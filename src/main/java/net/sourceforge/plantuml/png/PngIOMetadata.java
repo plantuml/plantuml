@@ -88,14 +88,14 @@ public class PngIOMetadata {
 		addText(meta, "copyleft", copyleft);
 		addiText(meta, "plantuml", metadata);
 
-		Log.debug("PngIOMetadata pngMetadata=" + meta);
+		Log.debug(() -> "PngIOMetadata pngMetadata=" + meta);
 
 		// Render the PNG to file
 		final IIOImage iioImage = new IIOImage(image, null, meta);
-		Log.debug("PngIOMetadata iioImage=" + iioImage);
+		Log.debug(() -> "PngIOMetadata iioImage=" + iioImage);
 		// Attach the metadata
 		final ImageWriter imagewriter = getImageWriter();
-		Log.debug("PngIOMetadata imagewriter=" + imagewriter);
+		Log.debug(() -> "PngIOMetadata imagewriter=" + imagewriter);
 
 		// See
 		// http://plantuml.sourceforge.net/qa/?qa=4367/sometimes-missing-response-headers-for-broken-png-images
@@ -174,14 +174,14 @@ public class PngIOMetadata {
 		final Iterator<ImageWriter> iterator = SImageIO.getImageWritersBySuffix("png");
 		for (final Iterator<ImageWriter> it = SImageIO.getImageWritersBySuffix("png"); it.hasNext();) {
 			final ImageWriter imagewriter = iterator.next();
-			Log.debug("PngIOMetadata countImageWriter = " + it.next());
+			Log.debug(() -> "PngIOMetadata countImageWriter = " + it.next());
 			if (imagewriter.getClass().getName().equals("com.sun.imageio.plugins.png.PNGImageWriter")) {
-				Log.debug("PngIOMetadata Found sun PNGImageWriter");
+				Log.debug(() -> "PngIOMetadata Found sun PNGImageWriter");
 				return imagewriter;
 			}
 
 		}
-		Log.debug("Using first one");
+		Log.debug(() -> "Using first one");
 		return SImageIO.getImageWritersBySuffix("png").next();
 	}
 

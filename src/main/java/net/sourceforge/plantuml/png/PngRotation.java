@@ -46,7 +46,7 @@ public class PngRotation {
 
 	public static BufferedImage process(BufferedImage im) {
 
-		Log.info("Rotation");
+		Log.info(() -> "Rotation");
 
 		final BufferedImage newIm = new BufferedImage(im.getHeight(), im.getWidth(), BufferedImage.TYPE_INT_RGB);
 		final Graphics2D g2d = newIm.createGraphics();

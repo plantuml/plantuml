@@ -402,8 +402,8 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public void muteStyle(Style modifiedStyle) {
-		skinParam.muteStyle(modifiedStyle);
+	public void muteStyle(Collection<Style> modifiedStyles) {
+		skinParam.muteStyle(modifiedStyles);
 	}
 
 	@Override

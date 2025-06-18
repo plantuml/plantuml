@@ -135,8 +135,8 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public void muteStyle(Style modifiedStyle) {
-		styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
+	public void muteStyle(Collection<Style> modifiedStyles) {
+		styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyles);
 	}
 
 	@Override
@@ -192,16 +192,14 @@ public class SkinParam implements ISkinParam {
 			applyPendingStyleMigration();
 			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2);
 			convertor.convertNow(value, getCurrentStyleBuilder());
-			for (Style style : convertor.getStyles())
-				muteStyle(style);
+			muteStyle(convertor.getStyles());
 		}
 		if ("style".equalsIgnoreCase(key) && "strictuml".equalsIgnoreCase(value)) {
 			final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/strictuml.skin");
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
-					this.muteStyle(modifiedStyle);
+				this.muteStyle(StyleParser.parse(lines, styleBuilder));
 
 			} catch (StyleParsingException e) {
 				Logme.error(e);
@@ -215,8 +213,7 @@ public class SkinParam implements ISkinParam {
 		for (Entry<String, String> ent : paramsPendingForStyleMigration.entrySet()) {
 			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(ent.getKey());
 			convertor.convertNow(ent.getValue(), getCurrentStyleBuilder());
-			for (Style style : convertor.getStyles())
-				muteStyle(style);
+			muteStyle(convertor.getStyles());
 		}
 		paramsPendingForStyleMigration.clear();
 	}

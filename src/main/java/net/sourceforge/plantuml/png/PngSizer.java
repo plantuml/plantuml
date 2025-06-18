@@ -53,7 +53,7 @@ public class PngSizer {
 	}
 
 	static private BufferedImage resize(BufferedImage im, int minsize) {
-		Log.info("Resizing file to " + minsize);
+		Log.info(() -> "Resizing file to " + minsize);
 
 		if (im.getWidth() >= minsize) {
 			return im;

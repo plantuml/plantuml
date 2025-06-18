@@ -54,8 +54,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
 	// ::remove file when __HAXE__
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^[%s]*\\</?style\\>[%s]*$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^[%s]*\\</?style\\>[%s]*$"));
 
 	public static final CommandStyleMultilinesCSS ME = new CommandStyleMultilinesCSS();
 
@@ -74,8 +73,7 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			for (Style modifiedStyle : StyleParser.parse(lines.subExtract(1, 1), styleBuilder))
-				diagram.getSkinParam().muteStyle(modifiedStyle);
+			diagram.getSkinParam().muteStyle(StyleParser.parse(lines.subExtract(1, 1), styleBuilder));
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();
 			return CommandExecutionResult.ok();

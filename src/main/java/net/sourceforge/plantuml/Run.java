@@ -96,22 +96,22 @@ public class Run {
 		final String waylandDisplay = System.getenv("WAYLAND_DISPLAY");
 
 		if (display == null && waylandDisplay != null)
-			Log.info("Wayland detected; X11 compatibility may be required via XWayland.");
+			Log.info(() -> "Wayland detected; X11 compatibility may be required via XWayland.");
 		else if (display != null)
-			Log.info("X11 display available: " + display);
+			Log.info(() -> "X11 display available: " + display);
 		else
-			Log.info("No display detected; you may need the -headless flag.");
+			Log.info(() -> "No display detected; you may need the -headless flag.");
 
 		if (GraphicsEnvironment.isHeadless()) {
-			Log.info("Forcing -Djava.awt.headless=true");
+			Log.info(() -> "Forcing -Djava.awt.headless=true");
 			System.setProperty("java.awt.headless", "true");
 		}
 
 		final String javaAwtHeadless = System.getProperty("java.awt.headless");
 		if (javaAwtHeadless == null)
-			Log.info("java.awt.headless not set");
+			Log.info(() -> "java.awt.headless not set");
 		else
-			Log.info("java.awt.headless set as '" + javaAwtHeadless + "'");
+			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
 		final Option option = new Option(argsArray);
 		ProgressBar.setEnable(option.isTextProgressBar());
@@ -147,10 +147,10 @@ public class Run {
 			encodeSprite(option.getResult());
 			return;
 		}
-		Log.info("SecurityProfile " + SecurityUtils.getSecurityProfile());
+		Log.info(() -> "SecurityProfile " + SecurityUtils.getSecurityProfile());
 		if (OptionFlags.getInstance().isVerbose()) {
-			Log.info("PlantUML Version " + Version.versionString());
-			Log.info("GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
+			Log.info(() -> "PlantUML Version " + Version.versionString());
+			Log.info(() -> "GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
 		}
 
 		if (OptionFlags.getInstance().isPrintFonts()) {
@@ -259,7 +259,7 @@ public class Run {
 	public static void forceOpenJdkResourceLoad() {
 		if (isOpenJdkRunning()) {
 			// see https://github.com/plantuml/plantuml/issues/123
-			Log.info("Forcing resource load on OpenJdk");
+			Log.info(() -> "Forcing resource load on OpenJdk");
 			final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 			final Graphics2D gg = imDummy.createGraphics();
 			final String text = "Alice";
@@ -428,8 +428,8 @@ public class Run {
 		}
 	}
 
-	private static void multithread(final Option option, final ErrorStatus error) throws InterruptedException {
-		Log.info("Using several threads: " + option.getNbThreads());
+	private static void multithread(Option option, ErrorStatus error) throws InterruptedException {
+		Log.info(() -> "Using several threads: " + option.getNbThreads());
 		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
 
 		int nb = 0;
@@ -461,7 +461,7 @@ public class Run {
 	}
 
 	private static void foundNbFiles(int nb) {
-		Log.info("Found " + nb + " files");
+		Log.info(() -> "Found " + nb + " files");
 	}
 
 	private static void incDone(boolean error) {
@@ -476,7 +476,7 @@ public class Run {
 
 	private static void manageFileInternal(File f, Option option, ErrorStatus error)
 			throws IOException, InterruptedException {
-		Log.info("Working on " + f.getPath());
+		Log.info(() -> "Working on " + f.getPath());
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			error.goOk();
 			extractMetadata(f);
@@ -544,7 +544,7 @@ public class Run {
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
 					.withPreprocFormat();
 			final SFile file = suggested.getFile(0);
-			Log.info("Export preprocessing source to " + file.getPrintablePath());
+			Log.info(() -> "Export preprocessing source to " + file.getPrintablePath());
 			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {
 				int level = 0;
 				for (CharSequence cs : blockUml.getDefinition(true)) {

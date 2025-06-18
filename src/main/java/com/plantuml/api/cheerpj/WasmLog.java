@@ -47,9 +47,9 @@ public class WasmLog {
 
 	public static long start;
 
-	public static void log(String message) {
+	public static void log(final String message) {
 		// ::revert when __CORE__
-		Log.info(message);
+		Log.info(() -> message);
 //		try {
 //			if (start > 0) {
 //				final long duration = System.currentTimeMillis() - start;

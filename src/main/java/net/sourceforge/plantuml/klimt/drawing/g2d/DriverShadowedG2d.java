@@ -95,9 +95,9 @@ public class DriverShadowedG2d {
 			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);
 			destination = simpleBlur.filter(destination, null);
 		} catch (OutOfMemoryError error) {
-			Log.info("Warning: Cannot draw shadow, image too big.");
+			Log.info(() -> "Warning: Cannot draw shadow, image too big.");
 		} catch (Exception e) {
-			Log.info("Warning: Cannot draw shadow: " + e);
+			Log.info(() -> "Warning: Cannot draw shadow: " + e);
 		}
 		if (destination != null) {
 			final AffineTransform at = g2d.getTransform();
@@ -130,9 +130,9 @@ public class DriverShadowedG2d {
 			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);
 			destination = simpleBlur.filter(destination, null);
 		} catch (OutOfMemoryError error) {
-			Log.info("Warning: Cannot draw shadow, image too big.");
+			Log.info(() -> "Warning: Cannot draw shadow, image too big.");
 		} catch (Exception e) {
-			Log.info("Warning: Cannot draw shadow: " + e);
+			Log.info(() -> "Warning: Cannot draw shadow: " + e);
 		}
 		if (destination != null) {
 			final AffineTransform at = g2d.getTransform();
@@ -165,9 +165,9 @@ public class DriverShadowedG2d {
 			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);
 			destination = simpleBlur.filter(destination, null);
 		} catch (OutOfMemoryError error) {
-			Log.info("Warning: Cannot draw shadow, image too big.");
+			Log.info(() -> "Warning: Cannot draw shadow, image too big.");
 		} catch (Exception e) {
-			Log.info("Warning: Cannot draw shadow: " + e);
+			Log.info(() -> "Warning: Cannot draw shadow: " + e);
 		}
 		if (destination != null) {
 			final AffineTransform at = g2d.getTransform();

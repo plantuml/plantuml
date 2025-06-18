@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -74,12 +75,12 @@ public class StyleBuilder implements AutomaticCounter {
 
 	}
 
-	public Style createStyle(String name) {
+	public Style createStyleStereotype(String name) {
 		if (name.contains(StyleSignatureBasic.STAR))
 			throw new IllegalArgumentException();
 
 		name = name.toLowerCase();
-		final StyleSignatureBasic signature = new StyleSignatureBasic(name);
+		final StyleSignatureBasic signature = StyleSignatureBasic.createStereotype(name);
 		final Style result = stylesMap.get(signature);
 		if (result == null)
 			return new Style(signature, new EnumMap<PName, Value>(PName.class));
@@ -87,19 +88,30 @@ public class StyleBuilder implements AutomaticCounter {
 		return result;
 	}
 
-	public StyleBuilder muteStyle(Style modifiedStyle) {
-		final Map<StyleSignatureBasic, Style> copy = new LinkedHashMap<StyleSignatureBasic, Style>(stylesMap);
-		final StyleSignatureBasic signature = modifiedStyle.getSignature();
-		final Style orig = copy.get(signature);
-		if (orig == null) {
-			copy.put(signature, modifiedStyle);
-		} else {
-			final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-			copy.put(signature, tmp);
-		}
+	public StyleBuilder muteStyle(Collection<Style> modifiedStyles) {
 		final StyleBuilder result = new StyleBuilder(this.printedForLog);
-		result.stylesMap.putAll(copy);
 		result.counter = this.counter;
+		result.stylesMap.putAll(stylesMap);
+
+		for (Style modifiedStyle : modifiedStyles) {
+			final StyleSignatureBasic signature = modifiedStyle.getSignature();
+			result.stylesMap.compute(signature, (key, orig) -> {
+				if (orig == null)
+					return modifiedStyle;
+				else
+					return orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+
+			});
+
+//			final Style orig = result.stylesMap.get(signature);
+//			if (orig == null) {
+//				result.stylesMap.put(signature, modifiedStyle);
+//			} else {
+//				final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+//				result.stylesMap.put(signature, tmp);
+//			}
+
+		}
 		return result;
 	}
 
@@ -119,17 +131,18 @@ public class StyleBuilder implements AutomaticCounter {
 	public int getNextInt() {
 		return ++counter;
 	}
-	
+
 	private final Map<StyleSignatureBasic, Style> mergedStyleCache = new ConcurrentHashMap<>();
 
 	public Style getMergedStyle(StyleSignatureBasic signature) {
-	    return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
+		// return computeMergedStyle(signature);
+		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
 	}
 
 	private Style computeMergedStyle(StyleSignatureBasic signature) {
 		boolean added = this.printedForLog.add(signature);
 		if (added)
-			Log.info("Using style " + signature);
+			Log.info(() -> "Using style " + signature);
 
 		Style result = null;
 		for (Entry<StyleSignatureBasic, Style> ent : stylesMap.entrySet()) {
@@ -149,7 +162,7 @@ public class StyleBuilder implements AutomaticCounter {
 	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int deltaPriority) {
 		boolean added = this.printedForLog.add(signature);
 		if (added)
-			Log.info("Using style " + signature);
+			Log.info(() -> "Using style " + signature);
 
 		Style result = null;
 		for (Entry<StyleSignatureBasic, Style> ent : stylesMap.entrySet()) {

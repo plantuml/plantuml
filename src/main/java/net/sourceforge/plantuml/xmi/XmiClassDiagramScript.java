@@ -237,7 +237,7 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 		}
 		List<MemberData> mbers = members.get(entity.getUid());
 		if (mbers == null) {
-			Log.info(String.format("Could not find entity %s in member list", entity.getName()));
+			Log.info(() -> String.format("Could not find entity %s in member list", entity.getName()));
 			return null;
 		}
 		for (MemberData m : mbers) {

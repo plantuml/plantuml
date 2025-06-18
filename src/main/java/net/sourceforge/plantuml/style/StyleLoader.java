@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.SoftReference;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
@@ -54,20 +54,32 @@ import net.sourceforge.plantuml.utils.Log;
 public final class StyleLoader {
 	// ::remove file when __HAXE__
 
-	private static final Map<String, SoftReference<StyleBuilder>> cache = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<String, StyleBuilder> cache = new ConcurrentHashMap<>();
 
 	private StyleLoader() {
 	}
 
 	public static StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
-		final SoftReference<StyleBuilder> ref = cache.get(filename);
-		StyleBuilder builder = (ref == null) ? null : ref.get();
+		try {
+			if (cache.size() >= 30)
+				cache.clear();
 
-		if (builder == null) {
-			builder = loadSkinSlow(filename);
-			cache.put(filename, new SoftReference<>(builder));
+			final StyleBuilder builder = cache.computeIfAbsent(filename, key -> {
+				try {
+					return loadSkinSlow(key);
+				} catch (IOException | StyleParsingException e) {
+					throw new RuntimeException(e);
+				}
+			});
+			return builder.cloneMe();
+		} catch (RuntimeException ex) {
+			Throwable cause = ex.getCause();
+			if (cause instanceof IOException)
+				throw (IOException) cause;
+			if (cause instanceof StyleParsingException)
+				throw (StyleParsingException) cause;
+			throw ex;
 		}
-		return builder.cloneMe();
 	}
 
 	private static StyleBuilder loadSkinSlow(String filename) throws IOException, StyleParsingException {
@@ -95,23 +107,24 @@ public final class StyleLoader {
 		// ::comment when __CORE__
 		InputStream internalIs = null;
 		SFile localFile = new SFile(filename);
-		Log.info("Trying to load style " + filename);
+		Log.info(() -> "Trying to load style " + filename);
 		try {
 			if (localFile.exists() == false)
 				localFile = FileSystem.getInstance().getFile(filename);
 		} catch (IOException e) {
-			Log.info("Cannot open file. " + e);
+			Log.info(() -> "Cannot open file. " + e);
 		}
 
+		final SFile localFile2 = localFile;
 		if (localFile.exists()) {
-			Log.info("File found : " + localFile.getPrintablePath());
+			Log.info(() -> "File found : " + localFile2.getPrintablePath());
 			internalIs = localFile.openFile();
 		} else {
-			Log.info("File not found : " + localFile.getPrintablePath());
+			Log.info(() -> "File not found : " + localFile2.getPrintablePath());
 			final String res = "/skin/" + filename;
 			internalIs = StyleLoader.class.getResourceAsStream(res);
 			if (internalIs != null)
-				Log.info("... but " + filename + " found inside the .jar");
+				Log.info(() -> "... but " + filename + " found inside the .jar");
 
 		}
 		return internalIs;

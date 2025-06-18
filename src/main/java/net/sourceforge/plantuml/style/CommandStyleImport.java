@@ -80,7 +80,8 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String path = arg.get("PATH", 0);
 		try {
 			BlocLines lines = null;
@@ -105,8 +106,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				return CommandExecutionResult.error("Cannot read: " + path);
 
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
-				diagram.getSkinParam().muteStyle(modifiedStyle);
+			diagram.getSkinParam().muteStyle(StyleParser.parse(lines, styleBuilder));
 
 		} catch (MalformedURLException e) {
 			return CommandExecutionResult.error("Invalid URL to style definition: " + e.getMessage());

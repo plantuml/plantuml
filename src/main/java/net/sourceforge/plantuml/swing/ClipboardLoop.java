@@ -82,18 +82,18 @@ public class ClipboardLoop {
 	}
 
 	private void runText(String text) throws IOException, InterruptedException {
-		Log.info("Getting some text from clipboard");
+		Log.info(() -> "Getting some text from clipboard");
 		final SourceStringReader source = new SourceStringReader(text);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final DiagramDescription desc = source.outputImage(baos);
 		if (desc == null) {
-			Log.info("No image generated");
+			Log.info(() -> "No image generated");
 		} else {
-			Log.info("Image ok " + desc.getDescription());
+			Log.info(() -> "Image ok " + desc.getDescription());
 			baos.close();
 			final BufferedImage image = SImageIO.read(baos.toByteArray());
 			setClipboardImage(image);
-			Log.info("Image copied in clipboard");
+			Log.info(() -> "Image copied in clipboard");
 		}
 	}
 

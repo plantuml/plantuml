@@ -91,7 +91,7 @@ public class ThemeUtils {
 	}
 
 	public static Theme getReaderTheme(String filename) {
-		Log.info("Loading theme " + filename);
+		Log.info(() -> "Loading theme " + filename);
 		final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
 		final String description = "<" + res + ">";
 		final InputStream is = Stdlib.class.getResourceAsStream(res);

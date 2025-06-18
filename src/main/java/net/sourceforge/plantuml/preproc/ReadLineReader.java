@@ -57,7 +57,7 @@ public class ReadLineReader implements ReadLine {
 		this.br = new BufferedReader(reader);
 		this.location = new LineLocationImpl(description, parent);
 		this.description = description;
-		Log.info("Reading from " + description);
+		Log.info(() -> "Reading from " + this.description);
 	}
 
 	@Override

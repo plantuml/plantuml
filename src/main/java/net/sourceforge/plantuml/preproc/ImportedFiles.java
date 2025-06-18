@@ -87,7 +87,7 @@ public class ImportedFiles {
 		// final File filecurrent = SecurityUtils.File(dir.getAbsoluteFile(),
 		// nameOrPath);
 		final AFile filecurrent = dir.getAFile(nameOrPath);
-		Log.info("ImportedFiles::getAFile filecurrent = " + filecurrent);
+		Log.info(() -> "ImportedFiles::getAFile filecurrent = " + filecurrent);
 		if (filecurrent != null && filecurrent.isOk()) 
 			return filecurrent;
 		

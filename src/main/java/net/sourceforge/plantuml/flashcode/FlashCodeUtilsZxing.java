@@ -50,7 +50,7 @@ import zext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import net.sourceforge.plantuml.utils.Log;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
-    // ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	private static final Lock lock = new ReentrantLock();
 
@@ -65,7 +65,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
 				return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
 			} catch (Exception e) {
-				Log.debug("Cannot create qrcode " + e);
+				Log.debug(() -> "Cannot create qrcode " + e);
 			} finally {
 				lock.unlock();
 			}

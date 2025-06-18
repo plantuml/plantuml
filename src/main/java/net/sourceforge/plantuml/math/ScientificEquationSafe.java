@@ -75,7 +75,7 @@ public class ScientificEquationSafe {
 			return new ScientificEquationSafe(formula, new AsciiMath(formula));
 		} catch (Exception e) {
 			Logme.error(e);
-			Log.info("Error parsing " + formula);
+			Log.info(() -> "Error parsing " + formula);
 			return new ScientificEquationSafe(formula, null);
 		}
 	}
@@ -85,7 +85,7 @@ public class ScientificEquationSafe {
 			return new ScientificEquationSafe(formula, new LatexBuilder(formula));
 		} catch (Exception e) {
 			Logme.error(e);
-			Log.info("Error parsing " + formula);
+			Log.info(() -> "Error parsing " + formula);
 			return new ScientificEquationSafe(formula, null);
 		}
 	}

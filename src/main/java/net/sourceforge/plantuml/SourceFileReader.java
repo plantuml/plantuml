@@ -89,48 +89,53 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 	}
 
 	private File getDirIfDirectory(String newName) throws FileNotFoundException {
-		Log.info("Checking=" + newName);
+		final String newName2 = newName;
+		Log.info(() -> "Checking=" + newName2);
 		if (endsWithSlashOrAntislash(newName)) {
-			Log.info("It ends with / so it looks like a directory");
+			Log.info(() -> "It ends with / so it looks like a directory");
 			newName = newName.substring(0, newName.length() - 1);
 			File f = new File(newName);
-			Log.info("f=" + f);
+			final File f2 = f;
+			Log.info(() -> "f=" + f2);
 			if (f.isAbsolute() == false) {
-				Log.info("It's relative, so let's change it");
+				Log.info(() -> "It's relative, so let's change it");
 				f = new File(outputDirectory, newName);
-				Log.info("f=" + f);
+				final File f3 = f;
+				Log.info(() -> "f=" + f3);
 			}
 			if (f.exists() == false) {
-				Log.info("It does not exist: let's create it");
+				Log.info(() -> "It does not exist: let's create it");
 				try {
 					f.mkdirs();
 				} catch (Exception e) {
-					Log.info("Error " + e);
+					Log.info(() -> "Error " + e);
 				}
 				if (f.exists() && f.isDirectory()) {
-					Log.info("Creation ok");
+					Log.info(() -> "Creation ok");
 					return f;
 				}
-				Log.info("We cannot create it");
+				Log.info(() -> "We cannot create it");
 			} else if (f.isDirectory() == false) {
-				Log.info("It exists, but is not a directory: we ignore it");
+				Log.info(() -> "It exists, but is not a directory: we ignore it");
 				return null;
 			}
 			return f;
 
 		}
 		File f = new File(newName);
-		Log.info("f=" + f);
+		final File f4 = f;
+		Log.info(() -> "f=" + f4);
 		if (f.isAbsolute() == false) {
-			Log.info("Relative, so let's change it");
+			Log.info(() -> "Relative, so let's change it");
 			f = new File(outputDirectory, newName);
-			Log.info("f=" + f);
+			final File f5 = f;
+			Log.info(() -> "f=" + f5);
 		}
 		if (f.exists() && f.isDirectory()) {
-			Log.info("It's an existing directory");
+			Log.info(() -> "It's an existing directory");
 			return f;
 		}
-		Log.info("It's not a directory");
+		Log.info(() -> "It's not a directory");
 		return null;
 
 	}
@@ -140,18 +145,19 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 		final String newName = blockUml.getFileOrDirname();
 		SuggestedFile suggested = null;
 		if (newName != null) {
-			Log.info("name from block=" + newName);
+			Log.info(() -> "name from block=" + newName);
 			final File dir = getDirIfDirectory(newName);
 			if (dir == null) {
-				Log.info(newName + " is not taken as a directory");
+				Log.info(() -> newName + " is not taken as a directory");
 				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
 						getFileFormatOption().getFileFormat(), 0);
 			} else {
-				Log.info("We are going to create files in directory " + dir);
+				Log.info(() -> "We are going to create files in directory " + dir);
 				suggested = SuggestedFile.fromOutputFile(new File(dir, getFileName()),
 						getFileFormatOption().getFileFormat(), 0);
 			}
-			Log.info("We are going to put data in " + suggested);
+			final SuggestedFile suggested2 = suggested;
+			Log.info(() -> "We are going to put data in " + suggested2);
 		}
 		if (suggested == null)
 			suggested = getSuggestedFile(outputDirectory, getFileName());

@@ -92,7 +92,7 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 	public static NumberAnalyzedDated load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
 		if (value.length() == 0) {
-			Log.info("Cannot load " + name);
+			Log.info(() -> "Cannot load " + name);
 			return null;
 		}
 		try {
@@ -103,7 +103,7 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36), st.nextToken());
 		} catch (Exception e) {
 			Logme.error(e);
-			Log.info("Error reading " + value);
+			Log.info(() -> "Error reading " + value);
 			return null;
 		}
 	}

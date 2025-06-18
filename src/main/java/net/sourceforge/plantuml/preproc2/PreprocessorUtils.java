@@ -117,7 +117,9 @@ public class PreprocessorUtils {
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 		if (filename.endsWith(".puml") == false)
 			filename = filename + ".puml";
-		Log.info("Loading non standard " + filename);
+
+		final String filename2 = filename;
+		Log.info(() -> "Loading non standard " + filename2);
 		final String res = "/stdlib/" + filename;
 		InputStream is = Stdlib.class.getResourceAsStream(res);
 
@@ -130,7 +132,7 @@ public class PreprocessorUtils {
 	// ::done
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
-		Log.info("Loading sdlib " + filename);
+		Log.info(() -> "Loading sdlib " + filename);
 		InputStream is = getStdlibInputStream(filename);
 		if (is == null)
 			return null;

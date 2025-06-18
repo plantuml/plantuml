@@ -220,7 +220,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 		for (ElementFactory f : cpx) {
 			if (f.ready()) {
-				Log.info("Using " + f);
+				Log.info(()->"Using " + f);
 				return f.create().getElement();
 			}
 		}

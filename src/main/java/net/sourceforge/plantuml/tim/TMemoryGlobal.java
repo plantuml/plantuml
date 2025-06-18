@@ -74,7 +74,7 @@ public class TMemoryGlobal extends ExecutionContexts implements TMemory {
 	@Override
 	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
 			throws EaterException {
-		Log.info("[MemGlobal] Setting " + varname);
+		Log.info(() -> "[MemGlobal] Setting " + varname);
 		if (scope == TVariableScope.LOCAL)
 			throw new EaterException("Cannot use local variable here", location);
 

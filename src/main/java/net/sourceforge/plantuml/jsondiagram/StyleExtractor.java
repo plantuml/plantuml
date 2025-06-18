@@ -117,8 +117,7 @@ public class StyleExtractor {
 		if (style.size() > 0) {
 			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 			final BlocLines blocLines = BlocLines.from(style);
-			for (Style modifiedStyle : StyleParser.parse(blocLines, styleBuilder))
-				skinParam.muteStyle(modifiedStyle);
+			skinParam.muteStyle(StyleParser.parse(blocLines, styleBuilder));
 		}
 	}
 

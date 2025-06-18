@@ -175,7 +175,7 @@ public class PSystemBuilder {
 			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
-			Log.info("Compilation duration " + (System.currentTimeMillis() - now));
+			Log.info(() -> "Compilation duration " + (System.currentTimeMillis() - now));
 			RegexConcat.printCacheInfo();
 			// ::done
 		}

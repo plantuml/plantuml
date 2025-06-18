@@ -184,7 +184,7 @@ public class Stereotype implements CharSequence {
 	public List<Style> getStyles(StyleBuilder builder) {
 		final List<Style> result = new ArrayList<>();
 		for (String s : getStyleNames()) {
-			final Style style = builder.createStyle(s);
+			final Style style = builder.createStyleStereotype(s);
 			assert (style != null);
 			result.add(style);
 		}

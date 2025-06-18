@@ -54,18 +54,14 @@ import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
 
 public class GraphvizRuntimeEnvironment {
-	
-	public static final String VIZJS = "vizjs";
 
+	public static final String VIZJS = "vizjs";
 
 	private final static GraphvizRuntimeEnvironment singleton = new GraphvizRuntimeEnvironment();
 
 	private final Map<File, GraphvizVersion> map = new ConcurrentHashMap<File, GraphvizVersion>();
 	private String dotExecutable;
 	private String dotVersion;
-
-
-	
 
 	private GraphvizRuntimeEnvironment() {
 	}
@@ -101,7 +97,7 @@ public class GraphvizRuntimeEnvironment {
 	public final void setDotExecutable(String value) {
 		dotExecutable = value == null ? null : value.trim();
 	}
-	
+
 	@DuplicateCode(reference = "GraphvizUtils")
 	public String getenvGraphvizDot() {
 		if (StringUtils.isNotEmpty(dotExecutable))
@@ -118,15 +114,14 @@ public class GraphvizRuntimeEnvironment {
 		return null;
 	}
 
-
 	@DuplicateCode(reference = "GraphvizUtils")
 	public Graphviz createForSystemDot(ISkinParam skinParam, String dotString, String... type) {
-        Graphviz result = createWithFactory(skinParam, dotString, type);
-        if (result != null) {
-            return result;
-        }
+		Graphviz result = createWithFactory(skinParam, dotString, type);
+		if (result != null) {
+			return result;
+		}
 		if (useVizJs(skinParam)) {
-			Log.info("Using " + VIZJS);
+			Log.info(() -> "Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
 		if (isWindows())
@@ -135,8 +130,9 @@ public class GraphvizRuntimeEnvironment {
 			result = new GraphvizLinux(skinParam, dotString, type);
 
 		if (result.getExeState() != ExeState.OK && VizJsEngine.isOk()) {
-			Log.info("Error with file " + result.getDotExe() + ": " + result.getExeState().getTextMessage());
-			Log.info("Using " + VIZJS);
+			final Graphviz result2 = result;
+			Log.info(() -> "Error with file " + result2.getDotExe() + ": " + result2.getExeState().getTextMessage());
+			Log.info(() -> "Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
 		return result;
@@ -145,12 +141,12 @@ public class GraphvizRuntimeEnvironment {
 
 	@DuplicateCode(reference = "GraphvizUtils")
 	public Graphviz create(ISkinParam skinParam, String dotString, String... type) {
-        Graphviz result = createWithFactory(skinParam, dotString, type);
-        if (result != null) {
-            return result;
-        }
+		Graphviz result = createWithFactory(skinParam, dotString, type);
+		if (result != null) {
+			return result;
+		}
 		if (useVizJs(skinParam)) {
-			Log.info("Using " + VIZJS);
+			Log.info(() -> "Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
 		if (isWindows())
@@ -159,28 +155,30 @@ public class GraphvizRuntimeEnvironment {
 			result = new GraphvizLinux(skinParam, dotString, type);
 
 		if (result.getExeState() != ExeState.OK && VizJsEngine.isOk()) {
-			Log.info("Error with file " + result.getDotExe() + ": " + result.getExeState().getTextMessage());
-			Log.info("Using " + VIZJS);
+			final Graphviz result2 = result;
+			Log.info(() -> "Error with file " + result2.getDotExe() + ": " + result2.getExeState().getTextMessage());
+			Log.info(() -> "Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
 		return result;
 
 	}
-	
+
 	@DuplicateCode(reference = "GraphvizUtils")
-    private Graphviz createWithFactory(ISkinParam skinParam, String dotString, String... type) {
-        Iterator<GraphvizFactory> iterator = ServiceLoader.load(GraphvizFactory.class).iterator();
-        while (iterator.hasNext()) {
-            final GraphvizFactory factory = iterator.next();
-            final Graphviz graphviz = factory.create(skinParam, dotString, type);
-            if (graphviz != null) {
-                Log.info("Using " + graphviz.getClass().getName() + " created by " + factory.getClass().getName());
-                return graphviz;
-            }
-        }
-        return null;
-    }
-	
+	private Graphviz createWithFactory(ISkinParam skinParam, String dotString, String... type) {
+		Iterator<GraphvizFactory> iterator = ServiceLoader.load(GraphvizFactory.class).iterator();
+		while (iterator.hasNext()) {
+			final GraphvizFactory factory = iterator.next();
+			final Graphviz graphviz = factory.create(skinParam, dotString, type);
+			if (graphviz != null) {
+				Log.info(
+						() -> "Using " + graphviz.getClass().getName() + " created by " + factory.getClass().getName());
+				return graphviz;
+			}
+		}
+		return null;
+	}
+
 	@DuplicateCode(reference = "GraphvizUtils")
 	public boolean useVizJs(ISkinParam skinParam) {
 		if (skinParam != null && skinParam.isUseVizJs() && VizJsEngine.isOk())
@@ -191,8 +189,6 @@ public class GraphvizRuntimeEnvironment {
 
 		return false;
 	}
-
-
 
 	@DuplicateCode(reference = "GraphvizUtils")
 	public File getDotExe() {
@@ -240,6 +236,5 @@ public class GraphvizRuntimeEnvironment {
 	public int getDotVersion() throws IOException, InterruptedException {
 		return retrieveVersion(dotVersion());
 	}
-
 
 }

@@ -155,7 +155,7 @@ public class Stdlib {
 				return cachedResult;
 			}
 		}
-		Log.info("No cache for " + file);
+		Log.info(() -> "No cache for " + file);
 		final DataInputStream dataStream = getDataStream();
 		if (dataStream == null)
 			return null;
@@ -173,7 +173,7 @@ public class Stdlib {
 			while (true) {
 				final String filename = dataStream.readUTF();
 				if (filename.equals(SEPARATOR)) {
-					Log.info("Not found " + filename);
+					Log.info(() -> "Not found " + filename);
 					return null;
 				}
 				if (filename.equalsIgnoreCase(file))

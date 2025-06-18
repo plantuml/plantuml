@@ -187,7 +187,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public StyleBuilder getCurrentStyleBuilder();
 
-	public void muteStyle(Style modifiedStyle);
+	public void muteStyle(Collection<Style> modifiedStyles);
 
 	public Collection<String> getAllSpriteNames();
 

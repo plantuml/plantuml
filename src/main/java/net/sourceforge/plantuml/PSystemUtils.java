@@ -76,7 +76,7 @@ public class PSystemUtils {
 			final boolean sameMetadata = fileFormatOption.getFileFormat().equalsMetadata(system.getMetadata(),
 					existingFile);
 			if (sameMetadata) {
-				Log.info("Skipping " + existingFile.getPrintablePath() + " because metadata has not changed.");
+				Log.info(() -> "Skipping " + existingFile.getPrintablePath() + " because metadata has not changed.");
 				return Arrays.asList(new FileImageData(existingFile, null));
 			}
 		}
@@ -116,17 +116,17 @@ public class PSystemUtils {
 			// if (system.hasUrl() && cmap != null && cmap.containsCMapData()) {
 			// system.exportCmap(suggestedFile, cmap);
 			// }
-			Log.info("File size : " + f.length());
+			Log.info(() -> "File size : " + f.length());
 			result.add(new FileImageData(f, cmap));
 		}
 		return result;
 	}
 
-	public static boolean canFileBeWritten(final SFile f) {
-		Log.info("Creating file: " + f.getAbsolutePath());
+	public static boolean canFileBeWritten(SFile f) {
+		Log.info(() -> "Creating file: " + f.getAbsolutePath());
 		if (f.exists() && f.canWrite() == false) {
 			if (OptionFlags.getInstance().isOverwrite()) {
-				Log.info("Overwrite " + f);
+				Log.info(() -> "Overwrite " + f);
 				f.setWritable(true);
 				f.delete();
 				return true;
@@ -158,7 +158,7 @@ public class PSystemUtils {
 			if (cmap != null && cmap.containsCMapData())
 				system.exportCmap(suggestedFile, i, cmap);
 
-			Log.info("File size : " + f.length());
+			Log.info(() -> "File size : " + f.length());
 			// ::done
 			result.add(new FileImageData(f, cmap));
 		}
@@ -181,7 +181,8 @@ public class PSystemUtils {
 				diagram.getSplitPagesHorizontal(), diagram.getSplitPagesVertical(),
 				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, diagram.getSkinParam().getDpi(),
 				diagram instanceof GanttDiagram ? new SplitParam(HColors.BLACK, null, 5) // for backwards compatibility
-						: diagram.getSkinParam().getSplitParam()).getFiles();
+						: diagram.getSkinParam().getSplitParam())
+				.getFiles();
 
 		final List<FileImageData> result = new ArrayList<>();
 		for (SFile f : files)

@@ -60,7 +60,7 @@ public class FileSystem {
 		if (dir == null) {
 			this.currentDir.set(null);
 		} else {
-			Log.info("Setting current dir: " + dir.getAbsolutePath());
+			Log.info(() -> "Setting current dir: " + dir.getAbsolutePath());
 			this.currentDir.set(dir.getAbsolutePath());
 		}
 	}
@@ -83,7 +83,7 @@ public class FileSystem {
 		// ::comment when __CORE__
 		if (isAbsolute(nameOrPath)) {
 			final SFile result = new SFile(nameOrPath);
-			Log.info("Trying " + result.getAbsolutePath());
+			Log.info(() -> "Trying " + result.getAbsolutePath());
 			return result.getCanonicalFile();
 		}
 
@@ -91,7 +91,8 @@ public class FileSystem {
 		SFile filecurrent = null;
 		if (dir != null) {
 			filecurrent = dir.getAbsoluteFile().file(nameOrPath);
-			Log.info("Current dir is " + dir.getAbsolutePath() + " so trying " + filecurrent.getAbsolutePath());
+			final SFile filecurrent2 = filecurrent;
+			Log.info(() -> "Current dir is " + dir.getAbsolutePath() + " so trying " + filecurrent2.getAbsolutePath());
 			if (filecurrent.exists())
 				return filecurrent.getCanonicalFile();
 

@@ -61,7 +61,7 @@ public class PngSplitter {
 			return;
 		}
 
-		Log.info("Splitting " + horizontalPages + " x " + verticalPages);
+		Log.info(() -> "Splitting " + horizontalPages + " x " + verticalPages);
 		final SFile full = pngFile.getTmpFile(); // SecurityUtils.File(pngFile.getParentFile(), pngFile.getName() +
 													// ".tmp");
 		// Thread.yield();
@@ -115,7 +115,7 @@ public class PngSplitter {
 		}
 
 		full.delete();
-		Log.info("End of splitting");
+		Log.info(() -> "End of splitting");
 	}
 
 	public List<SFile> getFiles() {

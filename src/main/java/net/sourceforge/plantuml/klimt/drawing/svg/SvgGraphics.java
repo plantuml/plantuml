@@ -651,7 +651,7 @@ public class SvgGraphics {
 
 	private Transformer getTransformer() throws TransformerException {
 		final Transformer transformer = XmlFactories.newTransformer();
-		Log.info("Transformer=" + transformer.getClass());
+		Log.info(() -> "Transformer=" + transformer.getClass());
 
 		// // Sets the standalone property in the first line of
 		// // the output file.
@@ -826,14 +826,22 @@ public class SvgGraphics {
 
 	private String format(double xx) {
 		final double x = xx * option.getScale();
-		if (x == 0)
+		if (x == 0.0)
 			return "0";
 
-		String s = String.format(Locale.US, "%1.4f", x);
-		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
-		if (s.endsWith("."))
-			s = s.substring(0, s.length() - 1);
+		String s = String.format(Locale.US, "%.4f", x);
 
+		final int dot = s.indexOf('.');
+		if (dot >= 0) {
+			int end = s.length() - 1;
+			while (end > dot && s.charAt(end) == '0')
+				end--;
+
+			if (end == dot)
+				end--;
+
+			s = s.substring(0, end + 1);
+		}
 		return s;
 	}
 

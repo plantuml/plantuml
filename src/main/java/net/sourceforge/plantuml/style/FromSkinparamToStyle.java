@@ -398,7 +398,7 @@ public class FromSkinparamToStyle {
 		if (stereo != null) {
 			map = StyleLoader.addPriorityForStereotype(map);
 			for (String s : stereo.split("\\&"))
-				sig = sig.addStereotypeDecoration(s);
+				sig = sig.addStereotype(s);
 		}
 
 		final Style style = new Style(sig, map);

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum SName {
 	action, //
 	activity, //
@@ -181,17 +184,17 @@ public enum SName {
 	wbsDiagram, //
 	yamlDiagram; //
 
-	private static final StringTrie<SName> ALL = new StringTrie<>();
+	private static final Map<String, SName> ALL = new HashMap<>();
 
 	static {
 		for (SName sname : SName.values()) {
-			final String s = sname.name().replace("_", "");
+			final String s = sname.name().replace("_", "").toLowerCase();
 			ALL.put(s, sname);
 		}
 	}
 
 	public static SName retrieve(String s) {
-		return ALL.get(s);
+		return ALL.get(s.toLowerCase());
 	}
 
 }

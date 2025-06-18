@@ -55,8 +55,8 @@ public class PngIO {
 		try (OutputStream os = file.createBufferedOutputStream()) {
 			write(image, mapper, os, metadata, dpi);
 		}
-		Log.debug("File is " + file);
-		Log.debug("File size " + file.length());
+		Log.debug(() -> "File is " + file);
+		Log.debug(() -> "File size " + file.length());
 		if (file.length() == 0) {
 			Log.error("File size is zero: " + file);
 			SImageIO.write(image, "png", file);

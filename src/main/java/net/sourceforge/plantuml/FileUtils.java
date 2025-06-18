@@ -120,7 +120,7 @@ public class FileUtils {
 			final String name = prefix + counter.addAndGet(1) + suffix;
 			f = new File(name);
 		}
-		Log.info("Creating temporary file: " + f);
+		Log.info(() -> "Creating temporary file: " + f);
 		f.deleteOnExit();
 		return f;
 	}
@@ -137,7 +137,7 @@ public class FileUtils {
 			final String name = prefix + counter.addAndGet(1) + suffix;
 			f = new SFile(name);
 		}
-		Log.info("Creating temporary file: " + f);
+		Log.info(() -> "Creating temporary file: " + f);
 		f.deleteOnExit();
 		return f;
 	}

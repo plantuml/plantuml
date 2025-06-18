@@ -163,7 +163,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	}
 
 	final public List<GeneratedImage> getGeneratedImages() throws IOException {
-		Log.info("Reading file: " + file);
+		Log.info(() -> "Reading file: " + file);
 
 		cpt = 0;
 		final List<GeneratedImage> result = new ArrayList<>();
@@ -207,7 +207,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 		}
 
-		Log.info("Number of image(s): " + result.size());
+		Log.info(() -> "Number of image(s): " + result.size());
 
 		return Collections.unmodifiableList(result);
 	}

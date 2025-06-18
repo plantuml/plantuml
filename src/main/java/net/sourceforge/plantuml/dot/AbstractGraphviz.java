@@ -61,13 +61,13 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	private static String findExecutableOnPath(String name) {
 		final String path = System.getenv("PATH");
-		if (path != null) 
+		if (path != null)
 			for (String dirname : path.split(SFile.pathSeparator)) {
 				final File file = new File(dirname, name);
 				if (file.isFile() && file.canExecute())
 					return file.getAbsolutePath();
 			}
-		
+
 		return null;
 	}
 
@@ -106,11 +106,11 @@ abstract class AbstractGraphviz implements Graphviz {
 		ProcessRunner p = null;
 		ProcessState state = null;
 		try {
-			Log.info("Starting Graphviz process " + Arrays.asList(cmd));
-			Log.info("DotString size: " + dotString.length());
+			Log.info(() -> "Starting Graphviz process " + Arrays.asList(cmd));
+			Log.info(() -> "DotString size: " + dotString.length());
 			p = new ProcessRunner(cmd);
 			state = p.run(dotString.getBytes(), os);
-			Log.info("Ending process ok");
+			Log.info(() -> "Ending process ok");
 		} catch (Throwable e) {
 			Logme.error(e);
 			Log.error("Error: " + e);
@@ -119,7 +119,7 @@ abstract class AbstractGraphviz implements Graphviz {
 			Log.error("Try java -jar plantuml.jar -testdot to figure out the issue");
 			Log.error("");
 		} finally {
-			Log.info("Ending Graphviz process");
+			Log.info(() -> "Ending Graphviz process");
 		}
 //		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getError().length() > 0) {
 //			Log.error("GraphViz error stream : " + p.getError());

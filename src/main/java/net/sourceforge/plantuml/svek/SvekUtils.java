@@ -48,7 +48,7 @@ public class SvekUtils {
 
 	// ::comment when __CORE__
 	static public void traceString(final SFile f, String text) throws IOException {
-		Log.info("Creating intermediate file " + f.getPrintablePath());
+		Log.info(() -> "Creating intermediate file " + f.getPrintablePath());
 		try (PrintWriter pw = f.createPrintWriter()) {
 			pw.print(text);
 		}

@@ -87,17 +87,18 @@ public class Matcher2 {
 
 	private static synchronized void addTime(String id, long duration) {
 		Long total = durations.get(id);
-		if (total == null) {
+		if (total == null)
 			total = 0L;
-		}
+
 		total += duration;
 		durations.put(id, total);
 		final String longest = getLongest();
-		if (longest == null) {
+		if (longest == null)
 			return;
-		}
+
 		if (durations.get(longest) > printed) {
-			Log.info("---------- Regex " + longest + " " + durations.get(longest) + "ms (" + durations.size() + ")");
+			Log.info(() -> "---------- Regex " + longest + " " + durations.get(longest) + "ms (" + durations.size()
+					+ ")");
 			printed = durations.get(longest);
 		}
 

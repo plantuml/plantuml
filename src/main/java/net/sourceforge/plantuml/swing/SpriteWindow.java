@@ -86,7 +86,7 @@ public class SpriteWindow extends JFrame {
 	}
 
 	private void startTimer() {
-		Log.info("Init done");
+		Log.info(() -> "Init done");
 		final Timer timer = new Timer(10000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tick();
@@ -94,7 +94,7 @@ public class SpriteWindow extends JFrame {
 		});
 		timer.setInitialDelay(0);
 		timer.start();
-		Log.info("Timer started");
+		Log.info(() -> "Timer started");
 	}
 
 	private void tick() {

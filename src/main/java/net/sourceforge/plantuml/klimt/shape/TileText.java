@@ -63,8 +63,8 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
 		final int spaceBottom = Math.abs(fontConfiguration.getSpace());
-		Log.debug("g2d=" + rect);
-		Log.debug("Size for " + text + " is " + rect);
+		Log.debug(() -> "g2d=" + rect);
+		Log.debug(() -> "Size for " + text + " is " + rect);
 		double h = rect.getHeight();
 		if (h < 10) {
 			h = 10;

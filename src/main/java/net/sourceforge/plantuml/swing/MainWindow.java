@@ -112,7 +112,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private static final Pattern p = Pattern.compile("\\w+");
-	
+
 	private void changeExtensions(String ext) {
 		if (ext.equals(getExtensions())) {
 			return;
@@ -163,7 +163,7 @@ public class MainWindow extends JFrame {
 		this.option = option;
 		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));
 
-		Log.info("Showing MainWindow");
+		Log.info(() -> "Showing MainWindow");
 		scrollPane = new JScrollPane(jList1);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -275,7 +275,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void startTimer() {
-		Log.info("Init done");
+		Log.info(() -> "Init done");
 		final Timer timer = new Timer(period, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tick();
@@ -283,7 +283,7 @@ public class MainWindow extends JFrame {
 		});
 		timer.setInitialDelay(0);
 		timer.start();
-		Log.info("Timer started");
+		Log.info(() -> "Timer started");
 	}
 
 	private void displayDialogChangeDir() {
@@ -294,9 +294,9 @@ public class MainWindow extends JFrame {
 		chooser.setAcceptAllFileFilterUsed(false);
 		final String currentPath = prefs.get(KEY_DIR, ".");
 		chooser.setCurrentDirectory(new File(currentPath));
-		Log.info("Showing OpenDialog");
+		Log.info(() -> "Showing OpenDialog");
 		final int returnVal = chooser.showOpenDialog(this);
-		Log.info("Closing OpenDialog");
+		Log.info(() -> "Closing OpenDialog");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			final File dir = chooser.getSelectedFile();
 			changeDir(dir);
@@ -309,7 +309,7 @@ public class MainWindow extends JFrame {
 		dirWatcher.cancel();
 		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));
 		setTitle(dir.getAbsolutePath());
-		Log.info("Creating DirWatcher");
+		Log.info(() -> "Creating DirWatcher");
 		currentDirectoryListing2.clear();
 		jList1.setListData(new Vector<>(currentDirectoryListing2));
 		jList1.setVisible(true);

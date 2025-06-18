@@ -122,11 +122,11 @@ public class CommunicationTileSelf extends AbstractTile {
 		double x1 = getMinX().getCurrentValue();
 		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);
 		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
-		Log.info("CommunicationTileSelf::drawU levelIgnore=" + levelIgnore + " levelConsidere=" + levelConsidere);
+		Log.info(() -> "CommunicationTileSelf::drawU levelIgnore=" + levelIgnore + " levelConsidere=" + levelConsidere);
 		if (!isReverseDefine()) {
 			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;
 			if (levelIgnore < levelConsidere) {
-				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere-levelIgnore);
+				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere - levelIgnore);
 			}
 		}
 
@@ -197,10 +197,9 @@ public class CommunicationTileSelf extends AbstractTile {
 
 	public Real getMinX() {
 		if (isReverseDefine()) {
-			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) > 0
-					? CommunicationTile.LIVE_DELTA_SIZE
-					: 0.0;
-			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth()-liveDeltaWidthAdjustment);
+			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,
+					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) > 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;
+			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth() - liveDeltaWidthAdjustment);
 		}
 		return getPoint1(getStringBounder());
 	}

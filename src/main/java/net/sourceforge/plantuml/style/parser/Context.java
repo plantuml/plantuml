@@ -79,16 +79,18 @@ class Context {
 
 		for (String s : newString.split(","))
 			for (StyleSignatureBasic ssb : this.signatures) {
-//				if (s.startsWith(".")) {
-//					System.err.println("s1=" + s);
-//				} else if (s.startsWith("depth(")) {
-//					System.err.println("s2=" + s);
-//				} else {
-//					final SName sname = SName.retrieve(s);
-//					if (sname == null)
-//						System.err.println("s3=" + s);
-//				}
-				ssb = ssb.addString(s);
+				if (s.startsWith(".")) {
+					ssb = ssb.addStereotype(s);
+				} else if (s.startsWith("depth(")) {
+					ssb = ssb.addLevel(Integer.parseInt(s.replaceAll("\\D", "")));
+				} else {
+					final SName sname = SName.retrieve(s);
+					if (sname == null)
+						ssb = ssb.addStereotype(s);
+					else
+						ssb = ssb.addSName(sname);
+				}
+
 				if (star)
 					ssb = ssb.addStar();
 

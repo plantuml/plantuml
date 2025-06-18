@@ -165,7 +165,7 @@ public class Defines implements Truth {
 			final EvalBoolean eval = new EvalBoolean(expression, this);
 			return eval.eval();
 		} catch (IllegalArgumentException e) {
-			Log.info("Error in " + expression);
+			Log.info(() -> "Error in " + expression);
 			return false;
 		}
 	}

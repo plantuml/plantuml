@@ -73,17 +73,21 @@ public class EmptyImageBuilder {
 
 		// ::comment when __CORE__
 		if (width > GraphvizUtils.getenvImageLimit()) {
-			Log.info("Width too large " + width + ". You should set PLANTUML_LIMIT_SIZE");
+			final double width2 = width;
+			Log.info(() -> "Width too large " + width2 + ". You should set PLANTUML_LIMIT_SIZE");
 			width = GraphvizUtils.getenvImageLimit();
 		}
 		if (height > GraphvizUtils.getenvImageLimit()) {
-			Log.info("Height too large " + height + ". You should set PLANTUML_LIMIT_SIZE");
+			final double height2 = height;
+			Log.info(() -> "Height too large " + height2 + ". You should set PLANTUML_LIMIT_SIZE");
 			height = GraphvizUtils.getenvImageLimit();
 		}
 		// ::done
 		this.background = background;
 		this.stringBounder = stringBounder;
-		Log.info("Creating image " + width + "x" + height);
+		final double width3 = width;
+		final double height3 = height;
+		Log.info(() -> "Creating image " + width3 + "x" + height3);
 		im = new BufferedImage(width, height, getType(background));
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);

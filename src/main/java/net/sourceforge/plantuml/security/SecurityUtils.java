@@ -259,7 +259,7 @@ public class SecurityUtils {
 				if (f.isDirectory())
 					result.add(f);
 			} catch (IOException e) {
-				Log.info("Cannot access to " + tmp + ". " + e);
+				Log.info(() -> "Cannot access to " + tmp + ". " + e);
 			}
 		}
 		return Collections.unmodifiableList(result);

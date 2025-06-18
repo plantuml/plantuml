@@ -795,7 +795,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			return;
 
 		if (dotPath == null) {
-			Log.info("DotPath is null for " + this);
+			Log.info(() -> "DotPath is null for " + this);
 			return;
 		}
 

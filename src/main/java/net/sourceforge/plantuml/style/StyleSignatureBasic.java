@@ -35,277 +35,240 @@
  */
 package net.sourceforge.plantuml.style;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypeDecoration;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Log;
 
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__
 
-	private final Set<String> names = new LinkedHashSet<>();
-	private final boolean withDot;
+	private final EnumSet<SName> snames;
+	private final Set<String> stereotypes;
+	private final boolean isStared;
+	private final int level;
 
-	public StyleSignatureBasic(String s) {
-		if (s.contains(STAR) || s.contains("&") || s.contains("-"))
-			throw new IllegalArgumentException();
+	public static StyleSignatureBasic createStereotype(String s) {
+		return empty().addStereotype(s);
+	}
 
-		this.withDot = s.contains(".");
-		this.names.add(clean(s));
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder(snames + " " + stereotypes);
+		if (level != -1)
+			sb.append(" " + level);
+		if (isStared)
+			sb.append(" (*)");
+		return sb.toString();
 	}
 
 	public static StyleSignatureBasic empty() {
-		return new StyleSignatureBasic(false);
+		return new StyleSignatureBasic(false, EnumSet.noneOf(SName.class), Collections.emptySet(), -1);
 	}
 
-	private StyleSignatureBasic(boolean withDot) {
-		this.withDot = withDot;
-	}
-
-	private StyleSignatureBasic(boolean withDot, Collection<String> copy) {
-		this.names.addAll(copy);
-		this.withDot = withDot;
+	private StyleSignatureBasic(boolean isStared, EnumSet<SName> snames, Set<String> stereotypes, int level) {
+		this.isStared = isStared;
+		this.snames = snames;
+		this.stereotypes = stereotypes;
+		this.level = level;
 	}
 
 	public StyleSignatureBasic addClickable(Url url) {
 		if (url == null)
 			return this;
 
-		final Set<String> result = new LinkedHashSet<>(names);
-		result.add(SName.clickable.name());
-		return new StyleSignatureBasic(withDot, result);
+		final EnumSet<SName> result = snames.clone();
+		result.add(SName.clickable);
+		return new StyleSignatureBasic(isStared, result, stereotypes, level);
 
 	}
 
 	public StyleSignatureBasic addLevel(int level) {
-		final String s = "depth(" + level + ")";
-		return addString(s);
+		return new StyleSignatureBasic(isStared, snames, stereotypes, level);
 	}
 
-	public StyleSignatureBasic addStereotypeDecoration(String s) {
-		return addString(StereotypeDecoration.PREFIX + s);
-	}
+	public StyleSignatureBasic addStereotype(String stereo) {
+		final Set<String> result = new HashSet<>(stereotypes);
+		result.add(clean(stereo));
 
-	public StyleSignatureBasic addString(String s) {
-		if (s == null)
-			return this;
-
-		if (s.contains("&"))
-			throw new IllegalArgumentException();
-
-		final Set<String> result = new LinkedHashSet<>(names);
-		result.add(clean(s));
-		return new StyleSignatureBasic(withDot || s.contains("."), result);
-	}
-
-	public StyleSignatureBasic addStereotype(Stereotype stereo) {
-		if (stereo == null)
-			return this;
-
-		final Set<String> result = new LinkedHashSet<>(names);
-		boolean withDotLocal = withDot;
-		for (String s : stereo.getLabels(Guillemet.NONE)) {
-			if (s.contains("&"))
-				throw new IllegalArgumentException();
-			result.add(StereotypeDecoration.PREFIX + clean(s));
-			withDotLocal = withDotLocal || s.contains(".");
-		}
-
-		return new StyleSignatureBasic(withDotLocal, result);
-	}
-
-	public StyleSignatureBasic addSName(SName name) {
-		return addString(name.name().toLowerCase().replace("_", ""));
-	}
-
-	public StyleSignatureBasic addStar() {
-		final Set<String> result = new LinkedHashSet<>(names);
-		result.add(STAR);
-		return new StyleSignatureBasic(withDot, result);
-	}
-
-	public boolean isStarred() {
-		return names.contains(STAR);
-	}
-
-	@Override
-	public boolean equals(Object arg) {
-		final StyleSignatureBasic other = (StyleSignatureBasic) arg;
-		return this.names.equals(other.names);
-	}
-
-	private final AtomicInteger cachedHashCode = new AtomicInteger(0);
-
-	@Override
-	public int hashCode() {
-		int hash = cachedHashCode.get();
-		if (hash == 0) {
-			hash = names.hashCode();
-			cachedHashCode.set(hash);
-		}
-		return hash;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder result = new StringBuilder();
-		for (String n : names) {
-			if (result.length() > 0)
-				result.append('.');
-
-			result.append(n);
-		}
-		return result.toString() + " " + withDot;
-	}
-
-	private final AtomicInteger cachedDepth = new AtomicInteger(Integer.MIN_VALUE);
-
-	private int depthFromTokens() {
-		final int result = cachedDepth.get();
-		if (result != Integer.MIN_VALUE)
-			return result;
-
-		for (String token : names) {
-			final int depth = depthFromSingleToken(token);
-			if (depth != -1) {
-				cachedDepth.set(depth);
-				return depth;
-			}
-
-		}
-		cachedDepth.set(-1);
-		return -1;
-	}
-
-	private final Map<StyleSignatureBasic, Boolean> matchAllCache = new ConcurrentHashMap<>();
-
-	public boolean matchAll(StyleSignatureBasic other) {
-		final Boolean computeIfAbsent = matchAllCache.computeIfAbsent(other, k -> this.matchAllImpl(other));
-		return computeIfAbsent;
-	}
-
-	private boolean matchAllImpl(StyleSignatureBasic other) {
-		final boolean namesContainsStar = names.contains(STAR);
-		if (other.isStarred() && namesContainsStar == false)
-			return false;
-
-		final int depthInNames = other.depthFromTokens();
-
-		for (String token : names) {
-			if (token.equals(STAR))
-				continue;
-
-			int tokenDepth = -1;
-			if (namesContainsStar && depthInNames != -1)
-				tokenDepth = depthFromSingleToken(token);
-
-			if (namesContainsStar && depthInNames != -1 && tokenDepth != -1) {
-				if (depthInNames < tokenDepth)
-					return false;
-			} else {
-				if (other.names.contains(token) == false)
-					return false;
-			}
-		}
-
-		return true;
-	}
-
-	private static int depthFromSingleToken(String token) {
-		final String prefix = "depth(";
-		final int prefixLen = prefix.length();
-		if (token.length() > prefixLen + 1 && token.startsWith(prefix) && token.charAt(token.length() - 1) == ')') {
-			try {
-				return Integer.parseInt(token.substring(prefixLen, token.length() - 1));
-			} catch (NumberFormatException e) {
-			}
-		}
-		return -1;
-	}
-
-	public final Set<String> getNames() {
-		return Collections.unmodifiableSet(names);
-	}
-
-	public static StyleSignatureBasic of(SName... names) {
-		final List<String> result = new ArrayList<>();
-		for (SName name : names)
-			result.add(name.name().toLowerCase().replace("_", ""));
-
-		return new StyleSignatureBasic(false, result);
-	}
-
-	public StyleSignature forStereotypeItself(Stereotype stereotype) {
-		if (stereotype == null || stereotype.getStyleNames().size() == 0)
-			return this;
-
-		final StyleSignatures result = new StyleSignatures();
-		for (String name : stereotype.getStyleNames()) {
-			final List<String> tmp = new ArrayList<>(names);
-			tmp.add(SName.stereotype.name().toLowerCase().replace("_", ""));
-			tmp.add(clean(name));
-			result.add(new StyleSignatureBasic(false, tmp));
-		}
-		return result;
-
-	}
-
-	@Override
-	public StyleSignature withTOBECHANGED(Stereotype stereotype) {
-		if (stereotype == null || stereotype.getStyleNames().size() == 0)
-			return this;
-
-		final StyleSignatures result = new StyleSignatures();
-		for (String name : stereotype.getStyleNames()) {
-			final List<String> tmp = new ArrayList<>(names);
-			tmp.add(clean(name));
-			result.add(new StyleSignatureBasic(true, tmp));
-		}
-		return result;
+		return new StyleSignatureBasic(isStared, snames, result, level);
 	}
 
 	@Override
 	public StyleSignature with(Stereostyles stereostyles) {
 		if (stereostyles.isEmpty())
 			return this;
-		final List<String> result = new ArrayList<>(names);
+		final Set<String> result = new HashSet<>(stereotypes);
 		for (String name : stereostyles.getStyleNames())
-			result.add(StereotypeDecoration.PREFIX + clean(name));
+			result.add(name);
 
-		return new StyleSignatureBasic(true, result);
+		return new StyleSignatureBasic(isStared, snames, result, level);
+
+	}
+
+	public StyleSignatureBasic addStereotype(Stereotype stereo) {
+		if (stereo == null)
+			return this;
+
+		final Set<String> result = new HashSet<>(stereotypes);
+
+		final List<String> labels = stereo.getLabels(Guillemet.NONE);
+
+		for (String s : labels)
+			result.add(clean(s));
+
+		return new StyleSignatureBasic(isStared, snames, result, level);
+	}
+
+	@Override
+	public StyleSignature withTOBECHANGED(Stereotype stereo) {
+		if (stereo == null || stereo.getStyleNames().size() == 0)
+			return this;
+
+		final List<String> labels = stereo.getLabels(Guillemet.NONE);
+		if (labels.size() == 0)
+			return this;
+
+		final StyleSignatures result = new StyleSignatures();
+		for (String name : labels)
+			result.add(this.addStereotype(name));
+
+		return result;
+	}
+
+	public StyleSignature forStereotypeItself(Stereotype stereo) {
+		if (stereo == null || stereo.getStyleNames().size() == 0)
+			return this;
+
+		final List<String> labels = stereo.getLabels(Guillemet.NONE);
+		if (labels.size() == 0)
+			return this;
+
+		final StyleSignatures result = new StyleSignatures();
+		for (String name : labels)
+			result.add(this.addStereotype(name).addSName(SName.stereotype));
+
+		return result;
+
+	}
+
+	public StyleSignatureBasic addSName(SName name) {
+		final EnumSet<SName> result = snames.clone();
+		result.add(name);
+		return new StyleSignatureBasic(isStared, result, stereotypes, level);
+	}
+
+	public StyleSignatureBasic addStar() {
+		return new StyleSignatureBasic(true, snames, stereotypes, level);
+	}
+
+	public boolean isStarred() {
+		return isStared;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof StyleSignatureBasic))
+			return false;
+		final StyleSignatureBasic other = (StyleSignatureBasic) obj;
+		return Objects.equals(snames, other.snames) && Objects.equals(stereotypes, other.stereotypes)
+				&& isStared == other.isStared && level == other.level;
+	}
+
+	private transient int cachedHashCode = 0;
+
+	@Override
+	public int hashCode() {
+		int result = cachedHashCode;
+		if (result == 0) {
+			result = Objects.hash(snames, stereotypes, isStared, level);
+			cachedHashCode = result;
+		}
+		return result;
+	}
+
+//	private final Map<StyleSignatureBasic, Boolean> matchAllCache = new ConcurrentHashMap<>();
+
+	public boolean matchAll(StyleSignatureBasic other) {
+//		final Boolean computeIfAbsent = matchAllCache.computeIfAbsent(other, k -> matchAllImpl(this, other));
+//		return computeIfAbsent;
+		return matchAllImpl(this, other);
+	}
+
+	private static boolean matchAllImpl(StyleSignatureBasic declaration, StyleSignatureBasic element) {
+
+		if (declaration.level != -1)
+			if (declaration.isStared) {
+				if (element.level == -1)
+					return false;
+				if (element.level < declaration.level)
+					return false;
+
+			} else {
+				if (element.level == -1)
+					return false;
+				if (element.level != declaration.level)
+					return false;
+			}
+
+		if (element.isStarred() && declaration.isStarred() == false)
+			return false;
+
+		if (element.snames.containsAll(declaration.snames) == false)
+			return false;
+
+		if (element.stereotypes.containsAll(declaration.stereotypes) == false)
+			return false;
+
+		return true;
+	}
+
+	public static StyleSignatureBasic of(SName... names) {
+
+		final EnumSet<SName> result = EnumSet.noneOf(SName.class);
+		for (SName name : names)
+			result.add(name);
+		return new StyleSignatureBasic(false, result, Collections.emptySet(), -1);
 	}
 
 	private String clean(String name) {
-		if (name.startsWith("."))
-			name = StereotypeDecoration.PREFIX + name;
+		final StringBuilder sb = new StringBuilder(name.length());
+		for (int i = 0; i < name.length(); i++) {
+			final char c = name.charAt(i);
+			if (c != '_' && c != '.')
+				sb.append(Character.toLowerCase(c));
 
-		return name.toLowerCase().replace("_", "").replace(".", "");
+		}
+		return sb.toString();
 	}
 
 	public StyleSignatureBasic mergeWith(List<Style> others) {
-		final List<String> copy = new ArrayList<>(names);
+		StyleSignatureBasic result = this;
 		for (Style other : others)
-			for (String s : other.getSignature().getNames())
-				copy.add(s);
+			result = result.mergeWith(other.getSignature());
 
-		return new StyleSignatureBasic(withDot, copy);
+		return result;
 	}
 
 	public StyleSignatureBasic mergeWith(StyleSignatureBasic other) {
-		final List<String> copy = new ArrayList<>(names);
-		copy.addAll(other.names);
-		return new StyleSignatureBasic(withDot || other.withDot, copy);
+
+		final EnumSet<SName> result1 = snames.clone();
+		result1.addAll(other.snames);
+
+		final Set<String> result2 = new HashSet<>(stereotypes);
+		result2.addAll(other.stereotypes);
+
+		return new StyleSignatureBasic(isStared || other.isStared, result1, result2, Math.max(level, other.level));
 	}
 
 	@Override
@@ -316,16 +279,8 @@ public class StyleSignatureBasic implements StyleSignature {
 		return styleBuilder.getMergedStyle(this);
 	}
 
-	public boolean match(Stereotype stereotype) {
-		for (String s : stereotype.getMultipleLabels())
-			if (names.contains(clean(s)))
-				return true;
-
-		return false;
-	}
-
 	public final boolean isWithDot() {
-		return withDot;
+		return stereotypes.size() > 0;
 	}
 
 	// Frequent use
@@ -364,7 +319,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public int size() {
-		return names.size();
+		return snames.size() + stereotypes.size();
 	}
 
 }

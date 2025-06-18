@@ -161,8 +161,8 @@ public class FileWithSuffix {
 		if (file == null) {
 			return null;
 		}
-		Log.info("Getting parent of " + file);
-		Log.info("-->The parent is " + file.getParentFile());
+		Log.info(() -> "Getting parent of " + file);
+		Log.info(() -> "-->The parent is " + file.getParentFile());
 		return file.getParentFile();
 	}
 
