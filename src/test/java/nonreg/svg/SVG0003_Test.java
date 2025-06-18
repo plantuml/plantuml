@@ -54,82 +54,82 @@ Expected result MUST be put between triple brackets
     <g>
       <title>transparent_keyword</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>white_with_zero_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>black_with_zero_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>gray_with_zero_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>white_with_low_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>black_with_low_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>gray_with_low_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>white_with_high_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>black_with_high_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>gray_with_high_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>white_with_full_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>black_with_full_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>gray_with_full_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>white_with_unspecified_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>black_with_unspecified_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>gray_with_unspecified_alpha</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g class="participant participant-head" data-participant="transparent_keyword">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>

@@ -37,42 +37,42 @@ Expected result MUST be put between triple brackets
     <g>
       <title>my_actor</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_boundary</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_collections</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_control</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_database</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_entity</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_participant</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g>
       <title>my_queue</title>
       <rect fill="#000000" fill-opacity="0.00000"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;"/>
     </g>
     <g class="participant participant-head" data-participant="my_actor">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_actor</text>
@@ -163,7 +163,7 @@ Expected result MUST be put between triple brackets
     </g>
     <g class="message" data-participant-1="my_database" data-participant-2="my_actor">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
-      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2.0,2.0;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Acknowledge it</text>
     </g>
   </g>
