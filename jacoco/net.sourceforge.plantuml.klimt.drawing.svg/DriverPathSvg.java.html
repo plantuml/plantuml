@@ -63,7 +63,7 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver&lt;UPath
 <span class="pc bpc" id="L63" title="3 of 6 branches missed.">		if (color != null &amp;&amp; back != null &amp;&amp; color.equals(back)) {</span>
 <span class="nc" id="L64">			svg.setFillColor(color.toSvg(mapper));</span>
 <span class="nc" id="L65">			svg.setStrokeColor(&quot;&quot;);</span>
-<span class="nc" id="L66">			svg.setStrokeWidth(0, &quot;&quot;);</span>
+<span class="nc" id="L66">			svg.setStrokeWidth(0, null);</span>
 		} else {
 <span class="fc" id="L68">			DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
 <span class="fc" id="L69">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
