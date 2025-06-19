@@ -10,13 +10,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EvalBooleanTest {
-
-    private static final Truth TEST_TRUTH = func -> {
-        return switch (func) {
-            case "A", "C" -> true;
-            case "B", "D" -> false;
-            default -> false;
-        };
+    
+    private static final Truth TEST_TRUTH = new Truth() {
+        @Override
+        public boolean isTrue(String func) {
+            switch (func) {
+                case "A":
+                case "C":
+                    return true;
+                case "B":
+                case "D":
+                    return false;
+                default:
+                    return false;
+            }
+        }
     };
 
     @ParameterizedTest
