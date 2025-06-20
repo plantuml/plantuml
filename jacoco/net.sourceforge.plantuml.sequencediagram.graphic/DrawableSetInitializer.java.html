@@ -649,30 +649,32 @@ class DrawableSetInitializer {
 <span class="fc" id="L649">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 <span class="fc" id="L650">		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, this.defaultLineType, null,</span>
 <span class="fc" id="L651">				drawableSet.getSkinParam(), participantDisplay);</span>
-<span class="fc" id="L652">		final Component delayLine = drawableSet.getSkin().createComponent(new Style[] { style },</span>
-<span class="fc" id="L653">				ComponentType.DELAY_LINE, null, drawableSet.getSkinParam(), participantDisplay);</span>
-<span class="fc" id="L654">		final ParticipantBox box = new ParticipantBox(skinParam.getPragma(), p.getLocation(), head, line, tail,</span>
-<span class="pc bpc" id="L655" title="1 of 2 branches missed.">				delayLine, this.freeX, skinParam.maxAsciiMessageLength() &gt; 0 ? 1 : 5, p);</span>
+<span class="fc" id="L652">		final Style styleDelay = ComponentType.DELAY_LINE.getStyleSignature().withTOBECHANGED(p.getStereotype())</span>
+<span class="fc" id="L653">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L654">		final Component delayLine = drawableSet.getSkin().createComponent(new Style[] { styleDelay },</span>
+<span class="fc" id="L655">				ComponentType.DELAY_LINE, null, drawableSet.getSkinParam(), participantDisplay);</span>
+<span class="fc" id="L656">		final ParticipantBox box = new ParticipantBox(skinParam.getPragma(), p.getLocation(), head, line, tail,</span>
+<span class="pc bpc" id="L657" title="1 of 2 branches missed.">				delayLine, this.freeX, skinParam.maxAsciiMessageLength() &gt; 0 ? 1 : 5, p);</span>
 
-<span class="fc" id="L657">		final Component comp = drawableSet.getSkin().createComponent(</span>
-<span class="fc" id="L658">				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()</span>
-<span class="fc" id="L659">						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
-<span class="fc" id="L660">				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), participantDisplay);</span>
+<span class="fc" id="L659">		final Component comp = drawableSet.getSkin().createComponent(</span>
+<span class="fc" id="L660">				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()</span>
+<span class="fc" id="L661">						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
+<span class="fc" id="L662">				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), participantDisplay);</span>
 
-<span class="fc" id="L662">		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder),</span>
-<span class="fc" id="L663">				drawableSet.getSkinParam().shadowing(p.getStereotype()), participantDisplay);</span>
-<span class="fc" id="L664">		drawableSet.setLivingParticipantBox(p, new LivingParticipantBox(box, lifeLine));</span>
+<span class="fc" id="L664">		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L665">				drawableSet.getSkinParam().shadowing(p.getStereotype()), participantDisplay);</span>
+<span class="fc" id="L666">		drawableSet.setLivingParticipantBox(p, new LivingParticipantBox(box, lifeLine));</span>
 
-<span class="fc" id="L666">		this.freeX = box.getMaxX(stringBounder);</span>
-<span class="fc" id="L667">	}</span>
+<span class="fc" id="L668">		this.freeX = box.getMaxX(stringBounder);</span>
+<span class="fc" id="L669">	}</span>
 
 	public void addParticipant(Participant p, ParticipantEnglober participantEnglober) {
-<span class="fc" id="L670">		drawableSet.addParticipant(p, participantEnglober);</span>
-<span class="fc" id="L671">	}</span>
+<span class="fc" id="L672">		drawableSet.addParticipant(p, participantEnglober);</span>
+<span class="fc" id="L673">	}</span>
 
 	public void addEvent(Event event) {
-<span class="fc" id="L674">		drawableSet.addEvent(event, null);</span>
-<span class="fc" id="L675">	}</span>
+<span class="fc" id="L676">		drawableSet.addEvent(event, null);</span>
+<span class="fc" id="L677">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
