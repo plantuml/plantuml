@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">StyleKey.java</span></div><h1>StyleKey.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.util.EnumSet;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.url.Url;
+
+public class StyleKey {
+	// ::remove file when __HAXE__
+
+	public final EnumSet&lt;SName&gt; snames;
+	public final boolean isStared;
+	public final int level;
+
+<span class="fc" id="L50">	private StyleKey(EnumSet&lt;SName&gt; snames, int level, boolean isStared) {</span>
+<span class="fc" id="L51">		this.level = level;</span>
+<span class="fc" id="L52">		this.isStared = isStared;</span>
+<span class="fc" id="L53">		this.snames = snames;</span>
+<span class="fc" id="L54">	}</span>
+
+	public static StyleKey empty() {
+<span class="fc" id="L57">		return new StyleKey(EnumSet.noneOf(SName.class), -1, false);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L62">		final StringBuilder sb = new StringBuilder(snames + &quot; &quot;);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (level != -1)</span>
+<span class="nc" id="L64">			sb.append(&quot; &quot; + level);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (isStared)</span>
+<span class="nc" id="L66">			sb.append(&quot; (*)&quot;);</span>
+<span class="nc" id="L67">		return sb.toString();</span>
+	}
+
+	public StyleKey addClickable(Url url) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L72">			return this;</span>
+
+<span class="nc" id="L74">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
+<span class="nc" id="L75">		result.add(SName.clickable);</span>
+
+<span class="nc" id="L77">		return new StyleKey(result, level, isStared);</span>
+
+	}
+
+	public StyleKey addLevel(int level) {
+<span class="fc" id="L82">		return new StyleKey(snames, level, isStared);</span>
+	}
+
+	public StyleKey addSName(SName name) {
+<span class="fc" id="L86">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
+<span class="fc" id="L87">		result.add(name);</span>
+<span class="fc" id="L88">		return new StyleKey(result, level, isStared);</span>
+	}
+
+	public StyleKey addStar() {
+<span class="fc" id="L92">		return new StyleKey(snames, level, true);</span>
+	}
+
+	public static StyleKey of(SName... names) {
+
+<span class="fc" id="L97">		final EnumSet&lt;SName&gt; result = EnumSet.noneOf(SName.class);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (SName name : names)</span>
+<span class="fc" id="L99">			result.add(name);</span>
+<span class="fc" id="L100">		return new StyleKey(result, -1, false);</span>
+	}
+
+	public StyleKey mergeWith(StyleKey other) {
+
+<span class="fc" id="L105">		final EnumSet&lt;SName&gt; result1 = snames.clone();</span>
+<span class="fc" id="L106">		result1.addAll(other.snames);</span>
+
+<span class="pc bpc" id="L108" title="2 of 4 branches missed.">		return new StyleKey(result1, Math.max(level, other.level), isStared || other.isStared);</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L114">			return true;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (!(obj instanceof StyleKey))</span>
+<span class="nc" id="L116">			return false;</span>
+<span class="fc" id="L117">		final StyleKey other = (StyleKey) obj;</span>
+<span class="pc bpc" id="L118" title="3 of 6 branches missed.">		return Objects.equals(snames, other.snames) &amp;&amp; isStared == other.isStared &amp;&amp; level == other.level;</span>
+	}
+
+<span class="fc" id="L121">	private transient int cachedHashCode = 0;</span>
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L125">		int result = cachedHashCode;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (result == 0) {</span>
+<span class="fc" id="L127">			result = Objects.hash(snames, isStared, level);</span>
+<span class="fc" id="L128">			cachedHashCode = result;</span>
+		}
+<span class="fc" id="L130">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

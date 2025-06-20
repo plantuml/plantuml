@@ -46,155 +46,142 @@ import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.Log;
 
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__
 
-	private final EnumSet&lt;SName&gt; snames;
 	private final Set&lt;String&gt; stereotypes;
-	private final boolean isStared;
-	private final int level;
+	private final StyleKey key;
 
 	public static StyleSignatureBasic createStereotype(String s) {
-<span class="nc" id="L60">		return empty().addStereotype(s);</span>
+<span class="nc" id="L57">		return empty().addStereotype(s);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L65">		final StringBuilder sb = new StringBuilder(snames + &quot; &quot; + stereotypes);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (level != -1)</span>
-<span class="nc" id="L67">			sb.append(&quot; &quot; + level);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (isStared)</span>
-<span class="nc" id="L69">			sb.append(&quot; (*)&quot;);</span>
-<span class="nc" id="L70">		return sb.toString();</span>
+<span class="nc" id="L62">		return key + &quot; &quot; + stereotypes;</span>
 	}
 
 	public static StyleSignatureBasic empty() {
-<span class="fc" id="L74">		return new StyleSignatureBasic(false, EnumSet.noneOf(SName.class), Collections.emptySet(), -1);</span>
+<span class="fc" id="L66">		return new StyleSignatureBasic(StyleKey.empty(), Collections.emptySet());</span>
 	}
 
-<span class="fc" id="L77">	private StyleSignatureBasic(boolean isStared, EnumSet&lt;SName&gt; snames, Set&lt;String&gt; stereotypes, int level) {</span>
-<span class="fc" id="L78">		this.isStared = isStared;</span>
-<span class="fc" id="L79">		this.snames = snames;</span>
-<span class="fc" id="L80">		this.stereotypes = stereotypes;</span>
-<span class="fc" id="L81">		this.level = level;</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L69">	private StyleSignatureBasic(StyleKey key, Set&lt;String&gt; stereotypes) {</span>
+<span class="fc" id="L70">		this.key = key;</span>
+<span class="fc" id="L71">		this.stereotypes = stereotypes;</span>
+<span class="fc" id="L72">	}</span>
 
 	public StyleSignatureBasic addClickable(Url url) {
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="fc" id="L86">			return this;</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="fc" id="L76">			return this;</span>
 
-<span class="nc" id="L88">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
-<span class="nc" id="L89">		result.add(SName.clickable);</span>
-<span class="nc" id="L90">		return new StyleSignatureBasic(isStared, result, stereotypes, level);</span>
+<span class="nc" id="L78">		return new StyleSignatureBasic(key.addClickable(url), stereotypes);</span>
 
 	}
 
 	public StyleSignatureBasic addLevel(int level) {
-<span class="fc" id="L95">		return new StyleSignatureBasic(isStared, snames, stereotypes, level);</span>
+<span class="fc" id="L83">		return new StyleSignatureBasic(key.addLevel(level), stereotypes);</span>
 	}
 
 	public StyleSignatureBasic addStereotype(String stereo) {
-<span class="fc" id="L99">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
-<span class="fc" id="L100">		result.add(clean(stereo));</span>
+<span class="fc" id="L87">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
+<span class="fc" id="L88">		result.add(clean(stereo));</span>
 
-<span class="fc" id="L102">		return new StyleSignatureBasic(isStared, snames, result, level);</span>
+<span class="fc" id="L90">		return new StyleSignatureBasic(key, result);</span>
 	}
 
 	@Override
 	public StyleSignature with(Stereostyles stereostyles) {
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (stereostyles.isEmpty())</span>
-<span class="fc" id="L108">			return this;</span>
-<span class="nc" id="L109">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (String name : stereostyles.getStyleNames())</span>
-<span class="nc" id="L111">			result.add(name);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (stereostyles.isEmpty())</span>
+<span class="fc" id="L96">			return this;</span>
+<span class="nc" id="L97">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (String name : stereostyles.getStyleNames())</span>
+<span class="nc" id="L99">			result.add(name);</span>
 
-<span class="nc" id="L113">		return new StyleSignatureBasic(isStared, snames, result, level);</span>
+<span class="nc" id="L101">		return new StyleSignatureBasic(key, result);</span>
 
 	}
 
 	public StyleSignatureBasic addStereotype(Stereotype stereo) {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (stereo == null)</span>
-<span class="fc" id="L119">			return this;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (stereo == null)</span>
+<span class="fc" id="L107">			return this;</span>
 
-<span class="nc" id="L121">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
+<span class="nc" id="L109">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
 
-<span class="nc" id="L123">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
+<span class="nc" id="L111">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
 
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (String s : labels)</span>
-<span class="nc" id="L126">			result.add(clean(s));</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (String s : labels)</span>
+<span class="nc" id="L114">			result.add(clean(s));</span>
 
-<span class="nc" id="L128">		return new StyleSignatureBasic(isStared, snames, result, level);</span>
+<span class="nc" id="L116">		return new StyleSignatureBasic(key, result);</span>
 	}
 
 	@Override
 	public StyleSignature withTOBECHANGED(Stereotype stereo) {
-<span class="fc bfc" id="L133" title="All 4 branches covered.">		if (stereo == null || stereo.getStyleNames().size() == 0)</span>
-<span class="fc" id="L134">			return this;</span>
+<span class="fc bfc" id="L121" title="All 4 branches covered.">		if (stereo == null || stereo.getStyleNames().size() == 0)</span>
+<span class="fc" id="L122">			return this;</span>
 
-<span class="fc" id="L136">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (labels.size() == 0)</span>
-<span class="nc" id="L138">			return this;</span>
+<span class="fc" id="L124">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (labels.size() == 0)</span>
+<span class="nc" id="L126">			return this;</span>
 
-<span class="fc" id="L140">		final StyleSignatures result = new StyleSignatures();</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (String name : labels)</span>
-<span class="fc" id="L142">			result.add(this.addStereotype(name));</span>
+<span class="fc" id="L128">		final StyleSignatures result = new StyleSignatures();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (String name : labels)</span>
+<span class="fc" id="L130">			result.add(this.addStereotype(name));</span>
 
-<span class="fc" id="L144">		return result;</span>
+<span class="fc" id="L132">		return result;</span>
 	}
 
 	public StyleSignature forStereotypeItself(Stereotype stereo) {
-<span class="fc bfc" id="L148" title="All 4 branches covered.">		if (stereo == null || stereo.getStyleNames().size() == 0)</span>
-<span class="fc" id="L149">			return this;</span>
+<span class="fc bfc" id="L136" title="All 4 branches covered.">		if (stereo == null || stereo.getStyleNames().size() == 0)</span>
+<span class="fc" id="L137">			return this;</span>
 
-<span class="fc" id="L151">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (labels.size() == 0)</span>
-<span class="nc" id="L153">			return this;</span>
+<span class="fc" id="L139">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (labels.size() == 0)</span>
+<span class="nc" id="L141">			return this;</span>
 
-<span class="fc" id="L155">		final StyleSignatures result = new StyleSignatures();</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (String name : labels)</span>
-<span class="fc" id="L157">			result.add(this.addStereotype(name).addSName(SName.stereotype));</span>
+<span class="fc" id="L143">		final StyleSignatures result = new StyleSignatures();</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (String name : labels)</span>
+<span class="fc" id="L145">			result.add(this.addStereotype(name).addSName(SName.stereotype));</span>
 
-<span class="fc" id="L159">		return result;</span>
+<span class="fc" id="L147">		return result;</span>
 
 	}
 
 	public StyleSignatureBasic addSName(SName name) {
-<span class="fc" id="L164">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
-<span class="fc" id="L165">		result.add(name);</span>
-<span class="fc" id="L166">		return new StyleSignatureBasic(isStared, result, stereotypes, level);</span>
+<span class="fc" id="L152">		final EnumSet&lt;SName&gt; result = key.snames.clone();</span>
+<span class="fc" id="L153">		result.add(name);</span>
+<span class="fc" id="L154">		return new StyleSignatureBasic(key.addSName(name), stereotypes);</span>
 	}
 
 	public StyleSignatureBasic addStar() {
-<span class="fc" id="L170">		return new StyleSignatureBasic(true, snames, stereotypes, level);</span>
+<span class="fc" id="L158">		return new StyleSignatureBasic(key.addStar(), stereotypes);</span>
 	}
 
 	public boolean isStarred() {
-<span class="fc" id="L174">		return isStared;</span>
+<span class="fc" id="L162">		return key.isStared;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L180">			return true;</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (!(obj instanceof StyleSignatureBasic))</span>
-<span class="nc" id="L182">			return false;</span>
-<span class="fc" id="L183">		final StyleSignatureBasic other = (StyleSignatureBasic) obj;</span>
-<span class="pc bpc" id="L184" title="4 of 8 branches missed.">		return Objects.equals(snames, other.snames) &amp;&amp; Objects.equals(stereotypes, other.stereotypes)</span>
-				&amp;&amp; isStared == other.isStared &amp;&amp; level == other.level;
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L168">			return true;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (!(obj instanceof StyleSignatureBasic))</span>
+<span class="nc" id="L170">			return false;</span>
+<span class="fc" id="L171">		final StyleSignatureBasic other = (StyleSignatureBasic) obj;</span>
+<span class="pc bpc" id="L172" title="2 of 4 branches missed.">		return Objects.equals(key, other.key) &amp;&amp; Objects.equals(stereotypes, other.stereotypes);</span>
 	}
 
-<span class="fc" id="L188">	private transient int cachedHashCode = 0;</span>
+<span class="fc" id="L175">	private transient int cachedHashCode = 0;</span>
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L192">		int result = cachedHashCode;</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (result == 0) {</span>
-<span class="fc" id="L194">			result = Objects.hash(snames, stereotypes, isStared, level);</span>
-<span class="fc" id="L195">			cachedHashCode = result;</span>
+<span class="fc" id="L179">		int result = cachedHashCode;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (result == 0) {</span>
+<span class="fc" id="L181">			result = Objects.hash(key, stereotypes);</span>
+<span class="fc" id="L182">			cachedHashCode = result;</span>
 		}
-<span class="fc" id="L197">		return result;</span>
+<span class="fc" id="L184">		return result;</span>
 	}
 
 //	private final Map&lt;StyleSignatureBasic, Boolean&gt; matchAllCache = new ConcurrentHashMap&lt;&gt;();
@@ -202,124 +189,121 @@ public class StyleSignatureBasic implements StyleSignature {
 	public boolean matchAll(StyleSignatureBasic other) {
 //		final Boolean computeIfAbsent = matchAllCache.computeIfAbsent(other, k -&gt; matchAllImpl(this, other));
 //		return computeIfAbsent;
-<span class="fc" id="L205">		return matchAllImpl(this, other);</span>
+<span class="fc" id="L192">		return matchAllImpl(this, other);</span>
 	}
 
 	private static boolean matchAllImpl(StyleSignatureBasic declaration, StyleSignatureBasic element) {
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (declaration.level != -1)</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (declaration.isStared) {</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">				if (element.level == -1)</span>
-<span class="nc" id="L213">					return false;</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">				if (element.level &lt; declaration.level)</span>
-<span class="nc" id="L215">					return false;</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (declaration.key.level != -1)</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (declaration.key.isStared) {</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">				if (element.key.level == -1)</span>
+<span class="nc" id="L200">					return false;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">				if (element.key.level &lt; declaration.key.level)</span>
+<span class="nc" id="L202">					return false;</span>
 
 			} else {
-<span class="nc bnc" id="L218" title="All 2 branches missed.">				if (element.level == -1)</span>
-<span class="nc" id="L219">					return false;</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">				if (element.level != declaration.level)</span>
-<span class="nc" id="L221">					return false;</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">				if (element.key.level == -1)</span>
+<span class="nc" id="L206">					return false;</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (element.key.level != declaration.key.level)</span>
+<span class="nc" id="L208">					return false;</span>
 			}
 
-<span class="pc bpc" id="L224" title="1 of 4 branches missed.">		if (element.isStarred() &amp;&amp; declaration.isStarred() == false)</span>
-<span class="fc" id="L225">			return false;</span>
+<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (element.isStarred() &amp;&amp; declaration.isStarred() == false)</span>
+<span class="fc" id="L212">			return false;</span>
 
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (element.snames.containsAll(declaration.snames) == false)</span>
-<span class="fc" id="L228">			return false;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (element.key.snames.containsAll(declaration.key.snames) == false)</span>
+<span class="fc" id="L215">			return false;</span>
 
-<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (element.stereotypes.containsAll(declaration.stereotypes) == false)</span>
-<span class="fc" id="L231">			return false;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (element.stereotypes.containsAll(declaration.stereotypes) == false)</span>
+<span class="fc" id="L218">			return false;</span>
 
-<span class="fc" id="L233">		return true;</span>
+<span class="fc" id="L220">		return true;</span>
 	}
 
 	public static StyleSignatureBasic of(SName... names) {
-
-<span class="fc" id="L238">		final EnumSet&lt;SName&gt; result = EnumSet.noneOf(SName.class);</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">		for (SName name : names)</span>
-<span class="fc" id="L240">			result.add(name);</span>
-<span class="fc" id="L241">		return new StyleSignatureBasic(false, result, Collections.emptySet(), -1);</span>
+<span class="fc" id="L224">		return new StyleSignatureBasic(StyleKey.of(names), Collections.emptySet());</span>
 	}
 
 	private String clean(String name) {
-<span class="fc" id="L245">		final StringBuilder sb = new StringBuilder(name.length());</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (int i = 0; i &lt; name.length(); i++) {</span>
-<span class="fc" id="L247">			final char c = name.charAt(i);</span>
-<span class="fc bfc" id="L248" title="All 4 branches covered.">			if (c != '_' &amp;&amp; c != '.')</span>
-<span class="fc" id="L249">				sb.append(Character.toLowerCase(c));</span>
+<span class="fc" id="L228">		final StringBuilder sb = new StringBuilder(name.length());</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		for (int i = 0; i &lt; name.length(); i++) {</span>
+<span class="fc" id="L230">			final char c = name.charAt(i);</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">			if (c != '_' &amp;&amp; c != '.')</span>
+<span class="fc" id="L232">				sb.append(Character.toLowerCase(c));</span>
 
 		}
-<span class="fc" id="L252">		return sb.toString();</span>
+<span class="fc" id="L235">		return sb.toString();</span>
 	}
 
 	public StyleSignatureBasic mergeWith(List&lt;Style&gt; others) {
-<span class="nc" id="L256">		StyleSignatureBasic result = this;</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		for (Style other : others)</span>
-<span class="nc" id="L258">			result = result.mergeWith(other.getSignature());</span>
+<span class="nc" id="L239">		StyleSignatureBasic result = this;</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		for (Style other : others)</span>
+<span class="nc" id="L241">			result = result.mergeWith(other.getSignature());</span>
 
-<span class="nc" id="L260">		return result;</span>
+<span class="nc" id="L243">		return result;</span>
 	}
 
 	public StyleSignatureBasic mergeWith(StyleSignatureBasic other) {
 
-<span class="fc" id="L265">		final EnumSet&lt;SName&gt; result1 = snames.clone();</span>
-<span class="fc" id="L266">		result1.addAll(other.snames);</span>
+<span class="fc" id="L248">		final Set&lt;String&gt; result2 = new HashSet&lt;&gt;(stereotypes);</span>
+<span class="fc" id="L249">		result2.addAll(other.stereotypes);</span>
 
-<span class="fc" id="L268">		final Set&lt;String&gt; result2 = new HashSet&lt;&gt;(stereotypes);</span>
-<span class="fc" id="L269">		result2.addAll(other.stereotypes);</span>
-
-<span class="pc bpc" id="L271" title="2 of 4 branches missed.">		return new StyleSignatureBasic(isStared || other.isStared, result1, result2, Math.max(level, other.level));</span>
+<span class="fc" id="L251">		return new StyleSignatureBasic(key.mergeWith(other.key), result2);</span>
 	}
 
 	@Override
 	public Style getMergedStyle(StyleBuilder styleBuilder) {
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (styleBuilder == null)</span>
-<span class="nc" id="L277">			return null;</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (styleBuilder == null)</span>
+<span class="nc" id="L257">			return null;</span>
 
-<span class="fc" id="L279">		return styleBuilder.getMergedStyle(this);</span>
+<span class="fc" id="L259">		return styleBuilder.getMergedStyle(this);</span>
 	}
 
 	public final boolean isWithDot() {
-<span class="fc bfc" id="L283" title="All 2 branches covered.">		return stereotypes.size() &gt; 0;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		return stereotypes.size() &gt; 0;</span>
 	}
 
 	// Frequent use
 
 	public static StyleSignatureBasic activity() {
-<span class="nc" id="L289">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
+<span class="nc" id="L269">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
 	}
 
 	public static StyleSignatureBasic activityDiamond() {
-<span class="nc" id="L293">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+<span class="nc" id="L273">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
 	}
 
 	public static StyleSignatureBasic activityArrow() {
-<span class="fc" id="L297">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);</span>
+<span class="fc" id="L277">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);</span>
 	}
 
 	// Really sorry about that :-)
 	public static StyleSignatureBasic of(SName name0, SName name1, SName name2, SName name3, SName[] names) {
-<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (names.length == 1)</span>
-<span class="fc" id="L303">			return of(name0, name1, name2, name3, names[0]);</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (names.length == 2)</span>
-<span class="nc" id="L305">			return of(name0, name1, name2, name3, names[0], names[1]);</span>
-<span class="nc" id="L306">		throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (names.length == 1)</span>
+<span class="fc" id="L283">			return of(name0, name1, name2, name3, names[0]);</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		if (names.length == 2)</span>
+<span class="nc" id="L285">			return of(name0, name1, name2, name3, names[0], names[1]);</span>
+<span class="nc" id="L286">		throw new UnsupportedOperationException();</span>
 	}
 
 	public static StyleSignatureBasic of(SName name0, SName name1, SName name2, SName[] sNames, SName... other) {
-<span class="fc" id="L310">		final SName[] concat = new SName[3 + sNames.length + other.length];</span>
+<span class="fc" id="L290">		final SName[] concat = new SName[3 + sNames.length + other.length];</span>
 
-<span class="fc" id="L312">		concat[0] = name0;</span>
-<span class="fc" id="L313">		concat[1] = name1;</span>
-<span class="fc" id="L314">		concat[2] = name2;</span>
-<span class="fc" id="L315">		System.arraycopy(sNames, 0, concat, 3, sNames.length);</span>
-<span class="fc" id="L316">		System.arraycopy(other, 0, concat, 3 + sNames.length, other.length);</span>
+<span class="fc" id="L292">		concat[0] = name0;</span>
+<span class="fc" id="L293">		concat[1] = name1;</span>
+<span class="fc" id="L294">		concat[2] = name2;</span>
+<span class="fc" id="L295">		System.arraycopy(sNames, 0, concat, 3, sNames.length);</span>
+<span class="fc" id="L296">		System.arraycopy(other, 0, concat, 3 + sNames.length, other.length);</span>
 
-<span class="fc" id="L318">		return of(concat);</span>
+<span class="fc" id="L298">		return of(concat);</span>
 	}
 
 	public int size() {
-<span class="fc" id="L322">		return snames.size() + stereotypes.size();</span>
+<span class="fc" id="L302">		return key.snames.size() + stereotypes.size();</span>
+	}
+
+	public StyleKey getKey() {
+<span class="nc" id="L306">		return key;</span>
 	}
 
 }
