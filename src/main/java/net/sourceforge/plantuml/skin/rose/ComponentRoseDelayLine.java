@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -61,7 +60,7 @@ public class ComponentRoseDelayLine extends AbstractComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final XDimension2D dimensionToUse = area.getDimensionToUse();
-		ug = ArrowConfiguration.stroke(ug, 1, 4, 1).apply(color);
+		ug = ug.apply(getStyle().getStroke()).apply(color);
 		final int x = (int) (dimensionToUse.getWidth() / 2);
 		ug.apply(UAntiAliasing.ANTI_ALIASING_OFF).apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));
 	}
