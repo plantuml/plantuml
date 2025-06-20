@@ -35,12 +35,17 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
@@ -72,6 +77,42 @@ public abstract class AbstractComponent implements Component {
 
 	protected HColorSet getIHtmlColorSet() {
 		return skinParam.getIHtmlColorSet();
+	}
+
+	private final HColor getColorFromPName(PName name) {
+		return style.value(name).asColor(getIHtmlColorSet());
+	}
+
+	protected final HColor getFontColor() {
+		return getColorFromPName(PName.FontColor);
+	}
+
+	protected final HColor getLineColor() {
+		return getColorFromPName(PName.LineColor);
+	}
+
+	protected final HColor getBackGroundColor() {
+		return getColorFromPName(PName.BackGroundColor);
+	}
+
+	protected final double getRoundCorner() {
+		return style.value(PName.RoundCorner).asInt(false);
+	}
+
+	protected final UStroke getStroke() {
+		return style.getStroke();
+	}
+
+	protected final double getShadowing() {
+		return style.getShadowing();
+	}
+
+	protected final UFont getUFont() {
+		return style.getUFont();
+	}
+
+	protected final HorizontalAlignment getHorizontalAlignment() {
+		return style.getHorizontalAlignment();
 	}
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);

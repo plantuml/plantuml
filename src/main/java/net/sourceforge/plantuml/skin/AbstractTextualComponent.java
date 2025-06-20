@@ -133,16 +133,16 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		return marginY;
 	}
 
-	final protected UFont getFont() {
-		return font;
-	}
+	//final protected UFont getFont() {
+	//	return font;
+	//}
 
-	protected HColor getFontColor() {
-		return fontColor;
-	}
+	//protected HColor getFontColor() {
+	//	return fontColor;
+	//}
 
-	public final HorizontalAlignment getHorizontalAlignment() {
-		return alignment;
-	}
+	//public final HorizontalAlignment getHorizontalAlignment() {
+	//	return alignment;
+	//}
 
 }
