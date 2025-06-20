@@ -17,7 +17,7 @@ junit-platform-launcher = "1.13.1"
 mockito-j8          = "4.+"
 mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
-xmlunit-core        = "2.10.2"
+xmlunit-core        = "2.10.3"
 
 
 [libraries]
