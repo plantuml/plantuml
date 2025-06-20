@@ -81,11 +81,9 @@ public class StyleBuilder implements AutomaticCounter {
 
 		name = name.toLowerCase();
 		final StyleSignatureBasic signature = StyleSignatureBasic.createStereotype(name);
-		final Style result = stylesMap.get(signature);
-		if (result == null)
-			return new Style(signature, new EnumMap<PName, Value>(PName.class));
 
-		return result;
+		return stylesMap.computeIfAbsent(signature, key -> new Style(key, new EnumMap<PName, Value>(PName.class)));
+
 	}
 
 	public StyleBuilder muteStyle(Collection<Style> modifiedStyles) {
@@ -103,14 +101,6 @@ public class StyleBuilder implements AutomaticCounter {
 
 			});
 
-//			final Style orig = result.stylesMap.get(signature);
-//			if (orig == null) {
-//				result.stylesMap.put(signature, modifiedStyle);
-//			} else {
-//				final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-//				result.stylesMap.put(signature, tmp);
-//			}
-
 		}
 		return result;
 	}
@@ -119,13 +109,13 @@ public class StyleBuilder implements AutomaticCounter {
 		if (signature.isStarred())
 			throw new IllegalArgumentException();
 
-		final Style orig = this.stylesMap.get(signature);
-		if (orig == null) {
-			this.stylesMap.put(signature, newStyle);
-		} else {
-			final Style tmp = orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-			this.stylesMap.put(signature, tmp);
-		}
+		this.stylesMap.compute(signature, (key, orig) -> {
+			if (orig == null)
+				return newStyle;
+			else
+				return orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+
+		});
 	}
 
 	public int getNextInt() {
@@ -140,47 +130,50 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	private Style computeMergedStyle(StyleSignatureBasic signature) {
-		boolean added = this.printedForLog.add(signature);
-		if (added)
+		if (this.printedForLog.add(signature)) {
 			Log.info(() -> "Using style " + signature);
+		}
 
-		Style result = null;
-		for (Entry<StyleSignatureBasic, Style> ent : stylesMap.entrySet()) {
-			final StyleSignatureBasic key = ent.getKey();
+		Style mergedStyle = null;
+
+		for (Map.Entry<StyleSignatureBasic, Style> entry : stylesMap.entrySet()) {
+			final StyleSignatureBasic key = entry.getKey();
 			if (key.matchAll(signature) == false)
 				continue;
 
-			if (result == null)
-				result = ent.getValue();
+			final Style style = entry.getValue();
+			if (mergedStyle == null)
+				mergedStyle = style;
 			else
-				result = result.mergeWith(ent.getValue(), MergeStrategy.OVERWRITE_EXISTING_VALUE);
+				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
 		}
-		return result;
+		return mergedStyle;
 	}
 
 	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int deltaPriority) {
-		boolean added = this.printedForLog.add(signature);
-		if (added)
+		if (this.printedForLog.add(signature)) {
 			Log.info(() -> "Using style " + signature);
+		}
 
-		Style result = null;
-		for (Entry<StyleSignatureBasic, Style> ent : stylesMap.entrySet()) {
-			final StyleSignatureBasic key = ent.getKey();
+		Style mergedStyle = null;
+
+		for (Map.Entry<StyleSignatureBasic, Style> entry : stylesMap.entrySet()) {
+			final StyleSignatureBasic key = entry.getKey();
 			if (key.matchAll(signature) == false)
 				continue;
 
-			Style tmp = ent.getValue();
+			Style style = entry.getValue();
 			if (key.isStarred())
-				tmp = tmp.deltaPriority(deltaPriority);
+				style = style.deltaPriority(deltaPriority);
 
-			if (result == null)
-				result = tmp;
+			if (mergedStyle == null)
+				mergedStyle = style;
 			else
-				result = result.mergeWith(tmp, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
 		}
-		return result;
+		return mergedStyle;
 	}
 
 }

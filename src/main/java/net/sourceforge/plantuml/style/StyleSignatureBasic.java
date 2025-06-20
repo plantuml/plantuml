@@ -46,15 +46,12 @@ import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.Log;
 
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__
 
-	private final EnumSet<SName> snames;
 	private final Set<String> stereotypes;
-	private final boolean isStared;
-	private final int level;
+	private final StyleKey key;
 
 	public static StyleSignatureBasic createStereotype(String s) {
 		return empty().addStereotype(s);
@@ -62,44 +59,35 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder(snames + " " + stereotypes);
-		if (level != -1)
-			sb.append(" " + level);
-		if (isStared)
-			sb.append(" (*)");
-		return sb.toString();
+		return key + " " + stereotypes;
 	}
 
 	public static StyleSignatureBasic empty() {
-		return new StyleSignatureBasic(false, EnumSet.noneOf(SName.class), Collections.emptySet(), -1);
+		return new StyleSignatureBasic(StyleKey.empty(), Collections.emptySet());
 	}
 
-	private StyleSignatureBasic(boolean isStared, EnumSet<SName> snames, Set<String> stereotypes, int level) {
-		this.isStared = isStared;
-		this.snames = snames;
+	private StyleSignatureBasic(StyleKey key, Set<String> stereotypes) {
+		this.key = key;
 		this.stereotypes = stereotypes;
-		this.level = level;
 	}
 
 	public StyleSignatureBasic addClickable(Url url) {
 		if (url == null)
 			return this;
 
-		final EnumSet<SName> result = snames.clone();
-		result.add(SName.clickable);
-		return new StyleSignatureBasic(isStared, result, stereotypes, level);
+		return new StyleSignatureBasic(key.addClickable(url), stereotypes);
 
 	}
 
 	public StyleSignatureBasic addLevel(int level) {
-		return new StyleSignatureBasic(isStared, snames, stereotypes, level);
+		return new StyleSignatureBasic(key.addLevel(level), stereotypes);
 	}
 
 	public StyleSignatureBasic addStereotype(String stereo) {
 		final Set<String> result = new HashSet<>(stereotypes);
 		result.add(clean(stereo));
 
-		return new StyleSignatureBasic(isStared, snames, result, level);
+		return new StyleSignatureBasic(key, result);
 	}
 
 	@Override
@@ -110,7 +98,7 @@ public class StyleSignatureBasic implements StyleSignature {
 		for (String name : stereostyles.getStyleNames())
 			result.add(name);
 
-		return new StyleSignatureBasic(isStared, snames, result, level);
+		return new StyleSignatureBasic(key, result);
 
 	}
 
@@ -125,7 +113,7 @@ public class StyleSignatureBasic implements StyleSignature {
 		for (String s : labels)
 			result.add(clean(s));
 
-		return new StyleSignatureBasic(isStared, snames, result, level);
+		return new StyleSignatureBasic(key, result);
 	}
 
 	@Override
@@ -161,17 +149,17 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public StyleSignatureBasic addSName(SName name) {
-		final EnumSet<SName> result = snames.clone();
+		final EnumSet<SName> result = key.snames.clone();
 		result.add(name);
-		return new StyleSignatureBasic(isStared, result, stereotypes, level);
+		return new StyleSignatureBasic(key.addSName(name), stereotypes);
 	}
 
 	public StyleSignatureBasic addStar() {
-		return new StyleSignatureBasic(true, snames, stereotypes, level);
+		return new StyleSignatureBasic(key.addStar(), stereotypes);
 	}
 
 	public boolean isStarred() {
-		return isStared;
+		return key.isStared;
 	}
 
 	@Override
@@ -181,8 +169,7 @@ public class StyleSignatureBasic implements StyleSignature {
 		if (!(obj instanceof StyleSignatureBasic))
 			return false;
 		final StyleSignatureBasic other = (StyleSignatureBasic) obj;
-		return Objects.equals(snames, other.snames) && Objects.equals(stereotypes, other.stereotypes)
-				&& isStared == other.isStared && level == other.level;
+		return Objects.equals(key, other.key) && Objects.equals(stereotypes, other.stereotypes);
 	}
 
 	private transient int cachedHashCode = 0;
@@ -191,7 +178,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	public int hashCode() {
 		int result = cachedHashCode;
 		if (result == 0) {
-			result = Objects.hash(snames, stereotypes, isStared, level);
+			result = Objects.hash(key, stereotypes);
 			cachedHashCode = result;
 		}
 		return result;
@@ -207,24 +194,24 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	private static boolean matchAllImpl(StyleSignatureBasic declaration, StyleSignatureBasic element) {
 
-		if (declaration.level != -1)
-			if (declaration.isStared) {
-				if (element.level == -1)
+		if (declaration.key.level != -1)
+			if (declaration.key.isStared) {
+				if (element.key.level == -1)
 					return false;
-				if (element.level < declaration.level)
+				if (element.key.level < declaration.key.level)
 					return false;
 
 			} else {
-				if (element.level == -1)
+				if (element.key.level == -1)
 					return false;
-				if (element.level != declaration.level)
+				if (element.key.level != declaration.key.level)
 					return false;
 			}
 
 		if (element.isStarred() && declaration.isStarred() == false)
 			return false;
 
-		if (element.snames.containsAll(declaration.snames) == false)
+		if (element.key.snames.containsAll(declaration.key.snames) == false)
 			return false;
 
 		if (element.stereotypes.containsAll(declaration.stereotypes) == false)
@@ -234,11 +221,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public static StyleSignatureBasic of(SName... names) {
-
-		final EnumSet<SName> result = EnumSet.noneOf(SName.class);
-		for (SName name : names)
-			result.add(name);
-		return new StyleSignatureBasic(false, result, Collections.emptySet(), -1);
+		return new StyleSignatureBasic(StyleKey.of(names), Collections.emptySet());
 	}
 
 	private String clean(String name) {
@@ -262,13 +245,10 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	public StyleSignatureBasic mergeWith(StyleSignatureBasic other) {
 
-		final EnumSet<SName> result1 = snames.clone();
-		result1.addAll(other.snames);
-
 		final Set<String> result2 = new HashSet<>(stereotypes);
 		result2.addAll(other.stereotypes);
 
-		return new StyleSignatureBasic(isStared || other.isStared, result1, result2, Math.max(level, other.level));
+		return new StyleSignatureBasic(key.mergeWith(other.key), result2);
 	}
 
 	@Override
@@ -319,7 +299,11 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public int size() {
-		return snames.size() + stereotypes.size();
+		return key.snames.size() + stereotypes.size();
+	}
+
+	public StyleKey getKey() {
+		return key;
 	}
 
 }
