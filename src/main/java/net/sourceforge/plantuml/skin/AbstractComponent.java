@@ -35,8 +35,10 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -79,20 +81,28 @@ public abstract class AbstractComponent implements Component {
 		return skinParam.getIHtmlColorSet();
 	}
 
-	private final HColor getColorFromPName(PName name) {
+	private final Fashion getSymbolContext() {
+		return style.getSymbolContext(getIHtmlColorSet());
+	}
+
+	private final Fashion getSymbolContext(Colors colors) {
+		return style.getSymbolContext(getIHtmlColorSet(), colors);
+	}
+
+	private final HColor getColor(PName name) {
 		return style.value(name).asColor(getIHtmlColorSet());
 	}
 
-	protected final HColor getFontColor() {
-		return getColorFromPName(PName.FontColor);
+	protected final HColor getColorFont() {
+		return getColor(PName.FontColor);
 	}
 
-	protected final HColor getLineColor() {
-		return getColorFromPName(PName.LineColor);
+	protected final HColor getColorLine() {
+		return getColor(PName.LineColor);
 	}
 
-	protected final HColor getBackGroundColor() {
-		return getColorFromPName(PName.BackGroundColor);
+	protected final HColor getColorBackGround() {
+		return getColor(PName.BackGroundColor);
 	}
 
 	protected final double getRoundCorner() {
