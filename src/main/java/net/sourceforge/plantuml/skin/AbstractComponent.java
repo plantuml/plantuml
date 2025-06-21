@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -123,6 +124,10 @@ public abstract class AbstractComponent implements Component {
 
 	protected final UFont getUFont() {
 		return style.getUFont();
+	}
+
+	protected final FontConfiguration getFontConfiguration() {
+		return style.getFontConfiguration(getIHtmlColorSet());
 	}
 
 	protected final HorizontalAlignment getHorizontalAlignment() {

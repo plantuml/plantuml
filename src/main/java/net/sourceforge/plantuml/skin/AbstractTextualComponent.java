@@ -78,10 +78,10 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 			int marginX2, int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
 		super(style, skinParam);
 
-		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
-		this.font = style.getUFont();
-		this.fontColor = style.value(PName.FontColor).asColor(getIHtmlColorSet());
-		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
+		final FontConfiguration fc = getFontConfiguration();
+		this.font = getUFont();
+		this.fontColor = getColorFont();
+		final HorizontalAlignment horizontalAlignment = getHorizontalAlignment();
 		final UFont fontForStereotype = stereo.getUFont();
 		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());
 		display = display.withoutStereotypeIfNeeded(style);
