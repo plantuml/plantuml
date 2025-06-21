@@ -81,11 +81,11 @@ public abstract class AbstractComponent implements Component {
 		return skinParam.getIHtmlColorSet();
 	}
 
-	private final Fashion getSymbolContext() {
+	protected final Fashion getSymbolContext() {
 		return style.getSymbolContext(getIHtmlColorSet());
 	}
 
-	private final Fashion getSymbolContext(Colors colors) {
+	protected final Fashion getSymbolContext(Colors colors) {
 		return style.getSymbolContext(getIHtmlColorSet(), colors);
 	}
 
