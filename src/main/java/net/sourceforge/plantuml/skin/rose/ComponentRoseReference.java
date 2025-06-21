@@ -63,17 +63,17 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final HorizontalAlignment position;
 	private final Fashion symbolContextHeader;
 	private final Fashion symbolContextBody;
-	private int roundCorner;
+	private double roundCorner;
 
 	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinParam skinParam) {
 		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam,
 				stringsToDisplay.subList(1, stringsToDisplay.size()), false);
 
 		this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
-		this.symbolContextBody = style.getSymbolContext(getIHtmlColorSet());
-		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
+		this.symbolContextBody = getSymbolContext();
+		this.roundCorner = getRoundCorner();
 		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());
-		this.position = style.getHorizontalAlignment();
+		this.position = getHorizontalAlignment();
 
 		this.textHeader = stringsToDisplay.subList(0, 1).create(fcHeader, HorizontalAlignment.LEFT, skinParam);
 

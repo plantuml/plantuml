@@ -56,8 +56,8 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 
 	public ComponentRoseEnglober(Style style, Display strings, ISkinParam skinParam) {
 		super(style, LineBreakStrategy.NONE, 3, 3, 1, skinParam, strings, false);
-		this.roundCorner = style.value(PName.RoundCorner).asDouble();
-		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+		this.roundCorner = getRoundCorner();
+		this.symbolContext = getSymbolContext();
 	}
 
 	@Override

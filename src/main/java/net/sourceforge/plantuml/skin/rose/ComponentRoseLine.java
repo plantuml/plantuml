@@ -64,8 +64,8 @@ public class ComponentRoseLine extends AbstractComponent {
 
 	public ComponentRoseLine(Style style, boolean continueLine, Display stringsToDisplay, ISkinParam skinParam) {
 		super(style, skinParam);
-		this.color = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-		this.stroke = style.getStroke();
+		this.color = getColorLine();
+		this.stroke = getStroke();
 		this.continueLine = continueLine;
 		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 
 		// we default to Display.NULL when it is null.

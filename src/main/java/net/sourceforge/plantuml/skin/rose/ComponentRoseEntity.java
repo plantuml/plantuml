@@ -58,7 +58,7 @@ public class ComponentRoseEntity extends AbstractTextualComponent {
 			ISkinParam skinParam) {
 		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);
 
-		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());
+		final Fashion biColor = getSymbolContext();
 
 		this.head = head;
 		this.stickman = new EntityDomain(biColor);

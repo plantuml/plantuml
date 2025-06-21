@@ -35,12 +35,20 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
@@ -72,6 +80,58 @@ public abstract class AbstractComponent implements Component {
 
 	protected HColorSet getIHtmlColorSet() {
 		return skinParam.getIHtmlColorSet();
+	}
+
+	protected final Fashion getSymbolContext() {
+		return style.getSymbolContext(getIHtmlColorSet());
+	}
+
+	protected final Fashion getSymbolContext(Colors colors) {
+		return style.getSymbolContext(getIHtmlColorSet(), colors);
+	}
+
+	private final HColor getColor(PName name) {
+		return style.value(name).asColor(getIHtmlColorSet());
+	}
+
+	protected final HColor getColorFont() {
+		return getColor(PName.FontColor);
+	}
+
+	protected final HColor getColorLine() {
+		return getColor(PName.LineColor);
+	}
+
+	protected final HColor getColorBackGround() {
+		return getColor(PName.BackGroundColor);
+	}
+
+	protected final double getRoundCorner() {
+		return style.value(PName.RoundCorner).asInt(false);
+	}
+
+	protected final double getDiagonalCorner() {
+		return style.value(PName.DiagonalCorner).asInt(false);
+	}	
+
+	protected final UStroke getStroke() {
+		return style.getStroke();
+	}
+
+	protected final double getShadowing() {
+		return style.getShadowing();
+	}
+
+	protected final UFont getUFont() {
+		return style.getUFont();
+	}
+
+	protected final FontConfiguration getFontConfiguration() {
+		return style.getFontConfiguration(getIHtmlColorSet());
+	}
+
+	protected final HorizontalAlignment getHorizontalAlignment() {
+		return style.getHorizontalAlignment();
 	}
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);
