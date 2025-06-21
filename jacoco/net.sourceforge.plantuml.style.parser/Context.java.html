@@ -101,7 +101,7 @@ class Context {
 	}
 
 	public Context pop() {
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (size() == 0)</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (isEmpty())</span>
 <span class="nc" id="L105">			throw new IllegalStateException();</span>
 <span class="fc" id="L106">		return this.parent;</span>
 	}
@@ -111,8 +111,8 @@ class Context {
 <span class="nc" id="L111">		return signatures.toString();</span>
 	}
 
-	public int size() {
-<span class="fc" id="L115">		return signatures.get(0).size();</span>
+	public boolean isEmpty() {
+<span class="fc" id="L115">		return signatures.get(0).isEmpty();</span>
 	}
 
 	public Collection&lt;StyleSignatureBasic&gt; toSignatures() {

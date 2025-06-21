@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleStorage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">StyleStorage.java</span></div><h1>StyleStorage.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.util.AbstractCollection;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NoSuchElementException;
+
+<span class="fc" id="L46">public class StyleStorage {</span>
+	// ::remove file when __HAXE__
+
+<span class="fc" id="L49">	private final Map&lt;StyleSignatureBasic, Style&gt; legacy = new LinkedHashMap&lt;StyleSignatureBasic, Style&gt;();</span>
+
+<span class="fc" id="L51">	private final Map&lt;StyleKey, Style&gt; plain = new LinkedHashMap&lt;StyleKey, Style&gt;();</span>
+
+	public void printMe() {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (Entry&lt;StyleSignatureBasic, Style&gt; ent : legacy.entrySet())</span>
+<span class="nc" id="L55">			ent.getValue().printMe();</span>
+
+<span class="nc" id="L57">	}</span>
+
+	public void putAll(StyleStorage other) {
+<span class="fc" id="L60">		legacy.putAll(other.legacy);</span>
+<span class="fc" id="L61">		plain.putAll(other.plain);</span>
+
+<span class="fc" id="L63">	}</span>
+
+	public Style get(StyleSignatureBasic signature) {
+//		if (signature.getStereotypes().size() &gt; 1)
+//			System.err.println(&quot;get &quot; + signature);
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (signature.getStereotypes().size() == 0)</span>
+<span class="fc" id="L70">			return plain.get(signature.getKey());</span>
+
+<span class="fc" id="L72">		return legacy.get(signature);</span>
+	}
+
+	public void put(Style modifiedStyle) {
+//		if (signature.getStereotypes().size() &gt; 1)
+//			System.err.println(&quot;put &quot; + signature);
+		
+<span class="fc" id="L79">		final StyleSignatureBasic signature = modifiedStyle.getSignature();</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (signature.getStereotypes().size() == 0)</span>
+<span class="fc" id="L82">			plain.put(signature.getKey(), modifiedStyle);</span>
+		else
+<span class="fc" id="L84">			legacy.put(signature, modifiedStyle);</span>
+
+<span class="fc" id="L86">	}</span>
+
+	public Collection&lt;Style&gt; getStyles() {
+<span class="fc" id="L89">		return new AbstractCollection&lt;Style&gt;() {</span>
+			@Override
+			public Iterator&lt;Style&gt; iterator() {
+<span class="fc" id="L92">				return new ConcatIterator&lt;&gt;(legacy.values().iterator(), plain.values().iterator());</span>
+			}
+
+			@Override
+			public int size() {
+<span class="nc" id="L97">				return legacy.size() + plain.size();</span>
+			}
+		};
+	}
+	
+	public Style computeMergedStyle(StyleSignatureBasic signature) {
+<span class="fc" id="L103">		Style mergedStyle = null;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (Style style : getStyles()) {</span>
+<span class="fc" id="L105">			final StyleSignatureBasic key = style.getSignature();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if (key.matchAll(signature) == false)</span>
+<span class="fc" id="L107">				continue;</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (mergedStyle == null)</span>
+<span class="fc" id="L110">				mergedStyle = style;</span>
+			else
+<span class="fc" id="L112">				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+
+<span class="fc" id="L114">		}</span>
+<span class="fc" id="L115">		return mergedStyle;</span>
+	}
+
+
+
+}
+
+class ConcatIterator&lt;T&gt; implements Iterator&lt;T&gt; {
+	private final Iterator&lt;T&gt; first;
+	private final Iterator&lt;T&gt; second;
+
+<span class="fc" id="L126">	public ConcatIterator(Iterator&lt;T&gt; first, Iterator&lt;T&gt; second) {</span>
+<span class="fc" id="L127">		this.first = first;</span>
+<span class="fc" id="L128">		this.second = second;</span>
+<span class="fc" id="L129">	}</span>
+
+	@Override
+	public boolean hasNext() {
+<span class="fc bfc" id="L133" title="All 4 branches covered.">		return first.hasNext() || second.hasNext();</span>
+	}
+
+	@Override
+	public T next() {
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (first.hasNext())</span>
+<span class="fc" id="L139">			return first.next();</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		else if (second.hasNext())</span>
+<span class="fc" id="L141">			return second.next();</span>
+		else
+<span class="nc" id="L143">			throw new NoSuchElementException();</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

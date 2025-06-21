@@ -129,7 +129,7 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 <span class="fc bfc" id="L129" title="All 2 branches covered.">			} else if (token.getType() == StyleTokenType.CLOSE_BRACKET) {</span>
 <span class="fc bfc" id="L130" title="All 2 branches covered.">				for (Style st : context.toStyles())</span>
 <span class="fc" id="L131">					result.add(st);</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">				if (context.size() &gt; 0)</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">				if (context.isEmpty() == false)</span>
 <span class="fc" id="L133">					context = context.pop();</span>
 
 <span class="pc bpc" id="L135" title="1 of 2 branches missed.">			} else if (token.getType() == StyleTokenType.AROBASE_MEDIA) {</span>

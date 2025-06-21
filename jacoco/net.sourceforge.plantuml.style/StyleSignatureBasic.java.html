@@ -298,12 +298,16 @@ public class StyleSignatureBasic implements StyleSignature {
 <span class="fc" id="L298">		return of(concat);</span>
 	}
 
-	public int size() {
-<span class="fc" id="L302">		return key.snames.size() + stereotypes.size();</span>
+	public boolean isEmpty() {
+<span class="pc bpc" id="L302" title="1 of 4 branches missed.">		return key.snames.isEmpty() &amp;&amp; stereotypes.isEmpty();</span>
 	}
 
 	public StyleKey getKey() {
-<span class="nc" id="L306">		return key;</span>
+<span class="fc" id="L306">		return key;</span>
+	}
+
+	public Set&lt;String&gt; getStereotypes() {
+<span class="fc" id="L310">		return stereotypes;</span>
 	}
 
 }
