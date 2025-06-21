@@ -109,6 +109,10 @@ public abstract class AbstractComponent implements Component {
 		return style.value(PName.RoundCorner).asInt(false);
 	}
 
+	protected final double getDiagonalCorner() {
+		return style.value(PName.DiagonalCorner).asInt(false);
+	}	
+
 	protected final UStroke getStroke() {
 		return style.getStroke();
 	}

@@ -59,7 +59,7 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 
     public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, Display stringsToDisplay, ISkinParam skinParam) {
 		super(style, skinParam);
-        this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+        this.symbolContext = getSymbolContext();
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
 		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 

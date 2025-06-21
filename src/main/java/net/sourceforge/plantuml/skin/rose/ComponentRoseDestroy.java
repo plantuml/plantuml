@@ -52,14 +52,14 @@ public class ComponentRoseDestroy extends AbstractComponent {
 
 	public ComponentRoseDestroy(Style style, ISkinParam skinParam) {
 		super(style, skinParam);
-		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.foregroundColor = getColorLine();
 	}
 
 	private final int crossSize = 9;
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-		ug = ug.apply(getStyle().getStroke()).apply(foregroundColor);
+		ug = ug.apply(getStroke()).apply(foregroundColor);
 
 		ug.draw(new ULine(2 * crossSize, 2 * crossSize));
 		ug.apply(UTranslate.dy(2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));

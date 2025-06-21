@@ -54,13 +54,13 @@ public class ComponentRoseDelayLine extends AbstractComponent {
 
 	public ComponentRoseDelayLine(Style style, ISkinParam skinParam) {
 		super(style, skinParam);
-		this.color = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.color = getColorLine();
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final XDimension2D dimensionToUse = area.getDimensionToUse();
-		ug = ug.apply(getStyle().getStroke()).apply(color);
+		ug = ug.apply(getStroke()).apply(color);
 		final int x = (int) (dimensionToUse.getWidth() / 2);
 		ug.apply(UAntiAliasing.ANTI_ALIASING_OFF).apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));
 	}
