@@ -61,8 +61,8 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 			ISkinParam skinParam, LineBreakStrategy maxMessageSize) {
 		super(style, maxMessageSize, 7, 7, 1, skinParam, stringsToDisplay, false);
 
-		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-		this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		this.foregroundColor = getColor(PName.LineColor);
+		this.backgroundColor = getColor(PName.BackGroundColor);
 		final UStroke stroke = style.getStroke();
 		this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
 
