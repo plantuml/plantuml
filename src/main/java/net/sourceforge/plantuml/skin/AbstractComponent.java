@@ -72,12 +72,12 @@ public abstract class AbstractComponent implements Component {
 		return skinParam;
 	}
 
-	protected HColorSet getIHtmlColorSet() {
+	protected HColorSet getIHtmlColorSetFooBar29() {
 		return skinParam.getIHtmlColorSet();
 	}
 
 	final protected HColor getColor(PName pname) {
-		return style.value(pname).asColor(getIHtmlColorSet());
+		return style.value(pname).asColor(getIHtmlColorSetFooBar29());
 	}
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);
