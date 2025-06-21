@@ -101,7 +101,7 @@ class Context {
 	}
 
 	public Context pop() {
-		if (size() == 0)
+		if (isEmpty())
 			throw new IllegalStateException();
 		return this.parent;
 	}
@@ -111,8 +111,8 @@ class Context {
 		return signatures.toString();
 	}
 
-	public int size() {
-		return signatures.get(0).size();
+	public boolean isEmpty() {
+		return signatures.get(0).isEmpty();
 	}
 
 	public Collection<StyleSignatureBasic> toSignatures() {

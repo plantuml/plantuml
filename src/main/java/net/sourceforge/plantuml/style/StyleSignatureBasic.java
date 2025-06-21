@@ -298,12 +298,16 @@ public class StyleSignatureBasic implements StyleSignature {
 		return of(concat);
 	}
 
-	public int size() {
-		return key.snames.size() + stereotypes.size();
+	public boolean isEmpty() {
+		return key.snames.isEmpty() && stereotypes.isEmpty();
 	}
 
 	public StyleKey getKey() {
 		return key;
+	}
+
+	public Set<String> getStereotypes() {
+		return stereotypes;
 	}
 
 }
