@@ -103,7 +103,7 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 <span class="fc" id="L103">				RegexLeaf.spaceZeroOrMore(), //</span>
 
 				new RegexConcat(//
-<span class="fc" id="L106">				optionalHead(&quot;ARROW_HEAD1&quot;, &quot;(?&lt;=[%s])+[ox]&quot;, &quot;[)#\\[&lt;*+^}]_?&quot;, &quot;\\&lt;_?\\|[\\:\\|]&quot;, &quot;[&lt;\\[]\\|&quot;,</span>
+<span class="fc" id="L106">				optionalHead(&quot;ARROW_HEAD1&quot;, &quot;(?&lt;=[%s])+[ox]&quot;, &quot;[)#\\[&lt;*+^}@]_?&quot;, &quot;\\&lt;_?\\|[\\:\\|]&quot;, &quot;[&lt;\\[]\\|&quot;,</span>
 						&quot;\\}o&quot;, &quot;\\}\\|&quot;, &quot;\\|o&quot;, &quot;\\|\\|&quot;),
 						new RegexLeaf(1, &quot;ARROW_BODY1&quot;, &quot;([-=.]+)&quot;), //
 						new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
@@ -111,7 +111,7 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 						new RegexOptional(new RegexLeaf(1, &quot;INSIDE&quot;, &quot;(0|\\(0\\)|\\(0|0\\))(?=[-=.~])&quot;)), //
 						new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
 						new RegexLeaf(1, &quot;ARROW_BODY2&quot;, &quot;([-=.]*)&quot;), //
-<span class="fc" id="L114">						optionalHead(&quot;ARROW_HEAD2&quot;, &quot;[ox][%s]+&quot;, &quot;:\\&gt;\\&gt;?&quot;, &quot;_?\\&gt;&quot;, &quot;[(#\\]*+^\\{]&quot;, &quot;[\\|:]\\|\\&gt;&quot;,</span>
+<span class="fc" id="L114">						optionalHead(&quot;ARROW_HEAD2&quot;, &quot;[ox][%s]+&quot;, &quot;:\\&gt;\\&gt;?&quot;, &quot;_?\\&gt;&quot;, &quot;[(#\\]*+^\\{@]&quot;, &quot;[\\|:]\\|\\&gt;&quot;,</span>
 								&quot;\\|[&gt;\\]]&quot;, &quot;o\\{&quot;, &quot;\\|\\{&quot;, &quot;o\\|&quot;, &quot;\\|\\|&quot;)), //
 
 <span class="fc" id="L117">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -471,133 +471,139 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 <span class="pc bpc" id="L471" title="1 of 2 branches missed.">		if (&quot;)&quot;.equals(s))</span>
 <span class="nc" id="L472">			return LinkDecor.PARENTHESIS;</span>
 
-<span class="fc" id="L474">		return LinkDecor.NONE;</span>
+<span class="pc bpc" id="L474" title="1 of 2 branches missed.">		if (&quot;@&quot;.equals(s))</span>
+<span class="nc" id="L475">			return LinkDecor.CIRCLE_FILL;</span>
+		
+<span class="fc" id="L477">		return LinkDecor.NONE;</span>
 	}
 
 	private LinkDecor getDecors2(String s) {
-<span class="pc bpc" id="L478" title="1 of 2 branches missed.">		if (s == null)</span>
-<span class="nc" id="L479">			return LinkDecor.NONE;</span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L482">			return LinkDecor.NONE;</span>
 
-<span class="fc" id="L481">		s = StringUtils.trin(s);</span>
-<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		if (&quot;|&gt;&quot;.equals(s))</span>
-<span class="nc" id="L483">			return LinkDecor.EXTENDS;</span>
+<span class="fc" id="L484">		s = StringUtils.trin(s);</span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		if (&quot;|&gt;&quot;.equals(s))</span>
+<span class="nc" id="L486">			return LinkDecor.EXTENDS;</span>
 
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		if (&quot;:|&gt;&quot;.equals(s))</span>
-<span class="nc" id="L486">			return LinkDecor.DEFINEDBY;</span>
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">		if (&quot;:|&gt;&quot;.equals(s))</span>
+<span class="nc" id="L489">			return LinkDecor.DEFINEDBY;</span>
 
-<span class="pc bpc" id="L488" title="1 of 2 branches missed.">		if (&quot;||&gt;&quot;.equals(s))</span>
-<span class="nc" id="L489">			return LinkDecor.REDEFINES;</span>
+<span class="pc bpc" id="L491" title="1 of 2 branches missed.">		if (&quot;||&gt;&quot;.equals(s))</span>
+<span class="nc" id="L492">			return LinkDecor.REDEFINES;</span>
 
-<span class="fc bfc" id="L491" title="All 2 branches covered.">		if (&quot;&gt;&quot;.equals(s))</span>
-<span class="fc" id="L492">			return LinkDecor.ARROW;</span>
+<span class="fc bfc" id="L494" title="All 2 branches covered.">		if (&quot;&gt;&quot;.equals(s))</span>
+<span class="fc" id="L495">			return LinkDecor.ARROW;</span>
 
-<span class="pc bpc" id="L494" title="1 of 2 branches missed.">		if (&quot;{&quot;.equals(s))</span>
-<span class="nc" id="L495">			return LinkDecor.CROWFOOT;</span>
+<span class="pc bpc" id="L497" title="1 of 2 branches missed.">		if (&quot;{&quot;.equals(s))</span>
+<span class="nc" id="L498">			return LinkDecor.CROWFOOT;</span>
 
-<span class="pc bpc" id="L497" title="1 of 2 branches missed.">		if (&quot;o{&quot;.equals(s))</span>
-<span class="nc" id="L498">			return LinkDecor.CIRCLE_CROWFOOT;</span>
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">		if (&quot;o{&quot;.equals(s))</span>
+<span class="nc" id="L501">			return LinkDecor.CIRCLE_CROWFOOT;</span>
 
-<span class="pc bpc" id="L500" title="1 of 2 branches missed.">		if (&quot;|{&quot;.equals(s))</span>
-<span class="nc" id="L501">			return LinkDecor.LINE_CROWFOOT;</span>
+<span class="pc bpc" id="L503" title="1 of 2 branches missed.">		if (&quot;|{&quot;.equals(s))</span>
+<span class="nc" id="L504">			return LinkDecor.LINE_CROWFOOT;</span>
 
-<span class="pc bpc" id="L503" title="1 of 2 branches missed.">		if (&quot;o|&quot;.equals(s))</span>
-<span class="nc" id="L504">			return LinkDecor.CIRCLE_LINE;</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">		if (&quot;o|&quot;.equals(s))</span>
+<span class="nc" id="L507">			return LinkDecor.CIRCLE_LINE;</span>
 
-<span class="pc bpc" id="L506" title="1 of 2 branches missed.">		if (&quot;||&quot;.equals(s))</span>
-<span class="nc" id="L507">			return LinkDecor.DOUBLE_LINE;</span>
+<span class="pc bpc" id="L509" title="1 of 2 branches missed.">		if (&quot;||&quot;.equals(s))</span>
+<span class="nc" id="L510">			return LinkDecor.DOUBLE_LINE;</span>
 
-<span class="pc bpc" id="L509" title="1 of 2 branches missed.">		if (&quot;^&quot;.equals(s))</span>
-<span class="nc" id="L510">			return LinkDecor.EXTENDS;</span>
+<span class="pc bpc" id="L512" title="1 of 2 branches missed.">		if (&quot;^&quot;.equals(s))</span>
+<span class="nc" id="L513">			return LinkDecor.EXTENDS;</span>
 
-<span class="pc bpc" id="L512" title="1 of 2 branches missed.">		if (&quot;+&quot;.equals(s))</span>
-<span class="nc" id="L513">			return LinkDecor.PLUS;</span>
+<span class="pc bpc" id="L515" title="1 of 2 branches missed.">		if (&quot;+&quot;.equals(s))</span>
+<span class="nc" id="L516">			return LinkDecor.PLUS;</span>
 
-<span class="pc bpc" id="L515" title="1 of 2 branches missed.">		if (&quot;o&quot;.equals(s))</span>
-<span class="nc" id="L516">			return LinkDecor.AGREGATION;</span>
+<span class="pc bpc" id="L518" title="1 of 2 branches missed.">		if (&quot;o&quot;.equals(s))</span>
+<span class="nc" id="L519">			return LinkDecor.AGREGATION;</span>
 
-<span class="pc bpc" id="L518" title="1 of 2 branches missed.">		if (&quot;x&quot;.equals(s))</span>
-<span class="nc" id="L519">			return LinkDecor.NOT_NAVIGABLE;</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		if (&quot;x&quot;.equals(s))</span>
+<span class="nc" id="L522">			return LinkDecor.NOT_NAVIGABLE;</span>
 
-<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		if (&quot;*&quot;.equals(s))</span>
-<span class="nc" id="L522">			return LinkDecor.COMPOSITION;</span>
+<span class="pc bpc" id="L524" title="1 of 2 branches missed.">		if (&quot;*&quot;.equals(s))</span>
+<span class="nc" id="L525">			return LinkDecor.COMPOSITION;</span>
 
-<span class="pc bpc" id="L524" title="1 of 2 branches missed.">		if (&quot;#&quot;.equals(s))</span>
-<span class="nc" id="L525">			return LinkDecor.SQUARE;</span>
+<span class="pc bpc" id="L527" title="1 of 2 branches missed.">		if (&quot;#&quot;.equals(s))</span>
+<span class="nc" id="L528">			return LinkDecor.SQUARE;</span>
 
-<span class="pc bpc" id="L527" title="1 of 2 branches missed.">		if (&quot;(&quot;.equals(s))</span>
-<span class="nc" id="L528">			return LinkDecor.PARENTHESIS;</span>
+<span class="pc bpc" id="L530" title="1 of 2 branches missed.">		if (&quot;(&quot;.equals(s))</span>
+<span class="nc" id="L531">			return LinkDecor.PARENTHESIS;</span>
 
-<span class="fc" id="L530">		return LinkDecor.NONE;</span>
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">		if (&quot;@&quot;.equals(s))</span>
+<span class="nc" id="L534">			return LinkDecor.CIRCLE_FILL;</span>
+
+<span class="fc" id="L536">		return LinkDecor.NONE;</span>
 	}
 
 	private LinkType getLinkType(RegexResult arg) {
-<span class="fc" id="L534">		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));</span>
-<span class="fc" id="L535">		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));</span>
+<span class="fc" id="L540">		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));</span>
+<span class="fc" id="L541">		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));</span>
 
-<span class="fc" id="L537">		LinkType result = new LinkType(decors2, decors1);</span>
-<span class="pc bpc" id="L538" title="1 of 4 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0).contains(&quot;.&quot;) || arg.get(&quot;ARROW_BODY2&quot;, 0).contains(&quot;.&quot;))</span>
-<span class="fc" id="L539">			result = result.goDashed();</span>
+<span class="fc" id="L543">		LinkType result = new LinkType(decors2, decors1);</span>
+<span class="pc bpc" id="L544" title="1 of 4 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0).contains(&quot;.&quot;) || arg.get(&quot;ARROW_BODY2&quot;, 0).contains(&quot;.&quot;))</span>
+<span class="fc" id="L545">			result = result.goDashed();</span>
 
-<span class="fc" id="L541">		final String middle = arg.get(&quot;INSIDE&quot;, 0);</span>
-<span class="pc bpc" id="L542" title="1 of 2 branches missed.">		if (&quot;0&quot;.equals(middle))</span>
-<span class="nc" id="L543">			result = result.withMiddleCircle();</span>
-<span class="pc bpc" id="L544" title="1 of 2 branches missed.">		else if (&quot;0)&quot;.equals(middle))</span>
-<span class="nc" id="L545">			result = result.withMiddleCircleCircled1();</span>
-<span class="pc bpc" id="L546" title="1 of 2 branches missed.">		else if (&quot;(0&quot;.equals(middle))</span>
-<span class="nc" id="L547">			result = result.withMiddleCircleCircled2();</span>
-<span class="pc bpc" id="L548" title="1 of 2 branches missed.">		else if (&quot;(0)&quot;.equals(middle))</span>
-<span class="nc" id="L549">			result = result.withMiddleCircleCircled();</span>
+<span class="fc" id="L547">		final String middle = arg.get(&quot;INSIDE&quot;, 0);</span>
+<span class="pc bpc" id="L548" title="1 of 2 branches missed.">		if (&quot;0&quot;.equals(middle))</span>
+<span class="nc" id="L549">			result = result.withMiddleCircle();</span>
+<span class="pc bpc" id="L550" title="1 of 2 branches missed.">		else if (&quot;0)&quot;.equals(middle))</span>
+<span class="nc" id="L551">			result = result.withMiddleCircleCircled1();</span>
+<span class="pc bpc" id="L552" title="1 of 2 branches missed.">		else if (&quot;(0&quot;.equals(middle))</span>
+<span class="nc" id="L553">			result = result.withMiddleCircleCircled2();</span>
+<span class="pc bpc" id="L554" title="1 of 2 branches missed.">		else if (&quot;(0)&quot;.equals(middle))</span>
+<span class="nc" id="L555">			result = result.withMiddleCircleCircled();</span>
 
-<span class="fc" id="L551">		return result;</span>
+<span class="fc" id="L557">		return result;</span>
 	}
 
 	private int getQueueLength(RegexResult arg) {
-<span class="fc" id="L555">		String s = getFullArrow(arg);</span>
-<span class="fc" id="L556">		s = s.replaceAll(&quot;[^-.=]&quot;, &quot;&quot;);</span>
-<span class="fc" id="L557">		return s.length();</span>
+<span class="fc" id="L561">		String s = getFullArrow(arg);</span>
+<span class="fc" id="L562">		s = s.replaceAll(&quot;[^-.=]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L563">		return s.length();</span>
 	}
 
 	private Direction getDirection(RegexResult arg) {
 //		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));
 //		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));
 
-<span class="fc" id="L564">		String s = getFullArrow(arg);</span>
-<span class="fc" id="L565">		s = s.replaceAll(&quot;[^-.=\\w]&quot;, &quot;&quot;);</span>
-<span class="fc bfc" id="L566" title="All 2 branches covered.">		if (s.startsWith(&quot;o&quot;))</span>
-<span class="fc" id="L567">			s = s.substring(1);</span>
+<span class="fc" id="L570">		String s = getFullArrow(arg);</span>
+<span class="fc" id="L571">		s = s.replaceAll(&quot;[^-.=\\w]&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L572" title="All 2 branches covered.">		if (s.startsWith(&quot;o&quot;))</span>
+<span class="fc" id="L573">			s = s.substring(1);</span>
 
-<span class="pc bpc" id="L569" title="1 of 2 branches missed.">		if (s.endsWith(&quot;o&quot;))</span>
-<span class="nc" id="L570">			s = s.substring(0, s.length() - 1);</span>
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">		if (s.endsWith(&quot;o&quot;))</span>
+<span class="nc" id="L576">			s = s.substring(0, s.length() - 1);</span>
 
-<span class="fc" id="L572">		Direction result = StringUtils.getQueueDirection(s);</span>
+<span class="fc" id="L578">		Direction result = StringUtils.getQueueDirection(s);</span>
 //		if (isInversed(decors1, decors2) &amp;&amp; s.matches(&quot;.*\\w.*&quot;)) {
 		// result = result.getInv();
 //		}
 
-<span class="fc" id="L577">		return result;</span>
+<span class="fc" id="L583">		return result;</span>
 	}
 
 	private String getArrowHead1(RegexResult arg) {
-<span class="fc" id="L581">		return getArrowHead(arg, &quot;ARROW_HEAD1&quot;);</span>
+<span class="fc" id="L587">		return getArrowHead(arg, &quot;ARROW_HEAD1&quot;);</span>
 	}
 
 	private String getArrowHead2(RegexResult arg) {
-<span class="fc" id="L585">		return getArrowHead(arg, &quot;ARROW_HEAD2&quot;);</span>
+<span class="fc" id="L591">		return getArrowHead(arg, &quot;ARROW_HEAD2&quot;);</span>
 	}
 
 	private String getArrowHead(RegexResult arg, final String key) {
-<span class="fc" id="L589">		return notNull(arg.get(key, 0)).replaceAll(&quot;_&quot;, &quot;&quot;);</span>
+<span class="fc" id="L595">		return notNull(arg.get(key, 0)).replaceAll(&quot;_&quot;, &quot;&quot;);</span>
 	}
 
 	private String getFullArrow(RegexResult arg) {
-<span class="fc" id="L593">		return getArrowHead1(arg) + notNull(arg.get(&quot;ARROW_BODY1&quot;, 0)) + notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0))</span>
-<span class="fc" id="L594">				+ notNull(arg.get(&quot;ARROW_BODY2&quot;, 0)) + getArrowHead2(arg);</span>
+<span class="fc" id="L599">		return getArrowHead1(arg) + notNull(arg.get(&quot;ARROW_BODY1&quot;, 0)) + notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0))</span>
+<span class="fc" id="L600">				+ notNull(arg.get(&quot;ARROW_BODY2&quot;, 0)) + getArrowHead2(arg);</span>
 	}
 
 	public static String notNull(String s) {
-<span class="fc bfc" id="L598" title="All 2 branches covered.">		if (s == null)</span>
-<span class="fc" id="L599">			return &quot;&quot;;</span>
-<span class="fc" id="L600">		return s;</span>
+<span class="fc bfc" id="L604" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L605">			return &quot;&quot;;</span>
+<span class="fc" id="L606">		return s;</span>
 	}
 
 }
