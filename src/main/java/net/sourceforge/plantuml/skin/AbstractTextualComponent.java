@@ -59,10 +59,6 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	private final TextBlock textBlock;
 
-	private final UFont font;
-	private final HColor fontColor;
-	private final HorizontalAlignment alignment;
-
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
 			int marginY, ISkinParam skinParam, CharSequence label) {
 		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam,
@@ -79,8 +75,6 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		super(style, skinParam);
 
 		final FontConfiguration fc = getFontConfiguration();
-		this.font = getUFont();
-		this.fontColor = getColorFont();
 		final HorizontalAlignment horizontalAlignment = getHorizontalAlignment();
 		final UFont fontForStereotype = stereo.getUFont();
 		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());
@@ -98,7 +92,6 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 			textBlock = display.create0(fc, horizontalAlignment, skinParam, maxMessageSize, CreoleMode.FULL,
 					fontForStereotype, htmlColorForStereotype, marginX1, marginX2);
 
-		this.alignment = horizontalAlignment;
 	}
 
 	protected TextBlock getTextBlock() {
@@ -132,17 +125,5 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	final protected int getMarginY() {
 		return marginY;
 	}
-
-	//final protected UFont getFont() {
-	//	return font;
-	//}
-
-	//protected HColor getFontColor() {
-	//	return fontColor;
-	//}
-
-	//public final HorizontalAlignment getHorizontalAlignment() {
-	//	return alignment;
-	//}
 
 }
