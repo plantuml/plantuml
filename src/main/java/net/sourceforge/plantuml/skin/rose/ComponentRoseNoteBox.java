@@ -57,8 +57,8 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	public ComponentRoseNoteBox(Style style, Display strings, ISkinParam skinParam, Colors colors) {
 		super(style, style.wrapWidth(), 4, 4, 4, skinParam, strings, false);
 
-		this.symbolContext = style.getSymbolContext(getIHtmlColorSet(), colors);
-		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
+		this.symbolContext = getSymbolContext(colors);
+		this.roundCorner = getRoundCorner();
 	}
 
 	@Override

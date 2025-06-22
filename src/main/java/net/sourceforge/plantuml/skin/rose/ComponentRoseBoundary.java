@@ -57,7 +57,7 @@ public class ComponentRoseBoundary extends AbstractTextualComponent {
 	public ComponentRoseBoundary(Style style, Style stereo, Display stringsToDisplay, boolean head,
 			ISkinParam skinParam) {
 		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);
-		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());
+		final Fashion biColor = getSymbolContext();
 
 		this.head = head;
 		this.stickman = new Boundary(biColor);
