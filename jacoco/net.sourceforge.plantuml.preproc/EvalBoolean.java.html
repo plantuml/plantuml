@@ -39,93 +39,93 @@ package net.sourceforge.plantuml.preproc;
 public class EvalBoolean {
 
 	private final String str;
-<span class="nc" id="L42">	private int pos = -1;</span>
+<span class="fc" id="L42">	private int pos = -1;</span>
 	private char ch;
 	private final Truth truth;
 
-<span class="nc" id="L46">	public EvalBoolean(String str, Truth truth) {</span>
-<span class="nc" id="L47">		this.str = str;</span>
-<span class="nc" id="L48">		this.truth = truth;</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L46">	public EvalBoolean(String str, Truth truth) {</span>
+<span class="fc" id="L47">		this.str = str;</span>
+<span class="fc" id="L48">		this.truth = truth;</span>
+<span class="fc" id="L49">	}</span>
 
 	private void nextChar() {
-<span class="nc" id="L52">		pos++;</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (pos &lt; str.length()) {</span>
-<span class="nc" id="L54">			ch = str.charAt(pos);</span>
+<span class="fc" id="L52">		pos++;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (pos &lt; str.length()) {</span>
+<span class="fc" id="L54">			ch = str.charAt(pos);</span>
 		} else {
-<span class="nc" id="L56">			ch = '\0';</span>
+<span class="fc" id="L56">			ch = '\0';</span>
 		}
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L58">	}</span>
 
 	private boolean eat(char charToEat) {
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		while (ch == ' ') {</span>
-<span class="nc" id="L62">			nextChar();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		while (ch == ' ') {</span>
+<span class="fc" id="L62">			nextChar();</span>
 		}
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (ch == charToEat) {</span>
-<span class="nc" id="L65">			nextChar();</span>
-<span class="nc" id="L66">			return true;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (ch == charToEat) {</span>
+<span class="fc" id="L65">			nextChar();</span>
+<span class="fc" id="L66">			return true;</span>
 		}
-<span class="nc" id="L68">		return false;</span>
+<span class="fc" id="L68">		return false;</span>
 	}
 
 	private boolean parseExpression() {
-<span class="nc" id="L72">		boolean x = parseTerm();</span>
+<span class="fc" id="L72">		boolean x = parseTerm();</span>
 		while (true) {
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (eat('|')) {</span>
-<span class="nc" id="L75">				eat('|');</span>
-<span class="nc" id="L76">				x = x | parseTerm();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (eat('|')) {</span>
+<span class="fc" id="L75">				eat('|');</span>
+<span class="fc" id="L76">				x = x | parseTerm();</span>
 			} else {
-<span class="nc" id="L78">				return x;</span>
+<span class="fc" id="L78">				return x;</span>
 			}
 		}
 	}
 
 	private boolean parseTerm() {
-<span class="nc" id="L84">		boolean x = parseFactor();</span>
+<span class="fc" id="L84">		boolean x = parseFactor();</span>
 		while (true) {
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (eat('&amp;')) {</span>
-<span class="nc" id="L87">				eat('&amp;');</span>
-<span class="nc" id="L88">				x = x &amp; parseFactor();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (eat('&amp;')) {</span>
+<span class="fc" id="L87">				eat('&amp;');</span>
+<span class="fc" id="L88">				x = x &amp; parseFactor();</span>
 			} else {
-<span class="nc" id="L90">				return x;</span>
+<span class="fc" id="L90">				return x;</span>
 			}
 		}
 	}
 
 	private boolean parseFactor() {
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (eat('!')) {</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			return !(parseFactor());</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (eat('!')) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			return !(parseFactor());</span>
 		}
 
 		final boolean x;
-<span class="nc" id="L101">		final int startPos = pos;</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (eat('(')) {</span>
-<span class="nc" id="L103">			x = parseExpression();</span>
-<span class="nc" id="L104">			eat(')');</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		} else if (isIdentifier()) {</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			while (isIdentifier()) {</span>
-<span class="nc" id="L107">				nextChar();</span>
+<span class="fc" id="L101">		final int startPos = pos;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (eat('(')) {</span>
+<span class="fc" id="L103">			x = parseExpression();</span>
+<span class="fc" id="L104">			eat(')');</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (isIdentifier()) {</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			while (isIdentifier()) {</span>
+<span class="fc" id="L107">				nextChar();</span>
 			}
-<span class="nc" id="L109">			final String func = str.substring(startPos, pos);</span>
-<span class="nc" id="L110">			x = truth.isTrue(func);</span>
-<span class="nc" id="L111">		} else {</span>
-<span class="nc" id="L112">			throw new IllegalArgumentException(&quot;Unexpected: &quot; + (char) ch);</span>
+<span class="fc" id="L109">			final String func = str.substring(startPos, pos);</span>
+<span class="fc" id="L110">			x = truth.isTrue(func);</span>
+<span class="fc" id="L111">		} else {</span>
+<span class="fc" id="L112">			throw new IllegalArgumentException(&quot;Unexpected: &quot; + (char) ch);</span>
 		}
 
-<span class="nc" id="L115">		return x;</span>
+<span class="fc" id="L115">		return x;</span>
 	}
 
 	private boolean isIdentifier() {
-<span class="nc bnc" id="L119" title="All 6 branches missed.">		return ch == '_' || ch == '$' || Character.isLetterOrDigit(ch);</span>
+<span class="fc bfc" id="L119" title="All 6 branches covered.">		return ch == '_' || ch == '$' || Character.isLetterOrDigit(ch);</span>
 	}
 
 	public boolean eval() {
-<span class="nc" id="L123">		nextChar();</span>
-<span class="nc" id="L124">		final boolean x = parseExpression();</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (pos &lt; str.length()) {</span>
-<span class="nc" id="L126">			throw new IllegalArgumentException(&quot;Unexpected: &quot; + (char) ch);</span>
+<span class="fc" id="L123">		nextChar();</span>
+<span class="fc" id="L124">		final boolean x = parseExpression();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (pos &lt; str.length()) {</span>
+<span class="fc" id="L126">			throw new IllegalArgumentException(&quot;Unexpected: &quot; + (char) ch);</span>
 		}
-<span class="nc" id="L128">		return x;</span>
+<span class="fc" id="L128">		return x;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
