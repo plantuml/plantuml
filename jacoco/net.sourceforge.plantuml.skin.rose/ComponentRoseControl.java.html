@@ -58,7 +58,7 @@ public class ComponentRoseControl extends AbstractTextualComponent {
 			ISkinParam skinParam) {
 <span class="fc" id="L59">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L61">		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());</span>
+<span class="fc" id="L61">		final Fashion biColor = getSymbolContext();</span>
 
 <span class="fc" id="L63">		this.head = head;</span>
 <span class="fc" id="L64">		this.stickman = new Control(biColor);</span>

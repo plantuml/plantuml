@@ -52,14 +52,14 @@ public class ComponentRoseDestroy extends AbstractComponent {
 
 	public ComponentRoseDestroy(Style style, ISkinParam skinParam) {
 <span class="fc" id="L54">		super(style, skinParam);</span>
-<span class="fc" id="L55">		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L55">		this.foregroundColor = getColorLine();</span>
 <span class="fc" id="L56">	}</span>
 
 <span class="fc" id="L58">	private final int crossSize = 9;</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L62">		ug = ug.apply(getStyle().getStroke()).apply(foregroundColor);</span>
+<span class="fc" id="L62">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
 
 <span class="fc" id="L64">		ug.draw(new ULine(2 * crossSize, 2 * crossSize));</span>
 <span class="fc" id="L65">		ug.apply(UTranslate.dy(2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));</span>

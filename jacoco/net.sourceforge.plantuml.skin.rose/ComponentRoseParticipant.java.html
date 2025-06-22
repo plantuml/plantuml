@@ -69,10 +69,10 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 			ISkinParam skinParam, double minWidth, boolean collections, double padding) {
 <span class="fc" id="L70">		super(style, stereo, LineBreakStrategy.NONE, 7, 7, 7, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L72">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
-<span class="fc" id="L73">		this.diagonalCorner = style.value(PName.DiagonalCorner).asInt(false);</span>
-<span class="fc" id="L74">		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());</span>
-<span class="fc" id="L75">		this.stroke = style.getStroke();</span>
+<span class="fc" id="L72">		this.roundCorner = getRoundCorner();</span>
+<span class="fc" id="L73">		this.diagonalCorner = getDiagonalCorner();</span>
+<span class="fc" id="L74">		final Fashion biColor = getSymbolContext();</span>
+<span class="fc" id="L75">		this.stroke = getStroke();</span>
 
 <span class="fc" id="L77">		this.padding = padding;</span>
 <span class="fc" id="L78">		this.minWidth = minWidth;</span>

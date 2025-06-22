@@ -66,11 +66,11 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	public ComponentRoseDivider(Style style, Display stringsToDisplay, ISkinParam skinParam) {
 <span class="fc" id="L67">		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L69">		this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L70">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L71">		this.stroke = style.getStroke();</span>
-<span class="fc" id="L72">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
-<span class="fc" id="L73">		this.shadow = style.getShadowing();</span>
+<span class="fc" id="L69">		this.background = getColorBackGround();</span>
+<span class="fc" id="L70">		this.borderColor = getColorLine();</span>
+<span class="fc" id="L71">		this.stroke = getStroke();</span>
+<span class="fc" id="L72">		this.roundCorner = getRoundCorner();</span>
+<span class="fc" id="L73">		this.shadow = getShadowing();</span>
 
 <span class="pc bpc" id="L75" title="1 of 2 branches missed.">		this.empty = stringsToDisplay.get(0).length() == 0;</span>
 <span class="fc" id="L76">	}</span>

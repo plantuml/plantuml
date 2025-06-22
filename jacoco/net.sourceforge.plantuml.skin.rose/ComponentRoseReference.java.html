@@ -63,17 +63,17 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final HorizontalAlignment position;
 	private final Fashion symbolContextHeader;
 	private final Fashion symbolContextBody;
-	private int roundCorner;
+	private double roundCorner;
 
 	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinParam skinParam) {
 <span class="nc" id="L69">		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam,</span>
 <span class="nc" id="L70">				stringsToDisplay.subList(1, stringsToDisplay.size()), false);</span>
 
 <span class="nc" id="L72">		this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());</span>
-<span class="nc" id="L73">		this.symbolContextBody = style.getSymbolContext(getIHtmlColorSet());</span>
-<span class="nc" id="L74">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
+<span class="nc" id="L73">		this.symbolContextBody = getSymbolContext();</span>
+<span class="nc" id="L74">		this.roundCorner = getRoundCorner();</span>
 <span class="nc" id="L75">		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());</span>
-<span class="nc" id="L76">		this.position = style.getHorizontalAlignment();</span>
+<span class="nc" id="L76">		this.position = getHorizontalAlignment();</span>
 
 <span class="nc" id="L78">		this.textHeader = stringsToDisplay.subList(0, 1).create(fcHeader, HorizontalAlignment.LEFT, skinParam);</span>
 

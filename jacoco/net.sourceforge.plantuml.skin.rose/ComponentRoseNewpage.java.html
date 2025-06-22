@@ -52,13 +52,13 @@ public class ComponentRoseNewpage extends AbstractComponent {
 
 	public ComponentRoseNewpage(Style style, ISkinParam skinParam) {
 <span class="fc" id="L54">		super(style, skinParam);</span>
-<span class="fc" id="L55">		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L55">		this.foregroundColor = getColorLine();</span>
 <span class="fc" id="L56">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 <span class="nc" id="L60">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L61">		ug = ug.apply(getStyle().getStroke()).apply(foregroundColor);</span>
+<span class="nc" id="L61">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
 <span class="nc" id="L62">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
 <span class="nc" id="L63">	}</span>
 

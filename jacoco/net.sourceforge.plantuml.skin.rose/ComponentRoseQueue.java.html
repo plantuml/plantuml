@@ -60,7 +60,7 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 			ISkinParam skinParam) {
 <span class="fc" id="L61">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L63">		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());</span>
+<span class="fc" id="L63">		final Fashion biColor = getSymbolContext();</span>
 
 <span class="fc" id="L65">		this.head = head;</span>
 <span class="fc" id="L66">		this.stickman = USymbols.QUEUE.asSmall(TextBlockUtils.empty(0, 0), getTextBlock(), TextBlockUtils.empty(0, 0),</span>
