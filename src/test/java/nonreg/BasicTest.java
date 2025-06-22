@@ -1,8 +1,7 @@
 package nonreg;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -50,7 +49,7 @@ public class BasicTest {
 			generatedResultJavaFile(actualResult, actualResult.getBytes(UTF_8));
 		}
 		final String imageExpectedResult = readTripleQuotedString(getResultFile());
-		assertEquals(imageExpectedResult, actualResult);
+		assertThat(actualResult).isEqualTo(imageExpectedResult);
 	}
 
 	private void generatedResultJavaFile(String actualResult, byte[] bytes) throws IOException {
@@ -90,20 +89,20 @@ public class BasicTest {
 		final SourceStringReader ssr = new SourceStringReader(diagramText, UTF_8);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final DiagramDescription diagramDescription = ssr.outputImage(baos, 0, new FileFormatOption(FileFormat.DEBUG));
-		assertEquals(expectedDescription, diagramDescription.getDescription(), "Bad description");
+		assertThat(diagramDescription.getDescription()).as("Bad description").isEqualTo(expectedDescription);
 
 		return new String(baos.toByteArray(), UTF_8);
 	}
 
 	protected String readTripleQuotedString(Path path) throws IOException {
-		assertTrue(Files.exists(path), "Cannot find " + path);
-		assertTrue(Files.isReadable(path), "Cannot read " + path);
+		assertThat(Files.exists(path)).as("Cannot find " + path).isTrue();
+		assertThat(Files.isReadable(path)).as("Cannot read " + path).isTrue();
 		final List<String> allLines = Files.readAllLines(path, UTF_8);
 		final int first = allLines.indexOf(TRIPLE_QUOTE);
 		final int last = allLines.lastIndexOf(TRIPLE_QUOTE);
-		assertTrue(first != -1);
-		assertTrue(last != -1);
-		assertTrue(last > first);
+		assertThat(first != -1).isTrue();
+		assertThat(last != -1).isTrue();
+		assertThat(last > first).isTrue();
 		return packString(allLines.subList(first + 1, last));
 	}
 
