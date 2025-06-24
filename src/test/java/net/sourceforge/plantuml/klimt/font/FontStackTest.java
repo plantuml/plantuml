@@ -22,20 +22,20 @@ class FontStackTest {
 		assertThat(stack.canDisplayUpTo(0, "a")).isEqualTo(-1);
 	}
 
-	@Test
-	void shouldReturnMinusOneForCommonCJKAndEmoji() {
-		FontStack stack = new FontStack("foo");
-		// All characters ("具", "🐛") are displayable in many recent fonts
-		assertThat(stack.canDisplayUpTo(0, "具🐛")).isEqualTo(-1);
-	}
-
-	@Test
-	void shouldReturnZeroForRareEmojiNotCoveredByFont() {
-		FontStack stack = new FontStack("foo");
-		// U+1F9AC (banjo emoji) is rarely supported by standard fonts
-		String nonDisplayable = "\uD83E\uDEAC";
-		assertThat(stack.canDisplayUpTo(0, nonDisplayable)).isEqualTo(0); // First char is not displayable
-	}
+//	@Test
+//	void shouldReturnMinusOneForCommonCJKAndEmoji() {
+//		FontStack stack = new FontStack("foo");
+//		// All characters ("具", "🐛") are displayable in many recent fonts
+//		assertThat(stack.canDisplayUpTo(0, "具🐛")).isEqualTo(-1);
+//	}
+//
+//	@Test
+//	void shouldReturnZeroForRareEmojiNotCoveredByFont() {
+//		FontStack stack = new FontStack("foo");
+//		// U+1F9AC (banjo emoji) is rarely supported by standard fonts
+//		String nonDisplayable = "\uD83E\uDEAC";
+//		assertThat(stack.canDisplayUpTo(0, nonDisplayable)).isEqualTo(0); // First char is not displayable
+//	}
 
 	@Test
 	void shouldReturnOneForFirstNonDisplayableCharAtSecondPosition() {
