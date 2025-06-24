@@ -326,7 +326,7 @@ public class Stdlib {
 	private static InputStream getInternalInputStream(String fullname, String extension) throws FileNotFoundException {
 <span class="fc" id="L327">		final String path = &quot;stdlib/&quot; + fullname + extension;</span>
 <span class="fc" id="L328">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
-<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (result == null)</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (result == null)</span>
 <span class="nc" id="L330">			result = new BufferedInputStream(new FileInputStream(path));</span>
 <span class="fc" id="L331">		return result;</span>
 	}
@@ -463,7 +463,7 @@ public class Stdlib {
 
 	public static void addInfoVersion(List&lt;String&gt; strings, boolean details) {
 		try {
-<span class="pc bpc" id="L466" title="1 of 2 branches missed.">			for (String name : getAllFolderNames()) {</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">			for (String name : getAllFolderNames()) {</span>
 <span class="fc" id="L467">				final Stdlib folder = Stdlib.retrieve(name);</span>
 <span class="pc bpc" id="L468" title="1 of 2 branches missed.">				if (details) {</span>
 <span class="fc" id="L469">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
@@ -474,11 +474,11 @@ public class Stdlib {
 <span class="nc" id="L474">					strings.add(&quot;* &quot; + name + &quot; (Version &quot; + folder.getVersion() + &quot;)&quot;);</span>
 				}
 <span class="fc" id="L476">			}</span>
-<span class="fc" id="L477">		} catch (IOException e) {</span>
-<span class="fc" id="L478">			Log.error(&quot;Error &quot; + e);</span>
-<span class="fc" id="L479">			return;</span>
-<span class="nc" id="L480">		}</span>
-<span class="nc" id="L481">	}</span>
+<span class="nc" id="L477">		} catch (IOException e) {</span>
+<span class="nc" id="L478">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L479">			return;</span>
+<span class="fc" id="L480">		}</span>
+<span class="fc" id="L481">	}</span>
 
 	public String getVersion() {
 <span class="fc" id="L484">		String result = info.get(&quot;VERSION&quot;);</span>
