@@ -101,7 +101,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		visible.ensureVisible(x, y - height + 1.5);
 		visible.ensureVisible(x + width, y + 1.5);
 
-		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));
+		g2d.setFont(font.getUnderlayingFont(shape.getText()));
 		g2d.setColor(fontConfiguration.getColor().toColor(mapper));
 		final TextLayout t = UFontContext.G2D.createTextLayout(font, shape.getText());
 		g2d.translate(x, y);
@@ -130,7 +130,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 			}
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(UFontContext.G2D));
+			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(shape.getText()));
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null)

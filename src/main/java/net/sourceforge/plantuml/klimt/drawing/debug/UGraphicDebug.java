@@ -142,7 +142,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		output.add("CENTERED_CHAR:");
 		output.add("  char: " + shape.getChar());
 		output.add("  position: " + pointd(getTranslateX(), getTranslateY()));
-		output.add("  font: " + shape.getFont().toStringDebug());
+		output.add("  font: " + shape.getFont().toString());
 		output.add("  color: " + colorToString(getParam().getColor()));
 		output.add("");
 

@@ -84,8 +84,9 @@ public class UnusedSpace {
 	private UnusedSpace(UFont font, char c) {
 		final BufferedImage im = new BufferedImage(2 * HALF_SIZE, 2 * HALF_SIZE, BufferedImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
-		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));
-		g2d.drawString("" + c, HALF_SIZE, HALF_SIZE);
+		final String text = "" + c;
+		g2d.setFont(font.getUnderlayingFont(text));
+		g2d.drawString(text, HALF_SIZE, HALF_SIZE);
 
 		int minI = Integer.MAX_VALUE;
 		int minJ = Integer.MAX_VALUE;
@@ -95,25 +96,25 @@ public class UnusedSpace {
 		for (int i = 0; i < im.getWidth(); i++) {
 			for (int j = 0; j < im.getHeight(); j++) {
 				if (isPoint(im, i, j)) {
-					if (i < minI) {
+					if (i < minI)
 						minI = i;
-					}
-					if (j < minJ) {
+
+					if (j < minJ)
 						minJ = j;
-					}
-					if (i > maxI) {
+
+					if (i > maxI)
 						maxI = i;
-					}
-					if (j > maxJ) {
+
+					if (j > maxJ)
 						maxJ = j;
-					}
+
 					points.add(new Point(i, j));
 				}
 			}
 		}
 
 		double min = Double.MAX_VALUE;
-		for (int i = minI * 4; i <= maxI * 4; i++) {
+		for (int i = minI * 4; i <= maxI * 4; i++) 
 			for (int j = minJ * 4; j < maxJ * 4; j++) {
 				final Point p = new Point(i / 4.0, j / 4.0);
 				final double d = biggestDistSqFromPoint(p);
@@ -123,7 +124,7 @@ public class UnusedSpace {
 					this.meanY2 = j / 4.0 - HALF_SIZE;
 				}
 			}
-		}
+		
 
 		// g2d.setColor(Color.RED);
 		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE - 1, meanY2 + HALF_SIZE

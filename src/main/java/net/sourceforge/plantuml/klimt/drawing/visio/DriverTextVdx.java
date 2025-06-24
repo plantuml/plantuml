@@ -70,7 +70,7 @@ public class DriverTextVdx implements UDriver<UText, VisioGraphics> {
 
 		text = StringUtils.trin(text);
 		final XDimension2D dim = stringBounder.calculateDimension(font, text);
-		visio.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), dim.getWidth(), dim.getHeight(),
+		visio.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), dim.getWidth(), dim.getHeight(),
 				fontConfiguration.getAttributes());
 
 	}

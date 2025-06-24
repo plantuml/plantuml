@@ -118,9 +118,8 @@ public class FontConfiguration {
 
 	// ::comment when __HAXE__
 	public String toStringDebug() {
-		return getFont().toStringDebug() + " " + styles.toString();
-//		return "" + currentFont + " " + styles.toString() + currentColor + extendedColor + hyperlinkColor
-//				+ hyperlinkUnderlineStroke + fontPosition + tabSize;
+		return getFont().toString() + " " + styles.toString();
+		// return getFont().toStringDebug() + " " + styles.toString();
 	}
 
 	@Override
