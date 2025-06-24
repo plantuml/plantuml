@@ -44,16 +44,16 @@ import java.util.logging.Logger;
 	private static final Logger logger;
 
 	static {
-<span class="nc" id="L47">		logger = Logger.getLogger(&quot;com.plantuml&quot;);</span>
-<span class="nc" id="L48">		logger.setUseParentHandlers(false);</span>
-<span class="nc" id="L49">		final ConsoleHandler handler = new ConsoleHandler();</span>
-<span class="nc" id="L50">		handler.setFormatter(new SimpleFormatter());</span>
-<span class="nc" id="L51">		logger.addHandler(handler);</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L47">		logger = Logger.getLogger(&quot;com.plantuml&quot;);</span>
+<span class="fc" id="L48">		logger.setUseParentHandlers(false);</span>
+<span class="fc" id="L49">		final ConsoleHandler handler = new ConsoleHandler();</span>
+<span class="fc" id="L50">		handler.setFormatter(new SimpleFormatter());</span>
+<span class="fc" id="L51">		logger.addHandler(handler);</span>
+<span class="fc" id="L52">	}</span>
 
 	public static void error(Throwable thrown) {
-<span class="nc" id="L55">		logger.log(Level.SEVERE, &quot;&quot;, thrown);</span>
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L55">		logger.log(Level.SEVERE, &quot;&quot;, thrown);</span>
+<span class="fc" id="L56">	}</span>
 
 	// Unused right now
 	//
