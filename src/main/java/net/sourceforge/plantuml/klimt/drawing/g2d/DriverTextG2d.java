@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
@@ -112,7 +111,7 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		 * RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		 */
 
-		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));
+		g2d.setFont(font.getUnderlayingFont(text));
 
 		if (orientation == 90) {
 			final AffineTransform orig = g2d.getTransform();
@@ -168,7 +167,7 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 				}
 			}
 			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(UFontContext.G2D));
+				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(text));
 				final int ypos = (int) (y - fm.getDescent() - 0.5);
 				if (extended != null)
 					g2d.setColor(extended.toColor(mapper));

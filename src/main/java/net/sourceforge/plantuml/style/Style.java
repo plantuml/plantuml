@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontStack;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -189,12 +190,12 @@ public class Style {
 
 	public UFont getUFont() {
 		final String fontName = value(PName.FontName).asString();
-		final String family = UFont.getExistingFontFamily(fontName);
+		// final String family = FontStack.getExistingFontFamily(fontName);
 		final int fontStyle = value(PName.FontStyle).asFontStyle();
 		int size = value(PName.FontSize).asInt(true);
 		if (size == -1)
 			size = 14;
-		return UFont.build(family, fontStyle, size);
+		return UFont.build(fontName, fontStyle, size);
 	}
 
 	public FontConfiguration getFontConfiguration(HColorSet set) {

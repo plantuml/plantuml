@@ -48,15 +48,15 @@ public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 		appendColor(getColor());
 		final UFont font = fontConfiguration.getFont();
 		final int size = font.getSize();
-		append("/" + getPSName(fontConfiguration) + " findfont " + size + " scalefont setfont", true);
+		append("/" + getPSName(text, fontConfiguration) + " findfont " + size + " scalefont setfont", true);
 		append("100 -100 scale", true);
 		append("(" + getTextAsEps(text) + ") show", false);
 		append(".01 -.01 scale", true);
 	}
 
-	private String getPSName(FontConfiguration fontConfiguration) {
+	private String getPSName(String text, FontConfiguration fontConfiguration) {
 		final UFont font = fontConfiguration.getFont();
-		final StringBuilder sb = new StringBuilder(font.getFamily(UFontContext.EPS));
+		final StringBuilder sb = new StringBuilder(font.getFamily(text, UFontContext.EPS));
 		// final int style = fontConfiguration.getFont().getStyle();
 		// final boolean bold = (style & Font.BOLD) != 0 ||
 		// fontConfiguration.containsStyle(FontStyle.BOLD);
