@@ -49,8 +49,8 @@ public enum UFontContext {
 		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
 	}
 
-	public TextLayout createTextLayout(UFont font, String string) {
-		return new TextLayout(string, font.getUnderlayingFont(this), FileFormat.gg.getFontRenderContext());
+	public TextLayout createTextLayout(UFont font, String text) {
+		return new TextLayout(text, font.getUnderlayingFont(text), FileFormat.gg.getFontRenderContext());
 	}
 	// ::done
 }

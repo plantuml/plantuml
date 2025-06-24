@@ -36,81 +36,23 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.util.HashSet;
-import java.util.Set;
-
-import net.sourceforge.plantuml.StringUtils;
+import java.util.Objects;
 
 public class UFont {
 
-	private final Font font;
-	private final String family;
+	private final FontStack fontStack;
 	private final int style;
 	private final int size;
-	private final int hash;
 
-	// ::comment when __HAXE__
-	private static final Set<String> names = new HashSet<>();
-
-	static {
-//		try {
-//			Roboto.registerFonts();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-			names.add(name.toLowerCase());
-	}
-	// ::done
-
-	public String toStringDebug() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(getPortableFontName());
-		sb.append("/");
-		sb.append(font.getSize());
-		return sb.toString();
+	public static UFont build(String fullDefinition, int fontStyle, int fontSize) {
+		final FontStack fontStack = new FontStack(fullDefinition);
+		return new UFont(fontStack, fontStyle, fontSize);
 	}
 
-	public static UFont build(String fontFamily, int fontStyle, int fontSize) {
-		final String family = getExistingFontFamily(fontFamily);
-		final Font font = new Font(family, fontStyle, fontSize);
-		return new UFont(font, fontFamily, fontStyle, fontSize);
-	}
-
-	private UFont(Font font, String family, int style, int size) {
-		this.font = font;
-		this.family = family;
+	private UFont(FontStack fontStack, int style, int size) {
+		this.fontStack = fontStack;
 		this.style = style;
 		this.size = size;
-		this.hash = computeFontHash(family, style, size);
-	}
-
-	public static int computeFontHash(String family, int style, int size) {
-		int hash = 17;
-		hash = 31 * hash + family.hashCode();
-		hash = 31 * hash + style;
-		hash = 31 * hash + size;
-		return hash;
-	}
-
-	public static String getExistingFontFamily(String fontFamily) {
-		if (fontFamily.contains(",")) {
-			for (String name : fontFamily.split(",")) {
-				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name.trim()).trim();
-				if (doesFamilyExists(name))
-					return name;
-			}
-			return "SansSerif";
-		}
-		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fontFamily.trim()).trim();
-	}
-
-	private static boolean doesFamilyExists(String name) {
-		// ::revert when __HAXE__
-		return names.contains(name.toLowerCase());
-		// return true;
-		// ::done
 	}
 
 	public static UFont serif(int size) {
@@ -129,24 +71,20 @@ public class UFont {
 		return sansSerif(12);
 	}
 
-	public UFont goTikz(int delta) {
-		return new UFont(new Font("Serif", getStyle(), getSize() + delta), "Serif", this.style, this.size + delta);
-	}
-
 	public static UFont monospaced(int size) {
 		return UFont.build("Monospaced", Font.PLAIN, size);
 	}
 
-	public final Font getUnderlayingFont(UFontContext context) {
-		return font;
+	public final Font getUnderlayingFont(String text) {
+		return fontStack.getFont(text, style, size);
 	}
 
 	public UFont withSize(float size) {
-		return new UFont(font.deriveFont(size), family, this.style, (int) size);
+		return new UFont(fontStack, this.style, (int) size);
 	}
 
 	public UFont withStyle(int style) {
-		return new UFont(font.deriveFont(style), family, style, this.size);
+		return new UFont(fontStack, style, this.size);
 	}
 
 	public UFont bold() {
@@ -158,45 +96,45 @@ public class UFont {
 	}
 
 	public int getStyle() {
-		return font.getStyle();
+		return style;
 	}
 
 	public int getSize() {
-		return font.getSize();
+		return size;
 	}
 
 	public double getSize2D() {
-		return font.getSize2D();
+		return size;
 	}
 
 	public boolean isBold() {
-		return font.isBold();
+		return (style & Font.BOLD) != 0;
 	}
 
 	public boolean isItalic() {
-		return font.isItalic();
+		return (style & Font.ITALIC) != 0;
 	}
 
-	public String getFamily(UFontContext context) {
+	public String getFamily(String text, UFontContext context) {
 		if (context == UFontContext.EPS) {
-			if (family == null)
-				return "Times-Roman";
-
-			return font.getPSName();
+//			if (fontStack.getFamily() == null)
+//				return "Times-Roman";
+			return getUnderlayingFont(text).getPSName();
 		}
 		if (context == UFontContext.SVG) {
-			String result = family.replace('\"', '\'');
+			String result = fontStack.getFullDefinition().replace('\"', '\'');
 			result = result.replaceAll("(?i)sansserif", "sans-serif");
 
 			return result;
 		}
-		return family;
+		throw new IllegalArgumentException();
 	}
 
 	// Kludge for testing because font names on some machines (only macOS?) do not
 	// end with <DOT><STYLE>
 	// See https://github.com/plantuml/plantuml/issues/720
 	private String getPortableFontName() {
+		final Font font = getUnderlayingFont(null);
 		final String name = font.getFontName();
 		if (font.isBold() && font.isItalic())
 			return name.endsWith(".bolditalic") ? name : name + ".bolditalic";
@@ -210,23 +148,30 @@ public class UFont {
 
 	@Override
 	public String toString() {
-		return font.toString()/* + " " + font.getPSName() */;
+		final StringBuilder sb = new StringBuilder();
+		sb.append(getPortableFontName());
+		sb.append("/");
+		sb.append(getSize());
+		return sb.toString();
 	}
 
 	// ::comment when __HAXE__
 
 	@Override
 	public int hashCode() {
-		return hash;
+		return Objects.hash(fontStack, style, size);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof UFont == false)
+		if (this == obj)
+			return true;
+		if (!(obj instanceof UFont))
 			return false;
-
-		return this.font.equals(((UFont) obj).font);
+		UFont other = (UFont) obj;
+		return Objects.equals(fontStack, other.fontStack) && style == other.style && size == other.size;
 	}
+
 	// ::done
 
 }
