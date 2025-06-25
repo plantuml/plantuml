@@ -70,6 +70,7 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 				diagram.addWarning(new Warning("Please use '!option handwritten true' to enable handwritten "));
 
 			diagram.setParam(name, arg.get("VALUE", 0));
+			diagram.setSkinParamUsed(true);
 
 			return CommandExecutionResult.ok();
 		} catch (NoStyleAvailableException e) {

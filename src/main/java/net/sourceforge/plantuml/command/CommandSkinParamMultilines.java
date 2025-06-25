@@ -73,6 +73,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 			return CommandExecutionResult.error("Bad syntax for skinparam");
 
 		final String group1 = mStart.group(1);
+		diagram.setSkinParamUsed(true);
 
 		return skinLoader.execute(lines, group1);
 

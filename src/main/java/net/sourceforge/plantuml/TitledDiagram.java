@@ -112,6 +112,16 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return skinParam;
 	}
 
+	private boolean skinParamUsed;
+
+	public boolean isSkinParamUsed() {
+		return skinParamUsed;
+	}
+
+	public void setSkinParamUsed(boolean skinParamUsed) {
+		this.skinParamUsed = skinParamUsed;
+	}
+
 	public void setParam(String key, String value) {
 		skinParam.setParam(StringUtils.goLowerCase(key), value);
 	}

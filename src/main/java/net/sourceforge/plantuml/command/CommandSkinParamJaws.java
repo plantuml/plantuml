@@ -78,6 +78,7 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 				lines = BlocLines.create();
 			}
 		}
+		diagram.setSkinParamUsed(true);
 		return CommandExecutionResult.ok();
 
 	}

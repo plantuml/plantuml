@@ -148,7 +148,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		super(source, type, previous, preprocessing);
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
-		new Entity(null, this.root, this, null, GroupType.ROOT, 0);
+		new Entity(null, null, this.root, this, null, GroupType.ROOT, 0);
 
 		this.stacks.add(this.root.getData());
 	}
@@ -826,7 +826,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		else
 			bodier = BodyFactory.createLeaf(getSkinParam(), entityType, hideVisibilityModifier);
 
-		final Entity result = new Entity(location, quark, this, bodier, entityType, diagram.rawLayout);
+		final Entity result = new Entity(getSkinParam().getCurrentStyleBuilder(), location, quark, this, bodier,
+				entityType, diagram.rawLayout);
 		bodier.setLeaf(result);
 		return result;
 	}
@@ -837,7 +838,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return quark.getData();
 
 		final Bodier bodier = BodyFactory.createGroup(getSkinParam());
-		final Entity result = new Entity(location, quark, this, bodier, groupType, this.rawLayout);
+		final Entity result = new Entity(getSkinParam().getCurrentStyleBuilder(), location, quark, this, bodier,
+				groupType, this.rawLayout);
 
 		return result;
 	}
