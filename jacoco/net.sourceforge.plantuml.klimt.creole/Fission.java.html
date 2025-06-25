@@ -161,7 +161,7 @@ public class Fission {
 
 		private boolean isWhite() {
 <span class="fc bfc" id="L163" title="All 2 branches covered.">			for (Neutron n : neutrons)</span>
-<span class="pc bpc" id="L164" title="2 of 4 branches missed.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR &amp;&amp; n.getType() != NeutronType.SPACE)</span>
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR &amp;&amp; n.getType() != NeutronType.WHITESPACE)</span>
 <span class="fc" id="L165">					return false;</span>
 <span class="fc" id="L166">			return true;</span>
 		}
@@ -170,7 +170,7 @@ public class Fission {
 <span class="pc bpc" id="L170" title="1 of 4 branches missed.">			while (neutrons.size() &gt; 0 &amp;&amp; neutrons.get(0).getType() == NeutronType.ZWSP_SEPARATOR)</span>
 <span class="nc" id="L171">				neutrons.remove(0);</span>
 <span class="fc bfc" id="L172" title="All 2 branches covered.">			while (neutrons.size() &gt; 1</span>
-<span class="fc bfc" id="L173" title="All 4 branches covered.">					&amp;&amp; (last().getType() == NeutronType.SPACE || last().getType() == NeutronType.ZWSP_SEPARATOR))</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">					&amp;&amp; (last().getType() == NeutronType.WHITESPACE || last().getType() == NeutronType.ZWSP_SEPARATOR))</span>
 <span class="fc" id="L174">				neutrons.remove(neutrons.size() - 1);</span>
 <span class="fc" id="L175">		}</span>
 
@@ -192,7 +192,7 @@ public class Fission {
 
 <span class="fc bfc" id="L193" title="All 2 branches covered.">			for (Neutron n : neutrons)</span>
 <span class="fc bfc" id="L194" title="All 2 branches covered.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR) {</span>
-<span class="pc bpc" id="L195" title="1 of 6 branches missed.">					if (removeInitialSpaces &amp;&amp; result.size() == 0 &amp;&amp; n.getType() == NeutronType.SPACE)</span>
+<span class="pc bpc" id="L195" title="1 of 6 branches missed.">					if (removeInitialSpaces &amp;&amp; result.size() == 0 &amp;&amp; n.getType() == NeutronType.WHITESPACE)</span>
 <span class="nc" id="L196">						continue;</span>
 <span class="fc" id="L197">					result.add(n.asAtom());</span>
 				}
@@ -210,7 +210,7 @@ public class Fission {
 <span class="pc bpc" id="L210" title="1 of 2 branches missed.">					&amp;&amp; last().getType() == NeutronType.ZWSP_SEPARATOR)</span>
 <span class="nc" id="L211">				return;</span>
 
-<span class="fc bfc" id="L213" title="All 6 branches covered.">			if (removeInitialSpaces &amp;&amp; this.neutrons.size() == 0 &amp;&amp; neutron.getType() == NeutronType.SPACE)</span>
+<span class="fc bfc" id="L213" title="All 6 branches covered.">			if (removeInitialSpaces &amp;&amp; this.neutrons.size() == 0 &amp;&amp; neutron.getType() == NeutronType.WHITESPACE)</span>
 <span class="fc" id="L214">				return;</span>
 
 <span class="fc" id="L216">			this.neutrons.add(neutron);</span>

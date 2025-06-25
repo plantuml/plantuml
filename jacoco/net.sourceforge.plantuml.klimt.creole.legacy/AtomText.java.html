@@ -215,31 +215,31 @@ public final class AtomText extends AbstractAtom implements Atom {
 			}
 <span class="fc" id="L216">			final NeutronType pendingType = Neutron.getNeutronTypeFromChar(pending.charAt(0));</span>
 <span class="fc" id="L217">			final NeutronType currentType = Neutron.getNeutronTypeFromChar(ch);</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (pendingType != currentType) {</span>
+<span class="pc bpc" id="L218" title="1 of 4 branches missed.">			if (pendingType != currentType || pendingType == NeutronType.CJK_IDEOGRAPH) {</span>
 <span class="fc" id="L219">				addPending(result, pending.toString());</span>
 <span class="fc" id="L220">				pending.setLength(0);</span>
 			}
 <span class="fc" id="L222">			pending.append(ch);</span>
 			// if (Neutron.isSentenceBoundary(ch) || Neutron.isChineseSentenceBoundary(ch))
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			if (Neutron.isChineseSentenceBoundary(ch)) {</span>
-<span class="nc" id="L225">				addPending(result, pending.toString());</span>
-<span class="nc" id="L226">				pending.setLength(0);</span>
-<span class="nc" id="L227">				result.add(Neutron.zwspSeparator());</span>
-			}
+//			if (Neutron.isChineseSentenceBoundary(ch)) {
+//				addPending(result, pending.toString());
+//				pending.setLength(0);
+//				result.add(Neutron.zwspSeparator());
+//			}
 
 		}
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (pending.length() &gt; 0) {</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (pending.length() &gt; 0)</span>
 <span class="fc" id="L232">			addPending(result, pending.toString());</span>
-		}
+
 <span class="fc" id="L234">		return result;</span>
 	}
 
 	private void addPending(List&lt;Neutron&gt; result, String pending) {
 <span class="fc" id="L238">		final Neutron tmp = Neutron.create(withText(pending));</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (tmp.getType() == NeutronType.SPACE)</span>
+<span class="pc bpc" id="L239" title="1 of 4 branches missed.">		if (tmp.getType() == NeutronType.WHITESPACE || tmp.getType() == NeutronType.CJK_IDEOGRAPH)</span>
 <span class="fc" id="L240">			result.add(Neutron.zwspSeparator());</span>
 <span class="fc" id="L241">		result.add(tmp);</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">		if (tmp.getType() == NeutronType.SPACE)</span>
+<span class="pc bpc" id="L242" title="1 of 4 branches missed.">		if (tmp.getType() == NeutronType.WHITESPACE || tmp.getType() == NeutronType.CJK_IDEOGRAPH)</span>
 <span class="fc" id="L243">			result.add(Neutron.zwspSeparator());</span>
 <span class="fc" id="L244">	}</span>
 

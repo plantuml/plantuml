@@ -41,74 +41,94 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class Neutron {
 
+<span class="fc" id="L44">	private static final Neutron ZWSP = new Neutron(null, NeutronType.ZWSP_SEPARATOR, null);</span>
+	
 	private final String data;
 	private final NeutronType type;
 	private final Atom asAtom;
 
-<span class="fc" id="L48">	private Neutron(String data, NeutronType type, Atom asAtom) {</span>
-<span class="fc" id="L49">		this.data = data;</span>
-<span class="fc" id="L50">		this.type = type;</span>
-<span class="fc" id="L51">		this.asAtom = asAtom;</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L50">	private Neutron(String data, NeutronType type, Atom asAtom) {</span>
+<span class="fc" id="L51">		this.data = data;</span>
+<span class="fc" id="L52">		this.type = type;</span>
+<span class="fc" id="L53">		this.asAtom = asAtom;</span>
+<span class="fc" id="L54">	}</span>
 
 	public static Neutron create(Atom atom) {
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (atom instanceof AtomText) {</span>
-<span class="fc" id="L56">			final String text = ((AtomText) atom).getText();</span>
-<span class="fc" id="L57">			return new Neutron(text, getNeutronTypeFromChar(text.charAt(0)), atom);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (atom instanceof AtomText) {</span>
+<span class="fc" id="L58">			final String text = ((AtomText) atom).getText();</span>
+<span class="fc" id="L59">			return new Neutron(text, getNeutronTypeFromChar(text.charAt(0)), atom);</span>
 		}
-<span class="fc" id="L59">		return new Neutron(null, NeutronType.OTHER, atom);</span>
+<span class="fc" id="L61">		return new Neutron(null, NeutronType.UNKNOWN, atom);</span>
 	}
 
 	public static Neutron zwspSeparator() {
-<span class="fc" id="L63">		return new Neutron(null, NeutronType.ZWSP_SEPARATOR, null);</span>
+<span class="fc" id="L65">		return ZWSP;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (type == NeutronType.ZWSP_SEPARATOR)</span>
-<span class="nc" id="L69">			return &quot;ZWSP&quot;;</span>
-<span class="nc" id="L70">		return type + &quot;(&quot; + data + &quot;)&quot;;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (type == NeutronType.ZWSP_SEPARATOR)</span>
+<span class="nc" id="L71">			return &quot;ZWSP&quot;;</span>
+<span class="nc" id="L72">		return type + &quot;(&quot; + data + &quot;)&quot;;</span>
 	}
 
 	public Atom asAtom() {
-<span class="fc" id="L74">		return asAtom;</span>
+<span class="fc" id="L76">		return asAtom;</span>
 	}
 
 	public NeutronType getType() {
-<span class="fc" id="L78">		return type;</span>
+<span class="fc" id="L80">		return type;</span>
 	}
 
-	public static boolean isSeparator(char ch) {
-<span class="fc" id="L82">		return Character.isWhitespace(ch);</span>
+	private static boolean isChinese(char ch) {
+	    // CJK Unified Ideographs
+<span class="pc bpc" id="L85" title="3 of 4 branches missed.">	    if (ch &gt;= 0x4E00 &amp;&amp; ch &lt;= 0x9FFF)</span>
+<span class="nc" id="L86">	        return true;</span>
+//	    // CJK Unified Ideographs Extension A
+//	    if (ch &gt;= 0x3400 &amp;&amp; ch &lt;= 0x4DBF)
+//	        return true;
+//	    // CJK Unified Ideographs Extension B–F
+//	    if (ch &gt;= 0x20000 &amp;&amp; ch &lt;= 0x2EBEF)
+//	        return true;
+//	    // CJK Compatibility Ideographs
+//	    if (ch &gt;= 0xF900 &amp;&amp; ch &lt;= 0xFAFF)
+//	        return true;
+//	    // CJK Symbols and Punctuation
+//	    if (ch &gt;= 0x3000 &amp;&amp; ch &lt;= 0x303F)
+//	        return true;
+<span class="fc" id="L99">	    return false;</span>
 	}
 
-	private static boolean isSentenceBoundaryUnused(char ch) {
-<span class="nc bnc" id="L86" title="All 4 branches missed.">		return ch == '.' || ch == ',';</span>
 
-	}
-
-	public static boolean isChineseSentenceBoundary(char ch) {
-<span class="pc bpc" id="L91" title="6 of 12 branches missed.">		return ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)</span>
-//				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
-//				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
-				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
-				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
-				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
-				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
-				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
-	}
+//	private static boolean isSentenceBoundaryUnused(char ch) {
+//		return ch == '.' || ch == ',';
+//
+//	}
+//
+//	private static boolean isChineseSentenceBoundary(char ch) {
+//		return ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
+////				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
+////				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
+//				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
+//				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
+//				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
+//				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
+//				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
+//	}
 
 	public double getWidth(StringBounder stringBounder) {
-<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (type == NeutronType.ZWSP_SEPARATOR)</span>
-<span class="fc" id="L103">			return 0;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (type == NeutronType.ZWSP_SEPARATOR)</span>
+<span class="fc" id="L121">			return 0;</span>
 
-<span class="fc" id="L105">		return asAtom.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L123">		return asAtom.calculateDimension(stringBounder).getWidth();</span>
 	}
 
 	public static NeutronType getNeutronTypeFromChar(char ch) {
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (isSeparator(ch))</span>
-<span class="fc" id="L110">			return NeutronType.SPACE;</span>
-<span class="fc" id="L111">		return NeutronType.TEXT;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (Character.isWhitespace(ch))</span>
+<span class="fc" id="L128">			return NeutronType.WHITESPACE;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (isChinese(ch))</span>
+<span class="nc" id="L130">			return NeutronType.CJK_IDEOGRAPH;</span>
+<span class="fc" id="L131">		return NeutronType.UNBREAKABLE;</span>
 	}
 
 }
