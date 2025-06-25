@@ -70,11 +70,12 @@ public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="nc" id="L70">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
 
 <span class="fc" id="L72">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="fc" id="L73">			diagram.setSkinParamUsed(true);</span>
 
-<span class="fc" id="L74">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L75">		} catch (NoStyleAvailableException e) {</span>
+<span class="fc" id="L75">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L76">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 
 	}

@@ -148,7 +148,7 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L148">		super(source, type, previous, preprocessing);</span>
 <span class="fc" id="L149">		this.namespace = new Plasma&lt;Entity&gt;();</span>
 <span class="fc" id="L150">		this.root = namespace.root();</span>
-<span class="fc" id="L151">		new Entity(null, this.root, this, null, GroupType.ROOT, 0);</span>
+<span class="fc" id="L151">		new Entity(null, null, this.root, this, null, GroupType.ROOT, 0);</span>
 
 <span class="fc" id="L153">		this.stacks.add(this.root.getData());</span>
 <span class="fc" id="L154">	}</span>
@@ -826,121 +826,123 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 		else
 <span class="fc" id="L827">			bodier = BodyFactory.createLeaf(getSkinParam(), entityType, hideVisibilityModifier);</span>
 
-<span class="fc" id="L829">		final Entity result = new Entity(location, quark, this, bodier, entityType, diagram.rawLayout);</span>
-<span class="fc" id="L830">		bodier.setLeaf(result);</span>
-<span class="fc" id="L831">		return result;</span>
+<span class="fc" id="L829">		final Entity result = new Entity(getSkinParam().getCurrentStyleBuilder(), location, quark, this, bodier,</span>
+				entityType, diagram.rawLayout);
+<span class="fc" id="L831">		bodier.setLeaf(result);</span>
+<span class="fc" id="L832">		return result;</span>
 	}
 
 	public Entity createGroup(LineLocation location, Quark&lt;Entity&gt; quark, GroupType groupType) {
-<span class="fc" id="L835">		Objects.requireNonNull(groupType);</span>
-<span class="pc bpc" id="L836" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L837">			return quark.getData();</span>
+<span class="fc" id="L836">		Objects.requireNonNull(groupType);</span>
+<span class="pc bpc" id="L837" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L838">			return quark.getData();</span>
 
-<span class="fc" id="L839">		final Bodier bodier = BodyFactory.createGroup(getSkinParam());</span>
-<span class="fc" id="L840">		final Entity result = new Entity(location, quark, this, bodier, groupType, this.rawLayout);</span>
+<span class="fc" id="L840">		final Bodier bodier = BodyFactory.createGroup(getSkinParam());</span>
+<span class="fc" id="L841">		final Entity result = new Entity(getSkinParam().getCurrentStyleBuilder(), location, quark, this, bodier,</span>
+				groupType, this.rawLayout);
 
-<span class="fc" id="L842">		return result;</span>
+<span class="fc" id="L844">		return result;</span>
 	}
 
 	public final Collection&lt;Entity&gt; leafs() {
-<span class="fc" id="L846">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L847" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
-<span class="fc bfc" id="L848" title="All 2 branches covered.">			if (quark.isRoot())</span>
-<span class="fc" id="L849">				continue;</span>
-<span class="fc" id="L850">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L851" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
-<span class="fc" id="L852">				result.add(data);</span>
-<span class="fc" id="L853">		}</span>
-<span class="fc" id="L854">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L848">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L849" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
+<span class="fc bfc" id="L850" title="All 2 branches covered.">			if (quark.isRoot())</span>
+<span class="fc" id="L851">				continue;</span>
+<span class="fc" id="L852">			final Entity data = quark.getData();</span>
+<span class="pc bpc" id="L853" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
+<span class="fc" id="L854">				result.add(data);</span>
+<span class="fc" id="L855">		}</span>
+<span class="fc" id="L856">		return Collections.unmodifiableCollection(result);</span>
 
 	}
 
 	public final Collection&lt;Entity&gt; groups() {
-<span class="fc" id="L859">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L860" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
-<span class="fc bfc" id="L861" title="All 2 branches covered.">			if (quark.isRoot())</span>
-<span class="fc" id="L862">				continue;</span>
+<span class="fc" id="L861">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L862" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
+<span class="fc bfc" id="L863" title="All 2 branches covered.">			if (quark.isRoot())</span>
+<span class="fc" id="L864">				continue;</span>
 
-<span class="fc" id="L864">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L865" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
-<span class="fc" id="L866">				result.add(data);</span>
-<span class="fc" id="L867">		}</span>
-<span class="fc" id="L868">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L866">			final Entity data = quark.getData();</span>
+<span class="pc bpc" id="L867" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="fc" id="L868">				result.add(data);</span>
+<span class="fc" id="L869">		}</span>
+<span class="fc" id="L870">		return Collections.unmodifiableCollection(result);</span>
 	}
 
 	public final Collection&lt;Entity&gt; groupsAndRoot() {
-<span class="fc" id="L872">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L873" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
-<span class="fc" id="L874">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L875" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
-<span class="fc" id="L876">				result.add(data);</span>
-<span class="fc" id="L877">		}</span>
-<span class="fc" id="L878">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L874">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L875" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
+<span class="fc" id="L876">			final Entity data = quark.getData();</span>
+<span class="pc bpc" id="L877" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="fc" id="L878">				result.add(data);</span>
+<span class="fc" id="L879">		}</span>
+<span class="fc" id="L880">		return Collections.unmodifiableCollection(result);</span>
 	}
 
 	public void incRawLayout() {
-<span class="nc" id="L882">		this.rawLayout++;</span>
-<span class="nc" id="L883">	}</span>
+<span class="nc" id="L884">		this.rawLayout++;</span>
+<span class="nc" id="L885">	}</span>
 
 	public final List&lt;Link&gt; getLinks() {
-<span class="fc" id="L886">		return Collections.unmodifiableList(this.links);</span>
+<span class="fc" id="L888">		return Collections.unmodifiableList(this.links);</span>
 	}
 
 	public void addLink(Link link) {
-<span class="pc bpc" id="L890" title="3 of 4 branches missed.">		if (link.isSingle() &amp;&amp; containsSimilarLink(link))</span>
-<span class="nc" id="L891">			return;</span>
+<span class="pc bpc" id="L892" title="3 of 4 branches missed.">		if (link.isSingle() &amp;&amp; containsSimilarLink(link))</span>
+<span class="nc" id="L893">			return;</span>
 
-<span class="fc" id="L893">		this.links.add(link);</span>
-<span class="fc" id="L894">	}</span>
+<span class="fc" id="L895">		this.links.add(link);</span>
+<span class="fc" id="L896">	}</span>
 
 	private boolean containsSimilarLink(Link other) {
-<span class="nc bnc" id="L897" title="All 2 branches missed.">		for (Link link : this.links)</span>
-<span class="nc bnc" id="L898" title="All 2 branches missed.">			if (other.sameConnections(link))</span>
-<span class="nc" id="L899">				return true;</span>
+<span class="nc bnc" id="L899" title="All 2 branches missed.">		for (Link link : this.links)</span>
+<span class="nc bnc" id="L900" title="All 2 branches missed.">			if (other.sameConnections(link))</span>
+<span class="nc" id="L901">				return true;</span>
 
-<span class="nc" id="L901">		return false;</span>
+<span class="nc" id="L903">		return false;</span>
 	}
 
 	public void removeLink(Link link) {
-<span class="nc" id="L905">		final boolean ok = this.links.remove(link);</span>
-<span class="nc bnc" id="L906" title="All 2 branches missed.">		if (ok == false)</span>
-<span class="nc" id="L907">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L907">		final boolean ok = this.links.remove(link);</span>
+<span class="nc bnc" id="L908" title="All 2 branches missed.">		if (ok == false)</span>
+<span class="nc" id="L909">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L909">	}</span>
+<span class="nc" id="L911">	}</span>
 
 	public Collection&lt;Quark&lt;Entity&gt;&gt; quarks() {
-<span class="fc" id="L912">		final List&lt;Quark&lt;Entity&gt;&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L913" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : this.namespace.quarks())</span>
-<span class="fc" id="L914">			result.add(quark);</span>
+<span class="fc" id="L914">		final List&lt;Quark&lt;Entity&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L915" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : this.namespace.quarks())</span>
+<span class="fc" id="L916">			result.add(quark);</span>
 
-<span class="fc" id="L916">		return result;</span>
+<span class="fc" id="L918">		return result;</span>
 	}
 
 	@Override
 	public Entity getRootGroup() {
-<span class="fc" id="L921">		return this.root.getData();</span>
+<span class="fc" id="L923">		return this.root.getData();</span>
 	}
 
 	public void setSeparator(String namespaceSeparator) {
-<span class="fc" id="L925">		this.namespace.setSeparator(namespaceSeparator);</span>
-<span class="fc" id="L926">	}</span>
+<span class="fc" id="L927">		this.namespace.setSeparator(namespaceSeparator);</span>
+<span class="fc" id="L928">	}</span>
 
 	public Quark&lt;Entity&gt; firstWithName(String full) {
-<span class="fc" id="L929">		return this.namespace.firstWithName(full);</span>
+<span class="fc" id="L931">		return this.namespace.firstWithName(full);</span>
 	}
 
 	public int countByName(String full) {
-<span class="fc" id="L933">		return this.namespace.countByName(full);</span>
+<span class="fc" id="L935">		return this.namespace.countByName(full);</span>
 	}
 
 	@Override
 	public final InstallationRequirement getInstallationRequirement() {
-<span class="nc bnc" id="L938" title="All 2 branches missed.">		if (this.isUseElk())</span>
-<span class="nc" id="L939">			return InstallationRequirement.ELK_LIBRARY_REQUIRED;</span>
-<span class="nc bnc" id="L940" title="All 2 branches missed.">		else if (this.isUseSmetana())</span>
-<span class="nc" id="L941">			return InstallationRequirement.NONE;</span>
+<span class="nc bnc" id="L940" title="All 2 branches missed.">		if (this.isUseElk())</span>
+<span class="nc" id="L941">			return InstallationRequirement.ELK_LIBRARY_REQUIRED;</span>
+<span class="nc bnc" id="L942" title="All 2 branches missed.">		else if (this.isUseSmetana())</span>
+<span class="nc" id="L943">			return InstallationRequirement.NONE;</span>
 		else
-<span class="nc" id="L943">			return InstallationRequirement.GRAPHVIZ_ENGINE_REQUIRED;</span>
+<span class="nc" id="L945">			return InstallationRequirement.GRAPHVIZ_ENGINE_REQUIRED;</span>
 	}
 
 }

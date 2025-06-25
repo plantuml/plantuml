@@ -141,17 +141,17 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 <span class="fc" id="L142">		final Stereotype stereotype = entity.getStereotype();</span>
 <span class="fc" id="L143">		final Style styleTitle = signatureTitle.withTOBECHANGED(stereotype)</span>
-<span class="fc" id="L144">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);</span>
+<span class="fc" id="L144">				.getMergedStyle(getEntity().getCurrentStyleBuilder()).eventuallyOverride(colors);</span>
 
 <span class="fc" id="L146">		final Style styleStereo = StyleSignatureBasic</span>
 <span class="fc" id="L147">				.of(SName.root, SName.element, getStyleName(), symbol.getSNames(), SName.stereotype)</span>
-<span class="fc" id="L148">				.forStereotypeItself(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L148">				.forStereotypeItself(stereotype).getMergedStyle(getEntity().getCurrentStyleBuilder());</span>
 
 <span class="fc" id="L150">		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(),</span>
 <span class="fc" id="L151">				symbol.getSNames());</span>
 
-<span class="fc" id="L153">		final Style style = signature.withTOBECHANGED(stereotype)</span>
-<span class="fc" id="L154">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);</span>
+<span class="fc" id="L153">		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(getEntity().getCurrentStyleBuilder())</span>
+<span class="fc" id="L154">				.eventuallyOverride(colors);</span>
 
 <span class="fc" id="L156">		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
