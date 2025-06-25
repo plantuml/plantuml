@@ -41,6 +41,8 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class Neutron {
 
+	private static final Neutron ZWSP = new Neutron(null, NeutronType.ZWSP_SEPARATOR, null);
+	
 	private final String data;
 	private final NeutronType type;
 	private final Atom asAtom;
@@ -56,11 +58,11 @@ public class Neutron {
 			final String text = ((AtomText) atom).getText();
 			return new Neutron(text, getNeutronTypeFromChar(text.charAt(0)), atom);
 		}
-		return new Neutron(null, NeutronType.OTHER, atom);
+		return new Neutron(null, NeutronType.UNKNOWN, atom);
 	}
 
 	public static Neutron zwspSeparator() {
-		return new Neutron(null, NeutronType.ZWSP_SEPARATOR, null);
+		return ZWSP;
 	}
 
 	@Override
@@ -78,25 +80,41 @@ public class Neutron {
 		return type;
 	}
 
-	public static boolean isSeparator(char ch) {
-		return Character.isWhitespace(ch);
+	private static boolean isChinese(char ch) {
+	    // CJK Unified Ideographs
+	    if (ch >= 0x4E00 && ch <= 0x9FFF)
+	        return true;
+//	    // CJK Unified Ideographs Extension A
+//	    if (ch >= 0x3400 && ch <= 0x4DBF)
+//	        return true;
+//	    // CJK Unified Ideographs Extension B–F
+//	    if (ch >= 0x20000 && ch <= 0x2EBEF)
+//	        return true;
+//	    // CJK Compatibility Ideographs
+//	    if (ch >= 0xF900 && ch <= 0xFAFF)
+//	        return true;
+//	    // CJK Symbols and Punctuation
+//	    if (ch >= 0x3000 && ch <= 0x303F)
+//	        return true;
+	    return false;
 	}
 
-	private static boolean isSentenceBoundaryUnused(char ch) {
-		return ch == '.' || ch == ',';
 
-	}
-
-	public static boolean isChineseSentenceBoundary(char ch) {
-		return ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
-//				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
-//				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
-				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
-				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
-				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
-				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
-				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
-	}
+//	private static boolean isSentenceBoundaryUnused(char ch) {
+//		return ch == '.' || ch == ',';
+//
+//	}
+//
+//	private static boolean isChineseSentenceBoundary(char ch) {
+//		return ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
+////				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
+////				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
+//				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
+//				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
+//				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
+//				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
+//				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
+//	}
 
 	public double getWidth(StringBounder stringBounder) {
 		if (type == NeutronType.ZWSP_SEPARATOR)
@@ -106,9 +124,11 @@ public class Neutron {
 	}
 
 	public static NeutronType getNeutronTypeFromChar(char ch) {
-		if (isSeparator(ch))
-			return NeutronType.SPACE;
-		return NeutronType.TEXT;
+		if (Character.isWhitespace(ch))
+			return NeutronType.WHITESPACE;
+		if (isChinese(ch))
+			return NeutronType.CJK_IDEOGRAPH;
+		return NeutronType.UNBREAKABLE;
 	}
 
 }

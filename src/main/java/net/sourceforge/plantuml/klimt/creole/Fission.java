@@ -161,7 +161,7 @@ public class Fission {
 
 		private boolean isWhite() {
 			for (Neutron n : neutrons)
-				if (n.getType() != NeutronType.ZWSP_SEPARATOR && n.getType() != NeutronType.SPACE)
+				if (n.getType() != NeutronType.ZWSP_SEPARATOR && n.getType() != NeutronType.WHITESPACE)
 					return false;
 			return true;
 		}
@@ -170,7 +170,7 @@ public class Fission {
 			while (neutrons.size() > 0 && neutrons.get(0).getType() == NeutronType.ZWSP_SEPARATOR)
 				neutrons.remove(0);
 			while (neutrons.size() > 1
-					&& (last().getType() == NeutronType.SPACE || last().getType() == NeutronType.ZWSP_SEPARATOR))
+					&& (last().getType() == NeutronType.WHITESPACE || last().getType() == NeutronType.ZWSP_SEPARATOR))
 				neutrons.remove(neutrons.size() - 1);
 		}
 
@@ -192,7 +192,7 @@ public class Fission {
 
 			for (Neutron n : neutrons)
 				if (n.getType() != NeutronType.ZWSP_SEPARATOR) {
-					if (removeInitialSpaces && result.size() == 0 && n.getType() == NeutronType.SPACE)
+					if (removeInitialSpaces && result.size() == 0 && n.getType() == NeutronType.WHITESPACE)
 						continue;
 					result.add(n.asAtom());
 				}
@@ -210,7 +210,7 @@ public class Fission {
 					&& last().getType() == NeutronType.ZWSP_SEPARATOR)
 				return;
 
-			if (removeInitialSpaces && this.neutrons.size() == 0 && neutron.getType() == NeutronType.SPACE)
+			if (removeInitialSpaces && this.neutrons.size() == 0 && neutron.getType() == NeutronType.WHITESPACE)
 				return;
 
 			this.neutrons.add(neutron);
