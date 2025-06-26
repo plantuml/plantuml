@@ -36,7 +36,15 @@
  */
 package net.sourceforge.plantuml.decoration;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
@@ -58,105 +66,180 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryPlus;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactorySquare;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 
-<span class="fc" id="L61">public enum LinkDecor {</span>
+<span class="fc" id="L69">public enum LinkDecor {</span>
 
-<span class="fc" id="L63">	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),</span>
-<span class="fc" id="L64">	NOT_NAVIGABLE(1, false, 0.5),</span>
+<span class="fc" id="L71">	NONE(null, null, 2, false, 0), //</span>
+<span class="fc" id="L72">	EXTENDS(decors1(&quot;&lt;|&quot;, &quot;^&quot;), decors2(&quot;|&gt;&quot;, &quot;^&quot;), 30, false, 2), //</span>
+<span class="fc" id="L73">	COMPOSITION(decors1(&quot;*&quot;), decors2(&quot;*&quot;), 15, true, 1.3), //</span>
+<span class="fc" id="L74">	AGREGATION(decors1(&quot;o&quot;), decors2(&quot;o&quot;), 15, false, 1.3), //</span>
+<span class="fc" id="L75">	NOT_NAVIGABLE(decors1(&quot;x&quot;), decors2(&quot;x&quot;), 1, false, 0.5), //</span>
 
-<span class="fc" id="L66">	REDEFINES(30, false, 2), DEFINEDBY(30, false, 2),</span>
+<span class="fc" id="L77">	REDEFINES(decors1(&quot;&lt;||&quot;), decors2(&quot;||&gt;&quot;), 30, false, 2), //</span>
+<span class="fc" id="L78">	DEFINEDBY(decors1(&quot;&lt;|:&quot;), decors2(&quot;:|&gt;&quot;), 30, false, 2), //</span>
 
-<span class="fc" id="L68">	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8), DOUBLE_LINE(7, false, 0.7),</span>
-<span class="fc" id="L69">	LINE_CROWFOOT(10, false, 0.8),</span>
+<span class="fc" id="L80">	CROWFOOT(decors1(&quot;}&quot;), decors2(&quot;{&quot;), 10, true, 0.8), //</span>
+<span class="fc" id="L81">	CIRCLE_CROWFOOT(decors1(&quot;}o&quot;), decors2(&quot;o{&quot;), 14, false, 0.8), //</span>
+<span class="fc" id="L82">	CIRCLE_LINE(decors1(&quot;|o&quot;), decors2(&quot;o|&quot;), 10, false, 0.8), //</span>
+<span class="fc" id="L83">	DOUBLE_LINE(decors1(&quot;||&quot;), decors2(&quot;||&quot;), 7, false, 0.7), //</span>
+<span class="fc" id="L84">	LINE_CROWFOOT(decors1(&quot;}|&quot;), decors2(&quot;|{&quot;), 10, false, 0.8), //</span>
 
-<span class="fc" id="L71">	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),</span>
+<span class="fc" id="L86">	ARROW(decors1(&quot;&lt;&quot;, &quot;&lt;_&quot;), decors2(&quot;&gt;&quot;, &quot;_&gt;&quot;), 10, true, 0.5), //</span>
+<span class="fc" id="L87">	ARROW_TRIANGLE(null, null, 10, true, 0.8), //</span>
+<span class="fc" id="L88">	ARROW_AND_CIRCLE(null, null, 10, false, 0.5), //</span>
 
-<span class="fc" id="L73">	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),</span>
-<span class="fc" id="L74">	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),</span>
+<span class="fc" id="L90">	CIRCLE(null, null, 0, false, 0.5), //</span>
+<span class="fc" id="L91">	CIRCLE_FILL(decors1(&quot;@&quot;), decors2(&quot;@&quot;), 0, false, 0.5), //</span>
+<span class="fc" id="L92">	CIRCLE_CONNECT(null, null, 0, false, 0.5), //</span>
+<span class="fc" id="L93">	PARENTHESIS(decors1(&quot;)&quot;), decors2(&quot;(&quot;), 0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //</span>
+<span class="fc" id="L94">	SQUARE(decors1(&quot;#&quot;), decors2(&quot;#&quot;), 0, false, 0.5), //</span>
 
-<span class="fc" id="L76">	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW_UP(0, false, 1.5), HALF_ARROW_DOWN(0, false, 1.5), SQUARE_toberemoved(30, false, 0);</span>
+<span class="fc" id="L96">	CIRCLE_CROSS(null, null, 0, false, 0.5), //</span>
+<span class="fc" id="L97">	PLUS(decors1(&quot;+&quot;), decors2(&quot;+&quot;), 0, false, 1.5), //</span>
+<span class="fc" id="L98">	HALF_ARROW_UP(null, null, 0, false, 1.5), //</span>
+<span class="fc" id="L99">	HALF_ARROW_DOWN(null, null, 0, false, 1.5), //</span>
+<span class="fc" id="L100">	SQUARE_toberemoved(null, null, 30, false, 0);</span>
 
 	private final double arrowSize;
 	private final int margin;
 	private final boolean fill;
+	private final String[] decors1;
+	private final String[] decors2;
 
-<span class="fc" id="L82">	private LinkDecor(int margin, boolean fill, double arrowSize) {</span>
-<span class="fc" id="L83">		this.margin = margin;</span>
-<span class="fc" id="L84">		this.fill = fill;</span>
-<span class="fc" id="L85">		this.arrowSize = arrowSize;</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L108">	private final static Map&lt;String, LinkDecor&gt; DECORS1 = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L109">	private final static Map&lt;String, LinkDecor&gt; DECORS2 = new HashMap&lt;&gt;();</span>
+
+	private static String[] decors1(String... tmp) {
+<span class="fc" id="L112">		return tmp;</span>
+	}
+
+	private static String[] decors2(String... tmp) {
+<span class="fc" id="L116">		return tmp;</span>
+	}
+
+<span class="fc" id="L119">	private LinkDecor(String[] decors1, String[] decors2, int margin, boolean fill, double arrowSize) {</span>
+<span class="fc" id="L120">		this.margin = margin;</span>
+<span class="fc" id="L121">		this.fill = fill;</span>
+<span class="fc" id="L122">		this.arrowSize = arrowSize;</span>
+<span class="fc" id="L123">		this.decors1 = decors1;</span>
+<span class="fc" id="L124">		this.decors2 = decors2;</span>
+
+<span class="fc" id="L126">	}</span>
+
+	static {
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (LinkDecor decor : values()) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			if (decor.decors1 != null)</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">				for (String s : decor.decors1)</span>
+<span class="fc" id="L132">					DECORS1.put(s, decor);</span>
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			if (decor.decors2 != null)</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">				for (String s : decor.decors2)</span>
+<span class="fc" id="L136">					DECORS2.put(s, decor);</span>
+		}
+<span class="fc" id="L138">	}</span>
 
 	public int getMargin() {
-<span class="nc" id="L89">		return margin;</span>
+<span class="nc" id="L141">		return margin;</span>
 	}
 
 	public boolean isFill() {
-<span class="nc" id="L93">		return fill;</span>
+<span class="nc" id="L145">		return fill;</span>
 	}
 
 	public double getArrowSize() {
-<span class="nc" id="L97">		return arrowSize;</span>
+<span class="nc" id="L149">		return arrowSize;</span>
 	}
 
 	public boolean isExtendsLike() {
-<span class="nc bnc" id="L101" title="All 6 branches missed.">		return this == EXTENDS || this == REDEFINES || this == DEFINEDBY;</span>
+<span class="nc bnc" id="L153" title="All 6 branches missed.">		return this == EXTENDS || this == REDEFINES || this == DEFINEDBY;</span>
 	}
 
 	public ExtremityFactory getExtremityFactoryComplete(HColor backgroundColor) {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (this == EXTENDS)</span>
-<span class="fc" id="L106">			return new ExtremityFactoryTriangle(null, 18, 6, 18);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (this == EXTENDS)</span>
+<span class="fc" id="L158">			return new ExtremityFactoryTriangle(null, 18, 6, 18);</span>
 
-<span class="fc" id="L108">		return getExtremityFactoryLegacy(backgroundColor);</span>
+<span class="fc" id="L160">		return getExtremityFactoryLegacy(backgroundColor);</span>
 	}
 
 	public ExtremityFactory getExtremityFactoryLegacy(HColor backgroundColor) {
-<span class="pc bpc" id="L112" title="17 of 23 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L164" title="17 of 23 branches missed.">		switch (this) {</span>
 		case PLUS:
-<span class="fc" id="L114">			return new ExtremityFactoryPlus(backgroundColor);</span>
+<span class="fc" id="L166">			return new ExtremityFactoryPlus(backgroundColor);</span>
 		case REDEFINES:
-<span class="nc" id="L116">			return new ExtremityFactoryExtendsLike(backgroundColor, false);</span>
+<span class="nc" id="L168">			return new ExtremityFactoryExtendsLike(backgroundColor, false);</span>
 		case DEFINEDBY:
-<span class="nc" id="L118">			return new ExtremityFactoryExtendsLike(backgroundColor, true);</span>
+<span class="nc" id="L170">			return new ExtremityFactoryExtendsLike(backgroundColor, true);</span>
 		case HALF_ARROW_UP:
-<span class="nc" id="L120">			return new ExtremityFactoryHalfArrow(1);</span>
+<span class="nc" id="L172">			return new ExtremityFactoryHalfArrow(1);</span>
 		case HALF_ARROW_DOWN:
-<span class="nc" id="L122">			return new ExtremityFactoryHalfArrow(-1);</span>
+<span class="nc" id="L174">			return new ExtremityFactoryHalfArrow(-1);</span>
 		case ARROW_TRIANGLE:
-<span class="fc" id="L124">			return new ExtremityFactoryTriangle(null, 8, 3, 8);</span>
+<span class="fc" id="L176">			return new ExtremityFactoryTriangle(null, 8, 3, 8);</span>
 		case CROWFOOT:
-<span class="nc" id="L126">			return new ExtremityFactoryCrowfoot();</span>
+<span class="nc" id="L178">			return new ExtremityFactoryCrowfoot();</span>
 		case CIRCLE_CROWFOOT:
-<span class="nc" id="L128">			return new ExtremityFactoryCircleCrowfoot();</span>
+<span class="nc" id="L180">			return new ExtremityFactoryCircleCrowfoot();</span>
 		case LINE_CROWFOOT:
-<span class="nc" id="L130">			return new ExtremityFactoryLineCrowfoot();</span>
+<span class="nc" id="L182">			return new ExtremityFactoryLineCrowfoot();</span>
 		case CIRCLE_LINE:
-<span class="nc" id="L132">			return new ExtremityFactoryCircleLine();</span>
+<span class="nc" id="L184">			return new ExtremityFactoryCircleLine();</span>
 		case DOUBLE_LINE:
-<span class="nc" id="L134">			return new ExtremityFactoryDoubleLine();</span>
+<span class="nc" id="L186">			return new ExtremityFactoryDoubleLine();</span>
 		case CIRCLE_CROSS:
-<span class="nc" id="L136">			return new ExtremityFactoryCircleCross(backgroundColor);</span>
+<span class="nc" id="L188">			return new ExtremityFactoryCircleCross(backgroundColor);</span>
 		case ARROW:
-<span class="fc" id="L138">			return new ExtremityFactoryArrow();</span>
+<span class="fc" id="L190">			return new ExtremityFactoryArrow();</span>
 		case ARROW_AND_CIRCLE:
-<span class="nc" id="L140">			return new ExtremityFactoryArrowAndCircle(backgroundColor);</span>
+<span class="nc" id="L192">			return new ExtremityFactoryArrowAndCircle(backgroundColor);</span>
 		case NOT_NAVIGABLE:
-<span class="nc" id="L142">			return new ExtremityFactoryNotNavigable();</span>
+<span class="nc" id="L194">			return new ExtremityFactoryNotNavigable();</span>
 		case AGREGATION:
-<span class="fc" id="L144">			return new ExtremityFactoryDiamond(false);</span>
+<span class="fc" id="L196">			return new ExtremityFactoryDiamond(false);</span>
 		case COMPOSITION:
-<span class="fc" id="L146">			return new ExtremityFactoryDiamond(true);</span>
+<span class="fc" id="L198">			return new ExtremityFactoryDiamond(true);</span>
 		case CIRCLE:
-<span class="nc" id="L148">			return new ExtremityFactoryCircle(false, backgroundColor);</span>
+<span class="nc" id="L200">			return new ExtremityFactoryCircle(false, backgroundColor);</span>
 		case CIRCLE_FILL:
-<span class="nc" id="L150">			return new ExtremityFactoryCircle(true, backgroundColor);</span>
+<span class="nc" id="L202">			return new ExtremityFactoryCircle(true, backgroundColor);</span>
 		case SQUARE:
-<span class="nc" id="L152">			return new ExtremityFactorySquare(backgroundColor);</span>
+<span class="nc" id="L204">			return new ExtremityFactorySquare(backgroundColor);</span>
 		case PARENTHESIS:
-<span class="nc" id="L154">			return new ExtremityFactoryParenthesis();</span>
+<span class="nc" id="L206">			return new ExtremityFactoryParenthesis();</span>
 		case CIRCLE_CONNECT:
-<span class="nc" id="L156">			return new ExtremityFactoryCircleConnect(backgroundColor);</span>
+<span class="nc" id="L208">			return new ExtremityFactoryCircleConnect(backgroundColor);</span>
 		default:
-<span class="fc" id="L158">			return null;</span>
+<span class="fc" id="L210">			return null;</span>
 		}
 	}
+
+	public static LinkDecor lookupDecors1(String s) {
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L216">			return LinkDecor.NONE;</span>
+<span class="fc" id="L217">		return DECORS1.getOrDefault(StringUtils.trin(s), LinkDecor.NONE);</span>
+	}
+
+	public static LinkDecor lookupDecors2(String s) {
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L222">			return LinkDecor.NONE;</span>
+<span class="fc" id="L223">		return DECORS2.getOrDefault(StringUtils.trin(s), LinkDecor.NONE);</span>
+	}
+
+	public static String getRegexDecors1() {
+<span class="fc" id="L227">		return buildRegexFromDecorKeys(DECORS1.keySet());</span>
+	}
+
+	public static String getRegexDecors2() {
+<span class="fc" id="L231">		return buildRegexFromDecorKeys(DECORS2.keySet());</span>
+	}
+
+	private static String buildRegexFromDecorKeys(Set&lt;String&gt; keys) {
+		// Sort by descending length to prevent prefix conflicts (e.g., &quot;||&quot; before &quot;|&quot;)
+		// Use Pattern.quote to escape any special regex characters
+		// Join all keys with &quot;|&quot; to build the final regular expression
+<span class="fc" id="L238">		return keys.stream() //</span>
+<span class="fc" id="L239">				.sorted(Comparator.&lt;String&gt;comparingInt(String::length).reversed()) //</span>
+<span class="fc" id="L240">				.map(Pattern::quote) //</span>
+<span class="fc" id="L241">				.collect(Collectors.joining(&quot;|&quot;, &quot;(&quot;, &quot;)?&quot;)); //</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
