@@ -36,7 +36,15 @@
  */
 package net.sourceforge.plantuml.decoration;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
@@ -60,29 +68,73 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 
 public enum LinkDecor {
 
-	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),
-	NOT_NAVIGABLE(1, false, 0.5),
+	NONE(null, null, 2, false, 0), //
+	EXTENDS(decors1("<|", "^"), decors2("|>", "^"), 30, false, 2), //
+	COMPOSITION(decors1("*"), decors2("*"), 15, true, 1.3), //
+	AGREGATION(decors1("o"), decors2("o"), 15, false, 1.3), //
+	NOT_NAVIGABLE(decors1("x"), decors2("x"), 1, false, 0.5), //
 
-	REDEFINES(30, false, 2), DEFINEDBY(30, false, 2),
+	REDEFINES(decors1("<||"), decors2("||>"), 30, false, 2), //
+	DEFINEDBY(decors1("<|:"), decors2(":|>"), 30, false, 2), //
 
-	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8), DOUBLE_LINE(7, false, 0.7),
-	LINE_CROWFOOT(10, false, 0.8),
+	CROWFOOT(decors1("}"), decors2("{"), 10, true, 0.8), //
+	CIRCLE_CROWFOOT(decors1("}o"), decors2("o{"), 14, false, 0.8), //
+	CIRCLE_LINE(decors1("|o"), decors2("o|"), 10, false, 0.8), //
+	DOUBLE_LINE(decors1("||"), decors2("||"), 7, false, 0.7), //
+	LINE_CROWFOOT(decors1("}|"), decors2("|{"), 10, false, 0.8), //
 
-	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),
+	ARROW(decors1("<", "<_"), decors2(">", "_>"), 10, true, 0.5), //
+	ARROW_TRIANGLE(null, null, 10, true, 0.8), //
+	ARROW_AND_CIRCLE(null, null, 10, false, 0.5), //
 
-	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),
-	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),
+	CIRCLE(null, null, 0, false, 0.5), //
+	CIRCLE_FILL(decors1("@"), decors2("@"), 0, false, 0.5), //
+	CIRCLE_CONNECT(null, null, 0, false, 0.5), //
+	PARENTHESIS(decors1(")"), decors2("("), 0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //
+	SQUARE(decors1("#"), decors2("#"), 0, false, 0.5), //
 
-	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW_UP(0, false, 1.5), HALF_ARROW_DOWN(0, false, 1.5), SQUARE_toberemoved(30, false, 0);
+	CIRCLE_CROSS(null, null, 0, false, 0.5), //
+	PLUS(decors1("+"), decors2("+"), 0, false, 1.5), //
+	HALF_ARROW_UP(null, null, 0, false, 1.5), //
+	HALF_ARROW_DOWN(null, null, 0, false, 1.5), //
+	SQUARE_toberemoved(null, null, 30, false, 0);
 
 	private final double arrowSize;
 	private final int margin;
 	private final boolean fill;
+	private final String[] decors1;
+	private final String[] decors2;
 
-	private LinkDecor(int margin, boolean fill, double arrowSize) {
+	private final static Map<String, LinkDecor> DECORS1 = new HashMap<>();
+	private final static Map<String, LinkDecor> DECORS2 = new HashMap<>();
+
+	private static String[] decors1(String... tmp) {
+		return tmp;
+	}
+
+	private static String[] decors2(String... tmp) {
+		return tmp;
+	}
+
+	private LinkDecor(String[] decors1, String[] decors2, int margin, boolean fill, double arrowSize) {
 		this.margin = margin;
 		this.fill = fill;
 		this.arrowSize = arrowSize;
+		this.decors1 = decors1;
+		this.decors2 = decors2;
+
+	}
+
+	static {
+		for (LinkDecor decor : values()) {
+			if (decor.decors1 != null)
+				for (String s : decor.decors1)
+					DECORS1.put(s, decor);
+
+			if (decor.decors2 != null)
+				for (String s : decor.decors2)
+					DECORS2.put(s, decor);
+		}
 	}
 
 	public int getMargin() {
@@ -158,4 +210,35 @@ public enum LinkDecor {
 			return null;
 		}
 	}
+
+	public static LinkDecor lookupDecors1(String s) {
+		if (s == null)
+			return LinkDecor.NONE;
+		return DECORS1.getOrDefault(StringUtils.trin(s), LinkDecor.NONE);
+	}
+
+	public static LinkDecor lookupDecors2(String s) {
+		if (s == null)
+			return LinkDecor.NONE;
+		return DECORS2.getOrDefault(StringUtils.trin(s), LinkDecor.NONE);
+	}
+
+	public static String getRegexDecors1() {
+		return buildRegexFromDecorKeys(DECORS1.keySet());
+	}
+
+	public static String getRegexDecors2() {
+		return buildRegexFromDecorKeys(DECORS2.keySet());
+	}
+
+	private static String buildRegexFromDecorKeys(Set<String> keys) {
+		// Sort by descending length to prevent prefix conflicts (e.g., "||" before "|")
+		// Use Pattern.quote to escape any special regex characters
+		// Join all keys with "|" to build the final regular expression
+		return keys.stream() //
+				.sorted(Comparator.<String>comparingInt(String::length).reversed()) //
+				.map(Pattern::quote) //
+				.collect(Collectors.joining("|", "(", ")?")); //
+	}
+
 }
