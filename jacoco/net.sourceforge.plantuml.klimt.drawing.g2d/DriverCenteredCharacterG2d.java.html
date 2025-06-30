@@ -57,9 +57,10 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 <span class="fc" id="L57">		final double xpos = x - unusedSpace.getCenterX();</span>
 <span class="fc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="fc" id="L60">		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));</span>
-<span class="fc" id="L61">		g2d.drawString(&quot;&quot; + c, (float) xpos, (float) ypos);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L60">		final String text = &quot;&quot; + c;</span>
+<span class="fc" id="L61">		g2d.setFont(font.getUnderlayingFont(text));</span>
+<span class="fc" id="L62">		g2d.drawString(text, (float) xpos, (float) ypos);</span>
+<span class="fc" id="L63">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

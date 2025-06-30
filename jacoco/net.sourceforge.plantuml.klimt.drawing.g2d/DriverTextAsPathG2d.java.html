@@ -101,7 +101,7 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L101">		visible.ensureVisible(x, y - height + 1.5);</span>
 <span class="nc" id="L102">		visible.ensureVisible(x + width, y + 1.5);</span>
 
-<span class="nc" id="L104">		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));</span>
+<span class="nc" id="L104">		g2d.setFont(font.getUnderlayingFont(shape.getText()));</span>
 <span class="nc" id="L105">		g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
 <span class="nc" id="L106">		final TextLayout t = UFontContext.G2D.createTextLayout(font, shape.getText());</span>
 <span class="nc" id="L107">		g2d.translate(x, y);</span>
@@ -130,7 +130,7 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 			}
 		}
 <span class="nc bnc" id="L132" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
-<span class="nc" id="L133">			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(UFontContext.G2D));</span>
+<span class="nc" id="L133">			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(shape.getText()));</span>
 <span class="nc" id="L134">			final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
 <span class="nc" id="L135">			final HColor extended = fontConfiguration.getExtendedColor();</span>
 <span class="nc bnc" id="L136" title="All 2 branches missed.">			if (extended != null)</span>

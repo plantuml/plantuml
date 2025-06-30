@@ -143,7 +143,7 @@ public class DriverTextSvg implements UDriver&lt;UText, SvgGraphics&gt; {
 
 <span class="fc" id="L144">		final HColor textColor = fontConfiguration.getColor();</span>
 <span class="fc" id="L145">		svg.setFillColor(textColor.toSvg(mapper));</span>
-<span class="fc" id="L146">		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,</span>
+<span class="fc" id="L146">		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,</span>
 <span class="fc" id="L147">				width, fontConfiguration.getAttributes(), backColor);</span>
 
 <span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (extraLine != null) {</span>

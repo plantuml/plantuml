@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 <span class="nc" id="L49">		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());</span>
 	}
 
-	public TextLayout createTextLayout(UFont font, String string) {
-<span class="fc" id="L53">		return new TextLayout(string, font.getUnderlayingFont(this), FileFormat.gg.getFontRenderContext());</span>
+	public TextLayout createTextLayout(UFont font, String text) {
+<span class="fc" id="L53">		return new TextLayout(text, font.getUnderlayingFont(text), FileFormat.gg.getFontRenderContext());</span>
 	}
 	// ::done
 }

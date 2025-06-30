@@ -235,10 +235,19 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 		// Sort by descending length to prevent prefix conflicts (e.g., &quot;||&quot; before &quot;|&quot;)
 		// Use Pattern.quote to escape any special regex characters
 		// Join all keys with &quot;|&quot; to build the final regular expression
-<span class="fc" id="L238">		return keys.stream() //</span>
-<span class="fc" id="L239">				.sorted(Comparator.&lt;String&gt;comparingInt(String::length).reversed()) //</span>
-<span class="fc" id="L240">				.map(Pattern::quote) //</span>
-<span class="fc" id="L241">				.collect(Collectors.joining(&quot;|&quot;, &quot;(&quot;, &quot;)?&quot;)); //</span>
+<span class="fc" id="L238">		return keys.stream().sorted(Comparator.&lt;String&gt;comparingInt(String::length).reversed()).map(key -&gt; {</span>
+<span class="fc" id="L239">			final String quoted = Pattern.quote(key);</span>
+<span class="fc" id="L240">			final boolean startsWithO = key.startsWith(&quot;o&quot;);</span>
+<span class="fc" id="L241">			final boolean endsWithO = key.endsWith(&quot;o&quot;);</span>
+<span class="fc bfc" id="L242" title="All 4 branches covered.">			if (startsWithO &amp;&amp; endsWithO)</span>
+<span class="fc" id="L243">				return &quot;\\b&quot; + quoted + &quot;\\b&quot;;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">			if (startsWithO)</span>
+<span class="fc" id="L245">				return &quot;\\b&quot; + quoted;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">			if (endsWithO)</span>
+<span class="fc" id="L247">				return quoted + &quot;\\b&quot;;</span>
+
+<span class="fc" id="L249">			return quoted;</span>
+<span class="fc" id="L250">		}).collect(Collectors.joining(&quot;|&quot;, &quot;(&quot;, &quot;)?&quot;));</span>
 	}
 
 }

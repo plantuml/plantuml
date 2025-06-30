@@ -48,15 +48,15 @@ import net.sourceforge.plantuml.klimt.font.UFontContext;
 <span class="nc" id="L48">		appendColor(getColor());</span>
 <span class="nc" id="L49">		final UFont font = fontConfiguration.getFont();</span>
 <span class="nc" id="L50">		final int size = font.getSize();</span>
-<span class="nc" id="L51">		append(&quot;/&quot; + getPSName(fontConfiguration) + &quot; findfont &quot; + size + &quot; scalefont setfont&quot;, true);</span>
+<span class="nc" id="L51">		append(&quot;/&quot; + getPSName(text, fontConfiguration) + &quot; findfont &quot; + size + &quot; scalefont setfont&quot;, true);</span>
 <span class="nc" id="L52">		append(&quot;100 -100 scale&quot;, true);</span>
 <span class="nc" id="L53">		append(&quot;(&quot; + getTextAsEps(text) + &quot;) show&quot;, false);</span>
 <span class="nc" id="L54">		append(&quot;.01 -.01 scale&quot;, true);</span>
 <span class="nc" id="L55">	}</span>
 
-	private String getPSName(FontConfiguration fontConfiguration) {
+	private String getPSName(String text, FontConfiguration fontConfiguration) {
 <span class="nc" id="L58">		final UFont font = fontConfiguration.getFont();</span>
-<span class="nc" id="L59">		final StringBuilder sb = new StringBuilder(font.getFamily(UFontContext.EPS));</span>
+<span class="nc" id="L59">		final StringBuilder sb = new StringBuilder(font.getFamily(text, UFontContext.EPS));</span>
 		// final int style = fontConfiguration.getFont().getStyle();
 		// final boolean bold = (style &amp; Font.BOLD) != 0 ||
 		// fontConfiguration.containsStyle(FontStyle.BOLD);

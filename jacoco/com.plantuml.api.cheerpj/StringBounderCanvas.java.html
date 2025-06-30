@@ -42,7 +42,6 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderCanvas extends StringBounderRaw {
@@ -50,21 +49,21 @@ public class StringBounderCanvas extends StringBounderRaw {
 	private final Graphics2D g2d;
 
 	public StringBounderCanvas(Graphics2D g2d) {
-<span class="nc" id="L53">		super(g2d.getFontRenderContext());</span>
-<span class="nc" id="L54">		this.g2d = g2d;</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L52">		super(g2d.getFontRenderContext());</span>
+<span class="nc" id="L53">		this.g2d = g2d;</span>
+<span class="nc" id="L54">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc" id="L59">		return false;</span>
+<span class="nc" id="L58">		return false;</span>
 	}
 
 	@Override
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-<span class="nc" id="L64">		final Font javaFont = font.getUnderlayingFont(UFontContext.G2D);</span>
-<span class="nc" id="L65">		final FontMetrics fm = g2d.getFontMetrics(javaFont);</span>
-<span class="nc" id="L66">		final Rectangle2D rect = fm.getStringBounds(text, g2d);</span>
-<span class="nc" id="L67">		return new XDimension2D(rect.getWidth(), rect.getHeight());</span>
+<span class="nc" id="L63">		final Font javaFont = font.getUnderlayingFont(text);</span>
+<span class="nc" id="L64">		final FontMetrics fm = g2d.getFontMetrics(javaFont);</span>
+<span class="nc" id="L65">		final Rectangle2D rect = fm.getStringBounds(text, g2d);</span>
+<span class="nc" id="L66">		return new XDimension2D(rect.getWidth(), rect.getHeight());</span>
 	}
 
 }

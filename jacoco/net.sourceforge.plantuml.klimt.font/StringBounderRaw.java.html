@@ -72,7 +72,7 @@ public abstract class StringBounderRaw implements StringBounder {
 	protected abstract XDimension2D calculateDimensionInternal(UFont font, String text);
 
 	public double getDescent(UFont font, String text) {
-<span class="fc" id="L75">		final LineMetrics lineMetrics = font.getUnderlayingFont(UFontContext.G2D).getLineMetrics(text, frc);</span>
+<span class="fc" id="L75">		final LineMetrics lineMetrics = font.getUnderlayingFont(text).getLineMetrics(text, frc);</span>
 <span class="fc" id="L76">		final double descent = lineMetrics.getDescent();</span>
 <span class="fc" id="L77">		return descent;</span>
 	}

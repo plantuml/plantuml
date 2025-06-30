@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontStack;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -63,232 +64,232 @@ public class Style {
 	private final Map&lt;PName, Value&gt; map;
 	private final StyleSignatureBasic signature;
 
-<span class="fc" id="L66">	public Style(StyleSignatureBasic signature, Map&lt;PName, Value&gt; map) {</span>
-<span class="fc" id="L67">		this.map = map;</span>
-<span class="fc" id="L68">		this.signature = signature;</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L67">	public Style(StyleSignatureBasic signature, Map&lt;PName, Value&gt; map) {</span>
+<span class="fc" id="L68">		this.map = map;</span>
+<span class="fc" id="L69">		this.signature = signature;</span>
+<span class="fc" id="L70">	}</span>
 
 	public Style deltaPriority(int delta) {
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (signature.isStarred() == false)</span>
-<span class="nc" id="L73">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (signature.isStarred() == false)</span>
+<span class="nc" id="L74">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L75">		final EnumMap&lt;PName, Value&gt; copy = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : this.map.entrySet())</span>
-<span class="nc" id="L77">			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));</span>
+<span class="nc" id="L76">		final EnumMap&lt;PName, Value&gt; copy = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : this.map.entrySet())</span>
+<span class="nc" id="L78">			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));</span>
 
-<span class="nc" id="L79">		return new Style(this.signature, copy);</span>
+<span class="nc" id="L80">		return new Style(this.signature, copy);</span>
 
 	}
 
 	public void printMe() {
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (map.size() == 0)</span>
-<span class="nc" id="L85">			return;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (map.size() == 0)</span>
+<span class="nc" id="L86">			return;</span>
 
-<span class="nc" id="L87">		System.err.println(signature + &quot; {&quot;);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : map.entrySet())</span>
-<span class="nc" id="L89">			System.err.println(&quot;  &quot; + ent.getKey() + &quot;: &quot; + ent.getValue().asString());</span>
+<span class="nc" id="L88">		System.err.println(signature + &quot; {&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : map.entrySet())</span>
+<span class="nc" id="L90">			System.err.println(&quot;  &quot; + ent.getKey() + &quot;: &quot; + ent.getValue().asString());</span>
 
-<span class="nc" id="L91">		System.err.println(&quot;}&quot;);</span>
+<span class="nc" id="L92">		System.err.println(&quot;}&quot;);</span>
 
-<span class="nc" id="L93">	}</span>
+<span class="nc" id="L94">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L97">		return signature + &quot; &quot; + map;</span>
+<span class="nc" id="L98">		return signature + &quot; &quot; + map;</span>
 	}
 
 	public Value value(PName name) {
-<span class="fc" id="L101">		final Value result = map.get(name);</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (result == null)</span>
-<span class="fc" id="L103">			return ValueNull.NULL;</span>
+<span class="fc" id="L102">		final Value result = map.get(name);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L104">			return ValueNull.NULL;</span>
 
-<span class="fc" id="L105">		return result;</span>
+<span class="fc" id="L106">		return result;</span>
 	}
 
 	public double getShadowing() {
-<span class="fc" id="L109">		final Value result = map.get(PName.Shadowing);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L111">			return 0;</span>
+<span class="fc" id="L110">		final Value result = map.get(PName.Shadowing);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L112">			return 0;</span>
 
-<span class="fc" id="L113">		return value(PName.Shadowing).asDoubleDefaultTo(1.5);</span>
+<span class="fc" id="L114">		return value(PName.Shadowing).asDoubleDefaultTo(1.5);</span>
 	}
 
 	public boolean hasValue(PName name) {
-<span class="fc" id="L117">		return map.containsKey(name);</span>
+<span class="fc" id="L118">		return map.containsKey(name);</span>
 	}
 
 	public Style mergeWith(Style other, MergeStrategy strategy) {
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (other == null)</span>
-<span class="fc" id="L122">			return this;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (other == null)</span>
+<span class="fc" id="L123">			return this;</span>
 
-<span class="fc" id="L124">		final EnumMap&lt;PName, Value&gt; both = new EnumMap&lt;PName, Value&gt;(this.map);</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : other.map.entrySet()) {</span>
-<span class="fc" id="L126">			final Value previous = this.map.get(ent.getKey());</span>
-<span class="fc bfc" id="L127" title="All 6 branches covered.">			if (previous != null &amp;&amp; previous.getPriority() &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE</span>
+<span class="fc" id="L125">		final EnumMap&lt;PName, Value&gt; both = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : other.map.entrySet()) {</span>
+<span class="fc" id="L127">			final Value previous = this.map.get(ent.getKey());</span>
+<span class="fc bfc" id="L128" title="All 6 branches covered.">			if (previous != null &amp;&amp; previous.getPriority() &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE</span>
 					&amp;&amp; strategy == MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE)
-<span class="fc" id="L129">				continue;</span>
-<span class="fc" id="L130">			final PName key = ent.getKey();</span>
-<span class="fc" id="L131">			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));</span>
-<span class="fc" id="L132">		}</span>
-<span class="fc" id="L133">		return new Style(this.signature.mergeWith(other.getSignature()), both);</span>
+<span class="fc" id="L130">				continue;</span>
+<span class="fc" id="L131">			final PName key = ent.getKey();</span>
+<span class="fc" id="L132">			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));</span>
+<span class="fc" id="L133">		}</span>
+<span class="fc" id="L134">		return new Style(this.signature.mergeWith(other.getSignature()), both);</span>
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (color == null)</span>
-<span class="fc" id="L138">			return this;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (color == null)</span>
+<span class="fc" id="L139">			return this;</span>
 
-<span class="fc" id="L140">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
-<span class="fc" id="L141">		final Value old = result.get(param);</span>
-<span class="fc" id="L142">		result.put(param, new ValueColor(color, old.getPriority()));</span>
-<span class="fc" id="L143">		return new Style(this.signature, result);</span>
+<span class="fc" id="L141">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc" id="L142">		final Value old = result.get(param);</span>
+<span class="fc" id="L143">		result.put(param, new ValueColor(color, old.getPriority()));</span>
+<span class="fc" id="L144">		return new Style(this.signature, result);</span>
 	}
 
 	public Style eventuallyOverride(PName param, double value) {
-<span class="fc" id="L147">		return eventuallyOverride(param, &quot;&quot; + value);</span>
+<span class="fc" id="L148">		return eventuallyOverride(param, &quot;&quot; + value);</span>
 	}
 
 	public Style eventuallyOverride(PName param, String value) {
-<span class="fc" id="L151">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
-<span class="fc" id="L152">		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));</span>
-<span class="fc" id="L153">		return new Style(this.signature, result);</span>
+<span class="fc" id="L152">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc" id="L153">		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));</span>
+<span class="fc" id="L154">		return new Style(this.signature, result);</span>
 	}
 
 	public Style eventuallyOverride(Colors colors) {
-<span class="fc" id="L157">		Style result = this;</span>
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (colors != null) {</span>
-<span class="fc" id="L159">			final HColor back = colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (back != null)</span>
-<span class="fc" id="L161">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+<span class="fc" id="L158">		Style result = this;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (colors != null) {</span>
+<span class="fc" id="L160">			final HColor back = colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (back != null)</span>
+<span class="fc" id="L162">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
 
-<span class="fc" id="L163">			final HColor line = colors.getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (line != null)</span>
-<span class="nc" id="L165">				result = result.eventuallyOverride(PName.LineColor, line);</span>
+<span class="fc" id="L164">			final HColor line = colors.getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (line != null)</span>
+<span class="nc" id="L166">				result = result.eventuallyOverride(PName.LineColor, line);</span>
 
-<span class="fc" id="L167">			final HColor text = colors.getColor(ColorType.TEXT);</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (text != null)</span>
-<span class="nc" id="L169">				result = result.eventuallyOverride(PName.FontColor, text);</span>
+<span class="fc" id="L168">			final HColor text = colors.getColor(ColorType.TEXT);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (text != null)</span>
+<span class="nc" id="L170">				result = result.eventuallyOverride(PName.FontColor, text);</span>
 
 		}
-<span class="fc" id="L172">		return result;</span>
+<span class="fc" id="L173">		return result;</span>
 	}
 
 	public Style eventuallyOverride(Fashion symbolContext) {
-<span class="fc" id="L176">		Style result = this;</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (symbolContext != null) {</span>
-<span class="fc" id="L178">			final HColor back = symbolContext.getBackColor();</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (back != null)</span>
-<span class="fc" id="L180">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+<span class="fc" id="L177">		Style result = this;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (symbolContext != null) {</span>
+<span class="fc" id="L179">			final HColor back = symbolContext.getBackColor();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (back != null)</span>
+<span class="fc" id="L181">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
 
 		}
-<span class="fc" id="L183">		return result;</span>
+<span class="fc" id="L184">		return result;</span>
 	}
 
 	public StyleSignatureBasic getSignature() {
-<span class="fc" id="L187">		return signature;</span>
+<span class="fc" id="L188">		return signature;</span>
 	}
 
 	public UFont getUFont() {
-<span class="fc" id="L191">		final String fontName = value(PName.FontName).asString();</span>
-<span class="fc" id="L192">		final String family = UFont.getExistingFontFamily(fontName);</span>
-<span class="fc" id="L193">		final int fontStyle = value(PName.FontStyle).asFontStyle();</span>
-<span class="fc" id="L194">		int size = value(PName.FontSize).asInt(true);</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (size == -1)</span>
-<span class="nc" id="L196">			size = 14;</span>
-<span class="fc" id="L197">		return UFont.build(family, fontStyle, size);</span>
+<span class="fc" id="L192">		final String fontName = value(PName.FontName).asString();</span>
+		// final String family = FontStack.getExistingFontFamily(fontName);
+<span class="fc" id="L194">		final int fontStyle = value(PName.FontStyle).asFontStyle();</span>
+<span class="fc" id="L195">		int size = value(PName.FontSize).asInt(true);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		if (size == -1)</span>
+<span class="nc" id="L197">			size = 14;</span>
+<span class="fc" id="L198">		return UFont.build(fontName, fontStyle, size);</span>
 	}
 
 	public FontConfiguration getFontConfiguration(HColorSet set) {
-<span class="fc" id="L201">		return getFontConfiguration(set, null);</span>
+<span class="fc" id="L202">		return getFontConfiguration(set, null);</span>
 	}
 
 	public FontConfiguration getFontConfiguration(HColorSet set, Colors colors) {
-<span class="fc" id="L205">		final UFont font = getUFont();</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L208">			color = value(PName.FontColor).asColor(set);</span>
+<span class="fc" id="L206">		final UFont font = getUFont();</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc" id="L209">			color = value(PName.FontColor).asColor(set);</span>
 
-<span class="fc" id="L210">		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);</span>
-<span class="fc" id="L211">		final UStroke stroke = getStroke(PName.HyperlinkUnderlineThickness, PName.HyperlinkUnderlineStyle);</span>
-<span class="fc" id="L212">		return FontConfiguration.create(font, color, hyperlinkColor, stroke);</span>
+<span class="fc" id="L211">		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);</span>
+<span class="fc" id="L212">		final UStroke stroke = getStroke(PName.HyperlinkUnderlineThickness, PName.HyperlinkUnderlineStyle);</span>
+<span class="fc" id="L213">		return FontConfiguration.create(font, color, hyperlinkColor, stroke);</span>
 	}
 
 	public Fashion getSymbolContext(HColorSet set, Colors colors) {
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (backColor == null)</span>
-<span class="fc" id="L218">			backColor = value(PName.BackGroundColor).asColor(set);</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (foreColor == null)</span>
-<span class="fc" id="L221">			foreColor = value(PName.LineColor).asColor(set);</span>
-<span class="fc" id="L222">		final double deltaShadowing = getShadowing();</span>
-<span class="fc" id="L223">		final double roundCorner = value(PName.RoundCorner).asDouble();</span>
-<span class="fc" id="L224">		final double diagonalCorner = value(PName.DiagonalCorner).asDouble();</span>
-<span class="fc" id="L225">		return new Fashion(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing)</span>
-<span class="fc" id="L226">				.withCorner(roundCorner, diagonalCorner);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (backColor == null)</span>
+<span class="fc" id="L219">			backColor = value(PName.BackGroundColor).asColor(set);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (foreColor == null)</span>
+<span class="fc" id="L222">			foreColor = value(PName.LineColor).asColor(set);</span>
+<span class="fc" id="L223">		final double deltaShadowing = getShadowing();</span>
+<span class="fc" id="L224">		final double roundCorner = value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L225">		final double diagonalCorner = value(PName.DiagonalCorner).asDouble();</span>
+<span class="fc" id="L226">		return new Fashion(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing)</span>
+<span class="fc" id="L227">				.withCorner(roundCorner, diagonalCorner);</span>
 	}
 
 	public Fashion getSymbolContext(HColorSet set) {
-<span class="fc" id="L230">		return getSymbolContext(set, null);</span>
+<span class="fc" id="L231">		return getSymbolContext(set, null);</span>
 	}
 
 	public Style eventuallyOverride(UStroke stroke) {
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (stroke == null)</span>
-<span class="nc" id="L235">			return this;</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="nc" id="L236">			return this;</span>
 
-<span class="fc" id="L237">		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());</span>
-<span class="fc" id="L238">		final double space = stroke.getDashSpace();</span>
-<span class="fc" id="L239">		final double visible = stroke.getDashVisible();</span>
-<span class="fc" id="L240">		result = result.eventuallyOverride(PName.LineStyle, &quot;&quot; + visible + &quot;-&quot; + space);</span>
-<span class="fc" id="L241">		return result;</span>
+<span class="fc" id="L238">		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());</span>
+<span class="fc" id="L239">		final double space = stroke.getDashSpace();</span>
+<span class="fc" id="L240">		final double visible = stroke.getDashVisible();</span>
+<span class="fc" id="L241">		result = result.eventuallyOverride(PName.LineStyle, &quot;&quot; + visible + &quot;-&quot; + space);</span>
+<span class="fc" id="L242">		return result;</span>
 	}
 
 	public UStroke getStroke() {
-<span class="fc" id="L245">		return getStroke(PName.LineThickness, PName.LineStyle);</span>
+<span class="fc" id="L246">		return getStroke(PName.LineThickness, PName.LineStyle);</span>
 	}
 
 	private UStroke getStroke(final PName thicknessParam, final PName styleParam) {
-<span class="fc" id="L249">		final double thickness = value(thicknessParam).asDouble();</span>
-<span class="fc" id="L250">		final String dash = value(styleParam).asString();</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (dash.length() == 0)</span>
-<span class="fc" id="L252">			return UStroke.withThickness(thickness);</span>
+<span class="fc" id="L250">		final double thickness = value(thicknessParam).asDouble();</span>
+<span class="fc" id="L251">		final String dash = value(styleParam).asString();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (dash.length() == 0)</span>
+<span class="fc" id="L253">			return UStroke.withThickness(thickness);</span>
 
 		try {
-<span class="fc" id="L255">			final StringTokenizer st = new StringTokenizer(dash, &quot;-;,&quot;);</span>
-<span class="fc" id="L256">			final double dashVisible = Double.parseDouble(st.nextToken().trim());</span>
-<span class="fc" id="L257">			double dashSpace = dashVisible;</span>
-<span class="fc bfc" id="L258" title="All 2 branches covered.">			if (st.hasMoreTokens())</span>
-<span class="fc" id="L259">				dashSpace = Double.parseDouble(st.nextToken().trim());</span>
+<span class="fc" id="L256">			final StringTokenizer st = new StringTokenizer(dash, &quot;-;,&quot;);</span>
+<span class="fc" id="L257">			final double dashVisible = Double.parseDouble(st.nextToken().trim());</span>
+<span class="fc" id="L258">			double dashSpace = dashVisible;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (st.hasMoreTokens())</span>
+<span class="fc" id="L260">				dashSpace = Double.parseDouble(st.nextToken().trim());</span>
 
-<span class="fc" id="L261">			return new UStroke(dashVisible, dashSpace, thickness);</span>
-<span class="fc" id="L262">		} catch (Exception e) {</span>
-<span class="fc" id="L263">			return UStroke.withThickness(thickness);</span>
+<span class="fc" id="L262">			return new UStroke(dashVisible, dashSpace, thickness);</span>
+<span class="fc" id="L263">		} catch (Exception e) {</span>
+<span class="fc" id="L264">			return UStroke.withThickness(thickness);</span>
 		}
 	}
 
 	public UStroke getStroke(Colors colors) {
-<span class="fc" id="L268">		final UStroke stroke = colors.getSpecificLineStroke();</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (stroke == null)</span>
-<span class="fc" id="L270">			return getStroke();</span>
+<span class="fc" id="L269">		final UStroke stroke = colors.getSpecificLineStroke();</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="fc" id="L271">			return getStroke();</span>
 
-<span class="nc" id="L272">		return stroke;</span>
+<span class="nc" id="L273">		return stroke;</span>
 	}
 
 	public LineBreakStrategy wrapWidth() {
-<span class="fc" id="L276">		final String value = value(PName.MaximumWidth).asString();</span>
-<span class="fc" id="L277">		return new LineBreakStrategy(value);</span>
+<span class="fc" id="L277">		final String value = value(PName.MaximumWidth).asString();</span>
+<span class="fc" id="L278">		return new LineBreakStrategy(value);</span>
 	}
 
 	public ClockwiseTopRightBottomLeft getPadding() {
-<span class="fc" id="L281">		final String padding = value(PName.Padding).asString();</span>
-<span class="fc" id="L282">		return ClockwiseTopRightBottomLeft.read(padding);</span>
+<span class="fc" id="L282">		final String padding = value(PName.Padding).asString();</span>
+<span class="fc" id="L283">		return ClockwiseTopRightBottomLeft.read(padding);</span>
 	}
 
 	public ClockwiseTopRightBottomLeft getMargin() {
-<span class="fc" id="L286">		final String margin = value(PName.Margin).asString();</span>
-<span class="fc" id="L287">		return ClockwiseTopRightBottomLeft.read(margin);</span>
+<span class="fc" id="L287">		final String margin = value(PName.Margin).asString();</span>
+<span class="fc" id="L288">		return ClockwiseTopRightBottomLeft.read(margin);</span>
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="fc" id="L291">		return value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
+<span class="fc" id="L292">		return value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
 	}
 
 	public static final String ID_TITLE = &quot;_title&quot;;
@@ -297,32 +298,32 @@ public class Style {
 
 	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer, String id,
 			LineBreakStrategy lineBreak) {
-<span class="fc" id="L300">		final HorizontalAlignment alignment = this.getHorizontalAlignment();</span>
-<span class="fc" id="L301">		final FontConfiguration fc = this.getFontConfiguration(set);</span>
+<span class="fc" id="L301">		final HorizontalAlignment alignment = this.getHorizontalAlignment();</span>
+<span class="fc" id="L302">		final FontConfiguration fc = this.getFontConfiguration(set);</span>
 
-<span class="fc" id="L303">		final TextBlock textBlock = note.create0(fc, alignment, spriteContainer, lineBreak, CreoleMode.FULL, null,</span>
+<span class="fc" id="L304">		final TextBlock textBlock = note.create0(fc, alignment, spriteContainer, lineBreak, CreoleMode.FULL, null,</span>
 				null);
 
-<span class="fc" id="L306">		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);</span>
-<span class="fc" id="L307">		final HColor lineColor = this.value(PName.LineColor).asColor(set);</span>
-<span class="fc" id="L308">		final UStroke stroke = this.getStroke();</span>
-<span class="fc" id="L309">		final int cornersize = this.value(PName.RoundCorner).asInt(false);</span>
-<span class="fc" id="L310">		final ClockwiseTopRightBottomLeft margin = this.getMargin();</span>
-<span class="fc" id="L311">		final ClockwiseTopRightBottomLeft padding = this.getPadding();</span>
-<span class="fc" id="L312">		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,</span>
+<span class="fc" id="L307">		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);</span>
+<span class="fc" id="L308">		final HColor lineColor = this.value(PName.LineColor).asColor(set);</span>
+<span class="fc" id="L309">		final UStroke stroke = this.getStroke();</span>
+<span class="fc" id="L310">		final int cornersize = this.value(PName.RoundCorner).asInt(false);</span>
+<span class="fc" id="L311">		final ClockwiseTopRightBottomLeft margin = this.getMargin();</span>
+<span class="fc" id="L312">		final ClockwiseTopRightBottomLeft padding = this.getPadding();</span>
+<span class="fc" id="L313">		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,</span>
 				padding, id);
-<span class="fc" id="L314">		return TextBlockUtils.withMargin(result, margin);</span>
+<span class="fc" id="L315">		return TextBlockUtils.withMargin(result, margin);</span>
 	}
 
 	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {
-<span class="fc" id="L318">		final HColor color = value(PName.LineColor).asColor(colorSet);</span>
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="nc" id="L320">			ug = ug.apply(HColors.none());</span>
+<span class="fc" id="L319">		final HColor color = value(PName.LineColor).asColor(colorSet);</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L321">			ug = ug.apply(HColors.none());</span>
 		else
-<span class="fc" id="L322">			ug = ug.apply(color);</span>
+<span class="fc" id="L323">			ug = ug.apply(color);</span>
 
-<span class="fc" id="L324">		ug = ug.apply(getStroke());</span>
-<span class="fc" id="L325">		return ug;</span>
+<span class="fc" id="L325">		ug = ug.apply(getStroke());</span>
+<span class="fc" id="L326">		return ug;</span>
 	}
 
 }
