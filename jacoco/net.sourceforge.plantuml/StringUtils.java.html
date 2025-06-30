@@ -126,16 +126,16 @@ import net.sourceforge.plantuml.utils.Log;
 	public static final char INTERNAL_BOLD = '\uE100';
 
 	public static String toInternalBoldNumber(String s) {
-<span class="nc" id="L129">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="nc" id="L131">			final char c = s.charAt(i);</span>
-<span class="nc bnc" id="L132" title="All 4 branches missed.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
-<span class="nc" id="L133">				sb.append(Character.toChars('\uE100' + c - '0'));</span>
+<span class="fc" id="L129">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L131">			final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L132" title="All 4 branches covered.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L133">				sb.append(Character.toChars('\uE100' + c - '0'));</span>
 			else
-<span class="nc" id="L135">				sb.append(c);</span>
+<span class="fc" id="L135">				sb.append(c);</span>
 
 		}
-<span class="nc" id="L138">		return sb.toString();</span>
+<span class="fc" id="L138">		return sb.toString();</span>
 	}
 
 	public static void appendInternalToRealBoldNumber(StringBuilder sb, char c) {
@@ -452,7 +452,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L452">			char c = s.charAt(i);</span>
 <span class="fc bfc" id="L453" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
 <span class="fc" id="L454">				c += 13;</span>
-<span class="pc bpc" id="L455" title="4 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
+<span class="fc bfc" id="L455" title="All 8 branches covered.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
 <span class="fc" id="L456">				c -= 13;</span>
 <span class="pc bpc" id="L457" title="1 of 2 branches missed.">			else if (c &gt; 126)</span>
 <span class="nc" id="L458">				throw new IllegalArgumentException(s);</span>
