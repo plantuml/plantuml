@@ -235,10 +235,19 @@ public enum LinkDecor {
 		// Sort by descending length to prevent prefix conflicts (e.g., "||" before "|")
 		// Use Pattern.quote to escape any special regex characters
 		// Join all keys with "|" to build the final regular expression
-		return keys.stream() //
-				.sorted(Comparator.<String>comparingInt(String::length).reversed()) //
-				.map(Pattern::quote) //
-				.collect(Collectors.joining("|", "(", ")?")); //
+		return keys.stream().sorted(Comparator.<String>comparingInt(String::length).reversed()).map(key -> {
+			final String quoted = Pattern.quote(key);
+			final boolean startsWithO = key.startsWith("o");
+			final boolean endsWithO = key.endsWith("o");
+			if (startsWithO && endsWithO)
+				return "\\b" + quoted + "\\b";
+			if (startsWithO)
+				return "\\b" + quoted;
+			if (endsWithO)
+				return quoted + "\\b";
+
+			return quoted;
+		}).collect(Collectors.joining("|", "(", ")?"));
 	}
 
 }
