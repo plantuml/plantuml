@@ -26,4 +26,20 @@ class StringUtilsTest {
 		assertThat(StringUtils.isNotEmpty(s))
 				.isNotEqualTo(empty);
 	}
+
+	@ParameterizedTest
+	@CsvSource(value = {
+			" 'abc', 'abc' ",
+			" '', '' ",
+			" ' ', ' ' ",
+			" '0', '\uE100' ",
+			" 'a1b2', 'a\uE101b\uE102' ",
+			" '\uE1000', '\uE100\uE100' ",
+			" '1234567890', '\uE101\uE102\uE103\uE104\uE105\uE106\uE107\uE108\uE109\uE100' ",
+			" 'e\uE1023', 'e\uE102\uE103' "
+	})
+	void test_toInternalBoldNumber(String s, String result) {
+		assertThat(StringUtils.toInternalBoldNumber(s))
+				.isEqualTo(result);
+	}
 }
