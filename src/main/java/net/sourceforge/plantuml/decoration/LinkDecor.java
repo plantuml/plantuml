@@ -84,19 +84,19 @@ public enum LinkDecor {
 	LINE_CROWFOOT(decors1("}|"), decors2("|{"), 10, false, 0.8), //
 
 	ARROW(decors1("<", "<_"), decors2(">", "_>"), 10, true, 0.5), //
-	ARROW_TRIANGLE(null, null, 10, true, 0.8), //
+	ARROW_TRIANGLE(decors1("<<"), decors2(">>"), 10, true, 0.8), //
 	ARROW_AND_CIRCLE(null, null, 10, false, 0.5), //
 
-	CIRCLE(null, null, 0, false, 0.5), //
+	CIRCLE(decors1("0"), decors2("0"), 0, false, 0.5), //
 	CIRCLE_FILL(decors1("@"), decors2("@"), 0, false, 0.5), //
-	CIRCLE_CONNECT(null, null, 0, false, 0.5), //
+	CIRCLE_CONNECT(decors1("0)"), decors2("(0"), 0, false, 0.5), //
 	PARENTHESIS(decors1(")"), decors2("("), 0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //
 	SQUARE(decors1("#"), decors2("#"), 0, false, 0.5), //
 
 	CIRCLE_CROSS(null, null, 0, false, 0.5), //
 	PLUS(decors1("+"), decors2("+"), 0, false, 1.5), //
-	HALF_ARROW_UP(null, null, 0, false, 1.5), //
-	HALF_ARROW_DOWN(null, null, 0, false, 1.5), //
+	HALF_ARROW_UP(null, decors2("\\\\"), 0, false, 1.5), //
+	HALF_ARROW_DOWN(null, decors2("//"), 0, false, 1.5), //
 	SQUARE_toberemoved(null, null, 30, false, 0);
 
 	private final double arrowSize;
@@ -108,10 +108,22 @@ public enum LinkDecor {
 	private final static Map<String, LinkDecor> DECORS1 = new HashMap<>();
 	private final static Map<String, LinkDecor> DECORS2 = new HashMap<>();
 
+	/**
+	 * Helper method to associate one or more string patterns ("decorators") with
+	 * the "left" or "start" side of a link extremity. Used for improved readability
+	 * in enum construction, allowing clear distinction between left and right
+	 * decorations.
+	 */
 	private static String[] decors1(String... tmp) {
 		return tmp;
 	}
 
+	/**
+	 * Helper method to associate one or more string patterns ("decorators") with
+	 * the "right" or "end" side of a link extremity. Symmetrical to
+	 * {@link #decors1}, this improves clarity when specifying both sides in enum
+	 * entries and makes maintenance easier.
+	 */
 	private static String[] decors2(String... tmp) {
 		return tmp;
 	}

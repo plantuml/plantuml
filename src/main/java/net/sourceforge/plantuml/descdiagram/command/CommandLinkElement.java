@@ -94,14 +94,15 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 //				new RegexOptional(new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)")), //
 //				RegexLeaf.spaceZeroOrMore(), //
 
-				new RegexLeaf(1, "HEAD2", "(0\\)|<<|<_|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
+				new RegexLeaf(1, "HEAD1", LinkDecor.getRegexDecors1()), //
 				new RegexLeaf(1, "BODY1", "([-=.~]+)"), //
 				new RegexLeaf(1, "ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
-				new RegexOptional(new RegexLeaf(1, "DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])")), //
+				new RegexOptional(
+						new RegexLeaf(1, "DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])")), //
 				new RegexOptional(new RegexLeaf(1, "INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
 				new RegexLeaf(1, "ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
 				new RegexLeaf(1, "BODY2", "([-=.~]*)"), //
-				new RegexLeaf(1, "HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|//|o[%s]+)?"), //
+				new RegexLeaf(1, "HEAD2", LinkDecor.getRegexDecors2()), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
@@ -131,72 +132,10 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	private LinkType getLinkType(RegexResult arg) {
 		final String head1 = getHead(arg, "HEAD1");
 		final String head2 = getHead(arg, "HEAD2");
-		LinkDecor d1 = LinkDecor.NONE;
-		LinkDecor d2 = LinkDecor.NONE;
+		final LinkDecor d1 = LinkDecor.lookupDecors1(head1);
+		final LinkDecor d2 = LinkDecor.lookupDecors2(head2);
 
-		if (head1.equals("(0"))
-			d1 = LinkDecor.CIRCLE_CONNECT;
-		else if (head1.equals("#"))
-			d1 = LinkDecor.SQUARE;
-		else if (head1.equals("0"))
-			d1 = LinkDecor.CIRCLE;
-		else if (head1.equals("@"))
-			d1 = LinkDecor.CIRCLE_FILL;
-		else if (head1.equals("("))
-			d1 = LinkDecor.PARENTHESIS;
-		else if (head1.equals(">"))
-			d1 = LinkDecor.ARROW;
-		else if (head1.equals("*"))
-			d1 = LinkDecor.COMPOSITION;
-		else if (head1.equals("o"))
-			d1 = LinkDecor.AGREGATION;
-		else if (head1.equals("+"))
-			d1 = LinkDecor.PLUS;
-		else if (head1.equals("\\\\"))
-			d1 = LinkDecor.HALF_ARROW_UP;
-		else if (head1.equals("//"))
-			d1 = LinkDecor.HALF_ARROW_DOWN;
-		else if (head1.equals(">>"))
-			d1 = LinkDecor.ARROW_TRIANGLE;
-		else if (head1.equals("^"))
-			d1 = LinkDecor.EXTENDS;
-		else if (head1.equals(":|>"))
-			d1 = LinkDecor.DEFINEDBY;
-		else if (head1.equals("||>"))
-			d1 = LinkDecor.REDEFINES;
-		else if (head1.equals("|>"))
-			d1 = LinkDecor.EXTENDS;
-
-		if (head2.equals("0)"))
-			d2 = LinkDecor.CIRCLE_CONNECT;
-		else if (head2.equals("#"))
-			d2 = LinkDecor.SQUARE;
-		else if (head2.equals("0"))
-			d2 = LinkDecor.CIRCLE;
-		else if (head2.equals("@"))
-			d2 = LinkDecor.CIRCLE_FILL;
-		else if (head2.equals(")"))
-			d2 = LinkDecor.PARENTHESIS;
-		else if (head2.equals("<"))
-			d2 = LinkDecor.ARROW;
-		else if (head2.equals("*"))
-			d2 = LinkDecor.COMPOSITION;
-		else if (head2.equals("o"))
-			d2 = LinkDecor.AGREGATION;
-		else if (head2.equals("+"))
-			d2 = LinkDecor.PLUS;
-		else if (head2.equals("<<"))
-			d2 = LinkDecor.ARROW_TRIANGLE;
-		else if (head2.equals("^"))
-			d2 = LinkDecor.EXTENDS;
-		else if (head2.equals("<|:"))
-			d2 = LinkDecor.DEFINEDBY;
-		else if (head2.equals("<||"))
-			d2 = LinkDecor.REDEFINES;
-		else if (head2.equals("<|"))
-			d2 = LinkDecor.EXTENDS;
-
-		LinkType result = new LinkType(d1, d2);
+		LinkType result = new LinkType(d2, d1);
 		final String queue = getQueue(arg);
 		if (queue.contains("."))
 			result = result.goDashed();
