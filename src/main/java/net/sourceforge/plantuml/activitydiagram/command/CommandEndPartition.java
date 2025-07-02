@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -46,9 +47,10 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+@DeadCode
 public class CommandEndPartition extends SingleLineCommand2<ActivityDiagram> {
 
-	public CommandEndPartition() {
+	private CommandEndPartition() {
 		super(getRegexConcat());
 	}
 

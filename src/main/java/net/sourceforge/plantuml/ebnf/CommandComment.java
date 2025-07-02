@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,9 +46,10 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+@DeadCode
 public class CommandComment extends SingleLineCommand2<PSystemEbnf> {
 
-	public CommandComment() {
+	private CommandComment() {
 		super(getRegexConcat());
 	}
 

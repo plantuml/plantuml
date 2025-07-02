@@ -35,33 +35,39 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+
 import net.sourceforge.plantuml.Lazy;
-import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.command.UBrexCommandMultilines2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.Pattern2;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-@DeadCode
-public class CommandEbnfMultilines extends CommandMultilines2<PSystemEbnf> {
+public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2<PSystemEbnf> {
 
-	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);$"));
+	private final static Lazy<UnicodeBracketedExpression> END = new Lazy<>(() -> new UBrexLeaf("〇+〘 〄>; 〙"));
 
-	private CommandEbnfMultilines() {
+	public UBrexCommandEbnfMultilines() {
 		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "LINE", "([%pLN_][-%pLN_]*[%s]*=.*)"), //
-				RegexLeaf.end());
+	static UnicodeBracketedExpression getRegexConcat() {
+
+		return new UBrexNamed("LINE", //
+				UBrexConcat.build( //
+						new UBrexLeaf("「〴an_」"), //
+						new UBrexLeaf("〇*「〴an_-」"), //
+						UBrexLeaf.spaceZeroOrMore(), //
+						new UBrexLeaf("="), //
+						new UBrexLeaf("〇*〴.") //
+				));
+
 	}
 
 	@Override

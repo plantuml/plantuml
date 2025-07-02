@@ -35,39 +35,37 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.Lazy;
-import net.sourceforge.plantuml.annotation.DeadCode;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
-import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.Trim;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.Pattern2;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-@DeadCode
-public class CommandEbnfMultilines extends CommandMultilines2<PSystemEbnf> {
+public class UBrexCommandComment extends UBrexSingleLineCommand2<PSystemEbnf> {
 
-	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);$"));
-
-	private CommandEbnfMultilines() {
-		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);
+	public UBrexCommandComment() {
+		super(getRegexConcat());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "LINE", "([%pLN_][-%pLN_]*[%s]*=.*)"), //
-				RegexLeaf.end());
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build( //
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexLeaf("(*"), //
+				new UBrexLeaf("〶$COMMENT=〄+〴.->〘*) 〇*〴s 〒($)〙"), //
+				UBrexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
-			throws NoSuchColorException {
-		return diagram.addBlocLines(lines, null, null);
+	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get("COMMENT", 0));
+		return diagram.addNote(note, null);
 	}
 
 }

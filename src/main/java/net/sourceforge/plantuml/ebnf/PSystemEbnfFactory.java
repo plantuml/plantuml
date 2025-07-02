@@ -55,11 +55,11 @@ public class PSystemEbnfFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandComment());
+		cmds.add(new UBrexCommandComment());
 		cmds.add(new CommandCommentMultilines2());
 		cmds.add(new CommandCommentMultilines());
 		cmds.add(new CommandEBnfSingleLine());
-		cmds.add(new CommandEbnfMultilines());
+		cmds.add(new UBrexCommandEbnfMultilines());
 		// cmds.add(new CommandNoteMultilines());
 	}
 
