@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -48,24 +49,25 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.utils.BlocLines;
 
+@DeadCode
 public class CommandEbnfMultilines extends CommandMultilines2&lt;PSystemEbnf&gt; {
 
-<span class="pc" id="L53">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);$&quot;));</span>
+<span class="nc" id="L55">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);$&quot;));</span>
 
-	public CommandEbnfMultilines() {
-<span class="fc" id="L56">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L57">	}</span>
+	private CommandEbnfMultilines() {
+<span class="nc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="nc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L62">		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;LINE&quot;, &quot;([%pLN_][-%pLN_]*[%s]*=.*)&quot;), //
-<span class="fc" id="L62">				RegexLeaf.end());</span>
+<span class="nc" id="L64">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L68">		return diagram.addBlocLines(lines, null, null);</span>
+<span class="nc" id="L70">		return diagram.addBlocLines(lines, null, null);</span>
 	}
 
 }

@@ -38,10 +38,10 @@ package net.sourceforge.plantuml.activitydiagram;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandElse;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandIf;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandPartition;
@@ -74,7 +74,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 <span class="fc" id="L74">		cmds.add(new UBrexCommandRankDir());</span>
 
 <span class="fc" id="L76">		cmds.add(new UBrexCommandPartition());</span>
-<span class="fc" id="L77">		cmds.add(new CommandEndPartition());</span>
+<span class="fc" id="L77">		cmds.add(new UBrexCommandEndPartition());</span>
 <span class="fc" id="L78">		cmds.add(new CommandLinkLongActivity());</span>
 
 <span class="fc" id="L80">		final CommandFactoryNoteActivity factoryNoteActivityCommand = new CommandFactoryNoteActivity();</span>
