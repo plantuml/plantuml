@@ -1,6 +1,10 @@
-## V1.2025.4beta
-- See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.4)
+## V1.2025.5beta
+- See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.5)
 - _TBC_ 🚧
+
+## V1.2025.4
+- See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.4)
+
 
 ## V1.2025.3 (Jun 1, 2025)
 - See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.3)
