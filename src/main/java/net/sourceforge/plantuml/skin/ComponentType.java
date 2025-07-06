@@ -99,10 +99,10 @@ public enum ComponentType implements Styleable {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);
 
 		if (this == DELAY_TEXT)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.delay);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
 
 		if (this == DELAY_LINE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.delay);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
 
 //		if (this == REFERENCE) {
 //			return StyleSignature.of(SName.root, SName.element,
