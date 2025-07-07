@@ -2,8 +2,11 @@
 - See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.5)
 - _TBC_ 🚧
 
-## V1.2025.4
+## V1.2025.4 (June 28, 2025)
 - See directly on GitHub: [All GitHub Issues fixed or GitHub Pull Request accepted of the version](https://github.com/plantuml/plantuml/issues?q=milestone%3A1.2025.4)
+- [Sequence - Lifeline border thickness is ignored when a delay is added in sequence diagram](https://forum.plantuml.net/7030/lifeline-border-thickness-ignored-delay-sequence-diagram)
+- [Sequence - CSS styling Beta - Sequence diagram - dots not colored with LineColor](https://forum.plantuml.net/10991/styling-beta-sequence-diagram-dots-colored-with-linecolor)
+- [Sequence - Text of delay message in cerulean theme is invisible](https://forum.plantuml.net/20091/text-of-delay-message-in-cerulean-theme-is-invisible)
 
 
 ## V1.2025.3 (Jun 1, 2025)
