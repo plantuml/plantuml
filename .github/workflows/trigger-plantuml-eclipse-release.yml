@@ -6,12 +6,18 @@ on:
 
   # call this from another workflow_call:
   workflow_call:
+    secrets:
+      PLANTUML_ECLIPSE_DISPATCH_TOKEN:
+        required: true
 
   # run this on release event
   release:
     # We might switch to 'released' if we only want non-SNAPSHOT releases to trigger the workflow
     # see https://docs.github.com/en/actions/reference/events-that-trigger-workflows#release
     types: [published]
+
+permissions:
+  contents: write
 
 jobs:
   trigger-workflow:
