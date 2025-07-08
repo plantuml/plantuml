@@ -59,8 +59,7 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
 
 	public CommandWBSItemMultiline() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
@@ -104,7 +103,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
-		Direction dir = Direction.RIGHT;
+		final Direction dir = CommandWBSItem.parseDirection(line0, type);
 
 		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
 				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.get("SHAPE", 0)));
