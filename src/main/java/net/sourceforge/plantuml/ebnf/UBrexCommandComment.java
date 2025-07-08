@@ -39,6 +39,7 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexUpto;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -57,7 +58,15 @@ public class UBrexCommandComment extends UBrexSingleLineCommand2<PSystemEbnf> {
 		return UBrexConcat.build( //
 				UBrexLeaf.spaceZeroOrMore(), //
 				new UBrexLeaf("(*"), //
-				new UBrexLeaf("〶$COMMENT=〄+〴.->〘*) 〇*〴s 〒($)〙"), //
+				new UBrexNamed("COMMENT", //
+						new UBrexUpto(//
+								new UBrexLeaf("〴."), //
+								UBrexConcat.build( //
+										new UBrexLeaf("*)"), //
+										UBrexLeaf.spaceZeroOrMore(), //
+										new UBrexLeaf("〒($)") //
+								))),
+//				new UBrexLeaf("〶$COMMENT=〄+〴.->〘*) 〇*〴s 〒($)〙"), //
 				UBrexLeaf.end());
 	}
 

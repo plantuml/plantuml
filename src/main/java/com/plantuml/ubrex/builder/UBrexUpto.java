@@ -35,26 +35,22 @@
 package com.plantuml.ubrex.builder;
 
 import com.plantuml.ubrex.Challenge;
+import com.plantuml.ubrex.ChallengeOneOrMoreUpToOldVersion;
 import com.plantuml.ubrex.CompositeList;
-import com.plantuml.ubrex.CompositeNamed;
 
-public class UBrexNamed extends UBrexPart {
+public class UBrexUpto extends UBrexPart {
 
-	public UBrexNamed(String name, UBrexPart origin) {
-		super(create(name, origin));
+	public UBrexUpto(UBrexPart what, UBrexPart stop) {
+		super(buildChallenge(what, stop));
 	}
 
-	private static Challenge create(String name, UBrexPart part) {
-		if (part instanceof UBrexUpto) {
-			final CompositeList list = (CompositeList) part.getChallenge();
-			final CompositeNamed result = new CompositeNamed(name, list.getInternalChallengesList());
-			return result;
-		}
-
-		final Challenge challenge = part.getChallenge();
-		final CompositeNamed result = new CompositeNamed(name, challenge);
+	private static Challenge buildChallenge(UBrexPart what, UBrexPart stop) {
+		final Challenge p1 = what.getChallenge();
+		final Challenge p2 = stop.getChallenge();
+		final CompositeList result = CompositeList.createEmpty();
+		result.addChallenge(new ChallengeOneOrMoreUpToOldVersion(p1, p2));
+		result.addChallenge(p2);
 		return result;
-
 	}
 
 }

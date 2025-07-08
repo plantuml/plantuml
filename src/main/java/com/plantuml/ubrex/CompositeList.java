@@ -35,6 +35,7 @@
 package com.plantuml.ubrex;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CompositeList implements Challenge {
@@ -113,6 +114,10 @@ public class CompositeList implements Challenge {
 		}
 
 		return new ChallengeResult(current - position, capture);
+	}
+
+	public List<Challenge> getInternalChallengesList() {
+		return Collections.unmodifiableList(challenges);
 	}
 
 }

@@ -60,18 +60,16 @@ public class PSystemEbnfFactory extends PSystemCommandFactory {
 		cmds.add(new CommandCommentMultilines());
 		cmds.add(new CommandEBnfSingleLine());
 		cmds.add(new UBrexCommandEbnfMultilines());
-		// cmds.add(new CommandNoteMultilines());
 	}
 
 	@Override
 	public PSystemEbnf createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		return new PSystemEbnf(source, preprocessing);
 	}
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.EBNF;
 	}
-
 
 }
