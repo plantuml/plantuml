@@ -35,84 +35,89 @@
 package com.plantuml.ubrex;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CompositeList implements Challenge {
 
-<span class="fc" id="L42">	private final List&lt;Challenge&gt; challenges = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">	private final List&lt;Challenge&gt; challenges = new ArrayList&lt;&gt;();</span>
 
 	public void addChallenge(Challenge p) {
-<span class="fc" id="L45">		this.challenges.add(p);</span>
-<span class="fc" id="L46">	}</span>
+<span class="fc" id="L46">		this.challenges.add(p);</span>
+<span class="fc" id="L47">	}</span>
 
 	public static CompositeList createEmpty() {
-<span class="fc" id="L49">		return new CompositeList();</span>
+<span class="fc" id="L50">		return new CompositeList();</span>
 	}
 
 	public static CompositeList parseAndBuild(CharSequence input) {
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (input == null)</span>
-<span class="nc" id="L54">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (input == null)</span>
+<span class="nc" id="L55">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L56">		return new CompositeList(input);</span>
+<span class="fc" id="L57">		return new CompositeList(input);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L61">		return challenges.toString();</span>
+<span class="nc" id="L62">		return challenges.toString();</span>
 	}
 
-<span class="fc" id="L64">	private CompositeList() {</span>
+<span class="fc" id="L65">	private CompositeList() {</span>
 
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L67">	}</span>
 
 	public static CompositeList parseAndBuildFromTextNavigator(TextNavigator input) {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (input == null)</span>
-<span class="nc" id="L70">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L71">		final CompositeList result = new CompositeList();</span>
-<span class="fc" id="L72">		result.parseAndConsumeNow(input);</span>
-<span class="fc" id="L73">		return result;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (input == null)</span>
+<span class="nc" id="L71">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L72">		final CompositeList result = new CompositeList();</span>
+<span class="fc" id="L73">		result.parseAndConsumeNow(input);</span>
+<span class="fc" id="L74">		return result;</span>
 	}
 
-<span class="fc" id="L76">	private CompositeList(CharSequence definition) {</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (definition.length() == 0)</span>
-<span class="nc" id="L78">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L77">	private CompositeList(CharSequence definition) {</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (definition.length() == 0)</span>
+<span class="nc" id="L79">			throw new UnsupportedOperationException();</span>
 
-<span class="fc" id="L80">		final TextNavigator input = TextNavigator.build(definition);</span>
-<span class="fc" id="L81">		parseAndConsumeNow(input);</span>
+<span class="fc" id="L81">		final TextNavigator input = TextNavigator.build(definition);</span>
+<span class="fc" id="L82">		parseAndConsumeNow(input);</span>
 
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L84">	}</span>
 
 	private void parseAndConsumeNow(final TextNavigator input) {
-<span class="fc" id="L86">		final AtomicParser builder = new AtomicParser();</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		while (input.length() &gt; 0) {</span>
-<span class="fc" id="L88">			final char ch = input.charAt(0);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (ch == ' ')</span>
-<span class="fc" id="L90">				input.jump(1);</span>
+<span class="fc" id="L87">		final AtomicParser builder = new AtomicParser();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		while (input.length() &gt; 0) {</span>
+<span class="fc" id="L89">			final char ch = input.charAt(0);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (ch == ' ')</span>
+<span class="fc" id="L91">				input.jump(1);</span>
 			else
-<span class="fc bfc" id="L92" title="All 2 branches covered.">				for (Challenge c : builder.parse(input))</span>
-<span class="fc" id="L93">					this.addChallenge(c);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">				for (Challenge c : builder.parse(input))</span>
+<span class="fc" id="L94">					this.addChallenge(c);</span>
 
-<span class="fc" id="L95">		}</span>
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L96">		}</span>
+<span class="fc" id="L97">	}</span>
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 
-<span class="fc" id="L101">		Capture capture = Capture.EMPTY;</span>
+<span class="fc" id="L102">		Capture capture = Capture.EMPTY;</span>
 		// Capture nonMergeableCapture = Capture.EMPTY;
 
-<span class="fc" id="L104">		int current = position;</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (Challenge challenge : challenges) {</span>
-<span class="fc" id="L106">			final ChallengeResult shallWePass = challenge.runChallenge(string, current);</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (shallWePass.getFullCaptureLength() &lt; 0)</span>
-<span class="fc" id="L108">				return new ChallengeResult(NO_MATCH, capture);</span>
+<span class="fc" id="L105">		int current = position;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (Challenge challenge : challenges) {</span>
+<span class="fc" id="L107">			final ChallengeResult shallWePass = challenge.runChallenge(string, current);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (shallWePass.getFullCaptureLength() &lt; 0)</span>
+<span class="fc" id="L109">				return new ChallengeResult(NO_MATCH, capture);</span>
 
-<span class="fc" id="L110">			current += shallWePass.getFullCaptureLength();</span>
-<span class="fc" id="L111">			capture = capture.merge(shallWePass.getCapture());</span>
-<span class="fc" id="L112">			capture = capture.merge(shallWePass.getNonMergeableCapture());</span>
-<span class="fc" id="L113">		}</span>
+<span class="fc" id="L111">			current += shallWePass.getFullCaptureLength();</span>
+<span class="fc" id="L112">			capture = capture.merge(shallWePass.getCapture());</span>
+<span class="fc" id="L113">			capture = capture.merge(shallWePass.getNonMergeableCapture());</span>
+<span class="fc" id="L114">		}</span>
 
-<span class="fc" id="L115">		return new ChallengeResult(current - position, capture);</span>
+<span class="fc" id="L116">		return new ChallengeResult(current - position, capture);</span>
+	}
+
+	public List&lt;Challenge&gt; getInternalChallengesList() {
+<span class="fc" id="L120">		return Collections.unmodifiableList(challenges);</span>
 	}
 
 }

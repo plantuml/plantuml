@@ -39,6 +39,7 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexUpto;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,22 +51,30 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandComment extends UBrexSingleLineCommand2&lt;PSystemEbnf&gt; {
 
 	public UBrexCommandComment() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L57">		return UBrexConcat.build( //</span>
-<span class="fc" id="L58">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L58">		return UBrexConcat.build( //</span>
+<span class="fc" id="L59">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexLeaf(&quot;(*&quot;), //
-				new UBrexLeaf(&quot;〶$COMMENT=〄+〴.-&gt;〘*) 〇*〴s 〒($)〙&quot;), //
-<span class="fc" id="L61">				UBrexLeaf.end());</span>
+				new UBrexNamed(&quot;COMMENT&quot;, //
+						new UBrexUpto(//
+								new UBrexLeaf(&quot;〴.&quot;), //
+<span class="fc" id="L64">								UBrexConcat.build( //</span>
+										new UBrexLeaf(&quot;*)&quot;), //
+<span class="fc" id="L66">										UBrexLeaf.spaceZeroOrMore(), //</span>
+										new UBrexLeaf(&quot;〒($)&quot;) //
+								))),
+//				new UBrexLeaf(&quot;〶$COMMENT=〄+〴.-&gt;〘*) 〇*〴s 〒($)〙&quot;), //
+<span class="fc" id="L70">				UBrexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L67">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;COMMENT&quot;, 0));</span>
-<span class="nc" id="L68">		return diagram.addNote(note, null);</span>
+<span class="nc" id="L76">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;COMMENT&quot;, 0));</span>
+<span class="nc" id="L77">		return diagram.addNote(note, null);</span>
 	}
 
 }

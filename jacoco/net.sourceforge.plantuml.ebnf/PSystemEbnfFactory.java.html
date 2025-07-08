@@ -60,19 +60,17 @@ public class PSystemEbnfFactory extends PSystemCommandFactory {
 <span class="fc" id="L60">		cmds.add(new CommandCommentMultilines());</span>
 <span class="fc" id="L61">		cmds.add(new CommandEBnfSingleLine());</span>
 <span class="fc" id="L62">		cmds.add(new UBrexCommandEbnfMultilines());</span>
-		// cmds.add(new CommandNoteMultilines());
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public PSystemEbnf createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L68">		return new PSystemEbnf(source, preprocessing);</span>
-	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L73">		return UmlDiagramType.EBNF;</span>
+<span class="fc" id="L67">		return new PSystemEbnf(source, preprocessing);</span>
 	}
 
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+<span class="nc" id="L72">		return UmlDiagramType.EBNF;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
