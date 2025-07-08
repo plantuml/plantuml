@@ -4,6 +4,9 @@ on:
   # run this manually
   workflow_dispatch:
 
+  # call this from another workflow_call:
+  workflow_call:
+
   # run this on release event
   release:
     # We might switch to 'released' if we only want non-SNAPSHOT releases to trigger the workflow
