@@ -1,0 +1,34 @@
+name: Trigger release workflow in plantuml-eclipse project
+
+on:
+  # run this manually
+  workflow_dispatch:
+
+  # run this on release event
+  release:
+    # We might switch to 'released' if we only want non-SNAPSHOT releases to trigger the workflow
+    # see https://docs.github.com/en/actions/reference/events-that-trigger-workflows#release
+    types: [published]
+
+jobs:
+  trigger-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger release workflow in plantuml-eclipse repo
+        # see https://github.com/peter-evans/repository-dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}
+          repository: plantuml/plantuml-eclipse
+          # custom event that is used to trigger the other workflow
+          event-type: plantuml-release
+          # payload with release event details
+          client-payload: |-
+            {
+              "release": "${{ github.event.release.tag_name }}",
+              "url":  "${{ github.event.release.html_url }}",
+              "description": "${{ github.event.release.body}}",
+              "snapshot": "${{ github.event.release.prerelease}}",
+              "released_at": "${{ github.event.release.published_at}}",
+              "details": ${{ toJson(github.event.release) }}
+            }
