@@ -92,15 +92,20 @@ public class CommandWBSItem extends SingleLineCommand2&lt;WBSDiagram&gt; {
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (stringColor != null)</span>
 <span class="nc" id="L93">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		Direction dir = type.contains(&quot;-&quot;) ? Direction.LEFT : Direction.RIGHT;</span>
-<span class="fc" id="L96">		final String direction = arg.get(&quot;DIRECTION&quot;, 0);</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (&quot;&lt;&quot;.equals(direction))</span>
-<span class="fc" id="L98">			dir = Direction.LEFT;</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		else if (&quot;&gt;&quot;.equals(direction))</span>
-<span class="fc" id="L100">			dir = Direction.RIGHT;</span>
+<span class="fc" id="L95">		final Direction dir = parseDirection(arg, type);</span>
 
-<span class="fc" id="L102">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,</span>
-<span class="fc" id="L103">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)));</span>
+<span class="fc" id="L97">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,</span>
+<span class="fc" id="L98">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)));</span>
+	}
+
+	public static Direction parseDirection(RegexResult arg, final String type) {
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		Direction dir = type.contains(&quot;-&quot;) ? Direction.LEFT : Direction.RIGHT;</span>
+<span class="fc" id="L103">		final String direction = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (&quot;&lt;&quot;.equals(direction))</span>
+<span class="fc" id="L105">			dir = Direction.LEFT;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		else if (&quot;&gt;&quot;.equals(direction))</span>
+<span class="fc" id="L107">			dir = Direction.RIGHT;</span>
+<span class="fc" id="L108">		return dir;</span>
 	}
 
 }
