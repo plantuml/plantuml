@@ -9,12 +9,19 @@ on:
     secrets:
       PLANTUML_ECLIPSE_DISPATCH_TOKEN:
         required: true
-
-  # run this on release event
-  release:
-    # We might switch to 'released' if we only want non-SNAPSHOT releases to trigger the workflow
-    # see https://docs.github.com/en/actions/reference/events-that-trigger-workflows#release
-    types: [published]
+    inputs:
+      pom-version:
+        description: 'Released PlantUML version from pom.xml'
+        required: true
+        type: string
+      git-ref:
+        description: 'The git ref representing the new PlantUML release'
+        required: true
+        type: string
+      snapshot:
+        description: 'Whether the new PlantUML release is a SNAPSHOT / pre-release'
+        required: true
+        type: boolean
 
 permissions:
   contents: write
@@ -34,10 +41,7 @@ jobs:
           # payload with release event details
           client-payload: |-
             {
-              "release": "${{ github.event.release.tag_name }}",
-              "url":  "${{ github.event.release.html_url }}",
-              "description": "${{ github.event.release.body}}",
-              "snapshot": "${{ github.event.release.prerelease}}",
-              "released_at": "${{ github.event.release.published_at}}",
-              "details": ${{ toJson(github.event.release) }}
+              "release": "${{ inputs.pom-version }}",
+              "snapshot": "${{ inputs.snapshot }}",
+              "ref": ${{ inputs.git-ref }}
             }
