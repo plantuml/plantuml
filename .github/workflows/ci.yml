@@ -359,5 +359,9 @@ jobs:
     needs: [ workflow_config, upload ]
     if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     uses: ./.github/workflows/trigger-plantuml-eclipse-release.yml
+    with:
+      pom-version: ${{ needs.workflow_config.outputs.pom_version }}
+      git-ref: ${{ github.event.ref }}
+      snapshot: ${{ needs.workflow_config.outputs.do_snapshot_release }}
     secrets:
       PLANTUML_ECLIPSE_DISPATCH_TOKEN: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}
