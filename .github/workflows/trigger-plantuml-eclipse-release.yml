@@ -43,5 +43,5 @@ jobs:
             {
               "release": "${{ inputs.pom-version }}",
               "snapshot": "${{ inputs.snapshot }}",
-              "ref": ${{ inputs.git-ref }}
+              "ref": "${{ inputs.git-ref }}"
             }
