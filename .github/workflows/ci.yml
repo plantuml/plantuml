@@ -356,8 +356,12 @@ jobs:
     uses: ./.github/workflows/native-image-release.yml
 
   trigger_plantuml_eclipse_release:
-    needs: [ workflow_config, upload ]
+    needs: [ workflow_config, upload, build_artifacts ]
     if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     uses: ./.github/workflows/trigger-plantuml-eclipse-release.yml
+    with:
+      pom-version: ${{ needs.build_artifacts.outputs.release_version }}
+      git-ref: ${{ github.sha }}
+      snapshot: ${{ needs.workflow_config.outputs.do_snapshot_release == 'true' }}
     secrets:
       PLANTUML_ECLIPSE_DISPATCH_TOKEN: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}
