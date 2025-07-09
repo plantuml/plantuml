@@ -362,6 +362,6 @@ jobs:
     with:
       pom-version: ${{ needs.workflow_config.outputs.pom_version }}
       git-ref: ${{ github.event.ref }}
-      snapshot: ${{ needs.workflow_config.outputs.do_snapshot_release }}
+      snapshot: ${{ needs.workflow_config.outputs.do_snapshot_release == 'true' }}
     secrets:
       PLANTUML_ECLIPSE_DISPATCH_TOKEN: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}
