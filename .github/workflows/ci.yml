@@ -360,8 +360,9 @@ jobs:
     if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     uses: ./.github/workflows/trigger-plantuml-eclipse-release.yml
     with:
-      pom-version: ${{ needs.build_artifacts.outputs.release_version }}
-      git-ref: ${{ github.sha }}
+      release-version: ${{ needs.build_artifacts.outputs.release_version }}
+      git-ref: ${{ github.ref }}
+      git-commit: ${{ github.sha }}
       snapshot: ${{ needs.workflow_config.outputs.do_snapshot_release == 'true' }}
     secrets:
       PLANTUML_ECLIPSE_DISPATCH_TOKEN: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}

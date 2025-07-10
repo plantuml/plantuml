@@ -10,12 +10,16 @@ on:
       PLANTUML_ECLIPSE_DISPATCH_TOKEN:
         required: true
     inputs:
-      pom-version:
-        description: 'Released PlantUML version from pom.xml'
+      release-version:
+        description: 'The released PlantUML version'
         required: true
         type: string
       git-ref:
-        description: 'The git ref representing the new PlantUML release'
+        description: 'The git ref representing the new PlantUML release, e.g. refs/heads/master'
+        required: true
+        type: string
+      git-commit:
+        description: 'The git commit SHA representing the new PlantUML release, e.g. ffac537e6cbbf934b08745a378932722df287a53'
         required: true
         type: string
       snapshot:
@@ -38,7 +42,8 @@ jobs:
           # payload with release event details
           client-payload: |-
             {
-              "release": "${{ inputs.pom-version }}",
+              "release": "${{ inputs.release-version }}",
               "snapshot": "${{ inputs.snapshot }}",
-              "ref": "${{ inputs.git-ref }}"
+              "ref": "${{ inputs.git-ref }}",
+              "commit": "${{ inputs.git-commit }}",
             }
