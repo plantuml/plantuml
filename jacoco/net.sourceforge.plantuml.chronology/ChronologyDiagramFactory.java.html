@@ -66,13 +66,14 @@ public class ChronologyDiagramFactory extends PSystemCommandFactory {
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 <span class="nc" id="L67">		CommonCommands.addTitleCommands(cmds);</span>
 <span class="nc" id="L68">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="nc" id="L69">		CommonCommands.addCommonScaleCommands(cmds);</span>
 
 //		cmds.add(CommandStyleMultilinesCSS.ME);
 //		cmds.add(CommandStyleImport.ME);
 //
 //		cmds.add(CommandNope.ME);
 
-<span class="nc" id="L75">		addLanguageCommands(cmds);</span>
+<span class="nc" id="L76">		addLanguageCommands(cmds);</span>
 
 //		cmds.add(new CommandGanttArrow());
 //		cmds.add(new CommandGanttArrow2());
@@ -91,43 +92,43 @@ public class ChronologyDiagramFactory extends PSystemCommandFactory {
 //		cmds.add(new CommandHideResourceName());
 //		cmds.add(new CommandHideResourceFootbox());
 //		cmds.add(new CommandTaskCompleteDefault());
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L95">	}</span>
 
 	private void addLanguageCommands(List&lt;Command&gt; cmd) {
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (Subject&lt;ChronologyDiagram&gt; subject : subjects())</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceA : subject.getSentences()) {</span>
-<span class="nc" id="L99">				cmd.add(NaturalCommand.create(sentenceA));</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">				for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceB : subject.getSentences()) {</span>
-<span class="nc" id="L101">					final String signatureA = sentenceA.getSignature();</span>
-<span class="nc" id="L102">					final String signatureB = sentenceB.getSignature();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (signatureA.equals(signatureB) == false)</span>
-<span class="nc" id="L104">						cmd.add(NaturalCommand.create(new SentenceAnd&lt;ChronologyDiagram&gt;(sentenceA, sentenceB)));</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (Subject&lt;ChronologyDiagram&gt; subject : subjects())</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceA : subject.getSentences()) {</span>
+<span class="nc" id="L100">				cmd.add(NaturalCommand.create(sentenceA));</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceB : subject.getSentences()) {</span>
+<span class="nc" id="L102">					final String signatureA = sentenceA.getSignature();</span>
+<span class="nc" id="L103">					final String signatureB = sentenceB.getSignature();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">					if (signatureA.equals(signatureB) == false)</span>
+<span class="nc" id="L105">						cmd.add(NaturalCommand.create(new SentenceAnd&lt;ChronologyDiagram&gt;(sentenceA, sentenceB)));</span>
 
-<span class="nc" id="L106">				}</span>
-<span class="nc" id="L107">			}</span>
+<span class="nc" id="L107">				}</span>
+<span class="nc" id="L108">			}</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Subject&lt;ChronologyDiagram&gt; subject : subjects())</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceA : subject.getSentences())</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">				for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceB : subject.getSentences())</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">					for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceC : subject.getSentences()) {</span>
-<span class="nc" id="L113">						final String signatureA = sentenceA.getSignature();</span>
-<span class="nc" id="L114">						final String signatureB = sentenceB.getSignature();</span>
-<span class="nc" id="L115">						final String signatureC = sentenceC.getSignature();</span>
-<span class="nc bnc" id="L116" title="All 4 branches missed.">						if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">								&amp;&amp; signatureC.equals(signatureB) == false)</span>
-<span class="nc" id="L118">							cmd.add(NaturalCommand</span>
-<span class="nc" id="L119">									.create(new SentenceAndAnd&lt;ChronologyDiagram&gt;(sentenceA, sentenceB, sentenceC)));</span>
-<span class="nc" id="L120">					}</span>
-<span class="nc" id="L121">	}</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (Subject&lt;ChronologyDiagram&gt; subject : subjects())</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceA : subject.getSentences())</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">				for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceB : subject.getSentences())</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">					for (SentenceSimple&lt;ChronologyDiagram&gt; sentenceC : subject.getSentences()) {</span>
+<span class="nc" id="L114">						final String signatureA = sentenceA.getSignature();</span>
+<span class="nc" id="L115">						final String signatureB = sentenceB.getSignature();</span>
+<span class="nc" id="L116">						final String signatureC = sentenceC.getSignature();</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">						if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">								&amp;&amp; signatureC.equals(signatureB) == false)</span>
+<span class="nc" id="L119">							cmd.add(NaturalCommand</span>
+<span class="nc" id="L120">									.create(new SentenceAndAnd&lt;ChronologyDiagram&gt;(sentenceA, sentenceB, sentenceC)));</span>
+<span class="nc" id="L121">					}</span>
+<span class="nc" id="L122">	}</span>
 
 	@Override
 	public ChronologyDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L125">		return new ChronologyDiagram(source, preprocessing);</span>
+<span class="nc" id="L126">		return new ChronologyDiagram(source, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L130">		return UmlDiagramType.CHRONOLOGY;</span>
+<span class="nc" id="L131">		return UmlDiagramType.CHRONOLOGY;</span>
 	}
 
 }

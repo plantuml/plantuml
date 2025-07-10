@@ -52,17 +52,18 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 <span class="fc" id="L53">		CommonCommands.addCommonCommands1(cmds);</span>
 <span class="fc" id="L54">		CommonCommands.addCommonCommands2(cmds);</span>
-<span class="fc" id="L55">		cmds.add(new CommandListSprite());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L55">		CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="fc" id="L56">		cmds.add(new CommandListSprite());</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L60">		return new ListSpriteDiagram(source, previous, preprocessing);</span>
+<span class="fc" id="L61">		return new ListSpriteDiagram(source, previous, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L65">		return null;</span>
+<span class="fc" id="L66">		return null;</span>
 	}
 
 }

@@ -53,63 +53,67 @@ public final class CommonCommands {
 	static public void addCommonCommands1(List&lt;Command&gt; cmds) {
 <span class="fc" id="L54">		addTitleCommands(cmds);</span>
 <span class="fc" id="L55">		addCommonCommands2(cmds);</span>
-<span class="fc" id="L56">		addCommonHides(cmds);</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L56">		addCommonScaleCommands(cmds);</span>
+<span class="fc" id="L57">		addCommonHides(cmds);</span>
+<span class="fc" id="L58">	}</span>
 
 	static public void addCommonCommands2(List&lt;Command&gt; cmds) {
-<span class="fc" id="L60">		cmds.add(CommandNope.ME);</span>
-<span class="fc" id="L61">		cmds.add(CommandPragma.ME);</span>
-<span class="fc" id="L62">		cmds.add(CommandAssumeTransparent.ME);</span>
+<span class="fc" id="L61">		cmds.add(CommandNope.ME);</span>
+<span class="fc" id="L62">		cmds.add(CommandPragma.ME);</span>
+<span class="fc" id="L63">		cmds.add(CommandAssumeTransparent.ME);</span>
 
-<span class="fc" id="L64">		cmds.add(CommandSkinParam.ME);</span>
-<span class="fc" id="L65">		cmds.add(CommandSkinParamJaws.ME);</span>
-<span class="fc" id="L66">		cmds.add(CommandSkinParamMultilines.ME);</span>
+<span class="fc" id="L65">		cmds.add(CommandSkinParam.ME);</span>
+<span class="fc" id="L66">		cmds.add(CommandSkinParamJaws.ME);</span>
+<span class="fc" id="L67">		cmds.add(CommandSkinParamMultilines.ME);</span>
 
-<span class="fc" id="L68">		cmds.add(CommandSkin.ME);</span>
-<span class="fc" id="L69">		cmds.add(CommandMinwidth.ME);</span>
-<span class="fc" id="L70">		cmds.add(CommandPage.ME);</span>
-<span class="fc" id="L71">		cmds.add(CommandRotate.ME);</span>
-<span class="fc" id="L72">		cmds.add(CommandScale.ME);</span>
-<span class="fc" id="L73">		cmds.add(CommandScaleWidthAndHeight.ME);</span>
-<span class="fc" id="L74">		cmds.add(CommandScaleWidthOrHeight.ME);</span>
-<span class="fc" id="L75">		cmds.add(CommandScaleMaxWidth.ME);</span>
-<span class="fc" id="L76">		cmds.add(CommandScaleMaxHeight.ME);</span>
-<span class="fc" id="L77">		cmds.add(CommandScaleMaxWidthAndHeight.ME);</span>
-<span class="fc" id="L78">		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;</span>
+<span class="fc" id="L69">		cmds.add(CommandSkin.ME);</span>
+<span class="fc" id="L70">		cmds.add(CommandMinwidth.ME);</span>
+<span class="fc" id="L71">		cmds.add(CommandPage.ME);</span>
+<span class="fc" id="L72">		cmds.add(CommandRotate.ME);</span>
+<span class="fc" id="L73">		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;</span>
 
-<span class="fc" id="L80">		cmds.add(factorySpriteCommand.createMultiLine(false));</span>
-<span class="fc" id="L81">		cmds.add(factorySpriteCommand.createSingleLine());</span>
-<span class="fc" id="L82">		cmds.add(CommandSpriteSvg.ME);</span>
-<span class="fc" id="L83">		cmds.add(CommandSpriteFile.ME);</span>
-<span class="fc" id="L84">		cmds.add(CommandSpriteSvgMultiline.ME);</span>
+<span class="fc" id="L75">		cmds.add(factorySpriteCommand.createMultiLine(false));</span>
+<span class="fc" id="L76">		cmds.add(factorySpriteCommand.createSingleLine());</span>
+<span class="fc" id="L77">		cmds.add(CommandSpriteSvg.ME);</span>
+<span class="fc" id="L78">		cmds.add(CommandSpriteFile.ME);</span>
+<span class="fc" id="L79">		cmds.add(CommandSpriteSvgMultiline.ME);</span>
 
-<span class="fc" id="L86">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
-<span class="fc" id="L87">		cmds.add(CommandStyleImport.ME);</span>
+<span class="fc" id="L81">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
+<span class="fc" id="L82">		cmds.add(CommandStyleImport.ME);</span>
 
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L84">	}</span>
+
+	static public void addCommonScaleCommands(List&lt;Command&gt; cmds) {
+<span class="fc" id="L87">		cmds.add(CommandScale.ME);</span>
+<span class="fc" id="L88">		cmds.add(CommandScaleWidthAndHeight.ME);</span>
+<span class="fc" id="L89">		cmds.add(CommandScaleWidthOrHeight.ME);</span>
+<span class="fc" id="L90">		cmds.add(CommandScaleMaxWidth.ME);</span>
+<span class="fc" id="L91">		cmds.add(CommandScaleMaxHeight.ME);</span>
+<span class="fc" id="L92">		cmds.add(CommandScaleMaxWidthAndHeight.ME);</span>
+<span class="fc" id="L93">	}</span>
 
 	static public void addCommonHides(List&lt;Command&gt; cmds) {
-<span class="fc" id="L92">		cmds.add(CommandHideEmptyDescription.ME);</span>
-<span class="fc" id="L93">		cmds.add(CommandHideShowByVisibility.ME);</span>
-<span class="fc" id="L94">		cmds.add(CommandHideShowByGender.ME);</span>
-<span class="fc" id="L95">	}</span>
+<span class="fc" id="L96">		cmds.add(CommandHideEmptyDescription.ME);</span>
+<span class="fc" id="L97">		cmds.add(CommandHideShowByVisibility.ME);</span>
+<span class="fc" id="L98">		cmds.add(CommandHideShowByGender.ME);</span>
+<span class="fc" id="L99">	}</span>
 
 	static public void addTitleCommands(List&lt;Command&gt; cmds) {
-<span class="fc" id="L98">		cmds.add(CommandTitle.ME);</span>
-<span class="fc" id="L99">		cmds.add(CommandMainframe.ME);</span>
-<span class="fc" id="L100">		cmds.add(CommandCaption.ME);</span>
-<span class="fc" id="L101">		cmds.add(CommandMultilinesCaption.ME);</span>
-<span class="fc" id="L102">		cmds.add(CommandMultilinesTitle.ME);</span>
-<span class="fc" id="L103">		cmds.add(CommandMultilinesLegend.ME);</span>
-<span class="fc" id="L104">		cmds.add(CommandLegend.ME);</span>
+<span class="fc" id="L102">		cmds.add(CommandTitle.ME);</span>
+<span class="fc" id="L103">		cmds.add(CommandMainframe.ME);</span>
+<span class="fc" id="L104">		cmds.add(CommandCaption.ME);</span>
+<span class="fc" id="L105">		cmds.add(CommandMultilinesCaption.ME);</span>
+<span class="fc" id="L106">		cmds.add(CommandMultilinesTitle.ME);</span>
+<span class="fc" id="L107">		cmds.add(CommandMultilinesLegend.ME);</span>
+<span class="fc" id="L108">		cmds.add(CommandLegend.ME);</span>
 
-<span class="fc" id="L106">		cmds.add(CommandFooter.ME);</span>
-<span class="fc" id="L107">		cmds.add(CommandMultilinesFooter.ME);</span>
+<span class="fc" id="L110">		cmds.add(CommandFooter.ME);</span>
+<span class="fc" id="L111">		cmds.add(CommandMultilinesFooter.ME);</span>
 
-<span class="fc" id="L109">		cmds.add(CommandHeader.ME);</span>
-<span class="fc" id="L110">		cmds.add(CommandMultilinesHeader.ME);</span>
-<span class="fc" id="L111">		cmds.add(CommandNamespaceSeparator.ME);</span>
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L113">		cmds.add(CommandHeader.ME);</span>
+<span class="fc" id="L114">		cmds.add(CommandMultilinesHeader.ME);</span>
+<span class="fc" id="L115">		cmds.add(CommandNamespaceSeparator.ME);</span>
+<span class="fc" id="L116">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
