@@ -58,6 +58,7 @@ public class PSystemSaltFactory extends PSystemCommandFactory {
 			cmds.add(new CommandSalt());
 
 		CommonCommands.addCommonCommands2(cmds);
+		CommonCommands.addCommonScaleCommands(cmds);
 		CommonCommands.addTitleCommands(cmds);
 		cmds.add(new CommandAnything());
 	}

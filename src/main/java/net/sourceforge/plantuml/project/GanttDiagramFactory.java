@@ -95,6 +95,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
+		CommonCommands.addCommonScaleCommands(cmds);
 
 		cmds.add(CommandStyleMultilinesCSS.ME);
 		cmds.add(CommandStyleImport.ME);

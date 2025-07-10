@@ -69,12 +69,8 @@ public final class UBrexCommonCommands {
 		cmds.add(CommandMinwidth.ME);
 		cmds.add(CommandPage.ME);
 		cmds.add(CommandRotate.ME);
-		cmds.add(CommandScale.ME);
-		cmds.add(CommandScaleWidthAndHeight.ME);
-		cmds.add(CommandScaleWidthOrHeight.ME);
-		cmds.add(CommandScaleMaxWidth.ME);
-		cmds.add(CommandScaleMaxHeight.ME);
-		cmds.add(CommandScaleMaxWidthAndHeight.ME);
+		CommonCommands.addCommonScaleCommands(cmds);
+
 		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());

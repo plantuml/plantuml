@@ -98,6 +98,8 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
 
+		CommonCommands.addCommonScaleCommands(cmds);
+
 		cmds.add(new CommandAddMethod());
 
 		CommonCommands.addCommonHides(cmds);
@@ -159,6 +161,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(CommandCreateElementMultilines.TYPE1);
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
+
 	}
 	
 	@Override

@@ -52,6 +52,7 @@ public class ListSpriteDiagramFactory extends PSystemCommandFactory {
 	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		CommonCommands.addCommonCommands2(cmds);
+		CommonCommands.addCommonScaleCommands(cmds);
 		cmds.add(new CommandListSprite());
 	}
 
