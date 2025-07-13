@@ -219,8 +219,8 @@ public class Stdlib {
 
 <span class="fc" id="L220">						final int width = Integer.parseInt(m.group(1));</span>
 <span class="fc" id="L221">						final int height = Integer.parseInt(m.group(2));</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">						if (found == null) {</span>
-<span class="fc" id="L223">							skipSprite(width, height, spriteStream);</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">						if (found == null) {</span>
+<span class="nc" id="L223">							skipSprite(width, height, spriteStream);</span>
 						} else {
 <span class="fc" id="L225">							final String sprite = readSprite(width, height, spriteStream);</span>
 <span class="fc" id="L226">							found.append(sprite);</span>
@@ -258,9 +258,9 @@ public class Stdlib {
 	}
 
 	private void skipSprite(int width, int height, InputStream inputStream) throws IOException {
-<span class="fc" id="L261">		final int nbLines = (height + 1) / 2;</span>
-<span class="fc" id="L262">		inputStream.skip(nbLines * width);</span>
-<span class="fc" id="L263">	}</span>
+<span class="nc" id="L261">		final int nbLines = (height + 1) / 2;</span>
+<span class="nc" id="L262">		inputStream.skip(nbLines * width);</span>
+<span class="nc" id="L263">	}</span>
 
 <span class="fc" id="L265">	private static final char[] HEX = &quot;0123456789ABCDEF&quot;.toCharArray();</span>
 
