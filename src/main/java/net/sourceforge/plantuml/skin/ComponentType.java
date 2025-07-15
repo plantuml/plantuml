@@ -55,7 +55,7 @@ public enum ComponentType implements Styleable {
 
 	DELAY_TEXT, DESTROY,
 
-	DELAY_LINE, PARTICIPANT_LINE, CONTINUE_LINE,
+	DELAY_LINE, PARTICIPANT_LINE, /*CONTINUE_LINE,*/
 
 	//
 	GROUPING_ELSE_LEGACY, GROUPING_ELSE_TEOZ, GROUPING_HEADER_LEGACY, GROUPING_HEADER_TEOZ, GROUPING_SPACE,
@@ -76,7 +76,7 @@ public enum ComponentType implements Styleable {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
 
-		if (this == PARTICIPANT_LINE || this == CONTINUE_LINE)
+		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
 
 		if (this == ALIVE_BOX_CLOSE_CLOSE || this == ALIVE_BOX_CLOSE_OPEN || this == ALIVE_BOX_OPEN_CLOSE

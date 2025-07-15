@@ -248,7 +248,7 @@ public class FromSkinparamToStyle {
 //		addConvert("sequenceStereotypeFontColor", PName.FontColor, SName.stereotype);
 //		addConvert("sequenceStereotypeFontName", PName.FontName, SName.stereotype);
 
-		addConvert("lifelineStrategy", PName.LineStyle, SName.lifeLine);
+		// addConvert("lifelineStrategy", PName.LineStyle, SName.lifeLine);
 		addConvert("wrapWidth", PName.MaximumWidth, SName.element);
 		addConvert("HyperlinkUnderline", PName.HyperlinkUnderlineThickness, SName.element);
 		addConvert("StereotypeAlignment", PName.HorizontalAlignment, SName.stereotype);
@@ -306,9 +306,9 @@ public class FromSkinparamToStyle {
 				value = "0";
 			else if (value.equalsIgnoreCase("true"))
 				value = "3";
-		} else if (key.equals("lifelinestrategy")) {
-			if (value.equalsIgnoreCase("solid"))
-				value = "0";
+//		} else if (key.equals("lifelinestrategy")) {
+//			if (value.equalsIgnoreCase("solid"))
+//				value = "0";
 		} else if (key.equals("hyperlinkunderline")) {
 			if (value.equalsIgnoreCase("false"))
 				value = "0";

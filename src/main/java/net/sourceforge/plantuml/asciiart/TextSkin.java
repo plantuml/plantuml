@@ -122,8 +122,8 @@ public class TextSkin extends Rose {
 		if (type == ComponentType.PARTICIPANT_LINE)
 			return new ComponentTextLine(type, fileFormat);
 
-		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentTextLine(type, fileFormat);
+		// if (type == ComponentType.CONTINUE_LINE)
+		//	return new ComponentTextLine(type, fileFormat);
 
 		if (type == ComponentType.DELAY_LINE)
 			return new ComponentTextLine(type, fileFormat);

@@ -77,7 +77,7 @@ import net.sourceforge.plantuml.style.Style;
 
 class DrawableSetInitializer {
 
-	private ComponentType defaultLineType;
+	// private ComponentType defaultLineType;
 	private final DrawableSet drawableSet;
 	private final boolean showTail;
 
@@ -95,21 +95,6 @@ class DrawableSetInitializer {
 		this.showTail = showTail;
 		// this.autonewpage = autonewpage;
 
-	}
-
-	private boolean useContinueLineBecauseOfDelay() {
-		final String strategy = drawableSet.getSkinParam().getValue("lifelineStrategy");
-		if ("nosolid".equalsIgnoreCase(strategy))
-			return false;
-
-		if ("solid".equalsIgnoreCase(strategy))
-			return true;
-
-		for (Event ev : drawableSet.getAllEvents())
-			if (ev instanceof Delay)
-				return true;
-
-		return false;
 	}
 
 	private ParticipantRange getFullParticipantRange() {
@@ -135,8 +120,8 @@ class DrawableSetInitializer {
 		if (freeY2 != null)
 			throw new IllegalStateException();
 
-		this.defaultLineType = useContinueLineBecauseOfDelay() ? ComponentType.CONTINUE_LINE
-				: ComponentType.PARTICIPANT_LINE;
+//		this.defaultLineType = useContinueLineBecauseOfDelay() ? ComponentType.CONTINUE_LINE
+//				: ComponentType.PARTICIPANT_LINE;
 
 		for (Participant p : drawableSet.getAllParticipants())
 			prepareParticipant(stringBounder, p);
@@ -645,9 +630,9 @@ class DrawableSetInitializer {
 				participantDisplay);
 		final Component tail = drawableSet.getSkin().createComponentParticipant(p, tailType, null, skinParam,
 				participantDisplay);
-		final Style style = this.defaultLineType.getStyleSignature().withTOBECHANGED(p.getStereotype())
+		final Style style = ComponentType.PARTICIPANT_LINE.getStyleSignature().withTOBECHANGED(p.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, this.defaultLineType, null,
+		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, ComponentType.PARTICIPANT_LINE, null,
 				drawableSet.getSkinParam(), participantDisplay);
 		final Style styleDelay = ComponentType.DELAY_LINE.getStyleSignature().withTOBECHANGED(p.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());

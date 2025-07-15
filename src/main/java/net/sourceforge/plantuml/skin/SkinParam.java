@@ -561,7 +561,7 @@ public class SkinParam implements ISkinParam {
 		result.add("SwimlaneWidth");
 		result.add("SwimlaneWrapTitleWidth");
 		result.add("FixCircleLabelOverlapping");
-		result.add("LifelineStrategy");
+		// result.add("LifelineStrategy");
 
 		for (FontParam p : EnumSet.allOf(FontParam.class)) {
 			final String h = humanName(p.name());

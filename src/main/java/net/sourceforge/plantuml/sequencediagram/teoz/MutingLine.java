@@ -58,7 +58,7 @@ public class MutingLine {
 
 	private final Rose skin;
 	private final ISkinParam skinParam;
-	private final boolean useContinueLineBecauseOfDelay;
+	// private final boolean useContinueLineBecauseOfDelay;
 	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 	private final StyleBuilder styleBuilder;
 	private final Participant participant;
@@ -67,25 +67,13 @@ public class MutingLine {
 		this.participant = participant;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
+		// this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
 		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 	}
 
-	private boolean useContinueLineBecauseOfDelay(List<Event> events) {
-		final String strategy = skinParam.getValue("lifelineStrategy");
-		if ("nosolid".equalsIgnoreCase(strategy))
-			return false;
-
-		for (Event ev : events)
-			if (ev instanceof Delay)
-				return true;
-
-		return false;
-	}
-
 	public void drawLine(UGraphic ug, Context2D context, double createY, double endY) {
-		final ComponentType defaultLineType = useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE
-				: ComponentType.PARTICIPANT_LINE;
+		final ComponentType defaultLineType = /* useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE : */
+				ComponentType.PARTICIPANT_LINE;
 		if (delays.size() > 0) {
 			double y = createY;
 			for (Map.Entry<Double, Double> ent : delays.entrySet()) {

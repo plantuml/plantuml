@@ -143,19 +143,6 @@ public class LivingSpace {
 		this.liveboxes = new LiveBoxes(p, events, skin, skinParam);
 	}
 
-	private boolean useContinueLineBecauseOfDelay(List<Event> events) {
-		final String strategy = skinParam.getValue("lifelineStrategy");
-		if ("nosolid".equalsIgnoreCase(strategy)) {
-			return false;
-		}
-		for (Event ev : events) {
-			if (ev instanceof Delay) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
 		mutingLine.drawLine(ug, context, createY, height);
 		liveboxes.drawBoxes(ug, context, createY, height);
