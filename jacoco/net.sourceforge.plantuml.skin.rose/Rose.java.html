@@ -207,8 +207,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc bfc" id="L207" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_LINE)</span>
 <span class="fc" id="L208">			return new ComponentRoseLine(styles[0], false, stringsToDisplay, param);</span>
 
-<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (type == ComponentType.CONTINUE_LINE)</span>
-<span class="fc" id="L211">			return new ComponentRoseLine(styles[0], true, stringsToDisplay, param);</span>
+		// if (type == ComponentType.CONTINUE_LINE)
+		//	return new ComponentRoseLine(styles[0], true, stringsToDisplay, param);
 
 <span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE)</span>
 <span class="nc" id="L214">			throw new UnsupportedOperationException();</span>

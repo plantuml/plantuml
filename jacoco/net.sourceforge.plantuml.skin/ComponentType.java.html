@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.Styleable;
 
 <span class="fc" id="L56">	DELAY_TEXT, DESTROY,</span>
 
-<span class="fc" id="L58">	DELAY_LINE, PARTICIPANT_LINE, CONTINUE_LINE,</span>
+<span class="fc" id="L58">	DELAY_LINE, PARTICIPANT_LINE, /*CONTINUE_LINE,*/</span>
 
 	//
 <span class="fc" id="L61">	GROUPING_ELSE_LEGACY, GROUPING_ELSE_TEOZ, GROUPING_HEADER_LEGACY, GROUPING_HEADER_TEOZ, GROUPING_SPACE,</span>
@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.style.Styleable;
 <span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)</span>
 <span class="nc" id="L77">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);</span>
 
-<span class="fc bfc" id="L79" title="All 4 branches covered.">		if (this == PARTICIPANT_LINE || this == CONTINUE_LINE)</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)</span>
 <span class="fc" id="L80">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);</span>
 
 <span class="pc bpc" id="L82" title="2 of 8 branches missed.">		if (this == ALIVE_BOX_CLOSE_CLOSE || this == ALIVE_BOX_CLOSE_OPEN || this == ALIVE_BOX_OPEN_CLOSE</span>

@@ -248,7 +248,7 @@ public class FromSkinparamToStyle {
 //		addConvert(&quot;sequenceStereotypeFontColor&quot;, PName.FontColor, SName.stereotype);
 //		addConvert(&quot;sequenceStereotypeFontName&quot;, PName.FontName, SName.stereotype);
 
-<span class="fc" id="L251">		addConvert(&quot;lifelineStrategy&quot;, PName.LineStyle, SName.lifeLine);</span>
+		// addConvert(&quot;lifelineStrategy&quot;, PName.LineStyle, SName.lifeLine);
 <span class="fc" id="L252">		addConvert(&quot;wrapWidth&quot;, PName.MaximumWidth, SName.element);</span>
 <span class="fc" id="L253">		addConvert(&quot;HyperlinkUnderline&quot;, PName.HyperlinkUnderlineThickness, SName.element);</span>
 <span class="fc" id="L254">		addConvert(&quot;StereotypeAlignment&quot;, PName.HorizontalAlignment, SName.stereotype);</span>
@@ -306,9 +306,9 @@ public class FromSkinparamToStyle {
 <span class="fc" id="L306">				value = &quot;0&quot;;</span>
 <span class="nc bnc" id="L307" title="All 2 branches missed.">			else if (value.equalsIgnoreCase(&quot;true&quot;))</span>
 <span class="nc" id="L308">				value = &quot;3&quot;;</span>
-<span class="fc bfc" id="L309" title="All 2 branches covered.">		} else if (key.equals(&quot;lifelinestrategy&quot;)) {</span>
-<span class="fc bfc" id="L310" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;solid&quot;))</span>
-<span class="fc" id="L311">				value = &quot;0&quot;;</span>
+//		} else if (key.equals(&quot;lifelinestrategy&quot;)) {
+//			if (value.equalsIgnoreCase(&quot;solid&quot;))
+//				value = &quot;0&quot;;
 <span class="fc bfc" id="L312" title="All 2 branches covered.">		} else if (key.equals(&quot;hyperlinkunderline&quot;)) {</span>
 <span class="fc bfc" id="L313" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
 <span class="fc" id="L314">				value = &quot;0&quot;;</span>
