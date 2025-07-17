@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class ParticipantBoxSimple implements Pushable {
 
@@ -73,6 +74,11 @@ public class ParticipantBoxSimple implements Pushable {
 
 	public Collection<Segment> getDelays(StringBounder stringBounder) {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public Stereotype getStereotype() {
+		throw new UnsupportedOperationException();
 	}
 
 }

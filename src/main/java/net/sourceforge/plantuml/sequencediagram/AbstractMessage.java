@@ -287,5 +287,11 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	public abstract Participant getParticipant1();
 
 	public abstract Participant getParticipant2();
+	
+	public StyleBuilder getStyleBuilder() {
+		return styleBuilder;
+	}
+
+
 
 }

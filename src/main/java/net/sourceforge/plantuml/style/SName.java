@@ -40,6 +40,7 @@ import java.util.Map;
 
 public enum SName {
 	action, //
+	activationBox, //
 	activity, //
 	activityBar, //
 	activityDiagram, //

@@ -112,7 +112,7 @@ public class FromSkinparamToStyle {
 		addConvert("SequenceBoxBackgroundColor", PName.BackGroundColor, SName.box);
 		addConvert("SequenceBoxFontColor", PName.FontColor, SName.box);
 		addConvert("SequenceLifeLineBorderColor", PName.LineColor, SName.lifeLine);
-		addConvert("SequenceLifeLineBackgroundColor", PName.BackGroundColor, SName.lifeLine);
+		addConvert("SequenceLifeLineBackgroundColor", PName.BackGroundColor, SName.activationBox);
 		addConFont("sequenceDelay", SName.delay);
 		addConvert("sequenceDelayBorderColor", PName.LineColor, SName.delay);
 		addConvert("sequenceDividerBackgroundColor", PName.BackGroundColor, SName.separator);

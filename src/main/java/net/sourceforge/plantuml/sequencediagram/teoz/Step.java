@@ -36,19 +36,22 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class Step {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final double value;
 	private final boolean destroy;
 	private final int indent;
 	private final Fashion color;
+	private final StyleBuilder styleBuilder;
 
-	public Step(double value, boolean destroy, int indent, Fashion color) {
-		if (indent < 0) {
+	public Step(double value, boolean destroy, int indent, Fashion color, StyleBuilder styleBuilder) {
+		if (indent < 0)
 			throw new IllegalArgumentException();
-		}
+
+		this.styleBuilder = styleBuilder;
 		this.indent = indent;
 		this.color = color;
 		this.value = value;
@@ -69,6 +72,10 @@ public class Step {
 
 	public Fashion getColors() {
 		return color;
+	}
+
+	public StyleBuilder getStyleBuilder() {
+		return styleBuilder;
 	}
 
 }

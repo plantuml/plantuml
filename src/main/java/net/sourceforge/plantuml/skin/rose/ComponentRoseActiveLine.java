@@ -55,14 +55,15 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final Fashion symbolContext;
 	private final boolean closeUp;
 	private final boolean closeDown;
-    private final Display stringsToDisplay;
+	private final Display stringsToDisplay;
 
-    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, Display stringsToDisplay, ISkinParam skinParam) {
+	public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, Display stringsToDisplay,
+			ISkinParam skinParam) {
 		super(style, skinParam);
-        this.symbolContext = getSymbolContext();
+		this.symbolContext = getSymbolContext();
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
-		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 
+		// Ideally, stringsToDisplay should never be null. However, as a safeguard,
 		// we default to Display.NULL when it is null.
 		this.stringsToDisplay = stringsToDisplay == null ? Display.NULL : stringsToDisplay;
 	}
@@ -72,16 +73,15 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;
 
-		if (dimensionToUse.getHeight() == 0) {
+		if (dimensionToUse.getHeight() == 0)
 			return;
-		}
 
 		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
 
 		final URectangle rect = URectangle.build(getPreferredWidth(stringBounder), dimensionToUse.getHeight());
-		if (symbolContext.isShadowing()) {
+		if (symbolContext.isShadowing())
 			rect.setDeltaShadow(1);
-		}
+
 		ug = ug.apply(symbolContext.getForeColor());
 		if (closeUp && closeDown) {
 			ug.apply(symbolContext.getBackColor().bg()).apply(UTranslate.dx(x)).draw(rect);
@@ -94,12 +94,12 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 			ug.apply(UTranslate.dx(x + getPreferredWidth(stringBounder))).draw(vline);
 
 			final ULine hline = ULine.hline(getPreferredWidth(stringBounder));
-			if (closeUp) {
+			if (closeUp)
 				ug.apply(UTranslate.dx(x)).draw(hline);
-			}
-			if (closeDown) {
+
+			if (closeDown)
 				ug.apply(new UTranslate(x, dimensionToUse.getHeight())).draw(hline);
-			}
+
 		}
 
 		ug.closeGroup();

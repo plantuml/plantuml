@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class LiveBoxes {
 
@@ -102,7 +103,7 @@ public class LiveBoxes {
 					level++;
 
 				if (le.getParticipant() == p && le.isDeactivateOrDestroy())
-					level = Math.max(0,level - 1);
+					level = Math.max(0, level - 1);
 
 			}
 			if (event == current) {
@@ -111,8 +112,10 @@ public class LiveBoxes {
 					boolean seenDeactivate = false;
 					while (it.hasNext()) {
 						final Event next = nextButSkippingNotes(it);
-						if (!(next instanceof LifeEvent || next instanceof AbstractMessage)) break;
-						if (!(next instanceof LifeEvent)) continue;
+						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))
+							break;
+						if (!(next instanceof LifeEvent))
+							continue;
 
 						final LifeEvent le = (LifeEvent) next;
 						final AbstractMessage msg = (AbstractMessage) current;
@@ -125,15 +128,17 @@ public class LiveBoxes {
 						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE && le.isActivate() && msg.dealWith(p)
 								&& le.getParticipant() == p) {
 							seenActivate = true;
-							if (seenDeactivate) break;
+							if (seenDeactivate)
+								break;
 							level++;
 						}
 
 						if (mode == EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE && le.isDeactivateOrDestroy()
 								&& msg.dealWith(p) && le.getParticipant() == p) {
 							seenDeactivate = true;
-							if (seenActivate) break;
-							level = Math.max(0,level - 1);
+							if (seenActivate)
+								break;
+							level = Math.max(0, level - 1);
 						}
 
 						// System.err.println("Warning, this is message " + current + " next=" + next);
@@ -183,7 +188,7 @@ public class LiveBoxes {
 
 			if (current instanceof Message || current instanceof MessageExo) {
 				Event next = nextButSkippingNotes(it);
-				while (next instanceof LifeEvent && ((LifeEvent) next).getMessage() ==current) {
+				while (next instanceof LifeEvent && ((LifeEvent) next).getMessage() == current) {
 					final LifeEvent le = (LifeEvent) next;
 					if (le.isActivate() && le.getParticipant() == p)
 						return le.getSpecificColors();
@@ -240,30 +245,35 @@ public class LiveBoxes {
 					seenActivate |= le.isActivate();
 					seenDeactivate |= le.isDeactivate();
 				} else
-						continue;
+					continue;
 			} else
 				position = potentialPosition;
 
 			if (event instanceof AbstractMessage) {
 				if (((AbstractMessage) event).isParallelWith(lastMessage))
 					continue;
-			  else {
+				else {
 					seenActivate = false;
 					seenDeactivate = false;
 					lastMessage = (AbstractMessage) event;
 				}
 			}
 
-			if (position != null ) {
+			if (position != null) {
 				assert position <= totalHeight : "position=" + position + " totalHeight=" + totalHeight;
 				indent = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
 				final Fashion activateColor = getActivateColor(event);
+				StyleBuilder styleBuilder = null;
+				if (event instanceof AbstractMessage)
+					styleBuilder = ((AbstractMessage) event).getStyleBuilder();
+				if (event instanceof LifeEvent)
+					styleBuilder = ((LifeEvent) event).getStyleBuilder();
 				final Step step = new Step(Math.max(createY, position), isNextEventADestroy(event), indent,
-						activateColor);
+						activateColor, styleBuilder);
 				stair.addStep(step);
 			}
 		}
-		stair.addStep(new Step(totalHeight, false, indent, null));
+		stair.addStep(new Step(totalHeight, false, indent, null, null));
 		return stair;
 	}
 
@@ -297,7 +307,8 @@ public class LiveBoxes {
 
 	public double getMaxPosition(StringBounder stringBounder) {
 		final int max = getMaxValue();
-		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(new SimpleContext2D(true), skin, skinParam, delays);
+		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(new SimpleContext2D(true), skin, skinParam, delays,
+				p.getStereotype());
 		return drawer.getWidth(stringBounder) / 2.0 * max;
 	}
 
@@ -313,14 +324,14 @@ public class LiveBoxes {
 	}
 
 	private void drawDestroys(UGraphic ug, Stairs stairs, Context2D context) {
-		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);
+		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());
 		for (Step yposition : stairs.getSteps())
 			drawer.drawDestroyIfNeeded(ug, yposition);
 
 	}
 
 	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs stairs, Context2D context) {
-		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);
+		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());
 		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));
 
 		boolean pending = true;
@@ -328,7 +339,7 @@ public class LiveBoxes {
 			final Step yposition = it.next();
 			final int indent = yposition.getIndent();
 			if (pending && indent == levelToDraw) {
-				drawer.addStart(yposition.getValue(), yposition.getColors());
+				drawer.addStart(yposition.getValue(), yposition.getColors(), yposition.getStyleBuilder());
 				pending = false;
 			} else if (pending == false && (it.hasNext() == false || indent < levelToDraw)) {
 				drawer.doDrawing(ug, yposition.getValue());

@@ -89,7 +89,7 @@ class DrawableSetInitializer {
 
 	private ConstraintSet constraintSet;
 
-	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, /*double autonewpage,*/
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, /* double autonewpage, */
 			AtomicInteger counter) {
 		this.drawableSet = new DrawableSet(skin, skinParam, counter);
 		this.showTail = showTail;
@@ -137,7 +137,7 @@ class DrawableSetInitializer {
 			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);
 			for (int i = 0; i < p.getInitialLife(); i++)
 				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,
-						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors(i));
+						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors(i), null);
 
 		}
 
@@ -495,7 +495,8 @@ class DrawableSetInitializer {
 				pos = message.getPosYstartLevel() + delta1;
 			}
 			final LifeLine line1 = drawableSet.getLivingParticipantBox(lifeEvent.getParticipant()).getLifeLine();
-			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificColors());
+			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificColors(),
+					message == null ? null : message.getStyleBuilder());
 		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {
 			double delta = 0;
 			if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage())
@@ -507,7 +508,8 @@ class DrawableSetInitializer {
 			if (message != null)
 				pos2 = message.getPosYendLevel() - delta;
 
-			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificColors());
+			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificColors(),
+					message == null ? null : message.getStyleBuilder());
 		}
 
 		if (lifeEvent.getType() == LifeEventType.DESTROY) {
@@ -632,8 +634,8 @@ class DrawableSetInitializer {
 				participantDisplay);
 		final Style style = ComponentType.PARTICIPANT_LINE.getStyleSignature().withTOBECHANGED(p.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, ComponentType.PARTICIPANT_LINE, null,
-				drawableSet.getSkinParam(), participantDisplay);
+		final Component line = drawableSet.getSkin().createComponent(new Style[] { style },
+				ComponentType.PARTICIPANT_LINE, null, drawableSet.getSkinParam(), participantDisplay);
 		final Style styleDelay = ComponentType.DELAY_LINE.getStyleSignature().withTOBECHANGED(p.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final Component delayLine = drawableSet.getSkin().createComponent(new Style[] { styleDelay },
@@ -641,10 +643,11 @@ class DrawableSetInitializer {
 		final ParticipantBox box = new ParticipantBox(skinParam.getPragma(), p.getLocation(), head, line, tail,
 				delayLine, this.freeX, skinParam.maxAsciiMessageLength() > 0 ? 1 : 5, p);
 
-		final Component comp = drawableSet.getSkin().createComponent(
-				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()
-						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },
-				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), participantDisplay);
+		final Style activationBoxStyle = ComponentType.ACTIVATION_BOX_CLOSE_CLOSE.getStyleSignature()
+				.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder());
+
+		final Component comp = drawableSet.getSkin().createComponent(new Style[] { activationBoxStyle },
+				ComponentType.ACTIVATION_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), participantDisplay);
 
 		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder),
 				drawableSet.getSkinParam().shadowing(p.getStereotype()), participantDisplay);

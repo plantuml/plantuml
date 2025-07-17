@@ -110,4 +110,8 @@ public class LifeEvent extends AbstractEvent implements Event {
 		return new Style[] { style };
 	}
 
+	public StyleBuilder getStyleBuilder() {
+		return styleBuilder;
+	}
+
 }

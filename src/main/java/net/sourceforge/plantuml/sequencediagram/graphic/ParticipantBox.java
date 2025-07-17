@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ParticipantBox implements Pushable {
@@ -252,6 +253,11 @@ public class ParticipantBox implements Pushable {
 				return delays.size();
 			}
 		};
+	}
+
+	@Override
+	public Stereotype getStereotype() {
+		return p.getStereotype();
 	}
 
 }

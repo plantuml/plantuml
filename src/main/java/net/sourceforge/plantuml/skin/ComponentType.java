@@ -51,7 +51,7 @@ public enum ComponentType implements Styleable {
 	DATABASE_HEAD, DATABASE_TAIL, COLLECTIONS_HEAD, COLLECTIONS_TAIL,
 
 	//
-	ALIVE_BOX_CLOSE_CLOSE, ALIVE_BOX_CLOSE_OPEN, ALIVE_BOX_OPEN_CLOSE, ALIVE_BOX_OPEN_OPEN,
+	ACTIVATION_BOX_CLOSE_CLOSE, ACTIVATION_BOX_CLOSE_OPEN, ACTIVATION_BOX_OPEN_CLOSE, ACTIVATION_BOX_OPEN_OPEN,
 
 	DELAY_TEXT, DESTROY,
 
@@ -79,9 +79,9 @@ public enum ComponentType implements Styleable {
 		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
 
-		if (this == ALIVE_BOX_CLOSE_CLOSE || this == ALIVE_BOX_CLOSE_OPEN || this == ALIVE_BOX_OPEN_CLOSE
-				|| this == ALIVE_BOX_OPEN_OPEN)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
+		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE
+				|| this == ACTIVATION_BOX_OPEN_OPEN)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);
 
 		if (this == DESTROY)
 			return LifeEventType.DESTROY.getStyleSignature();

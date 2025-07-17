@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 public interface Pushable {
 
@@ -47,6 +48,8 @@ public interface Pushable {
 
 	void pushToLeft(double deltaX);
 
-	public Collection<Segment> getDelays(StringBounder stringBounder);
+	Collection<Segment> getDelays(StringBounder stringBounder);
+	
+	Stereotype getStereotype();
 
 }

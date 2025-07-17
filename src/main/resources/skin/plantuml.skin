@@ -126,8 +126,11 @@ sequenceDiagram {
 	}
 
 	lifeLine {
-	  BackGroundColor white
 	  LineStyle 5
+	}
+
+	activationBox {
+	  BackGroundColor white
 	}
 
   destroy {

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -72,11 +73,14 @@ class Step1Message extends Step1Abstract {
 		} else {
 			final ArrowComponent comp = drawingSet.getSkin().createComponentArrow(message.getUsedStyles(), getConfig(),
 					drawingSet.getSkinParam(), message.getLabelNumbered());
-			final Component compAliveBox = drawingSet.getSkin().createComponent(
-					new Style[] { ComponentType.ALIVE_BOX_OPEN_OPEN.getStyleSignature()
-							.getMergedStyle(drawingSet.getSkinParam().getCurrentStyleBuilder()) },
-					ComponentType.ALIVE_BOX_OPEN_OPEN, null, drawingSet.getSkinParam(),
-					message.getParticipant1().getDisplay(false));
+
+			final Participant participant1 = message.getParticipant1();
+			final Style activationBoxStyle = ComponentType.ACTIVATION_BOX_OPEN_OPEN.getStyleSignature()
+					.getMergedStyle(drawingSet.getSkinParam().getCurrentStyleBuilder());
+
+			final Component compAliveBox = drawingSet.getSkin().createComponent(new Style[] { activationBoxStyle },
+					ComponentType.ACTIVATION_BOX_OPEN_OPEN, null, drawingSet.getSkinParam(),
+					participant1.getDisplay(false));
 
 			this.messageArrow = new MessageArrow(getDrawingSet().getCounter(),
 					getDrawingSet().getSkinParam().getPragma(), freeY.getFreeY(range), drawingSet.getSkin(), comp,
@@ -237,9 +241,10 @@ class Step1Message extends Step1Abstract {
 	private double getHalfLifeWidth() {
 		return getDrawingSet().getSkin()
 				.createComponent(
-						new Style[] { ComponentType.ALIVE_BOX_OPEN_OPEN.getStyleSignature()
+						new Style[] { ComponentType.ACTIVATION_BOX_OPEN_OPEN.getStyleSignature()
 								.getMergedStyle(getDrawingSet().getSkinParam().getCurrentStyleBuilder()) },
-						ComponentType.ALIVE_BOX_OPEN_OPEN, null, getDrawingSet().getSkinParam(), Display.create(""))
+						ComponentType.ACTIVATION_BOX_OPEN_OPEN, null, getDrawingSet().getSkinParam(),
+						Display.create(""))
 				.getPreferredWidth(null) / 2;
 	}
 

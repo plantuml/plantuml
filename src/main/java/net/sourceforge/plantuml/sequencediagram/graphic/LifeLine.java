@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class LifeLine {
 
@@ -63,11 +64,13 @@ public class LifeLine {
 		final private LifeSegmentVariation type;
 		final private Fashion colors;
 		final private double y;
+		final private StyleBuilder styleBuilder;
 
-		Variation(LifeSegmentVariation type, double y, Fashion backcolor) {
+		Variation(LifeSegmentVariation type, double y, Fashion backcolor, StyleBuilder styleBuilder) {
 			this.type = type;
 			this.y = y;
 			this.colors = backcolor;
+			this.styleBuilder = styleBuilder;
 		}
 
 		@Override
@@ -83,16 +86,16 @@ public class LifeLine {
 	private final Stairs stairs = new Stairs();
 	private int maxLevel = 0;
 	private final boolean shadowing;
-    private final Display participantDisplay;
+	private final Display participantDisplay;
 
-    public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing, Display participantDisplay) {
+	public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing, Display participantDisplay) {
 		this.participant = participant;
 		this.nominalPreferredWidth = nominalPreferredWidth;
 		this.shadowing = shadowing;
-        this.participantDisplay = participantDisplay;
-    }
+		this.participantDisplay = participantDisplay;
+	}
 
-	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors) {
+	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors, StyleBuilder styleBuilder) {
 		if (events.size() > 0) {
 			final Variation last = events.get(events.size() - 1);
 			if (y < last.y) {
@@ -104,7 +107,7 @@ public class LifeLine {
 				// throw new IllegalArgumentException();
 			}
 		}
-		events.add(new Variation(type, y, colors));
+		events.add(new Variation(type, y, colors, styleBuilder));
 		final int currentLevel = type.apply(stairs.getLastValue());
 		stairs.addStep(y, currentLevel);
 		assert getLevel(y) == stairs.getValue(y);
@@ -115,20 +118,19 @@ public class LifeLine {
 
 	public void finish(double y) {
 		final int missingClose = getMissingClose();
-		for (int i = 0; i < missingClose; i++) {
-			addSegmentVariation(LifeSegmentVariation.SMALLER, y, null);
-		}
+		for (int i = 0; i < missingClose; i++)
+			addSegmentVariation(LifeSegmentVariation.SMALLER, y, null, null);
+
 	}
 
 	int getMissingClose() {
 		int level = 0;
-		for (Variation ev : events) {
-			if (ev.type == LifeSegmentVariation.LARGER) {
+		for (Variation ev : events)
+			if (ev.type == LifeSegmentVariation.LARGER)
 				level++;
-			} else {
+			else
 				level--;
-			}
-		}
+
 		return level;
 	}
 
@@ -164,9 +166,9 @@ public class LifeLine {
 	}
 
 	private double getLeftShiftAtLevel(int level) {
-		if (level == 0) {
+		if (level == 0)
 			return 0;
-		}
+
 		return nominalPreferredWidth / 2.0;
 	}
 
@@ -176,16 +178,16 @@ public class LifeLine {
 	}
 
 	private SegmentColored getSegment(int i) {
-		if (events.get(i).type != LifeSegmentVariation.LARGER) {
+		if (events.get(i).type != LifeSegmentVariation.LARGER)
 			return null;
-		}
+
 		int level = 1;
 		for (int j = i + 1; j < events.size(); j++) {
-			if (events.get(j).type == LifeSegmentVariation.LARGER) {
+			if (events.get(j).type == LifeSegmentVariation.LARGER)
 				level++;
-			} else {
+			else
 				level--;
-			}
+
 			if (level == 0) {
 				final double y1 = events.get(i).y;
 				final double y2 = events.get(j).y;
@@ -197,9 +199,9 @@ public class LifeLine {
 
 	private Collection<SegmentColored> getSegmentsCutted(StringBounder stringBounder, int i) {
 		final SegmentColored seg = getSegment(i);
-		if (seg != null) {
+		if (seg != null)
 			return seg.cutSegmentIfNeed(participant.getDelays(stringBounder));
-		}
+
 		return Collections.emptyList();
 	}
 
@@ -210,33 +212,41 @@ public class LifeLine {
 
 		int eventLevel = 0;
 		for (int i = 0; i < events.size(); i++) {
-			ComponentType type = ComponentType.ALIVE_BOX_CLOSE_OPEN;
+			ComponentType type = ComponentType.ACTIVATION_BOX_CLOSE_OPEN;
 			Collection<SegmentColored> segmentsCutted = getSegmentsCutted(stringBounder, i);
 			if (events.get(i).type == LifeSegmentVariation.LARGER)
 				eventLevel++;
 			else if (events.get(i).type == LifeSegmentVariation.SMALLER)
-				eventLevel = Math.max(0,eventLevel-1);
+				eventLevel = Math.max(0, eventLevel - 1);
 			for (final Iterator<SegmentColored> it = segmentsCutted.iterator(); it.hasNext();) {
 				final SegmentColored seg = it.next();
 				final HColor specificBackColor = seg.getSpecificBackColor();
 				ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, specificBackColor);
 				final HColor specificLineColor = seg.getSpecificLineColor();
-				if (specificLineColor != null) {
+				if (specificLineColor != null)
 					skinParam2 = new SkinParamForceColor(skinParam2, ColorParam.sequenceLifeLineBorder,
 							specificLineColor);
-				}
-				if (it.hasNext() == false) {
-					type = type == ComponentType.ALIVE_BOX_CLOSE_OPEN ? ComponentType.ALIVE_BOX_CLOSE_CLOSE
-							: ComponentType.ALIVE_BOX_OPEN_CLOSE;
-				}
-				Style style = type.getStyleSignature().getMergedStyle(skinParam2.getCurrentStyleBuilder());
+
+				if (it.hasNext() == false)
+					type = type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN ? ComponentType.ACTIVATION_BOX_CLOSE_CLOSE
+							: ComponentType.ACTIVATION_BOX_OPEN_CLOSE;
+
+				StyleBuilder currentStyleBuilder = events.get(i).styleBuilder;
+				if (currentStyleBuilder == null)
+					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();
+
+				Style style = type.getStyleSignature().withTOBECHANGED(participant.getStereotype())
+						.getMergedStyle(currentStyleBuilder);
+
 				if (style != null) {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);
 					style = style.eventuallyOverride(PName.LineColor, specificLineColor);
 				}
-				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2, participantDisplay);
-				type = ComponentType.ALIVE_BOX_OPEN_OPEN;
-				final int currentLevel = Math.min(eventLevel,getLevel(seg.getPos1Initial()));
+
+				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2,
+						participantDisplay);
+				type = ComponentType.ACTIVATION_BOX_OPEN_OPEN;
+				final int currentLevel = Math.min(eventLevel, getLevel(seg.getPos1Initial()));
 				seg.drawU(ug, compAliveBox, currentLevel);
 			}
 		}
@@ -267,9 +277,9 @@ public class LifeLine {
 	}
 
 	public Fashion getColors() {
-		if (events.size() == 0) {
+		if (events.size() == 0)
 			return null;
-		}
+
 		return events.get(events.size() - 1).colors;
 	}
 }
