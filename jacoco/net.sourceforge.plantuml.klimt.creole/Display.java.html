@@ -132,11 +132,11 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public Stereotype getStereotypeIfAny() {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (CharSequence cs : displayData)</span>
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			if (cs instanceof Stereotype)</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (CharSequence cs : displayData)</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (cs instanceof Stereotype)</span>
 <span class="nc" id="L137">				return (Stereotype) cs;</span>
 
-<span class="fc" id="L139">		return null;</span>
+<span class="nc" id="L139">		return null;</span>
 
 	}
 

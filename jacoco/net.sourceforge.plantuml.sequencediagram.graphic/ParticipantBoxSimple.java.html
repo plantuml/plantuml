@@ -39,40 +39,46 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class ParticipantBoxSimple implements Pushable {
 
-<span class="fc" id="L45">	private double pos = 0;</span>
+<span class="fc" id="L46">	private double pos = 0;</span>
 	private final String name;
 
 	public ParticipantBoxSimple(double pos) {
-<span class="nc" id="L49">		this(pos, null);</span>
-<span class="nc" id="L50">	}</span>
+<span class="nc" id="L50">		this(pos, null);</span>
+<span class="nc" id="L51">	}</span>
 
-<span class="fc" id="L52">	public ParticipantBoxSimple(double pos, String name) {</span>
-<span class="fc" id="L53">		this.pos = pos;</span>
-<span class="fc" id="L54">		this.name = name;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">	public ParticipantBoxSimple(double pos, String name) {</span>
+<span class="fc" id="L54">		this.pos = pos;</span>
+<span class="fc" id="L55">		this.name = name;</span>
+<span class="fc" id="L56">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		return name == null ? super.toString() : name;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		return name == null ? super.toString() : name;</span>
 	}
 
 	public double getCenterX(StringBounder stringBounder) {
-<span class="fc" id="L63">		return pos;</span>
+<span class="fc" id="L64">		return pos;</span>
 	}
 
 	public void pushToLeft(double deltaX) {
-<span class="fc" id="L67">		pos += deltaX;</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L68">		pos += deltaX;</span>
+<span class="fc" id="L69">	}</span>
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L71">		return 0;</span>
+<span class="nc" id="L72">		return 0;</span>
 	}
 
 	public Collection&lt;Segment&gt; getDelays(StringBounder stringBounder) {
-<span class="nc" id="L75">		return Collections.emptyList();</span>
+<span class="nc" id="L76">		return Collections.emptyList();</span>
+	}
+
+	@Override
+	public Stereotype getStereotype() {
+<span class="nc" id="L81">		throw new UnsupportedOperationException();</span>
 	}
 
 }

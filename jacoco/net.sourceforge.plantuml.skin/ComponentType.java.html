@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.style.Styleable;
 <span class="fc" id="L51">	DATABASE_HEAD, DATABASE_TAIL, COLLECTIONS_HEAD, COLLECTIONS_TAIL,</span>
 
 	//
-<span class="fc" id="L54">	ALIVE_BOX_CLOSE_CLOSE, ALIVE_BOX_CLOSE_OPEN, ALIVE_BOX_OPEN_CLOSE, ALIVE_BOX_OPEN_OPEN,</span>
+<span class="fc" id="L54">	ACTIVATION_BOX_CLOSE_CLOSE, ACTIVATION_BOX_CLOSE_OPEN, ACTIVATION_BOX_OPEN_CLOSE, ACTIVATION_BOX_OPEN_OPEN,</span>
 
 <span class="fc" id="L56">	DELAY_TEXT, DESTROY,</span>
 
@@ -79,9 +79,9 @@ import net.sourceforge.plantuml.style.Styleable;
 <span class="fc bfc" id="L79" title="All 2 branches covered.">		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)</span>
 <span class="fc" id="L80">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);</span>
 
-<span class="pc bpc" id="L82" title="2 of 8 branches missed.">		if (this == ALIVE_BOX_CLOSE_CLOSE || this == ALIVE_BOX_CLOSE_OPEN || this == ALIVE_BOX_OPEN_CLOSE</span>
-				|| this == ALIVE_BOX_OPEN_OPEN)
-<span class="fc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);</span>
+<span class="pc bpc" id="L82" title="2 of 8 branches missed.">		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE</span>
+				|| this == ACTIVATION_BOX_OPEN_OPEN)
+<span class="fc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);</span>
 
 <span class="fc bfc" id="L86" title="All 2 branches covered.">		if (this == DESTROY)</span>
 <span class="fc" id="L87">			return LifeEventType.DESTROY.getStyleSignature();</span>

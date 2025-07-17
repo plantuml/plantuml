@@ -199,7 +199,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="nc" id="L199">				throw new UnsupportedOperationException(type.toString());</span>
 		}
 
-<span class="fc bfc" id="L202" title="All 2 branches covered.">		final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();</span>
+		// final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
 
 <span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (type.isArrow())</span>
 <span class="nc" id="L205">			return createComponentArrow(null, config, param, stringsToDisplay);</span>
@@ -234,16 +234,16 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc bfc" id="L234" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_SPACE)</span>
 <span class="fc" id="L235">			return new ComponentRoseGroupingSpace(7);</span>
 
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_CLOSE)</span>
 <span class="fc" id="L238">			return new ComponentRoseActiveLine(styles[0], true, true, stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN)</span>
 <span class="nc" id="L241">			return new ComponentRoseActiveLine(styles[0], true, false, stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_CLOSE) {</span>
 <span class="nc" id="L244">			return new ComponentRoseActiveLine(styles[0], false, true, stringsToDisplay, param);</span>
 		}
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
 <span class="fc" id="L247">			return new ComponentRoseActiveLine(styles[0], false, false, stringsToDisplay, param);</span>
 
 <span class="fc bfc" id="L249" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE)</span>

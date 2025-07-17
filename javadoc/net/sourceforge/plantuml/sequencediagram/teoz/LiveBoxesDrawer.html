@@ -90,10 +90,11 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.skin.Context2D,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.style.ISkinParam,java.util.Map)" class="member-name-link">LiveBoxesDrawer</a><wbr>(<a href="../../skin/Context2D.html" title="interface in net.sourceforge.plantuml.skin">Context2D</a>&nbsp;context,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.skin.Context2D,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.style.ISkinParam,java.util.Map,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">LiveBoxesDrawer</a><wbr>(<a href="../../skin/Context2D.html" title="interface in net.sourceforge.plantuml.skin">Context2D</a>&nbsp;context,
  <a href="../../skin/rose/Rose.html" title="class in net.sourceforge.plantuml.skin.rose">Rose</a>&nbsp;skin,
  <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;delays)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;delays,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -110,8 +111,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addStart(double,net.sourceforge.plantuml.klimt.Fashion)" class="member-name-link">addStart</a><wbr>(double&nbsp;y1,
- <a href="../../klimt/Fashion.html" title="class in net.sourceforge.plantuml.klimt">Fashion</a>&nbsp;symbolContext)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addStart(double,net.sourceforge.plantuml.klimt.Fashion,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">addStart</a><wbr>(double&nbsp;y1,
+ <a href="../../klimt/Fashion.html" title="class in net.sourceforge.plantuml.klimt">Fashion</a>&nbsp;symbolContext,
+ <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDrawing(net.sourceforge.plantuml.klimt.drawing.UGraphic,double)" class="member-name-link">doDrawing</a><wbr>(<a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
@@ -142,12 +144,13 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.skin.Context2D,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.style.ISkinParam,java.util.Map)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.skin.Context2D,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.style.ISkinParam,java.util.Map,net.sourceforge.plantuml.stereo.Stereotype)">
 <h3>LiveBoxesDrawer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">LiveBoxesDrawer</span><wbr><span class="parameters">(<a href="../../skin/Context2D.html" title="interface in net.sourceforge.plantuml.skin">Context2D</a>&nbsp;context,
  <a href="../../skin/rose/Rose.html" title="class in net.sourceforge.plantuml.skin.rose">Rose</a>&nbsp;skin,
  <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;delays)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;delays,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</span></div>
 </section>
 </li>
 </ul>
@@ -165,10 +168,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addStart(double,net.sourceforge.plantuml.klimt.Fashion)">
+<section class="detail" id="addStart(double,net.sourceforge.plantuml.klimt.Fashion,net.sourceforge.plantuml.style.StyleBuilder)">
 <h3>addStart</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addStart</span><wbr><span class="parameters">(double&nbsp;y1,
- <a href="../../klimt/Fashion.html" title="class in net.sourceforge.plantuml.klimt">Fashion</a>&nbsp;symbolContext)</span></div>
+ <a href="../../klimt/Fashion.html" title="class in net.sourceforge.plantuml.klimt">Fashion</a>&nbsp;symbolContext,
+ <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</span></div>
 </section>
 </li>
 <li>

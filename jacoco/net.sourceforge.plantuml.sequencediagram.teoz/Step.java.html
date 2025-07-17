@@ -36,39 +36,46 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class Step {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final double value;
 	private final boolean destroy;
 	private final int indent;
 	private final Fashion color;
+	private final StyleBuilder styleBuilder;
 
-<span class="fc" id="L48">	public Step(double value, boolean destroy, int indent, Fashion color) {</span>
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (indent &lt; 0) {</span>
-<span class="nc" id="L50">			throw new IllegalArgumentException();</span>
-		}
-<span class="fc" id="L52">		this.indent = indent;</span>
-<span class="fc" id="L53">		this.color = color;</span>
-<span class="fc" id="L54">		this.value = value;</span>
-<span class="fc" id="L55">		this.destroy = destroy;</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L50">	public Step(double value, boolean destroy, int indent, Fashion color, StyleBuilder styleBuilder) {</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (indent &lt; 0)</span>
+<span class="nc" id="L52">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L54">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L55">		this.indent = indent;</span>
+<span class="fc" id="L56">		this.color = color;</span>
+<span class="fc" id="L57">		this.value = value;</span>
+<span class="fc" id="L58">		this.destroy = destroy;</span>
+<span class="fc" id="L59">	}</span>
 
 	public double getValue() {
-<span class="fc" id="L59">		return value;</span>
+<span class="fc" id="L62">		return value;</span>
 	}
 
 	public boolean isDestroy() {
-<span class="fc" id="L63">		return destroy;</span>
+<span class="fc" id="L66">		return destroy;</span>
 	}
 
 	public int getIndent() {
-<span class="fc" id="L67">		return indent;</span>
+<span class="fc" id="L70">		return indent;</span>
 	}
 
 	public Fashion getColors() {
-<span class="fc" id="L71">		return color;</span>
+<span class="fc" id="L74">		return color;</span>
+	}
+
+	public StyleBuilder getStyleBuilder() {
+<span class="fc" id="L78">		return styleBuilder;</span>
 	}
 
 }

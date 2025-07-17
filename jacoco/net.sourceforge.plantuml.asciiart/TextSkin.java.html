@@ -128,16 +128,16 @@ public class TextSkin extends Rose {
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE)</span>
 <span class="fc" id="L129">			return new ComponentTextLine(type, fileFormat);</span>
 
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_CLOSE)</span>
 <span class="fc" id="L132">			return new ComponentTextActiveLine(fileFormat);</span>
 
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN)</span>
 <span class="nc" id="L135">			return new ComponentTextActiveLine(fileFormat);</span>
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE)</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_CLOSE)</span>
 <span class="nc" id="L138">			return new ComponentTextActiveLine(fileFormat);</span>
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
 <span class="fc" id="L141">			return new ComponentTextActiveLine(fileFormat);</span>
 
 <span class="nc bnc" id="L143" title="All 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>

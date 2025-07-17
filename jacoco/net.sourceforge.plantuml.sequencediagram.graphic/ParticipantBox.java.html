@@ -53,11 +53,12 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ParticipantBox implements Pushable {
 
-<span class="fc" id="L60">	private static int CPT = 0;</span>
+<span class="fc" id="L61">	private static int CPT = 0;</span>
 
 	private final int outMargin;
 
@@ -70,188 +71,193 @@ public class ParticipantBox implements Pushable {
 	private final Participant p;
 	private final Pragma pragma;
 
-<span class="fc" id="L73">	private int cpt = CPT++;</span>
+<span class="fc" id="L74">	private int cpt = CPT++;</span>
 
 	public ParticipantBox(Pragma pragma, LineLocation location, Component head, Component line, Component tail,
-<span class="fc" id="L76">			Component delayLine, double startingX, int outMargin, Participant p) {</span>
-<span class="fc" id="L77">		this.outMargin = outMargin;</span>
-<span class="fc" id="L78">		this.startingX = startingX;</span>
-<span class="fc" id="L79">		this.head = head;</span>
-<span class="fc" id="L80">		this.line = line;</span>
-<span class="fc" id="L81">		this.tail = tail;</span>
-<span class="fc" id="L82">		this.delayLine = delayLine;</span>
-<span class="fc" id="L83">		this.p = p;</span>
-<span class="fc" id="L84">		this.pragma = pragma;</span>
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L77">			Component delayLine, double startingX, int outMargin, Participant p) {</span>
+<span class="fc" id="L78">		this.outMargin = outMargin;</span>
+<span class="fc" id="L79">		this.startingX = startingX;</span>
+<span class="fc" id="L80">		this.head = head;</span>
+<span class="fc" id="L81">		this.line = line;</span>
+<span class="fc" id="L82">		this.tail = tail;</span>
+<span class="fc" id="L83">		this.delayLine = delayLine;</span>
+<span class="fc" id="L84">		this.p = p;</span>
+<span class="fc" id="L85">		this.pragma = pragma;</span>
+<span class="fc" id="L86">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L89">		return &quot;PB&quot; + cpt;</span>
+<span class="nc" id="L90">		return &quot;PB&quot; + cpt;</span>
 	}
 
 	public double getMinX() {
-<span class="fc" id="L93">		return startingX + outMargin;</span>
+<span class="fc" id="L94">		return startingX + outMargin;</span>
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L97">		return startingX + head.getPreferredWidth(stringBounder) + 2 * outMargin;</span>
+<span class="fc" id="L98">		return startingX + head.getPreferredWidth(stringBounder) + 2 * outMargin;</span>
 	}
 
 	public double getCenterX(StringBounder stringBounder) {
-<span class="fc" id="L101">		return startingX + head.getPreferredWidth(stringBounder) / 2.0 + outMargin;</span>
+<span class="fc" id="L102">		return startingX + head.getPreferredWidth(stringBounder) / 2.0 + outMargin;</span>
 	}
 
 	public double getHeadHeight(StringBounder stringBounder) {
-<span class="fc" id="L105">		return head.getPreferredHeight(stringBounder) + line.getPreferredHeight(stringBounder) / 2.0;</span>
+<span class="fc" id="L106">		return head.getPreferredHeight(stringBounder) + line.getPreferredHeight(stringBounder) / 2.0;</span>
 	}
 
 	public double getHeadHeightOnly(StringBounder stringBounder) {
-<span class="nc" id="L109">		return head.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L110">		return head.getPreferredHeight(stringBounder);</span>
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L113">		return head.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L114">		return head.getPreferredWidth(stringBounder);</span>
 	}
 
 	public double getTailHeight(StringBounder stringBounder) {
-<span class="fc" id="L117">		return tail.getPreferredHeight(stringBounder) + line.getPreferredHeight(stringBounder) / 2.0;</span>
+<span class="fc" id="L118">		return tail.getPreferredHeight(stringBounder) + line.getPreferredHeight(stringBounder) / 2.0;</span>
 	}
 
 	public void pushToLeft(double deltaX) {
-<span class="fc" id="L121">		startingX += deltaX;</span>
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L122">		startingX += deltaX;</span>
+<span class="fc" id="L123">	}</span>
 
 	public void drawHeadTailU(UGraphic ug, double topStartingY, boolean showHead, double positionTail) {
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (topStartingY == 0) {</span>
-<span class="nc" id="L126">			throw new IllegalStateException(&quot;setTopStartingY cannot be zero&quot;);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (topStartingY == 0) {</span>
+<span class="nc" id="L127">			throw new IllegalStateException(&quot;setTopStartingY cannot be zero&quot;);</span>
 		}
 
 		// final double atX = ug.getTranslateX();
 		// final double atY = ug.getTranslateY();
-<span class="fc" id="L131">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L132">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (showHead) {</span>
-<span class="fc" id="L134">			ug.startGroup(p.groupTypeHead(pragma));</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (showHead) {</span>
+<span class="fc" id="L135">			ug.startGroup(p.groupTypeHead(pragma));</span>
 
-<span class="fc" id="L136">			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)</span>
-<span class="fc" id="L137">					- line.getPreferredHeight(stringBounder) / 2;</span>
-<span class="fc" id="L138">			head.drawU(ug.apply(new UTranslate(getMinX(), y1)), new Area(</span>
-<span class="fc" id="L139">					new XDimension2D(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder))),</span>
+<span class="fc" id="L137">			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)</span>
+<span class="fc" id="L138">					- line.getPreferredHeight(stringBounder) / 2;</span>
+<span class="fc" id="L139">			head.drawU(ug.apply(new UTranslate(getMinX(), y1)), new Area(</span>
+<span class="fc" id="L140">					new XDimension2D(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder))),</span>
 					new SimpleContext2D(false));
 			// ug.setTranslate(atX, atY);
 
-<span class="fc" id="L143">			ug.closeGroup();</span>
+<span class="fc" id="L144">			ug.closeGroup();</span>
 		}
 
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (positionTail &gt; 0) {</span>
-<span class="fc" id="L147">			ug.startGroup(p.groupTypeTail(pragma));</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (positionTail &gt; 0) {</span>
+<span class="fc" id="L148">			ug.startGroup(p.groupTypeTail(pragma));</span>
 
 			// final double y2 = positionTail - topStartingY +
 			// line.getPreferredHeight(stringBounder) / 2 - 1;
-<span class="fc" id="L151">			positionTail += line.getPreferredHeight(stringBounder) / 2 - 1;</span>
+<span class="fc" id="L152">			positionTail += line.getPreferredHeight(stringBounder) / 2 - 1;</span>
 			// if (y2 != y22) {
 			// throw new IllegalStateException();
 			// }
-<span class="fc" id="L155">			ug = ug.apply(new UTranslate(getMinX(), positionTail));</span>
-<span class="fc" id="L156">			tail.drawU(ug, new Area(</span>
-<span class="fc" id="L157">					new XDimension2D(tail.getPreferredWidth(stringBounder), tail.getPreferredHeight(stringBounder))),</span>
+<span class="fc" id="L156">			ug = ug.apply(new UTranslate(getMinX(), positionTail));</span>
+<span class="fc" id="L157">			tail.drawU(ug, new Area(</span>
+<span class="fc" id="L158">					new XDimension2D(tail.getPreferredWidth(stringBounder), tail.getPreferredHeight(stringBounder))),</span>
 					new SimpleContext2D(false));
 			// ug.setTranslate(atX, atY);
 
-<span class="fc" id="L161">			ug.closeGroup();</span>
+<span class="fc" id="L162">			ug.closeGroup();</span>
 		}
-<span class="fc" id="L163">	}</span>
+<span class="fc" id="L164">	}</span>
 
 	public void drawParticipantHead(UGraphic ug) {
 		// ug.translate(outMargin, 0);
-<span class="nc" id="L167">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L168">		head.drawU(ug.apply(UTranslate.dx(outMargin)), new Area(</span>
-<span class="nc" id="L169">				new XDimension2D(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder))),</span>
+<span class="nc" id="L168">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L169">		head.drawU(ug.apply(UTranslate.dx(outMargin)), new Area(</span>
+<span class="nc" id="L170">				new XDimension2D(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder))),</span>
 				new SimpleContext2D(false));
 		// ug.translate(-outMargin, 0);
-<span class="nc" id="L172">	}</span>
+<span class="nc" id="L173">	}</span>
 
 	public void drawLineU22(UGraphic ug, double startingY, final double endingY, boolean showTail, double myDelta) {
-<span class="fc" id="L175">		ug = ug.apply(UTranslate.dx(startingX));</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (delays.size() &gt; 0) {</span>
-<span class="nc" id="L177">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			for (GraphicalDelayText delay : delays)</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">				if (delay.getStartingY() - myDelta &gt;= startingY) {</span>
-<span class="nc" id="L180">					drawLineIfLowerThan(ug, startingY, delay.getStartingY() - myDelta, line, endingY);</span>
-<span class="nc" id="L181">					drawLineIfLowerThan(ug, delay.getStartingY() - myDelta, delay.getEndingY(stringBounder) - myDelta,</span>
+<span class="fc" id="L176">		ug = ug.apply(UTranslate.dx(startingX));</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (delays.size() &gt; 0) {</span>
+<span class="nc" id="L178">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			for (GraphicalDelayText delay : delays)</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">				if (delay.getStartingY() - myDelta &gt;= startingY) {</span>
+<span class="nc" id="L181">					drawLineIfLowerThan(ug, startingY, delay.getStartingY() - myDelta, line, endingY);</span>
+<span class="nc" id="L182">					drawLineIfLowerThan(ug, delay.getStartingY() - myDelta, delay.getEndingY(stringBounder) - myDelta,</span>
 							delayLine, endingY);
-<span class="nc" id="L183">					startingY = delay.getEndingY(stringBounder) - myDelta;</span>
+<span class="nc" id="L184">					startingY = delay.getEndingY(stringBounder) - myDelta;</span>
 				}
 
-<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta &gt; startingY)</span>
-<span class="nc" id="L187">				startingY = delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta &gt; startingY)</span>
+<span class="nc" id="L188">				startingY = delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta;</span>
 
 		}
-<span class="fc" id="L190">		drawLineIfLowerThan(ug, startingY, endingY, line, endingY);</span>
-<span class="fc" id="L191">	}</span>
+<span class="fc" id="L191">		drawLineIfLowerThan(ug, startingY, endingY, line, endingY);</span>
+<span class="fc" id="L192">	}</span>
 
 	private void drawLineIfLowerThan(UGraphic ug, double startingY, double endingY, Component comp, double limitY) {
-<span class="fc" id="L194">		startingY = Math.min(startingY, limitY);</span>
-<span class="fc" id="L195">		endingY = Math.min(endingY, limitY);</span>
-<span class="pc bpc" id="L196" title="3 of 4 branches missed.">		if (startingY &lt; limitY || endingY &lt; limitY)</span>
-<span class="fc" id="L197">			drawLine(ug, startingY, endingY, comp);</span>
+<span class="fc" id="L195">		startingY = Math.min(startingY, limitY);</span>
+<span class="fc" id="L196">		endingY = Math.min(endingY, limitY);</span>
+<span class="pc bpc" id="L197" title="3 of 4 branches missed.">		if (startingY &lt; limitY || endingY &lt; limitY)</span>
+<span class="fc" id="L198">			drawLine(ug, startingY, endingY, comp);</span>
 
-<span class="fc" id="L199">	}</span>
+<span class="fc" id="L200">	}</span>
 
 	private void drawLine(UGraphic ug, double startingY, double endingY, Component comp) {
-<span class="fc" id="L202">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L203">		comp.drawU(ug.apply(UTranslate.dy(startingY)),</span>
-<span class="fc" id="L204">				new Area(new XDimension2D(head.getPreferredWidth(stringBounder) + outMargin * 2, endingY - startingY)),</span>
+<span class="fc" id="L203">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L204">		comp.drawU(ug.apply(UTranslate.dy(startingY)),</span>
+<span class="fc" id="L205">				new Area(new XDimension2D(head.getPreferredWidth(stringBounder) + outMargin * 2, endingY - startingY)),</span>
 				new SimpleContext2D(false));
-<span class="fc" id="L206">	}</span>
+<span class="fc" id="L207">	}</span>
 
 	public double magicMargin(StringBounder stringBounder) {
-<span class="fc" id="L209">		return line.getPreferredHeight(stringBounder) / 2;</span>
+<span class="fc" id="L210">		return line.getPreferredHeight(stringBounder) / 2;</span>
 	}
 
 	public double getStartingX() {
-<span class="fc" id="L213">		return startingX;</span>
+<span class="fc" id="L214">		return startingX;</span>
 	}
 
-<span class="fc" id="L216">	private final List&lt;GraphicalDelayText&gt; delays = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L217">	private final List&lt;GraphicalDelayText&gt; delays = new ArrayList&lt;&gt;();</span>
 
 	public void addDelay(GraphicalDelayText delay) {
-<span class="nc" id="L219">		this.delays.add(delay);</span>
-<span class="nc" id="L220">	}</span>
+<span class="nc" id="L220">		this.delays.add(delay);</span>
+<span class="nc" id="L221">	}</span>
 
 	public Participant getParticipant() {
-<span class="fc" id="L223">		return p;</span>
+<span class="fc" id="L224">		return p;</span>
 	}
 
 	public Collection&lt;Segment&gt; getDelays(final StringBounder stringBounder) {
-<span class="fc" id="L227">		return new AbstractCollection&lt;Segment&gt;() {</span>
+<span class="fc" id="L228">		return new AbstractCollection&lt;Segment&gt;() {</span>
 
 			@Override
 			public Iterator&lt;Segment&gt; iterator() {
-<span class="fc" id="L231">				return new Iterator&lt;Segment&gt;() {</span>
+<span class="fc" id="L232">				return new Iterator&lt;Segment&gt;() {</span>
 
-<span class="fc" id="L233">					private final Iterator&lt;GraphicalDelayText&gt; it = delays.iterator();</span>
+<span class="fc" id="L234">					private final Iterator&lt;GraphicalDelayText&gt; it = delays.iterator();</span>
 
 					public boolean hasNext() {
-<span class="fc" id="L236">						return it.hasNext();</span>
+<span class="fc" id="L237">						return it.hasNext();</span>
 					}
 
 					public Segment next() {
-<span class="nc" id="L240">						final GraphicalDelayText d = it.next();</span>
-<span class="nc" id="L241">						return new Segment(d.getStartingY(), d.getEndingY(stringBounder));</span>
+<span class="nc" id="L241">						final GraphicalDelayText d = it.next();</span>
+<span class="nc" id="L242">						return new Segment(d.getStartingY(), d.getEndingY(stringBounder));</span>
 					}
 
 					public void remove() {
-<span class="nc" id="L245">						throw new UnsupportedOperationException();</span>
+<span class="nc" id="L246">						throw new UnsupportedOperationException();</span>
 					}
 				};
 			}
 
 			@Override
 			public int size() {
-<span class="fc" id="L252">				return delays.size();</span>
+<span class="fc" id="L253">				return delays.size();</span>
 			}
 		};
+	}
+
+	@Override
+	public Stereotype getStereotype() {
+<span class="fc" id="L260">		return p.getStereotype();</span>
 	}
 
 }
