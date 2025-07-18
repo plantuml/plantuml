@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.builtin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.json.ParseException;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -121,7 +123,8 @@ public class LoadJson extends SimpleReturnFunction {
 			return TValue.fromJson(jsonValue);
 		} catch (ParseException pe) {
 			Logme.error(pe);
-			throw new EaterException("JSON parse issue in source " + path + " on location " + pe.getLocation(), location);
+			throw new EaterException("JSON parse issue in source " + path + " on location " + pe.getLocation(),
+					location);
 		} catch (UnsupportedEncodingException e) {
 			Logme.error(e);
 			throw new EaterException("JSON encoding issue in source " + path + ": " + e.getMessage(), location);
@@ -163,11 +166,14 @@ public class LoadJson extends SimpleReturnFunction {
 	 * @return the decoded String from the data source
 	 * @throws EaterException if something went wrong on reading data
 	 */
-	private String loadStringData(String path, String charset)
-			throws EaterException, UnsupportedEncodingException {
+	private String loadStringData(String path, String charset) throws EaterException, UnsupportedEncodingException {
 
 		byte[] byteData = null;
-		if (path.startsWith("http://") || path.startsWith("https://")) {
+		if (path.startsWith("<") || path.startsWith(">")) {
+			path = path.substring(1, path.length() - 1);
+			final String json = Stdlib.getJsonResource(path);
+			return json;
+		} else if (path.startsWith("http://") || path.startsWith("https://")) {
 			final SURL url = SURL.create(path);
 			if (url != null)
 				byteData = url.getBytes();

@@ -85,6 +85,28 @@ public class Stdlib {
 			}
 	}
 
+	public static String getJsonResource(String fullname) {
+		final int last = fullname.indexOf('/');
+		if (last == -1)
+			return null;
+
+		try {
+			final Stdlib folder = retrieve(fullname.substring(0, last));
+			if (folder == null || folder.info.size() == 0)
+				return null;
+
+			final String data = folder.loadJsonResource(fullname.substring(last + 1));
+			if (data == null)
+				return null;
+
+			return data;
+		} catch (IOException e) {
+			Logme.error(e);
+			return null;
+		}
+
+	}
+
 	public static InputStream getResourceAsStream(String fullname) {
 		fullname = fullname.toLowerCase().replace(".puml", "");
 		final int last = fullname.indexOf('/');
@@ -144,6 +166,28 @@ public class Stdlib {
 
 	private static int read2bytes(InputStream is) throws IOException {
 		return (read1byte(is) << 8) + read1byte(is);
+	}
+
+	private String loadJsonResource(String file) throws IOException {
+		final DataInputStream dataStream = getJsonStream(name);
+		if (dataStream == null)
+			return null;
+
+		try {
+			while (dataStream.available() > 0)
+				return null;
+			final String readName = dataStream.readUTF();
+			final int size = dataStream.readShort();
+			final byte data[] = new byte[size];
+			dataStream.readFully(data);
+			if (readName.equals(file))
+				return new String(data);
+
+		} finally {
+			dataStream.close();
+		}
+		return null;
+
 	}
 
 	/* private */ public String loadResource(String file) throws IOException {
@@ -299,6 +343,14 @@ public class Stdlib {
 
 	private static DataInputStream getDataStream(String name) throws IOException {
 		final InputStream raw = getInternalInputStream(name, "-abx.repx");
+		if (raw == null)
+			return null;
+
+		return new DataInputStream(new BrotliInputStream(raw));
+	}
+
+	private static DataInputStream getJsonStream(String name) throws IOException {
+		final InputStream raw = getInternalInputStream(name, "-jsox.repx");
 		if (raw == null)
 			return null;
 
