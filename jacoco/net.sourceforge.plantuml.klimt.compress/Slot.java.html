@@ -36,15 +36,15 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class Slot implements Comparable&lt;Slot&gt; {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final double start;
 	private final double end;
 
 <span class="fc" id="L44">	public Slot(double start, double end) {</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (start &gt;= end) </span>
-<span class="nc" id="L46">			throw new IllegalArgumentException();</span>
-		
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (start &gt;= end)</span>
+<span class="nc" id="L46">			throw new IllegalArgumentException(&quot;start=&quot; + start + &quot; end=&quot; + end);</span>
+
 <span class="fc" id="L48">		this.start = start;</span>
 <span class="fc" id="L49">		this.end = end;</span>
 <span class="fc" id="L50">	}</span>
@@ -79,22 +79,22 @@ public class Slot implements Comparable&lt;Slot&gt; {
 	}
 
 	public Slot intersect(double otherStart, double otherEnd) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (otherStart &gt;= end) </span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (otherStart &gt;= end)</span>
 <span class="nc" id="L83">			return null;</span>
-		
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (otherEnd &lt;= start) </span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (otherEnd &lt;= start)</span>
 <span class="nc" id="L86">			return null;</span>
-		
+
 <span class="nc" id="L88">		return new Slot(Math.max(start, otherStart), Math.min(end, otherEnd));</span>
 	}
 
 	public int compareTo(Slot other) {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this.start &lt; other.start) </span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this.start &lt; other.start)</span>
 <span class="fc" id="L93">			return -1;</span>
-		
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (this.start &gt; other.start) </span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (this.start &gt; other.start)</span>
 <span class="fc" id="L96">			return 1;</span>
-		
+
 <span class="nc" id="L98">		return 0;</span>
 	}
 
