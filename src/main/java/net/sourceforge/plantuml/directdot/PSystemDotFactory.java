@@ -47,7 +47,7 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 
 	private StringBuilder data;
 	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(
-		"\\s*(strict\\s+)?(di)?graph\\s+([a-zA-Z_\\200-\\377][a-zA-Z0-9_\\200-\\377]*|-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)|\"([^\"\\\\]|\\\\\")*\")?\\s*\\{\\s*"
+		"\\s*(strict\\s+)?(di)?graph\\s+([_\\p{L}][_\\p{L}\\p{N}]*|-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)|\"([^\"\\\\]|\\\\\")*\")?\\s*\\{\\s*"
 	);
 
 	public PSystemDotFactory(DiagramType diagramType) {
