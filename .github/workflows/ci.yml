@@ -91,7 +91,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java_version: [ 8, 17 ]
+        java_version: [ 17 ]
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     steps:
