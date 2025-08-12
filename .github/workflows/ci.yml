@@ -33,7 +33,7 @@ jobs:
       do_test_windows: ${{ steps.config.outputs.do_test_windows }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configure workflow
         id: config
@@ -97,7 +97,7 @@ jobs:
     steps:
       - name: Checkout the repository
         if: needs.workflow_config.outputs.do_test_linux == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up java
         if: needs.workflow_config.outputs.do_test_linux == 'true'
@@ -132,7 +132,7 @@ jobs:
       release_version: ${{ steps.version.outputs.release_version }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up java
         uses: actions/setup-java@v4
         with:
@@ -194,7 +194,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up java
         uses: actions/setup-java@v4
@@ -229,7 +229,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up java
         uses: actions/setup-java@v4
@@ -309,7 +309,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
