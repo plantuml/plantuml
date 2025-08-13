@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.directdot;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -43,35 +46,54 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 
 	private StringBuilder data;
+<span class="fc" id="L49">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(</span>
+		  &quot;\\s*&quot;                            // optional leading whitespace
+		+ &quot;(strict\\s+)?&quot;                   // optional 'strict'
+		+ &quot;(di)?&quot;                           // optional 'di'
+		+ &quot;graph\\s+&quot;                       // 'graph' keyword
+		+ &quot;(&quot;
+		+     &quot;[_\\p{L}][_\\p{L}\\p{N}]*&quot;   // identifier
+		+   &quot;|&quot;
+		+     &quot;-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)&quot; // number
+		+   &quot;|&quot;
+		+     &quot;\&quot;([^\&quot;\\\\]|\\\\\&quot;)*\&quot;&quot;     // quoted string
+		+ &quot;)?&quot;
+		+ &quot;\\s*\\{\\s*&quot;                     // opening brace
+	);
 
 	public PSystemDotFactory(DiagramType diagramType) {
-<span class="fc" id="L48">		super(diagramType);</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L65">		super(diagramType);</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
 	public PSystemDot initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L53">		data = null;</span>
-<span class="fc" id="L54">		return null;</span>
+<span class="fc" id="L70">		data = null;</span>
+<span class="fc" id="L71">		return null;</span>
 	}
 
 	@Override
 	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line, PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">		if (system == null &amp;&amp; line.matches(&quot;(strict\\s+)?(di)?graph\\s+\&quot;?[-\\w]+\&quot;?\\s*\\{&quot;)) {</span>
-<span class="nc" id="L60">			data = new StringBuilder(line);</span>
-<span class="nc" id="L61">			data.append(&quot;\n&quot;);</span>
-<span class="nc" id="L62">			return new PSystemDot(source, data.toString(), preprocessing);</span>
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (system == null &amp;&amp; isGraphvizDotHeader(line)) {</span>
+<span class="nc" id="L77">			data = new StringBuilder(line);</span>
+<span class="nc" id="L78">			data.append(&quot;\n&quot;);</span>
+<span class="nc" id="L79">			return new PSystemDot(source, data.toString(), preprocessing);</span>
 		}
-<span class="pc bpc" id="L64" title="3 of 4 branches missed.">		if (data == null || system == null)</span>
-<span class="fc" id="L65">			return null;</span>
+<span class="pc bpc" id="L81" title="3 of 4 branches missed.">		if (data == null || system == null)</span>
+<span class="fc" id="L82">			return null;</span>
 
-<span class="nc" id="L67">		data.append(line);</span>
-<span class="nc" id="L68">		data.append(&quot;\n&quot;);</span>
-<span class="nc" id="L69">		return new PSystemDot(source, data.toString(), preprocessing);</span>
+<span class="nc" id="L84">		data.append(line);</span>
+<span class="nc" id="L85">		data.append(&quot;\n&quot;);</span>
+<span class="nc" id="L86">		return new PSystemDot(source, data.toString(), preprocessing);</span>
 	}
-	
+
+    private boolean isGraphvizDotHeader(String line) {
+<span class="fc" id="L90">        Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);</span>
+<span class="fc" id="L91">        return matcher.matches();</span>
+    }
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L74">		return null;</span>
+<span class="fc" id="L96">		return null;</span>
 	}
 
 }
