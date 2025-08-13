@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -46,14 +45,12 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
-import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -68,7 +65,6 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.utils.BlocLines;
 
 public class StdlibDiagram extends UmlDiagram {
 	// ::remove file when __CORE__
@@ -128,19 +124,19 @@ public class StdlibDiagram extends UmlDiagram {
 
 		Command<WithSprite> cmd = factorySpriteCommand.createMultiLine(false);
 
-		final List<String> all = folder.extractAllSprites();
-		int nb = 0;
-		for (String s : all) {
-			// System.err.println("s="+s);
-			final BlocLines bloc = BlocLines.fromArray(s.split("\n"));
-			try {
-				cmd.execute(this, bloc, ParserPass.ONE);
-			} catch (NoSuchColorException e) {
-				Logme.error(e);
-			}
-//			System.err.println("nb=" + nb);
-			nb++;
-		}
+//		final List<String> all = folder.extractAllSprites();
+//		int nb = 0;
+//		for (String s : all) {
+//			// System.err.println("s="+s);
+//			final BlocLines bloc = BlocLines.fromArray(s.split("\n"));
+//			try {
+//				cmd.execute(this, bloc, ParserPass.ONE);
+//			} catch (NoSuchColorException e) {
+//				Logme.error(e);
+//			}
+////			System.err.println("nb=" + nb);
+//			nb++;
+//		}
 
 		for (String n : getSkinParam().getAllSpriteNames()) {
 			final Sprite sprite = getSkinParam().getSprite(n);

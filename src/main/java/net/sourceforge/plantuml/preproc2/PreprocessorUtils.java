@@ -36,28 +36,18 @@
  */
 package net.sourceforge.plantuml.preproc2;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.lang.ref.SoftReference;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.ReadLine;
-import net.sourceforge.plantuml.preproc.ReadLineConcat;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineSimple;
 import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
@@ -99,20 +89,6 @@ public class PreprocessorUtils {
 		return null;
 	}
 
-	private static final Map<String, SoftReference<byte[]>> cache = new ConcurrentHashMap<>();
-
-	private static InputStream getStdlibInputStream(String filename) throws IOException {
-		final SoftReference<byte[]> ref = cache.get(filename);
-		byte[] data = (ref != null) ? ref.get() : null;
-
-		if (data == null) {
-			data = FileUtils.copyToByteArray(Stdlib.getResourceAsStream(filename));
-			cache.put(filename, new SoftReference<>(data));
-		}
-
-		return new ByteArrayInputStream(data);
-	}
-
 	// ::comment when __CORE__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 		if (filename.endsWith(".puml") == false)
@@ -133,39 +109,34 @@ public class PreprocessorUtils {
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
 		Log.info(() -> "Loading sdlib " + filename);
-		InputStream is = getStdlibInputStream(filename);
-		if (is == null)
+		final byte[] puml = Stdlib.getPumlResource(filename);
+		if (puml == null)
 			return null;
 
 		final String description = "<" + filename + ">";
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(is, description)) {
-				is = getStdlibInputStream(filename);
-				return StartDiagramExtractReader.build(is, description);
-			}
-			is = getStdlibInputStream(filename);
-			if (is == null)
-				return null;
+			if (StartDiagramExtractReader.containsStartDiagram(new ByteArrayInputStream(puml), description))
+				return StartDiagramExtractReader.build(new ByteArrayInputStream(puml), description);
 
-			return ReadLineReader.create(new InputStreamReader(is), description);
+			return ReadLineReader.create(puml, description);
 		} catch (IOException e) {
 			Logme.error(e);
 			return new ReadLineSimple(s, e.toString());
 		}
 	}
 
-	public static ReadLine getReaderStdlibIncludeSprites(StringLocated s, String root) throws IOException {
-		final Stdlib lib = Stdlib.retrieve(root);
-		final Collection<String> filenames = lib.getAllFilenamesWithSprites();
-		final List<ReadLine> readers = new ArrayList<>();
-
-		for (String name : filenames) {
-			final String data = lib.loadResource(name);
-			final InputStream is = new ByteArrayInputStream(data.getBytes(UTF_8));
-			readers.add(StartDiagramExtractReader.build(is, "<" + root + "/" + name + ">"));
-		}
-		return new ReadLineConcat(readers);
-	}
+//	public static ReadLine getReaderStdlibIncludeSprites(StringLocated s, String root) throws IOException {
+//		final Stdlib lib = Stdlib.retrieve(root);
+//		final Collection<String> filenames = lib.getAllFilenamesWithSprites();
+//		final List<ReadLine> readers = new ArrayList<>();
+//
+//		for (String name : filenames) {
+//			final String data = lib.loadResource(name);
+//			final InputStream is = new ByteArrayInputStream(data.getBytes(UTF_8));
+//			readers.add(StartDiagramExtractReader.build(is, "<" + root + "/" + name + ">"));
+//		}
+//		return new ReadLineConcat(readers);
+//	}
 
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
 			throws EaterException {
