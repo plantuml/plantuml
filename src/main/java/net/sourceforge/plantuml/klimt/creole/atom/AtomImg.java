@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TileImageSvg;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SURL;
@@ -67,6 +68,7 @@ import net.sourceforge.plantuml.utils.Base64Coder;
 public class AtomImg extends AbstractAtom implements Atom {
 
 	public static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
+	public static final String DATA_IMAGE_PNG_SPM = "data:image/png;spm ";
 	private static final String DATA_IMAGE_SVG_BASE64 = "data:image/svg+xml;base64,";
 	private final BufferedImage image;
 	private final double scale;
@@ -96,6 +98,24 @@ public class AtomImg extends AbstractAtom implements Atom {
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
 		final UFont font = UFont.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
+
+		if (src.startsWith(DATA_IMAGE_PNG_SPM)) {
+			final String data = src.substring(DATA_IMAGE_PNG_SPM.length(), src.length());
+			final int x = data.indexOf('/');
+			if (x == -1)
+				return AtomTextUtils.createLegacy("ERROR DATA IMAGE", fc);
+			try {
+				final Stdlib lib = Stdlib.retrieve(data.substring(0, x));
+				final int num = Integer.parseInt(data.substring(x + 1));
+				final BufferedImage image = lib.readDataImagePng(num);
+				return new AtomImg(image, scale, url, null);
+
+
+			} catch (Exception e) {
+				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
+			}
+
+		}
 
 		if (src.startsWith(DATA_IMAGE_PNG_BASE64)) {
 			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());

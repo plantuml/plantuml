@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.sprite.ResourcesUtils;
-import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.utils.Log;
@@ -83,11 +82,11 @@ public class ThemeUtils {
 		final String description = realName + " from " + from;
 		from = from.substring(1, from.length() - 1);
 		final String res = from + "/" + THEME_FILE_PREFIX + realName + THEME_FILE_SUFFIX;
-		final InputStream is = Stdlib.getResourceAsStream(res);
+		final byte[] is = Stdlib.getPumlResource(res);
 		if (is == null)
 			return null;
 
-		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));
+		return new Theme(ReadLineReader.create(is, description));
 	}
 
 	public static Theme getReaderTheme(String filename) {

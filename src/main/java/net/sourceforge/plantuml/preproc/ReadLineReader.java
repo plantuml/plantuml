@@ -36,8 +36,11 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -67,6 +70,12 @@ public class ReadLineReader implements ReadLine {
 
 	private ReadLineReader(Reader reader, String desc) {
 		this(reader, desc, null);
+	}
+
+	public static ReadLine create(byte[] data, String description) {
+		final BufferedReader br = new BufferedReader(
+				new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8));
+		return new ReadLineReader(br, description, null);
 	}
 
 	public static ReadLine create(Reader reader, String description) {

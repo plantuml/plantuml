@@ -35,11 +35,13 @@
  */
 package net.sourceforge.plantuml.preproc;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc2.ReadFilterMergeLines;
@@ -116,7 +118,7 @@ public class StartDiagramExtractReader implements ReadLine {
 	}
 
 	private static ReadLine getReadLine(InputStream is, String description) {
-		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(is), description));
+		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(is, StandardCharsets.UTF_8), description));
 	}
 
 	private static ReadLine getReadLine(SURL url, StringLocated s, Charset charset) {

@@ -46,8 +46,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
@@ -196,6 +199,58 @@ public class FileUtils {
 
 		return readSvg(br, true, true);
 	}
+
+	static public List<String> readStrings(InputStream is) throws IOException {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+			return reader.lines().collect(Collectors.toList());
+		}
+	}
+
+	private static final int DISCARD_BUFFER_SIZE = 64 * 1024; // 64 KiB
+
+	public static void skipExactly(InputStream in, long n) throws IOException {
+		if (n < 0)
+			throw new IllegalArgumentException("n must be >= 0");
+
+		long remaining = n;
+		byte[] discard = null;
+
+		while (remaining > 0) {
+
+			final long skipped = in.skip(remaining);
+			if (skipped > 0) {
+				remaining -= skipped;
+				continue;
+			}
+
+			if (discard == null)
+				discard = new byte[(int) Math.min(DISCARD_BUFFER_SIZE, remaining)];
+
+			final int toRead = (int) Math.min(remaining, discard.length);
+			final int read = in.read(discard, 0, toRead);
+			if (read == -1)
+				throw new IOException("End of stream reached before skipping " + n + " bytes");
+
+			remaining -= read;
+		}
+	}
+
+	public static byte[] readExactly(InputStream in, int n) throws IOException {
+		if (n < 0)
+			throw new IllegalArgumentException("n must be >= 0");
+
+		final byte[] data = new byte[n];
+		int offset = 0;
+		while (offset < n) {
+			final int read = in.read(data, offset, n - offset);
+			if (read == -1)
+				throw new IOException("End of stream reached after reading " + offset + " bytes (expected " + n + ")");
+
+			offset += read;
+		}
+		return data;
+	}
+
 	// ::done
 
 }

@@ -384,9 +384,9 @@ public class TContext {
 		} else if (type == TLineType.INCLUDE) {
 			this.executeInclude(memory, s);
 			return null;
-		} else if (type == TLineType.INCLUDE_SPRITES) {
-			this.executeIncludeSprites(memory, s);
-			return null;
+//		} else if (type == TLineType.INCLUDE_SPRITES) {
+//			this.executeIncludeSprites(memory, s);
+//			return null;
 		} else if (type == TLineType.INCLUDE_DEF) {
 			this.executeIncludeDef(memory, s);
 			return null;
@@ -728,38 +728,38 @@ public class TContext {
 		}
 	}
 
-	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
-		final EaterIncludeSprites include = new EaterIncludeSprites(s.getTrimmed());
-		include.analyze(this, memory);
-		final String what = include.getWhat();
-		if (what.startsWith("<") && what.endsWith(">")) {
-			ReadLine reader = null;
-			try {
-				reader = PreprocessorUtils.getReaderStdlibIncludeSprites(s, what.substring(1, what.length() - 1));
-				final List<StringLocated> body = new ArrayList<>();
-				do {
-					final StringLocated sl = reader.readLine();
-					if (sl == null) {
-						executeLines(memory, body, null, false);
-						return;
-					}
-					body.add(sl);
-				} while (true);
-			} catch (IOException e) {
-				Logme.error(e);
-				throw new EaterException("cannot include " + e, s);
-			} finally {
-				if (reader != null)
-					try {
-						reader.close();
-					} catch (IOException e) {
-						Logme.error(e);
-					}
-			}
-
-		}
-		throw new EaterException("cannot include sprites from " + what, s);
-	}
+//	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
+//		final EaterIncludeSprites include = new EaterIncludeSprites(s.getTrimmed());
+//		include.analyze(this, memory);
+//		final String what = include.getWhat();
+//		if (what.startsWith("<") && what.endsWith(">")) {
+//			ReadLine reader = null;
+//			try {
+//				reader = PreprocessorUtils.getReaderStdlibIncludeSprites(s, what.substring(1, what.length() - 1));
+//				final List<StringLocated> body = new ArrayList<>();
+//				do {
+//					final StringLocated sl = reader.readLine();
+//					if (sl == null) {
+//						executeLines(memory, body, null, false);
+//						return;
+//					}
+//					body.add(sl);
+//				} while (true);
+//			} catch (IOException e) {
+//				Logme.error(e);
+//				throw new EaterException("cannot include " + e, s);
+//			} finally {
+//				if (reader != null)
+//					try {
+//						reader.close();
+//					} catch (IOException e) {
+//						Logme.error(e);
+//					}
+//			}
+//
+//		}
+//		throw new EaterException("cannot include sprites from " + what, s);
+//	}
 
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
 		final EaterInclude include = new EaterInclude(s.getTrimmed());
