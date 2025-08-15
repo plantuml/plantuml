@@ -38,33 +38,30 @@ package net.sourceforge.plantuml.command;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.preproc.StdlibSprite;
+import net.sourceforge.plantuml.preproc.StdlibSpriteSvg;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandSpriteStdlib extends SingleLineCommand2<TitledDiagram> {
+public class CommandSpriteStdlibSvg extends SingleLineCommand2<TitledDiagram> {
 
-	public static final CommandSpriteStdlib ME = new CommandSpriteStdlib();
+	public static final CommandSpriteStdlibSvg ME = new CommandSpriteStdlibSvg();
 
-	private CommandSpriteStdlib() {
+	private CommandSpriteStdlibSvg() {
 		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandSpriteStdlib.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandSpriteStdlibSvg.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("sprite"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("\\$"), //
+				new RegexLeaf("\\$?"), //
 				new RegexLeaf(1, "NAME", "([-%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(3, "DIM", "\\[(\\d+)x(\\d+)/(\\d+)\\]"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(2, "FILE", "#([^/]+)/(\\d+)"), //
+				new RegexLeaf(2, "FILE", ":([^/]+)/(\\d+)"), //
 				RegexLeaf.end());
 	}
 
@@ -73,13 +70,9 @@ public class CommandSpriteStdlib extends SingleLineCommand2<TitledDiagram> {
 			ParserPass currentPass) {
 		try {
 			final Stdlib lib = Stdlib.retrieve(arg.get("FILE", 0));
-			final int width = Integer.parseInt(arg.get("DIM", 0));
-			final int height = Integer.parseInt(arg.get("DIM", 1));
 			final int num = Integer.parseInt(arg.get("FILE", 1));
-			final Sprite sprite = new StdlibSprite(lib, width, height, num);
 			final String name = arg.get("NAME", 0);
-			
-			system.addSprite(name, sprite);
+			system.addSprite(name, new StdlibSpriteSvg(lib, num));
 		} catch (IOException e) {
 			return CommandExecutionResult.error("Cannot read sprite " + e.toString());
 		}

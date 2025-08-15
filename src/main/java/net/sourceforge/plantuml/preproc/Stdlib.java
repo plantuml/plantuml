@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.SoftReference;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,6 +56,7 @@ import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteMonochrome;
 import net.sourceforge.plantuml.log.Logme;
@@ -90,6 +92,7 @@ public class Stdlib {
 	private final Lazy<SpmToc> pumlToc;
 	private final Lazy<SpmToc> jsonToc;
 	private final Lazy<SpmTable> spritesTable;
+	private final Lazy<SpmTable> svgTable;
 	private final Lazy<SpmImageTable> imagesTable;
 
 	private Stdlib(String name) throws IOException {
@@ -126,6 +129,16 @@ public class Stdlib {
 
 		this.spritesTable = new Lazy<>(() -> {
 			try (DataInputStream is = new DataInputStream(getInternalInputStream(SpmChannel.SPRITE_TAB))) {
+				return new SpmTable(is);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+
+		});
+
+		this.svgTable = new Lazy<>(() -> {
+			try (DataInputStream is = new DataInputStream(getInternalInputStream(SpmChannel.SVG_TAB))) {
 				return new SpmTable(is);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -450,7 +463,7 @@ public class Stdlib {
 
 	private final ConcurrentMap<Integer, Sprite> cacheSprite = new ConcurrentHashMap<>();
 
-	public Sprite readSprite(int width, int height, int num) throws IOException {
+	public Sprite readSprite(int width, int height, int num) {
 		final SpmEntry entry = spritesTable.get().getEntry(num);
 		if (entry == null)
 			return null;
@@ -465,6 +478,22 @@ public class Stdlib {
 			}
 		});
 
+	}
+
+	public Sprite readSvgSprite(int num) {
+		final SpmEntry entry = svgTable.get().getEntry(num);
+		if (entry == null)
+			return null;
+
+		try (InputStream is = getInternalInputStream(SpmChannel.SVG_DAT)) {
+			FileUtils.skipExactly(is, entry.getPos());
+			final byte data[] = FileUtils.readExactly(is, entry.getLen());
+			final String svg = new String(data, StandardCharsets.UTF_8);
+			return new SvgNanoParser(svg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public BufferedImage readDataImagePng(int num) throws IOException {
