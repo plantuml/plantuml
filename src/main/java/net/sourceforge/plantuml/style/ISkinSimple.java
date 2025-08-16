@@ -74,6 +74,6 @@ public interface ISkinSimple extends SpriteContainer {
 
 	public Pragma getPragma();
 	
-	public ConfigurationStore<OptionKey> option();
+	public ConfigurationStore<OptionKey> options();
 
 }

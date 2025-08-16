@@ -195,7 +195,7 @@ public class FtileBox extends AbstractFtile {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
-		final boolean isDebug = Boolean.parseBoolean(skinParam().option().getValue(OptionKey.DEBUG));
+		final boolean isDebug = Boolean.parseBoolean(skinParam().options().getValue(OptionKey.DEBUG));
 
 		if (isDebug) {
 			ug = ug.apply(HColors.BLUE).apply(UStroke.withThickness(2));

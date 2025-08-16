@@ -89,6 +89,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
@@ -420,6 +421,7 @@ public class ImageBuilder {
 		option = option.withLinkTarget(getSvgLinkTarget());
 		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));
 		option = option.withPragma(pragma);
+		option = option.withConfigurationStore(skinParam.options());
 		if (diagram != null) {
 			option = option.withTitle(diagram.getTitleDisplay());
 			option = option.withRootAttribute("data-diagram-type", diagram.getUmlDiagramType().name());

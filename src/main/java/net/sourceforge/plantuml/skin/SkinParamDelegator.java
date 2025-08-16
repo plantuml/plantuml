@@ -469,8 +469,8 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public ConfigurationStore<OptionKey> option() {
-		return skinParam.option();
+	public ConfigurationStore<OptionKey> options() {
+		return skinParam.options();
 	}
 
 }

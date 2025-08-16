@@ -235,7 +235,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		final Style style = skinParam.getCurrentStyleBuilder()
 				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final boolean isDebug = Boolean.parseBoolean(skinParam.option().getValue(OptionKey.DEBUG));
+		final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
 		ug = new UGraphicForSnake(ug);
 		if (swimlanes().size() > 1) {

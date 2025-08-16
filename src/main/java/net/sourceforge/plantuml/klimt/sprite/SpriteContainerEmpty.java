@@ -130,7 +130,7 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 	}
 
 	@Override
-	public ConfigurationStore<OptionKey> option() {
+	public ConfigurationStore<OptionKey> options() {
 		return ConfigurationStore.createEmpty();
 	}
 

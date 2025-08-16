@@ -332,6 +332,13 @@ public class SvgGraphics {
 			svg.appendChild(title);
 		}
 
+		final String desc = option.getDesc();
+		if (desc != null) {
+			// Create a desc element and set its text
+			final Element descElement = document.createElement("desc");
+			descElement.setTextContent(desc);
+			svg.appendChild(descElement);
+		}
 		return svg;
 	}
 

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.preproc;
 
 public enum OptionKey {
 
-	LANGUAGE, USE_DESCRIPTIVE_NAMES, HANDWRITTEN, DEBUG;
+	LANGUAGE, USE_DESCRIPTIVE_NAMES, HANDWRITTEN, DEBUG, SVG_DESC, SVG_TITLE;
 
 	public static String simplify(String s) {
 		final StringBuilder result = new StringBuilder();

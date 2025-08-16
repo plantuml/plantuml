@@ -1245,7 +1245,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public ConfigurationStore<OptionKey> option() {
+	public ConfigurationStore<OptionKey> options() {
 		return option;
 	}
 
