@@ -144,8 +144,8 @@ public class BrotliInputStream extends InputStream {
 <span class="fc" id="L144">			state.outputLength = destLen;</span>
 <span class="fc" id="L145">			state.outputUsed = 0;</span>
 <span class="fc" id="L146">			Decode.decompress(state);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">			if (state.outputUsed == 0) {</span>
-<span class="nc" id="L148">				return -1;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (state.outputUsed == 0) {</span>
+<span class="fc" id="L148">				return -1;</span>
 			}
 <span class="fc" id="L150">			return state.outputUsed + copyLen;</span>
 <span class="nc" id="L151">		} catch (BrotliRuntimeException ex) {</span>

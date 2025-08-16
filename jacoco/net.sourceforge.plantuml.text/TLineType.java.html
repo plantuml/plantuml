@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 
 <span class="fc" id="L45">	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,</span>
 <span class="fc" id="L46">	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,</span>
-<span class="fc" id="L47">	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,</span>
+<span class="fc" id="L47">	LEGACY_DEFINELONG, THEME, INCLUDE, /*INCLUDE_SPRITES,*/ INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,</span>
 <span class="fc" id="L48">	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;</span>
 
 <span class="fc" id="L50">	private static final RegexLeaf IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT = new RegexLeaf(</span>
@@ -130,7 +130,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 			new RegexOptional(new RegexOr(new RegexLeaf(&quot;url&quot;), new RegexLeaf(&quot;_many&quot;), new RegexLeaf(&quot;_once&quot;))),
 			new RegexLeaf(&quot;\\b&quot;));
 
-<span class="fc" id="L133">	private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword(&quot;!include_sprites&quot;);</span>
+	// private static final IRegex PATTERN_INCLUDE_SPRITES = simpleKeyword(&quot;!include_sprites&quot;);
 
 <span class="fc" id="L135">	private static final IRegex PATTERN_INCLUDE_DEF = simpleKeyword(&quot;!includedef&quot;);</span>
 
@@ -229,8 +229,8 @@ import net.sourceforge.plantuml.regex.RegexOr;
 <span class="fc bfc" id="L229" title="All 2 branches covered.">		if (PATTERN_INCLUDE.match(sl))</span>
 <span class="fc" id="L230">			return INCLUDE;</span>
 
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_SPRITES.match(sl))</span>
-<span class="nc" id="L233">			return INCLUDE_SPRITES;</span>
+//		if (PATTERN_INCLUDE_SPRITES.match(sl))
+//			return INCLUDE_SPRITES;
 
 <span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (PATTERN_INCLUDE_DEF.match(sl))</span>
 <span class="nc" id="L236">			return INCLUDE_DEF;</span>

@@ -143,6 +143,7 @@ net.sourceforge.plantuml.plasma
 net.sourceforge.plantuml.png
 net.sourceforge.plantuml.posimo
 net.sourceforge.plantuml.preproc
+net.sourceforge.plantuml.preproc.spm
 net.sourceforge.plantuml.preproc2
 net.sourceforge.plantuml.project
 net.sourceforge.plantuml.project.command

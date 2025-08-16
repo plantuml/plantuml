@@ -384,9 +384,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc bfc" id="L384" title="All 2 branches covered.">		} else if (type == TLineType.INCLUDE) {</span>
 <span class="fc" id="L385">			this.executeInclude(memory, s);</span>
 <span class="fc" id="L386">			return null;</span>
-<span class="pc bpc" id="L387" title="1 of 2 branches missed.">		} else if (type == TLineType.INCLUDE_SPRITES) {</span>
-<span class="nc" id="L388">			this.executeIncludeSprites(memory, s);</span>
-<span class="nc" id="L389">			return null;</span>
+//		} else if (type == TLineType.INCLUDE_SPRITES) {
+//			this.executeIncludeSprites(memory, s);
+//			return null;
 <span class="pc bpc" id="L390" title="1 of 2 branches missed.">		} else if (type == TLineType.INCLUDE_DEF) {</span>
 <span class="nc" id="L391">			this.executeIncludeDef(memory, s);</span>
 <span class="nc" id="L392">			return null;</span>
@@ -728,38 +728,38 @@ import net.sourceforge.plantuml.utils.LineLocation;
 		}
 	}
 
-	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L732">		final EaterIncludeSprites include = new EaterIncludeSprites(s.getTrimmed());</span>
-<span class="nc" id="L733">		include.analyze(this, memory);</span>
-<span class="nc" id="L734">		final String what = include.getWhat();</span>
-<span class="nc bnc" id="L735" title="All 4 branches missed.">		if (what.startsWith(&quot;&lt;&quot;) &amp;&amp; what.endsWith(&quot;&gt;&quot;)) {</span>
-<span class="nc" id="L736">			ReadLine reader = null;</span>
-			try {
-<span class="nc" id="L738">				reader = PreprocessorUtils.getReaderStdlibIncludeSprites(s, what.substring(1, what.length() - 1));</span>
-<span class="nc" id="L739">				final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
-				do {
-<span class="nc" id="L741">					final StringLocated sl = reader.readLine();</span>
-<span class="nc bnc" id="L742" title="All 2 branches missed.">					if (sl == null) {</span>
-<span class="nc" id="L743">						executeLines(memory, body, null, false);</span>
-<span class="nc" id="L744">						return;</span>
-					}
-<span class="nc" id="L746">					body.add(sl);</span>
-<span class="nc" id="L747">				} while (true);</span>
-<span class="nc" id="L748">			} catch (IOException e) {</span>
-<span class="nc" id="L749">				Logme.error(e);</span>
-<span class="nc" id="L750">				throw new EaterException(&quot;cannot include &quot; + e, s);</span>
-			} finally {
-<span class="nc bnc" id="L752" title="All 2 branches missed.">				if (reader != null)</span>
-					try {
-<span class="nc" id="L754">						reader.close();</span>
-<span class="nc" id="L755">					} catch (IOException e) {</span>
-<span class="nc" id="L756">						Logme.error(e);</span>
-<span class="nc" id="L757">					}</span>
-			}
-
-		}
-<span class="nc" id="L761">		throw new EaterException(&quot;cannot include sprites from &quot; + what, s);</span>
-	}
+//	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
+//		final EaterIncludeSprites include = new EaterIncludeSprites(s.getTrimmed());
+//		include.analyze(this, memory);
+//		final String what = include.getWhat();
+//		if (what.startsWith(&quot;&lt;&quot;) &amp;&amp; what.endsWith(&quot;&gt;&quot;)) {
+//			ReadLine reader = null;
+//			try {
+//				reader = PreprocessorUtils.getReaderStdlibIncludeSprites(s, what.substring(1, what.length() - 1));
+//				final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();
+//				do {
+//					final StringLocated sl = reader.readLine();
+//					if (sl == null) {
+//						executeLines(memory, body, null, false);
+//						return;
+//					}
+//					body.add(sl);
+//				} while (true);
+//			} catch (IOException e) {
+//				Logme.error(e);
+//				throw new EaterException(&quot;cannot include &quot; + e, s);
+//			} finally {
+//				if (reader != null)
+//					try {
+//						reader.close();
+//					} catch (IOException e) {
+//						Logme.error(e);
+//					}
+//			}
+//
+//		}
+//		throw new EaterException(&quot;cannot include sprites from &quot; + what, s);
+//	}
 
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
 <span class="fc" id="L765">		final EaterInclude include = new EaterInclude(s.getTrimmed());</span>

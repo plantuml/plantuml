@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.sprite.ResourcesUtils;
-import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.utils.Log;
@@ -56,7 +55,7 @@ import net.sourceforge.plantuml.utils.Log;
 //import java.io.FileNotFoundException;
 // ::done
 
-<span class="nc" id="L59">public class ThemeUtils {</span>
+<span class="nc" id="L58">public class ThemeUtils {</span>
 	// ::remove folder when __HAXE__
 
 	private static final String THEME_FILE_PREFIX = &quot;puml-theme-&quot;;
@@ -80,50 +79,50 @@ import net.sourceforge.plantuml.utils.Log;
 
 	// ::comment when __CORE__
 	public static Theme getReaderTheme(String realName, String from) {
-<span class="nc" id="L83">		final String description = realName + &quot; from &quot; + from;</span>
-<span class="nc" id="L84">		from = from.substring(1, from.length() - 1);</span>
-<span class="nc" id="L85">		final String res = from + &quot;/&quot; + THEME_FILE_PREFIX + realName + THEME_FILE_SUFFIX;</span>
-<span class="nc" id="L86">		final InputStream is = Stdlib.getResourceAsStream(res);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L88">			return null;</span>
+<span class="nc" id="L82">		final String description = realName + &quot; from &quot; + from;</span>
+<span class="nc" id="L83">		from = from.substring(1, from.length() - 1);</span>
+<span class="nc" id="L84">		final String res = from + &quot;/&quot; + THEME_FILE_PREFIX + realName + THEME_FILE_SUFFIX;</span>
+<span class="nc" id="L85">		final byte[] is = Stdlib.getPumlResource(res);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L87">			return null;</span>
 
-<span class="nc" id="L90">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
+<span class="nc" id="L89">		return new Theme(ReadLineReader.create(is, description));</span>
 	}
 
 	public static Theme getReaderTheme(String filename) {
-<span class="pc" id="L94">		Log.info(() -&gt; &quot;Loading theme &quot; + filename);</span>
-<span class="fc" id="L95">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
-<span class="fc" id="L96">		final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
-<span class="fc" id="L97">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L99">			return null;</span>
+<span class="pc" id="L93">		Log.info(() -&gt; &quot;Loading theme &quot; + filename);</span>
+<span class="fc" id="L94">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
+<span class="fc" id="L95">		final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
+<span class="fc" id="L96">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L98">			return null;</span>
 
-<span class="fc" id="L101">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
+<span class="fc" id="L100">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
 	}
 
 	public static List&lt;String&gt; getAllThemeNames() throws IOException {
-<span class="fc" id="L105">		final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
-<span class="fc" id="L106">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (String f : filenames) {</span>
-<span class="pc bpc" id="L108" title="2 of 4 branches missed.">			if (f.startsWith(THEME_FILE_PREFIX) &amp;&amp; f.endsWith(THEME_FILE_SUFFIX)) {</span>
-<span class="fc" id="L109">				result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));</span>
+<span class="fc" id="L104">		final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
+<span class="fc" id="L105">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (String f : filenames) {</span>
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">			if (f.startsWith(THEME_FILE_PREFIX) &amp;&amp; f.endsWith(THEME_FILE_SUFFIX)) {</span>
+<span class="fc" id="L108">				result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));</span>
 			}
-<span class="fc" id="L111">		}</span>
-<span class="fc" id="L112">		Collections.sort(result);</span>
-<span class="fc" id="L113">		return result;</span>
+<span class="fc" id="L110">		}</span>
+<span class="fc" id="L111">		Collections.sort(result);</span>
+<span class="fc" id="L112">		return result;</span>
 	}
 	// ::done
 
 	public static String getFullPath(String from, String filename) {
-<span class="nc" id="L118">		final StringBuilder sb = new StringBuilder(from);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (from.endsWith(&quot;/&quot;) == false) {</span>
-<span class="nc" id="L120">			sb.append(&quot;/&quot;);</span>
+<span class="nc" id="L117">		final StringBuilder sb = new StringBuilder(from);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (from.endsWith(&quot;/&quot;) == false) {</span>
+<span class="nc" id="L119">			sb.append(&quot;/&quot;);</span>
 		}
-<span class="nc" id="L122">		return sb + getFilename(filename);</span>
+<span class="nc" id="L121">		return sb + getFilename(filename);</span>
 	}
 
 	public static String getFilename(String filename) {
-<span class="nc" id="L126">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
+<span class="nc" id="L125">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
 	}
 
 }

@@ -51,7 +51,7 @@ package net.sourceforge.plantuml.brotli;
 	 */
 	private static int nextTableBitSize(int[] count, int len, int rootBits) {
 <span class="fc" id="L53">		int left = 1 &lt;&lt; (len - rootBits);</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">		while (len &lt; MAX_LENGTH) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		while (len &lt; MAX_LENGTH) {</span>
 <span class="fc" id="L55">			left -= count[len];</span>
 <span class="fc bfc" id="L56" title="All 2 branches covered.">			if (left &lt;= 0) {</span>
 <span class="fc" id="L57">				break;</span>

@@ -81,15 +81,15 @@ public final class StringBuilder2 {
 	}
 
 	public StringBuilder2 append(String str) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (str == null)</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (str == null)</span>
 <span class="nc" id="L85">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L86">		final int len = str.length();</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (length + len &gt; buffer.length)</span>
+<span class="nc" id="L86">		final int len = str.length();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (length + len &gt; buffer.length)</span>
 <span class="nc" id="L88">			throw new IllegalStateException(&quot;Capacity exceeded&quot;);</span>
 		
-<span class="fc" id="L90">		str.getChars(0, len, buffer, length);</span>
-<span class="fc" id="L91">		length += len;</span>
-<span class="fc" id="L92">		return this;</span>
+<span class="nc" id="L90">		str.getChars(0, len, buffer, length);</span>
+<span class="nc" id="L91">		length += len;</span>
+<span class="nc" id="L92">		return this;</span>
 	}
 
 	public StringBuilder2 append(int value) {

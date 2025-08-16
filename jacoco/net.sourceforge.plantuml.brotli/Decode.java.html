@@ -105,16 +105,16 @@ import java.io.InputStream;
 
 	private static int decodeWindowBits(State s) {
 <span class="fc" id="L107">		BitReader.fillBitWindow(s);</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (BitReader.readFewBits(s, 1) == 0) {</span>
-<span class="fc" id="L109">			return 16;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (BitReader.readFewBits(s, 1) == 0) {</span>
+<span class="nc" id="L109">			return 16;</span>
 		}
 <span class="fc" id="L111">		int n = BitReader.readFewBits(s, 3);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (n != 0) {</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (n != 0) {</span>
 <span class="fc" id="L113">			return 17 + n;</span>
 		}
-<span class="fc" id="L115">		n = BitReader.readFewBits(s, 3);</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (n != 0) {</span>
-<span class="fc" id="L117">			return 8 + n;</span>
+<span class="nc" id="L115">		n = BitReader.readFewBits(s, 3);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (n != 0) {</span>
+<span class="nc" id="L117">			return 8 + n;</span>
 		}
 <span class="nc" id="L119">		return 17;</span>
 	}
@@ -145,8 +145,8 @@ import java.io.InputStream;
 <span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (s.runningState == UNINITIALIZED) {</span>
 <span class="nc" id="L146">			throw new IllegalStateException(&quot;State MUST be initialized&quot;);</span>
 		}
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (s.runningState == CLOSED) {</span>
-<span class="nc" id="L149">			return;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (s.runningState == CLOSED) {</span>
+<span class="fc" id="L149">			return;</span>
 		}
 <span class="fc" id="L151">		s.runningState = CLOSED;</span>
 <span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (s.input != null) {</span>
@@ -177,7 +177,7 @@ import java.io.InputStream;
 <span class="fc" id="L177">		s.metaBlockLength = 0;</span>
 <span class="fc" id="L178">		s.isUncompressed = 0;</span>
 <span class="fc" id="L179">		s.isMetadata = 0;</span>
-<span class="pc bpc" id="L180" title="1 of 4 branches missed.">		if ((s.inputEnd != 0) &amp;&amp; BitReader.readFewBits(s, 1) != 0) {</span>
+<span class="pc bpc" id="L180" title="2 of 4 branches missed.">		if ((s.inputEnd != 0) &amp;&amp; BitReader.readFewBits(s, 1) != 0) {</span>
 <span class="nc" id="L181">			return;</span>
 		}
 <span class="fc" id="L183">		int sizeNibbles = BitReader.readFewBits(s, 2) + 4;</span>
@@ -209,8 +209,8 @@ import java.io.InputStream;
 			}
 		}
 <span class="fc" id="L211">		s.metaBlockLength++;</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (s.inputEnd == 0) {</span>
-<span class="fc" id="L213">			s.isUncompressed = BitReader.readFewBits(s, 1);</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (s.inputEnd == 0) {</span>
+<span class="nc" id="L213">			s.isUncompressed = BitReader.readFewBits(s, 1);</span>
 		}
 <span class="fc" id="L215">	}</span>
 
@@ -389,7 +389,7 @@ import java.io.InputStream;
 <span class="fc" id="L389">			int[] codeLengthCodeLengths = new int[CODE_LENGTH_CODES];</span>
 <span class="fc" id="L390">			int space = 32;</span>
 <span class="fc" id="L391">			int numCodes = 0;</span>
-<span class="fc bfc" id="L392" title="All 4 branches covered.">			for (int i = simpleCodeOrSkip; i &lt; CODE_LENGTH_CODES &amp;&amp; space &gt; 0; i++) {</span>
+<span class="pc bpc" id="L392" title="1 of 4 branches missed.">			for (int i = simpleCodeOrSkip; i &lt; CODE_LENGTH_CODES &amp;&amp; space &gt; 0; i++) {</span>
 <span class="fc" id="L393">				int codeLenIdx = CODE_LENGTH_CODE_ORDER[i];</span>
 <span class="fc" id="L394">				BitReader.fillBitWindow(s);</span>
 <span class="fc" id="L395">				int p = BitReader.peekBits(s) &amp; 15;</span>
@@ -425,7 +425,7 @@ import java.io.InputStream;
 <span class="fc" id="L425">		BitReader.fillBitWindow(s);</span>
 <span class="fc" id="L426">		int useRleForZeros = BitReader.readFewBits(s, 1);</span>
 <span class="fc" id="L427">		int maxRunLengthPrefix = 0;</span>
-<span class="fc bfc" id="L428" title="All 2 branches covered.">		if (useRleForZeros != 0) {</span>
+<span class="pc bpc" id="L428" title="1 of 2 branches missed.">		if (useRleForZeros != 0) {</span>
 <span class="fc" id="L429">			maxRunLengthPrefix = BitReader.readFewBits(s, 4) + 1;</span>
 		}
 <span class="fc" id="L431">		int[] table = new int[HUFFMAN_TABLE_SIZE];</span>
@@ -505,7 +505,7 @@ import java.io.InputStream;
 
 	private static void maybeReallocateRingBuffer(State s) {
 <span class="fc" id="L507">		int newSize = s.maxRingBufferSize;</span>
-<span class="fc bfc" id="L508" title="All 2 branches covered.">		if (newSize &gt; s.expectedTotalSize) {</span>
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">		if (newSize &gt; s.expectedTotalSize) {</span>
 			/* TODO: Handle 2GB+ cases more gracefully. */
 <span class="fc" id="L510">			int minimalNewSize = s.expectedTotalSize;</span>
 <span class="fc bfc" id="L511" title="All 2 branches covered.">			while ((newSize &gt;&gt; 1) &gt; minimalNewSize) {</span>
@@ -603,7 +603,7 @@ import java.io.InputStream;
 <span class="fc" id="L603">		s.contextMap = new byte[s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS];</span>
 <span class="fc" id="L604">		int numLiteralTrees = decodeContextMap(s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS, s.contextMap, s);</span>
 <span class="fc" id="L605">		s.trivialLiteralContext = 1;</span>
-<span class="pc bpc" id="L606" title="1 of 2 branches missed.">		for (int j = 0; j &lt; s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS; j++) {</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">		for (int j = 0; j &lt; s.numLiteralBlockTypes &lt;&lt; LITERAL_CONTEXT_BITS; j++) {</span>
 <span class="fc bfc" id="L607" title="All 2 branches covered.">			if (s.contextMap[j] != j &gt;&gt; LITERAL_CONTEXT_BITS) {</span>
 <span class="fc" id="L608">				s.trivialLiteralContext = 0;</span>
 <span class="fc" id="L609">				break;</span>
@@ -751,17 +751,17 @@ import java.io.InputStream;
 
 				// Fall through
 			case INSERT_LOOP:
-<span class="pc bpc" id="L754" title="1 of 2 branches missed.">				if (s.trivialLiteralContext != 0) {</span>
-<span class="nc bnc" id="L755" title="All 2 branches missed.">					while (s.j &lt; s.insertLength) {</span>
-<span class="nc" id="L756">						BitReader.readMoreInput(s);</span>
-<span class="nc bnc" id="L757" title="All 2 branches missed.">						if (s.literalBlockLength == 0) {</span>
+<span class="fc bfc" id="L754" title="All 2 branches covered.">				if (s.trivialLiteralContext != 0) {</span>
+<span class="fc bfc" id="L755" title="All 2 branches covered.">					while (s.j &lt; s.insertLength) {</span>
+<span class="fc" id="L756">						BitReader.readMoreInput(s);</span>
+<span class="pc bpc" id="L757" title="1 of 2 branches missed.">						if (s.literalBlockLength == 0) {</span>
 <span class="nc" id="L758">							decodeLiteralBlockSwitch(s);</span>
 						}
-<span class="nc" id="L760">						s.literalBlockLength--;</span>
-<span class="nc" id="L761">						BitReader.fillBitWindow(s);</span>
-<span class="nc" id="L762">						ringBuffer[s.pos] = (byte) readSymbol(s.hGroup0, s.literalTree, s);</span>
-<span class="nc" id="L763">						s.j++;</span>
-<span class="nc bnc" id="L764" title="All 2 branches missed.">						if (s.pos++ == ringBufferMask) {</span>
+<span class="fc" id="L760">						s.literalBlockLength--;</span>
+<span class="fc" id="L761">						BitReader.fillBitWindow(s);</span>
+<span class="fc" id="L762">						ringBuffer[s.pos] = (byte) readSymbol(s.hGroup0, s.literalTree, s);</span>
+<span class="fc" id="L763">						s.j++;</span>
+<span class="pc bpc" id="L764" title="1 of 2 branches missed.">						if (s.pos++ == ringBufferMask) {</span>
 <span class="nc" id="L765">							s.nextRunningState = INSERT_LOOP;</span>
 <span class="nc" id="L766">							s.bytesToWrite = s.ringBufferSize;</span>
 <span class="nc" id="L767">							s.bytesWritten = 0;</span>
@@ -863,7 +863,7 @@ import java.io.InputStream;
 <span class="fc" id="L863">				int copyLength = s.copyLength - s.j;</span>
 <span class="fc" id="L864">				int srcEnd = src + copyLength;</span>
 <span class="fc" id="L865">				int dstEnd = dst + copyLength;</span>
-<span class="pc bpc" id="L866" title="1 of 4 branches missed.">				if ((srcEnd &lt; ringBufferMask) &amp;&amp; (dstEnd &lt; ringBufferMask)) {</span>
+<span class="pc bpc" id="L866" title="2 of 4 branches missed.">				if ((srcEnd &lt; ringBufferMask) &amp;&amp; (dstEnd &lt; ringBufferMask)) {</span>
 <span class="pc bpc" id="L867" title="1 of 6 branches missed.">					if (copyLength &lt; 12 || (srcEnd &gt; dst &amp;&amp; dstEnd &gt; src)) {</span>
 <span class="fc bfc" id="L868" title="All 2 branches covered.">						for (int k = 0; k &lt; copyLength; ++k) {</span>
 <span class="fc" id="L869">							ringBuffer[dst++] = ringBuffer[src++];</span>
@@ -875,20 +875,20 @@ import java.io.InputStream;
 <span class="fc" id="L875">					s.metaBlockLength -= copyLength;</span>
 <span class="fc" id="L876">					s.pos += copyLength;</span>
 				} else {
-<span class="pc bpc" id="L878" title="1 of 2 branches missed.">					for (; s.j &lt; s.copyLength;) {</span>
-<span class="fc" id="L879">						ringBuffer[s.pos] = ringBuffer[(s.pos - s.distance) &amp; ringBufferMask];</span>
-<span class="fc" id="L880">						s.metaBlockLength--;</span>
-<span class="fc" id="L881">						s.j++;</span>
-<span class="fc bfc" id="L882" title="All 2 branches covered.">						if (s.pos++ == ringBufferMask) {</span>
-<span class="fc" id="L883">							s.nextRunningState = COPY_LOOP;</span>
-<span class="fc" id="L884">							s.bytesToWrite = s.ringBufferSize;</span>
-<span class="fc" id="L885">							s.bytesWritten = 0;</span>
-<span class="fc" id="L886">							s.runningState = WRITE;</span>
-<span class="fc" id="L887">							break;</span>
+<span class="nc bnc" id="L878" title="All 2 branches missed.">					for (; s.j &lt; s.copyLength;) {</span>
+<span class="nc" id="L879">						ringBuffer[s.pos] = ringBuffer[(s.pos - s.distance) &amp; ringBufferMask];</span>
+<span class="nc" id="L880">						s.metaBlockLength--;</span>
+<span class="nc" id="L881">						s.j++;</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">						if (s.pos++ == ringBufferMask) {</span>
+<span class="nc" id="L883">							s.nextRunningState = COPY_LOOP;</span>
+<span class="nc" id="L884">							s.bytesToWrite = s.ringBufferSize;</span>
+<span class="nc" id="L885">							s.bytesWritten = 0;</span>
+<span class="nc" id="L886">							s.runningState = WRITE;</span>
+<span class="nc" id="L887">							break;</span>
 						}
 					}
 				}
-<span class="fc bfc" id="L891" title="All 2 branches covered.">				if (s.runningState == COPY_LOOP) {</span>
+<span class="pc bpc" id="L891" title="1 of 2 branches missed.">				if (s.runningState == COPY_LOOP) {</span>
 <span class="fc" id="L892">					s.runningState = MAIN_LOOP;</span>
 				}
 				continue;

@@ -1,40 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Stdlib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">Stdlib.java</span></div><h1>Stdlib.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.preproc;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Stdlib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">Stdlib.java</span></div><h1>Stdlib.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.ref.SoftReference;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-
-import net.sourceforge.plantuml.StringBuilder2;
-import net.sourceforge.plantuml.brotli.BrotliInputStream;
-import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.emoji.SvgNanoParser;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.utils.Base64Coder;
+import net.sourceforge.plantuml.preproc.spm.SpmChannel;
 import net.sourceforge.plantuml.utils.Log;
 // ::uncomment when __CORE__
 //import java.io.FileInputStream;
@@ -46,466 +68,374 @@ public class Stdlib {
 
 	// ::uncomment when __CORE__
 //	public static InputStream getResourceAsStream(String fullname) {
-//		fullname = fullname.replace(&quot;.puml&quot;, &quot;&quot;);
-//		fullname = fullname.replace(&quot;awslib/&quot;, &quot;awslib14/&quot;);
-//
-//		final String fullpath = cheerpjPath + &quot;stdlib/&quot; + fullname + &quot;.puml&quot;;
-//		System.err.println(&quot;Trying to read &quot; + fullpath);
-//		// See https://docs.leaningtech.com/cheerpj/File-System-support
-//		try {
-//			return new FileInputStream(fullpath);
-//		} catch (FileNotFoundException e) {
-//			System.err.println(&quot;Cannot load &quot; + fullpath);
 //			return null;
-//		}
 //	}
 	// ::done
 
 	// ::comment when __CORE__
-<span class="fc" id="L65">	private static final Map&lt;String, Stdlib&gt; all = new ConcurrentHashMap&lt;String, Stdlib&gt;();</span>
-	private static final String SEPARATOR = &quot;\uF8FF&quot;;
-<span class="fc" id="L67">	private static final Pattern sizePattern = Pattern.compile(&quot;\\[(\\d+)x(\\d+)/16\\]&quot;);</span>
 
-<span class="fc" id="L69">	private final Map&lt;String, SoftReference&lt;String&gt;&gt; cache = new ConcurrentHashMap&lt;String, SoftReference&lt;String&gt;&gt;();</span>
+<span class="fc" id="L77">	private static final ConcurrentMap&lt;String, Stdlib&gt; all = new ConcurrentHashMap&lt;&gt;();</span>
+
+<span class="fc" id="L79">	private final List&lt;Integer&gt; colors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L80">	private final Map&lt;String, byte[]&gt; puml = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L81">	private final Map&lt;String, byte[]&gt; json = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L82">	private final Map&lt;String, StdlibSprite&gt; sprites = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L83">	private final Map&lt;String, SvgNanoParser&gt; svgs = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L84">	private final List&lt;FutureBufferedImage&gt; images = new ArrayList&lt;&gt;();</span>
 
 	private final String name;
-<span class="fc" id="L72">	private final Map&lt;String, String&gt; info = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L87">	private final Map&lt;String, String&gt; info = new HashMap&lt;String, String&gt;();</span>
 
-<span class="fc" id="L74">	private Stdlib(String name, String info) throws IOException {</span>
-<span class="fc" id="L75">		this.name = name;</span>
-<span class="fc" id="L76">		fillMap(info);</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L89">	private Stdlib(String name) throws IOException {</span>
+<span class="fc" id="L90">		this.name = name;</span>
+<span class="fc" id="L91">		try (final InputStream is = getInternalInputStream(SpmChannel.INFO)) {</span>
+<span class="fc" id="L92">			final List&lt;String&gt; pathInfo = FileUtils.readStrings(is);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			for (String s : pathInfo)</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if (s.contains(&quot;=&quot;)) {</span>
+<span class="fc" id="L95">					final String data[] = s.split(&quot;=&quot;);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">					if (data.length == 2)</span>
+<span class="fc" id="L97">						this.info.put(data[0], data[1]);</span>
+				}
+		}
 
-	private void fillMap(String infoString) {
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (String s : infoString.split(&quot;\n&quot;))</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (s.contains(&quot;=&quot;)) {</span>
-<span class="fc" id="L82">				final String data[] = s.split(&quot;=&quot;);</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">				if (data.length == 2)</span>
-<span class="fc" id="L84">					this.info.put(data[0], data[1]);</span>
-			}
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L101">	}</span>
 
-	public static InputStream getResourceAsStream(String fullname) {
-<span class="fc" id="L89">		fullname = fullname.toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;);</span>
-<span class="fc" id="L90">		final int last = fullname.indexOf('/');</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (last == -1)</span>
-<span class="nc" id="L92">			return null;</span>
+	public static byte[] getPumlResource(String fullname) {
+<span class="fc" id="L104">		fullname = fullname.toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;);</span>
+<span class="fc" id="L105">		final int last = fullname.indexOf('/');</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (last == -1)</span>
+<span class="nc" id="L107">			return null;</span>
 
 		try {
-<span class="fc" id="L95">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
-<span class="pc bpc" id="L96" title="2 of 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
-<span class="nc" id="L97">				return null;</span>
+<span class="fc" id="L110">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
+<span class="pc bpc" id="L111" title="2 of 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
+<span class="nc" id="L112">				return null;</span>
 
-<span class="fc" id="L99">			final String data = folder.loadResource(fullname.substring(last + 1));</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (data == null)</span>
-<span class="nc" id="L101">				return null;</span>
-
-<span class="fc" id="L103">			return new ByteArrayInputStream(data.getBytes(UTF_8));</span>
-<span class="nc" id="L104">		} catch (IOException e) {</span>
-<span class="nc" id="L105">			Logme.error(e);</span>
-<span class="nc" id="L106">			return null;</span>
+<span class="fc" id="L114">			return folder.loadPumlResource(fullname.substring(last + 1));</span>
+<span class="nc" id="L115">		} catch (IOException e) {</span>
+<span class="nc" id="L116">			Logme.error(e);</span>
+<span class="nc" id="L117">			return null;</span>
 		}
 	}
+
+	public static byte[] getJsonResource(String fullname) {
+<span class="nc" id="L122">		final int last = fullname.indexOf('/');</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (last == -1)</span>
+<span class="nc" id="L124">			return null;</span>
+
+		try {
+<span class="nc" id="L127">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
+<span class="nc" id="L129">				return null;</span>
+
+<span class="nc" id="L131">			return folder.loadJsonResource(fullname.substring(last + 1));</span>
+
+<span class="nc" id="L133">		} catch (IOException e) {</span>
+<span class="nc" id="L134">			Logme.error(e);</span>
+<span class="nc" id="L135">			return null;</span>
+		}
+	}
+
+	private byte[] loadPumlResource(String file) throws IOException {
+<span class="fc" id="L140">		synchronized (puml) {</span>
+<span class="fc" id="L141">			initMapIfNeeded(puml, SpmChannel.PUML);</span>
+<span class="fc" id="L142">			return puml.get(file);</span>
+		}
+	}
+
+	private byte[] loadJsonResource(String file) throws IOException {
+<span class="nc" id="L147">		synchronized (json) {</span>
+<span class="nc" id="L148">			initMapIfNeeded(json, SpmChannel.JSON);</span>
+<span class="nc" id="L149">			return json.get(file);</span>
+		}
+	}
+
+	private void initMapIfNeeded(Map&lt;String, byte[]&gt; map, SpmChannel channel) throws IOException {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (map.size() == 0) {</span>
+<span class="fc" id="L155">			try (InputStream is = getInternalInputStream(channel); DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="fc" id="L156">				final int nb = dis.readInt();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">				for (int i = 0; i &lt; nb; i++) {</span>
+<span class="fc" id="L158">					final String name = dis.readUTF();</span>
+<span class="fc" id="L159">					final int len = dis.readInt();</span>
+<span class="fc" id="L160">					final byte data[] = FileUtils.readExactly(dis, len);</span>
+<span class="fc" id="L161">					map.put(name.toLowerCase(), data);</span>
+				}
+			}
+		}
+<span class="fc" id="L165">	}</span>
 
 	public static Stdlib retrieve(final String name) throws IOException {
-<span class="fc" id="L111">		Stdlib result = all.get(name);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L113">			final DataInputStream dataStream = getDataStream(name);</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (dataStream == null)</span>
-<span class="nc" id="L115">				return null;</span>
+<span class="fc" id="L168">		return all.computeIfAbsent(name, key -&gt; {</span>
+			try {
+<span class="fc" id="L170">				final Stdlib result = new Stdlib(key);</span>
+<span class="fc" id="L171">				final String link = result.getLinkFromInfo();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">				if (link != null)</span>
+<span class="fc" id="L173">					return retrieve(link);</span>
 
-<span class="fc" id="L117">			final String info = dataStream.readUTF();</span>
-<span class="fc" id="L118">			dataStream.close();</span>
-
-<span class="fc" id="L120">			final String link = getLinkFromInfo(info);</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (link == null)</span>
-<span class="fc" id="L122">				result = new Stdlib(name, info);</span>
-			else
-<span class="fc" id="L124">				result = retrieve(link);</span>
-
-<span class="fc" id="L126">			all.put(name, result);</span>
-		}
-<span class="fc" id="L128">		return result;</span>
-	}
-
-	private static String getLinkFromInfo(String infoString) {
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (String s : infoString.split(&quot;\n&quot;))</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (s.contains(&quot;=&quot;)) {</span>
-<span class="fc" id="L134">				final String data[] = s.split(&quot;=&quot;);</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">				if (data[0].equalsIgnoreCase(&quot;link&quot;))</span>
-<span class="fc" id="L136">					return data[1];</span>
+<span class="fc" id="L175">				return result;</span>
+<span class="nc" id="L176">			} catch (IOException e) {</span>
+<span class="nc" id="L177">				throw new UncheckedIOException(e);</span>
 			}
-<span class="fc" id="L138">		return null;</span>
+		});
 	}
 
-	private static int read1byte(InputStream is) throws IOException {
-<span class="nc" id="L142">		return is.read() &amp; 0xFF;</span>
+	private String getLinkFromInfo() {
+<span class="fc" id="L183">		return info.get(&quot;link&quot;);</span>
 	}
 
-	private static int read2bytes(InputStream is) throws IOException {
-<span class="nc" id="L146">		return (read1byte(is) &lt;&lt; 8) + read1byte(is);</span>
+	static private int read1byte(InputStream is) throws IOException {
+<span class="nc" id="L187">		return is.read() &amp; 0xFF;</span>
 	}
 
-	/* private */ public String loadResource(String file) throws IOException {
-<span class="fc" id="L150">		final SoftReference&lt;String&gt; cached = cache.get(file.toLowerCase());</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (cached != null) {</span>
-<span class="nc" id="L152">			final String cachedResult = cached.get();</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (cachedResult != null) {</span>
-				// Log.info(&quot;Using cache for &quot; + file);
-<span class="nc" id="L155">				return cachedResult;</span>
-			}
-		}
-<span class="pc" id="L158">		Log.info(() -&gt; &quot;No cache for &quot; + file);</span>
-<span class="fc" id="L159">		final DataInputStream dataStream = getDataStream();</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (dataStream == null)</span>
-<span class="nc" id="L161">			return null;</span>
-
-<span class="fc" id="L163">		dataStream.readUTF();</span>
-<span class="fc" id="L164">		final InputStream spriteStream = getSpriteStream();</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (spriteStream == null) {</span>
-<span class="nc" id="L166">			dataStream.close();</span>
-<span class="nc" id="L167">			return null;</span>
-		}
-<span class="fc" id="L169">		InputStream dataImagePngBase64Stream = null;</span>
-<span class="fc" id="L170">		final List&lt;Integer&gt; colors = new ArrayList&lt;&gt;();</span>
-		try {
-<span class="fc" id="L172">			StringBuilder found = null;</span>
-			while (true) {
-<span class="fc" id="L174">				final String filename = dataStream.readUTF();</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">				if (filename.equals(SEPARATOR)) {</span>
-<span class="nc" id="L176">					Log.info(() -&gt; &quot;Not found &quot; + filename);</span>
-<span class="nc" id="L177">					return null;</span>
-				}
-<span class="fc bfc" id="L179" title="All 2 branches covered.">				if (filename.equalsIgnoreCase(file))</span>
-<span class="fc" id="L180">					found = new StringBuilder();</span>
-
-				while (true) {
-<span class="fc" id="L183">					String s = dataStream.readUTF();</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">					if (s.equals(SEPARATOR)) {</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">						if (found != null) {</span>
-<span class="fc" id="L186">							final String result = found.toString();</span>
-<span class="fc" id="L187">							cache.put(file.toLowerCase(), new SoftReference&lt;&gt;(result));</span>
-<span class="fc" id="L188">							return result;</span>
-						}
-						break;
-					}
-
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">					if (s.contains(AtomImg.DATA_IMAGE_PNG_BASE64)) {</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">						if (dataImagePngBase64Stream == null) {</span>
-<span class="nc" id="L195">							dataImagePngBase64Stream = getDataImagePngBase64();</span>
-<span class="nc" id="L196">							final int size = read2bytes(dataImagePngBase64Stream);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">							for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc" id="L198">								final int alpha = read1byte(dataImagePngBase64Stream);</span>
-<span class="nc" id="L199">								final int red = read1byte(dataImagePngBase64Stream);</span>
-<span class="nc" id="L200">								final int green = read1byte(dataImagePngBase64Stream);</span>
-<span class="nc" id="L201">								final int blue = read1byte(dataImagePngBase64Stream);</span>
-<span class="nc" id="L202">								final int rgb = (alpha &lt;&lt; 24) + (red &lt;&lt; 16) + (green &lt;&lt; 8) + blue;</span>
-<span class="nc" id="L203">								colors.add(rgb);</span>
-							}
-						}
-<span class="nc" id="L206">						final String base64 = readOneImage(dataImagePngBase64Stream, colors);</span>
-<span class="nc" id="L207">						s = s.replaceFirst(AtomImg.DATA_IMAGE_PNG_BASE64, AtomImg.DATA_IMAGE_PNG_BASE64 + base64);</span>
-					}
-
-<span class="fc bfc" id="L210" title="All 2 branches covered.">					if (found != null) {</span>
-<span class="fc" id="L211">						found.append(s);</span>
-<span class="fc" id="L212">						found.append(&quot;\n&quot;);</span>
-					}
-<span class="fc bfc" id="L214" title="All 2 branches covered.">					if (isSpriteLine(s)) {</span>
-<span class="fc" id="L215">						final Matcher m = sizePattern.matcher(s);</span>
-<span class="fc" id="L216">						final boolean ok = m.find();</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">						if (ok == false)</span>
-<span class="nc" id="L218">							throw new IOException(s);</span>
-
-<span class="fc" id="L220">						final int width = Integer.parseInt(m.group(1));</span>
-<span class="fc" id="L221">						final int height = Integer.parseInt(m.group(2));</span>
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">						if (found == null) {</span>
-<span class="nc" id="L223">							skipSprite(width, height, spriteStream);</span>
-						} else {
-<span class="fc" id="L225">							final String sprite = readSprite(width, height, spriteStream);</span>
-<span class="fc" id="L226">							found.append(sprite);</span>
-<span class="fc" id="L227">							found.append(&quot;}\n&quot;);</span>
-						}
-					}
-<span class="fc" id="L230">				}</span>
-<span class="fc" id="L231">			}</span>
-		} finally {
-<span class="fc" id="L233">			dataStream.close();</span>
-<span class="fc" id="L234">			spriteStream.close();</span>
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">			if (dataImagePngBase64Stream != null)</span>
-<span class="nc" id="L236">				dataImagePngBase64Stream.close();</span>
-		}
-
+	static int read2bytes(InputStream is) throws IOException {
+<span class="nc" id="L191">		return (read1byte(is) &lt;&lt; 8) + read1byte(is);</span>
 	}
 
-	private String readOneImage(InputStream is, List&lt;Integer&gt; colors) throws IOException {
-<span class="nc" id="L242">		final int width = is.read();</span>
-<span class="nc" id="L243">		final int height = is.read();</span>
-
-<span class="nc" id="L245">		final BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
-
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y += 1)</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x += 1) {</span>
-<span class="nc" id="L249">				final int rgb = colors.get(read2bytes(is));</span>
-<span class="nc" id="L250">				result.setRGB(x, y, rgb);</span>
-			}
-
-<span class="nc" id="L253">		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
-<span class="nc" id="L254">			ImageIO.write(result, &quot;png&quot;, baos);</span>
-<span class="nc" id="L255">			return new String(Base64Coder.encode(baos.toByteArray()));</span>
-		}
-
-	}
-
-	private void skipSprite(int width, int height, InputStream inputStream) throws IOException {
-<span class="nc" id="L261">		final int nbLines = (height + 1) / 2;</span>
-<span class="nc" id="L262">		inputStream.skip(nbLines * width);</span>
-<span class="nc" id="L263">	}</span>
-
-<span class="fc" id="L265">	private static final char[] HEX = &quot;0123456789ABCDEF&quot;.toCharArray();</span>
-
-	private String readSprite(int width, int height, InputStream inputStream) throws IOException {
-<span class="fc" id="L268">		final int nbLines = (height + 1) / 2;</span>
-<span class="fc" id="L269">		final int estimatedResultCapacity = (width + 1) * (height + 1);</span>
-
-<span class="fc" id="L271">		final StringBuilder2 result = new StringBuilder2(estimatedResultCapacity);</span>
-<span class="fc" id="L272">		int line = 0;</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">		for (int j = 0; j &lt; nbLines; j++) {</span>
-<span class="fc" id="L274">			final StringBuilder2 sb1 = new StringBuilder2(width);</span>
-<span class="fc" id="L275">			final StringBuilder2 sb2 = new StringBuilder2(width);</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">			for (int i = 0; i &lt; width; i++) {</span>
-<span class="fc" id="L277">				final int b = inputStream.read();</span>
-<span class="fc" id="L278">				final int b1 = (b &amp; 0xF0) &gt;&gt; 4;</span>
-<span class="fc" id="L279">				final int b2 = (b &amp; 0x0F);</span>
-<span class="fc" id="L280">				sb1.append(HEX[b1]);</span>
-<span class="fc" id="L281">				sb2.append(HEX[b2]);</span>
-			}
-<span class="fc" id="L283">			result.append(sb1.toString());</span>
-<span class="fc" id="L284">			result.append(&quot;\n&quot;);</span>
-<span class="fc" id="L285">			line++;</span>
-<span class="pc bpc" id="L286" title="1 of 2 branches missed.">			if (line &lt; height) {</span>
-<span class="fc" id="L287">				result.append(sb2.toString());</span>
-<span class="fc" id="L288">				result.append(&quot;\n&quot;);</span>
-<span class="fc" id="L289">				line++;</span>
-			}
-		}
-
-<span class="fc" id="L293">		return result.toString();</span>
-	}
-
-	private boolean isSpriteLine(String s) {
-<span class="pc bpc" id="L297" title="1 of 4 branches missed.">		return s.trim().startsWith(&quot;sprite&quot;) &amp;&amp; s.trim().endsWith(&quot;{&quot;);</span>
-	}
-
-	private static DataInputStream getDataStream(String name) throws IOException {
-<span class="fc" id="L301">		final InputStream raw = getInternalInputStream(name, &quot;-abx.repx&quot;);</span>
-<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (raw == null)</span>
-<span class="nc" id="L303">			return null;</span>
-
-<span class="fc" id="L305">		return new DataInputStream(new BrotliInputStream(raw));</span>
-	}
-
-	private DataInputStream getDataStream() throws IOException {
-<span class="fc" id="L309">		return getDataStream(name);</span>
-	}
-
-	private InputStream getSpriteStream() throws IOException {
-<span class="fc" id="L313">		final InputStream raw = getInternalInputStream(name, &quot;-dex.repx&quot;);</span>
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">		if (raw == null)</span>
-<span class="nc" id="L315">			return null;</span>
-<span class="fc" id="L316">		return new BrotliInputStream(raw);</span>
-	}
-
-	private InputStream getDataImagePngBase64() throws IOException {
-<span class="nc" id="L320">		final InputStream raw = getInternalInputStream(name, &quot;-ghx.repx&quot;);</span>
-<span class="nc bnc" id="L321" title="All 2 branches missed.">		if (raw == null)</span>
-<span class="nc" id="L322">			return null;</span>
-<span class="nc" id="L323">		return new BrotliInputStream(raw);</span>
-	}
-
-	private static InputStream getInternalInputStream(String fullname, String extension) throws FileNotFoundException {
-<span class="fc" id="L327">		final String path = &quot;stdlib/&quot; + fullname + extension;</span>
-<span class="fc" id="L328">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L330">			result = new BufferedInputStream(new FileInputStream(path));</span>
-<span class="fc" id="L331">		return result;</span>
+	private InputStream getInternalInputStream(SpmChannel channel) throws IOException {
+<span class="fc" id="L195">		return channel.getInternalInputStream(name);</span>
 	}
 
 	public static void extractStdLib() throws IOException {
-<span class="nc bnc" id="L335" title="All 2 branches missed.">		for (String name : getAllFolderNames()) {</span>
-<span class="nc" id="L336">			final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="nc" id="L337">			folder.extractMeFull();</span>
-<span class="nc" id="L338">		}</span>
-<span class="nc" id="L339">	}</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (String name : getAllFolderNames()) {</span>
+<span class="nc" id="L200">			final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="nc" id="L201">			folder.extractMeFull();</span>
+<span class="nc" id="L202">		}</span>
+<span class="nc" id="L203">	}</span>
 
 	public static Collection&lt;String&gt; getAllFolderNames() throws IOException {
-<span class="fc" id="L342">		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L343">		final InputStream home = getInternalInputStream(&quot;home&quot;, &quot;.repx&quot;);</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (home == null)</span>
-<span class="nc" id="L345">			throw new IOException(&quot;Cannot access to /stdlib/*.repx files&quot;);</span>
+<span class="fc" id="L206">		final InputStream home = SpmChannel.inputStream(&quot;stdlib/home.spm&quot;);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (home == null)</span>
+<span class="nc" id="L208">			throw new IOException(&quot;Cannot access to /stdlib files&quot;);</span>
 
-<span class="fc" id="L347">		final BufferedReader br = new BufferedReader(new InputStreamReader(home));</span>
-		String name;
-<span class="fc bfc" id="L349" title="All 2 branches covered.">		while ((name = br.readLine()) != null)</span>
-<span class="fc" id="L350">			result.add(name);</span>
-
-<span class="fc" id="L352">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L210">		try (final BufferedReader br = new BufferedReader(new InputStreamReader(home))) {</span>
+<span class="fc" id="L211">			return new TreeSet&lt;&gt;(br.lines().collect(Collectors.toList()));</span>
+		}
 	}
 
 	private void extractMeFull() throws IOException {
-<span class="nc" id="L356">		final DataInputStream dataStream = getDataStream();</span>
-<span class="nc bnc" id="L357" title="All 2 branches missed.">		if (dataStream == null)</span>
-<span class="nc" id="L358">			return;</span>
+//		final DataInputStream dataStream = getDataStream();
+//		if (dataStream == null)
+//			return;
+//
+//		dataStream.readUTF();
+//		final InputStream spriteStream = getSpriteStream();
+//		try {
+//			while (true) {
+//				final String filename = dataStream.readUTF();
+//				if (filename.equals(SEPARATOR))
+//					return;
+//
+//				final SFile f = new SFile(&quot;stdlib/&quot; + name + &quot;/&quot; + filename + &quot;.puml&quot;);
+//				f.getParentFile().mkdirs();
+//				final PrintWriter fos = f.createPrintWriter();
+//				while (true) {
+//					final String s = dataStream.readUTF();
+//					if (s.equals(SEPARATOR))
+//						break;
+//
+//					fos.println(s);
+//					if (isSpriteLine(s)) {
+//						final Matcher m = sizePattern.matcher(s);
+//						final boolean ok = m.find();
+//						if (ok == false)
+//							throw new IOException(s);
+//
+//						final int width = Integer.parseInt(m.group(1));
+//						final int height = Integer.parseInt(m.group(2));
+//						final String sprite = readSprite(width, height, spriteStream);
+//						fos.println(sprite);
+//						fos.println(&quot;}&quot;);
+//					}
+//				}
+//				fos.close();
+//			}
+//		} finally {
+//			dataStream.close();
+//			spriteStream.close();
+//		}
+<span class="nc" id="L256">	}</span>
 
-<span class="nc" id="L360">		dataStream.readUTF();</span>
-<span class="nc" id="L361">		final InputStream spriteStream = getSpriteStream();</span>
-		try {
-			while (true) {
-<span class="nc" id="L364">				final String filename = dataStream.readUTF();</span>
-<span class="nc bnc" id="L365" title="All 2 branches missed.">				if (filename.equals(SEPARATOR))</span>
-<span class="nc" id="L366">					return;</span>
+//	public Collection&lt;String&gt; getAllFilenamesWithSprites() throws IOException {
+//		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();
+//
+//		dataStream.readUTF();
+//		try {
+//			while (true) {
+//				final String filename = dataStream.readUTF();
+//				if (filename.equals(SEPARATOR))
+//					return result;
+//
+//				while (true) {
+//					final String s = dataStream.readUTF();
+//					if (s.equals(SEPARATOR))
+//						break;
+//					if (isSpriteLine(s))
+//						result.add(filename);
+//				}
+//			}
+//		} finally {
+//			dataStream.close();
+//		}
+//	}
 
-<span class="nc" id="L368">				final SFile f = new SFile(&quot;stdlib/&quot; + name + &quot;/&quot; + filename + &quot;.puml&quot;);</span>
-<span class="nc" id="L369">				f.getParentFile().mkdirs();</span>
-<span class="nc" id="L370">				final PrintWriter fos = f.createPrintWriter();</span>
-				while (true) {
-<span class="nc" id="L372">					final String s = dataStream.readUTF();</span>
-<span class="nc bnc" id="L373" title="All 2 branches missed.">					if (s.equals(SEPARATOR))</span>
-<span class="nc" id="L374">						break;</span>
-
-<span class="nc" id="L376">					fos.println(s);</span>
-<span class="nc bnc" id="L377" title="All 2 branches missed.">					if (isSpriteLine(s)) {</span>
-<span class="nc" id="L378">						final Matcher m = sizePattern.matcher(s);</span>
-<span class="nc" id="L379">						final boolean ok = m.find();</span>
-<span class="nc bnc" id="L380" title="All 2 branches missed.">						if (ok == false)</span>
-<span class="nc" id="L381">							throw new IOException(s);</span>
-
-<span class="nc" id="L383">						final int width = Integer.parseInt(m.group(1));</span>
-<span class="nc" id="L384">						final int height = Integer.parseInt(m.group(2));</span>
-<span class="nc" id="L385">						final String sprite = readSprite(width, height, spriteStream);</span>
-<span class="nc" id="L386">						fos.println(sprite);</span>
-<span class="nc" id="L387">						fos.println(&quot;}&quot;);</span>
-					}
-<span class="nc" id="L389">				}</span>
-<span class="nc" id="L390">				fos.close();</span>
-<span class="nc" id="L391">			}</span>
-		} finally {
-<span class="nc" id="L393">			dataStream.close();</span>
-<span class="nc" id="L394">			spriteStream.close();</span>
-		}
-	}
-
-	public Collection&lt;String&gt; getAllFilenamesWithSprites() throws IOException {
-<span class="nc" id="L399">		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="nc" id="L400">		final DataInputStream dataStream = getDataStream();</span>
-<span class="nc bnc" id="L401" title="All 2 branches missed.">		if (dataStream == null)</span>
-<span class="nc" id="L402">			return result;</span>
-
-<span class="nc" id="L404">		dataStream.readUTF();</span>
-		try {
-			while (true) {
-<span class="nc" id="L407">				final String filename = dataStream.readUTF();</span>
-<span class="nc bnc" id="L408" title="All 2 branches missed.">				if (filename.equals(SEPARATOR))</span>
-<span class="nc" id="L409">					return result;</span>
-
-				while (true) {
-<span class="nc" id="L412">					final String s = dataStream.readUTF();</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">					if (s.equals(SEPARATOR))</span>
-<span class="nc" id="L414">						break;</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">					if (isSpriteLine(s))</span>
-<span class="nc" id="L416">						result.add(filename);</span>
-<span class="nc" id="L417">				}</span>
-<span class="nc" id="L418">			}</span>
-		} finally {
-<span class="nc" id="L420">			dataStream.close();</span>
-		}
-	}
-
-	public List&lt;String&gt; extractAllSprites() throws IOException {
-<span class="nc" id="L425">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L426">		final DataInputStream dataStream = getDataStream();</span>
-<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (dataStream == null)</span>
-<span class="nc" id="L428">			return Collections.unmodifiableList(result);</span>
-
-<span class="nc" id="L430">		dataStream.readUTF();</span>
-<span class="nc" id="L431">		final InputStream spriteStream = getSpriteStream();</span>
-		try {
-			while (true) {
-<span class="nc" id="L434">				final String filename = dataStream.readUTF();</span>
-<span class="nc bnc" id="L435" title="All 2 branches missed.">				if (filename.equals(SEPARATOR))</span>
-<span class="nc" id="L436">					return Collections.unmodifiableList(result);</span>
-
-				while (true) {
-<span class="nc" id="L439">					final String s = dataStream.readUTF();</span>
-<span class="nc bnc" id="L440" title="All 2 branches missed.">					if (s.equals(SEPARATOR))</span>
-<span class="nc" id="L441">						break;</span>
-
-<span class="nc bnc" id="L443" title="All 2 branches missed.">					if (isSpriteLine(s)) {</span>
-<span class="nc" id="L444">						final Matcher m = sizePattern.matcher(s);</span>
-<span class="nc" id="L445">						final boolean ok = m.find();</span>
-<span class="nc bnc" id="L446" title="All 2 branches missed.">						if (ok == false)</span>
-<span class="nc" id="L447">							throw new IOException(s);</span>
-
-<span class="nc" id="L449">						final int width = Integer.parseInt(m.group(1));</span>
-<span class="nc" id="L450">						final int height = Integer.parseInt(m.group(2));</span>
-<span class="nc" id="L451">						final String sprite = readSprite(width, height, spriteStream);</span>
-<span class="nc bnc" id="L452" title="All 2 branches missed.">						if (s.contains(&quot;_LARGE&quot;) == false)</span>
-<span class="nc" id="L453">							result.add(s + &quot;\n&quot; + sprite + &quot;}&quot;);</span>
-
-					}
-<span class="nc" id="L456">				}</span>
-<span class="nc" id="L457">			}</span>
-		} finally {
-<span class="nc" id="L459">			dataStream.close();</span>
-<span class="nc" id="L460">			spriteStream.close();</span>
-		}
-	}
+//	public List&lt;String&gt; extractAllSprites() throws IOException {
+//		final List&lt;String&gt; result = new ArrayList&lt;&gt;();
+//		final DataInputStream dataStream = getDataStream();
+//		if (dataStream == null)
+//			return Collections.unmodifiableList(result);
+//
+//		dataStream.readUTF();
+//		final InputStream spriteStream = getSpriteStream();
+//		try {
+//			while (true) {
+//				final String filename = dataStream.readUTF();
+//				if (filename.equals(SEPARATOR))
+//					return Collections.unmodifiableList(result);
+//
+//				while (true) {
+//					final String s = dataStream.readUTF();
+//					if (s.equals(SEPARATOR))
+//						break;
+//
+//					if (isSpriteLine(s)) {
+//						final Matcher m = sizePattern.matcher(s);
+//						final boolean ok = m.find();
+//						if (ok == false)
+//							throw new IOException(s);
+//
+//						final int width = Integer.parseInt(m.group(1));
+//						final int height = Integer.parseInt(m.group(2));
+//						final String sprite = readSprite(width, height, spriteStream);
+//						if (s.contains(&quot;_LARGE&quot;) == false)
+//							result.add(s + &quot;\n&quot; + sprite + &quot;}&quot;);
+//
+//					}
+//				}
+//			}
+//		} finally {
+//			dataStream.close();
+//			spriteStream.close();
+//		}
+//	}
 
 	public static void addInfoVersion(List&lt;String&gt; strings, boolean details) {
 		try {
-<span class="fc bfc" id="L466" title="All 2 branches covered.">			for (String name : getAllFolderNames()) {</span>
-<span class="fc" id="L467">				final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="pc bpc" id="L468" title="1 of 2 branches missed.">				if (details) {</span>
-<span class="fc" id="L469">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
-<span class="fc" id="L470">					strings.add(&quot;Version &quot; + folder.getVersion());</span>
-<span class="fc" id="L471">					strings.add(&quot;Delivered by &quot; + folder.getSource());</span>
-<span class="fc" id="L472">					strings.add(&quot; &quot;);</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">			for (String name : getAllFolderNames()) {</span>
+<span class="fc" id="L324">				final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">				if (details) {</span>
+<span class="fc" id="L326">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
+<span class="fc" id="L327">					strings.add(&quot;Version &quot; + folder.getVersion());</span>
+<span class="fc" id="L328">					strings.add(&quot;Delivered by &quot; + folder.getSource());</span>
+<span class="fc" id="L329">					strings.add(&quot; &quot;);</span>
 				} else {
-<span class="nc" id="L474">					strings.add(&quot;* &quot; + name + &quot; (Version &quot; + folder.getVersion() + &quot;)&quot;);</span>
+<span class="nc" id="L331">					strings.add(&quot;* &quot; + name + &quot; (Version &quot; + folder.getVersion() + &quot;)&quot;);</span>
 				}
-<span class="fc" id="L476">			}</span>
-<span class="nc" id="L477">		} catch (IOException e) {</span>
-<span class="nc" id="L478">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L479">			return;</span>
-<span class="fc" id="L480">		}</span>
-<span class="fc" id="L481">	}</span>
+<span class="fc" id="L333">			}</span>
+<span class="nc" id="L334">		} catch (IOException e) {</span>
+<span class="nc" id="L335">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L336">			return;</span>
+<span class="fc" id="L337">		}</span>
+<span class="fc" id="L338">	}</span>
 
 	public String getVersion() {
-<span class="fc" id="L484">		String result = info.get(&quot;VERSION&quot;);</span>
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L486">			result = info.get(&quot;version&quot;);</span>
-<span class="fc" id="L487">		return result;</span>
+<span class="fc" id="L341">		String result = info.get(&quot;VERSION&quot;);</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L343">			result = info.get(&quot;version&quot;);</span>
+<span class="fc" id="L344">		return result;</span>
 	}
 
 	public String getSource() {
-<span class="fc" id="L491">		String result = info.get(&quot;SOURCE&quot;);</span>
-<span class="pc bpc" id="L492" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L493">			result = info.get(&quot;source&quot;);</span>
-<span class="fc" id="L494">		return result;</span>
+<span class="fc" id="L348">		String result = info.get(&quot;SOURCE&quot;);</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L350">			result = info.get(&quot;source&quot;);</span>
+<span class="fc" id="L351">		return result;</span>
 	}
 
 	public Map&lt;String, String&gt; getMetadata() {
-<span class="nc" id="L498">		return Collections.unmodifiableMap(info);</span>
+<span class="nc" id="L355">		return Collections.unmodifiableMap(info);</span>
 
 	}
 
 	public static void printStdLib() {
-<span class="nc" id="L503">		final List&lt;String&gt; print = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L504">		addInfoVersion(print, true);</span>
-<span class="nc bnc" id="L505" title="All 2 branches missed.">		for (String s : print)</span>
-<span class="nc" id="L506">			System.out.println(s.replace(&quot;&lt;b&gt;&quot;, &quot;&quot;));</span>
+<span class="nc" id="L360">		final List&lt;String&gt; print = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L361">		addInfoVersion(print, true);</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		for (String s : print)</span>
+<span class="nc" id="L363">			System.out.println(s.replace(&quot;&lt;b&gt;&quot;, &quot;&quot;));</span>
 
-<span class="nc" id="L508">	}</span>
+<span class="nc" id="L365">	}</span>
 	// ::done
+
+	public Sprite readSprite(String name) throws IOException {
+<span class="fc" id="L369">		synchronized (sprites) {</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">			if (sprites.size() == 0) {</span>
+<span class="fc" id="L371">				try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);</span>
+<span class="fc" id="L372">						DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="fc" id="L373">					final int nb = dis.readInt();</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">					for (int i = 0; i &lt; nb; i++) {</span>
+<span class="fc" id="L375">						final String spriteName = dis.readUTF();</span>
+<span class="fc" id="L376">						final int width = dis.readInt();</span>
+<span class="fc" id="L377">						final int height = dis.readInt();</span>
+
+<span class="fc" id="L379">						final int nbLines = (height + 1) / 2;</span>
+<span class="fc" id="L380">						final byte data[] = FileUtils.readExactly(dis, width * nbLines);</span>
+<span class="fc" id="L381">						final StdlibSprite sprite = new StdlibSprite(width, height, data);</span>
+<span class="fc" id="L382">						sprites.put(spriteName, sprite);</span>
+					}
+				}
+			}
+<span class="fc" id="L386">			return sprites.get(name);</span>
+		}
+	}
+
+	public Sprite readSvgSprite(String name) throws IOException {
+<span class="nc" id="L391">		synchronized (svgs) {</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">			if (svgs.size() == 0) {</span>
+<span class="nc" id="L393">				try (InputStream is = getInternalInputStream(SpmChannel.SVG);</span>
+<span class="nc" id="L394">						DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="nc" id="L395">					final int nb = dis.readInt();</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">					for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L397">						final String spriteName = dis.readUTF();</span>
+<span class="nc" id="L398">						final String svg = dis.readUTF();</span>
+<span class="nc" id="L399">						svgs.put(spriteName, new SvgNanoParser(svg));</span>
+					}
+				}
+			}
+<span class="nc" id="L403">			return svgs.get(name);</span>
+		}
+
+	}
+
+	public FutureBufferedImage readDataImagePng(int num) throws IOException {
+<span class="nc" id="L409">		synchronized (images) {</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">			if (images.size() == 0) {</span>
+<span class="nc" id="L411">				try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);</span>
+<span class="nc" id="L412">						DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="nc" id="L413">					final int nb = dis.readInt();</span>
+<span class="nc" id="L414">					readColorTable(dis);</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">					for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L416">						final int width = dis.readInt();</span>
+<span class="nc" id="L417">						final int height = dis.readInt();</span>
+<span class="nc" id="L418">						final byte data[] = FileUtils.readExactly(dis, width * height * 2);</span>
+<span class="nc" id="L419">						images.add(new FutureBufferedImage(colors, width, height, data));</span>
+					}
+				}
+			}
+<span class="nc" id="L423">			return images.get(num);</span>
+		}
+
+	}
+
+	private void readColorTable(InputStream is) throws IOException {
+<span class="nc" id="L429">		final int size = read2bytes(is);</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L431">			final int alpha = read1byte(is);</span>
+<span class="nc" id="L432">			final int red = read1byte(is);</span>
+<span class="nc" id="L433">			final int green = read1byte(is);</span>
+<span class="nc" id="L434">			final int blue = read1byte(is);</span>
+<span class="nc" id="L435">			final int rgb = (alpha &lt;&lt; 24) + (red &lt;&lt; 16) + (green &lt;&lt; 8) + blue;</span>
+<span class="nc" id="L436">			colors.add(rgb);</span>
+		}
+<span class="nc" id="L438">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

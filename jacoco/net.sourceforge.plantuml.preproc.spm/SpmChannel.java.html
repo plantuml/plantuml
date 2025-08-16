@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpmChannel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc.spm</a> &gt; <span class="el_source">SpmChannel.java</span></div><h1>SpmChannel.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc.spm;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import net.sourceforge.plantuml.brotli.BrotliInputStream;
+import net.sourceforge.plantuml.preproc.Stdlib;
+
+<span class="fc" id="L46">public enum SpmChannel {</span>
+<span class="fc" id="L47">	INFO, //</span>
+<span class="fc" id="L48">	PUML, //</span>
+<span class="fc" id="L49">	JSON, //</span>
+<span class="fc" id="L50">	SPRITE, //</span>
+<span class="fc" id="L51">	SVG, //</span>
+<span class="fc" id="L52">	IMAGE;</span>
+
+	private String getFileName() {
+<span class="fc" id="L55">		return name().toLowerCase().replace('_', '-') + &quot;.spm&quot;;</span>
+	}
+
+//	public Path getPath(Path rootFolder, String name) throws IOException {
+//		final Path dir = rootFolder.resolve(name);
+//		return getPath(dir);
+//	}
+//
+//	public Path getPath(Path dir) throws IOException {
+//		Files.createDirectories(dir);
+//		return dir.resolve(getFileName());
+//	}
+
+	public InputStream getInternalInputStream(String libname) throws IOException {
+<span class="fc" id="L69">		final String path = &quot;stdlib/&quot; + libname + &quot;/&quot; + getFileName();</span>
+<span class="fc" id="L70">		return new BrotliInputStream(inputStream(path));</span>
+	}
+
+	public static InputStream inputStream(String path) throws IOException {
+<span class="fc" id="L74">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L76">			result = new BufferedInputStream(new FileInputStream(path));</span>
+<span class="fc" id="L77">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
