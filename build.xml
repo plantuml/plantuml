@@ -94,7 +94,7 @@
         </copy>
         <copy todir="build/stdlib">
             <fileset dir="src/main/resources/stdlib">
-                <include name="**/*.repx" />
+                <include name="**/*.spm" />
             </fileset>
         </copy>
         <copy todir="build/skin">
