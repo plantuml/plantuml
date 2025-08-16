@@ -235,7 +235,7 @@ import net.sourceforge.plantuml.utils.MathUtils;
 <span class="fc" id="L235">		final Style style = skinParam.getCurrentStyleBuilder()</span>
 <span class="fc" id="L236">				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));</span>
 <span class="fc" id="L237">		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L238">		final boolean isDebug = Boolean.parseBoolean(skinParam.option().getValue(OptionKey.DEBUG));</span>
+<span class="fc" id="L238">		final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));</span>
 
 <span class="fc" id="L240">		ug = new UGraphicForSnake(ug);</span>
 <span class="fc bfc" id="L241" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>

@@ -195,7 +195,7 @@ public class FtileBox extends AbstractFtile {
 <span class="fc" id="L195">		final double widthTotal = dimTotal.getWidth();</span>
 <span class="fc" id="L196">		final double heightTotal = dimTotal.getHeight();</span>
 		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
-<span class="fc" id="L198">		final boolean isDebug = Boolean.parseBoolean(skinParam().option().getValue(OptionKey.DEBUG));</span>
+<span class="fc" id="L198">		final boolean isDebug = Boolean.parseBoolean(skinParam().options().getValue(OptionKey.DEBUG));</span>
 
 <span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (isDebug) {</span>
 <span class="nc" id="L201">			ug = ug.apply(HColors.BLUE).apply(UStroke.withThickness(2));</span>
