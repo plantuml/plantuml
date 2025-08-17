@@ -22,6 +22,49 @@ defaults:
     shell: bash
 
 jobs:
+
+  jdk8:
+    name: Build & Run with Ant (Java 8)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 8 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+
+      - name: Ensure Ant present
+        run: |
+          if ! command -v ant >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ant
+          fi
+          ant -version
+
+      - name: Build with Ant
+        run: ant -noinput
+
+      - name: Check PlantUML version
+        run: java -jar plantuml.jar -version
+        
+      - name: Upload plantuml.jar
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plantuml-jdk8-jar
+          path: plantuml.jar
+          if-no-files-found: error
+          retention-days: 30 
+                 
+      - name: Run sample diagram test (ASCII)
+        run: |
+          echo "Alice -> Bob : it works!" | java -jar plantuml.jar -pipe -ttxt
+
+
   workflow_config:
     runs-on: ubuntu-latest
     outputs:
@@ -189,7 +232,7 @@ jobs:
           enableCrossOsArchive: true
 
   deploy_javadoc_jacoco:
-    needs: [ build_artifacts, test_linux ]
+    needs: [ build_artifacts, test_linux, jdk8 ]
     if: needs.workflow_config.outputs.do_javadoc == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -225,7 +268,7 @@ jobs:
     if: |
       needs.workflow_config.outputs.do_release == 'true' ||
       needs.workflow_config.outputs.do_snapshot_release == 'true'
-    needs: [ workflow_config, build_artifacts, test_linux ]
+    needs: [ workflow_config, build_artifacts, test_linux, jdk8 ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository

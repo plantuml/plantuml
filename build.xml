@@ -39,7 +39,7 @@
         <mkdir dir="build" />
 
         <!-- Compile Java sources -->
-        <javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on">
+        <javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on" encoding="UTF-8">
             <exclude name="test/**" />
         </javac>
 
