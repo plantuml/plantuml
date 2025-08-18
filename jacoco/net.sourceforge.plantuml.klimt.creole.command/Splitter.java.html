@@ -86,9 +86,9 @@ public class Splitter {
 <span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
 
 <span class="nc bnc" id="L88" title="All 2 branches missed.">		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {</span>
-<span class="nc" id="L89">			sb.append(style.getActivationPattern());</span>
+<span class="nc" id="L89">			sb.append(style.getRegexActivationPattern());</span>
 <span class="nc" id="L90">			sb.append('|');</span>
-<span class="nc" id="L91">			sb.append(style.getDeactivationPattern());</span>
+<span class="nc" id="L91">			sb.append(style.getRegexDeactivationPattern());</span>
 <span class="nc" id="L92">			sb.append('|');</span>
 <span class="nc" id="L93">		}</span>
 <span class="nc" id="L94">		sb.append(fontPattern);</span>

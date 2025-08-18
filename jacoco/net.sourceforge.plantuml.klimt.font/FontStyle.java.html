@@ -36,140 +36,162 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
-import java.util.EnumSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 
-<span class="fc" id="L47">public enum FontStyle {</span>
+<span class="fc" id="L42">public enum FontStyle {</span>
 
-<span class="fc" id="L49">	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;</span>
-
-<span class="fc" id="L51">	private final Lazy&lt;Pattern&gt; activation = new Lazy&lt;&gt;(() -&gt; Pattern.compile(getActivationPattern()));</span>
-<span class="pc" id="L52">	private final Lazy&lt;Pattern&gt; deactivation = new Lazy&lt;&gt;(() -&gt; Pattern.compile(getDeactivationPattern()));</span>
+<span class="fc" id="L44">	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;</span>
 
 	public UFont mutateFont(UFont font) {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (this == PLAIN)</span>
-<span class="nc" id="L56">			return font.withStyle(Font.PLAIN);</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (this == PLAIN)</span>
+<span class="nc" id="L48">			return font.withStyle(Font.PLAIN);</span>
 
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (this == ITALIC)</span>
-<span class="fc" id="L59">			return font.withStyle(font.getStyle() | Font.ITALIC);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L51">			return font.withStyle(font.getStyle() | Font.ITALIC);</span>
 
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (this == BOLD)</span>
-<span class="fc" id="L62">			return font.withStyle(font.getStyle() | Font.BOLD);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L54">			return font.withStyle(font.getStyle() | Font.BOLD);</span>
 
-<span class="fc" id="L64">		return font;</span>
+<span class="fc" id="L56">		return font;</span>
 	}
 
-	public String getActivationPattern() {
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (this == PLAIN)</span>
-<span class="fc" id="L69">			return &quot;\\&lt;[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
+	public String getRegexActivationPattern() {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (this == PLAIN)</span>
+<span class="nc" id="L61">			return &quot;\\&lt;[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (this == ITALIC)</span>
-<span class="fc" id="L72">			return &quot;\\&lt;[iI]\\&gt;&quot;;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (this == ITALIC)</span>
+<span class="nc" id="L64">			return &quot;\\&lt;[iI]\\&gt;&quot;;</span>
 
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (this == BOLD)</span>
-<span class="fc" id="L75">			return &quot;\\&lt;[bB]\\&gt;&quot;;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (this == BOLD)</span>
+<span class="nc" id="L67">			return &quot;\\&lt;[bB]\\&gt;&quot;;</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
-<span class="fc" id="L78">			return &quot;\\&lt;[uU](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (this == UNDERLINE)</span>
+<span class="nc" id="L70">			return &quot;\\&lt;[uU](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
 
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (this == WAVE)</span>
-<span class="fc" id="L81">			return &quot;\\&lt;[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (this == WAVE)</span>
+<span class="nc" id="L73">			return &quot;\\&lt;[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
-			// return &quot;\\&lt;[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;
-<span class="fc" id="L85">			return &quot;\\&lt;[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\&gt;&quot;;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (this == BACKCOLOR)</span>
+<span class="nc" id="L76">			return &quot;\\&lt;[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\&gt;&quot;;</span>
 
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
-<span class="fc" id="L88">			return &quot;\\&lt;(?:s|S|strike|STRIKE|del|DEL)(?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (this == STRIKE)</span>
+<span class="nc" id="L79">			return &quot;&lt;【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
 
-<span class="nc" id="L90">		return null;</span>
+<span class="nc" id="L81">		return null;</span>
+	}
+
+	public String getUbrexActivationPattern() {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (this == PLAIN)</span>
+<span class="fc" id="L86">			return &quot;&lt;「pP」「lL」「aA」「iI」「nN」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L89">			return &quot;&lt;「iI」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L92">			return &quot;&lt;「bB」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L95">			return &quot;&lt;「uU」〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L98">			return &quot;&lt;「wW」〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L101">			return &quot;&lt;「bB」「aA」「cC」「kK」〇?〘:〶$XC=〘&quot; + //</span>
+					&quot;【#〇{6}「0〜9a〜fA〜F」┇〇+〴w 】 &quot; + //
+					&quot;〇?〘「-\\|/」【〇{6}「0〜9a〜fA〜F」┇〇+〴w】 〙&quot; + //
+					&quot;〙 〙&gt;&quot;;
+
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L107">			return &quot;&lt;【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+
+<span class="nc" id="L109">		return null;</span>
+	}
+
+	public String getUbrexDeactivationPattern() {
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (this == PLAIN)</span>
+<span class="fc" id="L114">			return &quot;&lt;/「pP」「lL」「aA」「iI」「nN」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L117">			return &quot;&lt;/「iI」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L120">			return &quot;&lt;/「bB」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L123">			return &quot;&lt;/「uU」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L126">			return &quot;&lt;/「wW」&gt;&quot;;</span>
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L129">			return &quot;&lt;/「bB」「aA」「cC」「kK」&gt;&quot;;</span>
+
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L132">			return &quot;&lt;/【strike┇STRIKE┇s┇S┇del┇DEL】&gt;&quot;;</span>
+
+<span class="nc" id="L134">		return null;</span>
+	}
+
+	public String getRegexDeactivationPattern() {
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (this == PLAIN)</span>
+<span class="nc" id="L139">			return &quot;\\&lt;/[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (this == ITALIC)</span>
+<span class="nc" id="L142">			return &quot;\\&lt;/[iI]\\&gt;&quot;;</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (this == BOLD)</span>
+<span class="nc" id="L145">			return &quot;\\&lt;/[bB]\\&gt;&quot;;</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (this == UNDERLINE)</span>
+<span class="nc" id="L148">			return &quot;\\&lt;/[uU]\\&gt;&quot;;</span>
+
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (this == WAVE)</span>
+<span class="nc" id="L151">			return &quot;\\&lt;/[wW]\\&gt;&quot;;</span>
+
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (this == BACKCOLOR)</span>
+<span class="nc" id="L154">			return &quot;\\&lt;/[bB][aA][cC][kK]\\&gt;&quot;;</span>
+
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (this == STRIKE)</span>
+<span class="nc" id="L157">			return &quot;\\&lt;/(?:s|S|strike|STRIKE|del|DEL)\\&gt;&quot;;</span>
+
+<span class="nc" id="L159">		return null;</span>
 	}
 
 	public boolean canHaveExtendedColor() {
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
-<span class="fc" id="L95">			return true;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L164">			return true;</span>
 
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (this == WAVE)</span>
-<span class="fc" id="L98">			return true;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L167">			return true;</span>
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
-<span class="fc" id="L101">			return true;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L170">			return true;</span>
 
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (this == STRIKE)</span>
-<span class="fc" id="L104">			return true;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (this == STRIKE)</span>
+<span class="fc" id="L173">			return true;</span>
 
-<span class="fc" id="L106">		return false;</span>
+<span class="fc" id="L175">		return false;</span>
 	}
 
-	public String getCreoleSyntax() {
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (this == ITALIC)</span>
-<span class="fc" id="L111">			return &quot;//&quot;;</span>
+	public String getUbrexCreoleSyntax() {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L180">			return &quot;//&quot;;</span>
 
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (this == BOLD)</span>
-<span class="fc" id="L114">			return &quot;\\*\\*&quot;;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L183">			return &quot;**&quot;;</span>
 
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
-<span class="fc" id="L117">			return &quot;__&quot;;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L186">			return &quot;__&quot;;</span>
 
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (this == WAVE)</span>
-<span class="fc" id="L120">			return &quot;~~&quot;;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L189">			return &quot;~~&quot;;</span>
 
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
-<span class="fc" id="L123">			return &quot;--&quot;;</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L192">			return &quot;--&quot;;</span>
 
-<span class="nc" id="L125">		throw new UnsupportedOperationException();</span>
-	}
-
-	// ::comment when __HAXE__
-	public HColor getExtendedColor(String s) {
-<span class="fc" id="L130">		final Matcher m = activation.get().matcher(s);</span>
-<span class="pc bpc" id="L131" title="2 of 4 branches missed.">		if (m.find() == false || m.groupCount() != 1)</span>
-<span class="nc" id="L132">			return null;</span>
-
-<span class="fc" id="L134">		final String color = m.group(1);</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (color == null)</span>
-<span class="fc" id="L136">			return null;</span>
-
-<span class="fc" id="L138">		return HColorSet.instance().getColorOrWhite(color);</span>
-	}
-	// ::done
-
-	public String getDeactivationPattern() {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (this == PLAIN)</span>
-<span class="fc" id="L144">			return &quot;\\&lt;/[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
-
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (this == ITALIC)</span>
-<span class="fc" id="L147">			return &quot;\\&lt;/[iI]\\&gt;&quot;;</span>
-
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (this == BOLD)</span>
-<span class="fc" id="L150">			return &quot;\\&lt;/[bB]\\&gt;&quot;;</span>
-
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
-<span class="fc" id="L153">			return &quot;\\&lt;/[uU]\\&gt;&quot;;</span>
-
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (this == WAVE)</span>
-<span class="fc" id="L156">			return &quot;\\&lt;/[wW]\\&gt;&quot;;</span>
-
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
-<span class="fc" id="L159">			return &quot;\\&lt;/[bB][aA][cC][kK]\\&gt;&quot;;</span>
-
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
-<span class="fc" id="L162">			return &quot;\\&lt;/(?:s|S|strike|STRIKE|del|DEL)\\&gt;&quot;;</span>
-
-<span class="nc" id="L164">		return null;</span>
-	}
-
-	public static FontStyle getStyle(String line) {
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		for (FontStyle style : EnumSet.allOf(FontStyle.class))</span>
-<span class="nc bnc" id="L169" title="All 4 branches missed.">			if (style.activation.get().matcher(line).matches() || style.deactivation.get().matcher(line).matches())</span>
-<span class="nc" id="L170">				return style;</span>
-
-<span class="nc" id="L172">		throw new IllegalArgumentException(line);</span>
+<span class="nc" id="L194">		throw new UnsupportedOperationException();</span>
 	}
 
 }

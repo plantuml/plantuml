@@ -35,50 +35,60 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontPosition;
-import net.sourceforge.plantuml.regex.Matcher2;
 
-public class CommandCreoleExposantChange extends CommandCreoleCache implements Command {
+public class CommandCreoleExposantChange implements Command {
 
 	private final FontPosition position;
+	private final UnicodeBracketedExpression ubrex;
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L49">		return &quot;&lt;&quot;;</span>
+<span class="fc" id="L54">		return &quot;&lt;&quot;;</span>
 	}
 
-	private CommandCreoleExposantChange(String p, FontPosition position) {
-<span class="fc" id="L53">		super(p);</span>
-<span class="fc" id="L54">		this.position = position;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L57">	private CommandCreoleExposantChange(String ubrexString, FontPosition position) {</span>
+<span class="fc" id="L58">		this.position = position;</span>
+<span class="fc" id="L59">		this.ubrex = UnicodeBracketedExpression.build(ubrexString);</span>
+<span class="fc" id="L60">	}</span>
 
 	public static Command create(FontPosition position) {
-<span class="fc" id="L58">		return new CommandCreoleExposantChange(</span>
-<span class="fc" id="L59">				&quot;^(&quot; + &quot;\\&lt;&quot; + position.getHtmlTag() + &quot;\\&gt;&quot; + &quot;(.*?)\\&lt;/&quot; + position.getHtmlTag() + &quot;\\&gt;)&quot;, position);</span>
+<span class="fc" id="L63">		final String htmlTag = position.getHtmlTag();</span>
+<span class="fc" id="L64">		final String ubrexString = &quot;&lt;&quot; + htmlTag + &quot;&gt;〶$V=〄&gt;〘&lt;/&quot; + htmlTag + &quot;&gt;〙&quot;;</span>
+<span class="fc" id="L65">		return new CommandCreoleExposantChange(ubrexString, position);</span>
 	}
 
 	public int matchingSize(String line) {
-<span class="fc" id="L63">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
-<span class="fc" id="L65">			return 0;</span>
-		}
-<span class="nc" id="L67">		return m.group(2).length();</span>
+<span class="fc" id="L69">		final UMatcher matcher = ubrex.match(line);</span>
+<span class="fc" id="L70">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (value.size() == 0)</span>
+<span class="fc" id="L72">			return 0;</span>
+<span class="nc" id="L73">		return value.get(0).length();</span>
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-<span class="nc" id="L71">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L73">			throw new IllegalStateException();</span>
-		}
-<span class="nc" id="L75">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
-<span class="nc" id="L76">		final FontConfiguration fc2 = fc1.changeFontPosition(position);</span>
 
-<span class="nc" id="L78">		stripe.setActualFontConfiguration(fc2);</span>
-<span class="nc" id="L79">		stripe.analyzeAndAdd(m.group(2));</span>
-<span class="nc" id="L80">		stripe.setActualFontConfiguration(fc1);</span>
-<span class="nc" id="L81">		return line.substring(m.group(1).length());</span>
+<span class="nc" id="L78">		final UMatcher matcher = ubrex.match(line);</span>
+<span class="nc" id="L79">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="nc" id="L80">		final String accepted = matcher.getAcceptedMatch();</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (value.size() == 0)</span>
+<span class="nc" id="L83">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L85">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
+<span class="nc" id="L86">		final FontConfiguration fc2 = fc1.changeFontPosition(position);</span>
+
+<span class="nc" id="L88">		stripe.setActualFontConfiguration(fc2);</span>
+<span class="nc" id="L89">		stripe.analyzeAndAdd(value.get(0));</span>
+<span class="nc" id="L90">		stripe.setActualFontConfiguration(fc1);</span>
+<span class="nc" id="L91">		return line.substring(accepted.length());</span>
 	}
 
 }

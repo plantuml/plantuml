@@ -51,8 +51,8 @@ public class ChallengeOneOrMoreUpToOldVersion implements Challenge {
 <span class="fc" id="L51">		int currentPos = position;</span>
 		while (true) {
 <span class="fc" id="L53">			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">			if (shallWePass.getFullCaptureLength() &lt; 0)</span>
-<span class="nc" id="L55">				return new ChallengeResult(NO_MATCH);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			if (shallWePass.getFullCaptureLength() &lt; 0)</span>
+<span class="fc" id="L55">				return new ChallengeResult(NO_MATCH);</span>
 <span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (shallWePass.getFullCaptureLength() == 0)</span>
 <span class="nc" id="L57">				throw new IllegalStateException(&quot;infinite loop&quot;);</span>
 <span class="fc" id="L58">			capture = capture.merge(shallWePass.getCapture());</span>

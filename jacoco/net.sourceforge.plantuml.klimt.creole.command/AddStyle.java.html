@@ -49,16 +49,12 @@ public class AddStyle {
 <span class="fc" id="L49">		this.extendedColor = extendedColor;</span>
 <span class="fc" id="L50">	}</span>
 
-	public static AddStyle fromString(String s) {
-<span class="nc" id="L53">		return new AddStyle(FontStyle.getStyle(s), FontStyle.getStyle(s).getExtendedColor(s));</span>
-	}
-
 	public FontConfiguration apply(FontConfiguration initial) {
-<span class="fc" id="L57">		initial = initial.add(style);</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (extendedColor != null)</span>
-<span class="fc" id="L59">			initial = initial.changeExtendedColor(extendedColor);</span>
+<span class="fc" id="L53">		initial = initial.add(style);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (extendedColor != null)</span>
+<span class="fc" id="L55">			initial = initial.changeExtendedColor(extendedColor);</span>
 
-<span class="fc" id="L61">		return initial;</span>
+<span class="fc" id="L57">		return initial;</span>
 	}
 
 }
