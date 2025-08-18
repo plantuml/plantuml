@@ -35,13 +35,18 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
-import net.sourceforge.plantuml.regex.Matcher2;
 
-public class CommandCreoleStyle extends CommandCreoleCache implements Command {
+public class CommandCreoleStyle implements Command {
 
 	@Override
 	public String startingChars() {
@@ -50,56 +55,64 @@ public class CommandCreoleStyle extends CommandCreoleCache implements Command {
 
 	private final FontStyle style;
 	private final boolean tryExtendedColor;
+	private final UnicodeBracketedExpression ubrex;
 
 	public static Command createCreole(FontStyle style) {
-		return new CommandCreoleStyle("^(" + style.getCreoleSyntax() + "(.+?)" + style.getCreoleSyntax() + ")", style,
-				false);
+		final String ubrexString = style.getUbrexCreoleSyntax() + "〶$V=〄+〴.->〘" + style.getUbrexCreoleSyntax() + "〙";
+		return new CommandCreoleStyle(ubrexString, style, false);
 	}
 
 	public static Command createLegacy(FontStyle style) {
-		return new CommandCreoleStyle(
-				"^((" + style.getActivationPattern() + ")(.+?)" + style.getDeactivationPattern() + ")", style,
-				style.canHaveExtendedColor());
+		final String ubrexString = style.getUbrexActivationPattern() + "〶$V=〄>〘" + style.getUbrexDeactivationPattern()
+				+ "〙";
+		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());
 	}
 
 	public static Command createLegacyEol(FontStyle style) {
-		return new CommandCreoleStyle("^((" + style.getActivationPattern() + ")(.+))$", style,
-				style.canHaveExtendedColor());
+		final String ubrexString = style.getUbrexActivationPattern() + "〶$V=〇+〴.";
+		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());
 	}
 
-	private CommandCreoleStyle(String p, FontStyle style, boolean tryExtendedColor) {
-		super(p);
+	private CommandCreoleStyle(String ubrexString, FontStyle style, boolean tryExtendedColor) {
+		this.ubrex = UnicodeBracketedExpression.build(ubrexString);
 		this.style = style;
 		this.tryExtendedColor = tryExtendedColor;
 	}
 
-	private HColor getExtendedColor(Matcher2 m) {
+	private HColor getExtendedColor(UMatcher matcher) {
 		if (tryExtendedColor) {
-			return style.getExtendedColor(m.group(2));
+			final List<String> extendedColor = matcher.getCapture("XC");
+			if (extendedColor.size() > 0)
+				return HColorSet.instance().getColorOrWhite(extendedColor.get(0));
 		}
+
 		return null;
 	}
 
 	public String executeAndGetRemaining(final String line, StripeSimple stripe) {
-		final Matcher2 m = mypattern.matcher(line);
-		if (m.find() == false) {
+		final UMatcher matcher = ubrex.match(line);
+
+		final List<String> value = matcher.getCapture("V");
+		final String accepted = matcher.getAcceptedMatch();
+		if (value.size() == 0)
 			throw new IllegalStateException();
-		}
+
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
-		final FontConfiguration fc2 = new AddStyle(style, getExtendedColor(m)).apply(fc1);
+		final FontConfiguration fc2 = new AddStyle(style, getExtendedColor(matcher)).apply(fc1);
 		stripe.setActualFontConfiguration(fc2);
-		final int groupCount = m.groupCount();
-		stripe.analyzeAndAdd(m.group(groupCount));
+
+		stripe.analyzeAndAdd(value.get(0));
 		stripe.setActualFontConfiguration(fc1);
-		return line.substring(m.group(1).length());
+		return line.substring(accepted.length());
 	}
 
 	public int matchingSize(String line) {
-		final Matcher2 m = mypattern.matcher(line);
-		if (m.find() == false) {
+		final UMatcher matcher = ubrex.match(line);
+		final List<String> value = matcher.getCapture("V");
+		if (value.size() == 0)
 			return 0;
-		}
-		return m.group(1).length();
+
+		return value.get(0).length();
 	}
 
 }

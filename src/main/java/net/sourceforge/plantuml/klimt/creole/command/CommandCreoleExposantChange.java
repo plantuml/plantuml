@@ -35,50 +35,60 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontPosition;
-import net.sourceforge.plantuml.regex.Matcher2;
 
-public class CommandCreoleExposantChange extends CommandCreoleCache implements Command {
+public class CommandCreoleExposantChange implements Command {
 
 	private final FontPosition position;
+	private final UnicodeBracketedExpression ubrex;
 
 	@Override
 	public String startingChars() {
 		return "<";
 	}
 
-	private CommandCreoleExposantChange(String p, FontPosition position) {
-		super(p);
+	private CommandCreoleExposantChange(String ubrexString, FontPosition position) {
 		this.position = position;
+		this.ubrex = UnicodeBracketedExpression.build(ubrexString);
 	}
 
 	public static Command create(FontPosition position) {
-		return new CommandCreoleExposantChange(
-				"^(" + "\\<" + position.getHtmlTag() + "\\>" + "(.*?)\\</" + position.getHtmlTag() + "\\>)", position);
+		final String htmlTag = position.getHtmlTag();
+		final String ubrexString = "<" + htmlTag + ">〶$V=〄>〘</" + htmlTag + ">〙";
+		return new CommandCreoleExposantChange(ubrexString, position);
 	}
 
 	public int matchingSize(String line) {
-		final Matcher2 m = mypattern.matcher(line);
-		if (m.find() == false) {
+		final UMatcher matcher = ubrex.match(line);
+		final List<String> value = matcher.getCapture("V");
+		if (value.size() == 0)
 			return 0;
-		}
-		return m.group(2).length();
+		return value.get(0).length();
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = mypattern.matcher(line);
-		if (m.find() == false) {
+
+		final UMatcher matcher = ubrex.match(line);
+		final List<String> value = matcher.getCapture("V");
+		final String accepted = matcher.getAcceptedMatch();
+
+		if (value.size() == 0)
 			throw new IllegalStateException();
-		}
+
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
 		final FontConfiguration fc2 = fc1.changeFontPosition(position);
 
 		stripe.setActualFontConfiguration(fc2);
-		stripe.analyzeAndAdd(m.group(2));
+		stripe.analyzeAndAdd(value.get(0));
 		stripe.setActualFontConfiguration(fc1);
-		return line.substring(m.group(1).length());
+		return line.substring(accepted.length());
 	}
 
 }

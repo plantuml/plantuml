@@ -36,20 +36,12 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
-import java.util.EnumSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 
 public enum FontStyle {
 
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
-
-	private final Lazy<Pattern> activation = new Lazy<>(() -> Pattern.compile(getActivationPattern()));
-	private final Lazy<Pattern> deactivation = new Lazy<>(() -> Pattern.compile(getDeactivationPattern()));
 
 	public UFont mutateFont(UFont font) {
 		if (this == PLAIN)
@@ -64,7 +56,7 @@ public enum FontStyle {
 		return font;
 	}
 
-	public String getActivationPattern() {
+	public String getRegexActivationPattern() {
 		if (this == PLAIN)
 			return "\\<[pP][lL][aA][iI][nN]\\>";
 
@@ -81,65 +73,68 @@ public enum FontStyle {
 			return "\\<[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 
 		if (this == BACKCOLOR)
-			// return "\\<[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 			return "\\<[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\>";
 
 		if (this == STRIKE)
-			return "\\<(?:s|S|strike|STRIKE|del|DEL)(?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
+			return "<【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙>";
 
 		return null;
 	}
 
-	public boolean canHaveExtendedColor() {
-		if (this == UNDERLINE)
-			return true;
+	public String getUbrexActivationPattern() {
+		if (this == PLAIN)
+			return "<「pP」「lL」「aA」「iI」「nN」>";
 
-		if (this == WAVE)
-			return true;
-
-		if (this == BACKCOLOR)
-			return true;
-
-		if (this == STRIKE)
-			return true;
-
-		return false;
-	}
-
-	public String getCreoleSyntax() {
 		if (this == ITALIC)
-			return "//";
+			return "<「iI」>";
 
 		if (this == BOLD)
-			return "\\*\\*";
+			return "<「bB」>";
 
 		if (this == UNDERLINE)
-			return "__";
+			return "<「uU」〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙>";
 
 		if (this == WAVE)
-			return "~~";
+			return "<「wW」〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙>";
+
+		if (this == BACKCOLOR)
+			return "<「bB」「aA」「cC」「kK」〇?〘:〶$XC=〘" + //
+					"【#〇{6}「0〜9a〜fA〜F」┇〇+〴w 】 " + //
+					"〇?〘「-\\|/」【〇{6}「0〜9a〜fA〜F」┇〇+〴w】 〙" + //
+					"〙 〙>";
 
 		if (this == STRIKE)
-			return "--";
+			return "<【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙>";
 
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
-	// ::comment when __HAXE__
-	public HColor getExtendedColor(String s) {
-		final Matcher m = activation.get().matcher(s);
-		if (m.find() == false || m.groupCount() != 1)
-			return null;
+	public String getUbrexDeactivationPattern() {
+		if (this == PLAIN)
+			return "</「pP」「lL」「aA」「iI」「nN」>";
 
-		final String color = m.group(1);
-		if (color == null)
-			return null;
+		if (this == ITALIC)
+			return "</「iI」>";
 
-		return HColorSet.instance().getColorOrWhite(color);
+		if (this == BOLD)
+			return "</「bB」>";
+
+		if (this == UNDERLINE)
+			return "</「uU」>";
+
+		if (this == WAVE)
+			return "</「wW」>";
+
+		if (this == BACKCOLOR)
+			return "</「bB」「aA」「cC」「kK」>";
+
+		if (this == STRIKE)
+			return "</【strike┇STRIKE┇s┇S┇del┇DEL】>";
+
+		return null;
 	}
-	// ::done
 
-	public String getDeactivationPattern() {
+	public String getRegexDeactivationPattern() {
 		if (this == PLAIN)
 			return "\\</[pP][lL][aA][iI][nN]\\>";
 
@@ -164,12 +159,39 @@ public enum FontStyle {
 		return null;
 	}
 
-	public static FontStyle getStyle(String line) {
-		for (FontStyle style : EnumSet.allOf(FontStyle.class))
-			if (style.activation.get().matcher(line).matches() || style.deactivation.get().matcher(line).matches())
-				return style;
+	public boolean canHaveExtendedColor() {
+		if (this == UNDERLINE)
+			return true;
 
-		throw new IllegalArgumentException(line);
+		if (this == WAVE)
+			return true;
+
+		if (this == BACKCOLOR)
+			return true;
+
+		if (this == STRIKE)
+			return true;
+
+		return false;
+	}
+
+	public String getUbrexCreoleSyntax() {
+		if (this == ITALIC)
+			return "//";
+
+		if (this == BOLD)
+			return "**";
+
+		if (this == UNDERLINE)
+			return "__";
+
+		if (this == WAVE)
+			return "~~";
+
+		if (this == STRIKE)
+			return "--";
+
+		throw new UnsupportedOperationException();
 	}
 
 }

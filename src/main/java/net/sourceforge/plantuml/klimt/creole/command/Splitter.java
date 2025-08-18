@@ -86,9 +86,9 @@ public class Splitter {
 		final StringBuilder sb = new StringBuilder();
 
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
-			sb.append(style.getActivationPattern());
+			sb.append(style.getRegexActivationPattern());
 			sb.append('|');
-			sb.append(style.getDeactivationPattern());
+			sb.append(style.getRegexDeactivationPattern());
 			sb.append('|');
 		}
 		sb.append(fontPattern);

@@ -49,10 +49,6 @@ public class AddStyle {
 		this.extendedColor = extendedColor;
 	}
 
-	public static AddStyle fromString(String s) {
-		return new AddStyle(FontStyle.getStyle(s), FontStyle.getStyle(s).getExtendedColor(s));
-	}
-
 	public FontConfiguration apply(FontConfiguration initial) {
 		initial = initial.add(style);
 		if (extendedColor != null)
