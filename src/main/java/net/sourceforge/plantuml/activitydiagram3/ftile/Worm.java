@@ -155,14 +155,6 @@ public class Worm implements Iterable<XPoint2D> {
 		ug.draw(new ULine(x2 - x1, y2 - y1));
 	}
 
-	public Worm move(double dx, double dy) {
-		final Worm result = new Worm(style, arrows);
-		for (XPoint2D pt : points)
-			result.addPoint(pt.getX() + dx, pt.getY() + dy);
-
-		return result;
-	}
-
 	public Worm moveFirstPoint(UTranslate move) {
 		final double dx = move.getDx();
 		final double dy = move.getDy();
@@ -248,10 +240,6 @@ public class Worm implements Iterable<XPoint2D> {
 
 	public void addPoint(XPoint2D pt) {
 		this.addPoint(pt.getX(), pt.getY());
-	}
-
-	public Worm translate(UTranslate translate) {
-		return move(translate.getDx(), translate.getDy());
 	}
 
 	SnakeDirection getDirection() {
