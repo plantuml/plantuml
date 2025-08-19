@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -108,10 +110,15 @@ public class SvgOption {
 	}
 
 	public SvgOption withTitle(Display titleDisplay) {
-		if (titleDisplay.size() > 0)
-			title = titleDisplay.get(0).toString();
+		if (titleDisplay.size() > 0) {
+			title = StreamSupport.stream(titleDisplay.spliterator(), false) //
+	            .map(CharSequence::toString) //
+	            .collect(Collectors.joining("\n"));
+		}
 		return this;
 	}
+
+
 
 	public SvgOption withInteractive(String interactiveBaseFilename) {
 		this.interactiveBaseFilename = interactiveBaseFilename;
