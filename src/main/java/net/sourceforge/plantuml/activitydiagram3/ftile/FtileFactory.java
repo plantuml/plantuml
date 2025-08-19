@@ -69,7 +69,7 @@ public interface FtileFactory {
 
 	public Ftile spot(Swimlane swimlane, String spot, HColor color);
 
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder);
 
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
 			VerticalAlignment verticalAlignment);

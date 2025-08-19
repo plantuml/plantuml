@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -49,7 +48,6 @@ import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.Style;
 
 public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 

@@ -114,22 +114,41 @@ public class ValueImpl implements Value {
 	}
 
 	public int asInt(boolean minusOneIfError) {
-		String s = value.getValue1();
-		s = s.replaceAll("[^0-9]", "");
+		final String s = extractDigits(value.getValue1());
 		if (s.length() == 0)
 			return minusOneIfError ? -1 : 0;
 		return Integer.parseInt(s);
 	}
 
+	private String extractDigits(String s) {
+		final StringBuilder sb = new StringBuilder(s.length());
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c >= '0' && c <= '9')
+				sb.append(c);
+
+		}
+		return sb.toString();
+	}
+
+	private String extractDigitsAndDot(String s) {
+		final StringBuilder sb = new StringBuilder(s.length());
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c >= '0' && c <= '9' || c == '.')
+				sb.append(c);
+
+		}
+		return sb.toString();
+	}
+
 	public double asDouble() {
-		String s = value.getValue1();
-		s = s.replaceAll("[^.0-9]", "");
+		final String s = extractDigitsAndDot(value.getValue1());
 		return Double.parseDouble(s);
 	}
 
 	public double asDoubleDefaultTo(double defaultValue) {
-		String s = value.getValue1();
-		s = s.replaceAll("[^.0-9]", "");
+		final String s = extractDigitsAndDot(value.getValue1());
 		if (s.length() > 0)
 			try {
 				return Double.parseDouble(s);

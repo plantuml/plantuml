@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -73,6 +72,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class FtileBox extends AbstractFtile {
@@ -136,13 +136,15 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	public static FtileBox create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
-			Stereotype stereotype) {
+			Stereotype stereotype, StyleBuilder styleBuilder) {
 		if (stereotype == null && boxStyle != null)
 			stereotype = boxStyle.getStereotype();
 
-		final Style style = getStyleSignature().withTOBECHANGED(stereotype)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		if (styleBuilder == null)
+			styleBuilder = skinParam.getCurrentStyleBuilder();
+
+		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
+		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(styleBuilder);
 		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
 
@@ -194,7 +196,8 @@ public class FtileBox extends AbstractFtile {
 		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
+		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal,
+		// shadowing, roundCorner);
 		final boolean isDebug = Boolean.parseBoolean(skinParam().options().getValue(OptionKey.DEBUG));
 
 		if (isDebug) {

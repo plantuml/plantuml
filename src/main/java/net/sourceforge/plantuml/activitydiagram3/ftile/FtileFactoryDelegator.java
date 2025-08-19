@@ -142,8 +142,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	@Override
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype) {
-		return factory.activity(label, swimlane, style, colors, stereotype);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder) {
+		return factory.activity(label, swimlane, style, colors, stereotype, styleBuilder);
 	}
 
 	@Override

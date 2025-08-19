@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
@@ -65,6 +66,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final BoxStyle boxStyle;
 	private final Url url;
 	private final Stereotype stereotype;
+	private final StyleBuilder styleBuilder;
 
 	@Override
 	public boolean containsBreak() {
@@ -72,7 +74,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	}
 
 	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle boxStyle,
-			Url url, Colors colors, Stereotype stereotype) {
+			Url url, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder) {
 		super(swimlane);
 		this.stereotype = stereotype;
 		this.url = url;
@@ -80,6 +82,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		this.label = label;
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.colors = Objects.requireNonNull(colors);
+		this.styleBuilder = styleBuilder;
 	}
 
 	// ::comment when __CORE__
@@ -103,7 +106,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype);
+		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype, styleBuilder);
 		if (url != null) {
 			result = factory.addUrl(result, url);
 		}

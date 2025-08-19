@@ -177,7 +177,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (Display.isNull(backward))
 			return null;
 
-		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotypeBack);
+		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotypeBack, null);
 		if (backwardNotes.size() > 0)
 			result = factory.addNote(result, swimlaneBackward, backwardNotes, VerticalAlignment.CENTER);
 

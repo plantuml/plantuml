@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.Style;
 
 public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 

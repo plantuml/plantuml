@@ -133,8 +133,9 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors, Stereotype stereotype) {
-		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors, Stereotype stereotype,
+			StyleBuilder styleBuilder) {
+		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype, styleBuilder);
 	}
 
 	@Override

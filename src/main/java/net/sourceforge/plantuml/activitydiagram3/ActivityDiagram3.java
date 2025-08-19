@@ -113,7 +113,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 			Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),
-				swimlanes.getCurrentSwimlane(), boxStyle, url, colors, stereotype);
+				swimlanes.getCurrentSwimlane(), boxStyle, url, colors, stereotype, getCurrentStyleBuilder());
 		final CommandExecutionResult added = current().add(ins);
 		if (added.isOk() == false)
 			return added;

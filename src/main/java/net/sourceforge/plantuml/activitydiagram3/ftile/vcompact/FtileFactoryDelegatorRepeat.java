@@ -153,6 +153,6 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		if (Display.isNull(startLabel))
 			return null;
 
-		return this.activity(startLabel, swimlane, boxStyleIn, colors, stereotype);
+		return this.activity(startLabel, swimlane, boxStyleIn, colors, stereotype, null);
 	}
 }
