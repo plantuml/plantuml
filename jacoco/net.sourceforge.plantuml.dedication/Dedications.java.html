@@ -61,40 +61,45 @@ public class Dedications {
 <span class="fc" id="L61">			all.add(new DedicationSimple(load(&quot;baraye&quot;), &quot;baraye&quot;));</span>
 <span class="fc" id="L62">			all.add(new DedicationSimple(load(&quot;nothing&quot;), &quot;Nothing of value is ever easy&quot;));</span>
 <span class="fc" id="L63">			all.add(new DedicationSimple(load(&quot;friends&quot;), &quot;Have good friends and be a good friend to other people&quot;));</span>
-<span class="fc" id="L64">			all.add(new DedicationSimple(load(&quot;fatherson&quot;), &quot;By the time a man realizes that maybe his father was right, he usually has a son who thinks he is wrong&quot;));</span>
-<span class="fc" id="L65">			all.add(secret(5, &quot;835ff5d643b58cd35a20db6480071d05751aa6a0e01da78662ceafd0161f3f5e&quot;, new BigInteger(</span>
+<span class="fc" id="L64">			all.add(new DedicationSimple(load(&quot;fatherson&quot;),</span>
+					&quot;By the time a man realizes that maybe his father was right, he usually has a son who thinks he is wrong&quot;));
+<span class="fc" id="L66">			all.add(secret(5, &quot;835ff5d643b58cd35a20db6480071d05751aa6a0e01da78662ceafd0161f3f5e&quot;, new BigInteger(</span>
 					&quot;1182423723677118831606503500858825217076578422970565964857326298418401529955036896808663335300684244453386039908536275400945824932191521017102701344437753036730900076162922741167523337650578479960119614237031234925702200473053235777&quot;)));
-<span class="fc" id="L67">			all.add(secret(3, &quot;514816d583044efbd336882227deb822194ff63e3bdc3cf707a01f17770d5a6a&quot;, new BigInteger(</span>
+<span class="fc" id="L68">			all.add(secret(3, &quot;514816d583044efbd336882227deb822194ff63e3bdc3cf707a01f17770d5a6a&quot;, new BigInteger(</span>
 					&quot;538955952645999836068094511687012232127213955837942782605199622268460518023083462090291844640318324475656060087513198129259364840841077651829017347845508167869708224054456044836844382437974410757740941102771969965334031780041648873&quot;)));
-<span class="fc" id="L69">			all.add(secret(1, &quot;ae8a7cf3997ccd6418866fc59e596502e1bd1c0265bba2fc380ad7f51c76518f&quot;, new BigInteger(</span>
+<span class="fc" id="L70">			all.add(secret(1, &quot;ae8a7cf3997ccd6418866fc59e596502e1bd1c0265bba2fc380ad7f51c76518f&quot;, new BigInteger(</span>
 					&quot;987988542836850639056829173787067531749177506648884857100630852970876999799588072360773169026225182488073794585127241896588994816566037813451743416913613428321215803586563629080034406083114565732322220091545330060636171674602040157&quot;)));
-<span class="nc" id="L71">		} catch (Throwable t) {</span>
-<span class="nc" id="L72">			Logme.error(t);</span>
-<span class="fc" id="L73">		}</span>
-<span class="fc" id="L74">	}</span>
+<span class="nc" id="L72">		} catch (Throwable t) {</span>
+<span class="nc" id="L73">			Logme.error(t);</span>
+<span class="fc" id="L74">		}</span>
+<span class="fc" id="L75">	}</span>
 
 	private static DedicationCrypted secret(int tiny, String sig, BigInteger pq) throws IOException {
-<span class="fc" id="L77">		return new DedicationCrypted(load(sig), tiny, sig, pq);</span>
+<span class="fc" id="L78">		return new DedicationCrypted(load(sig), tiny, sig, pq);</span>
 	}
 
 	private static byte[] load(String name) throws IOException {
-<span class="fc" id="L81">		final InputStream tmp = PSystemDedication.class.getResourceAsStream(name + &quot;.png&quot;);</span>
-<span class="fc" id="L82">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L83">		FileUtils.copyInternal(tmp, baos, true);</span>
-<span class="fc" id="L84">		return baos.toByteArray();</span>
+<span class="fc" id="L82">		final InputStream tmp = PSystemDedication.class.getResourceAsStream(name + &quot;.png&quot;);</span>
+<span class="fc" id="L83">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L84">		FileUtils.copyInternal(tmp, baos, true);</span>
+<span class="fc" id="L85">		return baos.toByteArray();</span>
 	}
 
 	private Dedications() {
 	}
 
-	public synchronized static BufferedImage get(String line) {
-<span class="fc" id="L91">		final TinyHashableString sentence = new TinyHashableString(line);</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Dedication dedication : all) {</span>
-<span class="fc" id="L93">			final BufferedImage image = dedication.getImage(sentence);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (image != null)</span>
-<span class="nc" id="L95">				return image;</span>
-<span class="fc" id="L96">		}</span>
-<span class="fc" id="L97">		return null;</span>
+	public static BufferedImage get(String line) {
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (line.length() &gt; 25) {</span>
+<span class="nc" id="L93">			final TinyHashableString sentence = new TinyHashableString(line);</span>
+<span class="nc" id="L94">			synchronized (Dedications.class) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				for (Dedication dedication : all) {</span>
+<span class="nc" id="L96">					final BufferedImage image = dedication.getImage(sentence);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">					if (image != null)</span>
+<span class="nc" id="L98">						return image;</span>
+<span class="nc" id="L99">				}</span>
+<span class="nc" id="L100">			}</span>
+		}
+<span class="fc" id="L102">		return null;</span>
 	}
 
 }

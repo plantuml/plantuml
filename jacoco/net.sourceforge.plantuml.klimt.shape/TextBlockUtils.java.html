@@ -217,14 +217,14 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 	}
 
 	public static TextBlock fromUImage(final UImage image) {
-<span class="fc" id="L220">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L220">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L223">				ug.draw(image);</span>
-<span class="fc" id="L224">			}</span>
+<span class="nc" id="L223">				ug.draw(image);</span>
+<span class="nc" id="L224">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L227">				return new XDimension2D(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L227">				return new XDimension2D(image.getWidth(), image.getHeight());</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {

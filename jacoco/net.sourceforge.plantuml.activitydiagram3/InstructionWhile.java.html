@@ -120,7 +120,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 <span class="nc bnc" id="L122" title="All 2 branches missed.">		final Ftile back = Display.isNull(backward) ? null</span>
-<span class="nc" id="L123">				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype);</span>
+<span class="nc" id="L123">				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype, null);</span>
 <span class="nc" id="L124">		Ftile tmp = repeatList.createFtile(factory);</span>
 <span class="nc" id="L125">		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2,</span>
 				currentStyleBuilder);

@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -73,6 +72,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class FtileBox extends AbstractFtile {
@@ -136,111 +136,114 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	public static FtileBox create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
-			Stereotype stereotype) {
+			Stereotype stereotype, StyleBuilder styleBuilder) {
 <span class="pc bpc" id="L140" title="2 of 4 branches missed.">		if (stereotype == null &amp;&amp; boxStyle != null)</span>
 <span class="fc" id="L141">			stereotype = boxStyle.getStereotype();</span>
 
-<span class="fc" id="L143">		final Style style = getStyleSignature().withTOBECHANGED(stereotype)</span>
-<span class="fc" id="L144">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L145">		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L146">		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (styleBuilder == null)</span>
+<span class="nc" id="L144">			styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+
+<span class="fc" id="L146">		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L147">		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L148">		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);</span>
 	}
 
 	private FtileBox(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
 			Style styleArrow) {
-<span class="fc" id="L151">		super(skinParam);</span>
-<span class="fc" id="L152">		this.style = style;</span>
-<span class="fc" id="L153">		this.boxStyle = boxStyle;</span>
-<span class="fc" id="L154">		this.swimlane = swimlane;</span>
+<span class="fc" id="L153">		super(skinParam);</span>
+<span class="fc" id="L154">		this.style = style;</span>
+<span class="fc" id="L155">		this.boxStyle = boxStyle;</span>
+<span class="fc" id="L156">		this.swimlane = swimlane;</span>
 
-<span class="fc" id="L156">		this.inRendering = LinkRendering.create(Rainbow.build(styleArrow, getIHtmlColorSet()));</span>
-<span class="fc" id="L157">		Colors specBack = null;</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (skinParam instanceof SkinParamColors)</span>
-<span class="fc" id="L159">			specBack = ((SkinParamColors) skinParam).getColors();</span>
+<span class="fc" id="L158">		this.inRendering = LinkRendering.create(Rainbow.build(styleArrow, getIHtmlColorSet()));</span>
+<span class="fc" id="L159">		Colors specBack = null;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (skinParam instanceof SkinParamColors)</span>
+<span class="fc" id="L161">			specBack = ((SkinParamColors) skinParam).getColors();</span>
 
-<span class="fc" id="L161">		style = style.eventuallyOverride(specBack);</span>
-<span class="fc" id="L162">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L163">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L163">		style = style.eventuallyOverride(specBack);</span>
+<span class="fc" id="L164">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L165">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
 
-<span class="fc" id="L165">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="fc" id="L167">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
 
-<span class="fc" id="L167">		this.horizontalAlignment = style.getHorizontalAlignment();</span>
-<span class="fc" id="L168">		this.padding = style.getPadding();</span>
-<span class="fc" id="L169">		this.margin = style.getMargin();</span>
-<span class="fc" id="L170">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
-<span class="fc" id="L171">		this.shadowing = style.getShadowing();</span>
+<span class="fc" id="L169">		this.horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L170">		this.padding = style.getPadding();</span>
+<span class="fc" id="L171">		this.margin = style.getMargin();</span>
+<span class="fc" id="L172">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L173">		this.shadowing = style.getShadowing();</span>
 
-<span class="fc" id="L173">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
-<span class="fc" id="L174">		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();</span>
+<span class="fc" id="L175">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="fc" id="L176">		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();</span>
 
-<span class="fc" id="L176">		final Sheet sheet = skinParam.sheet(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), CreoleMode.FULL)</span>
-<span class="fc" id="L177">				.createSheet(label);</span>
-<span class="fc" id="L178">		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), new MyStencil(),</span>
-<span class="fc" id="L179">				UStroke.withThickness(1));</span>
-<span class="fc" id="L180">		this.print = label.toString();</span>
+<span class="fc" id="L178">		final Sheet sheet = skinParam.sheet(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), CreoleMode.FULL)</span>
+<span class="fc" id="L179">				.createSheet(label);</span>
+<span class="fc" id="L180">		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), new MyStencil(),</span>
+<span class="fc" id="L181">				UStroke.withThickness(1));</span>
+<span class="fc" id="L182">		this.print = label.toString();</span>
 
-<span class="fc" id="L182">	}</span>
+<span class="fc" id="L184">	}</span>
 
 	final private String print;
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (print == null)</span>
-<span class="nc" id="L189">			return super.toString();</span>
-<span class="nc" id="L190">		return print;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (print == null)</span>
+<span class="nc" id="L191">			return super.toString();</span>
+<span class="nc" id="L192">		return print;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L194">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L195">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="fc" id="L196">		final double heightTotal = dimTotal.getHeight();</span>
-		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
-<span class="fc" id="L198">		final boolean isDebug = Boolean.parseBoolean(skinParam().options().getValue(OptionKey.DEBUG));</span>
+<span class="fc" id="L196">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L197">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="fc" id="L198">		final double heightTotal = dimTotal.getHeight();</span>
+		// final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal,
+		// shadowing, roundCorner);
+<span class="fc" id="L201">		final boolean isDebug = Boolean.parseBoolean(skinParam().options().getValue(OptionKey.DEBUG));</span>
 
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (isDebug) {</span>
-<span class="nc" id="L201">			ug = ug.apply(HColors.BLUE).apply(UStroke.withThickness(2));</span>
-<span class="nc" id="L202">			boxStyle.drawMeDebug(ug, widthTotal, heightTotal, shadowing, roundCorner);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (isDebug) {</span>
+<span class="nc" id="L204">			ug = ug.apply(HColors.BLUE).apply(UStroke.withThickness(2));</span>
+<span class="nc" id="L205">			boxStyle.drawMeDebug(ug, widthTotal, heightTotal, shadowing, roundCorner);</span>
 		}
 
-<span class="fc" id="L205">		final UStroke thickness = style.getStroke();</span>
+<span class="fc" id="L208">		final UStroke thickness = style.getStroke();</span>
 
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (borderColor == null)</span>
-<span class="nc" id="L208">			ug = ug.apply(HColors.none());</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (borderColor == null)</span>
+<span class="nc" id="L211">			ug = ug.apply(HColors.none());</span>
 		else
-<span class="fc" id="L210">			ug = ug.apply(borderColor);</span>
+<span class="fc" id="L213">			ug = ug.apply(borderColor);</span>
 
-<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (backColor == null)</span>
-<span class="nc" id="L213">			ug = ug.apply(HColors.none().bg());</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (backColor == null)</span>
+<span class="nc" id="L216">			ug = ug.apply(HColors.none().bg());</span>
 		else
-<span class="fc" id="L215">			ug = ug.apply(backColor.bg());</span>
+<span class="fc" id="L218">			ug = ug.apply(backColor.bg());</span>
 
-<span class="fc" id="L217">		ug = ug.apply(thickness);</span>
+<span class="fc" id="L220">		ug = ug.apply(thickness);</span>
 		// shape.drawU(ug);
-<span class="fc" id="L219">		boxStyle.drawMe(ug, widthTotal, heightTotal, shadowing, roundCorner);</span>
+<span class="fc" id="L222">		boxStyle.drawMe(ug, widthTotal, heightTotal, shadowing, roundCorner);</span>
 
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
-<span class="fc" id="L222">			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L224">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L225">			tb.drawU(ug.apply(</span>
-<span class="nc" id="L226">					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
-<span class="nc" id="L228">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L229">			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
+<span class="fc" id="L225">			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L227">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L228">			tb.drawU(ug.apply(</span>
+<span class="nc" id="L229">					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
+<span class="nc" id="L231">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L232">			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));</span>
 		}
-<span class="fc" id="L231">	}</span>
+<span class="fc" id="L234">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="fc" id="L235">		XDimension2D dimRaw = tb.calculateDimension(stringBounder);</span>
-<span class="fc" id="L236">		dimRaw = dimRaw.delta(padding.getLeft() + padding.getRight(), padding.getBottom() + padding.getTop());</span>
-<span class="fc" id="L237">		dimRaw = dimRaw.atLeast(minimumWidth, 0);</span>
-<span class="fc" id="L238">		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,</span>
-<span class="fc" id="L239">				dimRaw.getHeight());</span>
+<span class="fc" id="L238">		XDimension2D dimRaw = tb.calculateDimension(stringBounder);</span>
+<span class="fc" id="L239">		dimRaw = dimRaw.delta(padding.getLeft() + padding.getRight(), padding.getBottom() + padding.getTop());</span>
+<span class="fc" id="L240">		dimRaw = dimRaw.atLeast(minimumWidth, 0);</span>
+<span class="fc" id="L241">		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,</span>
+<span class="fc" id="L242">				dimRaw.getHeight());</span>
 	}
 
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L243">		return Collections.emptyList();</span>
+<span class="nc" id="L246">		return Collections.emptyList();</span>
 	}
 
 }

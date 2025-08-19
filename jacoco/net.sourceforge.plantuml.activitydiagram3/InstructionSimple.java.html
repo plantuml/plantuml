@@ -54,80 +54,83 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
 
-<span class="fc" id="L61">	private boolean killed = false;</span>
+<span class="fc" id="L62">	private boolean killed = false;</span>
 	private final Display label;
 	private final Colors colors;
 	private final LinkRendering inlinkRendering;
 	private final BoxStyle boxStyle;
 	private final Url url;
 	private final Stereotype stereotype;
+	private final StyleBuilder styleBuilder;
 
 	@Override
 	public boolean containsBreak() {
-<span class="nc" id="L71">		return false;</span>
+<span class="nc" id="L73">		return false;</span>
 	}
 
 	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle boxStyle,
-			Url url, Colors colors, Stereotype stereotype) {
-<span class="fc" id="L76">		super(swimlane);</span>
-<span class="fc" id="L77">		this.stereotype = stereotype;</span>
-<span class="fc" id="L78">		this.url = url;</span>
-<span class="fc" id="L79">		this.boxStyle = boxStyle;</span>
-<span class="fc" id="L80">		this.label = label;</span>
-<span class="fc" id="L81">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="fc" id="L82">		this.colors = Objects.requireNonNull(colors);</span>
-<span class="fc" id="L83">	}</span>
+			Url url, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder) {
+<span class="fc" id="L78">		super(swimlane);</span>
+<span class="fc" id="L79">		this.stereotype = stereotype;</span>
+<span class="fc" id="L80">		this.url = url;</span>
+<span class="fc" id="L81">		this.boxStyle = boxStyle;</span>
+<span class="fc" id="L82">		this.label = label;</span>
+<span class="fc" id="L83">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="fc" id="L84">		this.colors = Objects.requireNonNull(colors);</span>
+<span class="fc" id="L85">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L86">	}</span>
 
 	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L88">		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), boxStyle,</span>
+<span class="nc" id="L91">		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), boxStyle,</span>
 				stereotype);
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (hasNotes()) {</span>
-<span class="nc" id="L91">			final Collection&lt;PositionedNote&gt; notes = getPositionedNotes();</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (notes.size() == 0)</span>
-<span class="nc" id="L93">				throw new UnsupportedOperationException(&quot;wip&quot;);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (notes.size() &gt; 0)</span>
-<span class="nc" id="L95">				return new GtileWithNotes(result, notes, skinParam);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (hasNotes()) {</span>
+<span class="nc" id="L94">			final Collection&lt;PositionedNote&gt; notes = getPositionedNotes();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (notes.size() == 0)</span>
+<span class="nc" id="L96">				throw new UnsupportedOperationException(&quot;wip&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (notes.size() &gt; 0)</span>
+<span class="nc" id="L98">				return new GtileWithNotes(result, notes, skinParam);</span>
 
-<span class="nc" id="L97">			return new GtileWithNoteOpale(result, notes.iterator().next(), skinParam, false);</span>
+<span class="nc" id="L100">			return new GtileWithNoteOpale(result, notes.iterator().next(), skinParam, false);</span>
 
 		}
-<span class="nc" id="L100">		return result;</span>
+<span class="nc" id="L103">		return result;</span>
 	}
 	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="fc" id="L106">		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype);</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L108">			result = factory.addUrl(result, url);</span>
+<span class="fc" id="L109">		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype, styleBuilder);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L111">			result = factory.addUrl(result, url);</span>
 		}
-<span class="fc" id="L110">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (killed) {</span>
-<span class="nc" id="L112">			return new FtileKilled(result);</span>
+<span class="fc" id="L113">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (killed) {</span>
+<span class="nc" id="L115">			return new FtileKilled(result);</span>
 		}
-<span class="fc" id="L114">		return result;</span>
+<span class="fc" id="L117">		return result;</span>
 	}
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {
-<span class="nc" id="L119">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L122">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L124">		this.killed = true;</span>
-<span class="nc" id="L125">		return true;</span>
+<span class="nc" id="L127">		this.killed = true;</span>
+<span class="nc" id="L128">		return true;</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="fc" id="L130">		return inlinkRendering;</span>
+<span class="fc" id="L133">		return inlinkRendering;</span>
 	}
 
 }

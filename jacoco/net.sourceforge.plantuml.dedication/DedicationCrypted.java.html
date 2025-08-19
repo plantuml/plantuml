@@ -63,10 +63,10 @@ public class DedicationCrypted implements Dedication {
 <span class="fc" id="L63">	}</span>
 
 	public synchronized BufferedImage getImage(final TinyHashableString sentence) {
-<span class="fc" id="L66">		final String line = sentence.getSentence();</span>
+<span class="nc" id="L66">		final String line = sentence.getSentence();</span>
 
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (line.length() &lt; 40)</span>
-<span class="fc" id="L69">			return null;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (line.length() &lt; 40)</span>
+<span class="nc" id="L69">			return null;</span>
 
 		try {
 <span class="nc bnc" id="L72" title="All 4 branches missed.">			if (solution == null || line.equals(this.solution) == false) {</span>

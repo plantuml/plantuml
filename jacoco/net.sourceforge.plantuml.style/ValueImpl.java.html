@@ -114,46 +114,65 @@ public class ValueImpl implements Value {
 	}
 
 	public int asInt(boolean minusOneIfError) {
-<span class="fc" id="L117">		String s = value.getValue1();</span>
-<span class="fc" id="L118">		s = s.replaceAll(&quot;[^0-9]&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			return minusOneIfError ? -1 : 0;</span>
-<span class="fc" id="L121">		return Integer.parseInt(s);</span>
+<span class="fc" id="L117">		final String s = extractDigits(value.getValue1());</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			return minusOneIfError ? -1 : 0;</span>
+<span class="fc" id="L120">		return Integer.parseInt(s);</span>
+	}
+
+	private String extractDigits(String s) {
+<span class="fc" id="L124">		final StringBuilder sb = new StringBuilder(s.length());</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L126">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L127" title="2 of 4 branches missed.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L128">				sb.append(c);</span>
+
+		}
+<span class="fc" id="L131">		return sb.toString();</span>
+	}
+
+	private String extractDigitsAndDot(String s) {
+<span class="fc" id="L135">		final StringBuilder sb = new StringBuilder(s.length());</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L137">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L138" title="2 of 6 branches missed.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9' || c == '.')</span>
+<span class="fc" id="L139">				sb.append(c);</span>
+
+		}
+<span class="fc" id="L142">		return sb.toString();</span>
 	}
 
 	public double asDouble() {
-<span class="fc" id="L125">		String s = value.getValue1();</span>
-<span class="fc" id="L126">		s = s.replaceAll(&quot;[^.0-9]&quot;, &quot;&quot;);</span>
-<span class="fc" id="L127">		return Double.parseDouble(s);</span>
+<span class="fc" id="L146">		final String s = extractDigitsAndDot(value.getValue1());</span>
+<span class="fc" id="L147">		return Double.parseDouble(s);</span>
 	}
 
 	public double asDoubleDefaultTo(double defaultValue) {
-<span class="fc" id="L131">		String s = value.getValue1();</span>
-<span class="fc" id="L132">		s = s.replaceAll(&quot;[^.0-9]&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (s.length() &gt; 0)</span>
+<span class="fc" id="L151">		final String s = extractDigitsAndDot(value.getValue1());</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (s.length() &gt; 0)</span>
 			try {
-<span class="fc" id="L135">				return Double.parseDouble(s);</span>
-<span class="nc" id="L136">			} catch (NumberFormatException e) {</span>
+<span class="fc" id="L154">				return Double.parseDouble(s);</span>
+<span class="nc" id="L155">			} catch (NumberFormatException e) {</span>
 			}
-<span class="nc" id="L138">		return defaultValue;</span>
+<span class="nc" id="L157">		return defaultValue;</span>
 	}
 
 	public int asFontStyle() {
-<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (value.getValue1().equalsIgnoreCase(&quot;bold&quot;))</span>
-<span class="fc" id="L143">			return Font.BOLD;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (value.getValue1().equalsIgnoreCase(&quot;bold&quot;))</span>
+<span class="fc" id="L162">			return Font.BOLD;</span>
 
-<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (value.getValue1().equalsIgnoreCase(&quot;italic&quot;))</span>
-<span class="fc" id="L146">			return Font.ITALIC;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (value.getValue1().equalsIgnoreCase(&quot;italic&quot;))</span>
+<span class="fc" id="L165">			return Font.ITALIC;</span>
 
-<span class="fc" id="L148">		return Font.PLAIN;</span>
+<span class="fc" id="L167">		return Font.PLAIN;</span>
 	}
 
 	public HorizontalAlignment asHorizontalAlignment() {
-<span class="fc" id="L152">		return HorizontalAlignment.fromString(asString());</span>
+<span class="fc" id="L171">		return HorizontalAlignment.fromString(asString());</span>
 	}
 
 	public int getPriority() {
-<span class="fc" id="L156">		return value.getPriority();</span>
+<span class="fc" id="L175">		return value.getPriority();</span>
 	}
 
 }

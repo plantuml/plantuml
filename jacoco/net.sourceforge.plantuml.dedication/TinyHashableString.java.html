@@ -40,14 +40,14 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public final class TinyHashableString {
 
 	private final String sentence;
-<span class="fc" id="L43">	private int cachedTinyHash = -1;</span>
+<span class="nc" id="L43">	private int cachedTinyHash = -1;</span>
 
-<span class="fc" id="L45">	public TinyHashableString(String sentence) {</span>
-<span class="fc" id="L46">		this.sentence = sentence;</span>
-<span class="fc" id="L47">	}</span>
+<span class="nc" id="L45">	public TinyHashableString(String sentence) {</span>
+<span class="nc" id="L46">		this.sentence = sentence;</span>
+<span class="nc" id="L47">	}</span>
 
 	public String getSentence() {
-<span class="fc" id="L50">		return sentence;</span>
+<span class="nc" id="L50">		return sentence;</span>
 	}
 
 	public synchronized int tinyHash() {

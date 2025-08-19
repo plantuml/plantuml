@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.Style;
 
 public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
@@ -63,117 +61,117 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L66">		return &quot;FtileAssemblySimple &quot; + tile1 + &quot; &amp;&amp; &quot; + tile2;</span>
+<span class="nc" id="L64">		return &quot;FtileAssemblySimple &quot; + tile1 + &quot; &amp;&amp; &quot; + tile2;</span>
 	}
 
-<span class="fc" id="L69">	public FtileAssemblySimple(Ftile tile1, Ftile tile2) {</span>
-<span class="fc" id="L70">		this.tile1 = tile1;</span>
-<span class="fc" id="L71">		this.tile2 = tile2;</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L67">	public FtileAssemblySimple(Ftile tile1, Ftile tile2) {</span>
+<span class="fc" id="L68">		this.tile1 = tile1;</span>
+<span class="fc" id="L69">		this.tile2 = tile2;</span>
+<span class="fc" id="L70">	}</span>
 
 	public Swimlane getSwimlaneIn() {
-<span class="fc" id="L75">		return tile1.getSwimlaneIn();</span>
+<span class="fc" id="L73">		return tile1.getSwimlaneIn();</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="fc" id="L79">		return tile2.getSwimlaneOut();</span>
+<span class="fc" id="L77">		return tile2.getSwimlaneOut();</span>
 	}
 
-<span class="fc" id="L82">	private final Map&lt;Ftile, UTranslate&gt; cachedTranslation = new HashMap&lt;Ftile, UTranslate&gt;();</span>
+<span class="fc" id="L80">	private final Map&lt;Ftile, UTranslate&gt; cachedTranslation = new HashMap&lt;Ftile, UTranslate&gt;();</span>
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-<span class="fc" id="L85">		UTranslate result = cachedTranslation.get(child);</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L87">			result = getTranslateForSlow(child, stringBounder);</span>
-<span class="fc" id="L88">			cachedTranslation.put(child, result);</span>
+<span class="fc" id="L83">		UTranslate result = cachedTranslation.get(child);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L85">			result = getTranslateForSlow(child, stringBounder);</span>
+<span class="fc" id="L86">			cachedTranslation.put(child, result);</span>
 		}
-<span class="fc" id="L90">		return result;</span>
+<span class="fc" id="L88">		return result;</span>
 	}
 
 	private UTranslate getTranslateForSlow(Ftile child, StringBounder stringBounder) {
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (child == tile1)</span>
-<span class="fc" id="L95">			return getTranslated1(stringBounder);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (child == tile1)</span>
+<span class="fc" id="L93">			return getTranslated1(stringBounder);</span>
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (child == tile2)</span>
-<span class="fc" id="L98">			return getTranslated2(stringBounder);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (child == tile2)</span>
+<span class="fc" id="L96">			return getTranslated2(stringBounder);</span>
 
-<span class="nc" id="L100">		UTranslate tmp = tile1.getTranslateFor(child, stringBounder);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (tmp != null)</span>
-<span class="nc" id="L102">			return tmp.compose(getTranslated1(stringBounder));</span>
+<span class="nc" id="L98">		UTranslate tmp = tile1.getTranslateFor(child, stringBounder);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (tmp != null)</span>
+<span class="nc" id="L100">			return tmp.compose(getTranslated1(stringBounder));</span>
 
-<span class="nc" id="L104">		tmp = tile2.getTranslateFor(child, stringBounder);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (tmp != null)</span>
-<span class="nc" id="L106">			return tmp.compose(getTranslated2(stringBounder));</span>
+<span class="nc" id="L102">		tmp = tile2.getTranslateFor(child, stringBounder);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (tmp != null)</span>
+<span class="nc" id="L104">			return tmp.compose(getTranslated2(stringBounder));</span>
 
-<span class="nc" id="L108">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L106">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L112">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L113">		ug.apply(getTranslateFor(tile1, stringBounder)).draw(tile1);</span>
-<span class="fc" id="L114">		ug.apply(getTranslateFor(tile2, stringBounder)).draw(tile2);</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L110">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L111">		ug.apply(getTranslateFor(tile1, stringBounder)).draw(tile1);</span>
+<span class="fc" id="L112">		ug.apply(getTranslateFor(tile2, stringBounder)).draw(tile2);</span>
+<span class="fc" id="L113">	}</span>
 
 	public LinkRendering getInLinkRendering() {
-<span class="fc" id="L118">		return tile1.getInLinkRendering();</span>
+<span class="fc" id="L116">		return tile1.getInLinkRendering();</span>
 	}
 
 	public LinkRendering getOutLinkRendering() {
-<span class="nc" id="L122">		return LinkRendering.none();</span>
+<span class="nc" id="L120">		return LinkRendering.none();</span>
 	}
 
 	private FtileGeometry calculateDimension;
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (calculateDimension == null) {</span>
-<span class="fc" id="L129">			calculateDimension = tile1.calculateDimension(stringBounder)</span>
-<span class="fc" id="L130">					.appendBottom(tile2.calculateDimension(stringBounder));</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (calculateDimension == null) {</span>
+<span class="fc" id="L127">			calculateDimension = tile1.calculateDimension(stringBounder)</span>
+<span class="fc" id="L128">					.appendBottom(tile2.calculateDimension(stringBounder));</span>
 		}
-<span class="fc" id="L132">		return calculateDimension;</span>
+<span class="fc" id="L130">		return calculateDimension;</span>
 	}
 
 	private UTranslate getTranslated1(StringBounder stringBounder) {
-<span class="fc" id="L136">		final double left = calculateDimension(stringBounder).getLeft();</span>
-<span class="fc" id="L137">		return UTranslate.dx(left - tile1.calculateDimension(stringBounder).getLeft());</span>
+<span class="fc" id="L134">		final double left = calculateDimension(stringBounder).getLeft();</span>
+<span class="fc" id="L135">		return UTranslate.dx(left - tile1.calculateDimension(stringBounder).getLeft());</span>
 	}
 
 	private UTranslate getTranslated2(StringBounder stringBounder) {
-<span class="fc" id="L141">		final XDimension2D dim1 = tile1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L142">		final double left = calculateDimension(stringBounder).getLeft();</span>
-<span class="fc" id="L143">		return new UTranslate(left - tile2.calculateDimension(stringBounder).getLeft(), dim1.getHeight());</span>
+<span class="fc" id="L139">		final XDimension2D dim1 = tile1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L140">		final double left = calculateDimension(stringBounder).getLeft();</span>
+<span class="fc" id="L141">		return new UTranslate(left - tile2.calculateDimension(stringBounder).getLeft(), dim1.getHeight());</span>
 	}
 
 	public Collection&lt;Connection&gt; getInnerConnections() {
-<span class="nc" id="L147">		return Collections.emptyList();</span>
+<span class="nc" id="L145">		return Collections.emptyList();</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="fc" id="L152">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L153">		result.addAll(tile1.getSwimlanes());</span>
-<span class="fc" id="L154">		result.addAll(tile2.getSwimlanes());</span>
-<span class="fc" id="L155">		return Collections.unmodifiableSet(result);</span>
+<span class="fc" id="L150">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L151">		result.addAll(tile1.getSwimlanes());</span>
+<span class="fc" id="L152">		result.addAll(tile2.getSwimlanes());</span>
+<span class="fc" id="L153">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	@Override
 	public ISkinParam skinParam() {
-<span class="fc" id="L160">		return tile1.skinParam();</span>
+<span class="fc" id="L158">		return tile1.skinParam();</span>
 	}
 
 	@Override
 	public List&lt;WeldingPoint&gt; getWeldingPoints() {
-<span class="fc" id="L165">		final List&lt;WeldingPoint&gt; result = new ArrayList&lt;&gt;(tile1.getWeldingPoints());</span>
-<span class="fc" id="L166">		result.addAll(tile2.getWeldingPoints());</span>
-<span class="fc" id="L167">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L163">		final List&lt;WeldingPoint&gt; result = new ArrayList&lt;&gt;(tile1.getWeldingPoints());</span>
+<span class="fc" id="L164">		result.addAll(tile2.getWeldingPoints());</span>
+<span class="fc" id="L165">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L171">		return Arrays.asList(tile1, tile2);</span>
+<span class="nc" id="L169">		return Arrays.asList(tile1, tile2);</span>
 	}
 
 	@Override
 	public HorizontalAlignment arrowHorizontalAlignment() {
-<span class="fc" id="L176">		return tile1.arrowHorizontalAlignment();</span>
+<span class="fc" id="L174">		return tile1.arrowHorizontalAlignment();</span>
 	}
 
 }

@@ -52,8 +52,8 @@ public class DedicationSimple implements Dedication {
 <span class="fc" id="L52">	}</span>
 
 	public synchronized BufferedImage getImage(TinyHashableString sentence) {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (same(this.sentence, sentence.getSentence()) == false)</span>
-<span class="fc" id="L56">			return null;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (same(this.sentence, sentence.getSentence()) == false)</span>
+<span class="nc" id="L56">			return null;</span>
 
 		try {
 <span class="nc" id="L59">			byte[] current = crypted.clone();</span>
@@ -69,9 +69,9 @@ public class DedicationSimple implements Dedication {
 	}
 
 	private boolean same(String s1, String s2) {
-<span class="fc" id="L72">		s1 = s1.replaceAll(&quot;[^\\p{L}0-9]+&quot;, &quot;&quot;);</span>
-<span class="fc" id="L73">		s2 = s2.replaceAll(&quot;[^\\p{L}0-9]+&quot;, &quot;&quot;);</span>
-<span class="fc" id="L74">		return s1.equalsIgnoreCase(s2);</span>
+<span class="nc" id="L72">		s1 = s1.replaceAll(&quot;[^\\p{L}0-9]+&quot;, &quot;&quot;);</span>
+<span class="nc" id="L73">		s2 = s2.replaceAll(&quot;[^\\p{L}0-9]+&quot;, &quot;&quot;);</span>
+<span class="nc" id="L74">		return s1.equalsIgnoreCase(s2);</span>
 	}
 
 }
