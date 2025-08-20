@@ -35,105 +35,156 @@
  */
 package net.sourceforge.plantuml.core;
 
-import net.sourceforge.plantuml.utils.StartUtils;
-
 // To be merged with UmlDiagramType
 public enum DiagramType {
 	// ::remove folder when __HAXE__
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,
 	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, UNKNOWN;
 
-	static public DiagramType getTypeFromArobaseStart(String s) {
-		s = s.toLowerCase();
-		// if (s.startsWith("@startuml2")) {
-		// return UML2;
-		// }
-		if (StartUtils.startsWithSymbolAnd("startwire", s))
-			return WIRE;
+	static public DiagramType getTypeFromArobaseStart(String text) {
+		for (int i = 0; i < text.length(); i++) {
+			final char c = text.charAt(i);
 
-		if (StartUtils.startsWithSymbolAnd("startbpm", s))
-			return BPM;
+			if (Character.isWhitespace(c))
+				continue;
 
-		if (StartUtils.startsWithSymbolAnd("startuml", s))
-			return UML;
+			if (c != '@' && c != '\\')
+				return UNKNOWN;
 
-		if (StartUtils.startsWithSymbolAnd("startdot", s))
-			return DOT;
+			final int pos = i + 1;
 
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or
-		// __LGPL__
-		if (StartUtils.startsWithSymbolAnd("startjcckit", s))
-			return JCCKIT;
-		// ::done
+			if (text.length() - pos < 5 || check("start", text, pos) == false)
+				return UNKNOWN;
 
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
-		if (StartUtils.startsWithSymbolAnd("startditaa", s))
-			return DITAA;
-		// ::done
+			final int p = pos + 5;
+			if (p >= text.length())
+				return UNKNOWN;
 
-		if (StartUtils.startsWithSymbolAnd("startproject", s))
-			return PROJECT;
-
-		if (StartUtils.startsWithSymbolAnd("startsalt", s))
-			return SALT;
-
-		if (StartUtils.startsWithSymbolAnd("startflow", s))
-			return FLOW;
-
-		if (StartUtils.startsWithSymbolAnd("startcreole", s))
-			return CREOLE;
-
-		if (StartUtils.startsWithSymbolAnd("startmath", s))
-			return MATH;
-
-		if (StartUtils.startsWithSymbolAnd("startlatex", s))
-			return LATEX;
-
-		if (StartUtils.startsWithSymbolAnd("startdef", s))
-			return DEFINITION;
-
-		if (StartUtils.startsWithSymbolAnd("startgantt", s))
-			return GANTT;
-
-		if (StartUtils.startsWithSymbolAnd("startnwdiag", s))
-			return NW;
-
-		if (StartUtils.startsWithSymbolAnd("startmindmap", s))
-			return MINDMAP;
-
-		if (StartUtils.startsWithSymbolAnd("startwbs", s))
-			return WBS;
-
-		if (StartUtils.startsWithSymbolAnd("startjson", s))
-			return JSON;
-
-		if (StartUtils.startsWithSymbolAnd("startgit", s))
-			return GIT;
-
-		if (StartUtils.startsWithSymbolAnd("startboard", s))
-			return BOARD;
-
-		if (StartUtils.startsWithSymbolAnd("startyaml", s))
-			return YAML;
-
-		if (StartUtils.startsWithSymbolAnd("starthcl", s))
-			return HCL;
-
-		if (StartUtils.startsWithSymbolAnd("startebnf", s))
-			return EBNF;
-
-		if (StartUtils.startsWithSymbolAnd("startregex", s))
-			return REGEX;
-
-		if (StartUtils.startsWithSymbolAnd("startfiles", s))
-			return FILES;
-
-		if (StartUtils.startsWithSymbolAnd("startchronology", s))
-			return CHRONOLOGY;
-
-		if (StartUtils.startsWithSymbolAnd("startchen", s))
-			return CHEN_EER;
+			return getType(text, p);
+		}
 
 		return UNKNOWN;
 	}
+
+	private static DiagramType getType(String text, final int p) {
+		switch (Character.toLowerCase(text.charAt(p))) {
+
+		case 'b':
+			if (check("bpm", text, p))
+				return BPM;
+			if (check("board", text, p))
+				return BOARD;
+			return UNKNOWN;
+
+		case 'c':
+			if (check("creole", text, p))
+				return CREOLE;
+			if (check("chronology", text, p))
+				return CHRONOLOGY;
+			if (check("chen", text, p))
+				return CHEN_EER;
+			return UNKNOWN;
+
+		case 'd':
+			if (check("dot", text, p))
+				return DOT;
+			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
+			if (check("ditaa", text, p))
+				return DITAA;
+			// ::done
+			if (check("def", text, p))
+				return DEFINITION;
+			return UNKNOWN;
+
+		case 'e':
+			if (check("ebnf", text, p))
+				return EBNF;
+			return UNKNOWN;
+
+		case 'f':
+			if (check("flow", text, p))
+				return FLOW;
+			if (check("files", text, p))
+				return FILES;
+			return UNKNOWN;
+
+		case 'g':
+			if (check("gantt", text, p))
+				return GANTT;
+			if (check("git", text, p))
+				return GIT;
+			return UNKNOWN;
+
+		case 'h':
+			if (check("hcl", text, p))
+				return HCL;
+			return UNKNOWN;
+
+		case 'j':
+			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+			if (check("jcckit", text, p))
+				return JCCKIT;
+			// ::done
+			if (check("json", text, p))
+				return JSON;
+			return UNKNOWN;
+
+		case 'l':
+			if (check("latex", text, p))
+				return LATEX;
+			return UNKNOWN;
+
+		case 'm':
+			if (check("math", text, p))
+				return MATH;
+			if (check("mindmap", text, p))
+				return MINDMAP;
+			return UNKNOWN;
+
+		case 'n':
+			if (check("nwdiag", text, p))
+				return NW;
+			return UNKNOWN;
+
+		case 'p':
+			if (check("project", text, p))
+				return PROJECT;
+			return UNKNOWN;
+
+		case 'r':
+			if (check("regex", text, p))
+				return REGEX;
+			return UNKNOWN;
+
+		case 's':
+			if (check("salt", text, p))
+				return SALT;
+			return UNKNOWN;
+
+		case 'u':
+			if (check("uml", text, p))
+				return UML;
+			return UNKNOWN;
+
+		case 'w':
+			if (check("wire", text, p))
+				return WIRE;
+			if (check("wbs", text, p))
+				return WBS;
+			return UNKNOWN;
+
+		case 'y':
+			if (check("yaml", text, p))
+				return YAML;
+			return UNKNOWN;
+
+		default:
+			return UNKNOWN;
+		}
+	}
+
+	static boolean check(String key, String text, int p) {
+		return text.regionMatches(true, p, key, 0, key.length());
+	}
+
 }

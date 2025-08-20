@@ -44,7 +44,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class StartUtils {
 	// ::remove file when __HAXE__
 
-	public static final Pattern2 patternFilename = Pattern2.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
+	public static final Pattern2 patternFilename = Pattern2
+			.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
 	public static final String PAUSE_PATTERN = "((?:\\W|\\<[^<>]*\\>)*)[@\\\\]unpause";
 	public static final String START_PATTERN = "((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
@@ -63,62 +64,68 @@ public class StartUtils {
 
 				continue;
 			}
-			if (single.equals("<")) {
+
+			if (single.equals("<"))
 				inside = true;
-			} else if (single.matches("[\\w~]")) {
+			else if (single.matches("[\\w~]"))
 				return null;
-			}
+
 		}
 		return null;
-		// final Matcher m = MyPattern.cmpile(START_PATTERN).matcher(result);
-		// if (m.find()) {
-		// return m.group(1);
-		// }
-		// return null;
 	}
 
 	public static boolean isArobaseStartDiagram(String s) {
-		final String s2 = StringUtils.trinNoTrace(s);
-		if (s2.startsWith("@") == false && s2.startsWith("\\") == false)
-			return false;
-
-		return DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
+		return DiagramType.getTypeFromArobaseStart(s) != DiagramType.UNKNOWN;
 	}
 
-	public static boolean startsWithSymbolAnd(String value, final StringLocated tmp) {
-		return tmp.getString().startsWith("@" + value) || tmp.getString().startsWith("\\" + value);
-	}
+	private static boolean startsWithSymbolAnd(String keyword, String text) {
+		for (int i = 0; i < text.length(); i++) {
+			final char c = text.charAt(i);
+			if (Character.isWhitespace(c))
+				continue;
 
-	public static boolean startsWithSymbolAnd(String value, final String tmp) {
-		return tmp.startsWith("@" + value) || tmp.startsWith("\\" + value);
-	}
+			if (c != '@' && c != '\\')
+				return false;
 
-	public static boolean startOrEnd(final StringLocated s) {
-		final String s2 = StringUtils.trinNoTrace(s.getString());
-		if (s2.startsWith("@") == false && s2.startsWith("\\") == false)
-			return false;
+			if (text.length() - i - 1 < keyword.length())
+				return false;
 
-		return startsWithSymbolAnd("end", s2) || DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
+			return text.regionMatches(i + 1, keyword, 0, keyword.length());
+		}
+		return false;
 	}
 
 	public static boolean isArobaseEndDiagram(String s) {
-		final String s2 = StringUtils.trinNoTrace(s);
-		return startsWithSymbolAnd("end", s2);
+		return startsWithSymbolAnd("end", s);
 	}
 
 	public static boolean isArobasePauseDiagram(String s) {
-		final String s2 = StringUtils.trinNoTrace(s);
-		return startsWithSymbolAnd("pause", s2);
+		return startsWithSymbolAnd("pause", s);
 	}
 
 	public static boolean isArobaseUnpauseDiagram(String s) {
-		final String s2 = StringUtils.trinNoTrace(s);
-		return startsWithSymbolAnd("unpause", s2);
+		return startsWithSymbolAnd("unpause", s);
 	}
 
 	public static boolean isExit(CharSequence s) {
-		final String s2 = StringUtils.trinNoTrace(s);
-		return s2.equals("!exit");
+		final int len = s.length();
+		int start = 0;
+		int end = len - 1;
+
+		while (start < len && Character.isWhitespace(s.charAt(start)))
+			start++;
+
+		while (end >= start && Character.isWhitespace(s.charAt(end)))
+			end--;
+
+		if (end - start + 1 != 5)
+			return false;
+
+		return s.charAt(start) == '!' && //
+				s.charAt(start + 1) == 'e' && //
+				s.charAt(start + 2) == 'x' && //
+				s.charAt(start + 3) == 'i' && //
+				s.charAt(start + 4) == 't';
 	}
 
 	private static final Pattern2 append = Pattern2.cmpile("^\\W*[@\\\\](append|a)\\b");
