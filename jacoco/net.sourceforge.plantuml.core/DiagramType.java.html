@@ -35,106 +35,157 @@
  */
 package net.sourceforge.plantuml.core;
 
-import net.sourceforge.plantuml.utils.StartUtils;
-
 // To be merged with UmlDiagramType
-<span class="fc" id="L41">public enum DiagramType {</span>
+<span class="fc" id="L39">public enum DiagramType {</span>
 	// ::remove folder when __HAXE__
-<span class="fc" id="L43">	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,</span>
-<span class="fc" id="L44">	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, UNKNOWN;</span>
+<span class="fc" id="L41">	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,</span>
+<span class="fc" id="L42">	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, UNKNOWN;</span>
 
-	static public DiagramType getTypeFromArobaseStart(String s) {
-<span class="fc" id="L47">		s = s.toLowerCase();</span>
-		// if (s.startsWith(&quot;@startuml2&quot;)) {
-		// return UML2;
-		// }
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startwire&quot;, s))</span>
-<span class="nc" id="L52">			return WIRE;</span>
+	static public DiagramType getTypeFromArobaseStart(String text) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L46">			final char c = text.charAt(i);</span>
 
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startbpm&quot;, s))</span>
-<span class="nc" id="L55">			return BPM;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">			if (Character.isWhitespace(c))</span>
+<span class="fc" id="L49">				continue;</span>
 
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startuml&quot;, s))</span>
-<span class="fc" id="L58">			return UML;</span>
+<span class="pc bpc" id="L51" title="1 of 4 branches missed.">			if (c != '@' &amp;&amp; c != '\\')</span>
+<span class="fc" id="L52">				return UNKNOWN;</span>
 
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startdot&quot;, s))</span>
-<span class="nc" id="L61">			return DOT;</span>
+<span class="fc" id="L54">			final int pos = i + 1;</span>
 
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or
-		// __LGPL__
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startjcckit&quot;, s))</span>
-<span class="nc" id="L66">			return JCCKIT;</span>
-		// ::done
+<span class="fc bfc" id="L56" title="All 4 branches covered.">			if (text.length() - pos &lt; 5 || check(&quot;start&quot;, text, pos) == false)</span>
+<span class="fc" id="L57">				return UNKNOWN;</span>
 
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startditaa&quot;, s))</span>
-<span class="nc" id="L71">			return DITAA;</span>
-		// ::done
+<span class="fc" id="L59">			final int p = pos + 5;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (p &gt;= text.length())</span>
+<span class="nc" id="L61">				return UNKNOWN;</span>
 
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startproject&quot;, s))</span>
-<span class="nc" id="L75">			return PROJECT;</span>
+<span class="fc" id="L63">			return getType(text, p);</span>
+		}
 
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startsalt&quot;, s))</span>
-<span class="nc" id="L78">			return SALT;</span>
-
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startflow&quot;, s))</span>
-<span class="nc" id="L81">			return FLOW;</span>
-
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startcreole&quot;, s))</span>
-<span class="nc" id="L84">			return CREOLE;</span>
-
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startmath&quot;, s))</span>
-<span class="nc" id="L87">			return MATH;</span>
-
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startlatex&quot;, s))</span>
-<span class="nc" id="L90">			return LATEX;</span>
-
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startdef&quot;, s))</span>
-<span class="fc" id="L93">			return DEFINITION;</span>
-
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startgantt&quot;, s))</span>
-<span class="fc" id="L96">			return GANTT;</span>
-
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startnwdiag&quot;, s))</span>
-<span class="nc" id="L99">			return NW;</span>
-
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startmindmap&quot;, s))</span>
-<span class="fc" id="L102">			return MINDMAP;</span>
-
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startwbs&quot;, s))</span>
-<span class="fc" id="L105">			return WBS;</span>
-
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startjson&quot;, s))</span>
-<span class="fc" id="L108">			return JSON;</span>
-
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startgit&quot;, s))</span>
-<span class="nc" id="L111">			return GIT;</span>
-
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startboard&quot;, s))</span>
-<span class="nc" id="L114">			return BOARD;</span>
-
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startyaml&quot;, s))</span>
-<span class="nc" id="L117">			return YAML;</span>
-
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;starthcl&quot;, s))</span>
-<span class="nc" id="L120">			return HCL;</span>
-
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startebnf&quot;, s))</span>
-<span class="fc" id="L123">			return EBNF;</span>
-
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startregex&quot;, s))</span>
-<span class="nc" id="L126">			return REGEX;</span>
-
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startfiles&quot;, s))</span>
-<span class="nc" id="L129">			return FILES;</span>
-
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (StartUtils.startsWithSymbolAnd(&quot;startchronology&quot;, s))</span>
-<span class="nc" id="L132">			return CHRONOLOGY;</span>
-
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (StartUtils.startsWithSymbolAnd(&quot;startchen&quot;, s))</span>
-<span class="fc" id="L135">			return CHEN_EER;</span>
-
-<span class="fc" id="L137">		return UNKNOWN;</span>
+<span class="fc" id="L66">		return UNKNOWN;</span>
 	}
+
+	private static DiagramType getType(String text, final int p) {
+<span class="pc bpc" id="L70" title="10 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
+
+		case 'b':
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (check(&quot;bpm&quot;, text, p))</span>
+<span class="nc" id="L74">				return BPM;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (check(&quot;board&quot;, text, p))</span>
+<span class="nc" id="L76">				return BOARD;</span>
+<span class="nc" id="L77">			return UNKNOWN;</span>
+
+		case 'c':
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (check(&quot;creole&quot;, text, p))</span>
+<span class="nc" id="L81">				return CREOLE;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (check(&quot;chronology&quot;, text, p))</span>
+<span class="nc" id="L83">				return CHRONOLOGY;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			if (check(&quot;chen&quot;, text, p))</span>
+<span class="fc" id="L85">				return CHEN_EER;</span>
+<span class="nc" id="L86">			return UNKNOWN;</span>
+
+		case 'd':
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (check(&quot;dot&quot;, text, p))</span>
+<span class="nc" id="L90">				return DOT;</span>
+			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (check(&quot;ditaa&quot;, text, p))</span>
+<span class="nc" id="L93">				return DITAA;</span>
+			// ::done
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (check(&quot;def&quot;, text, p))</span>
+<span class="fc" id="L96">				return DEFINITION;</span>
+<span class="nc" id="L97">			return UNKNOWN;</span>
+
+		case 'e':
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (check(&quot;ebnf&quot;, text, p))</span>
+<span class="fc" id="L101">				return EBNF;</span>
+<span class="nc" id="L102">			return UNKNOWN;</span>
+
+		case 'f':
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (check(&quot;flow&quot;, text, p))</span>
+<span class="nc" id="L106">				return FLOW;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (check(&quot;files&quot;, text, p))</span>
+<span class="nc" id="L108">				return FILES;</span>
+<span class="nc" id="L109">			return UNKNOWN;</span>
+
+		case 'g':
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (check(&quot;gantt&quot;, text, p))</span>
+<span class="fc" id="L113">				return GANTT;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (check(&quot;git&quot;, text, p))</span>
+<span class="nc" id="L115">				return GIT;</span>
+<span class="nc" id="L116">			return UNKNOWN;</span>
+
+		case 'h':
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (check(&quot;hcl&quot;, text, p))</span>
+<span class="nc" id="L120">				return HCL;</span>
+<span class="nc" id="L121">			return UNKNOWN;</span>
+
+		case 'j':
+			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (check(&quot;jcckit&quot;, text, p))</span>
+<span class="nc" id="L126">				return JCCKIT;</span>
+			// ::done
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (check(&quot;json&quot;, text, p))</span>
+<span class="fc" id="L129">				return JSON;</span>
+<span class="nc" id="L130">			return UNKNOWN;</span>
+
+		case 'l':
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (check(&quot;latex&quot;, text, p))</span>
+<span class="nc" id="L134">				return LATEX;</span>
+<span class="nc" id="L135">			return UNKNOWN;</span>
+
+		case 'm':
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (check(&quot;math&quot;, text, p))</span>
+<span class="nc" id="L139">				return MATH;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (check(&quot;mindmap&quot;, text, p))</span>
+<span class="fc" id="L141">				return MINDMAP;</span>
+<span class="nc" id="L142">			return UNKNOWN;</span>
+
+		case 'n':
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (check(&quot;nwdiag&quot;, text, p))</span>
+<span class="nc" id="L146">				return NW;</span>
+<span class="nc" id="L147">			return UNKNOWN;</span>
+
+		case 'p':
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (check(&quot;project&quot;, text, p))</span>
+<span class="nc" id="L151">				return PROJECT;</span>
+<span class="nc" id="L152">			return UNKNOWN;</span>
+
+		case 'r':
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (check(&quot;regex&quot;, text, p))</span>
+<span class="nc" id="L156">				return REGEX;</span>
+<span class="nc" id="L157">			return UNKNOWN;</span>
+
+		case 's':
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (check(&quot;salt&quot;, text, p))</span>
+<span class="nc" id="L161">				return SALT;</span>
+<span class="nc" id="L162">			return UNKNOWN;</span>
+
+		case 'u':
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (check(&quot;uml&quot;, text, p))</span>
+<span class="fc" id="L166">				return UML;</span>
+<span class="nc" id="L167">			return UNKNOWN;</span>
+
+		case 'w':
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			if (check(&quot;wire&quot;, text, p))</span>
+<span class="nc" id="L171">				return WIRE;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (check(&quot;wbs&quot;, text, p))</span>
+<span class="fc" id="L173">				return WBS;</span>
+<span class="nc" id="L174">			return UNKNOWN;</span>
+
+		case 'y':
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (check(&quot;yaml&quot;, text, p))</span>
+<span class="nc" id="L178">				return YAML;</span>
+<span class="nc" id="L179">			return UNKNOWN;</span>
+
+		default:
+<span class="nc" id="L182">			return UNKNOWN;</span>
+		}
+	}
+
+	static boolean check(String key, String text, int p) {
+<span class="fc" id="L187">		return text.regionMatches(true, p, key, 0, key.length());</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
