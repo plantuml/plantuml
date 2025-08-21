@@ -52,9 +52,9 @@ public class WormMutation {
 	public static WormMutation create(Worm worm, double delta) {
 <span class="nc" id="L53">		final String signature = worm.getDirectionsCode();</span>
 <span class="nc" id="L54">		final String definition = getDefinition(signature);</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (definition == null) {</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (definition == null)</span>
 <span class="nc" id="L56">			return createFromLongSignature(signature, delta);</span>
-		}
+
 <span class="nc" id="L58">		return new WormMutation(definition, delta);</span>
 	}
 
@@ -66,23 +66,23 @@ public class WormMutation {
 <span class="nc" id="L66">				result.translations.add(tmp.translations.get(0));</span>
 			} else {
 <span class="nc" id="L68">				UTranslate last = result.getLast();</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">				if (last.isAlmostSame(tmp.translations.get(0)) == false) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">				if (last.isAlmostSame(tmp.translations.get(0)) == false)</span>
 <span class="nc" id="L70">					tmp = tmp.reverse();</span>
-				}
+
 			}
 <span class="nc" id="L73">			result.translations.add(tmp.translations.get(1));</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (i == signature.length() - 2) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (i == signature.length() - 2)</span>
 <span class="nc" id="L75">				result.translations.add(tmp.translations.get(2));</span>
-			}
+
 		}
 <span class="nc" id="L78">		return result;</span>
 	}
 
 	private WormMutation reverse() {
 <span class="nc" id="L82">		final WormMutation result = new WormMutation();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (UTranslate tr : translations) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (UTranslate tr : translations)</span>
 <span class="nc" id="L84">			result.translations.add(tr.reverse());</span>
-<span class="nc" id="L85">		}</span>
+
 <span class="nc" id="L86">		return result;</span>
 	}
 
@@ -99,27 +99,27 @@ public class WormMutation {
 	}
 
 	private static String getDefinition(final String signature) {
-<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (signature.equals(&quot;D&quot;) || signature.equals(&quot;U&quot;)) {</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (signature.equals(&quot;D&quot;) || signature.equals(&quot;U&quot;))</span>
 <span class="nc" id="L103">			return &quot;33&quot;;</span>
-<span class="nc bnc" id="L104" title="All 4 branches missed.">		} else if (signature.equals(&quot;L&quot;) || signature.equals(&quot;R&quot;)) {</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		else if (signature.equals(&quot;L&quot;) || signature.equals(&quot;R&quot;))</span>
 <span class="nc" id="L105">			return &quot;55&quot;;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		} else if (signature.equals(&quot;RD&quot;)) {</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		else if (signature.equals(&quot;RD&quot;))</span>
 <span class="nc" id="L107">			return &quot;123&quot;;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		} else if (signature.equals(&quot;RU&quot;)) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		else if (signature.equals(&quot;RU&quot;))</span>
 <span class="nc" id="L109">			return &quot;543&quot;;</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		} else if (signature.equals(&quot;LD&quot;)) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		else if (signature.equals(&quot;LD&quot;))</span>
 <span class="nc" id="L111">			return &quot;187&quot;;</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		} else if (signature.equals(&quot;DL&quot;)) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		else if (signature.equals(&quot;DL&quot;))</span>
 <span class="nc" id="L113">			return &quot;345&quot;;</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (signature.equals(&quot;DR&quot;)) {</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		else if (signature.equals(&quot;DR&quot;))</span>
 <span class="nc" id="L115">			return &quot;765&quot;;</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		} else if (signature.equals(&quot;UL&quot;)) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		else if (signature.equals(&quot;UL&quot;))</span>
 <span class="nc" id="L117">			return &quot;321&quot;;</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		} else if (signature.equals(&quot;UR&quot;)) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		else if (signature.equals(&quot;UR&quot;))</span>
 <span class="nc" id="L119">			return &quot;781&quot;;</span>
-			// } else if (signature.equals(&quot;DLD&quot;)) {
-			// return &quot;3443&quot;;
-		}
+		// } else if (signature.equals(&quot;DLD&quot;)) {
+		// return &quot;3443&quot;;
+
 <span class="nc" id="L123">		return null;</span>
 	}
 
@@ -158,18 +158,18 @@ public class WormMutation {
 <span class="nc" id="L158">		private double max = Double.MIN_VALUE;</span>
 
 		private void append(double v) {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (v &gt; max) {</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (v &gt; max)</span>
 <span class="nc" id="L162">				max = v;</span>
-			}
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (v &lt; min) {</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (v &lt; min)</span>
 <span class="nc" id="L165">				min = v;</span>
-			}
+
 <span class="nc" id="L167">		}</span>
 
 		private double getExtreme() {
-<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (Math.abs(max) &gt; Math.abs(min)) {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (Math.abs(max) &gt; Math.abs(min))</span>
 <span class="nc" id="L171">				return max;</span>
-			}
+
 <span class="nc" id="L173">			return min;</span>
 		}
 
@@ -177,9 +177,9 @@ public class WormMutation {
 
 	public UTranslate getTextTranslate(int size) {
 <span class="nc" id="L179">		final MinMax result = new MinMax();</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (UTranslate tr : translations) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (UTranslate tr : translations)</span>
 <span class="nc" id="L181">			result.append(tr.getDx());</span>
-<span class="nc" id="L182">		}</span>
+
 <span class="nc" id="L183">		return UTranslate.dx(result.getExtreme() * (size - 1));</span>
 	}
 
@@ -189,9 +189,9 @@ public class WormMutation {
 
 	public Worm mute(Worm original) {
 <span class="nc" id="L191">		final Worm result = original.cloneEmpty();</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (int i = 0; i &lt; original.size(); i++) {</span>
-<span class="nc" id="L193">			result.addPoint(translations.get(i).getTranslated(original.get(i)));</span>
-		}
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (int i = 0; i &lt; original.size(); i++)</span>
+<span class="nc" id="L193">			result.addPoint(translations.get(i).getTranslated(original.getPoint(i)));</span>
+
 <span class="nc" id="L195">		return result;</span>
 	}
 
