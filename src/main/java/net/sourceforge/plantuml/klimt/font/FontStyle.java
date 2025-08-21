@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
 
-import net.sourceforge.plantuml.klimt.color.HColor;
-
 public enum FontStyle {
 
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;

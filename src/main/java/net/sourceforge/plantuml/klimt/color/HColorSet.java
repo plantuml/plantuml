@@ -45,8 +45,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.StringBuilder2;
-import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.Pattern2;
 
 public class HColorSet {
 

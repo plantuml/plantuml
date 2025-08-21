@@ -61,12 +61,16 @@ public class Worm {
 	private final List<XPoint2D> points;
 	private final Style style;
 	private final Arrows arrows;
+	private UTranslate tr;
 
 	public Worm move(double dx, double dy) {
 		final Worm result = cloneEmpty();
-		for (XPoint2D pt : points)
-			result.addPoint(pt.getX() + dx, pt.getY() + dy);
+		if (this.tr == null)
+			result.tr = new UTranslate(dx, dy);
+		else
+			result.tr = this.tr.compose(new UTranslate(dx, dy));
 
+		result.points.addAll(points);
 		return result;
 	}
 
@@ -225,16 +229,20 @@ public class Worm {
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < size() - 1; i++)
-			result.append(getDirectionAtPoint(i)).append(" ");
-
-		return result + points.toString();
-	}
+//	@Override
+//	public String toString() {
+//		final StringBuilder result = new StringBuilder();
+//		for (int i = 0; i < size() - 1; i++)
+//			result.append(getDirectionAtPoint(i)).append(" ");
+//
+//		return result + points.toString();
+//	}
 
 	public void addPoint(double x, double y) {
+		if (tr != null) {
+			x -= tr.getDx();
+			y -= tr.getDy();
+		}
 		if (Double.isNaN(x))
 			throw new IllegalArgumentException();
 
@@ -245,8 +253,8 @@ public class Worm {
 			final XPoint2D last = getLast();
 			if (last.getX() == x && last.getY() == y)
 				return;
-
 		}
+
 		this.points.add(new XPoint2D(x, y));
 	}
 
@@ -299,7 +307,13 @@ public class Worm {
 	}
 
 	public XPoint2D getPoint(int i) {
-		return points.get(i);
+		return resolve(points.get(i));
+	}
+
+	private XPoint2D resolve(XPoint2D point) {
+		if (tr == null)
+			return point;
+		return tr.getTranslated(point);
 	}
 
 	public XPoint2D getFirst() {
@@ -313,21 +327,21 @@ public class Worm {
 	public double getMinX() {
 		double result = getPoint(0).getX();
 		for (XPoint2D pt : points)
-			result = Math.min(result, pt.getX());
+			result = Math.min(result, resolve(pt).getX());
 		return result;
 	}
 
 	public double getMaxX() {
 		double result = getPoint(0).getX();
 		for (XPoint2D pt : points)
-			result = Math.max(result, pt.getX());
+			result = Math.max(result, resolve(pt).getX());
 		return result;
 	}
 
 	public double getMaxY() {
 		double result = getPoint(0).getY();
 		for (XPoint2D pt : points)
-			result = Math.max(result, pt.getY());
+			result = Math.max(result, resolve(pt).getY());
 		return result;
 	}
 
@@ -336,13 +350,17 @@ public class Worm {
 			throw new IllegalArgumentException();
 
 		final Worm result = new Worm(style, arrows, size() + other.size());
-		result.points.addAll(this.points);
-		result.points.addAll(other.points);
+		for (XPoint2D pt : this.points)
+			result.addPoint(this.resolve(pt));
+		for (XPoint2D pt : other.points)
+			result.addPoint(other.resolve(pt));
 		result.mergeMe(merge);
 		return result;
 	}
 
 	private void mergeMe(MergeStrategy merge) {
+		if (tr != null)
+			throw new UnsupportedOperationException();
 		boolean change = false;
 		do {
 			change = false;

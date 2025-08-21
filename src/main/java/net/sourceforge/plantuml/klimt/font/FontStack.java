@@ -36,12 +36,9 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class FontStack {
 
