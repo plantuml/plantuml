@@ -421,93 +421,94 @@ public class ImageBuilder {
 <span class="fc" id="L421">		option = option.withLinkTarget(getSvgLinkTarget());</span>
 <span class="fc" id="L422">		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));</span>
 <span class="fc" id="L423">		option = option.withPragma(pragma);</span>
-<span class="fc" id="L424">		option = option.withConfigurationStore(skinParam.options());</span>
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">		if (diagram != null) {</span>
-<span class="fc" id="L426">			option = option.withTitle(diagram.getTitleDisplay());</span>
-<span class="fc" id="L427">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagram.getUmlDiagramType().name());</span>
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (skinParam != null)</span>
+<span class="fc" id="L425">			option = option.withConfigurationStore(skinParam.options());</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">		if (diagram != null) {</span>
+<span class="fc" id="L427">			option = option.withTitle(diagram.getTitleDisplay());</span>
+<span class="fc" id="L428">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagram.getUmlDiagramType().name());</span>
 		}
 
-<span class="fc bfc" id="L430" title="All 2 branches covered.">		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
-<span class="fc" id="L431">			String interactiveBaseFilename = &quot;default&quot;;</span>
-<span class="pc bpc" id="L432" title="1 of 4 branches missed.">			if (diagram != null &amp;&amp; diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)</span>
-<span class="fc" id="L433">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
-<span class="fc" id="L434">			option = option.withInteractive(interactiveBaseFilename);</span>
+<span class="fc bfc" id="L431" title="All 2 branches covered.">		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
+<span class="fc" id="L432">			String interactiveBaseFilename = &quot;default&quot;;</span>
+<span class="pc bpc" id="L433" title="1 of 4 branches missed.">			if (diagram != null &amp;&amp; diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)</span>
+<span class="fc" id="L434">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
+<span class="fc" id="L435">			option = option.withInteractive(interactiveBaseFilename);</span>
 		}
 
-<span class="pc bpc" id="L437" title="1 of 2 branches missed.">		if (skinParam != null) {</span>
-<span class="fc" id="L438">			option = option.withLengthAdjust(skinParam.getlengthAdjust());</span>
-<span class="fc" id="L439">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
+<span class="pc bpc" id="L438" title="1 of 2 branches missed.">		if (skinParam != null) {</span>
+<span class="fc" id="L439">			option = option.withLengthAdjust(skinParam.getlengthAdjust());</span>
+<span class="fc" id="L440">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
 		}
 
-<span class="fc" id="L442">		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);</span>
-<span class="fc" id="L443">		return ug;</span>
+<span class="fc" id="L443">		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);</span>
+<span class="fc" id="L444">		return ug;</span>
 
 	}
 
 	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, String watermark,
 			FileFormat format) {
-<span class="fc" id="L449">		Color pngBackColor = new Color(0, 0, 0, 0);</span>
+<span class="fc" id="L450">		Color pngBackColor = new Color(0, 0, 0, 0);</span>
 
-<span class="pc bpc" id="L451" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorSimple)</span>
-<span class="fc" id="L452">			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorSimple)</span>
+<span class="fc" id="L453">			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());</span>
 
-<span class="pc bpc" id="L454" title="1 of 2 branches missed.">		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent()</span>
-<span class="nc bnc" id="L455" title="All 4 branches missed.">				&amp;&amp; (Color.WHITE.equals(pngBackColor) || Color.BLACK.equals(pngBackColor)))</span>
-<span class="nc" id="L456">			pngBackColor = new Color(0, 0, 0, 0);</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent()</span>
+<span class="nc bnc" id="L456" title="All 4 branches missed.">				&amp;&amp; (Color.WHITE.equals(pngBackColor) || Color.BLACK.equals(pngBackColor)))</span>
+<span class="nc" id="L457">			pngBackColor = new Color(0, 0, 0, 0);</span>
 
-<span class="fc" id="L458">		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),</span>
-<span class="fc" id="L459">				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);</span>
-<span class="fc" id="L460">		final Graphics2D graphics2D = builder.getGraphics2D();</span>
+<span class="fc" id="L459">		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),</span>
+<span class="fc" id="L460">				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);</span>
+<span class="fc" id="L461">		final Graphics2D graphics2D = builder.getGraphics2D();</span>
 
-<span class="fc" id="L462">		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,</span>
+<span class="fc" id="L463">		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,</span>
 				scaleFactor, format);
 
-<span class="fc" id="L465">		ug.setBufferedImage(builder.getBufferedImage());</span>
-<span class="fc" id="L466">		final BufferedImage im = ug.getBufferedImage();</span>
-<span class="pc bpc" id="L467" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorGradient)</span>
-<span class="nc" id="L468">			ug.apply(this.backcolor.bg())</span>
-<span class="nc" id="L469">					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));</span>
+<span class="fc" id="L466">		ug.setBufferedImage(builder.getBufferedImage());</span>
+<span class="fc" id="L467">		final BufferedImage im = ug.getBufferedImage();</span>
+<span class="pc bpc" id="L468" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorGradient)</span>
+<span class="nc" id="L469">			ug.apply(this.backcolor.bg())</span>
+<span class="nc" id="L470">					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));</span>
 
-<span class="fc" id="L471">		return ug;</span>
+<span class="fc" id="L472">		return ug;</span>
 	}
 
 	static private HColor getDefaultHBackColor() {
-<span class="fc" id="L475">		return HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="fc" id="L476">		return HColors.WHITE.withDark(HColors.BLACK);</span>
 	}
 
 	private String getHoverPathColorRGB() {
-<span class="pc bpc" id="L479" title="1 of 2 branches missed.">		if (fileFormatOption.getHoverColor() != null) {</span>
-<span class="nc" id="L480">			return fileFormatOption.getHoverColor();</span>
-<span class="pc bpc" id="L481" title="1 of 2 branches missed.">		} else if (skinParam != null) {</span>
-<span class="fc" id="L482">			final HColor color = skinParam.hoverPathColor();</span>
-<span class="pc bpc" id="L483" title="1 of 2 branches missed.">			if (color != null)</span>
-<span class="nc" id="L484">				return color.toRGB(fileFormatOption.getColorMapper());</span>
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">		if (fileFormatOption.getHoverColor() != null) {</span>
+<span class="nc" id="L481">			return fileFormatOption.getHoverColor();</span>
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		} else if (skinParam != null) {</span>
+<span class="fc" id="L483">			final HColor color = skinParam.hoverPathColor();</span>
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">			if (color != null)</span>
+<span class="nc" id="L485">				return color.toRGB(fileFormatOption.getColorMapper());</span>
 
 		}
-<span class="fc" id="L487">		return null;</span>
+<span class="fc" id="L488">		return null;</span>
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
-<span class="fc" id="L491">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
-<span class="fc" id="L492">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc bfc" id="L493" title="All 2 branches covered.">		if (style.hasValue(PName.Margin))</span>
-<span class="fc" id="L494">			return style.getMargin();</span>
+<span class="fc" id="L492">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="fc" id="L493">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc bfc" id="L494" title="All 2 branches covered.">		if (style.hasValue(PName.Margin))</span>
+<span class="fc" id="L495">			return style.getMargin();</span>
 
-<span class="fc" id="L496">		return diagram.getDefaultMargins();</span>
+<span class="fc" id="L497">		return diagram.getDefaultMargins();</span>
 	}
 
 	public String getPreserveAspectRatio() {
-<span class="fc bfc" id="L500" title="All 2 branches covered.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
-<span class="fc" id="L501">			return fileFormatOption.getPreserveAspectRatio();</span>
-<span class="fc bfc" id="L502" title="All 2 branches covered.">		else if (skinParam != null)</span>
-<span class="fc" id="L503">			return skinParam.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
+<span class="fc" id="L502">			return fileFormatOption.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">		else if (skinParam != null)</span>
+<span class="fc" id="L504">			return skinParam.getPreserveAspectRatio();</span>
 		else
-<span class="fc" id="L505">			return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
+<span class="fc" id="L506">			return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
 
 	}
 
 	private ImageDataSimple createImageData(XDimension2D dim) {
-<span class="fc" id="L510">		return new ImageDataSimple(dim, status);</span>
+<span class="fc" id="L511">		return new ImageDataSimple(dim, status);</span>
 	}
 
 }
