@@ -52,9 +52,9 @@ public class WormMutation {
 	public static WormMutation create(Worm worm, double delta) {
 		final String signature = worm.getDirectionsCode();
 		final String definition = getDefinition(signature);
-		if (definition == null) {
+		if (definition == null)
 			return createFromLongSignature(signature, delta);
-		}
+
 		return new WormMutation(definition, delta);
 	}
 
@@ -66,23 +66,23 @@ public class WormMutation {
 				result.translations.add(tmp.translations.get(0));
 			} else {
 				UTranslate last = result.getLast();
-				if (last.isAlmostSame(tmp.translations.get(0)) == false) {
+				if (last.isAlmostSame(tmp.translations.get(0)) == false)
 					tmp = tmp.reverse();
-				}
+
 			}
 			result.translations.add(tmp.translations.get(1));
-			if (i == signature.length() - 2) {
+			if (i == signature.length() - 2)
 				result.translations.add(tmp.translations.get(2));
-			}
+
 		}
 		return result;
 	}
 
 	private WormMutation reverse() {
 		final WormMutation result = new WormMutation();
-		for (UTranslate tr : translations) {
+		for (UTranslate tr : translations)
 			result.translations.add(tr.reverse());
-		}
+
 		return result;
 	}
 
@@ -99,27 +99,27 @@ public class WormMutation {
 	}
 
 	private static String getDefinition(final String signature) {
-		if (signature.equals("D") || signature.equals("U")) {
+		if (signature.equals("D") || signature.equals("U"))
 			return "33";
-		} else if (signature.equals("L") || signature.equals("R")) {
+		else if (signature.equals("L") || signature.equals("R"))
 			return "55";
-		} else if (signature.equals("RD")) {
+		else if (signature.equals("RD"))
 			return "123";
-		} else if (signature.equals("RU")) {
+		else if (signature.equals("RU"))
 			return "543";
-		} else if (signature.equals("LD")) {
+		else if (signature.equals("LD"))
 			return "187";
-		} else if (signature.equals("DL")) {
+		else if (signature.equals("DL"))
 			return "345";
-		} else if (signature.equals("DR")) {
+		else if (signature.equals("DR"))
 			return "765";
-		} else if (signature.equals("UL")) {
+		else if (signature.equals("UL"))
 			return "321";
-		} else if (signature.equals("UR")) {
+		else if (signature.equals("UR"))
 			return "781";
-			// } else if (signature.equals("DLD")) {
-			// return "3443";
-		}
+		// } else if (signature.equals("DLD")) {
+		// return "3443";
+
 		return null;
 	}
 
@@ -158,18 +158,18 @@ public class WormMutation {
 		private double max = Double.MIN_VALUE;
 
 		private void append(double v) {
-			if (v > max) {
+			if (v > max)
 				max = v;
-			}
-			if (v < min) {
+
+			if (v < min)
 				min = v;
-			}
+
 		}
 
 		private double getExtreme() {
-			if (Math.abs(max) > Math.abs(min)) {
+			if (Math.abs(max) > Math.abs(min))
 				return max;
-			}
+
 			return min;
 		}
 
@@ -177,9 +177,9 @@ public class WormMutation {
 
 	public UTranslate getTextTranslate(int size) {
 		final MinMax result = new MinMax();
-		for (UTranslate tr : translations) {
+		for (UTranslate tr : translations)
 			result.append(tr.getDx());
-		}
+
 		return UTranslate.dx(result.getExtreme() * (size - 1));
 	}
 
@@ -189,9 +189,9 @@ public class WormMutation {
 
 	public Worm mute(Worm original) {
 		final Worm result = original.cloneEmpty();
-		for (int i = 0; i < original.size(); i++) {
-			result.addPoint(translations.get(i).getTranslated(original.get(i)));
-		}
+		for (int i = 0; i < original.size(); i++)
+			result.addPoint(translations.get(i).getTranslated(original.getPoint(i)));
+
 		return result;
 	}
 

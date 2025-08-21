@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.decoration.HtmlColorAndStyle;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.compress.PiecewiseAffineTransform;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -90,26 +89,18 @@ public class Snake implements UShape {
 	private final Direction emphasizeDirection;
 	private final ISkinParam skinParam;
 
-	public Snake transformX(PiecewiseAffineTransform compressionTransform) {
-		final Snake result = cloneEmpty();
-		for (XPoint2D pt : worm) {
-			final double x = compressionTransform.transform(pt.x);
-			final double y = pt.y;
-			result.addPoint(x, y);
-		}
-		return result;
-	}
+//	public Snake transformX(PiecewiseAffineTransform compressionTransform) {
+//		final Snake result = cloneEmpty();
+//		for (XPoint2D pt : worm) {
+//			final double x = compressionTransform.transform(pt.x);
+//			final double y = pt.y;
+//			result.addPoint(x, y);
+//		}
+//		return result;
+//	}
 
 	public Snake move(double dx, double dy) {
-		final Snake result = cloneEmpty();
-		for (XPoint2D pt : worm)
-			result.addPoint(pt.getX() + dx, pt.getY() + dy);
-
-		return result;
-	}
-
-	private Snake cloneEmpty() {
-		return new Snake(skinParam, startDecoration, color, endDecoration, worm.cloneEmpty(), mergeable,
+		return new Snake(skinParam, startDecoration, color, endDecoration, worm.move(dx, dy), mergeable,
 				emphasizeDirection, texts);
 	}
 
@@ -241,10 +232,7 @@ public class Snake implements UShape {
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-		double result = -Double.MAX_VALUE;
-		for (XPoint2D pt : worm)
-			result = Math.max(result, pt.getX());
-
+		double result = worm.getMaxX();
 		for (Text text : texts) {
 			final XPoint2D position = getTextBlockPosition(stringBounder, text);
 			final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);
@@ -254,8 +242,8 @@ public class Snake implements UShape {
 	}
 
 	private XPoint2D getTextBlockPosition(StringBounder stringBounder, Text text) {
-		final XPoint2D pt1 = worm.get(0);
-		final XPoint2D pt2 = worm.get(1);
+		final XPoint2D pt1 = worm.getPoint(0);
+		final XPoint2D pt2 = worm.getPoint(1);
 		final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);
 		double x = Math.max(pt1.getX(), pt2.getX()) + 4;
 		final boolean zigzag = worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD");
@@ -267,16 +255,16 @@ public class Snake implements UShape {
 			x = worm.getMinX();
 			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;
 		} else if (text.horizontalAlignment == HorizontalAlignment.CENTER && zigzag) {
-			final XPoint2D pt3 = worm.get(2);
+			final XPoint2D pt3 = worm.getPoint(2);
 			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;
 		} else if (text.horizontalAlignment == HorizontalAlignment.RIGHT && zigzag) {
 			x = Math.max(pt1.getX(), pt2.getX()) - dim.getWidth() - 4;
 		} else if (worm.getDirectionsCode().equals("RD")) {
 			x = Math.max(pt1.getX(), pt2.getX());
-			y = (pt1.getY() + worm.get(2).getY()) / 2 - dim.getHeight() / 2;
+			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;
 		} else if (worm.getDirectionsCode().equals("LD")) {
 			x = Math.min(pt1.getX(), pt2.getX());
-			y = (pt1.getY() + worm.get(2).getY()) / 2 - dim.getHeight() / 2;
+			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;
 		}
 		return new XPoint2D(x, y);
 	}
@@ -284,8 +272,8 @@ public class Snake implements UShape {
 	public List<XLine2D> getHorizontalLines() {
 		final List<XLine2D> result = new ArrayList<>();
 		for (int i = 0; i < worm.size() - 1; i++) {
-			final XPoint2D pt1 = worm.get(i);
-			final XPoint2D pt2 = worm.get(i + 1);
+			final XPoint2D pt1 = worm.getPoint(i);
+			final XPoint2D pt2 = worm.getPoint(i + 1);
 			if (pt1.getY() == pt2.getY()) {
 				final XLine2D line = XLine2D.line(pt1, pt2);
 				result.add(line);
@@ -296,11 +284,11 @@ public class Snake implements UShape {
 	}
 
 	private XPoint2D getFirst() {
-		return worm.get(0);
+		return worm.getPoint(0);
 	}
 
 	public XPoint2D getLast() {
-		return worm.get(worm.size() - 1);
+		return worm.getPoint(worm.size() - 1);
 	}
 
 	static boolean same(XPoint2D pt1, XPoint2D pt2) {
