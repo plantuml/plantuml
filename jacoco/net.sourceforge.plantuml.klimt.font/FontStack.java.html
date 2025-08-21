@@ -36,16 +36,13 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class FontStack {
 
-<span class="fc" id="L48">	private final List&lt;Font&gt; fonts = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L45">	private final List&lt;Font&gt; fonts = new ArrayList&lt;&gt;();</span>
 	private final String fullDefinition;
 
 //	private static final Set&lt;String&gt; availableFontFamilyNames = new TreeSet&lt;&gt;();
@@ -55,74 +52,74 @@ public class FontStack {
 //			availableFontFamilyNames.add(name.toLowerCase());
 //	}
 
-<span class="fc" id="L58">	public FontStack(String fullDefinition) {</span>
-<span class="fc" id="L59">		this.fullDefinition = fullDefinition;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L55">	public FontStack(String fullDefinition) {</span>
+<span class="fc" id="L56">		this.fullDefinition = fullDefinition;</span>
+<span class="fc" id="L57">	}</span>
 	
 
 	private List&lt;Font&gt; getFonts() {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (fonts.size() == 0)</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			for (String name : fullDefinition.split(&quot;,&quot;)) {</span>
-<span class="fc" id="L66">				name = trimWhitespaceOrDoubleQuote(name);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (fonts.size() == 0)</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">			for (String name : fullDefinition.split(&quot;,&quot;)) {</span>
+<span class="fc" id="L63">				name = trimWhitespaceOrDoubleQuote(name);</span>
 				// final Font font = new Font(name, Font.PLAIN, 12);
-<span class="fc" id="L68">				final Font font = Font.decode(name);</span>
-<span class="fc" id="L69">				fonts.add(font);</span>
+<span class="fc" id="L65">				final Font font = Font.decode(name);</span>
+<span class="fc" id="L66">				fonts.add(font);</span>
 			}
 
-<span class="fc" id="L72">		return fonts;</span>
+<span class="fc" id="L69">		return fonts;</span>
 	}
 
 	public int canDisplayUpTo(int index, String text) {
-<span class="fc" id="L76">		return getFonts().get(index).canDisplayUpTo(text);</span>
+<span class="fc" id="L73">		return getFonts().get(index).canDisplayUpTo(text);</span>
 	}
 
 	public Font getFont(String text, int style, int size) {
-<span class="pc bpc" id="L80" title="3 of 4 branches missed.">		if (getFonts().size() &gt; 1 &amp;&amp; text != null)</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			for (Font font : getFonts())</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">				if (font.canDisplayUpTo(text) == -1)</span>
-<span class="nc" id="L83">					return font.deriveFont(style, (float) size);</span>
+<span class="pc bpc" id="L77" title="3 of 4 branches missed.">		if (getFonts().size() &gt; 1 &amp;&amp; text != null)</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (Font font : getFonts())</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (font.canDisplayUpTo(text) == -1)</span>
+<span class="nc" id="L80">					return font.deriveFont(style, (float) size);</span>
 
-<span class="fc" id="L85">		return getFonts().get(0).deriveFont(style, (float) size);</span>
+<span class="fc" id="L82">		return getFonts().get(0).deriveFont(style, (float) size);</span>
 	}
 
 	private static boolean isWhitespaceOrDoubleQuote(char c) {
-<span class="pc bpc" id="L89" title="1 of 4 branches missed.">		return Character.isWhitespace(c) || c == '&quot;';</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">		return Character.isWhitespace(c) || c == '&quot;';</span>
 	}
 
 	private static String trimWhitespaceOrDoubleQuote(String s) {
-<span class="fc" id="L93">		int start = 0;</span>
-<span class="fc" id="L94">		int end = s.length();</span>
+<span class="fc" id="L90">		int start = 0;</span>
+<span class="fc" id="L91">		int end = s.length();</span>
 
-<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		while (start &lt; end &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(start)))</span>
-<span class="fc" id="L97">			start++;</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">		while (start &lt; end &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(start)))</span>
+<span class="fc" id="L94">			start++;</span>
 
-<span class="pc bpc" id="L99" title="1 of 4 branches missed.">		while (end &gt; start &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(end - 1)))</span>
-<span class="fc" id="L100">			end--;</span>
-<span class="fc" id="L101">		return s.substring(start, end);</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		while (end &gt; start &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(end - 1)))</span>
+<span class="fc" id="L97">			end--;</span>
+<span class="fc" id="L98">		return s.substring(start, end);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L107">			return true;</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (!(obj instanceof FontStack))</span>
-<span class="nc" id="L109">			return false;</span>
-<span class="fc" id="L110">		FontStack other = (FontStack) obj;</span>
-<span class="fc" id="L111">		return Objects.equals(fullDefinition, other.fullDefinition);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L104">			return true;</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (!(obj instanceof FontStack))</span>
+<span class="nc" id="L106">			return false;</span>
+<span class="fc" id="L107">		FontStack other = (FontStack) obj;</span>
+<span class="fc" id="L108">		return Objects.equals(fullDefinition, other.fullDefinition);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L116">		return Objects.hash(fullDefinition);</span>
+<span class="fc" id="L113">		return Objects.hash(fullDefinition);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L121">		return &quot;FontStack[&quot; + fullDefinition + &quot;]&quot;;</span>
+<span class="nc" id="L118">		return &quot;FontStack[&quot; + fullDefinition + &quot;]&quot;;</span>
 	}
 
 	public String getFullDefinition() {
-<span class="fc" id="L125">		return fullDefinition;</span>
+<span class="fc" id="L122">		return fullDefinition;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
