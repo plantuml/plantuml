@@ -421,7 +421,8 @@ public class ImageBuilder {
 		option = option.withLinkTarget(getSvgLinkTarget());
 		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));
 		option = option.withPragma(pragma);
-		option = option.withConfigurationStore(skinParam.options());
+		if (skinParam != null)
+			option = option.withConfigurationStore(skinParam.options());
 		if (diagram != null) {
 			option = option.withTitle(diagram.getTitleDisplay());
 			option = option.withRootAttribute("data-diagram-type", diagram.getUmlDiagramType().name());
