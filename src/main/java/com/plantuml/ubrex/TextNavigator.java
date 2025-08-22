@@ -55,8 +55,9 @@ public class TextNavigator implements CharSequence {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < length(); i++)
+		final int length = length();
+		final StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++)
 			sb.append(this.charAt(i));
 		return sb.toString();
 	}
