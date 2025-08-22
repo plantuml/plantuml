@@ -229,23 +229,22 @@ import java.util.TreeSet;
 	public void putColor(CharSequence name, Color color) {
 <span class="fc" id="L230">		ColorTrieNode n = this;</span>
 <span class="fc bfc" id="L231" title="All 2 branches covered.">		for (int i = 0, len = name.length(); i &lt; len; i++) {</span>
-<span class="fc" id="L232">			ColorTrieNode next = n.child(name.charAt(i), true);</span>
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">			if (next == null)</span>
+<span class="fc" id="L232">			n = n.child(name.charAt(i), true);</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">			if (n == null)</span>
 <span class="nc" id="L234">				return;</span>
-<span class="fc" id="L235">			n = next;</span>
 		}
-<span class="fc" id="L237">		n.value = color;</span>
-<span class="fc" id="L238">	}</span>
+<span class="fc" id="L236">		n.value = color;</span>
+<span class="fc" id="L237">	}</span>
 
 	public Color getColor(CharSequence name) {
-<span class="fc" id="L241">		ColorTrieNode n = this;</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">		for (int i = 0, len = name.length(); i &lt; len; i++) {</span>
-<span class="fc" id="L243">			n = n.child(name.charAt(i), false);</span>
-<span class="fc bfc" id="L244" title="All 2 branches covered.">			if (n == null)</span>
-<span class="fc" id="L245">				return null;</span>
+<span class="fc" id="L240">		ColorTrieNode n = this;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		for (int i = 0, len = name.length(); i &lt; len; i++) {</span>
+<span class="fc" id="L242">			n = n.child(name.charAt(i), false);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">			if (n == null)</span>
+<span class="fc" id="L244">				return null;</span>
 
 		}
-<span class="fc" id="L248">		return n.value;</span>
+<span class="fc" id="L247">		return n.value;</span>
 	}
 
 }
