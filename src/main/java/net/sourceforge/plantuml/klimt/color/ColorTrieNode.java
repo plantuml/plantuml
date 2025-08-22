@@ -229,10 +229,9 @@ public class ColorTrieNode {
 	public void putColor(CharSequence name, Color color) {
 		ColorTrieNode n = this;
 		for (int i = 0, len = name.length(); i < len; i++) {
-			ColorTrieNode next = n.child(name.charAt(i), true);
-			if (next == null)
+			n = n.child(name.charAt(i), true);
+			if (n == null)
 				return;
-			n = next;
 		}
 		n.value = color;
 	}

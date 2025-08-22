@@ -107,14 +107,37 @@ public enum TokenOperator {
 	}
 
 	public static TokenOperator getTokenOperator(char ch, char ch2) {
-		for (TokenOperator op : TokenOperator.values())
-			if (op.display.length() == 2 && op.display.charAt(0) == ch && op.display.charAt(1) == ch2)
-				return op;
+		switch (ch) {
+		case '*':
+			return MULTIPLICATION;
 
-		for (TokenOperator op : TokenOperator.values())
-			if (op.display.length() == 1 && op.display.charAt(0) == ch)
-				return op;
+		case '/':
+			return DIVISION;
 
+		case '+':
+			return ADDITION;
+
+		case TokenType.COMMERCIAL_MINUS_SIGN:
+			return SUBSTRACTION;
+
+		case '<':
+			return (ch2 == '=') ? LESS_THAN_OR_EQUALS : LESS_THAN;
+
+		case '>':
+			return (ch2 == '=') ? GREATER_THAN_OR_EQUALS : GREATER_THAN;
+
+		case '=':
+			return (ch2 == '=') ? EQUALS : null;
+
+		case '!':
+			return (ch2 == '=') ? NOT_EQUALS : null;
+
+		case '&':
+			return (ch2 == '&') ? LOGICAL_AND : null;
+
+		case '|':
+			return (ch2 == '|') ? LOGICAL_OR : null;
+		}
 		return null;
 	}
 
