@@ -37,14 +37,14 @@ package net.sourceforge.plantuml;
 
 public final class StringBuilder2 {
 	private final char[] buffer;
-<span class="fc" id="L40">	private int length = 0;</span>
+<span class="nc" id="L40">	private int length = 0;</span>
 
-<span class="fc" id="L42">	public StringBuilder2(int capacity) {</span>
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if (capacity &lt; 0)</span>
+<span class="nc" id="L42">	public StringBuilder2(int capacity) {</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (capacity &lt; 0)</span>
 <span class="nc" id="L44">			throw new IllegalArgumentException(&quot;Capacity must be non-negative&quot;);</span>
 
-<span class="fc" id="L46">		this.buffer = new char[capacity];</span>
-<span class="fc" id="L47">	}</span>
+<span class="nc" id="L46">		this.buffer = new char[capacity];</span>
+<span class="nc" id="L47">	}</span>
 
 	public int capacity() {
 <span class="nc" id="L50">		return buffer.length;</span>
@@ -55,11 +55,11 @@ public final class StringBuilder2 {
 	}
 
 	public StringBuilder2 append(char c) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (length == buffer.length)</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (length == buffer.length)</span>
 <span class="nc" id="L59">			throw new IllegalStateException(&quot;Capacity exceeded&quot;);</span>
 
-<span class="fc" id="L61">		buffer[length++] = c;</span>
-<span class="fc" id="L62">		return this;</span>
+<span class="nc" id="L61">		buffer[length++] = c;</span>
+<span class="nc" id="L62">		return this;</span>
 	}
 
 	public StringBuilder2 append(CharSequence csq) {
@@ -110,7 +110,7 @@ public final class StringBuilder2 {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L113">		return new String(buffer, 0, length);</span>
+<span class="nc" id="L113">		return new String(buffer, 0, length);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

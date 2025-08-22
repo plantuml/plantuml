@@ -38,412 +38,144 @@ package net.sourceforge.plantuml.klimt.color;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
-
-import net.sourceforge.plantuml.StringBuilder2;
 
 public class HColorSet {
 
-<span class="fc" id="L51">	private final static HColorSet singleton = new HColorSet();</span>
-
-<span class="fc" id="L53">	private final Map&lt;String, String&gt; htmlNames = new HashMap&lt;String, String&gt;();</span>
-<span class="fc" id="L54">	private final Set&lt;String&gt; names = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L44">	private final static HColorSet singleton = new HColorSet();</span>
 
 	public static HColorSet instance() {
-<span class="fc" id="L57">		return singleton;</span>
+<span class="fc" id="L47">		return singleton;</span>
 	}
 
 	public Collection&lt;String&gt; names() {
-<span class="nc" id="L61">		return Collections.unmodifiableSet(names);</span>
+<span class="nc" id="L51">		return Collections.unmodifiableCollection(ColorTrieNode.NAMES);</span>
 	}
 
-<span class="fc" id="L64">	private HColorSet() {</span>
-		// Taken from http://perl.wikipedia.com/wiki/Named_colors ?
-		// http://www.w3schools.com/HTML/html_colornames.asp
-<span class="fc" id="L67">		register(&quot;AliceBlue&quot;, &quot;#F0F8FF&quot;);</span>
-<span class="fc" id="L68">		register(&quot;AntiqueWhite&quot;, &quot;#FAEBD7&quot;);</span>
-<span class="fc" id="L69">		register(&quot;Aqua&quot;, &quot;#00FFFF&quot;);</span>
-<span class="fc" id="L70">		register(&quot;Aquamarine&quot;, &quot;#7FFFD4&quot;);</span>
-<span class="fc" id="L71">		register(&quot;Azure&quot;, &quot;#F0FFFF&quot;);</span>
-<span class="fc" id="L72">		register(&quot;Beige&quot;, &quot;#F5F5DC&quot;);</span>
-<span class="fc" id="L73">		register(&quot;Bisque&quot;, &quot;#FFE4C4&quot;);</span>
-<span class="fc" id="L74">		register(&quot;Black&quot;, &quot;#000000&quot;);</span>
-<span class="fc" id="L75">		register(&quot;BlanchedAlmond&quot;, &quot;#FFEBCD&quot;);</span>
-<span class="fc" id="L76">		register(&quot;Blue&quot;, &quot;#0000FF&quot;);</span>
-<span class="fc" id="L77">		register(&quot;BlueViolet&quot;, &quot;#8A2BE2&quot;);</span>
-<span class="fc" id="L78">		register(&quot;Brown&quot;, &quot;#A52A2A&quot;);</span>
-<span class="fc" id="L79">		register(&quot;BurlyWood&quot;, &quot;#DEB887&quot;);</span>
-<span class="fc" id="L80">		register(&quot;CadetBlue&quot;, &quot;#5F9EA0&quot;);</span>
-<span class="fc" id="L81">		register(&quot;Chartreuse&quot;, &quot;#7FFF00&quot;);</span>
-<span class="fc" id="L82">		register(&quot;Chocolate&quot;, &quot;#D2691E&quot;);</span>
-<span class="fc" id="L83">		register(&quot;Coral&quot;, &quot;#FF7F50&quot;);</span>
-<span class="fc" id="L84">		register(&quot;CornflowerBlue&quot;, &quot;#6495ED&quot;);</span>
-<span class="fc" id="L85">		register(&quot;Cornsilk&quot;, &quot;#FFF8DC&quot;);</span>
-<span class="fc" id="L86">		register(&quot;Crimson&quot;, &quot;#DC143C&quot;);</span>
-<span class="fc" id="L87">		register(&quot;Cyan&quot;, &quot;#00FFFF&quot;);</span>
-<span class="fc" id="L88">		register(&quot;DarkBlue&quot;, &quot;#00008B&quot;);</span>
-<span class="fc" id="L89">		register(&quot;DarkCyan&quot;, &quot;#008B8B&quot;);</span>
-<span class="fc" id="L90">		register(&quot;DarkGoldenRod&quot;, &quot;#B8860B&quot;);</span>
-<span class="fc" id="L91">		register(&quot;DarkGray&quot;, &quot;#A9A9A9&quot;);</span>
-<span class="fc" id="L92">		register(&quot;DarkGrey&quot;, &quot;#A9A9A9&quot;);</span>
-<span class="fc" id="L93">		register(&quot;DarkGreen&quot;, &quot;#006400&quot;);</span>
-<span class="fc" id="L94">		register(&quot;DarkKhaki&quot;, &quot;#BDB76B&quot;);</span>
-<span class="fc" id="L95">		register(&quot;DarkMagenta&quot;, &quot;#8B008B&quot;);</span>
-<span class="fc" id="L96">		register(&quot;DarkOliveGreen&quot;, &quot;#556B2F&quot;);</span>
-<span class="fc" id="L97">		register(&quot;Darkorange&quot;, &quot;#FF8C00&quot;);</span>
-<span class="fc" id="L98">		register(&quot;DarkOrchid&quot;, &quot;#9932CC&quot;);</span>
-<span class="fc" id="L99">		register(&quot;DarkRed&quot;, &quot;#8B0000&quot;);</span>
-<span class="fc" id="L100">		register(&quot;DarkSalmon&quot;, &quot;#E9967A&quot;);</span>
-<span class="fc" id="L101">		register(&quot;DarkSeaGreen&quot;, &quot;#8FBC8F&quot;);</span>
-<span class="fc" id="L102">		register(&quot;DarkSlateBlue&quot;, &quot;#483D8B&quot;);</span>
-<span class="fc" id="L103">		register(&quot;DarkSlateGray&quot;, &quot;#2F4F4F&quot;);</span>
-<span class="fc" id="L104">		register(&quot;DarkSlateGrey&quot;, &quot;#2F4F4F&quot;);</span>
-<span class="fc" id="L105">		register(&quot;DarkTurquoise&quot;, &quot;#00CED1&quot;);</span>
-<span class="fc" id="L106">		register(&quot;DarkViolet&quot;, &quot;#9400D3&quot;);</span>
-<span class="fc" id="L107">		register(&quot;DeepPink&quot;, &quot;#FF1493&quot;);</span>
-<span class="fc" id="L108">		register(&quot;DeepSkyBlue&quot;, &quot;#00BFFF&quot;);</span>
-<span class="fc" id="L109">		register(&quot;DimGray&quot;, &quot;#696969&quot;);</span>
-<span class="fc" id="L110">		register(&quot;DimGrey&quot;, &quot;#696969&quot;);</span>
-<span class="fc" id="L111">		register(&quot;DodgerBlue&quot;, &quot;#1E90FF&quot;);</span>
-<span class="fc" id="L112">		register(&quot;FireBrick&quot;, &quot;#B22222&quot;);</span>
-<span class="fc" id="L113">		register(&quot;FloralWhite&quot;, &quot;#FFFAF0&quot;);</span>
-<span class="fc" id="L114">		register(&quot;ForestGreen&quot;, &quot;#228B22&quot;);</span>
-<span class="fc" id="L115">		register(&quot;Fuchsia&quot;, &quot;#FF00FF&quot;);</span>
-<span class="fc" id="L116">		register(&quot;Gainsboro&quot;, &quot;#DCDCDC&quot;);</span>
-<span class="fc" id="L117">		register(&quot;GhostWhite&quot;, &quot;#F8F8FF&quot;);</span>
-<span class="fc" id="L118">		register(&quot;Gold&quot;, &quot;#FFD700&quot;);</span>
-<span class="fc" id="L119">		register(&quot;GoldenRod&quot;, &quot;#DAA520&quot;);</span>
-<span class="fc" id="L120">		register(&quot;Gray&quot;, &quot;#808080&quot;);</span>
-<span class="fc" id="L121">		register(&quot;Grey&quot;, &quot;#808080&quot;);</span>
-<span class="fc" id="L122">		register(&quot;Green&quot;, &quot;#008000&quot;);</span>
-<span class="fc" id="L123">		register(&quot;GreenYellow&quot;, &quot;#ADFF2F&quot;);</span>
-<span class="fc" id="L124">		register(&quot;HoneyDew&quot;, &quot;#F0FFF0&quot;);</span>
-<span class="fc" id="L125">		register(&quot;HotPink&quot;, &quot;#FF69B4&quot;);</span>
-<span class="fc" id="L126">		register(&quot;IndianRed&quot;, &quot;#CD5C5C&quot;);</span>
-<span class="fc" id="L127">		register(&quot;Indigo&quot;, &quot;#4B0082&quot;);</span>
-<span class="fc" id="L128">		register(&quot;Ivory&quot;, &quot;#FFFFF0&quot;);</span>
-<span class="fc" id="L129">		register(&quot;Khaki&quot;, &quot;#F0E68C&quot;);</span>
-<span class="fc" id="L130">		register(&quot;Lavender&quot;, &quot;#E6E6FA&quot;);</span>
-<span class="fc" id="L131">		register(&quot;LavenderBlush&quot;, &quot;#FFF0F5&quot;);</span>
-<span class="fc" id="L132">		register(&quot;LawnGreen&quot;, &quot;#7CFC00&quot;);</span>
-<span class="fc" id="L133">		register(&quot;LemonChiffon&quot;, &quot;#FFFACD&quot;);</span>
-<span class="fc" id="L134">		register(&quot;LightBlue&quot;, &quot;#ADD8E6&quot;);</span>
-<span class="fc" id="L135">		register(&quot;LightCoral&quot;, &quot;#F08080&quot;);</span>
-<span class="fc" id="L136">		register(&quot;LightCyan&quot;, &quot;#E0FFFF&quot;);</span>
-<span class="fc" id="L137">		register(&quot;LightGoldenRodYellow&quot;, &quot;#FAFAD2&quot;);</span>
-<span class="fc" id="L138">		register(&quot;LightGray&quot;, &quot;#D3D3D3&quot;);</span>
-<span class="fc" id="L139">		register(&quot;LightGrey&quot;, &quot;#D3D3D3&quot;);</span>
-<span class="fc" id="L140">		register(&quot;LightGreen&quot;, &quot;#90EE90&quot;);</span>
-<span class="fc" id="L141">		register(&quot;LightPink&quot;, &quot;#FFB6C1&quot;);</span>
-<span class="fc" id="L142">		register(&quot;LightSalmon&quot;, &quot;#FFA07A&quot;);</span>
-<span class="fc" id="L143">		register(&quot;LightSeaGreen&quot;, &quot;#20B2AA&quot;);</span>
-<span class="fc" id="L144">		register(&quot;LightSkyBlue&quot;, &quot;#87CEFA&quot;);</span>
-<span class="fc" id="L145">		register(&quot;LightSlateGray&quot;, &quot;#778899&quot;);</span>
-<span class="fc" id="L146">		register(&quot;LightSlateGrey&quot;, &quot;#778899&quot;);</span>
-<span class="fc" id="L147">		register(&quot;LightSteelBlue&quot;, &quot;#B0C4DE&quot;);</span>
-<span class="fc" id="L148">		register(&quot;LightYellow&quot;, &quot;#FFFFE0&quot;);</span>
-<span class="fc" id="L149">		register(&quot;Lime&quot;, &quot;#00FF00&quot;);</span>
-<span class="fc" id="L150">		register(&quot;LimeGreen&quot;, &quot;#32CD32&quot;);</span>
-<span class="fc" id="L151">		register(&quot;Linen&quot;, &quot;#FAF0E6&quot;);</span>
-<span class="fc" id="L152">		register(&quot;Magenta&quot;, &quot;#FF00FF&quot;);</span>
-<span class="fc" id="L153">		register(&quot;Maroon&quot;, &quot;#800000&quot;);</span>
-<span class="fc" id="L154">		register(&quot;MediumAquaMarine&quot;, &quot;#66CDAA&quot;);</span>
-<span class="fc" id="L155">		register(&quot;MediumBlue&quot;, &quot;#0000CD&quot;);</span>
-<span class="fc" id="L156">		register(&quot;MediumOrchid&quot;, &quot;#BA55D3&quot;);</span>
-<span class="fc" id="L157">		register(&quot;MediumPurple&quot;, &quot;#9370D8&quot;);</span>
-<span class="fc" id="L158">		register(&quot;MediumSeaGreen&quot;, &quot;#3CB371&quot;);</span>
-<span class="fc" id="L159">		register(&quot;MediumSlateBlue&quot;, &quot;#7B68EE&quot;);</span>
-<span class="fc" id="L160">		register(&quot;MediumSpringGreen&quot;, &quot;#00FA9A&quot;);</span>
-<span class="fc" id="L161">		register(&quot;MediumTurquoise&quot;, &quot;#48D1CC&quot;);</span>
-<span class="fc" id="L162">		register(&quot;MediumVioletRed&quot;, &quot;#C71585&quot;);</span>
-<span class="fc" id="L163">		register(&quot;MidnightBlue&quot;, &quot;#191970&quot;);</span>
-<span class="fc" id="L164">		register(&quot;MintCream&quot;, &quot;#F5FFFA&quot;);</span>
-<span class="fc" id="L165">		register(&quot;MistyRose&quot;, &quot;#FFE4E1&quot;);</span>
-<span class="fc" id="L166">		register(&quot;Moccasin&quot;, &quot;#FFE4B5&quot;);</span>
-<span class="fc" id="L167">		register(&quot;NavajoWhite&quot;, &quot;#FFDEAD&quot;);</span>
-<span class="fc" id="L168">		register(&quot;Navy&quot;, &quot;#000080&quot;);</span>
-<span class="fc" id="L169">		register(&quot;OldLace&quot;, &quot;#FDF5E6&quot;);</span>
-<span class="fc" id="L170">		register(&quot;Olive&quot;, &quot;#808000&quot;);</span>
-<span class="fc" id="L171">		register(&quot;OliveDrab&quot;, &quot;#6B8E23&quot;);</span>
-<span class="fc" id="L172">		register(&quot;Orange&quot;, &quot;#FFA500&quot;);</span>
-<span class="fc" id="L173">		register(&quot;OrangeRed&quot;, &quot;#FF4500&quot;);</span>
-<span class="fc" id="L174">		register(&quot;Orchid&quot;, &quot;#DA70D6&quot;);</span>
-<span class="fc" id="L175">		register(&quot;PaleGoldenRod&quot;, &quot;#EEE8AA&quot;);</span>
-<span class="fc" id="L176">		register(&quot;PaleGreen&quot;, &quot;#98FB98&quot;);</span>
-<span class="fc" id="L177">		register(&quot;PaleTurquoise&quot;, &quot;#AFEEEE&quot;);</span>
-<span class="fc" id="L178">		register(&quot;PaleVioletRed&quot;, &quot;#D87093&quot;);</span>
-<span class="fc" id="L179">		register(&quot;PapayaWhip&quot;, &quot;#FFEFD5&quot;);</span>
-<span class="fc" id="L180">		register(&quot;PeachPuff&quot;, &quot;#FFDAB9&quot;);</span>
-<span class="fc" id="L181">		register(&quot;Peru&quot;, &quot;#CD853F&quot;);</span>
-<span class="fc" id="L182">		register(&quot;Pink&quot;, &quot;#FFC0CB&quot;);</span>
-<span class="fc" id="L183">		register(&quot;Plum&quot;, &quot;#DDA0DD&quot;);</span>
-<span class="fc" id="L184">		register(&quot;PowderBlue&quot;, &quot;#B0E0E6&quot;);</span>
-<span class="fc" id="L185">		register(&quot;Purple&quot;, &quot;#800080&quot;);</span>
-<span class="fc" id="L186">		register(&quot;Red&quot;, &quot;#FF0000&quot;);</span>
-<span class="fc" id="L187">		register(&quot;RosyBrown&quot;, &quot;#BC8F8F&quot;);</span>
-<span class="fc" id="L188">		register(&quot;RoyalBlue&quot;, &quot;#4169E1&quot;);</span>
-<span class="fc" id="L189">		register(&quot;SaddleBrown&quot;, &quot;#8B4513&quot;);</span>
-<span class="fc" id="L190">		register(&quot;Salmon&quot;, &quot;#FA8072&quot;);</span>
-<span class="fc" id="L191">		register(&quot;SandyBrown&quot;, &quot;#F4A460&quot;);</span>
-<span class="fc" id="L192">		register(&quot;SeaGreen&quot;, &quot;#2E8B57&quot;);</span>
-<span class="fc" id="L193">		register(&quot;SeaShell&quot;, &quot;#FFF5EE&quot;);</span>
-<span class="fc" id="L194">		register(&quot;Sienna&quot;, &quot;#A0522D&quot;);</span>
-<span class="fc" id="L195">		register(&quot;Silver&quot;, &quot;#C0C0C0&quot;);</span>
-<span class="fc" id="L196">		register(&quot;SkyBlue&quot;, &quot;#87CEEB&quot;);</span>
-<span class="fc" id="L197">		register(&quot;SlateBlue&quot;, &quot;#6A5ACD&quot;);</span>
-<span class="fc" id="L198">		register(&quot;SlateGray&quot;, &quot;#708090&quot;);</span>
-<span class="fc" id="L199">		register(&quot;SlateGrey&quot;, &quot;#708090&quot;);</span>
-<span class="fc" id="L200">		register(&quot;Snow&quot;, &quot;#FFFAFA&quot;);</span>
-<span class="fc" id="L201">		register(&quot;SpringGreen&quot;, &quot;#00FF7F&quot;);</span>
-<span class="fc" id="L202">		register(&quot;SteelBlue&quot;, &quot;#4682B4&quot;);</span>
-<span class="fc" id="L203">		register(&quot;Tan&quot;, &quot;#D2B48C&quot;);</span>
-<span class="fc" id="L204">		register(&quot;Teal&quot;, &quot;#008080&quot;);</span>
-<span class="fc" id="L205">		register(&quot;Thistle&quot;, &quot;#D8BFD8&quot;);</span>
-<span class="fc" id="L206">		register(&quot;Tomato&quot;, &quot;#FF6347&quot;);</span>
-<span class="fc" id="L207">		register(&quot;Turquoise&quot;, &quot;#40E0D0&quot;);</span>
-<span class="fc" id="L208">		register(&quot;Violet&quot;, &quot;#EE82EE&quot;);</span>
-<span class="fc" id="L209">		register(&quot;Wheat&quot;, &quot;#F5DEB3&quot;);</span>
-<span class="fc" id="L210">		register(&quot;White&quot;, &quot;#FFFFFF&quot;);</span>
-<span class="fc" id="L211">		register(&quot;WhiteSmoke&quot;, &quot;#F5F5F5&quot;);</span>
-<span class="fc" id="L212">		register(&quot;Yellow&quot;, &quot;#FFFF00&quot;);</span>
-<span class="fc" id="L213">		register(&quot;YellowGreen&quot;, &quot;#9ACD32&quot;);</span>
-		// Archimate
-<span class="fc" id="L215">		register(&quot;BUSINESS&quot;, &quot;#FFFFCC&quot;);</span>
-<span class="fc" id="L216">		register(&quot;APPLICATION&quot;, &quot;#C2F0FF&quot;);</span>
-<span class="fc" id="L217">		register(&quot;MOTIVATION&quot;, &quot;#EFEFFF&quot;);</span>
-<span class="fc" id="L218">		register(&quot;STRATEGY&quot;, &quot;#F8E7C0&quot;);</span>
-<span class="fc" id="L219">		register(&quot;TECHNOLOGY&quot;, &quot;#C9FFC9&quot;);</span>
-<span class="fc" id="L220">		register(&quot;PHYSICAL&quot;, &quot;#97FF97&quot;);</span>
-<span class="fc" id="L221">		register(&quot;IMPLEMENTATION&quot;, &quot;#FFE0E0&quot;);</span>
-<span class="fc" id="L222">	}</span>
-
-	private void register(String s, String color) {
-<span class="fc" id="L225">		htmlNames.put(removeFirstDieseAndgoLowerCase(s), color);</span>
-<span class="fc" id="L226">		names.add(s);</span>
-<span class="fc" id="L227">	}</span>
+	private HColorSet() {
+	}
 
 	public HColor getColorOrWhite(String s) {
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (isColorValid(Objects.requireNonNull(s)) == false)</span>
-<span class="nc" id="L231">			return HColors.WHITE;</span>
-
-		try {
-<span class="fc" id="L234">			return getColor(s);</span>
-<span class="nc" id="L235">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L236">			assert false;</span>
-<span class="nc" id="L237">			return HColors.WHITE;</span>
-		}
-	}
-
-	static class Gradient {
-		private final String s1;
-		private final char sep;
-		private final String s2;
-		private final HColorSet me;
-
-<span class="nc" id="L247">		Gradient(HColorSet me, String s1, char sep, String s2) {</span>
-<span class="nc" id="L248">			this.me = me;</span>
-<span class="nc" id="L249">			this.s1 = s1;</span>
-<span class="nc" id="L250">			this.sep = sep;</span>
-<span class="nc" id="L251">			this.s2 = s2;</span>
-<span class="nc" id="L252">		}</span>
-
-		boolean isValid() {
-<span class="nc bnc" id="L255" title="All 4 branches missed.">			return me.isColorValid(s1) &amp;&amp; me.isColorValid(s2);</span>
-		}
-
-		// ::comment when __HAXE__
-		HColorGradient buildInternal() {
-<span class="nc" id="L260">			return HColors.gradient(me.build(s1), me.build(s2), sep);</span>
-		}
-		// ::done
-
-	}
-
-	static class Automatic {
-		private final String[] colors;
-		private final HColorSet me;
-
-<span class="nc" id="L270">		public Automatic(HColorSet me, String[] colors) {</span>
-<span class="nc" id="L271">			this.me = me;</span>
-<span class="nc" id="L272">			this.colors = colors;</span>
-<span class="nc" id="L273">		}</span>
-
-		boolean isValid() {
-<span class="nc bnc" id="L276" title="All 2 branches missed.">			for (String color : colors)</span>
-<span class="nc bnc" id="L277" title="All 2 branches missed.">				if (me.isColorValid(color) == false)</span>
-<span class="nc" id="L278">					return false;</span>
-
-<span class="nc" id="L280">			return true;</span>
-		}
-
-		HColorScheme buildInternal() {
-<span class="nc bnc" id="L284" title="All 2 branches missed.">			if (colors.length == 2)</span>
-<span class="nc" id="L285">				return new HColorScheme(me.build(colors[0]), me.build(colors[1]), null);</span>
-
-<span class="nc" id="L287">			return new HColorScheme(me.build(colors[0]), me.build(colors[1]), me.build(colors[2]));</span>
-		}
-
-	}
-
-	private Gradient gradientFromString(String s) {
-		// ::comment when __HAXE__
-<span class="fc" id="L294">		final int len = s.length();</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">		for (int i = 0; i &lt; len; i++) {</span>
-<span class="fc" id="L296">			final char c = s.charAt(i);</span>
-<span class="pc bpc" id="L297" title="4 of 8 branches missed.">			if (c == '-' || c == '\\' || c == '|' || c == '/') {</span>
-<span class="nc" id="L298">				final String s1 = s.substring(0, i);</span>
-<span class="nc" id="L299">				final String s2 = s.substring(i + 1);</span>
-<span class="nc" id="L300">				return new Gradient(this, s1, c, s2);</span>
-			}
-		}
-		// ::done
-<span class="fc" id="L304">		return null;</span>
-	}
-
-	private Automatic automaticFromString(String s) {
-<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (s.startsWith(&quot;#&quot;))</span>
-<span class="fc" id="L309">			s = s.substring(1);</span>
-
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		if (s.startsWith(&quot;?&quot;) == false)</span>
-<span class="fc" id="L312">			return null;</span>
-
-<span class="nc" id="L314">		final int idx = s.indexOf(':');</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (idx != -1)</span>
-<span class="nc" id="L316">			return new Automatic(this, s.substring(1).split(&quot;:&quot;));</span>
-
-<span class="nc" id="L318">		return null;</span>
+<span class="fc" id="L58">		final HColor result = parseColor(s);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L60">			return HColors.WHITE;</span>
+<span class="fc" id="L61">		return result;</span>
 	}
 
 	public HColor getColor(String s) throws NoSuchColorException {
-<span class="fc bfc" id="L322" title="All 2 branches covered.">		if (isColorValid(Objects.requireNonNull(s)) == false)</span>
-<span class="fc" id="L323">			throw new NoSuchColorException();</span>
+<span class="fc" id="L65">		final HColor result = parseColor(s);</span>
 
-<span class="fc" id="L325">		final Automatic automatic = automaticFromString(s);</span>
-<span class="pc bpc" id="L326" title="1 of 2 branches missed.">		if (automatic != null)</span>
-<span class="nc" id="L327">			return automatic.buildInternal();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L68">			throw new NoSuchColorException();</span>
 
-		// ::comment when __HAXE__
-<span class="fc" id="L330">		final Gradient gradient = gradientFromString(s);</span>
-<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		if (gradient != null)</span>
-<span class="nc" id="L332">			return gradient.buildInternal();</span>
-		// ::done
-
-<span class="pc bpc" id="L335" title="1 of 4 branches missed.">		if (s.equalsIgnoreCase(&quot;#transparent&quot;) || s.equalsIgnoreCase(&quot;transparent&quot;))</span>
-<span class="fc" id="L336">			s = &quot;#00000000&quot;;</span>
-
-<span class="fc" id="L338">		return build(s);</span>
+<span class="fc" id="L70">		return result;</span>
 	}
 
-	private boolean isColorValid(String s) {
-<span class="fc" id="L342">		s = removeFirstDieseAndgoLowerCase(s);</span>
-<span class="fc" id="L343">		final Automatic automatic = automaticFromString(s);</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (automatic != null)</span>
-<span class="nc" id="L345">			return automatic.isValid();</span>
+	private HColor parseColor(String s) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (s.startsWith(&quot;#&quot;))</span>
+<span class="fc" id="L75">			s = s.substring(1);</span>
 
-<span class="fc" id="L347">		final Gradient gradient = gradientFromString(s);</span>
-<span class="pc bpc" id="L348" title="1 of 2 branches missed.">		if (gradient != null)</span>
-<span class="nc" id="L349">			return gradient.isValid();</span>
+<span class="pc bpc" id="L77" title="1 of 4 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;) || s.equalsIgnoreCase(&quot;background&quot;))</span>
+<span class="fc" id="L78">			return HColors.none();</span>
 
-<span class="fc bfc" id="L351" title="All 2 branches covered.">		if (isColorKeywordOrHex(s))</span>
-<span class="fc" id="L352">			return true;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;automatic&quot;))</span>
+<span class="nc" id="L81">			return new HColorAutomagic();</span>
 
-<span class="fc bfc" id="L354" title="All 2 branches covered.">		if (htmlNames.containsKey(s))</span>
-<span class="fc" id="L355">			return true;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;))</span>
+<span class="nc" id="L84">			return HColors.simple(new Color(0, 0, 0, 0));</span>
 
-<span class="fc" id="L357">		return false;</span>
-	}
+<span class="fc" id="L86">		final Color result = parseSimpleColor(s);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L88">			return HColors.simple(result);</span>
 
-	private static boolean isColorKeywordOrHex(String s) {
-<span class="fc" id="L361">		final int len = s.length();</span>
-<span class="pc bpc" id="L362" title="1 of 4 branches missed.">		if (s.equalsIgnoreCase(&quot;automatic&quot;) || s.equalsIgnoreCase(&quot;transparent&quot;))</span>
-<span class="fc" id="L363">			return true;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (s.startsWith(&quot;?&quot;)) {</span>
+<span class="nc" id="L91">			final String[] colors = s.substring(1).split(&quot;:&quot;);</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">			if (colors.length == 2 || colors.length == 3) {</span>
+<span class="nc" id="L93">				final Color col0 = parseSimpleColor(colors[0]);</span>
+<span class="nc" id="L94">				final Color col1 = parseSimpleColor(colors[1]);</span>
+<span class="nc bnc" id="L95" title="All 6 branches missed.">				if (colors.length == 2 &amp;&amp; col0 != null &amp;&amp; col1 != null)</span>
+<span class="nc" id="L96">					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), null);</span>
+<span class="nc" id="L97">				final Color col2 = parseSimpleColor(colors[2]);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">				if (col2 != null)</span>
+<span class="nc" id="L99">					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), HColors.simple(col2));</span>
 
-<span class="fc bfc" id="L365" title="All 8 branches covered.">		if (len == 1 || len == 3 || len == 6 || len == 8) {</span>
-<span class="fc bfc" id="L366" title="All 2 branches covered.">			for (int i = 0; i &lt; len; i++)</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">				if (isHexDigit(s.charAt(i)) == false)</span>
-<span class="fc" id="L368">					return false;</span>
-
-<span class="fc" id="L370">			return true;</span>
+			}
 		}
 
-<span class="fc" id="L373">		return false;</span>
-	}
-
-	private HColor build(String s) {
-<span class="fc" id="L377">		s = removeFirstDieseAndgoLowerCase(s);</span>
-<span class="fc" id="L378">		final int len = s.length();</span>
-
-		final Color color;
-<span class="pc bpc" id="L381" title="2 of 4 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;) || s.equalsIgnoreCase(&quot;background&quot;)) {</span>
-<span class="nc" id="L382">			return HColors.none();</span>
-			// ::comment when __HAXE__
-<span class="pc bpc" id="L384" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;automatic&quot;)) {</span>
-<span class="nc" id="L385">			return new HColorAutomagic();</span>
-			// ::done
-<span class="pc bpc" id="L387" title="1 of 4 branches missed.">		} else if (len == 1 &amp;&amp; isHexDigit(s.charAt(0))) {</span>
-<span class="fc" id="L388">			s = &quot;&quot; + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0);</span>
-<span class="fc" id="L389">			color = new Color(Integer.parseInt(s, 16));</span>
-<span class="fc bfc" id="L390" title="All 4 branches covered.">		} else if (len == 3 &amp;&amp; isHexColor(s)) {</span>
-<span class="fc" id="L391">			s = &quot;&quot; + s.charAt(0) + s.charAt(0) + s.charAt(1) + s.charAt(1) + s.charAt(2) + s.charAt(2);</span>
-<span class="fc" id="L392">			color = new Color(Integer.parseInt(s, 16));</span>
-<span class="fc bfc" id="L393" title="All 4 branches covered.">		} else if (len == 6 &amp;&amp; isHexColor(s)) {</span>
-<span class="fc" id="L394">			color = new Color(Integer.parseInt(s, 16));</span>
-<span class="fc bfc" id="L395" title="All 4 branches covered.">		} else if (len == 8 &amp;&amp; isHexColor(s)) {</span>
-<span class="fc" id="L396">			color = fromRGBa(s);</span>
-		} else {
-<span class="fc" id="L398">			final String value = Objects.requireNonNull(htmlNames.get(s));</span>
-<span class="fc" id="L399">			color = new Color(Integer.parseInt(value.substring(1), 16));</span>
-		}
-<span class="fc" id="L401">		return HColors.simple(color);</span>
-	}
-
-	private static boolean isHexColor(String s) {
-<span class="fc bfc" id="L405" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
-<span class="fc bfc" id="L406" title="All 2 branches covered.">			if (!isHexDigit(s.charAt(i)))</span>
-<span class="fc" id="L407">				return false;</span>
-
-<span class="fc" id="L409">		return true;</span>
-	}
-
-	private static boolean isHexDigit(final char c) {
-<span class="pc bpc" id="L413" title="4 of 12 branches missed.">		return (c &gt;= '0' &amp;&amp; c &lt;= '9') || (c &gt;= 'A' &amp;&amp; c &lt;= 'F') || (c &gt;= 'a' &amp;&amp; c &lt;= 'f');</span>
-	}
-
-	private Color fromRGBa(String s) {
-		// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">		if (s.length() != 8)</span>
-<span class="nc" id="L419">			throw new IllegalArgumentException();</span>
-
-<span class="fc" id="L421">		final int red = Integer.parseInt(s.substring(0, 2), 16);</span>
-<span class="fc" id="L422">		final int green = Integer.parseInt(s.substring(2, 4), 16);</span>
-<span class="fc" id="L423">		final int blue = Integer.parseInt(s.substring(4, 6), 16);</span>
-<span class="fc" id="L424">		final int alpha = Integer.parseInt(s.substring(6, 8), 16);</span>
-<span class="fc" id="L425">		return new Color(red, green, blue, alpha);</span>
-	}
-
-	private String removeFirstDieseAndgoLowerCase(String s) {
-<span class="fc" id="L429">		int len = s.length();</span>
-<span class="fc" id="L430">		int start = 0;</span>
-<span class="pc bpc" id="L431" title="1 of 4 branches missed.">		if (len &gt; 0 &amp;&amp; s.charAt(0) == '#') {</span>
-<span class="fc" id="L432">			start = 1;</span>
-<span class="fc" id="L433">			len--;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L105">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L106" title="4 of 8 branches missed.">			if (c == '-' || c == '\\' || c == '|' || c == '/') {</span>
+<span class="nc" id="L107">				final Color col0 = parseSimpleColor(s.substring(0, i));</span>
+<span class="nc" id="L108">				final Color col1 = parseSimpleColor(s.substring(i + 1));</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">				if (col0 != null &amp;&amp; col1 != null)</span>
+<span class="nc" id="L110">					return HColors.gradient(HColors.simple(col0), HColors.simple(col1), c);</span>
+			}
 		}
 
-<span class="fc" id="L436">		final StringBuilder2 sb = new StringBuilder2(len);</span>
-<span class="fc bfc" id="L437" title="All 2 branches covered.">		for (int i = start; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L438">			final char c = s.charAt(i);</span>
-<span class="fc bfc" id="L439" title="All 4 branches covered.">			if (c &gt;= 'A' &amp;&amp; c &lt;= 'Z')</span>
-<span class="fc" id="L440">				sb.append((char) (c + ('a' - 'A')));</span>
-			else
-<span class="fc" id="L442">				sb.append(c);</span>
+<span class="fc" id="L114">		return null;</span>
+	}
 
+	private Color parseSimpleColor(String s) {
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (s.startsWith(&quot;#&quot;))</span>
+<span class="nc" id="L119">			s = s.substring(1);</span>
+<span class="fc" id="L120">		final int len = s.length();</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (len == 1) {</span>
+<span class="fc" id="L123">			final int d = hexNibble(s.charAt(0));</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (d &gt;= 0) {</span>
+<span class="fc" id="L125">				final int v = (d &lt;&lt; 4) | d;</span>
+<span class="fc" id="L126">				final int rgb = (v &lt;&lt; 16) | (v &lt;&lt; 8) | v;</span>
+<span class="fc" id="L127">				return new Color(rgb);</span>
+			}
+<span class="pc bfc" id="L129" title="All 2 branches covered.">		} else if (len == 3) {</span>
+<span class="fc" id="L130">			final int r = hexNibble(s.charAt(0));</span>
+<span class="fc" id="L131">			final int g = hexNibble(s.charAt(1));</span>
+<span class="fc" id="L132">			final int b = hexNibble(s.charAt(2));</span>
+<span class="pc bpc" id="L133" title="2 of 6 branches missed.">			if (r &gt;= 0 &amp;&amp; g &gt;= 0 &amp;&amp; b &gt;= 0) {</span>
+<span class="fc" id="L134">				final int rr = (r &lt;&lt; 4) | r;</span>
+<span class="fc" id="L135">				final int gg = (g &lt;&lt; 4) | g;</span>
+<span class="fc" id="L136">				final int bb = (b &lt;&lt; 4) | b;</span>
+<span class="fc" id="L137">				final int rgb = (rr &lt;&lt; 16) | (gg &lt;&lt; 8) | bb;</span>
+<span class="fc" id="L138">				return new Color(rgb);</span>
+			}
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		} else if (len == 6) {</span>
+<span class="fc" id="L141">			final int rgb = parseHex24(s, 0);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (rgb &gt;= 0)</span>
+<span class="fc" id="L143">				return new Color(rgb);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		} else if (len == 8) {</span>
+			// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
+<span class="fc" id="L146">			final int r = parseHexByte(s, 0);</span>
+<span class="fc" id="L147">			final int g = parseHexByte(s, 2);</span>
+<span class="fc" id="L148">			final int b = parseHexByte(s, 4);</span>
+<span class="fc" id="L149">			final int a = parseHexByte(s, 6);</span>
+<span class="pc bpc" id="L150" title="2 of 8 branches missed.">			if (r &gt;= 0 &amp;&amp; g &gt;= 0 &amp;&amp; b &gt;= 0 &amp;&amp; a &gt;= 0)</span>
+<span class="fc" id="L151">				return new Color(r, g, b, a);</span>
 		}
+<span class="fc" id="L153">		return ColorTrieNode.INSTANCE.getColor(s);</span>
+	}
 
-<span class="fc" id="L446">		return sb.toString();</span>
+	private static int hexNibble(char c) {
+<span class="pc bpc" id="L157" title="1 of 4 branches missed.">		if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L158">			return c - '0';</span>
+<span class="fc bfc" id="L159" title="All 4 branches covered.">		else if (c &gt;= 'a' &amp;&amp; c &lt;= 'f')</span>
+<span class="fc" id="L160">			return c - 'a' + 10;</span>
+<span class="pc bpc" id="L161" title="1 of 4 branches missed.">		else if (c &gt;= 'A' &amp;&amp; c &lt;= 'F')</span>
+<span class="fc" id="L162">			return c - 'A' + 10;</span>
+		else
+<span class="fc" id="L164">			return -1;</span>
+
+	}
+
+	private static int parseHexByte(CharSequence s, int off) {
+<span class="fc" id="L169">		final int hi = hexNibble(s.charAt(off));</span>
+<span class="fc" id="L170">		final int lo = hexNibble(s.charAt(off + 1));</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		return (hi | lo) &lt; 0 ? -1 : ((hi &lt;&lt; 4) | lo);</span>
+	}
+
+	private static int parseHex24(CharSequence s, int off) {
+<span class="fc" id="L175">		final int r = parseHexByte(s, off);</span>
+<span class="fc" id="L176">		final int g = parseHexByte(s, off + 2);</span>
+<span class="fc" id="L177">		final int b = parseHexByte(s, off + 4);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		return (r | g | b) &lt; 0 ? -1 : ((r &lt;&lt; 16) | (g &lt;&lt; 8) | b);</span>
 	}
 
 }
