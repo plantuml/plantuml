@@ -30,53 +30,45 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.dedication;
+package net.sourceforge.plantuml.licensing;
 
-import java.math.BigInteger;
+import java.io.IOException;
+import java.io.OutputStream;
 
-public class QBlock {
+public class BooleanOutputStream implements AutoCloseable {
 
-	private final BigInteger big;
+	private final OutputStream os;
+	private int currentByte = 0;
+	private int bitCount = 0;
 
-	public static QBlock fromBuffer(final byte[] buffer) {
-		final byte[] block = new byte[buffer.length + 1];
-		System.arraycopy(buffer, 0, block, 1, buffer.length);
-		final BigInteger big = new BigInteger(block);
-		return new QBlock(big);
+	public BooleanOutputStream(OutputStream os) {
+		this.os = os;
 	}
 
-	public QBlock(BigInteger number) {
-		this.big = number;
+	public void writeBoolean(boolean value) throws IOException {
+		if (value)
+			currentByte |= (1 << bitCount);
+
+		bitCount++;
+
+		if (bitCount == 8)
+			flushCurrentByte();
+
 	}
 
-	public QBlock change(BigInteger E, BigInteger N) {
-		final BigInteger changed = big.modPow(E, N);
-		return new QBlock(changed);
-	}
-
-	public byte[] getData512() {
-		final byte[] nb = big.toByteArray();
-		if (nb.length == 512)
-			return nb;
-
-		final byte[] result = new byte[512];
-		if (nb.length < 512)
-			System.arraycopy(nb, 0, result, 512 - nb.length, nb.length);
-		else
-			System.arraycopy(nb, nb.length - 512, result, 0, 512);
-
-		return result;
-	}
-
-	public byte[] getDataRaw() {
-		return big.toByteArray();
+	private void flushCurrentByte() throws IOException {
+		os.write(currentByte);
+		currentByte = 0;
+		bitCount = 0;
 	}
 
 	@Override
-	public String toString() {
-		return big.toByteArray().length + " " + big.toString(36);
+	public void close() throws IOException {
+		if (bitCount > 0)
+			flushCurrentByte();
+
+		os.close();
 	}
 }

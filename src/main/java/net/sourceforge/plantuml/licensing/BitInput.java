@@ -30,53 +30,38 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.dedication;
+package net.sourceforge.plantuml.licensing;
 
-import java.math.BigInteger;
+import java.io.IOException;
 
-public class QBlock {
+public class BitInput {
+	private final byte[] buf;
+	private int byteIndex = 0;
+	private int bitIndex = 0;
 
-	private final BigInteger big;
-
-	public static QBlock fromBuffer(final byte[] buffer) {
-		final byte[] block = new byte[buffer.length + 1];
-		System.arraycopy(buffer, 0, block, 1, buffer.length);
-		final BigInteger big = new BigInteger(block);
-		return new QBlock(big);
+	BitInput(byte[] buf) {
+		this.buf = buf;
 	}
 
-	public QBlock(BigInteger number) {
-		this.big = number;
+	int availableBits() {
+		return (buf.length - byteIndex) * 8 - bitIndex;
 	}
 
-	public QBlock change(BigInteger E, BigInteger N) {
-		final BigInteger changed = big.modPow(E, N);
-		return new QBlock(changed);
+	boolean readBit() throws IOException {
+		if (byteIndex >= buf.length)
+			throw new IOException();
+
+		final int current = buf[byteIndex] & 0xFF;
+		final boolean bit = ((current >> bitIndex) & 1) == 1;
+
+		bitIndex++;
+		if (bitIndex == 8) {
+			bitIndex = 0;
+			byteIndex++;
+		}
+		return bit;
 	}
 
-	public byte[] getData512() {
-		final byte[] nb = big.toByteArray();
-		if (nb.length == 512)
-			return nb;
-
-		final byte[] result = new byte[512];
-		if (nb.length < 512)
-			System.arraycopy(nb, 0, result, 512 - nb.length, nb.length);
-		else
-			System.arraycopy(nb, nb.length - 512, result, 0, 512);
-
-		return result;
-	}
-
-	public byte[] getDataRaw() {
-		return big.toByteArray();
-	}
-
-	@Override
-	public String toString() {
-		return big.toByteArray().length + " " + big.toString(36);
-	}
 }
