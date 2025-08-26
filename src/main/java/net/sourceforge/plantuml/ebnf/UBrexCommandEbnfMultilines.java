@@ -59,6 +59,17 @@ public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2<PSystemE
 
 	static UnicodeBracketedExpression getRegexConcat() {
 
+		// This expression need to be modified to allow comments like (* abc *)
+		// Something similar to:
+		//		new RegexOptional( //
+		//				new RegexConcat( //
+		//						RegexLeaf.spaceZeroOrMore(), //
+		//						new RegexLeaf("\\(\\*"), //
+		//						new RegexLeaf(1, "COMMENTA", "(.*[^%s].*)"), //
+		//						new RegexLeaf("\\*\\)"), //
+		//						RegexLeaf.spaceZeroOrMore())), //
+		// But in the new Ubrex syntax...
+
 		return new UBrexNamed("LINE", //
 				UBrexConcat.build( //
 						new UBrexLeaf("「〴an_」"), //
