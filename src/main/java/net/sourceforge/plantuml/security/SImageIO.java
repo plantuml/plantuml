@@ -101,10 +101,6 @@ public class SImageIO {
 	public static Iterator<ImageReader> getImageReaders(ImageInputStream iis) {
 		return javax.imageio.ImageIO.getImageReaders(iis);
 	}
-
-	public static Iterator<ImageWriter> getImageWritersBySuffix(String string) {
-		return javax.imageio.ImageIO.getImageWritersBySuffix(string);
-	}
 	// ::done
 
 }
