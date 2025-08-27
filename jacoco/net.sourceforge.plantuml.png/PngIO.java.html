@@ -69,29 +69,16 @@ import net.sourceforge.plantuml.utils.Log;
 
 	public static void write(RenderedImage image, ColorMapper mapper, OutputStream os, String metadata, int dpi)
 			throws IOException {
-<span class="fc" id="L72">		write(image, mapper, os, metadata, dpi, null);</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L72">		BufferedImage newImage = Quantify555.quantifyMeIfPossible(image);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (newImage == null)</span>
+<span class="fc" id="L74">			newImage = QuantifyPacked28.quantifyMeIfPossible(image);</span>
+		
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (newImage != null)</span>
+<span class="fc" id="L77">			image = newImage;</span>
+		
+<span class="fc" id="L79">		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);</span>
+<span class="fc" id="L80">	}</span>
 
-	private static void write(RenderedImage image, ColorMapper mapper, OutputStream os, String metadata, int dpi,
-			String debugData) throws IOException {
-
-<span class="fc" id="L78">		BufferedImage newImage = Quantify555.quantifyMeIfPossible(image);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (newImage == null)</span>
-<span class="fc" id="L80">			newImage = QuantifyPacked28.quantifyMeIfPossible(image);</span>
-
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (newImage != null)</span>
-<span class="fc" id="L83">			image = newImage;</span>
-
-		// ::comment when __CORE__
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (metadata == null)</span>
-			// ::done
-<span class="nc" id="L88">			SImageIO.write(image, &quot;png&quot;, os);</span>
-		// ::comment when __CORE__
-		else
-<span class="fc" id="L91">			PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, debugData);</span>
-		// ::done
-
-<span class="fc" id="L94">	}</span>
 
 //	/** writes a BufferedImage of type TYPE_INT_ARGB to PNG using PNGJ */
 //	public static void writeARGB(BufferedImage bi, OutputStream os, String metadata) {
