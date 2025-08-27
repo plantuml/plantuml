@@ -45,18 +45,17 @@ import net.sourceforge.plantuml.png.quant.QuantUtils;
 
 	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
 
-		// Convertit vers un BufferedImage ARGB utilisable (si besoin)
-<span class="nc" id="L49">		final BufferedImage src = QuantUtils.toBufferedARGB(input);</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (src == null)</span>
-<span class="nc" id="L51">			return null;</span>
+<span class="nc" id="L48">		final BufferedImage src = QuantUtils.toBufferedARGB(input);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (src == null)</span>
+<span class="nc" id="L50">			return null;</span>
 
-<span class="nc" id="L53">		final int w = src.getWidth();</span>
-<span class="nc" id="L54">		final int h = src.getHeight();</span>
-<span class="nc" id="L55">		int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
+<span class="nc" id="L52">		final int w = src.getWidth();</span>
+<span class="nc" id="L53">		final int h = src.getHeight();</span>
+<span class="nc" id="L54">		int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
 
-<span class="nc" id="L57">		Map&lt;Integer, Integer&gt; palette = new QuantizerWuOKLab().quantize(pixels, 256);</span>
+<span class="nc" id="L56">		Map&lt;Integer, Integer&gt; palette = new QuantizerWuOKLab().quantize(pixels, 256);</span>
 
-<span class="nc" id="L59">		return OKLabPaletteMapper.quantize(src, palette, true);</span>
+<span class="nc" id="L58">		return OKLabPaletteMapper.quantize(src, palette, true);</span>
 
 	}
 
