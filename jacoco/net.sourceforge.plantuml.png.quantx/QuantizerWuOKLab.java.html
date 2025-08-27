@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuantizerWuOKLab.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.png.quantx</a> &gt; <span class="el_source">QuantizerWuOKLab.java</span></div><h1>QuantizerWuOKLab.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * With assistance from ChatGPT (OpenAI)
+ *
+ */
+package net.sourceforge.plantuml.png.quantx;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * Wu quantization over OKLab (L, a, b) instead of RGB.
+ *
+ * - 3D histogram on L, a, b (32 bins per axis -&gt; INDEX_BITS = 5, INDEX_COUNT = 33 for integrals)
+ * - Cumulative moments/sums along each axis + squared sum (L^2 + a^2 + b^2)
+ * - Recursive splitting (maximize variance) same as the original algorithm
+ * - Average cube colors converted back to 8-bit sRGB
+ *
+ * Notes:
+ * - L in [0,1], a,b ~ [-0.5, 0.5] for sRGB; we clamp a,b to these limits
+ * - “Moments” L/a/b are stored as double; weights remain int
+ */
+<span class="nc" id="L56">public final class QuantizerWuOKLab {</span>
+
+  // Histograms / moments (3D compact indexing with INDEX_COUNT = 33)
+  int[] weights;         // sum of weights
+  double[] momentsL;     // sum of L * count
+  double[] momentsA;     // sum of a * count
+  double[] momentsB;     // sum of b * count
+  double[] momentsSS;    // sum of (L^2 + a^2 + b^2) * count
+	  
+  Box[] cubes;
+
+  //OKLab quantization parameters
+  private static final int INDEX_BITS = 5;          // 5 bits -&gt; 32 bacs / dimension
+  private static final int INDEX_COUNT = 33;        // (1 &lt;&lt; INDEX_BITS) + 1 = 32 + 1
+  private static final int TOTAL_SIZE = INDEX_COUNT * INDEX_COUNT * INDEX_COUNT; // 35937
+
+  //OKLab bounds for a and b (safe for sRGB)
+  private static final float A_MIN = -0.5f, A_MAX = 0.5f;
+  private static final float B_MIN = -0.5f, B_MAX = 0.5f;
+  private static final int INDEX_MAX = (1 &lt;&lt; INDEX_BITS) - 1; // 31
+
+
+  public Map&lt;Integer, Integer&gt; quantize(int[] pixels, int colorCount) {
+<span class="nc" id="L79">	Map&lt;Integer, Integer&gt; mapResult = new QuantizerMap().quantize(pixels, colorCount);</span>
+<span class="nc" id="L80">    constructHistogram(mapResult);</span>
+<span class="nc" id="L81">    createMoments();</span>
+<span class="nc" id="L82">    CreateBoxesResult createBoxesResult = createBoxes(colorCount);</span>
+<span class="nc" id="L83">    List&lt;Integer&gt; colors = createResult(createBoxesResult.resultCount);</span>
+<span class="nc" id="L84">    Map&lt;Integer, Integer&gt; resultMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    for (int color : colors) {</span>
+<span class="nc" id="L86">      resultMap.put(color, 0);</span>
+<span class="nc" id="L87">    }</span>
+<span class="nc" id="L88">    return resultMap;</span>
+  }
+
+  // ---- Histogram construction in OKLab -------------------------------------
+
+  static int getIndex(int l, int a, int b) {
+    // index = l*33^2 + a*33 + b, optimized using shifts (since 33 = 32 + 1)
+<span class="nc" id="L95">    return (l &lt;&lt; (INDEX_BITS * 2)) + (l &lt;&lt; (INDEX_BITS + 1)) + l</span>
+         + (a &lt;&lt; INDEX_BITS) + a + b;
+  }
+
+  void constructHistogram(Map&lt;Integer, Integer&gt; pixels) {
+<span class="nc" id="L100">    weights   = new int[TOTAL_SIZE];</span>
+<span class="nc" id="L101">    momentsL  = new double[TOTAL_SIZE];</span>
+<span class="nc" id="L102">    momentsA  = new double[TOTAL_SIZE];</span>
+<span class="nc" id="L103">    momentsB  = new double[TOTAL_SIZE];</span>
+<span class="nc" id="L104">    momentsSS = new double[TOTAL_SIZE];</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">    for (Map.Entry&lt;Integer, Integer&gt; pair : pixels.entrySet()) {</span>
+<span class="nc" id="L107">      final int argb = pair.getKey();</span>
+<span class="nc" id="L108">      final int count = pair.getValue();</span>
+
+<span class="nc" id="L110">      int r8 = (argb &gt;&gt; 16) &amp; 0xFF;</span>
+<span class="nc" id="L111">      int g8 = (argb &gt;&gt;  8) &amp; 0xFF;</span>
+<span class="nc" id="L112">      int b8 = (argb      ) &amp; 0xFF;</span>
+
+      // Convert to OKLab (L,a,b) floats
+<span class="nc" id="L115">      float[] lab = srgb8ToOKLab(r8, g8, b8);</span>
+<span class="nc" id="L116">      float L = lab[0];</span>
+<span class="nc" id="L117">      float A = lab[1];</span>
+<span class="nc" id="L118">      float B = lab[2];</span>
+
+      // Quantize L/a/b into indices 1..32 (0 and 33 reserved for integrals)
+<span class="nc" id="L121">      int iL = toIndexL(L);</span>
+<span class="nc" id="L122">      int iA = toIndexA(A);</span>
+<span class="nc" id="L123">      int iB = toIndexB(B);</span>
+
+<span class="nc" id="L125">      int index = getIndex(iL, iA, iB);</span>
+
+<span class="nc" id="L127">      weights[index] += count;</span>
+<span class="nc" id="L128">      momentsL[index] += (double)L * count;</span>
+<span class="nc" id="L129">      momentsA[index] += (double)A * count;</span>
+<span class="nc" id="L130">      momentsB[index] += (double)B * count;</span>
+<span class="nc" id="L131">      momentsSS[index] += (double)count * (L * L + A * A + B * B);</span>
+<span class="nc" id="L132">    }</span>
+<span class="nc" id="L133">  }</span>
+
+  // ---- 3D cumulative integrals (moments) -----------------------------------
+
+  void createMoments() {
+<span class="nc bnc" id="L138" title="All 2 branches missed.">    for (int l = 1; l &lt; INDEX_COUNT; ++l) {</span>
+<span class="nc" id="L139">      int[] areaW = new int[INDEX_COUNT];</span>
+<span class="nc" id="L140">      double[] areaL = new double[INDEX_COUNT];</span>
+<span class="nc" id="L141">      double[] areaA = new double[INDEX_COUNT];</span>
+<span class="nc" id="L142">      double[] areaB = new double[INDEX_COUNT];</span>
+<span class="nc" id="L143">      double[] areaSS = new double[INDEX_COUNT];</span>
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">      for (int a = 1; a &lt; INDEX_COUNT; ++a) {</span>
+<span class="nc" id="L146">        int lineW = 0;</span>
+<span class="nc" id="L147">        double lineL = 0.0;</span>
+<span class="nc" id="L148">        double lineA = 0.0;</span>
+<span class="nc" id="L149">        double lineB = 0.0;</span>
+<span class="nc" id="L150">        double lineSS = 0.0;</span>
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (int b = 1; b &lt; INDEX_COUNT; ++b) {</span>
+<span class="nc" id="L153">          int index = getIndex(l, a, b);</span>
+
+<span class="nc" id="L155">          lineW  += weights[index];</span>
+<span class="nc" id="L156">          lineL  += momentsL[index];</span>
+<span class="nc" id="L157">          lineA  += momentsA[index];</span>
+<span class="nc" id="L158">          lineB  += momentsB[index];</span>
+<span class="nc" id="L159">          lineSS += momentsSS[index];</span>
+
+<span class="nc" id="L161">          areaW[b]  += lineW;</span>
+<span class="nc" id="L162">          areaL[b]  += lineL;</span>
+<span class="nc" id="L163">          areaA[b]  += lineA;</span>
+<span class="nc" id="L164">          areaB[b]  += lineB;</span>
+<span class="nc" id="L165">          areaSS[b] += lineSS;</span>
+
+<span class="nc" id="L167">          int prev = getIndex(l - 1, a, b);</span>
+<span class="nc" id="L168">          weights[index]  = weights[prev]  + areaW[b];</span>
+<span class="nc" id="L169">          momentsL[index] = momentsL[prev] + areaL[b];</span>
+<span class="nc" id="L170">          momentsA[index] = momentsA[prev] + areaA[b];</span>
+<span class="nc" id="L171">          momentsB[index] = momentsB[prev] + areaB[b];</span>
+<span class="nc" id="L172">          momentsSS[index]= momentsSS[prev]+ areaSS[b];</span>
+        }
+      }
+    }
+<span class="nc" id="L176">  }</span>
+
+  // ---- Splitting (partitioning) --------------------------------------------
+
+  CreateBoxesResult createBoxes(int maxColorCount) {
+<span class="nc" id="L181">    cubes = new Box[maxColorCount];</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">    for (int i = 0; i &lt; maxColorCount; i++) cubes[i] = new Box();</span>
+
+<span class="nc" id="L184">    double[] volumeVariance = new double[maxColorCount];</span>
+
+<span class="nc" id="L186">    Box first = cubes[0];</span>
+<span class="nc" id="L187">    first.l1 = INDEX_COUNT - 1;</span>
+<span class="nc" id="L188">    first.a1 = INDEX_COUNT - 1;</span>
+<span class="nc" id="L189">    first.b1 = INDEX_COUNT - 1;</span>
+
+<span class="nc" id="L191">    int generatedColorCount = maxColorCount;</span>
+<span class="nc" id="L192">    int next = 0;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">    for (int i = 1; i &lt; maxColorCount; i++) {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">      if (cut(cubes[next], cubes[i])) {</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        volumeVariance[next] = (cubes[next].vol &gt; 1) ? variance(cubes[next]) : 0.0;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        volumeVariance[i]    = (cubes[i].vol    &gt; 1) ? variance(cubes[i])    : 0.0;</span>
+      } else {
+<span class="nc" id="L198">        volumeVariance[next] = 0.0;</span>
+<span class="nc" id="L199">        i--;</span>
+      }
+
+<span class="nc" id="L202">      next = 0;</span>
+<span class="nc" id="L203">      double best = volumeVariance[0];</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">      for (int j = 1; j &lt;= i; j++) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">        if (volumeVariance[j] &gt; best) {</span>
+<span class="nc" id="L206">          best = volumeVariance[j];</span>
+<span class="nc" id="L207">          next = j;</span>
+        }
+      }
+<span class="nc bnc" id="L210" title="All 2 branches missed.">      if (best &lt;= 0.0) {</span>
+<span class="nc" id="L211">        generatedColorCount = i + 1;</span>
+<span class="nc" id="L212">        break;</span>
+      }
+    }
+<span class="nc" id="L215">    return new CreateBoxesResult(maxColorCount, generatedColorCount);</span>
+  }
+
+  List&lt;Integer&gt; createResult(int colorCount) {
+<span class="nc" id="L219">    List&lt;Integer&gt; colors = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">    for (int i = 0; i &lt; colorCount; ++i) {</span>
+<span class="nc" id="L221">      Box cube = cubes[i];</span>
+<span class="nc" id="L222">      int w = volume(cube, weights);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">      if (w &gt; 0) {</span>
+<span class="nc" id="L224">        double L = volume(cube, momentsL) / w;</span>
+<span class="nc" id="L225">        double A = volume(cube, momentsA) / w;</span>
+<span class="nc" id="L226">        double B = volume(cube, momentsB) / w;</span>
+<span class="nc" id="L227">        int argb = oklabToSrgb8Clamp((float)L, (float)A, (float)B);</span>
+<span class="nc" id="L228">        colors.add(argb);</span>
+      }
+    }
+<span class="nc" id="L231">    return colors;</span>
+  }
+
+  double variance(Box cube) {
+<span class="nc" id="L235">    double dL = volume(cube, momentsL);</span>
+<span class="nc" id="L236">    double dA = volume(cube, momentsA);</span>
+<span class="nc" id="L237">    double dB = volume(cube, momentsB);</span>
+
+<span class="nc" id="L239">    double xx =</span>
+<span class="nc" id="L240">        momentsSS[getIndex(cube.l1, cube.a1, cube.b1)]</span>
+<span class="nc" id="L241">      - momentsSS[getIndex(cube.l1, cube.a1, cube.b0)]</span>
+<span class="nc" id="L242">      - momentsSS[getIndex(cube.l1, cube.a0, cube.b1)]</span>
+<span class="nc" id="L243">      + momentsSS[getIndex(cube.l1, cube.a0, cube.b0)]</span>
+<span class="nc" id="L244">      - momentsSS[getIndex(cube.l0, cube.a1, cube.b1)]</span>
+<span class="nc" id="L245">      + momentsSS[getIndex(cube.l0, cube.a1, cube.b0)]</span>
+<span class="nc" id="L246">      + momentsSS[getIndex(cube.l0, cube.a0, cube.b1)]</span>
+<span class="nc" id="L247">      - momentsSS[getIndex(cube.l0, cube.a0, cube.b0)];</span>
+
+<span class="nc" id="L249">    double hyp = dL * dL + dA * dA + dB * dB;</span>
+<span class="nc" id="L250">    int volW = volume(cube, weights);</span>
+<span class="nc" id="L251">    return xx - hyp / (double) volW;</span>
+  }
+
+  Boolean cut(Box one, Box two) {
+<span class="nc" id="L255">    double wholeL = volume(one, momentsL);</span>
+<span class="nc" id="L256">    double wholeA = volume(one, momentsA);</span>
+<span class="nc" id="L257">    double wholeB = volume(one, momentsB);</span>
+<span class="nc" id="L258">    int    wholeW = volume(one, weights);</span>
+
+<span class="nc" id="L260">    MaximizeResult maxL = maximize(one, Direction.L, one.l0 + 1, one.l1, wholeL, wholeA, wholeB, wholeW);</span>
+<span class="nc" id="L261">    MaximizeResult maxA = maximize(one, Direction.A, one.a0 + 1, one.a1, wholeL, wholeA, wholeB, wholeW);</span>
+<span class="nc" id="L262">    MaximizeResult maxB = maximize(one, Direction.B, one.b0 + 1, one.b1, wholeL, wholeA, wholeB, wholeW);</span>
+
+    Direction dir;
+<span class="nc" id="L265">    MaximizeResult best = maxL;</span>
+<span class="nc" id="L266">    dir = Direction.L;</span>
+
+<span class="nc bnc" id="L268" title="All 2 branches missed.">    if (maxA.maximum &gt;= best.maximum) { best = maxA; dir = Direction.A; }</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">    if (maxB.maximum &gt;= best.maximum) { best = maxB; dir = Direction.B; }</span>
+
+<span class="nc bnc" id="L271" title="All 2 branches missed.">    if (best.cutLocation &lt; 0) return false;</span>
+
+<span class="nc" id="L273">    two.l1 = one.l1; two.a1 = one.a1; two.b1 = one.b1;</span>
+
+<span class="nc bnc" id="L275" title="All 4 branches missed.">    switch (dir) {</span>
+      case L:
+<span class="nc" id="L277">        one.l1 = best.cutLocation;</span>
+<span class="nc" id="L278">        two.l0 = one.l1;</span>
+<span class="nc" id="L279">        two.a0 = one.a0;</span>
+<span class="nc" id="L280">        two.b0 = one.b0;</span>
+<span class="nc" id="L281">        break;</span>
+      case A:
+<span class="nc" id="L283">        one.a1 = best.cutLocation;</span>
+<span class="nc" id="L284">        two.l0 = one.l0;</span>
+<span class="nc" id="L285">        two.a0 = one.a1;</span>
+<span class="nc" id="L286">        two.b0 = one.b0;</span>
+<span class="nc" id="L287">        break;</span>
+      case B:
+<span class="nc" id="L289">        one.b1 = best.cutLocation;</span>
+<span class="nc" id="L290">        two.l0 = one.l0;</span>
+<span class="nc" id="L291">        two.a0 = one.a0;</span>
+<span class="nc" id="L292">        two.b0 = one.b1;</span>
+        break;
+    }
+
+<span class="nc" id="L296">    one.vol = (one.l1 - one.l0) * (one.a1 - one.a0) * (one.b1 - one.b0);</span>
+<span class="nc" id="L297">    two.vol = (two.l1 - two.l0) * (two.a1 - two.a0) * (two.b1 - two.b0);</span>
+<span class="nc" id="L298">    return true;</span>
+  }
+
+  MaximizeResult maximize(
+      Box cube,
+      Direction direction,
+      int first,
+      int last,
+      double wholeL,
+      double wholeA,
+      double wholeB,
+      int wholeW) {
+
+<span class="nc" id="L311">    double bottomL = bottom(cube, direction, momentsL);</span>
+<span class="nc" id="L312">    double bottomA = bottom(cube, direction, momentsA);</span>
+<span class="nc" id="L313">    double bottomB = bottom(cube, direction, momentsB);</span>
+<span class="nc" id="L314">    int    bottomW = bottom(cube, direction, weights);</span>
+
+<span class="nc" id="L316">    double max = 0.0;</span>
+<span class="nc" id="L317">    int cut = -1;</span>
+
+<span class="nc bnc" id="L319" title="All 2 branches missed.">    for (int i = first; i &lt; last; i++) {</span>
+<span class="nc" id="L320">      double halfL = bottomL + top(cube, direction, i, momentsL);</span>
+<span class="nc" id="L321">      double halfA = bottomA + top(cube, direction, i, momentsA);</span>
+<span class="nc" id="L322">      double halfB = bottomB + top(cube, direction, i, momentsB);</span>
+<span class="nc" id="L323">      int    halfW = bottomW + top(cube, direction, i, weights);</span>
+
+<span class="nc bnc" id="L325" title="All 2 branches missed.">      if (halfW != 0) {</span>
+<span class="nc" id="L326">        double t = (halfL * halfL + halfA * halfA + halfB * halfB) / (double) halfW;</span>
+
+<span class="nc" id="L328">        double rL = wholeL - halfL;</span>
+<span class="nc" id="L329">        double rA = wholeA - halfA;</span>
+<span class="nc" id="L330">        double rB = wholeB - halfB;</span>
+<span class="nc" id="L331">        int    rW = wholeW - halfW;</span>
+
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        if (rW != 0) {</span>
+<span class="nc" id="L334">          t += (rL * rL + rA * rA + rB * rB) / (double) rW;</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">          if (t &gt; max) { max = t; cut = i; }</span>
+        }
+      }
+    }
+<span class="nc" id="L339">    return new MaximizeResult(cut, max);</span>
+  }
+
+  // ---- Integrals: volume/top/bottom helpers --------------------------------
+
+  static int volume(Box c, int[] m) {
+<span class="nc" id="L345">    return  m[getIndex(c.l1, c.a1, c.b1)]</span>
+<span class="nc" id="L346">          - m[getIndex(c.l1, c.a1, c.b0)]</span>
+<span class="nc" id="L347">          - m[getIndex(c.l1, c.a0, c.b1)]</span>
+<span class="nc" id="L348">          + m[getIndex(c.l1, c.a0, c.b0)]</span>
+<span class="nc" id="L349">          - m[getIndex(c.l0, c.a1, c.b1)]</span>
+<span class="nc" id="L350">          + m[getIndex(c.l0, c.a1, c.b0)]</span>
+<span class="nc" id="L351">          + m[getIndex(c.l0, c.a0, c.b1)]</span>
+<span class="nc" id="L352">          - m[getIndex(c.l0, c.a0, c.b0)];</span>
+  }
+
+  static double volume(Box c, double[] m) {
+<span class="nc" id="L356">    return  m[getIndex(c.l1, c.a1, c.b1)]</span>
+<span class="nc" id="L357">          - m[getIndex(c.l1, c.a1, c.b0)]</span>
+<span class="nc" id="L358">          - m[getIndex(c.l1, c.a0, c.b1)]</span>
+<span class="nc" id="L359">          + m[getIndex(c.l1, c.a0, c.b0)]</span>
+<span class="nc" id="L360">          - m[getIndex(c.l0, c.a1, c.b1)]</span>
+<span class="nc" id="L361">          + m[getIndex(c.l0, c.a1, c.b0)]</span>
+<span class="nc" id="L362">          + m[getIndex(c.l0, c.a0, c.b1)]</span>
+<span class="nc" id="L363">          - m[getIndex(c.l0, c.a0, c.b0)];</span>
+  }
+
+  static int bottom(Box c, Direction d, int[] m) {
+<span class="nc bnc" id="L367" title="All 4 branches missed.">    switch (d) {</span>
+      case L:
+<span class="nc" id="L369">        return -m[getIndex(c.l0, c.a1, c.b1)] + m[getIndex(c.l0, c.a1, c.b0)]</span>
+<span class="nc" id="L370">             +  m[getIndex(c.l0, c.a0, c.b1)] - m[getIndex(c.l0, c.a0, c.b0)];</span>
+      case A:
+<span class="nc" id="L372">        return -m[getIndex(c.l1, c.a0, c.b1)] + m[getIndex(c.l1, c.a0, c.b0)]</span>
+<span class="nc" id="L373">             +  m[getIndex(c.l0, c.a0, c.b1)] - m[getIndex(c.l0, c.a0, c.b0)];</span>
+      case B:
+<span class="nc" id="L375">        return -m[getIndex(c.l1, c.a1, c.b0)] + m[getIndex(c.l1, c.a0, c.b0)]</span>
+<span class="nc" id="L376">             +  m[getIndex(c.l0, c.a1, c.b0)] - m[getIndex(c.l0, c.a0, c.b0)];</span>
+    }
+<span class="nc" id="L378">    throw new IllegalArgumentException(&quot;unexpected direction &quot; + d);</span>
+  }
+
+  static double bottom(Box c, Direction d, double[] m) {
+<span class="nc bnc" id="L382" title="All 4 branches missed.">    switch (d) {</span>
+      case L:
+<span class="nc" id="L384">        return -m[getIndex(c.l0, c.a1, c.b1)] + m[getIndex(c.l0, c.a1, c.b0)]</span>
+<span class="nc" id="L385">             +  m[getIndex(c.l0, c.a0, c.b1)] - m[getIndex(c.l0, c.a0, c.b0)];</span>
+      case A:
+<span class="nc" id="L387">        return -m[getIndex(c.l1, c.a0, c.b1)] + m[getIndex(c.l1, c.a0, c.b0)]</span>
+<span class="nc" id="L388">             +  m[getIndex(c.l0, c.a0, c.b1)] - m[getIndex(c.l0, c.a0, c.b0)];</span>
+      case B:
+<span class="nc" id="L390">        return -m[getIndex(c.l1, c.a1, c.b0)] + m[getIndex(c.l1, c.a0, c.b0)]</span>
+<span class="nc" id="L391">             +  m[getIndex(c.l0, c.a1, c.b0)] - m[getIndex(c.l0, c.a0, c.b0)];</span>
+    }
+<span class="nc" id="L393">    throw new IllegalArgumentException(&quot;unexpected direction &quot; + d);</span>
+  }
+
+  static int top(Box c, Direction d, int pos, int[] m) {
+<span class="nc bnc" id="L397" title="All 4 branches missed.">    switch (d) {</span>
+      case L:
+<span class="nc" id="L399">        return  m[getIndex(pos, c.a1, c.b1)] - m[getIndex(pos, c.a1, c.b0)]</span>
+<span class="nc" id="L400">              - m[getIndex(pos, c.a0, c.b1)] + m[getIndex(pos, c.a0, c.b0)];</span>
+      case A:
+<span class="nc" id="L402">        return  m[getIndex(c.l1, pos, c.b1)] - m[getIndex(c.l1, pos, c.b0)]</span>
+<span class="nc" id="L403">              - m[getIndex(c.l0, pos, c.b1)] + m[getIndex(c.l0, pos, c.b0)];</span>
+      case B:
+<span class="nc" id="L405">        return  m[getIndex(c.l1, c.a1, pos)] - m[getIndex(c.l1, c.a0, pos)]</span>
+<span class="nc" id="L406">              - m[getIndex(c.l0, c.a1, pos)] + m[getIndex(c.l0, c.a0, pos)];</span>
+    }
+<span class="nc" id="L408">    throw new IllegalArgumentException(&quot;unexpected direction &quot; + d);</span>
+  }
+
+  static double top(Box c, Direction d, int pos, double[] m) {
+<span class="nc bnc" id="L412" title="All 4 branches missed.">    switch (d) {</span>
+      case L:
+<span class="nc" id="L414">        return  m[getIndex(pos, c.a1, c.b1)] - m[getIndex(pos, c.a1, c.b0)]</span>
+<span class="nc" id="L415">              - m[getIndex(pos, c.a0, c.b1)] + m[getIndex(pos, c.a0, c.b0)];</span>
+      case A:
+<span class="nc" id="L417">        return  m[getIndex(c.l1, pos, c.b1)] - m[getIndex(c.l1, pos, c.b0)]</span>
+<span class="nc" id="L418">              - m[getIndex(c.l0, pos, c.b1)] + m[getIndex(c.l0, pos, c.b0)];</span>
+      case B:
+<span class="nc" id="L420">        return  m[getIndex(c.l1, c.a1, pos)] - m[getIndex(c.l1, c.a0, pos)]</span>
+<span class="nc" id="L421">              - m[getIndex(c.l0, c.a1, pos)] + m[getIndex(c.l0, c.a0, pos)];</span>
+    }
+<span class="nc" id="L423">    throw new IllegalArgumentException(&quot;unexpected direction &quot; + d);</span>
+  }
+
+<span class="nc" id="L426">  private static enum Direction { L, A, B }</span>
+
+  private static final class MaximizeResult {
+    int cutLocation;   // &lt; 0 si impossible
+    double maximum;
+<span class="nc" id="L431">    MaximizeResult(int cut, double max) { this.cutLocation = cut; this.maximum = max; }</span>
+  }
+
+  private static final class CreateBoxesResult {
+    int requestedCount;
+    int resultCount;
+<span class="nc" id="L437">    CreateBoxesResult(int requestedCount, int resultCount) {</span>
+<span class="nc" id="L438">      this.requestedCount = requestedCount;</span>
+<span class="nc" id="L439">      this.resultCount = resultCount;</span>
+<span class="nc" id="L440">    }</span>
+  }
+
+<span class="nc" id="L443">  private static final class Box {</span>
+<span class="nc" id="L444">    int l0 = 0, l1 = 0;</span>
+<span class="nc" id="L445">    int a0 = 0, a1 = 0;</span>
+<span class="nc" id="L446">    int b0 = 0, b1 = 0;</span>
+<span class="nc" id="L447">    int vol = 0;</span>
+  }
+
+  // ---- OKLab -&gt; index quantization (1..32) ---------------------------------
+
+  private static int toIndexL(float L) {
+<span class="nc bnc" id="L453" title="All 4 branches missed.">    if (L &lt; 0f) L = 0f; else if (L &gt; 1f) L = 1f;</span>
+<span class="nc" id="L454">    int i = (int)(L * INDEX_MAX);</span>
+<span class="nc bnc" id="L455" title="All 4 branches missed.">    if (i &lt; 0) i = 0; else if (i &gt; INDEX_MAX) i = INDEX_MAX;</span>
+<span class="nc" id="L456">    return i + 1;</span>
+  }
+
+  private static int toIndexA(float a) {
+<span class="nc bnc" id="L460" title="All 4 branches missed.">    if (a &lt; A_MIN) a = A_MIN; else if (a &gt; A_MAX) a = A_MAX;</span>
+<span class="nc" id="L461">    float norm = (a - A_MIN) / (A_MAX - A_MIN); // 0..1</span>
+<span class="nc" id="L462">    int i = (int)(norm * INDEX_MAX);</span>
+<span class="nc bnc" id="L463" title="All 4 branches missed.">    if (i &lt; 0) i = 0; else if (i &gt; INDEX_MAX) i = INDEX_MAX;</span>
+<span class="nc" id="L464">    return i + 1;</span>
+  }
+
+  private static int toIndexB(float b) {
+<span class="nc bnc" id="L468" title="All 4 branches missed.">    if (b &lt; B_MIN) b = B_MIN; else if (b &gt; B_MAX) b = B_MAX;</span>
+<span class="nc" id="L469">    float norm = (b - B_MIN) / (B_MAX - B_MIN); // 0..1</span>
+<span class="nc" id="L470">    int i = (int)(norm * INDEX_MAX);</span>
+<span class="nc bnc" id="L471" title="All 4 branches missed.">    if (i &lt; 0) i = 0; else if (i &gt; INDEX_MAX) i = INDEX_MAX;</span>
+<span class="nc" id="L472">    return i + 1;</span>
+  }
+
+  // ---- Conversions sRGB &lt;-&gt; OKLab ------------------------------------------
+
+  private static float[] srgb8ToOKLab(int r8, int g8, int b8) {
+    // 8-bit -&gt; [0,1]
+<span class="nc" id="L479">    double r = r8 / 255.0;</span>
+<span class="nc" id="L480">    double g = g8 / 255.0;</span>
+<span class="nc" id="L481">    double b = b8 / 255.0;</span>
+
+    // sRGB -&gt; lin
+<span class="nc" id="L484">    double rl = srgbToLinear(r);</span>
+<span class="nc" id="L485">    double gl = srgbToLinear(g);</span>
+<span class="nc" id="L486">    double bl = srgbToLinear(b);</span>
+
+    // linear sRGB -&gt; LMS (matrix recommended by Bjorn Ottosson)
+    
+<span class="nc" id="L490">    double l = 0.4122214708 * rl + 0.5363325363 * gl + 0.0514459929 * bl;</span>
+<span class="nc" id="L491">    double m = 0.2119034982 * rl + 0.6806995451 * gl + 0.1073969566 * bl;</span>
+<span class="nc" id="L492">    double s = 0.0883024619 * rl + 0.2817188376 * gl + 0.6299787005 * bl;</span>
+
+    // cube root
+<span class="nc" id="L495">    double l_ = Math.cbrt(l);</span>
+<span class="nc" id="L496">    double m_ = Math.cbrt(m);</span>
+<span class="nc" id="L497">    double s_ = Math.cbrt(s);</span>
+
+<span class="nc" id="L499">    double L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;</span>
+<span class="nc" id="L500">    double A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;</span>
+<span class="nc" id="L501">    double B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;</span>
+
+<span class="nc" id="L503">    return new float[]{ (float)L, (float)A, (float)B };</span>
+  }
+
+  private static int oklabToSrgb8Clamp(float L, float A, float B) {
+    // OKLab -&gt; LMS^
+<span class="nc" id="L508">    double l_ = L + 0.3963377774 * A + 0.2158037573 * B;</span>
+<span class="nc" id="L509">    double m_ = L - 0.1055613458 * A - 0.0638541728 * B;</span>
+<span class="nc" id="L510">    double s_ = L - 0.0894841775 * A - 1.2914855480 * B;</span>
+
+    // ^3
+<span class="nc" id="L513">    double l = l_ * l_ * l_;</span>
+<span class="nc" id="L514">    double m = m_ * m_ * m_;</span>
+<span class="nc" id="L515">    double s = s_ * s_ * s_;</span>
+
+    // LMS -&gt; lin sRGB
+<span class="nc" id="L518">    double rl =  4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;</span>
+<span class="nc" id="L519">    double gl = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;</span>
+<span class="nc" id="L520">    double bl = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;</span>
+
+    // lin -&gt; sRGB (borne 0..1)
+<span class="nc" id="L523">    double r = linearToSrgb(rl);</span>
+<span class="nc" id="L524">    double g = linearToSrgb(gl);</span>
+<span class="nc" id="L525">    double b = linearToSrgb(bl);</span>
+
+<span class="nc" id="L527">    int r8 = clamp8((int)Math.round(r * 255.0));</span>
+<span class="nc" id="L528">    int g8 = clamp8((int)Math.round(g * 255.0));</span>
+<span class="nc" id="L529">    int b8 = clamp8((int)Math.round(b * 255.0));</span>
+
+<span class="nc" id="L531">    return (0xFF &lt;&lt; 24) | (r8 &lt;&lt; 16) | (g8 &lt;&lt; 8) | b8;</span>
+  }
+
+  private static double srgbToLinear(double c) {
+<span class="nc bnc" id="L535" title="All 2 branches missed.">    return (c &lt;= 0.04045) ? (c / 12.92) : Math.pow((c + 0.055) / 1.055, 2.4);</span>
+  }
+
+  private static double linearToSrgb(double x) {
+<span class="nc bnc" id="L539" title="All 2 branches missed.">    if (x &lt;= 0.0) return 0.0;</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">    if (x &gt;= 1.0) return 1.0;</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">    return (x &lt;= 0.0031308) ? (12.92 * x) : (1.055 * Math.pow(x, 1.0 / 2.4) - 0.055);</span>
+  }
+
+  private static int clamp8(int v) {
+<span class="nc bnc" id="L545" title="All 2 branches missed.">    if (v &lt; 0) return 0;</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">    if (v &gt; 255) return 255;</span>
+<span class="nc" id="L547">    return v;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
