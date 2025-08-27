@@ -141,6 +141,7 @@ net.sourceforge.plantuml.pdf
 net.sourceforge.plantuml.picoweb
 net.sourceforge.plantuml.plasma
 net.sourceforge.plantuml.png
+net.sourceforge.plantuml.png.quant
 net.sourceforge.plantuml.posimo
 net.sourceforge.plantuml.preproc
 net.sourceforge.plantuml.preproc.spm

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuantUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.png.quant</a> &gt; <span class="el_source">QuantUtils.java</span></div><h1>QuantUtils.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * With assistance from ChatGPT (OpenAI)
+ *
+ */
+package net.sourceforge.plantuml.png.quant;
+
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+
+/**
+ * Utility functions for image handling in the quantization process.
+ */
+<span class="nc" id="L44">public final class QuantUtils {</span>
+
+	/**
+	 * Converts any {@link RenderedImage} into a {@link BufferedImage} of type
+	 * {@link BufferedImage#TYPE_INT_ARGB}.
+	 * &lt;p&gt;
+	 * - If the input is already a {@link BufferedImage} with a supported type
+	 * (ARGB, RGB, 3BYTE_BGR, or 4BYTE_ABGR), it is returned as-is. &lt;br&gt;
+	 * - Otherwise, an {@link IllegalArgumentException} is thrown.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * This method is intended to normalize different image types into a single
+	 * consistent format (ARGB) before performing color quantization.
+	 * &lt;/p&gt;
+	 *
+	 * @param src the input image (must be a {@link BufferedImage})
+	 * @return the same image if it already has a supported format
+	 * @throws IllegalArgumentException if the image is not a {@link BufferedImage}
+	 *                                  or if its type is unsupported
+	 */
+	public static BufferedImage toBufferedARGB(RenderedImage src) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (src instanceof BufferedImage) {</span>
+<span class="fc" id="L67">			final BufferedImage bi = (BufferedImage) src;</span>
+<span class="fc" id="L68">			final int type = bi.getType();</span>
+			// Only accept common formats that can be processed safely
+<span class="pc bpc" id="L70" title="3 of 8 branches missed.">			if (type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
+					|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR)
+<span class="fc" id="L72">				return bi;</span>
+			
+			// This already indexed
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (type == BufferedImage.TYPE_BYTE_INDEXED)</span>
+<span class="fc" id="L76">				return null;</span>
+
+<span class="nc" id="L78">			throw new IllegalArgumentException(&quot;BufferedImage type=&quot; + type);</span>
+		}
+<span class="nc" id="L80">		throw new IllegalArgumentException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
