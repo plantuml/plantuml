@@ -107,9 +107,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#toBufferedARGB(java.awt.image.RenderedImage)" class="member-name-link">toBufferedARGB</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/RenderedImage.html" title="class or interface in java.awt.image" class="external-link">RenderedImage</a>&nbsp;src)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compressPackedARGB(int)" class="member-name-link">compressPackedARGB</a><wbr>(int&nbsp;argb)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Bitwise, branch-free LSB -> MSB "compression" for packed <code>0xAARRGGBB</code> pixels.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#toBufferedARGB(java.awt.image.RenderedImage)" class="member-name-link">toBufferedARGB</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/RenderedImage.html" title="class or interface in java.awt.image" class="external-link">RenderedImage</a>&nbsp;src)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Converts any <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/RenderedImage.html" title="class or interface in java.awt.image" class="external-link"><code>RenderedImage</code></a> into a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a> of type
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_INT_ARGB" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage.TYPE_INT_ARGB</code></a>.</div>
 </div>
@@ -168,6 +173,90 @@ loadScripts(document, 'script');</script>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the image is not a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a>
                                   or if its type is unsupported</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="compressPackedARGB(int)">
+<h3>compressPackedARGB</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">compressPackedARGB</span><wbr><span class="parameters">(int&nbsp;argb)</span></div>
+<div class="block">Bitwise, branch-free LSB -> MSB "compression" for packed <code>0xAARRGGBB</code> pixels.
+
+ <p>Replaces the least-significant bit (LSB) of each byte (A, R, G, B) with that byte’s
+ most-significant bit (MSB). This slightly reduces per-channel entropy with negligible
+ visual impact while keeping pure black and pure white unchanged.</p>
+
+ <p>Formally, for each 8-bit component <code>x</code> in {A,R,G,B}:
+ <code>x' = (x &amp; 0xFE) | ((x &gt;&gt;&gt; 7) &amp; 0x01)</code>.</p>
+
+ <p>This packed implementation is equivalent to applying the above transform independently
+ to A, R, G, and B and then reassembling the pixel:</p>
+
+ <pre><code>
+ // Reference (per-channel) form:
+ int a = (argb &gt;&gt;&gt; 24) &amp; 0xFF;
+ int r = (argb &gt;&gt;&gt; 16) &amp; 0xFF;
+ int g = (argb &gt;&gt;&gt;  8) &amp; 0xFF;
+ int b =  argb         &amp; 0xFF;
+
+ a = (a &amp; 0xFE) | ((a &gt;&gt;&gt; 7) &amp; 1);
+ r = (r &amp; 0xFE) | ((r &gt;&gt;&gt; 7) &amp; 1);
+ g = (g &amp; 0xFE) | ((g &gt;&gt;&gt; 7) &amp; 1);
+ b = (b &amp; 0xFE) | ((b &gt;&gt;&gt; 7) &amp; 1);
+
+ return (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;
+ </code></pre>
+
+ <h4>Perceptual &amp; compression rationale</h4>
+ <ul>
+   <li><b>Visually negligible:</b> Flipping at most one LSB per channel changes the value by &lt;=1/255
+       (~0.4%) per component. Under normal viewing conditions and typical display gamma, such changes
+       are below the just-noticeable difference for flat regions, lines, and text—effectively invisible
+       to the naked eye. Pure black (<code>0x00</code>) and pure white (<code>0xFF</code>) remain unchanged.</li>
+   <li><b>More compressible:</b> Enforcing a relation between each byte’s MSB and its LSB removes high-frequency
+       “LSB noise,” which increases redundancy. PNG’s scanline filters (Sub/Up/Average/Paeth) then produce
+       residuals with more zeros and repeated patterns, yielding better DEFLATE (LZ77+Huffman) matches.
+       In practice this often reduces output size without any visible degradation. The same intuition applies
+       to other lossless codecs that benefit from lower entropy and longer runs.</li>
+ </ul>
+
+ <h4>Properties</h4>
+ <ul>
+   <li><b>Idempotent</b>: <code>f(f(x)) == f(x)</code>.</li>
+   <li><b>Only LSBs may change</b>: <code>x ^ f(x)</code> can have bits set only at positions 0, 8, 16, 24.</li>
+   <li><b>New LSB equals old MSB</b> for each byte.</li>
+   <li><b>Invariants</b>: <code>0x00000000</code> (black) and <code>0xFFFFFFFF</code> (white) remain unchanged.</li>
+   <li><b>Branchless and fast</b>: two ANDs, one logical right shift, one OR; very JIT- and SIMD-friendly.</li>
+ </ul>
+
+ <h4>Usage notes</h4>
+ <ul>
+   <li>Input must be a packed 32-bit ARGB pixel (<code>0xAARRGGBB</code>).</li>
+   <li>Prefer non-premultiplied images (e.g., <code>TYPE_INT_ARGB</code>). On premultiplied data
+       (<code>TYPE_INT_ARGB_PRE</code>), altering RGB independently by 1 LSB slightly breaks the A·RGB invariant.</li>
+   <li>This transform is intentionally <b>not reversible</b>; it loses at most one bit per channel.</li>
+   <li>On synthetic gradients specifically crafted to reveal banding, any LSB change could, in theory,
+       be measurable; for diagrams/UI/flat fills and typical photography, it is effectively invisible.</li>
+ </ul>
+
+ <h4>Examples</h4>
+ <pre><code>
+ // Byte 0x7F (0111_1111) -&gt; 0x7E (0111_1110)
+ // Byte 0x80 (1000_0000) -&gt; 0x81 (1000_0001)
+ int p = 0x7F80_55AA;              // A=0x7F, R=0x80, G=0x55, B=0xAA
+ int q = compressPackedARGB(p);    // q == 0x7E81_54AB
+ </code></pre></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>argb</code> - packed 32-bit pixel in ARGB order (<code>0xAARRGGBB</code>).</dd>
+<dt>Returns:</dt>
+<dd>the pixel with each channel’s LSB replaced by its MSB.</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><code>#smartCompress(int)</code></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>

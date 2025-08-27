@@ -79,6 +79,84 @@ import java.awt.image.RenderedImage;
 		}
 <span class="nc" id="L80">		throw new IllegalArgumentException();</span>
 	}
+	
 
+	/**
+	 * Bitwise, branch-free LSB -&gt; MSB &quot;compression&quot; for packed {@code 0xAARRGGBB} pixels.
+	 *
+	 * &lt;p&gt;Replaces the least-significant bit (LSB) of each byte (A, R, G, B) with that byte’s
+	 * most-significant bit (MSB). This slightly reduces per-channel entropy with negligible
+	 * visual impact while keeping pure black and pure white unchanged.&lt;/p&gt;
+	 *
+	 * &lt;p&gt;Formally, for each 8-bit component {@code x} in {A,R,G,B}:
+	 * {@code x' = (x &amp; 0xFE) | ((x &gt;&gt;&gt; 7) &amp; 0x01)}.&lt;/p&gt;
+	 *
+	 * &lt;p&gt;This packed implementation is equivalent to applying the above transform independently
+	 * to A, R, G, and B and then reassembling the pixel:&lt;/p&gt;
+	 *
+	 * &lt;pre&gt;{@code
+	 * // Reference (per-channel) form:
+	 * int a = (argb &gt;&gt;&gt; 24) &amp; 0xFF;
+	 * int r = (argb &gt;&gt;&gt; 16) &amp; 0xFF;
+	 * int g = (argb &gt;&gt;&gt;  8) &amp; 0xFF;
+	 * int b =  argb         &amp; 0xFF;
+	 *
+	 * a = (a &amp; 0xFE) | ((a &gt;&gt;&gt; 7) &amp; 1);
+	 * r = (r &amp; 0xFE) | ((r &gt;&gt;&gt; 7) &amp; 1);
+	 * g = (g &amp; 0xFE) | ((g &gt;&gt;&gt; 7) &amp; 1);
+	 * b = (b &amp; 0xFE) | ((b &gt;&gt;&gt; 7) &amp; 1);
+	 *
+	 * return (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;
+	 * }&lt;/pre&gt;
+	 *
+	 * &lt;h4&gt;Perceptual &amp; compression rationale&lt;/h4&gt;
+	 * &lt;ul&gt;
+	 *   &lt;li&gt;&lt;b&gt;Visually negligible:&lt;/b&gt; Flipping at most one LSB per channel changes the value by &lt;=1/255
+	 *       (~0.4%) per component. Under normal viewing conditions and typical display gamma, such changes
+	 *       are below the just-noticeable difference for flat regions, lines, and text—effectively invisible
+	 *       to the naked eye. Pure black ({@code 0x00}) and pure white ({@code 0xFF}) remain unchanged.&lt;/li&gt;
+	 *   &lt;li&gt;&lt;b&gt;More compressible:&lt;/b&gt; Enforcing a relation between each byte’s MSB and its LSB removes high-frequency
+	 *       “LSB noise,” which increases redundancy. PNG’s scanline filters (Sub/Up/Average/Paeth) then produce
+	 *       residuals with more zeros and repeated patterns, yielding better DEFLATE (LZ77+Huffman) matches.
+	 *       In practice this often reduces output size without any visible degradation. The same intuition applies
+	 *       to other lossless codecs that benefit from lower entropy and longer runs.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 *
+	 * &lt;h4&gt;Properties&lt;/h4&gt;
+	 * &lt;ul&gt;
+	 *   &lt;li&gt;&lt;b&gt;Idempotent&lt;/b&gt;: {@code f(f(x)) == f(x)}.&lt;/li&gt;
+	 *   &lt;li&gt;&lt;b&gt;Only LSBs may change&lt;/b&gt;: {@code x ^ f(x)} can have bits set only at positions 0, 8, 16, 24.&lt;/li&gt;
+	 *   &lt;li&gt;&lt;b&gt;New LSB equals old MSB&lt;/b&gt; for each byte.&lt;/li&gt;
+	 *   &lt;li&gt;&lt;b&gt;Invariants&lt;/b&gt;: {@code 0x00000000} (black) and {@code 0xFFFFFFFF} (white) remain unchanged.&lt;/li&gt;
+	 *   &lt;li&gt;&lt;b&gt;Branchless and fast&lt;/b&gt;: two ANDs, one logical right shift, one OR; very JIT- and SIMD-friendly.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 *
+	 * &lt;h4&gt;Usage notes&lt;/h4&gt;
+	 * &lt;ul&gt;
+	 *   &lt;li&gt;Input must be a packed 32-bit ARGB pixel ({@code 0xAARRGGBB}).&lt;/li&gt;
+	 *   &lt;li&gt;Prefer non-premultiplied images (e.g., {@code TYPE_INT_ARGB}). On premultiplied data
+	 *       ({@code TYPE_INT_ARGB_PRE}), altering RGB independently by 1 LSB slightly breaks the A·RGB invariant.&lt;/li&gt;
+	 *   &lt;li&gt;This transform is intentionally &lt;b&gt;not reversible&lt;/b&gt;; it loses at most one bit per channel.&lt;/li&gt;
+	 *   &lt;li&gt;On synthetic gradients specifically crafted to reveal banding, any LSB change could, in theory,
+	 *       be measurable; for diagrams/UI/flat fills and typical photography, it is effectively invisible.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 *
+	 * &lt;h4&gt;Examples&lt;/h4&gt;
+	 * &lt;pre&gt;{@code
+	 * // Byte 0x7F (0111_1111) -&gt; 0x7E (0111_1110)
+	 * // Byte 0x80 (1000_0000) -&gt; 0x81 (1000_0001)
+	 * int p = 0x7F80_55AA;              // A=0x7F, R=0x80, G=0x55, B=0xAA
+	 * int q = compressPackedARGB(p);    // q == 0x7E81_54AB
+	 * }&lt;/pre&gt;
+	 *
+	 * @param argb packed 32-bit pixel in ARGB order ({@code 0xAARRGGBB}).
+	 * @return the pixel with each channel’s LSB replaced by its MSB.
+	 * @implNote Packed equivalent of the per-channel form:
+	 *           {@code (argb &amp; 0xFEFEFEFE) | ((argb &gt;&gt;&gt; 7) &amp; 0x01010101)}.
+	 * @see #smartCompress(int)
+	 */
+	public static int compressPackedARGB(int argb) {
+<span class="fc" id="L159">	    return (argb &amp; 0xFEFEFEFE) | ((argb &gt;&gt;&gt; 7) &amp; 0x01010101);</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
