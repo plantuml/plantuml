@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ed25519.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.licensing</a> &gt; <span class="el_source">Ed25519.java</span></div><h1>Ed25519.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * With assistance from ChatGPT (OpenAI)
+ *
+ */
+package net.sourceforge.plantuml.licensing;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.Arrays;
+
+/**
+ * Minimal Ed25519 in pure Java.
+ */
+public final class Ed25519 {
+
+    // p = 2^255 - 19
+<span class="nc" id="L49">    private static final BigInteger P = new BigInteger(&quot;7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed&quot;, 16);</span>
+    // L = subgroup order
+<span class="nc" id="L51">    private static final BigInteger L = new BigInteger(&quot;1000000000000000000000000000000014def9dea2f79cd65812631a5cf5d3ed&quot;, 16);</span>
+
+    // curve constants (twisted Edwards, a = -1)
+    private static final BigInteger D;       // d = -121665/121666 mod p
+    private static final BigInteger SQRT_M1; // sqrt(-1) mod p
+
+    // basepoint B (x, y) — standard Ed25519 values
+<span class="nc" id="L58">    private static final BigInteger BX = new BigInteger(</span>
+        &quot;15112221349535400772501151409588531511454012693041857206046113283949847762202&quot;);
+<span class="nc" id="L60">    private static final BigInteger BY = new BigInteger(</span>
+        &quot;46316835694926478169428394003475163141307993866256225615783033603165251855960&quot;);
+
+    static {
+        // d = -121665 * inv(121666) mod p
+<span class="nc" id="L65">        D = BigInteger.valueOf(-121665).mod(P)</span>
+<span class="nc" id="L66">                .multiply(BigInteger.valueOf(121666).modInverse(P)).mod(P);</span>
+        // sqrt(-1) = 2^((p-1)/4) mod p
+<span class="nc" id="L68">        SQRT_M1 = BigInteger.valueOf(2).modPow(P.subtract(BigInteger.ONE).shiftRight(2), P);</span>
+    }
+
+    private Ed25519() {}
+
+    // --- key API ---
+
+    /** Generates a pair (private seed 32 bytes, public key 32 bytes). */
+    public static KeyPair generateKeyPair(SecureRandom rnd) {
+<span class="nc" id="L77">        byte[] seed = new byte[32];</span>
+<span class="nc" id="L78">        rnd.nextBytes(seed);</span>
+<span class="nc" id="L79">        byte[] pub = publicKeyFromSeed(seed);</span>
+<span class="nc" id="L80">        return new KeyPair(seed, pub);</span>
+    }
+
+    /** Derives the public key (32 bytes) from a private seed (32 bytes). */
+    public static byte[] publicKeyFromSeed(byte[] seed32) {
+<span class="nc bnc" id="L85" title="All 4 branches missed.">        if (seed32 == null || seed32.length != 32) throw new IllegalArgumentException(&quot;seed must be 32 bytes&quot;);</span>
+<span class="nc" id="L86">        Digest d = sha512(seed32);</span>
+<span class="nc" id="L87">        byte[] aBytes = clamp(Arrays.copyOfRange(d.bytes, 0, 32));</span>
+<span class="nc" id="L88">        BigInteger a = leToInt(aBytes);</span>
+<span class="nc" id="L89">        Point A = scalarMulBase(a);</span>
+<span class="nc" id="L90">        return encodePoint(A);</span>
+    }
+
+    // --- signature ---
+
+    /**
+     * Signs a message with a private seed (32 bytes). Returns a 64-byte signature (R||S).
+     * The public key encoder is implicitly the one derived from the seed.
+     */
+    public static byte[] sign(byte[] seed32, byte[] message) {
+<span class="nc bnc" id="L100" title="All 4 branches missed.">        if (seed32 == null || seed32.length != 32) throw new IllegalArgumentException(&quot;seed must be 32 bytes&quot;);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (message == null) message = new byte[0];</span>
+
+        // H = SHA-512(seed)
+<span class="nc" id="L104">        Digest h = sha512(seed32);</span>
+<span class="nc" id="L105">        byte[] aBytes = clamp(Arrays.copyOfRange(h.bytes, 0, 32)); // clamped &quot;a&quot; (LE)</span>
+<span class="nc" id="L106">        byte[] prefix = Arrays.copyOfRange(h.bytes, 32, 64);</span>
+
+<span class="nc" id="L108">        BigInteger a = leToInt(aBytes);</span>
+<span class="nc" id="L109">        byte[] Aenc = encodePoint(scalarMulBase(a));</span>
+
+        // r = SHA-512(prefix || M) mod L
+<span class="nc" id="L112">        Digest rDig = sha512(prefix, message);</span>
+<span class="nc" id="L113">        BigInteger r = leToInt(rDig.bytes).mod(L);</span>
+
+        // R = r * B
+<span class="nc" id="L116">        byte[] Renc = encodePoint(scalarMulBase(r));</span>
+
+        // k = SHA-512(Renc || Aenc || M) mod L
+<span class="nc" id="L119">        Digest kDig = sha512(Renc, Aenc, message);</span>
+<span class="nc" id="L120">        BigInteger k = leToInt(kDig.bytes).mod(L);</span>
+
+        // S = r + k*a (mod L)
+<span class="nc" id="L123">        BigInteger S = r.add(k.multiply(a)).mod(L);</span>
+
+        // sig = Renc (32) || S(le,32)
+<span class="nc" id="L126">        byte[] sig = new byte[64];</span>
+<span class="nc" id="L127">        System.arraycopy(Renc, 0, sig, 0, 32);</span>
+<span class="nc" id="L128">        System.arraycopy(intToLe(S, 32), 0, sig, 32, 32);</span>
+<span class="nc" id="L129">        return sig;</span>
+    }
+
+    /**
+     * Verifies a 64-byte signature on a message using a 32-byte public key.
+     */
+    public static boolean verify(byte[] publicKey32, byte[] message, byte[] signature64) {
+<span class="nc bnc" id="L136" title="All 4 branches missed.">        if (publicKey32 == null || publicKey32.length != 32) return false;</span>
+<span class="nc bnc" id="L137" title="All 4 branches missed.">        if (signature64 == null || signature64.length != 64) return false;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (message == null) message = new byte[0];</span>
+
+        try {
+            // parse signature
+<span class="nc" id="L142">            byte[] Renc = Arrays.copyOfRange(signature64, 0, 32);</span>
+<span class="nc" id="L143">            byte[] Senc = Arrays.copyOfRange(signature64, 32, 64);</span>
+<span class="nc" id="L144">            BigInteger S = leToInt(Senc);</span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">            if (S.signum() &lt; 0 || S.compareTo(L) &gt;= 0) return false;</span>
+
+<span class="nc" id="L147">            Point A = decodePoint(publicKey32);</span>
+<span class="nc" id="L148">            Point R = decodePoint(Renc);</span>
+
+            // k = SHA-512(Renc || Aenc || M) mod L
+<span class="nc" id="L151">            Digest kDig = sha512(Renc, publicKey32, message);</span>
+<span class="nc" id="L152">            BigInteger k = leToInt(kDig.bytes).mod(L);</span>
+
+            // check: [S]B == R + [k]A
+<span class="nc" id="L155">            Point left = scalarMulBase(S);</span>
+<span class="nc" id="L156">            Point right = add(R, scalarMul(A, k));</span>
+<span class="nc" id="L157">            return left.equals(right);</span>
+<span class="nc" id="L158">        } catch (Exception ex) {</span>
+<span class="nc" id="L159">            return false;</span>
+        }
+    }
+
+    // --- structures &amp; utilities ---
+
+    public static final class KeyPair {
+        private final byte[] seed32;     // private (seed)
+        private final byte[] public32;   // public key (encoded)
+<span class="nc" id="L168">        public KeyPair(byte[] seed32, byte[] public32) {</span>
+<span class="nc" id="L169">            this.seed32 = Arrays.copyOf(seed32, 32);</span>
+<span class="nc" id="L170">            this.public32 = Arrays.copyOf(public32, 32);</span>
+<span class="nc" id="L171">        }</span>
+<span class="nc" id="L172">        public byte[] getPrivateSeed() { return Arrays.copyOf(seed32, 32); }</span>
+<span class="nc" id="L173">        public byte[] getPublicKey()  { return Arrays.copyOf(public32, 32); }</span>
+    }
+
+    private static final class Digest {
+        final byte[] bytes;
+<span class="nc" id="L178">        Digest(byte[] b) { this.bytes = b; }</span>
+    }
+
+    private static Digest sha512(byte[]... parts) {
+        try {
+<span class="nc" id="L183">            MessageDigest md = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            for (byte[] p : parts) md.update(p);</span>
+<span class="nc" id="L185">            return new Digest(md.digest());</span>
+<span class="nc" id="L186">        } catch (Exception e) {</span>
+<span class="nc" id="L187">            throw new IllegalStateException(e);</span>
+        }
+    }
+
+    private static byte[] clamp(byte[] a) {
+        // a: 32 bytes LE
+<span class="nc" id="L193">        a[0]  &amp;= (byte) 0xF8;</span>
+<span class="nc" id="L194">        a[31] &amp;= (byte) 0x7F;</span>
+<span class="nc" id="L195">        a[31] |= (byte) 0x40;</span>
+<span class="nc" id="L196">        return a;</span>
+    }
+
+    private static byte[] intToLe(BigInteger x, int len) {
+<span class="nc" id="L200">        byte[] be = x.toByteArray(); // signed BE</span>
+<span class="nc bnc" id="L201" title="All 4 branches missed.">        if (be.length &gt; 1 &amp;&amp; be[0] == 0) be = Arrays.copyOfRange(be, 1, be.length);</span>
+<span class="nc" id="L202">        byte[] out = new byte[len];</span>
+        // copy BE -&gt; end, then reverse to LE
+<span class="nc" id="L204">        int copy = Math.min(be.length, len);</span>
+<span class="nc" id="L205">        System.arraycopy(be, be.length - copy, out, len - copy, copy);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        for (int i = 0, j = len - 1; i &lt; j; i++, j--) { byte t = out[i]; out[i] = out[j]; out[j] = t; }</span>
+<span class="nc" id="L207">        return out;</span>
+    }
+
+    private static BigInteger leToInt(byte[] le) {
+<span class="nc" id="L211">        byte[] be = Arrays.copyOf(le, le.length);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        for (int i = 0, j = be.length - 1; i &lt; j; i++, j--) { byte t = be[i]; be[i] = be[j]; be[j] = t; }</span>
+<span class="nc" id="L213">        return new BigInteger(1, be);</span>
+    }
+
+<span class="nc" id="L216">    private static BigInteger inv(BigInteger x) { return x.modInverse(P); }</span>
+
+    // point on the curve (affine coordinates)
+    private static final class Point {
+        final BigInteger x, y;
+<span class="nc" id="L221">        Point(BigInteger x, BigInteger y) { this.x = x.mod(P); this.y = y.mod(P); }</span>
+        @Override public boolean equals(Object o) {
+<span class="nc bnc" id="L223" title="All 2 branches missed.">            if (!(o instanceof Point)) return false;</span>
+<span class="nc" id="L224">            Point p = (Point) o;</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">            return this.x.equals(p.x) &amp;&amp; this.y.equals(p.y);</span>
+        }
+    }
+
+<span class="nc" id="L229">    private static final Point B = new Point(BX, BY);</span>
+<span class="nc" id="L230">    private static final Point ID = new Point(BigInteger.ZERO, BigInteger.ONE); // neutral element</span>
+
+    // Edwards addition (a = -1)
+    private static Point add(Point P1, Point P2) {
+<span class="nc" id="L234">        BigInteger x1 = P1.x, y1 = P1.y, x2 = P2.x, y2 = P2.y;</span>
+<span class="nc" id="L235">        BigInteger x1x2 = x1.multiply(x2).mod(P);</span>
+<span class="nc" id="L236">        BigInteger y1y2 = y1.multiply(y2).mod(P);</span>
+<span class="nc" id="L237">        BigInteger x1y2 = x1.multiply(y2).mod(P);</span>
+<span class="nc" id="L238">        BigInteger y1x2 = y1.multiply(x2).mod(P);</span>
+<span class="nc" id="L239">        BigInteger denX = BigInteger.ONE.add(D.multiply(x1x2).mod(P).multiply(y1y2).mod(P)).mod(P);</span>
+<span class="nc" id="L240">        BigInteger denY = BigInteger.ONE.subtract(D.multiply(x1x2).mod(P).multiply(y1y2).mod(P)).mod(P);</span>
+
+<span class="nc" id="L242">        BigInteger x3 = x1y2.add(y1x2).mod(P).multiply(inv(denX)).mod(P);</span>
+<span class="nc" id="L243">        BigInteger y3 = y1y2.add(x1x2).mod(P).multiply(inv(denY)).mod(P);</span>
+<span class="nc" id="L244">        return new Point(x3, y3);</span>
+    }
+
+<span class="nc" id="L247">    private static Point dbl(Point P) { return add(P, P); }</span>
+
+    private static Point scalarMul(Point P, BigInteger k) {
+<span class="nc" id="L250">        Point Q = ID;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        for (int i = k.bitLength() - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L252">            Q = dbl(Q);</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">            if (k.testBit(i)) Q = add(Q, P);</span>
+        }
+<span class="nc" id="L255">        return Q;</span>
+    }
+
+<span class="nc" id="L258">    private static Point scalarMulBase(BigInteger k) { return scalarMul(B, k); }</span>
+
+    // encoding (y in LE 255 bits + sign bit of x in MSB)
+    private static byte[] encodePoint(Point P) {
+<span class="nc" id="L262">        BigInteger x = P.x, y = P.y;</span>
+<span class="nc" id="L263">        BigInteger yMasked = y; // 255 bits</span>
+<span class="nc" id="L264">        byte[] enc = intToLe(yMasked, 32);</span>
+        // set MSB (bit 255) with the parity bit of x
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        if (x.testBit(0)) enc[31] = (byte) (enc[31] | 0x80);</span>
+<span class="nc" id="L267">        else enc[31] = (byte) (enc[31] &amp; 0x7F);</span>
+<span class="nc" id="L268">        return enc;</span>
+    }
+
+    // decoding from 32 bytes LE (y || sign(x))
+    private static Point decodePoint(byte[] enc) {
+<span class="nc bnc" id="L273" title="All 4 branches missed.">        if (enc == null || enc.length != 32) throw new IllegalArgumentException(&quot;point encoding must be 32 bytes&quot;);</span>
+<span class="nc" id="L274">        byte[] yLe = Arrays.copyOf(enc, 32);</span>
+<span class="nc" id="L275">        int signX = (yLe[31] &amp; 0x80) &gt;&gt;&gt; 7;</span>
+<span class="nc" id="L276">        yLe[31] &amp;= 0x7F; // mask of sign bit</span>
+<span class="nc" id="L277">        BigInteger y = leToInt(yLe);</span>
+
+        // x^2 = (y^2 - 1) / (d*y^2 + 1)
+<span class="nc" id="L280">        BigInteger y2 = y.multiply(y).mod(P);</span>
+<span class="nc" id="L281">        BigInteger u = y2.subtract(BigInteger.ONE).mod(P);</span>
+<span class="nc" id="L282">        BigInteger v = D.multiply(y2).add(BigInteger.ONE).mod(P);</span>
+<span class="nc" id="L283">        BigInteger x2 = u.multiply(inv(v)).mod(P);</span>
+
+        // square root mod p (p ≡ 5 (mod 8))
+<span class="nc" id="L286">        BigInteger x = x2.modPow(P.add(BigInteger.valueOf(3)).shiftRight(3), P);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">        if (!x.multiply(x).mod(P).equals(x2)) {</span>
+<span class="nc" id="L288">            x = x.multiply(SQRT_M1).mod(P);</span>
+        }
+<span class="nc bnc" id="L290" title="All 2 branches missed.">        if (!x.multiply(x).mod(P).equals(x2)) {</span>
+<span class="nc" id="L291">            throw new IllegalArgumentException(&quot;invalid point encoding&quot;);</span>
+        }
+<span class="nc bnc" id="L293" title="All 4 branches missed.">        if (x.testBit(0) != (signX == 1)) {</span>
+<span class="nc" id="L294">            x = P.subtract(x);</span>
+        }
+<span class="nc" id="L296">        return new Point(x, y);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

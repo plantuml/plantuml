@@ -125,6 +125,7 @@ net.sourceforge.plantuml.klimt.font
 net.sourceforge.plantuml.klimt.geom
 net.sourceforge.plantuml.klimt.shape
 net.sourceforge.plantuml.klimt.sprite
+net.sourceforge.plantuml.licensing
 net.sourceforge.plantuml.log
 net.sourceforge.plantuml.math
 net.sourceforge.plantuml.mda
