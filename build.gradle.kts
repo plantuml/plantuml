@@ -62,15 +62,6 @@ repositories {
 	mavenCentral()
 }
 
-sourceSets {
-}
-
-tasks.processResources {
-    from("src/main/java") {
-        include("**/graphviz.dat", "**/*.svg", "**/*.png", "**/*.txt")
-    }
-}
-
 tasks.compileJava {
 	if (JavaVersion.current().isJava8) {
 		java.targetCompatibility = JavaVersion.VERSION_1_8
