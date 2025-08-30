@@ -44,20 +44,14 @@ repositories {
 }
 
 sourceSets {
-	main {
-		java {
-			srcDirs("build/generated/sjpp")
-		}
-        resources {
-			srcDirs("../src/main/resources")
-        }
-	}
-}
-
-tasks.processResources {
-    from("../src/main/java") {
-        include("**/graphviz.dat", "**/*.svg", "**/*.png", "**/*.txt")
+  main {
+    java {
+      srcDirs("build/generated/sjpp")
     }
+    resources {
+      srcDir(rootProject.layout.projectDirectory.dir("src/main/resources"))
+    }
+  }
 }
 
 tasks.compileJava {
@@ -73,7 +67,7 @@ tasks.withType<Jar>().configureEach {
 		attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
 		attributes["Implementation-Version"] = archiveVersion
 		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
-		from("../manifest.txt")
+		from(rootProject.layout.projectDirectory.file("manifest.txt"))
 	}
 
 	// Add dependencies to the JAR
