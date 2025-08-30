@@ -50,73 +50,8 @@
             </fileset>
         </copy>
 
-        <copy todir="build/net/sourceforge/plantuml/openiconic/data">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/openiconic/data">
-                <include name="*.txt" />
-                <include name="*.svg" />
-            </fileset>
-        </copy>
-        <copy todir="build/net/sourceforge/plantuml/emoji/data">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/emoji/data">
-                <include name="*.txt" />
-                <include name="*.svg" />
-            </fileset>
-        </copy>
-        <copy todir="build/net/sourceforge/plantuml/fun">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/fun">
-                <include name="*.png" />
-            </fileset>
-        </copy>
-        <copy todir="build/sprites/archimate">
-            <fileset dir="src/main/java/sprites/archimate">
-                <include name="*.png" />
-            </fileset>
-        </copy>
-        <copy todir="build/net/sourceforge/plantuml/dedication">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/dedication">
-                <include name="*.png" />
-            </fileset>
-        </copy>
-        <copy todir="build/net/sourceforge/plantuml/math">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/math">
-                <include name="*.js" />
-            </fileset>
-        </copy>
-        <copy todir="build/net/sourceforge/plantuml/utils">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/utils">
-                <include name="*.txt" />
-            </fileset>
-        </copy>
-        <copy todir="build/net/sourceforge/plantuml/windowsdot">
-            <fileset dir="src/main/java/net/sourceforge/plantuml/windowsdot">
-                <include name="*.dat" />
-            </fileset>
-        </copy>
-        <copy todir="build/stdlib">
-            <fileset dir="src/main/resources/stdlib">
-                <include name="**/*.spm" />
-            </fileset>
-        </copy>
-        <copy todir="build/skin">
-            <fileset dir="src/main/resources/skin">
-                <include name="**/*.skin" />
-            </fileset>
-        </copy>
-        <copy todir="build/themes">
-            <fileset dir="src/main/resources/themes">
-                <include name="**/*.puml" />
-            </fileset>
-        </copy>
-        <copy todir="build/svg">
-            <fileset dir="src/main/resources/svg">
-                <include name="**/*.js" />
-                <include name="**/*.css" />
-            </fileset>
-        </copy>
-        <copy todir="build/resources">
-            <fileset dir="src/main/resources">
-                <include name="**/*.properties"/>
-            </fileset>
+        <copy todir="build">
+            <fileset dir="src/main/resources"/>
         </copy>
     </target>
 
