@@ -69,6 +69,30 @@
                 <attribute name="Main-Class" value="net.sourceforge.plantuml.Run" />
             </manifest>
         </jar>
+    	
+        <!-- === Verification of required JAR entries === -->
+        <!-- Count how many required entries are present -->
+        <resourcecount property="present.count">
+            <resources>
+                <zipentry zipfile="plantuml.jar" name="net/sourceforge/plantuml/Run.class"/>
+                <zipentry zipfile="plantuml.jar" name="sprites/archimate/access.png"/>
+                <zipentry zipfile="plantuml.jar" name="skin/plantuml.skin"/>
+            </resources>
+        </resourcecount>
+
+        <!-- Expected number of entries (must match the list above) -->
+        <property name="expected.count" value="3"/>
+
+        <condition property="all.present">
+            <equals arg1="${present.count}" arg2="${expected.count}"/>
+        </condition>
+
+        <!-- Fail the build if entries are missing -->
+        <fail unless="all.present"
+              message="Missing entries in plantuml.jar (expected ${expected.count}, found ${present.count})."/>
+
+        <echo>OK: all required entries are present in plantuml.jar.</echo>
+        <!-- === End of verification === -->
 
         <!-- Clean up the build and distribution directories -->
         <delete dir="build" />
