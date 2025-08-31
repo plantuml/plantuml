@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.color;
@@ -200,7 +200,7 @@ public class ColorTrieNode {
 		// Archimate
 		register("BUSINESS", new Color(0xFFFFCC));
 		register("APPLICATION", new Color(0xC2F0FF));
-		register("MOTIVATION", new Color(0xEFEFFF));
+		register("MOTIVATION", new Color(0xCCCCFF));
 		register("STRATEGY", new Color(0xF8E7C0));
 		register("TECHNOLOGY", new Color(0xC9FFC9));
 		register("PHYSICAL", new Color(0x97FF97));
