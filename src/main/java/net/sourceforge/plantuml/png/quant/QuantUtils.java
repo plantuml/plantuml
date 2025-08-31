@@ -62,7 +62,7 @@ public final class QuantUtils {
 	 * @throws IllegalArgumentException if the image is not a {@link BufferedImage}
 	 *                                  or if its type is unsupported
 	 */
-	public static BufferedImage toBufferedARGB(RenderedImage src) {
+	public static BufferedImage toBufferedARGBorRGB(RenderedImage src) {
 		if (src instanceof BufferedImage) {
 			final BufferedImage bi = (BufferedImage) src;
 			final int type = bi.getType();

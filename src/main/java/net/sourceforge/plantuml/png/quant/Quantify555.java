@@ -37,55 +37,63 @@ package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
-import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 import java.util.Arrays;
+
+import net.sourceforge.plantuml.utils.Log;
 
 /**
  * A simple color quantizer based on RGB555 cubes.
  *
- * <p><b>Process:</b></p>
+ * <p>
+ * <b>Process:</b>
+ * </p>
  * <ol>
- *   <li>Each pixel is mapped to a 15-bit cube index (RGB555).</li>
- *   <li>Inside the cube, a 9-bit sub-color index (0–511) is computed.</li>
- *   <li>Frequencies of sub-colors are accumulated in each cube.</li>
- *   <li>If more than 255 distinct cubes are populated, quantization aborts
- *       (since the palette would exceed 256 colors).</li>
- *   <li>For each cube, the most frequent sub-color is selected as the
- *       representative palette entry.</li>
- *   <li>An {@link IndexColorModel} is built and an 8-bit indexed image is
- *       generated.</li>
+ * <li>Each pixel is mapped to a 15-bit cube index (RGB555).</li>
+ * <li>Inside the cube, a 9-bit sub-color index (0–511) is computed.</li>
+ * <li>Frequencies of sub-colors are accumulated in each cube.</li>
+ * <li>If more than 255 distinct cubes are populated, quantization aborts (since
+ * the palette would exceed 256 colors).</li>
+ * <li>For each cube, the most frequent sub-color is selected as the
+ * representative palette entry.</li>
+ * <li>An {@link IndexColorModel} is built and an 8-bit indexed image is
+ * generated.</li>
  * </ol>
  * 
- * <p><b>Comparison to other algorithms:</b></p>
+ * <p>
+ * <b>Comparison to other algorithms:</b>
+ * </p>
  * <ul>
- *   <li><b>Median Cut:</b> Splits color space adaptively based on variance.
- *       Produces better palettes on natural images (gradients, photos),
- *       but more expensive computationally.</li>
- *   <li><b>Wu's Algorithm:</b> Uses variance minimization and dynamic
- *       programming. Produces very high-quality palettes (similar to pngquant),
- *       but requires more memory and preprocessing.</li>
- *   <li><b>RGB555 Cube Quantizer (this class):</b> Extremely fast,
- *       deterministic, and simple. Well-suited for diagrams, icons,
- *       or graphics with limited colors. However, palette quality is
- *       generally inferior to Wu or Median Cut, especially for gradients
- *       and photos.</li>
+ * <li><b>Median Cut:</b> Splits color space adaptively based on variance.
+ * Produces better palettes on natural images (gradients, photos), but more
+ * expensive computationally.</li>
+ * <li><b>Wu's Algorithm:</b> Uses variance minimization and dynamic
+ * programming. Produces very high-quality palettes (similar to pngquant), but
+ * requires more memory and preprocessing.</li>
+ * <li><b>RGB555 Cube Quantizer (this class):</b> Extremely fast, deterministic,
+ * and simple. Well-suited for diagrams, icons, or graphics with limited colors.
+ * However, palette quality is generally inferior to Wu or Median Cut,
+ * especially for gradients and photos.</li>
  * </ul>
  *
- * <p><b>Advantages:</b></p>
+ * <p>
+ * <b>Advantages:</b>
+ * </p>
  * <ul>
- *   <li>Very fast: one pass to count, one pass to remap pixels.</li>
- *   <li>Simple and predictable (no recursion, no complex math).</li>
- *   <li>Guaranteed <= 256 colors (or aborts safely).</li>
+ * <li>Very fast: one pass to count, one pass to remap pixels.</li>
+ * <li>Simple and predictable (no recursion, no complex math).</li>
+ * <li>Guaranteed <= 256 colors (or aborts safely).</li>
  * </ul>
  *
- * <p><b>Limitations:</b></p>
+ * <p>
+ * <b>Limitations:</b>
+ * </p>
  * <ul>
- *   <li>Rigid partitioning (fixed RGB555 grid) does not adapt to the
- *       distribution of colors in the image.</li>
- *   <li>Poorer palette quality for continuous-tone images.</li>
- *   <li>No dithering: banding artifacts are visible on gradients unless
- *       combined with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
+ * <li>Rigid partitioning (fixed RGB555 grid) does not adapt to the distribution
+ * of colors in the image.</li>
+ * <li>Poorer palette quality for continuous-tone images.</li>
+ * <li>No dithering: banding artifacts are visible on gradients unless combined
+ * with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
  * </ul>
  */
 public final class Quantify555 {
@@ -93,20 +101,17 @@ public final class Quantify555 {
 	/**
 	 * Attempts to quantize an image to <= 256 colors using the Cube555 structure.
 	 * 
-	 * @param input any {@link RenderedImage} (must be convertible to ARGB)
+	 * @param src any {@link BufferedImage}
 	 * @return a new {@link BufferedImage} with an indexed color model, or
 	 *         {@code null} if quantization is not possible (too many colors)
 	 */
-	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
-
-		// Convert to a BufferedImage in ARGB format if needed
-		final BufferedImage src = QuantUtils.toBufferedARGB(input);
-		if (src == null)
-			return null;
+	public static BufferedImage quantifyMeIfPossible(BufferedImage src) {
 
 		final int w = src.getWidth();
 		final int h = src.getHeight();
 		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
+
+		Log.info(() -> "Using Quantify555.");
 
 		int nbCubes = 0;
 
@@ -117,8 +122,10 @@ public final class Quantify555 {
 			Cube555 cube = cubes[rgb555];
 			if (cube == null) {
 				// Abort if too many distinct cubes are found
-				if (nbCubes++ > 255)
+				if (nbCubes++ > 255) {
+					Log.info(() -> "...abort, too many colors");
 					return null;
+				}
 				cube = new Cube555(rgb555);
 				cubes[rgb555] = cube;
 			}

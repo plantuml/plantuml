@@ -45,7 +45,7 @@ public final class QuantifyOKLab {
 
 	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
 
-		final BufferedImage src = QuantUtils.toBufferedARGB(input);
+		final BufferedImage src = QuantUtils.toBufferedARGBorRGB(input);
 		if (src == null)
 			return null;
 
