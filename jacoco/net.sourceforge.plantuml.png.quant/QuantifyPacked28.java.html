@@ -37,35 +37,30 @@ package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
 
-import net.sourceforge.plantuml.utils.Log;
+<span class="pc" id="L40">public final class QuantifyPacked28 {</span>
 
-<span class="pc" id="L42">public final class QuantifyPacked28 {</span>
+	public static BufferedImage packMeIfPossible(BufferedImage src) {
 
-	public static BufferedImage quantifyMeIfPossible(BufferedImage src) {
+<span class="fc" id="L44">		final int type = src.getType();</span>
 
-<span class="fc" id="L46">		final int type = src.getType();</span>
-
-<span class="pc bpc" id="L48" title="6 of 8 branches missed.">		assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
+<span class="pc bpc" id="L46" title="6 of 8 branches missed.">		assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
 				|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
-<span class="pc bpc" id="L51" title="2 of 4 branches missed.">		final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;</span>
-<span class="pc" id="L52">		Log.info(() -&gt; &quot;Using QuantifyPacked28. hasAlpha=&quot; + hasAlpha);</span>
+<span class="fc" id="L49">		final int w = src.getWidth();</span>
+<span class="fc" id="L50">		final int h = src.getHeight();</span>
 
-<span class="fc" id="L54">		final int w = src.getWidth();</span>
-<span class="fc" id="L55">		final int h = src.getHeight();</span>
+<span class="fc" id="L52">		final BufferedImage dst = new BufferedImage(w, h, type);</span>
 
-<span class="fc" id="L57">		final BufferedImage dst = new BufferedImage(w, h, type);</span>
+<span class="fc" id="L54">		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
+<span class="fc" id="L55">		final int[] out = new int[pixels.length];</span>
 
-<span class="fc" id="L59">		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
-<span class="fc" id="L60">		final int[] out = new int[pixels.length];</span>
-
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (int i = 0; i &lt; pixels.length; i++) {</span>
-<span class="fc" id="L63">			final int argb = pixels[i];</span>
-<span class="fc" id="L64">			out[i] = QuantUtils.compressPackedARGB(argb);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (int i = 0; i &lt; pixels.length; i++) {</span>
+<span class="fc" id="L58">			final int argb = pixels[i];</span>
+<span class="fc" id="L59">			out[i] = QuantUtils.compressPackedARGB(argb);</span>
 		}
 
-<span class="fc" id="L67">		dst.setRGB(0, 0, w, h, out, 0, w);</span>
-<span class="fc" id="L68">		return dst;</span>
+<span class="fc" id="L62">		dst.setRGB(0, 0, w, h, out, 0, w);</span>
+<span class="fc" id="L63">		return dst;</span>
 	}
 
 }

@@ -70,21 +70,21 @@ import net.sourceforge.plantuml.utils.Log;
 
 	public static void write(RenderedImage image, ColorMapper mapper, OutputStream os, String metadata, int dpi)
 			throws IOException {
-<span class="fc" id="L73">		final BufferedImage src = QuantUtils.toBufferedARGBorRGB(image);</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (src != null) {</span>
-<span class="fc" id="L75">			final int type = src.getType();</span>
+<span class="fc" id="L73">		final BufferedImage bufferedImage = QuantUtils.toBufferedARGBorRGB(image);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (bufferedImage != null) {</span>
+<span class="fc" id="L75">			final int type = bufferedImage.getType();</span>
 <span class="pc bpc" id="L76" title="6 of 8 branches missed.">			assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
 					|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
-<span class="fc" id="L79">			BufferedImage newImage = null;</span>
-<span class="pc bpc" id="L80" title="3 of 4 branches missed.">			if (type == BufferedImage.TYPE_INT_RGB || type == BufferedImage.TYPE_3BYTE_BGR)</span>
-<span class="fc" id="L81">				newImage = Quantify555.quantifyMeIfPossible(src);</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">			final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;</span>
+<span class="pc" id="L80">			Log.info(() -&gt; &quot;Trying to pack image. hasAlpha=&quot; + hasAlpha);</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (newImage == null)</span>
-<span class="fc" id="L84">				newImage = QuantifyPacked28.quantifyMeIfPossible(src);</span>
+<span class="fc" id="L82">			BufferedImage tmp = Quantify555.packMeIfPossible(bufferedImage);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (tmp == null)</span>
+<span class="fc" id="L84">				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);</span>
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (newImage != null)</span>
-<span class="fc" id="L87">				image = newImage;</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (tmp != null)</span>
+<span class="fc" id="L87">				image = tmp;</span>
 		}
 
 <span class="fc" id="L90">		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);</span>

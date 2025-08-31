@@ -120,6 +120,15 @@ loadScripts(document, 'script');</script>
  <li>Simple and predictable (no recursion, no complex math).</li>
  <li>Guaranteed &lt;= 256 colors (or aborts safely).</li>
  </ul>
+ 
+ <p>
+ rules for transparency:
+ </p>
+ <ul>
+ <li>any pixel with alpha less than 127 is considered fully transparent and
+ mapped to ARGB 0x00000000.</li>
+ <li>a special cube id is reserved to represent this transparent color.</li>
+ </ul>
 
  <p>
  <b>Limitations:</b>
@@ -164,9 +173,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Builds an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/IndexColorModel.html" title="class or interface in java.awt.image" class="external-link"><code>IndexColorModel</code></a> from a palette of ARGB colors.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#quantifyMeIfPossible(java.awt.image.BufferedImage)" class="member-name-link">quantifyMeIfPossible</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;src)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isTransparent(int)" class="member-name-link">isTransparent</a><wbr>(int&nbsp;argb)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#packMeIfPossible(java.awt.image.BufferedImage)" class="member-name-link">packMeIfPossible</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;src)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.</div>
 </div>
 </div>
@@ -201,9 +213,9 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="quantifyMeIfPossible(java.awt.image.BufferedImage)">
-<h3>quantifyMeIfPossible</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></span>&nbsp;<span class="element-name">quantifyMeIfPossible</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;src)</span></div>
+<section class="detail" id="packMeIfPossible(java.awt.image.BufferedImage)">
+<h3>packMeIfPossible</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></span>&nbsp;<span class="element-name">packMeIfPossible</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;src)</span></div>
 <div class="block">Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -212,6 +224,12 @@ loadScripts(document, 'script');</script>
 <dd>a new <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a> with an indexed color model, or
          <code>null</code> if quantization is not possible (too many colors)</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTransparent(int)">
+<h3>isTransparent</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTransparent</span><wbr><span class="parameters">(int&nbsp;argb)</span></div>
 </section>
 </li>
 <li>
