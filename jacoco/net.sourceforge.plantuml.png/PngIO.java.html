@@ -41,13 +41,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.png.quant.QuantUtils;
 import net.sourceforge.plantuml.png.quant.Quantify555;
 import net.sourceforge.plantuml.png.quant.QuantifyPacked28;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L50">public class PngIO {</span>
+<span class="pc" id="L51">public class PngIO {</span>
 	// ::remove folder when __HAXE__
 
 	// ::comment when __CORE__
@@ -55,30 +56,39 @@ import net.sourceforge.plantuml.utils.Log;
 
 	public static void write(RenderedImage image, ColorMapper mapper, SFile file, String metadata, int dpi)
 			throws IOException {
-<span class="fc" id="L58">		try (OutputStream os = file.createBufferedOutputStream()) {</span>
-<span class="fc" id="L59">			write(image, mapper, os, metadata, dpi);</span>
+<span class="fc" id="L59">		try (OutputStream os = file.createBufferedOutputStream()) {</span>
+<span class="fc" id="L60">			write(image, mapper, os, metadata, dpi);</span>
 		}
-<span class="pc" id="L61">		Log.debug(() -&gt; &quot;File is &quot; + file);</span>
-<span class="pc" id="L62">		Log.debug(() -&gt; &quot;File size &quot; + file.length());</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (file.length() == 0) {</span>
-<span class="nc" id="L64">			Log.error(&quot;File size is zero: &quot; + file);</span>
-<span class="nc" id="L65">			SImageIO.write(image, &quot;png&quot;, file);</span>
+<span class="pc" id="L62">		Log.debug(() -&gt; &quot;File is &quot; + file);</span>
+<span class="pc" id="L63">		Log.debug(() -&gt; &quot;File size &quot; + file.length());</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (file.length() == 0) {</span>
+<span class="nc" id="L65">			Log.error(&quot;File size is zero: &quot; + file);</span>
+<span class="nc" id="L66">			SImageIO.write(image, &quot;png&quot;, file);</span>
 		}
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L68">	}</span>
 	// ::done
 
 	public static void write(RenderedImage image, ColorMapper mapper, OutputStream os, String metadata, int dpi)
 			throws IOException {
-<span class="fc" id="L72">		BufferedImage newImage = Quantify555.quantifyMeIfPossible(image);</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (newImage == null)</span>
-<span class="fc" id="L74">			newImage = QuantifyPacked28.quantifyMeIfPossible(image);</span>
-		
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (newImage != null)</span>
-<span class="fc" id="L77">			image = newImage;</span>
-		
-<span class="fc" id="L79">		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L73">		final BufferedImage src = QuantUtils.toBufferedARGBorRGB(image);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (src != null) {</span>
+<span class="fc" id="L75">			final int type = src.getType();</span>
+<span class="pc bpc" id="L76" title="6 of 8 branches missed.">			assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
+					|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
+<span class="fc" id="L79">			BufferedImage newImage = null;</span>
+<span class="pc bpc" id="L80" title="3 of 4 branches missed.">			if (type == BufferedImage.TYPE_INT_RGB || type == BufferedImage.TYPE_3BYTE_BGR)</span>
+<span class="fc" id="L81">				newImage = Quantify555.quantifyMeIfPossible(src);</span>
+
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (newImage == null)</span>
+<span class="fc" id="L84">				newImage = QuantifyPacked28.quantifyMeIfPossible(src);</span>
+
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (newImage != null)</span>
+<span class="fc" id="L87">				image = newImage;</span>
+		}
+
+<span class="fc" id="L90">		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);</span>
+<span class="fc" id="L91">	}</span>
 
 //	/** writes a BufferedImage of type TYPE_INT_ARGB to PNG using PNGJ */
 //	public static void writeARGB(BufferedImage bi, OutputStream os, String metadata) {

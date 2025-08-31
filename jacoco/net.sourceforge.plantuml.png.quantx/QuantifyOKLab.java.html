@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.png.quant.QuantUtils;
 
 	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
 
-<span class="nc" id="L48">		final BufferedImage src = QuantUtils.toBufferedARGB(input);</span>
+<span class="nc" id="L48">		final BufferedImage src = QuantUtils.toBufferedARGBorRGB(input);</span>
 <span class="nc bnc" id="L49" title="All 2 branches missed.">		if (src == null)</span>
 <span class="nc" id="L50">			return null;</span>
 

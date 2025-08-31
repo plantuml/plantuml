@@ -81,48 +81,55 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">A simple color quantizer based on RGB555 cubes.
 
- <p><b>Process:</b></p>
+ <p>
+ <b>Process:</b>
+ </p>
  <ol>
-   <li>Each pixel is mapped to a 15-bit cube index (RGB555).</li>
-   <li>Inside the cube, a 9-bit sub-color index (0–511) is computed.</li>
-   <li>Frequencies of sub-colors are accumulated in each cube.</li>
-   <li>If more than 255 distinct cubes are populated, quantization aborts
-       (since the palette would exceed 256 colors).</li>
-   <li>For each cube, the most frequent sub-color is selected as the
-       representative palette entry.</li>
-   <li>An <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/IndexColorModel.html" title="class or interface in java.awt.image" class="external-link"><code>IndexColorModel</code></a> is built and an 8-bit indexed image is
-       generated.</li>
+ <li>Each pixel is mapped to a 15-bit cube index (RGB555).</li>
+ <li>Inside the cube, a 9-bit sub-color index (0–511) is computed.</li>
+ <li>Frequencies of sub-colors are accumulated in each cube.</li>
+ <li>If more than 255 distinct cubes are populated, quantization aborts (since
+ the palette would exceed 256 colors).</li>
+ <li>For each cube, the most frequent sub-color is selected as the
+ representative palette entry.</li>
+ <li>An <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/IndexColorModel.html" title="class or interface in java.awt.image" class="external-link"><code>IndexColorModel</code></a> is built and an 8-bit indexed image is
+ generated.</li>
  </ol>
  
- <p><b>Comparison to other algorithms:</b></p>
+ <p>
+ <b>Comparison to other algorithms:</b>
+ </p>
  <ul>
-   <li><b>Median Cut:</b> Splits color space adaptively based on variance.
-       Produces better palettes on natural images (gradients, photos),
-       but more expensive computationally.</li>
-   <li><b>Wu's Algorithm:</b> Uses variance minimization and dynamic
-       programming. Produces very high-quality palettes (similar to pngquant),
-       but requires more memory and preprocessing.</li>
-   <li><b>RGB555 Cube Quantizer (this class):</b> Extremely fast,
-       deterministic, and simple. Well-suited for diagrams, icons,
-       or graphics with limited colors. However, palette quality is
-       generally inferior to Wu or Median Cut, especially for gradients
-       and photos.</li>
+ <li><b>Median Cut:</b> Splits color space adaptively based on variance.
+ Produces better palettes on natural images (gradients, photos), but more
+ expensive computationally.</li>
+ <li><b>Wu's Algorithm:</b> Uses variance minimization and dynamic
+ programming. Produces very high-quality palettes (similar to pngquant), but
+ requires more memory and preprocessing.</li>
+ <li><b>RGB555 Cube Quantizer (this class):</b> Extremely fast, deterministic,
+ and simple. Well-suited for diagrams, icons, or graphics with limited colors.
+ However, palette quality is generally inferior to Wu or Median Cut,
+ especially for gradients and photos.</li>
  </ul>
 
- <p><b>Advantages:</b></p>
+ <p>
+ <b>Advantages:</b>
+ </p>
  <ul>
-   <li>Very fast: one pass to count, one pass to remap pixels.</li>
-   <li>Simple and predictable (no recursion, no complex math).</li>
-   <li>Guaranteed &lt;= 256 colors (or aborts safely).</li>
+ <li>Very fast: one pass to count, one pass to remap pixels.</li>
+ <li>Simple and predictable (no recursion, no complex math).</li>
+ <li>Guaranteed &lt;= 256 colors (or aborts safely).</li>
  </ul>
 
- <p><b>Limitations:</b></p>
+ <p>
+ <b>Limitations:</b>
+ </p>
  <ul>
-   <li>Rigid partitioning (fixed RGB555 grid) does not adapt to the
-       distribution of colors in the image.</li>
-   <li>Poorer palette quality for continuous-tone images.</li>
-   <li>No dithering: banding artifacts are visible on gradients unless
-       combined with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
+ <li>Rigid partitioning (fixed RGB555 grid) does not adapt to the distribution
+ of colors in the image.</li>
+ <li>Poorer palette quality for continuous-tone images.</li>
+ <li>No dithering: banding artifacts are visible on gradients unless combined
+ with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
  </ul></div>
 </section>
 <section class="summary">
@@ -158,7 +165,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Builds an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/IndexColorModel.html" title="class or interface in java.awt.image" class="external-link"><code>IndexColorModel</code></a> from a palette of ARGB colors.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#quantifyMeIfPossible(java.awt.image.RenderedImage)" class="member-name-link">quantifyMeIfPossible</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/RenderedImage.html" title="class or interface in java.awt.image" class="external-link">RenderedImage</a>&nbsp;input)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#quantifyMeIfPossible(java.awt.image.BufferedImage)" class="member-name-link">quantifyMeIfPossible</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;src)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.</div>
 </div>
@@ -194,13 +201,13 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="quantifyMeIfPossible(java.awt.image.RenderedImage)">
+<section class="detail" id="quantifyMeIfPossible(java.awt.image.BufferedImage)">
 <h3>quantifyMeIfPossible</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></span>&nbsp;<span class="element-name">quantifyMeIfPossible</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/RenderedImage.html" title="class or interface in java.awt.image" class="external-link">RenderedImage</a>&nbsp;input)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a></span>&nbsp;<span class="element-name">quantifyMeIfPossible</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;src)</span></div>
 <div class="block">Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>input</code> - any <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/RenderedImage.html" title="class or interface in java.awt.image" class="external-link"><code>RenderedImage</code></a> (must be convertible to ARGB)</dd>
+<dd><code>src</code> - any <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a></dd>
 <dt>Returns:</dt>
 <dd>a new <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a> with an indexed color model, or
          <code>null</code> if quantization is not possible (too many colors)</dd>

@@ -62,7 +62,7 @@ import java.awt.image.RenderedImage;
 	 * @throws IllegalArgumentException if the image is not a {@link BufferedImage}
 	 *                                  or if its type is unsupported
 	 */
-	public static BufferedImage toBufferedARGB(RenderedImage src) {
+	public static BufferedImage toBufferedARGBorRGB(RenderedImage src) {
 <span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (src instanceof BufferedImage) {</span>
 <span class="fc" id="L67">			final BufferedImage bi = (BufferedImage) src;</span>
 <span class="fc" id="L68">			final int type = bi.getType();</span>

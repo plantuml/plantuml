@@ -37,96 +37,103 @@ package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
-import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 import java.util.Arrays;
+
+import net.sourceforge.plantuml.utils.Log;
 
 /**
  * A simple color quantizer based on RGB555 cubes.
  *
- * &lt;p&gt;&lt;b&gt;Process:&lt;/b&gt;&lt;/p&gt;
+ * &lt;p&gt;
+ * &lt;b&gt;Process:&lt;/b&gt;
+ * &lt;/p&gt;
  * &lt;ol&gt;
- *   &lt;li&gt;Each pixel is mapped to a 15-bit cube index (RGB555).&lt;/li&gt;
- *   &lt;li&gt;Inside the cube, a 9-bit sub-color index (0–511) is computed.&lt;/li&gt;
- *   &lt;li&gt;Frequencies of sub-colors are accumulated in each cube.&lt;/li&gt;
- *   &lt;li&gt;If more than 255 distinct cubes are populated, quantization aborts
- *       (since the palette would exceed 256 colors).&lt;/li&gt;
- *   &lt;li&gt;For each cube, the most frequent sub-color is selected as the
- *       representative palette entry.&lt;/li&gt;
- *   &lt;li&gt;An {@link IndexColorModel} is built and an 8-bit indexed image is
- *       generated.&lt;/li&gt;
+ * &lt;li&gt;Each pixel is mapped to a 15-bit cube index (RGB555).&lt;/li&gt;
+ * &lt;li&gt;Inside the cube, a 9-bit sub-color index (0–511) is computed.&lt;/li&gt;
+ * &lt;li&gt;Frequencies of sub-colors are accumulated in each cube.&lt;/li&gt;
+ * &lt;li&gt;If more than 255 distinct cubes are populated, quantization aborts (since
+ * the palette would exceed 256 colors).&lt;/li&gt;
+ * &lt;li&gt;For each cube, the most frequent sub-color is selected as the
+ * representative palette entry.&lt;/li&gt;
+ * &lt;li&gt;An {@link IndexColorModel} is built and an 8-bit indexed image is
+ * generated.&lt;/li&gt;
  * &lt;/ol&gt;
  * 
- * &lt;p&gt;&lt;b&gt;Comparison to other algorithms:&lt;/b&gt;&lt;/p&gt;
+ * &lt;p&gt;
+ * &lt;b&gt;Comparison to other algorithms:&lt;/b&gt;
+ * &lt;/p&gt;
  * &lt;ul&gt;
- *   &lt;li&gt;&lt;b&gt;Median Cut:&lt;/b&gt; Splits color space adaptively based on variance.
- *       Produces better palettes on natural images (gradients, photos),
- *       but more expensive computationally.&lt;/li&gt;
- *   &lt;li&gt;&lt;b&gt;Wu's Algorithm:&lt;/b&gt; Uses variance minimization and dynamic
- *       programming. Produces very high-quality palettes (similar to pngquant),
- *       but requires more memory and preprocessing.&lt;/li&gt;
- *   &lt;li&gt;&lt;b&gt;RGB555 Cube Quantizer (this class):&lt;/b&gt; Extremely fast,
- *       deterministic, and simple. Well-suited for diagrams, icons,
- *       or graphics with limited colors. However, palette quality is
- *       generally inferior to Wu or Median Cut, especially for gradients
- *       and photos.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Median Cut:&lt;/b&gt; Splits color space adaptively based on variance.
+ * Produces better palettes on natural images (gradients, photos), but more
+ * expensive computationally.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Wu's Algorithm:&lt;/b&gt; Uses variance minimization and dynamic
+ * programming. Produces very high-quality palettes (similar to pngquant), but
+ * requires more memory and preprocessing.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;RGB555 Cube Quantizer (this class):&lt;/b&gt; Extremely fast, deterministic,
+ * and simple. Well-suited for diagrams, icons, or graphics with limited colors.
+ * However, palette quality is generally inferior to Wu or Median Cut,
+ * especially for gradients and photos.&lt;/li&gt;
  * &lt;/ul&gt;
  *
- * &lt;p&gt;&lt;b&gt;Advantages:&lt;/b&gt;&lt;/p&gt;
+ * &lt;p&gt;
+ * &lt;b&gt;Advantages:&lt;/b&gt;
+ * &lt;/p&gt;
  * &lt;ul&gt;
- *   &lt;li&gt;Very fast: one pass to count, one pass to remap pixels.&lt;/li&gt;
- *   &lt;li&gt;Simple and predictable (no recursion, no complex math).&lt;/li&gt;
- *   &lt;li&gt;Guaranteed &lt;= 256 colors (or aborts safely).&lt;/li&gt;
+ * &lt;li&gt;Very fast: one pass to count, one pass to remap pixels.&lt;/li&gt;
+ * &lt;li&gt;Simple and predictable (no recursion, no complex math).&lt;/li&gt;
+ * &lt;li&gt;Guaranteed &lt;= 256 colors (or aborts safely).&lt;/li&gt;
  * &lt;/ul&gt;
  *
- * &lt;p&gt;&lt;b&gt;Limitations:&lt;/b&gt;&lt;/p&gt;
+ * &lt;p&gt;
+ * &lt;b&gt;Limitations:&lt;/b&gt;
+ * &lt;/p&gt;
  * &lt;ul&gt;
- *   &lt;li&gt;Rigid partitioning (fixed RGB555 grid) does not adapt to the
- *       distribution of colors in the image.&lt;/li&gt;
- *   &lt;li&gt;Poorer palette quality for continuous-tone images.&lt;/li&gt;
- *   &lt;li&gt;No dithering: banding artifacts are visible on gradients unless
- *       combined with an error-diffusion algorithm (e.g. Floyd–Steinberg).&lt;/li&gt;
+ * &lt;li&gt;Rigid partitioning (fixed RGB555 grid) does not adapt to the distribution
+ * of colors in the image.&lt;/li&gt;
+ * &lt;li&gt;Poorer palette quality for continuous-tone images.&lt;/li&gt;
+ * &lt;li&gt;No dithering: banding artifacts are visible on gradients unless combined
+ * with an error-diffusion algorithm (e.g. Floyd–Steinberg).&lt;/li&gt;
  * &lt;/ul&gt;
  */
-<span class="nc" id="L91">public final class Quantify555 {</span>
+<span class="nc" id="L99">public final class Quantify555 {</span>
 
 	/**
 	 * Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.
 	 * 
-	 * @param input any {@link RenderedImage} (must be convertible to ARGB)
+	 * @param src any {@link BufferedImage}
 	 * @return a new {@link BufferedImage} with an indexed color model, or
 	 *         {@code null} if quantization is not possible (too many colors)
 	 */
-	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
+	public static BufferedImage quantifyMeIfPossible(BufferedImage src) {
 
-		// Convert to a BufferedImage in ARGB format if needed
-<span class="fc" id="L103">		final BufferedImage src = QuantUtils.toBufferedARGB(input);</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (src == null)</span>
-<span class="fc" id="L105">			return null;</span>
+<span class="fc" id="L110">		final int w = src.getWidth();</span>
+<span class="fc" id="L111">		final int h = src.getHeight();</span>
+<span class="fc" id="L112">		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
 
-<span class="fc" id="L107">		final int w = src.getWidth();</span>
-<span class="fc" id="L108">		final int h = src.getHeight();</span>
-<span class="fc" id="L109">		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
+<span class="pc" id="L114">		Log.info(() -&gt; &quot;Using Quantify555.&quot;);</span>
 
-<span class="fc" id="L111">		int nbCubes = 0;</span>
+<span class="fc" id="L116">		int nbCubes = 0;</span>
 
 		// Step 1: Fill Cube555 structures with frequency counts
-<span class="fc" id="L114">		final Cube555[] cubes = new Cube555[32 * 32 * 32]; // 32768 possible RGB555 cubes</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (int argb : pixels) {</span>
-<span class="fc" id="L116">			final int rgb555 = toRGB555(argb);</span>
-<span class="fc" id="L117">			Cube555 cube = cubes[rgb555];</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (cube == null) {</span>
+<span class="fc" id="L119">		final Cube555[] cubes = new Cube555[32 * 32 * 32]; // 32768 possible RGB555 cubes</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (int argb : pixels) {</span>
+<span class="fc" id="L121">			final int rgb555 = toRGB555(argb);</span>
+<span class="fc" id="L122">			Cube555 cube = cubes[rgb555];</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			if (cube == null) {</span>
 				// Abort if too many distinct cubes are found
-<span class="fc bfc" id="L120" title="All 2 branches covered.">				if (nbCubes++ &gt; 255)</span>
-<span class="fc" id="L121">					return null;</span>
-<span class="fc" id="L122">				cube = new Cube555(rgb555);</span>
-<span class="fc" id="L123">				cubes[rgb555] = cube;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">				if (nbCubes++ &gt; 255) {</span>
+<span class="pc" id="L126">					Log.info(() -&gt; &quot;...abort, too many colors&quot;);</span>
+<span class="fc" id="L127">					return null;</span>
+				}
+<span class="fc" id="L129">				cube = new Cube555(rgb555);</span>
+<span class="fc" id="L130">				cubes[rgb555] = cube;</span>
 			}
-<span class="fc" id="L125">			cube.increment(subColorIndex512(argb));</span>
+<span class="fc" id="L132">			cube.increment(subColorIndex512(argb));</span>
 		}
 
 		// Step 2: Build the final indexed image
-<span class="fc" id="L129">		return buildIndexedImageFromCubes(src, cubes);</span>
+<span class="fc" id="L136">		return buildIndexedImageFromCubes(src, cubes);</span>
 	}
 
 	/**
@@ -137,50 +144,50 @@ import java.util.Arrays;
 	 * @return an indexed (8-bit) {@link BufferedImage}
 	 */
 	private static BufferedImage buildIndexedImageFromCubes(BufferedImage src, Cube555[] cubes) {
-<span class="fc" id="L140">		final int w = src.getWidth();</span>
-<span class="fc" id="L141">		final int h = src.getHeight();</span>
+<span class="fc" id="L147">		final int w = src.getWidth();</span>
+<span class="fc" id="L148">		final int h = src.getHeight();</span>
 
 		// Step 1: Build the palette from all non-empty cubes
-<span class="fc" id="L144">		final int cubeCount = cubes.length; // 32*32*32 = 32768</span>
-<span class="fc" id="L145">		final int[] cubeToPal = new int[cubeCount];</span>
-<span class="fc" id="L146">		Arrays.fill(cubeToPal, -1);</span>
+<span class="fc" id="L151">		final int cubeCount = cubes.length; // 32*32*32 = 32768</span>
+<span class="fc" id="L152">		final int[] cubeToPal = new int[cubeCount];</span>
+<span class="fc" id="L153">		Arrays.fill(cubeToPal, -1);</span>
 
-<span class="fc" id="L148">		final int[] palARGB = new int[256];</span>
-<span class="fc" id="L149">		int palSize = 0;</span>
+<span class="fc" id="L155">		final int[] palARGB = new int[256];</span>
+<span class="fc" id="L156">		int palSize = 0;</span>
 
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (Cube555 c : cubes) {</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (c == null)</span>
-<span class="fc" id="L153">				continue;</span>
-<span class="fc" id="L154">			final int sub = c.best(); // most frequent sub-color (0..511)</span>
-<span class="fc" id="L155">			final int argb = representativeARGB(c.rgb555, sub);</span>
-<span class="fc" id="L156">			cubeToPal[c.rgb555] = palSize;</span>
-<span class="fc" id="L157">			palARGB[palSize++] = argb;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (Cube555 c : cubes) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (c == null)</span>
+<span class="fc" id="L160">				continue;</span>
+<span class="fc" id="L161">			final int sub = c.best(); // most frequent sub-color (0..511)</span>
+<span class="fc" id="L162">			final int argb = representativeARGB(c.rgb555, sub);</span>
+<span class="fc" id="L163">			cubeToPal[c.rgb555] = palSize;</span>
+<span class="fc" id="L164">			palARGB[palSize++] = argb;</span>
 		}
 
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (palSize == 0)</span>
-<span class="nc" id="L161">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (palSize == 0)</span>
+<span class="nc" id="L168">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L163">		final IndexColorModel icm = buildICM(palARGB, palSize);</span>
+<span class="fc" id="L170">		final IndexColorModel icm = buildICM(palARGB, palSize);</span>
 
 		// Step 2: Create output indexed image
-<span class="fc" id="L166">		final BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_INDEXED, icm);</span>
-<span class="fc" id="L167">		final WritableRaster raster = dst.getRaster();</span>
+<span class="fc" id="L173">		final BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_INDEXED, icm);</span>
+<span class="fc" id="L174">		final WritableRaster raster = dst.getRaster();</span>
 
 		// Step 3: Replace each pixel in the source with its palette index
-<span class="fc" id="L170">		final int[] line = new int[w];</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (int y = 0; y &lt; h; y++) {</span>
-<span class="fc" id="L172">			src.getRGB(0, y, w, 1, line, 0, w);</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">			for (int x = 0; x &lt; w; x++) {</span>
-<span class="fc" id="L174">				final int argb = line[x];</span>
-<span class="fc" id="L175">				final int cubeIndex = toRGB555(argb);</span>
-<span class="fc" id="L176">				final int p = cubeToPal[cubeIndex];</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">				if (p &lt; 0)</span>
-<span class="nc" id="L178">					throw new IllegalStateException();</span>
+<span class="fc" id="L177">		final int[] line = new int[w];</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (int y = 0; y &lt; h; y++) {</span>
+<span class="fc" id="L179">			src.getRGB(0, y, w, 1, line, 0, w);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			for (int x = 0; x &lt; w; x++) {</span>
+<span class="fc" id="L181">				final int argb = line[x];</span>
+<span class="fc" id="L182">				final int cubeIndex = toRGB555(argb);</span>
+<span class="fc" id="L183">				final int p = cubeToPal[cubeIndex];</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">				if (p &lt; 0)</span>
+<span class="nc" id="L185">					throw new IllegalStateException();</span>
 
-<span class="fc" id="L180">				raster.setSample(x, y, 0, p);</span>
+<span class="fc" id="L187">				raster.setSample(x, y, 0, p);</span>
 			}
 		}
-<span class="fc" id="L183">		return dst;</span>
+<span class="fc" id="L190">		return dst;</span>
 	}
 
 	/**
@@ -191,20 +198,20 @@ import java.util.Arrays;
 	 * @return an {@link IndexColorModel} suitable for TYPE_BYTE_INDEXED
 	 */
 	public static IndexColorModel buildICM(final int[] palARGB, final int palSize) {
-<span class="fc" id="L194">		final byte[] r = new byte[palSize];</span>
-<span class="fc" id="L195">		final byte[] g = new byte[palSize];</span>
-<span class="fc" id="L196">		final byte[] b = new byte[palSize];</span>
-<span class="fc" id="L197">		final byte[] a = new byte[palSize];</span>
+<span class="fc" id="L201">		final byte[] r = new byte[palSize];</span>
+<span class="fc" id="L202">		final byte[] g = new byte[palSize];</span>
+<span class="fc" id="L203">		final byte[] b = new byte[palSize];</span>
+<span class="fc" id="L204">		final byte[] a = new byte[palSize];</span>
 
-<span class="fc bfc" id="L199" title="All 2 branches covered.">		for (int i = 0; i &lt; palSize; i++) {</span>
-<span class="fc" id="L200">			final int argb = palARGB[i];</span>
-<span class="fc" id="L201">			a[i] = (byte) ((argb &gt;&gt;&gt; 24) &amp; 0xFF);</span>
-<span class="fc" id="L202">			r[i] = (byte) ((argb &gt;&gt;&gt; 16) &amp; 0xFF);</span>
-<span class="fc" id="L203">			g[i] = (byte) ((argb &gt;&gt;&gt; 8) &amp; 0xFF);</span>
-<span class="fc" id="L204">			b[i] = (byte) (argb &amp; 0xFF);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		for (int i = 0; i &lt; palSize; i++) {</span>
+<span class="fc" id="L207">			final int argb = palARGB[i];</span>
+<span class="fc" id="L208">			a[i] = (byte) ((argb &gt;&gt;&gt; 24) &amp; 0xFF);</span>
+<span class="fc" id="L209">			r[i] = (byte) ((argb &gt;&gt;&gt; 16) &amp; 0xFF);</span>
+<span class="fc" id="L210">			g[i] = (byte) ((argb &gt;&gt;&gt; 8) &amp; 0xFF);</span>
+<span class="fc" id="L211">			b[i] = (byte) (argb &amp; 0xFF);</span>
 		}
 
-<span class="fc" id="L207">		return new IndexColorModel(8, palSize, r, g, b, a);</span>
+<span class="fc" id="L214">		return new IndexColorModel(8, palSize, r, g, b, a);</span>
 	}
 
 	/**
@@ -219,19 +226,19 @@ import java.util.Arrays;
 	 * @return reconstructed ARGB color
 	 */
 	private static int representativeARGB(int cubeIndex, int sub512) {
-<span class="fc" id="L222">		final int r5 = (cubeIndex &gt;&gt;&gt; 10) &amp; 0x1F;</span>
-<span class="fc" id="L223">		final int g5 = (cubeIndex &gt;&gt;&gt; 5) &amp; 0x1F;</span>
-<span class="fc" id="L224">		final int b5 = cubeIndex &amp; 0x1F;</span>
+<span class="fc" id="L229">		final int r5 = (cubeIndex &gt;&gt;&gt; 10) &amp; 0x1F;</span>
+<span class="fc" id="L230">		final int g5 = (cubeIndex &gt;&gt;&gt; 5) &amp; 0x1F;</span>
+<span class="fc" id="L231">		final int b5 = cubeIndex &amp; 0x1F;</span>
 
-<span class="fc" id="L226">		final int rLow3 = (sub512 &gt;&gt;&gt; 6) &amp; 0x07;</span>
-<span class="fc" id="L227">		final int gLow3 = (sub512 &gt;&gt;&gt; 3) &amp; 0x07;</span>
-<span class="fc" id="L228">		final int bLow3 = sub512 &amp; 0x07;</span>
+<span class="fc" id="L233">		final int rLow3 = (sub512 &gt;&gt;&gt; 6) &amp; 0x07;</span>
+<span class="fc" id="L234">		final int gLow3 = (sub512 &gt;&gt;&gt; 3) &amp; 0x07;</span>
+<span class="fc" id="L235">		final int bLow3 = sub512 &amp; 0x07;</span>
 
-<span class="fc" id="L230">		final int r8 = (r5 &lt;&lt; 3) | rLow3;</span>
-<span class="fc" id="L231">		final int g8 = (g5 &lt;&lt; 3) | gLow3;</span>
-<span class="fc" id="L232">		final int b8 = (b5 &lt;&lt; 3) | bLow3;</span>
+<span class="fc" id="L237">		final int r8 = (r5 &lt;&lt; 3) | rLow3;</span>
+<span class="fc" id="L238">		final int g8 = (g5 &lt;&lt; 3) | gLow3;</span>
+<span class="fc" id="L239">		final int b8 = (b5 &lt;&lt; 3) | bLow3;</span>
 
-<span class="fc" id="L234">		return (0xFF &lt;&lt; 24) | (r8 &lt;&lt; 16) | (g8 &lt;&lt; 8) | b8;</span>
+<span class="fc" id="L241">		return (0xFF &lt;&lt; 24) | (r8 &lt;&lt; 16) | (g8 &lt;&lt; 8) | b8;</span>
 	}
 
 	/**
@@ -244,10 +251,10 @@ import java.util.Arrays;
 	 * @return 15-bit RGB555 index
 	 */
 	private static int toRGB555(int argb) {
-<span class="fc" id="L247">		final int r5 = (argb &gt;&gt;&gt; 19) &amp; 0x1F; // bits 23..19</span>
-<span class="fc" id="L248">		final int g5 = (argb &gt;&gt;&gt; 11) &amp; 0x1F; // bits 15..11</span>
-<span class="fc" id="L249">		final int b5 = (argb &gt;&gt;&gt; 3) &amp; 0x1F; // bits 7..3</span>
-<span class="fc" id="L250">		return (r5 &lt;&lt; 10) | (g5 &lt;&lt; 5) | b5;</span>
+<span class="fc" id="L254">		final int r5 = (argb &gt;&gt;&gt; 19) &amp; 0x1F; // bits 23..19</span>
+<span class="fc" id="L255">		final int g5 = (argb &gt;&gt;&gt; 11) &amp; 0x1F; // bits 15..11</span>
+<span class="fc" id="L256">		final int b5 = (argb &gt;&gt;&gt; 3) &amp; 0x1F; // bits 7..3</span>
+<span class="fc" id="L257">		return (r5 &lt;&lt; 10) | (g5 &lt;&lt; 5) | b5;</span>
 	}
 
 	/**
@@ -263,15 +270,15 @@ import java.util.Arrays;
 	 * @return sub-color index (0..511)
 	 */
 	private static int subColorIndex512(int argb) {
-<span class="fc" id="L266">		final int r8 = (argb &gt;&gt;&gt; 16) &amp; 0xFF;</span>
-<span class="fc" id="L267">		final int g8 = (argb &gt;&gt;&gt; 8) &amp; 0xFF;</span>
-<span class="fc" id="L268">		final int b8 = argb &amp; 0xFF;</span>
+<span class="fc" id="L273">		final int r8 = (argb &gt;&gt;&gt; 16) &amp; 0xFF;</span>
+<span class="fc" id="L274">		final int g8 = (argb &gt;&gt;&gt; 8) &amp; 0xFF;</span>
+<span class="fc" id="L275">		final int b8 = argb &amp; 0xFF;</span>
 
-<span class="fc" id="L270">		final int rLow3 = r8 &amp; 0x07; // 3 least significant bits</span>
-<span class="fc" id="L271">		final int gLow3 = g8 &amp; 0x07;</span>
-<span class="fc" id="L272">		final int bLow3 = b8 &amp; 0x07;</span>
+<span class="fc" id="L277">		final int rLow3 = r8 &amp; 0x07; // 3 least significant bits</span>
+<span class="fc" id="L278">		final int gLow3 = g8 &amp; 0x07;</span>
+<span class="fc" id="L279">		final int bLow3 = b8 &amp; 0x07;</span>
 
-<span class="fc" id="L274">		return (rLow3 &lt;&lt; 6) | (gLow3 &lt;&lt; 3) | bLow3; // 0..511</span>
+<span class="fc" id="L281">		return (rLow3 &lt;&lt; 6) | (gLow3 &lt;&lt; 3) | bLow3; // 0..511</span>
 	}
 
 }
