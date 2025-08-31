@@ -37,19 +37,14 @@ package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
 
-import net.sourceforge.plantuml.utils.Log;
-
 public final class QuantifyPacked28 {
 
-	public static BufferedImage quantifyMeIfPossible(BufferedImage src) {
+	public static BufferedImage packMeIfPossible(BufferedImage src) {
 
 		final int type = src.getType();
 
 		assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB
 				|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
-
-		final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;
-		Log.info(() -> "Using QuantifyPacked28. hasAlpha=" + hasAlpha);
 
 		final int w = src.getWidth();
 		final int h = src.getHeight();

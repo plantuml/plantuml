@@ -70,21 +70,21 @@ public class PngIO {
 
 	public static void write(RenderedImage image, ColorMapper mapper, OutputStream os, String metadata, int dpi)
 			throws IOException {
-		final BufferedImage src = QuantUtils.toBufferedARGBorRGB(image);
-		if (src != null) {
-			final int type = src.getType();
+		final BufferedImage bufferedImage = QuantUtils.toBufferedARGBorRGB(image);
+		if (bufferedImage != null) {
+			final int type = bufferedImage.getType();
 			assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB
 					|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
-			BufferedImage newImage = null;
-			if (type == BufferedImage.TYPE_INT_RGB || type == BufferedImage.TYPE_3BYTE_BGR)
-				newImage = Quantify555.quantifyMeIfPossible(src);
+			final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;
+			Log.info(() -> "Trying to pack image. hasAlpha=" + hasAlpha);
 
-			if (newImage == null)
-				newImage = QuantifyPacked28.quantifyMeIfPossible(src);
+			BufferedImage tmp = Quantify555.packMeIfPossible(bufferedImage);
+			if (tmp == null)
+				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);
 
-			if (newImage != null)
-				image = newImage;
+			if (tmp != null)
+				image = tmp;
 		}
 
 		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);
