@@ -630,7 +630,7 @@ ganttDiagram {
   task {
     $primary_scheme()
 	LineColor $PRIMARY_BG
-    Margin 10
+    Margin 10 2 2 2
     Padding 6
   }
   note {

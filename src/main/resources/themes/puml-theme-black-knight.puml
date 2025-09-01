@@ -188,7 +188,7 @@ skinparam  {
 	task {
 		$primary_scheme()
 		LineColor $PRIMARY
-		Margin 10
+		Margin 10 2 2 2
 		Padding 6
 	}
 	note {
