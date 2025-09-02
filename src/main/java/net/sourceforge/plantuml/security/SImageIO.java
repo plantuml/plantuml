@@ -44,7 +44,6 @@ import java.io.OutputStream;
 import java.util.Iterator;
 
 import javax.imageio.ImageReader;
-import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 

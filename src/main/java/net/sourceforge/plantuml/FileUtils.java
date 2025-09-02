@@ -224,6 +224,16 @@ public class FileUtils {
 		return data;
 	}
 
+	public static String readAllBytes(InputStream in) throws IOException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		final byte[] buffer = new byte[8192];
+		int read;
+		while ((read = in.read(buffer)) != -1)
+			baos.write(buffer, 0, read);
+
+		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
+	}
+
 	// ::done
 
 }
