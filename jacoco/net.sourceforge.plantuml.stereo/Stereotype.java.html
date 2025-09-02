@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -63,172 +64,172 @@ public class Stereotype implements CharSequence {
 	private final StereotypeDecoration decoration;
 
 	private Stereotype(boolean automaticPackageStyle, String label, StereotypeDecoration decoration, double radius,
-<span class="fc" id="L66">			UFont circledFont) {</span>
-<span class="fc" id="L67">		this.automaticPackageStyle = automaticPackageStyle;</span>
-<span class="fc" id="L68">		this.radius = radius;</span>
-<span class="fc" id="L69">		this.circledFont = circledFont;</span>
-<span class="fc" id="L70">		this.decoration = Objects.requireNonNull(decoration);</span>
+<span class="fc" id="L67">			UFont circledFont) {</span>
+<span class="fc" id="L68">		this.automaticPackageStyle = automaticPackageStyle;</span>
+<span class="fc" id="L69">		this.radius = radius;</span>
+<span class="fc" id="L70">		this.circledFont = circledFont;</span>
+<span class="fc" id="L71">		this.decoration = Objects.requireNonNull(decoration);</span>
 
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L73">	}</span>
 
 	private static void checkLabel(String label) {
-<span class="pc bpc" id="L75" title="2 of 4 branches missed.">		if (label.startsWith(&quot;&lt;&lt;&quot;) == false || label.endsWith(&quot;&gt;&gt;&quot;) == false)</span>
-<span class="nc" id="L76">			throw new IllegalArgumentException(label);</span>
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (label.startsWith(&quot;&lt;&lt;&quot;) == false || label.endsWith(&quot;&gt;&gt;&quot;) == false)</span>
+<span class="nc" id="L77">			throw new IllegalArgumentException(label);</span>
 
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L79">	}</span>
 
 	public static Stereotype build(String label) {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (label == null)</span>
-<span class="fc" id="L82">			return null;</span>
-<span class="fc" id="L83">		return build(label, true);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (label == null)</span>
+<span class="fc" id="L83">			return null;</span>
+<span class="fc" id="L84">		return build(label, true);</span>
 	}
 
 	public static Stereotype build(String label, boolean automaticPackageStyle) {
-<span class="fc" id="L87">		checkLabel(label);</span>
-<span class="fc" id="L88">		final StereotypeDecoration decoration = StereotypeDecoration.buildSimple(label);</span>
-<span class="fc" id="L89">		return new Stereotype(automaticPackageStyle, label, decoration, 0, null);</span>
+<span class="fc" id="L88">		checkLabel(label);</span>
+<span class="fc" id="L89">		final StereotypeDecoration decoration = StereotypeDecoration.buildSimple(label);</span>
+<span class="fc" id="L90">		return new Stereotype(automaticPackageStyle, label, decoration, 0, null);</span>
 	}
 
 	public static Stereotype build(String label, double radius, UFont circledFont, HColorSet htmlColorSet)
 			throws NoSuchColorException {
-<span class="fc" id="L94">		checkLabel(label);</span>
-<span class="fc" id="L95">		final StereotypeDecoration decoration = StereotypeDecoration.buildComplex(label, htmlColorSet);</span>
-<span class="fc" id="L96">		return new Stereotype(true, label, decoration, radius, circledFont);</span>
+<span class="fc" id="L95">		checkLabel(label);</span>
+<span class="fc" id="L96">		final StereotypeDecoration decoration = StereotypeDecoration.buildComplex(label, htmlColorSet);</span>
+<span class="fc" id="L97">		return new Stereotype(true, label, decoration, radius, circledFont);</span>
 	}
 
 	public HColor getHtmlColor() {
-<span class="fc" id="L100">		return decoration.htmlColor;</span>
+<span class="fc" id="L101">		return decoration.htmlColor;</span>
 	}
 
 	public char getCharacter() {
-<span class="fc" id="L104">		return decoration.character;</span>
+<span class="fc" id="L105">		return decoration.character;</span>
 	}
 
 	public final TextBlock getSprite(SpriteContainer container) {
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">		if (decoration.spriteName == null || container == null)</span>
-<span class="fc" id="L109">			return null;</span>
+<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		if (decoration.spriteName == null || container == null)</span>
+<span class="fc" id="L110">			return null;</span>
 
-<span class="fc" id="L111">		final Sprite tmp = container.getSprite(decoration.spriteName);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (tmp == null)</span>
-<span class="nc" id="L113">			return null;</span>
+<span class="fc" id="L112">		final Sprite tmp = container.getSprite(decoration.spriteName);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L114">			return null;</span>
 
-<span class="fc" id="L115">		return tmp.asTextBlock(getHtmlColor(), getHtmlColor(), decoration.spriteScale);</span>
+<span class="fc" id="L116">		return tmp.asTextBlock(getHtmlColor(), null, decoration.spriteScale);</span>
 	}
 
 	public boolean isWithOOSymbol() {
-<span class="fc" id="L119">		return &quot;&lt;&lt;O-O&gt;&gt;&quot;.equalsIgnoreCase(decoration.label);</span>
+<span class="fc" id="L120">		return &quot;&lt;&lt;O-O&gt;&gt;&quot;.equalsIgnoreCase(decoration.label);</span>
 	}
 
-<span class="fc" id="L122">	private final static Pattern p = Pattern.compile(&quot;\\&lt;\\&lt;\\s?((?:\\&lt;&amp;\\w+\\&gt;|[^&lt;&gt;])+?)\\s?\\&gt;\\&gt;&quot;);</span>
+<span class="fc" id="L123">	private final static Pattern p = Pattern.compile(&quot;\\&lt;\\&lt;\\s?((?:\\&lt;&amp;\\w+\\&gt;|[^&lt;&gt;])+?)\\s?\\&gt;\\&gt;&quot;);</span>
 
 	public List&lt;String&gt; getMultipleLabels() {
-<span class="nc" id="L125">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L126">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L127">		final Matcher m = p.matcher(decoration.label);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L129">			result.add(m.group(1));</span>
+<span class="nc" id="L128">		final Matcher m = p.matcher(decoration.label);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L130">			result.add(m.group(1));</span>
 
-<span class="nc" id="L131">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L132">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public boolean isSpotted() {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		return decoration.character != 0;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		return decoration.character != 0;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (decoration.character == 0)</span>
-<span class="fc" id="L141">			return decoration.label;</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (decoration.character == 0)</span>
+<span class="fc" id="L142">			return decoration.label;</span>
 
-<span class="nc" id="L143">		return decoration.character + &quot; &quot; + decoration.label;</span>
+<span class="nc" id="L144">		return decoration.character + &quot; &quot; + decoration.label;</span>
 	}
 
 	public char charAt(int arg0) {
-<span class="nc" id="L147">		return toString().charAt(arg0);</span>
+<span class="nc" id="L148">		return toString().charAt(arg0);</span>
 	}
 
 	public int length() {
-<span class="nc" id="L151">		return toString().length();</span>
+<span class="nc" id="L152">		return toString().length();</span>
 	}
 
 	public CharSequence subSequence(int arg0, int arg1) {
-<span class="nc" id="L155">		return toString().subSequence(arg0, arg1);</span>
+<span class="nc" id="L156">		return toString().subSequence(arg0, arg1);</span>
 	}
 
 	public double getRadius() {
-<span class="nc" id="L159">		return radius;</span>
+<span class="nc" id="L160">		return radius;</span>
 	}
 
 	public final UFont getCircledFont() {
-<span class="nc" id="L163">		return circledFont;</span>
+<span class="nc" id="L164">		return circledFont;</span>
 	}
 
 	public String getLabel(Guillemet guillemet) {
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (isWithOOSymbol())</span>
-<span class="nc" id="L168">			return null;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (isWithOOSymbol())</span>
+<span class="nc" id="L169">			return null;</span>
 
-<span class="pc bpc" id="L170" title="1 of 4 branches missed.">		if (decoration.spriteName != null &amp;&amp; decoration.spriteName.startsWith(&quot;archimate/&quot;))</span>
-<span class="nc" id="L171">			return guillemet.manageGuillemet(&quot;&lt;&lt;&quot; + decoration.spriteName.substring(&quot;archimate/&quot;.length()) + &quot;&gt;&gt;&quot;);</span>
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">		if (decoration.spriteName != null &amp;&amp; decoration.spriteName.startsWith(&quot;archimate/&quot;))</span>
+<span class="nc" id="L172">			return guillemet.manageGuillemet(&quot;&lt;&lt;&quot; + decoration.spriteName.substring(&quot;archimate/&quot;.length()) + &quot;&gt;&gt;&quot;);</span>
 
-<span class="fc" id="L173">		return guillemet.manageGuillemet(decoration.label);</span>
+<span class="fc" id="L174">		return guillemet.manageGuillemet(decoration.label);</span>
 	}
 
 	public List&lt;String&gt; getLabels(Guillemet guillemet) {
-<span class="fc" id="L177">		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (labelLocal == null)</span>
-<span class="nc" id="L179">			return Collections.emptyList();</span>
+<span class="fc" id="L178">		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (labelLocal == null)</span>
+<span class="nc" id="L180">			return Collections.emptyList();</span>
 
-<span class="fc" id="L181">		return StereotypeDecoration.cutLabels(labelLocal, guillemet);</span>
+<span class="fc" id="L182">		return StereotypeDecoration.cutLabels(labelLocal, guillemet);</span>
 	}
 
 	public List&lt;Style&gt; getStyles(StyleBuilder builder) {
-<span class="nc" id="L185">		final List&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		for (String s : getStyleNames()) {</span>
-<span class="nc" id="L187">			final Style style = builder.createStyleStereotype(s);</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">			assert (style != null);</span>
-<span class="nc" id="L189">			result.add(style);</span>
-<span class="nc" id="L190">		}</span>
-<span class="nc" id="L191">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L186">		final List&lt;Style&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		for (String s : getStyleNames()) {</span>
+<span class="nc" id="L188">			final Style style = builder.createStyleStereotype(s);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			assert (style != null);</span>
+<span class="nc" id="L190">			result.add(style);</span>
+<span class="nc" id="L191">		}</span>
+<span class="nc" id="L192">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public List&lt;String&gt; getStyleNames() {
-<span class="fc" id="L195">		return decoration.getStyleNames();</span>
+<span class="fc" id="L196">		return decoration.getStyleNames();</span>
 	}
 
 	public PackageStyle getPackageStyle() {
-<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (automaticPackageStyle == false)</span>
-<span class="fc" id="L200">			return null;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (automaticPackageStyle == false)</span>
+<span class="fc" id="L201">			return null;</span>
 
-<span class="fc bfc" id="L202" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if ((&quot;&lt;&lt;&quot; + p + &quot;&gt;&gt;&quot;).equalsIgnoreCase(decoration.label))</span>
-<span class="nc" id="L204">				return p;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			if ((&quot;&lt;&lt;&quot; + p + &quot;&gt;&gt;&quot;).equalsIgnoreCase(decoration.label))</span>
+<span class="nc" id="L205">				return p;</span>
 
-<span class="fc" id="L206">		return null;</span>
+<span class="fc" id="L207">		return null;</span>
 	}
 
 	public boolean isBiddableOrUncertain() {
-<span class="nc bnc" id="L210" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;B&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Biddable&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Uncertain&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L211" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;B&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Biddable&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Uncertain&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isCausal() {
-<span class="nc bnc" id="L215" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;C&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Causal&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L216" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;C&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Causal&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isLexicalOrGiven() {
-<span class="nc bnc" id="L219" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;L&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Lexical&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L220" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;X&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Given&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L220" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;L&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Lexical&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;X&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Given&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isDesignedOrSolved() {
-<span class="nc bnc" id="L224" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;D&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Designed&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L225" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Nested&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Solved&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;&lt;&lt;D&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Designed&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Nested&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Solved&gt;&gt;&quot;);</span>
 	}
 
 	public boolean isMachineOrSpecification() {
-<span class="nc bnc" id="L229" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;M&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Machine&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L230" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;S&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Spec&gt;&gt;&quot;)</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Specification&gt;&gt;&quot;);</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">		return decoration.label.equalsIgnoreCase(&quot;M&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Machine&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L231" title="All 4 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;S&gt;&gt;&quot;) || decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Spec&gt;&gt;&quot;)</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				|| decoration.label.equalsIgnoreCase(&quot;&lt;&lt;Specification&gt;&gt;&quot;);</span>
 	}
 
 }

@@ -122,8 +122,16 @@ public class UGraphicWithScale {
 <span class="nc" id="L122">		return angle;</span>
 	}
 
-	public double getScale() {
-<span class="nc" id="L126">		return scale;</span>
+	public double getEffectiveScale() {
+<span class="nc" id="L126">		final double scaleX = at.getScaleX();</span>
+<span class="nc" id="L127">		final double scaleY = at.getScaleY();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (scaleX == scaleY)</span>
+<span class="nc" id="L129">			return scale * scaleX;</span>
+<span class="nc" id="L130">		return scale * Math.sqrt(scaleX * scaleY);</span>
+	}
+
+	public double getInitialScale() {
+<span class="nc" id="L134">		return scale;</span>
 	}
 
 }

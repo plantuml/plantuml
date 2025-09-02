@@ -224,6 +224,16 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L224">		return data;</span>
 	}
 
+	public static String readAllBytes(InputStream in) throws IOException {
+<span class="nc" id="L228">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L229">		final byte[] buffer = new byte[8192];</span>
+		int read;
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		while ((read = in.read(buffer)) != -1)</span>
+<span class="nc" id="L232">			baos.write(buffer, 0, read);</span>
+
+<span class="nc" id="L234">		return new String(baos.toByteArray(), StandardCharsets.UTF_8);</span>
+	}
+
 	// ::done
 
 }

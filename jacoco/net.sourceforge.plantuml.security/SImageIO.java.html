@@ -44,62 +44,61 @@ import java.io.OutputStream;
 import java.util.Iterator;
 
 import javax.imageio.ImageReader;
-import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-<span class="nc" id="L51">public class SImageIO {</span>
+<span class="nc" id="L50">public class SImageIO {</span>
 
 	// ::comment when __CORE__
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
-<span class="fc" id="L55">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
+<span class="fc" id="L54">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
 	}
 	// ::done
 
 	public static void write(RenderedImage image, String format, OutputStream os) throws IOException {
-<span class="nc" id="L60">		javax.imageio.ImageIO.write(image, format, os);</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L59">		javax.imageio.ImageIO.write(image, format, os);</span>
+<span class="nc" id="L60">	}</span>
 
 	// ::comment when __CORE__
 	public static void write(RenderedImage image, String format, SFile file) throws IOException {
-<span class="nc" id="L65">		javax.imageio.ImageIO.write(image, format, file.conv());</span>
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L64">		javax.imageio.ImageIO.write(image, format, file.conv());</span>
+<span class="nc" id="L65">	}</span>
 
 	public static BufferedImage read(java.io.File file) throws IOException {
-<span class="nc" id="L69">		return javax.imageio.ImageIO.read(file);</span>
+<span class="nc" id="L68">		return javax.imageio.ImageIO.read(file);</span>
 	}
 
 	public static BufferedImage read(SFile file) throws IOException {
-<span class="fc" id="L73">		return javax.imageio.ImageIO.read(file.conv());</span>
+<span class="fc" id="L72">		return javax.imageio.ImageIO.read(file.conv());</span>
 	}
 	// ::done
 
 	public static BufferedImage read(InputStream is) throws IOException {
-<span class="fc" id="L78">		return javax.imageio.ImageIO.read(is);</span>
+<span class="fc" id="L77">		return javax.imageio.ImageIO.read(is);</span>
 	}
 
 	public static BufferedImage read(byte[] bytes) throws IOException {
-<span class="fc" id="L82">		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));</span>
+<span class="fc" id="L81">		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));</span>
 	}
 
 	// ::comment when __CORE__
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {
-<span class="nc" id="L87">		return javax.imageio.ImageIO.createImageInputStream(file.conv());</span>
+<span class="nc" id="L86">		return javax.imageio.ImageIO.createImageInputStream(file.conv());</span>
 	}
 
 	public static ImageInputStream createImageInputStream(Object obj) throws IOException {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (obj instanceof SFile)</span>
-<span class="nc" id="L92">			obj = ((SFile) obj).conv();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (obj instanceof SFile)</span>
+<span class="nc" id="L91">			obj = ((SFile) obj).conv();</span>
 
-<span class="nc" id="L94">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
+<span class="nc" id="L93">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
 	}
 
 	public static ImageInputStream createImageInputStream(InputStream is) throws IOException {
-<span class="nc" id="L98">		return javax.imageio.ImageIO.createImageInputStream(is);</span>
+<span class="nc" id="L97">		return javax.imageio.ImageIO.createImageInputStream(is);</span>
 	}
 
 	public static Iterator&lt;ImageReader&gt; getImageReaders(ImageInputStream iis) {
-<span class="nc" id="L102">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
+<span class="nc" id="L101">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
 	}
 	// ::done
 

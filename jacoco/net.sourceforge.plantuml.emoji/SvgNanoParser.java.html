@@ -187,7 +187,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 
 <span class="nc" id="L188">		final String strokeWidth = extract(DATA_STROKE_WIDTH, s);</span>
 <span class="nc bnc" id="L189" title="All 2 branches missed.">		if (strokeWidth != null) {</span>
-<span class="nc" id="L190">			final double scale = ugs.getScale();</span>
+<span class="nc" id="L190">			final double scale = ugs.getEffectiveScale();</span>
 <span class="nc" id="L191">			ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));</span>
 		}
 
@@ -266,7 +266,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 <span class="nc" id="L266">		path.closePath();</span>
 
 <span class="nc" id="L268">		path = path.translate(cx - rx, cy - ry);</span>
-<span class="nc" id="L269">		path = path.affine(ugs.getAffineTransform(), ugs.getAngle(), ugs.getScale());</span>
+<span class="nc" id="L269">		path = path.affine(ugs.getAffineTransform(), ugs.getAngle(), ugs.getInitialScale());</span>
 
 <span class="nc" id="L271">		ugs.draw(path);</span>
 
@@ -497,7 +497,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 	public int getMaxGrayLevel() {
 <span class="nc bnc" id="L498" title="All 2 branches missed.">		if (maxGray == -1)</span>
 <span class="nc" id="L499">			computeMinMaxGray();</span>
-		
+
 <span class="nc" id="L501">		return maxGray;</span>
 	}
 
