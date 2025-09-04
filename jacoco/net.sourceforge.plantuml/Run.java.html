@@ -596,16 +596,17 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L596">				final int idxEnd = part.indexOf(&quot;]&quot;);</span>
 <span class="nc bnc" id="L597" title="All 2 branches missed.">				if (idxEnd &gt; 0) {</span>
 <span class="nc" id="L598">					part = part.substring(0, idxEnd);</span>
-<span class="nc" id="L599">					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
-<span class="nc" id="L600">					System.err.println(decoded);</span>
+<span class="nc" id="L599">					part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
+<span class="nc" id="L600">					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
+<span class="nc" id="L601">					System.err.println(decoded);</span>
 				}
 			}
-<span class="nc" id="L603">		} else {</span>
-<span class="nc" id="L604">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
-<span class="nc" id="L605">			System.out.println(data);</span>
+<span class="nc" id="L604">		} else {</span>
+<span class="nc" id="L605">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
+<span class="nc" id="L606">			System.out.println(data);</span>
 		}
-<span class="nc" id="L607">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="nc" id="L608">	}</span>
+<span class="nc" id="L608">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="nc" id="L609">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
