@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -161,7 +162,7 @@ public class EntityImageTips extends AbstractEntityImage {
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
 			final XPoint2D pp2 = new XPoint2D(x, y);
 			opale.setOpale(direction, pp1, pp2);
-			opale.drawU(ug);
+			opale.drawU(UGraphicStencil.create(ug, dim));
 			ug = ug.apply(UTranslate.dy(dim.getHeight() + ySpacing));
 			height += dim.getHeight();
 			height += ySpacing;
