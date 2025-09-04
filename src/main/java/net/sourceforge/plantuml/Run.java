@@ -596,6 +596,7 @@ public class Run {
 				final int idxEnd = part.indexOf("]");
 				if (idxEnd > 0) {
 					part = part.substring(0, idxEnd);
+					part = part.replace("- -", "--");
 					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);
 					System.err.println(decoded);
 				}
