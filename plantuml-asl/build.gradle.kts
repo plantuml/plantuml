@@ -21,9 +21,6 @@ description = "PlantUML"
 java {
 	withSourcesJar()
 	withJavadocJar()
-	registerFeature("pdf") {
-		usingSourceSet(sourceSets["main"])
-	}
 }
 
 dependencies {

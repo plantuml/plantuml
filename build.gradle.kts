@@ -196,6 +196,25 @@ tasks.register<Test>("runIntermediateTest") {
     }
 }
 
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+
+    val mainClasses = sourceSets.main.get().output.classesDirs
+
+    classDirectories.setFrom(
+        files(mainClasses).asFileTree.matching {
+            include("**/*.class")
+        }
+    )
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
+    }
+}
+
+
 val pdfJar by tasks.registering(Jar::class) {
 	group = "build" // OR for example, "build"
 	description = "Assembles a jar containing dependencies to create PDFs."

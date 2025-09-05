@@ -252,7 +252,7 @@ jobs:
         run: gradle test
 
       - name: Build Jacoco HTML Report
-        run: gradle jacocoTestReport
+        run: gradle jacocoTestReport --stacktrace --info --warning-mode all
 
       - name: Move Jacoco HTML Report to docs folder
         run: mv ./build/reports/jacoco/test/html ./build/docs/jacoco
