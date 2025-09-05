@@ -85,19 +85,19 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
-		if (name.endsWith(".png"))
+		if (name.endsWith(".png") || name.endsWith(".svg"))
 			throw new IllegalArgumentException();
 
 		try {
-			InputStream is = getInternalSprite(name + ".png");
-			if (is == null) {
-				is = getInternalSprite(name + ".svg");
-				if (is == null)
-					return null;
-				final String svg = FileUtils.readAllBytes(is);
-				return new SvgNanoParser(svg);
-			}
-			return new SpriteImage(SImageIO.read(is));
+			InputStream is;
+			is = getInternalSprite(name + ".svg");
+			if (is != null)
+				return new SvgNanoParser(FileUtils.readAllBytes(is));
+			is = getInternalSprite(name + ".png");
+			if (is != null)
+				return new SpriteImage(SImageIO.read(is));
+			return null;
+
 		} catch (Throwable e) {
 			Logme.error(e);
 			return null;
