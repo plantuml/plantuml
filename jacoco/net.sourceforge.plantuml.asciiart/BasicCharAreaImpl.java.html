@@ -98,23 +98,23 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="pc bpc" id="L98" title="1 of 2 branches missed.">		while (x &gt;= newCharSize1) {</span>
 <span class="nc" id="L99">			newCharSize1 *= 2;</span>
 		}
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		while (y &gt;= newCharSize2) {</span>
-<span class="nc" id="L102">			newCharSize2 *= 2;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		while (y &gt;= newCharSize2) {</span>
+<span class="fc" id="L102">			newCharSize2 *= 2;</span>
 		}
-<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (newCharSize1 != charSize1 || newCharSize2 != charSize2) {</span>
-<span class="nc" id="L105">			final char newChars[][] = new char[newCharSize1][newCharSize2];</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			for (int i = 0; i &lt; newCharSize1; i++) {</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">				for (int j = 0; j &lt; newCharSize2; j++) {</span>
-<span class="nc" id="L108">					char c = ' ';</span>
-<span class="nc bnc" id="L109" title="All 4 branches missed.">					if (i &lt; charSize1 &amp;&amp; j &lt; charSize2) {</span>
-<span class="nc" id="L110">						c = chars[i][j];</span>
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">		if (newCharSize1 != charSize1 || newCharSize2 != charSize2) {</span>
+<span class="fc" id="L105">			final char newChars[][] = new char[newCharSize1][newCharSize2];</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			for (int i = 0; i &lt; newCharSize1; i++) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">				for (int j = 0; j &lt; newCharSize2; j++) {</span>
+<span class="fc" id="L108">					char c = ' ';</span>
+<span class="pc bpc" id="L109" title="1 of 4 branches missed.">					if (i &lt; charSize1 &amp;&amp; j &lt; charSize2) {</span>
+<span class="fc" id="L110">						c = chars[i][j];</span>
 					}
-<span class="nc" id="L112">					newChars[i][j] = c;</span>
+<span class="fc" id="L112">					newChars[i][j] = c;</span>
 				}
 			}
-<span class="nc" id="L115">			this.chars = newChars;</span>
-<span class="nc" id="L116">			this.charSize1 = newCharSize1;</span>
-<span class="nc" id="L117">			this.charSize2 = newCharSize2;</span>
+<span class="fc" id="L115">			this.chars = newChars;</span>
+<span class="fc" id="L116">			this.charSize1 = newCharSize1;</span>
+<span class="fc" id="L117">			this.charSize2 = newCharSize2;</span>
 		}
 
 <span class="fc" id="L120">	}</span>
@@ -200,4 +200,4 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="fc" id="L200">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -29,48 +29,48 @@ public final class ReedSolomonEncoder {
   private final GF256 field;
   private final Vector cachedGenerators;
 
-<span class="fc" id="L32">  public ReedSolomonEncoder(GF256 field) {</span>
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">    if (!GF256.QR_CODE_FIELD.equals(field)) {</span>
+<span class="nc" id="L32">  public ReedSolomonEncoder(GF256 field) {</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">    if (!GF256.QR_CODE_FIELD.equals(field)) {</span>
 <span class="nc" id="L34">      throw new IllegalArgumentException(&quot;Only QR Code is supported at this time&quot;);</span>
     }
-<span class="fc" id="L36">    this.field = field;</span>
-<span class="fc" id="L37">    this.cachedGenerators = new Vector();</span>
-<span class="fc" id="L38">    cachedGenerators.addElement(new GF256Poly(field, new int[] { 1 }));</span>
-<span class="fc" id="L39">  }</span>
+<span class="nc" id="L36">    this.field = field;</span>
+<span class="nc" id="L37">    this.cachedGenerators = new Vector();</span>
+<span class="nc" id="L38">    cachedGenerators.addElement(new GF256Poly(field, new int[] { 1 }));</span>
+<span class="nc" id="L39">  }</span>
 
   private GF256Poly buildGenerator(int degree) {
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">    if (degree &gt;= cachedGenerators.size()) {</span>
-<span class="fc" id="L43">      GF256Poly lastGenerator = (GF256Poly) cachedGenerators.elementAt(cachedGenerators.size() - 1);</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">      for (int d = cachedGenerators.size(); d &lt;= degree; d++) {</span>
-<span class="fc" id="L45">        GF256Poly nextGenerator = lastGenerator.multiply(new GF256Poly(field, new int[] { 1, field.exp(d - 1) }));</span>
-<span class="fc" id="L46">        cachedGenerators.addElement(nextGenerator);</span>
-<span class="fc" id="L47">        lastGenerator = nextGenerator;</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">    if (degree &gt;= cachedGenerators.size()) {</span>
+<span class="nc" id="L43">      GF256Poly lastGenerator = (GF256Poly) cachedGenerators.elementAt(cachedGenerators.size() - 1);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">      for (int d = cachedGenerators.size(); d &lt;= degree; d++) {</span>
+<span class="nc" id="L45">        GF256Poly nextGenerator = lastGenerator.multiply(new GF256Poly(field, new int[] { 1, field.exp(d - 1) }));</span>
+<span class="nc" id="L46">        cachedGenerators.addElement(nextGenerator);</span>
+<span class="nc" id="L47">        lastGenerator = nextGenerator;</span>
       }
     }
-<span class="fc" id="L50">    return (GF256Poly) cachedGenerators.elementAt(degree);    </span>
+<span class="nc" id="L50">    return (GF256Poly) cachedGenerators.elementAt(degree);    </span>
   }
 
   public void encode(int[] toEncode, int ecBytes) {
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">    if (ecBytes == 0) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">    if (ecBytes == 0) {</span>
 <span class="nc" id="L55">      throw new IllegalArgumentException(&quot;No error correction bytes&quot;);</span>
     }
-<span class="fc" id="L57">    int dataBytes = toEncode.length - ecBytes;</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">    if (dataBytes &lt;= 0) {</span>
+<span class="nc" id="L57">    int dataBytes = toEncode.length - ecBytes;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    if (dataBytes &lt;= 0) {</span>
 <span class="nc" id="L59">      throw new IllegalArgumentException(&quot;No data bytes provided&quot;);</span>
     }
-<span class="fc" id="L61">    GF256Poly generator = buildGenerator(ecBytes);</span>
-<span class="fc" id="L62">    int[] infoCoefficients = new int[dataBytes];</span>
-<span class="fc" id="L63">    System.arraycopy(toEncode, 0, infoCoefficients, 0, dataBytes);</span>
-<span class="fc" id="L64">    GF256Poly info = new GF256Poly(field, infoCoefficients);</span>
-<span class="fc" id="L65">    info = info.multiplyByMonomial(ecBytes, 1);</span>
-<span class="fc" id="L66">    GF256Poly remainder = info.divide(generator)[1];</span>
-<span class="fc" id="L67">    int[] coefficients = remainder.getCoefficients();</span>
-<span class="fc" id="L68">    int numZeroCoefficients = ecBytes - coefficients.length;</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">    for (int i = 0; i &lt; numZeroCoefficients; i++) {</span>
+<span class="nc" id="L61">    GF256Poly generator = buildGenerator(ecBytes);</span>
+<span class="nc" id="L62">    int[] infoCoefficients = new int[dataBytes];</span>
+<span class="nc" id="L63">    System.arraycopy(toEncode, 0, infoCoefficients, 0, dataBytes);</span>
+<span class="nc" id="L64">    GF256Poly info = new GF256Poly(field, infoCoefficients);</span>
+<span class="nc" id="L65">    info = info.multiplyByMonomial(ecBytes, 1);</span>
+<span class="nc" id="L66">    GF256Poly remainder = info.divide(generator)[1];</span>
+<span class="nc" id="L67">    int[] coefficients = remainder.getCoefficients();</span>
+<span class="nc" id="L68">    int numZeroCoefficients = ecBytes - coefficients.length;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">    for (int i = 0; i &lt; numZeroCoefficients; i++) {</span>
 <span class="nc" id="L70">      toEncode[dataBytes + i] = 0;</span>
     }
-<span class="fc" id="L72">    System.arraycopy(coefficients, 0, toEncode, dataBytes + numZeroCoefficients, coefficients.length);</span>
-<span class="fc" id="L73">  }</span>
+<span class="nc" id="L72">    System.arraycopy(coefficients, 0, toEncode, dataBytes + numZeroCoefficients, coefficients.length);</span>
+<span class="nc" id="L73">  }</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

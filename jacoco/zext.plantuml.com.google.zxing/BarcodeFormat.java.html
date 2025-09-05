@@ -30,59 +30,59 @@ public final class BarcodeFormat {
 
 	// No, we can't use an enum here. J2ME doesn't support it.
 
-<span class="fc" id="L33">	private static final Hashtable VALUES = new Hashtable();</span>
+<span class="nc" id="L33">	private static final Hashtable VALUES = new Hashtable();</span>
 
 	/** QR Code 2D barcode format. */
-<span class="fc" id="L36">	public static final BarcodeFormat QR_CODE = new BarcodeFormat(&quot;QR_CODE&quot;);</span>
+<span class="nc" id="L36">	public static final BarcodeFormat QR_CODE = new BarcodeFormat(&quot;QR_CODE&quot;);</span>
 
 	/** Data Matrix 2D barcode format. */
-<span class="fc" id="L39">	public static final BarcodeFormat DATA_MATRIX = new BarcodeFormat(&quot;DATA_MATRIX&quot;);</span>
+<span class="nc" id="L39">	public static final BarcodeFormat DATA_MATRIX = new BarcodeFormat(&quot;DATA_MATRIX&quot;);</span>
 
 	/** UPC-E 1D format. */
-<span class="fc" id="L42">	public static final BarcodeFormat UPC_E = new BarcodeFormat(&quot;UPC_E&quot;);</span>
+<span class="nc" id="L42">	public static final BarcodeFormat UPC_E = new BarcodeFormat(&quot;UPC_E&quot;);</span>
 
 	/** UPC-A 1D format. */
-<span class="fc" id="L45">	public static final BarcodeFormat UPC_A = new BarcodeFormat(&quot;UPC_A&quot;);</span>
+<span class="nc" id="L45">	public static final BarcodeFormat UPC_A = new BarcodeFormat(&quot;UPC_A&quot;);</span>
 
 	/** EAN-8 1D format. */
-<span class="fc" id="L48">	public static final BarcodeFormat EAN_8 = new BarcodeFormat(&quot;EAN_8&quot;);</span>
+<span class="nc" id="L48">	public static final BarcodeFormat EAN_8 = new BarcodeFormat(&quot;EAN_8&quot;);</span>
 
 	/** EAN-13 1D format. */
-<span class="fc" id="L51">	public static final BarcodeFormat EAN_13 = new BarcodeFormat(&quot;EAN_13&quot;);</span>
+<span class="nc" id="L51">	public static final BarcodeFormat EAN_13 = new BarcodeFormat(&quot;EAN_13&quot;);</span>
 
 	/** UPC/EAN extension format. Not a stand-alone format. */
-<span class="fc" id="L54">	public static final BarcodeFormat UPC_EAN_EXTENSION = new BarcodeFormat(&quot;UPC_EAN_EXTENSION&quot;);</span>
+<span class="nc" id="L54">	public static final BarcodeFormat UPC_EAN_EXTENSION = new BarcodeFormat(&quot;UPC_EAN_EXTENSION&quot;);</span>
 
 	/** Code 128 1D format. */
-<span class="fc" id="L57">	public static final BarcodeFormat CODE_128 = new BarcodeFormat(&quot;CODE_128&quot;);</span>
+<span class="nc" id="L57">	public static final BarcodeFormat CODE_128 = new BarcodeFormat(&quot;CODE_128&quot;);</span>
 
 	/** Code 39 1D format. */
-<span class="fc" id="L60">	public static final BarcodeFormat CODE_39 = new BarcodeFormat(&quot;CODE_39&quot;);</span>
+<span class="nc" id="L60">	public static final BarcodeFormat CODE_39 = new BarcodeFormat(&quot;CODE_39&quot;);</span>
 
 	/** Code 93 1D format. */
-<span class="fc" id="L63">	public static final BarcodeFormat CODE_93 = new BarcodeFormat(&quot;CODE_93&quot;);</span>
+<span class="nc" id="L63">	public static final BarcodeFormat CODE_93 = new BarcodeFormat(&quot;CODE_93&quot;);</span>
 
 	/** CODABAR 1D format. */
-<span class="fc" id="L66">	public static final BarcodeFormat CODABAR = new BarcodeFormat(&quot;CODABAR&quot;);</span>
+<span class="nc" id="L66">	public static final BarcodeFormat CODABAR = new BarcodeFormat(&quot;CODABAR&quot;);</span>
 
 	/** ITF (Interleaved Two of Five) 1D format. */
-<span class="fc" id="L69">	public static final BarcodeFormat ITF = new BarcodeFormat(&quot;ITF&quot;);</span>
+<span class="nc" id="L69">	public static final BarcodeFormat ITF = new BarcodeFormat(&quot;ITF&quot;);</span>
 
 	/** RSS 14 */
-<span class="fc" id="L72">	public static final BarcodeFormat RSS14 = new BarcodeFormat(&quot;RSS14&quot;);</span>
+<span class="nc" id="L72">	public static final BarcodeFormat RSS14 = new BarcodeFormat(&quot;RSS14&quot;);</span>
 
 	/** PDF417 format. */
-<span class="fc" id="L75">	public static final BarcodeFormat PDF417 = new BarcodeFormat(&quot;PDF417&quot;);</span>
+<span class="nc" id="L75">	public static final BarcodeFormat PDF417 = new BarcodeFormat(&quot;PDF417&quot;);</span>
 
 	/** RSS EXPANDED */
-<span class="fc" id="L78">	public static final BarcodeFormat RSS_EXPANDED = new BarcodeFormat(&quot;RSS_EXPANDED&quot;);</span>
+<span class="nc" id="L78">	public static final BarcodeFormat RSS_EXPANDED = new BarcodeFormat(&quot;RSS_EXPANDED&quot;);</span>
 
 	private final String name;
 
-<span class="fc" id="L82">	private BarcodeFormat(String name) {</span>
-<span class="fc" id="L83">		this.name = name;</span>
-<span class="fc" id="L84">		VALUES.put(name, this);</span>
-<span class="fc" id="L85">	}</span>
+<span class="nc" id="L82">	private BarcodeFormat(String name) {</span>
+<span class="nc" id="L83">		this.name = name;</span>
+<span class="nc" id="L84">		VALUES.put(name, this);</span>
+<span class="nc" id="L85">	}</span>
 
 	public String getName() {
 <span class="nc" id="L88">		return name;</span>
@@ -104,4 +104,4 @@ public final class BarcodeFormat {
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

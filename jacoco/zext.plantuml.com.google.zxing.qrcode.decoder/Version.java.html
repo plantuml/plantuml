@@ -30,7 +30,7 @@ public final class Version {
    * See ISO 18004:2006 Annex D.
    * Element i represents the raw version bits that specify version i + 7
    */
-<span class="fc" id="L33">  private static final int[] VERSION_DECODE_INFO = {</span>
+<span class="nc" id="L33">  private static final int[] VERSION_DECODE_INFO = {</span>
       0x07C94, 0x085BC, 0x09A99, 0x0A4D3, 0x0BBF6,
       0x0C762, 0x0D847, 0x0E60D, 0x0F928, 0x10B78,
       0x1145D, 0x12A17, 0x13532, 0x149A6, 0x15683,
@@ -40,7 +40,7 @@ public final class Version {
       0x2542E, 0x26A64, 0x27541, 0x28C69
   };
 
-<span class="fc" id="L43">  private static final Version[] VERSIONS = buildVersions();</span>
+<span class="nc" id="L43">  private static final Version[] VERSIONS = buildVersions();</span>
 
   private final int versionNumber;
   private final int[] alignmentPatternCenters;
@@ -52,22 +52,22 @@ public final class Version {
                   ECBlocks ecBlocks1,
                   ECBlocks ecBlocks2,
                   ECBlocks ecBlocks3,
-<span class="fc" id="L55">                  ECBlocks ecBlocks4) {</span>
-<span class="fc" id="L56">    this.versionNumber = versionNumber;</span>
-<span class="fc" id="L57">    this.alignmentPatternCenters = alignmentPatternCenters;</span>
-<span class="fc" id="L58">    this.ecBlocks = new ECBlocks[]{ecBlocks1, ecBlocks2, ecBlocks3, ecBlocks4};</span>
-<span class="fc" id="L59">    int total = 0;</span>
-<span class="fc" id="L60">    int ecCodewords = ecBlocks1.getECCodewordsPerBlock();</span>
-<span class="fc" id="L61">    ECB[] ecbArray = ecBlocks1.getECBlocks();</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">    for (int i = 0; i &lt; ecbArray.length; i++) {</span>
-<span class="fc" id="L63">      ECB ecBlock = ecbArray[i];</span>
-<span class="fc" id="L64">      total += ecBlock.getCount() * (ecBlock.getDataCodewords() + ecCodewords);</span>
+<span class="nc" id="L55">                  ECBlocks ecBlocks4) {</span>
+<span class="nc" id="L56">    this.versionNumber = versionNumber;</span>
+<span class="nc" id="L57">    this.alignmentPatternCenters = alignmentPatternCenters;</span>
+<span class="nc" id="L58">    this.ecBlocks = new ECBlocks[]{ecBlocks1, ecBlocks2, ecBlocks3, ecBlocks4};</span>
+<span class="nc" id="L59">    int total = 0;</span>
+<span class="nc" id="L60">    int ecCodewords = ecBlocks1.getECCodewordsPerBlock();</span>
+<span class="nc" id="L61">    ECB[] ecbArray = ecBlocks1.getECBlocks();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">    for (int i = 0; i &lt; ecbArray.length; i++) {</span>
+<span class="nc" id="L63">      ECB ecBlock = ecbArray[i];</span>
+<span class="nc" id="L64">      total += ecBlock.getCount() * (ecBlock.getDataCodewords() + ecCodewords);</span>
     }
-<span class="fc" id="L66">    this.totalCodewords = total;</span>
-<span class="fc" id="L67">  }</span>
+<span class="nc" id="L66">    this.totalCodewords = total;</span>
+<span class="nc" id="L67">  }</span>
 
   public int getVersionNumber() {
-<span class="fc" id="L70">    return versionNumber;</span>
+<span class="nc" id="L70">    return versionNumber;</span>
   }
 
   public int[] getAlignmentPatternCenters() {
@@ -75,15 +75,15 @@ public final class Version {
   }
 
   public int getTotalCodewords() {
-<span class="fc" id="L78">    return totalCodewords;</span>
+<span class="nc" id="L78">    return totalCodewords;</span>
   }
 
   public int getDimensionForVersion() {
-<span class="fc" id="L82">    return 17 + 4 * versionNumber;</span>
+<span class="nc" id="L82">    return 17 + 4 * versionNumber;</span>
   }
 
   public ECBlocks getECBlocksForLevel(ErrorCorrectionLevel ecLevel) {
-<span class="fc" id="L86">    return ecBlocks[ecLevel.ordinal()];</span>
+<span class="nc" id="L86">    return ecBlocks[ecLevel.ordinal()];</span>
   }
 
   /**
@@ -105,10 +105,10 @@ public final class Version {
   }
 
   public static Version getVersionForNumber(int versionNumber) {
-<span class="pc bpc" id="L108" title="2 of 4 branches missed.">    if (versionNumber &lt; 1 || versionNumber &gt; 40) {</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">    if (versionNumber &lt; 1 || versionNumber &gt; 40) {</span>
 <span class="nc" id="L109">      throw new IllegalArgumentException();</span>
     }
-<span class="fc" id="L111">    return VERSIONS[versionNumber - 1];</span>
+<span class="nc" id="L111">    return VERSIONS[versionNumber - 1];</span>
   }
 
   static Version decodeVersionInformation(int versionBits) {
@@ -189,34 +189,34 @@ public final class Version {
     private final int ecCodewordsPerBlock;
     private final ECB[] ecBlocks;
 
-<span class="fc" id="L192">    ECBlocks(int ecCodewordsPerBlock, ECB ecBlocks) {</span>
-<span class="fc" id="L193">      this.ecCodewordsPerBlock = ecCodewordsPerBlock;</span>
-<span class="fc" id="L194">      this.ecBlocks = new ECB[]{ecBlocks};</span>
-<span class="fc" id="L195">    }</span>
+<span class="nc" id="L192">    ECBlocks(int ecCodewordsPerBlock, ECB ecBlocks) {</span>
+<span class="nc" id="L193">      this.ecCodewordsPerBlock = ecCodewordsPerBlock;</span>
+<span class="nc" id="L194">      this.ecBlocks = new ECB[]{ecBlocks};</span>
+<span class="nc" id="L195">    }</span>
 
-<span class="fc" id="L197">    ECBlocks(int ecCodewordsPerBlock, ECB ecBlocks1, ECB ecBlocks2) {</span>
-<span class="fc" id="L198">      this.ecCodewordsPerBlock = ecCodewordsPerBlock;</span>
-<span class="fc" id="L199">      this.ecBlocks = new ECB[]{ecBlocks1, ecBlocks2};</span>
-<span class="fc" id="L200">    }</span>
+<span class="nc" id="L197">    ECBlocks(int ecCodewordsPerBlock, ECB ecBlocks1, ECB ecBlocks2) {</span>
+<span class="nc" id="L198">      this.ecCodewordsPerBlock = ecCodewordsPerBlock;</span>
+<span class="nc" id="L199">      this.ecBlocks = new ECB[]{ecBlocks1, ecBlocks2};</span>
+<span class="nc" id="L200">    }</span>
 
     public int getECCodewordsPerBlock() {
-<span class="fc" id="L203">      return ecCodewordsPerBlock;</span>
+<span class="nc" id="L203">      return ecCodewordsPerBlock;</span>
     }
 
     public int getNumBlocks() {
-<span class="fc" id="L207">      int total = 0;</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">      for (int i = 0; i &lt; ecBlocks.length; i++) {</span>
-<span class="fc" id="L209">        total += ecBlocks[i].getCount();</span>
+<span class="nc" id="L207">      int total = 0;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">      for (int i = 0; i &lt; ecBlocks.length; i++) {</span>
+<span class="nc" id="L209">        total += ecBlocks[i].getCount();</span>
       }
-<span class="fc" id="L211">      return total;</span>
+<span class="nc" id="L211">      return total;</span>
     }
 
     public int getTotalECCodewords() {
-<span class="fc" id="L215">      return ecCodewordsPerBlock * getNumBlocks();</span>
+<span class="nc" id="L215">      return ecCodewordsPerBlock * getNumBlocks();</span>
     }
 
     public ECB[] getECBlocks() {
-<span class="fc" id="L219">      return ecBlocks;</span>
+<span class="nc" id="L219">      return ecBlocks;</span>
     }
   }
 
@@ -229,17 +229,17 @@ public final class Version {
     private final int count;
     private final int dataCodewords;
 
-<span class="fc" id="L232">    ECB(int count, int dataCodewords) {</span>
-<span class="fc" id="L233">      this.count = count;</span>
-<span class="fc" id="L234">      this.dataCodewords = dataCodewords;</span>
-<span class="fc" id="L235">    }</span>
+<span class="nc" id="L232">    ECB(int count, int dataCodewords) {</span>
+<span class="nc" id="L233">      this.count = count;</span>
+<span class="nc" id="L234">      this.dataCodewords = dataCodewords;</span>
+<span class="nc" id="L235">    }</span>
 
     public int getCount() {
-<span class="fc" id="L238">      return count;</span>
+<span class="nc" id="L238">      return count;</span>
     }
 
     public int getDataCodewords() {
-<span class="fc" id="L242">      return dataCodewords;</span>
+<span class="nc" id="L242">      return dataCodewords;</span>
     }
   }
 
@@ -251,7 +251,7 @@ public final class Version {
    * See ISO 18004:2006 6.5.1 Table 9
    */
   private static Version[] buildVersions() {
-<span class="fc" id="L254">    return new Version[]{</span>
+<span class="nc" id="L254">    return new Version[]{</span>
         new Version(1, new int[]{},
             new ECBlocks(7, new ECB(1, 19)),
             new ECBlocks(10, new ECB(1, 16)),
@@ -584,4 +584,4 @@ public final class Version {
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

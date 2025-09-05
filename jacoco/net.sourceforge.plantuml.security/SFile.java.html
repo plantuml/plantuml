@@ -150,7 +150,7 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public boolean isFile() {
-<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
 	}
 
 	public long lastModified() {
@@ -158,7 +158,7 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public int compareTo(SFile other) {
-<span class="fc" id="L161">		return this.internal.compareTo(other.internal);</span>
+<span class="nc" id="L161">		return this.internal.compareTo(other.internal);</span>
 	}
 
 	public String getPath() {
@@ -475,4 +475,4 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	// ::done
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
