@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.png.quant.QuantUtils;
 import net.sourceforge.plantuml.png.quant.Quantify555;
 import net.sourceforge.plantuml.png.quant.QuantifyPacked28;
 import net.sourceforge.plantuml.security.SFile;
@@ -69,16 +70,25 @@ public class PngIO {
 
 	public static void write(RenderedImage image, ColorMapper mapper, OutputStream os, String metadata, int dpi)
 			throws IOException {
-		BufferedImage newImage = Quantify555.quantifyMeIfPossible(image);
-		if (newImage == null)
-			newImage = QuantifyPacked28.quantifyMeIfPossible(image);
-		
-		if (newImage != null)
-			image = newImage;
-		
+		final BufferedImage bufferedImage = QuantUtils.toBufferedARGBorRGB(image);
+		if (bufferedImage != null) {
+			final int type = bufferedImage.getType();
+			assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB
+					|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
+
+			final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;
+			Log.info(() -> "Trying to pack image. hasAlpha=" + hasAlpha);
+
+			BufferedImage tmp = Quantify555.packMeIfPossible(bufferedImage);
+			if (tmp == null)
+				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);
+
+			if (tmp != null)
+				image = tmp;
+		}
+
 		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);
 	}
-
 
 //	/** writes a BufferedImage of type TYPE_INT_ARGB to PNG using PNGJ */
 //	public static void writeARGB(BufferedImage bi, OutputStream os, String metadata) {

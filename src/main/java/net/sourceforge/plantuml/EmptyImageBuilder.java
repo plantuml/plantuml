@@ -39,7 +39,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -55,17 +54,6 @@ public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
-	private final Color background;
-	private final StringBounder stringBounder;
-
-	private static EmptyImageBuilder create(String watermark, int width, int height, Color background,
-			StringBounder stringBounder, double dpiFactor) {
-		EmptyImageBuilder result = new EmptyImageBuilder(watermark, (int) (width * dpiFactor),
-				(int) (height * dpiFactor), background, stringBounder);
-		if (dpiFactor != 1.0)
-			result.g2d.setTransform(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));
-		return result;
-	}
 
 	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder) {
 		if (width <= 0 || height <= 0)
@@ -73,22 +61,22 @@ public class EmptyImageBuilder {
 
 		// ::comment when __CORE__
 		if (width > GraphvizUtils.getenvImageLimit()) {
-			final double width2 = width;
+			final int width2 = width;
 			Log.info(() -> "Width too large " + width2 + ". You should set PLANTUML_LIMIT_SIZE");
 			width = GraphvizUtils.getenvImageLimit();
 		}
 		if (height > GraphvizUtils.getenvImageLimit()) {
-			final double height2 = height;
+			final int height2 = height;
 			Log.info(() -> "Height too large " + height2 + ". You should set PLANTUML_LIMIT_SIZE");
 			height = GraphvizUtils.getenvImageLimit();
 		}
 		// ::done
-		this.background = background;
-		this.stringBounder = stringBounder;
-		final double width3 = width;
-		final double height3 = height;
-		Log.info(() -> "Creating image " + width3 + "x" + height3);
-		im = new BufferedImage(width, height, getType(background));
+		final int widthFinal = width;
+		final int heightFinal = height;
+		final int type = getType(background);
+		Log.info(() -> "Creating image " + widthFinal + "x" + heightFinal + " type=" + type);
+
+		im = new BufferedImage(width, height, type);
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		if (background != null) {
@@ -103,12 +91,12 @@ public class EmptyImageBuilder {
 	}
 
 	private int getType(Color background) {
-		if (background == null) {
+		if (background == null)
 			return BufferedImage.TYPE_INT_ARGB;
-		}
-		if (background.getAlpha() != 255) {
+
+		if (background.getAlpha() != 255)
 			return BufferedImage.TYPE_INT_ARGB;
-		}
+
 		return BufferedImage.TYPE_INT_RGB;
 	}
 
@@ -118,16 +106,14 @@ public class EmptyImageBuilder {
 		final Rectangle2D rect = fm.getStringBounds(watermark, g2d);
 		final int height = (int) rect.getHeight();
 		final int width = (int) rect.getWidth();
-		if (height < 2 || width < 2) {
+		if (height < 2 || width < 2)
 			return;
-		}
-		if (width <= maxWidth)
-			for (int y = height; y < maxHeight; y += height + 1) {
-				for (int x = 0; x < maxWidth; x += width + 10) {
+
+		if (width <= maxWidth) {
+			for (int y = height; y < maxHeight; y += height + 1)
+				for (int x = 0; x < maxWidth; x += width + 10)
 					g2d.drawString(watermark, x, y);
-				}
-			}
-		else {
+		} else {
 			final List<String> withBreaks = withBreaks(watermark, javaFont, fm, maxWidth);
 			int y = 0;
 			while (y < maxHeight) {
@@ -158,9 +144,9 @@ public class EmptyImageBuilder {
 				pending = word;
 			}
 		}
-		if (pending.length() > 0) {
+		if (pending.length() > 0)
 			result.add(pending);
-		}
+
 		return result;
 	}
 
@@ -171,12 +157,5 @@ public class EmptyImageBuilder {
 	public Graphics2D getGraphics2D() {
 		return g2d;
 	}
-
-//	public UGraphicG2d getUGraphicG2d(FileFormat format) {
-//		final HColor back = HColors.simple(background);
-//		final UGraphicG2d result = new UGraphicG2d(back, ColorMapper.IDENTITY, stringBounder, g2d, 1.0, format);
-//		result.setBufferedImage(im);
-//		return result;
-//	}
 
 }

@@ -2,15 +2,15 @@
 name: spacelab-white
 display_name: Spacelab White
 description: Theme based off of the bootstrap theme of the same name
-author: Brett Schwarz
+author: KingPlus-lang
 release: 
 license: MIT
-version: 
+version: Adapted by KingPlus-lang from `spacelab` theme of Brett Schwarz
 source: https://github.com/bschwarz/puml-themes
 inspiration: https://bootswatch.com/spacelab/
 ---
 
-!$THEME = "spacelab"
+!$THEME = "spacelab-white"
 
 !if %not(%variable_exists("$BGCOLOR"))
 !$BGCOLOR = "white"
@@ -141,25 +141,60 @@ skinparam useBetaStyle false
 	FontColor $PRIMARY
 	BorderColor $SECONDARY
   }
-  network {
-    $primary_scheme()    
-    LineColor $PRIMARY
-    LineThickness 1.0
-    FontColor $PRIMARY_DARK
+  nwdiagDiagram {
+	network {
+		$primary_scheme()    
+		LineColor $PRIMARY
+		LineThickness 1.0
+		FontColor $PRIMARY_DARK
+	}
+	server {
+		$primary_scheme()
+	}
+	arrow {
+		FontColor $PRIMARY_DARK
+		LineColor $PRIMARY_DARK
+	}
+	group {
+		BackGroundColor $LIGHT
+		LineColor $LIGHT_DARK
+		LineThickness 2.0
+		Margin 5
+		Padding 5
+	}
   }
-  server {
-    $primary_scheme()
-  }
-  arrow {
-    FontColor $PRIMARY_DARK
-    LineColor $PRIMARY_DARK
-  }
-  group {
-    BackGroundColor $LIGHT
-    LineColor $LIGHT_DARK
-    LineThickness 2.0
-    Margin 5
-    Padding 5
+  ganttDiagram {
+	task {
+		$primary_scheme()
+		LineColor $PRIMARY
+		Margin 10 2 2 2
+		Padding 6
+	}
+	note {
+		FontColor $INFO_TEXT
+		LineColor $INFO_DARK
+		BackGroundColor $INFO
+	}
+	separator {
+		LineColor $SECONDARY
+		BackGroundColor $SECONDARY-$SECONDARY_DARK
+		FontColor $SECONDARY_TEXT
+	}
+	milestone {
+		FontColor $INFO
+		FontSize 16
+		FontStyle italic
+		BackGroundColor $SECONDARY
+		LineColor $SECONDARY_DARK
+	}
+	timeline {
+		BackgroundColor $SECONDARY
+		FontColor $SECONDARY_TEXT
+	}
+	closed {
+		BackgroundColor $WARNING_DARK
+		FontColor $WARNING_TEXT
+	}
   }
 </style>
 ''

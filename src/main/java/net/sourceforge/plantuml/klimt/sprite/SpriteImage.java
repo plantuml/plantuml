@@ -36,11 +36,12 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -87,13 +88,17 @@ public class SpriteImage implements Sprite {
 		if (name.endsWith(".png"))
 			throw new IllegalArgumentException();
 
-		final InputStream is = getInternalSprite(name + ".png");
-		if (is == null)
-			return null;
-
 		try {
+			InputStream is = getInternalSprite(name + ".png");
+			if (is == null) {
+				is = getInternalSprite(name + ".svg");
+				if (is == null)
+					return null;
+				final String svg = FileUtils.readAllBytes(is);
+				return new SvgNanoParser(svg);
+			}
 			return new SpriteImage(SImageIO.read(is));
-		} catch (IOException e) {
+		} catch (Throwable e) {
 			Logme.error(e);
 			return null;
 		}

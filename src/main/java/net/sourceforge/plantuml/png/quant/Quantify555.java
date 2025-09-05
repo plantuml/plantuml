@@ -37,96 +37,127 @@ package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
-import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 import java.util.Arrays;
+
+import net.sourceforge.plantuml.utils.Log;
 
 /**
  * A simple color quantizer based on RGB555 cubes.
  *
- * <p><b>Process:</b></p>
+ * <p>
+ * <b>Process:</b>
+ * </p>
  * <ol>
- *   <li>Each pixel is mapped to a 15-bit cube index (RGB555).</li>
- *   <li>Inside the cube, a 9-bit sub-color index (0–511) is computed.</li>
- *   <li>Frequencies of sub-colors are accumulated in each cube.</li>
- *   <li>If more than 255 distinct cubes are populated, quantization aborts
- *       (since the palette would exceed 256 colors).</li>
- *   <li>For each cube, the most frequent sub-color is selected as the
- *       representative palette entry.</li>
- *   <li>An {@link IndexColorModel} is built and an 8-bit indexed image is
- *       generated.</li>
+ * <li>Each pixel is mapped to a 15-bit cube index (RGB555).</li>
+ * <li>Inside the cube, a 9-bit sub-color index (0–511) is computed.</li>
+ * <li>Frequencies of sub-colors are accumulated in each cube.</li>
+ * <li>If more than 255 distinct cubes are populated, quantization aborts (since
+ * the palette would exceed 256 colors).</li>
+ * <li>For each cube, the most frequent sub-color is selected as the
+ * representative palette entry.</li>
+ * <li>An {@link IndexColorModel} is built and an 8-bit indexed image is
+ * generated.</li>
  * </ol>
  * 
- * <p><b>Comparison to other algorithms:</b></p>
+ * <p>
+ * <b>Comparison to other algorithms:</b>
+ * </p>
  * <ul>
- *   <li><b>Median Cut:</b> Splits color space adaptively based on variance.
- *       Produces better palettes on natural images (gradients, photos),
- *       but more expensive computationally.</li>
- *   <li><b>Wu's Algorithm:</b> Uses variance minimization and dynamic
- *       programming. Produces very high-quality palettes (similar to pngquant),
- *       but requires more memory and preprocessing.</li>
- *   <li><b>RGB555 Cube Quantizer (this class):</b> Extremely fast,
- *       deterministic, and simple. Well-suited for diagrams, icons,
- *       or graphics with limited colors. However, palette quality is
- *       generally inferior to Wu or Median Cut, especially for gradients
- *       and photos.</li>
+ * <li><b>Median Cut:</b> Splits color space adaptively based on variance.
+ * Produces better palettes on natural images (gradients, photos), but more
+ * expensive computationally.</li>
+ * <li><b>Wu's Algorithm:</b> Uses variance minimization and dynamic
+ * programming. Produces very high-quality palettes (similar to pngquant), but
+ * requires more memory and preprocessing.</li>
+ * <li><b>RGB555 Cube Quantizer (this class):</b> Extremely fast, deterministic,
+ * and simple. Well-suited for diagrams, icons, or graphics with limited colors.
+ * However, palette quality is generally inferior to Wu or Median Cut,
+ * especially for gradients and photos.</li>
  * </ul>
  *
- * <p><b>Advantages:</b></p>
+ * <p>
+ * <b>Advantages:</b>
+ * </p>
  * <ul>
- *   <li>Very fast: one pass to count, one pass to remap pixels.</li>
- *   <li>Simple and predictable (no recursion, no complex math).</li>
- *   <li>Guaranteed <= 256 colors (or aborts safely).</li>
+ * <li>Very fast: one pass to count, one pass to remap pixels.</li>
+ * <li>Simple and predictable (no recursion, no complex math).</li>
+ * <li>Guaranteed <= 256 colors (or aborts safely).</li>
+ * </ul>
+ * 
+ * <p>
+ * rules for transparency:
+ * </p>
+ * <ul>
+ * <li>any pixel with alpha less than 127 is considered fully transparent and
+ * mapped to ARGB 0x00000000.</li>
+ * <li>a special cube id is reserved to represent this transparent color.</li>
  * </ul>
  *
- * <p><b>Limitations:</b></p>
+ * <p>
+ * <b>Limitations:</b>
+ * </p>
  * <ul>
- *   <li>Rigid partitioning (fixed RGB555 grid) does not adapt to the
- *       distribution of colors in the image.</li>
- *   <li>Poorer palette quality for continuous-tone images.</li>
- *   <li>No dithering: banding artifacts are visible on gradients unless
- *       combined with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
+ * <li>Rigid partitioning (fixed RGB555 grid) does not adapt to the distribution
+ * of colors in the image.</li>
+ * <li>Poorer palette quality for continuous-tone images.</li>
+ * <li>No dithering: banding artifacts are visible on gradients unless combined
+ * with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
  * </ul>
  */
 public final class Quantify555 {
 
+	// 32*32*32 RGB555 cubes + 1 extra slot for fully transparent color
+	private static final int CUBE_COUNT_RGB555 = 32 * 32 * 32; // 0..32767
+	private static final int TRANSPARENT_CUBE = CUBE_COUNT_RGB555; // 32768
+	private static final int TOTAL_CUBE_SLOTS = CUBE_COUNT_RGB555 + 1;
+
 	/**
 	 * Attempts to quantize an image to <= 256 colors using the Cube555 structure.
 	 * 
-	 * @param input any {@link RenderedImage} (must be convertible to ARGB)
+	 * @param src any {@link BufferedImage}
 	 * @return a new {@link BufferedImage} with an indexed color model, or
 	 *         {@code null} if quantization is not possible (too many colors)
 	 */
-	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
-
-		// Convert to a BufferedImage in ARGB format if needed
-		final BufferedImage src = QuantUtils.toBufferedARGB(input);
-		if (src == null)
-			return null;
+	public static BufferedImage packMeIfPossible(BufferedImage src) {
 
 		final int w = src.getWidth();
 		final int h = src.getHeight();
 		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
 
+		Log.info(() -> "Using Quantify555.");
+
 		int nbCubes = 0;
 
 		// Step 1: Fill Cube555 structures with frequency counts
-		final Cube555[] cubes = new Cube555[32 * 32 * 32]; // 32768 possible RGB555 cubes
+		final Cube555[] cubes = new Cube555[TOTAL_CUBE_SLOTS];
 		for (int argb : pixels) {
-			final int rgb555 = toRGB555(argb);
-			Cube555 cube = cubes[rgb555];
+			final int cubeIndex = getCubeIndex(argb);
+
+			Cube555 cube = cubes[cubeIndex];
 			if (cube == null) {
 				// Abort if too many distinct cubes are found
-				if (nbCubes++ > 255)
+				if (nbCubes++ > 255) {
+					Log.info(() -> "...abort, too many colors");
 					return null;
-				cube = new Cube555(rgb555);
-				cubes[rgb555] = cube;
+				}
+				cube = new Cube555(cubeIndex);
+				cubes[cubeIndex] = cube;
 			}
-			cube.increment(subColorIndex512(argb));
+
+			// for transparent pixels, we don't care about sub-color distribution;
+			// just increment bucket 0 (or any fixed slot).
+			final int sub = cubeIndex == TRANSPARENT_CUBE ? 0 : subColorIndex512(argb);
+			cube.increment(sub);
+
 		}
 
 		// Step 2: Build the final indexed image
 		return buildIndexedImageFromCubes(src, cubes);
+	}
+
+	public static boolean isTransparent(int argb) {
+		return ((argb >>> 24) & 0xFF) < 127;
 	}
 
 	/**
@@ -141,8 +172,7 @@ public final class Quantify555 {
 		final int h = src.getHeight();
 
 		// Step 1: Build the palette from all non-empty cubes
-		final int cubeCount = cubes.length; // 32*32*32 = 32768
-		final int[] cubeToPal = new int[cubeCount];
+		final int[] cubeToPal = new int[TOTAL_CUBE_SLOTS];
 		Arrays.fill(cubeToPal, -1);
 
 		final int[] palARGB = new int[256];
@@ -172,7 +202,7 @@ public final class Quantify555 {
 			src.getRGB(0, y, w, 1, line, 0, w);
 			for (int x = 0; x < w; x++) {
 				final int argb = line[x];
-				final int cubeIndex = toRGB555(argb);
+				final int cubeIndex = getCubeIndex(argb);
 				final int p = cubeToPal[cubeIndex];
 				if (p < 0)
 					throw new IllegalStateException();
@@ -219,6 +249,10 @@ public final class Quantify555 {
 	 * @return reconstructed ARGB color
 	 */
 	private static int representativeARGB(int cubeIndex, int sub512) {
+
+		if (cubeIndex == TRANSPARENT_CUBE)
+			return 0x00000000; // fully transparent black
+
 		final int r5 = (cubeIndex >>> 10) & 0x1F;
 		final int g5 = (cubeIndex >>> 5) & 0x1F;
 		final int b5 = cubeIndex & 0x1F;
@@ -234,16 +268,17 @@ public final class Quantify555 {
 		return (0xFF << 24) | (r8 << 16) | (g8 << 8) | b8;
 	}
 
-	/**
-	 * Compacts a 24-bit ARGB color into a 15-bit RGB555 index.
-	 * <p>
-	 * Formula: r5:g5:b5 -> (r5 << 10) | (g5 << 5) | b5
-	 * </p>
-	 *
-	 * @param argb 32-bit ARGB color
-	 * @return 15-bit RGB555 index
-	 */
-	private static int toRGB555(int argb) {
+	private static int getCubeIndex(int argb) {
+
+		if (isTransparent(argb))
+			return TRANSPARENT_CUBE;
+
+		/*
+		 * Compacts a 24-bit ARGB color into a 15-bit RGB555 index.
+		 * 
+		 * Formula: r5:g5:b5 -> (r5 << 10) | (g5 << 5) | b5 </p>
+		 */
+
 		final int r5 = (argb >>> 19) & 0x1F; // bits 23..19
 		final int g5 = (argb >>> 11) & 0x1F; // bits 15..11
 		final int b5 = (argb >>> 3) & 0x1F; // bits 7..3

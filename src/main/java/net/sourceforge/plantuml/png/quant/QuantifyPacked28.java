@@ -36,21 +36,20 @@
 package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 
 public final class QuantifyPacked28 {
 
-	public static BufferedImage quantifyMeIfPossible(RenderedImage input) {
+	public static BufferedImage packMeIfPossible(BufferedImage src) {
 
-		// Convert to a BufferedImage in ARGB format if needed
-		final BufferedImage src = QuantUtils.toBufferedARGB(input);
-		if (src == null)
-			return null;
+		final int type = src.getType();
+
+		assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB
+				|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
 		final int w = src.getWidth();
 		final int h = src.getHeight();
 
-		final BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		final BufferedImage dst = new BufferedImage(w, h, type);
 
 		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
 		final int[] out = new int[pixels.length];
