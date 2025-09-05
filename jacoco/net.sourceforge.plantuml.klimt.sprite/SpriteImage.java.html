@@ -85,19 +85,19 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (name.endsWith(&quot;.png&quot;))</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (name.endsWith(&quot;.png&quot;) || name.endsWith(&quot;.svg&quot;))</span>
 <span class="nc" id="L89">			throw new IllegalArgumentException();</span>
 
 		try {
-<span class="nc" id="L92">			InputStream is = getInternalSprite(name + &quot;.png&quot;);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (is == null) {</span>
-<span class="nc" id="L94">				is = getInternalSprite(name + &quot;.svg&quot;);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (is == null)</span>
-<span class="nc" id="L96">					return null;</span>
-<span class="nc" id="L97">				final String svg = FileUtils.readAllBytes(is);</span>
-<span class="nc" id="L98">				return new SvgNanoParser(svg);</span>
-			}
-<span class="nc" id="L100">			return new SpriteImage(SImageIO.read(is));</span>
+			InputStream is;
+<span class="nc" id="L93">			is = getInternalSprite(name + &quot;.svg&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (is != null)</span>
+<span class="nc" id="L95">				return new SvgNanoParser(FileUtils.readAllBytes(is));</span>
+<span class="nc" id="L96">			is = getInternalSprite(name + &quot;.png&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (is != null)</span>
+<span class="nc" id="L98">				return new SpriteImage(SImageIO.read(is));</span>
+<span class="nc" id="L99">			return null;</span>
+
 <span class="nc" id="L101">		} catch (Throwable e) {</span>
 <span class="nc" id="L102">			Logme.error(e);</span>
 <span class="nc" id="L103">			return null;</span>
