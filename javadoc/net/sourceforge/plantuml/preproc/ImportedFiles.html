@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(net.sourceforge.plantuml.security.SFile)" class="member-name-link">add</a><wbr>(<a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;file)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addImportFile(net.sourceforge.plantuml.security.SFile)" class="member-name-link">addImportFile</a><wbr>(<a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;file)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ImportedFiles.html" title="class in net.sourceforge.plantuml.preproc">ImportedFiles</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createImportedFiles(net.sourceforge.plantuml.file.AParentFolder)" class="member-name-link">createImportedFiles</a><wbr>(<a href="../file/AParentFolder.html" title="interface in net.sourceforge.plantuml.file">AParentFolder</a>&nbsp;newCurrentDir)</code></div>
@@ -109,15 +109,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFile(java.lang.String,java.lang.String)" class="member-name-link">getFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;suffix)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPath()" class="member-name-link">getPath</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ImportedFiles.html" title="class in net.sourceforge.plantuml.preproc">ImportedFiles</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withCurrentDir(net.sourceforge.plantuml.file.AParentFolder)" class="member-name-link">withCurrentDir</a><wbr>(<a href="../file/AParentFolder.html" title="interface in net.sourceforge.plantuml.file">AParentFolder</a>&nbsp;newCurrentDir)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ImportedFiles.html" title="class in net.sourceforge.plantuml.preproc">ImportedFiles</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withCurrentDir(net.sourceforge.plantuml.file.AParentFolder)" class="member-name-link">withCurrentDir</a><wbr>(<a href="../file/AParentFolder.html" title="interface in net.sourceforge.plantuml.file">AParentFolder</a>&nbsp;newCurrentDir)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -169,15 +166,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getPath()">
-<h3>getPath</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&gt;</span>&nbsp;<span class="element-name">getPath</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="add(net.sourceforge.plantuml.security.SFile)">
-<h3>add</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;file)</span></div>
+<section class="detail" id="addImportFile(net.sourceforge.plantuml.security.SFile)">
+<h3>addImportFile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addImportFile</span><wbr><span class="parameters">(<a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;file)</span></div>
 </section>
 </li>
 <li>

@@ -107,7 +107,7 @@ public class ImportedFiles {
 <span class="fc" id="L107">		return filecurrent;</span>
 	}
 
-	public List&lt;SFile&gt; getPath() {
+	private List&lt;SFile&gt; getPath() {
 <span class="fc" id="L111">		final List&lt;SFile&gt; result = new ArrayList&lt;&gt;(imported);</span>
 		// ::comment when __CORE__
 <span class="fc" id="L113">		result.addAll(includePath());</span>
@@ -130,12 +130,12 @@ public class ImportedFiles {
 <span class="fc" id="L130">		return f.isAbsolute();</span>
 	}
 
-	public void add(SFile file) {
+	public void addImportFile(SFile file) {
 <span class="nc" id="L134">		this.imported.add(file);</span>
 <span class="nc" id="L135">	}</span>
 
 	public AParentFolder getCurrentDir() {
-<span class="nc" id="L138">		return currentDir;</span>
+<span class="fc" id="L138">		return currentDir;</span>
 	}
 
 	public FileWithSuffix getFile(String filename, String suffix) throws IOException {
