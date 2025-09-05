@@ -51,6 +51,9 @@ import java.util.Set;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.file.AFile;
+import net.sourceforge.plantuml.file.AParentFolder;
+import net.sourceforge.plantuml.file.AParentFolderStdlib;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.json.Json;
@@ -593,7 +596,7 @@ public class TContext {
 			final SFile file = FileSystem.getInstance()
 					.getFile(applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation())));
 			if (file.exists() && file.isDirectory() == false) {
-				importedFiles.add(file);
+				importedFiles.addImportFile(file);
 				return;
 			}
 		} catch (IOException e) {
@@ -705,6 +708,9 @@ public class TContext {
 		if (theme == null)
 			throw new EaterException("No such theme " + eater.getName(), s);
 
+		final ImportedFiles saveImportedFiles = this.importedFiles;
+		this.importedFiles = eater.getNewImportedFiles();
+
 		try {
 			final List<StringLocated> body = new ArrayList<>();
 			do {
@@ -720,6 +726,7 @@ public class TContext {
 			throw new EaterException("Error reading theme " + e, s);
 		} finally {
 			this.themeMetadata = theme.getMetadata();
+			this.importedFiles = saveImportedFiles;
 			try {
 				theme.close();
 			} catch (IOException e) {
@@ -783,11 +790,18 @@ public class TContext {
 
 				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
 			} else if (what.startsWith("<") && what.endsWith(">")) {
-				reader = PreprocessorUtils.getReaderStdlibInclude(s, what.substring(1, what.length() - 1));
+				final String stdlibPath = what.substring(1, what.length() - 1);
+				final String libname = stdlibPath.substring(0, stdlibPath.indexOf('/'));
+				saveImportedFiles = this.importedFiles;
+				this.importedFiles = this.importedFiles.withCurrentDir(new AParentFolderStdlib(s, libname));
+				reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
 				// ::comment when __CORE__
 			} else if (what.startsWith("[") && what.endsWith("]")) {
 				reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1, what.length() - 1));
 				// ::done
+			} else if (importedFiles.getCurrentDir() instanceof AParentFolderStdlib) {
+				final AParentFolderStdlib folderStdlib = (AParentFolderStdlib) importedFiles.getCurrentDir();
+				reader = folderStdlib.getReader(what);
 			} else {
 				final FileWithSuffix f2 = importedFiles.getFile(what, suf);
 				if (f2.fileOk()) {

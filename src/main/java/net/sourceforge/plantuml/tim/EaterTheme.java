@@ -42,11 +42,14 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.plantuml.file.AFile;
+import net.sourceforge.plantuml.file.AParentFolder;
+import net.sourceforge.plantuml.file.AParentFolderRegular;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.theme.Theme;
@@ -60,10 +63,12 @@ public class EaterTheme extends Eater {
 	private String from;
 	private TContext context;
 	private final ImportedFiles importedFiles;
+	private ImportedFiles newImportedFiles;
 
 	public EaterTheme(StringLocated s, ImportedFiles importedFiles) {
 		super(s);
 		this.importedFiles = importedFiles;
+		this.newImportedFiles = importedFiles;
 	}
 
 	@Override
@@ -128,6 +133,10 @@ public class EaterTheme extends Eater {
 			if (tmp == null)
 				throw new EaterException("No such theme " + realName, getStringLocated());
 
+			final AFile fromDir = importedFiles.getAFile(from);
+			final AParentFolder parent = new AParentFolderRegular(fromDir.getUnderlyingFile());
+			newImportedFiles = importedFiles.withCurrentDir(parent);
+
 			return new Theme(ReadLineReader.create(tmp, "theme " + realName));
 		} catch (IOException e) {
 			Logme.error(e);
@@ -138,6 +147,10 @@ public class EaterTheme extends Eater {
 
 	public String getName() {
 		return name;
+	}
+
+	public ImportedFiles getNewImportedFiles() {
+		return newImportedFiles;
 	}
 
 }

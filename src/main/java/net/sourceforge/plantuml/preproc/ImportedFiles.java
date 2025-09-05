@@ -107,7 +107,7 @@ public class ImportedFiles {
 		return filecurrent;
 	}
 
-	public List<SFile> getPath() {
+	private List<SFile> getPath() {
 		final List<SFile> result = new ArrayList<>(imported);
 		// ::comment when __CORE__
 		result.addAll(includePath());
@@ -130,7 +130,7 @@ public class ImportedFiles {
 		return f.isAbsolute();
 	}
 
-	public void add(SFile file) {
+	public void addImportFile(SFile file) {
 		this.imported.add(file);
 	}
 
