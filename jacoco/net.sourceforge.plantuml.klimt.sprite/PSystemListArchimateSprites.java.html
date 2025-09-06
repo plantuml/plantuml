@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemListInternalSprites.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.sprite</a> &gt; <span class="el_source">PSystemListInternalSprites.java</span></div><h1>PSystemListInternalSprites.java</h1><pre class="source lang-java linenums">/* ========================================================================
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemListArchimateSprites.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.sprite</a> &gt; <span class="el_source">PSystemListArchimateSprites.java</span></div><h1>PSystemListArchimateSprites.java</h1><pre class="source lang-java linenums">/* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
@@ -50,10 +50,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemListInternalSprites extends PlainDiagram {
+public class PSystemListArchimateSprites extends PlainDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemListInternalSprites(UmlSource source, PreprocessingArtifact preprocessing) {
+	public PSystemListArchimateSprites(UmlSource source, PreprocessingArtifact preprocessing) {
 <span class="nc" id="L57">		super(source, preprocessing);</span>
 <span class="nc" id="L58">	}</span>
 
@@ -67,19 +67,20 @@ public class PSystemListInternalSprites extends PlainDiagram {
 <span class="nc bnc" id="L67" title="All 2 branches missed.">		for (String folder : ResourcesUtils.getJarFile(&quot;sprites&quot;, true)) {</span>
 <span class="nc" id="L68">			lines.add(&quot;&lt;u&gt;&quot; + folder + &quot;&lt;/u&gt; :&quot;);</span>
 <span class="nc" id="L69">			lines.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">			for (String png : ResourcesUtils.getJarFile(&quot;sprites/&quot; + folder, false)) {</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">				if (png.endsWith(&quot;.png&quot;)) {</span>
-<span class="nc" id="L72">					final String spriteName = png.substring(0, png.length() - 4);</span>
-<span class="nc" id="L73">					lines.add(&quot;&lt;$archimate/&quot; + spriteName + &quot;&gt; &quot; + spriteName);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			for (String file : ResourcesUtils.getJarFile(&quot;sprites/&quot; + folder, false))</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">				if (file.endsWith(&quot;.png&quot;) || file.endsWith(&quot;.svg&quot;)) {</span>
+<span class="nc" id="L72">					final String format = file.substring(file.length() - 3);</span>
+<span class="nc" id="L73">					final String spriteName = file.substring(0, file.length() - 4);</span>
+<span class="nc" id="L74">					lines.add(&quot;&lt;$archimate/&quot; + spriteName + &quot;&gt; &quot; + spriteName + &quot; (&quot; + format + &quot;)&quot;);</span>
 				}
-<span class="nc" id="L75">			}</span>
-<span class="nc" id="L76">		}</span>
-<span class="nc" id="L77">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 4, 0);</span>
-<span class="nc" id="L78">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
+
+<span class="nc" id="L77">		}</span>
+<span class="nc" id="L78">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 4, 0);</span>
+<span class="nc" id="L79">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L82">		return new DiagramDescription(&quot;(Sprites)&quot;);</span>
+<span class="nc" id="L83">		return new DiagramDescription(&quot;(Sprites)&quot;);</span>
 	}
 
 }
