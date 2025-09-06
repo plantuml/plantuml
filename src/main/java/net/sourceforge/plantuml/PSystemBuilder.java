@@ -81,7 +81,7 @@ import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
-import net.sourceforge.plantuml.klimt.sprite.PSystemListInternalSpritesFactory;
+import net.sourceforge.plantuml.klimt.sprite.PSystemListArchimateSpritesFactory;
 import net.sourceforge.plantuml.klimt.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
@@ -207,7 +207,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemListEmojiFactory());
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
-		factories.add(new PSystemListInternalSpritesFactory());
+		factories.add(new PSystemListArchimateSpritesFactory());
 		// ::done
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));

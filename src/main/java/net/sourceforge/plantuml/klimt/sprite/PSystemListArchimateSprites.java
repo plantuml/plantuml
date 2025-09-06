@@ -50,10 +50,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemListInternalSprites extends PlainDiagram {
+public class PSystemListArchimateSprites extends PlainDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemListInternalSprites(UmlSource source, PreprocessingArtifact preprocessing) {
+	public PSystemListArchimateSprites(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 	}
 
@@ -67,12 +67,13 @@ public class PSystemListInternalSprites extends PlainDiagram {
 		for (String folder : ResourcesUtils.getJarFile("sprites", true)) {
 			lines.add("<u>" + folder + "</u> :");
 			lines.add(" ");
-			for (String png : ResourcesUtils.getJarFile("sprites/" + folder, false)) {
-				if (png.endsWith(".png")) {
-					final String spriteName = png.substring(0, png.length() - 4);
-					lines.add("<$archimate/" + spriteName + "> " + spriteName);
+			for (String file : ResourcesUtils.getJarFile("sprites/" + folder, false))
+				if (file.endsWith(".png") || file.endsWith(".svg")) {
+					final String format = file.substring(file.length() - 3);
+					final String spriteName = file.substring(0, file.length() - 4);
+					lines.add("<$archimate/" + spriteName + "> " + spriteName + " (" + format + ")");
 				}
-			}
+
 		}
 		final List<TextBlock> cols = PSystemDonors.getCols(lines, 4, 0);
 		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);

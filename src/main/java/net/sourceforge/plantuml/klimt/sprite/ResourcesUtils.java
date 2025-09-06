@@ -55,9 +55,9 @@ import net.sourceforge.plantuml.version.Version;
 public class ResourcesUtils {
 
 	public static Set<String> getJarFile(String path, boolean folder) throws IOException {
-		if (path.startsWith("/") || path.endsWith("/")) {
+		if (path.startsWith("/") || path.endsWith("/"))
 			throw new IllegalArgumentException();
-		}
+
 		final String protocol = getProtocol();
 		if ("file".equals(protocol)) {
 			final URL local = Version.class.getClassLoader().getResource(path);
@@ -72,12 +72,11 @@ public class ResourcesUtils {
 			final String classFile = Version.class.getName().replace(".", "/") + ".class";
 			final URL versionURL = Version.class.getClassLoader().getResource(classFile);
 			final String jarPath = versionURL.getPath().substring(5, versionURL.getPath().indexOf("!"));
-			if (folder) {
+			if (folder)
 				return listFolders(new JarFile(URLDecoder.decode(jarPath, UTF_8.name())), path + "/");
-			} else {
+			else
 				return listFiles(new JarFile(URLDecoder.decode(jarPath, UTF_8.name())), path + "/");
 
-			}
 		}
 		return Collections.<String>emptySet();
 	}
@@ -92,9 +91,9 @@ public class ResourcesUtils {
 		final Set<String> result = new TreeSet<>();
 		while (entries.hasMoreElements()) {
 			final String name = entries.nextElement().getName();
-			if (name.startsWith(path)) {
+			if (name.startsWith(path))
 				result.add(name.substring(path.length()));
-			}
+
 		}
 		return result;
 	}
@@ -107,9 +106,9 @@ public class ResourcesUtils {
 			if (name.startsWith(path)) {
 				final String folder = name.substring(path.length());
 				final int x = folder.indexOf('/');
-				if (x != -1) {
+				if (x != -1)
 					result.add(folder.substring(0, x));
-				}
+
 			}
 		}
 		return result;
@@ -117,9 +116,9 @@ public class ResourcesUtils {
 
 	private static Set<String> listEntry(SFile dir) {
 		final Set<String> result = new TreeSet<>();
-		for (String n : dir.list()) {
+		for (String n : dir.list())
 			result.add(n);
-		}
+
 		return result;
 	}
 
