@@ -107,7 +107,7 @@ public class CommandCreateMap extends CommandMultilines2&lt;AbstractEntityDiagra
 <span class="nc" id="L107">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 <span class="nc" id="L108">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L110">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
+<span class="nc" id="L110">			return CommandExecutionResult.error(&quot;Map already exists: &quot; + line0.get(&quot;NAME&quot;, 1));</span>
 
 <span class="nc" id="L112">		lines = lines.subExtract(1, 1);</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">		for (StringLocated sl : lines) {</span>

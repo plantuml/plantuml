@@ -99,7 +99,7 @@ public class CommandCreateJson extends CommandMultilines2&lt;AbstractEntityDiagr
 <span class="nc" id="L99">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 <span class="nc" id="L100">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
 <span class="nc bnc" id="L101" title="All 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L102">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
+<span class="nc" id="L102">			return CommandExecutionResult.error(&quot;JSON already exists: &quot; + line0.getLazzy(&quot;CODE&quot;, 0));</span>
 
 <span class="nc" id="L104">		final JsonValue json = getJsonValue(lines);</span>
 

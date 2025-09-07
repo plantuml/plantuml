@@ -94,7 +94,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2&lt;AbstractE
 			ParserPass currentPass) throws NoSuchColorException {
 <span class="nc" id="L95">		final Entity entity1 = executeArg0(location, diagram, arg);</span>
 <span class="nc bnc" id="L96" title="All 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
+<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;JSON already exists: &quot; + arg.get(&quot;NAME&quot;, 1));</span>
 
 <span class="nc" id="L99">		final JsonValue json = getJsonValue(arg);</span>
 

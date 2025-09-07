@@ -87,7 +87,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2&lt;AbstractCla
 <span class="nc" id="L87">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
 
 <span class="nc bnc" id="L89" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Object already exists : &quot; + quark.getData());</span>
+<span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Object already exists: &quot; + quark.getName());</span>
 
 <span class="nc" id="L92">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
 <span class="nc bnc" id="L93" title="All 2 branches missed.">		if (Display.isNull(display))</span>
