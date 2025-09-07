@@ -87,7 +87,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 		final String stereotype = arg.get("STEREO", 0);
 
 		if (quark.getData() != null)
-			return CommandExecutionResult.error("Object already exists : " + quark.getData());
+			return CommandExecutionResult.error("Object already exists: " + quark.getName());
 
 		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 		if (Display.isNull(display))
