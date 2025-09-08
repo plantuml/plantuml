@@ -345,6 +345,14 @@ jobs:
           echo "RELEASE_VERSION=$RELEASE_VERSION"
           .github/scripts/release.sh
           gradle --debug publish
+          NS="net.sourceforge.plantuml"
+          AUTH="$(printf '%s' "$CENTRAL_USERNAME:$CENTRAL_PASSWORD" | base64 | tr -d '\n')"
+          curl -fSs -X POST \
+            -H "Authorization: Bearer $AUTH" \
+            -H "Content-Type: application/json" \
+            -d '{"publishing_type":"automatic"}' \
+            "https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/$NS"
+          echo "Staging repo transferred to Central Portal - check Publishing -> Deployments."
 
   push_to_docker_registry:
     needs: [ workflow_config, upload, test_linux ]
