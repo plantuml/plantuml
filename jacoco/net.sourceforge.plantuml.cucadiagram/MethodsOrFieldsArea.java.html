@@ -42,7 +42,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -54,6 +53,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategy;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyVisibility;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2Center;
@@ -79,181 +80,217 @@ import net.sourceforge.plantuml.utils.CharHidder;
 public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock, WithPorts {
 
 	public TextBlock asBlockMemberImpl() {
-<span class="fc" id="L82">		return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),</span>
-<span class="fc" id="L83">				TextBlockUtils.withMargin(this, 6, 4));</span>
+<span class="fc" id="L83">		return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),</span>
+<span class="fc" id="L84">				TextBlockUtils.withMargin(this, 6, 4));</span>
 	}
 
 	private final ISkinParam skinParam;
 
 	private final Display members;
 	private final HorizontalAlignment align;
-<span class="fc" id="L90">	private final List&lt;EmbeddedDiagram&gt; embeddeds = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L91">	private final List&lt;EmbeddedDiagram&gt; embeddeds = new ArrayList&lt;&gt;();</span>
 
 	private final Entity leaf;
 	private final Style style;
 
 	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, Entity leaf, Style style) {
-<span class="fc" id="L96">		this(members, skinParam, HorizontalAlignment.LEFT, leaf, style);</span>
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L97">		this(members, skinParam, HorizontalAlignment.LEFT, leaf, style);</span>
+<span class="fc" id="L98">	}</span>
 
 	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, HorizontalAlignment align, Entity leaf,
-<span class="fc" id="L100">			Style style) {</span>
-<span class="fc" id="L101">		this.style = style;</span>
-<span class="fc" id="L102">		this.leaf = leaf;</span>
+<span class="fc" id="L101">			Style style) {</span>
+<span class="fc" id="L102">		this.style = style;</span>
+<span class="fc" id="L103">		this.leaf = leaf;</span>
 
-<span class="fc" id="L104">		this.align = align;</span>
-<span class="fc" id="L105">		this.skinParam = skinParam;</span>
+<span class="fc" id="L105">		this.align = align;</span>
+<span class="fc" id="L106">		this.skinParam = skinParam;</span>
 
-<span class="fc" id="L107">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L108">		final Iterator&lt;CharSequence&gt; it = members.iterator();</span>
+<span class="fc" id="L108">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L109">		final Iterator&lt;CharSequence&gt; it = members.iterator();</span>
 
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		while (it.hasNext()) {</span>
-<span class="fc" id="L111">			final CharSequence cs = it.next();</span>
-<span class="fc" id="L112">			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (type != null)</span>
-<span class="nc" id="L114">				embeddeds.add(EmbeddedDiagram.createAndSkip(type, it, skinParam));</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L112">			final CharSequence cs = it.next();</span>
+<span class="fc" id="L113">			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (type != null)</span>
+<span class="nc" id="L115">				embeddeds.add(EmbeddedDiagram.createAndSkip(type, it, skinParam));</span>
 			else
-<span class="fc" id="L116">				result.add(cs);</span>
+<span class="fc" id="L117">				result.add(cs);</span>
 
-<span class="fc" id="L118">		}</span>
+<span class="fc" id="L119">		}</span>
 
-<span class="fc" id="L120">		this.members = Display.create(result);</span>
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L121">		this.members = Display.create(result);</span>
+<span class="fc" id="L122">	}</span>
 
 	private boolean hasSmallIcon() {
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (skinParam.classAttributeIconSize() == 0)</span>
-<span class="nc" id="L125">			return false;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (skinParam.classAttributeIconSize() == 0)</span>
+<span class="nc" id="L126">			return false;</span>
 
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (cs instanceof Member == false)</span>
-<span class="nc" id="L129">				continue;</span>
-<span class="fc" id="L130">			final Member m = (Member) cs;</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (m.getVisibilityModifier() != null)</span>
-<span class="fc" id="L132">				return true;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (cs instanceof Member == false)</span>
+<span class="nc" id="L130">				continue;</span>
+<span class="fc" id="L131">			final Member m = (Member) cs;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">			if (m.getVisibilityModifier() != null)</span>
+<span class="fc" id="L133">				return true;</span>
 
-<span class="fc" id="L134">		}</span>
-<span class="fc" id="L135">		return false;</span>
+<span class="fc" id="L135">		}</span>
+<span class="fc" id="L136">		return false;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L140">		final XDimension2D dim1 = calculateDimensionOnlyMembers(stringBounder);</span>
-<span class="fc" id="L141">		double x = dim1.getWidth();</span>
-<span class="fc" id="L142">		double y = dim1.getHeight();</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
-<span class="nc" id="L144">			final XDimension2D dim = embedded.calculateDimension(stringBounder);</span>
-<span class="nc" id="L145">			x = Math.max(dim.getWidth(), x);</span>
-<span class="nc" id="L146">			y += dim.getHeight();</span>
-<span class="nc" id="L147">		}</span>
+<span class="fc" id="L141">		final XDimension2D dim1 = calculateDimensionOnlyMembers(stringBounder);</span>
+<span class="fc" id="L142">		double x = dim1.getWidth();</span>
+<span class="fc" id="L143">		double y = dim1.getHeight();</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
+<span class="nc" id="L145">			final XDimension2D dim = embedded.calculateDimension(stringBounder);</span>
+<span class="nc" id="L146">			x = Math.max(dim.getWidth(), x);</span>
+<span class="nc" id="L147">			y += dim.getHeight();</span>
+<span class="nc" id="L148">		}</span>
 
-<span class="fc" id="L149">		return new XDimension2D(x, y);</span>
+<span class="fc" id="L150">		return new XDimension2D(x, y);</span>
 	}
 
 	private XDimension2D calculateDimensionOnlyMembers(StringBounder stringBounder) {
-<span class="fc" id="L153">		double smallIcon = 0;</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (hasSmallIcon())</span>
-<span class="fc" id="L155">			smallIcon = skinParam.getCircledCharacterRadius() + 3;</span>
+<span class="fc" id="L154">		double smallIcon = 0;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (hasSmallIcon())</span>
+<span class="fc" id="L156">			smallIcon = skinParam.getCircledCharacterRadius() + 3;</span>
 
-<span class="fc" id="L157">		double x = 0;</span>
-<span class="fc" id="L158">		double y = 0;</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
-<span class="fc" id="L160">			final TextBlock bloc = createTextBlock(cs);</span>
-<span class="fc" id="L161">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
-<span class="fc" id="L162">			x = Math.max(dim.getWidth(), x);</span>
-<span class="fc" id="L163">			y += dim.getHeight();</span>
-<span class="fc" id="L164">		}</span>
-<span class="fc" id="L165">		x += smallIcon;</span>
+<span class="fc" id="L158">		double x = 0;</span>
+<span class="fc" id="L159">		double y = 0;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
+<span class="fc" id="L161">			final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc" id="L162">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L163">			x = Math.max(dim.getWidth(), x);</span>
+<span class="fc" id="L164">			y += dim.getHeight();</span>
+<span class="fc" id="L165">		}</span>
+<span class="fc" id="L166">		x += smallIcon;</span>
 
-<span class="fc" id="L167">		return new XDimension2D(x, y);</span>
+<span class="fc" id="L168">		return new XDimension2D(x, y);</span>
 	}
 
 	private Collection&lt;String&gt; sortBySize(Collection&lt;String&gt; all) {
-<span class="nc" id="L171">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;(all);</span>
-<span class="nc" id="L172">		Collections.sort(result, new Comparator&lt;String&gt;() {</span>
+<span class="nc" id="L172">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;(all);</span>
+<span class="nc" id="L173">		Collections.sort(result, new Comparator&lt;String&gt;() {</span>
 			@Override
 			public int compare(String s1, String s2) {
-<span class="nc" id="L175">				final int diff = s2.length() - s1.length();</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">				if (diff != 0)</span>
-<span class="nc" id="L177">					return diff;</span>
-<span class="nc" id="L178">				return s1.compareTo(s2);</span>
+<span class="nc" id="L176">				final int diff = s2.length() - s1.length();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (diff != 0)</span>
+<span class="nc" id="L178">					return diff;</span>
+<span class="nc" id="L179">				return s1.compareTo(s2);</span>
 			}
 		});
-<span class="nc" id="L181">		return result;</span>
+<span class="nc" id="L182">		return result;</span>
 	}
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc" id="L186">		final Ports ports = new Ports();</span>
-<span class="nc" id="L187">		double y = 0;</span>
+<span class="nc" id="L187">		final Ports ports = new Ports();</span>
+<span class="nc" id="L188">		double y = 0;</span>
 
-<span class="nc" id="L189">		final Collection&lt;String&gt; shortNames = sortBySize(leaf.getPortShortNames());</span>
+<span class="nc" id="L190">		final Collection&lt;String&gt; shortNames = sortBySize(leaf.getPortShortNames());</span>
 
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
-<span class="nc" id="L192">			final TextBlock bloc = createTextBlock(cs);</span>
-<span class="nc" id="L193">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L194">			final Elected elected = getElected(convert(cs), shortNames);</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (elected != null)</span>
-<span class="nc" id="L196">				ports.add(elected.getShortName(), elected.getScore(), y, dim.getHeight());</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
+<span class="nc" id="L193">			final TextBlock bloc = createTextBlock(cs);</span>
+<span class="nc" id="L194">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L195">			final Elected elected = getElected(convert(cs), shortNames);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (elected != null)</span>
+<span class="nc" id="L197">				ports.add(elected.getShortName(), elected.getScore(), y, dim.getHeight());</span>
 
-<span class="nc" id="L198">			y += dim.getHeight();</span>
-<span class="nc" id="L199">		}</span>
-<span class="nc" id="L200">		return ports;</span>
+<span class="nc" id="L199">			y += dim.getHeight();</span>
+<span class="nc" id="L200">		}</span>
+<span class="nc" id="L201">		return ports;</span>
 	}
 
 	private String convert(CharSequence cs) {
-<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (cs instanceof Member)</span>
-<span class="nc" id="L205">			return ((Member) cs).getDisplay(false);</span>
-<span class="nc" id="L206">		return cs.toString();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (cs instanceof Member)</span>
+<span class="nc" id="L206">			return ((Member) cs).getDisplay(false);</span>
+<span class="nc" id="L207">		return cs.toString();</span>
 	}
 
 	public Elected getElected(String cs, Collection&lt;String&gt; shortNames) {
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		for (String shortName : shortNames) {</span>
-<span class="nc" id="L211">			final int score = getScore(cs, shortName);</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">			if (score &gt; 0)</span>
-<span class="nc" id="L213">				return new Elected(shortName, score);</span>
-<span class="nc" id="L214">		}</span>
-<span class="nc" id="L215">		return null;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		for (String shortName : shortNames) {</span>
+<span class="nc" id="L212">			final int score = getScore(cs, shortName);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (score &gt; 0)</span>
+<span class="nc" id="L214">				return new Elected(shortName, score);</span>
+<span class="nc" id="L215">		}</span>
+<span class="nc" id="L216">		return null;</span>
 	}
 
 	private int getScore(String cs, String shortName) {
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (cs.matches(&quot;.*\\b&quot; + shortName + &quot;\\b.*&quot;))</span>
-<span class="nc" id="L220">			return 100;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (cs.matches(&quot;.*\\b&quot; + shortName + &quot;\\b.*&quot;))</span>
+<span class="nc" id="L221">			return 100;</span>
 
-<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (cs.contains(shortName))</span>
-<span class="nc" id="L223">			return 50;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (cs.contains(shortName))</span>
+<span class="nc" id="L224">			return 50;</span>
 
-<span class="nc" id="L225">		return 0;</span>
+<span class="nc" id="L226">		return 0;</span>
 	}
 
 	private TextBlock createTextBlock(CharSequence cs) {
 
-<span class="fc" id="L230">		FontConfiguration config = FontConfiguration.create(skinParam, style, leaf.getColors());</span>
+<span class="fc" id="L231">		FontConfiguration config = FontConfiguration.create(skinParam, style, leaf.getColors());</span>
 
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (cs instanceof Member) {</span>
-<span class="fc" id="L233">			final Member m = (Member) cs;</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;</span>
-<span class="fc" id="L235">			String s = m.getDisplay(withVisibilityChar);</span>
-<span class="pc bpc" id="L236" title="3 of 4 branches missed.">			if (withVisibilityChar &amp;&amp; s.startsWith(&quot;#&quot;))</span>
-<span class="nc" id="L237">				s = CharHidder.addTileAtBegin(s);</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (cs instanceof Member) {</span>
+<span class="fc" id="L234">			final Member m = (Member) cs;</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">			final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;</span>
+<span class="fc" id="L236">			String s = m.getDisplay(withVisibilityChar);</span>
+<span class="pc bpc" id="L237" title="3 of 4 branches missed.">			if (withVisibilityChar &amp;&amp; s.startsWith(&quot;#&quot;))</span>
+<span class="nc" id="L238">				s = CharHidder.addTileAtBegin(s);</span>
 
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">			if (m.isAbstract())</span>
-<span class="nc" id="L240">				config = config.italic();</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">			if (m.isAbstract())</span>
+<span class="nc" id="L241">				config = config.italic();</span>
 
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">			if (m.isStatic())</span>
-<span class="nc" id="L243">				config = config.underline();</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">			if (m.isStatic())</span>
+<span class="nc" id="L244">				config = config.underline();</span>
 
-<span class="fc" id="L245">			TextBlock bloc = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,</span>
-<span class="fc" id="L246">					style.wrapWidth());</span>
-<span class="fc" id="L247">			bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));</span>
-<span class="fc" id="L248">			return new TextBlockTracer(m, bloc);</span>
+<span class="fc" id="L246">			TextBlock bloc = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam,</span>
+<span class="fc" id="L247">					CreoleMode.SIMPLE_LINE, style.wrapWidth());</span>
+<span class="fc" id="L248">			bloc = fullInnerPosition(bloc, m);</span>
+<span class="fc" id="L249">			return new TextBlockTracer(m, bloc);</span>
 		}
 
 //		if (cs instanceof EmbeddedDiagram)
 //			return ((EmbeddedDiagram) cs).asDraw(skinParam);
 
-<span class="nc" id="L254">		return Display.getWithNewlines(skinParam.getPragma(), cs.toString()).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,</span>
-<span class="nc" id="L255">				style.wrapWidth());</span>
+<span class="nc" id="L255">		return Display.getWithNewlines(skinParam.getPragma(), cs.toString()).create8(config, align, skinParam,</span>
+<span class="nc" id="L256">				CreoleMode.SIMPLE_LINE, style.wrapWidth());</span>
 
+	}
+
+	private static TextBlock fullInnerPosition(final TextBlock bloc, final Member display) {
+<span class="fc" id="L261">		return new TextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L264">				bloc.drawU(ug);</span>
+<span class="fc" id="L265">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L268">				return bloc.calculateDimension(stringBounder);</span>
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc" id="L272">				return bloc.getMinMax(stringBounder);</span>
+			}
+
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+				// InnerStrategy
+<span class="nc bnc" id="L278" title="All 2 branches missed.">				if (display.toString().equals(member.toString())) {</span>
+<span class="nc" id="L279">					final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L280">					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());</span>
+				}
+<span class="nc" id="L282">				return null;</span>
+			}
+
+			public MagneticBorder getMagneticBorder() {
+<span class="nc" id="L286">				return bloc.getMagneticBorder();</span>
+			}
+
+			public HColor getBackcolor() {
+<span class="nc" id="L290">				return bloc.getBackcolor();</span>
+			}
+
+		};
 	}
 
 	static class TextBlockTracer extends AbstractTextBlock implements TextBlock {
@@ -261,125 +298,124 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		private final TextBlock bloc;
 		private final Url url;
 
-<span class="fc" id="L264">		public TextBlockTracer(Member m, TextBlock bloc) {</span>
-<span class="fc" id="L265">			this.bloc = bloc;</span>
-<span class="fc" id="L266">			this.url = m.getUrl();</span>
-<span class="fc" id="L267">		}</span>
+<span class="fc" id="L301">		public TextBlockTracer(Member m, TextBlock bloc) {</span>
+<span class="fc" id="L302">			this.bloc = bloc;</span>
+<span class="fc" id="L303">			this.url = m.getUrl();</span>
+<span class="fc" id="L304">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L271">				ug.startUrl(url);</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L308">				ug.startUrl(url);</span>
 
-<span class="fc" id="L273">			bloc.drawU(ug);</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L275">				ug.closeUrl();</span>
+<span class="fc" id="L310">			bloc.drawU(ug);</span>
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L312">				ug.closeUrl();</span>
 
-<span class="fc" id="L277">		}</span>
+<span class="fc" id="L314">		}</span>
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L280">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
-<span class="fc" id="L281">			return dim;</span>
+<span class="fc" id="L317">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L318">			return dim;</span>
 		}
 
 		@Override
-		public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L286">			return bloc.getInnerPosition(member, stringBounder, strategy);</span>
+		public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L323">			return bloc.getInnerPosition(member, stringBounder);</span>
 		}
 
 	}
 
 	private TextBlock getUBlock(final VisibilityModifier modifier, Url url) {
-<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (modifier == null) {</span>
-<span class="nc" id="L293">			return new AbstractTextBlock() {</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (modifier == null) {</span>
+<span class="nc" id="L330">			return new AbstractTextBlock() {</span>
 
 				public void drawU(UGraphic ug) {
-<span class="nc" id="L296">				}</span>
+<span class="nc" id="L333">				}</span>
 
 				@Override
-				public XRectangle2D getInnerPosition(String member, StringBounder stringBounder,
-						InnerStrategy strategy) {
-<span class="nc" id="L301">					return null;</span>
+				public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L337">					return null;</span>
 				}
 
 				public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L305">					return new XDimension2D(1, 1);</span>
+<span class="nc" id="L341">					return new XDimension2D(1, 1);</span>
 				}
 			};
 		}
-<span class="fc" id="L309">		final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L310">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L311">		final boolean isField = modifier.isField();</span>
-<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		final HColor backColor = isField ? null</span>
-<span class="fc" id="L313">				: style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L345">		final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L346">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L347">		final boolean isField = modifier.isField();</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">		final HColor backColor = isField ? null</span>
+<span class="fc" id="L349">				: style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), borderColor, backColor,</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), borderColor, backColor,</span>
 				url != null);
-<span class="fc" id="L317">		return TextBlockWithUrl.withUrl(uBlock, url);</span>
+<span class="fc" id="L353">		return TextBlockWithUrl.withUrl(uBlock, url);</span>
 	}
 
 	public boolean contains(String member) {
-<span class="nc bnc" id="L321" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
-<span class="nc" id="L322">			final Member att = (Member) cs;</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">			if (att.getDisplay(false).startsWith(member))</span>
-<span class="nc" id="L324">				return true;</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
+<span class="nc" id="L358">			final Member att = (Member) cs;</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">			if (att.getDisplay(false).startsWith(member))</span>
+<span class="nc" id="L360">				return true;</span>
 
-<span class="nc" id="L326">		}</span>
-<span class="nc" id="L327">		return false;</span>
+<span class="nc" id="L362">		}</span>
+<span class="nc" id="L363">		return false;</span>
 	}
 
 	@Override
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L332">		final ULayoutGroup group = getLayout(stringBounder);</span>
-<span class="nc" id="L333">		final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L334">		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L368">		final ULayoutGroup group = getLayout(stringBounder);</span>
+<span class="nc" id="L369">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L370">		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
 	}
 
 	private ULayoutGroup getLayout(final StringBounder stringBounder) {
 		final ULayoutGroup group;
-<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (hasSmallIcon()) {</span>
-<span class="fc" id="L340">			group = new ULayoutGroup(</span>
-<span class="fc" id="L341">					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));</span>
-<span class="fc bfc" id="L342" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L343">				final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (hasSmallIcon()) {</span>
+<span class="fc" id="L376">			group = new ULayoutGroup(</span>
+<span class="fc" id="L377">					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L379">				final TextBlock bloc = createTextBlock(cs);</span>
 //				if (cs instanceof EmbeddedDiagram) {
 //					group.add(getUBlock(null, null));
 //				} else {
-<span class="fc" id="L347">				final Member att = (Member) cs;</span>
-<span class="fc" id="L348">				final VisibilityModifier modifier = att.getVisibilityModifier();</span>
-<span class="fc" id="L349">				group.add(getUBlock(modifier, att.getUrl()));</span>
+<span class="fc" id="L383">				final Member att = (Member) cs;</span>
+<span class="fc" id="L384">				final VisibilityModifier modifier = att.getVisibilityModifier();</span>
+<span class="fc" id="L385">				group.add(getUBlock(modifier, att.getUrl()));</span>
 //				}
-<span class="fc" id="L351">				group.add(bloc);</span>
-<span class="fc" id="L352">			}</span>
+<span class="fc" id="L387">				group.add(bloc);</span>
+<span class="fc" id="L388">			}</span>
 		} else {
 			final PlacementStrategy placementStrategy;
-<span class="pc bpc" id="L355" title="1 of 2 branches missed.">			if (align == HorizontalAlignment.LEFT)</span>
-<span class="fc" id="L356">				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);</span>
-<span class="nc bnc" id="L357" title="All 2 branches missed.">			else if (align == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L358">				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">			if (align == HorizontalAlignment.LEFT)</span>
+<span class="fc" id="L392">				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">			else if (align == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L394">				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);</span>
 			else
-<span class="nc" id="L360">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
+<span class="nc" id="L396">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
 
-<span class="fc" id="L362">			group = new ULayoutGroup(placementStrategy);</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L364">				final TextBlock bloc = createTextBlock(cs);</span>
-<span class="fc" id="L365">				group.add(bloc);</span>
-<span class="fc" id="L366">			}</span>
+<span class="fc" id="L398">			group = new ULayoutGroup(placementStrategy);</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L400">				final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc" id="L401">				group.add(bloc);</span>
+<span class="fc" id="L402">			}</span>
 		}
-<span class="fc" id="L368">		return group;</span>
+<span class="fc" id="L404">		return group;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L372">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L373">		final ULayoutGroup group = getLayout(stringBounder);</span>
-<span class="fc" id="L374">		final XDimension2D dim = calculateDimensionOnlyMembers(stringBounder);</span>
-<span class="fc" id="L375">		group.drawU(ug, dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L376">		ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
+<span class="fc" id="L408">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L409">		final ULayoutGroup group = getLayout(stringBounder);</span>
+<span class="fc" id="L410">		final XDimension2D dim = calculateDimensionOnlyMembers(stringBounder);</span>
+<span class="fc" id="L411">		group.drawU(ug, dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L412">		ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
 
-<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
-<span class="nc" id="L379">			embedded.drawU(ug);</span>
-<span class="nc" id="L380">			ug = ug.apply(UTranslate.dy(embedded.calculateDimension(stringBounder).getHeight()));</span>
-<span class="nc" id="L381">		}</span>
-<span class="fc" id="L382">	}</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
+<span class="nc" id="L415">			embedded.drawU(ug);</span>
+<span class="nc" id="L416">			ug = ug.apply(UTranslate.dy(embedded.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L417">		}</span>
+<span class="fc" id="L418">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -2182,8 +2182,79 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#fromUImage(net.sourceforge.plantuml.klimt.shape.UImage)" class="member-name-link">fromUImage</a><wbr>(<a href="../UImage.html" title="class in net.sourceforge.plantuml.klimt.shape">UImage</a>&nbsp;image)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#fullInnerPosition(net.sourceforge.plantuml.klimt.shape.TextBlock,java.lang.String)" class="member-name-link">fullInnerPosition</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;bloc,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;display)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeLR(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.geom.VerticalAlignment)" class="member-name-link">mergeLR</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
+ <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b2,
+ <a href="../../geom/VerticalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">VerticalAlignment</a>&nbsp;verticallAlignment)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeTB(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">mergeTB</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
+ <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b2,
+ <a href="../../geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;horizontalAlignment)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeTB(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.UImage,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">mergeTB</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
+ <a href="../UImage.html" title="class in net.sourceforge.plantuml.klimt.shape">UImage</a>&nbsp;image,
+ <a href="../../geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;horizontalAlignment)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMargin(net.sourceforge.plantuml.klimt.shape.TextBlock,double,double)" class="member-name-link">withMargin</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
+ double&nbsp;marginX,
+ double&nbsp;marginY)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMargin(net.sourceforge.plantuml.klimt.shape.TextBlock,double,double,double,double)" class="member-name-link">withMargin</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
+ double&nbsp;marginX1,
+ double&nbsp;marginX2,
+ double&nbsp;marginY1,
+ double&nbsp;marginY2)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMargin(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft)" class="member-name-link">withMargin</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
+ <a href="../../../style/ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a>&nbsp;margins)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMinWidth(net.sourceforge.plantuml.klimt.shape.TextBlock,double,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">withMinWidth</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
+ double&nbsp;minWidth,
+ <a href="../../geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;horizontalAlignment)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockWithUrl.</span><code><a href="../TextBlockWithUrl.html#withUrl(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.url.Url)" class="member-name-link">withUrl</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;block,
+ <a href="../../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.shape</a> with parameters of type <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#addBackcolor(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">addBackcolor</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;text,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../../geom/Positionable.html" title="interface in net.sourceforge.plantuml.klimt.geom">Positionable</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#asPositionable(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.klimt.geom.XPoint2D)" class="member-name-link">asPositionable</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
+ <a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+ <a href="../../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;pt)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#bordered(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.UStroke,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor,double,net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft,java.lang.String)" class="member-name-link">bordered</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
+ <a href="../../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a>&nbsp;stroke,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;borderColor,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backgroundColor,
+ double&nbsp;cornersize,
+ <a href="../../../style/ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a>&nbsp;margins,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../UHorizontalLine.html" title="class in net.sourceforge.plantuml.klimt.shape">UHorizontalLine</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UHorizontalLine.</span><code><a href="../UHorizontalLine.html#infinite(double,double,double,net.sourceforge.plantuml.klimt.shape.TextBlock,char)" class="member-name-link">infinite</a><wbr>(double&nbsp;defaultThickness,
+ double&nbsp;skipAtStart,
+ double&nbsp;skipAtEnd,
+ <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;title,
+ char&nbsp;style)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#isEmpty(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">isEmpty</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;text,
+ <a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;dummyStringBounder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeLR(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.geom.VerticalAlignment)" class="member-name-link">mergeLR</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
@@ -2225,85 +2296,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">TextBlockWithUrl.</span><code><a href="../TextBlockWithUrl.html#withUrl(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.url.Url)" class="member-name-link">withUrl</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;block,
  <a href="../../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.shape</a> with parameters of type <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#addBackcolor(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">addBackcolor</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;text,
- <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../geom/Positionable.html" title="interface in net.sourceforge.plantuml.klimt.geom">Positionable</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#asPositionable(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.klimt.geom.XPoint2D)" class="member-name-link">asPositionable</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
- <a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;pt)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#bordered(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.UStroke,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor,double,net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft,java.lang.String)" class="member-name-link">bordered</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
- <a href="../../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a>&nbsp;stroke,
- <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;borderColor,
- <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backgroundColor,
- double&nbsp;cornersize,
- <a href="../../../style/ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a>&nbsp;margins,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#fullInnerPosition(net.sourceforge.plantuml.klimt.shape.TextBlock,java.lang.String)" class="member-name-link">fullInnerPosition</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;bloc,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;display)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../UHorizontalLine.html" title="class in net.sourceforge.plantuml.klimt.shape">UHorizontalLine</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UHorizontalLine.</span><code><a href="../UHorizontalLine.html#infinite(double,double,double,net.sourceforge.plantuml.klimt.shape.TextBlock,char)" class="member-name-link">infinite</a><wbr>(double&nbsp;defaultThickness,
- double&nbsp;skipAtStart,
- double&nbsp;skipAtEnd,
- <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;title,
- char&nbsp;style)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#isEmpty(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">isEmpty</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;text,
- <a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;dummyStringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeLR(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.geom.VerticalAlignment)" class="member-name-link">mergeLR</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
- <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b2,
- <a href="../../geom/VerticalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">VerticalAlignment</a>&nbsp;verticallAlignment)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeTB(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">mergeTB</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
- <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b2,
- <a href="../../geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;horizontalAlignment)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#mergeTB(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.klimt.shape.UImage,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">mergeTB</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;b1,
- <a href="../UImage.html" title="class in net.sourceforge.plantuml.klimt.shape">UImage</a>&nbsp;image,
- <a href="../../geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;horizontalAlignment)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMargin(net.sourceforge.plantuml.klimt.shape.TextBlock,double,double)" class="member-name-link">withMargin</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
- double&nbsp;marginX,
- double&nbsp;marginY)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMargin(net.sourceforge.plantuml.klimt.shape.TextBlock,double,double,double,double)" class="member-name-link">withMargin</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
- double&nbsp;marginX1,
- double&nbsp;marginX2,
- double&nbsp;marginY1,
- double&nbsp;marginY2)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMargin(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft)" class="member-name-link">withMargin</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
- <a href="../../../style/ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a>&nbsp;margins)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockUtils.</span><code><a href="../TextBlockUtils.html#withMinWidth(net.sourceforge.plantuml.klimt.shape.TextBlock,double,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">withMinWidth</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;textBlock,
- double&nbsp;minWidth,
- <a href="../../geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;horizontalAlignment)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TextBlockWithUrl.</span><code><a href="../TextBlockWithUrl.html#withUrl(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.url.Url)" class="member-name-link">withUrl</a><wbr>(<a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;block,
- <a href="../../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.shape</a> with parameters of type <a href="../TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span></div>
 <div class="summary-table three-column-summary">

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -54,66 +53,67 @@ public class GridTextBlockSimple implements TextBlock {
 	protected final NwArray data;
 	private final ISkinParam skinParam;
 
-<span class="nc" id="L57">	public GridTextBlockSimple(int lines, int cols, ISkinParam skinParam) {</span>
-<span class="nc" id="L58">		this.skinParam = skinParam;</span>
-<span class="nc" id="L59">		this.data = new NwArray(lines, cols);</span>
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L56">	public GridTextBlockSimple(int lines, int cols, ISkinParam skinParam) {</span>
+<span class="nc" id="L57">		this.skinParam = skinParam;</span>
+<span class="nc" id="L58">		this.data = new NwArray(lines, cols);</span>
+<span class="nc" id="L59">	}</span>
 
 	protected void drawGrid(UGraphic ug) {
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L62">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L66">		drawGrid(ug);</span>
-<span class="nc" id="L67">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L68">		double y = 0;</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
-<span class="nc" id="L70">			final double lineHeight = lineHeight(stringBounder, i);</span>
-<span class="nc" id="L71">			double x = 0;</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
-<span class="nc" id="L73">				final double colWidth = colWidth(stringBounder, j);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (data.get(i, j) != null)</span>
-<span class="nc" id="L75">					data.get(i, j).drawMe(ug.apply(new UTranslate(x, y)), colWidth, lineHeight);</span>
+<span class="nc" id="L65">		drawGrid(ug);</span>
+<span class="nc" id="L66">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L67">		double y = 0;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="nc" id="L69">			final double lineHeight = lineHeight(stringBounder, i);</span>
+<span class="nc" id="L70">			double x = 0;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
+<span class="nc" id="L72">				final double colWidth = colWidth(stringBounder, j);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">				if (data.get(i, j) != null)</span>
+<span class="nc" id="L74">					data.get(i, j).drawMe(ug.apply(new UTranslate(x, y)), colWidth, lineHeight);</span>
 
-<span class="nc" id="L77">				x += colWidth;</span>
+<span class="nc" id="L76">				x += colWidth;</span>
 			}
-<span class="nc" id="L79">			y += lineHeight;</span>
+<span class="nc" id="L78">			y += lineHeight;</span>
 		}
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L80">	}</span>
 
 	protected double colWidth(StringBounder stringBounder, final int j) {
-<span class="nc" id="L84">		double width = 0;</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++)</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (data.get(i, j) != null)</span>
-<span class="nc" id="L87">				width = Math.max(width, data.get(i, j).naturalDimension(stringBounder).getWidth());</span>
+<span class="nc" id="L83">		double width = 0;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++)</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (data.get(i, j) != null)</span>
+<span class="nc" id="L86">				width = Math.max(width, data.get(i, j).naturalDimension(stringBounder).getWidth());</span>
 
-<span class="nc" id="L89">		return width;</span>
+<span class="nc" id="L88">		return width;</span>
 	}
 
 	public double lineHeight(StringBounder stringBounder, final int i) {
-<span class="nc" id="L93">		double height = 50;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (int j = 0; j &lt; data.getNbCols(); j++)</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (data.get(i, j) != null)</span>
-<span class="nc" id="L96">				height = Math.max(height, data.get(i, j).naturalDimension(stringBounder).getHeight());</span>
+<span class="nc" id="L92">		double height = 50;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (int j = 0; j &lt; data.getNbCols(); j++)</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (data.get(i, j) != null)</span>
+<span class="nc" id="L95">				height = Math.max(height, data.get(i, j).naturalDimension(stringBounder).getHeight());</span>
 
-<span class="nc" id="L98">		return height;</span>
+<span class="nc" id="L97">		return height;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (data.getNbLines() == 0)</span>
-<span class="nc" id="L103">			return new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (data.getNbLines() == 0)</span>
+<span class="nc" id="L102">			return new XDimension2D(0, 0);</span>
 
-<span class="nc" id="L105">		double height = 0;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++)</span>
-<span class="nc" id="L107">			height += lineHeight(stringBounder, i);</span>
+<span class="nc" id="L104">		double height = 0;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++)</span>
+<span class="nc" id="L106">			height += lineHeight(stringBounder, i);</span>
 
-<span class="nc" id="L109">		double width = 0;</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (int j = 0; j &lt; data.getNbCols(); j++)</span>
-<span class="nc" id="L111">			width += colWidth(stringBounder, j);</span>
+<span class="nc" id="L108">		double width = 0;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (int j = 0; j &lt; data.getNbCols(); j++)</span>
+<span class="nc" id="L110">			width += colWidth(stringBounder, j);</span>
 
-<span class="nc" id="L113">		return new XDimension2D(Math.max(MINIMUM_WIDTH, width), height);</span>
+<span class="nc" id="L112">		return new XDimension2D(Math.max(MINIMUM_WIDTH, width), height);</span>
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 <span class="nc" id="L117">		throw new UnsupportedOperationException(&quot;member=&quot; + member + &quot; &quot; + getClass().toString());</span>
 	}
 

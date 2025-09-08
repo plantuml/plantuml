@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -46,66 +45,66 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
-<span class="nc" id="L49">public class IEntityImageUtils {</span>
+<span class="nc" id="L48">public class IEntityImageUtils {</span>
 
 	public static IEntityImage translate(final IEntityImage orig, final UTranslate translate) {
-<span class="nc" id="L52">		return new IEntityImage() {</span>
+<span class="nc" id="L51">		return new IEntityImage() {</span>
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L56">				orig.drawU(ug.apply(translate));</span>
+<span class="nc" id="L55">				orig.drawU(ug.apply(translate));</span>
 
-<span class="nc" id="L58">			}</span>
+<span class="nc" id="L57">			}</span>
 
 			@Override
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L62">				return orig.getMinMax(stringBounder);</span>
+<span class="nc" id="L61">				return orig.getMinMax(stringBounder);</span>
 
 			}
 
 			@Override
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L68">				return orig.getInnerPosition(member, stringBounder, strategy);</span>
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L67">				return orig.getInnerPosition(member, stringBounder);</span>
 			}
 
 			@Override
 			public HColor getBackcolor() {
-<span class="nc" id="L73">				return orig.getBackcolor();</span>
+<span class="nc" id="L72">				return orig.getBackcolor();</span>
 			}
 
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L78">				return orig.calculateDimension(stringBounder);</span>
+<span class="nc" id="L77">				return orig.calculateDimension(stringBounder);</span>
 			}
 
 			@Override
 			public boolean isHidden() {
-<span class="nc" id="L83">				return orig.isHidden();</span>
+<span class="nc" id="L82">				return orig.isHidden();</span>
 			}
 
 			@Override
 			public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L88">				return orig.getShield(stringBounder);</span>
+<span class="nc" id="L87">				return orig.getShield(stringBounder);</span>
 			}
 
 			@Override
 			public ShapeType getShapeType() {
-<span class="nc" id="L93">				return orig.getShapeType();</span>
+<span class="nc" id="L92">				return orig.getShapeType();</span>
 			}
 
 			@Override
 			public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L98">				return orig.getOverscanX(stringBounder);</span>
+<span class="nc" id="L97">				return orig.getOverscanX(stringBounder);</span>
 			}
 
 			@Override
 			public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L103">				final MagneticBorder magneticBorder = orig.getMagneticBorder();</span>
-<span class="nc" id="L104">				return new MagneticBorder() {</span>
+<span class="nc" id="L102">				final MagneticBorder magneticBorder = orig.getMagneticBorder();</span>
+<span class="nc" id="L103">				return new MagneticBorder() {</span>
 
 					@Override
 					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-<span class="nc" id="L108">						return magneticBorder.getForceAt(stringBounder, translate.reverse().getTranslated(position));</span>
+<span class="nc" id="L107">						return magneticBorder.getForceAt(stringBounder, translate.reverse().getTranslated(position));</span>
 					}
 				};
 			}

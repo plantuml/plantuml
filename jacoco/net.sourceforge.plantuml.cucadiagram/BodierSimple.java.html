@@ -35,12 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -50,58 +44,46 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-public class BodierSimple implements Bodier {
+public class BodierSimple extends BodierAbstract {
 
-<span class="fc" id="L55">	private final List&lt;CharSequence&gt; rawBody = new ArrayList&lt;&gt;();</span>
 	private final ISkinParam skinParam;
-	private Entity leaf;
 
 	@Override
 	public void muteClassToObject() {
-<span class="nc" id="L61">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L53">		throw new UnsupportedOperationException();</span>
 	}
 
-<span class="fc" id="L64">	BodierSimple(ISkinParam skinParam) {</span>
-<span class="fc" id="L65">		this.skinParam = skinParam;</span>
-<span class="fc" id="L66">	}</span>
-
-	@Override
-	public void setLeaf(Entity leaf) {
-<span class="fc" id="L70">		this.leaf = Objects.requireNonNull(leaf);</span>
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L56">	BodierSimple(ISkinParam skinParam) {</span>
+<span class="fc" id="L57">		this.skinParam = skinParam;</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	public boolean addFieldOrMethod(String s) throws NoSuchColorException {
-<span class="fc" id="L75">		final Display display = Display</span>
-<span class="fc" id="L76">				.getWithNewlines2(skinParam.getPragma(), s);</span>
-<span class="fc" id="L77">		rawBody.addAll(display.asList());</span>
-<span class="fc" id="L78">		return true;</span>
+<span class="fc" id="L62">		final Display display = Display</span>
+<span class="fc" id="L63">				.getWithNewlines2(skinParam.getPragma(), s);</span>
+<span class="fc" id="L64">		rawBody.addAll(display.asList());</span>
+<span class="fc" id="L65">		return true;</span>
 	}
 
 	@Override
 	public Display getMethodsToDisplay() {
-<span class="nc" id="L83">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Display getFieldsToDisplay() {
-<span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L75">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean hasUrl() {
-<span class="nc" id="L93">		return false;</span>
-	}
-
-	@Override
-	public List&lt;CharSequence&gt; getRawBody() {
-<span class="fc" id="L98">		return Collections.unmodifiableList(rawBody);</span>
+<span class="nc" id="L80">		return false;</span>
 	}
 
 	@Override
 	public TextBlock getBody(ISkinParam skinParam, boolean showMethods, boolean showFields, Stereotype stereotype,
 			Style style, FontConfiguration fontConfiguration) {
-<span class="nc" id="L104">		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, skinParam,</span>
+<span class="nc" id="L86">		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, skinParam,</span>
 				stereotype, leaf, style);
 	}
 

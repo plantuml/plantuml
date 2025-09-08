@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.dot.Neighborhood;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -52,8 +51,9 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	private final Bibliotekon bibliotekon;
 	private final Neighborhood neighborhood;
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L56">		final XRectangle2D result = orig.getInnerPosition(member, stringBounder, strategy);</span>
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L56">		final XRectangle2D result = orig.getInnerPosition(member, stringBounder);</span>
 <span class="nc" id="L57">		return new XRectangle2D(result.getMinX() + border, result.getMinY() + border, result.getWidth(),</span>
 <span class="nc" id="L58">				result.getHeight());</span>
 	}

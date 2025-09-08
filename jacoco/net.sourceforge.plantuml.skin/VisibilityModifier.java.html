@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -53,291 +52,291 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-<span class="fc" id="L56">public enum VisibilityModifier {</span>
-<span class="fc" id="L57">	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),</span>
-<span class="fc" id="L58">	PROTECTED_FIELD(StringUtils.PROTECTED_FIELD, ColorParam.iconProtected, null),</span>
-<span class="fc" id="L59">	PACKAGE_PRIVATE_FIELD(StringUtils.PACKAGE_PRIVATE_FIELD, ColorParam.iconPackage, null),</span>
-<span class="fc" id="L60">	PUBLIC_FIELD(StringUtils.PUBLIC_FIELD, ColorParam.iconPublic, null),</span>
+<span class="fc" id="L55">public enum VisibilityModifier {</span>
+<span class="fc" id="L56">	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),</span>
+<span class="fc" id="L57">	PROTECTED_FIELD(StringUtils.PROTECTED_FIELD, ColorParam.iconProtected, null),</span>
+<span class="fc" id="L58">	PACKAGE_PRIVATE_FIELD(StringUtils.PACKAGE_PRIVATE_FIELD, ColorParam.iconPackage, null),</span>
+<span class="fc" id="L59">	PUBLIC_FIELD(StringUtils.PUBLIC_FIELD, ColorParam.iconPublic, null),</span>
 
-<span class="fc" id="L62">	PRIVATE_METHOD(StringUtils.PRIVATE_METHOD, ColorParam.iconPrivate, ColorParam.iconPrivateBackground),</span>
-<span class="fc" id="L63">	PROTECTED_METHOD(StringUtils.PROTECTED_METHOD, ColorParam.iconProtected, ColorParam.iconProtectedBackground),</span>
-<span class="fc" id="L64">	PACKAGE_PRIVATE_METHOD(StringUtils.PACKAGE_PRIVATE_METHOD, ColorParam.iconPackage,</span>
+<span class="fc" id="L61">	PRIVATE_METHOD(StringUtils.PRIVATE_METHOD, ColorParam.iconPrivate, ColorParam.iconPrivateBackground),</span>
+<span class="fc" id="L62">	PROTECTED_METHOD(StringUtils.PROTECTED_METHOD, ColorParam.iconProtected, ColorParam.iconProtectedBackground),</span>
+<span class="fc" id="L63">	PACKAGE_PRIVATE_METHOD(StringUtils.PACKAGE_PRIVATE_METHOD, ColorParam.iconPackage,</span>
 			ColorParam.iconPackageBackground),
-<span class="fc" id="L66">	PUBLIC_METHOD(StringUtils.PUBLIC_METHOD, ColorParam.iconPublic, ColorParam.iconPublicBackground),</span>
+<span class="fc" id="L65">	PUBLIC_METHOD(StringUtils.PUBLIC_METHOD, ColorParam.iconPublic, ColorParam.iconPublicBackground),</span>
 
-<span class="fc" id="L68">	IE_MANDATORY(StringUtils.IE_MANDATORY, ColorParam.iconIEMandatory, ColorParam.iconIEMandatory);</span>
+<span class="fc" id="L67">	IE_MANDATORY(StringUtils.IE_MANDATORY, ColorParam.iconIEMandatory, ColorParam.iconIEMandatory);</span>
 
 	private final ColorParam foregroundParam;
 	private final ColorParam backgroundParam;
 	private final char unicode;
 
 	public static String regexForVisibilityCharacterInClassName() {
-<span class="fc" id="L75">		return &quot;[-#+~]&quot;;</span>
+<span class="fc" id="L74">		return &quot;[-#+~]&quot;;</span>
 	}
 
-<span class="fc" id="L78">	private VisibilityModifier(char unicode, ColorParam foreground, ColorParam background) {</span>
-<span class="fc" id="L79">		this.foregroundParam = foreground;</span>
-<span class="fc" id="L80">		this.backgroundParam = background;</span>
-<span class="fc" id="L81">		this.unicode = unicode;</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L77">	private VisibilityModifier(char unicode, ColorParam foreground, ColorParam background) {</span>
+<span class="fc" id="L78">		this.foregroundParam = foreground;</span>
+<span class="fc" id="L79">		this.backgroundParam = background;</span>
+<span class="fc" id="L80">		this.unicode = unicode;</span>
+<span class="fc" id="L81">	}</span>
 
 	public UDrawable getUDrawable(final int size, final HColor foregroundColor, final HColor backgoundColor) {
-<span class="nc" id="L85">		return new UDrawable() {</span>
+<span class="nc" id="L84">		return new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L87">				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);</span>
-<span class="nc" id="L88">			}</span>
+<span class="nc" id="L86">				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);</span>
+<span class="nc" id="L87">			}</span>
 
 		};
 	}
 
 	public TextBlock getUBlock(final int size, final HColor foregroundColor, final HColor backgoundColor,
 			final boolean withInvisibleRectanble) {
-<span class="fc" id="L95">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L94">		return new AbstractTextBlock() {</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L98">				return new XDimension2D(size + 1, size + 1);</span>
+<span class="fc" id="L97">				return new XDimension2D(size + 1, size + 1);</span>
 			}
 
 			@Override
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L103">				return null;</span>
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L102">				return null;</span>
 			}
 
 			public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">				if (withInvisibleRectanble)</span>
-<span class="nc" id="L108">					ug.apply(HColors.none()).draw(URectangle.build(size * 2, size));</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">				if (withInvisibleRectanble)</span>
+<span class="nc" id="L107">					ug.apply(HColors.none()).draw(URectangle.build(size * 2, size));</span>
 
-<span class="fc" id="L110">				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);</span>
-<span class="fc" id="L111">			}</span>
+<span class="fc" id="L109">				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);</span>
+<span class="fc" id="L110">			}</span>
 		};
 	}
 
 	private void drawInternal(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
 			double x, double y) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (backgoundColor == null)</span>
-<span class="nc" id="L118">			ug = ug.apply(HColors.none().bg());</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (backgoundColor == null)</span>
+<span class="nc" id="L117">			ug = ug.apply(HColors.none().bg());</span>
 		else
-<span class="fc" id="L120">			ug = ug.apply(backgoundColor.bg());</span>
+<span class="fc" id="L119">			ug = ug.apply(backgoundColor.bg());</span>
 
-<span class="fc" id="L122">		ug = ug.apply(foregroundColor);</span>
-<span class="fc" id="L123">		size = ensureEven(size);</span>
-<span class="pc bpc" id="L124" title="8 of 10 branches missed.">		switch (this) {</span>
+<span class="fc" id="L121">		ug = ug.apply(foregroundColor);</span>
+<span class="fc" id="L122">		size = ensureEven(size);</span>
+<span class="pc bpc" id="L123" title="8 of 10 branches missed.">		switch (this) {</span>
 		case PACKAGE_PRIVATE_FIELD:
-<span class="nc" id="L126">			drawTriangle(ug, false, size, x, y);</span>
-<span class="nc" id="L127">			break;</span>
+<span class="nc" id="L125">			drawTriangle(ug, false, size, x, y);</span>
+<span class="nc" id="L126">			break;</span>
 
 		case PRIVATE_FIELD:
-<span class="nc" id="L130">			drawSquare(ug, false, size, x, y);</span>
-<span class="nc" id="L131">			break;</span>
+<span class="nc" id="L129">			drawSquare(ug, false, size, x, y);</span>
+<span class="nc" id="L130">			break;</span>
 
 		case PROTECTED_FIELD:
-<span class="nc" id="L134">			drawDiamond(ug, false, size, x, y);</span>
-<span class="nc" id="L135">			break;</span>
+<span class="nc" id="L133">			drawDiamond(ug, false, size, x, y);</span>
+<span class="nc" id="L134">			break;</span>
 
 		case PUBLIC_FIELD:
-<span class="nc" id="L138">			drawCircle(ug, false, size, x, y);</span>
-<span class="nc" id="L139">			break;</span>
+<span class="nc" id="L137">			drawCircle(ug, false, size, x, y);</span>
+<span class="nc" id="L138">			break;</span>
 
 		case PACKAGE_PRIVATE_METHOD:
-<span class="fc" id="L142">			drawTriangle(ug, true, size, x, y);</span>
-<span class="fc" id="L143">			break;</span>
+<span class="fc" id="L141">			drawTriangle(ug, true, size, x, y);</span>
+<span class="fc" id="L142">			break;</span>
 
 		case PRIVATE_METHOD:
-<span class="nc" id="L146">			drawSquare(ug, true, size, x, y);</span>
-<span class="nc" id="L147">			break;</span>
+<span class="nc" id="L145">			drawSquare(ug, true, size, x, y);</span>
+<span class="nc" id="L146">			break;</span>
 
 		case PROTECTED_METHOD:
-<span class="nc" id="L150">			drawDiamond(ug, true, size, x, y);</span>
-<span class="nc" id="L151">			break;</span>
+<span class="nc" id="L149">			drawDiamond(ug, true, size, x, y);</span>
+<span class="nc" id="L150">			break;</span>
 
 		case PUBLIC_METHOD:
-<span class="fc" id="L154">			drawCircle(ug, true, size, x, y);</span>
-<span class="fc" id="L155">			break;</span>
+<span class="fc" id="L153">			drawCircle(ug, true, size, x, y);</span>
+<span class="fc" id="L154">			break;</span>
 
 		case IE_MANDATORY:
-<span class="nc" id="L158">			drawCircle(ug, true, size, x, y);</span>
-<span class="nc" id="L159">			break;</span>
+<span class="nc" id="L157">			drawCircle(ug, true, size, x, y);</span>
+<span class="nc" id="L158">			break;</span>
 
 		default:
-<span class="nc" id="L162">			throw new IllegalStateException();</span>
+<span class="nc" id="L161">			throw new IllegalStateException();</span>
 		}
-<span class="fc" id="L164">	}</span>
+<span class="fc" id="L163">	}</span>
 
 	private void drawSquare(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="nc" id="L167">		ug.apply(new UTranslate(x + 2, y + 2)).draw(URectangle.build(size - 4, size - 4));</span>
-<span class="nc" id="L168">	}</span>
+<span class="nc" id="L166">		ug.apply(new UTranslate(x + 2, y + 2)).draw(URectangle.build(size - 4, size - 4));</span>
+<span class="nc" id="L167">	}</span>
 
 	private void drawCircle(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="fc" id="L171">		ug.apply(new UTranslate(x + 2, y + 2)).draw(UEllipse.build(size - 4, size - 4));</span>
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L170">		ug.apply(new UTranslate(x + 2, y + 2)).draw(UEllipse.build(size - 4, size - 4));</span>
+<span class="fc" id="L171">	}</span>
 
 	static private int ensureEven(int n) {
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (n % 2 == 1)</span>
-<span class="nc" id="L176">			n--;</span>
-<span class="fc" id="L177">		return n;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (n % 2 == 1)</span>
+<span class="nc" id="L175">			n--;</span>
+<span class="fc" id="L176">		return n;</span>
 	}
 
 	private void drawDiamond(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="nc" id="L181">		final UPolygon poly = new UPolygon();</span>
-<span class="nc" id="L182">		size -= 2;</span>
-<span class="nc" id="L183">		poly.addPoint(size / 2.0, 0);</span>
-<span class="nc" id="L184">		poly.addPoint(size, size / 2.0);</span>
-<span class="nc" id="L185">		poly.addPoint(size / 2.0, size);</span>
-<span class="nc" id="L186">		poly.addPoint(0, size / 2.0);</span>
-<span class="nc" id="L187">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
-<span class="nc" id="L188">	}</span>
+<span class="nc" id="L180">		final UPolygon poly = new UPolygon();</span>
+<span class="nc" id="L181">		size -= 2;</span>
+<span class="nc" id="L182">		poly.addPoint(size / 2.0, 0);</span>
+<span class="nc" id="L183">		poly.addPoint(size, size / 2.0);</span>
+<span class="nc" id="L184">		poly.addPoint(size / 2.0, size);</span>
+<span class="nc" id="L185">		poly.addPoint(0, size / 2.0);</span>
+<span class="nc" id="L186">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
+<span class="nc" id="L187">	}</span>
 
 	private void drawTriangle(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="fc" id="L191">		final UPolygon poly = new UPolygon();</span>
-<span class="fc" id="L192">		size -= 2;</span>
-<span class="fc" id="L193">		poly.addPoint(size / 2.0, 1);</span>
-<span class="fc" id="L194">		poly.addPoint(0, size - 1);</span>
-<span class="fc" id="L195">		poly.addPoint(size, size - 1);</span>
-<span class="fc" id="L196">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
-<span class="fc" id="L197">	}</span>
+<span class="fc" id="L190">		final UPolygon poly = new UPolygon();</span>
+<span class="fc" id="L191">		size -= 2;</span>
+<span class="fc" id="L192">		poly.addPoint(size / 2.0, 1);</span>
+<span class="fc" id="L193">		poly.addPoint(0, size - 1);</span>
+<span class="fc" id="L194">		poly.addPoint(size, size - 1);</span>
+<span class="fc" id="L195">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
+<span class="fc" id="L196">	}</span>
 
 	public static boolean isVisibilityCharacter(CharSequence s) {
-<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (s.length() &lt;= 2)</span>
-<span class="fc" id="L201">			return false;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (s.length() &lt;= 2)</span>
+<span class="fc" id="L200">			return false;</span>
 
-<span class="fc" id="L203">		final char c = s.charAt(0);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (s.charAt(1) == c)</span>
-<span class="fc" id="L205">			return false;</span>
+<span class="fc" id="L202">		final char c = s.charAt(0);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (s.charAt(1) == c)</span>
+<span class="fc" id="L204">			return false;</span>
 
-<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (c == '-')</span>
-<span class="fc" id="L208">			return true;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (c == '-')</span>
+<span class="fc" id="L207">			return true;</span>
 
-<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (c == '#')</span>
-<span class="fc" id="L211">			return true;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (c == '#')</span>
+<span class="fc" id="L210">			return true;</span>
 
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		if (c == '+')</span>
-<span class="fc" id="L214">			return true;</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (c == '+')</span>
+<span class="fc" id="L213">			return true;</span>
 
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (c == '~')</span>
-<span class="fc" id="L217">			return true;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (c == '~')</span>
+<span class="fc" id="L216">			return true;</span>
 
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (c == '*')</span>
-<span class="nc" id="L220">			return true;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (c == '*')</span>
+<span class="nc" id="L219">			return true;</span>
 
-<span class="fc" id="L222">		return false;</span>
+<span class="fc" id="L221">		return false;</span>
 	}
 
 	public static VisibilityModifier getByUnicode(char c) {
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (VisibilityModifier modifier : VisibilityModifier.values())</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (modifier.unicode == c)</span>
-<span class="nc" id="L228">				return modifier;</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		for (VisibilityModifier modifier : VisibilityModifier.values())</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (modifier.unicode == c)</span>
+<span class="nc" id="L227">				return modifier;</span>
 
-<span class="nc" id="L230">		return null;</span>
+<span class="nc" id="L229">		return null;</span>
 	}
 
 	public static String replaceVisibilityModifierByUnicodeChar(String s, boolean isField) {
-<span class="nc" id="L234">		final VisibilityModifier modifier = getVisibilityModifier(s, isField);</span>
-<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (modifier == null)</span>
-<span class="nc" id="L236">			return s;</span>
+<span class="nc" id="L233">		final VisibilityModifier modifier = getVisibilityModifier(s, isField);</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">		if (modifier == null)</span>
+<span class="nc" id="L235">			return s;</span>
 
-<span class="nc" id="L238">		return &quot;&quot; + modifier.unicode + s.substring(1);</span>
+<span class="nc" id="L237">		return &quot;&quot; + modifier.unicode + s.substring(1);</span>
 	}
 
 	public static VisibilityModifier getVisibilityModifier(CharSequence s, boolean isField) {
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (s.length() &lt;= 2)</span>
-<span class="nc" id="L243">			return null;</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (s.length() &lt;= 2)</span>
+<span class="nc" id="L242">			return null;</span>
 
-<span class="fc" id="L245">		final char c = s.charAt(0);</span>
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (s.charAt(1) == c)</span>
-<span class="nc" id="L247">			return null;</span>
+<span class="fc" id="L244">		final char c = s.charAt(0);</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (s.charAt(1) == c)</span>
+<span class="nc" id="L246">			return null;</span>
 
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (isField)</span>
-<span class="fc" id="L250">			return getVisibilityModifierForField(c);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (isField)</span>
+<span class="fc" id="L249">			return getVisibilityModifierForField(c);</span>
 
-<span class="fc" id="L252">		return getVisibilityModifierForMethod(c);</span>
+<span class="fc" id="L251">		return getVisibilityModifierForMethod(c);</span>
 	}
 
 	private static VisibilityModifier getVisibilityModifierForField(char c) {
-<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (c == '-')</span>
-<span class="fc" id="L257">			return VisibilityModifier.PRIVATE_FIELD;</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (c == '-')</span>
+<span class="fc" id="L256">			return VisibilityModifier.PRIVATE_FIELD;</span>
 
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (c == '#')</span>
-<span class="fc" id="L260">			return VisibilityModifier.PROTECTED_FIELD;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (c == '#')</span>
+<span class="fc" id="L259">			return VisibilityModifier.PROTECTED_FIELD;</span>
 
-<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (c == '+')</span>
-<span class="fc" id="L263">			return VisibilityModifier.PUBLIC_FIELD;</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (c == '+')</span>
+<span class="fc" id="L262">			return VisibilityModifier.PUBLIC_FIELD;</span>
 
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (c == '~')</span>
-<span class="nc" id="L266">			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (c == '~')</span>
+<span class="nc" id="L265">			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;</span>
 
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (c == '*')</span>
-<span class="nc" id="L269">			return VisibilityModifier.IE_MANDATORY;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (c == '*')</span>
+<span class="nc" id="L268">			return VisibilityModifier.IE_MANDATORY;</span>
 
-<span class="nc" id="L271">		return null;</span>
+<span class="nc" id="L270">		return null;</span>
 	}
 
 	private static VisibilityModifier getVisibilityModifierForMethod(char c) {
-<span class="fc bfc" id="L275" title="All 2 branches covered.">		if (c == '-')</span>
-<span class="fc" id="L276">			return VisibilityModifier.PRIVATE_METHOD;</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (c == '-')</span>
+<span class="fc" id="L275">			return VisibilityModifier.PRIVATE_METHOD;</span>
 
-<span class="fc bfc" id="L278" title="All 2 branches covered.">		if (c == '#')</span>
-<span class="fc" id="L279">			return VisibilityModifier.PROTECTED_METHOD;</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (c == '#')</span>
+<span class="fc" id="L278">			return VisibilityModifier.PROTECTED_METHOD;</span>
 
-<span class="fc bfc" id="L281" title="All 2 branches covered.">		if (c == '+')</span>
-<span class="fc" id="L282">			return VisibilityModifier.PUBLIC_METHOD;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (c == '+')</span>
+<span class="fc" id="L281">			return VisibilityModifier.PUBLIC_METHOD;</span>
 
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">		if (c == '~')</span>
-<span class="fc" id="L285">			return VisibilityModifier.PACKAGE_PRIVATE_METHOD;</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (c == '~')</span>
+<span class="fc" id="L284">			return VisibilityModifier.PACKAGE_PRIVATE_METHOD;</span>
 
-<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (c == '*')</span>
-<span class="nc" id="L288">			return VisibilityModifier.IE_MANDATORY;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		if (c == '*')</span>
+<span class="nc" id="L287">			return VisibilityModifier.IE_MANDATORY;</span>
 
-<span class="nc" id="L290">		return null;</span>
+<span class="nc" id="L289">		return null;</span>
 	}
 
 	public final ColorParam getForeground() {
-<span class="nc" id="L294">		return foregroundParam;</span>
+<span class="nc" id="L293">		return foregroundParam;</span>
 	}
 
 	public final ColorParam getBackground() {
-<span class="nc" id="L298">		return backgroundParam;</span>
+<span class="nc" id="L297">		return backgroundParam;</span>
 	}
 
 	public String getXmiVisibility() {
-<span class="pc bpc" id="L302" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
-<span class="fc" id="L303">			return &quot;public&quot;;</span>
+<span class="pc bpc" id="L301" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
+<span class="fc" id="L302">			return &quot;public&quot;;</span>
 
-<span class="pc bpc" id="L305" title="1 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
-<span class="fc" id="L306">			return &quot;private&quot;;</span>
+<span class="pc bpc" id="L304" title="1 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
+<span class="fc" id="L305">			return &quot;private&quot;;</span>
 
-<span class="pc bpc" id="L308" title="3 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
-<span class="fc" id="L309">			return &quot;protected&quot;;</span>
+<span class="pc bpc" id="L307" title="3 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
+<span class="fc" id="L308">			return &quot;protected&quot;;</span>
 
-<span class="nc bnc" id="L311" title="All 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
-<span class="nc" id="L312">			return &quot;package&quot;;</span>
+<span class="nc bnc" id="L310" title="All 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
+<span class="nc" id="L311">			return &quot;package&quot;;</span>
 
-<span class="nc" id="L314">		throw new IllegalStateException();</span>
+<span class="nc" id="L313">		throw new IllegalStateException();</span>
 	}
 
 	public boolean isField() {
-<span class="pc bpc" id="L318" title="4 of 8 branches missed.">		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)</span>
-<span class="nc" id="L319">			return true;</span>
+<span class="pc bpc" id="L317" title="4 of 8 branches missed.">		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)</span>
+<span class="nc" id="L318">			return true;</span>
 
-<span class="fc" id="L321">		return false;</span>
+<span class="fc" id="L320">		return false;</span>
 	}
 
 	public StyleSignatureBasic getStyleSignature() {
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		if (this == IE_MANDATORY)</span>
-<span class="nc" id="L326">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">		if (this == IE_MANDATORY)</span>
+<span class="nc" id="L325">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);</span>
 
-<span class="pc bpc" id="L328" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
-<span class="fc" id="L329">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);</span>
+<span class="pc bpc" id="L327" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
+<span class="fc" id="L328">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);</span>
 
-<span class="pc bpc" id="L331" title="2 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
-<span class="nc" id="L332">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.private_);</span>
+<span class="pc bpc" id="L330" title="2 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
+<span class="nc" id="L331">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.private_);</span>
 
-<span class="pc bpc" id="L334" title="2 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
-<span class="nc" id="L335">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.protected_);</span>
+<span class="pc bpc" id="L333" title="2 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
+<span class="nc" id="L334">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.protected_);</span>
 
-<span class="pc bpc" id="L337" title="2 of 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
-<span class="fc" id="L338">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);</span>
+<span class="pc bpc" id="L336" title="2 of 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
+<span class="fc" id="L337">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);</span>
 
-<span class="nc" id="L340">		throw new IllegalStateException();</span>
+<span class="nc" id="L339">		throw new IllegalStateException();</span>
 	}
 
 }

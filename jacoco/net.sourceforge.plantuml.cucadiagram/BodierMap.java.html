@@ -35,16 +35,11 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -53,76 +48,63 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-public class BodierMap implements Bodier {
+public class BodierMap extends BodierAbstract {
 
-<span class="nc" id="L58">	private final List&lt;CharSequence&gt; rawBody = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L59">	private final Map&lt;String, String&gt; map = new LinkedHashMap&lt;String, String&gt;();</span>
-	private Entity leaf;
+<span class="nc" id="L53">	private final Map&lt;String, String&gt; map = new LinkedHashMap&lt;String, String&gt;();</span>
 
 	@Override
 	public void muteClassToObject() {
-<span class="nc" id="L64">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L57">		throw new UnsupportedOperationException();</span>
 	}
 
-<span class="nc" id="L67">	public BodierMap() {</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L60">	public BodierMap() {</span>
+<span class="nc" id="L61">	}</span>
 
-	@Override
-	public void setLeaf(Entity leaf) {
-<span class="nc" id="L72">		this.leaf = Objects.requireNonNull(leaf);</span>
-
-<span class="nc" id="L74">	}</span>
-
-<span class="nc" id="L76">	private static final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
+<span class="nc" id="L63">	private static final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
 
 	public static String getLinkedEntry(String s) {
-<span class="nc" id="L79">		final Matcher m = p.matcher(s);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L81">			return m.group(1);</span>
+<span class="nc" id="L66">		final Matcher m = p.matcher(s);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L68">			return m.group(1);</span>
 
-<span class="nc" id="L83">		return null;</span>
+<span class="nc" id="L70">		return null;</span>
 	}
 
 	@Override
 	public boolean addFieldOrMethod(String s) {
-<span class="nc" id="L88">		final int x = s.indexOf(&quot;=&gt;&quot;);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (x != -1) {</span>
-<span class="nc" id="L90">			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());</span>
-<span class="nc" id="L91">			return true;</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		} else if (getLinkedEntry(s) != null) {</span>
-<span class="nc" id="L93">			final String link = getLinkedEntry(s);</span>
-<span class="nc" id="L94">			final int pos = s.indexOf(link);</span>
-<span class="nc" id="L95">			map.put(s.substring(0, pos).trim(), &quot;\0&quot;);</span>
-<span class="nc" id="L96">			return true;</span>
+<span class="nc" id="L75">		final int x = s.indexOf(&quot;=&gt;&quot;);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (x != -1) {</span>
+<span class="nc" id="L77">			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());</span>
+<span class="nc" id="L78">			return true;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		} else if (getLinkedEntry(s) != null) {</span>
+<span class="nc" id="L80">			final String link = getLinkedEntry(s);</span>
+<span class="nc" id="L81">			final int pos = s.indexOf(link);</span>
+<span class="nc" id="L82">			map.put(s.substring(0, pos).trim(), &quot;\0&quot;);</span>
+<span class="nc" id="L83">			return true;</span>
 		}
-<span class="nc" id="L98">		return false;</span>
+<span class="nc" id="L85">		return false;</span>
 	}
 
 	@Override
 	public Display getMethodsToDisplay() {
-<span class="nc" id="L103">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L90">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Display getFieldsToDisplay() {
-<span class="nc" id="L108">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L95">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean hasUrl() {
-<span class="nc" id="L113">		return false;</span>
+<span class="nc" id="L100">		return false;</span>
 	}
 
 	@Override
 	public TextBlock getBody(ISkinParam skinParam, final boolean showMethods, final boolean showFields,
 			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
-<span class="nc" id="L119">		final LineBreakStrategy wordWrap = style.wrapWidth();</span>
-<span class="nc" id="L120">		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap);</span>
-	}
-
-	@Override
-	public List&lt;CharSequence&gt; getRawBody() {
-<span class="nc" id="L125">		return Collections.unmodifiableList(rawBody);</span>
+<span class="nc" id="L106">		final LineBreakStrategy wordWrap = style.wrapWidth();</span>
+<span class="nc" id="L107">		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap);</span>
 	}
 
 }

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
@@ -67,48 +66,49 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 	private final BpmElementType type;
 	private final Display display;
 
-<span class="nc" id="L70">	public BpmElement(String id, BpmElementType type, String label) {</span>
-<span class="nc" id="L71">		this.id = id;</span>
-<span class="nc" id="L72">		this.type = type;</span>
-<span class="nc" id="L73">		this.display = Display.getWithNewlines(getPragma(), label);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L69">	public BpmElement(String id, BpmElementType type, String label) {</span>
+<span class="nc" id="L70">		this.id = id;</span>
+<span class="nc" id="L71">		this.type = type;</span>
+<span class="nc" id="L72">		this.display = Display.getWithNewlines(getPragma(), label);</span>
+<span class="nc" id="L73">	}</span>
 
 	public BpmElement(String id, BpmElementType type) {
-<span class="nc" id="L77">		this(id, type, null);</span>
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L76">		this(id, type, null);</span>
+<span class="nc" id="L77">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (id == null) {</span>
-<span class="nc" id="L83">			return type.toString() + &quot;(&quot; + display + &quot;)&quot;;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (id == null) {</span>
+<span class="nc" id="L82">			return type.toString() + &quot;(&quot; + display + &quot;)&quot;;</span>
 		}
-<span class="nc" id="L85">		return type.toString() + &quot;(&quot; + id + &quot;)&quot;;</span>
+<span class="nc" id="L84">		return type.toString() + &quot;(&quot; + id + &quot;)&quot;;</span>
 	}
 
 	public BpmElementType getType() {
-<span class="nc" id="L89">		return type;</span>
+<span class="nc" id="L88">		return type;</span>
 	}
 
 	public final Display getDisplay() {
-<span class="nc" id="L93">		return display;</span>
+<span class="nc" id="L92">		return display;</span>
 	}
 
 	public TextBlock toTextBlock(ISkinParam skinParam) {
-<span class="nc" id="L97">		final TextBlock raw = toTextBlockInternal(skinParam);</span>
-<span class="nc" id="L98">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L96">		final TextBlock raw = toTextBlockInternal(skinParam);</span>
+<span class="nc" id="L97">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L101">				raw.drawU(ug);</span>
-<span class="nc" id="L102">				ug = ug.apply(HColors.RED);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">				for (Where w : Where.values()) {</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">					if (have(w)) {</span>
-<span class="nc" id="L105">						drawLine(ug, w, raw.calculateDimension(ug.getStringBounder()));</span>
+<span class="nc" id="L100">				raw.drawU(ug);</span>
+<span class="nc" id="L101">				ug = ug.apply(HColors.RED);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				for (Where w : Where.values()) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (have(w)) {</span>
+<span class="nc" id="L104">						drawLine(ug, w, raw.calculateDimension(ug.getStringBounder()));</span>
 					}
 				}
-<span class="nc" id="L108">			}</span>
+<span class="nc" id="L107">			}</span>
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L111">				return raw.getInnerPosition(member, stringBounder, strategy);</span>
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L111">				return raw.getInnerPosition(member, stringBounder);</span>
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

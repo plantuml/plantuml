@@ -35,15 +35,12 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
-
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.atmp.ImageBuilder;
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -76,173 +73,174 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class FlowDiagram extends UmlDiagram implements TextBlock {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
-<span class="nc" id="L81">	private static double SINGLE_SIZE_X = 100;</span>
-<span class="nc" id="L82">	private static double SINGLE_SIZE_Y = 35;</span>
+<span class="nc" id="L78">	private static double SINGLE_SIZE_X = 100;</span>
+<span class="nc" id="L79">	private static double SINGLE_SIZE_Y = 35;</span>
 
 	private TilesField field;
-<span class="nc" id="L85">	private final Map&lt;Tile, ActivityBox&gt; tilesBoxes = new HashMap&lt;Tile, ActivityBox&gt;();</span>
+<span class="nc" id="L82">	private final Map&lt;Tile, ActivityBox&gt; tilesBoxes = new HashMap&lt;Tile, ActivityBox&gt;();</span>
 	private Tile lastTile;
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L89">		throw new UnsupportedOperationException();</span>
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L87">		throw new UnsupportedOperationException();</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L93">		return new DiagramDescription(&quot;Flow Diagram&quot;);</span>
+<span class="nc" id="L91">		return new DiagramDescription(&quot;Flow Diagram&quot;);</span>
 	}
 
 	public FlowDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L97">		super(source, UmlDiagramType.FLOW, null, preprocessing);</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L95">		super(source, UmlDiagramType.FLOW, null, preprocessing);</span>
+<span class="nc" id="L96">	}</span>
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {
 		final Tile newTile;
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (field == null) {</span>
-<span class="nc" id="L103">			field = new TilesField();</span>
-<span class="nc" id="L104">			tilesBoxes.clear();</span>
-<span class="nc" id="L105">			newTile = field.getRoot();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (field == null) {</span>
+<span class="nc" id="L101">			field = new TilesField();</span>
+<span class="nc" id="L102">			tilesBoxes.clear();</span>
+<span class="nc" id="L103">			newTile = field.getRoot();</span>
 		} else {
-<span class="nc" id="L107">			newTile = field.createTile(lastTile, orientation);</span>
+<span class="nc" id="L105">			newTile = field.createTile(lastTile, orientation);</span>
 		}
-<span class="nc" id="L109">		final ActivityBox box = new ActivityBox(newTile, idDest, label);</span>
-<span class="nc" id="L110">		tilesBoxes.put(newTile, box);</span>
-<span class="nc" id="L111">		lastTile = newTile;</span>
-<span class="nc" id="L112">		return;</span>
+<span class="nc" id="L107">		final ActivityBox box = new ActivityBox(newTile, idDest, label);</span>
+<span class="nc" id="L108">		tilesBoxes.put(newTile, box);</span>
+<span class="nc" id="L109">		lastTile = newTile;</span>
+<span class="nc" id="L110">		return;</span>
 	}
 
 	public void linkSimple(TileGeometry orientation, String idDest) {
-<span class="nc" id="L116">		final Tile tile = getTileById(idDest);</span>
-<span class="nc" id="L117">		field.addPath(lastTile, tile, orientation);</span>
-<span class="nc" id="L118">	}</span>
+<span class="nc" id="L114">		final Tile tile = getTileById(idDest);</span>
+<span class="nc" id="L115">		field.addPath(lastTile, tile, orientation);</span>
+<span class="nc" id="L116">	}</span>
 
 	private Tile getTileById(String id) {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, ActivityBox&gt; ent : tilesBoxes.entrySet()) {</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (ent.getValue().getId().equals(id)) {</span>
-<span class="nc" id="L123">				return ent.getKey();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, ActivityBox&gt; ent : tilesBoxes.entrySet()) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (ent.getValue().getId().equals(id)) {</span>
+<span class="nc" id="L121">				return ent.getKey();</span>
 			}
-<span class="nc" id="L125">		}</span>
-<span class="nc" id="L126">		throw new IllegalArgumentException(id);</span>
+<span class="nc" id="L123">		}</span>
+<span class="nc" id="L124">		throw new IllegalArgumentException(id);</span>
 	}
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L131">		return ImageBuilder.create(fileFormatOption)</span>
-<span class="nc" id="L132">				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">				.margin(getDefaultMargins()).metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)</span>
-<span class="nc" id="L134">				.seed(seed());</span>
+<span class="nc" id="L129">		return ImageBuilder.create(fileFormatOption)</span>
+<span class="nc" id="L130">				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">				.margin(getDefaultMargins()).metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)</span>
+<span class="nc" id="L132">				.seed(seed());</span>
 	}
 
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-<span class="nc" id="L141">		return createImageBuilder(fileFormatOption).drawable(this).write(os);</span>
+<span class="nc" id="L139">		return createImageBuilder(fileFormatOption).drawable(this).write(os);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L145">		double x = 0;</span>
-<span class="nc" id="L146">		double y = 0;</span>
-<span class="nc" id="L147">		final MinMaxGolem minMax = getMinMax();</span>
-<span class="nc" id="L148">		x -= minMax.getMinX() * SINGLE_SIZE_X;</span>
-<span class="nc" id="L149">		y -= minMax.getMinY() * SINGLE_SIZE_Y;</span>
-<span class="nc" id="L150">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, ActivityBox&gt; ent : tilesBoxes.entrySet()) {</span>
-<span class="nc" id="L152">			final Tile tile = ent.getKey();</span>
-<span class="nc" id="L153">			final Position pos = field.getPosition(tile);</span>
-<span class="nc" id="L154">			final int xmin = pos.getXmin();</span>
-<span class="nc" id="L155">			final int ymin = pos.getYmin();</span>
-<span class="nc" id="L156">			final ActivityBox box = ent.getValue();</span>
-<span class="nc" id="L157">			final XDimension2D dimBox = box.calculateDimension(stringBounder);</span>
-<span class="nc" id="L158">			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();</span>
-<span class="nc" id="L159">			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();</span>
-<span class="nc" id="L160">			box.drawU(ug.apply(</span>
+<span class="nc" id="L143">		double x = 0;</span>
+<span class="nc" id="L144">		double y = 0;</span>
+<span class="nc" id="L145">		final MinMaxGolem minMax = getMinMax();</span>
+<span class="nc" id="L146">		x -= minMax.getMinX() * SINGLE_SIZE_X;</span>
+<span class="nc" id="L147">		y -= minMax.getMinY() * SINGLE_SIZE_Y;</span>
+<span class="nc" id="L148">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (Map.Entry&lt;Tile, ActivityBox&gt; ent : tilesBoxes.entrySet()) {</span>
+<span class="nc" id="L150">			final Tile tile = ent.getKey();</span>
+<span class="nc" id="L151">			final Position pos = field.getPosition(tile);</span>
+<span class="nc" id="L152">			final int xmin = pos.getXmin();</span>
+<span class="nc" id="L153">			final int ymin = pos.getYmin();</span>
+<span class="nc" id="L154">			final ActivityBox box = ent.getValue();</span>
+<span class="nc" id="L155">			final XDimension2D dimBox = box.calculateDimension(stringBounder);</span>
+<span class="nc" id="L156">			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();</span>
+<span class="nc" id="L157">			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();</span>
+<span class="nc" id="L158">			box.drawU(ug.apply(</span>
 					new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
-<span class="nc" id="L162">		}</span>
-<span class="nc" id="L163">		ug = ug.apply(HColors.MY_RED);</span>
-<span class="nc" id="L164">		ug = ug.apply(HColors.MY_RED.bg());</span>
-<span class="nc" id="L165">		final UShape arrow = UEllipse.build(7, 7);</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (Path p : field.getPaths()) {</span>
-<span class="nc" id="L167">			final TileArea start = p.getStart();</span>
-<span class="nc" id="L168">			final TileArea dest = p.getDest();</span>
-<span class="nc" id="L169">			final XPoint2D pStart = movePoint(getCenter(start), start.getTile(), start.getGeometry(), stringBounder);</span>
-<span class="nc" id="L170">			final XPoint2D pDest = movePoint(getCenter(dest), dest.getTile(), dest.getGeometry(), stringBounder);</span>
-<span class="nc" id="L171">			final ULine line = new ULine(pDest.getX() - pStart.getX(), pDest.getY() - pStart.getY());</span>
-<span class="nc" id="L172">			ug.apply(new UTranslate(x + pStart.getX(), y + pStart.getY())).draw(line);</span>
-<span class="nc" id="L173">			ug.apply(new UTranslate(x + pDest.getX() - 3, y + pDest.getY() - 3)).draw(arrow);</span>
+<span class="nc" id="L160">		}</span>
+<span class="nc" id="L161">		ug = ug.apply(HColors.MY_RED);</span>
+<span class="nc" id="L162">		ug = ug.apply(HColors.MY_RED.bg());</span>
+<span class="nc" id="L163">		final UShape arrow = UEllipse.build(7, 7);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (Path p : field.getPaths()) {</span>
+<span class="nc" id="L165">			final TileArea start = p.getStart();</span>
+<span class="nc" id="L166">			final TileArea dest = p.getDest();</span>
+<span class="nc" id="L167">			final XPoint2D pStart = movePoint(getCenter(start), start.getTile(), start.getGeometry(), stringBounder);</span>
+<span class="nc" id="L168">			final XPoint2D pDest = movePoint(getCenter(dest), dest.getTile(), dest.getGeometry(), stringBounder);</span>
+<span class="nc" id="L169">			final ULine line = new ULine(pDest.getX() - pStart.getX(), pDest.getY() - pStart.getY());</span>
+<span class="nc" id="L170">			ug.apply(new UTranslate(x + pStart.getX(), y + pStart.getY())).draw(line);</span>
+<span class="nc" id="L171">			ug.apply(new UTranslate(x + pDest.getX() - 3, y + pDest.getY() - 3)).draw(arrow);</span>
 
-<span class="nc" id="L175">		}</span>
-<span class="nc" id="L176">	}</span>
+<span class="nc" id="L173">		}</span>
+<span class="nc" id="L174">	}</span>
 
 	private XPoint2D getCenter(TileArea area) {
-<span class="nc" id="L179">		final Tile tile = area.getTile();</span>
-<span class="nc" id="L180">		final Position position = field.getPosition(tile);</span>
-<span class="nc" id="L181">		final double x = position.getCenterX();</span>
-<span class="nc" id="L182">		final double y = position.getCenterY();</span>
-<span class="nc" id="L183">		return new XPoint2D(x * SINGLE_SIZE_X, y * SINGLE_SIZE_Y);</span>
+<span class="nc" id="L177">		final Tile tile = area.getTile();</span>
+<span class="nc" id="L178">		final Position position = field.getPosition(tile);</span>
+<span class="nc" id="L179">		final double x = position.getCenterX();</span>
+<span class="nc" id="L180">		final double y = position.getCenterY();</span>
+<span class="nc" id="L181">		return new XPoint2D(x * SINGLE_SIZE_X, y * SINGLE_SIZE_Y);</span>
 	}
 
 	private XPoint2D movePoint(XPoint2D pt, Tile tile, TileGeometry tileGeometry, StringBounder stringBounder) {
-<span class="nc" id="L187">		final XDimension2D dim = tilesBoxes.get(tile).calculateDimension(stringBounder);</span>
-<span class="nc" id="L188">		final double width = dim.getWidth();</span>
-<span class="nc" id="L189">		final double height = dim.getHeight();</span>
-<span class="nc" id="L190">		double x = pt.getX();</span>
-<span class="nc" id="L191">		double y = pt.getY();</span>
-<span class="nc bnc" id="L192" title="All 5 branches missed.">		switch (tileGeometry) {</span>
+<span class="nc" id="L185">		final XDimension2D dim = tilesBoxes.get(tile).calculateDimension(stringBounder);</span>
+<span class="nc" id="L186">		final double width = dim.getWidth();</span>
+<span class="nc" id="L187">		final double height = dim.getHeight();</span>
+<span class="nc" id="L188">		double x = pt.getX();</span>
+<span class="nc" id="L189">		double y = pt.getY();</span>
+<span class="nc bnc" id="L190" title="All 5 branches missed.">		switch (tileGeometry) {</span>
 		case SOUTH:
-<span class="nc" id="L194">			y += height / 2;</span>
-<span class="nc" id="L195">			break;</span>
+<span class="nc" id="L192">			y += height / 2;</span>
+<span class="nc" id="L193">			break;</span>
 		case NORTH:
-<span class="nc" id="L197">			y -= height / 2;</span>
-<span class="nc" id="L198">			break;</span>
+<span class="nc" id="L195">			y -= height / 2;</span>
+<span class="nc" id="L196">			break;</span>
 		case EAST:
-<span class="nc" id="L200">			x += width / 2;</span>
-<span class="nc" id="L201">			break;</span>
+<span class="nc" id="L198">			x += width / 2;</span>
+<span class="nc" id="L199">			break;</span>
 		case WEST:
-<span class="nc" id="L203">			x -= width / 2;</span>
-<span class="nc" id="L204">			break;</span>
+<span class="nc" id="L201">			x -= width / 2;</span>
+<span class="nc" id="L202">			break;</span>
 		default:
-<span class="nc" id="L206">			throw new IllegalStateException();</span>
+<span class="nc" id="L204">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L208">		return new XPoint2D(x, y);</span>
+<span class="nc" id="L206">		return new XPoint2D(x, y);</span>
 	}
 
 	private MinMaxGolem getMinMax() {
-<span class="nc" id="L212">		final MinMaxGolem minMax = new MinMaxGolem();</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (Tile tile : tilesBoxes.keySet()) {</span>
-<span class="nc" id="L214">			minMax.manage(field.getPosition(tile));</span>
-<span class="nc" id="L215">		}</span>
-<span class="nc" id="L216">		return minMax;</span>
+<span class="nc" id="L210">		final MinMaxGolem minMax = new MinMaxGolem();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		for (Tile tile : tilesBoxes.keySet()) {</span>
+<span class="nc" id="L212">			minMax.manage(field.getPosition(tile));</span>
+<span class="nc" id="L213">		}</span>
+<span class="nc" id="L214">		return minMax;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L220">		final MinMaxGolem minMax = getMinMax();</span>
-<span class="nc" id="L221">		return new XDimension2D(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);</span>
+<span class="nc" id="L218">		final MinMaxGolem minMax = getMinMax();</span>
+<span class="nc" id="L219">		return new XDimension2D(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);</span>
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L225">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L223">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="nc" id="L230">		return ClockwiseTopRightBottomLeft.same(0);</span>
+<span class="nc" id="L228">		return ClockwiseTopRightBottomLeft.same(0);</span>
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-<span class="nc" id="L235">		return this;</span>
+<span class="nc" id="L233">		return this;</span>
 	}
 
 	@Override
 	public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L240">		return new MagneticBorderNone();</span>
+<span class="nc" id="L238">		return new MagneticBorderNone();</span>
 	}
 
 	@Override
 	public HColor getBackcolor() {
-<span class="nc" id="L245">		return null;</span>
+<span class="nc" id="L243">		return null;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

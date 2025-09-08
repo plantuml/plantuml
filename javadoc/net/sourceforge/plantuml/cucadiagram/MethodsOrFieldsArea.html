@@ -139,9 +139,8 @@ implements <a href="../klimt/shape/TextBlock.html" title="interface in net.sourc
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;shortNames)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/XRectangle2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XRectangle2D</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInnerPosition(java.lang.String,net.sourceforge.plantuml.klimt.font.StringBounder,net.atmp.InnerStrategy)" class="member-name-link">getInnerPosition</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;member,
- <a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../../atmp/InnerStrategy.html" title="enum class in net.atmp">InnerStrategy</a>&nbsp;strategy)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInnerPosition(java.lang.CharSequence,net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getInnerPosition</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;member,
+ <a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../svek/Ports.html" title="class in net.sourceforge.plantuml.svek">Ports</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPorts(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPorts</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
@@ -236,16 +235,15 @@ implements <a href="../klimt/shape/TextBlock.html" title="interface in net.sourc
 </section>
 </li>
 <li>
-<section class="detail" id="getInnerPosition(java.lang.String,net.sourceforge.plantuml.klimt.font.StringBounder,net.atmp.InnerStrategy)">
+<section class="detail" id="getInnerPosition(java.lang.CharSequence,net.sourceforge.plantuml.klimt.font.StringBounder)">
 <h3>getInnerPosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/geom/XRectangle2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XRectangle2D</a></span>&nbsp;<span class="element-name">getInnerPosition</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;member,
- <a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../../atmp/InnerStrategy.html" title="enum class in net.atmp">InnerStrategy</a>&nbsp;strategy)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/geom/XRectangle2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XRectangle2D</a></span>&nbsp;<span class="element-name">getInnerPosition</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;member,
+ <a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../klimt/shape/TextBlock.html#getInnerPosition(java.lang.String,net.sourceforge.plantuml.klimt.font.StringBounder,net.atmp.InnerStrategy)">getInnerPosition</a></code>&nbsp;in interface&nbsp;<code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></dd>
+<dd><code><a href="../klimt/shape/TextBlock.html#getInnerPosition(java.lang.CharSequence,net.sourceforge.plantuml.klimt.font.StringBounder)">getInnerPosition</a></code>&nbsp;in interface&nbsp;<code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="../klimt/shape/AbstractTextBlock.html#getInnerPosition(java.lang.String,net.sourceforge.plantuml.klimt.font.StringBounder,net.atmp.InnerStrategy)">getInnerPosition</a></code>&nbsp;in class&nbsp;<code><a href="../klimt/shape/AbstractTextBlock.html" title="class in net.sourceforge.plantuml.klimt.shape">AbstractTextBlock</a></code></dd>
+<dd><code><a href="../klimt/shape/AbstractTextBlock.html#getInnerPosition(java.lang.CharSequence,net.sourceforge.plantuml.klimt.font.StringBounder)">getInnerPosition</a></code>&nbsp;in class&nbsp;<code><a href="../klimt/shape/AbstractTextBlock.html" title="class in net.sourceforge.plantuml.klimt.shape">AbstractTextBlock</a></code></dd>
 </dl>
 </section>
 </li>

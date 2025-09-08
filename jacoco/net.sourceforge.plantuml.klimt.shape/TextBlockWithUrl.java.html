@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -52,34 +51,35 @@ public class TextBlockWithUrl implements TextBlock {
 	private final Url url;
 
 	public static TextBlock withUrl(TextBlock block, Url url) {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="fc" id="L56">			return block;</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="fc" id="L55">			return block;</span>
 
-<span class="nc" id="L58">		return new TextBlockWithUrl(block, url);</span>
+<span class="nc" id="L57">		return new TextBlockWithUrl(block, url);</span>
 
 	}
 
-<span class="nc" id="L62">	private TextBlockWithUrl(TextBlock block, Url url) {</span>
-<span class="nc" id="L63">		this.block = block;</span>
-<span class="nc" id="L64">		this.url = url;</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L61">	private TextBlockWithUrl(TextBlock block, Url url) {</span>
+<span class="nc" id="L62">		this.block = block;</span>
+<span class="nc" id="L63">		this.url = url;</span>
+<span class="nc" id="L64">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L68">		ug.startUrl(url);</span>
-<span class="nc" id="L69">		block.drawU(ug);</span>
-<span class="nc" id="L70">		ug.closeUrl();</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L67">		ug.startUrl(url);</span>
+<span class="nc" id="L68">		block.drawU(ug);</span>
+<span class="nc" id="L69">		ug.closeUrl();</span>
+<span class="nc" id="L70">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L74">		return block.calculateDimension(stringBounder);</span>
+<span class="nc" id="L73">		return block.calculateDimension(stringBounder);</span>
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L78">		return block.getMinMax(stringBounder);</span>
+<span class="nc" id="L77">		return block.getMinMax(stringBounder);</span>
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L82">		return block.getInnerPosition(member, stringBounder, strategy);</span>
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L82">		return block.getInnerPosition(member, stringBounder);</span>
 	}
 
 	@Override

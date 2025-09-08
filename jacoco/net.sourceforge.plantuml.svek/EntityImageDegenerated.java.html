@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -50,35 +49,36 @@ import net.sourceforge.plantuml.klimt.shape.UEmpty;
 public class EntityImageDegenerated implements IEntityImage {
 
 	private final IEntityImage orig;
-<span class="fc" id="L53">	private final double delta = 7;</span>
+<span class="fc" id="L52">	private final double delta = 7;</span>
 	private final HColor backcolor;
 
-<span class="fc" id="L56">	public EntityImageDegenerated(IEntityImage orig, HColor backcolor) {</span>
-<span class="fc" id="L57">		this.orig = orig;</span>
-<span class="fc" id="L58">		this.backcolor = backcolor;</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L55">	public EntityImageDegenerated(IEntityImage orig, HColor backcolor) {</span>
+<span class="fc" id="L56">		this.orig = orig;</span>
+<span class="fc" id="L57">		this.backcolor = backcolor;</span>
+<span class="fc" id="L58">	}</span>
 
 	public boolean isHidden() {
-<span class="nc" id="L62">		return orig.isHidden();</span>
+<span class="nc" id="L61">		return orig.isHidden();</span>
 	}
 
 	public HColor getBackcolor() {
 		// return orig.getBackcolor();
-<span class="nc" id="L67">		return backcolor;</span>
+<span class="nc" id="L66">		return backcolor;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L71">		return orig.calculateDimension(stringBounder).delta(delta * 2, delta * 2);</span>
+<span class="fc" id="L70">		return orig.calculateDimension(stringBounder).delta(delta * 2, delta * 2);</span>
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L75">		return orig.getMinMax(stringBounder);</span>
+<span class="nc" id="L74">		return orig.getMinMax(stringBounder);</span>
 		// return orig.getMinMax(stringBounder).translate(new UTranslate(delta, delta));
 		// return orig.getMinMax(stringBounder).appendToMax(delta, delta);
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L81">		return orig.getInnerPosition(member, stringBounder, strategy);</span>
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L81">		return orig.getInnerPosition(member, stringBounder);</span>
 	}
 
 	public void drawU(UGraphic ug) {

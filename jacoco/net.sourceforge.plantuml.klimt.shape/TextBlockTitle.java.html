@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -53,37 +52,38 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class TextBlockTitle implements TextBlock {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
-<span class="nc" id="L58">	private final double outMargin = 2;</span>
+<span class="nc" id="L57">	private final double outMargin = 2;</span>
 
 	private final TextBlock textBlock;
 
-<span class="nc" id="L62">	TextBlockTitle(FontConfiguration font, Display stringsToDisplay, ISkinSimple spriteContainer) {</span>
-<span class="nc bnc" id="L63" title="All 4 branches missed.">		if (stringsToDisplay.size() == 1 &amp;&amp; stringsToDisplay.get(0).length() == 0) {</span>
-<span class="nc" id="L64">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L61">	TextBlockTitle(FontConfiguration font, Display stringsToDisplay, ISkinSimple spriteContainer) {</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (stringsToDisplay.size() == 1 &amp;&amp; stringsToDisplay.get(0).length() == 0) {</span>
+<span class="nc" id="L63">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L66">		final LineBreakStrategy lineBreak = LineBreakStrategy.NONE;</span>
-<span class="nc" id="L67">		textBlock = stringsToDisplay.create0(font, HorizontalAlignment.CENTER, spriteContainer, lineBreak,</span>
+<span class="nc" id="L65">		final LineBreakStrategy lineBreak = LineBreakStrategy.NONE;</span>
+<span class="nc" id="L66">		textBlock = stringsToDisplay.create0(font, HorizontalAlignment.CENTER, spriteContainer, lineBreak,</span>
 				CreoleMode.FULL, null, null);
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L68">	}</span>
 
 	public final void drawU(UGraphic ug) {
-<span class="nc" id="L72">		textBlock.drawU(ug.apply(UTranslate.dx(outMargin)));</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L71">		textBlock.drawU(ug.apply(UTranslate.dx(outMargin)));</span>
+<span class="nc" id="L72">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L76">		final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L77">		final double width = textDim.getWidth() + outMargin * 2;</span>
-<span class="nc" id="L78">		final double height = textDim.getHeight();</span>
-<span class="nc" id="L79">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L75">		final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L76">		final double width = textDim.getWidth() + outMargin * 2;</span>
+<span class="nc" id="L77">		final double height = textDim.getHeight();</span>
+<span class="nc" id="L78">		return new XDimension2D(width, height);</span>
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L83">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L82">		throw new UnsupportedOperationException();</span>
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 <span class="nc" id="L87">		return null;</span>
 	}
 

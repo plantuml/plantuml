@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
@@ -52,86 +51,88 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-<span class="nc" id="L55">public class TextBlockUtils {</span>
+<span class="nc" id="L54">public class TextBlockUtils {</span>
 	// ::remove file when __HAXE__
 
-<span class="fc" id="L58">	public static final TextBlock EMPTY_TEXT_BLOCK = TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L57">	public static final TextBlock EMPTY_TEXT_BLOCK = TextBlockUtils.empty(0, 0);</span>
 
 	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
 			double cornersize, ClockwiseTopRightBottomLeft margins, String id) {
-<span class="fc" id="L62">		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, margins, id);</span>
+<span class="fc" id="L61">		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, margins, id);</span>
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
-<span class="pc bpc" id="L66" title="1 of 4 branches missed.">		if (marginX == 0 &amp;&amp; marginY == 0)</span>
-<span class="fc" id="L67">			return textBlock;</span>
+<span class="pc bpc" id="L65" title="1 of 4 branches missed.">		if (marginX == 0 &amp;&amp; marginY == 0)</span>
+<span class="fc" id="L66">			return textBlock;</span>
 
-<span class="fc" id="L69">		return new TextBlockMarged(textBlock, marginY, marginX, marginY, marginX);</span>
+<span class="fc" id="L68">		return new TextBlockMarged(textBlock, marginY, marginX, marginY, marginX);</span>
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, ClockwiseTopRightBottomLeft margins) {
-<span class="fc" id="L73">		return new TextBlockMarged(textBlock, margins);</span>
+<span class="fc" id="L72">		return new TextBlockMarged(textBlock, margins);</span>
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX1, double marginX2, double marginY1,
 			double marginY2) {
-<span class="fc" id="L78">		return new TextBlockMarged(textBlock, marginY1, marginX2, marginY2, marginX1);</span>
+<span class="fc" id="L77">		return new TextBlockMarged(textBlock, marginY1, marginX2, marginY2, marginX1);</span>
 	}
 
 	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth,
 			HorizontalAlignment horizontalAlignment) {
-<span class="nc" id="L83">		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);</span>
+<span class="nc" id="L82">		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);</span>
 	}
 
 	public static TextBlock empty(final double width, final double height) {
-<span class="fc" id="L87">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L86">		return new AbstractTextBlock() {</span>
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L89">			}</span>
+<span class="fc" id="L88">			}</span>
 
+			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 <span class="fc" id="L92">				return new XDimension2D(width, height);</span>
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L96">				return null;</span>
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L97">				return null;</span>
 			}
 
 		};
 	}
 
 	public static Positionable asPositionable(TextBlock textBlock, StringBounder stringBounder, XPoint2D pt) {
-<span class="nc" id="L103">		return PositionableImpl.create(pt, textBlock.calculateDimension(stringBounder));</span>
+<span class="nc" id="L104">		return PositionableImpl.create(pt, textBlock.calculateDimension(stringBounder));</span>
 	}
 
 	public static Positionable asPositionable(XDimension2D dim, StringBounder stringBounder, XPoint2D pt) {
-<span class="nc" id="L107">		return PositionableImpl.create(pt, dim);</span>
+<span class="nc" id="L108">		return PositionableImpl.create(pt, dim);</span>
 	}
 
 	public static TextBlock mergeLR(TextBlock b1, TextBlock b2, VerticalAlignment verticallAlignment) {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L112">			return b2;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L113">			return b2;</span>
 
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (b2 == EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L115">			return b1;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (b2 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L116">			return b1;</span>
 
-<span class="fc" id="L117">		return new TextBlockHorizontal(b1, b2, verticallAlignment);</span>
+<span class="fc" id="L118">		return new TextBlockHorizontal(b1, b2, verticallAlignment);</span>
 	}
 
 	public static TextBlock mergeTB(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L122">			return b2;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L123">			return b2;</span>
 
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (b2 == EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L125">			return b1;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (b2 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L126">			return b1;</span>
 
-<span class="fc" id="L127">		return new TextBlockVertical2(b1, b2, horizontalAlignment);</span>
+<span class="fc" id="L128">		return new TextBlockVertical2(b1, b2, horizontalAlignment);</span>
 	}
 
 	public static TextBlock mergeTB(TextBlock b1, UImage image, HorizontalAlignment horizontalAlignment) {
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L132">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L133">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L134">		return new TextBlockVertical2(b1, image, horizontalAlignment);</span>
+<span class="nc" id="L135">		return new TextBlockVertical2(b1, image, horizontalAlignment);</span>
 	}
 
 	// public static TextBlockBackcolored mergeColoredTB(TextBlockBackcolored b1,
@@ -141,94 +142,61 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 	// }
 
 	public static MinMax getMinMax(UDrawable tb, StringBounder stringBounder, boolean initToZero) {
-<span class="fc" id="L144">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, initToZero);</span>
-<span class="fc" id="L145">		tb.drawU(limitFinder);</span>
-<span class="fc" id="L146">		return limitFinder.getMinMax();</span>
+<span class="fc" id="L145">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, initToZero);</span>
+<span class="fc" id="L146">		tb.drawU(limitFinder);</span>
+<span class="fc" id="L147">		return limitFinder.getMinMax();</span>
 	}
 
 	public static boolean isEmpty(TextBlock text, StringBounder dummyStringBounder) {
-<span class="pc bpc" id="L150" title="1 of 4 branches missed.">		if (text == null || text == EMPTY_TEXT_BLOCK)</span>
-<span class="fc" id="L151">			return true;</span>
+<span class="pc bpc" id="L151" title="1 of 4 branches missed.">		if (text == null || text == EMPTY_TEXT_BLOCK)</span>
+<span class="fc" id="L152">			return true;</span>
 
-<span class="fc" id="L153">		final XDimension2D dim = text.calculateDimension(dummyStringBounder);</span>
-<span class="pc bpc" id="L154" title="1 of 4 branches missed.">		return dim.getHeight() == 0 &amp;&amp; dim.getWidth() == 0;</span>
-	}
-
-	public static TextBlock fullInnerPosition(final TextBlock bloc, final String display) {
-<span class="fc" id="L158">		return new TextBlock() {</span>
-
-			public void drawU(UGraphic ug) {
-<span class="fc" id="L161">				bloc.drawU(ug);</span>
-<span class="fc" id="L162">			}</span>
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L165">				return bloc.calculateDimension(stringBounder);</span>
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L169">				return bloc.getMinMax(stringBounder);</span>
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (strategy.check(display, member)) {</span>
-<span class="nc" id="L174">					final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L175">					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());</span>
-				}
-<span class="nc" id="L177">				return null;</span>
-			}
-
-			public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L181">				return bloc.getMagneticBorder();</span>
-			}
-
-			public HColor getBackcolor() {
-<span class="nc" id="L185">				return bloc.getBackcolor();</span>
-			}
-
-		};
+<span class="fc" id="L154">		final XDimension2D dim = text.calculateDimension(dummyStringBounder);</span>
+<span class="pc bpc" id="L155" title="1 of 4 branches missed.">		return dim.getHeight() == 0 &amp;&amp; dim.getWidth() == 0;</span>
 	}
 
 	public static TextBlock addBackcolor(final TextBlock text, final HColor backColor) {
-<span class="fc" id="L192">		return new TextBlock() {</span>
+<span class="fc" id="L159">		return new TextBlock() {</span>
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L194">				text.drawU(ug);</span>
-<span class="fc" id="L195">			}</span>
+<span class="fc" id="L161">				text.drawU(ug);</span>
+<span class="fc" id="L162">			}</span>
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L198">				return text.getMinMax(stringBounder);</span>
+<span class="nc" id="L165">				return text.getMinMax(stringBounder);</span>
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L202">				return text.getInnerPosition(member, stringBounder, strategy);</span>
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L170">				return text.getInnerPosition(member, stringBounder);</span>
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L206">				return text.calculateDimension(stringBounder);</span>
+<span class="fc" id="L174">				return text.calculateDimension(stringBounder);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="fc" id="L210">				return backColor;</span>
+<span class="fc" id="L178">				return backColor;</span>
 			}
 
 			public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L214">				return text.getMagneticBorder();</span>
+<span class="nc" id="L182">				return text.getMagneticBorder();</span>
 			}
 		};
 	}
 
 	public static TextBlock fromUImage(final UImage image) {
-<span class="fc" id="L220">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L188">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L223">				ug.draw(image);</span>
-<span class="fc" id="L224">			}</span>
+<span class="nc" id="L191">				ug.draw(image);</span>
+<span class="nc" id="L192">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L227">				return new XDimension2D(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L195">				return new XDimension2D(image.getWidth(), image.getHeight());</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L231">				return MinMax.fromMax(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L199">				return MinMax.fromMax(image.getWidth(), image.getHeight());</span>
 			}
 
 		};

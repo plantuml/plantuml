@@ -46,13 +46,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -82,11 +82,28 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">BodierLikeClassOrObject</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second even-row-color"><code><a href="#leaf" class="member-name-link">leaf</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#rawBody" class="member-name-link">rawBody</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -101,32 +118,35 @@ implements <a href="Bodier.html" title="interface in net.sourceforge.plantuml.cu
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addFieldOrMethod(java.lang.String)" class="member-name-link">addFieldOrMethod</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBody(net.sourceforge.plantuml.style.ISkinParam,boolean,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.klimt.font.FontConfiguration)" class="member-name-link">getBody</a><wbr>(<a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBestMatch(java.lang.CharSequence)" class="member-name-link">getBestMatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;candidate)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBody(net.sourceforge.plantuml.style.ISkinParam,boolean,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.klimt.font.FontConfiguration)" class="member-name-link">getBody</a><wbr>(<a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  boolean&nbsp;showMethods,
  boolean&nbsp;showFields,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fontConfiguration)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFieldsToDisplay()" class="member-name-link">getFieldsToDisplay</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMethodsToDisplay()" class="member-name-link">getMethodsToDisplay</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFieldsToDisplay()" class="member-name-link">getFieldsToDisplay</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRawBody()" class="member-name-link">getRawBody</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMethodsToDisplay()" class="member-name-link">getMethodsToDisplay</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasUrl()" class="member-name-link">hasUrl</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRawBody()" class="member-name-link">getRawBody</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#muteClassToObject()" class="member-name-link">muteClassToObject</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasUrl()" class="member-name-link">hasUrl</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLeaf(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">setLeaf</a><wbr>(<a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#muteClassToObject()" class="member-name-link">muteClassToObject</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLeaf(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">setLeaf</a><wbr>(<a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -139,6 +159,26 @@ implements <a href="Bodier.html" title="interface in net.sourceforge.plantuml.cu
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="rawBody">
+<h3>rawBody</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&gt;</span>&nbsp;<span class="element-name">rawBody</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="leaf">
+<h3>leaf</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span>&nbsp;<span class="element-name">leaf</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
@@ -148,60 +188,30 @@ implements <a href="Bodier.html" title="interface in net.sourceforge.plantuml.cu
 <section class="detail" id="muteClassToObject()">
 <h3>muteClassToObject</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">muteClassToObject</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#muteClassToObject()">muteClassToObject</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setLeaf(net.sourceforge.plantuml.abel.Entity)">
-<h3>setLeaf</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLeaf</span><wbr><span class="parameters">(<a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#setLeaf(net.sourceforge.plantuml.abel.Entity)">setLeaf</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="addFieldOrMethod(java.lang.String)">
 <h3>addFieldOrMethod</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addFieldOrMethod</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#addFieldOrMethod(java.lang.String)">addFieldOrMethod</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getMethodsToDisplay()">
 <h3>getMethodsToDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></span>&nbsp;<span class="element-name">getMethodsToDisplay</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#getMethodsToDisplay()">getMethodsToDisplay</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getFieldsToDisplay()">
 <h3>getFieldsToDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></span>&nbsp;<span class="element-name">getFieldsToDisplay</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#getFieldsToDisplay()">getFieldsToDisplay</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="hasUrl()">
 <h3>hasUrl</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasUrl</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#hasUrl()">hasUrl</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
@@ -213,19 +223,35 @@ implements <a href="Bodier.html" title="interface in net.sourceforge.plantuml.cu
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fontConfiguration)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setLeaf(net.sourceforge.plantuml.abel.Entity)">
+<h3>setLeaf</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLeaf</span><wbr><span class="parameters">(<a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Bodier.html#getBody(net.sourceforge.plantuml.style.ISkinParam,boolean,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.klimt.font.FontConfiguration)">getBody</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
+<dd><code><a href="Bodier.html#setLeaf(net.sourceforge.plantuml.abel.Entity)">setLeaf</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getRawBody()">
 <h3>getRawBody</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&gt;</span>&nbsp;<span class="element-name">getRawBody</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&gt;</span>&nbsp;<span class="element-name">getRawBody</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Bodier.html#getRawBody()">getRawBody</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getBestMatch(java.lang.CharSequence)">
+<h3>getBestMatch</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a></span>&nbsp;<span class="element-name">getBestMatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;candidate)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Bodier.html#getBestMatch(java.lang.CharSequence)">getBestMatch</a></code>&nbsp;in interface&nbsp;<code><a href="Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></dd>
 </dl>
 </section>
 </li>

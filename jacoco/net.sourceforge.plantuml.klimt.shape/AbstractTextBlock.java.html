@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
@@ -43,27 +42,27 @@ import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
-<span class="fc" id="L46">public abstract class AbstractTextBlock implements TextBlock {</span>
+<span class="fc" id="L45">public abstract class AbstractTextBlock implements TextBlock {</span>
     // ::remove file when __HAXE__
 
 	@Override
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-<span class="nc" id="L51">		throw new UnsupportedOperationException(&quot;member=&quot; + member + &quot; &quot; + getClass().toString());</span>
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+<span class="nc" id="L50">		throw new UnsupportedOperationException(&quot;member=&quot; + member + &quot; &quot; + getClass().toString());</span>
 	}
 
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L56">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L55">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 	@Override
 	public MagneticBorder getMagneticBorder() {
-<span class="fc" id="L61">		return new MagneticBorderNone();</span>
+<span class="fc" id="L60">		return new MagneticBorderNone();</span>
 	}
 
 	@Override
 	public HColor getBackcolor() {
-<span class="fc" id="L66">		return null;</span>
+<span class="fc" id="L65">		return null;</span>
 	}
 
 }

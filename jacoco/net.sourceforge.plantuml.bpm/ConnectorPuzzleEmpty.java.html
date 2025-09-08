@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -50,78 +49,79 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 
-<span class="nc" id="L53">public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Placeable, TextBlock, ConnectorPuzzle {</span>
+<span class="nc" id="L52">public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Placeable, TextBlock, ConnectorPuzzle {</span>
 
 	public static ConnectorPuzzleEmpty get(String value) {
-<span class="nc" id="L56">		final ConnectorPuzzleEmpty result = new ConnectorPuzzleEmpty();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (Where w : Where.values()) {</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">			if (value.contains(w.toShortString())) {</span>
-<span class="nc" id="L59">				result.append(w);</span>
+<span class="nc" id="L55">		final ConnectorPuzzleEmpty result = new ConnectorPuzzleEmpty();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (Where w : Where.values()) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">			if (value.contains(w.toShortString())) {</span>
+<span class="nc" id="L58">				result.append(w);</span>
 			}
 		}
-<span class="nc" id="L62">		return result;</span>
+<span class="nc" id="L61">		return result;</span>
 	}
 
 	public boolean checkDirections(String directions) {
-<span class="nc" id="L66">		return connections().equals(get(directions).connections());</span>
+<span class="nc" id="L65">		return connections().equals(get(directions).connections());</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (connections().size() == 0) {</span>
-<span class="nc" id="L72">			return &quot;NONE&quot;;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (connections().size() == 0) {</span>
+<span class="nc" id="L71">			return &quot;NONE&quot;;</span>
 
 		}
-<span class="nc" id="L75">		return connections().toString();</span>
+<span class="nc" id="L74">		return connections().toString();</span>
 	}
 
 	public XDimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam) {
-<span class="nc" id="L79">		return new XDimension2D(20, 20);</span>
+<span class="nc" id="L78">		return new XDimension2D(20, 20);</span>
 	}
 
 	public TextBlock toTextBlock(ISkinParam skinParam) {
-<span class="nc" id="L83">		return this;</span>
+<span class="nc" id="L82">		return this;</span>
 	}
 
 	public String getId() {
-<span class="nc" id="L87">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L86">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// System.err.println(&quot;DRAWING &quot; + toString());
-<span class="nc" id="L92">		ug = ug.apply(HColors.BLUE);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (Where w : Where.values()) {</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (have(w)) {</span>
-<span class="nc" id="L95">				drawLine(ug, w);</span>
+<span class="nc" id="L91">		ug = ug.apply(HColors.BLUE);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (Where w : Where.values()) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (have(w)) {</span>
+<span class="nc" id="L94">				drawLine(ug, w);</span>
 			}
 		}
 
-<span class="nc" id="L99">	}</span>
+<span class="nc" id="L98">	}</span>
 
 	private void drawLine(UGraphic ug, Where w) {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (w == Where.WEST) {</span>
-<span class="nc" id="L103">			ug.apply(UTranslate.dy(10)).draw(ULine.hline(10));</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (w == Where.WEST) {</span>
+<span class="nc" id="L102">			ug.apply(UTranslate.dy(10)).draw(ULine.hline(10));</span>
 		}
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (w == Where.EAST) {</span>
-<span class="nc" id="L106">			ug.apply(new UTranslate(10, 10)).draw(ULine.hline(10));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (w == Where.EAST) {</span>
+<span class="nc" id="L105">			ug.apply(new UTranslate(10, 10)).draw(ULine.hline(10));</span>
 		}
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (w == Where.NORTH) {</span>
-<span class="nc" id="L109">			ug.apply(UTranslate.dx(10)).draw(ULine.vline(10));</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (w == Where.NORTH) {</span>
+<span class="nc" id="L108">			ug.apply(UTranslate.dx(10)).draw(ULine.vline(10));</span>
 		}
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (w == Where.SOUTH) {</span>
-<span class="nc" id="L112">			ug.apply(new UTranslate(10, 10)).draw(ULine.vline(10));</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (w == Where.SOUTH) {</span>
+<span class="nc" id="L111">			ug.apply(new UTranslate(10, 10)).draw(ULine.vline(10));</span>
 		}
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L113">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L117">		return new XDimension2D(20, 20);</span>
+<span class="nc" id="L116">		return new XDimension2D(20, 20);</span>
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L121">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L120">		throw new UnsupportedOperationException();</span>
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 <span class="nc" id="L125">		return null;</span>
 	}
 
