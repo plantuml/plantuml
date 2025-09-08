@@ -24,8 +24,9 @@ jobs:
     runs-on: ${{matrix.os}}
     env:
       GRADLE_USER_HOME: ${{ github.workspace }}/.gradle
-      TMP:  ${{ runner.temp }}
-      TEMP: ${{ runner.temp }}
+      TMPDIR: ${{ github.workspace }}/.tmp
+      TMP:    ${{ github.workspace }}/.tmp
+      TEMP:   ${{ github.workspace }}/.tmp
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v5
@@ -36,6 +37,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           distribution: liberica
           cache: gradle
+
+      - name: Sanity check paths
+        shell: bash
+        run: |
+          echo "PWD=$(pwd)"
+          echo "GRADLE_USER_HOME=$GRADLE_USER_HOME"
+          echo "TMP=$TMP  TEMP=$TEMP  TMPDIR=$TMPDIR"
+          java -XshowSettings:properties -version 2>&1 | sed -n 's/.*java.io.tmpdir = //p'
 
       - name: Set the release version
         shell: bash
