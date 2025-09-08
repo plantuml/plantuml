@@ -11,7 +11,6 @@ val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
 plugins {
 	java
-	`maven-publish`
 	signing
 }
 
@@ -148,49 +147,6 @@ tasks.named("sourcesJar"){
 }
 
 
-publishing {
-	publications.create<MavenPublication>("maven") {
-		from(components["java"])
-		pom {
-			name.set("PlantUML")
-			description.set("PlantUML is a component that allows to quickly write diagrams from text.")
-			groupId = project.group as String
-			artifactId = project.name
-			version = project.version as String
-			url.set("https://plantuml.com/")
-			licenses {
-				license {
-					name.set("ASL License")
-					url.set("https://opensource.org/license/apache-2-0/")
-				}
-			}
-			developers {
-				developer {
-					id.set("arnaud.roques")
-					name.set("Arnaud Roques")
-					email.set("plantuml@gmail.com")
-				}
-			}
-			scm {
-				connection.set("scm:git:git://github.com:plantuml/plantuml.git")
-				developerConnection.set("scm:git:ssh://git@github.com:plantuml/plantuml.git")
-				url.set("https://github.com/plantuml/plantuml")
-			}
-		}
-	}
-	repositories {
-		maven {
-			name = "OSSRH"
-			val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-			val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-			url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-			credentials {
-				username = System.getenv("OSSRH_USERNAME")
-				password = System.getenv("OSSRH_PASSWORD")
-			}
-		}
-	}
-}
 
 signing {
 	if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
@@ -199,8 +155,5 @@ signing {
 		val signingKey: String? by project
 		val signingPassword: String? by project
 		useInMemoryPgpKeys(signingKey, signingPassword)
-	}
-	if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
-		sign(publishing.publications["maven"])
 	}
 }
