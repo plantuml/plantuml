@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.klimt.Fashion;
@@ -135,8 +134,9 @@ public class AnnotatedBuilder {
 				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				final XRectangle2D rect = original.getInnerPosition(member, stringBounder, strategy);
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+				final XRectangle2D rect = original.getInnerPosition(member, stringBounder);
 				return new XRectangle2D(dx + rect.getX() + margin.getLeft() + padding.getLeft(),
 						dy + rect.getY() + margin.getTop() + padding.getTop() + dimTitle.getHeight(), rect.getWidth(),
 						rect.getHeight());

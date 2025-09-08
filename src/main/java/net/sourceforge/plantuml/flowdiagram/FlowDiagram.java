@@ -35,15 +35,12 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
-
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.atmp.ImageBuilder;
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -76,7 +73,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class FlowDiagram extends UmlDiagram implements TextBlock {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private static double SINGLE_SIZE_X = 100;
 	private static double SINGLE_SIZE_Y = 35;
@@ -85,7 +82,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<Tile, ActivityBox>();
 	private Tile lastTile;
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 		throw new UnsupportedOperationException();
 	}
 

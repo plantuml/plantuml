@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -121,7 +120,8 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 		throw new UnsupportedOperationException();
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 		return null;
 	}
 

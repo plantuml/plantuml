@@ -758,5 +758,12 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		// that was active when the entity was created (currentStyleBuilder).
 		return currentStyleBuilder;
 	}
+	
+	
+
+	public final CharSequence getBestMatch(CharSequence candidate) {
+		return bodier.getBestMatch(candidate);
+
+	}
 
 }

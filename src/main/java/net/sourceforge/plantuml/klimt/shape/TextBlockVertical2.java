@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -136,11 +135,11 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	}
 
 	@Override
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 		double y = 0;
 		for (TextBlock block : blocks) {
 			final XDimension2D dimb = block.calculateDimension(stringBounder);
-			final XRectangle2D result = block.getInnerPosition(member, stringBounder, strategy);
+			final XRectangle2D result = block.getInnerPosition(member, stringBounder);
 			if (result != null) {
 				return UTranslate.dy(y).apply(result);
 			}

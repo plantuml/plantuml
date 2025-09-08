@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -113,7 +112,8 @@ public class GridTextBlockSimple implements TextBlock {
 		return new XDimension2D(Math.max(MINIMUM_WIDTH, width), height);
 	}
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	@Override
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 		throw new UnsupportedOperationException("member=" + member + " " + getClass().toString());
 	}
 

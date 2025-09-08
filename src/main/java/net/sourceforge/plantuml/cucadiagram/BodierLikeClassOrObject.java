@@ -36,13 +36,11 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.creole.Parser;
@@ -57,14 +55,12 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.url.UrlBuilder;
 
-public class BodierLikeClassOrObject implements Bodier {
+public class BodierLikeClassOrObject extends BodierAbstract {
 
-	private final List<CharSequence> rawBody = new ArrayList<>();
 	private final Set<VisibilityModifier> hideVisibilityModifier;
 	private LeafType type;
 	private List<Member> methodsToDisplay;
 	private List<Member> fieldsToDisplay;
-	private Entity leaf;
 
 	@Override
 	public void muteClassToObject() {
@@ -80,12 +76,6 @@ public class BodierLikeClassOrObject implements Bodier {
 		this.type = Objects.requireNonNull(type);
 		assert type.isLikeClass() || type == LeafType.OBJECT;
 		this.hideVisibilityModifier = hideVisibilityModifier;
-	}
-
-	@Override
-	public void setLeaf(Entity leaf) {
-		this.leaf = Objects.requireNonNull(leaf);
-
 	}
 
 	@Override
@@ -251,11 +241,6 @@ public class BodierLikeClassOrObject implements Bodier {
 		final TextBlock bb1 = fields.asBlockMemberImpl();
 		final TextBlock bb2 = methods.asBlockMemberImpl();
 		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);
-	}
-
-	@Override
-	public List<CharSequence> getRawBody() {
-		return Collections.unmodifiableList(rawBody);
 	}
 
 }

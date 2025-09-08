@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -51,7 +50,7 @@ public interface TextBlock extends UDrawable, UShape {
 	// ::comment when __HAXE__
 	public MinMax getMinMax(StringBounder stringBounder);
 
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder);
 
 	public MagneticBorder getMagneticBorder();
 

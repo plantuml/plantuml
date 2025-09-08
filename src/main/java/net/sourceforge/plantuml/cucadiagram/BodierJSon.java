@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.List;
-import java.util.Objects;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -50,7 +49,6 @@ import net.sourceforge.plantuml.style.Style;
 
 public class BodierJSon implements Bodier {
 
-	private Entity leaf;
 	private JsonValue json;
 
 	@Override
@@ -63,7 +61,6 @@ public class BodierJSon implements Bodier {
 
 	@Override
 	public void setLeaf(Entity leaf) {
-		this.leaf = Objects.requireNonNull(leaf);
 
 	}
 
@@ -100,6 +97,11 @@ public class BodierJSon implements Bodier {
 
 	public void setJson(JsonValue json) {
 		this.json = json;
+	}
+
+	@Override
+	public CharSequence getBestMatch(CharSequence candidate) {
+		throw new UnsupportedOperationException();
 	}
 
 }

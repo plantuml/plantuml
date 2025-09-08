@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.LineConfigurable;
@@ -127,8 +126,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	@Override
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-		final XRectangle2D result = body.getInnerPosition(member, stringBounder, strategy);
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+		final XRectangle2D result = body.getInnerPosition(member, stringBounder);
 		if (result == null)
 			return result;
 

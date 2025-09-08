@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -99,7 +98,7 @@ public enum VisibilityModifier {
 			}
 
 			@Override
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 				return null;
 			}
 

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
@@ -107,8 +106,9 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 				}
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return raw.getInnerPosition(member, stringBounder, strategy);
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+				return raw.getInnerPosition(member, stringBounder);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

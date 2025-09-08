@@ -35,12 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -50,11 +44,9 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-public class BodierSimple implements Bodier {
+public class BodierSimple extends BodierAbstract {
 
-	private final List<CharSequence> rawBody = new ArrayList<>();
 	private final ISkinParam skinParam;
-	private Entity leaf;
 
 	@Override
 	public void muteClassToObject() {
@@ -63,11 +55,6 @@ public class BodierSimple implements Bodier {
 
 	BodierSimple(ISkinParam skinParam) {
 		this.skinParam = skinParam;
-	}
-
-	@Override
-	public void setLeaf(Entity leaf) {
-		this.leaf = Objects.requireNonNull(leaf);
 	}
 
 	@Override
@@ -91,11 +78,6 @@ public class BodierSimple implements Bodier {
 	@Override
 	public boolean hasUrl() {
 		return false;
-	}
-
-	@Override
-	public List<CharSequence> getRawBody() {
-		return Collections.unmodifiableList(rawBody);
 	}
 
 	@Override

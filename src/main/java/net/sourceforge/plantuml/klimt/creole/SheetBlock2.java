@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole;
 import java.util.List;
 import java.util.Objects;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
@@ -109,8 +108,8 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 	}
 
 	@Override
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-		return block.getInnerPosition(member, stringBounder, strategy);
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+		return block.getInnerPosition(member, stringBounder);
 	}
 
 	@Override

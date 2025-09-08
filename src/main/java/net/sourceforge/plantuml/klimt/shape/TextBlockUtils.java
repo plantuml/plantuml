@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
@@ -88,11 +87,13 @@ public class TextBlockUtils {
 			public void drawU(UGraphic ug) {
 			}
 
+			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(width, height);
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 				return null;
 			}
 
@@ -154,40 +155,6 @@ public class TextBlockUtils {
 		return dim.getHeight() == 0 && dim.getWidth() == 0;
 	}
 
-	public static TextBlock fullInnerPosition(final TextBlock bloc, final String display) {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				bloc.drawU(ug);
-			}
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return bloc.calculateDimension(stringBounder);
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				return bloc.getMinMax(stringBounder);
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				if (strategy.check(display, member)) {
-					final XDimension2D dim = calculateDimension(stringBounder);
-					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());
-				}
-				return null;
-			}
-
-			public MagneticBorder getMagneticBorder() {
-				return bloc.getMagneticBorder();
-			}
-
-			public HColor getBackcolor() {
-				return bloc.getBackcolor();
-			}
-
-		};
-	}
-
 	public static TextBlock addBackcolor(final TextBlock text, final HColor backColor) {
 		return new TextBlock() {
 			public void drawU(UGraphic ug) {
@@ -198,8 +165,9 @@ public class TextBlockUtils {
 				return text.getMinMax(stringBounder);
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return text.getInnerPosition(member, stringBounder, strategy);
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+				return text.getInnerPosition(member, stringBounder);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

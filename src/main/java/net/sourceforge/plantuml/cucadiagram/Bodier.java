@@ -64,4 +64,7 @@ public interface Bodier {
 	public void muteClassToObject();
 
 	public boolean hasUrl();
+	
+	public CharSequence getBestMatch(CharSequence candidate);
+
 }

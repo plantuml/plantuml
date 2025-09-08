@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -67,20 +66,17 @@ public class ULayoutGroup {
 
 	}
 
-	public XRectangle2D getInnerPosition(String member, double width, double height, StringBounder stringBounder) {
+	public XRectangle2D getInnerPosition(CharSequence member, double width, double height,
+			StringBounder stringBounder) {
 		final Set<Entry<TextBlock, XPoint2D>> all = placementStrategy.getPositions(width, height).entrySet();
-		XRectangle2D result = tryOne(all, member, stringBounder, InnerStrategy.STRICT);
-		if (result == null)
-			result = tryOne(all, member, stringBounder, InnerStrategy.LAZZY);
-
-		return result;
+		return tryOne(all, member, stringBounder);
 	}
 
-	private XRectangle2D tryOne(final Set<Entry<TextBlock, XPoint2D>> all, String member, StringBounder stringBounder,
-			InnerStrategy mode) {
+	private XRectangle2D tryOne(final Set<Entry<TextBlock, XPoint2D>> all, CharSequence member,
+			StringBounder stringBounder) {
 		for (Map.Entry<TextBlock, XPoint2D> ent : all) {
 			final TextBlock block = ent.getKey();
-			final XRectangle2D result = block.getInnerPosition(member, stringBounder, mode);
+			final XRectangle2D result = block.getInnerPosition(member, stringBounder);
 			if (result != null) {
 				final UTranslate translate = UTranslate.point(ent.getValue());
 				return translate.apply(result);

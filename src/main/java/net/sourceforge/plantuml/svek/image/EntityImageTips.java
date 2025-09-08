@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek.image;
 
 import java.util.Map;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -142,8 +141,12 @@ public class EntityImageTips extends AbstractEntityImage {
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
-			final XRectangle2D memberPosition = nodeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
-					InnerStrategy.STRICT);
+			final String member = ent.getKey();
+			final CharSequence bestMatch = nodeOther.getBestMatch(member);
+			if (bestMatch == null)
+				return;
+			final XRectangle2D memberPosition = nodeOther.getImage().getInnerPosition(bestMatch.toString(),
+					stringBounder);
 			if (memberPosition == null)
 				return;
 

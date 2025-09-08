@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -171,7 +170,7 @@ public final class GraphvizImageBuilder {
 			return MinMax.fromDim(calculateDimension(stringBounder));
 		}
 
-		public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 			return null;
 		}
 

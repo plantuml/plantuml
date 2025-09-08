@@ -508,5 +508,12 @@ public class SvekNode implements XNode {
 //			}
 //		};
 	}
+	
+	
+	public final CharSequence getBestMatch(CharSequence candidate) {
+		return leaf.getBestMatch(candidate);
+
+	}
+
 
 }

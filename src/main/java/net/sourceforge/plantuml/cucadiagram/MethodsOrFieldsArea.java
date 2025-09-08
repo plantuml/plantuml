@@ -42,7 +42,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -54,6 +53,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategy;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyVisibility;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2Center;
@@ -242,18 +243,54 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			if (m.isStatic())
 				config = config.underline();
 
-			TextBlock bloc = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,
-					style.wrapWidth());
-			bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));
+			TextBlock bloc = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam,
+					CreoleMode.SIMPLE_LINE, style.wrapWidth());
+			bloc = fullInnerPosition(bloc, m);
 			return new TextBlockTracer(m, bloc);
 		}
 
 //		if (cs instanceof EmbeddedDiagram)
 //			return ((EmbeddedDiagram) cs).asDraw(skinParam);
 
-		return Display.getWithNewlines(skinParam.getPragma(), cs.toString()).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,
-				style.wrapWidth());
+		return Display.getWithNewlines(skinParam.getPragma(), cs.toString()).create8(config, align, skinParam,
+				CreoleMode.SIMPLE_LINE, style.wrapWidth());
 
+	}
+
+	private static TextBlock fullInnerPosition(final TextBlock bloc, final Member display) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				bloc.drawU(ug);
+			}
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return bloc.calculateDimension(stringBounder);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return bloc.getMinMax(stringBounder);
+			}
+
+			@Override
+			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+				// InnerStrategy
+				if (display.toString().equals(member.toString())) {
+					final XDimension2D dim = calculateDimension(stringBounder);
+					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());
+				}
+				return null;
+			}
+
+			public MagneticBorder getMagneticBorder() {
+				return bloc.getMagneticBorder();
+			}
+
+			public HColor getBackcolor() {
+				return bloc.getBackcolor();
+			}
+
+		};
 	}
 
 	static class TextBlockTracer extends AbstractTextBlock implements TextBlock {
@@ -282,8 +319,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		}
 
 		@Override
-		public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-			return bloc.getInnerPosition(member, stringBounder, strategy);
+		public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+			return bloc.getInnerPosition(member, stringBounder);
 		}
 
 	}
@@ -296,8 +333,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 				}
 
 				@Override
-				public XRectangle2D getInnerPosition(String member, StringBounder stringBounder,
-						InnerStrategy strategy) {
+				public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 					return null;
 				}
 
@@ -328,7 +364,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 	}
 
 	@Override
-	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 		final ULayoutGroup group = getLayout(stringBounder);
 		final XDimension2D dim = calculateDimension(stringBounder);
 		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);
