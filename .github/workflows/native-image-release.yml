@@ -22,6 +22,10 @@ jobs:
           - os: 'windows-latest'
             platform: 'win-amd64'
     runs-on: ${{matrix.os}}
+    env:
+      GRADLE_USER_HOME: ${{ github.workspace }}/.gradle
+      TMP:  ${{ runner.temp }}
+      TEMP: ${{ runner.temp }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v5
