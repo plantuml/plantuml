@@ -58,11 +58,11 @@ import net.sourceforge.plantuml.abel.Entity;
 	}
 
 	static private boolean isAlphanum(char c) {
-<span class="nc bnc" id="L61" title="All 6 branches missed.">		return Character.isAlphabetic(c) || Character.isDigit(c) || c == '_';</span>
+<span class="pc bpc" id="L61" title="2 of 6 branches missed.">		return Character.isAlphabetic(c) || Character.isDigit(c) || c == '_';</span>
 	}
 
 	static private boolean isOnlyLetter(char c) {
-<span class="nc" id="L65">		return Character.isAlphabetic(c);</span>
+<span class="fc" id="L65">		return Character.isAlphabetic(c);</span>
 	}
 
 	@Override
@@ -91,62 +91,62 @@ import net.sourceforge.plantuml.abel.Entity;
 	private static final long WEIGHT_BEFORE_MATCH_LETTER_STEP = 1000_000_000L;
 
 	static long matchScore(CharSequence fullString, CharSequence candidate) {
-<span class="nc bnc" id="L94" title="All 4 branches missed.">		if (fullString == null || candidate == null)</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">		if (fullString == null || candidate == null)</span>
 <span class="nc" id="L95">			throw new IllegalArgumentException();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (candidate.length() == 0)</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (candidate.length() == 0)</span>
 <span class="nc" id="L97">			throw new IllegalArgumentException(&quot;candidate must not be empty&quot;);</span>
 
-<span class="nc" id="L99">		final int lenFull = fullString.length();</span>
-<span class="nc" id="L100">		final int lenCand = candidate.length();</span>
+<span class="fc" id="L99">		final int lenFull = fullString.length();</span>
+<span class="fc" id="L100">		final int lenCand = candidate.length();</span>
 
-<span class="nc" id="L102">		long score = 0;</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (int i = 0; i &lt;= lenFull - lenCand; i++) {</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (startsWith(fullString, i, candidate)) {</span>
+<span class="fc" id="L102">		long score = 0;</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		for (int i = 0; i &lt;= lenFull - lenCand; i++) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (startsWith(fullString, i, candidate)) {</span>
 
-<span class="nc" id="L106">				boolean separatorSeen = false;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">				for (int j = i + lenCand; j &lt; lenFull; j++) {</span>
-<span class="nc" id="L108">					final char ch = fullString.charAt(j);</span>
-<span class="nc bnc" id="L109" title="All 4 branches missed.">					if (separatorSeen == false &amp;&amp; isAlphanum(ch)) {</span>
-<span class="nc" id="L110">						score += WEIGHT_TRAILING_LETTERS;</span>
+<span class="fc" id="L106">				boolean separatorSeen = false;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">				for (int j = i + lenCand; j &lt; lenFull; j++) {</span>
+<span class="fc" id="L108">					final char ch = fullString.charAt(j);</span>
+<span class="fc bfc" id="L109" title="All 4 branches covered.">					if (separatorSeen == false &amp;&amp; isAlphanum(ch)) {</span>
+<span class="fc" id="L110">						score += WEIGHT_TRAILING_LETTERS;</span>
 					} else {
-<span class="nc" id="L112">						separatorSeen = true;</span>
-<span class="nc" id="L113">						score += WEIGHT_AFTER_SEPARATOR;</span>
+<span class="fc" id="L112">						separatorSeen = true;</span>
+<span class="fc" id="L113">						score += WEIGHT_AFTER_SEPARATOR;</span>
 					}
 				}
-<span class="nc" id="L116">				return score;</span>
+<span class="fc" id="L116">				return score;</span>
 			}
 
-<span class="nc" id="L119">			final char ch = fullString.charAt(i);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (isOnlyLetter(ch))</span>
-<span class="nc" id="L121">				score += WEIGHT_BEFORE_MATCH_LETTER_STEP;</span>
+<span class="fc" id="L119">			final char ch = fullString.charAt(i);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (isOnlyLetter(ch))</span>
+<span class="fc" id="L121">				score += WEIGHT_BEFORE_MATCH_LETTER_STEP;</span>
 			else
-<span class="nc" id="L123">				score += WEIGHT_BEFORE_MATCH_STEP;</span>
+<span class="fc" id="L123">				score += WEIGHT_BEFORE_MATCH_STEP;</span>
 		}
 
 <span class="nc" id="L126">		return Long.MAX_VALUE;</span>
 	}
 
 	static boolean startsWith(CharSequence fullString, int startIdx, CharSequence candidate) {
-<span class="nc bnc" id="L130" title="All 4 branches missed.">		if (fullString == null || candidate == null)</span>
+<span class="pc bpc" id="L130" title="2 of 4 branches missed.">		if (fullString == null || candidate == null)</span>
 <span class="nc" id="L131">			return false;</span>
 
-<span class="nc" id="L133">		final int lenFull = fullString.length();</span>
-<span class="nc" id="L134">		final int lenCandidate = candidate.length();</span>
+<span class="fc" id="L133">		final int lenFull = fullString.length();</span>
+<span class="fc" id="L134">		final int lenCandidate = candidate.length();</span>
 
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (lenCandidate == 0)</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (lenCandidate == 0)</span>
 <span class="nc" id="L137">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (startIdx &lt; 0 || startIdx &gt; lenFull)</span>
-<span class="nc" id="L140">			return false;</span>
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">		if (startIdx &lt; 0 || startIdx &gt; lenFull)</span>
+<span class="fc" id="L140">			return false;</span>
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (startIdx + lenCandidate &gt; lenFull)</span>
-<span class="nc" id="L143">			return false;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (startIdx + lenCandidate &gt; lenFull)</span>
+<span class="fc" id="L143">			return false;</span>
 
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (int i = 0; i &lt; lenCandidate; i++)</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (fullString.charAt(startIdx + i) != candidate.charAt(i))</span>
-<span class="nc" id="L147">				return false;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (int i = 0; i &lt; lenCandidate; i++)</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (fullString.charAt(startIdx + i) != candidate.charAt(i))</span>
+<span class="fc" id="L147">				return false;</span>
 
-<span class="nc" id="L149">		return true;</span>
+<span class="fc" id="L149">		return true;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
