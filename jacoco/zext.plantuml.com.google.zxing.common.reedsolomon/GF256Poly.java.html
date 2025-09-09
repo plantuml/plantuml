@@ -49,8 +49,8 @@ final class GF256Poly {
 <span class="fc bfc" id="L49" title="All 4 branches covered.">    if (coefficientsLength &gt; 1 &amp;&amp; coefficients[0] == 0) {</span>
       // Leading term must be non-zero for anything except the constant polynomial &quot;0&quot;
 <span class="fc" id="L51">      int firstNonZero = 1;</span>
-<span class="pc bpc" id="L52" title="1 of 4 branches missed.">      while (firstNonZero &lt; coefficientsLength &amp;&amp; coefficients[firstNonZero] == 0) {</span>
-<span class="fc" id="L53">        firstNonZero++;</span>
+<span class="pc bpc" id="L52" title="2 of 4 branches missed.">      while (firstNonZero &lt; coefficientsLength &amp;&amp; coefficients[firstNonZero] == 0) {</span>
+<span class="nc" id="L53">        firstNonZero++;</span>
       }
 <span class="pc bpc" id="L55" title="1 of 2 branches missed.">      if (firstNonZero == coefficientsLength) {</span>
 <span class="nc" id="L56">        this.coefficients = field.getZero().coefficients;</span>
