@@ -149,7 +149,7 @@ public class WBSDiagram extends UmlDiagram {
 		try {
 <span class="fc bfc" id="L150" title="All 2 branches covered.">			if (level == 0) {</span>
 <span class="pc bpc" id="L151" title="1 of 2 branches missed.">				if (root != null)</span>
-<span class="nc" id="L152">					return CommandExecutionResult.error(&quot;Error 44&quot;);</span>
+<span class="nc" id="L152">					return CommandExecutionResult.error(&quot;WBS diagram only accepts one root first declared.&quot;);</span>
 
 <span class="fc" id="L154">				initRoot(backColor, display, stereotype, shape);</span>
 <span class="fc" id="L155">				return CommandExecutionResult.ok();</span>
