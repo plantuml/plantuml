@@ -149,7 +149,7 @@ public class WBSDiagram extends UmlDiagram {
 		try {
 			if (level == 0) {
 				if (root != null)
-					return CommandExecutionResult.error("Error 44");
+					return CommandExecutionResult.error("WBS diagram only accepts one root first declared.");
 
 				initRoot(backColor, display, stereotype, shape);
 				return CommandExecutionResult.ok();
