@@ -42,8 +42,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.function.Supplier;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.ProgressBar;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 
 public abstract class Log {
 	// ::comment when __HAXE__
@@ -99,7 +100,7 @@ public abstract class Log {
 
 	public synchronized static void info(Supplier<String> msgSupplier) {
 		// ::comment when __CORE__ or __HAXE__
-		if (OptionFlags.getInstance().isVerbose()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 			ProgressBar.clear();
 			System.err.println(format(msgSupplier.get()));
 		}

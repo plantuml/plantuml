@@ -17,6 +17,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.security.SFile;
 
 /**
@@ -125,7 +127,7 @@ class LoadJsonTest {
 
     private String render(String diagram, String... extraOptions) throws Exception {
 
-        final Option option = new Option(optionArray(extraOptions));
+        final CliOptions option = CliParser.parse(optionArray(extraOptions));
 
         final ByteArrayInputStream bais = new ByteArrayInputStream(diagram.getBytes(UTF_8));
 

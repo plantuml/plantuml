@@ -47,6 +47,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
@@ -157,7 +159,7 @@ public class BlockUml {
 
 	// ::comment when __CORE__
 	public String getFileOrDirname() {
-		if (OptionFlags.getInstance().isWord())
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))
 			return null;
 
 		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));

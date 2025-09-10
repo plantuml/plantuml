@@ -58,9 +58,10 @@ import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
@@ -276,7 +277,7 @@ public class PicoWebServer implements Runnable {
 
 	public void handleRenderRequest(RenderRequest renderRequest, BufferedOutputStream out) throws Exception {
 
-		final Option option = new Option(renderRequest.getOptions());
+		final CliOptions option = CliParser.parse(renderRequest.getOptions());
 
 		final String source = renderRequest.getSource().startsWith("@start") ? renderRequest.getSource()
 				: "@startuml\n" + renderRequest.getSource() + "\n@enduml";

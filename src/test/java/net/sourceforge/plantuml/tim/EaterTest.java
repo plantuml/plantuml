@@ -12,13 +12,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.IndicativeSentencesGeneration;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.ErrorStatus;
-import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.Pipe;
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParser;
 
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 /**
@@ -48,7 +48,7 @@ class EaterTest {
     }
 
     private String render(String diagram, String... extraOptions) throws Exception {
-        final Option option = new Option(optionArray(extraOptions));
+        final CliOptions option = CliParser.parse(optionArray(extraOptions));
         final ByteArrayInputStream bais = new ByteArrayInputStream(diagram.getBytes(UTF_8));
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getCharset());

@@ -17,6 +17,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.picoweb.RenderRequest;
 
@@ -102,7 +104,7 @@ public class TestFileDirOption {
 
 	private String renderViaPipe(String... extraOptions) throws Exception {
 
-		final Option option = new Option(optionArray(extraOptions));
+		final CliOptions option = CliParser.parse(optionArray(extraOptions));
 
 		final ByteArrayInputStream bais = new ByteArrayInputStream(DIAGRAM.getBytes(UTF_8));
 

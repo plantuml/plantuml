@@ -40,9 +40,9 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -64,7 +64,7 @@ public class SyntaxChecker {
 	}
 
 	public static SyntaxResult checkSyntax(String source) {
-		OptionFlags.getInstance().setQuiet(true);
+		// GlobalConfig.getInstance().setQuiet(true);
 		final SyntaxResult result = new SyntaxResult();
 
 		if (source.startsWith("@startuml\n") == false) {

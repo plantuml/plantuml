@@ -38,7 +38,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 public class License {
@@ -218,7 +219,7 @@ public class License {
 		text.add("by the very same license.");
 
 		// ::comment when __CORE__
-		if (OptionFlags.getInstance().isEnableStats()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {
 			text.add(" ");
 			text.add("This version of PlantUML records general local statistics about usage.");
 			text.add("(more info on https://plantuml.com/statistics-report)");

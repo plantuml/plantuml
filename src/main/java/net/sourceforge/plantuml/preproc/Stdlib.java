@@ -195,12 +195,12 @@ public class Stdlib {
 		return channel.getInternalInputStream(name);
 	}
 
-	public static void extractStdLib() throws IOException {
-		for (String name : getAllFolderNames()) {
-			final Stdlib folder = Stdlib.retrieve(name);
-			folder.extractMeFull();
-		}
-	}
+//	public static void extractStdLib() throws IOException {
+//		for (String name : getAllFolderNames()) {
+//			final Stdlib folder = Stdlib.retrieve(name);
+//			folder.extractMeFull();
+//		}
+//	}
 
 	public static Collection<String> getAllFolderNames() throws IOException {
 		final InputStream home = SpmChannel.inputStream("stdlib/home.spm");

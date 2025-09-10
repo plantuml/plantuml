@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
@@ -213,7 +213,7 @@ class Step1Message extends Step1Abstract {
 		double halfLifeWidth = getHalfLifeWidth();
 		if (getMessage().isActivate()) {
 			deltaY -= halfLifeWidth;
-			if (OptionFlags.STRICT_SELFMESSAGE_POSITION)
+			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION)
 				deltaX += 5;
 		}
 		if (getMessage().isDeactivate())

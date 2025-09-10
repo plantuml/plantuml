@@ -39,11 +39,11 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.decoration.symbol.USymbolInterface;
 import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
@@ -157,9 +157,9 @@ public final class GeneralImageBuilder {
 			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
-			if (OptionFlags.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
+			if (GlobalConfig.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye1(leaf, bibliotekon);
-			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
+			} else if (GlobalConfig.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, portionShower);
 			} else {
 				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);

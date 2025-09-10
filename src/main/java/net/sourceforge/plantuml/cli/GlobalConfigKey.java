@@ -31,31 +31,51 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
-package net.sourceforge.plantuml.svek.extremity;
+package net.sourceforge.plantuml.cli;
 
-import net.sourceforge.plantuml.cli.GlobalConfig;
-import net.sourceforge.plantuml.klimt.geom.Side;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
+public enum GlobalConfigKey {
 
-public class ExtremityFactoryParenthesis extends AbstractExtremityFactory implements ExtremityFactory {
+	REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT(Boolean.FALSE), //
+	VERBOSE(Boolean.FALSE), //
+	EXTRACT_FROM_METADATA(Boolean.FALSE), //
+	WORD(Boolean.FALSE), //
+	SYSTEM_EXIT(Boolean.TRUE), //
+	GUI(Boolean.FALSE), //
+	PRINT_FONTS(Boolean.FALSE), //
+	ENCODESPRITE(Boolean.FALSE), //
+	DUMP_HTML_STATS(Boolean.FALSE), //
+	DUMP_STATS(Boolean.FALSE), //
+	LOOP_STATS(Boolean.FALSE), //
+	OVERWRITE(Boolean.FALSE), //
+	ENABLE_STATS(defaultForStats()), //
+	STD_LIB(Boolean.FALSE), //
+	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //
+	CLIPBOARD_LOOP(Boolean.FALSE), //
+	CLIPBOARD(Boolean.FALSE), //
+	FILE_SEPARATOR("_"), //
+	TIMEOUT_MS(15 * 60 * 1000L);// 15 minutes
 
-	@Override
-	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-		return new ExtremityParenthesis(p0, angle - Math.PI / 2);
+	private final Object defaultValue;
+
+	GlobalConfigKey(Object defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
-	@Override
-	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
-		final double ortho = atan2(p0, p2);
-		if (GlobalConfig.USE_INTERFACE_EYE2) {
-			final XPoint2D center = new XPoint2D((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
-			return new ExtremityParenthesis2(center, ortho, p1);
-		}
-		return new ExtremityParenthesis(p1, ortho);
+	public Object getDefaultValue() {
+		return defaultValue;
 	}
+	
+	
+	private static boolean defaultForStats() {
+		return isTrue(System.getProperty("PLANTUML_STATS")) || isTrue(System.getenv("PLANTUML_STATS"));
+	}
+
+	private static boolean isTrue(final String value) {
+		return "on".equalsIgnoreCase(value) || "true".equalsIgnoreCase(value);
+	}
+
+
 
 }

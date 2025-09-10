@@ -43,8 +43,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
@@ -90,7 +90,7 @@ public enum LinkDecor {
 	CIRCLE(decors1("0"), decors2("0"), 0, false, 0.5), //
 	CIRCLE_FILL(decors1("@"), decors2("@"), 0, false, 0.5), //
 	CIRCLE_CONNECT(decors1("0)"), decors2("(0"), 0, false, 0.5), //
-	PARENTHESIS(decors1(")"), decors2("("), 0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //
+	PARENTHESIS(decors1(")"), decors2("("), 0, false, GlobalConfig.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //
 	SQUARE(decors1("#"), decors2("#"), 0, false, 0.5), //
 
 	CIRCLE_CROSS(null, null, 0, false, 0.5), //

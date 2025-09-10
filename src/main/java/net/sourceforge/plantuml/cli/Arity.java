@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -31,31 +31,21 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
-package net.sourceforge.plantuml.svek.extremity;
+package net.sourceforge.plantuml.cli;
 
-import net.sourceforge.plantuml.cli.GlobalConfig;
-import net.sourceforge.plantuml.klimt.geom.Side;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
+public enum Arity {
 
-public class ExtremityFactoryParenthesis extends AbstractExtremityFactory implements ExtremityFactory {
+	/** Option without any value, e.g. -verbose */
+	BOOLEAN,
 
-	@Override
-	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-		return new ExtremityParenthesis(p0, angle - Math.PI / 2);
-	}
+	/** Option with a key and a value, e.g. -DKEY=VALUE */
+	KEY_VALUE,
 
-	@Override
-	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
-		final double ortho = atan2(p0, p2);
-		if (GlobalConfig.USE_INTERFACE_EYE2) {
-			final XPoint2D center = new XPoint2D((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
-			return new ExtremityParenthesis2(center, ortho, p1);
-		}
-		return new ExtremityParenthesis(p1, ortho);
-	}
+	/** Option with a key and an optional value, e.g. -ftp:8080 or -ftp */
+	KEY_OPTIONAL_COLON_VALUE,
 
+	/** Option with a single value, e.g. -graphvizdot "foo.exe" */
+	SINGLE_VALUE;
 }

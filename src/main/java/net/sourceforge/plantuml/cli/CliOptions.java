@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.cli;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,6 +46,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.OptionPreprocOutputMode;
+import net.sourceforge.plantuml.Stdrpt;
+import net.sourceforge.plantuml.StdrptNull;
+import net.sourceforge.plantuml.StdrptPipe0;
+import net.sourceforge.plantuml.StdrptV1;
+import net.sourceforge.plantuml.StdrptV2;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ApiWarning;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
@@ -58,7 +67,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.utils.Log;
 
-public class Option {
+public class CliOptions {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
@@ -107,7 +116,7 @@ public class Option {
 
 	private final List<String> result = new ArrayList<>();
 
-	public Option() {
+	public CliOptions() {
 	}
 
 	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
@@ -124,11 +133,12 @@ public class Option {
 	final public void setFileFormatOption(FileFormatOption newFormat) {
 		this.fileFormatOption = newFormat;
 	}
+	
 
 	// ::comment when __CORE__
-	public Option(String... arg) throws InterruptedException, IOException {
+	CliOptions(String... arg) throws InterruptedException, IOException {
 		if (arg.length == 0)
-			OptionFlags.getInstance().setGui(true);
+			GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);
 
 		initInclude(GraphvizUtils.getenvDefaultConfigFilename());
 		for (int i = 0; i < arg.length; i++) {
@@ -203,7 +213,7 @@ public class Option {
 				setFileFormatOption(this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE));
 
 			} else if (s.equalsIgnoreCase("-overwrite")) {
-				OptionFlags.getInstance().setOverwrite(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true);
 
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {
 				i++;
@@ -268,7 +278,7 @@ public class Option {
 
 				final String timeSeconds = arg[i];
 				if (timeSeconds.matches("\\d+"))
-					OptionFlags.getInstance().setTimeoutMs(Integer.parseInt(timeSeconds) * 1000L);
+					GlobalConfig.getInstance().put(GlobalConfigKey.TIMEOUT_MS, Integer.parseInt(timeSeconds) * 1000L);
 
 			} else if (s.equalsIgnoreCase("-failfast")) {
 				this.failfast = true;
@@ -305,7 +315,7 @@ public class Option {
 				excludes.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
 
 			} else if (s.equalsIgnoreCase("-verbose") || s.equalsIgnoreCase("--verbose") || s.equalsIgnoreCase("-v")) {
-				OptionFlags.getInstance().setVerbose(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);
 
 			} else if (s.equalsIgnoreCase("-pipe") || s.equalsIgnoreCase("-p")) {
 				pipe = true;
@@ -324,7 +334,7 @@ public class Option {
 
 			} else if (s.equalsIgnoreCase("-syntax")) {
 				syntax = true;
-				OptionFlags.getInstance().setQuiet(true);
+				// GlobalConfig.getInstance().setQuiet(true);
 
 			} else if (s.equalsIgnoreCase("-duration")) {
 				duration = true;
@@ -336,23 +346,23 @@ public class Option {
 				System.err.println("-keepfiles option has been removed. Please consider -debugsvek instead");
 
 			} else if (s.equalsIgnoreCase("-metadata")) {
-				OptionFlags.getInstance().setExtractFromMetadata(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.EXTRACT_FROM_METADATA, true);
 
-			} else if (s.equalsIgnoreCase("-logdata")) {
-				i++;
-				if (i == arg.length)
-					continue;
-
-				OptionFlags.getInstance()
-						.setLogData(new SFile(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i])));
+//			} else if (s.equalsIgnoreCase("-logdata")) {
+//				i++;
+//				if (i == arg.length)
+//					continue;
+//
+//				GlobalConfig.getInstance()
+//						.setLogData(new SFile(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i])));
 
 			} else if (s.equalsIgnoreCase("-word")) {
-				OptionFlags.getInstance().setWord(true);
-				OptionFlags.getInstance().setQuiet(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.WORD, true);
+				// GlobalConfig.getInstance().setQuiet(true);
 				this.charset = "UTF-8";
 
-			} else if (s.equalsIgnoreCase("-quiet")) {
-				OptionFlags.getInstance().setQuiet(true);
+//			} else if (s.equalsIgnoreCase("-quiet")) {
+//				GlobalConfig.getInstance().setQuiet(true);
 
 			} else if (s.equalsIgnoreCase("-decodeurl")) {
 				this.decodeurl = true;
@@ -391,40 +401,40 @@ public class Option {
 				OptionPrint.printLanguage();
 
 			} else if (s.equalsIgnoreCase("-gui")) {
-				OptionFlags.getInstance().setGui(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);
 
 			} else if (s.equalsIgnoreCase("-encodesprite")) {
-				OptionFlags.getInstance().setEncodesprite(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.ENCODESPRITE, true);
 
 			} else if (s.equalsIgnoreCase("-printfonts")) {
-				OptionFlags.getInstance().setPrintFonts(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.PRINT_FONTS, true);
 
 			} else if (s.equalsIgnoreCase("-dumphtmlstats")) {
-				OptionFlags.getInstance().setDumpHtmlStats(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.DUMP_HTML_STATS, true);
 
 			} else if (s.equalsIgnoreCase("-dumpstats")) {
-				OptionFlags.getInstance().setDumpStats(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.DUMP_STATS, true);
 
 			} else if (s.equalsIgnoreCase("-loopstats")) {
-				OptionFlags.getInstance().setLoopStats(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.LOOP_STATS, true);
 
 			} else if (s.equalsIgnoreCase("-enablestats")) {
-				OptionFlags.getInstance().setEnableStats(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true);
 
 			} else if (s.equalsIgnoreCase("-disablestats")) {
-				OptionFlags.getInstance().setEnableStats(false);
+				GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true);
 
-			} else if (s.equalsIgnoreCase("-extractstdlib")) {
-				OptionFlags.getInstance().setExtractStdLib(true);
+//			} else if (s.equalsIgnoreCase("-extractstdlib")) {
+//				GlobalConfig.getInstance().setExtractStdLib(true);
 
 			} else if (s.equalsIgnoreCase("-stdlib")) {
-				OptionFlags.getInstance().setStdLib(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.STD_LIB, true);
 
 			} else if (s.equalsIgnoreCase("-clipboard")) {
-				OptionFlags.getInstance().setClipboard(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.CLIPBOARD, true);
 
 			} else if (s.equalsIgnoreCase("-clipboardloop")) {
-				OptionFlags.getInstance().setClipboardLoop(true);
+				GlobalConfig.getInstance().put(GlobalConfigKey.CLIPBOARD_LOOP, true);
 
 			} else if (s.equalsIgnoreCase("-htmlstats")) {
 				StatsUtils.setHtmlStats(true);
@@ -436,7 +446,7 @@ public class Option {
 				StatsUtils.setRealTimeStats(true);
 
 			} else if (s.equalsIgnoreCase("-useseparatorminus")) {
-				OptionFlags.getInstance().setFileSeparator("-");
+				GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, "-");
 
 			} else if (s.equalsIgnoreCase("-splash")) {
 				splash = true;

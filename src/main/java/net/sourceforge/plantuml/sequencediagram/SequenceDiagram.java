@@ -52,10 +52,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
@@ -302,7 +301,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	private boolean modeTeoz() {
-		return OptionFlags.FORCE_TEOZ || getPragma().isTrue(PragmaKey.TEOZ);
+		return GlobalConfig.FORCE_TEOZ || getPragma().isTrue(PragmaKey.TEOZ);
 	}
 
 	@Override

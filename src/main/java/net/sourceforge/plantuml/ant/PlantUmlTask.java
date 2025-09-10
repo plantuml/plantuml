@@ -55,12 +55,12 @@ import org.apache.tools.ant.types.FileSet;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.Option;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.Splash;
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.stats.StatsUtils;
@@ -81,7 +81,7 @@ public class PlantUmlTask extends Task {
     // ::remove folder when __HAXE__
 
 	private String dir = null;
-	private final Option option = new Option();
+	private final CliOptions option = new CliOptions();
 	private List<FileSet> filesets = new ArrayList<>();
 	private List<FileList> filelists = new ArrayList<>();
 	private AtomicInteger nbFiles = new AtomicInteger(0);
@@ -191,7 +191,7 @@ public class PlantUmlTask extends Task {
 	}
 
 	private boolean processingSingleFile(final File f) throws IOException, InterruptedException {
-		if (OptionFlags.getInstance().isVerbose()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 			this.log("Processing " + f.getAbsolutePath());
 		}
 		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
@@ -219,7 +219,7 @@ public class PlantUmlTask extends Task {
 		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
 		boolean error = false;
 		for (GeneratedImage g : result) {
-			if (OptionFlags.getInstance().isVerbose()) {
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 				myLog(g + " " + g.getDescription());
 			}
 			nbFiles.addAndGet(1);
@@ -264,7 +264,7 @@ public class PlantUmlTask extends Task {
 	}
 
 	private boolean fileToProcess(String name) {
-		return name.matches(Option.getPattern());
+		return name.matches(CliOptions.getPattern());
 	}
 
 	public void setDir(String s) {
@@ -299,7 +299,7 @@ public class PlantUmlTask extends Task {
 
 	public void setVerbose(String s) {
 		if ("true".equalsIgnoreCase(s)) {
-			OptionFlags.getInstance().setVerbose(true);
+			GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);
 		}
 	}
 
@@ -362,7 +362,7 @@ public class PlantUmlTask extends Task {
 			this.executorService = Executors.newFixedThreadPool(nbThreads);
 		}
 		if ("auto".equalsIgnoreCase(s)) {
-			option.setNbThreads(Option.defaultNbThreads());
+			option.setNbThreads(CliOptions.defaultNbThreads());
 			final int nbThreads = option.getNbThreads();
 			this.executorService = Executors.newFixedThreadPool(nbThreads);
 		}
@@ -394,11 +394,11 @@ public class PlantUmlTask extends Task {
 
 	public void setOverwrite(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		OptionFlags.getInstance().setOverwrite(flag);
+		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true);
 	}
 
 	public void setFileSeparator(String s) {
-		OptionFlags.getInstance().setFileSeparator(s);
+		GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, s);
 	}
 
 	public void setHtmlStats(String s) {
@@ -418,7 +418,7 @@ public class PlantUmlTask extends Task {
 
 	public void setEnableStats(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		OptionFlags.getInstance().setEnableStats(flag);
+		GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true);
 	}
 
 	public void setSplash(String s) {

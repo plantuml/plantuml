@@ -54,6 +54,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.UIManager;
 
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
@@ -113,47 +117,47 @@ public class Run {
 		else
 			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
-		final Option option = new Option(argsArray);
+		final CliOptions option = CliParser.parse(argsArray);
 		ProgressBar.setEnable(option.isTextProgressBar());
-		if (OptionFlags.getInstance().isClipboardLoop()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.CLIPBOARD_LOOP)) {
 			ClipboardLoop.runLoop();
 			return;
 		}
-		if (OptionFlags.getInstance().isClipboard()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.CLIPBOARD)) {
 			ClipboardLoop.runOnce();
 			return;
 		}
-		if (OptionFlags.getInstance().isExtractStdLib()) {
-			Stdlib.extractStdLib();
-			return;
-		}
-		if (OptionFlags.getInstance().isStdLib()) {
+//		if (GlobalConfig.getInstance().isExtractStdLib()) {
+//			Stdlib.extractStdLib();
+//			return;
+//		}
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.STD_LIB)) {
 			Stdlib.printStdLib();
 			return;
 		}
-		if (OptionFlags.getInstance().isDumpStats()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.DUMP_STATS)) {
 			StatsUtils.dumpStats();
 			return;
 		}
-		if (OptionFlags.getInstance().isLoopStats()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.LOOP_STATS)) {
 			StatsUtils.loopStats();
 			return;
 		}
-		if (OptionFlags.getInstance().isDumpHtmlStats()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.DUMP_HTML_STATS)) {
 			StatsUtils.outHtml();
 			return;
 		}
-		if (OptionFlags.getInstance().isEncodesprite()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENCODESPRITE)) {
 			encodeSprite(option.getResult());
 			return;
 		}
 		Log.info(() -> "SecurityProfile " + SecurityUtils.getSecurityProfile());
-		if (OptionFlags.getInstance().isVerbose()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 			Log.info(() -> "PlantUML Version " + Version.versionString());
 			Log.info(() -> "GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
 		}
 
-		if (OptionFlags.getInstance().isPrintFonts()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.PRINT_FONTS)) {
 			printFonts();
 			return;
 		}
@@ -174,7 +178,7 @@ public class Run {
 
 		final ErrorStatus error = ErrorStatus.init();
 		boolean forceQuit = false;
-		if (OptionFlags.getInstance().isGui()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.GUI)) {
 			try {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			} catch (Exception e) {
@@ -228,14 +232,14 @@ public class Run {
 			Log.error("Duration = " + duration + " seconds");
 		}
 
-		if (OptionFlags.getInstance().isGui() == false) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.GUI) == false) {
 			if (error.hasError() || error.isNoData())
 				option.getStdrpt().finalMessage(error);
 
 			if (error.hasError())
 				System.exit(error.getExitCode());
 
-			if (forceQuit && OptionFlags.getInstance().isSystemExit())
+			if (forceQuit && GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT))
 				System.exit(0);
 
 		}
@@ -344,14 +348,14 @@ public class Run {
 		return sb.toString();
 	}
 
-	private static void goFtp(Option option) throws IOException {
+	private static void goFtp(CliOptions option) throws IOException {
 		final int ftpPort = option.getFtpPort();
 		System.err.println("ftpPort=" + ftpPort);
 		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());
 		ftpServer.go();
 	}
 
-	private static void goPicoweb(Option option) throws IOException {
+	private static void goPicoweb(CliOptions option) throws IOException {
 		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress(),
 				option.getPicowebEnableStop());
 	}
@@ -368,17 +372,17 @@ public class Run {
 		}
 	}
 
-	private static void managePipe(Option option, ErrorStatus error) throws IOException {
+	private static void managePipe(CliOptions option, ErrorStatus error) throws IOException {
 		final String charset = option.getCharset();
 		new Pipe(option, System.out, System.in, charset).managePipe(error);
 	}
 
-	private static void manageAllFiles(Option option, ErrorStatus error)
+	private static void manageAllFiles(CliOptions option, ErrorStatus error)
 			throws NoPlantumlCompressionException, InterruptedException {
 
 		SFile lockFile = null;
 		try {
-			if (OptionFlags.getInstance().isWord()) {
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
 				final SFile dir = new SFile(option.getResult().get(0));
 				final SFile javaIsRunningFile = dir.file("javaisrunning.tmp");
 				javaIsRunningFile.delete();
@@ -393,10 +397,10 @@ public class Run {
 
 	}
 
-	private static void processArgs(Option option, ErrorStatus error)
+	private static void processArgs(CliOptions option, ErrorStatus error)
 			throws NoPlantumlCompressionException, InterruptedException {
 		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
-				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
+				&& GlobalConfig.getInstance().boolValue(GlobalConfigKey.EXTRACT_FROM_METADATA) == false) {
 			multithread(option, error);
 			return;
 		}
@@ -428,7 +432,7 @@ public class Run {
 		}
 	}
 
-	private static void multithread(Option option, ErrorStatus error) throws InterruptedException {
+	private static void multithread(CliOptions option, ErrorStatus error) throws InterruptedException {
 		Log.info(() -> "Using several threads: " + option.getNbThreads());
 		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
 
@@ -474,10 +478,10 @@ public class Run {
 		ProgressBar.incTotal(nb);
 	}
 
-	private static void manageFileInternal(File f, Option option, ErrorStatus error)
+	private static void manageFileInternal(File f, CliOptions option, ErrorStatus error)
 			throws IOException, InterruptedException {
 		Log.info(() -> "Working on " + f.getPath());
-		if (OptionFlags.getInstance().isExtractFromMetadata()) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.EXTRACT_FROM_METADATA)) {
 			error.goOk();
 			extractMetadata(f);
 			return;
@@ -538,7 +542,7 @@ public class Run {
 		hasErrors(f, result, error, rpt);
 	}
 
-	private static void extractPreproc(Option option, final ISourceFileReader sourceFileReader) throws IOException {
+	private static void extractPreproc(CliOptions option, final ISourceFileReader sourceFileReader) throws IOException {
 		final String charset = option.getCharset();
 		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)

@@ -54,6 +54,8 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -150,7 +152,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	}
 
 	protected void exportWarnOrErrIfWord(SFile f, Diagram system) throws FileNotFoundException {
-		if (OptionFlags.getInstance().isWord() && f != null) {
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD) && f != null) {
 			final String warnOrError = system.getWarningOrError();
 			if (warnOrError != null) {
 				final String name = f.getName().substring(0, f.getName().length() - 4) + ".err";
@@ -176,16 +178,16 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				Logme.error(t);
-				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() || noerror)
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noerror)
 					continue;
 
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
 			}
 
-			if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() && system instanceof PSystemError)
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) && system instanceof PSystemError)
 				continue;
 
-			OptionFlags.getInstance().logData(SFile.fromFile(file), system);
+			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
 			final List<FileImageData> exportDiagrams;
 			if (noerror && system instanceof PSystemError) {
 				exportDiagrams = new ArrayList<FileImageData>();

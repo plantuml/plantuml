@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.abel;
 import java.util.Objects;
 
 import net.atmp.CucaDiagram;
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.cucadiagram.LinkConstraint;
 import net.sourceforge.plantuml.decoration.LinkDecor;
@@ -239,7 +239,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 
 		LinkType result = type;
-		if (OptionFlags.USE_INTERFACE_EYE1) {
+		if (GlobalConfig.USE_INTERFACE_EYE1) {
 			if (isLollipopInterfaceEye(cl1))
 				type = type.withLollipopInterfaceEye1();
 
@@ -274,7 +274,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 
 		LinkType result = type;
-		if (OptionFlags.USE_INTERFACE_EYE1) {
+		if (GlobalConfig.USE_INTERFACE_EYE1) {
 			if (isLollipopInterfaceEye(cl1))
 				type = type.withLollipopInterfaceEye1();
 

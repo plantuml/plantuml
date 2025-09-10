@@ -40,8 +40,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.Option;
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 
@@ -51,11 +52,11 @@ public class FileGroup {
 	private final List<File> result = new ArrayList<>();
 	private final String pattern;
 	private final List<String> excluded;
-	private final Option option;
+	private final CliOptions option;
 
 	private final static Pattern2 predirPath = Pattern2.cmpile("^([^*?]*[/\\\\])?(.*)$");
 
-	public FileGroup(String pattern, List<String> excluded, Option option) {
+	public FileGroup(String pattern, List<String> excluded, CliOptions option) {
 		this.pattern = pattern;
 		this.excluded = excluded;
 		this.option = option;
@@ -104,10 +105,10 @@ public class FileGroup {
 	}
 
 	private void addSimpleDirectory(File dir) {
-		if (OptionFlags.getInstance().isWord())
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))
 			addSimpleDirectory(dir, "(?i)^.*_extr\\d+\\.txt$");
 		else
-			addSimpleDirectory(dir, option.getPattern());
+			addSimpleDirectory(dir, CliOptions.getPattern());
 
 	}
 

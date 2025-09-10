@@ -19,13 +19,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.error.PSystemError;
 
 class PipeTest {
 
 	ByteArrayOutputStream baos;
 	ErrorStatus errorStatus;
-	Option option;
+	CliOptions option;
 	Pipe pipe;
 	PrintStream ps;
 
@@ -36,7 +38,7 @@ class PipeTest {
 		errorStatus = ErrorStatus.init();
 
 		baos = new ByteArrayOutputStream();
-		option = new Option();
+		option = new CliOptions();
 		ps = new PrintStream(baos);
 
 		pipe = new Pipe(option, ps, new ByteArrayInputStream(new byte[0]), UTF_8.toString());
@@ -168,7 +170,7 @@ class PipeTest {
 	@ParameterizedTest
 	@MethodSource("managePipeTestCases")
 	void should_managePipe_manage_success_cases_correctly(TestCase testCase) throws IOException, InterruptedException {
-		option = new Option(testCase.getOptions().split(" "));
+		option = CliParser.parse(testCase.getOptions().split(" "));
 		pipe = new Pipe(option, ps, new ByteArrayInputStream(testCase.getInput().getBytes(UTF_8)), UTF_8.name());
 
 		pipe.managePipe(errorStatus);

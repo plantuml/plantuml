@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.cli;
 
 import java.net.InetAddress;
 import java.nio.charset.Charset;
@@ -104,7 +104,7 @@ public class OptionPrint {
 		System.out.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
 		System.out.println("    -enablestats\tTo enable statistics computation");
 		System.out.println("    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
-		System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
+		// System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
 		System.out.println("    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs");
 		System.out.println("    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster");
 		System.out.println("    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')");
@@ -119,7 +119,7 @@ public class OptionPrint {
 		System.out.println("    -loopstats\t\tTo continuously print statistics about usage");
 		System.out.println("    -metadata\t\tTo retrieve PlantUML sources from PNG images");
 		System.out.println("    -nbthread N\t\tTo use (N) threads for processing");
-		System.out.println("    -nbthread auto\tTo use " + Option.defaultNbThreads() + " threads for processing");
+		System.out.println("    -nbthread auto\tTo use " + CliOptions.defaultNbThreads() + " threads for processing");
 		System.out.println("    -noerror\t\tTo skip images when error in diagrams");
 		System.out.println("    -nometadata\t\tTo NOT export metadata in PNG/SVG generated files");
 		System.out.println("    -o[utput] \"dir\"\tTo generate images in the specified directory");
@@ -131,7 +131,7 @@ public class OptionPrint {
 		System.out.println("    -preproc\t\tTo output preprocessor text of diagrams");
 		System.out.println("    -printfonts\t\tTo print fonts available on your system");
 		System.out.println("    -progress\t\tTo display a textual progress bar in console");
-		System.out.println("    -quiet\t\tTo NOT print error message into the console");
+		// System.out.println("    -quiet\t\tTo NOT print error message into the console");
 		System.out.println("    -realtimestats\tTo generate statistics on the fly rather than at the end");
 		System.out.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
 		System.out.println("    -splash\t\tTo display a splash screen with some progress bar");
@@ -161,7 +161,7 @@ public class OptionPrint {
 	}
 
 	static private void exit(int errorCode) throws InterruptedException {
-		if (OptionFlags.getInstance().isSystemExit() || errorCode != 0)
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)
 			System.exit(errorCode);
 
 		throw new InterruptedException("exit");

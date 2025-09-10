@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -60,12 +61,12 @@ public class Pipe {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	private final Option option;
+	private final CliOptions option;
 	private final BufferedReader br;
 	private final PrintStream ps;
 	private final Stdrpt stdrpt;
 
-	public Pipe(Option option, PrintStream ps, InputStream is, String charset) {
+	public Pipe(CliOptions option, PrintStream ps, InputStream is, String charset) {
 		this.option = option;
 		try {
 			this.br = new BufferedReader(

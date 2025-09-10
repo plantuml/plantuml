@@ -31,31 +31,45 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
-package net.sourceforge.plantuml.svek.extremity;
+package net.sourceforge.plantuml.cli;
 
-import net.sourceforge.plantuml.cli.GlobalConfig;
-import net.sourceforge.plantuml.klimt.geom.Side;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
+import java.util.EnumMap;
+import java.util.Map;
 
-public class ExtremityFactoryParenthesis extends AbstractExtremityFactory implements ExtremityFactory {
+public class GlobalConfig {
+	// ::remove file when __HAXE__
 
-	@Override
-	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-		return new ExtremityParenthesis(p0, angle - Math.PI / 2);
+	private static final GlobalConfig singleton = new GlobalConfig();
+	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
+	static public final boolean USE_INTERFACE_EYE1 = false;
+	static public final boolean USE_INTERFACE_EYE2 = false;
+	static public final boolean FORCE_TEOZ = false;
+
+	public static GlobalConfig getInstance() {
+		return singleton;
 	}
 
-	@Override
-	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
-		final double ortho = atan2(p0, p2);
-		if (GlobalConfig.USE_INTERFACE_EYE2) {
-			final XPoint2D center = new XPoint2D((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
-			return new ExtremityParenthesis2(center, ortho, p1);
-		}
-		return new ExtremityParenthesis(p1, ortho);
+	private GlobalConfig() {
 	}
 
+	private final Map<GlobalConfigKey, Object> keys = new EnumMap<>(GlobalConfigKey.class);
+
+	public void put(GlobalConfigKey key, Object value) {
+		this.keys.put(key, value);
+	}
+
+	public boolean boolValue(GlobalConfigKey key) {
+		return (Boolean) value(key);
+	}
+
+	public Object value(GlobalConfigKey key) {
+		final Object value = keys.get(key);
+		if (value == null)
+			return key.getDefaultValue();
+		return value;
+	}
+
+	// ::done
 }

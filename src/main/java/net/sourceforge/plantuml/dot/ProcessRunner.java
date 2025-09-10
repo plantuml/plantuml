@@ -40,7 +40,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
@@ -87,7 +88,7 @@ public class ProcessRunner {
 			}
 
 			// Wait for process to terminate
-			final long timeoutMs = OptionFlags.getInstance().getTimeoutMs();
+			final long timeoutMs = (Long) GlobalConfig.getInstance().value(GlobalConfigKey.TIMEOUT_MS);
 			final boolean finished = process.waitFor(timeoutMs, TimeUnit.MILLISECONDS);
 			outputStream.close();
 			if (finished) {

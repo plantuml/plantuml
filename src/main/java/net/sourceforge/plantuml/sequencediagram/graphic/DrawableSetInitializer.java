@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -489,7 +489,7 @@ class DrawableSetInitializer {
 				int delta1 = 0;
 				if (message.isCreate())
 					delta1 += 10;
-				else if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message.isSelfMessage())
+				else if (GlobalConfig.STRICT_SELFMESSAGE_POSITION && message.isSelfMessage())
 					delta1 += 8;
 
 				pos = message.getPosYstartLevel() + delta1;
@@ -499,7 +499,7 @@ class DrawableSetInitializer {
 					message == null ? null : message.getStyleBuilder());
 		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {
 			double delta = 0;
-			if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage())
+			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage())
 				delta += 7;
 
 			final Participant p = lifeEvent.getParticipant();

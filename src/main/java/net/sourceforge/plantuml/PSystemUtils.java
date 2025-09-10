@@ -45,6 +45,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.file.SuggestedFile;
@@ -125,7 +127,7 @@ public class PSystemUtils {
 	public static boolean canFileBeWritten(SFile f) {
 		Log.info(() -> "Creating file: " + f.getAbsolutePath());
 		if (f.exists() && f.canWrite() == false) {
-			if (OptionFlags.getInstance().isOverwrite()) {
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.OVERWRITE)) {
 				Log.info(() -> "Overwrite " + f);
 				f.setWritable(true);
 				f.delete();

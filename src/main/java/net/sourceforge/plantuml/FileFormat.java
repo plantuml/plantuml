@@ -47,6 +47,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -347,7 +349,7 @@ public enum FileFormat {
 			return changeName(fileName, getFileSuffix());
 
 		return changeName(fileName,
-				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", cpt) + getFileSuffix());
+				(String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR) + String.format("%03d", cpt) + getFileSuffix());
 	}
 
 //	private SFile computeFilename(SFile pngFile, int i) {

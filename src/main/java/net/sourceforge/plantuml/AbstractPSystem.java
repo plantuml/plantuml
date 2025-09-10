@@ -47,6 +47,9 @@ import java.util.Set;
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.DisplayPositionned;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.cli.OptionPrint;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -217,7 +220,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
 			// ::comment when __CORE__
-			if (OptionFlags.getInstance().isEnableStats())
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))
 				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
 						fileFormatOption.getFileFormat());
 

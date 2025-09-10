@@ -43,10 +43,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.cli.OptionPrint;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
@@ -179,7 +180,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
 			strings.add("Loaded from " + Version.getJarPath());
 
-			if (OptionFlags.getInstance().isWord()) {
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
 				strings.add("Word Mode");
 				strings.add("Command Line: " + Run.getCommandLine());
 				strings.add("Current Dir: " + new SFile(".").getAbsolutePath());

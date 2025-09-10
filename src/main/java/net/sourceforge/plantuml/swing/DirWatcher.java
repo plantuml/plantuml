@@ -45,8 +45,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
@@ -56,12 +56,12 @@ public class DirWatcher {
 	// ::remove file when __CORE__
 
 	final private File dir;
-	final private Option option;
+	final private CliOptions option;
 	final private String pattern;
 
 	final private Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
 
-	public DirWatcher(File dir, Option option, String pattern) {
+	public DirWatcher(File dir, CliOptions option, String pattern) {
 		this.dir = dir;
 		this.option = option;
 		this.pattern = pattern;
