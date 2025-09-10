@@ -43,8 +43,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
@@ -90,7 +90,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 <span class="fc" id="L90">	CIRCLE(decors1(&quot;0&quot;), decors2(&quot;0&quot;), 0, false, 0.5), //</span>
 <span class="fc" id="L91">	CIRCLE_FILL(decors1(&quot;@&quot;), decors2(&quot;@&quot;), 0, false, 0.5), //</span>
 <span class="fc" id="L92">	CIRCLE_CONNECT(decors1(&quot;0)&quot;), decors2(&quot;(0&quot;), 0, false, 0.5), //</span>
-<span class="fc" id="L93">	PARENTHESIS(decors1(&quot;)&quot;), decors2(&quot;(&quot;), 0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //</span>
+<span class="fc" id="L93">	PARENTHESIS(decors1(&quot;)&quot;), decors2(&quot;(&quot;), 0, false, GlobalConfig.USE_INTERFACE_EYE2 ? 0.5 : 1.0), //</span>
 <span class="fc" id="L94">	SQUARE(decors1(&quot;#&quot;), decors2(&quot;#&quot;), 0, false, 0.5), //</span>
 
 <span class="fc" id="L96">	CIRCLE_CROSS(null, null, 0, false, 0.5), //</span>

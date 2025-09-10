@@ -55,12 +55,12 @@ import org.apache.tools.ant.types.FileSet;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.Option;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.Splash;
+import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.stats.StatsUtils;
@@ -81,7 +81,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
     // ::remove folder when __HAXE__
 
 <span class="nc" id="L83">	private String dir = null;</span>
-<span class="nc" id="L84">	private final Option option = new Option();</span>
+<span class="nc" id="L84">	private final CliOptions option = new CliOptions();</span>
 <span class="nc" id="L85">	private List&lt;FileSet&gt; filesets = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L86">	private List&lt;FileList&gt; filelists = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L87">	private AtomicInteger nbFiles = new AtomicInteger(0);</span>
@@ -191,7 +191,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 	}
 
 	private boolean processingSingleFile(final File f) throws IOException, InterruptedException {
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (OptionFlags.getInstance().isVerbose()) {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
 <span class="nc" id="L195">			this.log(&quot;Processing &quot; + f.getAbsolutePath());</span>
 		}
 <span class="nc" id="L197">		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
@@ -219,7 +219,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc" id="L219">		final Collection&lt;GeneratedImage&gt; result = sourceFileReader.getGeneratedImages();</span>
 <span class="nc" id="L220">		boolean error = false;</span>
 <span class="nc bnc" id="L221" title="All 2 branches missed.">		for (GeneratedImage g : result) {</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">			if (OptionFlags.getInstance().isVerbose()) {</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
 <span class="nc" id="L223">				myLog(g + &quot; &quot; + g.getDescription());</span>
 			}
 <span class="nc" id="L225">			nbFiles.addAndGet(1);</span>
@@ -264,7 +264,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 	}
 
 	private boolean fileToProcess(String name) {
-<span class="nc" id="L267">		return name.matches(Option.getPattern());</span>
+<span class="nc" id="L267">		return name.matches(CliOptions.getPattern());</span>
 	}
 
 	public void setDir(String s) {
@@ -299,7 +299,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 
 	public void setVerbose(String s) {
 <span class="nc bnc" id="L301" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s)) {</span>
-<span class="nc" id="L302">			OptionFlags.getInstance().setVerbose(true);</span>
+<span class="nc" id="L302">			GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);</span>
 		}
 <span class="nc" id="L304">	}</span>
 
@@ -362,7 +362,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc" id="L362">			this.executorService = Executors.newFixedThreadPool(nbThreads);</span>
 		}
 <span class="nc bnc" id="L364" title="All 2 branches missed.">		if (&quot;auto&quot;.equalsIgnoreCase(s)) {</span>
-<span class="nc" id="L365">			option.setNbThreads(Option.defaultNbThreads());</span>
+<span class="nc" id="L365">			option.setNbThreads(CliOptions.defaultNbThreads());</span>
 <span class="nc" id="L366">			final int nbThreads = option.getNbThreads();</span>
 <span class="nc" id="L367">			this.executorService = Executors.newFixedThreadPool(nbThreads);</span>
 		}
@@ -394,11 +394,11 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 
 	public void setOverwrite(String s) {
 <span class="nc bnc" id="L396" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
-<span class="nc" id="L397">		OptionFlags.getInstance().setOverwrite(flag);</span>
+<span class="nc" id="L397">		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true);</span>
 <span class="nc" id="L398">	}</span>
 
 	public void setFileSeparator(String s) {
-<span class="nc" id="L401">		OptionFlags.getInstance().setFileSeparator(s);</span>
+<span class="nc" id="L401">		GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, s);</span>
 <span class="nc" id="L402">	}</span>
 
 	public void setHtmlStats(String s) {
@@ -418,7 +418,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 
 	public void setEnableStats(String s) {
 <span class="nc bnc" id="L420" title="All 6 branches missed.">		final boolean flag = &quot;true&quot;.equalsIgnoreCase(s) || &quot;yes&quot;.equalsIgnoreCase(s) || &quot;on&quot;.equalsIgnoreCase(s);</span>
-<span class="nc" id="L421">		OptionFlags.getInstance().setEnableStats(flag);</span>
+<span class="nc" id="L421">		GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true);</span>
 <span class="nc" id="L422">	}</span>
 
 	public void setSplash(String s) {

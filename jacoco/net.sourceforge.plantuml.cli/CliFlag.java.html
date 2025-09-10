@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CliFlag.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cli</a> &gt; <span class="el_source">CliFlag.java</span></div><h1>CliFlag.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.cli;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+<span class="fc" id="L42">public enum CliFlag {</span>
+
+<span class="fc" id="L44">	AUTHOR(Arity.BOOLEAN, &quot;-author&quot;, aliases(&quot;-authors&quot;, &quot;-about&quot;), &quot;Print information about PlantUML authors&quot;), //</span>
+<span class="fc" id="L45">	CHECK_METADATA(Arity.BOOLEAN, &quot;-checkmetadata&quot;, &quot;Skip PNG files that don't need to be regenerated&quot;), //</span>
+<span class="fc" id="L46">	CHECK_ONLY(Arity.BOOLEAN, &quot;-checkonly&quot;, &quot;Check syntax of files without generating images&quot;), //</span>
+<span class="fc" id="L47">	CHARSET(Arity.SINGLE_VALUE, &quot;-charset&quot;, &quot;Use a specific charset for input files&quot;), //</span>
+<span class="fc" id="L48">	COMPUTE_URL(Arity.BOOLEAN, &quot;-computeurl&quot;, aliases(&quot;-encodeurl&quot;),</span>
+			&quot;Compute the encoded URL of a PlantUML source file&quot;), //
+<span class="fc" id="L50">	CONFIG(Arity.SINGLE_VALUE, &quot;-config&quot;, &quot;???&quot;), //</span>
+<span class="fc" id="L51">	CYPHER(Arity.BOOLEAN, &quot;-cypher&quot;, &quot;Encrypt diagram texts so they can be shared securely&quot;), //</span>
+<span class="fc" id="L52">	DEFINE(Arity.KEY_VALUE, &quot;-D&quot;, &quot;Set a preprocessing variable as if '!define VAR value' were used&quot;), //</span>
+<span class="fc" id="L53">	DARK_MODE(Arity.BOOLEAN, &quot;-darkmode&quot;, &quot;Use dark mode for diagrams&quot;), //</span>
+<span class="fc" id="L54">	DEBUG_SVEK(Arity.BOOLEAN, &quot;-debugsvek&quot;, &quot;Generate intermediate Svek files&quot;), //</span>
+<span class="fc" id="L55">	DECODE_URL(Arity.BOOLEAN, &quot;-decodeurl&quot;, &quot;Retrieve PlantUML source from an encoded URL&quot;), //</span>
+<span class="fc" id="L56">	DISABLE_STATS(Arity.BOOLEAN, &quot;-disablestats&quot;, &quot;Disable statistics computation (default)&quot;), //</span>
+<span class="fc" id="L57">	DURATION(Arity.BOOLEAN, &quot;-duration&quot;, &quot;Print total duration of diagram processing&quot;), //</span>
+<span class="fc" id="L58">	EXCLUDE(Arity.SINGLE_VALUE, &quot;-exclude&quot;, aliases(&quot;-xclude&quot;), &quot;Exclude files matching a given pattern&quot;), //</span>
+<span class="fc" id="L59">	ENABLE_STATS(Arity.BOOLEAN, &quot;-enablestats&quot;, &quot;Enable statistics computation&quot;), //</span>
+<span class="fc" id="L60">	ENCODE_SPRITE(Arity.BOOLEAN, &quot;-encodesprite&quot;, &quot;Encode a sprite from an image&quot;), //</span>
+<span class="fc" id="L61">	FAIL_FAST(Arity.BOOLEAN, &quot;-failfast&quot;, &quot;Stop processing on first syntax error&quot;), //</span>
+<span class="fc" id="L62">	FAIL_FAST2(Arity.BOOLEAN, &quot;-failfast2&quot;, &quot;Syntax check before processing for faster failure&quot;), //</span>
+<span class="fc" id="L63">	FILE_DIR(Arity.SINGLE_VALUE, &quot;-filedir&quot;, &quot;Pretend input files are located in given directory&quot;), //</span>
+<span class="fc" id="L64">	FILENAME(Arity.SINGLE_VALUE, &quot;-filename&quot;, &quot;Override %filename% variable&quot;), //</span>
+<span class="fc" id="L65">	FTP(Arity.KEY_OPTIONAL_COLON_VALUE, &quot;-ftp&quot;, &quot;???&quot;), //</span>
+<span class="fc" id="L66">	GRAPHVIZ_DOT(Arity.SINGLE_VALUE, &quot;-graphvizdot&quot;, aliases(&quot;-graphviz_dot&quot;), &quot;Specify dot executable path&quot;), //</span>
+<span class="fc" id="L67">	GUI(Arity.BOOLEAN, &quot;-gui&quot;, &quot;Run the graphical user interface&quot;), //</span>
+<span class="fc" id="L68">	HELP(Arity.BOOLEAN, &quot;-help&quot;, aliases(&quot;-h&quot;), &quot;Display help message&quot;), //</span>
+<span class="fc" id="L69">	HTML_STATS(Arity.BOOLEAN, &quot;-htmlstats&quot;, &quot;Output general statistics in HTML format&quot;), //</span>
+<span class="fc" id="L70">	HEADLESS(Arity.BOOLEAN, &quot;-headless&quot;, &quot;?&quot;), //</span>
+<span class="fc" id="L71">	INCLUDE(Arity.BOOLEAN, &quot;-I&quot;, &quot;Include external files as if '!include file' were used&quot;), //</span>
+<span class="fc" id="L72">	LANGUAGE(Arity.BOOLEAN, &quot;-language&quot;, &quot;Print the list of PlantUML keywords&quot;), //</span>
+<span class="fc" id="L73">	LOOP_STATS(Arity.BOOLEAN, &quot;-loopstats&quot;, &quot;Continuously print usage statistics&quot;), //</span>
+<span class="fc" id="L74">	METADATA(Arity.BOOLEAN, &quot;-metadata&quot;, &quot;Retrieve PlantUML sources from PNG images&quot;), //</span>
+<span class="fc" id="L75">	NB_THREAD(Arity.SINGLE_VALUE, &quot;-nbthread&quot;, &quot;Use N threads for processing (or 'auto')&quot;), //</span>
+<span class="fc" id="L76">	NO_ERROR(Arity.BOOLEAN, &quot;-noerror&quot;, &quot;Skip images when diagrams contain errors&quot;), //</span>
+<span class="fc" id="L77">	NO_METADATA(Arity.BOOLEAN, &quot;-nometadata&quot;, &quot;Do not export metadata in generated files&quot;), //</span>
+<span class="fc" id="L78">	OFILE(Arity.SINGLE_VALUE, &quot;-ofile&quot;, &quot;???&quot;), //</span>
+<span class="fc" id="L79">	OUTPUT(Arity.SINGLE_VALUE, &quot;-output&quot;, &quot;Generate images in the specified directory&quot;), //</span>
+<span class="fc" id="L80">	OVERWRITE(Arity.BOOLEAN, &quot;-overwrite&quot;, &quot;Allow overwriting read-only files&quot;), //</span>
+<span class="fc" id="L81">	PRAGMA(Arity.BOOLEAN, &quot;-P&quot;, &quot;Set pragma as if '!pragma key value' were used&quot;), //</span>
+<span class="fc" id="L82">	PIPE(Arity.BOOLEAN, &quot;-pipe&quot;, aliases(&quot;-p&quot;), &quot;Use stdin for source, stdout for output&quot;), //</span>
+<span class="fc" id="L83">	PICOWEB(Arity.BOOLEAN, &quot;-picoweb&quot;, &quot;Start internal HTTP server for rendering&quot;), //</span>
+<span class="fc" id="L84">	PIPE_IMAGE_INDEX(Arity.BOOLEAN, &quot;-pipeimageindex&quot;, &quot;Generate the Nth image with pipe option&quot;), //</span>
+<span class="fc" id="L85">	PREPROCESS(Arity.BOOLEAN, &quot;-preproc&quot;, &quot;Output preprocessor text of diagrams&quot;), //</span>
+<span class="fc" id="L86">	PRINT_FONTS(Arity.BOOLEAN, &quot;-printfonts&quot;, &quot;List fonts available on your system&quot;), //</span>
+<span class="fc" id="L87">	PROGRESS(Arity.BOOLEAN, &quot;-progress&quot;, &quot;Display a textual progress bar in console&quot;), //</span>
+<span class="fc" id="L88">	REALTIME_STATS(Arity.BOOLEAN, &quot;-realtimestats&quot;, &quot;Generate statistics on the fly&quot;), //</span>
+<span class="fc" id="L89">	SKIN_PARAM(Arity.BOOLEAN, &quot;-S&quot;, &quot;Set a skin parameter as if 'skinparam key value' were used&quot;), //</span>
+<span class="fc" id="L90">	SPLASH(Arity.BOOLEAN, &quot;-splash&quot;, &quot;Display splash screen with progress bar&quot;), //</span>
+<span class="fc" id="L91">	STD_LIB(Arity.BOOLEAN, &quot;-stdlib&quot;, &quot;Print standard library information&quot;), //</span>
+<span class="fc" id="L92">	SYNTAX(Arity.BOOLEAN, &quot;-syntax&quot;, &quot;Report syntax errors from stdin without generating images&quot;), //</span>
+<span class="fc" id="L93">	TEST_DOT(Arity.BOOLEAN, &quot;-testdot&quot;, &quot;Test Graphviz installation&quot;), //</span>
+<span class="fc" id="L94">	THEME(Arity.SINGLE_VALUE, &quot;-theme&quot;, &quot;Use a specific theme&quot;), //</span>
+<span class="fc" id="L95">	TIMEOUT(Arity.SINGLE_VALUE, &quot;-timeout&quot;, &quot;Set processing timeout in seconds&quot;), //</span>
+<span class="fc" id="L96">	T_EPS(Arity.BOOLEAN, &quot;-teps&quot;, aliases(&quot;-eps&quot;), &quot;Generate images in EPS format&quot;), //</span>
+<span class="fc" id="L97">	T_HTML(Arity.BOOLEAN, &quot;-thtml&quot;, aliases(&quot;-html&quot;), &quot;Generate HTML file for class diagram&quot;), //</span>
+<span class="fc" id="L98">	T_LATEX_NOPREAMBLE(Arity.BOOLEAN, &quot;-tlatex:nopreamble&quot;, aliases(&quot;-latex:nopreamble&quot;),</span>
+			&quot;Generate LaTeX/Tikz without preamble&quot;), //
+<span class="fc" id="L100">	T_LATEX(Arity.BOOLEAN, &quot;-tlatex&quot;, aliases(&quot;-latex&quot;), &quot;Generate LaTeX/Tikz output&quot;), //</span>
+<span class="fc" id="L101">	T_PDF(Arity.BOOLEAN, &quot;-tpdf&quot;, aliases(&quot;-pdf&quot;), &quot;Generate PDF images&quot;), //</span>
+<span class="fc" id="L102">	T_PNG(Arity.BOOLEAN, &quot;-tpng&quot;, aliases(&quot;-png&quot;), &quot;Generate PNG images (default)&quot;), //</span>
+<span class="fc" id="L103">	T_SCXML(Arity.BOOLEAN, &quot;-tscxml&quot;, &quot;Generate SCXML file for state diagram&quot;), //</span>
+<span class="fc" id="L104">	T_SVG(Arity.BOOLEAN, &quot;-tsvg&quot;, aliases(&quot;-svg&quot;), &quot;Generate SVG images&quot;), //</span>
+<span class="fc" id="L105">	T_TXT(Arity.BOOLEAN, &quot;-ttxt&quot;, aliases(&quot;-txt&quot;), &quot;Generate ASCII art diagrams&quot;), //</span>
+<span class="fc" id="L106">	T_UTXT(Arity.BOOLEAN, &quot;-tutxt&quot;, aliases(&quot;-utxt&quot;), &quot;Generate ASCII art diagrams using Unicode&quot;), //</span>
+<span class="fc" id="L107">	T_VDX(Arity.BOOLEAN, &quot;-tvdx&quot;, aliases(&quot;-vdx&quot;), &quot;Generate VDX images&quot;), //</span>
+<span class="fc" id="L108">	T_XMI(Arity.BOOLEAN, &quot;-txmi&quot;, aliases(&quot;-xmi&quot;), &quot;Generate XMI files for class diagrams&quot;), //</span>
+<span class="fc" id="L109">	VERBOSE(Arity.BOOLEAN, &quot;-verbose&quot;, aliases(&quot;-v&quot;), &quot;Enable verbose log output&quot;), //</span>
+<span class="fc" id="L110">	VERSION(Arity.BOOLEAN, &quot;-version&quot;, &quot;Display PlantUML and Java version info&quot;), //</span>
+<span class="fc" id="L111">	XML_STATS(Arity.BOOLEAN, &quot;-xmlstats&quot;, &quot;Output general statistics in XML format&quot;); //</span>
+
+	private final String flag;
+	private final List&lt;String&gt; aliases;
+	private final String description;
+	private final Arity type;
+
+	CliFlag(Arity type, String flag, String description) {
+<span class="fc" id="L119">		this(type, flag, Collections.emptyList(), description);</span>
+<span class="fc" id="L120">	}</span>
+
+<span class="fc" id="L122">	CliFlag(Arity type, String flag, List&lt;String&gt; aliases, String description) {</span>
+<span class="fc" id="L123">		this.type = type;</span>
+<span class="fc" id="L124">		this.flag = flag;</span>
+<span class="fc" id="L125">		this.aliases = aliases;</span>
+<span class="fc" id="L126">		this.description = description;</span>
+<span class="fc" id="L127">	}</span>
+
+	private static List&lt;String&gt; aliases(String... names) {
+<span class="fc" id="L130">		return Arrays.asList(names);</span>
+	}
+
+	public String getFlag() {
+<span class="nc" id="L134">		return flag;</span>
+	}
+
+	public List&lt;String&gt; getAliases() {
+<span class="nc" id="L138">		return aliases;</span>
+	}
+
+	public String getDescription() {
+<span class="nc" id="L142">		return description;</span>
+	}
+
+	public Arity getType() {
+<span class="fc" id="L146">		return type;</span>
+	}
+
+	boolean match(String tmp) {
+<span class="fc bfc" id="L150" title="All 4 branches covered.">		if (type == Arity.KEY_VALUE || type == Arity.KEY_OPTIONAL_COLON_VALUE)</span>
+<span class="fc" id="L151">			return (tmp.startsWith(flag));</span>
+
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (String alias : aliases)</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			if (tmp.equals(alias))</span>
+<span class="fc" id="L155">				return true;</span>
+
+<span class="fc" id="L157">		return tmp.equals(flag);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

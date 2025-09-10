@@ -49,7 +49,7 @@ import java.util.Enumeration;
 import java.util.Random;
 
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.cli.OptionPrint;
 import net.sourceforge.plantuml.dedication.Dedication;
 import net.sourceforge.plantuml.dedication.QBlock;
 import net.sourceforge.plantuml.dedication.TurningBytes;

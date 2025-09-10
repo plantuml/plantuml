@@ -41,8 +41,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -164,17 +164,17 @@ abstract class AbstractGraphviz implements Graphviz {
 	}
 
 	final String[] getCommandLine() {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (OptionFlags.ADD_NICE_FOR_DOT) {</span>
-<span class="nc" id="L168">			final String[] result = new String[type.length + 1 + 3];</span>
-<span class="nc" id="L169">			result[0] = &quot;/bin/nice&quot;;</span>
-<span class="nc" id="L170">			result[1] = &quot;-n&quot;;</span>
-<span class="nc" id="L171">			result[2] = &quot;10&quot;;</span>
-<span class="nc" id="L172">			result[3] = getDotExe().getAbsolutePath();</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			for (int i = 0; i &lt; type.length; i++)</span>
-<span class="nc" id="L174">				result[i + 4] = &quot;-T&quot; + type[i];</span>
-
-<span class="nc" id="L176">			return result;</span>
-		}
+//		if (GlobalConfig.ADD_NICE_FOR_DOT) {
+//			final String[] result = new String[type.length + 1 + 3];
+//			result[0] = &quot;/bin/nice&quot;;
+//			result[1] = &quot;-n&quot;;
+//			result[2] = &quot;10&quot;;
+//			result[3] = getDotExe().getAbsolutePath();
+//			for (int i = 0; i &lt; type.length; i++)
+//				result[i + 4] = &quot;-T&quot; + type[i];
+//
+//			return result;
+//		}
 <span class="nc" id="L178">		final String[] result = new String[type.length + 1];</span>
 <span class="nc" id="L179">		result[0] = getDotExe().getAbsolutePath();</span>
 <span class="nc bnc" id="L180" title="All 2 branches missed.">		for (int i = 0; i &lt; type.length; i++)</span>

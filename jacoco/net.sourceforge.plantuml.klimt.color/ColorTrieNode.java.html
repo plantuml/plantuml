@@ -209,8 +209,8 @@ import java.util.TreeSet;
 
 	private ColorTrieNode child(char k, boolean create) {
 <span class="fc" id="L211">		final int idx = ((k | 0x20) - 'a');</span>
-<span class="pc bpc" id="L212" title="2 of 4 branches missed.">		if (idx &lt; 0 || idx &gt;= 26)</span>
-<span class="nc" id="L213">			return null;</span>
+<span class="pc bpc" id="L212" title="1 of 4 branches missed.">		if (idx &lt; 0 || idx &gt;= 26)</span>
+<span class="fc" id="L213">			return null;</span>
 
 <span class="fc" id="L215">		ColorTrieNode c = children[idx];</span>
 <span class="fc bfc" id="L216" title="All 4 branches covered.">		if (c == null &amp;&amp; create) {</span>

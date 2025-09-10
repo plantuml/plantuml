@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
@@ -213,7 +213,7 @@ import net.sourceforge.plantuml.style.Style;
 <span class="fc" id="L213">		double halfLifeWidth = getHalfLifeWidth();</span>
 <span class="fc bfc" id="L214" title="All 2 branches covered.">		if (getMessage().isActivate()) {</span>
 <span class="fc" id="L215">			deltaY -= halfLifeWidth;</span>
-			if (OptionFlags.STRICT_SELFMESSAGE_POSITION)
+			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION)
 <span class="fc" id="L217">				deltaX += 5;</span>
 		}
 <span class="fc bfc" id="L219" title="All 2 branches covered.">		if (getMessage().isDeactivate())</span>

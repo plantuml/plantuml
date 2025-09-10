@@ -45,6 +45,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.file.SuggestedFile;
@@ -57,169 +59,169 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L60">public class PSystemUtils {</span>
+<span class="nc" id="L62">public class PSystemUtils {</span>
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
 	public static List&lt;FileImageData&gt; exportDiagrams(Diagram system, SuggestedFile suggested,
 			FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L66">		return exportDiagrams(system, suggested, fileFormatOption, false);</span>
+<span class="nc" id="L68">		return exportDiagrams(system, suggested, fileFormatOption, false);</span>
 	}
 
 	public static List&lt;FileImageData&gt; exportDiagrams(Diagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormatOption, boolean checkMetadata) throws IOException {
 
 		// ::comment when __CORE__
-<span class="fc" id="L73">		final SFile existingFile = suggestedFile.getFile(0);</span>
-<span class="pc bpc" id="L74" title="5 of 6 branches missed.">		if (checkMetadata &amp;&amp; fileFormatOption.getFileFormat().doesSupportMetadata() &amp;&amp; existingFile.exists()) {</span>
+<span class="fc" id="L75">		final SFile existingFile = suggestedFile.getFile(0);</span>
+<span class="pc bpc" id="L76" title="5 of 6 branches missed.">		if (checkMetadata &amp;&amp; fileFormatOption.getFileFormat().doesSupportMetadata() &amp;&amp; existingFile.exists()) {</span>
 			// &amp;&amp; system.getNbImages() == 1) {
-<span class="nc" id="L76">			final boolean sameMetadata = fileFormatOption.getFileFormat().equalsMetadata(system.getMetadata(),</span>
+<span class="nc" id="L78">			final boolean sameMetadata = fileFormatOption.getFileFormat().equalsMetadata(system.getMetadata(),</span>
 					existingFile);
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (sameMetadata) {</span>
-<span class="nc" id="L79">				Log.info(() -&gt; &quot;Skipping &quot; + existingFile.getPrintablePath() + &quot; because metadata has not changed.&quot;);</span>
-<span class="nc" id="L80">				return Arrays.asList(new FileImageData(existingFile, null));</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (sameMetadata) {</span>
+<span class="nc" id="L81">				Log.info(() -&gt; &quot;Skipping &quot; + existingFile.getPrintablePath() + &quot; because metadata has not changed.&quot;);</span>
+<span class="nc" id="L82">				return Arrays.asList(new FileImageData(existingFile, null));</span>
 			}
 		}
 		// ::done
 
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (system instanceof NewpagedDiagram)</span>
-<span class="nc" id="L86">			return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (system instanceof NewpagedDiagram)</span>
+<span class="nc" id="L88">			return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);</span>
 
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (system instanceof SequenceDiagram)</span>
-<span class="fc" id="L89">			return exportDiagramsSequence((SequenceDiagram) system, suggestedFile, fileFormatOption);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (system instanceof SequenceDiagram)</span>
+<span class="fc" id="L91">			return exportDiagramsSequence((SequenceDiagram) system, suggestedFile, fileFormatOption);</span>
 
 		// ::comment when __CORE__
-<span class="pc bpc" id="L92" title="1 of 4 branches missed.">		if (system instanceof CucaDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.HTML)</span>
-<span class="nc" id="L93">			return createFilesHtml((CucaDiagram) system, suggestedFile);</span>
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">		if (system instanceof CucaDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.HTML)</span>
+<span class="nc" id="L95">			return createFilesHtml((CucaDiagram) system, suggestedFile);</span>
 		// ::done
 
-<span class="fc" id="L96">		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);</span>
+<span class="fc" id="L98">		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);</span>
 	}
 
 	private static List&lt;FileImageData&gt; exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
-<span class="nc" id="L101">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L102">		final int nbImages = system.getNbImages();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (int i = 0; i &lt; nbImages; i++) {</span>
+<span class="nc" id="L103">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L104">		final int nbImages = system.getNbImages();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (int i = 0; i &lt; nbImages; i++) {</span>
 
-<span class="nc" id="L105">			final SFile f = suggestedFile.getFile(i);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (canFileBeWritten(f) == false)</span>
-<span class="nc" id="L107">				return result;</span>
+<span class="nc" id="L107">			final SFile f = suggestedFile.getFile(i);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (canFileBeWritten(f) == false)</span>
+<span class="nc" id="L109">				return result;</span>
 
-<span class="nc" id="L109">			final OutputStream fos = f.createBufferedOutputStream();</span>
-<span class="nc" id="L110">			ImageData cmap = null;</span>
+<span class="nc" id="L111">			final OutputStream fos = f.createBufferedOutputStream();</span>
+<span class="nc" id="L112">			ImageData cmap = null;</span>
 			try {
-<span class="nc" id="L112">				system.exportDiagram(fos, i, fileFormat);</span>
+<span class="nc" id="L114">				system.exportDiagram(fos, i, fileFormat);</span>
 			} finally {
-<span class="nc" id="L114">				fos.close();</span>
+<span class="nc" id="L116">				fos.close();</span>
 			}
 			// if (system.hasUrl() &amp;&amp; cmap != null &amp;&amp; cmap.containsCMapData()) {
 			// system.exportCmap(suggestedFile, cmap);
 			// }
-<span class="nc" id="L119">			Log.info(() -&gt; &quot;File size : &quot; + f.length());</span>
-<span class="nc" id="L120">			result.add(new FileImageData(f, cmap));</span>
+<span class="nc" id="L121">			Log.info(() -&gt; &quot;File size : &quot; + f.length());</span>
+<span class="nc" id="L122">			result.add(new FileImageData(f, cmap));</span>
 		}
-<span class="nc" id="L122">		return result;</span>
+<span class="nc" id="L124">		return result;</span>
 	}
 
 	public static boolean canFileBeWritten(SFile f) {
-<span class="pc" id="L126">		Log.info(() -&gt; &quot;Creating file: &quot; + f.getAbsolutePath());</span>
-<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (f.exists() &amp;&amp; f.canWrite() == false) {</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (OptionFlags.getInstance().isOverwrite()) {</span>
-<span class="nc" id="L129">				Log.info(() -&gt; &quot;Overwrite &quot; + f);</span>
-<span class="nc" id="L130">				f.setWritable(true);</span>
-<span class="nc" id="L131">				f.delete();</span>
-<span class="nc" id="L132">				return true;</span>
+<span class="pc" id="L128">		Log.info(() -&gt; &quot;Creating file: &quot; + f.getAbsolutePath());</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (f.exists() &amp;&amp; f.canWrite() == false) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.OVERWRITE)) {</span>
+<span class="nc" id="L131">				Log.info(() -&gt; &quot;Overwrite &quot; + f);</span>
+<span class="nc" id="L132">				f.setWritable(true);</span>
+<span class="nc" id="L133">				f.delete();</span>
+<span class="nc" id="L134">				return true;</span>
 			}
-<span class="nc" id="L134">			Log.error(&quot;Cannot write to file &quot; + f.getAbsolutePath());</span>
-<span class="nc" id="L135">			return false;</span>
+<span class="nc" id="L136">			Log.error(&quot;Cannot write to file &quot; + f.getAbsolutePath());</span>
+<span class="nc" id="L137">			return false;</span>
 		}
-<span class="fc" id="L137">		return true;</span>
+<span class="fc" id="L139">		return true;</span>
 	}
 
 	private static List&lt;FileImageData&gt; exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
-<span class="fc" id="L142">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L143">		final int nbImages = system.getNbImages();</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (int i = 0; i &lt; nbImages; i++) {</span>
+<span class="fc" id="L144">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L145">		final int nbImages = system.getNbImages();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		for (int i = 0; i &lt; nbImages; i++) {</span>
 
-<span class="fc" id="L146">			final SFile f = suggestedFile.getFile(i);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(i)) == false)</span>
-<span class="nc" id="L148">				return result;</span>
+<span class="fc" id="L148">			final SFile f = suggestedFile.getFile(i);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(i)) == false)</span>
+<span class="nc" id="L150">				return result;</span>
 
-<span class="fc" id="L150">			final OutputStream fos = f.createBufferedOutputStream();</span>
-<span class="fc" id="L151">			ImageData cmap = null;</span>
+<span class="fc" id="L152">			final OutputStream fos = f.createBufferedOutputStream();</span>
+<span class="fc" id="L153">			ImageData cmap = null;</span>
 			try {
-<span class="fc" id="L153">				cmap = system.exportDiagram(fos, i, fileFormat);</span>
+<span class="fc" id="L155">				cmap = system.exportDiagram(fos, i, fileFormat);</span>
 			} finally {
-<span class="fc" id="L155">				fos.close();</span>
+<span class="fc" id="L157">				fos.close();</span>
 			}
 			// ::comment when __CORE__
-<span class="pc bpc" id="L158" title="1 of 4 branches missed.">			if (cmap != null &amp;&amp; cmap.containsCMapData())</span>
-<span class="fc" id="L159">				system.exportCmap(suggestedFile, i, cmap);</span>
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">			if (cmap != null &amp;&amp; cmap.containsCMapData())</span>
+<span class="fc" id="L161">				system.exportCmap(suggestedFile, i, cmap);</span>
 
-<span class="pc" id="L161">			Log.info(() -&gt; &quot;File size : &quot; + f.length());</span>
+<span class="pc" id="L163">			Log.info(() -&gt; &quot;File size : &quot; + f.length());</span>
 			// ::done
-<span class="fc" id="L163">			result.add(new FileImageData(f, cmap));</span>
+<span class="fc" id="L165">			result.add(new FileImageData(f, cmap));</span>
 		}
-<span class="fc" id="L165">		return result;</span>
+<span class="fc" id="L167">		return result;</span>
 	}
 
 	private static List&lt;FileImageData&gt; createFilesHtml(CucaDiagram system, SuggestedFile suggestedFile)
 			throws IOException {
-<span class="nc" id="L170">		final String name = suggestedFile.getName();</span>
-<span class="nc" id="L171">		final int idx = name.lastIndexOf('.');</span>
-<span class="nc" id="L172">		final SFile dir = suggestedFile.getParentFile().file(name.substring(0, idx));</span>
-<span class="nc" id="L173">		final CucaDiagramHtmlMaker maker = new CucaDiagramHtmlMaker(system, dir);</span>
-<span class="nc" id="L174">		return maker.create();</span>
+<span class="nc" id="L172">		final String name = suggestedFile.getName();</span>
+<span class="nc" id="L173">		final int idx = name.lastIndexOf('.');</span>
+<span class="nc" id="L174">		final SFile dir = suggestedFile.getParentFile().file(name.substring(0, idx));</span>
+<span class="nc" id="L175">		final CucaDiagramHtmlMaker maker = new CucaDiagramHtmlMaker(system, dir);</span>
+<span class="nc" id="L176">		return maker.create();</span>
 	}
 
 	private static List&lt;FileImageData&gt; splitPng(TitledDiagram diagram, SuggestedFile pngFile, ImageData imageData,
 			FileFormatOption fileFormatOption) throws IOException {
 
-<span class="fc" id="L180">		final List&lt;SFile&gt; files = new PngSplitter(fileFormatOption.getColorMapper(), pngFile,</span>
-<span class="fc" id="L181">				diagram.getSplitPagesHorizontal(), diagram.getSplitPagesVertical(),</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, diagram.getSkinParam().getDpi(),</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">				diagram instanceof GanttDiagram ? new SplitParam(HColors.BLACK, null, 5) // for backwards compatibility</span>
-<span class="fc" id="L184">						: diagram.getSkinParam().getSplitParam())</span>
-<span class="fc" id="L185">				.getFiles();</span>
+<span class="fc" id="L182">		final List&lt;SFile&gt; files = new PngSplitter(fileFormatOption.getColorMapper(), pngFile,</span>
+<span class="fc" id="L183">				diagram.getSplitPagesHorizontal(), diagram.getSplitPagesVertical(),</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, diagram.getSkinParam().getDpi(),</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">				diagram instanceof GanttDiagram ? new SplitParam(HColors.BLACK, null, 5) // for backwards compatibility</span>
+<span class="fc" id="L186">						: diagram.getSkinParam().getSplitParam())</span>
+<span class="fc" id="L187">				.getFiles();</span>
 
-<span class="fc" id="L187">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (SFile f : files)</span>
-<span class="fc" id="L189">			result.add(new FileImageData(f, imageData));</span>
+<span class="fc" id="L189">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		for (SFile f : files)</span>
+<span class="fc" id="L191">			result.add(new FileImageData(f, imageData));</span>
 
-<span class="fc" id="L191">		return result;</span>
+<span class="fc" id="L193">		return result;</span>
 	}
 
 	private static List&lt;FileImageData&gt; exportDiagramsDefault(Diagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormatOption) throws IOException {
 
-<span class="fc" id="L197">		final SFile outputFile = suggestedFile.getFile(0);</span>
+<span class="fc" id="L199">		final SFile outputFile = suggestedFile.getFile(0);</span>
 
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (outputFile.isDirectory())</span>
-<span class="nc" id="L200">			throw new IllegalArgumentException(&quot;File is a directory &quot; + suggestedFile);</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (outputFile.isDirectory())</span>
+<span class="nc" id="L202">			throw new IllegalArgumentException(&quot;File is a directory &quot; + suggestedFile);</span>
 
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (!canFileBeWritten(outputFile))</span>
-<span class="nc" id="L203">			return emptyList();</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (!canFileBeWritten(outputFile))</span>
+<span class="nc" id="L205">			return emptyList();</span>
 
 		final ImageData imageData;
 
-<span class="fc" id="L207">		try (OutputStream os = outputFile.createBufferedOutputStream()) {</span>
-<span class="fc" id="L208">			imageData = system.exportDiagram(os, 0, fileFormatOption);</span>
+<span class="fc" id="L209">		try (OutputStream os = outputFile.createBufferedOutputStream()) {</span>
+<span class="fc" id="L210">			imageData = system.exportDiagram(os, 0, fileFormatOption);</span>
 		}
 
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (imageData == null)</span>
-<span class="nc" id="L212">			return emptyList();</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (imageData == null)</span>
+<span class="nc" id="L214">			return emptyList();</span>
 
 		// ::comment when __CORE__
-<span class="pc bpc" id="L215" title="1 of 4 branches missed.">		if (imageData.containsCMapData() &amp;&amp; system instanceof UmlDiagram)</span>
-<span class="fc" id="L216">			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		if (imageData.containsCMapData() &amp;&amp; system instanceof UmlDiagram)</span>
+<span class="fc" id="L218">			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);</span>
 		// ::done
 
-<span class="pc bpc" id="L219" title="2 of 4 branches missed.">		if (system instanceof TitledDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.PNG)</span>
-<span class="fc" id="L220">			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);</span>
+<span class="pc bpc" id="L221" title="2 of 4 branches missed.">		if (system instanceof TitledDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.PNG)</span>
+<span class="fc" id="L222">			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);</span>
 
-<span class="nc" id="L222">		return singletonList(new FileImageData(outputFile, imageData));</span>
+<span class="nc" id="L224">		return singletonList(new FileImageData(outputFile, imageData));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

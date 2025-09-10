@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OptionPrint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">OptionPrint.java</span></div><h1>OptionPrint.java</h1><pre class="source lang-java linenums">/* ========================================================================
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OptionPrint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cli</a> &gt; <span class="el_source">OptionPrint.java</span></div><h1>OptionPrint.java</h1><pre class="source lang-java linenums">/* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.cli;
 
 import java.net.InetAddress;
 import java.nio.charset.Charset;
@@ -104,7 +104,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L104">		System.out.println(&quot;    -e[x]clude pattern\tTo exclude files that match the provided pattern&quot;);</span>
 <span class="nc" id="L105">		System.out.println(&quot;    -enablestats\tTo enable statistics computation&quot;);</span>
 <span class="nc" id="L106">		System.out.println(&quot;    -encodesprite 4|8|16[z] \&quot;file\&quot;\tTo encode a sprite at gray level (z for compression) from an image&quot;);</span>
-<span class="nc" id="L107">		System.out.println(&quot;    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder&quot;);</span>
+		// System.out.println(&quot;    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder&quot;);
 <span class="nc" id="L108">		System.out.println(&quot;    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs&quot;);</span>
 <span class="nc" id="L109">		System.out.println(&quot;    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster&quot;);</span>
 <span class="nc" id="L110">		System.out.println(&quot;    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')&quot;);</span>
@@ -119,7 +119,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L119">		System.out.println(&quot;    -loopstats\t\tTo continuously print statistics about usage&quot;);</span>
 <span class="nc" id="L120">		System.out.println(&quot;    -metadata\t\tTo retrieve PlantUML sources from PNG images&quot;);</span>
 <span class="nc" id="L121">		System.out.println(&quot;    -nbthread N\t\tTo use (N) threads for processing&quot;);</span>
-<span class="nc" id="L122">		System.out.println(&quot;    -nbthread auto\tTo use &quot; + Option.defaultNbThreads() + &quot; threads for processing&quot;);</span>
+<span class="nc" id="L122">		System.out.println(&quot;    -nbthread auto\tTo use &quot; + CliOptions.defaultNbThreads() + &quot; threads for processing&quot;);</span>
 <span class="nc" id="L123">		System.out.println(&quot;    -noerror\t\tTo skip images when error in diagrams&quot;);</span>
 <span class="nc" id="L124">		System.out.println(&quot;    -nometadata\t\tTo NOT export metadata in PNG/SVG generated files&quot;);</span>
 <span class="nc" id="L125">		System.out.println(&quot;    -o[utput] \&quot;dir\&quot;\tTo generate images in the specified directory&quot;);</span>
@@ -131,7 +131,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L131">		System.out.println(&quot;    -preproc\t\tTo output preprocessor text of diagrams&quot;);</span>
 <span class="nc" id="L132">		System.out.println(&quot;    -printfonts\t\tTo print fonts available on your system&quot;);</span>
 <span class="nc" id="L133">		System.out.println(&quot;    -progress\t\tTo display a textual progress bar in console&quot;);</span>
-<span class="nc" id="L134">		System.out.println(&quot;    -quiet\t\tTo NOT print error message into the console&quot;);</span>
+		// System.out.println(&quot;    -quiet\t\tTo NOT print error message into the console&quot;);
 <span class="nc" id="L135">		System.out.println(&quot;    -realtimestats\tTo generate statistics on the fly rather than at the end&quot;);</span>
 <span class="nc" id="L136">		System.out.println(&quot;    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used&quot;);</span>
 <span class="nc" id="L137">		System.out.println(&quot;    -splash\t\tTo display a splash screen with some progress bar&quot;);</span>
@@ -161,7 +161,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L161">	}</span>
 
 	static private void exit(int errorCode) throws InterruptedException {
-<span class="nc bnc" id="L164" title="All 4 branches missed.">		if (OptionFlags.getInstance().isSystemExit() || errorCode != 0)</span>
+<span class="nc bnc" id="L164" title="All 4 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)</span>
 <span class="nc" id="L165">			System.exit(errorCode);</span>
 
 <span class="nc" id="L167">		throw new InterruptedException(&quot;exit&quot;);</span>

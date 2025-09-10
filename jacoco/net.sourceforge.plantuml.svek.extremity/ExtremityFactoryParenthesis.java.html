@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.geom.Side;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 	@Override
 	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 <span class="nc" id="L53">		final double ortho = atan2(p0, p2);</span>
-		if (OptionFlags.USE_INTERFACE_EYE2) {
+		if (GlobalConfig.USE_INTERFACE_EYE2) {
 			final XPoint2D center = new XPoint2D((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
 			return new ExtremityParenthesis2(center, ortho, p1);
 		}

@@ -107,6 +107,7 @@ loadScripts(document, 'script');</script>
 <li><a href="net/sourceforge/plantuml/chronology/package-tree.html">net.sourceforge.plantuml.chronology</a>, </li>
 <li><a href="net/sourceforge/plantuml/classdiagram/package-tree.html">net.sourceforge.plantuml.classdiagram</a>, </li>
 <li><a href="net/sourceforge/plantuml/classdiagram/command/package-tree.html">net.sourceforge.plantuml.classdiagram.command</a>, </li>
+<li><a href="net/sourceforge/plantuml/cli/package-tree.html">net.sourceforge.plantuml.cli</a>, </li>
 <li><a href="net/sourceforge/plantuml/code/package-tree.html">net.sourceforge.plantuml.code</a>, </li>
 <li><a href="net/sourceforge/plantuml/code/deflate/package-tree.html">net.sourceforge.plantuml.code.deflate</a>, </li>
 <li><a href="net/sourceforge/plantuml/command/package-tree.html">net.sourceforge.plantuml.command</a>, </li>
@@ -1080,6 +1081,9 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/CleanerEmptyLine.html" class="type-name-link" title="class in net.sourceforge.plantuml.bpm">CleanerEmptyLine</a> (implements net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/GridCleaner.html" title="interface in net.sourceforge.plantuml.bpm">GridCleaner</a>)</li>
 <li class="circle">net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/CleanerInterleavingLines.html" class="type-name-link" title="class in net.sourceforge.plantuml.bpm">CleanerInterleavingLines</a> (implements net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/GridCleaner.html" title="interface in net.sourceforge.plantuml.bpm">GridCleaner</a>)</li>
 <li class="circle">net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/CleanerMoveBlock.html" class="type-name-link" title="class in net.sourceforge.plantuml.bpm">CleanerMoveBlock</a> (implements net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/GridCleaner.html" title="interface in net.sourceforge.plantuml.bpm">GridCleaner</a>)</li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/CliFlagValued.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">CliFlagValued</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/CliOptions.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">CliOptions</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/CliParser.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">CliParser</a></li>
 <li class="circle">net.sourceforge.plantuml.swing.<a href="net/sourceforge/plantuml/swing/ClipboardLoop.html" class="type-name-link" title="class in net.sourceforge.plantuml.swing">ClipboardLoop</a></li>
 <li class="circle">jcckit.graphic.<a href="jcckit/graphic/ClippingRectangle.html" class="type-name-link" title="class in jcckit.graphic">ClippingRectangle</a> (implements jcckit.graphic.<a href="jcckit/graphic/ClippingShape.html" title="interface in jcckit.graphic">ClippingShape</a>)</li>
 <li class="circle">net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/ClockwiseTopRightBottomLeft.html" class="type-name-link" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a></li>
@@ -1660,6 +1664,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">zext.plantuml.com.google.zxing.common.reedsolomon.<a href="zext/plantuml/com/google/zxing/common/reedsolomon/GF256.html" class="type-name-link" title="class in zext.plantuml.com.google.zxing.common.reedsolomon">GF256</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/GitCurve.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">GitCurve</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/GitTextArea.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">GitTextArea</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/GlobalConfig.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">GlobalConfig</a></li>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/Globals.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">Globals</a></li>
 <li class="circle">smetana.core.<a href="smetana/core/Globals.html" class="type-name-link" title="class in smetana.core">Globals</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/GNode.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">GNode</a></li>
@@ -1922,9 +1927,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.png.quantx.<a href="net/sourceforge/plantuml/png/quantx/OKLabPaletteMapper.html" class="type-name-link" title="class in net.sourceforge.plantuml.png.quantx">OKLabPaletteMapper</a></li>
 <li class="circle">net.sourceforge.plantuml.project.<a href="net/sourceforge/plantuml/project/OpenClose.html" class="type-name-link" title="class in net.sourceforge.plantuml.project">OpenClose</a> (implements net.sourceforge.plantuml.project.core3.<a href="net/sourceforge/plantuml/project/core3/Histogram.html" title="interface in net.sourceforge.plantuml.project.core3">Histogram</a>, net.sourceforge.plantuml.project.<a href="net/sourceforge/plantuml/project/LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a>)</li>
 <li class="circle">net.sourceforge.plantuml.openiconic.<a href="net/sourceforge/plantuml/openiconic/OpenIcon.html" class="type-name-link" title="class in net.sourceforge.plantuml.openiconic">OpenIcon</a></li>
-<li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/Option.html" class="type-name-link" title="class in net.sourceforge.plantuml">Option</a></li>
-<li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/OptionFlags.html" class="type-name-link" title="class in net.sourceforge.plantuml">OptionFlags</a></li>
-<li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/OptionPrint.html" class="type-name-link" title="class in net.sourceforge.plantuml">OptionPrint</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/OptionPrint.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">OptionPrint</a></li>
 <li class="circle">net.sourceforge.plantuml.zopfli.<a href="net/sourceforge/plantuml/zopfli/Options.html" class="type-name-link" title="class in net.sourceforge.plantuml.zopfli">Options</a></li>
 <li class="circle">net.sourceforge.plantuml.oregon.<a href="net/sourceforge/plantuml/oregon/OregonBasicGame.html" class="type-name-link" title="class in net.sourceforge.plantuml.oregon">OregonBasicGame</a> (implements net.sourceforge.plantuml.oregon.<a href="net/sourceforge/plantuml/oregon/BasicGame.html" title="interface in net.sourceforge.plantuml.oregon">BasicGame</a>)</li>
 <li class="circle">net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/Oscillator.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek">Oscillator</a></li>
@@ -3662,6 +3665,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/AffineTransformType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt">AffineTransformType</a></li>
 <li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/AlignmentParam.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.skin">AlignmentParam</a></li>
 <li class="circle">net.sourceforge.plantuml.argon2.model.<a href="net/sourceforge/plantuml/argon2/model/Argon2Type.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.argon2.model">Argon2Type</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/Arity.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.cli">Arity</a></li>
 <li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/ArrowBody.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.skin">ArrowBody</a></li>
 <li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/ArrowDecoration.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.skin">ArrowDecoration</a></li>
 <li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/ArrowDirection.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.skin">ArrowDirection</a></li>
@@ -3672,6 +3676,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/CaseMode.html" class="type-name-link" title="enum class in com.plantuml.ubrex">CaseMode</a></li>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/CharClassRaw.html" class="type-name-link" title="enum class in com.plantuml.ubrex">CharClassRaw</a></li>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/CharClassType.html" class="type-name-link" title="enum class in com.plantuml.ubrex">CharClassType</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/CliFlag.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.cli">CliFlag</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.color.<a href="net/sourceforge/plantuml/klimt/color/ColorOrder.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt.color">ColorOrder</a></li>
 <li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/ColorParam.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.skin">ColorParam</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.color.<a href="net/sourceforge/plantuml/klimt/color/ColorType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt.color">ColorType</a></li>
@@ -3714,6 +3719,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.<a href="net/sourceforge/plantuml/activitydiagram3/ForkStyle.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.activitydiagram3">ForkStyle</a></li>
 <li class="circle">net.sourceforge.plantuml.project.<a href="net/sourceforge/plantuml/project/GanttConstraintMode.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.project">GanttConstraintMode</a></li>
 <li class="circle">net.sourceforge.plantuml.project.core.<a href="net/sourceforge/plantuml/project/core/GArrowType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.project.core">GArrowType</a></li>
+<li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/GlobalConfigKey.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.cli">GlobalConfigKey</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/GraphicPosition.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt.geom">GraphicPosition</a></li>
 <li class="circle">net.sourceforge.plantuml.sequencediagram.<a href="net/sourceforge/plantuml/sequencediagram/GroupingType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.sequencediagram">GroupingType</a></li>
 <li class="circle">net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/GroupType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.abel">GroupType</a></li>

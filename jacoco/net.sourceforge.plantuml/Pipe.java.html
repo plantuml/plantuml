@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -60,181 +61,181 @@ public class Pipe {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	private final Option option;
+	private final CliOptions option;
 	private final BufferedReader br;
 	private final PrintStream ps;
 	private final Stdrpt stdrpt;
 
-<span class="fc" id="L68">	public Pipe(Option option, PrintStream ps, InputStream is, String charset) {</span>
-<span class="fc" id="L69">		this.option = option;</span>
+<span class="fc" id="L69">	public Pipe(CliOptions option, PrintStream ps, InputStream is, String charset) {</span>
+<span class="fc" id="L70">		this.option = option;</span>
 		try {
-<span class="fc" id="L71">			this.br = new BufferedReader(</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">					new InputStreamReader(is, (charset != null) ? charset : Charset.defaultCharset().name()));</span>
-<span class="nc" id="L73">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L74">			throw new RuntimeException(&quot;Invalid charset provided&quot;, e);</span>
-<span class="fc" id="L75">		}</span>
-<span class="fc" id="L76">		this.ps = ps;</span>
-<span class="fc" id="L77">		this.stdrpt = option.getStdrpt();</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L72">			this.br = new BufferedReader(</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">					new InputStreamReader(is, (charset != null) ? charset : Charset.defaultCharset().name()));</span>
+<span class="nc" id="L74">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L75">			throw new RuntimeException(&quot;Invalid charset provided&quot;, e);</span>
+<span class="fc" id="L76">		}</span>
+<span class="fc" id="L77">		this.ps = ps;</span>
+<span class="fc" id="L78">		this.stdrpt = option.getStdrpt();</span>
+<span class="fc" id="L79">	}</span>
 
 	public void managePipe(ErrorStatus error) throws IOException {
-<span class="fc" id="L81">		final boolean noStdErr = option.isPipeNoStdErr();</span>
+<span class="fc" id="L82">		final boolean noStdErr = option.isPipeNoStdErr();</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {</span>
-<span class="fc" id="L84">			final Defines defines = option.getDefaultDefines();</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">			final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());</span>
-<span class="fc" id="L86">			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,</span>
-<span class="fc" id="L87">					option.getConfig(), newCurrentDir);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {</span>
+<span class="fc" id="L85">			final Defines defines = option.getDefaultDefines();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());</span>
+<span class="fc" id="L87">			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,</span>
+<span class="fc" id="L88">					option.getConfig(), newCurrentDir);</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (option.isComputeurl())</span>
-<span class="fc" id="L90">				computeUrlForDiagram(sourceStringReader);</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">			else if (option.isSyntax())</span>
-<span class="fc" id="L92">				syntaxCheckDiagram(sourceStringReader, error);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">			else if (option.isPipeMap())</span>
-<span class="fc" id="L94">				createPipeMapForDiagram(sourceStringReader, error);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (option.isComputeurl())</span>
+<span class="fc" id="L91">				computeUrlForDiagram(sourceStringReader);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			else if (option.isSyntax())</span>
+<span class="fc" id="L93">				syntaxCheckDiagram(sourceStringReader, error);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			else if (option.isPipeMap())</span>
+<span class="fc" id="L95">				createPipeMapForDiagram(sourceStringReader, error);</span>
 			else
-<span class="fc" id="L96">				generateDiagram(sourceStringReader, error, noStdErr);</span>
+<span class="fc" id="L97">				generateDiagram(sourceStringReader, error, noStdErr);</span>
 
-<span class="fc" id="L98">			ps.flush();</span>
+<span class="fc" id="L99">			ps.flush();</span>
 		}
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L101">	}</span>
 
 	private void generateDiagram(SourceStringReader sourceStringReader, ErrorStatus error, boolean noStdErr)
 			throws IOException {
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;</span>
-<span class="fc" id="L105">		final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),</span>
-<span class="fc" id="L106">				option.getFileFormatOption());</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;</span>
+<span class="fc" id="L106">		final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),</span>
+<span class="fc" id="L107">				option.getFileFormatOption());</span>
 
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		printInfo(noStdErr ? ps : System.err, sourceStringReader);</span>
-<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		if (result != null &amp;&amp; &quot;(error)&quot;.equalsIgnoreCase(result.getDescription())) {</span>
-<span class="fc" id="L110">			error.goWithError();</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		printInfo(noStdErr ? ps : System.err, sourceStringReader);</span>
+<span class="pc bpc" id="L110" title="1 of 4 branches missed.">		if (result != null &amp;&amp; &quot;(error)&quot;.equalsIgnoreCase(result.getDescription())) {</span>
+<span class="fc" id="L111">			error.goWithError();</span>
 		} else {
-<span class="fc" id="L112">			error.goOk();</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (noStdErr) {</span>
-<span class="nc" id="L114">				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;</span>
-<span class="nc" id="L115">				baos.close();</span>
-<span class="nc" id="L116">				ps.write(baos.toByteArray());</span>
+<span class="fc" id="L113">			error.goOk();</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (noStdErr) {</span>
+<span class="nc" id="L115">				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;</span>
+<span class="nc" id="L116">				baos.close();</span>
+<span class="nc" id="L117">				ps.write(baos.toByteArray());</span>
 			}
 		}
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (option.getPipeDelimitor() != null)</span>
-<span class="fc" id="L120">			ps.println(option.getPipeDelimitor());</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (option.getPipeDelimitor() != null)</span>
+<span class="fc" id="L121">			ps.println(option.getPipeDelimitor());</span>
 
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L123">	}</span>
 
 	private void createPipeMapForDiagram(SourceStringReader sourceStringReader, ErrorStatus error) throws IOException {
-<span class="fc" id="L125">		final String result = sourceStringReader.getCMapData(option.getImageIndex(), option.getFileFormatOption());</span>
+<span class="fc" id="L126">		final String result = sourceStringReader.getCMapData(option.getImageIndex(), option.getFileFormatOption());</span>
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// We don't check errors
-<span class="fc" id="L128">		error.goOk();</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L129">		error.goOk();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (result == null) {</span>
 //			final CMapData empty = new CMapData();
 //			ps.println(empty.asString(&quot;plantuml&quot;));
-<span class="fc" id="L132">			ps.println();</span>
+<span class="fc" id="L133">			ps.println();</span>
 		} else
-<span class="fc" id="L134">			ps.println(result);</span>
+<span class="fc" id="L135">			ps.println(result);</span>
 
-<span class="fc" id="L136">	}</span>
+<span class="fc" id="L137">	}</span>
 
 	private void computeUrlForDiagram(SourceStringReader sourceStringReader) throws IOException {
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (BlockUml s : sourceStringReader.getBlocks())</span>
-<span class="fc" id="L140">			ps.println(s.getEncodedUrl());</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		for (BlockUml s : sourceStringReader.getBlocks())</span>
+<span class="fc" id="L141">			ps.println(s.getEncodedUrl());</span>
 
-<span class="fc" id="L142">	}</span>
+<span class="fc" id="L143">	}</span>
 
 	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ErrorStatus error) {
-<span class="fc" id="L145">		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (system instanceof UmlDiagram) {</span>
-<span class="fc" id="L147">			error.goOk();</span>
-<span class="fc" id="L148">			ps.println(((UmlDiagram) system).getUmlDiagramType().name());</span>
-<span class="fc" id="L149">			ps.println(system.getDescription());</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		} else if (system instanceof PSystemError) {</span>
-<span class="fc" id="L151">			error.goWithError();</span>
-<span class="fc" id="L152">			stdrpt.printInfo(ps, system);</span>
+<span class="fc" id="L146">		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (system instanceof UmlDiagram) {</span>
+<span class="fc" id="L148">			error.goOk();</span>
+<span class="fc" id="L149">			ps.println(((UmlDiagram) system).getUmlDiagramType().name());</span>
+<span class="fc" id="L150">			ps.println(system.getDescription());</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		} else if (system instanceof PSystemError) {</span>
+<span class="fc" id="L152">			error.goWithError();</span>
+<span class="fc" id="L153">			stdrpt.printInfo(ps, system);</span>
 		} else {
-<span class="fc" id="L154">			error.goOk();</span>
-<span class="fc" id="L155">			ps.println(&quot;OTHER&quot;);</span>
-<span class="fc" id="L156">			ps.println(system.getDescription());</span>
+<span class="fc" id="L155">			error.goOk();</span>
+<span class="fc" id="L156">			ps.println(&quot;OTHER&quot;);</span>
+<span class="fc" id="L157">			ps.println(system.getDescription());</span>
 		}
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L159">	}</span>
 
 	private void printInfo(final PrintStream output, final SourceStringReader sourceStringReader) {
-<span class="fc" id="L161">		final List&lt;BlockUml&gt; blocks = sourceStringReader.getBlocks();</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (blocks.size() == 0)</span>
-<span class="nc" id="L163">			stdrpt.printInfo(output, null);</span>
+<span class="fc" id="L162">		final List&lt;BlockUml&gt; blocks = sourceStringReader.getBlocks();</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (blocks.size() == 0)</span>
+<span class="nc" id="L164">			stdrpt.printInfo(output, null);</span>
 		else
-<span class="fc" id="L165">			stdrpt.printInfo(output, blocks.get(0).getDiagram());</span>
+<span class="fc" id="L166">			stdrpt.printInfo(output, blocks.get(0).getDiagram());</span>
 
-<span class="fc" id="L167">	}</span>
+<span class="fc" id="L168">	}</span>
 
 	String readFirstDiagram() throws IOException {
-<span class="fc" id="L170">		return readSingleDiagram(true);</span>
+<span class="fc" id="L171">		return readSingleDiagram(true);</span>
 	}
 
 	String readSubsequentDiagram() throws IOException {
-<span class="fc" id="L174">		return readSingleDiagram(false);</span>
+<span class="fc" id="L175">		return readSingleDiagram(false);</span>
 	}
 
 	String readSingleDiagram(boolean unmarkedAllowed) throws IOException {
-<span class="fc" id="L178">		State state = State.NO_CONTENT;</span>
-<span class="fc" id="L179">		String expectedEnd = null;</span>
-<span class="fc" id="L180">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L179">		State state = State.NO_CONTENT;</span>
+<span class="fc" id="L180">		String expectedEnd = null;</span>
+<span class="fc" id="L181">		final StringBuilder sb = new StringBuilder();</span>
 
 		String line;
-<span class="fc bfc" id="L183" title="All 4 branches covered.">		while (state != State.COMPLETE &amp;&amp; (line = br.readLine()) != null) {</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">		while (state != State.COMPLETE &amp;&amp; (line = br.readLine()) != null) {</span>
 
-<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (line.startsWith(&quot;@@@format &quot;)) {</span>
-<span class="fc" id="L186">				manageFormat(line);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">			if (line.startsWith(&quot;@@@format &quot;)) {</span>
+<span class="fc" id="L187">				manageFormat(line);</span>
 			} else {
-<span class="fc bfc" id="L188" title="All 4 branches covered.">				if (state == State.NO_CONTENT &amp;&amp; line.trim().length() &gt; 0)</span>
-<span class="fc" id="L189">					state = State.START_MARK_NOT_FOUND;</span>
+<span class="fc bfc" id="L189" title="All 4 branches covered.">				if (state == State.NO_CONTENT &amp;&amp; line.trim().length() &gt; 0)</span>
+<span class="fc" id="L190">					state = State.START_MARK_NOT_FOUND;</span>
 
-<span class="fc bfc" id="L191" title="All 4 branches covered.">				if (state == State.START_MARK_NOT_FOUND &amp;&amp; line.startsWith(&quot;@start&quot;)) {</span>
-<span class="fc" id="L192">					sb.setLength(0); // discard any previous input</span>
-<span class="fc" id="L193">					state = State.START_MARK_FOUND;</span>
-<span class="fc" id="L194">					final Matcher m = Pattern.compile(&quot;@start([A-Za-z]*)&quot;).matcher(line);</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">					if (m.matches())</span>
-<span class="fc" id="L196">						expectedEnd = &quot;@end&quot; + m.group(1);</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">				if (state == State.START_MARK_NOT_FOUND &amp;&amp; line.startsWith(&quot;@start&quot;)) {</span>
+<span class="fc" id="L193">					sb.setLength(0); // discard any previous input</span>
+<span class="fc" id="L194">					state = State.START_MARK_FOUND;</span>
+<span class="fc" id="L195">					final Matcher m = Pattern.compile(&quot;@start([A-Za-z]*)&quot;).matcher(line);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">					if (m.matches())</span>
+<span class="fc" id="L197">						expectedEnd = &quot;@end&quot; + m.group(1);</span>
 					else
-<span class="fc" id="L198">						expectedEnd = &quot;@end&quot;;</span>
+<span class="fc" id="L199">						expectedEnd = &quot;@end&quot;;</span>
 
-<span class="fc bfc" id="L200" title="All 4 branches covered.">				} else if (state == State.START_MARK_FOUND &amp;&amp; line.startsWith(expectedEnd)) {</span>
-<span class="fc" id="L201">					state = State.COMPLETE;</span>
+<span class="fc bfc" id="L201" title="All 4 branches covered.">				} else if (state == State.START_MARK_FOUND &amp;&amp; line.startsWith(expectedEnd)) {</span>
+<span class="fc" id="L202">					state = State.COMPLETE;</span>
 				}
 
-<span class="fc bfc" id="L204" title="All 2 branches covered.">				if (state != State.NO_CONTENT)</span>
-<span class="fc" id="L205">					sb.append(line).append(&quot;\n&quot;);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">				if (state != State.NO_CONTENT)</span>
+<span class="fc" id="L206">					sb.append(line).append(&quot;\n&quot;);</span>
 
 			}
 		}
 
-<span class="pc bpc" id="L210" title="1 of 5 branches missed.">		switch (state) {</span>
+<span class="pc bpc" id="L211" title="1 of 5 branches missed.">		switch (state) {</span>
 		case NO_CONTENT:
-<span class="fc" id="L212">			return null;</span>
+<span class="fc" id="L213">			return null;</span>
 		case START_MARK_NOT_FOUND:
-<span class="fc bfc" id="L214" title="All 2 branches covered.">			return (unmarkedAllowed) ? &quot;@startuml\n&quot; + sb.toString() + &quot;@enduml\n&quot; : null;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">			return (unmarkedAllowed) ? &quot;@startuml\n&quot; + sb.toString() + &quot;@enduml\n&quot; : null;</span>
 		case START_MARK_FOUND:
-<span class="fc" id="L216">			return sb.toString() + expectedEnd;</span>
+<span class="fc" id="L217">			return sb.toString() + expectedEnd;</span>
 		case COMPLETE:
-<span class="fc" id="L218">			return sb.toString();</span>
+<span class="fc" id="L219">			return sb.toString();</span>
 		default:
-<span class="nc" id="L220">			throw new IllegalStateException(&quot;Unexpected value: &quot; + state);</span>
+<span class="nc" id="L221">			throw new IllegalStateException(&quot;Unexpected value: &quot; + state);</span>
 		}
 	}
 
 	void manageFormat(String s) {
-<span class="fc" id="L225">		s = s.toLowerCase();</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (s.contains(&quot;png&quot;))</span>
-<span class="fc" id="L227">			option.setFileFormatOption(new FileFormatOption(FileFormat.PNG));</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">		else if (s.contains(&quot;svg&quot;))</span>
-<span class="fc" id="L229">			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">		else if (s.contains(&quot;atxt&quot;))</span>
-<span class="fc" id="L231">			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">		else if (s.contains(&quot;utxt&quot;))</span>
-<span class="fc" id="L233">			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));</span>
-<span class="fc" id="L234">	}</span>
+<span class="fc" id="L226">		s = s.toLowerCase();</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (s.contains(&quot;png&quot;))</span>
+<span class="fc" id="L228">			option.setFileFormatOption(new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		else if (s.contains(&quot;svg&quot;))</span>
+<span class="fc" id="L230">			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		else if (s.contains(&quot;atxt&quot;))</span>
+<span class="fc" id="L232">			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		else if (s.contains(&quot;utxt&quot;))</span>
+<span class="fc" id="L234">			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));</span>
+<span class="fc" id="L235">	}</span>
 
-<span class="fc" id="L236">	enum State {</span>
-<span class="fc" id="L237">		NO_CONTENT, START_MARK_NOT_FOUND, START_MARK_FOUND, COMPLETE</span>
+<span class="fc" id="L237">	enum State {</span>
+<span class="fc" id="L238">		NO_CONTENT, START_MARK_NOT_FOUND, START_MARK_FOUND, COMPLETE</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

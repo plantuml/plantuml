@@ -80,7 +80,7 @@ import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 
 import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.Option;
+import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.PSystemVersion;
@@ -99,7 +99,7 @@ public class MainWindow extends JFrame {
 
 <span class="nc" id="L100">	final private List&lt;SimpleLine&gt; currentDirectoryListing2 = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L101">	final private Set&lt;ImageWindow&gt; openWindows2 = new HashSet&lt;&gt;();</span>
-	final private Option option;
+	final private CliOptions option;
 
 	private DirWatcher2 dirWatcher;
 
@@ -152,10 +152,10 @@ public class MainWindow extends JFrame {
 <span class="nc" id="L152">			filePattern.append(&quot;)$&quot;);</span>
 <span class="nc" id="L153">			return filePattern.toString();</span>
 		}
-<span class="nc" id="L155">		return Option.getPattern();</span>
+<span class="nc" id="L155">		return CliOptions.getPattern();</span>
 	}
 
-	public MainWindow(Option option, File arg) {
+	public MainWindow(CliOptions option, File arg) {
 <span class="nc" id="L159">		super(getDirectory(arg).getAbsolutePath());</span>
 <span class="nc" id="L160">		System.setProperty(&quot;PLANTUML_SECURITY_PROFILE&quot;, &quot;UNSECURE&quot;);</span>
 <span class="nc" id="L161">		final File dir = getDirectory(arg);</span>

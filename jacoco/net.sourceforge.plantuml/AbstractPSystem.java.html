@@ -47,6 +47,9 @@ import java.util.Set;
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.DisplayPositionned;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.cli.OptionPrint;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -89,123 +92,123 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 
 	private final UmlSource source;
 	private Scale scale;
-<span class="fc" id="L92">	private int splitPagesHorizontal = 1;</span>
-<span class="fc" id="L93">	private int splitPagesVertical = 1;</span>
+<span class="fc" id="L95">	private int splitPagesHorizontal = 1;</span>
+<span class="fc" id="L96">	private int splitPagesVertical = 1;</span>
 
-<span class="fc" id="L95">	private String namespaceSeparator = null;</span>
+<span class="fc" id="L98">	private String namespaceSeparator = null;</span>
 	private final PreprocessingArtifact preprocessing;
 
 	public void setNamespaceSeparator(String namespaceSeparator) {
-<span class="fc" id="L99">		this.namespaceSeparator = namespaceSeparator;</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L102">		this.namespaceSeparator = namespaceSeparator;</span>
+<span class="fc" id="L103">	}</span>
 
 	final public String getNamespaceSeparator() {
-<span class="fc" id="L103">		return namespaceSeparator;</span>
+<span class="fc" id="L106">		return namespaceSeparator;</span>
 	}
 
-<span class="fc" id="L106">	public AbstractPSystem(UmlSource source, PreprocessingArtifact preprocessing) {</span>
-<span class="fc" id="L107">		this.source = Objects.requireNonNull(source);</span>
-<span class="fc" id="L108">		this.preprocessing = preprocessing;</span>
-<span class="fc" id="L109">	}</span>
+<span class="fc" id="L109">	public AbstractPSystem(UmlSource source, PreprocessingArtifact preprocessing) {</span>
+<span class="fc" id="L110">		this.source = Objects.requireNonNull(source);</span>
+<span class="fc" id="L111">		this.preprocessing = preprocessing;</span>
+<span class="fc" id="L112">	}</span>
 
 	private String getVersion() {
-<span class="fc" id="L112">		final StringBuilder toAppend = new StringBuilder();</span>
-<span class="fc" id="L113">		toAppend.append(&quot;PlantUML version &quot;);</span>
-<span class="fc" id="L114">		toAppend.append(Version.versionString());</span>
-<span class="fc" id="L115">		toAppend.append(&quot;(&quot; + Version.compileTimeString() + &quot;)\n&quot;);</span>
-<span class="fc" id="L116">		toAppend.append(&quot;(&quot; + License.getCurrent() + &quot; source distribution)\n&quot;);</span>
+<span class="fc" id="L115">		final StringBuilder toAppend = new StringBuilder();</span>
+<span class="fc" id="L116">		toAppend.append(&quot;PlantUML version &quot;);</span>
+<span class="fc" id="L117">		toAppend.append(Version.versionString());</span>
+<span class="fc" id="L118">		toAppend.append(&quot;(&quot; + Version.compileTimeString() + &quot;)\n&quot;);</span>
+<span class="fc" id="L119">		toAppend.append(&quot;(&quot; + License.getCurrent() + &quot; source distribution)\n&quot;);</span>
 		// ::comment when __CORE__
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (String name : OptionPrint.interestingProperties()) {</span>
-<span class="fc" id="L119">			toAppend.append(name);</span>
-<span class="fc" id="L120">			toAppend.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="fc" id="L121">		}</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (String name : OptionPrint.interestingProperties()) {</span>
+<span class="fc" id="L122">			toAppend.append(name);</span>
+<span class="fc" id="L123">			toAppend.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="fc" id="L124">		}</span>
 		// ::done
-<span class="fc" id="L123">		return toAppend.toString();</span>
+<span class="fc" id="L126">		return toAppend.toString();</span>
 	}
 
 	final public String getMetadata() {
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L128">			return getVersion();</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L131">			return getVersion();</span>
 
-<span class="fc" id="L130">		final String rawString = source.getRawString(&quot;\n&quot;);</span>
-<span class="fc" id="L131">		final String plainString = source.getPlainString(&quot;\n&quot;);</span>
-<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (rawString != null &amp;&amp; rawString.equals(plainString))</span>
-<span class="fc" id="L133">			return rawString + BackSlash.NEWLINE + getVersion();</span>
+<span class="fc" id="L133">		final String rawString = source.getRawString(&quot;\n&quot;);</span>
+<span class="fc" id="L134">		final String plainString = source.getPlainString(&quot;\n&quot;);</span>
+<span class="pc bpc" id="L135" title="1 of 4 branches missed.">		if (rawString != null &amp;&amp; rawString.equals(plainString))</span>
+<span class="fc" id="L136">			return rawString + BackSlash.NEWLINE + getVersion();</span>
 
-<span class="fc" id="L135">		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();</span>
+<span class="fc" id="L138">		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();</span>
 	}
 
 	final public UmlSource getSource() {
-<span class="fc" id="L139">		return source;</span>
+<span class="fc" id="L142">		return source;</span>
 	}
 
 	final public long seed() {
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L144">			return 42;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L147">			return 42;</span>
 
-<span class="fc" id="L146">		return getSource().seed();</span>
+<span class="fc" id="L149">		return getSource().seed();</span>
 	}
 
 	public int getNbImages() {
-<span class="fc" id="L150">		return 1;</span>
+<span class="fc" id="L153">		return 1;</span>
 	}
 
 	@Override
 	public int getSplitPagesHorizontal() {
-<span class="fc" id="L155">		return splitPagesHorizontal;</span>
+<span class="fc" id="L158">		return splitPagesHorizontal;</span>
 	}
 
 	public void setSplitPagesHorizontal(int splitPagesHorizontal) {
-<span class="fc" id="L159">		this.splitPagesHorizontal = splitPagesHorizontal;</span>
-<span class="fc" id="L160">	}</span>
+<span class="fc" id="L162">		this.splitPagesHorizontal = splitPagesHorizontal;</span>
+<span class="fc" id="L163">	}</span>
 
 	@Override
 	public int getSplitPagesVertical() {
-<span class="fc" id="L164">		return splitPagesVertical;</span>
+<span class="fc" id="L167">		return splitPagesVertical;</span>
 	}
 
 	public void setSplitPagesVertical(int splitPagesVertical) {
-<span class="fc" id="L168">		this.splitPagesVertical = splitPagesVertical;</span>
-<span class="fc" id="L169">	}</span>
+<span class="fc" id="L171">		this.splitPagesVertical = splitPagesVertical;</span>
+<span class="fc" id="L172">	}</span>
 
 	public DisplayPositionned getTitle() {
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L173">			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L176">			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
 
-<span class="nc" id="L175">		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+<span class="nc" id="L178">		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
 	}
 
 	public String getWarningOrError() {
-<span class="fc" id="L179">		return null;</span>
+<span class="fc" id="L182">		return null;</span>
 	}
 
 	public String checkFinalError() {
-<span class="fc" id="L183">		return null;</span>
+<span class="fc" id="L186">		return null;</span>
 	}
 
 	public void makeDiagramReady() {
-<span class="fc" id="L187">	}</span>
+<span class="fc" id="L190">	}</span>
 
 	public boolean isOk() {
-<span class="fc" id="L190">		return true;</span>
+<span class="fc" id="L193">		return true;</span>
 	}
 
 	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
-<span class="fc" id="L194">		cmd = new ProtectedCommand(cmd);</span>
+<span class="fc" id="L197">		cmd = new ProtectedCommand(cmd);</span>
 		try {
-<span class="fc" id="L196">			return cmd.execute(this, lines, currentPass);</span>
-<span class="nc" id="L197">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L198">			return CommandExecutionResult.badColor();</span>
+<span class="fc" id="L199">			return cmd.execute(this, lines, currentPass);</span>
+<span class="nc" id="L200">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L201">			return CommandExecutionResult.badColor();</span>
 		}
 	}
 
 	public boolean hasUrl() {
-<span class="nc" id="L203">		return false;</span>
+<span class="nc" id="L206">		return false;</span>
 	}
 
 	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-<span class="fc" id="L208">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L211">		final long now = System.currentTimeMillis();</span>
 		try {
 //			if (this instanceof TitledDiagram) {
 //				final TitledDiagram titledDiagram = (TitledDiagram) this;
@@ -214,33 +217,33 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 //					styleBuilder.printMe();
 //				}
 //			}
-<span class="fc" id="L217">			return exportDiagramNow(os, index, fileFormatOption);</span>
+<span class="fc" id="L220">			return exportDiagramNow(os, index, fileFormatOption);</span>
 		} finally {
 			// ::comment when __CORE__
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (OptionFlags.getInstance().isEnableStats())</span>
-<span class="nc" id="L221">				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
-<span class="nc" id="L222">						fileFormatOption.getFileFormat());</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))</span>
+<span class="nc" id="L224">				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
+<span class="nc" id="L225">						fileFormatOption.getFileFormat());</span>
 
 			// ::done
 		}
 	}
 
 	final public void setScale(Scale scale) {
-<span class="fc" id="L229">		this.scale = scale;</span>
-<span class="fc" id="L230">	}</span>
+<span class="fc" id="L232">		this.scale = scale;</span>
+<span class="fc" id="L233">	}</span>
 
 	final public Scale getScale() {
-<span class="fc" id="L233">		return scale;</span>
+<span class="fc" id="L236">		return scale;</span>
 	}
 
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L237">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
-<span class="fc" id="L238">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
-<span class="fc" id="L239">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
+<span class="fc" id="L240">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
+<span class="fc" id="L241">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
+<span class="fc" id="L242">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
 	}
 
 	protected ColorMapper muteColorMapper(ColorMapper init) {
-<span class="fc" id="L243">		return init;</span>
+<span class="fc" id="L246">		return init;</span>
 	}
 
 	// TODO &quot;index&quot; isnt really being used
@@ -248,48 +251,48 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 			throws IOException;
 
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L251">		return ClockwiseTopRightBottomLeft.same(0);</span>
+<span class="fc" id="L254">		return ClockwiseTopRightBottomLeft.same(0);</span>
 	}
 
 	@Override
 	public Display getTitleDisplay() {
-<span class="fc" id="L256">		return Display.NULL;</span>
+<span class="fc" id="L259">		return Display.NULL;</span>
 	}
 
 	@Override
 	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
-<span class="nc" id="L261">		final UFont font = UFont.monospaced(14);</span>
-<span class="nc" id="L262">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
-<span class="nc" id="L263">		final UText text = UText.build(&quot;Not implemented yet for &quot; + getClass().getName(), fc);</span>
-<span class="nc" id="L264">		ug.apply(new UTranslate(10, 10)).draw(text);</span>
-<span class="nc" id="L265">	}</span>
+<span class="nc" id="L264">		final UFont font = UFont.monospaced(14);</span>
+<span class="nc" id="L265">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
+<span class="nc" id="L266">		final UText text = UText.build(&quot;Not implemented yet for &quot; + getClass().getName(), fc);</span>
+<span class="nc" id="L267">		ug.apply(new UTranslate(10, 10)).draw(text);</span>
+<span class="nc" id="L268">	}</span>
 
 	public Set&lt;ParserPass&gt; getRequiredPass() {
-<span class="fc" id="L268">		return EnumSet.of(ParserPass.ONE);</span>
+<span class="fc" id="L271">		return EnumSet.of(ParserPass.ONE);</span>
 	}
 
 	public void startingPass(ParserPass pass) {
-<span class="fc" id="L272">	}</span>
+<span class="fc" id="L275">	}</span>
 
 	final public PreprocessingArtifact getPreprocessingArtifact() {
-<span class="fc" id="L275">		return preprocessing;</span>
+<span class="fc" id="L278">		return preprocessing;</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="nc" id="L280">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L283">		throw new UnsupportedOperationException();</span>
 
 	}
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="nc" id="L286">		return preprocessing.getWarnings();</span>
+<span class="nc" id="L289">		return preprocessing.getWarnings();</span>
 	}
 	
 	
 	@Override
 	public InstallationRequirement getInstallationRequirement() {
-<span class="nc" id="L292">		return InstallationRequirement.NONE;</span>
+<span class="nc" id="L295">		return InstallationRequirement.NONE;</span>
 	}
 
 }

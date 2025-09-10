@@ -40,9 +40,9 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 	}
 
 	public static SyntaxResult checkSyntax(String source) {
-<span class="nc" id="L67">		OptionFlags.getInstance().setQuiet(true);</span>
+		// GlobalConfig.getInstance().setQuiet(true);
 <span class="nc" id="L68">		final SyntaxResult result = new SyntaxResult();</span>
 
 <span class="nc bnc" id="L70" title="All 2 branches missed.">		if (source.startsWith(&quot;@startuml\n&quot;) == false) {</span>

@@ -53,6 +53,7 @@ net.sourceforge.plantuml.cheneer.command
 net.sourceforge.plantuml.chronology
 net.sourceforge.plantuml.classdiagram
 net.sourceforge.plantuml.classdiagram.command
+net.sourceforge.plantuml.cli
 net.sourceforge.plantuml.code
 net.sourceforge.plantuml.code.deflate
 net.sourceforge.plantuml.command

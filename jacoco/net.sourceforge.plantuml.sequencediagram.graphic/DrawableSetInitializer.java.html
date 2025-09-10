@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -489,7 +489,7 @@ class DrawableSetInitializer {
 <span class="fc" id="L489">				int delta1 = 0;</span>
 <span class="pc bpc" id="L490" title="1 of 2 branches missed.">				if (message.isCreate())</span>
 <span class="nc" id="L491">					delta1 += 10;</span>
-<span class="fc bfc" id="L492" title="All 2 branches covered.">				else if (OptionFlags.STRICT_SELFMESSAGE_POSITION &amp;&amp; message.isSelfMessage())</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">				else if (GlobalConfig.STRICT_SELFMESSAGE_POSITION &amp;&amp; message.isSelfMessage())</span>
 <span class="fc" id="L493">					delta1 += 8;</span>
 
 <span class="fc" id="L495">				pos = message.getPosYstartLevel() + delta1;</span>
@@ -499,7 +499,7 @@ class DrawableSetInitializer {
 <span class="fc bfc" id="L499" title="All 2 branches covered.">					message == null ? null : message.getStyleBuilder());</span>
 <span class="pc bpc" id="L500" title="1 of 4 branches missed.">		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {</span>
 <span class="fc" id="L501">			double delta = 0;</span>
-<span class="pc bpc" id="L502" title="1 of 4 branches missed.">			if (OptionFlags.STRICT_SELFMESSAGE_POSITION &amp;&amp; message != null &amp;&amp; message.isSelfMessage())</span>
+<span class="pc bpc" id="L502" title="1 of 4 branches missed.">			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION &amp;&amp; message != null &amp;&amp; message.isSelfMessage())</span>
 <span class="fc" id="L503">				delta += 7;</span>
 
 <span class="fc" id="L505">			final Participant p = lifeEvent.getParticipant();</span>

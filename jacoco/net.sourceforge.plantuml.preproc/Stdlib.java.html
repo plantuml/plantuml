@@ -195,12 +195,12 @@ public class Stdlib {
 <span class="fc" id="L195">		return channel.getInternalInputStream(name);</span>
 	}
 
-	public static void extractStdLib() throws IOException {
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (String name : getAllFolderNames()) {</span>
-<span class="nc" id="L200">			final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="nc" id="L201">			folder.extractMeFull();</span>
-<span class="nc" id="L202">		}</span>
-<span class="nc" id="L203">	}</span>
+//	public static void extractStdLib() throws IOException {
+//		for (String name : getAllFolderNames()) {
+//			final Stdlib folder = Stdlib.retrieve(name);
+//			folder.extractMeFull();
+//		}
+//	}
 
 	public static Collection&lt;String&gt; getAllFolderNames() throws IOException {
 <span class="fc" id="L206">		final InputStream home = SpmChannel.inputStream(&quot;stdlib/home.spm&quot;);</span>

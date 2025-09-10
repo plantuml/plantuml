@@ -42,30 +42,31 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.function.Supplier;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.ProgressBar;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 
-<span class="nc" id="L48">public abstract class Log {</span>
+<span class="nc" id="L49">public abstract class Log {</span>
 	// ::comment when __HAXE__
-<span class="fc" id="L50">	private static final long start = System.currentTimeMillis();</span>
+<span class="fc" id="L51">	private static final long start = System.currentTimeMillis();</span>
 
 	private static String format(String s) {
-<span class="nc" id="L53">		final long delta = System.currentTimeMillis() - start;</span>
+<span class="nc" id="L54">		final long delta = System.currentTimeMillis() - start;</span>
 		// final HealthCheck healthCheck = Performance.getHealthCheck();
 		// final long cpu = healthCheck.jvmCpuTime() / 1000L / 1000L;
 		// final long dot = healthCheck.dotTime().getSum();
 
-<span class="nc" id="L58">		final long freeMemory = Runtime.getRuntime().freeMemory();</span>
-<span class="nc" id="L59">		final long maxMemory = Runtime.getRuntime().maxMemory();</span>
-<span class="nc" id="L60">		final long totalMemory = Runtime.getRuntime().totalMemory();</span>
-<span class="nc" id="L61">		final long usedMemory = totalMemory - freeMemory;</span>
-<span class="nc" id="L62">		final int threadActiveCount = Thread.activeCount();</span>
+<span class="nc" id="L59">		final long freeMemory = Runtime.getRuntime().freeMemory();</span>
+<span class="nc" id="L60">		final long maxMemory = Runtime.getRuntime().maxMemory();</span>
+<span class="nc" id="L61">		final long totalMemory = Runtime.getRuntime().totalMemory();</span>
+<span class="nc" id="L62">		final long usedMemory = totalMemory - freeMemory;</span>
+<span class="nc" id="L63">		final int threadActiveCount = Thread.activeCount();</span>
 
-<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L65">		sb.append(&quot;(&quot;);</span>
-<span class="nc" id="L66">		sb.append(delta / 1000L);</span>
-<span class="nc" id="L67">		sb.append(&quot;.&quot;);</span>
-<span class="nc" id="L68">		sb.append(String.format(&quot;%03d&quot;, delta % 1000L));</span>
+<span class="nc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L66">		sb.append(&quot;(&quot;);</span>
+<span class="nc" id="L67">		sb.append(delta / 1000L);</span>
+<span class="nc" id="L68">		sb.append(&quot;.&quot;);</span>
+<span class="nc" id="L69">		sb.append(String.format(&quot;%03d&quot;, delta % 1000L));</span>
 		// if (cpu != -1) {
 		// sb.append(&quot; - &quot;);
 		// sb.append(cpu / 1000L);
@@ -79,88 +80,88 @@ import net.sourceforge.plantuml.ProgressBar;
 		// sb.append(&quot;(&quot;);
 		// sb.append(healthCheck.dotTime().getNb());
 		// sb.append(&quot;)&quot;);
-<span class="nc" id="L82">		sb.append(&quot; - &quot;);</span>
-<span class="nc" id="L83">		final long total = totalMemory / 1024 / 1024;</span>
-<span class="nc" id="L84">		final long free = freeMemory / 1024 / 1024;</span>
-<span class="nc" id="L85">		sb.append(total);</span>
-<span class="nc" id="L86">		sb.append(&quot; Mo) &quot;);</span>
-<span class="nc" id="L87">		sb.append(free);</span>
-<span class="nc" id="L88">		sb.append(&quot; Mo - &quot;);</span>
-<span class="nc" id="L89">		sb.append(s);</span>
-<span class="nc" id="L90">		return sb.toString();</span>
+<span class="nc" id="L83">		sb.append(&quot; - &quot;);</span>
+<span class="nc" id="L84">		final long total = totalMemory / 1024 / 1024;</span>
+<span class="nc" id="L85">		final long free = freeMemory / 1024 / 1024;</span>
+<span class="nc" id="L86">		sb.append(total);</span>
+<span class="nc" id="L87">		sb.append(&quot; Mo) &quot;);</span>
+<span class="nc" id="L88">		sb.append(free);</span>
+<span class="nc" id="L89">		sb.append(&quot; Mo - &quot;);</span>
+<span class="nc" id="L90">		sb.append(s);</span>
+<span class="nc" id="L91">		return sb.toString();</span>
 	}
 
 	public static void println(Object s) {
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L95">	}</span>
 	// ::done
 
 	public synchronized static void debug(Supplier&lt;String&gt; msgSupplier) {
-<span class="fc" id="L98">	}</span>
+<span class="fc" id="L99">	}</span>
 
 	public synchronized static void info(Supplier&lt;String&gt; msgSupplier) {
 		// ::comment when __CORE__ or __HAXE__
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (OptionFlags.getInstance().isVerbose()) {</span>
-<span class="nc" id="L103">			ProgressBar.clear();</span>
-<span class="nc" id="L104">			System.err.println(format(msgSupplier.get()));</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
+<span class="nc" id="L104">			ProgressBar.clear();</span>
+<span class="nc" id="L105">			System.err.println(format(msgSupplier.get()));</span>
 		}
 		// ::done
-<span class="fc" id="L107">	}</span>
+<span class="fc" id="L108">	}</span>
 
 	public synchronized static void error(String s) {
 		// ::comment when __CORE__ or __HAXE__
-<span class="nc" id="L111">		ProgressBar.clear();</span>
+<span class="nc" id="L112">		ProgressBar.clear();</span>
 		// ::done
-<span class="nc" id="L113">		System.err.println(s);</span>
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L114">		System.err.println(s);</span>
+<span class="nc" id="L115">	}</span>
 
 	public static void header(String s) {
-<span class="nc" id="L117">	}</span>
+<span class="nc" id="L118">	}</span>
 
 	private static final String PERFLOG_FILENAME = &quot;perflog.txt&quot;;
-<span class="fc" id="L120">	private static boolean firstCall = true;</span>
+<span class="fc" id="L121">	private static boolean firstCall = true;</span>
 
 	public static void perflog(String line) {
 		// perflogInternal(line);
-<span class="nc" id="L124">	}</span>
+<span class="nc" id="L125">	}</span>
 
 	public static void deletePerfLogFile() {
-<span class="nc" id="L127">		final File file = new File(PERFLOG_FILENAME);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (file.exists()) {</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (!file.delete()) {</span>
-<span class="nc" id="L130">				error(&quot;Cannot del &quot; + PERFLOG_FILENAME);</span>
+<span class="nc" id="L128">		final File file = new File(PERFLOG_FILENAME);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (file.exists()) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (!file.delete()) {</span>
+<span class="nc" id="L131">				error(&quot;Cannot del &quot; + PERFLOG_FILENAME);</span>
 			}
 		}
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L134">	}</span>
 
 	private synchronized static void perflogInternal(String line) {
 		try {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (firstCall) {</span>
-<span class="nc" id="L138">				deletePerfLogFile();</span>
-<span class="nc" id="L139">				firstCall = false;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (firstCall) {</span>
+<span class="nc" id="L139">				deletePerfLogFile();</span>
+<span class="nc" id="L140">				firstCall = false;</span>
 			}
-<span class="nc" id="L141">			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);</span>
-<span class="nc" id="L142">					BufferedWriter bw = new BufferedWriter(fw);</span>
-<span class="nc" id="L143">					PrintWriter out = new PrintWriter(bw)) {</span>
-<span class="nc" id="L144">				out.println(line);</span>
+<span class="nc" id="L142">			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);</span>
+<span class="nc" id="L143">					BufferedWriter bw = new BufferedWriter(fw);</span>
+<span class="nc" id="L144">					PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="nc" id="L145">				out.println(line);</span>
 			}
-<span class="nc" id="L146">		} catch (IOException e) {</span>
-<span class="nc" id="L147">			error(&quot;Cannot write in &quot; + PERFLOG_FILENAME + &quot; : &quot; + e.getMessage());</span>
-<span class="nc" id="L148">		}</span>
-<span class="nc" id="L149">	}</span>
+<span class="nc" id="L147">		} catch (IOException e) {</span>
+<span class="nc" id="L148">			error(&quot;Cannot write in &quot; + PERFLOG_FILENAME + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L149">		}</span>
+<span class="nc" id="L150">	}</span>
 
 	public static synchronized void logStackTrace(String s) {
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (firstCall) {</span>
-<span class="nc" id="L153">			deletePerfLogFile();</span>
-<span class="nc" id="L154">			firstCall = false;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (firstCall) {</span>
+<span class="nc" id="L154">			deletePerfLogFile();</span>
+<span class="nc" id="L155">			firstCall = false;</span>
 		}
-<span class="nc" id="L156">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
-<span class="nc" id="L157">			final Exception e = new Exception(&quot;StackTrace &quot; + s);</span>
-<span class="nc" id="L158">			e.fillInStackTrace();</span>
-<span class="nc" id="L159">			e.printStackTrace(pw);</span>
-<span class="nc" id="L160">		} catch (IOException ex) {</span>
-<span class="nc" id="L161">			ex.printStackTrace();</span>
-<span class="nc" id="L162">		}</span>
-<span class="nc" id="L163">	}</span>
+<span class="nc" id="L157">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
+<span class="nc" id="L158">			final Exception e = new Exception(&quot;StackTrace &quot; + s);</span>
+<span class="nc" id="L159">			e.fillInStackTrace();</span>
+<span class="nc" id="L160">			e.printStackTrace(pw);</span>
+<span class="nc" id="L161">		} catch (IOException ex) {</span>
+<span class="nc" id="L162">			ex.printStackTrace();</span>
+<span class="nc" id="L163">		}</span>
+<span class="nc" id="L164">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

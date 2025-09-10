@@ -41,8 +41,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cli.OptionPrint;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.Version;
