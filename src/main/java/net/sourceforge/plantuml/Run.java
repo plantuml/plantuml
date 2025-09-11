@@ -54,6 +54,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.UIManager;
 
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.cli.GlobalConfig;
@@ -118,7 +119,7 @@ public class Run {
 			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
 		final CliOptions option = CliParser.parse(argsArray);
-		ProgressBar.setEnable(option.isTextProgressBar());
+		ProgressBar.setEnable(option.isTrue(CliFlag.PROGRESS));
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.CLIPBOARD_LOOP)) {
 			ClipboardLoop.runLoop();
 			return;
@@ -200,18 +201,18 @@ public class Run {
 				throw e;
 			}
 
-		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
+		} else if (option.isTrue(CliFlag.PIPE) || option.isTrue(CliFlag.PIPEMAP) || option.isTrue(CliFlag.SYNTAX)) {
 			managePipe(option, error);
 			forceQuit = true;
-		} else if (option.isFailfast2()) {
-			if (option.isSplash())
+		} else if (option.isTrue(CliFlag.FAIL_FAST2)) {
+			if (option.isTrue(CliFlag.SPLASH))
 				Splash.createSplash();
 
 			final long start2 = System.currentTimeMillis();
-			option.setCheckOnly(true);
+			option.setValue(CliFlag.CHECK_ONLY, true);
 			manageAllFiles(option, error);
-			option.setCheckOnly(false);
-			if (option.isDuration()) {
+			option.setValue(CliFlag.CHECK_ONLY, false);
+			if (option.isTrue(CliFlag.DURATION)) {
 				final double duration = (System.currentTimeMillis() - start2) / 1000.0;
 				Log.error("Check Duration = " + duration + " seconds");
 			}
@@ -220,14 +221,14 @@ public class Run {
 
 			forceQuit = true;
 		} else {
-			if (option.isSplash())
+			if (option.isTrue(CliFlag.SPLASH))
 				Splash.createSplash();
 
 			manageAllFiles(option, error);
 			forceQuit = true;
 		}
 
-		if (option.isDuration()) {
+		if (option.isTrue(CliFlag.DURATION)) {
 			final double duration = (System.currentTimeMillis() - start) / 1000.0;
 			Log.error("Duration = " + duration + " seconds");
 		}
@@ -373,7 +374,7 @@ public class Run {
 	}
 
 	private static void managePipe(CliOptions option, ErrorStatus error) throws IOException {
-		final String charset = option.getCharset();
+		final String charset = option.getString(CliFlag.CHARSET);
 		new Pipe(option, System.out, System.in, charset).managePipe(error);
 	}
 
@@ -399,14 +400,15 @@ public class Run {
 
 	private static void processArgs(CliOptions option, ErrorStatus error)
 			throws NoPlantumlCompressionException, InterruptedException {
-		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
+		if (option.isTrue(CliFlag.DECODE_URL) == false && option.getNbThreads() > 1
+				&& option.isTrue(CliFlag.CHECK_ONLY) == false
 				&& GlobalConfig.getInstance().boolValue(GlobalConfigKey.EXTRACT_FROM_METADATA) == false) {
 			multithread(option, error);
 			return;
 		}
 		final List<File> files = new ArrayList<>();
 		for (String s : option.getResult()) {
-			if (option.isDecodeurl()) {
+			if (option.isTrue(CliFlag.DECODE_URL)) {
 				error.goOk();
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 				System.out.println("@startuml");
@@ -493,26 +495,26 @@ public class Run {
 				final String path = outputDir.getPath();
 				outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
 				sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,
-						option.getConfig(), option.getCharset(), option.getFileFormatOption());
+						option.getConfig(), option.getString(CliFlag.CHARSET), option.getFileFormatOption());
 			} else {
 				sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
-						option.getCharset(), option.getFileFormatOption());
+						option.getString(CliFlag.CHARSET), option.getFileFormatOption());
 			}
 		} else {
 			sourceFileReader = new SourceFileReaderHardFile(option.getDefaultDefines(f), f, option.getOutputFile(),
-					option.getConfig(), option.getCharset(), option.getFileFormatOption());
+					option.getConfig(), option.getString(CliFlag.CHARSET), option.getFileFormatOption());
 		}
-		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
-		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isNoerror());
+		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));
+		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isTrue(CliFlag.NO_ERROR));
 
-		if (option.isComputeurl()) {
+		if (option.isTrue(CliFlag.COMPUTE_URL)) {
 			error.goOk();
 			for (BlockUml s : sourceFileReader.getBlocks()) {
 				System.out.println(s.getEncodedUrl());
 			}
 			return;
 		}
-		if (option.isCheckOnly()) {
+		if (option.isTrue(CliFlag.CHECK_ONLY)) {
 			error.goOk();
 			final boolean hasError = sourceFileReader.hasError();
 			if (hasError) {
@@ -543,7 +545,7 @@ public class Run {
 	}
 
 	private static void extractPreproc(CliOptions option, final ISourceFileReader sourceFileReader) throws IOException {
-		final String charset = option.getCharset();
+		final String charset = option.getString(CliFlag.CHARSET);
 		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
 					.withPreprocFormat();

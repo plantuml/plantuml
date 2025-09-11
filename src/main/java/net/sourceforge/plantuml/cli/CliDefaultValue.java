@@ -35,12 +35,16 @@
  */
 package net.sourceforge.plantuml.cli;
 
-import java.io.IOException;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-public class CliParser {
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-	public static CliOptions parse(String... arg) throws InterruptedException, IOException {
-		return new CliOptions(arg);
-	}
-
+@Documented
+@Retention(RUNTIME)
+@Target(FIELD)
+public @interface CliDefaultValue {
+    String value();
 }

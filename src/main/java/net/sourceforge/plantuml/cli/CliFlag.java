@@ -39,91 +39,279 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.stats.StatsUtils;
+
 public enum CliFlag {
 
-	AUTHOR(Arity.BOOLEAN, "-author", aliases("-authors", "-about"), "Print information about PlantUML authors"), //
-	CHECK_METADATA(Arity.BOOLEAN, "-checkmetadata", "Skip PNG files that don't need to be regenerated"), //
-	CHECK_ONLY(Arity.BOOLEAN, "-checkonly", "Check syntax of files without generating images"), //
-	CHARSET(Arity.SINGLE_VALUE, "-charset", "Use a specific charset for input files"), //
-	COMPUTE_URL(Arity.BOOLEAN, "-computeurl", aliases("-encodeurl"),
-			"Compute the encoded URL of a PlantUML source file"), //
-	CONFIG(Arity.SINGLE_VALUE, "-config", "???"), //
-	CYPHER(Arity.BOOLEAN, "-cypher", "Encrypt diagram texts so they can be shared securely"), //
-	DEFINE(Arity.KEY_VALUE, "-D", "Set a preprocessing variable as if '!define VAR value' were used"), //
-	DARK_MODE(Arity.BOOLEAN, "-darkmode", "Use dark mode for diagrams"), //
-	DEBUG_SVEK(Arity.BOOLEAN, "-debugsvek", "Generate intermediate Svek files"), //
-	DECODE_URL(Arity.BOOLEAN, "-decodeurl", "Retrieve PlantUML source from an encoded URL"), //
-	DISABLE_STATS(Arity.BOOLEAN, "-disablestats", "Disable statistics computation (default)"), //
-	DURATION(Arity.BOOLEAN, "-duration", "Print total duration of diagram processing"), //
-	EXCLUDE(Arity.SINGLE_VALUE, "-exclude", aliases("-xclude"), "Exclude files matching a given pattern"), //
-	ENABLE_STATS(Arity.BOOLEAN, "-enablestats", "Enable statistics computation"), //
-	ENCODE_SPRITE(Arity.BOOLEAN, "-encodesprite", "Encode a sprite from an image"), //
-	FAIL_FAST(Arity.BOOLEAN, "-failfast", "Stop processing on first syntax error"), //
-	FAIL_FAST2(Arity.BOOLEAN, "-failfast2", "Syntax check before processing for faster failure"), //
-	FILE_DIR(Arity.SINGLE_VALUE, "-filedir", "Pretend input files are located in given directory"), //
-	FILENAME(Arity.SINGLE_VALUE, "-filename", "Override %filename% variable"), //
-	FTP(Arity.KEY_OPTIONAL_COLON_VALUE, "-ftp", "???"), //
-	GRAPHVIZ_DOT(Arity.SINGLE_VALUE, "-graphvizdot", aliases("-graphviz_dot"), "Specify dot executable path"), //
-	GUI(Arity.BOOLEAN, "-gui", "Run the graphical user interface"), //
-	HELP(Arity.BOOLEAN, "-help", aliases("-h"), "Display help message"), //
-	HTML_STATS(Arity.BOOLEAN, "-htmlstats", "Output general statistics in HTML format"), //
-	HEADLESS(Arity.BOOLEAN, "-headless", "?"), //
-	INCLUDE(Arity.BOOLEAN, "-I", "Include external files as if '!include file' were used"), //
-	LANGUAGE(Arity.BOOLEAN, "-language", "Print the list of PlantUML keywords"), //
-	LOOP_STATS(Arity.BOOLEAN, "-loopstats", "Continuously print usage statistics"), //
-	METADATA(Arity.BOOLEAN, "-metadata", "Retrieve PlantUML sources from PNG images"), //
-	NB_THREAD(Arity.SINGLE_VALUE, "-nbthread", "Use N threads for processing (or 'auto')"), //
-	NO_ERROR(Arity.BOOLEAN, "-noerror", "Skip images when diagrams contain errors"), //
-	NO_METADATA(Arity.BOOLEAN, "-nometadata", "Do not export metadata in generated files"), //
-	OFILE(Arity.SINGLE_VALUE, "-ofile", "???"), //
-	OUTPUT(Arity.SINGLE_VALUE, "-output", "Generate images in the specified directory"), //
-	OVERWRITE(Arity.BOOLEAN, "-overwrite", "Allow overwriting read-only files"), //
-	PRAGMA(Arity.BOOLEAN, "-P", "Set pragma as if '!pragma key value' were used"), //
-	PIPE(Arity.BOOLEAN, "-pipe", aliases("-p"), "Use stdin for source, stdout for output"), //
-	PICOWEB(Arity.BOOLEAN, "-picoweb", "Start internal HTTP server for rendering"), //
-	PIPE_IMAGE_INDEX(Arity.BOOLEAN, "-pipeimageindex", "Generate the Nth image with pipe option"), //
-	PREPROCESS(Arity.BOOLEAN, "-preproc", "Output preprocessor text of diagrams"), //
-	PRINT_FONTS(Arity.BOOLEAN, "-printfonts", "List fonts available on your system"), //
-	PROGRESS(Arity.BOOLEAN, "-progress", "Display a textual progress bar in console"), //
-	REALTIME_STATS(Arity.BOOLEAN, "-realtimestats", "Generate statistics on the fly"), //
-	SKIN_PARAM(Arity.BOOLEAN, "-S", "Set a skin parameter as if 'skinparam key value' were used"), //
-	SPLASH(Arity.BOOLEAN, "-splash", "Display splash screen with progress bar"), //
-	STD_LIB(Arity.BOOLEAN, "-stdlib", "Print standard library information"), //
-	SYNTAX(Arity.BOOLEAN, "-syntax", "Report syntax errors from stdin without generating images"), //
-	TEST_DOT(Arity.BOOLEAN, "-testdot", "Test Graphviz installation"), //
-	THEME(Arity.SINGLE_VALUE, "-theme", "Use a specific theme"), //
-	TIMEOUT(Arity.SINGLE_VALUE, "-timeout", "Set processing timeout in seconds"), //
-	T_EPS(Arity.BOOLEAN, "-teps", aliases("-eps"), "Generate images in EPS format"), //
-	T_HTML(Arity.BOOLEAN, "-thtml", aliases("-html"), "Generate HTML file for class diagram"), //
-	T_LATEX_NOPREAMBLE(Arity.BOOLEAN, "-tlatex:nopreamble", aliases("-latex:nopreamble"),
-			"Generate LaTeX/Tikz without preamble"), //
-	T_LATEX(Arity.BOOLEAN, "-tlatex", aliases("-latex"), "Generate LaTeX/Tikz output"), //
-	T_PDF(Arity.BOOLEAN, "-tpdf", aliases("-pdf"), "Generate PDF images"), //
-	T_PNG(Arity.BOOLEAN, "-tpng", aliases("-png"), "Generate PNG images (default)"), //
-	T_SCXML(Arity.BOOLEAN, "-tscxml", "Generate SCXML file for state diagram"), //
-	T_SVG(Arity.BOOLEAN, "-tsvg", aliases("-svg"), "Generate SVG images"), //
-	T_TXT(Arity.BOOLEAN, "-ttxt", aliases("-txt"), "Generate ASCII art diagrams"), //
-	T_UTXT(Arity.BOOLEAN, "-tutxt", aliases("-utxt"), "Generate ASCII art diagrams using Unicode"), //
-	T_VDX(Arity.BOOLEAN, "-tvdx", aliases("-vdx"), "Generate VDX images"), //
-	T_XMI(Arity.BOOLEAN, "-txmi", aliases("-xmi"), "Generate XMI files for class diagrams"), //
-	VERBOSE(Arity.BOOLEAN, "-verbose", aliases("-v"), "Enable verbose log output"), //
-	VERSION(Arity.BOOLEAN, "-version", "Display PlantUML and Java version info"), //
-	XML_STATS(Arity.BOOLEAN, "-xmlstats", "Output general statistics in XML format"); //
+	@CliFlagDoc("Print information about PlantUML authors")
+	AUTHOR("-author", aliases("-authors", "-about"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printAbout2), //
+
+	@CliFlagDoc("Skip PNG files that don't need to be regenerated")
+	CHECK_METADATA("-checkmetadata", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Check syntax of files without generating images")
+	CHECK_ONLY("-checkonly", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Use a specific charset for input files")
+	@CliDefaultValue("UTF-8")
+	CHARSET("-charset", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Compute the encoded URL of a PlantUML source file")
+	COMPUTE_URL("-computeurl", aliases("-encodeurl"), Arity.UNARY_BOOLEAN), //
+	CLIPBOARD("-clipboard", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.CLIPBOARD, true)), //
+	CLIPBOARDLOOP("-clipboardloop", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.CLIPBOARD_LOOP, true)), //
+
+	@CliFlagDoc("Specify configuration file")
+	CONFIG("-config", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Encrypt diagram texts so they can be shared securely")
+	CYPHER("-cypher", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Set a preprocessing variable as if '!define VAR value' were used")
+	DEFINE("-D", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+	// !PLANTUML_LIMIT_SIZE
+
+	@CliFlagDoc("Use dark mode for diagrams")
+	DARK_MODE("-darkmode", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Generate intermediate Svek files")
+	DEBUG_SVEK("-debugsvek", aliases("-debug_svek"), Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Retrieve PlantUML source from an encoded URL")
+	DECODE_URL("-decodeurl", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Disable statistics computation (default)")
+	DISABLE_STATS("-disablestats", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),
+
+	@CliFlagDoc("Print total duration of diagram processing")
+	DURATION("-duration", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Exclude files matching a given pattern")
+	EXCLUDE("-exclude", aliases("-x"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Enable statistics computation")
+	ENABLE_STATS("-enablestats", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),
+	DUMPHTMLSTATS("-dumphtmlstats", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.DUMP_HTML_STATS, true)),
+	DUMPSTATS("-dumpstats", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.DUMP_STATS, true)),
+
+	@CliFlagDoc("Encode a sprite from an image")
+	ENCODE_SPRITE("-encodesprite", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENCODESPRITE, true)),
+
+	@CliFlagDoc("Stop processing on first syntax error")
+	FAIL_FAST("-failfast", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Syntax check before processing for faster failure")
+	FAIL_FAST2("-failfast2", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Pretend input files are located in given directory")
+	FILE_DIR("-filedir", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Override %filename% variable")
+	FILENAME("-filename", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	FTP("-ftp", Arity.UNARY_OPTIONAL_COLON),
+
+	@CliFlagDoc("Specify dot executable path")
+	GRAPHVIZ_DOT("-graphvizdot", aliases("-graphviz_dot"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Run the graphical user interface")
+	GUI("-gui", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true)),
+
+	@CliFlagDoc("Display help message")
+	HELP("-help", aliases("-h", "-?", "--help"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printHelp2),
+
+	@CliFlagDoc("Output general statistics in HTML format")
+	HTML_STATS("-htmlstats", Arity.UNARY_BOOLEAN, () -> StatsUtils.setHtmlStats(true)),
+
+	HEADLESS("-headless", Arity.UNARY_BOOLEAN, () -> System.setProperty("java.awt.headless", "true")),
+
+	@CliFlagDoc("Include external files as if '!include file' were used")
+	INCLUDE("-I", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+
+	@CliFlagDoc("Print the list of PlantUML keywords")
+	LANGUAGE("-language", Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printLanguage2),
+
+	@CliFlagDoc("Continuously print usage statistics")
+	LOOP_STATS("-loopstats", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.LOOP_STATS, true)),
+
+	@CliFlagDoc("Retrieve PlantUML sources from PNG/SVG images")
+	METADATA("-metadata", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.EXTRACT_FROM_METADATA, true)),
+
+	@CliFlagDoc("Use N threads for processing (or 'auto')")
+	NB_THREAD("-nbthread", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Skip images when diagrams contain errors")
+	NO_ERROR("-noerror", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Do not export metadata in generated files")
+	NO_METADATA("-nometadata", Arity.UNARY_BOOLEAN),
+
+	OFILE("-ofile", Arity.BINARY_NEXT_ARGUMENT_VALUE), O("-o", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE),
+
+	@CliFlagDoc("Generate images in the specified directory")
+	OUTPUT("-output", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Allow overwriting read-only files")
+	OVERWRITE("-overwrite", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),
+
+	@CliFlagDoc("Set pragma as if '!pragma key value' were used")
+	PRAGMA("-P", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+
+	@CliFlagDoc("Use stdin for source, stdout for output")
+	PIPE("-pipe", aliases("-p"), Arity.UNARY_BOOLEAN),
+
+	PIPEMAP("-pipemap", Arity.UNARY_BOOLEAN), //
+	PIPEDELIMITOR("-pipedelimitor", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
+	PIPENOSTDERR("-pipenostderr", Arity.UNARY_BOOLEAN), //
+
+	@CliFlagDoc("Start internal HTTP server for rendering")
+	PICOWEB("-picoweb", Arity.UNARY_OPTIONAL_COLON),
+
+	@CliFlagDoc("Generate the Nth image with pipe option")
+	PIPE_IMAGE_INDEX("-pipeimageindex", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Output preprocessor text of diagrams")
+	PREPROCESS("-preproc", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("List fonts available on your system")
+	PRINT_FONTS("-printfonts", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.PRINT_FONTS, true)),
+
+	@CliFlagDoc("Display a textual progress bar in console")
+	PROGRESS("-progress", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Generate statistics on the fly")
+	REALTIME_STATS("-realtimestats", Arity.UNARY_BOOLEAN, () -> StatsUtils.setRealTimeStats(true)),
+
+	@CliFlagDoc("Set a skin parameter as if 'skinparam key value' were used")
+	SKINPARAM("-S", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+
+	@CliFlagDoc("Display splash screen with progress bar")
+	SPLASH("-splash", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Print standard library information")
+	STD_LIB("-stdlib", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.STD_LIB, true)),
+
+	STDRPT("-stdrpt", Arity.UNARY_OPTIONAL_COLON),
+
+	@CliFlagDoc("Report syntax errors from stdin without generating images")
+	SYNTAX("-syntax", Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Test Graphviz installation")
+	TEST_DOT("-testdot", Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printTestDot2),
+
+	@CliFlagDoc("Use a specific theme")
+	THEME("-theme", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Set processing timeout in seconds")
+	TIMEOUT("-timeout", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc("Generate images in EPS format")
+	T_EPS("-teps", aliases("-eps"), Arity.UNARY_BOOLEAN, FileFormat.EPS),
+	T_EPS_TEXT("-teps:text", aliases("-eps:text"), Arity.UNARY_BOOLEAN, FileFormat.EPS_TEXT),
+
+	@CliFlagDoc("Generate HTML file for class diagram")
+	T_HTML("-thtml", aliases("-html"), Arity.UNARY_BOOLEAN, FileFormat.HTML),
+
+	@CliFlagDoc("Generate LaTeX/Tikz without preamble")
+	T_LATEX_NOPREAMBLE("-tlatex:nopreamble", aliases("-latex:nopreamble"), Arity.UNARY_BOOLEAN,
+			FileFormat.LATEX_NO_PREAMBLE),
+
+	@CliFlagDoc("Generate LaTeX/Tikz output")
+	T_LATEX("-tlatex", aliases("-latex"), Arity.UNARY_BOOLEAN, FileFormat.LATEX),
+
+	@CliFlagDoc("Generate PDF images")
+	T_PDF("-tpdf", aliases("-pdf"), Arity.UNARY_BOOLEAN, FileFormat.PDF),
+
+	@CliFlagDoc("Generate PNG images (default)")
+	T_PNG("-tpng", aliases("-png"), Arity.UNARY_BOOLEAN, FileFormat.PNG),
+
+	T_BASE64("-tbase64", aliases("-base64"), Arity.UNARY_BOOLEAN, FileFormat.BASE64),
+	T_BRAILLE("-tbraille", aliases("-braille"), Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
+
+	@CliFlagDoc("Generate SCXML file for state diagram")
+	T_SCXML("-tscxml", Arity.UNARY_BOOLEAN, FileFormat.SCXML),
+
+	@CliFlagDoc("Generate SVG images")
+	T_SVG("-tsvg", aliases("-svg"), Arity.UNARY_BOOLEAN, FileFormat.SVG),
+
+	@CliFlagDoc("Generate ASCII art diagrams")
+	T_TXT("-ttxt", aliases("-txt"), Arity.UNARY_BOOLEAN, FileFormat.ATXT),
+
+	@CliFlagDoc("Generate ASCII art diagrams using Unicode")
+	T_UTXT("-tutxt", aliases("-utxt"), Arity.UNARY_BOOLEAN, FileFormat.UTXT),
+
+	@CliFlagDoc("Generate VDX images")
+	T_VDX("-tvdx", aliases("-vdx"), Arity.UNARY_BOOLEAN, FileFormat.VDX),
+
+	@CliFlagDoc("Generate XMI files for class diagrams")
+	T_XMI("-txmi", aliases("-xmi"), Arity.UNARY_BOOLEAN, FileFormat.XMI_STANDARD),
+	T_XMI_ARGO("-txmi:argo", aliases("-xmi:argo"), Arity.UNARY_BOOLEAN, FileFormat.XMI_ARGO),
+	T_XMI_CUSTOM("-txmi:custom", aliases("-xmi:custom"), Arity.UNARY_BOOLEAN, FileFormat.XMI_CUSTOM),
+	T_XMI_SCRIPT("-txmi:script", aliases("-xmi:script"), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),
+	T_XMI_STAR("-txmi:star", aliases("-xmi:star"), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),
+
+	@CliFlagDoc("Enable verbose log output")
+	VERBOSE("-verbose", aliases("-v", "--verbose"), Arity.UNARY_BOOLEAN),
+
+	@CliFlagDoc("Display PlantUML and Java version info")
+	VERSION("-version", aliases("--version"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printVersion2),
+
+	LICENSE("-license", aliases("-licence"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printLicense2),
+
+	WORD("-word", Arity.UNARY_BOOLEAN),
+	USE_SEPARATOR_MINUS("-useseparatorminus", Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, "-")),
+
+	@CliFlagDoc("Output general statistics in XML format")
+	XML_STATS("-xmlstats", Arity.UNARY_BOOLEAN, () -> StatsUtils.setXmlStats(true));
 
 	private final String flag;
 	private final List<String> aliases;
-	private final String description;
 	private final Arity type;
+	private final Object foo;
 
-	CliFlag(Arity type, String flag, String description) {
-		this(type, flag, Collections.emptyList(), description);
+	CliFlag(String flag, Arity type) {
+		this(flag, Collections.emptyList(), type, null);
 	}
 
-	CliFlag(Arity type, String flag, List<String> aliases, String description) {
+	CliFlag(String flag, List<String> aliases, Arity type) {
+		this(flag, aliases, type, null);
+	}
+
+	CliFlag(String flag, Arity type, CliAction foo) {
+		this(flag, Collections.emptyList(), type, foo);
+	}
+
+	CliFlag(String flag, Arity type, Object foo) {
+		this(flag, Collections.emptyList(), type, foo);
+	}
+
+	CliFlag(String flag, List<String> aliases, Arity type, Object foo) {
 		this.type = type;
 		this.flag = flag;
 		this.aliases = aliases;
-		this.description = description;
+		this.foo = foo;
+	}
+
+	CliFlag(String flag, List<String> aliases, Arity type, CliAction foo) {
+		this.type = type;
+		this.flag = flag;
+		this.aliases = aliases;
+		this.foo = foo;
+	}
+
+	public boolean isImmediateAction() {
+		return foo instanceof CliAction;
 	}
 
 	private static List<String> aliases(String... names) {
@@ -138,16 +326,12 @@ public enum CliFlag {
 		return aliases;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
 	public Arity getType() {
 		return type;
 	}
 
 	boolean match(String tmp) {
-		if (type == Arity.KEY_VALUE || type == Arity.KEY_OPTIONAL_COLON_VALUE)
+		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON)
 			return (tmp.startsWith(flag));
 
 		for (String alias : aliases)
@@ -156,4 +340,33 @@ public enum CliFlag {
 
 		return tmp.equals(flag);
 	}
+
+	public String getFlagDoc() {
+		try {
+			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
+			if (annotation != null && !annotation.value().isEmpty())
+				return annotation.value();
+
+		} catch (NoSuchFieldException e) {
+			// Should never happen for enum constants
+		}
+		return null;
+	}
+
+	public String getDefaultValue() {
+		try {
+			final CliDefaultValue annotation = CliFlag.class.getField(this.name()).getAnnotation(CliDefaultValue.class);
+			if (annotation != null && !annotation.value().isEmpty())
+				return annotation.value();
+
+		} catch (NoSuchFieldException e) {
+			// Should never happen for enum constants
+		}
+		return null;
+	}
+
+	public Object getFoo() {
+		return foo;
+	}
+
 }

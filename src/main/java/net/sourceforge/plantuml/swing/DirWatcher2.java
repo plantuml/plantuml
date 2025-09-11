@@ -51,6 +51,7 @@ import java.util.concurrent.TimeUnit;
 
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.log.Logme;
@@ -89,7 +90,7 @@ public class DirWatcher2 {
 
 				if (watcher == null || watcher.hasChanged()) {
 					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,
-							option.getOutputDir(), option.getConfig(), option.getCharset(),
+							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
 					modifieds.put(f, new FileWatcher(Collections.singleton(f)));
 					final Future<List<GeneratedImage>> value = executorService

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.Splash;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
@@ -105,7 +106,7 @@ public class PlantUmlTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 
-		if (option.isSplash()) {
+		if (option.isTrue(CliFlag.SPLASH)) {
 			Splash.createSplash();
 		}
 
@@ -127,7 +128,7 @@ public class PlantUmlTask extends Task {
 			if (executorService != null) {
 				executorService.shutdown();
 				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-				if (option.isSplash()) {
+				if (option.isTrue(CliFlag.SPLASH)) {
 					Splash.disposeSplash();
 				}
 			}
@@ -195,9 +196,9 @@ public class PlantUmlTask extends Task {
 			this.log("Processing " + f.getAbsolutePath());
 		}
 		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-				option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
+				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET), option.getFileFormatOption());
 
-		if (option.isCheckOnly()) {
+		if (option.isTrue(CliFlag.CHECK_ONLY)) {
 			return sourceFileReader.hasError();
 		}
 		if (executorService == null) {
@@ -276,7 +277,7 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setCharset(String s) {
-		option.setCharset(s);
+		option.setValue(CliFlag.CHARSET, s);
 	}
 
 	public void setConfig(String s) {
@@ -292,15 +293,13 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setDebugSvek(String s) {
-		if ("true".equalsIgnoreCase(s)) {
-			option.setDebugSvek(true);
-		}
+		if ("true".equalsIgnoreCase(s)) 
+			option.setValue(CliFlag.DEBUG_SVEK, true);
 	}
 
 	public void setVerbose(String s) {
-		if ("true".equalsIgnoreCase(s)) {
+		if ("true".equalsIgnoreCase(s)) 
 			GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);
-		}
 	}
 
 	public void setFormat(String s) {
@@ -357,12 +356,12 @@ public class PlantUmlTask extends Task {
 
 	public void setNbThread(String s) {
 		if (s != null && s.matches("\\d+")) {
-			option.setNbThreads(Integer.parseInt(s));
+			option.setValue(CliFlag.NB_THREAD, Integer.parseInt(s));
 			final int nbThreads = option.getNbThreads();
 			this.executorService = Executors.newFixedThreadPool(nbThreads);
 		}
 		if ("auto".equalsIgnoreCase(s)) {
-			option.setNbThreads(CliOptions.defaultNbThreads());
+			option.setValue(CliFlag.NB_THREAD, CliOptions.defaultNbThreads());
 			final int nbThreads = option.getNbThreads();
 			this.executorService = Executors.newFixedThreadPool(nbThreads);
 		}
@@ -379,22 +378,22 @@ public class PlantUmlTask extends Task {
 
 	public void setFailFast(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		option.setFailfast(flag);
+		option.setValue(CliFlag.FAIL_FAST, flag);
 	}
 
 	public void setFailFast2(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		option.setFailfast2(flag);
+		option.setValue(CliFlag.FAIL_FAST2, flag);
 	}
 
 	public void setCheckOnly(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		option.setCheckOnly(flag);
+		option.setValue(CliFlag.CHECK_ONLY, flag);
 	}
 
 	public void setOverwrite(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true);
+		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, flag);
 	}
 
 	public void setFileSeparator(String s) {
@@ -423,7 +422,7 @@ public class PlantUmlTask extends Task {
 
 	public void setSplash(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-		option.setSplash(flag);
+		option.setValue(CliFlag.SPLASH, flag);
 	}
 
 }

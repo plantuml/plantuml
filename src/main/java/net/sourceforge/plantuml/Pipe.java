@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -79,7 +80,7 @@ public class Pipe {
 	}
 
 	public void managePipe(ErrorStatus error) throws IOException {
-		final boolean noStdErr = option.isPipeNoStdErr();
+		final boolean noStdErr = option.isTrue(CliFlag.PIPENOSTDERR);
 
 		for (String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {
 			final Defines defines = option.getDefaultDefines();
@@ -87,11 +88,11 @@ public class Pipe {
 			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,
 					option.getConfig(), newCurrentDir);
 
-			if (option.isComputeurl())
+			if (option.isTrue(CliFlag.COMPUTE_URL))
 				computeUrlForDiagram(sourceStringReader);
-			else if (option.isSyntax())
+			else if (option.isTrue(CliFlag.SYNTAX))
 				syntaxCheckDiagram(sourceStringReader, error);
-			else if (option.isPipeMap())
+			else if (option.isTrue(CliFlag.PIPEMAP))
 				createPipeMapForDiagram(sourceStringReader, error);
 			else
 				generateDiagram(sourceStringReader, error, noStdErr);
@@ -117,8 +118,8 @@ public class Pipe {
 				ps.write(baos.toByteArray());
 			}
 		}
-		if (option.getPipeDelimitor() != null)
-			ps.println(option.getPipeDelimitor());
+		if (option.getString(CliFlag.PIPEDELIMITOR) != null)
+			ps.println(option.getString(CliFlag.PIPEDELIMITOR));
 
 	}
 

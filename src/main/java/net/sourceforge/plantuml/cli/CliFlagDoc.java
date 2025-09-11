@@ -35,12 +35,28 @@
  */
 package net.sourceforge.plantuml.cli;
 
-import java.io.IOException;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-public class CliParser {
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-	public static CliOptions parse(String... arg) throws InterruptedException, IOException {
-		return new CliOptions(arg);
-	}
+/**
+ * Annotation used to document CLI flags in {@link CliFlag}.
+ * 
+ * The value of this annotation typically contains a human-readable description
+ * that may be used to generate help messages or documentation automatically.
+ */
+@Documented
+@Retention(RUNTIME)
+@Target(FIELD)
+public @interface CliFlagDoc {
 
+    /**
+     * A human-readable description of the CLI flag.
+     * 
+     * @return the description of the flag
+     */
+    String value();
 }
