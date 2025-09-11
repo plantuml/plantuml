@@ -64,8 +64,12 @@ public class PngIOMetadata {
 		try {
 			final ImageWriteParam writeParam = writer.getDefaultWriteParam();
 
-			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-			writeParam.setCompressionQuality(levelToQuality(level));
+			try {
+				writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+				writeParam.setCompressionQuality(levelToQuality(level));
+			} catch (Throwable t) {
+				Log.debug(() -> "Warning: cannot set compression mode/quality");
+			}
 
 			final ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier
 					.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
@@ -99,7 +103,7 @@ public class PngIOMetadata {
 
 	private static float levelToQuality(int level) {
 		final int L = Math.max(1, Math.min(9, level));
-		 return 1.0f - (L - 1) / 8.0f;
+		return 1.0f - (L - 1) / 8.0f;
 	}
 
 	private static void addDpi(IIOMetadata meta, double dpi) throws IIOInvalidTreeException {
