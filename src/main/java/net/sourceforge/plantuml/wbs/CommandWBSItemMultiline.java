@@ -70,6 +70,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf(1, "SHAPE", "(_)?"), //
+				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
