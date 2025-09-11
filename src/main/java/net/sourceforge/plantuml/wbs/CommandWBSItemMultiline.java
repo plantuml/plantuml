@@ -76,16 +76,6 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 				RegexLeaf.end());
 	}
 
-	static IRegex getRegexConcatOld() {
-		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf(1, "SHAPE", "(_)?"), //
-				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "LABEL", "([^%s].*)"), RegexLeaf.end());
-	}
-
 	@Override
 	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
