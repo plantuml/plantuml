@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 public class Neutron {
 
 	private static final Neutron ZWSP = new Neutron(null, NeutronType.ZWSP_SEPARATOR, null);
-	
+
 	private final String data;
 	private final NeutronType type;
 	private final Atom asAtom;
@@ -80,41 +80,35 @@ public class Neutron {
 		return type;
 	}
 
-	private static boolean isChinese(char ch) {
-	    // CJK Unified Ideographs
-	    if (ch >= 0x4E00 && ch <= 0x9FFF)
-	        return true;
-//	    // CJK Unified Ideographs Extension A
-//	    if (ch >= 0x3400 && ch <= 0x4DBF)
-//	        return true;
-//	    // CJK Unified Ideographs Extension B–F
-//	    if (ch >= 0x20000 && ch <= 0x2EBEF)
-//	        return true;
-//	    // CJK Compatibility Ideographs
-//	    if (ch >= 0xF900 && ch <= 0xFAFF)
-//	        return true;
-//	    // CJK Symbols and Punctuation
-//	    if (ch >= 0x3000 && ch <= 0x303F)
-//	        return true;
-	    return false;
+	/**
+	 * Returns true if the given character belongs to a script commonly used in
+	 * Chinese or Japanese writing systems, such as Kanji, Hiragana, Katakana, or
+	 * Japanese punctuation. This is used to determine valid line-break positions.
+	 */
+	private static boolean isCjkOrJapanese(char ch) {
+		// CJK Unified Ideographs: Common Han/Kanji characters
+		if (ch >= 0x4E00 && ch <= 0x9FFF)
+			return true;
+
+		// Hiragana: Japanese phonetic characters
+		if (ch >= 0x3040 && ch <= 0x309F)
+			return true;
+
+		// Katakana: Japanese phonetic characters (often for foreign words)
+		if (ch >= 0x30A0 && ch <= 0x30FF)
+			return true;
+
+		// CJK Symbols and Punctuation: Includes Japanese full-width punctuation
+		if (ch >= 0x3000 && ch <= 0x303F)
+			return true;
+
+		// Halfwidth Katakana (commonly used in Japanese, lives in Halfwidth/Fullwidth
+		// Forms)
+		if (ch >= 0xFF65 && ch <= 0xFF9F)
+			return true;
+
+		return false;
 	}
-
-
-//	private static boolean isSentenceBoundaryUnused(char ch) {
-//		return ch == '.' || ch == ',';
-//
-//	}
-//
-//	private static boolean isChineseSentenceBoundary(char ch) {
-//		return ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
-////				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
-////				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
-//				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
-//				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
-//				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
-//				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
-//				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
-//	}
 
 	public double getWidth(StringBounder stringBounder) {
 		if (type == NeutronType.ZWSP_SEPARATOR)
@@ -126,7 +120,7 @@ public class Neutron {
 	public static NeutronType getNeutronTypeFromChar(char ch) {
 		if (Character.isWhitespace(ch))
 			return NeutronType.WHITESPACE;
-		if (isChinese(ch))
+		if (isCjkOrJapanese(ch))
 			return NeutronType.CJK_IDEOGRAPH;
 		return NeutronType.UNBREAKABLE;
 	}
