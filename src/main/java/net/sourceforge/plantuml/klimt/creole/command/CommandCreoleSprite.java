@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.command;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -71,12 +72,14 @@ public class CommandCreoleSprite implements Command {
 		if (m.find() == false)
 			throw new IllegalStateException();
 
+		final FontConfiguration fc = stripe.getActualFontConfiguration();
 		final String src = m.group(3);
-		final double scale = Parser.getScale(m.group(4), 1);
+		final double scale = Parser.getScale(m.group(4), 1) * fc.getSize2D() / 13.0;
+
 		String colorName = m.group(2);
 		if (colorName == null)
 			colorName = Parser.getColor(m.group(4));
-		
+
 		HColor color = null;
 		if (colorName != null) {
 			final ISkinSimple skinParam = stripe.getSkinParam();

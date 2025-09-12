@@ -123,6 +123,7 @@ public class SpriteColor implements Sprite {
 		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
+	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 		return new AbstractTextBlock() {
 

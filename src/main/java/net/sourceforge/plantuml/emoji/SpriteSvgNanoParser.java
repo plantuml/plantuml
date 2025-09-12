@@ -62,6 +62,7 @@ public class SpriteSvgNanoParser implements Sprite {
 		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));
 	}
 
+	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 		return new AbstractTextBlock() {
 
