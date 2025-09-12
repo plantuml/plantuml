@@ -123,16 +123,17 @@ public class SpriteColor implements Sprite {
 <span class="nc" id="L123">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
 	}
 
+	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
-<span class="nc" id="L127">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L128">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L130">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), fontColor);</span>
-<span class="nc" id="L131">				ug.draw(image.scale(scale));</span>
-<span class="nc" id="L132">			}</span>
+<span class="nc" id="L131">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), fontColor);</span>
+<span class="nc" id="L132">				ug.draw(image.scale(scale));</span>
+<span class="nc" id="L133">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L135">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
+<span class="nc" id="L136">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
 			}
 		};
 	}

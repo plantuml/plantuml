@@ -207,30 +207,31 @@ public class SpriteMonochrome implements Sprite {
 <span class="fc" id="L207">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
 	}
 
+	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
-<span class="fc" id="L211">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L212">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L214">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
-<span class="fc" id="L216">				ug.draw(image.scale(scale));</span>
-<span class="fc" id="L217">			}</span>
+<span class="fc" id="L215">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
+<span class="fc" id="L217">				ug.draw(image.scale(scale));</span>
+<span class="fc" id="L218">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L220">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
+<span class="fc" id="L221">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
 			}
 		};
 	}
 
 	public void exportSprite1(OutputStream fos) throws IOException {
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
-<span class="nc" id="L228">				int b1 = this.getGray(x, y);</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
-<span class="nc" id="L230">				fos.write(b1 * 16 + b2);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
+<span class="nc" id="L229">				int b1 = this.getGray(x, y);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
+<span class="nc" id="L231">				fos.write(b1 * 16 + b2);</span>
 			}
 
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L234">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
