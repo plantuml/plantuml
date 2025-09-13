@@ -146,11 +146,13 @@ public class LanguageDescriptor {
 		keyword.add("attribute");
 		keyword.add("attributes");
 		keyword.add("autonumber");
+		keyword.add("backward");
 		keyword.add("bold");
 		keyword.add("bold");
 		keyword.add("bottom");
 		keyword.add("box");
 		keyword.add("break");
+		keyword.add("case");
 		keyword.add("caption");
 		keyword.add("center");
 		keyword.add("circle");
@@ -173,9 +175,12 @@ public class LanguageDescriptor {
 		keyword.add("end");
 		keyword.add("endcaption");
 		keyword.add("endfooter");
+		keyword.add("endfork");
 		keyword.add("endheader");
 		keyword.add("endif");
 		keyword.add("endlegend");
+		keyword.add("endmerge");
+		keyword.add("endswitch");
 		keyword.add("endtitle");
 		keyword.add("endwhile");
 		keyword.add("false");
@@ -185,6 +190,7 @@ public class LanguageDescriptor {
 		keyword.add("footbox");
 		keyword.add("footer");
 		keyword.add("fork");
+		keyword.add("goto");
 		keyword.add("group");
 		keyword.add("header");
 		keyword.add("hide");
@@ -193,6 +199,7 @@ public class LanguageDescriptor {
 		keyword.add("is");
 		keyword.add("italic");
 		keyword.add("kill");
+		keyword.add("label");
 		keyword.add("left");
 		keyword.add("left to right direction");
 		keyword.add("legend");
@@ -201,11 +208,13 @@ public class LanguageDescriptor {
 		keyword.add("mainframe");
 		keyword.add("member");
 		keyword.add("members");
+		keyword.add("merge");
 		keyword.add("method");
 		keyword.add("methods");
 		keyword.add("namespace");
 		keyword.add("newpage");
 		keyword.add("normal");
+		keyword.add("not");
 		keyword.add("note");
 		keyword.add("of");
 		keyword.add("on");
@@ -222,6 +231,7 @@ public class LanguageDescriptor {
 		keyword.add("public");
 		keyword.add("ref");
 		keyword.add("repeat");
+		keyword.add("repeatwhile");
 		keyword.add("return");
 		keyword.add("right");
 		keyword.add("rnote");
@@ -237,6 +247,7 @@ public class LanguageDescriptor {
 		keyword.add("stereotypes");
 		keyword.add("stop");
 		keyword.add("style");
+		keyword.add("switch");
 		keyword.add("then");
 		keyword.add("title");
 		keyword.add("together");
