@@ -87,253 +87,286 @@ public class LanguageDescriptor {
 <span class="nc" id="L87">		type.add(&quot;action&quot;);</span>
 <span class="nc" id="L88">		type.add(&quot;actor&quot;);</span>
 <span class="nc" id="L89">		type.add(&quot;agent&quot;);</span>
-<span class="nc" id="L90">		type.add(&quot;annotation&quot;);</span>
-<span class="nc" id="L91">		type.add(&quot;archimate&quot;);</span>
-<span class="nc" id="L92">		type.add(&quot;artifact&quot;);</span>
-<span class="nc" id="L93">		type.add(&quot;boundary&quot;);</span>
-<span class="nc" id="L94">		type.add(&quot;card&quot;);</span>
-<span class="nc" id="L95">		type.add(&quot;class&quot;);</span>
-<span class="nc" id="L96">		type.add(&quot;cloud&quot;);</span>
-<span class="nc" id="L97">		type.add(&quot;collections&quot;);</span>
-<span class="nc" id="L98">		type.add(&quot;component&quot;);</span>
-<span class="nc" id="L99">		type.add(&quot;control&quot;);</span>
-<span class="nc" id="L100">		type.add(&quot;database&quot;);</span>
-<span class="nc" id="L101">		type.add(&quot;diamond&quot;);</span>
-<span class="nc" id="L102">		type.add(&quot;entity&quot;);</span>
-<span class="nc" id="L103">		type.add(&quot;enum&quot;);</span>
-<span class="nc" id="L104">		type.add(&quot;exception&quot;);</span>
-<span class="nc" id="L105">		type.add(&quot;file&quot;);</span>
-<span class="nc" id="L106">		type.add(&quot;folder&quot;);</span>
-<span class="nc" id="L107">		type.add(&quot;frame&quot;);</span>
-<span class="nc" id="L108">		type.add(&quot;hexagon&quot;);</span>
-<span class="nc" id="L109">		type.add(&quot;interface&quot;);</span>
-<span class="nc" id="L110">		type.add(&quot;json&quot;);</span>
-<span class="nc" id="L111">		type.add(&quot;label&quot;);</span>
-<span class="nc" id="L112">		type.add(&quot;map&quot;);</span>
-<span class="nc" id="L113">		type.add(&quot;metaclass&quot;);</span>
-<span class="nc" id="L114">		type.add(&quot;node&quot;);</span>
-<span class="nc" id="L115">		type.add(&quot;object&quot;);</span>
-<span class="nc" id="L116">		type.add(&quot;package&quot;);</span>
-<span class="nc" id="L117">		type.add(&quot;participant&quot;);</span>
-<span class="nc" id="L118">		type.add(&quot;person&quot;);</span>
-<span class="nc" id="L119">		type.add(&quot;process&quot;);</span>
-<span class="nc" id="L120">		type.add(&quot;protocol&quot;);</span>
-<span class="nc" id="L121">		type.add(&quot;queue&quot;);</span>
-<span class="nc" id="L122">		type.add(&quot;rectangle&quot;);</span>
-<span class="nc" id="L123">		type.add(&quot;relationship&quot;);</span>
-<span class="nc" id="L124">		type.add(&quot;stack&quot;);</span>
-<span class="nc" id="L125">		type.add(&quot;state&quot;);</span>
-<span class="nc" id="L126">		type.add(&quot;storage&quot;);</span>
-<span class="nc" id="L127">		type.add(&quot;struct&quot;);</span>
-<span class="nc" id="L128">		type.add(&quot;usecase&quot;);</span>
+<span class="nc" id="L90">		type.add(&quot;analog&quot;);</span>
+<span class="nc" id="L91">		type.add(&quot;annotation&quot;);</span>
+<span class="nc" id="L92">		type.add(&quot;archimate&quot;);</span>
+<span class="nc" id="L93">		type.add(&quot;artifact&quot;);</span>
+<span class="nc" id="L94">		type.add(&quot;binary&quot;);</span>
+<span class="nc" id="L95">		type.add(&quot;boundary&quot;);</span>
+<span class="nc" id="L96">		type.add(&quot;card&quot;);</span>
+<span class="nc" id="L97">		type.add(&quot;class&quot;);</span>
+<span class="nc" id="L98">		type.add(&quot;clock&quot;);</span>
+<span class="nc" id="L99">		type.add(&quot;cloud&quot;);</span>
+<span class="nc" id="L100">		type.add(&quot;collections&quot;);</span>
+<span class="nc" id="L101">		type.add(&quot;component&quot;);</span>
+<span class="nc" id="L102">		type.add(&quot;concise&quot;);</span>
+<span class="nc" id="L103">		type.add(&quot;control&quot;);</span>
+<span class="nc" id="L104">		type.add(&quot;database&quot;);</span>
+<span class="nc" id="L105">		type.add(&quot;dataclass&quot;);</span>
+<span class="nc" id="L106">		type.add(&quot;diamond&quot;);</span>
+<span class="nc" id="L107">		type.add(&quot;entity&quot;);</span>
+<span class="nc" id="L108">		type.add(&quot;enum&quot;);</span>
+<span class="nc" id="L109">		type.add(&quot;exception&quot;);</span>
+<span class="nc" id="L110">		type.add(&quot;file&quot;);</span>
+<span class="nc" id="L111">		type.add(&quot;folder&quot;);</span>
+<span class="nc" id="L112">		type.add(&quot;frame&quot;);</span>
+<span class="nc" id="L113">		type.add(&quot;hexagon&quot;);</span>
+<span class="nc" id="L114">		type.add(&quot;interface&quot;);</span>
+<span class="nc" id="L115">		type.add(&quot;json&quot;);</span>
+<span class="nc" id="L116">		type.add(&quot;label&quot;);</span>
+<span class="nc" id="L117">		type.add(&quot;map&quot;);</span>
+<span class="nc" id="L118">		type.add(&quot;metaclass&quot;);</span>
+<span class="nc" id="L119">		type.add(&quot;network&quot;);</span>
+<span class="nc" id="L120">		type.add(&quot;node&quot;);</span>
+<span class="nc" id="L121">		type.add(&quot;nwdiag&quot;);</span>
+<span class="nc" id="L122">		type.add(&quot;object&quot;);</span>
+<span class="nc" id="L123">		type.add(&quot;package&quot;);</span>
+<span class="nc" id="L124">		type.add(&quot;participant&quot;);</span>
+<span class="nc" id="L125">		type.add(&quot;person&quot;);</span>
+<span class="nc" id="L126">		type.add(&quot;process&quot;);</span>
+<span class="nc" id="L127">		type.add(&quot;protocol&quot;);</span>
+<span class="nc" id="L128">		type.add(&quot;queue&quot;);</span>
+<span class="nc" id="L129">		type.add(&quot;record&quot;);</span>
+<span class="nc" id="L130">		type.add(&quot;rectangle&quot;);</span>
+<span class="nc" id="L131">		type.add(&quot;relationship&quot;);</span>
+<span class="nc" id="L132">		type.add(&quot;robust&quot;);</span>
+<span class="nc" id="L133">		type.add(&quot;stack&quot;);</span>
+<span class="nc" id="L134">		type.add(&quot;state&quot;);</span>
+<span class="nc" id="L135">		type.add(&quot;storage&quot;);</span>
+<span class="nc" id="L136">		type.add(&quot;struct&quot;);</span>
+<span class="nc" id="L137">		type.add(&quot;usecase&quot;);</span>
 
-<span class="nc" id="L130">		keyword.add(&quot;across&quot;);</span>
-<span class="nc" id="L131">		keyword.add(&quot;activate&quot;);</span>
-<span class="nc" id="L132">		keyword.add(&quot;again&quot;);</span>
-<span class="nc" id="L133">		keyword.add(&quot;allow_mixing&quot;);</span>
-<span class="nc" id="L134">		keyword.add(&quot;allowmixing&quot;);</span>
-<span class="nc" id="L135">		keyword.add(&quot;also&quot;);</span>
-<span class="nc" id="L136">		keyword.add(&quot;alt&quot;);</span>
-<span class="nc" id="L137">		keyword.add(&quot;as&quot;);</span>
-<span class="nc" id="L138">		keyword.add(&quot;attribute&quot;);</span>
-<span class="nc" id="L139">		keyword.add(&quot;attributes&quot;);</span>
-<span class="nc" id="L140">		keyword.add(&quot;autonumber&quot;);</span>
-<span class="nc" id="L141">		keyword.add(&quot;bold&quot;);</span>
-<span class="nc" id="L142">		keyword.add(&quot;bold&quot;);</span>
-<span class="nc" id="L143">		keyword.add(&quot;bottom&quot;);</span>
-<span class="nc" id="L144">		keyword.add(&quot;box&quot;);</span>
-<span class="nc" id="L145">		keyword.add(&quot;break&quot;);</span>
-<span class="nc" id="L146">		keyword.add(&quot;caption&quot;);</span>
-<span class="nc" id="L147">		keyword.add(&quot;center&quot;);</span>
-<span class="nc" id="L148">		keyword.add(&quot;circle&quot;);</span>
-<span class="nc" id="L149">		keyword.add(&quot;circled&quot;);</span>
-<span class="nc" id="L150">		keyword.add(&quot;circles&quot;);</span>
-<span class="nc" id="L151">		keyword.add(&quot;color&quot;);</span>
-<span class="nc" id="L152">		keyword.add(&quot;create&quot;);</span>
-<span class="nc" id="L153">		keyword.add(&quot;critical&quot;);</span>
-<span class="nc" id="L154">		keyword.add(&quot;dashed&quot;);</span>
-<span class="nc" id="L155">		keyword.add(&quot;deactivate&quot;);</span>
-<span class="nc" id="L156">		keyword.add(&quot;description&quot;);</span>
-<span class="nc" id="L157">		keyword.add(&quot;destroy&quot;);</span>
-<span class="nc" id="L158">		keyword.add(&quot;detach&quot;);</span>
-<span class="nc" id="L159">		keyword.add(&quot;dotted&quot;);</span>
-<span class="nc" id="L160">		keyword.add(&quot;down&quot;);</span>
-<span class="nc" id="L161">		keyword.add(&quot;else&quot;);</span>
-<span class="nc" id="L162">		keyword.add(&quot;else&quot;);</span>
-<span class="nc" id="L163">		keyword.add(&quot;elseif&quot;);</span>
-<span class="nc" id="L164">		keyword.add(&quot;empty&quot;);</span>
-<span class="nc" id="L165">		keyword.add(&quot;end&quot;);</span>
-<span class="nc" id="L166">		keyword.add(&quot;endcaption&quot;);</span>
-<span class="nc" id="L167">		keyword.add(&quot;endfooter&quot;);</span>
-<span class="nc" id="L168">		keyword.add(&quot;endheader&quot;);</span>
-<span class="nc" id="L169">		keyword.add(&quot;endif&quot;);</span>
-<span class="nc" id="L170">		keyword.add(&quot;endlegend&quot;);</span>
-<span class="nc" id="L171">		keyword.add(&quot;endtitle&quot;);</span>
-<span class="nc" id="L172">		keyword.add(&quot;endwhile&quot;);</span>
-<span class="nc" id="L173">		keyword.add(&quot;false&quot;);</span>
-<span class="nc" id="L174">		keyword.add(&quot;field&quot;);</span>
-<span class="nc" id="L175">		keyword.add(&quot;fields&quot;);</span>
-<span class="nc" id="L176">		keyword.add(&quot;footbox&quot;);</span>
-<span class="nc" id="L177">		keyword.add(&quot;footer&quot;);</span>
-<span class="nc" id="L178">		keyword.add(&quot;fork&quot;);</span>
-<span class="nc" id="L179">		keyword.add(&quot;group&quot;);</span>
-<span class="nc" id="L180">		keyword.add(&quot;header&quot;);</span>
-<span class="nc" id="L181">		keyword.add(&quot;hide&quot;);</span>
-<span class="nc" id="L182">		keyword.add(&quot;hnote&quot;);</span>
-<span class="nc" id="L183">		keyword.add(&quot;if&quot;);</span>
-<span class="nc" id="L184">		keyword.add(&quot;is&quot;);</span>
-<span class="nc" id="L185">		keyword.add(&quot;italic&quot;);</span>
-<span class="nc" id="L186">		keyword.add(&quot;kill&quot;);</span>
-<span class="nc" id="L187">		keyword.add(&quot;left&quot;);</span>
-<span class="nc" id="L188">		keyword.add(&quot;left to right direction&quot;);</span>
-<span class="nc" id="L189">		keyword.add(&quot;legend&quot;);</span>
-<span class="nc" id="L190">		keyword.add(&quot;link&quot;);</span>
-<span class="nc" id="L191">		keyword.add(&quot;loop&quot;);</span>
-<span class="nc" id="L192">		keyword.add(&quot;mainframe&quot;);</span>
-<span class="nc" id="L193">		keyword.add(&quot;member&quot;);</span>
-<span class="nc" id="L194">		keyword.add(&quot;members&quot;);</span>
-<span class="nc" id="L195">		keyword.add(&quot;method&quot;);</span>
-<span class="nc" id="L196">		keyword.add(&quot;methods&quot;);</span>
-<span class="nc" id="L197">		keyword.add(&quot;namespace&quot;);</span>
-<span class="nc" id="L198">		keyword.add(&quot;newpage&quot;);</span>
-<span class="nc" id="L199">		keyword.add(&quot;normal&quot;);</span>
-<span class="nc" id="L200">		keyword.add(&quot;note&quot;);</span>
-<span class="nc" id="L201">		keyword.add(&quot;of&quot;);</span>
-<span class="nc" id="L202">		keyword.add(&quot;on&quot;);</span>
-<span class="nc" id="L203">		keyword.add(&quot;opt&quot;);</span>
-<span class="nc" id="L204">		keyword.add(&quot;order&quot;);</span>
-<span class="nc" id="L205">		keyword.add(&quot;over&quot;);</span>
-<span class="nc" id="L206">		keyword.add(&quot;package&quot;);</span>
-<span class="nc" id="L207">		keyword.add(&quot;page&quot;);</span>
-<span class="nc" id="L208">		keyword.add(&quot;par&quot;);</span>
-<span class="nc" id="L209">		keyword.add(&quot;partition&quot;);</span>
-<span class="nc" id="L210">		keyword.add(&quot;plain&quot;);</span>
-<span class="nc" id="L211">		keyword.add(&quot;private&quot;);</span>
-<span class="nc" id="L212">		keyword.add(&quot;protected&quot;);</span>
-<span class="nc" id="L213">		keyword.add(&quot;public&quot;);</span>
-<span class="nc" id="L214">		keyword.add(&quot;ref&quot;);</span>
-<span class="nc" id="L215">		keyword.add(&quot;repeat&quot;);</span>
-<span class="nc" id="L216">		keyword.add(&quot;return&quot;);</span>
-<span class="nc" id="L217">		keyword.add(&quot;right&quot;);</span>
-<span class="nc" id="L218">		keyword.add(&quot;rnote&quot;);</span>
-<span class="nc" id="L219">		keyword.add(&quot;rotate&quot;);</span>
-<span class="nc" id="L220">		keyword.add(&quot;show&quot;);</span>
-<span class="nc" id="L221">		keyword.add(&quot;skin&quot;);</span>
-<span class="nc" id="L222">		keyword.add(&quot;skinparam&quot;);</span>
-<span class="nc" id="L223">		keyword.add(&quot;split&quot;);</span>
-<span class="nc" id="L224">		keyword.add(&quot;sprite&quot;);</span>
-<span class="nc" id="L225">		keyword.add(&quot;start&quot;);</span>
-<span class="nc" id="L226">		keyword.add(&quot;stereotype&quot;);</span>
-<span class="nc" id="L227">		keyword.add(&quot;stereotypes&quot;);</span>
-<span class="nc" id="L228">		keyword.add(&quot;stop&quot;);</span>
-<span class="nc" id="L229">		keyword.add(&quot;style&quot;);</span>
-<span class="nc" id="L230">		keyword.add(&quot;then&quot;);</span>
-<span class="nc" id="L231">		keyword.add(&quot;title&quot;);</span>
-<span class="nc" id="L232">		keyword.add(&quot;together&quot;);</span>
-<span class="nc" id="L233">		keyword.add(&quot;top&quot;);</span>
-<span class="nc" id="L234">		keyword.add(&quot;top to bottom direction&quot;);</span>
-<span class="nc" id="L235">		keyword.add(&quot;true&quot;);</span>
-<span class="nc" id="L236">		keyword.add(&quot;up&quot;);</span>
-<span class="nc" id="L237">		keyword.add(&quot;while&quot;);</span>
+<span class="nc" id="L139">		keyword.add(&quot;across&quot;);</span>
+<span class="nc" id="L140">		keyword.add(&quot;activate&quot;);</span>
+<span class="nc" id="L141">		keyword.add(&quot;address&quot;);</span>
+<span class="nc" id="L142">		keyword.add(&quot;again&quot;);</span>
+<span class="nc" id="L143">		keyword.add(&quot;allow_mixing&quot;);</span>
+<span class="nc" id="L144">		keyword.add(&quot;allowmixing&quot;);</span>
+<span class="nc" id="L145">		keyword.add(&quot;also&quot;);</span>
+<span class="nc" id="L146">		keyword.add(&quot;alt&quot;);</span>
+<span class="nc" id="L147">		keyword.add(&quot;as&quot;);</span>
+<span class="nc" id="L148">		keyword.add(&quot;attribute&quot;);</span>
+<span class="nc" id="L149">		keyword.add(&quot;attributes&quot;);</span>
+<span class="nc" id="L150">		keyword.add(&quot;autonumber&quot;);</span>
+<span class="nc" id="L151">		keyword.add(&quot;backward&quot;);</span>
+<span class="nc" id="L152">		keyword.add(&quot;bold&quot;);</span>
+<span class="nc" id="L153">		keyword.add(&quot;bottom&quot;);</span>
+<span class="nc" id="L154">		keyword.add(&quot;box&quot;);</span>
+<span class="nc" id="L155">		keyword.add(&quot;break&quot;);</span>
+<span class="nc" id="L156">		keyword.add(&quot;case&quot;);</span>
+<span class="nc" id="L157">		keyword.add(&quot;caption&quot;);</span>
+<span class="nc" id="L158">		keyword.add(&quot;center&quot;);</span>
+<span class="nc" id="L159">		keyword.add(&quot;circle&quot;);</span>
+<span class="nc" id="L160">		keyword.add(&quot;circled&quot;);</span>
+<span class="nc" id="L161">		keyword.add(&quot;circles&quot;);</span>
+<span class="nc" id="L162">		keyword.add(&quot;color&quot;);</span>
+<span class="nc" id="L163">		keyword.add(&quot;create&quot;);</span>
+<span class="nc" id="L164">		keyword.add(&quot;critical&quot;);</span>
+<span class="nc" id="L165">		keyword.add(&quot;dashed&quot;);</span>
+<span class="nc" id="L166">		keyword.add(&quot;deactivate&quot;);</span>
+<span class="nc" id="L167">		keyword.add(&quot;description&quot;);</span>
+<span class="nc" id="L168">		keyword.add(&quot;destroy&quot;);</span>
+<span class="nc" id="L169">		keyword.add(&quot;detach&quot;);</span>
+<span class="nc" id="L170">		keyword.add(&quot;dotted&quot;);</span>
+<span class="nc" id="L171">		keyword.add(&quot;down&quot;);</span>
+<span class="nc" id="L172">		keyword.add(&quot;else&quot;);</span>
+<span class="nc" id="L173">		keyword.add(&quot;else&quot;);</span>
+<span class="nc" id="L174">		keyword.add(&quot;elseif&quot;);</span>
+<span class="nc" id="L175">		keyword.add(&quot;empty&quot;);</span>
+<span class="nc" id="L176">		keyword.add(&quot;end&quot;);</span>
+<span class="nc" id="L177">		keyword.add(&quot;endcaption&quot;);</span>
+<span class="nc" id="L178">		keyword.add(&quot;endfooter&quot;);</span>
+<span class="nc" id="L179">		keyword.add(&quot;endfork&quot;);</span>
+<span class="nc" id="L180">		keyword.add(&quot;endheader&quot;);</span>
+<span class="nc" id="L181">		keyword.add(&quot;endif&quot;);</span>
+<span class="nc" id="L182">		keyword.add(&quot;endlegend&quot;);</span>
+<span class="nc" id="L183">		keyword.add(&quot;endmerge&quot;);</span>
+<span class="nc" id="L184">		keyword.add(&quot;endswitch&quot;);</span>
+<span class="nc" id="L185">		keyword.add(&quot;endtitle&quot;);</span>
+<span class="nc" id="L186">		keyword.add(&quot;endwhile&quot;);</span>
+<span class="nc" id="L187">		keyword.add(&quot;false&quot;);</span>
+<span class="nc" id="L188">		keyword.add(&quot;field&quot;);</span>
+<span class="nc" id="L189">		keyword.add(&quot;fields&quot;);</span>
+<span class="nc" id="L190">		keyword.add(&quot;floating note&quot;);</span>
+<span class="nc" id="L191">		keyword.add(&quot;footbox&quot;);</span>
+<span class="nc" id="L192">		keyword.add(&quot;footer&quot;);</span>
+<span class="nc" id="L193">		keyword.add(&quot;fork&quot;);</span>
+<span class="nc" id="L194">		keyword.add(&quot;goto&quot;);</span>
+<span class="nc" id="L195">		keyword.add(&quot;group&quot;);</span>
+<span class="nc" id="L196">		keyword.add(&quot;header&quot;);</span>
+<span class="nc" id="L197">		keyword.add(&quot;hide&quot;);</span>
+<span class="nc" id="L198">		keyword.add(&quot;highlight&quot;);</span>
+<span class="nc" id="L199">		keyword.add(&quot;hnote&quot;);</span>
+<span class="nc" id="L200">		keyword.add(&quot;if&quot;);</span>
+<span class="nc" id="L201">		keyword.add(&quot;is&quot;);</span>
+<span class="nc" id="L202">		keyword.add(&quot;italic&quot;);</span>
+<span class="nc" id="L203">		keyword.add(&quot;kill&quot;);</span>
+<span class="nc" id="L204">		keyword.add(&quot;label&quot;);</span>
+<span class="nc" id="L205">		keyword.add(&quot;left&quot;);</span>
+<span class="nc" id="L206">		keyword.add(&quot;left to right direction&quot;);</span>
+<span class="nc" id="L207">		keyword.add(&quot;legend&quot;);</span>
+<span class="nc" id="L208">		keyword.add(&quot;link&quot;);</span>
+<span class="nc" id="L209">		keyword.add(&quot;loop&quot;);</span>
+<span class="nc" id="L210">		keyword.add(&quot;mainframe&quot;);</span>
+<span class="nc" id="L211">		keyword.add(&quot;member&quot;);</span>
+<span class="nc" id="L212">		keyword.add(&quot;members&quot;);</span>
+<span class="nc" id="L213">		keyword.add(&quot;merge&quot;);</span>
+<span class="nc" id="L214">		keyword.add(&quot;method&quot;);</span>
+<span class="nc" id="L215">		keyword.add(&quot;methods&quot;);</span>
+<span class="nc" id="L216">		keyword.add(&quot;namespace&quot;);</span>
+<span class="nc" id="L217">		keyword.add(&quot;newpage&quot;);</span>
+<span class="nc" id="L218">		keyword.add(&quot;normal&quot;);</span>
+<span class="nc" id="L219">		keyword.add(&quot;not&quot;);</span>
+<span class="nc" id="L220">		keyword.add(&quot;note&quot;);</span>
+<span class="nc" id="L221">		keyword.add(&quot;null&quot;);</span>
+<span class="nc" id="L222">		keyword.add(&quot;of&quot;);</span>
+<span class="nc" id="L223">		keyword.add(&quot;on&quot;);</span>
+<span class="nc" id="L224">		keyword.add(&quot;opt&quot;);</span>
+<span class="nc" id="L225">		keyword.add(&quot;order&quot;);</span>
+<span class="nc" id="L226">		keyword.add(&quot;over&quot;);</span>
+<span class="nc" id="L227">		keyword.add(&quot;package&quot;);</span>
+<span class="nc" id="L228">		keyword.add(&quot;page&quot;);</span>
+<span class="nc" id="L229">		keyword.add(&quot;par&quot;);</span>
+<span class="nc" id="L230">		keyword.add(&quot;partition&quot;);</span>
+<span class="nc" id="L231">		keyword.add(&quot;plain&quot;);</span>
+<span class="nc" id="L232">		keyword.add(&quot;private&quot;);</span>
+<span class="nc" id="L233">		keyword.add(&quot;protected&quot;);</span>
+<span class="nc" id="L234">		keyword.add(&quot;public&quot;);</span>
+<span class="nc" id="L235">		keyword.add(&quot;ref&quot;);</span>
+<span class="nc" id="L236">		keyword.add(&quot;repeat&quot;);</span>
+<span class="nc" id="L237">		keyword.add(&quot;repeatwhile&quot;);</span>
+<span class="nc" id="L238">		keyword.add(&quot;return&quot;);</span>
+<span class="nc" id="L239">		keyword.add(&quot;right&quot;);</span>
+<span class="nc" id="L240">		keyword.add(&quot;rnote&quot;);</span>
+<span class="nc" id="L241">		keyword.add(&quot;rotate&quot;);</span>
+<span class="nc" id="L242">		keyword.add(&quot;shape&quot;);</span>
+<span class="nc" id="L243">		keyword.add(&quot;show&quot;);</span>
+<span class="nc" id="L244">		keyword.add(&quot;skin&quot;);</span>
+<span class="nc" id="L245">		keyword.add(&quot;skinparam&quot;);</span>
+<span class="nc" id="L246">		keyword.add(&quot;split&quot;);</span>
+<span class="nc" id="L247">		keyword.add(&quot;sprite&quot;);</span>
+<span class="nc" id="L248">		keyword.add(&quot;start&quot;);</span>
+<span class="nc" id="L249">		keyword.add(&quot;stereotype&quot;);</span>
+<span class="nc" id="L250">		keyword.add(&quot;stereotypes&quot;);</span>
+<span class="nc" id="L251">		keyword.add(&quot;stop&quot;);</span>
+<span class="nc" id="L252">		keyword.add(&quot;style&quot;);</span>
+<span class="nc" id="L253">		keyword.add(&quot;switch&quot;);</span>
+<span class="nc" id="L254">		keyword.add(&quot;then&quot;);</span>
+<span class="nc" id="L255">		keyword.add(&quot;title&quot;);</span>
+<span class="nc" id="L256">		keyword.add(&quot;together&quot;);</span>
+<span class="nc" id="L257">		keyword.add(&quot;top&quot;);</span>
+<span class="nc" id="L258">		keyword.add(&quot;top to bottom direction&quot;);</span>
+<span class="nc" id="L259">		keyword.add(&quot;true&quot;);</span>
+<span class="nc" id="L260">		keyword.add(&quot;up&quot;);</span>
+<span class="nc" id="L261">		keyword.add(&quot;while&quot;);</span>
 
-<span class="nc" id="L239">		preproc.add(&quot;!assert&quot;);</span>
-<span class="nc" id="L240">		preproc.add(&quot;!define&quot;);</span>
-<span class="nc" id="L241">		preproc.add(&quot;!definelong&quot;);</span>
-<span class="nc" id="L242">		preproc.add(&quot;!dump_memory&quot;);</span>
-<span class="nc" id="L243">		preproc.add(&quot;!else&quot;);</span>
-<span class="nc" id="L244">		preproc.add(&quot;!enddefinelong&quot;);</span>
-<span class="nc" id="L245">		preproc.add(&quot;!endfunction&quot;);</span>
-<span class="nc" id="L246">		preproc.add(&quot;!endif&quot;);</span>
-<span class="nc" id="L247">		preproc.add(&quot;!endprocedure&quot;);</span>
-<span class="nc" id="L248">		preproc.add(&quot;!endsub&quot;);</span>
-<span class="nc" id="L249">		preproc.add(&quot;!exit&quot;);</span>
-<span class="nc" id="L250">		preproc.add(&quot;!function&quot;);</span>
-<span class="nc" id="L251">		preproc.add(&quot;!if&quot;);</span>
-<span class="nc" id="L252">		preproc.add(&quot;!ifdef&quot;);</span>
-<span class="nc" id="L253">		preproc.add(&quot;!ifndef&quot;);</span>
-<span class="nc" id="L254">		preproc.add(&quot;!import&quot;);</span>
-<span class="nc" id="L255">		preproc.add(&quot;!include&quot;);</span>
-<span class="nc" id="L256">		preproc.add(&quot;!local&quot;);</span>
-<span class="nc" id="L257">		preproc.add(&quot;!log&quot;);</span>
-<span class="nc" id="L258">		preproc.add(&quot;!pragma&quot;);</span>
-<span class="nc" id="L259">		preproc.add(&quot;!procedure&quot;);</span>
-<span class="nc" id="L260">		preproc.add(&quot;!return&quot;);</span>
-<span class="nc" id="L261">		preproc.add(&quot;!startsub&quot;);</span>
-<span class="nc" id="L262">		preproc.add(&quot;!theme&quot;);</span>
-<span class="nc" id="L263">		preproc.add(&quot;!undef&quot;);</span>
-<span class="nc" id="L264">		preproc.add(&quot;!unquoted&quot;);</span>
-<span class="nc" id="L265">	}</span>
+<span class="nc" id="L263">		preproc.add(&quot;!assert&quot;);</span>
+<span class="nc" id="L264">		preproc.add(&quot;!define&quot;);</span>
+<span class="nc" id="L265">		preproc.add(&quot;!definelong&quot;);</span>
+<span class="nc" id="L266">		preproc.add(&quot;!dump_memory&quot;);</span>
+<span class="nc" id="L267">		preproc.add(&quot;!else&quot;);</span>
+<span class="nc" id="L268">		preproc.add(&quot;!end&quot;);</span>
+<span class="nc" id="L269">		preproc.add(&quot;!enddefinelong&quot;);</span>
+<span class="nc" id="L270">		preproc.add(&quot;!endfor&quot;);</span>
+<span class="nc" id="L271">		preproc.add(&quot;!endfunction&quot;);</span>
+<span class="nc" id="L272">		preproc.add(&quot;!endif&quot;);</span>
+<span class="nc" id="L273">		preproc.add(&quot;!endprocedure&quot;);</span>
+<span class="nc" id="L274">		preproc.add(&quot;!endsub&quot;);</span>
+<span class="nc" id="L275">		preproc.add(&quot;!endwhile&quot;);</span>
+<span class="nc" id="L276">		preproc.add(&quot;!exit&quot;);</span>
+<span class="nc" id="L277">		preproc.add(&quot;!final&quot;);</span>
+<span class="nc" id="L278">		preproc.add(&quot;!foreach&quot;);</span>
+<span class="nc" id="L279">		preproc.add(&quot;!function&quot;);</span>
+<span class="nc" id="L280">		preproc.add(&quot;!if&quot;);</span>
+<span class="nc" id="L281">		preproc.add(&quot;!ifdef&quot;);</span>
+<span class="nc" id="L282">		preproc.add(&quot;!ifndef&quot;);</span>
+<span class="nc" id="L283">		preproc.add(&quot;!import&quot;);</span>
+<span class="nc" id="L284">		preproc.add(&quot;!include&quot;);</span>
+<span class="nc" id="L285">		preproc.add(&quot;!includedef&quot;);</span>
+<span class="nc" id="L286">		preproc.add(&quot;!includesub&quot;);</span>
+<span class="nc" id="L287">		preproc.add(&quot;!local&quot;);</span>
+<span class="nc" id="L288">		preproc.add(&quot;!log&quot;);</span>
+<span class="nc" id="L289">		preproc.add(&quot;!option&quot;);</span>
+<span class="nc" id="L290">		preproc.add(&quot;!pragma&quot;);</span>
+<span class="nc" id="L291">		preproc.add(&quot;!procedure&quot;);</span>
+<span class="nc" id="L292">		preproc.add(&quot;!return&quot;);</span>
+<span class="nc" id="L293">		preproc.add(&quot;!startsub&quot;);</span>
+<span class="nc" id="L294">		preproc.add(&quot;!theme&quot;);</span>
+<span class="nc" id="L295">		preproc.add(&quot;!undef&quot;);</span>
+<span class="nc" id="L296">		preproc.add(&quot;!unquoted&quot;);</span>
+<span class="nc" id="L297">		preproc.add(&quot;!while&quot;);</span>
+<span class="nc" id="L298">	}</span>
 
 	private void addArobase(String type) {
-<span class="nc" id="L268">		keyword.add(&quot;@start&quot; + type);</span>
-<span class="nc" id="L269">		keyword.add(&quot;@end&quot; + type);</span>
-<span class="nc" id="L270">	}</span>
+<span class="nc" id="L301">		keyword.add(&quot;@start&quot; + type);</span>
+<span class="nc" id="L302">		keyword.add(&quot;@end&quot; + type);</span>
+<span class="nc" id="L303">	}</span>
 
 	public Cypher getCypher() {
-<span class="nc" id="L273">		final Cypher cypher = new Cypher();</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">		for (String s : type)</span>
-<span class="nc" id="L275">			cypher.addException(s);</span>
+<span class="nc" id="L306">		final Cypher cypher = new Cypher();</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		for (String s : type)</span>
+<span class="nc" id="L308">			cypher.addException(s);</span>
 
-<span class="nc bnc" id="L277" title="All 2 branches missed.">		for (String s : keyword)</span>
-<span class="nc" id="L278">			cypher.addException(s.replace(&quot;@&quot;, &quot;&quot;));</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		for (String s : keyword)</span>
+<span class="nc" id="L311">			cypher.addException(s.replace(&quot;@&quot;, &quot;&quot;));</span>
 
-<span class="nc bnc" id="L280" title="All 2 branches missed.">		for (String s : preproc)</span>
-<span class="nc" id="L281">			cypher.addException(s.substring(1));</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		for (String s : preproc)</span>
+<span class="nc" id="L314">			cypher.addException(s.substring(1));</span>
 
-<span class="nc bnc" id="L283" title="All 2 branches missed.">		for (String s : SkinParam.getPossibleValues())</span>
-<span class="nc" id="L284">			cypher.addException(s);</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">		for (String s : SkinParam.getPossibleValues())</span>
+<span class="nc" id="L317">			cypher.addException(s);</span>
 
-<span class="nc bnc" id="L286" title="All 2 branches missed.">		for (String s : HColorSet.instance().names())</span>
-<span class="nc" id="L287">			cypher.addException(s);</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (String s : HColorSet.instance().names())</span>
+<span class="nc" id="L320">			cypher.addException(s);</span>
 
-<span class="nc" id="L289">		cypher.addException(&quot;o&quot;);</span>
-<span class="nc" id="L290">		return cypher;</span>
+<span class="nc" id="L322">		cypher.addException(&quot;o&quot;);</span>
+<span class="nc" id="L323">		return cypher;</span>
 	}
 
 	public void print(PrintStream ps) {
-<span class="nc" id="L294">		print(ps, &quot;type&quot;, type);</span>
-<span class="nc" id="L295">		print(ps, &quot;keyword&quot;, keyword);</span>
-<span class="nc" id="L296">		print(ps, &quot;preprocessor&quot;, preproc);</span>
-<span class="nc" id="L297">		print(ps, &quot;skinparameter&quot;, SkinParam.getPossibleValues());</span>
-<span class="nc" id="L298">		print(ps, &quot;color&quot;, HColorSet.instance().names());</span>
-<span class="nc" id="L299">		ps.println(&quot;;EOF&quot;);</span>
-<span class="nc" id="L300">	}</span>
+<span class="nc" id="L327">		print(ps, &quot;type&quot;, type);</span>
+<span class="nc" id="L328">		print(ps, &quot;keyword&quot;, keyword);</span>
+<span class="nc" id="L329">		print(ps, &quot;preprocessor&quot;, preproc);</span>
+<span class="nc" id="L330">		print(ps, &quot;skinparameter&quot;, SkinParam.getPossibleValues());</span>
+<span class="nc" id="L331">		print(ps, &quot;color&quot;, HColorSet.instance().names());</span>
+<span class="nc" id="L332">		ps.println(&quot;;EOF&quot;);</span>
+<span class="nc" id="L333">	}</span>
 
 	private static void print(PrintStream ps, String name, Collection&lt;String&gt; data) {
-<span class="nc" id="L303">		ps.println(&quot;;&quot; + name);</span>
-<span class="nc" id="L304">		ps.println(&quot;;&quot; + data.size());</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">		for (String k : data)</span>
-<span class="nc" id="L306">			ps.println(k);</span>
+<span class="nc" id="L336">		ps.println(&quot;;&quot; + name);</span>
+<span class="nc" id="L337">		ps.println(&quot;;&quot; + data.size());</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		for (String k : data)</span>
+<span class="nc" id="L339">			ps.println(k);</span>
 
-<span class="nc" id="L308">		ps.println();</span>
-<span class="nc" id="L309">	}</span>
+<span class="nc" id="L341">		ps.println();</span>
+<span class="nc" id="L342">	}</span>
 
 	public final Set&lt;String&gt; getType() {
-<span class="nc" id="L312">		return Collections.unmodifiableSet(type);</span>
+<span class="nc" id="L345">		return Collections.unmodifiableSet(type);</span>
 	}
 
 	public final Set&lt;String&gt; getKeyword() {
-<span class="nc" id="L316">		return Collections.unmodifiableSet(keyword);</span>
+<span class="nc" id="L349">		return Collections.unmodifiableSet(keyword);</span>
 	}
 
 	public final Set&lt;String&gt; getPreproc() {
-<span class="nc" id="L320">		return Collections.unmodifiableSet(preproc);</span>
+<span class="nc" id="L353">		return Collections.unmodifiableSet(preproc);</span>
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L324">		LanguageDescriptor languageDescriptor = new LanguageDescriptor();</span>
-<span class="nc bnc" id="L325" title="All 2 branches missed.">		for (String s : languageDescriptor.type) {</span>
-<span class="nc" id="L326">			System.out.print(s);</span>
-<span class="nc" id="L327">			System.out.print(&quot;|&quot;);</span>
-<span class="nc" id="L328">		}</span>
-<span class="nc" id="L329">		System.out.println();</span>
-<span class="nc bnc" id="L330" title="All 2 branches missed.">		for (String s : languageDescriptor.keyword) {</span>
-<span class="nc bnc" id="L331" title="All 2 branches missed.">			if (s.startsWith(&quot;@&quot;))</span>
-<span class="nc" id="L332">				continue;</span>
-<span class="nc" id="L333">			System.out.print(s);</span>
-<span class="nc" id="L334">			System.out.print(&quot;|&quot;);</span>
-<span class="nc" id="L335">		}</span>
-<span class="nc" id="L336">	}</span>
+<span class="nc" id="L357">		LanguageDescriptor languageDescriptor = new LanguageDescriptor();</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">		for (String s : languageDescriptor.type) {</span>
+<span class="nc" id="L359">			System.out.print(s);</span>
+<span class="nc" id="L360">			System.out.print(&quot;|&quot;);</span>
+<span class="nc" id="L361">		}</span>
+<span class="nc" id="L362">		System.out.println();</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">		for (String s : languageDescriptor.keyword) {</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">			if (s.startsWith(&quot;@&quot;))</span>
+<span class="nc" id="L365">				continue;</span>
+<span class="nc" id="L366">			System.out.print(s);</span>
+<span class="nc" id="L367">			System.out.print(&quot;|&quot;);</span>
+<span class="nc" id="L368">		}</span>
+<span class="nc" id="L369">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
