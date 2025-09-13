@@ -195,6 +195,7 @@ public class LanguageDescriptor {
 		keyword.add("group");
 		keyword.add("header");
 		keyword.add("hide");
+		keyword.add("highlight");
 		keyword.add("hnote");
 		keyword.add("if");
 		keyword.add("is");
@@ -217,6 +218,7 @@ public class LanguageDescriptor {
 		keyword.add("normal");
 		keyword.add("not");
 		keyword.add("note");
+		keyword.add("null");
 		keyword.add("of");
 		keyword.add("on");
 		keyword.add("opt");
