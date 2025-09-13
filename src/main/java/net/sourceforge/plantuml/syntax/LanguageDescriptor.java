@@ -102,6 +102,7 @@ public class LanguageDescriptor {
 		type.add("concise");
 		type.add("control");
 		type.add("database");
+		type.add("dataclass");
 		type.add("diamond");
 		type.add("entity");
 		type.add("enum");
@@ -125,6 +126,7 @@ public class LanguageDescriptor {
 		type.add("process");
 		type.add("protocol");
 		type.add("queue");
+		type.add("record");
 		type.add("rectangle");
 		type.add("relationship");
 		type.add("robust");
