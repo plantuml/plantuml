@@ -265,20 +265,28 @@ public class LanguageDescriptor {
 		preproc.add("!definelong");
 		preproc.add("!dump_memory");
 		preproc.add("!else");
+		preproc.add("!end");
 		preproc.add("!enddefinelong");
+		preproc.add("!endfor");
 		preproc.add("!endfunction");
 		preproc.add("!endif");
 		preproc.add("!endprocedure");
 		preproc.add("!endsub");
+		preproc.add("!endwhile");
 		preproc.add("!exit");
+		preproc.add("!final");
+		preproc.add("!foreach");
 		preproc.add("!function");
 		preproc.add("!if");
 		preproc.add("!ifdef");
 		preproc.add("!ifndef");
 		preproc.add("!import");
 		preproc.add("!include");
+		preproc.add("!includedef");
+		preproc.add("!includesub");
 		preproc.add("!local");
 		preproc.add("!log");
+		preproc.add("!option");
 		preproc.add("!pragma");
 		preproc.add("!procedure");
 		preproc.add("!return");
@@ -286,6 +294,7 @@ public class LanguageDescriptor {
 		preproc.add("!theme");
 		preproc.add("!undef");
 		preproc.add("!unquoted");
+		preproc.add("!while");
 	}
 
 	private void addArobase(String type) {
