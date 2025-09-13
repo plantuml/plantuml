@@ -148,7 +148,6 @@ public class LanguageDescriptor {
 		keyword.add("autonumber");
 		keyword.add("backward");
 		keyword.add("bold");
-		keyword.add("bold");
 		keyword.add("bottom");
 		keyword.add("box");
 		keyword.add("break");
