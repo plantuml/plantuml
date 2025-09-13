@@ -87,15 +87,19 @@ public class LanguageDescriptor {
 		type.add("action");
 		type.add("actor");
 		type.add("agent");
+		type.add("analog");
 		type.add("annotation");
 		type.add("archimate");
 		type.add("artifact");
+		type.add("binary");
 		type.add("boundary");
 		type.add("card");
 		type.add("class");
+		type.add("clock");
 		type.add("cloud");
 		type.add("collections");
 		type.add("component");
+		type.add("concise");
 		type.add("control");
 		type.add("database");
 		type.add("diamond");
@@ -123,6 +127,7 @@ public class LanguageDescriptor {
 		type.add("queue");
 		type.add("rectangle");
 		type.add("relationship");
+		type.add("robust");
 		type.add("stack");
 		type.add("state");
 		type.add("storage");
