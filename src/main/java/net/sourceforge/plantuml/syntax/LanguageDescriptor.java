@@ -173,6 +173,7 @@ public class LanguageDescriptor {
 		keyword.add("false");
 		keyword.add("field");
 		keyword.add("fields");
+		keyword.add("floating note");
 		keyword.add("footbox");
 		keyword.add("footer");
 		keyword.add("fork");
