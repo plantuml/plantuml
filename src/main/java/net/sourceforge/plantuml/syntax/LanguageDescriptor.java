@@ -111,7 +111,9 @@ public class LanguageDescriptor {
 		type.add("label");
 		type.add("map");
 		type.add("metaclass");
+		type.add("network");
 		type.add("node");
+		type.add("nwdiag");
 		type.add("object");
 		type.add("package");
 		type.add("participant");
@@ -129,6 +131,7 @@ public class LanguageDescriptor {
 
 		keyword.add("across");
 		keyword.add("activate");
+		keyword.add("address");
 		keyword.add("again");
 		keyword.add("allow_mixing");
 		keyword.add("allowmixing");
@@ -218,6 +221,7 @@ public class LanguageDescriptor {
 		keyword.add("right");
 		keyword.add("rnote");
 		keyword.add("rotate");
+		keyword.add("shape");
 		keyword.add("show");
 		keyword.add("skin");
 		keyword.add("skinparam");
