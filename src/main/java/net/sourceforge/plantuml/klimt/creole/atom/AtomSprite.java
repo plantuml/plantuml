@@ -50,17 +50,19 @@ public class AtomSprite extends AbstractAtom implements Atom {
 	private final Url url;
 	private final HColor fontColor;
 	private final HColor forcedColor;
+	private final HColor backColor;
 
-	public AtomSprite(HColor fontColor, HColor forcedColor, double scale, Sprite sprite, Url url) {
+	public AtomSprite(HColor fontColor, HColor forcedColor, double scale, Sprite sprite, Url url, HColor backColor) {
 		this.scale = scale;
 		this.sprite = sprite;
 		this.url = url;
 		this.fontColor = fontColor;
 		this.forcedColor = forcedColor;
+		this.backColor = backColor;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return sprite.asTextBlock(fontColor, forcedColor, scale).calculateDimension(stringBounder);
+		return sprite.asTextBlock(fontColor, forcedColor, scale, null).calculateDimension(stringBounder);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -71,7 +73,7 @@ public class AtomSprite extends AbstractAtom implements Atom {
 		if (url != null)
 			ug.startUrl(url);
 
-		sprite.asTextBlock(fontColor, forcedColor, scale).drawU(ug);
+		sprite.asTextBlock(fontColor, forcedColor, scale, backColor).drawU(ug);
 		if (url != null)
 			ug.closeUrl();
 

@@ -208,7 +208,7 @@ public class SpriteMonochrome implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

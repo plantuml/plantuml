@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.openiconic.SvgPath;
@@ -443,7 +444,8 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
+			final HColor backColor) {
 
 		final UImageSvg data = new UImageSvg(svg.get(0), scale);
 		final double width = data.getWidth();
@@ -452,6 +454,9 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
+				if (backColor != null)
+					ug.apply(backColor.bg()).apply(backColor)
+							.draw(URectangle.build(calculateDimension(ug.getStringBounder())));
 				SvgNanoParser.this.drawU(ug, scale, fontColor, forcedColor);
 			}
 

@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.klimt.creole.atom.AtomSpace;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomSprite;
 import net.sourceforge.plantuml.klimt.creole.command.Command;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
@@ -185,8 +186,12 @@ public class StripeSimple implements Stripe {
 
 	public void addSprite(String src, double scale, HColor forcedColor) {
 		final Sprite sprite = skinParam.getSprite(src);
-		if (sprite != null)
-			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null));
+		if (sprite != null) {
+			final HColor backColor = fontConfiguration.containsStyle(FontStyle.BACKCOLOR)
+					? fontConfiguration.getExtendedColor()
+					: null;
+			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null, backColor));
+		}
 
 	}
 

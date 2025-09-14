@@ -52,7 +52,7 @@ public class SpriteSvg implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
 		final UImageSvg img = new UImageSvg(svg, scale);
 		return new AbstractTextBlock() {
 

@@ -40,6 +40,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public interface Sprite {
 
-	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale);
+	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale, HColor backColor);
 
 }

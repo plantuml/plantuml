@@ -123,7 +123,7 @@ public class AtomTextUtils {
 					final double scale = Parser.getScale(m.group(6), 1);
 					final HColor fontColor = fontConfiguration.getColor();
 					final HColor forcedColor = null;
-					result.add(new AtomSprite(fontColor, forcedColor, scale, sprite, url));
+					result.add(new AtomSprite(fontColor, forcedColor, scale, sprite, url, null));
 				}
 			} else if (valImg != null) {
 				final double scale = Parser.getScale(m.group(8), 1);

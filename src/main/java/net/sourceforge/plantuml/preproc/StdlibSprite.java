@@ -54,7 +54,7 @@ public class StdlibSprite implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale) {
+	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale, final HColor backColor) {
 		synchronized (this) {
 			if (sprite == null) {
 				int pos = 0;
@@ -75,7 +75,7 @@ public class StdlibSprite implements Sprite {
 			}
 
 		}
-		return sprite.asTextBlock(fontColor, forcedColor, scale);
+		return sprite.asTextBlock(fontColor, forcedColor, scale, backColor);
 	}
 
 }

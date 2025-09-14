@@ -113,7 +113,7 @@ public class Stereotype implements CharSequence {
 		if (tmp == null)
 			return null;
 
-		return tmp.asTextBlock(getHtmlColor(), null, decoration.spriteScale);
+		return tmp.asTextBlock(getHtmlColor(), null, decoration.spriteScale, null);
 	}
 
 	public boolean isWithOOSymbol() {
