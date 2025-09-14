@@ -142,7 +142,7 @@ public class StdlibDiagram extends UmlDiagram {
 <span class="nc" id="L142">			final Sprite sprite = getSkinParam().getSprite(n);</span>
 <span class="nc" id="L143">			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),</span>
 <span class="nc" id="L144">					HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L145">			TextBlock tb = sprite.asTextBlock(getBlack(), null, 1.0);</span>
+<span class="nc" id="L145">			TextBlock tb = sprite.asTextBlock(getBlack(), null, 1.0, null);</span>
 <span class="nc" id="L146">			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>
 <span class="nc" id="L147">			tb.drawU(ug.apply(new UTranslate(x, y)));</span>
 <span class="nc" id="L148">			final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());</span>

@@ -59,8 +59,8 @@ public class StdlibSpriteSvg implements Sprite {
 <span class="nc" id="L59">	}</span>
 
 	@Override
-	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale) {
-<span class="nc" id="L63">		return this.sprite.get().asTextBlock(fontColor, forcedColor, scale);</span>
+	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale, final HColor backColor) {
+<span class="nc" id="L63">		return this.sprite.get().asTextBlock(fontColor, forcedColor, scale, backColor);</span>
 	}
 
 }

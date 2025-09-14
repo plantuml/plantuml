@@ -54,7 +54,7 @@ public class StdlibSprite implements Sprite {
 <span class="fc" id="L54">	}</span>
 
 	@Override
-	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale) {
+	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale, final HColor backColor) {
 <span class="fc" id="L58">		synchronized (this) {</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">			if (sprite == null) {</span>
 <span class="fc" id="L60">				int pos = 0;</span>
@@ -75,7 +75,7 @@ public class StdlibSprite implements Sprite {
 			}
 
 <span class="fc" id="L77">		}</span>
-<span class="fc" id="L78">		return sprite.asTextBlock(fontColor, forcedColor, scale);</span>
+<span class="fc" id="L78">		return sprite.asTextBlock(fontColor, forcedColor, scale, backColor);</span>
 	}
 
 }

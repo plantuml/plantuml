@@ -95,7 +95,7 @@ public class ListSpriteDiagram extends UmlDiagram {
 <span class="nc" id="L95">					final Sprite sprite = getSkinParam().getSprite(n);</span>
 <span class="nc" id="L96">					TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),</span>
 <span class="nc" id="L97">							HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L98">					TextBlock tb = sprite.asTextBlock(HColors.BLACK, null, 1.0);</span>
+<span class="nc" id="L98">					TextBlock tb = sprite.asTextBlock(HColors.BLACK, null, 1.0, null);</span>
 <span class="nc" id="L99">					tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>
 <span class="nc" id="L100">					tb.drawU(ug.apply(new UTranslate(x, y)));</span>
 <span class="nc" id="L101">					final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());</span>

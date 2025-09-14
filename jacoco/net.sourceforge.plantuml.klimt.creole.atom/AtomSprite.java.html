@@ -50,32 +50,34 @@ public class AtomSprite extends AbstractAtom implements Atom {
 	private final Url url;
 	private final HColor fontColor;
 	private final HColor forcedColor;
+	private final HColor backColor;
 
-<span class="fc" id="L54">	public AtomSprite(HColor fontColor, HColor forcedColor, double scale, Sprite sprite, Url url) {</span>
-<span class="fc" id="L55">		this.scale = scale;</span>
-<span class="fc" id="L56">		this.sprite = sprite;</span>
-<span class="fc" id="L57">		this.url = url;</span>
-<span class="fc" id="L58">		this.fontColor = fontColor;</span>
-<span class="fc" id="L59">		this.forcedColor = forcedColor;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L55">	public AtomSprite(HColor fontColor, HColor forcedColor, double scale, Sprite sprite, Url url, HColor backColor) {</span>
+<span class="fc" id="L56">		this.scale = scale;</span>
+<span class="fc" id="L57">		this.sprite = sprite;</span>
+<span class="fc" id="L58">		this.url = url;</span>
+<span class="fc" id="L59">		this.fontColor = fontColor;</span>
+<span class="fc" id="L60">		this.forcedColor = forcedColor;</span>
+<span class="fc" id="L61">		this.backColor = backColor;</span>
+<span class="fc" id="L62">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L63">		return sprite.asTextBlock(fontColor, forcedColor, scale).calculateDimension(stringBounder);</span>
+<span class="fc" id="L65">		return sprite.asTextBlock(fontColor, forcedColor, scale, null).calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L67">		return 0;</span>
+<span class="fc" id="L69">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L72">			ug.startUrl(url);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L74">			ug.startUrl(url);</span>
 
-<span class="fc" id="L74">		sprite.asTextBlock(fontColor, forcedColor, scale).drawU(ug);</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L76">			ug.closeUrl();</span>
+<span class="fc" id="L76">		sprite.asTextBlock(fontColor, forcedColor, scale, backColor).drawU(ug);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L78">			ug.closeUrl();</span>
 
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L80">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
