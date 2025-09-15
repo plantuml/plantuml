@@ -92,20 +92,10 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
-		final Direction dir = parseDirection(arg, type);
+		final Direction dir = Direction.getWBSDirection(arg);
 
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
-	}
-
-	public static Direction parseDirection(RegexResult arg, final String type) {
-		Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
-		final String direction = arg.get("DIRECTION", 0);
-		if ("<".equals(direction))
-			dir = Direction.LEFT;
-		else if (">".equals(direction))
-			dir = Direction.RIGHT;
-		return dir;
 	}
 
 }

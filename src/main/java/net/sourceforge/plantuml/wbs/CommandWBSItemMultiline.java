@@ -94,7 +94,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
-		final Direction dir = CommandWBSItem.parseDirection(line0, type);
+		final Direction dir = Direction.getWBSDirection(line0);
 
 		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
 				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.get("SHAPE", 0)));
