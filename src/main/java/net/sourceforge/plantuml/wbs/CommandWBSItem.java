@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -59,10 +60,20 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		if (mode == 0)
 			return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
 					new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
-					new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-					new RegexOptional(new RegexLeaf(1, "CODE", "\\(([%pLN_]+)\\)")), //
-					new RegexLeaf(1, "SHAPE", "(_)?"), //
-					new RegexLeaf(1, "DIRECTION", "([<>])?"), //
+					new RegexOr( //
+						new RegexConcat( //
+							new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
+							new RegexOptional(new RegexLeaf(1, "CODE_1", "\\(([%pLN_]+)\\)"))),
+						new RegexConcat( //
+							new RegexOptional(new RegexLeaf(1, "CODE_2", "\\(([%pLN_]+)\\)")),
+							new RegexOptional(new RegexLeaf(1, "BACKCOLOR_2", "\\[(#\\w+)\\]")))), //
+					new RegexOr( //
+						new RegexConcat( //
+							new RegexLeaf(1, "SHAPE_1", "(_)?"), //
+							new RegexLeaf(1, "DIRECTION_1", "([<>])?")), //
+						new RegexConcat( //
+							new RegexLeaf(1, "DIRECTION_2", "([<>])?")), //
+							new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 					RegexLeaf.spaceOneOrMore(), //
 					new RegexLeaf(1, "LABEL", "([^%s].*)"), //
 					RegexLeaf.end());
@@ -70,8 +81,13 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
 				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf(1, "SHAPE", "(_)?"), //
-				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
+				new RegexOr( //
+					new RegexConcat( //
+						new RegexLeaf(1, "SHAPE_1", "(_)?"), //
+						new RegexLeaf(1, "DIRECTION_1", "([<>])?")), //
+					new RegexConcat( //
+						new RegexLeaf(1, "DIRECTION_2", "([<>])?")), //
+						new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "LABEL", "[%g](.*)[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -86,26 +102,16 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
-		final String code = arg.get("CODE", 0);
-		final String stringColor = arg.get("BACKCOLOR", 0);
+		final String code = arg.getLazzy("CODE", 0);
+		final String stringColor = arg.getLazzy("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
-		final Direction dir = parseDirection(arg, type);
+		final Direction dir = Direction.getWBSDirection(arg);
 
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,
-				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
-	}
-
-	public static Direction parseDirection(RegexResult arg, final String type) {
-		Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
-		final String direction = arg.get("DIRECTION", 0);
-		if ("<".equals(direction))
-			dir = Direction.LEFT;
-		else if (">".equals(direction))
-			dir = Direction.RIGHT;
-		return dir;
+				IdeaShape.fromDesc(arg.getLazzy("SHAPE", 0)));
 	}
 
 }
