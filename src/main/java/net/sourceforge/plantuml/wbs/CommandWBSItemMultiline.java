@@ -68,8 +68,13 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
-				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexOptional(new RegexLeaf(1, "CODE", "\\(([%pLN_]+)\\)")), //
+				new RegexOr( //
+					new RegexConcat( //
+						new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
+						new RegexOptional(new RegexLeaf(1, "CODE_1", "\\(([%pLN_]+)\\)"))),
+					new RegexConcat( //
+						new RegexOptional(new RegexLeaf(1, "CODE_2", "\\(([%pLN_]+)\\)")),
+						new RegexOptional(new RegexLeaf(1, "BACKCOLOR_2", "\\[(#\\w+)\\]")))), //
 				new RegexOr( //
 					new RegexConcat( //
 						new RegexLeaf(1, "SHAPE_1", "(_)?"), //
@@ -95,12 +100,12 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 			lines = lines.overrideLastLine(lineLast.get(0));
 
 		final String type = line0.get("TYPE", 0);
-		final String stringColor = line0.get("BACKCOLOR", 0);
+		final String stringColor = line0.getLazzy("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
-		final String code = line0.get("CODE", 0);
+		final String code = line0.getLazzy("CODE", 0);
 		final Direction dir = Direction.getWBSDirection(line0);
 
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),

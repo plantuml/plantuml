@@ -59,8 +59,13 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		if (mode == 0)
 			return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
 					new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
-					new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-					new RegexOptional(new RegexLeaf(1, "CODE", "\\(([%pLN_]+)\\)")), //
+					new RegexOr( //
+						new RegexConcat( //
+							new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
+							new RegexOptional(new RegexLeaf(1, "CODE_1", "\\(([%pLN_]+)\\)"))),
+						new RegexConcat( //
+							new RegexOptional(new RegexLeaf(1, "CODE_2", "\\(([%pLN_]+)\\)")),
+							new RegexOptional(new RegexLeaf(1, "BACKCOLOR_2", "\\[(#\\w+)\\]")))), //
 					new RegexOr( //
 						new RegexConcat( //
 							new RegexLeaf(1, "SHAPE_1", "(_)?"), //
@@ -96,8 +101,8 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
-		final String code = arg.get("CODE", 0);
-		final String stringColor = arg.get("BACKCOLOR", 0);
+		final String code = arg.getLazzy("CODE", 0);
+		final String stringColor = arg.getLazzy("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
