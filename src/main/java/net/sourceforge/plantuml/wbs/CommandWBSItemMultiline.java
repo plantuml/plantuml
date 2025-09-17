@@ -69,8 +69,13 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf(1, "SHAPE", "(_)?"), //
-				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
+				new RegexOr( //
+					new RegexConcat( //
+						new RegexLeaf(1, "SHAPE_1", "(_)?"), //
+						new RegexLeaf(1, "DIRECTION_1", "([<>])?")), //
+					new RegexConcat( //
+						new RegexLeaf(1, "DIRECTION_2", "([<>])?")), //
+						new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
@@ -97,7 +102,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		final Direction dir = Direction.getWBSDirection(line0);
 
 		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
-				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.get("SHAPE", 0)));
+				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy("SHAPE", 0)));
 
 	}
 

@@ -61,8 +61,13 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 					new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
 					new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
 					new RegexOptional(new RegexLeaf(1, "CODE", "\\(([%pLN_]+)\\)")), //
-					new RegexLeaf(1, "SHAPE", "(_)?"), //
-					new RegexLeaf(1, "DIRECTION", "([<>])?"), //
+					new RegexOr( //
+						new RegexConcat( //
+							new RegexLeaf(1, "SHAPE_1", "(_)?"), //
+							new RegexLeaf(1, "DIRECTION_1", "([<>])?")), //
+						new RegexConcat( //
+							new RegexLeaf(1, "DIRECTION_2", "([<>])?")), //
+							new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 					RegexLeaf.spaceOneOrMore(), //
 					new RegexLeaf(1, "LABEL", "([^%s].*)"), //
 					RegexLeaf.end());
@@ -70,8 +75,13 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
 				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf(1, "SHAPE", "(_)?"), //
-				new RegexLeaf(1, "DIRECTION", "([<>])?"), //
+				new RegexOr( //
+					new RegexConcat( //
+						new RegexLeaf(1, "SHAPE_1", "(_)?"), //
+						new RegexLeaf(1, "DIRECTION_1", "([<>])?")), //
+					new RegexConcat( //
+						new RegexLeaf(1, "DIRECTION_2", "([<>])?")), //
+						new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "LABEL", "[%g](.*)[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -95,7 +105,7 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		final Direction dir = Direction.getWBSDirection(arg);
 
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,
-				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
+				IdeaShape.fromDesc(arg.getLazzy("SHAPE", 0)));
 	}
 
 }
