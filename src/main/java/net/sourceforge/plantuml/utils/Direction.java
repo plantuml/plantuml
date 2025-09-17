@@ -52,6 +52,7 @@ public enum Direction {
 		case UP:
 			return DOWN;
 		}
+		throw new IllegalStateException();
 	}
 
 	public String getShortCode() {
@@ -95,6 +96,7 @@ public enum Direction {
 		case UP:
 			return RIGHT;
 		}
+		throw new IllegalStateException();
 	}
 
 	public static Direction leftOrRight(XPoint2D p1, XPoint2D p2) {

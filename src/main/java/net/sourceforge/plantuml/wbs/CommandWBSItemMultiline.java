@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
