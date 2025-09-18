@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -35,38 +35,28 @@
  */
 package net.sourceforge.plantuml.cli;
 
-public enum GlobalConfigKey {
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-	REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT(Boolean.FALSE), //
-	VERBOSE(Boolean.FALSE), //
-	WORD(Boolean.FALSE), //
-	// SYSTEM_EXIT(Boolean.TRUE), //
-	GUI(Boolean.FALSE), //
-	OVERWRITE(Boolean.FALSE), //
-	ENABLE_STATS(defaultForStats()), //
-	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //
-	FILE_SEPARATOR("_"), //
-	TIMEOUT_MS(15 * 60 * 1000L);// 15 minutes
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-	private final Object defaultValue;
+/**
+ * Annotation used to document CLI flags in {@link CliFlag}.
+ * 
+ * The value of this annotation typically contains a human-readable description
+ * that may be used to generate help messages or documentation automatically.
+ */
+@Documented
+@Retention(RUNTIME)
+@Target(FIELD)
+public @interface CliFlagDoc {
 
-	GlobalConfigKey(Object defaultValue) {
-		this.defaultValue = defaultValue;
-	}
-
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-	
-	
-	private static boolean defaultForStats() {
-		return isTrue(System.getProperty("PLANTUML_STATS")) || isTrue(System.getenv("PLANTUML_STATS"));
-	}
-
-	private static boolean isTrue(final String value) {
-		return "on".equalsIgnoreCase(value) || "true".equalsIgnoreCase(value);
-	}
-
-
-
+    /**
+     * A human-readable description of the CLI flag.
+     * 
+     * @return the description of the flag
+     */
+    String value();
 }

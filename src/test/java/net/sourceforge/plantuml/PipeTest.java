@@ -21,6 +21,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.error.PSystemError;
 
 class PipeTest {
@@ -52,7 +53,7 @@ class PipeTest {
 
 		try (AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
 			softly.assertThat(errorStatus.hasError()).isFalse();
-			softly.assertThat(errorStatus.isNoData()).isTrue();
+			softly.assertThat(errorStatus.isEmpty()).isTrue();
 			softly.assertThat(baos.toByteArray()).isEmpty();
 		}
 	}
@@ -177,7 +178,7 @@ class PipeTest {
 
 		try (AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
 			softly.assertThat(errorStatus.hasError()).isEqualTo(testCase.isExpectedHasErrors());
-			softly.assertThat(errorStatus.isNoData()).isEqualTo(testCase.isExpectedIsNoData());
+			softly.assertThat(errorStatus.isEmpty()).isEqualTo(testCase.isExpectedIsNoData());
 			testCase.getExpectedOutVerification().assertOk(softly, baos, testCase.getExpectedOut());
 		}
 	}

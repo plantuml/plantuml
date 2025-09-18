@@ -60,7 +60,7 @@ public class OptionPrint {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	static public void printTestDot() throws InterruptedException {
+	static public void printTestDot2() {
 		final ReportLog result = new ReportLog();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result)
@@ -69,7 +69,23 @@ public class OptionPrint {
 			else
 				System.err.println(s);
 
-		exit(errorCode);
+		Exit.exit(errorCode);
+	}
+
+//	static public void printTestDot() throws InterruptedException {
+//		final ReportLog result = new ReportLog();
+//		final int errorCode = GraphvizUtils.addDotStatus(result, false);
+//		for (String s : result)
+//			if (errorCode == 0)
+//				System.out.println(s);
+//			else
+//				System.err.println(s);
+//
+//		// exit(errorCode);
+//	}
+
+	static public void printHelp2() {
+
 	}
 
 	static public void printHelp() throws InterruptedException {
@@ -103,18 +119,23 @@ public class OptionPrint {
 		System.out.println("    -duration\t\tTo print the duration of complete diagrams processing");
 		System.out.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
 		System.out.println("    -enablestats\tTo enable statistics computation");
-		System.out.println("    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
-		// System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
+		System.out.println(
+				"    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
+		// System.out.println(" -extractstdlib\tTo extract PlantUML Standard Library
+		// into stdlib folder");
 		System.out.println("    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs");
 		System.out.println("    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster");
-		System.out.println("    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')");
+		System.out.println(
+				"    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')");
 		System.out.println("    -filename \"example.puml\"\tTo override %filename% variable");
 		System.out.println("    -graphvizdot \"exe\"\tTo specify dot executable");
 		System.out.println("    -gui\t\tTo run the graphical user interface");
 		System.out.println("    -h[elp]\t\tTo display this help message");
 		System.out.println("    -htmlstats\t\tTo output general statistics in file plantuml-stats.html");
-		System.out.println("    -I" + separator + "path" + separator + "to" + separator + "file\tTo include file as if '!include file' were used");
-		System.out.println("    -I" + separator + "path" + separator + "to" + separator + "*.puml\tTo include files with pattern");
+		System.out.println("    -I" + separator + "path" + separator + "to" + separator
+				+ "file\tTo include file as if '!include file' were used");
+		System.out.println(
+				"    -I" + separator + "path" + separator + "to" + separator + "*.puml\tTo include files with pattern");
 		System.out.println("    -language\t\tTo print the list of PlantUML keywords");
 		System.out.println("    -loopstats\t\tTo continuously print statistics about usage");
 		System.out.println("    -metadata\t\tTo retrieve PlantUML sources from PNG images");
@@ -131,7 +152,7 @@ public class OptionPrint {
 		System.out.println("    -preproc\t\tTo output preprocessor text of diagrams");
 		System.out.println("    -printfonts\t\tTo print fonts available on your system");
 		System.out.println("    -progress\t\tTo display a textual progress bar in console");
-		// System.out.println("    -quiet\t\tTo NOT print error message into the console");
+		// System.out.println(" -quiet\t\tTo NOT print error message into the console");
 		System.out.println("    -realtimestats\tTo generate statistics on the fly rather than at the end");
 		System.out.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
 		System.out.println("    -splash\t\tTo display a splash screen with some progress bar");
@@ -139,7 +160,8 @@ public class OptionPrint {
 		System.out.println("    -syntax\t\tTo report any syntax error from standard input without generating images");
 		System.out.println("    -testdot\t\tTo test the installation of graphviz");
 		System.out.println("    -theme xxx\t\tTo use a specific theme");
-		System.out.println("    -timeout N\t\tProcessing timeout in (N) seconds. Defaults to 15 minutes (900 seconds).");
+		System.out
+				.println("    -timeout N\t\tProcessing timeout in (N) seconds. Defaults to 15 minutes (900 seconds).");
 		System.out.println("    -teps\t\tTo generate images using EPS format");
 		System.out.println("    -thtml\t\tTo generate HTML file for class diagram");
 		System.out.println("    -tlatex:nopreamble\tTo generate images using LaTeX/Tikz format without preamble");
@@ -157,23 +179,27 @@ public class OptionPrint {
 		System.out.println("    -xmlstats\t\tTo output general statistics in file plantuml-stats.xml");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
-		exit(0);
+		// exit(0);
 	}
 
-	static private void exit(int errorCode) throws InterruptedException {
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)
-			System.exit(errorCode);
+//	static private void exit2(int errorCode) {
+//		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)
+//			System.exit(errorCode);
+//	}
+//
+//	static private void exit(int errorCode) throws InterruptedException {
+//		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)
+//			System.exit(errorCode);
+//
+//		throw new InterruptedException("exit");
+//	}
 
-		throw new InterruptedException("exit");
-	}
-
-	public static void printLicense() throws InterruptedException {
+	public static void printLicense() {
 		for (String s : License.getCurrent().getTextFull())
 			System.out.println(s);
-		System.exit(0);
 	}
 
-	public static void printVersion() throws InterruptedException {
+	public static void printVersion() {
 		System.out.println(Version.fullDescription());
 		System.out.println("(" + License.getCurrent() + " source distribution)");
 		for (String v : interestingProperties())
@@ -188,7 +214,7 @@ public class OptionPrint {
 		for (String s : result)
 			System.out.println(s);
 
-		System.exit(0);
+		Exit.exit(errorCode);
 	}
 
 	public static Collection<String> interestingProperties() {
@@ -274,16 +300,14 @@ public class OptionPrint {
 		return String.format(Locale.US, "%,d", value);
 	}
 
-	public static void printAbout() throws InterruptedException {
-		for (String s : PSystemVersion.getAuthorsStrings(false)) {
+	public static void printAbout() {
+		for (String s : PSystemVersion.getAuthorsStrings(false))
 			System.out.println(s);
-		}
-		exit(0);
+
 	}
 
-	public static void printLanguage() throws InterruptedException {
+	public static void printLanguage() {
 		new LanguageDescriptor().print(System.out);
-		exit(0);
 	}
 
 }
