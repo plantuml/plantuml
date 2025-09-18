@@ -22,7 +22,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 public class PlantUmlTestUtils {
 
 	public static ExportDiagram exportDiagram(String... source) {
-		final SourceStringReader ssr = new SourceStringReader(StringTestUtils.join("\n", source));
+		final SourceStringReader ssr = new SourceStringReader(String.join("\n", source));
 
 		final List<BlockUml> blocks = ssr.getBlocks();
 		if (blocks.isEmpty()) throw new AssertionError("There is no diagram");
@@ -53,7 +53,7 @@ public class PlantUmlTestUtils {
 		public ExportDiagram assertNoError() {
 			if (diagram instanceof PSystemError) {
 				final PSystemError error = (PSystemError) this.diagram;
-				throw new AssertionError("Diagram has an error: " + StringTestUtils.join("\n", error.getPureAsciiFormatted()));
+				throw new AssertionError("Diagram has an error: " + String.join("\n", error.getPureAsciiFormatted()));
 			}
 			return this;
 		}
