@@ -182,7 +182,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
 				strings.add("Word Mode");
-				strings.add("Command Line: " + Run.getCommandLine());
+				// strings.add("Command Line: " + Run.getCommandLine());
 				strings.add("Current Dir: " + new SFile(".").getAbsolutePath());
 				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv(SecurityUtils.PATHS_INCLUDES));
 			}

@@ -17,8 +17,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.security.SFile;
 
 /**
@@ -133,7 +135,7 @@ class LoadJsonTest {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getCharset());
+        final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getString(CliFlag.CHARSET));
 
         pipe.managePipe(ErrorStatus.init());
 

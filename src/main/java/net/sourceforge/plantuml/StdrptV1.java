@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
@@ -49,12 +50,12 @@ public class StdrptV1 implements Stdrpt {
 	// ::remove file when __HAXE__
 
 	public void printInfo(final PrintStream output, Diagram sys) {
-		if (sys instanceof PSystemWelcome) {
+		if (sys instanceof PSystemWelcome)
 			sys = null;
-		}
-		if (sys == null || sys instanceof PSystemError) {
+
+		if (sys == null || sys instanceof PSystemError)
 			out(output, (PSystemError) sys);
-		}
+
 	}
 
 	public void errorLine(int lineError, File file) {
@@ -68,31 +69,31 @@ public class StdrptV1 implements Stdrpt {
 		} else {
 			output.println("status=ERROR");
 			output.println("lineNumber=" + (err.getLineLocation().getPosition() + 1));
-			for (ErrorUml er : err.getErrorsUml()) {
+			for (ErrorUml er : err.getErrorsUml())
 				output.println("label=" + er.getError());
-			}
+
 		}
 		output.flush();
 	}
 
 	private boolean empty(final PSystemError err) {
-		if (err == null) {
+		if (err == null)
 			return true;
-		}
-		for (ErrorUml er : err.getErrorsUml()) {
+
+		for (ErrorUml er : err.getErrorsUml())
 			if (PSystemAbstractFactory.EMPTY_DESCRIPTION.equals(er.getError()))
 				return true;
-		}
+
 		return false;
 	}
 
 	public void finalMessage(ErrorStatus error) {
-		if (error.hasError()) {
+		if (error.hasError())
 			Log.error("Some diagram description contains errors");
-		}
-		if (error.isNoData()) {
+
+		if (error.isEmpty())
 			Log.error("No diagram found");
-		}
+
 	}
 
 }

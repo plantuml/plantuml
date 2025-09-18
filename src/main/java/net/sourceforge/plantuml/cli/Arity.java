@@ -38,14 +38,17 @@ package net.sourceforge.plantuml.cli;
 public enum Arity {
 
 	/** Option without any value, e.g. -verbose */
-	BOOLEAN,
+	UNARY_BOOLEAN,
 
-	/** Option with a key and a value, e.g. -DKEY=VALUE */
-	KEY_VALUE,
+	/** Option without any value that break the usual behaviour, e.g. -help, -testdot */
+	UNARY_IMMEDIATE_ACTION,
 
-	/** Option with a key and an optional value, e.g. -ftp:8080 or -ftp */
-	KEY_OPTIONAL_COLON_VALUE,
+	/** Option with a key and an optional value, e.g. -ftp or -ftp:8080*/
+	UNARY_OPTIONAL_COLON,
+
+	/** Option with an argument or a key/value, e.g. -DSOME_FLAG or -DKEY=VALUE  */
+	UNARY_INLINE_KEY_OR_KEY_VALUE,
 
 	/** Option with a single value, e.g. -graphvizdot "foo.exe" */
-	SINGLE_VALUE;
+	BINARY_NEXT_ARGUMENT_VALUE;
 }

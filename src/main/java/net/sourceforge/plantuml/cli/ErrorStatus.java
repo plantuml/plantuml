@@ -33,52 +33,49 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.cli;
 
 public class ErrorStatus {
 
-	private boolean noData;
-	private boolean hasErrors;
-	private boolean hasOk;
+	private int nbErrors;
+	private int nbOk;
 
 	private ErrorStatus() {
-		this.noData = true;
 	}
 
 	public static ErrorStatus init() {
 		return new ErrorStatus();
 	}
 
-	// public synchronized void goNoData() {
-	// this.noData = true;
-	// }
-
-	public synchronized void goWithError() {
-		this.hasErrors = true;
-		this.noData = false;
+	public synchronized void incError() {
+		nbErrors++;
 	}
 
-	public synchronized void goOk() {
-		this.hasOk = true;
-		this.noData = false;
+	public synchronized void incOk() {
+		nbOk++;
 	}
 
 	public synchronized boolean hasError() {
-		return hasErrors;
+		return nbErrors > 0;
 	}
 
-	public synchronized boolean isNoData() {
-		return noData;
+	public synchronized boolean isEmpty() {
+		return nbErrors == 0 && nbOk == 0;
 	}
 
-	public int getExitCode() {
-		if (isNoData()) 
+	public synchronized int getExitCode() {
+		if (isEmpty())
 			return 100;
-		
-		if (hasErrors) 
+
+		if (hasError())
 			return 200;
-		
+
 		return 0;
+	}
+
+	@Override
+	public String toString() {
+		return "nbErrors=" + nbErrors + " nbOk=" + nbOk;
 	}
 
 }
