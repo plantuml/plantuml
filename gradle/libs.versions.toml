@@ -5,7 +5,7 @@
 
 [versions]
 ant                 = "1.10.15"
-assertj             = "3.27.4"
+assertj             = "3.27.5"
 batik               = "1.19"
 elk                 = "0.10.0"
 fop                 = "2.11"
