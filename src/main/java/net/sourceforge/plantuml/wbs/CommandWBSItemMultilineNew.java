@@ -68,7 +68,7 @@ public class CommandWBSItemMultilineNew extends CommandMultilines2<WBSDiagram> {
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandWBSItemMultilineNew.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
 				new RegexOr( //
 					new RegexConcat( //

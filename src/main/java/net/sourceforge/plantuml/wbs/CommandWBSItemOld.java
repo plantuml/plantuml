@@ -50,17 +50,16 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.Constant;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.warning.Warning;
 
-public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
+public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 
-	public CommandWBSItem(int mode) {
+	public CommandWBSItemOld(int mode) {
 		super(false, getRegexConcat(mode));
 	}
 
 	static IRegex getRegexConcat(int mode) {
 		if (mode == 0)
-			return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
+			return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //
 					new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
 					new RegexOr( //
 						new RegexConcat( //
@@ -80,7 +79,7 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 					new RegexLeaf(1, "LABEL", "([^%s].*)"), //
 					RegexLeaf.end());
 
-		return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
+		return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //
 				new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexOr( //

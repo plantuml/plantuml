@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Constant;
 import net.sourceforge.plantuml.utils.Direction;
-import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 
@@ -69,7 +68,7 @@ public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandWBSItemMultilineOld.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
 				new RegexOr( //
 					new RegexConcat( //
