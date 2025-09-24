@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.Constant;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 
@@ -111,7 +112,7 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 
 		final Direction dir = Direction.getWBSDirection(arg);
 
-		//diagram.addWarning(new Warning("Please define Shape/Direction before Color/Id."));
+		diagram.addWarning(new Warning("Please define Direction/Shape before Color/Id."));
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,
 				IdeaShape.fromDesc(arg.getLazzy("SHAPE", 0)));
 	}
