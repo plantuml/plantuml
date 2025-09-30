@@ -64,11 +64,12 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //
-				StereotypePattern.optional("STEREO"), //
+				StereotypePattern.optional("STEREO1"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "LABEL", ":(.*?)")), //
+				StereotypePattern.optional("STEREO2"), //
 				new RegexOptional(new RegexLeaf(2, "STYLE", CommandActivity3.endingGroup())), //
 				// new RegexLeaf(";?"), //
 				RegexLeaf.end());
@@ -94,7 +95,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 		BoxStyle.checkDeprecatedWarning(diagram, styleString);
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		String stereo = arg.get("STEREO", 0);
+		String stereo = arg.getLazzy("STEREO", 0);
 		if (stereo == null)
 			stereo = arg.get("STYLE", 1);
 		Stereotype stereotype = null;
