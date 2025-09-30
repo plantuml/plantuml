@@ -36,30 +36,11 @@
 package net.sourceforge.plantuml.cli;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
-
-import net.sourceforge.plantuml.utils.Peeker;
-import net.sourceforge.plantuml.utils.PeekerUtils;
 
 public class CliParser {
 
 	public static CliOptions parse(String... arg) throws InterruptedException, IOException {
 		return new CliOptions(arg);
-	}
-
-	public static Map<CliFlag, Object> parse2(String... args) {
-		final Map<CliFlag, Object> result = new EnumMap<>(CliFlag.class);
-		for (final Peeker<String> peeker = PeekerUtils.peeker(Arrays.asList(args)); peeker.peek(0) != null; peeker
-				.jump()) {
-			final CliFlagValued flag = CliFlagValued.parse(peeker);
-			if (flag != null)
-				result.put(flag.getFlag(), flag.getValue());
-		}
-
-		return result;
-
 	}
 
 }

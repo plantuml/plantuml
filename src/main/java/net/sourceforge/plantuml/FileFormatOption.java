@@ -42,6 +42,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
+import net.sourceforge.plantuml.utils.Log;
 
 /**
  * A FileFormat with some parameters.
@@ -171,6 +172,7 @@ public final class FileFormatOption implements Serializable {
 	private boolean debugsvek = false;
 
 	public void setDebugSvek(boolean debugsvek) {
+		Log.info(() -> "setDebugSvek: " + debugsvek);
 		this.debugsvek = debugsvek;
 	}
 

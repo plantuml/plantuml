@@ -84,7 +84,7 @@ public class PicoWebServer implements Runnable {
 	// ::remove folder when __CORE__
 
 	private final Socket connect;
-	private static boolean enableStop;
+	static boolean enableStop;
 
 	public PicoWebServer(Socket c) {
 		this.connect = c;

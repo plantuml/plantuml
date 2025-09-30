@@ -1,6 +1,7 @@
 package nonreg.svg;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 
 import java.io.IOException;
 
@@ -93,6 +94,7 @@ Expected result MUST be put between triple brackets
 </svg>
 }}}
 */
+@Isolated
 public class SVG0006_Svek_Test extends SvekSvgTest {
 
 	@Test

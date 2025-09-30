@@ -52,14 +52,12 @@ public class FileGroup {
 	private final List<File> result = new ArrayList<>();
 	private final String pattern;
 	private final List<String> excluded;
-	private final CliOptions option;
 
 	private final static Pattern2 predirPath = Pattern2.cmpile("^([^*?]*[/\\\\])?(.*)$");
 
-	public FileGroup(String pattern, List<String> excluded, CliOptions option) {
+	public FileGroup(String pattern, List<String> excluded) {
 		this.pattern = pattern;
 		this.excluded = excluded;
-		this.option = option;
 		if (pattern.indexOf("*") == -1 && pattern.indexOf("?") == -1)
 			initNoStar();
 		else if (pattern.indexOf("**") != -1)

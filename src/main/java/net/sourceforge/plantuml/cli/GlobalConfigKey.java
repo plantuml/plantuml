@@ -39,23 +39,14 @@ public enum GlobalConfigKey {
 
 	REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT(Boolean.FALSE), //
 	VERBOSE(Boolean.FALSE), //
-	EXTRACT_FROM_METADATA(Boolean.FALSE), //
 	WORD(Boolean.FALSE), //
-	SYSTEM_EXIT(Boolean.TRUE), //
+	// SYSTEM_EXIT(Boolean.TRUE), //
 	GUI(Boolean.FALSE), //
-	PRINT_FONTS(Boolean.FALSE), //
-	ENCODESPRITE(Boolean.FALSE), //
-	DUMP_HTML_STATS(Boolean.FALSE), //
-	DUMP_STATS(Boolean.FALSE), //
-	LOOP_STATS(Boolean.FALSE), //
 	OVERWRITE(Boolean.FALSE), //
 	ENABLE_STATS(defaultForStats()), //
-	STD_LIB(Boolean.FALSE), //
 	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //
-	CLIPBOARD_LOOP(Boolean.FALSE), //
-	CLIPBOARD(Boolean.FALSE), //
 	FILE_SEPARATOR("_"), //
-	TIMEOUT_MS(15 * 60 * 1000L);// 15 minutes
+	TIMEOUT_MS(30_000L);// 30 seconds
 
 	private final Object defaultValue;
 

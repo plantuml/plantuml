@@ -16,9 +16,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.Isolated;
 
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.security.SFile;
 
 /**
@@ -26,6 +31,8 @@ import net.sourceforge.plantuml.security.SFile;
  * <p>
  * Current limitation: Only local file tests, not tests to a http rest endpoint
  */
+@Isolated
+@Execution(ExecutionMode.SAME_THREAD)
 class LoadJsonTest {
 
     private static final String[] COMMON_OPTIONS = {"-tutxt"};
@@ -133,7 +140,7 @@ class LoadJsonTest {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getCharset());
+        final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getString(CliFlag.CHARSET));
 
         pipe.managePipe(ErrorStatus.init());
 

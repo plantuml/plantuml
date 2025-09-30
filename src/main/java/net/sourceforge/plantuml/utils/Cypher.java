@@ -65,13 +65,12 @@ public class Cypher {
 	public Cypher() {
 		final InputStream is = Cypher.class.getResourceAsStream("words.txt");
 		if (is != null)
-			try {
-				final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 				String s;
-				while ((s = br.readLine()) != null) {
+				while ((s = br.readLine()) != null)
 					if (s.matches("[a-z]+"))
 						words.add(s);
-				}
+
 				is.close();
 			} catch (Exception e) {
 				Logme.error(e);
@@ -95,17 +94,17 @@ public class Cypher {
 
 	private String changeWord(final String word) {
 		final String lower = word.toLowerCase();
-		if (except.contains(lower) || lower.matches("^([a-f0-9]{3}|[a-f0-9]{6})$")) {
+		if (except.contains(lower) || lower.matches("^([a-f0-9]{3}|[a-f0-9]{6})$"))
 			return word;
-		}
+
 		String res = convert.get(word);
-		if (res != null) {
+		if (res != null)
 			return res;
-		}
+
 		int len = word.length();
-		if (len < 4) {
+		if (len < 4)
 			len = 4;
-		}
+
 		while (true) {
 			res = buildRandomWord(len);
 			if (convert.containsValue(res) == false) {

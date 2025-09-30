@@ -39,17 +39,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
+@DeadCode
 public class SourceFileReaderHardFile extends SourceFileReaderAbstract implements ISourceFileReader {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
 	private final File outputFile;
 
-	public SourceFileReaderHardFile(Defines defines, final File file, File outputFile, List<String> config,
+	private SourceFileReaderHardFile(Defines defines, final File file, File outputFile, List<String> config,
 			String charset, FileFormatOption fileFormatOption) throws IOException {
 		super(file, fileFormatOption, defines, config, charset);
 		this.outputFile = outputFile;

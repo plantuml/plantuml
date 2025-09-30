@@ -190,23 +190,31 @@ public class StatsUtils {
 		realTimeStats = value;
 	}
 
-	public static void outHtml() throws FileNotFoundException {
-		htmlOutput(getStats());
+	public static void outHtml() {
+		try {
+			htmlOutput(getStats());
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void dumpStats() {
 		new TextConverter(getStats()).printMe(System.out);
 	}
 
-	public static void loopStats() throws InterruptedException {
+	public static void loopStats() {
 		int linesUsed = 0;
-		while (true) {
-			restoreNow();
-			clearScreen(System.out, linesUsed);
-			final TextConverter textConverter = new TextConverter(getStats());
-			textConverter.printMe(System.out);
-			linesUsed = textConverter.getLinesUsed();
-			Thread.sleep(3000L);
+		try {
+			while (true) {
+				restoreNow();
+				clearScreen(System.out, linesUsed);
+				final TextConverter textConverter = new TextConverter(getStats());
+				textConverter.printMe(System.out);
+				linesUsed = textConverter.getLinesUsed();
+				Thread.sleep(3000L);
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 
 	}

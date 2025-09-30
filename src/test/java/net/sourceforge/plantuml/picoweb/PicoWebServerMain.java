@@ -25,7 +25,7 @@ import net.sourceforge.plantuml.log.Logme;
 // Multi-line strings here start with a "" so that IDE auto-indenting will leave the rest of the string nicely
 // aligned
 
-public class PicoWebServerTest {
+public class PicoWebServerMain {
 
 	public static void main(String[] args) throws Exception {
 		startServer();

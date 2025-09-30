@@ -52,32 +52,39 @@ import net.sourceforge.plantuml.utils.Log;
 public class ClipboardLoop {
 	// ::remove file when __CORE__
 
-	public static void runLoop() throws IOException, InterruptedException {
+	public static void runLoop() {
 		final ClipboardLoop clipboardLoop = new ClipboardLoop();
-		while (true) {
-			final String text = clipboardLoop.getClipboardText();
-			if (clipboardLoop.isTextOk(text)) {
-				clipboardLoop.runText(text);
+		try {
+			while (true) {
+				final String text = clipboardLoop.getClipboardText();
+				if (clipboardLoop.isTextOk(text))
+					clipboardLoop.runText(text);
+
+				Thread.sleep(10000L);
 			}
-			Thread.sleep(10000L);
+		} catch (InterruptedException | IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public static void runOnce() throws IOException, InterruptedException {
+	public static void runOnce() {
 		final ClipboardLoop clipboardLoop = new ClipboardLoop();
 		final String text = clipboardLoop.getClipboardText();
-		if (clipboardLoop.isTextOk(text)) {
-			clipboardLoop.runText(text);
-		} else {
-			clipboardLoop.setClipboardImage(new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB));
+		try {
+			if (clipboardLoop.isTextOk(text))
+				clipboardLoop.runText(text);
+			else
+				clipboardLoop.setClipboardImage(new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB));
+		} catch (InterruptedException | IOException e) {
+			e.printStackTrace();
 		}
 
 	}
 
 	private boolean isTextOk(String text) {
-		if (text == null) {
+		if (text == null)
 			return false;
-		}
+
 		return text.startsWith("@start");
 	}
 

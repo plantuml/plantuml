@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -52,7 +53,7 @@ public class StdrptNull implements Stdrpt {
 		if (error.hasError())
 			Log.error("Some diagram description contains errors");
 
-		if (error.isNoData())
+		if (error.isEmpty())
 			Log.error("No diagram found");
 
 	}

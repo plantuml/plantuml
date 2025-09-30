@@ -1,78 +1,131 @@
 package net.sourceforge.plantuml;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.Isolated;
+import org.junitpioneer.jupiter.StdErr;
+import org.junitpioneer.jupiter.StdIo;
 
-
+@Isolated
+@Execution(ExecutionMode.SAME_THREAD)
 public class ProgressBarTest {
 
-	private static final PrintStream standardErr = System.err;
-	private static final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+	private static final String CLEAR = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
 
-	@BeforeAll
-	public static void beforeAll() {
-		System.setErr(new PrintStream(outputStreamCaptor));
+	@BeforeEach
+	void setUp() {
+		ProgressBar.reset();
 	}
 
-	@AfterAll
-	public static void afterAll() {
-		System.setErr(standardErr); // restore default stderr
+	@AfterEach
+	void tearDown() {
+		ProgressBar.reset();
 	}
 
 	@Test
-	void test_progressbar() throws Exception {
+	@StdIo
+	void test_progressbar01(StdErr err) throws Exception {
+		ProgressBar.setEnable(true);
+		ProgressBar.incTotal(2);
+
+		final StringBuilder expected = new StringBuilder();
+		expected.append("[                              ] 0/2");
+
+		assertEquals(expected.toString(), err.capturedString());
+
+	}
+
+	@Test
+	@StdIo
+	void test_progressbar02(StdErr err) throws Exception {
 		ProgressBar.setEnable(true);
 		ProgressBar.incTotal(2);
 		ProgressBar.incTotal(2);
-		PeriodicIncrementDone t2 = new PeriodicIncrementDone(4);
-		t2.start();
-		t2.join();
-		StringBuilder expected = new StringBuilder();
-		expected.append("[                              ] 0/2");
-		appendClear(expected);
-		// increment total from 2 to 4
-		expected.append("[                              ] 0/4");
-		appendClear(expected);
-		expected.append("[#######                       ] 1/4");
-		appendClear(expected);
-		expected.append("[###############               ] 2/4");
-		appendClear(expected);
-		expected.append("[######################        ] 3/4");
-		appendClear(expected);
-		expected.append("[##############################] 4/4");
-		assertThat(outputStreamCaptor.toString().trim()).isEqualTo(expected.toString());
+
+		final String expected = progress( //
+				"[                              ] 0/2", //
+				"[                              ] 0/4");
+
+		assertEquals(expected.toString(), err.capturedString());
+
 	}
 
-	private void appendClear(StringBuilder sb) {
-		sb.append("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		sb.append("                                    ");
-		sb.append("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+	@Test
+	@StdIo
+	void test_progressbar03(StdErr err) throws Exception {
+		ProgressBar.setEnable(true);
+		ProgressBar.incTotal(2);
+		ProgressBar.incTotal(2);
+		ProgressBar.incDone(false);
+
+		final String expected = progress( //
+				"[                              ] 0/2", //
+				"[                              ] 0/4", //
+				"[#######                       ] 1/4");
+
+		assertEquals(expected.toString(), err.capturedString());
+
 	}
 
-	private static class PeriodicIncrementDone extends Thread {
+	@Test
+	@StdIo
+	void test_progressbar05(StdErr err) throws Exception {
+		ProgressBar.setEnable(true);
+		ProgressBar.incTotal(2);
+		ProgressBar.incTotal(2);
+		ProgressBar.incDone(false);
+		ProgressBar.incDone(false);
 
-		private int count;
+		final String expected = progress( //
+				"[                              ] 0/2", //
+				"[                              ] 0/4", //
+				"[#######                       ] 1/4", //
+				"[###############               ] 2/4");
 
-		public PeriodicIncrementDone(int count) {
-			this.count = count;
-		}
+		assertEquals(expected, err.capturedString());
 
-		@Override
-		public void run() {
-			while (count-- > 0) {
-				ProgressBar.incDone(false);
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
+	}
+
+	@Test
+	@StdIo
+	void test_progressbar04(StdErr err) throws Exception {
+		ProgressBar.setEnable(true);
+		ProgressBar.incTotal(2);
+		ProgressBar.incTotal(2);
+		ProgressBar.incDone(false);
+		ProgressBar.incDone(false);
+		ProgressBar.incDone(false);
+		ProgressBar.incDone(false);
+
+		final String expected = progress( //
+				"[                              ] 0/2", //
+				"[                              ] 0/4", //
+				"[#######                       ] 1/4", //
+				"[###############               ] 2/4", //
+				"[######################        ] 3/4", //
+				"[##############################] 4/4");
+
+		assertEquals(expected.toString(), err.capturedString());
+
+	}
+
+	public static String progress(String... lines) {
+		final StringBuilder result = new StringBuilder();
+		for (String s : lines) {
+			if (result.length() > 0) {
+				result.append(CLEAR);
+				result.append("                                    ");
+				result.append(CLEAR);
 			}
+			result.append(s);
+
 		}
+		return result.toString();
 	}
+
 }

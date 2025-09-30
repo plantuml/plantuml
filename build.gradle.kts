@@ -47,6 +47,7 @@ dependencies {
 	} else {
 		testImplementation(libs.mockito.core)
 		testImplementation(libs.mockito.junit.jupiter)
+		testImplementation(libs.junit.pioneer)
 	}
 	implementation(libs.jlatexmath)
     implementation(libs.elk.core)

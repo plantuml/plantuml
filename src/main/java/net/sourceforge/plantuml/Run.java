@@ -51,16 +51,22 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.UIManager;
 
+import net.sourceforge.plantuml.cli.CliAction;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.Exit;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.ftp.FtpServer;
@@ -70,12 +76,9 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.png.MetadataTag;
-import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.stats.StatsUtils;
-import net.sourceforge.plantuml.swing.ClipboardLoop;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.utils.Cypher;
@@ -86,15 +89,13 @@ public class Run {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	private static Cypher cypher;
-
 	public static void main(String[] argsArray)
 			throws NoPlantumlCompressionException, IOException, InterruptedException {
 		System.setProperty("log4j.debug", "false");
+
 		final long start = System.currentTimeMillis();
 		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless"))
 			System.setProperty("java.awt.headless", "true");
-		saveCommandLine(argsArray);
 
 		final String display = System.getenv("DISPLAY");
 		final String waylandDisplay = System.getenv("WAYLAND_DISPLAY");
@@ -117,147 +118,275 @@ public class Run {
 		else
 			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
+		final ErrorStatus errorStatus = ErrorStatus.init();
 		final CliOptions option = CliParser.parse(argsArray);
-		ProgressBar.setEnable(option.isTextProgressBar());
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.CLIPBOARD_LOOP)) {
-			ClipboardLoop.runLoop();
-			return;
-		}
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.CLIPBOARD)) {
-			ClipboardLoop.runOnce();
-			return;
-		}
-//		if (GlobalConfig.getInstance().isExtractStdLib()) {
-//			Stdlib.extractStdLib();
-//			return;
-//		}
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.STD_LIB)) {
-			Stdlib.printStdLib();
-			return;
-		}
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.DUMP_STATS)) {
-			StatsUtils.dumpStats();
-			return;
-		}
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.LOOP_STATS)) {
-			StatsUtils.loopStats();
-			return;
-		}
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.DUMP_HTML_STATS)) {
-			StatsUtils.outHtml();
-			return;
-		}
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENCODESPRITE)) {
-			encodeSprite(option.getResult());
-			return;
-		}
-		Log.info(() -> "SecurityProfile " + SecurityUtils.getSecurityProfile());
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
-			Log.info(() -> "PlantUML Version " + Version.versionString());
-			Log.info(() -> "GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
+
+		try {
+
+			final String timeout = option.getString(CliFlag.TIMEOUT);
+			if (timeout != null && timeout.matches("\\d+"))
+				GlobalConfig.getInstance().put(GlobalConfigKey.TIMEOUT_MS, Integer.parseInt(timeout) * 1000L);
+
+			final String charset = option.getString(CliFlag.CHARSET);
+			Log.info(() -> "Using charset " + charset);
+
+			option.flags.triggerNonImmediateCliAction();
+
+			final CliAction action = option.flags.getImmediateAction();
+			if (action != null) {
+				action.runAction();
+				return;
+			}
+
+			if (option.isTrue(CliFlag.GRAPHVIZ_DOT)) {
+				final String v = option.flags.getString(CliFlag.GRAPHVIZ_DOT);
+				GraphvizRuntimeEnvironment.getInstance()
+						.setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(v));
+			}
+
+			if (option.flags.isTrue(CliFlag.FTP)) {
+				goFtp(option);
+				return;
+			}
+
+			final List<String> remainingArgs = option.flags.getRemainingArgs();
+
+			ProgressBar.setEnable(option.isTrue(CliFlag.PROGRESS));
+
+			Log.info(() -> "SecurityProfile " + SecurityUtils.getSecurityProfile());
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
+				Log.info(() -> "PlantUML Version " + Version.versionString());
+				Log.info(() -> "GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
+			}
+
+			if (option.isTrue(CliFlag.ENCODE_SPRITE)) {
+				encodeSprite(remainingArgs);
+				return;
+			}
+
+			if (option.isTrue(CliFlag.PICOWEB) && option.getPicowebPort() != -1) {
+				goPicoweb(option);
+				return;
+			}
+
+			forceOpenJdkResourceLoad();
+
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.GUI)) {
+				runGui(option);
+				return;
+			}
+
+			if (option.isTrue(CliFlag.PIPE) || option.isTrue(CliFlag.PIPEMAP) || option.isTrue(CliFlag.SYNTAX)) {
+				new Pipe(option, System.out, System.in, charset).managePipe(errorStatus);
+				if (errorStatus.hasError())
+					Exit.exit(errorStatus.getExitCode());
+				return;
+			}
+
+			if (option.isTrue(CliFlag.DECODE_URL)) {
+				for (String s : option.getRemainingArgs()) {
+					final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
+					System.out.println("@startuml");
+					System.out.println(transcoder.decode(s));
+					System.out.println("@enduml");
+				}
+				return;
+			}
+
+			if (option.isTrue(CliFlag.RETRIEVE_METADATA)) {
+				final List<File> files = new ArrayList<>();
+				for (String s : option.getRemainingArgs()) {
+					final FileGroup group = new FileGroup(s, option.getExcludes());
+					incTotal(group.getFiles().size());
+					files.addAll(group.getFiles());
+				}
+				for (File f : files)
+					extractMetadata(f);
+
+				return;
+			}
+			if (option.isTrue(CliFlag.SPLASH))
+				Splash.createSplash();
+
+			final Run runner = new Run(option, errorStatus, charset);
+			incTotal(runner.size());
+
+			if (option.isTrue(CliFlag.COMPUTE_URL))
+				runner.computeUrl();
+			else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError())
+				errorStatus.incError();
+			else
+				runner.processInputsInParallel();
+
+		} finally {
+			if (option.isTrue(CliFlag.DURATION)) {
+				final double duration = (System.currentTimeMillis() - start) / 1000.0;
+				Log.error("Duration = " + duration + " seconds");
+			}
 		}
 
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.PRINT_FONTS)) {
-			printFonts();
-			return;
-		}
+		if (errorStatus.hasError() || errorStatus.isEmpty())
+			option.getStdrpt().finalMessage(errorStatus);
 
-		if (option.getFtpPort() != -1) {
-			goFtp(option);
-			return;
-		}
+		if (errorStatus.hasError())
+			Exit.exit(errorStatus.getExitCode());
+	}
 
-		if (option.getPicowebPort() != -1) {
-			goPicoweb(option);
-			return;
-		}
+	private final CliOptions option;
+	private final ErrorStatus errorStatus;
+	private final String charset;
+	private final List<File> files = new ArrayList<>();
+	private Cypher cypher;
 
-		forceOpenJdkResourceLoad();
+	public Run(CliOptions option, ErrorStatus errorStatus, String charset) {
+		this.option = option;
+		this.errorStatus = errorStatus;
+		this.charset = charset;
+
+		for (String s : option.getRemainingArgs()) {
+			final FileGroup group = new FileGroup(s, option.getExcludes());
+			for (final File f : group.getFiles())
+				files.add(f);
+		}
 		if (option.getPreprocessorOutputMode() == OptionPreprocOutputMode.CYPHER)
-			cypher = new LanguageDescriptor().getCypher();
+			this.cypher = new LanguageDescriptor().getCypher();
 
-		final ErrorStatus error = ErrorStatus.init();
-		boolean forceQuit = false;
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.GUI)) {
-			try {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} catch (Exception e) {
+		Log.info(() -> "Found " + size() + " files");
+	}
+
+	public int size() {
+		return files.size();
+	}
+
+	@FunctionalInterface
+	static interface FileTask {
+		public void processFile(File f) throws IOException, InterruptedException;
+
+	}
+
+	private boolean checkError() throws InterruptedException {
+		final AtomicBoolean hasError = new AtomicBoolean();
+		processInParallel(file -> {
+			if (hasError.get())
+				return;
+			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);
+			if (sourceFileReader.hasError()) {
+				hasError.set(true);
+				errorStatus.incError();
 			}
-			final List<String> list = option.getResult();
-			File dir = null;
-			if (list.size() == 1) {
-				final File f = new File(list.get(0));
-				if (f.exists() && f.isDirectory())
-					dir = f;
+		});
 
-			}
-			try {
-				new MainWindow(option, dir);
-			} catch (java.awt.HeadlessException e) {
-				System.err.println("There is an issue with your server. You will find some tips here:");
-				System.err.println("https://forum.plantuml.net/3399/problem-with-x11-and-headless-exception");
-				System.err.println("https://plantuml.com/en/faq#239d64f675c3e515");
-				throw e;
-			}
+		return hasError.get();
 
-		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
-			managePipe(option, error);
-			forceQuit = true;
-		} else if (option.isFailfast2()) {
-			if (option.isSplash())
-				Splash.createSplash();
+	}
 
-			final long start2 = System.currentTimeMillis();
-			option.setCheckOnly(true);
-			manageAllFiles(option, error);
-			option.setCheckOnly(false);
-			if (option.isDuration()) {
-				final double duration = (System.currentTimeMillis() - start2) / 1000.0;
-				Log.error("Check Duration = " + duration + " seconds");
-			}
-			if (error.hasError() == false)
-				manageAllFiles(option, error);
-
-			forceQuit = true;
-		} else {
-			if (option.isSplash())
-				Splash.createSplash();
-
-			manageAllFiles(option, error);
-			forceQuit = true;
-		}
-
-		if (option.isDuration()) {
-			final double duration = (System.currentTimeMillis() - start) / 1000.0;
-			Log.error("Duration = " + duration + " seconds");
-		}
-
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.GUI) == false) {
-			if (error.hasError() || error.isNoData())
-				option.getStdrpt().finalMessage(error);
-
-			if (error.hasError())
-				System.exit(error.getExitCode());
-
-			if (forceQuit && GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT))
-				System.exit(0);
-
+	private void computeUrl() throws IOException {
+		for (File f : files) {
+			final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
+			for (BlockUml s : sourceFileReader.getBlocks())
+				System.out.println(s.getEncodedUrl());
 		}
 	}
 
-	private static String commandLine = "";
+	private void processInputsInParallel() throws InterruptedException {
+		SFile lockFile = null;
+		try {
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
+				final SFile dir = new SFile(option.getRemainingArgs().get(0));
+				final SFile javaIsRunningFile = dir.file("javaisrunning.tmp");
+				javaIsRunningFile.delete();
+				lockFile = dir.file("javaumllock.tmp");
+			}
+			processInParallel(file -> {
+				if (errorStatus.hasError() && option.isFailfastOrFailfast2())
+					return;
 
-	public static final String getCommandLine() {
-		return commandLine;
+				manageFileInternal(file);
+				incDone(errorStatus.hasError());
+			});
+		} finally {
+			if (lockFile != null)
+				lockFile.delete();
+		}
 	}
 
-	private static void saveCommandLine(String[] argsArray) {
-		final StringBuilder sb = new StringBuilder();
-		for (String s : argsArray) {
-			sb.append(s);
-			sb.append(" ");
+	private void processInParallel(FileTask task) throws InterruptedException {
+		Log.info(() -> "Using several threads: " + option.getNbThreads());
+		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
+
+		for (File f : files)
+			executor.submit(() -> {
+				try {
+					task.processFile(f);
+				} catch (IOException | InterruptedException e) {
+					Logme.error(e);
+				}
+			});
+
+		executor.shutdown();
+		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+	}
+
+	private void manageFileInternal(File f) throws IOException, InterruptedException {
+		Log.info(() -> "Working on " + f.getPath());
+		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
+
+		if (sourceFileReader.hasError())
+			errorStatus.incError();
+		else
+			errorStatus.incOk();
+
+		if (option.isTrue(CliFlag.CHECK_ONLY))
+			return;
+
+		if (option.getPreprocessorOutputMode() != null) {
+			extractPreproc(sourceFileReader);
+			return;
 		}
-		commandLine = sb.toString();
+		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+		final Stdrpt rpt = option.getStdrpt();
+		if (result.size() == 0) {
+			Log.error("Warning: no image in " + f.getPath());
+			rpt.printInfo(System.err, null);
+			return;
+		}
+		for (BlockUml s : sourceFileReader.getBlocks())
+			rpt.printInfo(System.err, s.getDiagram());
+
+		if (result.size() != 0) {
+			for (GeneratedImage image : result) {
+				final int lineError = image.lineErrorRaw();
+				if (lineError != -1) {
+					rpt.errorLine(lineError, f);
+					errorStatus.incError();
+					return;
+				}
+			}
+			errorStatus.incOk();
+		}
+	}
+
+	private static void runGui(final CliOptions option) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e) {
+		}
+		final List<String> list = option.getRemainingArgs();
+		File dir = null;
+		if (list.size() == 1) {
+			final File f = new File(list.get(0));
+			if (f.exists() && f.isDirectory())
+				dir = f;
+
+		}
+		try {
+			new MainWindow(option, dir);
+		} catch (java.awt.HeadlessException e) {
+			System.err.println("There is an issue with your server. You will find some tips here:");
+			System.err.println("https://forum.plantuml.net/3399/problem-with-x11-and-headless-exception");
+			System.err.println("https://plantuml.com/en/faq#239d64f675c3e515");
+			throw e;
+		}
 	}
 
 	public static void forceOpenJdkResourceLoad() {
@@ -275,30 +404,30 @@ public class Run {
 
 	public static boolean isOpenJdkRunning() {
 		final String jvmName = System.getProperty("java.vm.name");
-		if (jvmName != null && jvmName.toLowerCase().contains("openjdk")) {
+		if (jvmName != null && jvmName.toLowerCase().contains("openjdk"))
 			return true;
-		}
+
 		return false;
 	}
 
 	static private final String httpProtocol = "http://";
 	static private final String httpsProtocol = "https://";
 
-	private static void encodeSprite(List<String> result) throws IOException {
+	private static void encodeSprite(List<String> remainingArgs) throws IOException {
 		SpriteGrayLevel level = SpriteGrayLevel.GRAY_16;
 		boolean compressed = false;
 		final String path;
-		if (result.size() > 1 && result.get(0).matches("(4|8|16)z?")) {
-			if (result.get(0).startsWith("8")) {
+		if (remainingArgs.size() > 1 && remainingArgs.get(0).matches("(4|8|16)z?")) {
+			if (remainingArgs.get(0).startsWith("8"))
 				level = SpriteGrayLevel.GRAY_8;
-			}
-			if (result.get(0).startsWith("4")) {
+
+			if (remainingArgs.get(0).startsWith("4"))
 				level = SpriteGrayLevel.GRAY_4;
-			}
-			compressed = StringUtils.goLowerCase(result.get(0)).endsWith("z");
-			path = result.get(1);
+
+			compressed = StringUtils.goLowerCase(remainingArgs.get(0)).endsWith("z");
+			path = remainingArgs.get(1);
 		} else {
-			path = result.get(0);
+			path = remainingArgs.get(0);
 		}
 
 		final String fileName;
@@ -314,9 +443,8 @@ public class Run {
 			fileName = f.getName();
 		}
 
-		if (source == null) {
+		if (source == null)
 			return;
-		}
 
 		final BufferedImage im;
 		try (InputStream stream = source.openStream()) {
@@ -330,21 +458,20 @@ public class Run {
 
 	private static String getSpriteName(String fileName) {
 		final String s = getSpriteNameInternal(fileName);
-		if (s.length() == 0) {
+		if (s.length() == 0)
 			return "test";
-		}
+
 		return s;
 	}
 
 	private static String getSpriteNameInternal(String fileName) {
 		final StringBuilder sb = new StringBuilder();
-		for (char c : fileName.toCharArray()) {
-			if (("" + c).matches("[\\p{L}0-9_]")) {
+		for (char c : fileName.toCharArray())
+			if (("" + c).matches("[\\p{L}0-9_]"))
 				sb.append(c);
-			} else {
+			else
 				return sb.toString();
-			}
-		}
+
 		return sb.toString();
 	}
 
@@ -362,110 +489,14 @@ public class Run {
 
 	public static void printFonts() {
 		final Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-		for (Font f : fonts) {
+		for (Font f : fonts)
 			System.out.println(
 					"f=" + f + "/" + f.getPSName() + "/" + f.getName() + "/" + f.getFontName() + "/" + f.getFamily());
-		}
+
 		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		for (String n : name) {
+		for (String n : name)
 			System.out.println("n=" + n);
-		}
-	}
 
-	private static void managePipe(CliOptions option, ErrorStatus error) throws IOException {
-		final String charset = option.getCharset();
-		new Pipe(option, System.out, System.in, charset).managePipe(error);
-	}
-
-	private static void manageAllFiles(CliOptions option, ErrorStatus error)
-			throws NoPlantumlCompressionException, InterruptedException {
-
-		SFile lockFile = null;
-		try {
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
-				final SFile dir = new SFile(option.getResult().get(0));
-				final SFile javaIsRunningFile = dir.file("javaisrunning.tmp");
-				javaIsRunningFile.delete();
-				lockFile = dir.file("javaumllock.tmp");
-			}
-			processArgs(option, error);
-		} finally {
-			if (lockFile != null) {
-				lockFile.delete();
-			}
-		}
-
-	}
-
-	private static void processArgs(CliOptions option, ErrorStatus error)
-			throws NoPlantumlCompressionException, InterruptedException {
-		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
-				&& GlobalConfig.getInstance().boolValue(GlobalConfigKey.EXTRACT_FROM_METADATA) == false) {
-			multithread(option, error);
-			return;
-		}
-		final List<File> files = new ArrayList<>();
-		for (String s : option.getResult()) {
-			if (option.isDecodeurl()) {
-				error.goOk();
-				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
-				System.out.println("@startuml");
-				System.out.println(transcoder.decode(s));
-				System.out.println("@enduml");
-			} else {
-				final FileGroup group = new FileGroup(s, option.getExcludes(), option);
-				incTotal(group.getFiles().size());
-				files.addAll(group.getFiles());
-			}
-		}
-		foundNbFiles(files.size());
-		for (File f : files) {
-			try {
-				manageFileInternal(f, option, error);
-				incDone(error.hasError());
-				if (error.hasError() && option.isFailfastOrFailfast2()) {
-					return;
-				}
-			} catch (IOException e) {
-				Logme.error(e);
-			}
-		}
-	}
-
-	private static void multithread(CliOptions option, ErrorStatus error) throws InterruptedException {
-		Log.info(() -> "Using several threads: " + option.getNbThreads());
-		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
-
-		int nb = 0;
-		for (String s : option.getResult()) {
-			final FileGroup group = new FileGroup(s, option.getExcludes(), option);
-			for (final File f : group.getFiles()) {
-				incTotal(1);
-				nb++;
-				executor.submit(new Runnable() {
-					public void run() {
-						if (error.hasError() && option.isFailfastOrFailfast2()) {
-							return;
-						}
-						try {
-							manageFileInternal(f, option, error);
-						} catch (IOException e) {
-							Logme.error(e);
-						} catch (InterruptedException e) {
-							Logme.error(e);
-						}
-						incDone(error.hasError());
-					}
-				});
-			}
-		}
-		foundNbFiles(nb);
-		executor.shutdown();
-		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-	}
-
-	private static void foundNbFiles(int nb) {
-		Log.info(() -> "Found " + nb + " files");
 	}
 
 	private static void incDone(boolean error) {
@@ -478,72 +509,27 @@ public class Run {
 		ProgressBar.incTotal(nb);
 	}
 
-	private static void manageFileInternal(File f, CliOptions option, ErrorStatus error)
-			throws IOException, InterruptedException {
-		Log.info(() -> "Working on " + f.getPath());
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.EXTRACT_FROM_METADATA)) {
-			error.goOk();
-			extractMetadata(f);
-			return;
-		}
+	private static ISourceFileReader getSourceFileReader(File f, CliOptions option, String charset) throws IOException {
 		final ISourceFileReader sourceFileReader;
-		if (option.getOutputFile() == null) {
-			File outputDir = option.getOutputDir();
-			if (outputDir != null && outputDir.getPath().endsWith("$")) {
-				final String path = outputDir.getPath();
-				outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
-				sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,
-						option.getConfig(), option.getCharset(), option.getFileFormatOption());
-			} else {
-				sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
-						option.getCharset(), option.getFileFormatOption());
-			}
+		final FileFormatOption fileFormatOption = option.getFileFormatOption();
+
+		File outputDir = option.getOutputDir();
+		if (outputDir != null && outputDir.getPath().endsWith("$")) {
+			final String path = outputDir.getPath();
+			outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
+			sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,
+					option.getConfig(), charset, fileFormatOption);
 		} else {
-			sourceFileReader = new SourceFileReaderHardFile(option.getDefaultDefines(f), f, option.getOutputFile(),
-					option.getConfig(), option.getCharset(), option.getFileFormatOption());
-		}
-		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
-		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isNoerror());
-
-		if (option.isComputeurl()) {
-			error.goOk();
-			for (BlockUml s : sourceFileReader.getBlocks()) {
-				System.out.println(s.getEncodedUrl());
-			}
-			return;
-		}
-		if (option.isCheckOnly()) {
-			error.goOk();
-			final boolean hasError = sourceFileReader.hasError();
-			if (hasError) {
-				error.goWithError();
-			}
-			// final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
-			// hasErrors(f, result, error);
-			return;
-		}
-		if (option.getPreprocessorOutputMode() != null) {
-			extractPreproc(option, sourceFileReader);
-			error.goOk();
-			return;
-		}
-		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
-		final Stdrpt rpt = option.getStdrpt();
-		if (result.size() == 0) {
-			Log.error("Warning: no image in " + f.getPath());
-			rpt.printInfo(System.err, null);
-			// error.goNoData();
-			return;
-		}
-		for (BlockUml s : sourceFileReader.getBlocks()) {
-			rpt.printInfo(System.err, s.getDiagram());
+			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
+					charset, fileFormatOption);
 		}
 
-		hasErrors(f, result, error, rpt);
+		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));
+		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isTrue(CliFlag.NO_ERROR));
+		return sourceFileReader;
 	}
 
-	private static void extractPreproc(CliOptions option, final ISourceFileReader sourceFileReader) throws IOException {
-		final String charset = option.getCharset();
+	private void extractPreproc(final ISourceFileReader sourceFileReader) throws IOException {
 		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
 					.withPreprocFormat();
@@ -554,37 +540,20 @@ public class Run {
 				for (CharSequence cs : blockUml.getDefinition(true)) {
 					String s = cs.toString();
 					if (cypher != null) {
-						if (s.contains("skinparam") && s.contains("{")) {
+						if (s.contains("skinparam") && s.contains("{"))
 							level++;
-						}
-						if (level == 0 && s.contains("skinparam") == false) {
+
+						if (level == 0 && s.contains("skinparam") == false)
 							s = cypher.cypher(s);
-						}
-						if (level > 0 && s.contains("}")) {
+
+						if (level > 0 && s.contains("}"))
 							level--;
-						}
+
 					}
 					pw.println(s);
 				}
 			}
 		}
-	}
-
-	private static void hasErrors(File file, final List<GeneratedImage> list, ErrorStatus error, Stdrpt stdrpt)
-			throws IOException {
-		if (list.size() == 0) {
-			// error.goNoData();
-			return;
-		}
-		for (GeneratedImage image : list) {
-			final int lineError = image.lineErrorRaw();
-			if (lineError != -1) {
-				stdrpt.errorLine(lineError, file);
-				error.goWithError();
-				return;
-			}
-		}
-		error.goOk();
 	}
 
 	private static void extractMetadata(File f) throws IOException {
@@ -602,7 +571,7 @@ public class Run {
 					part = part.substring(0, idxEnd);
 					part = part.replace("- -", "--");
 					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);
-					System.err.println(decoded);
+					System.out.println(decoded);
 				}
 			}
 		} else {

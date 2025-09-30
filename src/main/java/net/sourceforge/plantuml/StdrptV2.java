@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
@@ -57,12 +58,12 @@ public class StdrptV2 implements Stdrpt {
 	}
 
 	public void printInfo(final PrintStream output, Diagram sys) {
-		if (sys instanceof PSystemWelcome) {
+		if (sys instanceof PSystemWelcome)
 			sys = null;
-		}
-		if (sys == null || sys instanceof PSystemError) {
+
+		if (sys == null || sys instanceof PSystemError)
 			out(output, (PSystemError) sys);
-		}
+
 	}
 
 	private void out(final PrintStream output, final PSystemError err) {
@@ -75,22 +76,22 @@ public class StdrptV2 implements Stdrpt {
 			line.append(":");
 			line.append("error");
 			line.append(":");
-			for (ErrorUml er : err.getErrorsUml()) {
+			for (ErrorUml er : err.getErrorsUml())
 				line.append(er.getError());
-			}
+
 		}
 		output.println(line);
 		output.flush();
 	}
 
 	private boolean empty(final PSystemError err) {
-		if (err == null) {
+		if (err == null)
 			return true;
-		}
-		for (ErrorUml er : err.getErrorsUml()) {
+
+		for (ErrorUml er : err.getErrorsUml())
 			if (PSystemAbstractFactory.EMPTY_DESCRIPTION.equals(er.getError()))
 				return true;
-		}
+
 		return false;
 	}
 

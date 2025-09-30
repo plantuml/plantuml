@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.core.Diagram;
 
 public interface Stdrpt {

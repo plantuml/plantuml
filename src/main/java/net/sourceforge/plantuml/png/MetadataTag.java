@@ -72,29 +72,33 @@ public class MetadataTag {
 	}
 
 	public String getData() throws IOException {
-		final ImageInputStream iis = SImageIO.createImageInputStream(source);
-		final Iterator<ImageReader> readers = SImageIO.getImageReaders(iis);
+		try (final ImageInputStream iis = SImageIO.createImageInputStream(source)) {
+			final Iterator<ImageReader> readers = SImageIO.getImageReaders(iis);
 
-		if (readers.hasNext()) {
-			// pick the first available ImageReader
-			final ImageReader reader = readers.next();
+			if (readers.hasNext()) {
+				// pick the first available ImageReader
+				final ImageReader reader = readers.next();
+				try {
 
-			// attach source to the reader
-			reader.setInput(iis, true);
+					// attach source to the reader
+					reader.setInput(iis, true);
 
-			// read metadata of first image
-			final IIOMetadata metadata = reader.getImageMetadata(0);
+					// read metadata of first image
+					final IIOMetadata metadata = reader.getImageMetadata(0);
 
-			final String[] names = metadata.getMetadataFormatNames();
-			final int length = names.length;
-			for (int i = 0; i < length; i++) {
-				final String result = displayMetadata(metadata.getAsTree(names[i]));
-				if (result != null) {
-					return result;
+					final String[] names = metadata.getMetadataFormatNames();
+					final int length = names.length;
+					for (int i = 0; i < length; i++) {
+						final String result = displayMetadata(metadata.getAsTree(names[i]));
+						if (result != null)
+							return result;
+
+					}
+				} finally {
+					reader.dispose();
 				}
 			}
 		}
-
 		return null;
 	}
 
@@ -108,9 +112,9 @@ public class MetadataTag {
 			final Node keyword = map.getNamedItem("keyword");
 			if (keyword != null && tag.equals(keyword.getNodeValue())) {
 				final Node text = map.getNamedItem("value");
-				if (text != null) {
+				if (text != null)
 					return text.getNodeValue();
-				}
+
 			}
 		}
 
@@ -120,9 +124,9 @@ public class MetadataTag {
 		while (child != null) {
 			// print children recursively
 			final String result = displayMetadata(child, level + 1);
-			if (result != null) {
+			if (result != null)
 				return result;
-			}
+
 			child = child.getNextSibling();
 		}
 

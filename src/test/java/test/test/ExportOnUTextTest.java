@@ -1,62 +1,87 @@
 package test.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Lists.newArrayList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Collections;
-import java.util.List;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.ErrorStatus;
 import net.sourceforge.plantuml.Pipe;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 
-/**
- * Tests the Render UText
- */
 class ExportOnUTextTest {
 
-    @ParameterizedTest(name = "[{index}] {1}")
-	@CsvSource(value = {
-        "'@startuml\na -> b\n@enduml\n', a",
-        "'@startuml\nclass a\n@enduml\n', a",
-        "'@startuml\n!pragma layout smetana\nclass a\n@enduml\n', a",
-	})
-	void RenderTest(String input, String expected) throws Exception {
-		assertRenderExpectedOutput(input, expected);
+	@Test
+	void shouldRenderBasicSequenceDiagram() throws Exception {
+		final String input = String.join("\n", //
+				"@startuml", //
+				"a -> b", //
+				"@enduml");
+		final String expected = String.join("\n", //
+				"     ┌─┐          ┌─┐", //
+				"     │a│          │b│", //
+				"     └┬┘          └┬┘", //
+				"      │            │ ", //
+				"      │───────────>│ ", //
+				"     ┌┴┐          ┌┴┐", //
+				"     │a│          │b│", //
+				"     └─┘          └─┘", //
+				"");
+
+		final String rendered = renderViaPipe(input);
+
+		assertEquals(expected, rendered);
 	}
 
-    // TODO: to Factorize on a specific test package...
-    //
-    private static final String[] COMMON_OPTIONS = {"-tutxt"};
+	@Test
+	void shouldRenderSingleClassDiagram() throws Exception {
+		final String input = String.join("\n", //
+				"@startuml", //
+				"class a", //
+				"@enduml");
+		final String expected = String.join("\n", //
+				"┌─┐", //
+				"│a│", //
+				"├─┤", //
+				"└─┘", "");
 
-    private String[] optionArray(String... extraOptions) {
-        final List<String> list = newArrayList(COMMON_OPTIONS);
-        Collections.addAll(list, extraOptions);
-        return list.toArray(new String[0]);
-    }
+		final String rendered = renderViaPipe(input);
 
-    private String renderViaPipe(String diagram, String... extraOptions) throws Exception {
-        final CliOptions option = CliParser.parse(optionArray(extraOptions));
-        final ByteArrayInputStream bais = new ByteArrayInputStream(diagram.getBytes(UTF_8));
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getCharset());
-        pipe.managePipe(ErrorStatus.init());
-        final String rendered = new String(baos.toByteArray(), UTF_8);
-        // println actived
-        System.out.println(rendered);
-        return rendered;
-    }
+		assertEquals(expected, rendered);
+	}
 
-    public void assertRenderExpectedOutput(String input, String expected) throws Exception {
-        final String rendered = renderViaPipe(input);
-        assertThat(rendered).doesNotContain("syntax").contains(expected);
-    }   
+	@Test
+	void shouldRenderSingleClassDiagramWithSmetanaLayout() throws Exception {
+		final String input = String.join("\n", //
+				"@startuml", //
+				"!pragma layout smetana", //
+				"class a", //
+				"@enduml");
+		final String expected = String.join("\n", //
+				"┌─┐", //
+				"│a│", //
+				"├─┤", //
+				"└─┘", "");
+
+		final String rendered = renderViaPipe(input);
+
+		assertEquals(expected, rendered);
+	}
+
+	private static final String[] COMMON_OPTIONS = { "-tutxt" };
+
+	private String renderViaPipe(String diagram) throws Exception {
+		final CliOptions option = CliParser.parse(COMMON_OPTIONS);
+		final ByteArrayInputStream bais = new ByteArrayInputStream(diagram.getBytes(UTF_8));
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getString(CliFlag.CHARSET));
+		pipe.managePipe(ErrorStatus.init());
+		return new String(baos.toByteArray(), UTF_8);
+	}
 }

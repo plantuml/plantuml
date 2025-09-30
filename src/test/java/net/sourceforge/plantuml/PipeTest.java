@@ -15,14 +15,20 @@ import java.util.List;
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.Isolated;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.error.PSystemError;
 
+@Isolated
+@Execution(ExecutionMode.SAME_THREAD)
 class PipeTest {
 
 	ByteArrayOutputStream baos;
@@ -52,7 +58,7 @@ class PipeTest {
 
 		try (AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
 			softly.assertThat(errorStatus.hasError()).isFalse();
-			softly.assertThat(errorStatus.isNoData()).isTrue();
+			softly.assertThat(errorStatus.isEmpty()).isTrue();
 			softly.assertThat(baos.toByteArray()).isEmpty();
 		}
 	}
@@ -177,7 +183,7 @@ class PipeTest {
 
 		try (AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
 			softly.assertThat(errorStatus.hasError()).isEqualTo(testCase.isExpectedHasErrors());
-			softly.assertThat(errorStatus.isNoData()).isEqualTo(testCase.isExpectedIsNoData());
+			softly.assertThat(errorStatus.isEmpty()).isEqualTo(testCase.isExpectedIsNoData());
 			testCase.getExpectedOutVerification().assertOk(softly, baos, testCase.getExpectedOut());
 		}
 	}

@@ -1,41 +1,126 @@
 package test.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static test.utils.PlantUmlTestUtils.exportDiagram;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
 import test.utils.PlantUmlTestUtils.ExportDiagram;
-
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class PlantUmlTestUtilsTest {
 
-	@ParameterizedTest(name = "[{index}] ")
-	@CsvSource({
-		" '@startuml\ntitle that is the title\n[a]\n@enduml' ",
-        " '@startuml\ntitle a seq title\na -> b\nnewpage\nc -> d\n@enduml' ",
-		" '@startebnf\ntitle ebnf-Title\na=a*;\n@endebnf' ",
-		" '@startmindmap\n* root\n@endmindmap' ",
-        " '@startdef(id=macro_def_id)\nA -> B : hello1\n@enddef' ",
-	})
-	public void test_exportDiagram(String diagSource) {
-		final ExportDiagram exportDiag = exportDiagram(diagSource);
-		Diagram d = exportDiag.getDiagram();
-
-        System.out.println("<<<\n");
-        System.out.println(d.getSource().getPlainString("\n"));
-        System.out.println("===>");
-        System.out.println("class = " + d.getClass().getName());
-        System.out.println("desc. = " + d.getDescription());
-        System.out.println("title = " + d.getTitleDisplay());
-        System.out.println("NbImg = " + d.getNbImages());
-        System.out.println("Type  = " + d.getSource().getDiagramType());
-        System.out.println("Title = " + d.getSource().getTitle());
-        System.out.println("NbLine = "+ d.getSource().getTotalLineCount());
-        System.out.println("Id = "    + d.getSource().getId());
-        System.out.println("...");
-        System.out.println(">>>");
-
+	
+    @Test
+    void testDef() {
+        String src = makeSource(
+            "@startdef(id=macro_def_id)", //
+            "A -> B : hello1", //
+            "@enddef" //
+        );
+        ExportDiagram exportDiag = exportDiagram(src);
+        Diagram d = exportDiag.getDiagram();
+        assertEquals("net.sourceforge.plantuml.definition.PSystemDefinition", d.getClass().getName());
+        assertEquals("(Definition)", d.getDescription().toString());
+        assertEquals("NULL", d.getTitleDisplay().toString());
+        assertEquals(1, d.getNbImages());
+        assertEquals(DiagramType.DEFINITION, d.getSource().getDiagramType());
+        assertEquals("[]", d.getSource().getTitle().toString());
+        assertEquals(3, d.getSource().getTotalLineCount());
+        assertEquals("macro_def_id", d.getSource().getId());
     }
+
+    @Test
+    void testEbnf() {
+        String src = makeSource(
+            "@startebnf", //
+            "title ebnf-Title", //
+            "a=a*;", //
+            "@endebnf" //
+        );
+        ExportDiagram exportDiag = exportDiagram(src);
+        Diagram d = exportDiag.getDiagram();
+        assertEquals("net.sourceforge.plantuml.ebnf.PSystemEbnf", d.getClass().getName());
+        assertEquals("(EBNF)", d.getDescription().toString());
+        assertEquals("[ebnf-Title]", d.getTitleDisplay().toString());
+        assertEquals(1, d.getNbImages());
+        assertEquals(DiagramType.EBNF, d.getSource().getDiagramType());
+        assertEquals("[ebnf-Title]", d.getSource().getTitle().toString());
+        assertEquals(4, d.getSource().getTotalLineCount());
+        assertEquals(null, d.getSource().getId());
+    }
+
+
+
+
+    @Test
+    void testUmlWithNewpage() {
+        String src = makeSource( //
+            "@startuml", //
+            "title a seq title", //
+            "a -> b", //
+            "newpage", //
+            "c -> d", //
+            "@enduml" //
+        );
+        ExportDiagram exportDiag = exportDiagram(src);
+        Diagram d = exportDiag.getDiagram();
+        assertEquals("net.sourceforge.plantuml.sequencediagram.SequenceDiagram", d.getClass().getName());
+        assertEquals("(4 participants)", d.getDescription().toString());
+        assertEquals("[a seq title]", d.getTitleDisplay().toString());
+        assertEquals(2, d.getNbImages());
+        assertEquals(DiagramType.UML, d.getSource().getDiagramType());
+        assertEquals("[a seq title]", d.getSource().getTitle().toString());
+        assertEquals(6, d.getSource().getTotalLineCount());
+        assertEquals(null, d.getSource().getId());
+    }
+
+
+    @Test
+    void testUmlWithTitle() {
+        String src = makeSource( //
+            "@startuml", //
+            "title that is the title", //
+            "[a]", //
+            "@enduml" //
+        );
+        ExportDiagram exportDiag = exportDiagram(src);
+        Diagram d = exportDiag.getDiagram();
+        assertEquals("net.sourceforge.plantuml.descdiagram.DescriptionDiagram", d.getClass().getName());
+        assertEquals("(1 entities)", d.getDescription().toString());
+        assertEquals("[that is the title]", d.getTitleDisplay().toString());
+        assertEquals(1, d.getNbImages());
+        assertEquals(DiagramType.UML, d.getSource().getDiagramType());
+        assertEquals("[that is the title]", d.getSource().getTitle().toString());
+        assertEquals(4, d.getSource().getTotalLineCount());
+        assertEquals(null, d.getSource().getId());
+    }
+
+
+    @Test
+    void testMindmap() {
+        String src = makeSource(
+            "@startmindmap", //
+            "* root", //
+            "@endmindmap" //
+        );
+        ExportDiagram exportDiag = exportDiagram(src);
+        Diagram d = exportDiag.getDiagram();
+        assertEquals("net.sourceforge.plantuml.mindmap.MindMapDiagram", d.getClass().getName());
+        assertEquals("MindMap", d.getDescription().toString());
+        assertEquals("NULL", d.getTitleDisplay().toString());
+        assertEquals(1, d.getNbImages());
+        assertEquals(DiagramType.MINDMAP, d.getSource().getDiagramType());
+        assertEquals("[]", d.getSource().getTitle().toString());
+        assertEquals(3, d.getSource().getTotalLineCount());
+        assertEquals(null, d.getSource().getId());
+    }
+
+
+    private String makeSource(String... lines) {
+        return String.join("\n", lines);
+    }
+
+	
 }

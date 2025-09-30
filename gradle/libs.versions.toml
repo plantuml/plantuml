@@ -18,7 +18,7 @@ mockito-j8          = "4.+"
 mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.10.4"
-
+junit-pioneer       = "2.3.0"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
@@ -40,6 +40,7 @@ mockito-core                = { module = "org.mockito:mockito-core", version.ref
 mockito-junit-jupiter-j8    = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito-j8" }
 mockito-junit-jupiter       = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 xmlunit-core                = { module = "org.xmlunit:xmlunit-core", version.ref = "xmlunit-core" }
+junit-pioneer               = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
 
 
 [plugins]

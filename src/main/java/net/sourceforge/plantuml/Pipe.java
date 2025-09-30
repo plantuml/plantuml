@@ -50,7 +50,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -79,7 +81,7 @@ public class Pipe {
 	}
 
 	public void managePipe(ErrorStatus error) throws IOException {
-		final boolean noStdErr = option.isPipeNoStdErr();
+		final boolean noStdErr = option.isTrue(CliFlag.PIPENOSTDERR);
 
 		for (String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {
 			final Defines defines = option.getDefaultDefines();
@@ -87,11 +89,11 @@ public class Pipe {
 			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,
 					option.getConfig(), newCurrentDir);
 
-			if (option.isComputeurl())
+			if (option.isTrue(CliFlag.COMPUTE_URL))
 				computeUrlForDiagram(sourceStringReader);
-			else if (option.isSyntax())
+			else if (option.isTrue(CliFlag.SYNTAX))
 				syntaxCheckDiagram(sourceStringReader, error);
-			else if (option.isPipeMap())
+			else if (option.isTrue(CliFlag.PIPEMAP))
 				createPipeMapForDiagram(sourceStringReader, error);
 			else
 				generateDiagram(sourceStringReader, error, noStdErr);
@@ -108,25 +110,26 @@ public class Pipe {
 
 		printInfo(noStdErr ? ps : System.err, sourceStringReader);
 		if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
-			error.goWithError();
+			error.incError();
 		} else {
-			error.goOk();
+			error.incOk();
 			if (noStdErr) {
 				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
 				baos.close();
 				ps.write(baos.toByteArray());
 			}
 		}
-		if (option.getPipeDelimitor() != null)
-			ps.println(option.getPipeDelimitor());
+		if (option.getString(CliFlag.PIPEDELIMITOR) != null)
+			ps.println(option.getString(CliFlag.PIPEDELIMITOR));
 
 	}
 
 	private void createPipeMapForDiagram(SourceStringReader sourceStringReader, ErrorStatus error) throws IOException {
-		final String result = sourceStringReader.getCMapData(option.getImageIndex(), option.getFileFormatOption());
+		final String result = sourceStringReader.getCMapData(option.getImageIndex(),
+				new FileFormatOption(FileFormat.PNG));
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// We don't check errors
-		error.goOk();
+		error.incOk();
 		if (result == null) {
 //			final CMapData empty = new CMapData();
 //			ps.println(empty.asString("plantuml"));
@@ -145,14 +148,14 @@ public class Pipe {
 	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ErrorStatus error) {
 		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
 		if (system instanceof UmlDiagram) {
-			error.goOk();
+			error.incOk();
 			ps.println(((UmlDiagram) system).getUmlDiagramType().name());
 			ps.println(system.getDescription());
 		} else if (system instanceof PSystemError) {
-			error.goWithError();
+			error.incError();
 			stdrpt.printInfo(ps, system);
 		} else {
-			error.goOk();
+			error.incOk();
 			ps.println("OTHER");
 			ps.println(system.getDescription());
 		}
