@@ -352,7 +352,6 @@ complimentary
 comprehensive
 conciliate
 conciliatory
-concise
 confidence
 confident
 congenial
@@ -1521,7 +1520,6 @@ recommendations
 recommended
 reconcile
 reconciliation
-record
 recover
 recovery
 rectification
@@ -1620,7 +1618,6 @@ rightfully
 rightly
 rightness
 risk
-robust
 rock
 rockstar
 rockstars

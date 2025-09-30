@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.cli;
 
 import java.net.InetAddress;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,7 +47,6 @@ import java.util.Properties;
 
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
-import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
@@ -60,7 +58,7 @@ public class OptionPrint {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	static public void printTestDot() throws InterruptedException {
+	static public void printTestDot2() {
 		final ReportLog result = new ReportLog();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result)
@@ -69,111 +67,16 @@ public class OptionPrint {
 			else
 				System.err.println(s);
 
-		exit(errorCode);
+		Exit.exit(errorCode);
 	}
 
-	static public void printHelp() throws InterruptedException {
 
-		final String charset = Charset.defaultCharset().displayName();
-
-		System.out.println("Usage: java -jar plantuml.jar [options] -gui");
-		System.out.println("\t(to execute the GUI)");
-		System.out.println("    or java -jar plantuml.jar [options] [file/dir] [file/dir] [file/dir]");
-		System.out.println("\t(to process files or directories)");
-		System.out.println();
-		System.out.println("You can use the following wildcards in files/dirs:");
-		System.out.println("\t*\tmeans any characters but '" + SFile.separator + "'");
-		System.out.println("\t?\tone and only one character but '" + SFile.separator + "'");
-		System.out.println("\t**\tmeans any characters (used to recurse through directories)");
-		System.out.println();
-		final char separator = SFile.separatorChar;
-		System.out.println("where options include:");
-		System.out.println("    -author[s]\t\tTo print information about PlantUML authors");
-		System.out.println("    -checkmetadata\t\tSkip PNG files that don't need to be regenerated");
-		System.out.println("    -checkonly\t\tTo check the syntax of files without generating images");
-		System.out.println("    -charset xxx\tTo use a specific charset (default is " + charset + ")");
-		System.out.println("    -computeurl|-encodeurl\tTo compute the encoded URL of a PlantUML source file");
-		// System.out.println(" -config \"file\"\tTo read the provided config file
-		System.out.println("    -cypher\t\tTo cypher texts of diagrams so that you can share them");
-		System.out.println("    -DVAR1=value\tTo set a preprocessing variable as if '!define VAR1 value' were used");
-		System.out.println("    -darkmode\t\tTo use dark mode for diagrams");
-		System.out.println("    -debugsvek\t\tTo generate intermediate svek files");
-		System.out.println("    -decodeurl\t\tTo retrieve the PlantUML source from an encoded URL");
-		System.out.println("    -disablestats\tTo disable statistics computation (default)");
-		System.out.println("    -duration\t\tTo print the duration of complete diagrams processing");
-		System.out.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
-		System.out.println("    -enablestats\tTo enable statistics computation");
-		System.out.println("    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
-		// System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
-		System.out.println("    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs");
-		System.out.println("    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster");
-		System.out.println("    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')");
-		System.out.println("    -filename \"example.puml\"\tTo override %filename% variable");
-		System.out.println("    -graphvizdot \"exe\"\tTo specify dot executable");
-		System.out.println("    -gui\t\tTo run the graphical user interface");
-		System.out.println("    -h[elp]\t\tTo display this help message");
-		System.out.println("    -htmlstats\t\tTo output general statistics in file plantuml-stats.html");
-		System.out.println("    -I" + separator + "path" + separator + "to" + separator + "file\tTo include file as if '!include file' were used");
-		System.out.println("    -I" + separator + "path" + separator + "to" + separator + "*.puml\tTo include files with pattern");
-		System.out.println("    -language\t\tTo print the list of PlantUML keywords");
-		System.out.println("    -loopstats\t\tTo continuously print statistics about usage");
-		System.out.println("    -metadata\t\tTo retrieve PlantUML sources from PNG images");
-		System.out.println("    -nbthread N\t\tTo use (N) threads for processing");
-		System.out.println("    -nbthread auto\tTo use " + CliOptions.defaultNbThreads() + " threads for processing");
-		System.out.println("    -noerror\t\tTo skip images when error in diagrams");
-		System.out.println("    -nometadata\t\tTo NOT export metadata in PNG/SVG generated files");
-		System.out.println("    -o[utput] \"dir\"\tTo generate images in the specified directory");
-		System.out.println("    -overwrite\t\tTo allow to overwrite read only files");
-		System.out.println("    -Ppragma1=value\tTo set pragma as if '!pragma pragma1 value' were used");
-		System.out.println("    -p[ipe]\t\tTo use stdin for PlantUML source and stdout for PNG/SVG/EPS generation");
-		System.out.println("    -picoweb\t\tTo start internal HTTP Server. See https://plantuml.com/picoweb");
-		System.out.println("    -pipeimageindex N\tTo generate the Nth image with pipe option");
-		System.out.println("    -preproc\t\tTo output preprocessor text of diagrams");
-		System.out.println("    -printfonts\t\tTo print fonts available on your system");
-		System.out.println("    -progress\t\tTo display a textual progress bar in console");
-		// System.out.println("    -quiet\t\tTo NOT print error message into the console");
-		System.out.println("    -realtimestats\tTo generate statistics on the fly rather than at the end");
-		System.out.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
-		System.out.println("    -splash\t\tTo display a splash screen with some progress bar");
-		System.out.println("    -stdlib\t\tTo print standard library info");
-		System.out.println("    -syntax\t\tTo report any syntax error from standard input without generating images");
-		System.out.println("    -testdot\t\tTo test the installation of graphviz");
-		System.out.println("    -theme xxx\t\tTo use a specific theme");
-		System.out.println("    -timeout N\t\tProcessing timeout in (N) seconds. Defaults to 15 minutes (900 seconds).");
-		System.out.println("    -teps\t\tTo generate images using EPS format");
-		System.out.println("    -thtml\t\tTo generate HTML file for class diagram");
-		System.out.println("    -tlatex:nopreamble\tTo generate images using LaTeX/Tikz format without preamble");
-		System.out.println("    -tlatex\t\tTo generate images using LaTeX/Tikz format");
-		System.out.println("    -tpdf\t\tTo generate images using PDF format");
-		System.out.println("    -tpng\t\tTo generate images using PNG format (default)");
-		System.out.println("    -tscxml\t\tTo generate SCXML file for state diagram");
-		System.out.println("    -tsvg\t\tTo generate images using SVG format");
-		System.out.println("    -ttxt\t\tTo generate images with ASCII art");
-		System.out.println("    -tutxt\t\tTo generate images with ASCII art using Unicode characters");
-		System.out.println("    -tvdx\t\tTo generate images using VDX format");
-		System.out.println("    -txmi\t\tTo generate XMI file for class diagram");
-		System.out.println("    -v[erbose]\t\tTo have log information");
-		System.out.println("    -version\t\tTo display information about PlantUML and Java versions");
-		System.out.println("    -xmlstats\t\tTo output general statistics in file plantuml-stats.xml");
-		System.out.println();
-		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
-		exit(0);
-	}
-
-	static private void exit(int errorCode) throws InterruptedException {
-		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)
-			System.exit(errorCode);
-
-		throw new InterruptedException("exit");
-	}
-
-	public static void printLicense() throws InterruptedException {
+	public static void printLicense() {
 		for (String s : License.getCurrent().getTextFull())
 			System.out.println(s);
-		System.exit(0);
 	}
 
-	public static void printVersion() throws InterruptedException {
+	public static void printVersion() {
 		System.out.println(Version.fullDescription());
 		System.out.println("(" + License.getCurrent() + " source distribution)");
 		for (String v : interestingProperties())
@@ -188,7 +91,7 @@ public class OptionPrint {
 		for (String s : result)
 			System.out.println(s);
 
-		System.exit(0);
+		Exit.exit(errorCode);
 	}
 
 	public static Collection<String> interestingProperties() {
@@ -274,16 +177,14 @@ public class OptionPrint {
 		return String.format(Locale.US, "%,d", value);
 	}
 
-	public static void printAbout() throws InterruptedException {
-		for (String s : PSystemVersion.getAuthorsStrings(false)) {
+	public static void printAbout() {
+		for (String s : PSystemVersion.getAuthorsStrings(false))
 			System.out.println(s);
-		}
-		exit(0);
+
 	}
 
-	public static void printLanguage() throws InterruptedException {
+	public static void printLanguage() {
 		new LanguageDescriptor().print(System.out);
-		exit(0);
 	}
 
 }

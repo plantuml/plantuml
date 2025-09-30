@@ -33,52 +33,55 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.cli;
 
-public class ErrorStatus {
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
-	private boolean noData;
-	private boolean hasErrors;
-	private boolean hasOk;
+public class HelpTable {
 
-	private ErrorStatus() {
-		this.noData = true;
+	private final List<String[]> lines = new ArrayList<>();
+
+	public void newLine(String... cells) {
+		if (lines.size() > 0 && cells.length != nbCols())
+			throw new IllegalArgumentException();
+
+		lines.add(cells);
 	}
 
-	public static ErrorStatus init() {
-		return new ErrorStatus();
+	public int size(int cols) {
+		int result = 0;
+		for (String[] line : lines)
+			result = Math.max(result, line[cols].length());
+		return result;
 	}
 
-	// public synchronized void goNoData() {
-	// this.noData = true;
-	// }
-
-	public synchronized void goWithError() {
-		this.hasErrors = true;
-		this.noData = false;
+	public int nbCols() {
+		if (lines.size() == 0)
+			throw new IllegalStateException();
+		return lines.get(0).length;
 	}
 
-	public synchronized void goOk() {
-		this.hasOk = true;
-		this.noData = false;
+	private static String format(String s, int size, char format) {
+		final StringBuilder result = new StringBuilder(s);
+		while (result.length() < size)
+			result.append(format);
+		return result.toString();
 	}
 
-	public synchronized boolean hasError() {
-		return hasErrors;
-	}
+	public void printMe(PrintStream out) {
+		final int size0 = size(0);
+		int i = 0;
+		for (String[] line : lines)
+			if (line[0].length() == 0) {
+				out.println();
+				out.println(line[1] + ":");
+				// out.println();
 
-	public synchronized boolean isNoData() {
-		return noData;
-	}
+			} else
+				out.println(format(line[0] + " ", size0 + 2, '.') + " " + line[1]);
 
-	public int getExitCode() {
-		if (isNoData()) 
-			return 100;
-		
-		if (hasErrors) 
-			return 200;
-		
-		return 0;
 	}
 
 }

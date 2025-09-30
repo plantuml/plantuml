@@ -46,6 +46,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -85,7 +86,7 @@ public class DirWatcher {
 
 				if (watcher == null || watcher.hasChanged()) {
 					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-							option.getOutputDir(), option.getConfig(), option.getCharset(),
+							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
 					final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
 					files.add(f);
@@ -115,7 +116,7 @@ public class DirWatcher {
 
 				if (watcher == null || watcher.hasChanged()) {
 					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-							option.getOutputDir(), option.getConfig(), option.getCharset(),
+							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
 					if (sourceFileReader.hasError())
 						return f;

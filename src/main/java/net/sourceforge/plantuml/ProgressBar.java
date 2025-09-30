@@ -57,6 +57,13 @@ public class ProgressBar {
 	private static final AtomicInteger total = new AtomicInteger();
 	private static final AtomicInteger done = new AtomicInteger();
 
+	public static synchronized void reset() {
+		enable = false;
+		last = null;
+		total.set(0);
+		done.set(0);
+	}
+
 	private synchronized static void print(String message) {
 		logger.log(Level.INFO, buildClearMessage() + message);
 		last = message;
@@ -70,15 +77,15 @@ public class ProgressBar {
 	private static String buildClearMessage() {
 		if (last != null) {
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < last.length(); i++) {
+			for (int i = 0; i < last.length(); i++)
 				sb.append("\b");
-			}
-			for (int i = 0; i < last.length(); i++) {
+
+			for (int i = 0; i < last.length(); i++)
 				sb.append(" ");
-			}
-			for (int i = 0; i < last.length(); i++) {
+
+			for (int i = 0; i < last.length(); i++)
 				sb.append("\b");
-			}
+
 			return sb.toString();
 		}
 		return "";
@@ -90,12 +97,12 @@ public class ProgressBar {
 	}
 
 	private synchronized static void printBar(int done, int total) {
-		if (enable == false) {
+		if (enable == false)
 			return;
-		}
-		if (total == 0) {
+
+		if (total == 0)
 			return;
-		}
+
 		print("[" + getBar(done, total) + "] " + done + "/" + total);
 	}
 
@@ -103,9 +110,9 @@ public class ProgressBar {
 		final StringBuilder sb = new StringBuilder();
 		final int width = 30;
 		final int value = width * done / total;
-		for (int i = 0; i < width; i++) {
+		for (int i = 0; i < width; i++)
 			sb.append(i < value ? '#' : ' ');
-		}
+
 		return sb.toString();
 	}
 

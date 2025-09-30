@@ -16,12 +16,19 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.Isolated;
 
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.picoweb.RenderRequest;
 
+@Isolated
+@Execution(ExecutionMode.SAME_THREAD)
 public class TestFileDirOption {
 
 	@TempDir
@@ -110,7 +117,7 @@ public class TestFileDirOption {
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getCharset());
+		final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getString(CliFlag.CHARSET));
 
 		pipe.managePipe(ErrorStatus.init());
 

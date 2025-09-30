@@ -7,12 +7,12 @@ import java.io.IOException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.v2.DiagramReturn;
 import net.sourceforge.plantuml.api.v2.DiagramUtils;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.StringUtils;
 
 class ApiV2CsvTest {
 
