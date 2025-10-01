@@ -187,4 +187,9 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		return 0;
 	}
 
+	@Override
+	public boolean isCrash() {
+		return true;
+	}
+
 }

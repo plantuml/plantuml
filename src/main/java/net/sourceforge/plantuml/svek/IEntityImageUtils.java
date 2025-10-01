@@ -108,6 +108,11 @@ public class IEntityImageUtils {
 					}
 				};
 			}
+
+			@Override
+			public boolean isCrash() {
+				return orig.isCrash();
+			}
 		};
 	}
 

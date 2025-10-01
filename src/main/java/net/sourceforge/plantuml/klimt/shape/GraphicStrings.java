@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 
 public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final double margin = 5;
 
@@ -81,39 +81,39 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	public static IEntityImage createForError(List<String> strings, boolean useRed) {
 		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,
-				CreoleMode.NO_CREOLE);
+				CreoleMode.NO_CREOLE, true);
 	}
 
 	private static HColor getForeColor(boolean useRed) {
-		if (useRed) {
+		if (useRed)
 			return HColors.BLACK;
-		}
+
 		return HColors.MY_GREEN;
 	}
 
 	private static HColor getBackColor(boolean useRed) {
-		if (useRed) {
+		if (useRed)
 			return HColors.RED_LIGHT;
-		}
+
 		return HColors.BLACK;
 	}
 
 	public static TextBlock createGreenOnBlackMonospaced(List<String> strings) {
 		return new GraphicStrings(strings, monospaced14(HColors.GREEN), HColors.BLACK, null, null,
-				CreoleMode.SIMPLE_LINE);
+				CreoleMode.SIMPLE_LINE, false);
 	}
 
 	public static TextBlock createBlackOnWhite(List<String> strings) {
-		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL);
+		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);
 	}
 
 	public static TextBlock createBlackOnWhiteMonospaced(List<String> strings) {
-		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL);
+		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);
 	}
 
 	public static TextBlock createBlackOnWhite(List<String> strings, BufferedImage image, GraphicPosition position) {
 		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, image, position,
-				CreoleMode.FULL_BUT_UNDERSCORE);
+				CreoleMode.FULL_BUT_UNDERSCORE, false);
 	}
 
 	public static FontConfiguration sansSerif12(HColor color) {
@@ -130,25 +130,27 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final CreoleMode mode;
 
+	private final boolean isCrash;
+
 	private GraphicStrings(List<String> strings, FontConfiguration fontConfiguration, HColor background,
-			BufferedImage image, GraphicPosition position, CreoleMode mode) {
+			BufferedImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {
 		this.strings = strings;
 		this.background = background;
 		this.image = image;
 		this.position = position;
 		this.mode = mode;
 		this.fontConfiguration = fontConfiguration;
+		this.isCrash = isCrash;
 
 	}
 
 	private TextBlock getTextBlock() {
 		final Display display = Display.create(strings);
-		if (mode == CreoleMode.NO_CREOLE) {
+		if (mode == CreoleMode.NO_CREOLE)
 			return new TextBlockRaw(strings, fontConfiguration);
 
-		} else {
-			return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);
-		}
+		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);
+
 	}
 
 	public void drawU(UGraphic ug) {
@@ -157,16 +159,16 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));
 
 		if (image != null) {
-			if (position == GraphicPosition.BOTTOM) {
+			if (position == GraphicPosition.BOTTOM)
 				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))
 						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
+			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)
 				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
 						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
+			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
 				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1))
 						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
-			}
+
 		}
 	}
 
@@ -177,13 +179,13 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
 		XDimension2D dim = getTextBlock().calculateDimension(stringBounder);
 		if (image != null) {
-			if (position == GraphicPosition.BOTTOM) {
+			if (position == GraphicPosition.BOTTOM)
 				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
+			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)
 				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
+			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
 				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());
-			}
+
 		}
 		return dim;
 	}
@@ -206,6 +208,11 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	public double getOverscanX(StringBounder stringBounder) {
 		return 0;
+	}
+
+	@Override
+	public boolean isCrash() {
+		return isCrash;
 	}
 
 }

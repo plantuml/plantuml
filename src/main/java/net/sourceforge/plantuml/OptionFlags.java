@@ -50,4 +50,13 @@ public class OptionFlags {
 		GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, verbose);
 	}
 
+	public void setFileSeparator(String separator) {
+		GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, separator);
+		
+	}
+
+	public void setReplaceWhiteBackgroundByTransparent(boolean b) {
+		GlobalConfig.getInstance().put(GlobalConfigKey.REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT, b);
+	}
+
 }

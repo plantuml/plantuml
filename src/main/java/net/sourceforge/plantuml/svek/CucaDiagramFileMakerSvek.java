@@ -103,7 +103,14 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
 		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),
 				fileFormatOption.isDebugSvek());
+
+		int status = 0;
+
+		if (result instanceof IEntityImage && ((IEntityImage) result).isCrash())
+			status = 503;
+
 		if (result instanceof GraphvizCrash) {
+			status = 503;
 			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
 					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,
 					clusterManager);
@@ -127,9 +134,11 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 		// SvekResult::calculateDimension()
 		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off
 
-		return diagram.createImageBuilder(fileFormatOption).annotations(false) // backwards compatibility
-																				// (AnnotatedWorker is used above)
-				.drawable(result).status(result instanceof GraphvizCrash ? 503 : 0).warningOrError(warningOrError)
+		return diagram.createImageBuilder(fileFormatOption) //
+				.annotations(false) // backwards compatibility (AnnotatedWorker is used above)
+				.drawable(result) //
+				.status(status) //
+				.warningOrError(warningOrError) //
 				.write(os);
 	}
 
