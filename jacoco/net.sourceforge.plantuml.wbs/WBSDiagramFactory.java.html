@@ -55,20 +55,23 @@ public class WBSDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 <span class="fc" id="L57">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L58">		cmds.add(new CommandWBSItem(1));</span>
-<span class="fc" id="L59">		cmds.add(new CommandWBSItem(0));</span>
-<span class="fc" id="L60">		cmds.add(new CommandWBSItemMultiline());</span>
-<span class="fc" id="L61">		cmds.add(new CommandWBSLink());</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L58">		cmds.add(new CommandWBSItemNew(1));</span>
+<span class="fc" id="L59">		cmds.add(new CommandWBSItemNew(0));</span>
+<span class="fc" id="L60">		cmds.add(new CommandWBSItemMultilineNew());</span>
+<span class="fc" id="L61">		cmds.add(new CommandWBSItemOld(1));</span>
+<span class="fc" id="L62">		cmds.add(new CommandWBSItemOld(0));</span>
+<span class="fc" id="L63">		cmds.add(new CommandWBSItemMultilineOld());</span>
+<span class="fc" id="L64">		cmds.add(new CommandWBSLink());</span>
+<span class="fc" id="L65">	}</span>
 
 	@Override
 	public WBSDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L66">		return new WBSDiagram(source, preprocessing);</span>
+<span class="fc" id="L69">		return new WBSDiagram(source, preprocessing);</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L71">		return UmlDiagramType.WBS;</span>
+<span class="nc" id="L74">		return UmlDiagramType.WBS;</span>
 	}
 
 

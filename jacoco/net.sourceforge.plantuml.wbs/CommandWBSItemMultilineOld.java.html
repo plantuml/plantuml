@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandWBSItemMultilineOld.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.wbs</a> &gt; <span class="el_source">CommandWBSItemMultilineOld.java</span></div><h1>CommandWBSItemMultilineOld.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.wbs;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.Constant;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.warning.Warning;
+
+public class CommandWBSItemMultilineOld extends CommandMultilines2&lt;WBSDiagram&gt; {
+
+<span class="pc" id="L65">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;));</span>
+
+	public CommandWBSItemMultilineOld() {
+<span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L69">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L72">		return RegexConcat.build(CommandWBSItemMultilineOld.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(1, Constant.WBS_TYPE, &quot;([ \t]*[*+-]+)&quot;), //
+				new RegexOr( //
+					new RegexConcat( //
+						new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR_1&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
+						new RegexOptional(new RegexLeaf(1, &quot;CODE_1&quot;, &quot;\\(([%pLN_]+)\\)&quot;))),
+					new RegexConcat( //
+						new RegexOptional(new RegexLeaf(1, &quot;CODE_2&quot;, &quot;\\(([%pLN_]+)\\)&quot;)),
+						new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR_2&quot;, &quot;\\[(#\\w+)\\]&quot;)))), //
+				new RegexOr( //
+					new RegexConcat( //
+						new RegexLeaf(1, &quot;SHAPE_1&quot;, &quot;(_)?&quot;), //
+						new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_1&quot;, &quot;([&lt;&gt;])?&quot;)), //
+					new RegexConcat( //
+						new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_2&quot;, &quot;([&lt;&gt;])?&quot;)), //
+						new RegexLeaf(1, &quot;SHAPE_2&quot;, &quot;(_)?&quot;)), //
+				new RegexLeaf(&quot;:&quot;), //
+				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), //
+<span class="fc" id="L90">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+<span class="nc" id="L96">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+
+<span class="nc" id="L98">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
+<span class="nc" id="L99">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
+
+<span class="nc" id="L101">		final String stereotype = lineLast.get(1);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L103">			lines = lines.overrideLastLine(lineLast.get(0));</span>
+
+<span class="nc" id="L105">		final String type = line0.get(Constant.WBS_TYPE, 0);</span>
+<span class="nc" id="L106">		final String stringColor = line0.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L107">		HColor backColor = null;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L109">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+
+<span class="nc" id="L111">		final String code = line0.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L112">		final Direction dir = Direction.getWBSDirection(line0);</span>
+
+<span class="nc" id="L114">		diagram.addWarning(new Warning(&quot;Please define Direction/Shape before Color/Id.&quot;));</span>
+<span class="nc" id="L115">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),</span>
+<span class="nc" id="L116">				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy(&quot;SHAPE&quot;, 0)));</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -73,10 +73,10 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	public static Direction getWBSDirection(RegexResult arg) {
-<span class="fc" id="L76">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L76">		final String type = arg.get(Constant.WBS_TYPE, 0);</span>
 <span class="pc bpc" id="L77" title="1 of 2 branches missed.">		Direction direction = type.contains(&quot;-&quot;) ? LEFT : RIGHT;</span>
 		
-<span class="fc" id="L79">		final String dir = arg.getLazzy(&quot;DIRECTION&quot;, 0);</span>
+<span class="fc" id="L79">		final String dir = arg.getLazzy(Constant.WBS_DIRECTION, 0);</span>
 <span class="fc bfc" id="L80" title="All 2 branches covered.">		if (&quot;&lt;&quot;.equals(dir))</span>
 <span class="fc" id="L81">			direction = LEFT;</span>
 <span class="fc bfc" id="L82" title="All 2 branches covered.">		else if (&quot;&gt;&quot;.equals(dir))</span>
@@ -100,46 +100,42 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	public static Direction leftOrRight(XPoint2D p1, XPoint2D p2) {
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (p1.getX() &lt; p2.getX()) {</span>
-<span class="nc" id="L104">			return Direction.LEFT;</span>
-		}
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (p1.getX() &gt; p2.getX()) {</span>
-<span class="nc" id="L107">			return Direction.RIGHT;</span>
-		}
-<span class="nc" id="L109">		throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (p1.getX() &lt; p2.getX())</span>
+<span class="nc" id="L104">			return LEFT;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (p1.getX() &gt; p2.getX())</span>
+<span class="nc" id="L106">			return RIGHT;</span>
+<span class="nc" id="L107">		throw new IllegalArgumentException();</span>
 	}
 
 	public static Direction fromVector(XPoint2D p1, XPoint2D p2) {
-<span class="fc" id="L113">		final double x1 = p1.getX();</span>
-<span class="fc" id="L114">		final double y1 = p1.getY();</span>
-<span class="fc" id="L115">		final double x2 = p2.getX();</span>
-<span class="fc" id="L116">		final double y2 = p2.getY();</span>
-<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		if (x1 == x2 &amp;&amp; y1 == y2) {</span>
-<span class="nc" id="L118">			return null;</span>
+<span class="fc" id="L111">		final double x1 = p1.getX();</span>
+<span class="fc" id="L112">		final double y1 = p1.getY();</span>
+<span class="fc" id="L113">		final double x2 = p2.getX();</span>
+<span class="fc" id="L114">		final double y2 = p2.getY();</span>
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">		if (x1 == x2 &amp;&amp; y1 == y2)</span>
+<span class="nc" id="L116">			return null;</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (x1 == x2) {</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">			if (y2 &gt; y1)</span>
+<span class="nc" id="L120">				return DOWN;</span>
+<span class="fc" id="L121">			return UP;</span>
 		}
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (x1 == x2) {</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (y2 &gt; y1) {</span>
-<span class="nc" id="L122">				return Direction.DOWN;</span>
-			}
-<span class="fc" id="L124">			return Direction.UP;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (y1 == y2) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (x2 &gt; x1)</span>
+<span class="fc" id="L125">				return RIGHT;</span>
+<span class="nc" id="L126">			return LEFT;</span>
 		}
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (y1 == y2) {</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			if (x2 &gt; x1) {</span>
-<span class="fc" id="L128">				return Direction.RIGHT;</span>
-			}
-<span class="nc" id="L130">			return Direction.LEFT;</span>
-		}
-<span class="nc" id="L132">		throw new IllegalArgumentException(&quot;Not a H or V line!&quot;);</span>
+<span class="nc" id="L128">		throw new IllegalArgumentException(&quot;Not a H or V line!&quot;);</span>
 
 	}
 
 	public static Direction lazzyValueOf(String s) {
-<span class="nc" id="L137">		s = s.toUpperCase();</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (&quot;TOP&quot;.equals(s))</span>
-<span class="nc" id="L139">			return Direction.UP;</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (&quot;BOTTOM&quot;.equals(s))</span>
-<span class="nc" id="L141">			return Direction.DOWN;</span>
-<span class="nc" id="L142">		return valueOf(s);</span>
+<span class="nc" id="L133">		s = s.toUpperCase();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (&quot;TOP&quot;.equals(s))</span>
+<span class="nc" id="L135">			return UP;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (&quot;BOTTOM&quot;.equals(s))</span>
+<span class="nc" id="L137">			return DOWN;</span>
+<span class="nc" id="L138">		return valueOf(s);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
