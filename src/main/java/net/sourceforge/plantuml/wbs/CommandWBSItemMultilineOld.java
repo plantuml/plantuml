@@ -56,19 +56,21 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.Constant;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.warning.Warning;
 
-public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
+public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
 
-	public CommandWBSItemMultiline() {
+	public CommandWBSItemMultilineOld() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandWBSItemMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "TYPE", "([ \t]*[*+-]+)"), //
+		return RegexConcat.build(CommandWBSItemMultilineOld.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
 				new RegexOr( //
 					new RegexConcat( //
 						new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
@@ -79,9 +81,9 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 				new RegexOr( //
 					new RegexConcat( //
 						new RegexLeaf(1, "SHAPE_1", "(_)?"), //
-						new RegexLeaf(1, "DIRECTION_1", "([<>])?")), //
+						new RegexLeaf(1, Constant.WBS_DIRECTION + "_1", "([<>])?")), //
 					new RegexConcat( //
-						new RegexLeaf(1, "DIRECTION_2", "([<>])?")), //
+						new RegexLeaf(1, Constant.WBS_DIRECTION + "_2", "([<>])?")), //
 						new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
@@ -100,7 +102,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		if (stereotype != null)
 			lines = lines.overrideLastLine(lineLast.get(0));
 
-		final String type = line0.get("TYPE", 0);
+		final String type = line0.get(Constant.WBS_TYPE, 0);
 		final String stringColor = line0.getLazzy("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null)
@@ -109,6 +111,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		final String code = line0.getLazzy("CODE", 0);
 		final Direction dir = Direction.getWBSDirection(line0);
 
+		diagram.addWarning(new Warning("Please define Direction/Shape before Color/Id."));
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
 				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy("SHAPE", 0)));
 
