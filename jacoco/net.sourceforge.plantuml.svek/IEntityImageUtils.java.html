@@ -108,6 +108,11 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 					}
 				};
 			}
+
+			@Override
+			public boolean isCrash() {
+<span class="nc" id="L114">				return orig.isCrash();</span>
+			}
 		};
 	}
 
