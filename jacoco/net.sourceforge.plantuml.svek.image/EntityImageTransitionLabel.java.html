@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityImageTransitionLabel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek.image</a> &gt; <span class="el_source">EntityImageTransitionLabel.java</span></div><h1>EntityImageTransitionLabel.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svek.image;
+
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.ShapeType;
+
+public class EntityImageTransitionLabel extends AbstractEntityImage {
+
+	private final TextBlock textBlock;
+	private static final double MARGIN = 4;
+
+	public EntityImageTransitionLabel(Entity entity) {
+<span class="nc" id="L59">		super(entity);</span>
+
+<span class="nc" id="L61">		final Stereotype stereotype = entity.getStereotype();</span>
+
+		// Use same font configuration as arrow labels
+<span class="nc" id="L64">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.ARROW, stereotype);</span>
+
+		// Create text block from entity display
+<span class="nc" id="L67">		final Display display = getEntity().getDisplay();</span>
+
+		// Ensure we have a valid display to render
+<span class="nc bnc" id="L70" title="All 4 branches missed.">		if (display != null &amp;&amp; !Display.isNull(display)) {</span>
+<span class="nc" id="L71">			this.textBlock = display.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
+		} else {
+			// Fallback to entity name if display is not available
+<span class="nc" id="L74">			this.textBlock = Display.create(getEntity().getName()).create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
+		}
+<span class="nc" id="L76">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		try {
+			// Return dimensions based on the text content plus margins
+<span class="nc" id="L81">			XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L82">			return textDim.delta(MARGIN * 2, MARGIN * 2);</span>
+<span class="nc" id="L83">		} catch (Exception e) {</span>
+			// Fallback to safe default dimensions if calculation fails
+<span class="nc" id="L85">			return new XDimension2D(20, 20);</span>
+		}
+	}
+
+	final public void drawU(UGraphic ug) {
+<span class="nc" id="L90">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L91">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L92">		final XDimension2D dimText = textBlock.calculateDimension(stringBounder);</span>
+
+		// Draw a rounded rectangle background for the label
+<span class="nc" id="L95">		final URectangle rect = URectangle.build(dimTotal.getWidth(), dimTotal.getHeight()).rounded(5);</span>
+<span class="nc" id="L96">		ug.draw(rect);</span>
+
+		// Center the text within the rectangle
+<span class="nc" id="L99">		final double xText = (dimTotal.getWidth() - dimText.getWidth()) / 2;</span>
+<span class="nc" id="L100">		final double yText = (dimTotal.getHeight() - dimText.getHeight()) / 2;</span>
+<span class="nc" id="L101">		textBlock.drawU(ug.apply(new UTranslate(xText, yText)));</span>
+<span class="nc" id="L102">	}</span>
+
+	public ShapeType getShapeType() {
+		// Use RECTANGLE for a proper node shape
+<span class="nc" id="L106">		return ShapeType.RECTANGLE;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -51,115 +51,126 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 	protected LinkType type;
 <span class="fc" id="L52">	protected boolean hidden = false;</span>
 <span class="fc" id="L53">	private boolean single = false;</span>
+<span class="fc" id="L54">	private boolean useNodeStyle = false;</span>
 
-<span class="fc" id="L55">	private Colors colors = Colors.empty();</span>
+<span class="fc" id="L56">	private Colors colors = Colors.empty();</span>
 
-<span class="fc" id="L57">	private List&lt;Colors&gt; supplementary = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">	private List&lt;Colors&gt; supplementary = new ArrayList&lt;&gt;();</span>
 
 	public final HColor getSpecificColor() {
-<span class="fc" id="L60">		return colors.getColor(ColorType.LINE);</span>
+<span class="fc" id="L61">		return colors.getColor(ColorType.LINE);</span>
 	}
 
 	public final void setSpecificColor(HColor specificColor) {
-<span class="fc" id="L64">		setSpecificColor(specificColor, 0);</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L65">		setSpecificColor(specificColor, 0);</span>
+<span class="fc" id="L66">	}</span>
 
 	public final void setSpecificColor(HColor specificColor, int i) {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (i == 0) {</span>
-<span class="fc" id="L69">			colors = colors.add(ColorType.LINE, specificColor);</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (i == 0) {</span>
+<span class="fc" id="L70">			colors = colors.add(ColorType.LINE, specificColor);</span>
 		} else {
-<span class="nc" id="L71">			supplementary.add(colors.add(ColorType.LINE, specificColor));</span>
+<span class="nc" id="L72">			supplementary.add(colors.add(ColorType.LINE, specificColor));</span>
 		}
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L74">	}</span>
 
 	public List&lt;Colors&gt; getSupplementaryColors() {
-<span class="nc" id="L76">		return Collections.unmodifiableList(supplementary);</span>
+<span class="nc" id="L77">		return Collections.unmodifiableList(supplementary);</span>
 	}
 
 	public void setColors(Colors colors) {
-<span class="fc" id="L80">		this.colors = colors;</span>
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L81">		this.colors = colors;</span>
+<span class="fc" id="L82">	}</span>
 
 	public final Colors getColors() {
-<span class="fc" id="L84">		return colors;</span>
+<span class="fc" id="L85">		return colors;</span>
 	}
 
 	final public void goDashed() {
-<span class="nc" id="L88">		type = type.goDashed();</span>
-<span class="nc" id="L89">	}</span>
+<span class="nc" id="L89">		type = type.goDashed();</span>
+<span class="nc" id="L90">	}</span>
 
 	final public void goDotted() {
-<span class="nc" id="L92">		type = type.goDotted();</span>
-<span class="nc" id="L93">	}</span>
+<span class="nc" id="L93">		type = type.goDotted();</span>
+<span class="nc" id="L94">	}</span>
 
 	final public void goThickness(double thickness) {
-<span class="nc" id="L96">		type = type.goThickness(thickness);</span>
-<span class="nc" id="L97">	}</span>
+<span class="nc" id="L97">		type = type.goThickness(thickness);</span>
+<span class="nc" id="L98">	}</span>
 
 	final public void goHidden() {
-<span class="nc" id="L100">		this.hidden = true;</span>
-<span class="nc" id="L101">	}</span>
+<span class="nc" id="L101">		this.hidden = true;</span>
+<span class="nc" id="L102">	}</span>
 
 	public abstract void goNorank();
 
 	final public void goBold() {
-<span class="nc" id="L106">		type = type.goBold();</span>
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L107">		type = type.goBold();</span>
+<span class="nc" id="L108">	}</span>
 
 	public final void goSingle() {
-<span class="nc" id="L110">		this.single = true;</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L111">		this.single = true;</span>
+<span class="nc" id="L112">	}</span>
 
 	public boolean isSingle() {
-<span class="fc" id="L114">		return single;</span>
+<span class="fc" id="L115">		return single;</span>
+	}
+
+	public final void goNodeStyle() {
+<span class="nc" id="L119">		this.useNodeStyle = true;</span>
+<span class="nc" id="L120">	}</span>
+
+	public boolean useNodeStyle() {
+<span class="nc" id="L123">		return useNodeStyle;</span>
 	}
 
 	public void applyStyle(String arrowStyle) {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (arrowStyle == null) {</span>
-<span class="fc" id="L119">			return;</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (arrowStyle == null) {</span>
+<span class="fc" id="L128">			return;</span>
 		}
-<span class="nc" id="L121">		final StringTokenizer st = new StringTokenizer(arrowStyle, &quot;;&quot;);</span>
-<span class="nc" id="L122">		int i = 0;</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L124">			final String s = st.nextToken();</span>
-<span class="nc" id="L125">			applyOneStyle(s, i);</span>
-<span class="nc" id="L126">			i++;</span>
-<span class="nc" id="L127">		}</span>
-<span class="nc" id="L128">	}</span>
-
-	private void applyOneStyle(String arrowStyle, int i) {
-<span class="nc" id="L131">		final StringTokenizer st = new StringTokenizer(arrowStyle, &quot;,&quot;);</span>
+<span class="nc" id="L130">		final StringTokenizer st = new StringTokenizer(arrowStyle, &quot;;&quot;);</span>
+<span class="nc" id="L131">		int i = 0;</span>
 <span class="nc bnc" id="L132" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
 <span class="nc" id="L133">			final String s = st.nextToken();</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">			if (s.equalsIgnoreCase(&quot;dashed&quot;)) {</span>
-<span class="nc" id="L135">				this.goDashed();</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;bold&quot;)) {</span>
-<span class="nc" id="L137">				this.goBold();</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;dotted&quot;)) {</span>
-<span class="nc" id="L139">				this.goDotted();</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
-<span class="nc" id="L141">				this.goHidden();</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;single&quot;)) {</span>
-<span class="nc" id="L143">				this.goSingle();</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;plain&quot;)) {</span>
+<span class="nc" id="L134">			applyOneStyle(s, i);</span>
+<span class="nc" id="L135">			i++;</span>
+<span class="nc" id="L136">		}</span>
+<span class="nc" id="L137">	}</span>
+
+	private void applyOneStyle(String arrowStyle, int i) {
+<span class="nc" id="L140">		final StringTokenizer st = new StringTokenizer(arrowStyle, &quot;,&quot;);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L142">			final String s = st.nextToken();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (s.equalsIgnoreCase(&quot;dashed&quot;)) {</span>
+<span class="nc" id="L144">				this.goDashed();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;bold&quot;)) {</span>
+<span class="nc" id="L146">				this.goBold();</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;dotted&quot;)) {</span>
+<span class="nc" id="L148">				this.goDotted();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
+<span class="nc" id="L150">				this.goHidden();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;single&quot;)) {</span>
+<span class="nc" id="L152">				this.goSingle();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;plain&quot;)) {</span>
 				// Do nothing
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;norank&quot;)) {</span>
-<span class="nc" id="L147">				this.goNorank();</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			} else if (s.startsWith(&quot;thickness=&quot;)) {</span>
-<span class="nc" id="L149">				this.goThickness(Double.parseDouble(s.substring(&quot;thickness=&quot;.length())));</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;node&quot;)) {</span>
+<span class="nc" id="L156">				this.goNodeStyle();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;norank&quot;)) {</span>
+<span class="nc" id="L158">				this.goNorank();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			} else if (s.startsWith(&quot;thickness=&quot;)) {</span>
+<span class="nc" id="L160">				this.goThickness(Double.parseDouble(s.substring(&quot;thickness=&quot;.length())));</span>
 			} else {
-<span class="nc" id="L151">				final HColor tmp = HColorSet.instance().getColorOrWhite(s);</span>
-<span class="nc" id="L152">				setSpecificColor(tmp, i);</span>
+<span class="nc" id="L162">				final HColor tmp = HColorSet.instance().getColorOrWhite(s);</span>
+<span class="nc" id="L163">				setSpecificColor(tmp, i);</span>
 			}
-<span class="nc" id="L154">		}</span>
-<span class="nc" id="L155">	}</span>
+<span class="nc" id="L165">		}</span>
+<span class="nc" id="L166">	}</span>
 
 	public LinkType getType() {
-<span class="fc" id="L158">		return type;</span>
+<span class="fc" id="L169">		return type;</span>
 	}
 
 	public UStroke getUStroke() {
-<span class="nc" id="L162">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L173">		throw new UnsupportedOperationException();</span>
 	}
 
 }
