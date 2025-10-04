@@ -66,11 +66,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
-	private static final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+";
-	private static final String UBREX_KEY1 = "dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇thickness=〇+〴d";
+	private static final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|node|thickness=\\d+";
+	private static final String UBREX_KEY1 = "dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇node┇thickness=〇+〴d";
 
-	private static final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+";
-	private static final String UBREX_KEY2 = ",dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,thickness=〇+〴d";
+	private static final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,node|,thickness=\\d+";
+	private static final String UBREX_KEY2 = ",dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,node┇,thickness=〇+〴d";
 
 	public static final String LINE_STYLE = "(?:#\\w+|" + CommandLinkElement.KEY1 + ")(?:,#\\w+|"
 			+ CommandLinkElement.KEY2 + ")*";

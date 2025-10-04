@@ -87,6 +87,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
+import net.sourceforge.plantuml.svek.image.EntityImageTransitionLabel;
 import net.sourceforge.plantuml.text.Guillemet;
 
 public final class GeneralImageBuilder {
@@ -208,6 +209,9 @@ public final class GeneralImageBuilder {
 
 		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)
 			return new EntityImagePseudoState(leaf);
+
+		if (leaf.getLeafType() == LeafType.STATE_TRANSITION_LABEL)
+			return new EntityImageTransitionLabel(leaf);
 
 		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)
 			return new EntityImageDeepHistory(leaf);

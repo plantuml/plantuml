@@ -51,6 +51,7 @@ public abstract class WithLinkType {
 	protected LinkType type;
 	protected boolean hidden = false;
 	private boolean single = false;
+	private boolean useNodeStyle = false;
 
 	private Colors colors = Colors.empty();
 
@@ -114,6 +115,14 @@ public abstract class WithLinkType {
 		return single;
 	}
 
+	public final void goNodeStyle() {
+		this.useNodeStyle = true;
+	}
+
+	public boolean useNodeStyle() {
+		return useNodeStyle;
+	}
+
 	public void applyStyle(String arrowStyle) {
 		if (arrowStyle == null) {
 			return;
@@ -143,6 +152,8 @@ public abstract class WithLinkType {
 				this.goSingle();
 			} else if (s.equalsIgnoreCase("plain")) {
 				// Do nothing
+			} else if (s.equalsIgnoreCase("node")) {
+				this.goNodeStyle();
 			} else if (s.equalsIgnoreCase("norank")) {
 				this.goNorank();
 			} else if (s.startsWith("thickness=")) {
