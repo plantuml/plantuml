@@ -48,6 +48,17 @@ jobs:
       - name: Build with Ant
         run: ant -noinput
 
+      - name: Check PlantUML version (expect exit code 16)
+        run: |
+          set +e
+          java -jar plantuml.jar -version
+          CODE=$?
+          echo "Exit code: $CODE"
+          if [ $CODE -ne 16 ]; then
+            echo "::error::Unexpected exit code (expected 16, got $CODE)"
+            exit 1
+          fi
+        
       - name: Upload plantuml.jar
         if: always()
         uses: actions/upload-artifact@v4

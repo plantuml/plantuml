@@ -104,7 +104,7 @@ public class GraphvizUtils {
 			} catch (Exception e) {
 				result.add(red + e.toString());
 				Logme.error(e);
-				error = -1;
+				error = 11;
 			}
 			return error;
 		}
@@ -128,29 +128,29 @@ public class GraphvizUtils {
 				final int v = GraphvizRuntimeEnvironment.getInstance().getDotVersion();
 				if (v == -1) {
 					result.add("Warning : cannot determine dot version");
-					error = -2;
+					error = 12;
 				} else if (v < DOT_VERSION_LIMIT) {
 					result.add(bold + "Warning : Your dot installation seems old");
 					result.add(bold + "Some diagrams may have issues");
-					error = -3;
+					error = 13;
 				} else {
 					final String err = getTestCreateSimpleFile();
 					if (err == null) {
 						result.add(bold + "Installation seems OK. File generation OK");
 					} else {
 						result.add(red + err);
-						error = -4;
+						error = 14;
 					}
 				}
 			} catch (Exception e) {
 				result.add(red + e.toString());
 				Logme.error(e);
-				error = -5;
+				error = 15;
 			}
 		} else {
 			result.add(red + "Error: " + exeState.getTextMessage());
 			result.add("Error: only sequence diagrams will be generated");
-			error = -6;
+			error = 16;
 		}
 
 		return error;
