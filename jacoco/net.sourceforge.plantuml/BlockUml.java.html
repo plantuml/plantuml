@@ -231,12 +231,12 @@ public class BlockUml {
 	}
 
 	public List&lt;String&gt; getDefinition(boolean withHeader) {
-<span class="nc" id="L234">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (StringLocated s : data)</span>
-<span class="nc" id="L236">			result.add(s.getString());</span>
+<span class="fc" id="L234">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		for (StringLocated s : data)</span>
+<span class="fc" id="L236">			result.add(s.getString());</span>
 
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (withHeader)</span>
-<span class="nc" id="L239">			return Collections.unmodifiableList(result);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (withHeader)</span>
+<span class="fc" id="L239">			return Collections.unmodifiableList(result);</span>
 
 <span class="nc" id="L241">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
 	}

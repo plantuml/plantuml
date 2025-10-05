@@ -38,32 +38,32 @@ package net.sourceforge.plantuml.klimt.drawing.eps;
 import java.util.ArrayList;
 import java.util.List;
 
-<span class="nc" id="L41">public class PostScriptData {</span>
+<span class="fc" id="L41">public class PostScriptData {</span>
 
-<span class="nc" id="L43">	private final List&lt;PostScriptCommand&gt; data = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">	private final List&lt;PostScriptCommand&gt; data = new ArrayList&lt;&gt;();</span>
 
 	private String toString;
 
 	public String toPostString() {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (this.toString == null) {</span>
-<span class="nc" id="L49">			this.toString = toPostStringSlow();</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (this.toString == null) {</span>
+<span class="fc" id="L49">			this.toString = toPostStringSlow();</span>
 		}
-<span class="nc" id="L51">		return this.toString;</span>
+<span class="fc" id="L51">		return this.toString;</span>
 	}
 
 	private String toPostStringSlow() {
-<span class="nc" id="L55">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (PostScriptCommand cmd : data) {</span>
-<span class="nc" id="L57">			sb.append(cmd.toPostString());</span>
-<span class="nc" id="L58">			sb.append('\n');</span>
-<span class="nc" id="L59">		}</span>
-<span class="nc" id="L60">		return sb.toString();</span>
+<span class="fc" id="L55">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (PostScriptCommand cmd : data) {</span>
+<span class="fc" id="L57">			sb.append(cmd.toPostString());</span>
+<span class="fc" id="L58">			sb.append('\n');</span>
+<span class="fc" id="L59">		}</span>
+<span class="fc" id="L60">		return sb.toString();</span>
 	}
 
 	public void add(PostScriptCommand cmd) {
-<span class="nc" id="L64">		data.add(cmd);</span>
-<span class="nc" id="L65">		this.toString = null;</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L64">		data.add(cmd);</span>
+<span class="fc" id="L65">		this.toString = null;</span>
+<span class="fc" id="L66">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

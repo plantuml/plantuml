@@ -77,7 +77,7 @@ import net.sourceforge.plantuml.utils.Log;
 					|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
 <span class="pc bpc" id="L79" title="2 of 4 branches missed.">			final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;</span>
-<span class="pc" id="L80">			Log.info(() -&gt; &quot;Trying to pack image. hasAlpha=&quot; + hasAlpha);</span>
+<span class="fc" id="L80">			Log.info(() -&gt; &quot;Trying to pack image. hasAlpha=&quot; + hasAlpha);</span>
 
 <span class="fc" id="L82">			BufferedImage tmp = Quantify555.packMeIfPossible(bufferedImage);</span>
 <span class="fc bfc" id="L83" title="All 2 branches covered.">			if (tmp == null)</span>

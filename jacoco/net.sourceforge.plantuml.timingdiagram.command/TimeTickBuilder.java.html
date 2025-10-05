@@ -68,8 +68,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingFormat;
 	}
 
 	public static TimeTick parseTimeTick(String name, RegexResult arg, Clocks clock) {
-<span class="fc" id="L71">		final String code = arg.get(name + &quot;CODE&quot;, 0);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (code != null) {</span>
+<span class="nc" id="L71">		final String code = arg.get(name + &quot;CODE&quot;, 0);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (code != null) {</span>
 <span class="nc" id="L73">			final String delta = arg.get(name + &quot;CODE&quot;, 1);</span>
 <span class="nc" id="L74">			TimeTick result = clock.getCodeValue(code);</span>
 <span class="nc bnc" id="L75" title="All 2 branches missed.">			if (delta == null)</span>
@@ -78,37 +78,37 @@ import net.sourceforge.plantuml.timingdiagram.TimingFormat;
 <span class="nc" id="L78">			final BigDecimal value = result.getTime().add(new BigDecimal(delta));</span>
 <span class="nc" id="L79">			return new TimeTick(value, TimingFormat.DECIMAL);</span>
 		}
-<span class="fc" id="L81">		final String clockName = arg.get(name + &quot;CLOCK&quot;, 0);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (clockName != null) {</span>
+<span class="nc" id="L81">		final String clockName = arg.get(name + &quot;CLOCK&quot;, 0);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (clockName != null) {</span>
 <span class="nc" id="L83">			final int number = Integer.parseInt(arg.get(name + &quot;CLOCK&quot;, 1));</span>
 <span class="nc" id="L84">			return clock.getClockValue(clockName, number);</span>
 		}
-<span class="fc" id="L86">		final String hour = arg.get(name + &quot;HOUR&quot;, 0);</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (hour != null) {</span>
+<span class="nc" id="L86">		final String hour = arg.get(name + &quot;HOUR&quot;, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (hour != null) {</span>
 <span class="nc" id="L88">			final int h = Integer.parseInt(arg.get(name + &quot;HOUR&quot;, 0));</span>
 <span class="nc" id="L89">			final int m = Integer.parseInt(arg.get(name + &quot;HOUR&quot;, 1));</span>
 <span class="nc" id="L90">			final int s = Integer.parseInt(arg.get(name + &quot;HOUR&quot;, 2));</span>
 <span class="nc" id="L91">			final BigDecimal value = new BigDecimal(3600 * h + 60 * m + s);</span>
 <span class="nc" id="L92">			return new TimeTick(value, TimingFormat.HOUR);</span>
 		}
-<span class="fc" id="L94">		final String date = arg.get(name + &quot;DATE&quot;, 0);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (date != null) {</span>
+<span class="nc" id="L94">		final String date = arg.get(name + &quot;DATE&quot;, 0);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (date != null) {</span>
 <span class="nc" id="L96">			final int yy = Integer.parseInt(arg.get(name + &quot;DATE&quot;, 0));</span>
 <span class="nc" id="L97">			final int mm = Integer.parseInt(arg.get(name + &quot;DATE&quot;, 1));</span>
 <span class="nc" id="L98">			final int dd = Integer.parseInt(arg.get(name + &quot;DATE&quot;, 2));</span>
 
 <span class="nc" id="L100">			return TimingFormat.createDate(yy, mm, dd, clock.getTimingFormatDate());</span>
 		}
-<span class="fc" id="L102">		final String number = arg.get(name + &quot;DIGIT&quot;, 1);</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (number == null)</span>
-<span class="fc" id="L104">			return clock.getNow();</span>
+<span class="nc" id="L102">		final String number = arg.get(name + &quot;DIGIT&quot;, 1);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (number == null)</span>
+<span class="nc" id="L104">			return clock.getNow();</span>
 
-<span class="fc" id="L106">		final boolean isRelative = &quot;+&quot;.equals(arg.get(name + &quot;DIGIT&quot;, 0));</span>
-<span class="fc" id="L107">		BigDecimal value = new BigDecimal(number);</span>
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">		if (isRelative &amp;&amp; clock.getNow() != null)</span>
-<span class="fc" id="L109">			value = clock.getNow().getTime().add(value);</span>
+<span class="nc" id="L106">		final boolean isRelative = &quot;+&quot;.equals(arg.get(name + &quot;DIGIT&quot;, 0));</span>
+<span class="nc" id="L107">		BigDecimal value = new BigDecimal(number);</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (isRelative &amp;&amp; clock.getNow() != null)</span>
+<span class="nc" id="L109">			value = clock.getNow().getTime().add(value);</span>
 
-<span class="fc" id="L111">		return new TimeTick(value, TimingFormat.DECIMAL);</span>
+<span class="nc" id="L111">		return new TimeTick(value, TimingFormat.DECIMAL);</span>
 	}
 
 }

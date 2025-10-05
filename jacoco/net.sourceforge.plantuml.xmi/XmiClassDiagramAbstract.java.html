@@ -73,57 +73,57 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	protected final Document document;
 	protected final Element ownedElementRoot;
 
-<span class="fc" id="L76">	protected final Set&lt;Entity&gt; done = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L76">	protected final Set&lt;Entity&gt; done = new HashSet&lt;&gt;();</span>
 
-<span class="fc" id="L78">	public XmiClassDiagramAbstract(ClassDiagram classDiagram) throws ParserConfigurationException {</span>
-<span class="fc" id="L79">		this.classDiagram = classDiagram;</span>
+<span class="nc" id="L78">	public XmiClassDiagramAbstract(ClassDiagram classDiagram) throws ParserConfigurationException {</span>
+<span class="nc" id="L79">		this.classDiagram = classDiagram;</span>
 
-<span class="fc" id="L81">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
-<span class="fc" id="L82">		this.document = builder.newDocument();</span>
-<span class="fc" id="L83">		document.setXmlVersion(&quot;1.0&quot;);</span>
-<span class="fc" id="L84">		document.setXmlStandalone(true);</span>
+<span class="nc" id="L81">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
+<span class="nc" id="L82">		this.document = builder.newDocument();</span>
+<span class="nc" id="L83">		document.setXmlVersion(&quot;1.0&quot;);</span>
+<span class="nc" id="L84">		document.setXmlStandalone(true);</span>
 
-<span class="fc" id="L86">		final Element xmi = document.createElement(&quot;XMI&quot;);</span>
-<span class="fc" id="L87">		xmi.setAttribute(&quot;xmi.version&quot;, &quot;1.1&quot;);</span>
-<span class="fc" id="L88">		xmi.setAttribute(&quot;xmlns:UML&quot;, &quot;href://org.omg/UML/1.3&quot;);</span>
-<span class="fc" id="L89">		document.appendChild(xmi);</span>
+<span class="nc" id="L86">		final Element xmi = document.createElement(&quot;XMI&quot;);</span>
+<span class="nc" id="L87">		xmi.setAttribute(&quot;xmi.version&quot;, &quot;1.1&quot;);</span>
+<span class="nc" id="L88">		xmi.setAttribute(&quot;xmlns:UML&quot;, &quot;href://org.omg/UML/1.3&quot;);</span>
+<span class="nc" id="L89">		document.appendChild(xmi);</span>
 
-<span class="fc" id="L91">		final Element header = document.createElement(&quot;XMI.header&quot;);</span>
-<span class="fc" id="L92">		xmi.appendChild(header);</span>
+<span class="nc" id="L91">		final Element header = document.createElement(&quot;XMI.header&quot;);</span>
+<span class="nc" id="L92">		xmi.appendChild(header);</span>
 
-<span class="fc" id="L94">		header.appendChild(createXmiDocumentation());</span>
-<span class="fc" id="L95">		header.appendChild(createXmiMetamodel());</span>
+<span class="nc" id="L94">		header.appendChild(createXmiDocumentation());</span>
+<span class="nc" id="L95">		header.appendChild(createXmiMetamodel());</span>
 
-<span class="fc" id="L97">		final Element content = document.createElement(&quot;XMI.content&quot;);</span>
-<span class="fc" id="L98">		xmi.appendChild(content);</span>
+<span class="nc" id="L97">		final Element content = document.createElement(&quot;XMI.content&quot;);</span>
+<span class="nc" id="L98">		xmi.appendChild(content);</span>
 
-<span class="fc" id="L100">		final Element model = document.createElement(&quot;UML:Model&quot;);</span>
-<span class="fc" id="L101">		model.setAttribute(&quot;xmi.id&quot;, CucaDiagramXmiMaker.getModel(classDiagram));</span>
-<span class="fc" id="L102">		model.setAttribute(&quot;name&quot;, &quot;PlantUML&quot;);</span>
-<span class="fc" id="L103">		content.appendChild(model);</span>
+<span class="nc" id="L100">		final Element model = document.createElement(&quot;UML:Model&quot;);</span>
+<span class="nc" id="L101">		model.setAttribute(&quot;xmi.id&quot;, CucaDiagramXmiMaker.getModel(classDiagram));</span>
+<span class="nc" id="L102">		model.setAttribute(&quot;name&quot;, &quot;PlantUML&quot;);</span>
+<span class="nc" id="L103">		content.appendChild(model);</span>
 
 		// &lt;UML:Namespace.ownedElement&gt;
-<span class="fc" id="L106">		this.ownedElementRoot = document.createElement(&quot;UML:Namespace.ownedElement&quot;);</span>
-<span class="fc" id="L107">		model.appendChild(ownedElementRoot);</span>
+<span class="nc" id="L106">		this.ownedElementRoot = document.createElement(&quot;UML:Namespace.ownedElement&quot;);</span>
+<span class="nc" id="L107">		model.appendChild(ownedElementRoot);</span>
 
-<span class="fc" id="L109">	}</span>
+<span class="nc" id="L109">	}</span>
 	
 	private Element createXmiDocumentation() {
-<span class="fc" id="L112">		final Element documentation = document.createElement(&quot;XMI.documentation&quot;);</span>
-<span class="fc" id="L113">		final Element exporter = document.createElement(&quot;XMI.exporter&quot;);</span>
-<span class="fc" id="L114">		exporter.setTextContent(&quot;PlantUML&quot;);</span>
-<span class="fc" id="L115">		final Element exporterVersion = document.createElement(&quot;XMI.exporterVersion&quot;);</span>
-<span class="fc" id="L116">		exporterVersion.setTextContent(Version.versionString());</span>
-<span class="fc" id="L117">		documentation.appendChild(exporter);</span>
-<span class="fc" id="L118">		documentation.appendChild(exporterVersion);</span>
-<span class="fc" id="L119">		return documentation;</span>
+<span class="nc" id="L112">		final Element documentation = document.createElement(&quot;XMI.documentation&quot;);</span>
+<span class="nc" id="L113">		final Element exporter = document.createElement(&quot;XMI.exporter&quot;);</span>
+<span class="nc" id="L114">		exporter.setTextContent(&quot;PlantUML&quot;);</span>
+<span class="nc" id="L115">		final Element exporterVersion = document.createElement(&quot;XMI.exporterVersion&quot;);</span>
+<span class="nc" id="L116">		exporterVersion.setTextContent(Version.versionString());</span>
+<span class="nc" id="L117">		documentation.appendChild(exporter);</span>
+<span class="nc" id="L118">		documentation.appendChild(exporterVersion);</span>
+<span class="nc" id="L119">		return documentation;</span>
 	}
 
 	private Element createXmiMetamodel() {
-<span class="fc" id="L123">		final Element metamodel = document.createElement(&quot;XMI.metamodel&quot;);</span>
-<span class="fc" id="L124">		metamodel.setAttribute(&quot;xmi.name&quot;, &quot;UML&quot;);</span>
-<span class="fc" id="L125">		metamodel.setAttribute(&quot;xmi.version&quot;, &quot;1.4&quot;);</span>
-<span class="fc" id="L126">		return metamodel;</span>
+<span class="nc" id="L123">		final Element metamodel = document.createElement(&quot;XMI.metamodel&quot;);</span>
+<span class="nc" id="L124">		metamodel.setAttribute(&quot;xmi.name&quot;, &quot;UML&quot;);</span>
+<span class="nc" id="L125">		metamodel.setAttribute(&quot;xmi.version&quot;, &quot;1.4&quot;);</span>
+<span class="nc" id="L126">		return metamodel;</span>
 	}
 
 	final protected String forXMI(String s) {
@@ -138,24 +138,24 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	}
 
 	final public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
-<span class="fc" id="L141">		final Source source = new DOMSource(document);</span>
+<span class="nc" id="L141">		final Source source = new DOMSource(document);</span>
 
-<span class="fc" id="L143">		final Result resultat = new StreamResult(os);</span>
+<span class="nc" id="L143">		final Result resultat = new StreamResult(os);</span>
 
-<span class="fc" id="L145">		final Transformer transformer = XmlFactories.newTransformer();</span>
-<span class="fc" id="L146">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
-<span class="fc" id="L147">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
+<span class="nc" id="L145">		final Transformer transformer = XmlFactories.newTransformer();</span>
+<span class="nc" id="L146">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="nc" id="L147">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
 		// tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);
-<span class="fc" id="L149">		transformer.transform(source, resultat);</span>
-<span class="fc" id="L150">	}</span>
+<span class="nc" id="L149">		transformer.transform(source, resultat);</span>
+<span class="nc" id="L150">	}</span>
 
 	final protected Element createEntityNode(Entity entity) {
-<span class="fc" id="L153">		final Element cla = document.createElement(&quot;UML:Class&quot;);</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (entity.getLeafType() == LeafType.NOTE)</span>
+<span class="nc" id="L153">		final Element cla = document.createElement(&quot;UML:Class&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (entity.getLeafType() == LeafType.NOTE)</span>
 <span class="nc" id="L155">			return null;</span>
 
-<span class="fc" id="L157">		cla.setAttribute(&quot;xmi.id&quot;, entity.getUid());</span>
-<span class="fc" id="L158">		cla.setAttribute(&quot;name&quot;, entity.getDisplay().get(0).toString());</span>
+<span class="nc" id="L157">		cla.setAttribute(&quot;xmi.id&quot;, entity.getUid());</span>
+<span class="nc" id="L158">		cla.setAttribute(&quot;name&quot;, entity.getDisplay().get(0).toString());</span>
 
 //		final String parentCode = entity.getQuark().getParent().toStringPoint();
 //		if (parentCode.length() == 0)
@@ -163,8 +163,8 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 //		else
 //			cla.setAttribute(&quot;namespace&quot;, parentCode);
 
-<span class="fc" id="L166">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L166">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (stereotype != null) {</span>
 <span class="nc" id="L168">			final Element stereo = document.createElement(&quot;UML:ModelElement.stereotype&quot;);</span>
 <span class="nc bnc" id="L169" title="All 2 branches missed.">			for (String s : stereotype.getMultipleLabels()) {</span>
 <span class="nc" id="L170">				final Element name = document.createElement(&quot;UML:Stereotype&quot;);</span>
@@ -174,51 +174,51 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 <span class="nc" id="L174">			cla.appendChild(stereo);</span>
 		}
 
-<span class="fc" id="L177">		final LeafType type = entity.getLeafType();</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (type == LeafType.ABSTRACT_CLASS)</span>
-<span class="fc" id="L179">			cla.setAttribute(&quot;isAbstract&quot;, &quot;true&quot;);</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		else if (type == LeafType.INTERFACE)</span>
+<span class="nc" id="L177">		final LeafType type = entity.getLeafType();</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (type == LeafType.ABSTRACT_CLASS)</span>
+<span class="nc" id="L179">			cla.setAttribute(&quot;isAbstract&quot;, &quot;true&quot;);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		else if (type == LeafType.INTERFACE)</span>
 <span class="nc" id="L181">			cla.setAttribute(&quot;isInterface&quot;, &quot;true&quot;);</span>
 
-<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (entity.isStatic())</span>
-<span class="fc" id="L184">			cla.setAttribute(&quot;isStatic&quot;, &quot;true&quot;);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (entity.isStatic())</span>
+<span class="nc" id="L184">			cla.setAttribute(&quot;isStatic&quot;, &quot;true&quot;);</span>
 
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (entity.getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">				|| entity.getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)</span>
-<span class="fc" id="L188">			cla.setAttribute(&quot;visibility&quot;, entity.getVisibilityModifier().getXmiVisibility());</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (entity.getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				|| entity.getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)</span>
+<span class="nc" id="L188">			cla.setAttribute(&quot;visibility&quot;, entity.getVisibilityModifier().getXmiVisibility());</span>
 
-<span class="fc" id="L190">		final Element feature = document.createElement(&quot;UML:Classifier.feature&quot;);</span>
-<span class="fc" id="L191">		cla.appendChild(feature);</span>
+<span class="nc" id="L190">		final Element feature = document.createElement(&quot;UML:Classifier.feature&quot;);</span>
+<span class="nc" id="L191">		cla.appendChild(feature);</span>
 
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		for (CharSequence cs : entity.getBodier().getFieldsToDisplay()) {</span>
-<span class="fc" id="L194">			final Member m = (Member) cs;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (CharSequence cs : entity.getBodier().getFieldsToDisplay()) {</span>
+<span class="nc" id="L194">			final Member m = (Member) cs;</span>
 
-<span class="fc" id="L196">			final Element attribute = document.createElement(&quot;UML:Attribute&quot;);</span>
-<span class="fc" id="L197">			attribute.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;att&quot;));</span>
-<span class="fc" id="L198">			attribute.setAttribute(&quot;name&quot;, m.getDisplay(false));</span>
-<span class="fc" id="L199">			final VisibilityModifier visibility = m.getVisibilityModifier();</span>
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			if (visibility != null)</span>
-<span class="fc" id="L201">				attribute.setAttribute(&quot;visibility&quot;, visibility.getXmiVisibility());</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			if (m.isStatic())</span>
+<span class="nc" id="L196">			final Element attribute = document.createElement(&quot;UML:Attribute&quot;);</span>
+<span class="nc" id="L197">			attribute.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;att&quot;));</span>
+<span class="nc" id="L198">			attribute.setAttribute(&quot;name&quot;, m.getDisplay(false));</span>
+<span class="nc" id="L199">			final VisibilityModifier visibility = m.getVisibilityModifier();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (visibility != null)</span>
+<span class="nc" id="L201">				attribute.setAttribute(&quot;visibility&quot;, visibility.getXmiVisibility());</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">			if (m.isStatic())</span>
 <span class="nc" id="L203">				attribute.setAttribute(&quot;isStatic&quot;, &quot;true&quot;);</span>
 
-<span class="fc" id="L205">			feature.appendChild(attribute);</span>
-<span class="fc" id="L206">		}</span>
+<span class="nc" id="L205">			feature.appendChild(attribute);</span>
+<span class="nc" id="L206">		}</span>
 
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (CharSequence cs : entity.getBodier().getMethodsToDisplay()) {</span>
-<span class="fc" id="L209">			final Member m = (Member) cs;</span>
-<span class="fc" id="L210">			final Element operation = document.createElement(&quot;UML:Operation&quot;);</span>
-<span class="fc" id="L211">			operation.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;att&quot;));</span>
-<span class="fc" id="L212">			operation.setAttribute(&quot;name&quot;, m.getDisplay(false));</span>
-<span class="fc" id="L213">			final VisibilityModifier visibility = m.getVisibilityModifier();</span>
-<span class="pc bpc" id="L214" title="1 of 2 branches missed.">			if (visibility != null)</span>
-<span class="fc" id="L215">				operation.setAttribute(&quot;visibility&quot;, visibility.getXmiVisibility());</span>
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">			if (m.isStatic())</span>
-<span class="fc" id="L217">				operation.setAttribute(&quot;isStatic&quot;, &quot;true&quot;);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (CharSequence cs : entity.getBodier().getMethodsToDisplay()) {</span>
+<span class="nc" id="L209">			final Member m = (Member) cs;</span>
+<span class="nc" id="L210">			final Element operation = document.createElement(&quot;UML:Operation&quot;);</span>
+<span class="nc" id="L211">			operation.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;att&quot;));</span>
+<span class="nc" id="L212">			operation.setAttribute(&quot;name&quot;, m.getDisplay(false));</span>
+<span class="nc" id="L213">			final VisibilityModifier visibility = m.getVisibilityModifier();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (visibility != null)</span>
+<span class="nc" id="L215">				operation.setAttribute(&quot;visibility&quot;, visibility.getXmiVisibility());</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">			if (m.isStatic())</span>
+<span class="nc" id="L217">				operation.setAttribute(&quot;isStatic&quot;, &quot;true&quot;);</span>
 
-<span class="fc" id="L219">			feature.appendChild(operation);</span>
-<span class="fc" id="L220">		}</span>
-<span class="fc" id="L221">		return cla;</span>
+<span class="nc" id="L219">			feature.appendChild(operation);</span>
+<span class="nc" id="L220">		}</span>
+<span class="nc" id="L221">		return cla;</span>
 	}
 
 }

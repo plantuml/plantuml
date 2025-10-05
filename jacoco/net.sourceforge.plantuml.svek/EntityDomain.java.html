@@ -47,30 +47,30 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class EntityDomain extends AbstractTextBlock implements TextBlock {
 
-<span class="fc" id="L50">	private final double margin = 4;</span>
+<span class="nc" id="L50">	private final double margin = 4;</span>
 
-<span class="fc" id="L52">	private final double radius = 12;</span>
-<span class="fc" id="L53">	private final double suppY = 2;</span>
+<span class="nc" id="L52">	private final double radius = 12;</span>
+<span class="nc" id="L53">	private final double suppY = 2;</span>
 	private final Fashion symbolContext;
 
-<span class="fc" id="L56">	public EntityDomain(Fashion symbolContext) {</span>
-<span class="fc" id="L57">		this.symbolContext = symbolContext;</span>
-<span class="fc" id="L58">	}</span>
+<span class="nc" id="L56">	public EntityDomain(Fashion symbolContext) {</span>
+<span class="nc" id="L57">		this.symbolContext = symbolContext;</span>
+<span class="nc" id="L58">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L61">		double x = 0;</span>
-<span class="fc" id="L62">		double y = 0;</span>
-<span class="fc" id="L63">		x += margin;</span>
-<span class="fc" id="L64">		y += margin;</span>
-<span class="fc" id="L65">		ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L66">		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);</span>
-<span class="fc" id="L67">		circle.setDeltaShadow(symbolContext.getDeltaShadow());</span>
-<span class="fc" id="L68">		ug.apply(new UTranslate(x, y)).draw(circle);</span>
-<span class="fc" id="L69">		ug.apply(new UTranslate(x, y + 2 * radius + suppY)).draw(ULine.hline(2 * radius));</span>
-<span class="fc" id="L70">	}</span>
+<span class="nc" id="L61">		double x = 0;</span>
+<span class="nc" id="L62">		double y = 0;</span>
+<span class="nc" id="L63">		x += margin;</span>
+<span class="nc" id="L64">		y += margin;</span>
+<span class="nc" id="L65">		ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L66">		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);</span>
+<span class="nc" id="L67">		circle.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L68">		ug.apply(new UTranslate(x, y)).draw(circle);</span>
+<span class="nc" id="L69">		ug.apply(new UTranslate(x, y + 2 * radius + suppY)).draw(ULine.hline(2 * radius));</span>
+<span class="nc" id="L70">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L73">		return new XDimension2D(radius * 2 + 2 * margin, radius * 2 + 2 * margin);</span>
+<span class="nc" id="L73">		return new XDimension2D(radius * 2 + 2 * margin, radius * 2 + 2 * margin);</span>
 	}
 
 }

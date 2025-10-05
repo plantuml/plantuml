@@ -42,16 +42,16 @@ public class PostScriptCommandQuadTo implements PostScriptCommand {
 	private final double x2;
 	private final double y2;
 
-<span class="nc" id="L45">	public PostScriptCommandQuadTo(double x1, double y1, double x2, double y2) {</span>
-<span class="nc" id="L46">		this.x1 = x1;</span>
-<span class="nc" id="L47">		this.y1 = y1;</span>
-<span class="nc" id="L48">		this.x2 = x2;</span>
-<span class="nc" id="L49">		this.y2 = y2;</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L45">	public PostScriptCommandQuadTo(double x1, double y1, double x2, double y2) {</span>
+<span class="fc" id="L46">		this.x1 = x1;</span>
+<span class="fc" id="L47">		this.y1 = y1;</span>
+<span class="fc" id="L48">		this.x2 = x2;</span>
+<span class="fc" id="L49">		this.y2 = y2;</span>
+<span class="fc" id="L50">	}</span>
 
 	public String toPostString() {
-<span class="nc" id="L53">		return EpsGraphics.format(x1) + &quot; &quot; + EpsGraphics.format(y1) + &quot; &quot; + EpsGraphics.format(x2) + &quot; &quot;</span>
-<span class="nc" id="L54">				+ EpsGraphics.format(y2) + &quot; rquadto&quot;;</span>
+<span class="fc" id="L53">		return EpsGraphics.format(x1) + &quot; &quot; + EpsGraphics.format(y1) + &quot; &quot; + EpsGraphics.format(x2) + &quot; &quot;</span>
+<span class="fc" id="L54">				+ EpsGraphics.format(y2) + &quot; rquadto&quot;;</span>
 	}
 
 }

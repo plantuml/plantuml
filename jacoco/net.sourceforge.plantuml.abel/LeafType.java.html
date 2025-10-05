@@ -70,14 +70,14 @@ import net.sourceforge.plantuml.StringUtils;
 
 	public static LeafType getLeafType(String type) {
 <span class="fc" id="L72">		type = StringUtils.goUpperCase(type);</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (type.startsWith(&quot;ABSTRACT&quot;))</span>
-<span class="fc" id="L74">			return LeafType.ABSTRACT_CLASS;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (type.startsWith(&quot;ABSTRACT&quot;))</span>
+<span class="nc" id="L74">			return LeafType.ABSTRACT_CLASS;</span>
 
 <span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (type.startsWith(&quot;DIAMOND&quot;))</span>
 <span class="nc" id="L77">			return LeafType.STATE_CHOICE;</span>
 
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (type.startsWith(&quot;STATIC&quot;))</span>
-<span class="fc" id="L80">			return LeafType.CLASS;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (type.startsWith(&quot;STATIC&quot;))</span>
+<span class="nc" id="L80">			return LeafType.CLASS;</span>
 
 <span class="fc" id="L82">		return LeafType.valueOf(type);</span>
 	}
@@ -97,8 +97,8 @@ import net.sourceforge.plantuml.StringUtils;
 
 
 	public String toHtml() {
-<span class="nc" id="L100">		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));</span>
-<span class="nc" id="L101">		return StringUtils.capitalize(html);</span>
+<span class="fc" id="L100">		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));</span>
+<span class="fc" id="L101">		return StringUtils.capitalize(html);</span>
 	}
 
 //	public boolean manageModifier() {

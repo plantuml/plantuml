@@ -174,10 +174,10 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 		} finally {
 <span class="fc" id="L175">			WasmLog.log(&quot;...parsing ok...&quot;);</span>
 			// ::comment when __CORE__
-<span class="pc bpc" id="L177" title="2 of 4 branches missed.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
-<span class="nc" id="L178">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
+<span class="pc bpc" id="L177" title="1 of 4 branches missed.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
+<span class="fc" id="L178">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
 			}
-<span class="pc" id="L180">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
+<span class="fc" id="L180">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
 <span class="fc" id="L181">			RegexConcat.printCacheInfo();</span>
 			// ::done
 		}

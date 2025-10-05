@@ -54,8 +54,8 @@ public class DriverImagePng implements UDriver&lt;UImage, SvgGraphics&gt; {
 <span class="fc" id="L54">	}</span>
 
 	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="nc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (clip != null) {</span>
 <span class="nc bnc" id="L59" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
 <span class="nc" id="L60">				return;</span>
 			}
@@ -65,10 +65,10 @@ public class DriverImagePng implements UDriver&lt;UImage, SvgGraphics&gt; {
 		}
 
 		try {
-<span class="nc" id="L68">			svg.svgImage(image.getImage(1), x, y);</span>
+<span class="fc" id="L68">			svg.svgImage(image.getImage(1), x, y);</span>
 <span class="nc" id="L69">		} catch (IOException e) {</span>
 <span class="nc" id="L70">			Log.error(&quot;Error in svg for image &quot; + e);</span>
-<span class="nc" id="L71">		}</span>
-<span class="nc" id="L72">	}</span>
+<span class="fc" id="L71">		}</span>
+<span class="fc" id="L72">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

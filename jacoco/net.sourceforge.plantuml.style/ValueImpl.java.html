@@ -63,12 +63,12 @@ public class ValueImpl implements Value {
 	public Value mergeWith(Value other) {
 <span class="fc bfc" id="L64" title="All 2 branches covered.">		if (other == null)</span>
 <span class="fc" id="L65">			return this;</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (other instanceof ValueImpl)</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (other instanceof ValueImpl)</span>
 <span class="fc" id="L67">			return new ValueImpl(value.mergeWith(((ValueImpl) other).value));</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (other instanceof ValueColor) {</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (other.getPriority() &gt; getPriority())</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (other instanceof ValueColor) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (other.getPriority() &gt; getPriority())</span>
 <span class="nc" id="L70">				return other;</span>
-<span class="fc" id="L71">			return this;</span>
+<span class="nc" id="L71">			return this;</span>
 		}
 <span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
 	}

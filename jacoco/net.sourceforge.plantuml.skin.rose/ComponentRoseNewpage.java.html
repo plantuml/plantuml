@@ -57,10 +57,10 @@ public class ComponentRoseNewpage extends AbstractComponent {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="nc" id="L60">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L61">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
-<span class="nc" id="L62">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L60">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L61">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
+<span class="fc" id="L62">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -69,7 +69,7 @@ public class ComponentRoseNewpage extends AbstractComponent {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L72">		return 0;</span>
+<span class="fc" id="L72">		return 0;</span>
 	}
 
 }

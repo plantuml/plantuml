@@ -63,29 +63,29 @@ public class CommunicationTileNoteRight extends AbstractTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="fc" id="L66">		return message;</span>
+<span class="nc" id="L66">		return message;</span>
 	}
 
 	private boolean isCreate() {
-<span class="fc" id="L70">		return message.isCreate();</span>
+<span class="nc" id="L70">		return message.isCreate();</span>
 	}
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L75">		return tile.getContactPointRelative();</span>
+<span class="nc" id="L75">		return tile.getContactPointRelative();</span>
 	}
 
 	public CommunicationTileNoteRight(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
 			LivingSpace livingSpace, Note noteOnMessage, YGauge currentY) {
-<span class="fc" id="L80">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
-<span class="fc" id="L81">		this.tile = tile;</span>
-<span class="fc" id="L82">		this.message = message;</span>
-<span class="fc" id="L83">		this.skin = skin;</span>
-<span class="fc" id="L84">		this.skinParam = skinParam;</span>
-<span class="fc" id="L85">		this.noteOnMessage = noteOnMessage;</span>
-<span class="fc" id="L86">		this.livingSpace = livingSpace;</span>
-<span class="fc" id="L87">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="fc" id="L88">	}</span>
+<span class="nc" id="L80">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
+<span class="nc" id="L81">		this.tile = tile;</span>
+<span class="nc" id="L82">		this.message = message;</span>
+<span class="nc" id="L83">		this.skin = skin;</span>
+<span class="nc" id="L84">		this.skinParam = skinParam;</span>
+<span class="nc" id="L85">		this.noteOnMessage = noteOnMessage;</span>
+<span class="nc" id="L86">		this.livingSpace = livingSpace;</span>
+<span class="nc" id="L87">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="nc" id="L88">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
@@ -94,58 +94,58 @@ public class CommunicationTileNoteRight extends AbstractTile {
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L97">		super.callbackY_internal(y);</span>
-<span class="fc" id="L98">		tile.callbackY(y);</span>
-<span class="fc" id="L99">	}</span>
+<span class="nc" id="L97">		super.callbackY_internal(y);</span>
+<span class="nc" id="L98">		tile.callbackY(y);</span>
+<span class="nc" id="L99">	}</span>
 
 	private Component getComponent(StringBounder stringBounder) {
-<span class="fc" id="L102">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),</span>
-<span class="fc" id="L103">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
-<span class="fc" id="L104">				noteOnMessage.getColors());</span>
-<span class="fc" id="L105">		return comp;</span>
+<span class="nc" id="L102">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),</span>
+<span class="nc" id="L103">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
+<span class="nc" id="L104">				noteOnMessage.getColors());</span>
+<span class="nc" id="L105">		return comp;</span>
 	}
 
 	private Real getNotePosition(StringBounder stringBounder) {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (isCreate()) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (isCreate()) {</span>
 <span class="nc" id="L112">			return livingSpace.getPosD(stringBounder);</span>
 		}
-<span class="fc" id="L114">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L115">		return livingSpace.getPosC(stringBounder).addFixed(level * CommunicationTile.LIVE_DELTA_SIZE);</span>
+<span class="nc" id="L114">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="nc" id="L115">		return livingSpace.getPosC(stringBounder).addFixed(level * CommunicationTile.LIVE_DELTA_SIZE);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L120">		final Component comp = getComponent(stringBounder);</span>
-<span class="fc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L122">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L123">		((UDrawable) tile).drawU(ug);</span>
-<span class="fc" id="L124">		final Real p = getNotePosition(stringBounder);</span>
+<span class="nc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L120">		final Component comp = getComponent(stringBounder);</span>
+<span class="nc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L122">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L123">		((UDrawable) tile).drawU(ug);</span>
+<span class="nc" id="L124">		final Real p = getNotePosition(stringBounder);</span>
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
-<span class="fc" id="L128">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
-<span class="fc" id="L129">	}</span>
+<span class="nc" id="L128">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
+<span class="nc" id="L129">	}</span>
 
 	public double getPreferredHeight() {
-<span class="fc" id="L132">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L133">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L134">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
+<span class="nc" id="L132">		final Component comp = getComponent(getStringBounder());</span>
+<span class="nc" id="L133">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L134">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
 	}
 
 	public void addConstraints() {
-<span class="fc" id="L138">		tile.addConstraints();</span>
-<span class="fc" id="L139">	}</span>
+<span class="nc" id="L138">		tile.addConstraints();</span>
+<span class="nc" id="L139">	}</span>
 
 	public Real getMinX() {
-<span class="fc" id="L142">		return tile.getMinX();</span>
+<span class="nc" id="L142">		return tile.getMinX();</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L146">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L147">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L148">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
+<span class="nc" id="L146">		final Component comp = getComponent(getStringBounder());</span>
+<span class="nc" id="L147">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L148">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
 	}
 
 }

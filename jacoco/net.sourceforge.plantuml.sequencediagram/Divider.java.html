@@ -49,20 +49,20 @@ public class Divider extends AbstractEvent implements Event, WithStyle {
 	final private Style style;
 
 	public StyleSignature getStyleSignature() {
-<span class="fc" id="L52">		return ComponentType.DIVIDER.getStyleSignature();</span>
+<span class="nc" id="L52">		return ComponentType.DIVIDER.getStyleSignature();</span>
 	}
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L56">		return new Style[] { style };</span>
+<span class="nc" id="L56">		return new Style[] { style };</span>
 	}
 
-<span class="fc" id="L59">	public Divider(Display text, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L60">		this.text = text;</span>
-<span class="fc" id="L61">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L62">	}</span>
+<span class="nc" id="L59">	public Divider(Display text, StyleBuilder styleBuilder) {</span>
+<span class="nc" id="L60">		this.text = text;</span>
+<span class="nc" id="L61">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L62">	}</span>
 
 	public final Display getText() {
-<span class="fc" id="L65">		return text;</span>
+<span class="nc" id="L65">		return text;</span>
 	}
 
 	public boolean dealWith(Participant someone) {

@@ -36,30 +36,11 @@
 package net.sourceforge.plantuml.cli;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
 
-import net.sourceforge.plantuml.utils.Peeker;
-import net.sourceforge.plantuml.utils.PeekerUtils;
-
-<span class="nc" id="L46">public class CliParser {</span>
+<span class="nc" id="L40">public class CliParser {</span>
 
 	public static CliOptions parse(String... arg) throws InterruptedException, IOException {
-<span class="fc" id="L49">		return new CliOptions(arg);</span>
-	}
-
-	public static Map&lt;CliFlag, Object&gt; parse2(String... args) {
-<span class="fc" id="L53">		final Map&lt;CliFlag, Object&gt; result = new EnumMap&lt;&gt;(CliFlag.class);</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">		for (final Peeker&lt;String&gt; peeker = PeekerUtils.peeker(Arrays.asList(args)); peeker.peek(0) != null; peeker</span>
-<span class="fc" id="L55">				.jump()) {</span>
-<span class="fc" id="L56">			final CliFlagValued flag = CliFlagValued.parse(peeker);</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">			if (flag != null)</span>
-<span class="fc" id="L58">				result.put(flag.getFlag(), flag.getValue());</span>
-		}
-
-<span class="fc" id="L61">		return result;</span>
-
+<span class="fc" id="L43">		return new CliOptions(arg);</span>
 	}
 
 }

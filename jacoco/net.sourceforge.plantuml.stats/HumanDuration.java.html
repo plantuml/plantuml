@@ -39,31 +39,31 @@ class HumanDuration {
 
 	private final long duration;
 
-<span class="nc" id="L42">	public HumanDuration(long duration) {</span>
-<span class="nc" id="L43">		this.duration = duration;</span>
-<span class="nc" id="L44">	}</span>
+<span class="fc" id="L42">	public HumanDuration(long duration) {</span>
+<span class="fc" id="L43">		this.duration = duration;</span>
+<span class="fc" id="L44">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L48">		long time = duration;</span>
+<span class="fc" id="L48">		long time = duration;</span>
 //		final long ms = time % 1000L;
-<span class="nc" id="L50">		time = time / 1000;</span>
-<span class="nc" id="L51">		final long sec = time % 60;</span>
-<span class="nc" id="L52">		time = time / 60;</span>
-<span class="nc" id="L53">		final long min = time % 60;</span>
-<span class="nc" id="L54">		time = time / 60;</span>
-<span class="nc" id="L55">		final long hour = time % 24;</span>
-<span class="nc" id="L56">		final long day = time / 24;</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (day &gt; 0) {</span>
+<span class="fc" id="L50">		time = time / 1000;</span>
+<span class="fc" id="L51">		final long sec = time % 60;</span>
+<span class="fc" id="L52">		time = time / 60;</span>
+<span class="fc" id="L53">		final long min = time % 60;</span>
+<span class="fc" id="L54">		time = time / 60;</span>
+<span class="fc" id="L55">		final long hour = time % 24;</span>
+<span class="fc" id="L56">		final long day = time / 24;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (day &gt; 0) {</span>
 <span class="nc" id="L58">			return String.format(&quot;%dd %02dh%02dm%02ds&quot;, day, hour, min, sec);</span>
 		}
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (hour &gt; 0) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (hour &gt; 0) {</span>
 <span class="nc" id="L61">			return String.format(&quot;%dh%02dm%02ds&quot;, hour, min, sec);</span>
 		}
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (min &gt; 0) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (min &gt; 0) {</span>
 <span class="nc" id="L64">			return String.format(&quot;%dm%02ds&quot;, min, sec);</span>
 		}
-<span class="nc" id="L66">		return String.format(&quot;%ds&quot;, sec);</span>
+<span class="fc" id="L66">		return String.format(&quot;%ds&quot;, sec);</span>
 	}
 
 }

@@ -100,7 +100,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="fc" id="L100">	}</span>
 
 	public ParticipantBox getVeryfirst() {
-<span class="fc" id="L103">		return participants.values().iterator().next().getParticipantBox();</span>
+<span class="nc" id="L103">		return participants.values().iterator().next().getParticipantBox();</span>
 	}
 
 	public final Rose getSkin() {
@@ -317,8 +317,8 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	private UTranslate getTranslate4(final double delta) {
-<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
-<span class="nc" id="L321">			return UTranslate.dy(-delta);</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (delta &gt; 0)</span>
+<span class="fc" id="L321">			return UTranslate.dy(-delta);</span>
 
 <span class="fc" id="L323">		return UTranslate.none();</span>
 	}
@@ -375,12 +375,12 @@ import net.sourceforge.plantuml.url.Url;
 
 			}
 <span class="fc" id="L377">			final Url url = p.getUrl();</span>
-<span class="pc bpc" id="L378" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L379">				ug.startUrl(url);</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">			if (url != null)</span>
+<span class="fc" id="L379">				ug.startUrl(url);</span>
 
 <span class="fc" id="L381">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L383">				ug.closeUrl();</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">			if (url != null)</span>
+<span class="fc" id="L383">				ug.closeUrl();</span>
 
 <span class="fc" id="L385">		}</span>
 <span class="fc" id="L386">	}</span>

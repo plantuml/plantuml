@@ -121,10 +121,10 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc bfc" id="L121" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.ACTIVITY)</span>
 <span class="fc" id="L122">			return new EntityImageActivity(leaf, bibliotekon);</span>
 
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (/* (leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">				|| leaf.getLeafType() == LeafType.PORTOUT) {</span>
-<span class="fc" id="L126">			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());</span>
-<span class="fc" id="L127">			return new EntityImagePort(leaf, parent, bibliotekon);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (/* (leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">				|| leaf.getLeafType() == LeafType.PORTOUT) {</span>
+<span class="nc" id="L126">			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());</span>
+<span class="nc" id="L127">			return new EntityImagePort(leaf, parent, bibliotekon);</span>
 		}
 
 <span class="fc bfc" id="L130" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.STATE) {</span>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HelpPrint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cli</a> &gt; <span class="el_source">HelpPrint.java</span></div><h1>HelpPrint.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.cli;
+
+import java.nio.charset.Charset;
+
+import net.sourceforge.plantuml.security.SFile;
+
+<span class="nc" id="L42">public class HelpPrint {</span>
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
+
+	private static void printHeader() {
+<span class="fc" id="L47">		System.out.println(&quot;plantuml - generate diagrams from plain text&quot;);</span>
+<span class="fc" id="L48">		System.out.println();</span>
+<span class="fc" id="L49">		System.out.println(&quot;Usage:&quot;);</span>
+<span class="fc" id="L50">		System.out.println(&quot;  java -jar plantuml.jar [options] [file|dir]...&quot;);</span>
+<span class="fc" id="L51">		System.out.println(&quot;  java -jar plantuml.jar [options] -gui&quot;);</span>
+<span class="fc" id="L52">		System.out.println();</span>
+<span class="fc" id="L53">		System.out.println(&quot;Description:&quot;);</span>
+<span class="fc" id="L54">		System.out.println(</span>
+				&quot;  Process PlantUML sources from files, directories (optionally recursive), or stdin (-pipe).&quot;);
+<span class="fc" id="L56">		System.out.println();</span>
+<span class="fc" id="L57">		System.out.println(&quot;Wildcards (for files/dirs):&quot;);</span>
+<span class="fc" id="L58">		System.out.println(&quot;  *   any characters except '/' and '\\'&quot;);</span>
+<span class="fc" id="L59">		System.out.println(&quot;  ?   exactly one character except '/' and '\\'&quot;);</span>
+<span class="fc" id="L60">		System.out.println(&quot;  **  any characters across directories (recursive)&quot;);</span>
+<span class="fc" id="L61">		System.out.println(&quot;  Tip: quote patterns to avoid shell expansion (e.g., \&quot;**/*.puml\&quot;).&quot;);</span>
+<span class="fc" id="L62">		System.out.println();</span>
+<span class="fc" id="L63">		System.out.println(&quot;General:&quot;);</span>
+<span class="fc" id="L64">	}</span>
+
+
+	static public void printHelp() {
+<span class="fc" id="L68">		final String charset = Charset.defaultCharset().displayName();</span>
+<span class="fc" id="L69">		printHeader();</span>
+<span class="fc" id="L70">		getHelpTable(0).printMe(System.out);</span>
+<span class="fc" id="L71">		printFooter();</span>
+<span class="fc" id="L72">	}</span>
+	
+	static public void printHelpMore() {
+<span class="fc" id="L75">		final String charset = Charset.defaultCharset().displayName();</span>
+<span class="fc" id="L76">		printHeader();</span>
+<span class="fc" id="L77">		getHelpTable(1).printMe(System.out);</span>
+<span class="fc" id="L78">		printFooter();</span>
+<span class="fc" id="L79">	}</span>
+
+
+
+	private static void printFooter() {
+<span class="fc" id="L84">		System.out.println();</span>
+<span class="fc" id="L85">		System.out.println();</span>
+<span class="fc" id="L86">		System.out.println(&quot;Examples:&quot;);</span>
+<span class="fc" id="L87">		System.out.println(&quot;  # Process all .puml recursively&quot;);</span>
+<span class="fc" id="L88">		System.out.println(&quot;  java -jar plantuml.jar \&quot;**/*.puml\&quot;&quot;);</span>
+<span class="fc" id="L89">		System.out.println();</span>
+<span class="fc" id="L90">		System.out.println(&quot;  # Check syntax only (CI)&quot;);</span>
+<span class="fc" id="L91">		System.out.println(&quot;  java -jar plantuml.jar -checkonly src/diagrams&quot;);</span>
+<span class="fc" id="L92">		System.out.println();</span>
+<span class="fc" id="L93">		System.out.println(&quot;  # Read from stdin and write to stdout (SVG)&quot;);</span>
+<span class="fc" id="L94">		System.out.println(&quot;  cat diagram.puml | java -jar plantuml.jar -tsvg -pipe &gt; out.svg&quot;);</span>
+<span class="fc" id="L95">		System.out.println();</span>
+<span class="fc" id="L96">		System.out.println(&quot;  # Encode a sprite from an image&quot;);</span>
+<span class="fc" id="L97">		System.out.println(&quot;  java -jar plantuml.jar -encodesprite myicon.png&quot;);</span>
+<span class="fc" id="L98">		System.out.println();</span>
+<span class="fc" id="L99">		System.out.println(&quot;  # Use a define&quot;);</span>
+<span class="fc" id="L100">		System.out.println(&quot;  java -jar plantuml.jar -DAUTHOR=John diagram.puml&quot;);</span>
+<span class="fc" id="L101">		System.out.println();</span>
+<span class="fc" id="L102">		System.out.println(&quot;Exit codes:&quot;);</span>
+<span class="fc" id="L103">		System.out.println(&quot;  0   Success&quot;);</span>
+<span class="fc" id="L104">		System.out.println(&quot;  &gt;0  Error (syntax error or processing failure)&quot;);</span>
+<span class="fc" id="L105">		System.out.println();</span>
+<span class="fc" id="L106">		System.out.println(&quot;See also:&quot;);</span>
+<span class="fc" id="L107">		System.out.println(&quot;  java -jar plantuml.jar -help:more&quot;);</span>
+<span class="fc" id="L108">		System.out.println(&quot;  Documentation: https://plantuml.com&quot;);</span>
+<span class="fc" id="L109">	}</span>
+
+	private static HelpTable getHelpTable(int limit) {
+<span class="fc" id="L112">		final HelpTable table = new HelpTable();</span>
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (CliFlag flag : CliFlag.values()) {</span>
+<span class="fc" id="L115">			final String doc = flag.getFlagDoc();</span>
+<span class="fc" id="L116">			final int level = flag.getFlagLevel();</span>
+<span class="fc" id="L117">			final String newgroup = flag.getNewgroup();</span>
+
+<span class="fc bfc" id="L119" title="All 4 branches covered.">			if (doc != null &amp;&amp; level &lt;= limit) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">				if (newgroup.length() &gt; 0)</span>
+<span class="fc" id="L121">					table.newLine(&quot;&quot;, newgroup);</span>
+
+<span class="fc" id="L123">				table.newLine(flag.getUsage(), doc);</span>
+			}
+		}
+<span class="fc" id="L126">		return table;</span>
+	}
+
+	private void printHelpOld() throws InterruptedException {
+
+<span class="nc" id="L131">		final char separator = SFile.separatorChar;</span>
+<span class="nc" id="L132">		System.out.println(&quot;where options include:&quot;);</span>
+<span class="nc" id="L133">		System.out.println(&quot;    -debugsvek\t\tTo generate intermediate svek files&quot;);</span>
+<span class="nc" id="L134">		System.out.println(</span>
+				&quot;    -encodesprite 4|8|16[z] \&quot;file\&quot;\tTo encode a sprite at gray level (z for compression) from an image&quot;);
+		// System.out.println(&quot; -extractstdlib\tTo extract PlantUML Standard Library
+		// into stdlib folder&quot;);
+<span class="nc" id="L138">		System.out.println(&quot;    -filename \&quot;example.puml\&quot;\tTo override %filename% variable&quot;);</span>
+<span class="nc" id="L139">		System.out.println(&quot;    -pipeimageindex N\tTo generate the Nth image with pipe option&quot;);</span>
+<span class="nc" id="L140">		System.out.println(&quot;    -printfonts\t\tTo print fonts available on your system&quot;);</span>
+<span class="nc" id="L141">		System.out.println(&quot;    -stdlib\t\tTo print standard library info&quot;);</span>
+<span class="nc" id="L142">		System.out.println(&quot;    -syntax\t\tTo report any syntax error from standard input without generating images&quot;);</span>
+		// exit(0);
+<span class="nc" id="L144">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

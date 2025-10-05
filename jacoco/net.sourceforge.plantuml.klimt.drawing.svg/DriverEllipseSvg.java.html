@@ -51,11 +51,11 @@ public class DriverEllipseSvg implements UDriver&lt;UEllipse, SvgGraphics&gt; {
 <span class="fc" id="L51">	}</span>
 
 	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L54">		final double width = shape.getWidth();</span>
-<span class="fc" id="L55">		final double height = shape.getHeight();</span>
+<span class="nc" id="L54">		final double width = shape.getWidth();</span>
+<span class="nc" id="L55">		final double height = shape.getHeight();</span>
 
-<span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (clip != null) {</span>
+<span class="nc" id="L57">		final UClip clip = clipContainer.getClip();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (clip != null) {</span>
 <span class="nc bnc" id="L59" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
 <span class="nc" id="L60">				return;</span>
 			}
@@ -64,17 +64,17 @@ public class DriverEllipseSvg implements UDriver&lt;UEllipse, SvgGraphics&gt; {
 			}
 		}
 
-<span class="fc" id="L67">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
-<span class="fc" id="L68">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
+<span class="nc" id="L67">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc" id="L68">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
 
-<span class="fc" id="L70">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="nc" id="L70">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="fc" id="L72">		double start = shape.getStart();</span>
-<span class="fc" id="L73">		final double extend = shape.getExtend();</span>
-<span class="fc" id="L74">		final double cx = x + width / 2;</span>
-<span class="fc" id="L75">		final double cy = y + height / 2;</span>
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
-<span class="fc" id="L77">			svg.svgEllipse(cx, cy, width / 2, height / 2, shape.getDeltaShadow());</span>
+<span class="nc" id="L72">		double start = shape.getStart();</span>
+<span class="nc" id="L73">		final double extend = shape.getExtend();</span>
+<span class="nc" id="L74">		final double cx = x + width / 2;</span>
+<span class="nc" id="L75">		final double cy = y + height / 2;</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
+<span class="nc" id="L77">			svg.svgEllipse(cx, cy, width / 2, height / 2, shape.getDeltaShadow());</span>
 		} else {
 <span class="nc" id="L79">			start = start + 90;</span>
 <span class="nc bnc" id="L80" title="All 2 branches missed.">			if (extend &gt; 0) {</span>
@@ -93,7 +93,7 @@ public class DriverEllipseSvg implements UDriver&lt;UEllipse, SvgGraphics&gt; {
 
 			}
 		}
-<span class="fc" id="L96">	}</span>
+<span class="nc" id="L96">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

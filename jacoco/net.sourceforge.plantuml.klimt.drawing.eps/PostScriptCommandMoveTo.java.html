@@ -40,13 +40,13 @@ public class PostScriptCommandMoveTo implements PostScriptCommand {
 	private final double x;
 	private final double y;
 
-<span class="nc" id="L43">	public PostScriptCommandMoveTo(double x, double y) {</span>
-<span class="nc" id="L44">		this.x = x;</span>
-<span class="nc" id="L45">		this.y = y;</span>
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L43">	public PostScriptCommandMoveTo(double x, double y) {</span>
+<span class="fc" id="L44">		this.x = x;</span>
+<span class="fc" id="L45">		this.y = y;</span>
+<span class="fc" id="L46">	}</span>
 
 	public String toPostString() {
-<span class="nc" id="L49">		return EpsGraphics.format(x) + &quot; &quot; + EpsGraphics.format(y) + &quot; moveto&quot;;</span>
+<span class="fc" id="L49">		return EpsGraphics.format(x) + &quot; &quot; + EpsGraphics.format(y) + &quot; moveto&quot;;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

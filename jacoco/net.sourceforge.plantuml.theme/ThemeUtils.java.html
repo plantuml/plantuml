@@ -94,8 +94,8 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L94">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
 <span class="fc" id="L95">		final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
 <span class="fc" id="L96">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L98">			return null;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (is == null)</span>
+<span class="fc" id="L98">			return null;</span>
 
 <span class="fc" id="L100">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
 	}
@@ -122,7 +122,7 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static String getFilename(String filename) {
-<span class="nc" id="L125">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
+<span class="fc" id="L125">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
 	}
 
 }

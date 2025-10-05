@@ -61,16 +61,16 @@ public class SpriteUtils {
 	}
 
 	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
-<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
-<span class="nc" id="L65">		sb.append(</span>
-<span class="nc" id="L66">				&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;] {\n&quot;);</span>
-<span class="nc" id="L67">		final List&lt;String&gt; result = level.encode(img);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (String s : result) {</span>
-<span class="nc" id="L69">			sb.append(s);</span>
-<span class="nc" id="L70">			sb.append(BackSlash.NEWLINE);</span>
-<span class="nc" id="L71">		}</span>
-<span class="nc" id="L72">		sb.append(&quot;}\n&quot;);</span>
-<span class="nc" id="L73">		return sb.toString();</span>
+<span class="fc" id="L64">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
+<span class="fc" id="L65">		sb.append(</span>
+<span class="fc" id="L66">				&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;] {\n&quot;);</span>
+<span class="fc" id="L67">		final List&lt;String&gt; result = level.encode(img);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		for (String s : result) {</span>
+<span class="fc" id="L69">			sb.append(s);</span>
+<span class="fc" id="L70">			sb.append(BackSlash.NEWLINE);</span>
+<span class="fc" id="L71">		}</span>
+<span class="fc" id="L72">		sb.append(&quot;}\n&quot;);</span>
+<span class="fc" id="L73">		return sb.toString();</span>
 	}
 
 	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {

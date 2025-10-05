@@ -60,7 +60,7 @@ public class FileSystem {
 <span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (dir == null) {</span>
 <span class="nc" id="L61">			this.currentDir.set(null);</span>
 		} else {
-<span class="pc" id="L63">			Log.info(() -&gt; &quot;Setting current dir: &quot; + dir.getAbsolutePath());</span>
+<span class="fc" id="L63">			Log.info(() -&gt; &quot;Setting current dir: &quot; + dir.getAbsolutePath());</span>
 <span class="fc" id="L64">			this.currentDir.set(dir.getAbsolutePath());</span>
 		}
 <span class="fc" id="L66">	}</span>
@@ -68,11 +68,11 @@ public class FileSystem {
 	public SFile getCurrentDir() {
 		// ::comment when __CORE__
 <span class="fc" id="L70">		final String path = this.currentDir.get();</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (path != null)</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (path != null)</span>
 <span class="fc" id="L72">			return new SFile(path);</span>
 		// ::done
 
-<span class="nc" id="L75">		return null;</span>
+<span class="fc" id="L75">		return null;</span>
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-<span class="fc" id="L49">public abstract class UBrexCommandMultilines2&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
+<span class="nc" id="L49">public abstract class UBrexCommandMultilines2&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
 
 	private final UnicodeBracketedExpression starting;
 
@@ -57,14 +57,14 @@ import net.sourceforge.plantuml.utils.BlocLines;
 	private final Lazy&lt;UnicodeBracketedExpression&gt; end;
 
 	public UBrexCommandMultilines2(UnicodeBracketedExpression patternStart, MultilinesStrategy strategy, Trim trimEnd,
-<span class="fc" id="L60">			Lazy&lt;UnicodeBracketedExpression&gt; end) {</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		assert end != null;</span>
+<span class="nc" id="L60">			Lazy&lt;UnicodeBracketedExpression&gt; end) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		assert end != null;</span>
 
-<span class="fc" id="L63">		this.strategy = strategy;</span>
-<span class="fc" id="L64">		this.starting = patternStart;</span>
-<span class="fc" id="L65">		this.trimEnd = trimEnd;</span>
-<span class="fc" id="L66">		this.end = end;</span>
-<span class="fc" id="L67">	}</span>
+<span class="nc" id="L63">		this.strategy = strategy;</span>
+<span class="nc" id="L64">		this.starting = patternStart;</span>
+<span class="nc" id="L65">		this.trimEnd = trimEnd;</span>
+<span class="nc" id="L66">		this.end = end;</span>
+<span class="nc" id="L67">	}</span>
 
 	public boolean syntaxWithFinalBracket() {
 <span class="nc" id="L70">		return false;</span>

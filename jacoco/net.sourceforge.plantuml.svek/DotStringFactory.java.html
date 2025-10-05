@@ -90,7 +90,7 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	public Bibliotekon getBibliotekon() {
-<span class="nc" id="L93">		return bibliotekon;</span>
+<span class="fc" id="L93">		return bibliotekon;</span>
 	}
 
 	private double getVerticalDzeta(StringBounder stringBounder) {
@@ -261,19 +261,19 @@ public final class DotStringFactory implements Moveable {
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (graphvizVersion == null)</span>
-<span class="nc" id="L265">			graphvizVersion = getGraphvizVersionInternal();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (graphvizVersion == null)</span>
+<span class="fc" id="L265">			graphvizVersion = getGraphvizVersionInternal();</span>
 
-<span class="nc" id="L267">		return graphvizVersion;</span>
+<span class="fc" id="L267">		return graphvizVersion;</span>
 	}
 
 	private GraphvizVersion getGraphvizVersionInternal() {
-<span class="nc" id="L271">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;foo;&quot;, &quot;svg&quot;);</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
+<span class="fc" id="L271">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;foo;&quot;, &quot;svg&quot;);</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
 <span class="nc" id="L273">			return GraphvizJs.getGraphvizVersion(false);</span>
 
-<span class="nc" id="L275">		final File f = graphviz.getDotExe();</span>
-<span class="nc" id="L276">		return GraphvizRuntimeEnvironment.getInstance().getVersion(f);</span>
+<span class="fc" id="L275">		final File f = graphviz.getDotExe();</span>
+<span class="fc" id="L276">		return GraphvizRuntimeEnvironment.getInstance().getVersion(f);</span>
 	}
 
 	public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotOptions)
@@ -317,17 +317,17 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	public boolean illegalDotExe() {
-<span class="nc" id="L320">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
-<span class="nc bnc" id="L321" title="All 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
+<span class="fc" id="L320">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
 <span class="nc" id="L322">			return false;</span>
 
-<span class="nc" id="L324">		final File dotExe = graphviz.getDotExe();</span>
-<span class="nc bnc" id="L325" title="All 6 branches missed.">		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;</span>
+<span class="fc" id="L324">		final File dotExe = graphviz.getDotExe();</span>
+<span class="pc bpc" id="L325" title="4 of 6 branches missed.">		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;</span>
 	}
 
 	public File getDotExe() {
-<span class="nc" id="L329">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
-<span class="nc" id="L330">		return graphviz.getDotExe();</span>
+<span class="fc" id="L329">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
+<span class="fc" id="L330">		return graphviz.getDotExe();</span>
 	}
 
 <span class="fc" id="L333">	private static final Pattern pGraph = Pattern.compile(&quot;(?m)\\&lt;svg\\s+width=\&quot;(\\d+)pt\&quot;\\s+height=\&quot;(\\d+)pt\&quot;&quot;);</span>

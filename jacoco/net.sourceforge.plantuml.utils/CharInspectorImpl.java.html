@@ -59,9 +59,9 @@ public class CharInspectorImpl implements CharInspector {
 	}
 
 	private String getCurrentLine() {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (insertNewlines)</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (insertNewlines)</span>
 <span class="fc" id="L63">			return data.getAt(line).getTrimmed().getString() + &quot;\n&quot;;</span>
-<span class="fc" id="L64">		return data.getAt(line).getTrimmed().getString();</span>
+<span class="nc" id="L64">		return data.getAt(line).getTrimmed().getString();</span>
 	}
 
 	@Override

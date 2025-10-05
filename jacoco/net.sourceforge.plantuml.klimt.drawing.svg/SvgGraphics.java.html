@@ -165,14 +165,14 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (option.getHover() != null)</span>
 <span class="nc" id="L166">				defs.appendChild(getPathHover(option.getHover()));</span>
 
-<span class="fc bfc" id="L168" title="All 2 branches covered.">			if (option.isInteractive()) {</span>
-<span class="fc" id="L169">				final Element styles = getStylesForInteractiveMode();</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (styles != null)</span>
-<span class="fc" id="L171">					defs.appendChild(styles);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (option.isInteractive()) {</span>
+<span class="nc" id="L169">				final Element styles = getStylesForInteractiveMode();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">				if (styles != null)</span>
+<span class="nc" id="L171">					defs.appendChild(styles);</span>
 
-<span class="fc" id="L173">				final Element script = getScriptForInteractiveMode();</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">				if (script != null)</span>
-<span class="fc" id="L175">					defs.appendChild(script);</span>
+<span class="nc" id="L173">				final Element script = getScriptForInteractiveMode();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">				if (script != null)</span>
+<span class="nc" id="L175">					defs.appendChild(script);</span>
 			}
 
 <span class="fc" id="L178">			final HColor backcolor = option.getBackcolor();</span>
@@ -188,9 +188,9 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 			} else {
 <span class="fc" id="L189">				this.backcolorString = backcolor.toSvg(option.getColorMapper());</span>
 <span class="fc" id="L190">				final String color = backcolor.toSvg(option.getColorMapper());</span>
-<span class="pc bpc" id="L191" title="2 of 4 branches missed.">				if (color.equals(&quot;#00000000&quot;) == false &amp;&amp; color.equals(&quot;#000000&quot;) == false</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">						&amp;&amp; color.equals(&quot;#FFFFFF&quot;) == false)</span>
-<span class="nc" id="L193">					this.paintBackcolor(color);</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">				if (color.equals(&quot;#00000000&quot;) == false &amp;&amp; color.equals(&quot;#000000&quot;) == false</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">						&amp;&amp; color.equals(&quot;#FFFFFF&quot;) == false)</span>
+<span class="fc" id="L193">					this.paintBackcolor(color);</span>
 			}
 
 <span class="nc" id="L196">		} catch (ParserConfigurationException e) {</span>
@@ -212,22 +212,22 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="nc" id="L212">	}</span>
 
 	private void paintBackcolor(String back) {
-<span class="nc" id="L215">		setFillColor(back);</span>
-<span class="nc" id="L216">		setStrokeColor(null);</span>
-<span class="nc" id="L217">		pendingBackground = createRectangleInternal(0, 0, 0, 0);</span>
-<span class="nc" id="L218">		getG().appendChild(pendingBackground);</span>
-<span class="nc" id="L219">	}</span>
+<span class="fc" id="L215">		setFillColor(back);</span>
+<span class="fc" id="L216">		setStrokeColor(null);</span>
+<span class="fc" id="L217">		pendingBackground = createRectangleInternal(0, 0, 0, 0);</span>
+<span class="fc" id="L218">		getG().appendChild(pendingBackground);</span>
+<span class="fc" id="L219">	}</span>
 
 	private Element getStylesForInteractiveMode() {
-<span class="fc" id="L222">		final Element style = simpleElement(&quot;style&quot;);</span>
-<span class="fc" id="L223">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.css&quot;);</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (text == null)</span>
+<span class="nc" id="L222">		final Element style = simpleElement(&quot;style&quot;);</span>
+<span class="nc" id="L223">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.css&quot;);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (text == null)</span>
 <span class="nc" id="L225">			return null;</span>
 
-<span class="fc" id="L227">		final CDATASection cdata = document.createCDATASection(text);</span>
-<span class="fc" id="L228">		style.setAttribute(&quot;type&quot;, &quot;text/css&quot;);</span>
-<span class="fc" id="L229">		style.appendChild(cdata);</span>
-<span class="fc" id="L230">		return style;</span>
+<span class="nc" id="L227">		final CDATASection cdata = document.createCDATASection(text);</span>
+<span class="nc" id="L228">		style.setAttribute(&quot;type&quot;, &quot;text/css&quot;);</span>
+<span class="nc" id="L229">		style.appendChild(cdata);</span>
+<span class="nc" id="L230">		return style;</span>
 	}
 
 //	private Element getStylesForDarkness() {
@@ -259,22 +259,22 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 //	}
 
 	private Element getScriptForInteractiveMode() {
-<span class="fc" id="L262">		final Element script = document.createElement(&quot;script&quot;);</span>
-<span class="fc" id="L263">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.js&quot;);</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (text == null)</span>
+<span class="nc" id="L262">		final Element script = document.createElement(&quot;script&quot;);</span>
+<span class="nc" id="L263">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.js&quot;);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (text == null)</span>
 <span class="nc" id="L265">			return null;</span>
 
-<span class="fc" id="L267">		script.setTextContent(text);</span>
-<span class="fc" id="L268">		return script;</span>
+<span class="nc" id="L267">		script.setTextContent(text);</span>
+<span class="nc" id="L268">		return script;</span>
 	}
 
 	private static String getData(final String name) {
 		try {
-<span class="fc" id="L273">			final InputStream is = SvgGraphics.class.getResourceAsStream(&quot;/svg/&quot; + name);</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">			if (is == null)</span>
+<span class="nc" id="L273">			final InputStream is = SvgGraphics.class.getResourceAsStream(&quot;/svg/&quot; + name);</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">			if (is == null)</span>
 <span class="nc" id="L275">				Log.error(&quot;Cannot retrieve &quot; + name);</span>
 			else
-<span class="fc" id="L277">				return FileUtils.readText(is);</span>
+<span class="nc" id="L277">				return FileUtils.readText(is);</span>
 <span class="nc" id="L278">		} catch (IOException e) {</span>
 <span class="nc" id="L279">			Logme.error(e);</span>
 <span class="nc" id="L280">		}</span>
@@ -325,11 +325,11 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc" id="L325">		svg.setAttribute(&quot;xmlns:xlink&quot;, &quot;http://www.w3.org/1999/xlink&quot;);</span>
 <span class="fc" id="L326">		svg.setAttribute(&quot;version&quot;, &quot;1.1&quot;);</span>
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (option.getTitle() != null) {</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (option.getTitle() != null) {</span>
 			// Create a title element and set its text
-<span class="nc" id="L330">			final Element title = document.createElement(&quot;title&quot;);</span>
-<span class="nc" id="L331">			title.setTextContent(option.getTitle());</span>
-<span class="nc" id="L332">			svg.appendChild(title);</span>
+<span class="fc" id="L330">			final Element title = document.createElement(&quot;title&quot;);</span>
+<span class="fc" id="L331">			title.setTextContent(option.getTitle());</span>
+<span class="fc" id="L332">			svg.appendChild(title);</span>
 		}
 
 <span class="fc" id="L335">		final String desc = option.getDesc();</span>
@@ -343,20 +343,20 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 	}
 
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
-<span class="fc" id="L346">		manageShadow(deltaShadow);</span>
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (hidden == false) {</span>
-<span class="fc" id="L348">			final Element elt = document.createElement(&quot;ellipse&quot;);</span>
-<span class="fc" id="L349">			elt.setAttribute(&quot;cx&quot;, format(x));</span>
-<span class="fc" id="L350">			elt.setAttribute(&quot;cy&quot;, format(y));</span>
-<span class="fc" id="L351">			elt.setAttribute(&quot;rx&quot;, format(xRadius));</span>
-<span class="fc" id="L352">			elt.setAttribute(&quot;ry&quot;, format(yRadius));</span>
-<span class="fc" id="L353">			fillMe(elt);</span>
-<span class="fc" id="L354">			styleMe(elt);</span>
-<span class="fc" id="L355">			addFilterShadowId(elt, deltaShadow);</span>
-<span class="fc" id="L356">			getG().appendChild(elt);</span>
+<span class="nc" id="L346">		manageShadow(deltaShadow);</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (hidden == false) {</span>
+<span class="nc" id="L348">			final Element elt = document.createElement(&quot;ellipse&quot;);</span>
+<span class="nc" id="L349">			elt.setAttribute(&quot;cx&quot;, format(x));</span>
+<span class="nc" id="L350">			elt.setAttribute(&quot;cy&quot;, format(y));</span>
+<span class="nc" id="L351">			elt.setAttribute(&quot;rx&quot;, format(xRadius));</span>
+<span class="nc" id="L352">			elt.setAttribute(&quot;ry&quot;, format(yRadius));</span>
+<span class="nc" id="L353">			fillMe(elt);</span>
+<span class="nc" id="L354">			styleMe(elt);</span>
+<span class="nc" id="L355">			addFilterShadowId(elt, deltaShadow);</span>
+<span class="nc" id="L356">			getG().appendChild(elt);</span>
 		}
-<span class="fc" id="L358">		ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);</span>
-<span class="fc" id="L359">	}</span>
+<span class="nc" id="L358">		ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);</span>
+<span class="nc" id="L359">	}</span>
 
 	public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
 <span class="nc bnc" id="L362" title="All 2 branches missed.">		if (hidden == false) {</span>
@@ -578,11 +578,11 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc bfc" id="L578" title="All 2 branches covered.">			if (fontWeight != null)</span>
 <span class="fc" id="L579">				elt.setAttribute(&quot;font-weight&quot;, fontWeight);</span>
 
-<span class="pc bpc" id="L581" title="1 of 2 branches missed.">			if (fontStyle != null)</span>
-<span class="nc" id="L582">				elt.setAttribute(&quot;font-style&quot;, fontStyle);</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">			if (fontStyle != null)</span>
+<span class="fc" id="L582">				elt.setAttribute(&quot;font-style&quot;, fontStyle);</span>
 
-<span class="pc bpc" id="L584" title="1 of 2 branches missed.">			if (textDecoration != null)</span>
-<span class="nc" id="L585">				elt.setAttribute(&quot;text-decoration&quot;, textDecoration);</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">			if (textDecoration != null)</span>
+<span class="fc" id="L585">				elt.setAttribute(&quot;text-decoration&quot;, textDecoration);</span>
 
 <span class="pc bpc" id="L587" title="1 of 2 branches missed.">			if (fontFamily != null) {</span>
 
@@ -590,13 +590,13 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="nc" id="L590">					addRoboto();</span>
 
 				// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
-<span class="pc bpc" id="L593" title="1 of 2 branches missed.">				if (&quot;monospaced&quot;.equalsIgnoreCase(fontFamily))</span>
-<span class="nc" id="L594">					fontFamily = &quot;monospace&quot;;</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">				if (&quot;monospaced&quot;.equalsIgnoreCase(fontFamily))</span>
+<span class="fc" id="L594">					fontFamily = &quot;monospace&quot;;</span>
 
 <span class="fc" id="L596">				elt.setAttribute(&quot;font-family&quot;, fontFamily);</span>
 
-<span class="pc bpc" id="L598" title="2 of 4 branches missed.">				if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))</span>
-<span class="nc" id="L599">					text = text.replace(' ', (char) 160);</span>
+<span class="pc bpc" id="L598" title="1 of 4 branches missed.">				if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))</span>
+<span class="fc" id="L599">					text = text.replace(' ', (char) 160);</span>
 
 			}
 <span class="pc bpc" id="L602" title="1 of 2 branches missed.">			if (textBackColor != null) {</span>
@@ -658,7 +658,7 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 
 	private Transformer getTransformer() throws TransformerException {
 <span class="fc" id="L660">		final Transformer transformer = XmlFactories.newTransformer();</span>
-<span class="pc" id="L661">		Log.info(() -&gt; &quot;Transformer=&quot; + transformer.getClass());</span>
+<span class="fc" id="L661">		Log.info(() -&gt; &quot;Transformer=&quot; + transformer.getClass());</span>
 
 		// // Sets the standalone property in the first line of
 		// // the output file.
@@ -711,9 +711,9 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 		// root.setAttribute(&quot;contentScriptType&quot;, &quot;application/ecmascript&quot;);
 <span class="fc" id="L712">		root.setAttribute(&quot;contentStyleType&quot;, &quot;text/css&quot;);</span>
 
-<span class="pc bpc" id="L714" title="1 of 2 branches missed.">		if (pendingBackground != null) {</span>
-<span class="nc" id="L715">			pendingBackground.setAttribute(&quot;width&quot;, format(maxX));</span>
-<span class="nc" id="L716">			pendingBackground.setAttribute(&quot;height&quot;, format(maxY));</span>
+<span class="fc bfc" id="L714" title="All 2 branches covered.">		if (pendingBackground != null) {</span>
+<span class="fc" id="L715">			pendingBackground.setAttribute(&quot;width&quot;, format(maxX));</span>
+<span class="fc" id="L716">			pendingBackground.setAttribute(&quot;height&quot;, format(maxY));</span>
 		}
 
 		// Get a StreamResult object that points to the
@@ -724,59 +724,59 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc" id="L724">	}</span>
 
 	public void svgPath(double x, double y, UPath path, double deltaShadow) {
-<span class="fc" id="L727">		manageShadow(deltaShadow);</span>
-<span class="fc" id="L728">		ensureVisible(x, y);</span>
-<span class="fc" id="L729">		final StringBuilder sb = new StringBuilder(path.size() * 12);</span>
-<span class="fc bfc" id="L730" title="All 2 branches covered.">		for (USegment seg : path) {</span>
-<span class="fc" id="L731">			final USegmentType type = seg.getSegmentType();</span>
-<span class="fc" id="L732">			final double coord[] = seg.getCoord();</span>
-<span class="fc bfc" id="L733" title="All 2 branches covered.">			if (type == USegmentType.SEG_MOVETO) {</span>
-<span class="fc" id="L734">				sb.append(&quot;M&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
-<span class="fc" id="L735">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="fc bfc" id="L736" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_LINETO) {</span>
-<span class="fc" id="L737">				sb.append(&quot;L&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
-<span class="fc" id="L738">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="pc bpc" id="L739" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="nc" id="L727">		manageShadow(deltaShadow);</span>
+<span class="nc" id="L728">		ensureVisible(x, y);</span>
+<span class="nc" id="L729">		final StringBuilder sb = new StringBuilder(path.size() * 12);</span>
+<span class="nc bnc" id="L730" title="All 2 branches missed.">		for (USegment seg : path) {</span>
+<span class="nc" id="L731">			final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L732">			final double coord[] = seg.getCoord();</span>
+<span class="nc bnc" id="L733" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L734">				sb.append(&quot;M&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
+<span class="nc" id="L735">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
+<span class="nc bnc" id="L736" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L737">				sb.append(&quot;L&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
+<span class="nc" id="L738">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
+<span class="nc bnc" id="L739" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
 <span class="nc" id="L740">				sb.append(&quot;Q&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
 <span class="nc" id="L741">						+ format(coord[3] + y) + &quot; &quot;);</span>
 <span class="nc" id="L742">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
 <span class="nc" id="L743">				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);</span>
-<span class="fc bfc" id="L744" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
-<span class="fc" id="L745">				sb.append(&quot;C&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
-<span class="fc" id="L746">						+ format(coord[3] + y) + &quot; &quot; + format(coord[4] + x) + &quot;,&quot; + format(coord[5] + y) + &quot; &quot;);</span>
-<span class="fc" id="L747">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="fc" id="L748">				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);</span>
-<span class="fc" id="L749">				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);</span>
-<span class="pc bpc" id="L750" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="nc bnc" id="L744" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L745">				sb.append(&quot;C&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
+<span class="nc" id="L746">						+ format(coord[3] + y) + &quot; &quot; + format(coord[4] + x) + &quot;,&quot; + format(coord[5] + y) + &quot; &quot;);</span>
+<span class="nc" id="L747">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
+<span class="nc" id="L748">				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);</span>
+<span class="nc" id="L749">				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);</span>
+<span class="nc bnc" id="L750" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
 				// A25,25 0,0 5,395,40
-<span class="fc" id="L752">				sb.append(&quot;A&quot; + format(coord[0]) + &quot;,&quot; + format(coord[1]) + &quot; &quot; + format(coord[2]) + &quot; &quot;</span>
-<span class="fc" id="L753">						+ formatBoolean(coord[3]) + &quot; &quot; + formatBoolean(coord[4]) + &quot; &quot; + format(coord[5] + x) + &quot;,&quot;</span>
-<span class="fc" id="L754">						+ format(coord[6] + y) + &quot; &quot;);</span>
-<span class="fc" id="L755">				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);</span>
+<span class="nc" id="L752">				sb.append(&quot;A&quot; + format(coord[0]) + &quot;,&quot; + format(coord[1]) + &quot; &quot; + format(coord[2]) + &quot; &quot;</span>
+<span class="nc" id="L753">						+ formatBoolean(coord[3]) + &quot; &quot; + formatBoolean(coord[4]) + &quot; &quot; + format(coord[5] + x) + &quot;,&quot;</span>
+<span class="nc" id="L754">						+ format(coord[6] + y) + &quot; &quot;);</span>
+<span class="nc" id="L755">				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);</span>
 <span class="nc bnc" id="L756" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
 				// Nothing
 			} else {
 <span class="nc" id="L759">				Log.println(&quot;unknown3 &quot; + seg);</span>
 			}
 
-<span class="fc" id="L762">		}</span>
-<span class="pc bpc" id="L763" title="1 of 2 branches missed.">		if (hidden == false) {</span>
-<span class="fc" id="L764">			final Element elt = document.createElement(&quot;path&quot;);</span>
-<span class="fc" id="L765">			elt.setAttribute(&quot;d&quot;, sb.toString().trim());</span>
-<span class="fc" id="L766">			styleMe(elt);</span>
-<span class="fc" id="L767">			fillMe(elt);</span>
-<span class="fc" id="L768">			final String id = path.getComment();</span>
-<span class="pc bpc" id="L769" title="1 of 2 branches missed.">			if (id != null)</span>
+<span class="nc" id="L762">		}</span>
+<span class="nc bnc" id="L763" title="All 2 branches missed.">		if (hidden == false) {</span>
+<span class="nc" id="L764">			final Element elt = document.createElement(&quot;path&quot;);</span>
+<span class="nc" id="L765">			elt.setAttribute(&quot;d&quot;, sb.toString().trim());</span>
+<span class="nc" id="L766">			styleMe(elt);</span>
+<span class="nc" id="L767">			fillMe(elt);</span>
+<span class="nc" id="L768">			final String id = path.getComment();</span>
+<span class="nc bnc" id="L769" title="All 2 branches missed.">			if (id != null)</span>
 <span class="nc" id="L770">				elt.setAttribute(&quot;id&quot;, id);</span>
 
-<span class="fc" id="L772">			final String codeLine = path.getCodeLine();</span>
-<span class="pc bpc" id="L773" title="1 of 2 branches missed.">			if (codeLine != null)</span>
+<span class="nc" id="L772">			final String codeLine = path.getCodeLine();</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">			if (codeLine != null)</span>
 <span class="nc" id="L774">				elt.setAttribute(&quot;codeLine&quot;, codeLine);</span>
 
-<span class="fc" id="L776">			addFilterShadowId(elt, deltaShadow);</span>
-<span class="fc" id="L777">			getG().appendChild(elt);</span>
+<span class="nc" id="L776">			addFilterShadowId(elt, deltaShadow);</span>
+<span class="nc" id="L777">			getG().appendChild(elt);</span>
 		}
-<span class="fc" id="L779">	}</span>
+<span class="nc" id="L779">	}</span>
 
 	private void fillMe(Element elt) {
 <span class="fc bfc" id="L782" title="All 2 branches covered.">		if (fill.matches(&quot;#[0-9A-Fa-f]{8}&quot;)) {</span>
@@ -797,24 +797,24 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc" id="L797">	private StringBuilder currentPath = null;</span>
 
 	public void newpath() {
-<span class="fc" id="L800">		currentPath = new StringBuilder();</span>
+<span class="nc" id="L800">		currentPath = new StringBuilder();</span>
 
-<span class="fc" id="L802">	}</span>
+<span class="nc" id="L802">	}</span>
 
 	public void moveto(double x, double y) {
-<span class="fc" id="L805">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="fc" id="L806">		ensureVisible(x, y);</span>
-<span class="fc" id="L807">	}</span>
+<span class="nc" id="L805">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="nc" id="L806">		ensureVisible(x, y);</span>
+<span class="nc" id="L807">	}</span>
 
 	public void lineto(double x, double y) {
-<span class="fc" id="L810">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="fc" id="L811">		ensureVisible(x, y);</span>
-<span class="fc" id="L812">	}</span>
+<span class="nc" id="L810">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="nc" id="L811">		ensureVisible(x, y);</span>
+<span class="nc" id="L812">	}</span>
 
 	public void closepath() {
-<span class="fc" id="L815">		currentPath.append(&quot;Z &quot;);</span>
+<span class="nc" id="L815">		currentPath.append(&quot;Z &quot;);</span>
 
-<span class="fc" id="L817">	}</span>
+<span class="nc" id="L817">	}</span>
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
 <span class="nc" id="L820">		currentPath.append(&quot;C&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot; + format(x3)</span>
@@ -826,10 +826,10 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="nc" id="L826">	}</span>
 
 	public void quadto(double x1, double y1, double x2, double y2) {
-<span class="fc" id="L829">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
-<span class="fc" id="L830">		ensureVisible(x1, y1);</span>
-<span class="fc" id="L831">		ensureVisible(x2, y2);</span>
-<span class="fc" id="L832">	}</span>
+<span class="nc" id="L829">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
+<span class="nc" id="L830">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L831">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L832">	}</span>
 
 	private String format(double xx) {
 <span class="fc" id="L835">		final double x = xx * option.getScale();</span>
@@ -853,60 +853,60 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 	}
 
 	private String formatBoolean(double x) {
-<span class="fc bfc" id="L856" title="All 2 branches covered.">		return x == 0 ? &quot;0&quot; : &quot;1&quot;;</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">		return x == 0 ? &quot;0&quot; : &quot;1&quot;;</span>
 	}
 
 	public void fill(int windingRule) {
-<span class="pc bpc" id="L860" title="1 of 2 branches missed.">		if (hidden == false) {</span>
-<span class="fc" id="L861">			final Element elt = document.createElement(&quot;path&quot;);</span>
-<span class="fc" id="L862">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
-<span class="fc" id="L863">			fillMe(elt);</span>
-<span class="fc" id="L864">			getG().appendChild(elt);</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">		if (hidden == false) {</span>
+<span class="nc" id="L861">			final Element elt = document.createElement(&quot;path&quot;);</span>
+<span class="nc" id="L862">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
+<span class="nc" id="L863">			fillMe(elt);</span>
+<span class="nc" id="L864">			getG().appendChild(elt);</span>
 		}
-<span class="fc" id="L866">		currentPath = null;</span>
+<span class="nc" id="L866">		currentPath = null;</span>
 
-<span class="fc" id="L868">	}</span>
+<span class="nc" id="L868">	}</span>
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
 
-<span class="fc" id="L872">		this.newpath();</span>
-<span class="fc" id="L873">		final double coord[] = new double[6];</span>
-<span class="fc bfc" id="L874" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
-<span class="fc" id="L875">			final int code = path.currentSegment(coord);</span>
-<span class="fc bfc" id="L876" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO)</span>
-<span class="fc" id="L877">				this.moveto(coord[0] + x, coord[1] + y);</span>
-<span class="fc bfc" id="L878" title="All 2 branches covered.">			else if (code == PathIterator.SEG_LINETO)</span>
-<span class="fc" id="L879">				this.lineto(coord[0] + x, coord[1] + y);</span>
-<span class="fc bfc" id="L880" title="All 2 branches covered.">			else if (code == PathIterator.SEG_CLOSE)</span>
-<span class="fc" id="L881">				this.closepath();</span>
-<span class="pc bpc" id="L882" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
+<span class="nc" id="L872">		this.newpath();</span>
+<span class="nc" id="L873">		final double coord[] = new double[6];</span>
+<span class="nc bnc" id="L874" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
+<span class="nc" id="L875">			final int code = path.currentSegment(coord);</span>
+<span class="nc bnc" id="L876" title="All 2 branches missed.">			if (code == PathIterator.SEG_MOVETO)</span>
+<span class="nc" id="L877">				this.moveto(coord[0] + x, coord[1] + y);</span>
+<span class="nc bnc" id="L878" title="All 2 branches missed.">			else if (code == PathIterator.SEG_LINETO)</span>
+<span class="nc" id="L879">				this.lineto(coord[0] + x, coord[1] + y);</span>
+<span class="nc bnc" id="L880" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CLOSE)</span>
+<span class="nc" id="L881">				this.closepath();</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
 <span class="nc" id="L883">				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
-<span class="pc bpc" id="L884" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
-<span class="fc" id="L885">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
+<span class="nc" id="L885">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
 			else
 <span class="nc" id="L887">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 
-<span class="fc" id="L889">			path.next();</span>
-<span class="fc" id="L890">		}</span>
+<span class="nc" id="L889">			path.next();</span>
+<span class="nc" id="L890">		}</span>
 
-<span class="fc" id="L892">		this.fill(path.getWindingRule());</span>
+<span class="nc" id="L892">		this.fill(path.getWindingRule());</span>
 
-<span class="fc" id="L894">	}</span>
+<span class="nc" id="L894">	}</span>
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
-<span class="nc bnc" id="L897" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L898">			final Element elt = document.createElement(&quot;image&quot;);</span>
-<span class="nc" id="L899">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
-<span class="nc" id="L900">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
-<span class="nc" id="L901">			elt.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L902">			elt.setAttribute(&quot;y&quot;, format(y));</span>
-<span class="nc" id="L903">			final String s = toBase64(image);</span>
-<span class="nc" id="L904">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/png;base64,&quot; + s);</span>
-<span class="nc" id="L905">			getG().appendChild(elt);</span>
+<span class="pc bpc" id="L897" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L898">			final Element elt = document.createElement(&quot;image&quot;);</span>
+<span class="fc" id="L899">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
+<span class="fc" id="L900">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
+<span class="fc" id="L901">			elt.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="fc" id="L902">			elt.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="fc" id="L903">			final String s = toBase64(image);</span>
+<span class="fc" id="L904">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/png;base64,&quot; + s);</span>
+<span class="fc" id="L905">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L907">		ensureVisible(x, y);</span>
-<span class="nc" id="L908">		ensureVisible(x + image.getWidth(), y + image.getHeight());</span>
-<span class="nc" id="L909">	}</span>
+<span class="fc" id="L907">		ensureVisible(x, y);</span>
+<span class="fc" id="L908">		ensureVisible(x + image.getWidth(), y + image.getHeight());</span>
+<span class="fc" id="L909">	}</span>
 
 <span class="fc" id="L911">	private final Map&lt;String, String&gt; images = new HashMap&lt;String, String&gt;();</span>
 
@@ -979,10 +979,10 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 	}
 
 	private String toBase64(BufferedImage image) throws IOException {
-<span class="nc" id="L982">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L983">		SImageIO.write(image, &quot;png&quot;, baos);</span>
-<span class="nc" id="L984">		final byte data[] = baos.toByteArray();</span>
-<span class="nc" id="L985">		return new String(Base64Coder.encode(data));</span>
+<span class="fc" id="L982">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L983">		SImageIO.write(image, &quot;png&quot;, baos);</span>
+<span class="fc" id="L984">		final byte data[] = baos.toByteArray();</span>
+<span class="fc" id="L985">		return new String(Base64Coder.encode(data));</span>
 	}
 
 	private String toBase64(String s) {
@@ -1054,9 +1054,9 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc" id="L1054">	}</span>
 
 	public void addComment(String comment) {
-<span class="fc" id="L1057">		final Comment commentElement = document.createComment(comment);</span>
-<span class="fc" id="L1058">		getG().appendChild(commentElement);</span>
-<span class="fc" id="L1059">	}</span>
+<span class="nc" id="L1057">		final Comment commentElement = document.createComment(comment);</span>
+<span class="nc" id="L1058">		getG().appendChild(commentElement);</span>
+<span class="nc" id="L1059">	}</span>
 
 	private static class LinkData {
 		private final String url;
@@ -1262,12 +1262,12 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc" id="L1262">					pendingElements.get(0).appendChild(title);</span>
 				}
 
-<span class="fc bfc" id="L1265" title="All 2 branches covered.">				switch (typeIdent.getKey()) {</span>
+<span class="pc bpc" id="L1265" title="1 of 2 branches missed.">				switch (typeIdent.getKey()) {</span>
 				case DATA_UID:
 				case ID:
 				case DATA_SOURCE_LINE:
-<span class="fc" id="L1269">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
-<span class="fc" id="L1270">							typeIdent.getValue());</span>
+<span class="nc" id="L1269">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
+<span class="nc" id="L1270">							typeIdent.getValue());</span>
 				}
 
 				// if (option.isInteractive())

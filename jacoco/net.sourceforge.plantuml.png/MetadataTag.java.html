@@ -56,15 +56,15 @@ public class MetadataTag {
 	private final Object source;
 	private final String tag;
 
-<span class="nc" id="L59">	public MetadataTag(SFile file, String tag) throws FileNotFoundException {</span>
-<span class="nc" id="L60">		this.source = file.conv();</span>
-<span class="nc" id="L61">		this.tag = tag;</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L59">	public MetadataTag(SFile file, String tag) throws FileNotFoundException {</span>
+<span class="fc" id="L60">		this.source = file.conv();</span>
+<span class="fc" id="L61">		this.tag = tag;</span>
+<span class="fc" id="L62">	}</span>
 
-<span class="nc" id="L64">	public MetadataTag(java.io.File file, String tag) {</span>
-<span class="nc" id="L65">		this.source = file;</span>
-<span class="nc" id="L66">		this.tag = tag;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L64">	public MetadataTag(java.io.File file, String tag) {</span>
+<span class="fc" id="L65">		this.source = file;</span>
+<span class="fc" id="L66">		this.tag = tag;</span>
+<span class="fc" id="L67">	}</span>
 
 <span class="nc" id="L69">	public MetadataTag(InputStream is, String tag) {</span>
 <span class="nc" id="L70">		this.source = is;</span>
@@ -72,61 +72,65 @@ public class MetadataTag {
 <span class="nc" id="L72">	}</span>
 
 	public String getData() throws IOException {
-<span class="nc" id="L75">		final ImageInputStream iis = SImageIO.createImageInputStream(source);</span>
-<span class="nc" id="L76">		final Iterator&lt;ImageReader&gt; readers = SImageIO.getImageReaders(iis);</span>
+<span class="fc" id="L75">		try (final ImageInputStream iis = SImageIO.createImageInputStream(source)) {</span>
+<span class="fc" id="L76">			final Iterator&lt;ImageReader&gt; readers = SImageIO.getImageReaders(iis);</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (readers.hasNext()) {</span>
-			// pick the first available ImageReader
-<span class="nc" id="L80">			final ImageReader reader = readers.next();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (readers.hasNext()) {</span>
+				// pick the first available ImageReader
+<span class="fc" id="L80">				final ImageReader reader = readers.next();</span>
+				try {
 
-			// attach source to the reader
-<span class="nc" id="L83">			reader.setInput(iis, true);</span>
+					// attach source to the reader
+<span class="fc" id="L84">					reader.setInput(iis, true);</span>
 
-			// read metadata of first image
-<span class="nc" id="L86">			final IIOMetadata metadata = reader.getImageMetadata(0);</span>
+					// read metadata of first image
+<span class="fc" id="L87">					final IIOMetadata metadata = reader.getImageMetadata(0);</span>
 
-<span class="nc" id="L88">			final String[] names = metadata.getMetadataFormatNames();</span>
-<span class="nc" id="L89">			final int length = names.length;</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			for (int i = 0; i &lt; length; i++) {</span>
-<span class="nc" id="L91">				final String result = displayMetadata(metadata.getAsTree(names[i]));</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (result != null) {</span>
-<span class="nc" id="L93">					return result;</span>
+<span class="fc" id="L89">					final String[] names = metadata.getMetadataFormatNames();</span>
+<span class="fc" id="L90">					final int length = names.length;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">					for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L92">						final String result = displayMetadata(metadata.getAsTree(names[i]));</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">						if (result != null)</span>
+<span class="fc" id="L94">							return result;</span>
+
+					}
+				} finally {
+<span class="fc" id="L98">					reader.dispose();</span>
 				}
 			}
-		}
-
-<span class="nc" id="L98">		return null;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		}</span>
+<span class="fc" id="L102">		return null;</span>
 	}
 
 	private String displayMetadata(Node root) {
-<span class="nc" id="L102">		return displayMetadata(root, 0);</span>
+<span class="fc" id="L106">		return displayMetadata(root, 0);</span>
 	}
 
 	private String displayMetadata(Node node, int level) {
-<span class="nc" id="L106">		final NamedNodeMap map = node.getAttributes();</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (map != null) {</span>
-<span class="nc" id="L108">			final Node keyword = map.getNamedItem(&quot;keyword&quot;);</span>
-<span class="nc bnc" id="L109" title="All 4 branches missed.">			if (keyword != null &amp;&amp; tag.equals(keyword.getNodeValue())) {</span>
-<span class="nc" id="L110">				final Node text = map.getNamedItem(&quot;value&quot;);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (text != null) {</span>
-<span class="nc" id="L112">					return text.getNodeValue();</span>
-				}
+<span class="fc" id="L110">		final NamedNodeMap map = node.getAttributes();</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (map != null) {</span>
+<span class="fc" id="L112">			final Node keyword = map.getNamedItem(&quot;keyword&quot;);</span>
+<span class="fc bfc" id="L113" title="All 4 branches covered.">			if (keyword != null &amp;&amp; tag.equals(keyword.getNodeValue())) {</span>
+<span class="fc" id="L114">				final Node text = map.getNamedItem(&quot;value&quot;);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">				if (text != null)</span>
+<span class="fc" id="L116">					return text.getNodeValue();</span>
+
 			}
 		}
 
-<span class="nc" id="L117">		Node child = node.getFirstChild();</span>
+<span class="fc" id="L121">		Node child = node.getFirstChild();</span>
 
 		// children, so close current tag
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		while (child != null) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		while (child != null) {</span>
 			// print children recursively
-<span class="nc" id="L122">			final String result = displayMetadata(child, level + 1);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (result != null) {</span>
-<span class="nc" id="L124">				return result;</span>
-			}
-<span class="nc" id="L126">			child = child.getNextSibling();</span>
-<span class="nc" id="L127">		}</span>
+<span class="fc" id="L126">			final String result = displayMetadata(child, level + 1);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (result != null)</span>
+<span class="fc" id="L128">				return result;</span>
 
-<span class="nc" id="L129">		return null;</span>
+<span class="fc" id="L130">			child = child.getNextSibling();</span>
+<span class="fc" id="L131">		}</span>
+
+<span class="fc" id="L133">		return null;</span>
 
 	}
 

@@ -243,13 +243,13 @@ final public class UmlSource {
 	 * &lt;code&gt;null&lt;/code&gt;.
 	 */
 	public Display getTitle() {
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
-<span class="fc" id="L247">			final Matcher2 m = TITLE.matcher(s.getString());</span>
-<span class="fc" id="L248">			final boolean ok = m.matches();</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">			if (ok)</span>
-<span class="fc" id="L250">				return Display.create(m.group(1));</span>
-<span class="fc" id="L251">		}</span>
-<span class="fc" id="L252">		return Display.empty();</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		for (StringLocated s : source) {</span>
+<span class="nc" id="L247">			final Matcher2 m = TITLE.matcher(s.getString());</span>
+<span class="nc" id="L248">			final boolean ok = m.matches();</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (ok)</span>
+<span class="nc" id="L250">				return Display.create(m.group(1));</span>
+<span class="nc" id="L251">		}</span>
+<span class="nc" id="L252">		return Display.empty();</span>
 	}
 
 	public boolean isStartDef() {
@@ -260,8 +260,8 @@ final public class UmlSource {
 
 	public String getId() {
 <span class="fc" id="L262">		final Matcher m = ID.matcher(source.get(0).getString());</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (m.find())</span>
-<span class="fc" id="L264">			return m.group(1);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L264">			return m.group(1);</span>
 
 <span class="fc" id="L266">		return null;</span>
 	}

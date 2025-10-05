@@ -55,90 +55,89 @@ import net.sourceforge.plantuml.log.Logme;
 public class Cypher {
 	// ::remove file when __HAXE__
 
-<span class="nc" id="L58">	final private static Pattern p = Pattern.compile(&quot;[\\p{L}\\p{N}]+&quot;);</span>
+<span class="fc" id="L58">	final private static Pattern p = Pattern.compile(&quot;[\\p{L}\\p{N}]+&quot;);</span>
 
-<span class="nc" id="L60">	private final SecureRandom rnd = new SecureRandom();</span>
-<span class="nc" id="L61">	private final Map&lt;String, String&gt; convert = new HashMap&lt;String, String&gt;();</span>
-<span class="nc" id="L62">	private final Set&lt;String&gt; except = new HashSet&lt;&gt;();</span>
-<span class="nc" id="L63">	private final List&lt;String&gt; words = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">	private final SecureRandom rnd = new SecureRandom();</span>
+<span class="fc" id="L61">	private final Map&lt;String, String&gt; convert = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L62">	private final Set&lt;String&gt; except = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L63">	private final List&lt;String&gt; words = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L65">	public Cypher() {</span>
-<span class="nc" id="L66">		final InputStream is = Cypher.class.getResourceAsStream(&quot;words.txt&quot;);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (is != null)</span>
-			try {
-<span class="nc" id="L69">				final BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+<span class="fc" id="L65">	public Cypher() {</span>
+<span class="fc" id="L66">		final InputStream is = Cypher.class.getResourceAsStream(&quot;words.txt&quot;);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (is != null)</span>
+<span class="fc" id="L68">			try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
 				String s;
-<span class="nc bnc" id="L71" title="All 2 branches missed.">				while ((s = br.readLine()) != null) {</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">					if (s.matches(&quot;[a-z]+&quot;))</span>
-<span class="nc" id="L73">						words.add(s);</span>
-				}
-<span class="nc" id="L75">				is.close();</span>
-<span class="nc" id="L76">			} catch (Exception e) {</span>
-<span class="nc" id="L77">				Logme.error(e);</span>
-<span class="nc" id="L78">			}</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">				while ((s = br.readLine()) != null)</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">					if (s.matches(&quot;[a-z]+&quot;))</span>
+<span class="fc" id="L72">						words.add(s);</span>
 
-<span class="nc" id="L80">		Collections.shuffle(words, rnd);</span>
-<span class="nc" id="L81">	}</span>
+<span class="fc" id="L74">				is.close();</span>
+<span class="nc" id="L75">			} catch (Exception e) {</span>
+<span class="nc" id="L76">				Logme.error(e);</span>
+<span class="fc" id="L77">			}</span>
+
+<span class="fc" id="L79">		Collections.shuffle(words, rnd);</span>
+<span class="fc" id="L80">	}</span>
 
 	public synchronized String cypher(String s) {
 
-<span class="nc" id="L85">		final Matcher m = p.matcher(s);</span>
-<span class="nc" id="L86">		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		while (m.find()) {</span>
-<span class="nc" id="L88">			final String word = m.group(0);</span>
-<span class="nc" id="L89">			m.appendReplacement(sb, changeWord(word));</span>
-<span class="nc" id="L90">		}</span>
-<span class="nc" id="L91">		m.appendTail(sb);</span>
+<span class="fc" id="L84">		final Matcher m = p.matcher(s);</span>
+<span class="fc" id="L85">		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L87">			final String word = m.group(0);</span>
+<span class="fc" id="L88">			m.appendReplacement(sb, changeWord(word));</span>
+<span class="fc" id="L89">		}</span>
+<span class="fc" id="L90">		m.appendTail(sb);</span>
 
-<span class="nc" id="L93">		return sb.toString();</span>
+<span class="fc" id="L92">		return sb.toString();</span>
 	}
 
 	private String changeWord(final String word) {
-<span class="nc" id="L97">		final String lower = word.toLowerCase();</span>
-<span class="nc bnc" id="L98" title="All 4 branches missed.">		if (except.contains(lower) || lower.matches(&quot;^([a-f0-9]{3}|[a-f0-9]{6})$&quot;)) {</span>
-<span class="nc" id="L99">			return word;</span>
-		}
-<span class="nc" id="L101">		String res = convert.get(word);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (res != null) {</span>
-<span class="nc" id="L103">			return res;</span>
-		}
-<span class="nc" id="L105">		int len = word.length();</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (len &lt; 4) {</span>
-<span class="nc" id="L107">			len = 4;</span>
-		}
+<span class="fc" id="L96">		final String lower = word.toLowerCase();</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">		if (except.contains(lower) || lower.matches(&quot;^([a-f0-9]{3}|[a-f0-9]{6})$&quot;))</span>
+<span class="fc" id="L98">			return word;</span>
+
+<span class="fc" id="L100">		String res = convert.get(word);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (res != null)</span>
+<span class="nc" id="L102">			return res;</span>
+
+<span class="fc" id="L104">		int len = word.length();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (len &lt; 4)</span>
+<span class="fc" id="L106">			len = 4;</span>
+
 		while (true) {
-<span class="nc" id="L110">			res = buildRandomWord(len);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (convert.containsValue(res) == false) {</span>
-<span class="nc" id="L112">				convert.put(word, res);</span>
-<span class="nc" id="L113">				return res;</span>
+<span class="fc" id="L109">			res = buildRandomWord(len);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (convert.containsValue(res) == false) {</span>
+<span class="fc" id="L111">				convert.put(word, res);</span>
+<span class="fc" id="L112">				return res;</span>
 			}
 		}
 	}
 
 	private String buildRandomWord(int len) {
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (Iterator&lt;String&gt; it = words.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L120">			final String s = it.next();</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (s.length() == len) {</span>
-<span class="nc" id="L122">				it.remove();</span>
-<span class="nc" id="L123">				return s;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		for (Iterator&lt;String&gt; it = words.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L119">			final String s = it.next();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (s.length() == len) {</span>
+<span class="fc" id="L121">				it.remove();</span>
+<span class="fc" id="L122">				return s;</span>
 			}
-<span class="nc" id="L125">		}</span>
-<span class="nc" id="L126">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (int i = 0; i &lt; len; i++) {</span>
-<span class="nc" id="L128">			final char letter = (char) ('a' + rnd.nextInt(26));</span>
-<span class="nc" id="L129">			sb.append(letter);</span>
+<span class="fc" id="L124">		}</span>
+<span class="nc" id="L125">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		for (int i = 0; i &lt; len; i++) {</span>
+<span class="nc" id="L127">			final char letter = (char) ('a' + rnd.nextInt(26));</span>
+<span class="nc" id="L128">			sb.append(letter);</span>
 		}
-<span class="nc" id="L131">		return sb.toString();</span>
+<span class="nc" id="L130">		return sb.toString();</span>
 	}
 
 	public void addException(String word) {
-<span class="nc" id="L135">		word = word.toLowerCase();</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (words.contains(word)) {</span>
-<span class="nc" id="L137">			System.err.println(&quot;CypherWarning:&quot; + word);</span>
-<span class="nc" id="L138">			words.remove(word);</span>
+<span class="fc" id="L134">		word = word.toLowerCase();</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (words.contains(word)) {</span>
+<span class="nc" id="L136">			System.err.println(&quot;CypherWarning:&quot; + word);</span>
+<span class="nc" id="L137">			words.remove(word);</span>
 		}
-<span class="nc" id="L140">		except.add(word);</span>
-<span class="nc" id="L141">	}</span>
+<span class="fc" id="L139">		except.add(word);</span>
+<span class="fc" id="L140">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

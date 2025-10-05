@@ -58,35 +58,35 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 
 	public ComponentRoseQueue(Style style, Style stereo, Display stringsToDisplay, boolean head,
 			ISkinParam skinParam) {
-<span class="fc" id="L61">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
+<span class="nc" id="L61">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L63">		final Fashion biColor = getSymbolContext();</span>
+<span class="nc" id="L63">		final Fashion biColor = getSymbolContext();</span>
 
-<span class="fc" id="L65">		this.head = head;</span>
-<span class="fc" id="L66">		this.stickman = USymbols.QUEUE.asSmall(TextBlockUtils.empty(0, 0), getTextBlock(), TextBlockUtils.empty(0, 0),</span>
+<span class="nc" id="L65">		this.head = head;</span>
+<span class="nc" id="L66">		this.stickman = USymbols.QUEUE.asSmall(TextBlockUtils.empty(0, 0), getTextBlock(), TextBlockUtils.empty(0, 0),</span>
 				biColor, HorizontalAlignment.CENTER);
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L68">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L72">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L73">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
-<span class="fc" id="L74">		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;</span>
+<span class="nc" id="L72">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L73">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L74">		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;</span>
 
-<span class="fc" id="L76">		ug = ug.apply(UTranslate.dx(delta));</span>
-<span class="fc" id="L77">		stickman.drawU(ug);</span>
-<span class="fc" id="L78">	}</span>
+<span class="nc" id="L76">		ug = ug.apply(UTranslate.dx(delta));</span>
+<span class="nc" id="L77">		stickman.drawU(ug);</span>
+<span class="nc" id="L78">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L82">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
-<span class="fc" id="L83">		return dimStickman.getHeight();</span>
+<span class="nc" id="L82">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L83">		return dimStickman.getHeight();</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L88">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
-<span class="fc" id="L89">		return dimStickman.getWidth();</span>
+<span class="nc" id="L88">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L89">		return dimStickman.getWidth();</span>
 	}
 
 }

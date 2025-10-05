@@ -201,10 +201,10 @@ public class ImageBuilder {
 	private String getSvgLinkTarget() {
 <span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (fileFormatOption.getSvgLinkTarget() != null)</span>
 <span class="nc" id="L203">			return fileFormatOption.getSvgLinkTarget();</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		else if (skinParam != null)</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		else if (skinParam != null)</span>
 <span class="fc" id="L205">			return skinParam.getSvgLinkTarget();</span>
 		else
-<span class="nc" id="L207">			return null;</span>
+<span class="fc" id="L207">			return null;</span>
 
 	}
 
@@ -376,7 +376,7 @@ public class ImageBuilder {
 
 	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
 <span class="fc" id="L378">		final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
-<span class="pc bpc" id="L379" title="8 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
+<span class="pc bpc" id="L379" title="6 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
 		case PNG:
 		case PNG_EMPTY:
 		case RAW:
@@ -386,9 +386,9 @@ public class ImageBuilder {
 <span class="fc" id="L386">			return createUGraphicSVG(scaleFactor, dim, pragma);</span>
 		// ::comment when __CORE__
 		case EPS:
-<span class="nc" id="L389">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());</span>
+<span class="fc" id="L389">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());</span>
 		case EPS_TEXT:
-<span class="nc" id="L391">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);</span>
+<span class="fc" id="L391">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);</span>
 		case HTML5:
 <span class="nc" id="L393">			return new UGraphicHtml5(backcolor, colorMapper, stringBounder);</span>
 		case VDX:
@@ -421,21 +421,21 @@ public class ImageBuilder {
 <span class="fc" id="L421">		option = option.withLinkTarget(getSvgLinkTarget());</span>
 <span class="fc" id="L422">		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));</span>
 <span class="fc" id="L423">		option = option.withPragma(pragma);</span>
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (skinParam != null)</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (skinParam != null)</span>
 <span class="fc" id="L425">			option = option.withConfigurationStore(skinParam.options());</span>
-<span class="pc bpc" id="L426" title="1 of 2 branches missed.">		if (diagram != null) {</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">		if (diagram != null) {</span>
 <span class="fc" id="L427">			option = option.withTitle(diagram.getTitleDisplay());</span>
 <span class="fc" id="L428">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagram.getUmlDiagramType().name());</span>
 		}
 
-<span class="fc bfc" id="L431" title="All 2 branches covered.">		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
-<span class="fc" id="L432">			String interactiveBaseFilename = &quot;default&quot;;</span>
-<span class="pc bpc" id="L433" title="1 of 4 branches missed.">			if (diagram != null &amp;&amp; diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)</span>
-<span class="fc" id="L434">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
-<span class="fc" id="L435">			option = option.withInteractive(interactiveBaseFilename);</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
+<span class="nc" id="L432">			String interactiveBaseFilename = &quot;default&quot;;</span>
+<span class="nc bnc" id="L433" title="All 4 branches missed.">			if (diagram != null &amp;&amp; diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)</span>
+<span class="nc" id="L434">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
+<span class="nc" id="L435">			option = option.withInteractive(interactiveBaseFilename);</span>
 		}
 
-<span class="pc bpc" id="L438" title="1 of 2 branches missed.">		if (skinParam != null) {</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">		if (skinParam != null) {</span>
 <span class="fc" id="L439">			option = option.withLengthAdjust(skinParam.getlengthAdjust());</span>
 <span class="fc" id="L440">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
 		}
@@ -479,7 +479,7 @@ public class ImageBuilder {
 	private String getHoverPathColorRGB() {
 <span class="pc bpc" id="L480" title="1 of 2 branches missed.">		if (fileFormatOption.getHoverColor() != null) {</span>
 <span class="nc" id="L481">			return fileFormatOption.getHoverColor();</span>
-<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		} else if (skinParam != null) {</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">		} else if (skinParam != null) {</span>
 <span class="fc" id="L483">			final HColor color = skinParam.hoverPathColor();</span>
 <span class="pc bpc" id="L484" title="1 of 2 branches missed.">			if (color != null)</span>
 <span class="nc" id="L485">				return color.toRGB(fileFormatOption.getColorMapper());</span>

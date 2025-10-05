@@ -41,10 +41,10 @@ public class ProcessState {
 	private final String name;
 	private final Throwable cause;
 
-<span class="nc" id="L44">	private ProcessState(String name, Throwable cause) {</span>
-<span class="nc" id="L45">		this.name = name;</span>
-<span class="nc" id="L46">		this.cause = cause;</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L44">	private ProcessState(String name, Throwable cause) {</span>
+<span class="fc" id="L45">		this.name = name;</span>
+<span class="fc" id="L46">		this.cause = cause;</span>
+<span class="fc" id="L47">	}</span>
 
 	@Override
 	public String toString() {
@@ -54,11 +54,11 @@ public class ProcessState {
 <span class="nc" id="L54">		return name + &quot; &quot; + cause.toString();</span>
 	}
 
-<span class="nc" id="L57">	private final static ProcessState TERMINATED_OK = new ProcessState(&quot;TERMINATED_OK&quot;, null);</span>
-<span class="nc" id="L58">	private final static ProcessState TIMEOUT = new ProcessState(&quot;TIMEOUT&quot;, null);</span>
+<span class="fc" id="L57">	private final static ProcessState TERMINATED_OK = new ProcessState(&quot;TERMINATED_OK&quot;, null);</span>
+<span class="fc" id="L58">	private final static ProcessState TIMEOUT = new ProcessState(&quot;TIMEOUT&quot;, null);</span>
 
 	public static ProcessState TERMINATED_OK() {
-<span class="nc" id="L61">		return TERMINATED_OK;</span>
+<span class="fc" id="L61">		return TERMINATED_OK;</span>
 	}
 
 	public static ProcessState TIMEOUT() {
@@ -66,11 +66,11 @@ public class ProcessState {
 	}
 
 	public static ProcessState EXCEPTION(Throwable e) {
-<span class="nc" id="L69">		return new ProcessState(&quot;EXCEPTION&quot;, e);</span>
+<span class="fc" id="L69">		return new ProcessState(&quot;EXCEPTION&quot;, e);</span>
 	}
 
 	public boolean differs(ProcessState other) {
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		return name.equals(other.name) == false;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		return name.equals(other.name) == false;</span>
 	}
 
 	@Override

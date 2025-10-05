@@ -99,13 +99,13 @@ public class PlayingSpace implements Bordered {
 
 	public void drawBackground(UGraphic ug) {
 <span class="fc" id="L101">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
-<span class="fc" id="L102">		drawUInternal(interceptor, false);</span>
-<span class="fc" id="L103">	}</span>
+<span class="nc" id="L102">		drawUInternal(interceptor, false);</span>
+<span class="nc" id="L103">	}</span>
 
 	public void drawForeground(UGraphic ug) {
-<span class="fc" id="L106">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
-<span class="fc" id="L107">		drawUInternal(interceptor, false);</span>
-<span class="fc" id="L108">	}</span>
+<span class="nc" id="L106">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
+<span class="nc" id="L107">		drawUInternal(interceptor, false);</span>
+<span class="nc" id="L108">	}</span>
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
 <span class="fc" id="L111">		final StringBounder stringBounder = ug.getStringBounder();</span>
@@ -182,8 +182,8 @@ public class PlayingSpace implements Bordered {
 <span class="fc" id="L182">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L183">		yNewPages.add((double) 0);</span>
 <span class="fc bfc" id="L184" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L186">				((GroupingTile) tile).addYNewPages(yNewPages);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">			if (tile instanceof GroupingTile)</span>
+<span class="nc" id="L186">				((GroupingTile) tile).addYNewPages(yNewPages);</span>
 
 <span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (tile instanceof NewpageTile) {</span>
 <span class="nc" id="L189">				final double y = ((NewpageTile) tile).getTimeHook().getValue();</span>

@@ -67,8 +67,8 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 <span class="nc" id="L67">			return local;</span>
 
 <span class="fc" id="L69">		final String env = SecurityUtils.getenv(&quot;PLANTUML_LIMIT_SIZE&quot;);</span>
-<span class="pc bpc" id="L70" title="3 of 4 branches missed.">		if (StringUtils.isNotEmpty(env) &amp;&amp; env.matches(&quot;\\d+&quot;))</span>
-<span class="nc" id="L71">			return Integer.parseInt(env);</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">		if (StringUtils.isNotEmpty(env) &amp;&amp; env.matches(&quot;\\d+&quot;))</span>
+<span class="fc" id="L71">			return Integer.parseInt(env);</span>
 
 <span class="fc" id="L73">		return 4096;</span>
 	}

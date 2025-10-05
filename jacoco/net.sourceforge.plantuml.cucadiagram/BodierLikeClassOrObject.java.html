@@ -98,8 +98,8 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 
 	private boolean isMethod(CharSequence s) {
 <span class="fc" id="L100">		final String purged = s.toString().replaceAll(UrlBuilder.getRegexp(), &quot;&quot;);</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (purged.contains(&quot;{method}&quot;))</span>
-<span class="fc" id="L102">			return true;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (purged.contains(&quot;{method}&quot;))</span>
+<span class="nc" id="L102">			return true;</span>
 
 <span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (purged.contains(&quot;{field}&quot;))</span>
 <span class="nc" id="L105">			return false;</span>

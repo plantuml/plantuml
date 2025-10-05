@@ -209,7 +209,7 @@ public final class GraphvizImageBuilder {
 <span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
 <span class="nc" id="L210">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
 
-<span class="pc bpc" id="L212" title="2 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.getUmlDiagramType() != UmlDiagramType.STATE) {</span>
+<span class="pc bpc" id="L212" title="1 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.getUmlDiagramType() != UmlDiagramType.STATE) {</span>
 <span class="fc" id="L213">			final Entity single = dotData.getLeafs().iterator().next();</span>
 <span class="fc" id="L214">			final Entity group = single.getParentContainer();</span>
 <span class="pc bpc" id="L215" title="2 of 4 branches missed.">			if (group.isRoot() &amp;&amp; single.getUSymbol() instanceof USymbolHexagon == false) {</span>
@@ -219,12 +219,12 @@ public final class GraphvizImageBuilder {
 <span class="fc" id="L219">				return new EntityImageDegenerated(tmp, getBackcolor());</span>
 			}
 		}
-<span class="nc" id="L222">		dotData.removeIrrelevantSametail();</span>
+<span class="fc" id="L222">		dotData.removeIrrelevantSametail();</span>
 
-<span class="nc" id="L224">		printGroups(stringBounder, dotData.getRootGroup());</span>
-<span class="nc" id="L225">		printEntities(stringBounder, getUnpackagedEntities());</span>
+<span class="fc" id="L224">		printGroups(stringBounder, dotData.getRootGroup());</span>
+<span class="fc" id="L225">		printEntities(stringBounder, getUnpackagedEntities());</span>
 
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (Link link : dotData.getLinks()) {</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		for (Link link : dotData.getLinks()) {</span>
 <span class="nc bnc" id="L228" title="All 2 branches missed.">			if (link.isRemoved())</span>
 <span class="nc" id="L229">				continue;</span>
 
@@ -260,8 +260,8 @@ public final class GraphvizImageBuilder {
 <span class="nc" id="L260">			}</span>
 <span class="nc" id="L261">		}</span>
 
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (dotStringFactory.illegalDotExe())</span>
-<span class="nc" id="L264">			return error(dotStringFactory.getDotExe());</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (dotStringFactory.illegalDotExe())</span>
+<span class="fc" id="L264">			return error(dotStringFactory.getDotExe());</span>
 
 <span class="nc bnc" id="L266" title="All 6 branches missed.">		if (basefile == null &amp;&amp; (fileFormatOptionIsDebugSvek || isSvekTrace())</span>
 <span class="nc bnc" id="L267" title="All 2 branches missed.">				&amp;&amp; (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE</span>
@@ -329,56 +329,56 @@ public final class GraphvizImageBuilder {
 
 	// ::comment when __CORE__
 	private IEntityImage error(File dotExe) {
-<span class="nc" id="L332">		final List&lt;String&gt; msg = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L333">		msg.add(&quot;Dot Executable: &quot; + dotExe);</span>
-<span class="nc" id="L334">		final ExeState exeState = ExeState.checkFile(dotExe);</span>
-<span class="nc" id="L335">		msg.add(exeState.getTextMessage());</span>
-<span class="nc" id="L336">		msg.add(&quot;Cannot find Graphviz. You should try&quot;);</span>
-<span class="nc" id="L337">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L338">		msg.add(&quot;@startuml&quot;);</span>
-<span class="nc" id="L339">		msg.add(&quot;testdot&quot;);</span>
-<span class="nc" id="L340">		msg.add(&quot;@enduml&quot;);</span>
-<span class="nc" id="L341">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L342">		msg.add(&quot; or &quot;);</span>
-<span class="nc" id="L343">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L344">		msg.add(&quot;java -jar plantuml.jar -testdot&quot;);</span>
-<span class="nc" id="L345">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L346">		return GraphicStrings.createForError(msg, false);</span>
+<span class="fc" id="L332">		final List&lt;String&gt; msg = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L333">		msg.add(&quot;Dot Executable: &quot; + dotExe);</span>
+<span class="fc" id="L334">		final ExeState exeState = ExeState.checkFile(dotExe);</span>
+<span class="fc" id="L335">		msg.add(exeState.getTextMessage());</span>
+<span class="fc" id="L336">		msg.add(&quot;Cannot find Graphviz. You should try&quot;);</span>
+<span class="fc" id="L337">		msg.add(&quot; &quot;);</span>
+<span class="fc" id="L338">		msg.add(&quot;@startuml&quot;);</span>
+<span class="fc" id="L339">		msg.add(&quot;testdot&quot;);</span>
+<span class="fc" id="L340">		msg.add(&quot;@enduml&quot;);</span>
+<span class="fc" id="L341">		msg.add(&quot; &quot;);</span>
+<span class="fc" id="L342">		msg.add(&quot; or &quot;);</span>
+<span class="fc" id="L343">		msg.add(&quot; &quot;);</span>
+<span class="fc" id="L344">		msg.add(&quot;java -jar plantuml.jar -testdot&quot;);</span>
+<span class="fc" id="L345">		msg.add(&quot; &quot;);</span>
+<span class="fc" id="L346">		return GraphicStrings.createForError(msg, false);</span>
 	}
 	// ::done
 
 	private void printEntities(StringBounder stringBounder, Collection&lt;Entity&gt; entities2) {
-<span class="nc bnc" id="L351" title="All 2 branches missed.">		for (Entity ent : entities2) {</span>
-<span class="nc bnc" id="L352" title="All 2 branches missed.">			if (ent.isRemoved())</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		for (Entity ent : entities2) {</span>
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
 <span class="nc" id="L353">				continue;</span>
 
-<span class="nc" id="L355">			printEntity(stringBounder, ent);</span>
-<span class="nc" id="L356">		}</span>
-<span class="nc" id="L357">	}</span>
+<span class="fc" id="L355">			printEntity(stringBounder, ent);</span>
+<span class="fc" id="L356">		}</span>
+<span class="fc" id="L357">	}</span>
 
 	private void printEntity(StringBounder stringBounder, Entity ent) {
-<span class="nc bnc" id="L360" title="All 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">		if (ent.isRemoved())</span>
 <span class="nc" id="L361">			throw new IllegalStateException(ent.toString());</span>
 
-<span class="nc" id="L363">		final IEntityImage image = printEntityInternal(stringBounder, ent);</span>
-<span class="nc" id="L364">		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, stringBounder);</span>
-<span class="nc" id="L365">		clusterManager.addNode(node);</span>
-<span class="nc" id="L366">	}</span>
+<span class="fc" id="L363">		final IEntityImage image = printEntityInternal(stringBounder, ent);</span>
+<span class="fc" id="L364">		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, stringBounder);</span>
+<span class="fc" id="L365">		clusterManager.addNode(node);</span>
+<span class="fc" id="L366">	}</span>
 
 	private IEntityImage printEntityInternal(StringBounder stringBounder, Entity ent) {
-<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (ent.isRemoved())</span>
 <span class="nc" id="L370">			throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L372" title="All 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
-<span class="nc" id="L373">			ISkinParam skinParam = dotData.getSkinParam();</span>
-<span class="nc bnc" id="L374" title="All 2 branches missed.">			if (skinParam.sameClassWidth()) {</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
+<span class="fc" id="L373">			ISkinParam skinParam = dotData.getSkinParam();</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">			if (skinParam.sameClassWidth()) {</span>
 <span class="nc" id="L375">				final double width = getMaxWidth(stringBounder);</span>
 <span class="nc" id="L376">				((SkinParam) skinParam).setParamSameClassWidth(width);</span>
 			}
 
-<span class="nc" id="L379">			return GeneralImageBuilder.createEntityImageBlock(ent, dotData.isHideEmptyDescriptionForState(),</span>
-<span class="nc" id="L380">					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),</span>
-<span class="nc" id="L381">					dotStringFactory.getGraphvizVersion(), dotData.getLinks());</span>
+<span class="fc" id="L379">			return GeneralImageBuilder.createEntityImageBlock(ent, dotData.isHideEmptyDescriptionForState(),</span>
+<span class="fc" id="L380">					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),</span>
+<span class="fc" id="L381">					dotStringFactory.getGraphvizVersion(), dotData.getLinks());</span>
 		}
 <span class="nc" id="L383">		return ent.getSvekImage();</span>
 	}
@@ -399,19 +399,19 @@ public final class GraphvizImageBuilder {
 	}
 
 	private Collection&lt;Entity&gt; getUnpackagedEntities() {
-<span class="nc" id="L402">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L403" title="All 2 branches missed.">		for (Entity ent : dotData.getLeafs())</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">			if (dotData.getTopParent() == ent.getParentContainer())</span>
-<span class="nc" id="L405">				result.add(ent);</span>
+<span class="fc" id="L402">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">		for (Entity ent : dotData.getLeafs())</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">			if (dotData.getTopParent() == ent.getParentContainer())</span>
+<span class="fc" id="L405">				result.add(ent);</span>
 
-<span class="nc" id="L407">		return result;</span>
+<span class="fc" id="L407">		return result;</span>
 	}
 
 	private void printGroups(StringBounder stringBounder, Entity parent) {
 		// System.err.println(&quot;PARENT=&quot; + parent);
-<span class="nc" id="L412">		final Collection&lt;Entity&gt; groups = dotData.getGroupHierarchy().getChildrenGroups(parent);</span>
+<span class="fc" id="L412">		final Collection&lt;Entity&gt; groups = dotData.getGroupHierarchy().getChildrenGroups(parent);</span>
 		// System.err.println(&quot;groups=&quot; + groups);
-<span class="nc bnc" id="L414" title="All 2 branches missed.">		for (Entity g : groups) {</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">		for (Entity g : groups) {</span>
 <span class="nc bnc" id="L415" title="All 2 branches missed.">			if (g.isRemoved())</span>
 <span class="nc" id="L416">				continue;</span>
 
@@ -422,7 +422,7 @@ public final class GraphvizImageBuilder {
 <span class="nc" id="L422">				printGroup(stringBounder, g);</span>
 			}
 <span class="nc" id="L424">		}</span>
-<span class="nc" id="L425">	}</span>
+<span class="fc" id="L425">	}</span>
 
 	private void printGroup(StringBounder stringBounder, Entity g) {
 <span class="nc bnc" id="L428" title="All 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>

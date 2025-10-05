@@ -28,42 +28,42 @@ public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
 	private HashMap&lt;Participant, Stack&lt;Element&gt;&gt; activeParticipants;
 
 	public XmiSequenceDiagramStandard(SequenceDiagram diagram, Document document) {
-<span class="nc" id="L31">		super(diagram, document);</span>
+<span class="fc" id="L31">		super(diagram, document);</span>
 
-<span class="nc" id="L33">		covered = new Stack&lt;&gt;();</span>
-<span class="nc" id="L34">		covered.push(new HashSet&lt;String&gt;());</span>
+<span class="fc" id="L33">		covered = new Stack&lt;&gt;();</span>
+<span class="fc" id="L34">		covered.push(new HashSet&lt;String&gt;());</span>
 
-<span class="nc" id="L36">		activeParticipants = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L37">	}</span>
+<span class="fc" id="L36">		activeParticipants = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L37">	}</span>
 
 	@Override
 	public void build() {
-<span class="nc" id="L41">		Node packagedElement = document</span>
-<span class="nc" id="L42">				.appendChild(createElement(&quot;uml:Model&quot;,</span>
+<span class="fc" id="L41">		Node packagedElement = document</span>
+<span class="fc" id="L42">				.appendChild(createElement(&quot;uml:Model&quot;,</span>
 						new String[][] { { &quot;xmlns:uml&quot;, &quot;http://www.omg.org/spec/UML/20110701&quot; },
 								{ &quot;xmlns:xmi&quot;, &quot;http://schema.omg.org/spec/XMI/2.1&quot; }, { &quot;xmi:version&quot;, &quot;2.1&quot; },
-<span class="nc" id="L45">								{ &quot;xmi:id&quot;, getXmiId(&quot;uml:Model&quot;, diagram) } }))</span>
-<span class="nc" id="L46">				.appendChild(createUmlElement(diagram, &quot;packagedElement&quot;, &quot;Interaction&quot;));</span>
-<span class="nc" id="L47">		packagedElement.appendChild(createUmlElement(diagram, &quot;nestedClassifier&quot;, &quot;Collaboration&quot;));</span>
+<span class="fc" id="L45">								{ &quot;xmi:id&quot;, getXmiId(&quot;uml:Model&quot;, diagram) } }))</span>
+<span class="fc" id="L46">				.appendChild(createUmlElement(diagram, &quot;packagedElement&quot;, &quot;Interaction&quot;));</span>
+<span class="fc" id="L47">		packagedElement.appendChild(createUmlElement(diagram, &quot;nestedClassifier&quot;, &quot;Collaboration&quot;));</span>
 
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (Participant participant : diagram.participants()) {</span>
-<span class="nc" id="L50">			packagedElement.appendChild(createElement(participant, &quot;lifeline&quot;,</span>
-<span class="nc" id="L51">					new String[][] { { &quot;name&quot;, getDisplayString(participant.getDisplay(false)) } }));</span>
-<span class="nc" id="L52">		}</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		for (Participant participant : diagram.participants()) {</span>
+<span class="fc" id="L50">			packagedElement.appendChild(createElement(participant, &quot;lifeline&quot;,</span>
+<span class="fc" id="L51">					new String[][] { { &quot;name&quot;, getDisplayString(participant.getDisplay(false)) } }));</span>
+<span class="fc" id="L52">		}</span>
 
-<span class="nc" id="L54">		Node currentFragment = packagedElement;</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Event event : diagram.events()) {</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (event instanceof Note) {</span>
+<span class="fc" id="L54">		Node currentFragment = packagedElement;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (Event event : diagram.events()) {</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (event instanceof Note) {</span>
 <span class="nc" id="L57">				buildNoteEvent(packagedElement, (Note) event);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">			} else if (event instanceof LifeEvent) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			} else if (event instanceof LifeEvent) {</span>
 <span class="nc" id="L59">				buildLifeEvent(packagedElement, (LifeEvent) event);</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			} else if (event instanceof AbstractMessage) {</span>
-<span class="nc" id="L61">				buildMessage(packagedElement, currentFragment, (AbstractMessage) event);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			} else if (event instanceof AbstractMessage) {</span>
+<span class="fc" id="L61">				buildMessage(packagedElement, currentFragment, (AbstractMessage) event);</span>
 <span class="nc bnc" id="L62" title="All 2 branches missed.">			} else if (event instanceof Grouping) {</span>
 <span class="nc" id="L63">				currentFragment = buildGrouping(currentFragment, (Grouping) event);</span>
 			}
-<span class="nc" id="L65">		}</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">	}</span>
 
 	private void buildLifeEvent(Node packagedElement, LifeEvent event) {
 <span class="nc bnc" id="L69" title="All 2 branches missed.">		if (event.getType() == LifeEventType.ACTIVATE) {</span>
@@ -100,19 +100,19 @@ public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
 	}
 
 	private void buildMessage(Node packagedElement, Node currentFragment, AbstractMessage message) {
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (message instanceof Message) {</span>
-<span class="nc" id="L104">			buildMessage(packagedElement, currentFragment, (Message) message);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (message instanceof Message) {</span>
+<span class="fc" id="L104">			buildMessage(packagedElement, currentFragment, (Message) message);</span>
 <span class="nc bnc" id="L105" title="All 2 branches missed.">		} else if (message instanceof MessageExo) {</span>
 <span class="nc" id="L106">			buildMessageExo(packagedElement, currentFragment, (MessageExo) message);</span>
 		}
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (message.getParticipant1() != null) {</span>
-<span class="nc" id="L110">			covered.peek().add(getXmiId(&quot;lifeline&quot;, message.getParticipant1()));</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (message.getParticipant1() != null) {</span>
+<span class="fc" id="L110">			covered.peek().add(getXmiId(&quot;lifeline&quot;, message.getParticipant1()));</span>
 		}
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (message.getParticipant2() != null) {</span>
-<span class="nc" id="L113">			covered.peek().add(getXmiId(&quot;lifeline&quot;, message.getParticipant2()));</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (message.getParticipant2() != null) {</span>
+<span class="fc" id="L113">			covered.peek().add(getXmiId(&quot;lifeline&quot;, message.getParticipant2()));</span>
 		}
-<span class="nc" id="L115">	}</span>
+<span class="fc" id="L115">	}</span>
 
 	private void buildNoteEvent(Node packagedElement, Note note) {
 <span class="nc" id="L118">		HashSet&lt;String&gt; annotated = new HashSet&lt;String&gt;();</span>
@@ -174,17 +174,17 @@ public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
 <span class="nc" id="L174">	}</span>
 
 	private void buildMessage(Node packagedElement, Node currentFragment, Message message) {
-<span class="nc" id="L177">		currentFragment.appendChild(createMessageOccurrence(message, &quot;sendEvent&quot;, message.getParticipant1()));</span>
-<span class="nc" id="L178">		currentFragment.appendChild(createMessageOccurrence(message, &quot;receiveEvent&quot;, message.getParticipant2()));</span>
-<span class="nc" id="L179">		packagedElement.appendChild(setAttributes(createUmlElement(message, &quot;message&quot;, &quot;Message&quot;),</span>
-<span class="nc" id="L180">				new String[][] { { &quot;name&quot;, getDisplayString(message.getLabel()) },</span>
-<span class="nc" id="L181">						{ &quot;receiveEvent&quot;, getXmiId(&quot;receiveEvent&quot;, message) },</span>
-<span class="nc" id="L182">						{ &quot;sendEvent&quot;, getXmiId(&quot;sendEvent&quot;, message) } }));</span>
+<span class="fc" id="L177">		currentFragment.appendChild(createMessageOccurrence(message, &quot;sendEvent&quot;, message.getParticipant1()));</span>
+<span class="fc" id="L178">		currentFragment.appendChild(createMessageOccurrence(message, &quot;receiveEvent&quot;, message.getParticipant2()));</span>
+<span class="fc" id="L179">		packagedElement.appendChild(setAttributes(createUmlElement(message, &quot;message&quot;, &quot;Message&quot;),</span>
+<span class="fc" id="L180">				new String[][] { { &quot;name&quot;, getDisplayString(message.getLabel()) },</span>
+<span class="fc" id="L181">						{ &quot;receiveEvent&quot;, getXmiId(&quot;receiveEvent&quot;, message) },</span>
+<span class="fc" id="L182">						{ &quot;sendEvent&quot;, getXmiId(&quot;sendEvent&quot;, message) } }));</span>
 
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		for (Note note : message.getNoteOnMessages()) {</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		for (Note note : message.getNoteOnMessages()) {</span>
 <span class="nc" id="L185">			buildNote(packagedElement, note, getAnnotatedElements(note, message));</span>
 <span class="nc" id="L186">		}</span>
-<span class="nc" id="L187">	}</span>
+<span class="fc" id="L187">	}</span>
 
 	private Node buildGrouping(Node currentFragment, Grouping grouping) {
 <span class="nc bnc" id="L190" title="All 2 branches missed.">		if (grouping.getType() == GroupingType.START) {</span>
@@ -221,18 +221,18 @@ public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
 	}
 
 	private Element createElement(Object object, String tag, String[][] attributes) {
-<span class="nc" id="L224">		return setAttributes(createElement(tag, new String[][] { { &quot;xmi:id&quot;, getXmiId(tag, object) } }), attributes);</span>
+<span class="fc" id="L224">		return setAttributes(createElement(tag, new String[][] { { &quot;xmi:id&quot;, getXmiId(tag, object) } }), attributes);</span>
 	}
 
 	private Element createUmlElement(Object object, String tag, String type) {
-<span class="nc" id="L228">		return createElement(tag,</span>
-<span class="nc" id="L229">				new String[][] { { &quot;xmi:type&quot;, &quot;uml:&quot; + type }, { &quot;xmi:id&quot;, getXmiId(type, object) } });</span>
+<span class="fc" id="L228">		return createElement(tag,</span>
+<span class="fc" id="L229">				new String[][] { { &quot;xmi:type&quot;, &quot;uml:&quot; + type }, { &quot;xmi:id&quot;, getXmiId(type, object) } });</span>
 	}
 
 	private Node createMessageOccurrence(Object event, String type, Participant participant) {
-<span class="nc" id="L233">		return setAttributes(createUmlElement(event, &quot;fragment&quot;, &quot;MessageOccurrenceSpecification&quot;),</span>
-<span class="nc" id="L234">				new String[][] { { &quot;xmi:id&quot;, getXmiId(type, event) }, { &quot;covered&quot;, getXmiId(&quot;lifeline&quot;, participant) },</span>
-<span class="nc" id="L235">						{ &quot;message&quot;, getXmiId(&quot;Message&quot;, event) }, });</span>
+<span class="fc" id="L233">		return setAttributes(createUmlElement(event, &quot;fragment&quot;, &quot;MessageOccurrenceSpecification&quot;),</span>
+<span class="fc" id="L234">				new String[][] { { &quot;xmi:id&quot;, getXmiId(type, event) }, { &quot;covered&quot;, getXmiId(&quot;lifeline&quot;, participant) },</span>
+<span class="fc" id="L235">						{ &quot;message&quot;, getXmiId(&quot;Message&quot;, event) }, });</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

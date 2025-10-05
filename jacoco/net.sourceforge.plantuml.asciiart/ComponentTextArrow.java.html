@@ -117,7 +117,7 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 <span class="fc" id="L117">		final int textWidth = StringUtils.getWcWidth(stringsToDisplay);</span>
 
 <span class="fc" id="L119">		final int yarrow = height - 2;</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);</span>
 <span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (config.isDotted()) {</span>
 <span class="nc bnc" id="L122" title="All 2 branches missed.">			for (int i = 1; i &lt; width; i += 2) {</span>
 <span class="nc" id="L123">				charArea.drawChar(' ', i, yarrow);</span>
@@ -136,10 +136,10 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		}
 		// final int position = Math.max(0, (width - textWidth) / 2);
 
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (fileFormat == FileFormat.UTXT) {</span>
 <span class="fc" id="L140">			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
 		} else {
-<span class="nc" id="L142">			charArea.drawStringsLRSimple(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
+<span class="fc" id="L142">			charArea.drawStringsLRSimple(stringsToDisplay.asList(), (width - textWidth) / 2, 0);</span>
 		}
 <span class="fc" id="L144">	}</span>
 

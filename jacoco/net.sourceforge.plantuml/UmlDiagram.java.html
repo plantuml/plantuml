@@ -205,16 +205,16 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	@Override
 	public String getWarningOrError() {
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (lastInfo == null)</span>
 <span class="fc" id="L209">			return null;</span>
 
-<span class="nc" id="L211">		final double actualWidth = lastInfo.getWidth();</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (actualWidth == 0)</span>
+<span class="fc" id="L211">		final double actualWidth = lastInfo.getWidth();</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (actualWidth == 0)</span>
 <span class="nc" id="L213">			return null;</span>
 
-<span class="nc" id="L215">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (value == null)</span>
-<span class="nc" id="L217">			return null;</span>
+<span class="fc" id="L215">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (value == null)</span>
+<span class="fc" id="L217">			return null;</span>
 
 <span class="nc bnc" id="L219" title="All 2 branches missed.">		if (value.matches(&quot;\\d+&quot;) == false)</span>
 <span class="nc" id="L220">			return null;</span>

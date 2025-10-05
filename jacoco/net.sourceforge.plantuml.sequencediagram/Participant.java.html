@@ -154,12 +154,12 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 <span class="fc" id="L154">	private List&lt;Fashion&gt; liveBackcolors = new ArrayList&lt;&gt;();</span>
 
 	public final void incInitialLife(Fashion colors) {
-<span class="fc" id="L157">		initialLife++;</span>
-<span class="fc" id="L158">		this.liveBackcolors.add(colors);</span>
-<span class="fc" id="L159">	}</span>
+<span class="nc" id="L157">		initialLife++;</span>
+<span class="nc" id="L158">		this.liveBackcolors.add(colors);</span>
+<span class="nc" id="L159">	}</span>
 
 	public Fashion getLiveSpecificBackColors(int which) {
-<span class="fc" id="L162">		return liveBackcolors.get(which);</span>
+<span class="nc" id="L162">		return liveBackcolors.get(which);</span>
 	}
 
 	public Colors getColors() {
@@ -167,8 +167,8 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (color != null)</span>
-<span class="fc" id="L171">			this.colors = colors.add(type, color);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L171">			this.colors = colors.add(type, color);</span>
 
 <span class="fc" id="L173">	}</span>
 
@@ -185,8 +185,8 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public final void setUrl(Url url) {
-<span class="nc" id="L188">		this.url = url;</span>
-<span class="nc" id="L189">	}</span>
+<span class="fc" id="L188">		this.url = url;</span>
+<span class="fc" id="L189">	}</span>
 
 	public final Stereotype getStereotype() {
 <span class="fc" id="L192">		return stereotype;</span>

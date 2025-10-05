@@ -58,13 +58,13 @@ import java.io.File;
 	}
 
 	public String getTextMessage() {
-<span class="nc bnc" id="L61" title="All 7 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L61" title="6 of 7 branches missed.">		switch (this) {</span>
 		case OK:
 <span class="nc" id="L63">			return &quot;Dot executable OK&quot;;</span>
 		case NULL_UNDEFINED:
 <span class="nc" id="L65">			return &quot;No dot executable found&quot;;</span>
 		case DOES_NOT_EXIST:
-<span class="nc" id="L67">			return &quot;Dot executable does not exist&quot;;</span>
+<span class="fc" id="L67">			return &quot;Dot executable does not exist&quot;;</span>
 		case IS_A_DIRECTORY:
 <span class="nc" id="L69">			return &quot;Dot executable should be an executable, not a directory&quot;;</span>
 		case NOT_A_FILE:

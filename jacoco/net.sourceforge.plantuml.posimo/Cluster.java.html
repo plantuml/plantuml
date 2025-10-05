@@ -44,12 +44,12 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class Cluster implements Clusterable {
 
-<span class="fc" id="L47">	private static int CPT = 1;</span>
+<span class="nc" id="L47">	private static int CPT = 1;</span>
 
 	private final Cluster parent;
-<span class="fc" id="L50">	private final Collection&lt;Block&gt; blocs = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L51">	private final Collection&lt;Cluster&gt; children = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L52">	private final int uid = CPT++;</span>
+<span class="nc" id="L50">	private final Collection&lt;Block&gt; blocs = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L51">	private final Collection&lt;Cluster&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L52">	private final int uid = CPT++;</span>
 	private double x;
 	private double y;
 	private double width;
@@ -62,14 +62,14 @@ public class Cluster implements Clusterable {
 //		this(parent, 100, 20);
 //	}
 //	
-<span class="fc" id="L65">	public Cluster(Cluster parent, double titleWidth, double titleHeight) {</span>
-<span class="fc" id="L66">		this.parent = parent;</span>
-<span class="fc" id="L67">		this.titleWidth = titleWidth;</span>
-<span class="fc" id="L68">		this.titleHeight = titleHeight;</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (parent != null) {</span>
+<span class="nc" id="L65">	public Cluster(Cluster parent, double titleWidth, double titleHeight) {</span>
+<span class="nc" id="L66">		this.parent = parent;</span>
+<span class="nc" id="L67">		this.titleWidth = titleWidth;</span>
+<span class="nc" id="L68">		this.titleHeight = titleHeight;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (parent != null) {</span>
 <span class="nc" id="L70">			parent.children.add(this);</span>
 		}
-<span class="fc" id="L72">	}</span>
+<span class="nc" id="L72">	}</span>
 
 	public Collection&lt;Cluster&gt; getSubClusters() {
 <span class="nc" id="L75">		return Collections.unmodifiableCollection(children);</span>
@@ -94,8 +94,8 @@ public class Cluster implements Clusterable {
 	}
 
 	public void addBloc(Block b) {
-<span class="fc" id="L97">		this.blocs.add(b);</span>
-<span class="fc" id="L98">	}</span>
+<span class="nc" id="L97">		this.blocs.add(b);</span>
+<span class="nc" id="L98">	}</span>
 
 	public Cluster getParent() {
 <span class="nc" id="L101">		return parent;</span>

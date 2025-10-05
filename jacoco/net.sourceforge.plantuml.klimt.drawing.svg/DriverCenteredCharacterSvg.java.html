@@ -50,18 +50,18 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			SvgGraphics svg) {
-<span class="fc" id="L53">		final char c = characterCircled.getChar();</span>
-<span class="fc" id="L54">		final UFont font = characterCircled.getFont();</span>
-<span class="fc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="nc" id="L53">		final char c = characterCircled.getChar();</span>
+<span class="nc" id="L54">		final UFont font = characterCircled.getFont();</span>
+<span class="nc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="fc" id="L57">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="fc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="nc" id="L57">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="nc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="fc" id="L60">		final TextLayout t = UFontContext.SVG.createTextLayout(font, &quot;&quot; + c);</span>
-<span class="fc" id="L61">		final HColor textColor = param.getColor();</span>
-<span class="fc" id="L62">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="nc" id="L60">		final TextLayout t = UFontContext.SVG.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L61">		final HColor textColor = param.getColor();</span>
+<span class="nc" id="L62">		svg.setFillColor(textColor.toSvg(mapper));</span>
 
-<span class="fc" id="L64">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
-<span class="fc" id="L65">	}</span>
+<span class="nc" id="L64">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
+<span class="nc" id="L65">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

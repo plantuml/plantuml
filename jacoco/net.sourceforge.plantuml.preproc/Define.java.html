@@ -53,26 +53,26 @@ public class Define {
 	private Pattern pattern;
 	private final AParentFolder currentDir;
 
-<span class="nc" id="L56">	public Define(String key, List&lt;String&gt; lines, boolean emptyParentheses, AParentFolder currentDir) {</span>
-<span class="nc" id="L57">		this.currentDir = currentDir;</span>
-<span class="nc" id="L58">		this.emptyParentheses = emptyParentheses;</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (lines == null) {</span>
+<span class="fc" id="L56">	public Define(String key, List&lt;String&gt; lines, boolean emptyParentheses, AParentFolder currentDir) {</span>
+<span class="fc" id="L57">		this.currentDir = currentDir;</span>
+<span class="fc" id="L58">		this.emptyParentheses = emptyParentheses;</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (lines == null) {</span>
 <span class="nc" id="L60">			this.definition = null;</span>
 <span class="nc" id="L61">			this.definitionQuoted = null;</span>
 		} else {
-<span class="nc" id="L63">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			for (final Iterator&lt;String&gt; it = lines.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L65">				sb.append(it.next());</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">				if (it.hasNext()) {</span>
+<span class="fc" id="L63">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			for (final Iterator&lt;String&gt; it = lines.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L65">				sb.append(it.next());</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">				if (it.hasNext()) {</span>
 <span class="nc" id="L67">					sb.append('\n');</span>
 				}
 			}
-<span class="nc" id="L70">			this.definition = sb.toString();</span>
-<span class="nc" id="L71">			this.definitionQuoted = Matcher.quoteReplacement(definition);</span>
+<span class="fc" id="L70">			this.definition = sb.toString();</span>
+<span class="fc" id="L71">			this.definitionQuoted = Matcher.quoteReplacement(definition);</span>
 		}
-<span class="nc" id="L73">		this.signature = new DefineSignature(key, this.definitionQuoted);</span>
+<span class="fc" id="L73">		this.signature = new DefineSignature(key, this.definitionQuoted);</span>
 
-<span class="nc" id="L75">	}</span>
+<span class="fc" id="L75">	}</span>
 
 	@Override
 	public String toString() {
@@ -124,7 +124,7 @@ public class Define {
 	}
 
 	public TValue asTVariable() {
-<span class="nc" id="L127">		return TValue.fromString(definition);</span>
+<span class="fc" id="L127">		return TValue.fromString(definition);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -135,10 +135,10 @@ public static ST_Agnode_s map_interclust_node(ST_Agnode_s n) {
 <span class="fc" id="L135">ENTERING(&quot;8bd317q0mykfu6wpr3e4cxmh2&quot;,&quot;map_interclust_node&quot;);</span>
 try {
     ST_Agnode_s rv;
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">    if ((ND_clust(n) == null) || (  GD_expanded(ND_clust(n))) )</span>
+<span class="pc bpc" id="L138" title="3 of 4 branches missed.">    if ((ND_clust(n) == null) || (  GD_expanded(ND_clust(n))) )</span>
 <span class="fc" id="L139">	rv = n;</span>
     else
-<span class="fc" id="L141">	rv = GD_rankleader(ND_clust(n)).get_(ND_rank(n));</span>
+<span class="nc" id="L141">	rv = GD_rankleader(ND_clust(n)).get_(ND_rank(n));</span>
 <span class="fc" id="L142">    return rv;</span>
 } finally {
 <span class="fc" id="L144">LEAVING(&quot;8bd317q0mykfu6wpr3e4cxmh2&quot;,&quot;map_interclust_node&quot;);</span>
@@ -251,8 +251,8 @@ try {
 <span class="nc" id="L251">	    ve = (ST_Agedge_s) ND_out(aghead(ve)).list.get_(0);</span>
 	}
     } else {
-<span class="fc bfc" id="L254" title="All 2 branches covered.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
-<span class="pc bpc" id="L255" title="3 of 4 branches missed.">	    if ((ve = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, ve))) {</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
+<span class="nc bnc" id="L255" title="All 4 branches missed.">	    if ((ve = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, ve))) {</span>
 		/*ED_to_orig(ve) = orig; */
 <span class="nc" id="L257">		ED_to_virt(orig, ve);</span>
 <span class="nc" id="L258">		ED_edge_type(ve, type);</span>
@@ -261,12 +261,12 @@ try {
 <span class="nc bnc" id="L261" title="All 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
 <span class="nc" id="L262">		    other_edge(orig);</span>
 	    } else {
-<span class="fc" id="L264">		ED_to_virt(orig, null);</span>
-<span class="fc" id="L265">		ve = virtual_edge(from, to, orig);</span>
-<span class="fc" id="L266">		ED_edge_type(ve, type);</span>
+<span class="nc" id="L264">		ED_to_virt(orig, null);</span>
+<span class="nc" id="L265">		ve = virtual_edge(from, to, orig);</span>
+<span class="nc" id="L266">		ED_edge_type(ve, type);</span>
 	    }
 	}
-<span class="fc bfc" id="L269" title="All 2 branches covered.">	if (ND_rank(to) - ND_rank(from) &gt; 1) {</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">	if (ND_rank(to) - ND_rank(from) &gt; 1) {</span>
 <span class="fc" id="L270">	    e = ve;</span>
 <span class="fc bfc" id="L271" title="All 2 branches covered.">	    if ((agtail(ve) != from)) {</span>
 <span class="fc" id="L272">		ED_to_virt(orig, null);</span>
@@ -304,10 +304,10 @@ try {
     ST_Agnode_s u, v;
 <span class="fc" id="L305">    u = map_interclust_node(from);</span>
 <span class="fc" id="L306">    v = map_interclust_node(to);</span>
-<span class="pc bpc" id="L307" title="1 of 4 branches missed.">    if (u == from &amp;&amp; v == to)</span>
+<span class="pc bpc" id="L307" title="2 of 4 branches missed.">    if (u == from &amp;&amp; v == to)</span>
 <span class="fc" id="L308">	newtype = 1;</span>
     else
-<span class="fc" id="L310">	newtype = 5;</span>
+<span class="nc" id="L310">	newtype = 5;</span>
 <span class="fc" id="L311">    map_path(u, v, orig, ED_to_virt(orig), newtype);</span>
 } finally {
 <span class="fc" id="L313">LEAVING(&quot;69xbflgja0gvrsl5xcv7o7dia&quot;,&quot;make_interclust_chain&quot;);</span>
@@ -418,8 +418,8 @@ try {
 <span class="fc" id="L418">	    GD_rank(root).get__(r).v.set_(pos, v);</span>
 <span class="fc" id="L419">	    ND_order(v, pos++);</span>
 	/* real nodes automatically have v-&gt;root = root graph */
-<span class="fc bfc" id="L421" title="All 2 branches covered.">	    if (ND_node_type(v) == VIRTUAL)</span>
-<span class="fc" id="L422">		v.root = agroot(root);</span>
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">	    if (ND_node_type(v) == VIRTUAL)</span>
+<span class="nc" id="L422">		v.root = agroot(root);</span>
 <span class="fc" id="L423">	    delete_fast_node(subg, v);</span>
 <span class="fc" id="L424">	    fast_node(root, v);</span>
 <span class="fc" id="L425">	    GD_n_nodes(root, GD_n_nodes(root)+1);</span>
@@ -453,8 +453,8 @@ try {
 	/* remove the entire chain */
 <span class="fc bfc" id="L454" title="All 2 branches covered.">	while ((e = (ST_Agedge_s) ND_out(v).list.get_(0))!=null)</span>
 <span class="fc" id="L455">	    delete_fast_edge(e);</span>
-<span class="fc bfc" id="L456" title="All 2 branches covered.">	while ((e = (ST_Agedge_s) ND_in(v).list.get_(0))!=null)</span>
-<span class="fc" id="L457">	    delete_fast_edge(e);</span>
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">	while ((e = (ST_Agedge_s) ND_in(v).list.get_(0))!=null)</span>
+<span class="nc" id="L457">	    delete_fast_edge(e);</span>
 <span class="fc" id="L458">	delete_fast_node(dot_root(g), v);</span>
 <span class="fc" id="L459">	GD_rankleader(g).set_(r, null);</span>
     }

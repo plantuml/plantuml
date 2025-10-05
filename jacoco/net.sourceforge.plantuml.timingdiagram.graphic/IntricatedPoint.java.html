@@ -43,21 +43,21 @@ public class IntricatedPoint {
 	private final XPoint2D pta;
 	private final XPoint2D ptb;
 
-<span class="fc" id="L46">	public IntricatedPoint(XPoint2D pta, XPoint2D ptb) {</span>
-<span class="fc" id="L47">		this.pta = pta;</span>
-<span class="fc" id="L48">		this.ptb = ptb;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L46">	public IntricatedPoint(XPoint2D pta, XPoint2D ptb) {</span>
+<span class="nc" id="L47">		this.pta = pta;</span>
+<span class="nc" id="L48">		this.ptb = ptb;</span>
+<span class="nc" id="L49">	}</span>
 
 	public final XPoint2D getPointA() {
-<span class="fc" id="L52">		return pta;</span>
+<span class="nc" id="L52">		return pta;</span>
 	}
 
 	public final XPoint2D getPointB() {
-<span class="fc" id="L56">		return ptb;</span>
+<span class="nc" id="L56">		return ptb;</span>
 	}
 
 	public IntricatedPoint translated(UTranslate translate) {
-<span class="fc" id="L60">		return new IntricatedPoint(translate.getTranslated(pta), translate.getTranslated(ptb));</span>
+<span class="nc" id="L60">		return new IntricatedPoint(translate.getTranslated(pta), translate.getTranslated(ptb));</span>
 	}
 
 }

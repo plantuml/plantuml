@@ -59,9 +59,9 @@ public class CommandFootbox extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L62">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
-<span class="fc" id="L63">		diagram.setShowFootbox(footbox);</span>
-<span class="fc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L62">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
+<span class="nc" id="L63">		diagram.setShowFootbox(footbox);</span>
+<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -80,12 +80,12 @@ class Back implements UBackground {
 
 <span class="fc" id="L81">		final Color color = toColor(mapper);</span>
 <span class="fc" id="L82">		final int alpha = color.getAlpha();</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (alpha == 255)</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (alpha == 255)</span>
 <span class="fc" id="L84">			return toRGB(mapper);</span>
 
-<span class="fc" id="L86">		String s = &quot;0&quot; + Integer.toHexString(alpha).toUpperCase();</span>
-<span class="fc" id="L87">		s = s.substring(s.length() - 2);</span>
-<span class="fc" id="L88">		return toRGB(mapper) + s;</span>
+<span class="nc" id="L86">		String s = &quot;0&quot; + Integer.toHexString(alpha).toUpperCase();</span>
+<span class="nc" id="L87">		s = s.substring(s.length() - 2);</span>
+<span class="nc" id="L88">		return toRGB(mapper) + s;</span>
 	}
 
 	public HColor lighten(int ratio) {

@@ -43,9 +43,9 @@ import java.util.List;
 
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
-<span class="nc" id="L46">public class TextTable {</span>
+<span class="fc" id="L46">public class TextTable {</span>
 
-<span class="nc" id="L48">	private final static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);</span>
+<span class="fc" id="L48">	private final static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);</span>
 
 	static interface TextLine {
 		public int nbCols();
@@ -56,26 +56,26 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 	}
 
-<span class="nc" id="L59">	static class Separator implements TextLine {</span>
+<span class="fc" id="L59">	static class Separator implements TextLine {</span>
 
 		public int nbCols() {
-<span class="nc" id="L62">			return 0;</span>
+<span class="fc" id="L62">			return 0;</span>
 		}
 
 		public int getPreferredWidth(int col) {
-<span class="nc" id="L66">			return 0;</span>
+<span class="fc" id="L66">			return 0;</span>
 		}
 
 		public String getPrinted(int[] width) {
-<span class="nc" id="L70">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">			for (int w : width) {</span>
-<span class="nc" id="L72">				sb.append('+');</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">				for (int i = 0; i &lt; w + 2; i++) {</span>
-<span class="nc" id="L74">					sb.append('-');</span>
+<span class="fc" id="L70">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			for (int w : width) {</span>
+<span class="fc" id="L72">				sb.append('+');</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">				for (int i = 0; i &lt; w + 2; i++) {</span>
+<span class="fc" id="L74">					sb.append('-');</span>
 				}
 			}
-<span class="nc" id="L77">			sb.append('+');</span>
-<span class="nc" id="L78">			return sb.toString();</span>
+<span class="fc" id="L77">			sb.append('+');</span>
+<span class="fc" id="L78">			return sb.toString();</span>
 		}
 	}
 
@@ -83,101 +83,101 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 		private final Object[] cells;
 
-<span class="nc" id="L86">		private DataLine(Object[] cells) {</span>
-<span class="nc" id="L87">			this.cells = cells;</span>
-<span class="nc" id="L88">		}</span>
+<span class="fc" id="L86">		private DataLine(Object[] cells) {</span>
+<span class="fc" id="L87">			this.cells = cells;</span>
+<span class="fc" id="L88">		}</span>
 
 		public int nbCols() {
-<span class="nc" id="L91">			return cells.length;</span>
+<span class="fc" id="L91">			return cells.length;</span>
 		}
 
 		public int getPreferredWidth(int col) {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (col &lt; cells.length) {</span>
-<span class="nc" id="L96">				return formatMe(cells[col], 0).length();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (col &lt; cells.length) {</span>
+<span class="fc" id="L96">				return formatMe(cells[col], 0).length();</span>
 			}
 <span class="nc" id="L98">			return 0;</span>
 		}
 
 		public String getPrinted(int[] width) {
-<span class="nc" id="L102">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (int i = 0; i &lt; width.length; i++) {</span>
-<span class="nc" id="L104">				sb.append('|');</span>
-<span class="nc" id="L105">				final Object s = cells[i];</span>
-<span class="nc" id="L106">				sb.append(' ');</span>
-<span class="nc" id="L107">				sb.append(formatMe(s, width[i]));</span>
-<span class="nc" id="L108">				sb.append(' ');</span>
+<span class="fc" id="L102">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			for (int i = 0; i &lt; width.length; i++) {</span>
+<span class="fc" id="L104">				sb.append('|');</span>
+<span class="fc" id="L105">				final Object s = cells[i];</span>
+<span class="fc" id="L106">				sb.append(' ');</span>
+<span class="fc" id="L107">				sb.append(formatMe(s, width[i]));</span>
+<span class="fc" id="L108">				sb.append(' ');</span>
 			}
-<span class="nc" id="L110">			sb.append('|');</span>
-<span class="nc" id="L111">			return sb.toString();</span>
+<span class="fc" id="L110">			sb.append('|');</span>
+<span class="fc" id="L111">			return sb.toString();</span>
 		}
 
 		private String formatMe(Object s, int width) {
-<span class="nc" id="L115">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L116">			HorizontalAlignment align = HorizontalAlignment.CENTER;</span>
+<span class="fc" id="L115">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L116">			HorizontalAlignment align = HorizontalAlignment.CENTER;</span>
 
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (s instanceof Long) {</span>
-<span class="nc" id="L119">				final String num = String.format(&quot;%,d&quot;, s).replaceAll(&quot;\u00A0&quot;, &quot; &quot;);</span>
-<span class="nc" id="L120">				sb.append(num);</span>
-<span class="nc" id="L121">				align = HorizontalAlignment.RIGHT;</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">			} else if (s instanceof Date) {</span>
-<span class="nc" id="L123">				sb.append(formatter.format(s));</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (s != null) {</span>
-<span class="nc" id="L125">				sb.append(s.toString());</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (s instanceof Long) {</span>
+<span class="fc" id="L119">				final String num = String.format(&quot;%,d&quot;, s).replaceAll(&quot;\u00A0&quot;, &quot; &quot;);</span>
+<span class="fc" id="L120">				sb.append(num);</span>
+<span class="fc" id="L121">				align = HorizontalAlignment.RIGHT;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			} else if (s instanceof Date) {</span>
+<span class="fc" id="L123">				sb.append(formatter.format(s));</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			} else if (s != null) {</span>
+<span class="fc" id="L125">				sb.append(s.toString());</span>
 			}
-<span class="nc bnc" id="L127" title="All 2 branches missed.">			while (sb.length() &lt; width) {</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (align == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L129">					sb.insert(0, &quot; &quot;);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			while (sb.length() &lt; width) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">				if (align == HorizontalAlignment.RIGHT) {</span>
+<span class="fc" id="L129">					sb.insert(0, &quot; &quot;);</span>
 				} else {
-<span class="nc" id="L131">					sb.append(&quot; &quot;);</span>
+<span class="fc" id="L131">					sb.append(&quot; &quot;);</span>
 				}
-<span class="nc bnc" id="L133" title="All 4 branches missed.">				if (align == HorizontalAlignment.CENTER &amp;&amp; sb.length() &lt; width) {</span>
-<span class="nc" id="L134">					sb.insert(0, &quot; &quot;);</span>
+<span class="pc bpc" id="L133" title="1 of 4 branches missed.">				if (align == HorizontalAlignment.CENTER &amp;&amp; sb.length() &lt; width) {</span>
+<span class="fc" id="L134">					sb.insert(0, &quot; &quot;);</span>
 				}
 			}
-<span class="nc" id="L137">			return sb.toString();</span>
+<span class="fc" id="L137">			return sb.toString();</span>
 		}
 	}
 
-<span class="nc" id="L141">	private final List&lt;TextLine&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L141">	private final List&lt;TextLine&gt; lines = new ArrayList&lt;&gt;();</span>
 
 	public void addLine(Object... cells) {
-<span class="nc" id="L144">		this.lines.add(new DataLine(cells));</span>
+<span class="fc" id="L144">		this.lines.add(new DataLine(cells));</span>
 
-<span class="nc" id="L146">	}</span>
+<span class="fc" id="L146">	}</span>
 
 	public void addSeparator() {
-<span class="nc" id="L149">		this.lines.add(new Separator());</span>
-<span class="nc" id="L150">	}</span>
+<span class="fc" id="L149">		this.lines.add(new Separator());</span>
+<span class="fc" id="L150">	}</span>
 
 	private int[] getColsWidth() {
-<span class="nc" id="L153">		final int[] result = new int[getNbCols()];</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (int c = 0; c &lt; result.length; c++) {</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">			for (TextLine line : lines) {</span>
-<span class="nc" id="L156">				result[c] = Math.max(result[c], line.getPreferredWidth(c));</span>
-<span class="nc" id="L157">			}</span>
+<span class="fc" id="L153">		final int[] result = new int[getNbCols()];</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (int c = 0; c &lt; result.length; c++) {</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			for (TextLine line : lines) {</span>
+<span class="fc" id="L156">				result[c] = Math.max(result[c], line.getPreferredWidth(c));</span>
+<span class="fc" id="L157">			}</span>
 		}
-<span class="nc" id="L159">		return result;</span>
+<span class="fc" id="L159">		return result;</span>
 	}
 
 	private int getNbCols() {
-<span class="nc" id="L163">		int result = 0;</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (TextLine line : lines) {</span>
-<span class="nc" id="L165">			result = Math.max(result, line.nbCols());</span>
-<span class="nc" id="L166">		}</span>
-<span class="nc" id="L167">		return result;</span>
+<span class="fc" id="L163">		int result = 0;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (TextLine line : lines) {</span>
+<span class="fc" id="L165">			result = Math.max(result, line.nbCols());</span>
+<span class="fc" id="L166">		}</span>
+<span class="fc" id="L167">		return result;</span>
 	}
 
 	public void printMe(PrintStream ps) {
-<span class="nc" id="L171">		final int width[] = getColsWidth();</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		for (TextLine line : lines) {</span>
-<span class="nc" id="L173">			final String s = line.getPrinted(width);</span>
-<span class="nc" id="L174">			ps.println(s);</span>
-<span class="nc" id="L175">		}</span>
+<span class="fc" id="L171">		final int width[] = getColsWidth();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		for (TextLine line : lines) {</span>
+<span class="fc" id="L173">			final String s = line.getPrinted(width);</span>
+<span class="fc" id="L174">			ps.println(s);</span>
+<span class="fc" id="L175">		}</span>
 
-<span class="nc" id="L177">	}</span>
+<span class="fc" id="L177">	}</span>
 
 	public int getLines() {
-<span class="nc" id="L180">		return lines.size();</span>
+<span class="fc" id="L180">		return lines.size();</span>
 	}
 
 }

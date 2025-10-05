@@ -59,24 +59,24 @@ import net.sourceforge.plantuml.utils.Log;
 
 <span class="nc" id="L60">public class StatsUtils {</span>
 
-<span class="nc" id="L62">	final static Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);</span>
+<span class="fc" id="L62">	final static Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);</span>
 
 	static ParsedGenerated fullEver;
 
-<span class="nc" id="L66">	static ConcurrentMap&lt;String, ParsedGenerated&gt; byTypeEver = new ConcurrentHashMap&lt;String, ParsedGenerated&gt;();</span>
-<span class="nc" id="L67">	static ConcurrentMap&lt;String, ParsedGenerated&gt; byTypeCurrent = new ConcurrentHashMap&lt;String, ParsedGenerated&gt;();</span>
+<span class="fc" id="L66">	static ConcurrentMap&lt;String, ParsedGenerated&gt; byTypeEver = new ConcurrentHashMap&lt;String, ParsedGenerated&gt;();</span>
+<span class="fc" id="L67">	static ConcurrentMap&lt;String, ParsedGenerated&gt; byTypeCurrent = new ConcurrentHashMap&lt;String, ParsedGenerated&gt;();</span>
 
-<span class="nc" id="L69">	static FormatCounter formatCounterCurrent = new FormatCounter(&quot;currentformat.&quot;);</span>
-<span class="nc" id="L70">	static FormatCounter formatCounterEver = new FormatCounter(&quot;format.&quot;);</span>
+<span class="fc" id="L69">	static FormatCounter formatCounterCurrent = new FormatCounter(&quot;currentformat.&quot;);</span>
+<span class="fc" id="L70">	static FormatCounter formatCounterEver = new FormatCounter(&quot;format.&quot;);</span>
 
 	static HistoricalData historicalData;
 
-<span class="nc" id="L74">	static boolean xmlStats = false;</span>
-<span class="nc" id="L75">	static boolean htmlStats = false;</span>
-<span class="nc" id="L76">	static boolean realTimeStats = false;</span>
+<span class="fc" id="L74">	static boolean xmlStats = false;</span>
+<span class="fc" id="L75">	static boolean htmlStats = false;</span>
+<span class="fc" id="L76">	static boolean realTimeStats = false;</span>
 
 	public static Stats getStats() {
-<span class="nc" id="L79">		return new StatsImpl(byTypeEver, byTypeCurrent, formatCounterCurrent, formatCounterEver, historicalData,</span>
+<span class="fc" id="L79">		return new StatsImpl(byTypeEver, byTypeCurrent, formatCounterCurrent, formatCounterEver, historicalData,</span>
 				fullEver);
 	}
 
@@ -85,7 +85,7 @@ import net.sourceforge.plantuml.utils.Log;
 	static {
 		try {
 			// Logger.getLogger(&quot;java.util.prefs&quot;).setLevel(Level.OFF);
-<span class="nc" id="L88">			Logger.getLogger(&quot;java.util.prefs&quot;).setFilter(new Filter() {</span>
+<span class="fc" id="L88">			Logger.getLogger(&quot;java.util.prefs&quot;).setFilter(new Filter() {</span>
 				public boolean isLoggable(LogRecord record) {
 <span class="nc" id="L90">					final String message = record.getMessage();</span>
 <span class="nc" id="L91">					System.err.println(&quot;SPECIAL TRACE FOR PLANTUML: &quot; + message);</span>
@@ -94,44 +94,44 @@ import net.sourceforge.plantuml.utils.Log;
 			});
 <span class="nc" id="L95">		} catch (Exception e) {</span>
 <span class="nc" id="L96">			Logme.error(e);</span>
-<span class="nc" id="L97">		}</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (prefs.getInt(&quot;VERSION&quot;, 0) != VERSION) {</span>
+<span class="fc" id="L97">		}</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (prefs.getInt(&quot;VERSION&quot;, 0) != VERSION) {</span>
 			try {
-<span class="nc" id="L100">				prefs.clear();</span>
+<span class="fc" id="L100">				prefs.clear();</span>
 <span class="nc" id="L101">			} catch (BackingStoreException e1) {</span>
 <span class="nc" id="L102">				Logme.error(e1);</span>
-<span class="nc" id="L103">			}</span>
-<span class="nc" id="L104">			prefs.putInt(&quot;VERSION&quot;, VERSION);</span>
+<span class="fc" id="L103">			}</span>
+<span class="fc" id="L104">			prefs.putInt(&quot;VERSION&quot;, VERSION);</span>
 		}
-<span class="nc" id="L106">		restoreNow();</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (historicalData != null) {</span>
-<span class="nc" id="L108">			historicalData.reset();</span>
+<span class="fc" id="L106">		restoreNow();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (historicalData != null) {</span>
+<span class="fc" id="L108">			historicalData.reset();</span>
 		}
 
-<span class="nc" id="L111">		Runtime.getRuntime().addShutdownHook(new Thread() {</span>
+<span class="fc" id="L111">		Runtime.getRuntime().addShutdownHook(new Thread() {</span>
 			@Override
 			public void run() {
-<span class="nc" id="L114">				endingHook();</span>
-<span class="nc" id="L115">			}</span>
+<span class="fc" id="L114">				endingHook();</span>
+<span class="fc" id="L115">			}</span>
 		});
-<span class="nc" id="L117">	}</span>
+<span class="fc" id="L117">	}</span>
 
 	private static void restoreNow() {
 		try {
-<span class="nc" id="L121">			prefs.sync();</span>
-<span class="nc" id="L122">			fullEver = ParsedGenerated.loadDated(prefs, &quot;full&quot;);</span>
-<span class="nc" id="L123">			historicalData = new HistoricalData(prefs);</span>
-<span class="nc" id="L124">			reload();</span>
-<span class="nc" id="L125">			formatCounterEver.reload(&quot;format.&quot;, prefs);</span>
+<span class="fc" id="L121">			prefs.sync();</span>
+<span class="fc" id="L122">			fullEver = ParsedGenerated.loadDated(prefs, &quot;full&quot;);</span>
+<span class="fc" id="L123">			historicalData = new HistoricalData(prefs);</span>
+<span class="fc" id="L124">			reload();</span>
+<span class="fc" id="L125">			formatCounterEver.reload(&quot;format.&quot;, prefs);</span>
 <span class="nc" id="L126">		} catch (BackingStoreException e) {</span>
 <span class="nc" id="L127">			Log.error(&quot;Error reloading stats &quot; + e);</span>
 <span class="nc" id="L128">			byTypeEver.clear();</span>
-<span class="nc" id="L129">		}</span>
-<span class="nc" id="L130">	}</span>
+<span class="fc" id="L129">		}</span>
+<span class="fc" id="L130">	}</span>
 
 	private static void reload() throws BackingStoreException {
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (String key : prefs.keys()) {</span>
-<span class="nc bnc" id="L134" title="All 4 branches missed.">			if (key.startsWith(&quot;type.&quot;) &amp;&amp; key.endsWith(&quot;.p.saved&quot;)) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (String key : prefs.keys()) {</span>
+<span class="pc bpc" id="L134" title="3 of 4 branches missed.">			if (key.startsWith(&quot;type.&quot;) &amp;&amp; key.endsWith(&quot;.p.saved&quot;)) {</span>
 <span class="nc" id="L135">				final String name = removeDotPSaved(key);</span>
 <span class="nc" id="L136">				final ParsedGenerated p = ParsedGenerated.loadDated(prefs, name);</span>
 <span class="nc bnc" id="L137" title="All 2 branches missed.">				if (p != null) {</span>
@@ -139,7 +139,7 @@ import net.sourceforge.plantuml.utils.Log;
 				}
 			}
 		}
-<span class="nc" id="L142">	}</span>
+<span class="fc" id="L142">	}</span>
 
 	static String removeDotPSaved(String key) {
 <span class="nc" id="L145">		return key.substring(0, key.length() - &quot;.p.saved&quot;.length());</span>
@@ -147,81 +147,89 @@ import net.sourceforge.plantuml.utils.Log;
 
 	private static void endingHook() {
 		try {
-<span class="nc" id="L150">			final Stats stats = getStatsLazzy();</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (xmlStats) {</span>
+<span class="fc" id="L150">			final Stats stats = getStatsLazzy();</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			if (xmlStats) {</span>
 <span class="nc" id="L152">				xmlOutput(stats);</span>
 			}
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (htmlStats) {</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (htmlStats) {</span>
 <span class="nc" id="L155">				htmlOutput(stats);</span>
 			}
 <span class="nc" id="L157">		} catch (Exception e) {</span>
 <span class="nc" id="L158">			Logme.error(e);</span>
-<span class="nc" id="L159">		}</span>
-<span class="nc" id="L160">	}</span>
+<span class="fc" id="L159">		}</span>
+<span class="fc" id="L160">	}</span>
 
 	static Stats getStatsLazzy() {
-<span class="nc bnc" id="L163" title="All 4 branches missed.">		if (xmlStats || htmlStats) {</span>
-<span class="nc" id="L164">			return getStats();</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">		if (xmlStats || htmlStats) {</span>
+<span class="fc" id="L164">			return getStats();</span>
 		}
-<span class="nc" id="L166">		return null;</span>
+<span class="fc" id="L166">		return null;</span>
 	}
 
 	static void htmlOutput(Stats stats) throws FileNotFoundException {
-<span class="nc" id="L170">		try (PrintWriter pw = SecurityUtils.createPrintWriter(&quot;plantuml-stats.html&quot;)) {</span>
-<span class="nc" id="L171">			pw.print(new HtmlConverter(stats).toHtml());</span>
+<span class="fc" id="L170">		try (PrintWriter pw = SecurityUtils.createPrintWriter(&quot;plantuml-stats.html&quot;)) {</span>
+<span class="fc" id="L171">			pw.print(new HtmlConverter(stats).toHtml());</span>
 		}
-<span class="nc" id="L173">	}</span>
+<span class="fc" id="L173">	}</span>
 
 	static void xmlOutput(Stats stats) throws TransformerException, ParserConfigurationException, IOException {
-<span class="nc" id="L176">		try (OutputStream os = SecurityUtils.createFileOutputStream(&quot;plantuml-stats.xml&quot;)) {</span>
-<span class="nc" id="L177">			new XmlConverter(stats).createXml(os);</span>
+<span class="fc" id="L176">		try (OutputStream os = SecurityUtils.createFileOutputStream(&quot;plantuml-stats.xml&quot;)) {</span>
+<span class="fc" id="L177">			new XmlConverter(stats).createXml(os);</span>
 		}
-<span class="nc" id="L179">	}</span>
+<span class="fc" id="L179">	}</span>
 
 	public static void setXmlStats(boolean value) {
-<span class="nc" id="L182">		xmlStats = value;</span>
-<span class="nc" id="L183">	}</span>
+<span class="fc" id="L182">		xmlStats = value;</span>
+<span class="fc" id="L183">	}</span>
 
 	public static void setHtmlStats(boolean value) {
-<span class="nc" id="L186">		htmlStats = value;</span>
-<span class="nc" id="L187">	}</span>
+<span class="fc" id="L186">		htmlStats = value;</span>
+<span class="fc" id="L187">	}</span>
 
 	public static void setRealTimeStats(boolean value) {
-<span class="nc" id="L190">		realTimeStats = value;</span>
-<span class="nc" id="L191">	}</span>
+<span class="fc" id="L190">		realTimeStats = value;</span>
+<span class="fc" id="L191">	}</span>
 
-	public static void outHtml() throws FileNotFoundException {
-<span class="nc" id="L194">		htmlOutput(getStats());</span>
-<span class="nc" id="L195">	}</span>
+	public static void outHtml() {
+		try {
+<span class="fc" id="L195">			htmlOutput(getStats());</span>
+<span class="nc" id="L196">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L197">			throw new RuntimeException(e);</span>
+<span class="fc" id="L198">		}</span>
+<span class="fc" id="L199">	}</span>
 
 	public static void dumpStats() {
-<span class="nc" id="L198">		new TextConverter(getStats()).printMe(System.out);</span>
-<span class="nc" id="L199">	}</span>
+<span class="fc" id="L202">		new TextConverter(getStats()).printMe(System.out);</span>
+<span class="fc" id="L203">	}</span>
 
-	public static void loopStats() throws InterruptedException {
-<span class="nc" id="L202">		int linesUsed = 0;</span>
-		while (true) {
-<span class="nc" id="L204">			restoreNow();</span>
-<span class="nc" id="L205">			clearScreen(System.out, linesUsed);</span>
-<span class="nc" id="L206">			final TextConverter textConverter = new TextConverter(getStats());</span>
-<span class="nc" id="L207">			textConverter.printMe(System.out);</span>
-<span class="nc" id="L208">			linesUsed = textConverter.getLinesUsed();</span>
-<span class="nc" id="L209">			Thread.sleep(3000L);</span>
-<span class="nc" id="L210">		}</span>
+	public static void loopStats() {
+<span class="nc" id="L206">		int linesUsed = 0;</span>
+		try {
+			while (true) {
+<span class="nc" id="L209">				restoreNow();</span>
+<span class="nc" id="L210">				clearScreen(System.out, linesUsed);</span>
+<span class="nc" id="L211">				final TextConverter textConverter = new TextConverter(getStats());</span>
+<span class="nc" id="L212">				textConverter.printMe(System.out);</span>
+<span class="nc" id="L213">				linesUsed = textConverter.getLinesUsed();</span>
+<span class="nc" id="L214">				Thread.sleep(3000L);</span>
+<span class="nc" id="L215">			}</span>
+<span class="nc" id="L216">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L217">			e.printStackTrace();</span>
+		}
 
-	}
+<span class="nc" id="L220">	}</span>
 
 	private static void clearScreen(PrintStream ps, int linesUsed) {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (linesUsed == 0) {</span>
-<span class="nc" id="L216">			return;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (linesUsed == 0) {</span>
+<span class="nc" id="L224">			return;</span>
 		}
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (SFile.separatorChar == '/') {</span>
-<span class="nc" id="L219">			System.out.println(String.format(&quot;\033[%dA&quot;, linesUsed + 1)); // Move up</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (SFile.separatorChar == '/') {</span>
+<span class="nc" id="L227">			System.out.println(String.format(&quot;\033[%dA&quot;, linesUsed + 1)); // Move up</span>
 		} else {
-<span class="nc bnc" id="L221" title="All 2 branches missed.">			for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc" id="L222">				ps.println();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L230">				ps.println();</span>
 			}
 		}
-<span class="nc" id="L225">	}</span>
+<span class="nc" id="L233">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -63,7 +63,7 @@ final public class DotData {
 	final private PortionShower portionShower;
 
 	public Entity getRootGroup() {
-<span class="nc" id="L66">		return entityFactory.getRootGroup();</span>
+<span class="fc" id="L66">		return entityFactory.getRootGroup();</span>
 	}
 
 	public boolean isDegeneratedWithFewEntities(int nb) {
@@ -96,7 +96,7 @@ final public class DotData {
 <span class="fc" id="L96">	}</span>
 
 	public GroupHierarchy getGroupHierarchy() {
-<span class="nc" id="L99">		return groupHierarchy;</span>
+<span class="fc" id="L99">		return groupHierarchy;</span>
 	}
 
 	public List&lt;Link&gt; getLinks() {
@@ -108,7 +108,7 @@ final public class DotData {
 	}
 
 	public final Entity getTopParent() {
-<span class="nc" id="L111">		return topParent;</span>
+<span class="fc" id="L111">		return topParent;</span>
 	}
 
 	public boolean isEmpty(Entity g) {
@@ -120,8 +120,8 @@ final public class DotData {
 	}
 
 	public void removeIrrelevantSametail() {
-<span class="nc" id="L123">		final Map&lt;String, Integer&gt; sametails = new HashMap&lt;String, Integer&gt;();</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (Link link : links) {</span>
+<span class="fc" id="L123">		final Map&lt;String, Integer&gt; sametails = new HashMap&lt;String, Integer&gt;();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		for (Link link : links) {</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">			if (link.getType().getDecor2().isExtendsLike())</span>
 <span class="nc" id="L126">				link.setSametail(link.getEntity1().getUid());</span>
 
@@ -132,9 +132,9 @@ final public class DotData {
 <span class="nc" id="L132">			final Integer value = sametails.get(sametail);</span>
 <span class="nc bnc" id="L133" title="All 2 branches missed.">			sametails.put(sametail, value == null ? 1 : value + 1);</span>
 <span class="nc" id="L134">		}</span>
-<span class="nc" id="L135">		final Collection&lt;String&gt; toremove = new HashSet&lt;&gt;();</span>
-<span class="nc" id="L136">		final int limit = getSkinParam().groupInheritance();</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (Map.Entry&lt;String, Integer&gt; ent : sametails.entrySet()) {</span>
+<span class="fc" id="L135">		final Collection&lt;String&gt; toremove = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L136">		final int limit = getSkinParam().groupInheritance();</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		for (Map.Entry&lt;String, Integer&gt; ent : sametails.entrySet()) {</span>
 <span class="nc" id="L138">			final String key = ent.getKey();</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">			if (ent.getValue() &lt; limit) {</span>
 <span class="nc" id="L140">				toremove.add(key);</span>
@@ -150,7 +150,7 @@ final public class DotData {
 			}
 <span class="nc" id="L151">		}</span>
 
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (Link link : links) {</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		for (Link link : links) {</span>
 <span class="nc" id="L154">			final String sametail = link.getSametail();</span>
 <span class="nc bnc" id="L155" title="All 2 branches missed.">			if (sametail == null)</span>
 <span class="nc" id="L156">				continue;</span>
@@ -159,7 +159,7 @@ final public class DotData {
 <span class="nc" id="L159">				link.setSametail(null);</span>
 
 <span class="nc" id="L161">		}</span>
-<span class="nc" id="L162">	}</span>
+<span class="fc" id="L162">	}</span>
 
 	private List&lt;Link&gt; getLinksOfThisLeaf(Entity leaf) {
 <span class="nc" id="L165">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>

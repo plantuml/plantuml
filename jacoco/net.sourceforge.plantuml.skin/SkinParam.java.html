@@ -146,8 +146,8 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public void setDefaultSkin(String newSkin) {
-<span class="fc" id="L149">		this.skin = newSkin;</span>
-<span class="fc" id="L150">	}</span>
+<span class="nc" id="L149">		this.skin = newSkin;</span>
+<span class="nc" id="L150">	}</span>
 
 	private StyleBuilder getCurrentStyleBuilderInternal() throws IOException, StyleParsingException {
 <span class="fc" id="L153">		StyleBuilder result = StyleLoader.loadSkin(this.getDefaultSkin());</span>
@@ -299,18 +299,18 @@ public class SkinParam implements ISkinParam {
 	}
 
 	static String humanName(String key) {
-<span class="nc" id="L302">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L303">		boolean upper = true;</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">		for (int i = 0; i &lt; key.length(); i++) {</span>
-<span class="nc" id="L305">			final char c = key.charAt(i);</span>
-<span class="nc bnc" id="L306" title="All 2 branches missed.">			if (c == '_') {</span>
-<span class="nc" id="L307">				upper = true;</span>
+<span class="fc" id="L302">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L303">		boolean upper = true;</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		for (int i = 0; i &lt; key.length(); i++) {</span>
+<span class="fc" id="L305">			final char c = key.charAt(i);</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">			if (c == '_') {</span>
+<span class="fc" id="L307">				upper = true;</span>
 			} else {
-<span class="nc bnc" id="L309" title="All 2 branches missed.">				sb.append(upper ? StringUtils.goUpperCase(c) : StringUtils.goLowerCase(c));</span>
-<span class="nc" id="L310">				upper = false;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">				sb.append(upper ? StringUtils.goUpperCase(c) : StringUtils.goLowerCase(c));</span>
+<span class="fc" id="L310">				upper = false;</span>
 			}
 		}
-<span class="nc" id="L313">		return sb.toString();</span>
+<span class="fc" id="L313">		return sb.toString();</span>
 	}
 
 	@Override
@@ -508,85 +508,85 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public static Collection&lt;String&gt; getPossibleValues() {
-<span class="nc" id="L511">		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="nc" id="L512">		result.add(&quot;Monochrome&quot;);</span>
+<span class="fc" id="L511">		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L512">		result.add(&quot;Monochrome&quot;);</span>
 		// result.add(&quot;BackgroundColor&quot;);
-<span class="nc" id="L514">		result.add(&quot;CircledCharacterRadius&quot;);</span>
-<span class="nc" id="L515">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
-<span class="nc" id="L516">		result.add(&quot;DefaultFontName&quot;);</span>
-<span class="nc" id="L517">		result.add(&quot;DefaultFontStyle&quot;);</span>
-<span class="nc" id="L518">		result.add(&quot;DefaultFontSize&quot;);</span>
-<span class="nc" id="L519">		result.add(&quot;DefaultFontColor&quot;);</span>
-<span class="nc" id="L520">		result.add(&quot;MinClassWidth&quot;);</span>
-<span class="nc" id="L521">		result.add(&quot;MinClassWidth&quot;);</span>
-<span class="nc" id="L522">		result.add(&quot;Dpi&quot;);</span>
-<span class="nc" id="L523">		result.add(&quot;DefaultTextAlignment&quot;);</span>
-<span class="nc" id="L524">		result.add(&quot;Shadowing&quot;);</span>
-<span class="nc" id="L525">		result.add(&quot;NoteShadowing&quot;);</span>
-<span class="nc" id="L526">		result.add(&quot;Handwritten&quot;);</span>
-<span class="nc" id="L527">		result.add(&quot;CircledCharacterRadius&quot;);</span>
-<span class="nc" id="L528">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
-<span class="nc" id="L529">		result.add(&quot;Linetype&quot;);</span>
-<span class="nc" id="L530">		result.add(&quot;PackageStyle&quot;);</span>
-<span class="nc" id="L531">		result.add(&quot;ComponentStyle&quot;);</span>
-<span class="nc" id="L532">		result.add(&quot;StereotypePosition&quot;);</span>
-<span class="nc" id="L533">		result.add(&quot;Nodesep&quot;);</span>
-<span class="nc" id="L534">		result.add(&quot;Ranksep&quot;);</span>
-<span class="nc" id="L535">		result.add(&quot;RoundCorner&quot;);</span>
-<span class="nc" id="L536">		result.add(&quot;TitleBorderRoundCorner&quot;);</span>
-<span class="nc" id="L537">		result.add(&quot;MaxMessageSize&quot;);</span>
-<span class="nc" id="L538">		result.add(&quot;Style&quot;);</span>
-<span class="nc" id="L539">		result.add(&quot;SequenceParticipant&quot;);</span>
-<span class="nc" id="L540">		result.add(&quot;ConditionStyle&quot;);</span>
-<span class="nc" id="L541">		result.add(&quot;ConditionEndStyle&quot;);</span>
-<span class="nc" id="L542">		result.add(&quot;SameClassWidth&quot;);</span>
-<span class="nc" id="L543">		result.add(&quot;HyperlinkUnderline&quot;);</span>
-<span class="nc" id="L544">		result.add(&quot;Padding&quot;);</span>
-<span class="nc" id="L545">		result.add(&quot;BoxPadding&quot;);</span>
-<span class="nc" id="L546">		result.add(&quot;ParticipantPadding&quot;);</span>
-<span class="nc" id="L547">		result.add(&quot;Guillemet&quot;);</span>
-<span class="nc" id="L548">		result.add(&quot;SvglinkTarget&quot;);</span>
-<span class="nc" id="L549">		result.add(&quot;DefaultMonospacedFontName&quot;);</span>
-<span class="nc" id="L550">		result.add(&quot;TabSize&quot;);</span>
-<span class="nc" id="L551">		result.add(&quot;MaxAsciiMessageLength&quot;);</span>
-<span class="nc" id="L552">		result.add(&quot;ColorArrowSeparationSpace&quot;);</span>
-<span class="nc" id="L553">		result.add(&quot;ResponseMessageBelowArrow&quot;);</span>
-<span class="nc" id="L554">		result.add(&quot;GenericDisplay&quot;);</span>
-<span class="nc" id="L555">		result.add(&quot;PathHoverColor&quot;);</span>
-<span class="nc" id="L556">		result.add(&quot;SwimlaneWidth&quot;);</span>
-<span class="nc" id="L557">		result.add(&quot;PageBorderColor&quot;);</span>
-<span class="nc" id="L558">		result.add(&quot;PageExternalColor&quot;);</span>
-<span class="nc" id="L559">		result.add(&quot;PageMargin&quot;);</span>
-<span class="nc" id="L560">		result.add(&quot;WrapWidth&quot;);</span>
-<span class="nc" id="L561">		result.add(&quot;SwimlaneWidth&quot;);</span>
-<span class="nc" id="L562">		result.add(&quot;SwimlaneWrapTitleWidth&quot;);</span>
-<span class="nc" id="L563">		result.add(&quot;FixCircleLabelOverlapping&quot;);</span>
+<span class="fc" id="L514">		result.add(&quot;CircledCharacterRadius&quot;);</span>
+<span class="fc" id="L515">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
+<span class="fc" id="L516">		result.add(&quot;DefaultFontName&quot;);</span>
+<span class="fc" id="L517">		result.add(&quot;DefaultFontStyle&quot;);</span>
+<span class="fc" id="L518">		result.add(&quot;DefaultFontSize&quot;);</span>
+<span class="fc" id="L519">		result.add(&quot;DefaultFontColor&quot;);</span>
+<span class="fc" id="L520">		result.add(&quot;MinClassWidth&quot;);</span>
+<span class="fc" id="L521">		result.add(&quot;MinClassWidth&quot;);</span>
+<span class="fc" id="L522">		result.add(&quot;Dpi&quot;);</span>
+<span class="fc" id="L523">		result.add(&quot;DefaultTextAlignment&quot;);</span>
+<span class="fc" id="L524">		result.add(&quot;Shadowing&quot;);</span>
+<span class="fc" id="L525">		result.add(&quot;NoteShadowing&quot;);</span>
+<span class="fc" id="L526">		result.add(&quot;Handwritten&quot;);</span>
+<span class="fc" id="L527">		result.add(&quot;CircledCharacterRadius&quot;);</span>
+<span class="fc" id="L528">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
+<span class="fc" id="L529">		result.add(&quot;Linetype&quot;);</span>
+<span class="fc" id="L530">		result.add(&quot;PackageStyle&quot;);</span>
+<span class="fc" id="L531">		result.add(&quot;ComponentStyle&quot;);</span>
+<span class="fc" id="L532">		result.add(&quot;StereotypePosition&quot;);</span>
+<span class="fc" id="L533">		result.add(&quot;Nodesep&quot;);</span>
+<span class="fc" id="L534">		result.add(&quot;Ranksep&quot;);</span>
+<span class="fc" id="L535">		result.add(&quot;RoundCorner&quot;);</span>
+<span class="fc" id="L536">		result.add(&quot;TitleBorderRoundCorner&quot;);</span>
+<span class="fc" id="L537">		result.add(&quot;MaxMessageSize&quot;);</span>
+<span class="fc" id="L538">		result.add(&quot;Style&quot;);</span>
+<span class="fc" id="L539">		result.add(&quot;SequenceParticipant&quot;);</span>
+<span class="fc" id="L540">		result.add(&quot;ConditionStyle&quot;);</span>
+<span class="fc" id="L541">		result.add(&quot;ConditionEndStyle&quot;);</span>
+<span class="fc" id="L542">		result.add(&quot;SameClassWidth&quot;);</span>
+<span class="fc" id="L543">		result.add(&quot;HyperlinkUnderline&quot;);</span>
+<span class="fc" id="L544">		result.add(&quot;Padding&quot;);</span>
+<span class="fc" id="L545">		result.add(&quot;BoxPadding&quot;);</span>
+<span class="fc" id="L546">		result.add(&quot;ParticipantPadding&quot;);</span>
+<span class="fc" id="L547">		result.add(&quot;Guillemet&quot;);</span>
+<span class="fc" id="L548">		result.add(&quot;SvglinkTarget&quot;);</span>
+<span class="fc" id="L549">		result.add(&quot;DefaultMonospacedFontName&quot;);</span>
+<span class="fc" id="L550">		result.add(&quot;TabSize&quot;);</span>
+<span class="fc" id="L551">		result.add(&quot;MaxAsciiMessageLength&quot;);</span>
+<span class="fc" id="L552">		result.add(&quot;ColorArrowSeparationSpace&quot;);</span>
+<span class="fc" id="L553">		result.add(&quot;ResponseMessageBelowArrow&quot;);</span>
+<span class="fc" id="L554">		result.add(&quot;GenericDisplay&quot;);</span>
+<span class="fc" id="L555">		result.add(&quot;PathHoverColor&quot;);</span>
+<span class="fc" id="L556">		result.add(&quot;SwimlaneWidth&quot;);</span>
+<span class="fc" id="L557">		result.add(&quot;PageBorderColor&quot;);</span>
+<span class="fc" id="L558">		result.add(&quot;PageExternalColor&quot;);</span>
+<span class="fc" id="L559">		result.add(&quot;PageMargin&quot;);</span>
+<span class="fc" id="L560">		result.add(&quot;WrapWidth&quot;);</span>
+<span class="fc" id="L561">		result.add(&quot;SwimlaneWidth&quot;);</span>
+<span class="fc" id="L562">		result.add(&quot;SwimlaneWrapTitleWidth&quot;);</span>
+<span class="fc" id="L563">		result.add(&quot;FixCircleLabelOverlapping&quot;);</span>
 		// result.add(&quot;LifelineStrategy&quot;);
 
-<span class="nc bnc" id="L566" title="All 2 branches missed.">		for (FontParam p : EnumSet.allOf(FontParam.class)) {</span>
-<span class="nc" id="L567">			final String h = humanName(p.name());</span>
-<span class="nc" id="L568">			result.add(h + &quot;FontStyle&quot;);</span>
-<span class="nc" id="L569">			result.add(h + &quot;FontName&quot;);</span>
-<span class="nc" id="L570">			result.add(h + &quot;FontSize&quot;);</span>
-<span class="nc" id="L571">			result.add(h + &quot;FontColor&quot;);</span>
-<span class="nc" id="L572">		}</span>
-<span class="nc bnc" id="L573" title="All 2 branches missed.">		for (ColorParam p : EnumSet.allOf(ColorParam.class)) {</span>
-<span class="nc" id="L574">			final String h = capitalize(p.name());</span>
-<span class="nc" id="L575">			result.add(h + &quot;Color&quot;);</span>
-<span class="nc" id="L576">		}</span>
-<span class="nc bnc" id="L577" title="All 2 branches missed.">		for (LineParam p : EnumSet.allOf(LineParam.class)) {</span>
-<span class="nc" id="L578">			final String h = capitalize(p.name());</span>
-<span class="nc" id="L579">			result.add(h + &quot;Thickness&quot;);</span>
-<span class="nc" id="L580">		}</span>
-<span class="nc bnc" id="L581" title="All 2 branches missed.">		for (AlignmentParam p : EnumSet.allOf(AlignmentParam.class)) {</span>
-<span class="nc" id="L582">			final String h = capitalize(p.name());</span>
-<span class="nc" id="L583">			result.add(h);</span>
-<span class="nc" id="L584">		}</span>
-<span class="nc" id="L585">		return Collections.unmodifiableSet(result);</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">		for (FontParam p : EnumSet.allOf(FontParam.class)) {</span>
+<span class="fc" id="L567">			final String h = humanName(p.name());</span>
+<span class="fc" id="L568">			result.add(h + &quot;FontStyle&quot;);</span>
+<span class="fc" id="L569">			result.add(h + &quot;FontName&quot;);</span>
+<span class="fc" id="L570">			result.add(h + &quot;FontSize&quot;);</span>
+<span class="fc" id="L571">			result.add(h + &quot;FontColor&quot;);</span>
+<span class="fc" id="L572">		}</span>
+<span class="fc bfc" id="L573" title="All 2 branches covered.">		for (ColorParam p : EnumSet.allOf(ColorParam.class)) {</span>
+<span class="fc" id="L574">			final String h = capitalize(p.name());</span>
+<span class="fc" id="L575">			result.add(h + &quot;Color&quot;);</span>
+<span class="fc" id="L576">		}</span>
+<span class="fc bfc" id="L577" title="All 2 branches covered.">		for (LineParam p : EnumSet.allOf(LineParam.class)) {</span>
+<span class="fc" id="L578">			final String h = capitalize(p.name());</span>
+<span class="fc" id="L579">			result.add(h + &quot;Thickness&quot;);</span>
+<span class="fc" id="L580">		}</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">		for (AlignmentParam p : EnumSet.allOf(AlignmentParam.class)) {</span>
+<span class="fc" id="L582">			final String h = capitalize(p.name());</span>
+<span class="fc" id="L583">			result.add(h);</span>
+<span class="fc" id="L584">		}</span>
+<span class="fc" id="L585">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	private static String capitalize(String name) {
-<span class="nc" id="L589">		return StringUtils.goUpperCase(name.substring(0, 1)) + name.substring(1);</span>
+<span class="fc" id="L589">		return StringUtils.goUpperCase(name.substring(0, 1)) + name.substring(1);</span>
 	}
 
 	@Override

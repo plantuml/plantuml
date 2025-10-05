@@ -266,7 +266,7 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define GD_expanded(g) (((Agraphinfo_t*)AGDATA(g))-&gt;expanded)
 	public static boolean GD_expanded(ST_Agraph_s g) {
-<span class="fc" id="L269">		return ((ST_Agraphinfo_t) g.data).expanded;</span>
+<span class="nc" id="L269">		return ((ST_Agraphinfo_t) g.data).expanded;</span>
 	}
 
 	public static void GD_expanded(ST_Agraph_s g, boolean v) {
@@ -1671,8 +1671,8 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf,
 			int sz) {
-<span class="pc bpc" id="L1674" title="1 of 2 branches missed.">		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)</span>
-<span class="pc bpc" id="L1675" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
+<span class="nc bnc" id="L1674" title="All 2 branches missed.">		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)</span>
+<span class="nc bnc" id="L1675" title="All 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
 	}
 
 	public static final int SEARCHSIZE = 30;

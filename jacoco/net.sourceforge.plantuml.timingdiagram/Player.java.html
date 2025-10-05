@@ -65,21 +65,21 @@ public abstract class Player implements TimeProjected {
 	private final HColor generalBackgroundColor;
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
-<span class="fc" id="L68">			HColor generalBackgroundColor) {</span>
-<span class="fc" id="L69">		this.generalBackgroundColor = generalBackgroundColor;</span>
-<span class="fc" id="L70">		this.stereotype = stereotype;</span>
-<span class="fc" id="L71">		this.skinParam = skinParam;</span>
-<span class="fc" id="L72">		this.compact = compact;</span>
-<span class="fc" id="L73">		this.ruler = ruler;</span>
-<span class="fc" id="L74">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
-<span class="fc" id="L75">	}</span>
+<span class="nc" id="L68">			HColor generalBackgroundColor) {</span>
+<span class="nc" id="L69">		this.generalBackgroundColor = generalBackgroundColor;</span>
+<span class="nc" id="L70">		this.stereotype = stereotype;</span>
+<span class="nc" id="L71">		this.skinParam = skinParam;</span>
+<span class="nc" id="L72">		this.compact = compact;</span>
+<span class="nc" id="L73">		this.ruler = ruler;</span>
+<span class="nc" id="L74">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
+<span class="nc" id="L75">	}</span>
 
 	public boolean isCompact() {
-<span class="fc" id="L78">		return compact;</span>
+<span class="nc" id="L78">		return compact;</span>
 	}
 
 	public HColor getGeneralBackgroundColor() {
-<span class="fc" id="L82">		return generalBackgroundColor;</span>
+<span class="nc" id="L82">		return generalBackgroundColor;</span>
 	}
 
 	protected abstract StyleSignature getStyleSignature();
@@ -89,8 +89,8 @@ public abstract class Player implements TimeProjected {
 	}
 
 	final protected FontConfiguration getFontConfiguration() {
-<span class="fc" id="L92">		return FontConfiguration.create(skinParam, StyleSignatureBasic</span>
-<span class="fc" id="L93">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
+<span class="nc" id="L92">		return FontConfiguration.create(skinParam, StyleSignatureBasic</span>
+<span class="nc" id="L93">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
 	}
 
 	final protected UStroke getStroke() {
@@ -108,7 +108,7 @@ public abstract class Player implements TimeProjected {
 	}
 
 	final protected TextBlock getTitle() {
-<span class="fc" id="L111">		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L111">		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public abstract void addNote(TimeTick now, Display note, Position position, Stereotype stereotype);

@@ -63,19 +63,19 @@ abstract class CommandChangeState extends SingleLineCommand2&lt;TimingDiagram&gt
 
 	protected CommandExecutionResult addState(TimingDiagram diagram, RegexResult arg, final Player player,
 			final TimeTick now) throws NoSuchColorException {
-<span class="fc" id="L66">		final String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
-<span class="fc" id="L67">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L68">		player.setState(now, comment, colors, getStates(arg));</span>
-<span class="fc" id="L69">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L66">		final String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
+<span class="nc" id="L67">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L68">		player.setState(now, comment, colors, getStates(arg));</span>
+<span class="nc" id="L69">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String[] getStates(RegexResult arg) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (arg.get(&quot;STATE7&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (arg.get(&quot;STATE7&quot;, 0) != null) {</span>
 <span class="nc" id="L74">			final String state1 = arg.get(&quot;STATE7&quot;, 0);</span>
 <span class="nc" id="L75">			final String state2 = arg.get(&quot;STATE7&quot;, 1);</span>
 <span class="nc" id="L76">			return new String[] { state1, state2 };</span>
 		}
-<span class="fc" id="L78">		return new String[] { arg.getLazzy(&quot;STATE&quot;, 0) };</span>
+<span class="nc" id="L78">		return new String[] { arg.getLazzy(&quot;STATE&quot;, 0) };</span>
 	}
 
 	static IRegex getStateOrHidden() {

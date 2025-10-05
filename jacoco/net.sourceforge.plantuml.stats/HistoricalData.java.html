@@ -49,41 +49,41 @@ public class HistoricalData {
 
 	final private Preferences prefs;
 	private ParsedGenerated current;
-<span class="nc" id="L52">	final private List&lt;ParsedGenerated&gt; historical = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">	final private List&lt;ParsedGenerated&gt; historical = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L54">	HistoricalData(Preferences prefs) {</span>
-<span class="nc" id="L55">		this.prefs = prefs;</span>
+<span class="fc" id="L54">	HistoricalData(Preferences prefs) {</span>
+<span class="fc" id="L55">		this.prefs = prefs;</span>
 		try {
-<span class="nc" id="L57">			historical.addAll(reload());</span>
+<span class="fc" id="L57">			historical.addAll(reload());</span>
 <span class="nc" id="L58">		} catch (BackingStoreException e) {</span>
 <span class="nc" id="L59">			Logme.error(e);</span>
-<span class="nc" id="L60">		}</span>
-<span class="nc" id="L61">		Collections.sort(historical, getIdComparator());</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L60">		}</span>
+<span class="fc" id="L61">		Collections.sort(historical, getIdComparator());</span>
+<span class="fc" id="L62">	}</span>
 
 	public void reset() {
-<span class="nc" id="L65">		char currentCode = (char) ('A' + historical.size());</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (historical.size() &gt; 7) {</span>
+<span class="fc" id="L65">		char currentCode = (char) ('A' + historical.size());</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (historical.size() &gt; 7) {</span>
 <span class="nc" id="L67">			final ParsedGenerated last = historical.get(0);</span>
 <span class="nc" id="L68">			final String lastName = last.parsed().getName();</span>
 <span class="nc" id="L69">			currentCode = lastName.charAt(&quot;histo.&quot;.length());</span>
 		}
-<span class="nc" id="L71">		this.current = ParsedGenerated.loadDated(prefs, &quot;histo.&quot; + currentCode);</span>
-<span class="nc" id="L72">		this.current.reset();</span>
-<span class="nc" id="L73">		final long maxId = getMaxId();</span>
-<span class="nc" id="L74">		this.current.parsedDated().setComment(Long.toString(maxId + 1, 36) + &quot;/&quot; + Version.versionString());</span>
-<span class="nc" id="L75">	}</span>
+<span class="fc" id="L71">		this.current = ParsedGenerated.loadDated(prefs, &quot;histo.&quot; + currentCode);</span>
+<span class="fc" id="L72">		this.current.reset();</span>
+<span class="fc" id="L73">		final long maxId = getMaxId();</span>
+<span class="fc" id="L74">		this.current.parsedDated().setComment(Long.toString(maxId + 1, 36) + &quot;/&quot; + Version.versionString());</span>
+<span class="fc" id="L75">	}</span>
 
 	private long getMaxId() {
-<span class="nc" id="L78">		long v = 0;</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (ParsedGenerated histo : historical) {</span>
+<span class="fc" id="L78">		long v = 0;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		for (ParsedGenerated histo : historical) {</span>
 <span class="nc" id="L80">			v = Math.max(v, histo.getId());</span>
 <span class="nc" id="L81">		}</span>
-<span class="nc" id="L82">		return v;</span>
+<span class="fc" id="L82">		return v;</span>
 	}
 
 	private Comparator&lt;? super ParsedGenerated&gt; getIdComparator() {
-<span class="nc" id="L86">		return new Comparator&lt;ParsedGenerated&gt;() {</span>
+<span class="fc" id="L86">		return new Comparator&lt;ParsedGenerated&gt;() {</span>
 			public int compare(ParsedGenerated v1, ParsedGenerated v2) {
 <span class="nc" id="L88">				final long time1 = v1.getId();</span>
 <span class="nc" id="L89">				final long time2 = v2.getId();</span>
@@ -99,24 +99,24 @@ public class HistoricalData {
 	}
 
 	private List&lt;ParsedGenerated&gt; reload() throws BackingStoreException {
-<span class="nc" id="L102">		final List&lt;ParsedGenerated&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L103">		final int length = &quot;histo.&quot;.length();</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (String key : prefs.keys()) {</span>
-<span class="nc bnc" id="L105" title="All 4 branches missed.">			if (key.startsWith(&quot;histo.&quot;) &amp;&amp; key.endsWith(&quot;.p.saved&quot;)) {</span>
+<span class="fc" id="L102">		final List&lt;ParsedGenerated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L103">		final int length = &quot;histo.&quot;.length();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (String key : prefs.keys()) {</span>
+<span class="pc bpc" id="L105" title="3 of 4 branches missed.">			if (key.startsWith(&quot;histo.&quot;) &amp;&amp; key.endsWith(&quot;.p.saved&quot;)) {</span>
 <span class="nc" id="L106">				final String name = key.substring(length, length + 1);</span>
 <span class="nc" id="L107">				final ParsedGenerated load = ParsedGenerated.loadDated(prefs, &quot;histo.&quot; + name);</span>
 <span class="nc" id="L108">				result.add(load);</span>
 			}
 		}
-<span class="nc" id="L111">		return result;</span>
+<span class="fc" id="L111">		return result;</span>
 	}
 
 	public ParsedGenerated current() {
-<span class="nc" id="L115">		return current;</span>
+<span class="fc" id="L115">		return current;</span>
 	}
 
 	public List&lt;ParsedGenerated&gt; getHistorical() {
-<span class="nc" id="L119">		return Collections.unmodifiableList(historical);</span>
+<span class="fc" id="L119">		return Collections.unmodifiableList(historical);</span>
 	}
 
 }

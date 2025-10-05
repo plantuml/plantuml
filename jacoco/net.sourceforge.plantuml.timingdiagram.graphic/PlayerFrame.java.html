@@ -53,23 +53,23 @@ public class PlayerFrame {
 	private final ISkinParam skinParam;
 	private final TextBlock title;
 
-<span class="fc" id="L56">	public PlayerFrame(TextBlock title, ISkinParam skinParam) {</span>
-<span class="fc" id="L57">		this.title = title;</span>
-<span class="fc" id="L58">		this.skinParam = skinParam;</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L56">	public PlayerFrame(TextBlock title, ISkinParam skinParam) {</span>
+<span class="nc" id="L57">		this.title = title;</span>
+<span class="nc" id="L58">		this.skinParam = skinParam;</span>
+<span class="nc" id="L59">	}</span>
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L62">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
+<span class="nc" id="L62">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
 	}
 
 	private HColor getLineColor() {
-<span class="fc" id="L66">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L67">		return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L66">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L67">		return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private UStroke getUStroke() {
-<span class="fc" id="L71">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L72">		return style.getStroke();</span>
+<span class="nc" id="L71">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L72">		return style.getStroke();</span>
 	}
 
 	public void drawTitle(UGraphic ug) {
@@ -77,23 +77,23 @@ public class PlayerFrame {
 <span class="nc" id="L77">	}</span>
 
 	public void drawFrameTitle(UGraphic ug) {
-<span class="fc" id="L80">		title.drawU(ug);</span>
-<span class="fc" id="L81">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L82">		ug = ug.apply(getLineColor()).apply(getUStroke());</span>
-<span class="fc" id="L83">		final double widthTmp = dimTitle.getWidth() + 1;</span>
-<span class="fc" id="L84">		final double height = title.calculateDimension(ug.getStringBounder()).getHeight() + 1;</span>
-<span class="fc" id="L85">		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);</span>
-<span class="fc" id="L86">	}</span>
+<span class="nc" id="L80">		title.drawU(ug);</span>
+<span class="nc" id="L81">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L82">		ug = ug.apply(getLineColor()).apply(getUStroke());</span>
+<span class="nc" id="L83">		final double widthTmp = dimTitle.getWidth() + 1;</span>
+<span class="nc" id="L84">		final double height = title.calculateDimension(ug.getStringBounder()).getHeight() + 1;</span>
+<span class="nc" id="L85">		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);</span>
+<span class="nc" id="L86">	}</span>
 
 	private void drawLine(UGraphic ug, double... coord) {
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (int i = 0; i &lt; coord.length - 2; i += 2) {</span>
-<span class="fc" id="L90">			final double x1 = coord[i];</span>
-<span class="fc" id="L91">			final double y1 = coord[i + 1];</span>
-<span class="fc" id="L92">			final double x2 = coord[i + 2];</span>
-<span class="fc" id="L93">			final double y2 = coord[i + 3];</span>
-<span class="fc" id="L94">			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (int i = 0; i &lt; coord.length - 2; i += 2) {</span>
+<span class="nc" id="L90">			final double x1 = coord[i];</span>
+<span class="nc" id="L91">			final double y1 = coord[i + 1];</span>
+<span class="nc" id="L92">			final double x2 = coord[i + 2];</span>
+<span class="nc" id="L93">			final double y2 = coord[i + 3];</span>
+<span class="nc" id="L94">			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));</span>
 		}
-<span class="fc" id="L96">	}</span>
+<span class="nc" id="L96">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

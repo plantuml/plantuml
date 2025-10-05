@@ -78,13 +78,13 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L81">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L82">		final Player player = diagram.getPlayer(code);</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (player == null)</span>
+<span class="nc" id="L81">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L82">		final Player player = diagram.getPlayer(code);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (player == null)</span>
 <span class="nc" id="L84">			return CommandExecutionResult.error(&quot;Unkown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
 
-<span class="fc" id="L86">		final TimeTick now = diagram.getNow();</span>
-<span class="fc" id="L87">		return addState(diagram, arg, player, now);</span>
+<span class="nc" id="L86">		final TimeTick now = diagram.getNow();</span>
+<span class="nc" id="L87">		return addState(diagram, arg, player, now);</span>
 	}
 
 }

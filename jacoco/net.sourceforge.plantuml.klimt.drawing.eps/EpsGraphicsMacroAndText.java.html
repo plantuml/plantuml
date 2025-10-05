@@ -41,22 +41,22 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 
-<span class="nc" id="L44">public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {</span>
+<span class="fc" id="L44">public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {</span>
 
 	public void drawText(String text, FontConfiguration fontConfiguration, double x, double y) {
-<span class="nc" id="L47">		append(format(x) + &quot; &quot; + format(y) + &quot; moveto&quot;, true);</span>
-<span class="nc" id="L48">		appendColor(getColor());</span>
-<span class="nc" id="L49">		final UFont font = fontConfiguration.getFont();</span>
-<span class="nc" id="L50">		final int size = font.getSize();</span>
-<span class="nc" id="L51">		append(&quot;/&quot; + getPSName(text, fontConfiguration) + &quot; findfont &quot; + size + &quot; scalefont setfont&quot;, true);</span>
-<span class="nc" id="L52">		append(&quot;100 -100 scale&quot;, true);</span>
-<span class="nc" id="L53">		append(&quot;(&quot; + getTextAsEps(text) + &quot;) show&quot;, false);</span>
-<span class="nc" id="L54">		append(&quot;.01 -.01 scale&quot;, true);</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L47">		append(format(x) + &quot; &quot; + format(y) + &quot; moveto&quot;, true);</span>
+<span class="fc" id="L48">		appendColor(getColor());</span>
+<span class="fc" id="L49">		final UFont font = fontConfiguration.getFont();</span>
+<span class="fc" id="L50">		final int size = font.getSize();</span>
+<span class="fc" id="L51">		append(&quot;/&quot; + getPSName(text, fontConfiguration) + &quot; findfont &quot; + size + &quot; scalefont setfont&quot;, true);</span>
+<span class="fc" id="L52">		append(&quot;100 -100 scale&quot;, true);</span>
+<span class="fc" id="L53">		append(&quot;(&quot; + getTextAsEps(text) + &quot;) show&quot;, false);</span>
+<span class="fc" id="L54">		append(&quot;.01 -.01 scale&quot;, true);</span>
+<span class="fc" id="L55">	}</span>
 
 	private String getPSName(String text, FontConfiguration fontConfiguration) {
-<span class="nc" id="L58">		final UFont font = fontConfiguration.getFont();</span>
-<span class="nc" id="L59">		final StringBuilder sb = new StringBuilder(font.getFamily(text, UFontContext.EPS));</span>
+<span class="fc" id="L58">		final UFont font = fontConfiguration.getFont();</span>
+<span class="fc" id="L59">		final StringBuilder sb = new StringBuilder(font.getFamily(text, UFontContext.EPS));</span>
 		// final int style = fontConfiguration.getFont().getStyle();
 		// final boolean bold = (style &amp; Font.BOLD) != 0 ||
 		// fontConfiguration.containsStyle(FontStyle.BOLD);
@@ -69,23 +69,23 @@ import net.sourceforge.plantuml.klimt.font.UFontContext;
 		// } else if (italic) {
 		// sb.append(&quot;-Italic&quot;);
 		// }
-<span class="nc" id="L72">		return sb.toString();</span>
+<span class="fc" id="L72">		return sb.toString();</span>
 	}
 
 	private String getTextAsEps(String text) {
-<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; text.length(); i++) {</span>
-<span class="nc" id="L78">			final char c = text.charAt(i);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (c == '\\') {</span>
+<span class="fc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L78">			final char c = text.charAt(i);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			if (c == '\\') {</span>
 <span class="nc" id="L80">				sb.append(&quot;\\\\&quot;);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			} else if (c == '(') {</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			} else if (c == '(') {</span>
 <span class="nc" id="L82">				sb.append(&quot;\\(&quot;);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			} else if (c == ')') {</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			} else if (c == ')') {</span>
 <span class="nc" id="L84">				sb.append(&quot;\\)&quot;);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			} else if (c &lt; ' ') {</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			} else if (c &lt; ' ') {</span>
 <span class="nc" id="L86">				sb.append(&quot;?&quot;);</span>
-<span class="nc bnc" id="L87" title="All 4 branches missed.">			} else if (c &gt;= ' ' &amp;&amp; c &lt;= 127) {</span>
-<span class="nc" id="L88">				sb.append(c);</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">			} else if (c &gt;= ' ' &amp;&amp; c &lt;= 127) {</span>
+<span class="fc" id="L88">				sb.append(c);</span>
 			} else {
 <span class="nc" id="L90">				final String s = &quot;&quot; + c;</span>
 				try {
@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.klimt.font.UFontContext;
 <span class="nc" id="L101">				}</span>
 			}
 		}
-<span class="nc" id="L104">		return sb.toString();</span>
+<span class="fc" id="L104">		return sb.toString();</span>
 	}
 
 }

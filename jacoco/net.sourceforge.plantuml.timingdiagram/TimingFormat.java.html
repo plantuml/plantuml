@@ -66,16 +66,16 @@ public final class TimingFormat {
 	}
 
 	public String formatTime(long time) {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (sdf != null)</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (sdf != null)</span>
 <span class="nc" id="L70">			return sdf.format(time * 1000L);</span>
 
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (this == HOUR) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (this == HOUR) {</span>
 <span class="nc" id="L73">			final int s = (int) time % 60;</span>
 <span class="nc" id="L74">			final int m = (int) (time / 60) % 60;</span>
 <span class="nc" id="L75">			final int h = (int) (time / 3600);</span>
 <span class="nc" id="L76">			return String.format(&quot;%d:%02d:%02d&quot;, h, m, s);</span>
 		}
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (this == DATE) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (this == DATE) {</span>
 			final int yyyy;
 			final int mm;
 			final int dd;
@@ -88,7 +88,7 @@ public final class TimingFormat {
 			// return String.format(&quot;%04d/%02d/%02d&quot;, yyyy, mm, dd);
 <span class="nc" id="L89">			return String.format(&quot;%02d/%02d&quot;, mm, dd);</span>
 		}
-<span class="fc" id="L91">		return &quot;&quot; + time;</span>
+<span class="nc" id="L91">		return &quot;&quot; + time;</span>
 	}
 
 	public static TimeTick createDate(int yyyy, int mm, int dd, TimingFormat format) {

@@ -51,22 +51,22 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 <span class="fc" id="L51">	private static final long start = System.currentTimeMillis();</span>
 
 	private static String format(String s) {
-<span class="nc" id="L54">		final long delta = System.currentTimeMillis() - start;</span>
+<span class="fc" id="L54">		final long delta = System.currentTimeMillis() - start;</span>
 		// final HealthCheck healthCheck = Performance.getHealthCheck();
 		// final long cpu = healthCheck.jvmCpuTime() / 1000L / 1000L;
 		// final long dot = healthCheck.dotTime().getSum();
 
-<span class="nc" id="L59">		final long freeMemory = Runtime.getRuntime().freeMemory();</span>
-<span class="nc" id="L60">		final long maxMemory = Runtime.getRuntime().maxMemory();</span>
-<span class="nc" id="L61">		final long totalMemory = Runtime.getRuntime().totalMemory();</span>
-<span class="nc" id="L62">		final long usedMemory = totalMemory - freeMemory;</span>
-<span class="nc" id="L63">		final int threadActiveCount = Thread.activeCount();</span>
+<span class="fc" id="L59">		final long freeMemory = Runtime.getRuntime().freeMemory();</span>
+<span class="fc" id="L60">		final long maxMemory = Runtime.getRuntime().maxMemory();</span>
+<span class="fc" id="L61">		final long totalMemory = Runtime.getRuntime().totalMemory();</span>
+<span class="fc" id="L62">		final long usedMemory = totalMemory - freeMemory;</span>
+<span class="fc" id="L63">		final int threadActiveCount = Thread.activeCount();</span>
 
-<span class="nc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L66">		sb.append(&quot;(&quot;);</span>
-<span class="nc" id="L67">		sb.append(delta / 1000L);</span>
-<span class="nc" id="L68">		sb.append(&quot;.&quot;);</span>
-<span class="nc" id="L69">		sb.append(String.format(&quot;%03d&quot;, delta % 1000L));</span>
+<span class="fc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L66">		sb.append(&quot;(&quot;);</span>
+<span class="fc" id="L67">		sb.append(delta / 1000L);</span>
+<span class="fc" id="L68">		sb.append(&quot;.&quot;);</span>
+<span class="fc" id="L69">		sb.append(String.format(&quot;%03d&quot;, delta % 1000L));</span>
 		// if (cpu != -1) {
 		// sb.append(&quot; - &quot;);
 		// sb.append(cpu / 1000L);
@@ -80,15 +80,15 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 		// sb.append(&quot;(&quot;);
 		// sb.append(healthCheck.dotTime().getNb());
 		// sb.append(&quot;)&quot;);
-<span class="nc" id="L83">		sb.append(&quot; - &quot;);</span>
-<span class="nc" id="L84">		final long total = totalMemory / 1024 / 1024;</span>
-<span class="nc" id="L85">		final long free = freeMemory / 1024 / 1024;</span>
-<span class="nc" id="L86">		sb.append(total);</span>
-<span class="nc" id="L87">		sb.append(&quot; Mo) &quot;);</span>
-<span class="nc" id="L88">		sb.append(free);</span>
-<span class="nc" id="L89">		sb.append(&quot; Mo - &quot;);</span>
-<span class="nc" id="L90">		sb.append(s);</span>
-<span class="nc" id="L91">		return sb.toString();</span>
+<span class="fc" id="L83">		sb.append(&quot; - &quot;);</span>
+<span class="fc" id="L84">		final long total = totalMemory / 1024 / 1024;</span>
+<span class="fc" id="L85">		final long free = freeMemory / 1024 / 1024;</span>
+<span class="fc" id="L86">		sb.append(total);</span>
+<span class="fc" id="L87">		sb.append(&quot; Mo) &quot;);</span>
+<span class="fc" id="L88">		sb.append(free);</span>
+<span class="fc" id="L89">		sb.append(&quot; Mo - &quot;);</span>
+<span class="fc" id="L90">		sb.append(s);</span>
+<span class="fc" id="L91">		return sb.toString();</span>
 	}
 
 	public static void println(Object s) {
@@ -100,19 +100,19 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 
 	public synchronized static void info(Supplier&lt;String&gt; msgSupplier) {
 		// ::comment when __CORE__ or __HAXE__
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
-<span class="nc" id="L104">			ProgressBar.clear();</span>
-<span class="nc" id="L105">			System.err.println(format(msgSupplier.get()));</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
+<span class="fc" id="L104">			ProgressBar.clear();</span>
+<span class="fc" id="L105">			System.err.println(format(msgSupplier.get()));</span>
 		}
 		// ::done
 <span class="fc" id="L108">	}</span>
 
 	public synchronized static void error(String s) {
 		// ::comment when __CORE__ or __HAXE__
-<span class="nc" id="L112">		ProgressBar.clear();</span>
+<span class="fc" id="L112">		ProgressBar.clear();</span>
 		// ::done
-<span class="nc" id="L114">		System.err.println(s);</span>
-<span class="nc" id="L115">	}</span>
+<span class="fc" id="L114">		System.err.println(s);</span>
+<span class="fc" id="L115">	}</span>
 
 	public static void header(String s) {
 <span class="nc" id="L118">	}</span>

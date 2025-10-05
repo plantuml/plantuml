@@ -105,21 +105,25 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#BOOLEAN" class="member-name-link">BOOLEAN</a></code></div>
+<div class="col-first even-row-color"><code><a href="#BINARY_NEXT_ARGUMENT_VALUE" class="member-name-link">BINARY_NEXT_ARGUMENT_VALUE</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Option with a single value, e.g.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#UNARY_BOOLEAN" class="member-name-link">UNARY_BOOLEAN</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Option without any value, e.g.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#KEY_OPTIONAL_COLON_VALUE" class="member-name-link">KEY_OPTIONAL_COLON_VALUE</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Option with a key and an optional value, e.g.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="#KEY_VALUE" class="member-name-link">KEY_VALUE</a></code></div>
+<div class="col-first even-row-color"><code><a href="#UNARY_IMMEDIATE_ACTION" class="member-name-link">UNARY_IMMEDIATE_ACTION</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Option with a key and a value, e.g.</div>
+<div class="block">Option without any value that break the usual behaviour, e.g.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#SINGLE_VALUE" class="member-name-link">SINGLE_VALUE</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#UNARY_INLINE_KEY_OR_KEY_VALUE" class="member-name-link">UNARY_INLINE_KEY_OR_KEY_VALUE</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Option with a single value, e.g.</div>
+<div class="block">Option with an argument or a key/value, e.g.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#UNARY_OPTIONAL_COLON" class="member-name-link">UNARY_OPTIONAL_COLON</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Option with a key and an optional value, e.g.</div>
 </div>
 </div>
 </section>
@@ -167,30 +171,37 @@ the order they are declared.</div>
 <h2>Enum Constant Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="BOOLEAN">
-<h3>BOOLEAN</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">BOOLEAN</span></div>
+<section class="detail" id="UNARY_BOOLEAN">
+<h3>UNARY_BOOLEAN</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">UNARY_BOOLEAN</span></div>
 <div class="block">Option without any value, e.g. -verbose</div>
 </section>
 </li>
 <li>
-<section class="detail" id="KEY_VALUE">
-<h3>KEY_VALUE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">KEY_VALUE</span></div>
-<div class="block">Option with a key and a value, e.g. -DKEY=VALUE</div>
+<section class="detail" id="UNARY_IMMEDIATE_ACTION">
+<h3>UNARY_IMMEDIATE_ACTION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">UNARY_IMMEDIATE_ACTION</span></div>
+<div class="block">Option without any value that break the usual behaviour, e.g. -help, -testdot</div>
 </section>
 </li>
 <li>
-<section class="detail" id="KEY_OPTIONAL_COLON_VALUE">
-<h3>KEY_OPTIONAL_COLON_VALUE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">KEY_OPTIONAL_COLON_VALUE</span></div>
-<div class="block">Option with a key and an optional value, e.g. -ftp:8080 or -ftp</div>
+<section class="detail" id="UNARY_OPTIONAL_COLON">
+<h3>UNARY_OPTIONAL_COLON</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">UNARY_OPTIONAL_COLON</span></div>
+<div class="block">Option with a key and an optional value, e.g. -ftp or -ftp:8080</div>
 </section>
 </li>
 <li>
-<section class="detail" id="SINGLE_VALUE">
-<h3>SINGLE_VALUE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">SINGLE_VALUE</span></div>
+<section class="detail" id="UNARY_INLINE_KEY_OR_KEY_VALUE">
+<h3>UNARY_INLINE_KEY_OR_KEY_VALUE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">UNARY_INLINE_KEY_OR_KEY_VALUE</span></div>
+<div class="block">Option with an argument or a key/value, e.g. -DSOME_FLAG or -DKEY=VALUE</div>
+</section>
+</li>
+<li>
+<section class="detail" id="BINARY_NEXT_ARGUMENT_VALUE">
+<h3>BINARY_NEXT_ARGUMENT_VALUE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arity.html" title="enum class in net.sourceforge.plantuml.cli">Arity</a></span>&nbsp;<span class="element-name">BINARY_NEXT_ARGUMENT_VALUE</span></div>
 <div class="block">Option with a single value, e.g. -graphvizdot "foo.exe"</div>
 </section>
 </li>

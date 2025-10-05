@@ -90,9 +90,9 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 	}
 
 	public boolean isInside(double xp, double yp) {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (xp &lt; x) {</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			assert getClippedX(xp) != xp;</span>
-<span class="fc" id="L95">			return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (xp &lt; x) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			assert getClippedX(xp) != xp;</span>
+<span class="nc" id="L95">			return false;</span>
 		}
 <span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (xp &gt; x + width) {</span>
 <span class="nc bnc" id="L98" title="All 2 branches missed.">			assert getClippedX(xp) != xp;</span>
@@ -113,22 +113,22 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 	// ::comment when __HAXE__
 	public Rectangle2D.Double getClippedRectangle(Rectangle2D.Double r) {
-<span class="fc" id="L116">		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));</span>
+<span class="nc" id="L116">		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));</span>
 	}
 
 	public Line2D.Double getClippedLine(Line2D.Double line) {
-<span class="pc bpc" id="L120" title="2 of 4 branches missed.">		if (isInside(line.x1, line.y1) &amp;&amp; isInside(line.x2, line.y2))</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">		if (isInside(line.x1, line.y1) &amp;&amp; isInside(line.x2, line.y2))</span>
 <span class="fc" id="L121">			return line;</span>
 
-<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (isInside(line.x1, line.y1) == false &amp;&amp; isInside(line.x2, line.y2) == false) {</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (line.x1 == line.x2) {</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">		if (isInside(line.x1, line.y1) == false &amp;&amp; isInside(line.x2, line.y2) == false) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (line.x1 == line.x2) {</span>
 <span class="nc" id="L125">				final double newy1 = getClippedY(line.y1);</span>
 <span class="nc" id="L126">				final double newy2 = getClippedY(line.y2);</span>
 <span class="nc bnc" id="L127" title="All 2 branches missed.">				if (newy1 != newy2)</span>
 <span class="nc" id="L128">					return new Line2D.Double(line.x1, newy1, line.x2, newy2);</span>
 
 			}
-<span class="nc" id="L131">			return null;</span>
+<span class="fc" id="L131">			return null;</span>
 		}
 <span class="nc bnc" id="L133" title="All 4 branches missed.">		if (line.x1 != line.x2 &amp;&amp; line.y1 != line.y2)</span>
 <span class="nc" id="L134">			return null;</span>
@@ -153,8 +153,8 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 	// ::done
 
 	private double getClippedX(double xp) {
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (xp &lt; x)</span>
-<span class="fc" id="L157">			return x;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (xp &lt; x)</span>
+<span class="nc" id="L157">			return x;</span>
 
 <span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (xp &gt; x + width)</span>
 <span class="nc" id="L160">			return x + width;</span>

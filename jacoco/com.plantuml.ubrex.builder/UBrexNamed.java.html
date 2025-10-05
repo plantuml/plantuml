@@ -45,10 +45,10 @@ public class UBrexNamed extends UBrexPart {
 <span class="fc" id="L45">	}</span>
 
 	private static Challenge create(String name, UBrexPart part) {
-<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (part instanceof UBrexUpto) {</span>
-<span class="fc" id="L49">			final CompositeList list = (CompositeList) part.getChallenge();</span>
-<span class="fc" id="L50">			final CompositeNamed result = new CompositeNamed(name, list.getInternalChallengesList());</span>
-<span class="fc" id="L51">			return result;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (part instanceof UBrexUpto) {</span>
+<span class="nc" id="L49">			final CompositeList list = (CompositeList) part.getChallenge();</span>
+<span class="nc" id="L50">			final CompositeNamed result = new CompositeNamed(name, list.getInternalChallengesList());</span>
+<span class="nc" id="L51">			return result;</span>
 		}
 
 <span class="fc" id="L54">		final Challenge challenge = part.getChallenge();</span>

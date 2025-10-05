@@ -37,8 +37,8 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class NumberAnalyzedDated extends NumberAnalyzed {
 
-<span class="nc" id="L40">	private final AtomicLong created = new AtomicLong();</span>
-<span class="nc" id="L41">	private final AtomicLong modified = new AtomicLong();</span>
+<span class="pc" id="L40">	private final AtomicLong created = new AtomicLong();</span>
+<span class="pc" id="L41">	private final AtomicLong modified = new AtomicLong();</span>
 	private String comment;
 
 	private NumberAnalyzedDated(String name, long nb, long sum, long min, long max, long sumOfSquare, long sliddingSum,
@@ -51,32 +51,32 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 
 	@Override
 	public synchronized void reset() {
-<span class="nc" id="L54">		super.reset();</span>
-<span class="nc" id="L55">		resetCreatedModifiedComment();</span>
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L54">		super.reset();</span>
+<span class="fc" id="L55">		resetCreatedModifiedComment();</span>
+<span class="fc" id="L56">	}</span>
 
 	public NumberAnalyzedDated() {
-<span class="nc" id="L59">		super();</span>
-<span class="nc" id="L60">		resetCreatedModifiedComment();</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L59">		super();</span>
+<span class="fc" id="L60">		resetCreatedModifiedComment();</span>
+<span class="fc" id="L61">	}</span>
 
 	public NumberAnalyzedDated(String name) {
-<span class="nc" id="L64">		super(name);</span>
-<span class="nc" id="L65">		resetCreatedModifiedComment();</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L64">		super(name);</span>
+<span class="fc" id="L65">		resetCreatedModifiedComment();</span>
+<span class="fc" id="L66">	}</span>
 
 	private void resetCreatedModifiedComment() {
-<span class="nc" id="L69">		final long now = System.currentTimeMillis();</span>
-<span class="nc" id="L70">		this.created.set(now);</span>
-<span class="nc" id="L71">		this.modified.set(now);</span>
-<span class="nc" id="L72">		this.comment = &quot; &quot;;</span>
-<span class="nc" id="L73">	};</span>
+<span class="fc" id="L69">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L70">		this.created.set(now);</span>
+<span class="fc" id="L71">		this.modified.set(now);</span>
+<span class="fc" id="L72">		this.comment = &quot; &quot;;</span>
+<span class="fc" id="L73">	};</span>
 
 	@Override
 	public void addValue(long v) {
-<span class="nc" id="L77">		super.addValue(v);</span>
-<span class="nc" id="L78">		this.modified.set(System.currentTimeMillis());</span>
-<span class="nc" id="L79">	}</span>
+<span class="fc" id="L77">		super.addValue(v);</span>
+<span class="fc" id="L78">		this.modified.set(System.currentTimeMillis());</span>
+<span class="fc" id="L79">	}</span>
 
 	@Override
 	public void add(NumberAnalyzed other) {
@@ -86,14 +86,14 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 
 	@Override
 	protected String getSavedSupplementatyData() {
-<span class="nc" id="L89">		return longToString(created.get()) + &quot;;&quot; + longToString(modified.get()) + &quot;;&quot; + comment;</span>
+<span class="fc" id="L89">		return longToString(created.get()) + &quot;;&quot; + longToString(modified.get()) + &quot;;&quot; + comment;</span>
 	}
 
 	public static NumberAnalyzedDated load(String name, Preferences prefs) {
-<span class="nc" id="L93">		final String value = prefs.get(name + &quot;.saved&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (value.length() == 0) {</span>
-<span class="nc" id="L95">			Log.info(() -&gt; &quot;Cannot load &quot; + name);</span>
-<span class="nc" id="L96">			return null;</span>
+<span class="fc" id="L93">		final String value = prefs.get(name + &quot;.saved&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (value.length() == 0) {</span>
+<span class="pc" id="L95">			Log.info(() -&gt; &quot;Cannot load &quot; + name);</span>
+<span class="fc" id="L96">			return null;</span>
 		}
 		try {
 <span class="nc" id="L99">			final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
@@ -109,20 +109,20 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 	}
 
 	final public long getCreationTime() {
-<span class="nc" id="L112">		return created.get();</span>
+<span class="fc" id="L112">		return created.get();</span>
 	}
 
 	final public long getModificationTime() {
-<span class="nc" id="L116">		return modified.get();</span>
+<span class="fc" id="L116">		return modified.get();</span>
 	}
 
 	final public synchronized String getComment() {
-<span class="nc" id="L120">		return comment;</span>
+<span class="fc" id="L120">		return comment;</span>
 	}
 
 	final public synchronized void setComment(String comment) {
-<span class="nc" id="L124">		this.comment = comment;</span>
-<span class="nc" id="L125">	}</span>
+<span class="fc" id="L124">		this.comment = comment;</span>
+<span class="fc" id="L125">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

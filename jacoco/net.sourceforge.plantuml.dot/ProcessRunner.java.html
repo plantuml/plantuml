@@ -52,21 +52,21 @@ public class ProcessRunner {
 	private String error;
 	private String out;
 
-<span class="nc" id="L55">	public ProcessRunner(String[] cmd) {</span>
-<span class="nc" id="L56">		this.cmd = cmd;</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L55">	public ProcessRunner(String[] cmd) {</span>
+<span class="fc" id="L56">		this.cmd = cmd;</span>
+<span class="fc" id="L57">	}</span>
 
 	public ProcessState run(byte[] in, OutputStream redirection) {
-<span class="nc" id="L60">		return run(in, redirection, null);</span>
+<span class="fc" id="L60">		return run(in, redirection, null);</span>
 	}
 
 	public ProcessState run(byte[] in, OutputStream redirection, SFile dir) {
-<span class="nc" id="L64">		Process process = null;</span>
+<span class="fc" id="L64">		Process process = null;</span>
 		try {
-<span class="nc" id="L66">			final ProcessBuilder builder = new ProcessBuilder(cmd);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (dir != null)</span>
+<span class="fc" id="L66">			final ProcessBuilder builder = new ProcessBuilder(cmd);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (dir != null)</span>
 <span class="nc" id="L68">				builder.directory(dir.conv());</span>
-<span class="nc" id="L69">			builder.redirectErrorStream(true);</span>
+<span class="fc" id="L69">			builder.redirectErrorStream(true);</span>
 
 <span class="nc" id="L71">			process = builder.start();</span>
 
@@ -98,12 +98,12 @@ public class ProcessRunner {
 
 <span class="nc" id="L99">			return ProcessState.TIMEOUT();</span>
 
-<span class="nc" id="L101">		} catch (Throwable e) {</span>
-<span class="nc" id="L102">			Logme.error(e);</span>
-<span class="nc" id="L103">			this.error = e.toString();</span>
-<span class="nc" id="L104">			return ProcessState.EXCEPTION(e);</span>
+<span class="fc" id="L101">		} catch (Throwable e) {</span>
+<span class="fc" id="L102">			Logme.error(e);</span>
+<span class="fc" id="L103">			this.error = e.toString();</span>
+<span class="fc" id="L104">			return ProcessState.EXCEPTION(e);</span>
 		} finally {
-<span class="nc bnc" id="L106" title="All 6 branches missed.">			if (process != null &amp;&amp; out == null &amp;&amp; process.isAlive()) {</span>
+<span class="pc bpc" id="L106" title="5 of 6 branches missed.">			if (process != null &amp;&amp; out == null &amp;&amp; process.isAlive()) {</span>
 				// Process did not finish in time, kill it
 <span class="nc" id="L108">				process.destroy();</span>
 				// Not really sure that we should overwrite &quot;this.error&quot; here

@@ -121,7 +121,7 @@ public class Member implements CharSequence {
 <span class="fc" id="L121">		final String lower = StringUtils.goLowerCase(tmpDisplay.toString());</span>
 
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (manageModifier) {</span>
-<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			this.staticModifier = lower.contains(&quot;{static}&quot;) || lower.contains(&quot;{classifier}&quot;);</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">			this.staticModifier = lower.contains(&quot;{static}&quot;) || lower.contains(&quot;{classifier}&quot;);</span>
 <span class="fc" id="L125">			this.abstractModifier = lower.contains(&quot;{abstract}&quot;);</span>
 
 <span class="fc" id="L127">			String displayClean = REMOVE_STATIC_CLASSIFIER_ABSTRACT_PATTERN.matcher(tmpDisplay.toString())</span>

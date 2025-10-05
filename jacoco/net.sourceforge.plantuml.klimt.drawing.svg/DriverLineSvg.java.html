@@ -61,8 +61,8 @@ public class DriverLineSvg implements UDriver&lt;ULine, SvgGraphics&gt; {
 <span class="fc" id="L61">		final UClip clip = clipContainer.getClip();</span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">		if (clip != null) {</span>
 <span class="fc" id="L63">			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (line == null) {</span>
-<span class="nc" id="L65">				return;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			if (line == null) {</span>
+<span class="fc" id="L65">				return;</span>
 			}
 <span class="fc" id="L67">			x = line.x1;</span>
 <span class="fc" id="L68">			y = line.y1;</span>

@@ -62,47 +62,47 @@ public class UGraphicEps extends AbstractUGraphic&lt;EpsGraphics&gt; implements 
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L65">		final UGraphicEps result = new UGraphicEps(this);</span>
-<span class="nc" id="L66">		return result;</span>
+<span class="fc" id="L65">		final UGraphicEps result = new UGraphicEps(this);</span>
+<span class="fc" id="L66">		return result;</span>
 	}
 
 	protected UGraphicEps(UGraphicEps other) {
-<span class="nc" id="L70">		super(other.getStringBounder());</span>
-<span class="nc" id="L71">		copy(other);</span>
-<span class="nc" id="L72">		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;</span>
-<span class="nc" id="L73">		register();</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L70">		super(other.getStringBounder());</span>
+<span class="fc" id="L71">		copy(other);</span>
+<span class="fc" id="L72">		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;</span>
+<span class="fc" id="L73">		register();</span>
+<span class="fc" id="L74">	}</span>
 
 	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
 			EpsStrategy strategy) {
-<span class="nc" id="L78">		super(stringBounder);</span>
-<span class="nc" id="L79">		copy(defaultBackground, colorMapper, strategy.creatEpsGraphics());</span>
-<span class="nc" id="L80">		this.strategyTOBEREMOVED = strategy;</span>
-<span class="nc" id="L81">		register();</span>
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L78">		super(stringBounder);</span>
+<span class="fc" id="L79">		copy(defaultBackground, colorMapper, strategy.creatEpsGraphics());</span>
+<span class="fc" id="L80">		this.strategyTOBEREMOVED = strategy;</span>
+<span class="fc" id="L81">		register();</span>
+<span class="fc" id="L82">	}</span>
 
 	private void register() {
-<span class="nc" id="L85">		registerDriver(URectangle.class, new DriverRectangleEps(this));</span>
-<span class="nc" id="L86">		registerDriver(UText.class, new DriverTextEps(this, strategyTOBEREMOVED));</span>
-<span class="nc" id="L87">		registerDriver(ULine.class, new DriverLineEps(this));</span>
-<span class="nc" id="L88">		registerDriver(UPolygon.class, new DriverPolygonEps(this));</span>
-<span class="nc" id="L89">		registerDriver(UEllipse.class, new DriverEllipseEps(this));</span>
-<span class="nc" id="L90">		registerDriver(UImage.class, new DriverImageEps(this));</span>
-<span class="nc" id="L91">		registerDriver(UPath.class, new DriverPathEps());</span>
-<span class="nc" id="L92">		registerDriver(DotPath.class, new DriverDotPathEps());</span>
-<span class="nc" id="L93">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterEps());</span>
-<span class="nc" id="L94">	}</span>
+<span class="fc" id="L85">		registerDriver(URectangle.class, new DriverRectangleEps(this));</span>
+<span class="fc" id="L86">		registerDriver(UText.class, new DriverTextEps(this, strategyTOBEREMOVED));</span>
+<span class="fc" id="L87">		registerDriver(ULine.class, new DriverLineEps(this));</span>
+<span class="fc" id="L88">		registerDriver(UPolygon.class, new DriverPolygonEps(this));</span>
+<span class="fc" id="L89">		registerDriver(UEllipse.class, new DriverEllipseEps(this));</span>
+<span class="fc" id="L90">		registerDriver(UImage.class, new DriverImageEps(this));</span>
+<span class="fc" id="L91">		registerDriver(UPath.class, new DriverPathEps());</span>
+<span class="fc" id="L92">		registerDriver(DotPath.class, new DriverDotPathEps());</span>
+<span class="fc" id="L93">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterEps());</span>
+<span class="fc" id="L94">	}</span>
 
 	public void close() {
 <span class="nc" id="L97">		getEpsGraphics().close();</span>
 <span class="nc" id="L98">	}</span>
 
 	public String getEPSCode() {
-<span class="nc" id="L101">		return getEpsGraphics().getEPSCode();</span>
+<span class="fc" id="L101">		return getEpsGraphics().getEPSCode();</span>
 	}
 
 	public EpsGraphics getEpsGraphics() {
-<span class="nc" id="L105">		return this.getGraphicObject();</span>
+<span class="fc" id="L105">		return this.getGraphicObject();</span>
 	}
 
 	public void drawEps(String eps, double x, double y) {
@@ -129,8 +129,8 @@ public class UGraphicEps extends AbstractUGraphic&lt;EpsGraphics&gt; implements 
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L132">		os.write(getEPSCode().getBytes());</span>
-<span class="nc" id="L133">	}</span>
+<span class="fc" id="L132">		os.write(getEPSCode().getBytes());</span>
+<span class="fc" id="L133">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

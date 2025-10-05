@@ -59,7 +59,7 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L62">		return key + &quot; &quot; + stereotypes;</span>
+<span class="fc" id="L62">		return key + &quot; &quot; + stereotypes;</span>
 	}
 
 	public static StyleSignatureBasic empty() {
@@ -72,10 +72,10 @@ public class StyleSignatureBasic implements StyleSignature {
 <span class="fc" id="L72">	}</span>
 
 	public StyleSignatureBasic addClickable(Url url) {
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (url == null)</span>
 <span class="fc" id="L76">			return this;</span>
 
-<span class="nc" id="L78">		return new StyleSignatureBasic(key.addClickable(url), stereotypes);</span>
+<span class="fc" id="L78">		return new StyleSignatureBasic(key.addClickable(url), stereotypes);</span>
 
 	}
 

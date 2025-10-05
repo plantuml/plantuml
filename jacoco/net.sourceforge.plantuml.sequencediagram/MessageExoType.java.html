@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.sequencediagram;
 <span class="fc" id="L39">	FROM_LEFT, TO_LEFT, FROM_RIGHT, TO_RIGHT;</span>
 
 	public int getDirection() {
-<span class="pc bpc" id="L42" title="2 of 5 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L42" title="3 of 5 branches missed.">		switch (this) {</span>
 		case FROM_LEFT:
 <span class="fc" id="L44">			return 1;</span>
 		case TO_LEFT:
@@ -47,7 +47,7 @@ package net.sourceforge.plantuml.sequencediagram;
 		case TO_RIGHT:
 <span class="fc" id="L48">			return 1;</span>
 		case FROM_RIGHT:
-<span class="fc" id="L50">			return -1;</span>
+<span class="nc" id="L50">			return -1;</span>
 		}
 <span class="nc" id="L52">		throw new IllegalStateException();</span>
 	}
@@ -57,7 +57,7 @@ package net.sourceforge.plantuml.sequencediagram;
 	}
 
 	public boolean isRightBorder() {
-<span class="fc bfc" id="L60" title="All 4 branches covered.">		return this == MessageExoType.FROM_RIGHT || this == MessageExoType.TO_RIGHT;</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">		return this == MessageExoType.FROM_RIGHT || this == MessageExoType.TO_RIGHT;</span>
 	}
 
 	public MessageExoType reverse() {

@@ -50,10 +50,10 @@ public class ComponentTextLine extends AbstractComponentText {
 	private char using;
 
 <span class="fc" id="L52">	public ComponentTextLine(ComponentType type, FileFormat fileFormat) {</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (fileFormat == FileFormat.UTXT) {</span>
 <span class="fc" id="L54">			using = '\u2502';</span>
 		} else {
-<span class="nc" id="L56">			using = '|';</span>
+<span class="fc" id="L56">			using = '|';</span>
 		}
 <span class="fc bfc" id="L58" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE) {</span>
 <span class="fc" id="L59">			using = '.';</span>

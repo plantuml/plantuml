@@ -99,11 +99,11 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 
 <span class="nc" id="L100">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (dressing1 != null)</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (dressing1 != null)</span>
 <span class="fc" id="L103">			return MessageExoType.TO_RIGHT;</span>
 
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (dressing2 != null)</span>
-<span class="fc" id="L106">			return MessageExoType.FROM_RIGHT;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (dressing2 != null)</span>
+<span class="nc" id="L106">			return MessageExoType.FROM_RIGHT;</span>
 
 <span class="nc" id="L108">		throw new IllegalArgumentException();</span>
 	}

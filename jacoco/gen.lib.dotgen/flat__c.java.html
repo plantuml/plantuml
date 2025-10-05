@@ -390,13 +390,13 @@ try {
     ST_Agnode_s n;
     CArray&lt;ST_rank_t&gt; rank;
     
-<span class="fc bfc" id="L393" title="All 2 branches covered.">    if (ND_order(tn) &lt; ND_order(hn)) {</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">    if (ND_order(tn) &lt; ND_order(hn)) {</span>
 <span class="fc" id="L394">	lo = ND_order(tn);</span>
 <span class="fc" id="L395">	hi = ND_order(hn);</span>
     }
     else {
-<span class="fc" id="L398">	lo = ND_order(hn);</span>
-<span class="fc" id="L399">	hi = ND_order(tn);</span>
+<span class="nc" id="L398">	lo = ND_order(hn);</span>
+<span class="nc" id="L399">	hi = ND_order(tn);</span>
     }
 <span class="fc" id="L401">    rank = GD_rank(dot_root(tn)).plus_(ND_rank(tn));</span>
 <span class="pc bpc" id="L402" title="1 of 2 branches missed.">    for (i = lo + 1; i &lt; hi; i++) {</span>
@@ -405,7 +405,7 @@ try {
 <span class="nc bnc" id="L405" title="All 2 branches missed.">             ND_node_type(n) == NORMAL)</span>
 <span class="nc" id="L406">	    break;</span>
     }
-<span class="fc bfc" id="L408" title="All 2 branches covered.">    if (i == hi) {  /* adjacent edge */</span>
+<span class="pc bpc" id="L408" title="1 of 2 branches missed.">    if (i == hi) {  /* adjacent edge */</span>
 	do {
 <span class="fc" id="L410">	    ED_adjacent(e, 1);</span>
 <span class="fc" id="L411">	    e = ED_to_virt(e);</span>
@@ -497,7 +497,7 @@ try {
 <span class="fc" id="L497">		e = ND_other(n).list.get_(j);</span>
 <span class="fc" id="L498">		SmetanaDebug.LOG(&quot;e=&quot;+e.NAME);</span>
 <span class="pc bpc" id="L499" title="1 of 2 branches missed.">		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;</span>
-<span class="fc bfc" id="L500" title="All 2 branches covered.">		if (agtail(e) == aghead(e)) continue; /* skip loops */</span>
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">		if (agtail(e) == aghead(e)) continue; /* skip loops */</span>
 <span class="fc" id="L501">		le = e;</span>
 <span class="fc bfc" id="L502" title="All 2 branches covered.">		while (ED_to_virt(le)!=null) le = ED_to_virt(le);</span>
 <span class="fc" id="L503">		ED_adjacent(e, ED_adjacent(le)); </span>

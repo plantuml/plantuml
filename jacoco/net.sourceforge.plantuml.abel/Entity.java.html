@@ -324,11 +324,11 @@ import net.sourceforge.plantuml.utils.Position;
 //		if (leafType == LeafType.PORT)
 //			return EntityPosition.PORT;
 
-<span class="fc bfc" id="L327" title="All 2 branches covered.">		if (leafType == LeafType.PORTIN)</span>
-<span class="fc" id="L328">			return EntityPosition.PORTIN;</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTIN)</span>
+<span class="nc" id="L328">			return EntityPosition.PORTIN;</span>
 
-<span class="fc bfc" id="L330" title="All 2 branches covered.">		if (leafType == LeafType.PORTOUT)</span>
-<span class="fc" id="L331">			return EntityPosition.PORTOUT;</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTOUT)</span>
+<span class="nc" id="L331">			return EntityPosition.PORTOUT;</span>
 
 <span class="fc bfc" id="L333" title="All 2 branches covered.">		if (leafType != LeafType.STATE)</span>
 <span class="fc" id="L334">			return EntityPosition.NORMAL;</span>
@@ -593,11 +593,11 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public void setStatic(boolean isStatic) {
-<span class="fc" id="L596">		this.isStatic = isStatic;</span>
-<span class="fc" id="L597">	}</span>
+<span class="nc" id="L596">		this.isStatic = isStatic;</span>
+<span class="nc" id="L597">	}</span>
 
 	public boolean isStatic() {
-<span class="fc" id="L600">		return isStatic;</span>
+<span class="nc" id="L600">		return isStatic;</span>
 	}
 
 	// For group

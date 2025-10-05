@@ -63,9 +63,9 @@ public class CommandDivider extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L66">		final Display strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L67">		diagram.divider(strings);</span>
-<span class="fc" id="L68">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L66">		final Display strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L67">		diagram.divider(strings);</span>
+<span class="nc" id="L68">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -57,58 +57,58 @@ public class TimeMessage extends WithLinkType {
 	private final ISkinParam skinParam;
 	private final StyleBuilder styleBuilder;
 
-<span class="fc" id="L60">	public TimeMessage(TickInPlayer tickInPlayer1, TickInPlayer tickInPlayer2, String label, ISkinParam skinParam) {</span>
-<span class="fc" id="L61">		this.skinParam = skinParam;</span>
-<span class="fc" id="L62">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="fc" id="L63">		this.tickInPlayer1 = tickInPlayer1;</span>
-<span class="fc" id="L64">		this.tickInPlayer2 = tickInPlayer2;</span>
-<span class="fc" id="L65">		this.label = Display.getWithNewlines(skinParam.getPragma(), label);</span>
-<span class="fc" id="L66">		this.setSpecificColor(getColor());</span>
-<span class="fc" id="L67">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L60">	public TimeMessage(TickInPlayer tickInPlayer1, TickInPlayer tickInPlayer2, String label, ISkinParam skinParam) {</span>
+<span class="nc" id="L61">		this.skinParam = skinParam;</span>
+<span class="nc" id="L62">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="nc" id="L63">		this.tickInPlayer1 = tickInPlayer1;</span>
+<span class="nc" id="L64">		this.tickInPlayer2 = tickInPlayer2;</span>
+<span class="nc" id="L65">		this.label = Display.getWithNewlines(skinParam.getPragma(), label);</span>
+<span class="nc" id="L66">		this.setSpecificColor(getColor());</span>
+<span class="nc" id="L67">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="nc" id="L68">	}</span>
 
 	@Override
 	public UStroke getUStroke() {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (styleBuilder == null) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (styleBuilder == null) {</span>
 <span class="nc" id="L73">			return UStroke.withThickness(1.5);</span>
 		}
-<span class="fc" id="L75">		return getStyle().getStroke();</span>
+<span class="nc" id="L75">		return getStyle().getStroke();</span>
 	}
 
 	private HColor getColor() {
 //		return HColorUtils.BLUE;
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (styleBuilder == null) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (styleBuilder == null) {</span>
 <span class="nc" id="L81">			return HColors.MY_RED;</span>
 		}
-<span class="fc" id="L83">		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L83">		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L87">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L87">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.arrow);</span>
+<span class="nc" id="L91">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.arrow);</span>
 	}
 
 	public final Player getPlayer1() {
-<span class="fc" id="L95">		return tickInPlayer1.getPlayer();</span>
+<span class="nc" id="L95">		return tickInPlayer1.getPlayer();</span>
 	}
 
 	public final Player getPlayer2() {
-<span class="fc" id="L99">		return tickInPlayer2.getPlayer();</span>
+<span class="nc" id="L99">		return tickInPlayer2.getPlayer();</span>
 	}
 
 	public final TimeTick getTick1() {
-<span class="fc" id="L103">		return tickInPlayer1.getTick();</span>
+<span class="nc" id="L103">		return tickInPlayer1.getTick();</span>
 	}
 
 	public final TimeTick getTick2() {
-<span class="fc" id="L107">		return tickInPlayer2.getTick();</span>
+<span class="nc" id="L107">		return tickInPlayer2.getTick();</span>
 	}
 
 	public final Display getLabel() {
-<span class="fc" id="L111">		return label;</span>
+<span class="nc" id="L111">		return label;</span>
 	}
 
 	@Override

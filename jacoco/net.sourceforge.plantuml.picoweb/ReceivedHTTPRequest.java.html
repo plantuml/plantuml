@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
 
-<span class="nc" id="L7">public class ReceivedHTTPRequest {</span>
+<span class="fc" id="L7">public class ReceivedHTTPRequest {</span>
 
 	private static final String CONTENT_LENGTH_HEADER = &quot;content-length: &quot;;
 
@@ -15,98 +15,98 @@ import java.util.StringTokenizer;
 	private byte[] body;
 
 	public String getMethod() {
-<span class="nc" id="L18">		return method;</span>
+<span class="fc" id="L18">		return method;</span>
 	}
 
 	public String getPath() {
-<span class="nc" id="L22">		return path;</span>
+<span class="fc" id="L22">		return path;</span>
 	}
 
 	public byte[] getBody() {
-<span class="nc" id="L26">		return body;</span>
+<span class="fc" id="L26">		return body;</span>
 	}
 
 	public static ReceivedHTTPRequest fromStream(InputStream in) throws IOException {
-<span class="nc" id="L30">		final ReceivedHTTPRequest request = new ReceivedHTTPRequest();</span>
+<span class="fc" id="L30">		final ReceivedHTTPRequest request = new ReceivedHTTPRequest();</span>
 
-<span class="nc" id="L32">		final String requestLine = readLine(in);</span>
+<span class="fc" id="L32">		final String requestLine = readLine(in);</span>
 
-<span class="nc" id="L34">		final StringTokenizer tokenizer = new StringTokenizer(requestLine);</span>
-<span class="nc bnc" id="L35" title="All 2 branches missed.">		if (tokenizer.countTokens() != 3) {</span>
+<span class="fc" id="L34">		final StringTokenizer tokenizer = new StringTokenizer(requestLine);</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">		if (tokenizer.countTokens() != 3) {</span>
 <span class="nc" id="L36">			throw new BadRequest400(&quot;Bad request line&quot;);</span>
 		}
 
-<span class="nc" id="L39">		request.method = tokenizer.nextToken().toUpperCase();</span>
-<span class="nc" id="L40">		request.path = tokenizer.nextToken();</span>
+<span class="fc" id="L39">		request.method = tokenizer.nextToken().toUpperCase();</span>
+<span class="fc" id="L40">		request.path = tokenizer.nextToken();</span>
 
 		// Headers
-<span class="nc" id="L43">		int contentLength = 0;</span>
+<span class="fc" id="L43">		int contentLength = 0;</span>
 
 		while (true) {
-<span class="nc" id="L46">			String line = readLine(in);</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">			if (line.isEmpty()) {</span>
-<span class="nc" id="L48">				break;</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">			} else if (line.toLowerCase().startsWith(CONTENT_LENGTH_HEADER)) {</span>
-<span class="nc" id="L50">				contentLength = parseContentLengthHeader(line);</span>
+<span class="fc" id="L46">			String line = readLine(in);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			if (line.isEmpty()) {</span>
+<span class="fc" id="L48">				break;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			} else if (line.toLowerCase().startsWith(CONTENT_LENGTH_HEADER)) {</span>
+<span class="fc" id="L50">				contentLength = parseContentLengthHeader(line);</span>
 			}
-<span class="nc" id="L52">		}</span>
+<span class="fc" id="L52">		}</span>
 
-<span class="nc" id="L54">		request.body = readBody(in, contentLength);</span>
-<span class="nc" id="L55">		return request;</span>
+<span class="fc" id="L54">		request.body = readBody(in, contentLength);</span>
+<span class="fc" id="L55">		return request;</span>
 	}
 
 	private static int parseContentLengthHeader(String line) throws IOException {
 		int contentLength;
 
 		try {
-<span class="nc" id="L62">			contentLength = Integer.parseInt(line.substring(CONTENT_LENGTH_HEADER.length()).trim());</span>
+<span class="fc" id="L62">			contentLength = Integer.parseInt(line.substring(CONTENT_LENGTH_HEADER.length()).trim());</span>
 <span class="nc" id="L63">		} catch (NumberFormatException e) {</span>
 <span class="nc" id="L64">			throw new BadRequest400(&quot;Invalid content length&quot;);</span>
-<span class="nc" id="L65">		}</span>
+<span class="fc" id="L65">		}</span>
 
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (contentLength &lt; 0) {</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (contentLength &lt; 0) {</span>
 <span class="nc" id="L68">			throw new BadRequest400(&quot;Negative content length&quot;);</span>
 		}
 
-<span class="nc" id="L71">		return contentLength;</span>
+<span class="fc" id="L71">		return contentLength;</span>
 	}
 
 	private static byte[] readBody(InputStream in, int contentLength) throws IOException {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (contentLength == 0) {</span>
-<span class="nc" id="L76">			return new byte[0];</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (contentLength == 0) {</span>
+<span class="fc" id="L76">			return new byte[0];</span>
 		}
 
-<span class="nc" id="L79">		final byte[] body = new byte[contentLength];</span>
-<span class="nc" id="L80">		int n = 0;</span>
-<span class="nc" id="L81">		int offset = 0;</span>
+<span class="fc" id="L79">		final byte[] body = new byte[contentLength];</span>
+<span class="fc" id="L80">		int n = 0;</span>
+<span class="fc" id="L81">		int offset = 0;</span>
 
 		// java.io.InputStream.readNBytes() can replace this from Java 9
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		while (n &lt; contentLength) {</span>
-<span class="nc" id="L85">			int count = in.read(body, offset + n, contentLength - n);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (count &lt; 0) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		while (n &lt; contentLength) {</span>
+<span class="fc" id="L85">			int count = in.read(body, offset + n, contentLength - n);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (count &lt; 0) {</span>
 <span class="nc" id="L87">				throw new BadRequest400(&quot;Body too short&quot;);</span>
 			}
-<span class="nc" id="L89">			n += count;</span>
-<span class="nc" id="L90">		}</span>
-<span class="nc" id="L91">		return body;</span>
+<span class="fc" id="L89">			n += count;</span>
+<span class="fc" id="L90">		}</span>
+<span class="fc" id="L91">		return body;</span>
 	}
 
 	private static String readLine(InputStream in) throws IOException {
-<span class="nc" id="L95">		final StringBuilder builder = new StringBuilder();</span>
+<span class="fc" id="L95">		final StringBuilder builder = new StringBuilder();</span>
 
 		while (true) {
-<span class="nc" id="L98">			int c = in.read();</span>
-<span class="nc bnc" id="L99" title="All 4 branches missed.">			if (c == -1 || c == '\n') {</span>
-<span class="nc" id="L100">				break;</span>
+<span class="fc" id="L98">			int c = in.read();</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">			if (c == -1 || c == '\n') {</span>
+<span class="fc" id="L100">				break;</span>
 			}
-<span class="nc" id="L102">			builder.append((char) c);</span>
-<span class="nc" id="L103">		}</span>
+<span class="fc" id="L102">			builder.append((char) c);</span>
+<span class="fc" id="L103">		}</span>
 
-<span class="nc bnc" id="L105" title="All 4 branches missed.">		if (builder.length() &gt; 0 &amp;&amp; builder.charAt(builder.length() - 1) == '\r') {</span>
-<span class="nc" id="L106">			builder.deleteCharAt(builder.length() - 1);</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		if (builder.length() &gt; 0 &amp;&amp; builder.charAt(builder.length() - 1) == '\r') {</span>
+<span class="fc" id="L106">			builder.deleteCharAt(builder.length() - 1);</span>
 		}
 
-<span class="nc" id="L109">		return builder.toString();</span>
+<span class="fc" id="L109">		return builder.toString();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

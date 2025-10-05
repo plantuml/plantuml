@@ -49,29 +49,29 @@ public class StatsTableImpl implements StatsTable {
 
 	private final String name;
 	private final Collection&lt;StatsColumn&gt; columnHeaders;
-<span class="nc" id="L52">	private final List&lt;StatsLine&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">	private final List&lt;StatsLine&gt; lines = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L54">	public StatsTableImpl(String name) {</span>
-<span class="nc" id="L55">		this.name = name;</span>
-<span class="nc" id="L56">		this.columnHeaders = EnumSet.noneOf(StatsColumn.class);</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L54">	public StatsTableImpl(String name) {</span>
+<span class="fc" id="L55">		this.name = name;</span>
+<span class="fc" id="L56">		this.columnHeaders = EnumSet.noneOf(StatsColumn.class);</span>
+<span class="fc" id="L57">	}</span>
 
 	public String getName() {
-<span class="nc" id="L60">		return name;</span>
+<span class="fc" id="L60">		return name;</span>
 	}
 
 	public Collection&lt;StatsColumn&gt; getColumnHeaders() {
-<span class="nc" id="L64">		return Collections.unmodifiableCollection(columnHeaders);</span>
+<span class="fc" id="L64">		return Collections.unmodifiableCollection(columnHeaders);</span>
 	}
 
 	public List&lt;StatsLine&gt; getLines() {
-<span class="nc" id="L68">		return Collections.unmodifiableList(lines);</span>
+<span class="fc" id="L68">		return Collections.unmodifiableList(lines);</span>
 	}
 
 	public void addLine(StatsLine line) {
-<span class="nc" id="L72">		this.columnHeaders.addAll(line.getColumnHeaders());</span>
-<span class="nc" id="L73">		lines.add(line);</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L72">		this.columnHeaders.addAll(line.getColumnHeaders());</span>
+<span class="fc" id="L73">		lines.add(line);</span>
+<span class="fc" id="L74">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

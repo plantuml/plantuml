@@ -116,8 +116,8 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (name().startsWith(&quot;XMI_CUSTOM&quot;))</span>
 <span class="nc" id="L117">			return &quot;.xmi_custom&quot;;</span>
 
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (name().startsWith(&quot;XMI&quot;))</span>
-<span class="nc" id="L120">			return &quot;.xmi&quot;;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (name().startsWith(&quot;XMI&quot;))</span>
+<span class="fc" id="L120">			return &quot;.xmi&quot;;</span>
 
 <span class="pc bpc" id="L122" title="2 of 4 branches missed.">		if (this == LATEX || this == LATEX_NO_PREAMBLE)</span>
 <span class="nc" id="L123">			return &quot;.tex&quot;;</span>
@@ -125,8 +125,8 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (this == BRAILLE_PNG)</span>
 <span class="nc" id="L126">			return &quot;.braille.png&quot;;</span>
 
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (this == EPS_TEXT)</span>
-<span class="nc" id="L129">			return EPS.getFileSuffix();</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (this == EPS_TEXT)</span>
+<span class="fc" id="L129">			return EPS.getFileSuffix();</span>
 		// ::done
 
 <span class="fc" id="L132">		return &quot;.&quot; + StringUtils.goLowerCase(name());</span>
@@ -218,7 +218,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 		@Override
 		public boolean equals(Object obj) {
 <span class="fc" id="L220">			final FontTextKey other = (FontTextKey) obj;</span>
-<span class="pc bpc" id="L221" title="2 of 4 branches missed.">			return font.equals(other.font) &amp;&amp; text.equals(other.text);</span>
+<span class="pc bpc" id="L221" title="1 of 4 branches missed.">			return font.equals(other.font) &amp;&amp; text.equals(other.text);</span>
 		}
 
 		@Override
@@ -377,27 +377,27 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 //	}
 
 	public boolean doesSupportMetadata() {
-<span class="nc bnc" id="L380" title="All 4 branches missed.">		return this == PNG || this == SVG;</span>
+<span class="pc bpc" id="L380" title="1 of 4 branches missed.">		return this == PNG || this == SVG;</span>
 	}
 
 	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
-<span class="nc bnc" id="L385" title="All 2 branches missed.">			if (this == PNG) {</span>
-<span class="nc" id="L386">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
-<span class="nc" id="L387">				final String previousMetadata = tag.getData();</span>
-<span class="nc" id="L388">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
-<span class="nc" id="L389">				return sameMetadata;</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">			if (this == PNG) {</span>
+<span class="fc" id="L386">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
+<span class="fc" id="L387">				final String previousMetadata = tag.getData();</span>
+<span class="fc" id="L388">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
+<span class="fc" id="L389">				return sameMetadata;</span>
 			}
-<span class="nc bnc" id="L391" title="All 2 branches missed.">			if (this == SVG) {</span>
-<span class="nc" id="L392">				final String svg = FileUtils.readSvg(existingFile);</span>
-<span class="nc bnc" id="L393" title="All 2 branches missed.">				if (svg == null)</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">			if (this == SVG) {</span>
+<span class="fc" id="L392">				final String svg = FileUtils.readSvg(existingFile);</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">				if (svg == null)</span>
 <span class="nc" id="L394">					return false;</span>
 
-<span class="nc" id="L396">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
-<span class="nc" id="L397">				final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">				if (idx != -1) {</span>
-<span class="nc" id="L399">					final String part = svg.substring(idx + SvgGraphics.META_HEADER.length());</span>
-<span class="nc" id="L400">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
+<span class="fc" id="L396">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
+<span class="fc" id="L397">				final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">				if (idx != -1) {</span>
+<span class="fc" id="L399">					final String part = svg.substring(idx + SvgGraphics.META_HEADER.length());</span>
+<span class="fc" id="L400">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
 				}
 
 			}

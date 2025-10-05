@@ -260,7 +260,7 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (full.startsWith(sep))</span>
 <span class="nc" id="L261">			return Failable.ok(this.root.child(full.substring(sep.length())));</span>
 <span class="fc" id="L262">		final int x = full.indexOf(sep);</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (x == -1) {</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (x == -1) {</span>
 <span class="fc bfc" id="L264" title="All 4 branches covered.">			if (reuseExistingChild &amp;&amp; this.countByName(full) == 1) {</span>
 <span class="fc" id="L265">				final Quark&lt;Entity&gt; byName = this.firstWithName(full);</span>
 <span class="pc bpc" id="L266" title="1 of 2 branches missed.">				assert byName != null;</span>
@@ -270,16 +270,16 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L270">			return Failable.ok(currentQuark.child(full));</span>
 		}
 
-<span class="fc" id="L273">		final Quark&lt;Entity&gt; first = this.root.childIfExists(full.substring(0, x));</span>
+<span class="nc" id="L273">		final Quark&lt;Entity&gt; first = this.root.childIfExists(full.substring(0, x));</span>
 
-<span class="fc bfc" id="L275" title="All 2 branches covered.">		final boolean firstPackageDoesExist = first != null;</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">		final boolean firstPackageDoesExist = first != null;</span>
 
-<span class="pc bpc" id="L277" title="2 of 6 branches missed.">		if (firstPackageDoesExist &amp;&amp; first.getData() != null &amp;&amp; first.getData().isGroup() == false)</span>
+<span class="nc bnc" id="L277" title="All 6 branches missed.">		if (firstPackageDoesExist &amp;&amp; first.getData() != null &amp;&amp; first.getData().isGroup() == false)</span>
 <span class="nc" id="L278">			return Failable.error(&quot;Not a package: &quot; + full.substring(0, x));</span>
 
-<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (firstPackageDoesExist)</span>
-<span class="fc" id="L281">			return Failable.ok(this.root.child(full));</span>
-<span class="fc" id="L282">		return Failable.ok(currentQuark.child(full));</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (firstPackageDoesExist)</span>
+<span class="nc" id="L281">			return Failable.ok(this.root.child(full));</span>
+<span class="nc" id="L282">		return Failable.ok(currentQuark.child(full));</span>
 
 	}
 
@@ -323,11 +323,11 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc bfc" id="L323" title="All 2 branches covered.">			if (quark.getData() != null)</span>
 <span class="fc" id="L324">				continue;</span>
 <span class="fc" id="L325">			int countChildren = quark.countChildren();</span>
-<span class="fc bfc" id="L326" title="All 2 branches covered.">			if (countChildren &gt; 0) {</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">			if (countChildren &gt; 0) {</span>
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
-<span class="fc" id="L328">				final Display display = Display.getWithNewlines(getPragma(), quark.getName());</span>
-<span class="fc" id="L329">				final Entity result = this.createGroup(location, quark, GroupType.PACKAGE);</span>
-<span class="fc" id="L330">				result.setDisplay(display);</span>
+<span class="nc" id="L328">				final Display display = Display.getWithNewlines(getPragma(), quark.getName());</span>
+<span class="nc" id="L329">				final Entity result = this.createGroup(location, quark, GroupType.PACKAGE);</span>
+<span class="nc" id="L330">				result.setDisplay(display);</span>
 			}
 <span class="fc" id="L332">		}</span>
 <span class="fc" id="L333">	}</span>
@@ -417,9 +417,9 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L417">	}</span>
 
 	private void createFilesXmi(OutputStream suggestedFile, FileFormat fileFormat) throws IOException {
-<span class="fc" id="L420">		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);</span>
-<span class="fc" id="L421">		maker.createFiles(suggestedFile);</span>
-<span class="fc" id="L422">	}</span>
+<span class="nc" id="L420">		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);</span>
+<span class="nc" id="L421">		maker.createFiles(suggestedFile);</span>
+<span class="nc" id="L422">	}</span>
 
 	private void createFilesScxml(OutputStream suggestedFile) throws IOException {
 <span class="fc" id="L425">		final StateDiagramScxmlMaker maker = new StateDiagramScxmlMaker((StateDiagram) this);</span>
@@ -427,9 +427,9 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L427">	}</span>
 
 	private void createFilesTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
-<span class="fc" id="L430">		final CucaDiagramTxtMaker maker = new CucaDiagramTxtMaker(this, fileFormat);</span>
-<span class="fc" id="L431">		maker.createFiles(os, index);</span>
-<span class="fc" id="L432">	}</span>
+<span class="nc" id="L430">		final CucaDiagramTxtMaker maker = new CucaDiagramTxtMaker(this, fileFormat);</span>
+<span class="nc" id="L431">		maker.createFiles(os, index);</span>
+<span class="nc" id="L432">	}</span>
 	// ::done
 
 	@Override
@@ -449,9 +449,9 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L449">		final FileFormat fileFormat = fileFormatOption.getFileFormat();</span>
 
 		// ::comment when __CORE__
-<span class="pc bpc" id="L452" title="1 of 4 branches missed.">		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {</span>
-<span class="fc" id="L453">			createFilesTxt(os, index, fileFormat);</span>
-<span class="fc" id="L454">			return ImageDataSimple.ok();</span>
+<span class="pc bpc" id="L452" title="2 of 4 branches missed.">		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {</span>
+<span class="nc" id="L453">			createFilesTxt(os, index, fileFormat);</span>
+<span class="nc" id="L454">			return ImageDataSimple.ok();</span>
 		}
 
 <span class="fc bfc" id="L457" title="All 2 branches covered.">		if (fileFormat == FileFormat.GRAPHML) {</span>
@@ -459,9 +459,9 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L459">			return ImageDataSimple.ok();</span>
 		}
 
-<span class="fc bfc" id="L462" title="All 2 branches covered.">		if (fileFormat.name().startsWith(&quot;XMI&quot;)) {</span>
-<span class="fc" id="L463">			createFilesXmi(os, fileFormat);</span>
-<span class="fc" id="L464">			return ImageDataSimple.ok();</span>
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">		if (fileFormat.name().startsWith(&quot;XMI&quot;)) {</span>
+<span class="nc" id="L463">			createFilesXmi(os, fileFormat);</span>
+<span class="nc" id="L464">			return ImageDataSimple.ok();</span>
 		}
 
 <span class="fc bfc" id="L467" title="All 2 branches covered.">		if (fileFormat == FileFormat.SCXML) {</span>
@@ -761,8 +761,8 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="nc" id="L761">			return false;</span>
 
 <span class="fc" id="L763">		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);</span>
-<span class="pc bpc" id="L764" title="1 of 4 branches missed.">		if (other != null &amp;&amp; other != leaf)</span>
-<span class="fc" id="L765">			return isHidden(other);</span>
+<span class="pc bpc" id="L764" title="3 of 4 branches missed.">		if (other != null &amp;&amp; other != leaf)</span>
+<span class="nc" id="L765">			return isHidden(other);</span>
 
 <span class="fc" id="L767">		boolean hidden = false;</span>
 <span class="pc bpc" id="L768" title="1 of 2 branches missed.">		for (HideOrShow hide : this.hides2)</span>
@@ -794,8 +794,8 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc bfc" id="L794" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
 <span class="pc bpc" id="L795" title="1 of 2 branches missed.">			if (link.getType().isInvisible())</span>
 <span class="nc" id="L796">				continue;</span>
-<span class="fc bfc" id="L797" title="All 2 branches covered.">			if (link.contains(note) == false)</span>
-<span class="fc" id="L798">				continue;</span>
+<span class="pc bpc" id="L797" title="1 of 2 branches missed.">			if (link.contains(note) == false)</span>
+<span class="nc" id="L798">				continue;</span>
 <span class="pc bpc" id="L799" title="1 of 2 branches missed.">			if (other != null)</span>
 <span class="nc" id="L800">				return null;</span>
 <span class="fc" id="L801">			other = link.getOther(note);</span>

@@ -45,7 +45,7 @@ public class GraphvizVersionFinder {
 	// ::remove file when __CORE__
 
 	final private File dotExe;
-<span class="nc" id="L48">	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {</span>
+<span class="fc" id="L48">	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {</span>
 		public boolean useShieldForQuantifier() {
 <span class="nc" id="L50">			return true;</span>
 		}
@@ -67,17 +67,17 @@ public class GraphvizVersionFinder {
 		}
 	};
 
-<span class="nc" id="L70">	public GraphvizVersionFinder(File dotExe) {</span>
-<span class="nc" id="L71">		this.dotExe = dotExe;</span>
-<span class="nc" id="L72">	}</span>
+<span class="fc" id="L70">	public GraphvizVersionFinder(File dotExe) {</span>
+<span class="fc" id="L71">		this.dotExe = dotExe;</span>
+<span class="fc" id="L72">	}</span>
 
 	public GraphvizVersion getVersion() {
-<span class="nc" id="L75">		final String dotVersion = dotVersion();</span>
-<span class="nc" id="L76">		final Pattern p = Pattern.compile(&quot;(\\d+)\\.(\\d\\d?)&quot;);</span>
-<span class="nc" id="L77">		final Matcher m = p.matcher(dotVersion);</span>
-<span class="nc" id="L78">		final boolean find = m.find();</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (find == false)</span>
-<span class="nc" id="L80">			return DEFAULT;</span>
+<span class="fc" id="L75">		final String dotVersion = dotVersion();</span>
+<span class="fc" id="L76">		final Pattern p = Pattern.compile(&quot;(\\d+)\\.(\\d\\d?)&quot;);</span>
+<span class="fc" id="L77">		final Matcher m = p.matcher(dotVersion);</span>
+<span class="fc" id="L78">		final boolean find = m.find();</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (find == false)</span>
+<span class="fc" id="L80">			return DEFAULT;</span>
 
 <span class="nc" id="L82">		final int major = Integer.parseInt(m.group(1));</span>
 <span class="nc" id="L83">		final int minor = Integer.parseInt(m.group(2));</span>
@@ -114,12 +114,12 @@ public class GraphvizVersionFinder {
 	}
 
 	public String dotVersion() {
-<span class="nc" id="L117">		final String cmd[] = getCommandLine();</span>
+<span class="fc" id="L117">		final String cmd[] = getCommandLine();</span>
 
-<span class="nc" id="L119">		final ProcessRunner p = new ProcessRunner(cmd);</span>
-<span class="nc" id="L120">		final ProcessState state = p.run(null, null);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
-<span class="nc" id="L122">			return &quot;?&quot;;</span>
+<span class="fc" id="L119">		final ProcessRunner p = new ProcessRunner(cmd);</span>
+<span class="fc" id="L120">		final ProcessState state = p.run(null, null);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="fc" id="L122">			return &quot;?&quot;;</span>
 
 <span class="nc" id="L124">		final StringBuilder sb = new StringBuilder();</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getOut()))</span>
@@ -135,7 +135,7 @@ public class GraphvizVersionFinder {
 	}
 
 	private String[] getCommandLine() {
-<span class="nc" id="L138">		return new String[] { dotExe.getAbsolutePath(), &quot;-V&quot; };</span>
+<span class="fc" id="L138">		return new String[] { dotExe.getAbsolutePath(), &quot;-V&quot; };</span>
 	}
 
 }

@@ -16,13 +16,13 @@ public abstract class XmiSequenceDiagram {
 	protected final Document document;
 
 	public XmiSequenceDiagram(SequenceDiagram diagram, Document document) {
-<span class="nc" id="L19">		super();</span>
-<span class="nc" id="L20">		this.diagram = diagram;</span>
-<span class="nc" id="L21">		this.document = document;</span>
-<span class="nc" id="L22">	}</span>
+<span class="fc" id="L19">		super();</span>
+<span class="fc" id="L20">		this.diagram = diagram;</span>
+<span class="fc" id="L21">		this.document = document;</span>
+<span class="fc" id="L22">	}</span>
 
 	protected Element createElement(String tag, String[][] attributes) {
-<span class="nc" id="L25">		return setAttributes(document.createElement(tag), attributes);</span>
+<span class="fc" id="L25">		return setAttributes(document.createElement(tag), attributes);</span>
 	}
 
 	protected Element setAttribute(Element element, String name, String value) {
@@ -31,18 +31,18 @@ public abstract class XmiSequenceDiagram {
 	}
 
 	protected Element setAttributes(Element element, String[][] attributes) {
-<span class="nc bnc" id="L34" title="All 2 branches missed.">		for (String[] attr : attributes) {</span>
-<span class="nc" id="L35">			element.setAttribute(attr[0], attr[1]);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		for (String[] attr : attributes) {</span>
+<span class="fc" id="L35">			element.setAttribute(attr[0], attr[1]);</span>
 		}
-<span class="nc" id="L37">		return element;</span>
+<span class="fc" id="L37">		return element;</span>
 	}
 
 	protected String getDisplayString(Display display) {
-<span class="nc" id="L41">		return String.join(&quot;\n&quot;, display.asList());</span>
+<span class="fc" id="L41">		return String.join(&quot;\n&quot;, display.asList());</span>
 	}
 
 	protected String getXmiId(String tag, Object object) {
-<span class="nc" id="L45">		return Integer.toHexString(tag.hashCode()) + &quot;_&quot; + Integer.toHexString(object.hashCode());</span>
+<span class="fc" id="L45">		return Integer.toHexString(tag.hashCode()) + &quot;_&quot; + Integer.toHexString(object.hashCode());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

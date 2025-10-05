@@ -139,8 +139,8 @@ public class Cluster implements Moveable {
 	private Set&lt;EntityPosition&gt; entityPositionsExceptNormal() {
 <span class="fc" id="L140">		final Set&lt;EntityPosition&gt; result = EnumSet.&lt;EntityPosition&gt;noneOf(EntityPosition.class);</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
-<span class="fc" id="L143">				result.add(sh.getEntityPosition());</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="nc" id="L143">				result.add(sh.getEntityPosition());</span>
 
 <span class="fc" id="L145">		return Collections.unmodifiableSet(result);</span>
 	}
@@ -211,7 +211,7 @@ public class Cluster implements Moveable {
 	}
 
 	private boolean isNormalPosition(final SvekNode sh) {
-<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
 	}
 
 	private List&lt;SvekNode&gt; getNodesOrderedWithoutTop(Collection&lt;SvekEdge&gt; lines) {
@@ -266,7 +266,7 @@ public class Cluster implements Moveable {
 	}
 
 	public RectangleArea getRectangleArea() {
-<span class="fc" id="L269">		return rectangleArea;</span>
+<span class="nc" id="L269">		return rectangleArea;</span>
 	}
 
 	public void setTitlePosition(XPoint2D pos) {
@@ -339,8 +339,8 @@ public class Cluster implements Moveable {
 <span class="nc" id="L339">			ug.startUrl(url);</span>
 
 		try {
-<span class="fc bfc" id="L342" title="All 2 branches covered.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
-<span class="fc" id="L343">				manageEntryExitPoint(ug.getStringBounder());</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
+<span class="nc" id="L343">				manageEntryExitPoint(ug.getStringBounder());</span>
 
 <span class="pc bpc" id="L345" title="1 of 2 branches missed.">			if (skinParam.useSwimlanes(umlDiagramType)) {</span>
 <span class="nc" id="L346">				drawSwinLinesState(ug, borderColor);</span>
@@ -407,32 +407,32 @@ public class Cluster implements Moveable {
 	}
 
 	void manageEntryExitPoint(StringBounder stringBounder) {
-<span class="fc" id="L410">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L411">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L412" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
-<span class="pc bpc" id="L413" title="1 of 2 branches missed.">			if (isNormalPosition(sh))</span>
+<span class="nc" id="L410">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L411">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">		for (SvekNode sh : nodes)</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">			if (isNormalPosition(sh))</span>
 <span class="nc" id="L414">				insides.add(sh.getRectangleArea());</span>
 			else
-<span class="fc" id="L416">				points.add(sh.getRectangleArea().getPointCenter());</span>
+<span class="nc" id="L416">				points.add(sh.getRectangleArea().getPointCenter());</span>
 
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">		for (Cluster in : children)</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		for (Cluster in : children)</span>
 <span class="nc bnc" id="L419" title="All 2 branches missed.">			if (in.getRectangleArea() == null)</span>
 <span class="nc" id="L420">				System.err.println(&quot;Frontier null for &quot; + in);</span>
 			else
 <span class="nc" id="L422">				insides.add(in.getRectangleArea());</span>
 
-<span class="fc" id="L424">		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,</span>
-<span class="fc" id="L425">				skinParam.getRankdir());</span>
-<span class="pc bpc" id="L426" title="2 of 4 branches missed.">		if (getTitleAndAttributeWidth() &gt; 0 &amp;&amp; getTitleAndAttributeHeight() &gt; 0)</span>
-<span class="fc" id="L427">			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);</span>
+<span class="nc" id="L424">		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,</span>
+<span class="nc" id="L425">				skinParam.getRankdir());</span>
+<span class="nc bnc" id="L426" title="All 4 branches missed.">		if (getTitleAndAttributeWidth() &gt; 0 &amp;&amp; getTitleAndAttributeHeight() &gt; 0)</span>
+<span class="nc" id="L427">			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);</span>
 
-<span class="fc" id="L429">		this.rectangleArea = frontierCalculator.getSuggestedPosition();</span>
+<span class="nc" id="L429">		this.rectangleArea = frontierCalculator.getSuggestedPosition();</span>
 
-<span class="fc" id="L431">		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L432">		final double minX = rectangleArea.getMinX();</span>
-<span class="fc" id="L433">		final double minY = rectangleArea.getMinY();</span>
-<span class="fc" id="L434">		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);</span>
-<span class="fc" id="L435">	}</span>
+<span class="nc" id="L431">		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L432">		final double minX = rectangleArea.getMinX();</span>
+<span class="nc" id="L433">		final double minY = rectangleArea.getMinY();</span>
+<span class="nc" id="L434">		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);</span>
+<span class="nc" id="L435">	}</span>
 
 	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
 <span class="nc" id="L438">		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));</span>

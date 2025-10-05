@@ -182,7 +182,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 <span class="nc bnc" id="L183" title="All 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
 <span class="nc" id="L184">				strings.add(&quot;Word Mode&quot;);</span>
-<span class="nc" id="L185">				strings.add(&quot;Command Line: &quot; + Run.getCommandLine());</span>
+				// strings.add(&quot;Command Line: &quot; + Run.getCommandLine());
 <span class="nc" id="L186">				strings.add(&quot;Current Dir: &quot; + new SFile(&quot;.&quot;).getAbsolutePath());</span>
 <span class="nc" id="L187">				strings.add(&quot;plantuml.include.path: &quot; + PreprocessorUtils.getenv(SecurityUtils.PATHS_INCLUDES));</span>
 			}

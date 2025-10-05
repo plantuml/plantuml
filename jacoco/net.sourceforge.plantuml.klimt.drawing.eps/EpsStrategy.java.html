@@ -35,25 +35,25 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-<span class="nc" id="L38">public enum EpsStrategy {</span>
+<span class="fc" id="L38">public enum EpsStrategy {</span>
 
-<span class="nc" id="L40">	VERY_SIMPLE, WITH_MACRO, WITH_MACRO_AND_TEXT;</span>
+<span class="fc" id="L40">	VERY_SIMPLE, WITH_MACRO, WITH_MACRO_AND_TEXT;</span>
 
 	public EpsGraphics creatEpsGraphics() {
-<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (this == VERY_SIMPLE) {</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if (this == VERY_SIMPLE) {</span>
 <span class="nc" id="L44">			return new EpsGraphics();</span>
 		}
-<span class="nc bnc" id="L46" title="All 2 branches missed.">		if (this == WITH_MACRO) {</span>
-<span class="nc" id="L47">			return new EpsGraphicsMacro();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (this == WITH_MACRO) {</span>
+<span class="fc" id="L47">			return new EpsGraphicsMacro();</span>
 		}
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (this == WITH_MACRO_AND_TEXT) {</span>
-<span class="nc" id="L50">			return new EpsGraphicsMacroAndText();</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (this == WITH_MACRO_AND_TEXT) {</span>
+<span class="fc" id="L50">			return new EpsGraphicsMacroAndText();</span>
 		}
 <span class="nc" id="L52">		throw new IllegalArgumentException();</span>
 	}
 
 	public static EpsStrategy getDefault2() {
-<span class="nc" id="L56">		return WITH_MACRO;</span>
+<span class="fc" id="L56">		return WITH_MACRO;</span>
 	}
 
 }

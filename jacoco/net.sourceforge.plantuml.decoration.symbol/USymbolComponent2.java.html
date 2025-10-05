@@ -108,23 +108,23 @@ import net.sourceforge.plantuml.style.SName;
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="fc" id="L111">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L111">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L114">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L115">				ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L116">				drawComponent2(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
-<span class="fc" id="L117">						symbolContext.getRoundCorner());</span>
-<span class="fc" id="L118">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L119">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
-<span class="fc" id="L120">				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));</span>
-<span class="fc" id="L121">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L122">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
-<span class="fc" id="L123">				title.drawU(ug.apply(new UTranslate(posTitle, 13 + dimStereo.getHeight())));</span>
-<span class="fc" id="L124">			}</span>
+<span class="nc" id="L114">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L115">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L116">				drawComponent2(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
+<span class="nc" id="L117">						symbolContext.getRoundCorner());</span>
+<span class="nc" id="L118">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L119">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L120">				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));</span>
+<span class="nc" id="L121">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L122">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="nc" id="L123">				title.drawU(ug.apply(new UTranslate(posTitle, 13 + dimStereo.getHeight())));</span>
+<span class="nc" id="L124">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L127">				return new XDimension2D(width, height);</span>
+<span class="nc" id="L127">				return new XDimension2D(width, height);</span>
 			}
 
 		};

@@ -39,15 +39,15 @@ public class PostScriptCommandRaw implements PostScriptCommand {
 
 	final private String cmd;
 
-<span class="nc" id="L42">	public PostScriptCommandRaw(String cmd, boolean checkConsistence) {</span>
-<span class="nc bnc" id="L43" title="All 4 branches missed.">		if (checkConsistence &amp;&amp; cmd.indexOf('\n') != -1) {</span>
+<span class="fc" id="L42">	public PostScriptCommandRaw(String cmd, boolean checkConsistence) {</span>
+<span class="pc bpc" id="L43" title="1 of 4 branches missed.">		if (checkConsistence &amp;&amp; cmd.indexOf('\n') != -1) {</span>
 <span class="nc" id="L44">			throw new IllegalArgumentException(cmd);</span>
 		}
-<span class="nc" id="L46">		this.cmd = cmd;</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L46">		this.cmd = cmd;</span>
+<span class="fc" id="L47">	}</span>
 
 	public String toPostString() {
-<span class="nc" id="L50">		return cmd;</span>
+<span class="fc" id="L50">		return cmd;</span>
 	}
 
 }

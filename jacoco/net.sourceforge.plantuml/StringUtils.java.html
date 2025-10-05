@@ -77,8 +77,8 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="pc bpc" id="L77" title="3 of 6 branches missed.">		if (format.contains(&quot;(&quot;) &amp;&amp; s.startsWith(&quot;(&quot;) &amp;&amp; s.endsWith(&quot;)&quot;))</span>
 <span class="nc" id="L78">			return s.substring(1, s.length() - 1);</span>
 
-<span class="pc bpc" id="L80" title="1 of 6 branches missed.">		if (format.contains(&quot;[&quot;) &amp;&amp; s.startsWith(&quot;[&quot;) &amp;&amp; s.endsWith(&quot;]&quot;))</span>
-<span class="fc" id="L81">			return s.substring(1, s.length() - 1);</span>
+<span class="pc bpc" id="L80" title="3 of 6 branches missed.">		if (format.contains(&quot;[&quot;) &amp;&amp; s.startsWith(&quot;[&quot;) &amp;&amp; s.endsWith(&quot;]&quot;))</span>
+<span class="nc" id="L81">			return s.substring(1, s.length() - 1);</span>
 
 <span class="pc bpc" id="L83" title="1 of 6 branches missed.">		if (format.contains(&quot;:&quot;) &amp;&amp; s.startsWith(&quot;:&quot;) &amp;&amp; s.endsWith(&quot;:&quot;))</span>
 <span class="fc" id="L84">			return s.substring(1, s.length() - 1);</span>
@@ -207,16 +207,16 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static String unicodeForHtml(String s) {
-<span class="nc" id="L210">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">		for (char c : s.toCharArray())</span>
-<span class="nc bnc" id="L212" title="All 10 branches missed.">			if (c &gt; 127 || c == '&amp;' || c == '|' || c == '&lt;' || c == '&gt;') {</span>
+<span class="fc" id="L210">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
+<span class="pc bpc" id="L212" title="5 of 10 branches missed.">			if (c &gt; 127 || c == '&amp;' || c == '|' || c == '&lt;' || c == '&gt;') {</span>
 <span class="nc" id="L213">				final int i = c;</span>
 <span class="nc" id="L214">				result.append(&quot;&amp;#&quot; + i + &quot;;&quot;);</span>
 <span class="nc" id="L215">			} else {</span>
-<span class="nc" id="L216">				result.append(c);</span>
+<span class="fc" id="L216">				result.append(c);</span>
 			}
 
-<span class="nc" id="L219">		return result.toString();</span>
+<span class="fc" id="L219">		return result.toString();</span>
 	}
 
 	public static String unicodeForHtml(Display display) {
@@ -240,7 +240,7 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static char goUpperCase(char c) {
-<span class="nc" id="L243">		return goUpperCase(&quot;&quot; + c).charAt(0);</span>
+<span class="fc" id="L243">		return goUpperCase(&quot;&quot; + c).charAt(0);</span>
 	}
 
 	public static char goLowerCase(char c) {
@@ -450,7 +450,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L450">		final StringBuilder sb = new StringBuilder();</span>
 <span class="fc bfc" id="L451" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
 <span class="fc" id="L452">			char c = s.charAt(i);</span>
-<span class="pc bpc" id="L453" title="1 of 8 branches missed.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
+<span class="fc bfc" id="L453" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
 <span class="fc" id="L454">				c += 13;</span>
 <span class="pc bpc" id="L455" title="2 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
 <span class="fc" id="L456">				c -= 13;</span>

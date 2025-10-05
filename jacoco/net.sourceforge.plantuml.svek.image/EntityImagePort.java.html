@@ -64,23 +64,23 @@ import net.sourceforge.plantuml.svek.SvekNode;
 public class EntityImagePort extends AbstractEntityImageBorder {
 
 	public EntityImagePort(Entity leaf, Cluster parent, Bibliotekon bibliotekon) {
-<span class="fc" id="L67">		super(leaf, parent, bibliotekon, FontParam.BOUNDARY);</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L67">		super(leaf, parent, bibliotekon, FontParam.BOUNDARY);</span>
+<span class="nc" id="L68">	}</span>
 
 	@Override
 	protected StyleSignatureBasic getSignature() {
-<span class="fc" id="L72">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.port);</span>
+<span class="nc" id="L72">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.port);</span>
 	}
 
 	private boolean upPosition() {
-<span class="fc" id="L76">		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();</span>
-<span class="fc" id="L77">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		return node.getMinY() &lt; clusterCenter.getY();</span>
+<span class="nc" id="L76">		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();</span>
+<span class="nc" id="L77">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		return node.getMinY() &lt; clusterCenter.getY();</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L82">		double sp = EntityPosition.RADIUS * 2;</span>
-<span class="fc" id="L83">		return new XDimension2D(sp, sp);</span>
+<span class="nc" id="L82">		double sp = EntityPosition.RADIUS * 2;</span>
+<span class="nc" id="L83">		return new XDimension2D(sp, sp);</span>
 	}
 
 	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
@@ -90,56 +90,56 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 	}
 
 	private void drawSymbol(UGraphic ug) {
-<span class="fc" id="L93">		final Shadowable rect = URectangle.build(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);</span>
-<span class="fc" id="L94">		ug.draw(rect);</span>
-<span class="fc" id="L95">	}</span>
+<span class="nc" id="L93">		final Shadowable rect = URectangle.build(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);</span>
+<span class="nc" id="L94">		ug.draw(rect);</span>
+<span class="nc" id="L95">	}</span>
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L98">		final TextBlock desc = getDesc();</span>
-<span class="fc" id="L99">		double y = 0;</span>
-<span class="fc" id="L100">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L101">		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;</span>
+<span class="nc" id="L98">		final TextBlock desc = getDesc();</span>
+<span class="nc" id="L99">		double y = 0;</span>
+<span class="nc" id="L100">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L101">		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;</span>
 
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (upPosition())</span>
-<span class="fc" id="L104">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (upPosition())</span>
+<span class="nc" id="L104">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
 		else
-<span class="fc" id="L106">			y += 2 * EntityPosition.RADIUS;</span>
+<span class="nc" id="L106">			y += 2 * EntityPosition.RADIUS;</span>
 
-<span class="fc" id="L108">		final UGroup group = new UGroup(getEntity().getLocation());</span>
-<span class="fc" id="L109">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
-<span class="fc" id="L110">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="fc" id="L111">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="fc" id="L112">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="fc" id="L113">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="fc" id="L114">		ug.startGroup(group);</span>
+<span class="nc" id="L108">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="nc" id="L109">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="nc" id="L110">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="nc" id="L111">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="nc" id="L112">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="nc" id="L113">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="nc" id="L114">		ug.startGroup(group);</span>
 
-<span class="fc" id="L116">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L116">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
 
-<span class="fc" id="L118">		final Style style = getStyle();</span>
+<span class="nc" id="L118">		final Style style = getStyle();</span>
 
-<span class="fc" id="L120">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="fc" id="L121">		HColor borderColor = getEntity().getColors().getColor(ColorType.LINE);</span>
+<span class="nc" id="L120">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc" id="L121">		HColor borderColor = getEntity().getColors().getColor(ColorType.LINE);</span>
 
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (borderColor == null)</span>
-<span class="fc" id="L124">			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (borderColor == null)</span>
+<span class="nc" id="L124">			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (backcolor == null)</span>
-<span class="fc" id="L127">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L127">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L129">		ug = ug.apply(borderColor);</span>
-<span class="fc" id="L130">		ug = ug.apply(getUStroke()).apply(backcolor.bg());</span>
+<span class="nc" id="L129">		ug = ug.apply(borderColor);</span>
+<span class="nc" id="L130">		ug = ug.apply(getUStroke()).apply(backcolor.bg());</span>
 
-<span class="fc" id="L132">		drawSymbol(ug);</span>
+<span class="nc" id="L132">		drawSymbol(ug);</span>
 
-<span class="fc" id="L134">		ug.closeGroup();</span>
-<span class="fc" id="L135">	}</span>
+<span class="nc" id="L134">		ug.closeGroup();</span>
+<span class="nc" id="L135">	}</span>
 
 	private UStroke getUStroke() {
-<span class="fc" id="L138">		return UStroke.withThickness(1.5);</span>
+<span class="nc" id="L138">		return UStroke.withThickness(1.5);</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L142">		return ShapeType.RECTANGLE_PORT;</span>
+<span class="nc" id="L142">		return ShapeType.RECTANGLE_PORT;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

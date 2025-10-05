@@ -76,165 +76,162 @@ public class GraphvizRuntimeEnvironment {
 
 	@DuplicateCode(reference = &quot;GraphvizVersions&quot;)
 	public GraphvizVersion getVersion(File f) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (f == null)</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (f == null)</span>
 <span class="nc" id="L80">			return null;</span>
 
-<span class="nc" id="L82">		GraphvizVersion result = map.get(f);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L84">			return result;</span>
+<span class="fc" id="L82">		GraphvizVersion result = map.get(f);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L84">			return result;</span>
 
-<span class="nc" id="L86">		result = new GraphvizVersionFinder(new File(f.getAbsolutePath())).getVersion();</span>
-<span class="nc" id="L87">		map.put(f, result);</span>
-<span class="nc" id="L88">		return result;</span>
-	}
-
-	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
-	public final String getDotExecutableForTest() {
-<span class="nc" id="L93">		return dotExecutable;</span>
+<span class="fc" id="L86">		result = new GraphvizVersionFinder(new File(f.getAbsolutePath())).getVersion();</span>
+<span class="fc" id="L87">		map.put(f, result);</span>
+<span class="fc" id="L88">		return result;</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public final void setDotExecutable(String value) {
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		dotExecutable = value == null ? null : value.trim();</span>
-<span class="nc" id="L99">	}</span>
+<span class="fc bfc" id="L93" title="All 4 branches covered.">		if (value != null &amp;&amp; value.length() == 1)</span>
+<span class="fc" id="L94">			throw new IllegalArgumentException(&quot;setDotExecutable failure&quot;);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		dotExecutable = value == null ? null : value.trim();</span>
+<span class="fc" id="L96">	}</span>
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public String getenvGraphvizDot() {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(dotExecutable))</span>
-<span class="nc" id="L104">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(dotExecutable);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(dotExecutable))</span>
+<span class="fc" id="L101">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(dotExecutable);</span>
 
-<span class="fc" id="L106">		final String env = System.getProperty(&quot;GRAPHVIZ_DOT&quot;);</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(env))</span>
-<span class="nc" id="L108">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);</span>
+<span class="nc" id="L103">		final String env = System.getProperty(&quot;GRAPHVIZ_DOT&quot;);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(env))</span>
+<span class="nc" id="L105">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);</span>
 
-<span class="fc" id="L110">		final String getenv = System.getenv(&quot;GRAPHVIZ_DOT&quot;);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(getenv))</span>
-<span class="nc" id="L112">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getenv);</span>
+<span class="nc" id="L107">		final String getenv = System.getenv(&quot;GRAPHVIZ_DOT&quot;);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(getenv))</span>
+<span class="nc" id="L109">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getenv);</span>
 
-<span class="fc" id="L114">		return null;</span>
+<span class="nc" id="L111">		return null;</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public Graphviz createForSystemDot(ISkinParam skinParam, String dotString, String... type) {
-<span class="nc" id="L119">		Graphviz result = createWithFactory(skinParam, dotString, type);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (result != null) {</span>
-<span class="nc" id="L121">			return result;</span>
-		}
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (useVizJs(skinParam)) {</span>
-<span class="nc" id="L124">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
-<span class="nc" id="L125">			return new GraphvizJs(dotString);</span>
-		}
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (isWindows())</span>
-<span class="nc" id="L128">			result = new GraphvizWindowsOld(skinParam, dotString, type);</span>
-		else
-<span class="nc" id="L130">			result = new GraphvizLinux(skinParam, dotString, type);</span>
+<span class="nc" id="L116">		Graphviz result = createWithFactory(skinParam, dotString, type);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L118">			return result;</span>
 
-<span class="nc bnc" id="L132" title="All 4 branches missed.">		if (result.getExeState() != ExeState.OK &amp;&amp; VizJsEngine.isOk()) {</span>
-<span class="nc" id="L133">			final Graphviz result2 = result;</span>
-<span class="nc" id="L134">			Log.info(() -&gt; &quot;Error with file &quot; + result2.getDotExe() + &quot;: &quot; + result2.getExeState().getTextMessage());</span>
-<span class="nc" id="L135">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
-<span class="nc" id="L136">			return new GraphvizJs(dotString);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (useVizJs(skinParam)) {</span>
+<span class="nc" id="L121">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
+<span class="nc" id="L122">			return new GraphvizJs(dotString);</span>
 		}
-<span class="nc" id="L138">		return result;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (isWindows())</span>
+<span class="nc" id="L125">			result = new GraphvizWindowsOld(skinParam, dotString, type);</span>
+		else
+<span class="nc" id="L127">			result = new GraphvizLinux(skinParam, dotString, type);</span>
+
+<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (result.getExeState() != ExeState.OK &amp;&amp; VizJsEngine.isOk()) {</span>
+<span class="nc" id="L130">			final Graphviz result2 = result;</span>
+<span class="nc" id="L131">			Log.info(() -&gt; &quot;Error with file &quot; + result2.getDotExe() + &quot;: &quot; + result2.getExeState().getTextMessage());</span>
+<span class="nc" id="L132">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
+<span class="nc" id="L133">			return new GraphvizJs(dotString);</span>
+		}
+<span class="nc" id="L135">		return result;</span>
 
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public Graphviz create(ISkinParam skinParam, String dotString, String... type) {
-<span class="fc" id="L144">		Graphviz result = createWithFactory(skinParam, dotString, type);</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (result != null) {</span>
-<span class="nc" id="L146">			return result;</span>
-		}
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (useVizJs(skinParam)) {</span>
-<span class="nc" id="L149">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
-<span class="nc" id="L150">			return new GraphvizJs(dotString);</span>
-		}
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (isWindows())</span>
-<span class="nc" id="L153">			result = new GraphvizWindowsLite(skinParam, dotString, type);</span>
-		else
-<span class="fc" id="L155">			result = new GraphvizLinux(skinParam, dotString, type);</span>
+<span class="fc" id="L141">		Graphviz result = createWithFactory(skinParam, dotString, type);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L143">			return result;</span>
 
-<span class="pc bpc" id="L157" title="2 of 4 branches missed.">		if (result.getExeState() != ExeState.OK &amp;&amp; VizJsEngine.isOk()) {</span>
-<span class="nc" id="L158">			final Graphviz result2 = result;</span>
-<span class="nc" id="L159">			Log.info(() -&gt; &quot;Error with file &quot; + result2.getDotExe() + &quot;: &quot; + result2.getExeState().getTextMessage());</span>
-<span class="nc" id="L160">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
-<span class="nc" id="L161">			return new GraphvizJs(dotString);</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (useVizJs(skinParam)) {</span>
+<span class="nc" id="L146">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
+<span class="nc" id="L147">			return new GraphvizJs(dotString);</span>
 		}
-<span class="fc" id="L163">		return result;</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (isWindows())</span>
+<span class="nc" id="L150">			result = new GraphvizWindowsLite(skinParam, dotString, type);</span>
+		else
+<span class="fc" id="L152">			result = new GraphvizLinux(skinParam, dotString, type);</span>
+
+<span class="pc bpc" id="L154" title="2 of 4 branches missed.">		if (result.getExeState() != ExeState.OK &amp;&amp; VizJsEngine.isOk()) {</span>
+<span class="nc" id="L155">			final Graphviz result2 = result;</span>
+<span class="nc" id="L156">			Log.info(() -&gt; &quot;Error with file &quot; + result2.getDotExe() + &quot;: &quot; + result2.getExeState().getTextMessage());</span>
+<span class="nc" id="L157">			Log.info(() -&gt; &quot;Using &quot; + VIZJS);</span>
+<span class="nc" id="L158">			return new GraphvizJs(dotString);</span>
+		}
+<span class="fc" id="L160">		return result;</span>
 
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	private Graphviz createWithFactory(ISkinParam skinParam, String dotString, String... type) {
-<span class="fc" id="L169">		Iterator&lt;GraphvizFactory&gt; iterator = ServiceLoader.load(GraphvizFactory.class).iterator();</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		while (iterator.hasNext()) {</span>
-<span class="nc" id="L171">			final GraphvizFactory factory = iterator.next();</span>
-<span class="nc" id="L172">			final Graphviz graphviz = factory.create(skinParam, dotString, type);</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (graphviz != null) {</span>
-<span class="nc" id="L174">				Log.info(</span>
-<span class="nc" id="L175">						() -&gt; &quot;Using &quot; + graphviz.getClass().getName() + &quot; created by &quot; + factory.getClass().getName());</span>
-<span class="nc" id="L176">				return graphviz;</span>
+<span class="fc" id="L166">		Iterator&lt;GraphvizFactory&gt; iterator = ServiceLoader.load(GraphvizFactory.class).iterator();</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		while (iterator.hasNext()) {</span>
+<span class="nc" id="L168">			final GraphvizFactory factory = iterator.next();</span>
+<span class="nc" id="L169">			final Graphviz graphviz = factory.create(skinParam, dotString, type);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (graphviz != null) {</span>
+<span class="nc" id="L171">				Log.info(</span>
+<span class="nc" id="L172">						() -&gt; &quot;Using &quot; + graphviz.getClass().getName() + &quot; created by &quot; + factory.getClass().getName());</span>
+<span class="nc" id="L173">				return graphviz;</span>
 			}
-<span class="nc" id="L178">		}</span>
-<span class="fc" id="L179">		return null;</span>
+<span class="nc" id="L175">		}</span>
+<span class="fc" id="L176">		return null;</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public boolean useVizJs(ISkinParam skinParam) {
-<span class="pc bpc" id="L184" title="5 of 6 branches missed.">		if (skinParam != null &amp;&amp; skinParam.isUseVizJs() &amp;&amp; VizJsEngine.isOk())</span>
+<span class="pc bpc" id="L181" title="4 of 6 branches missed.">		if (skinParam != null &amp;&amp; skinParam.isUseVizJs() &amp;&amp; VizJsEngine.isOk())</span>
+<span class="nc" id="L182">			return true;</span>
+
+<span class="pc bpc" id="L184" title="3 of 4 branches missed.">		if (VIZJS.equalsIgnoreCase(GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot()) &amp;&amp; VizJsEngine.isOk())</span>
 <span class="nc" id="L185">			return true;</span>
 
-<span class="pc bpc" id="L187" title="3 of 4 branches missed.">		if (VIZJS.equalsIgnoreCase(GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot()) &amp;&amp; VizJsEngine.isOk())</span>
-<span class="nc" id="L188">			return true;</span>
-
-<span class="fc" id="L190">		return false;</span>
+<span class="fc" id="L187">		return false;</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public File getDotExe() {
-<span class="fc" id="L195">		return create(null, &quot;png&quot;).getDotExe();</span>
+<span class="nc" id="L192">		return create(null, &quot;png&quot;).getDotExe();</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public String dotVersion() throws IOException, InterruptedException {
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (dotVersion == null) {</span>
-<span class="nc" id="L201">			final File dotExe = getDotExe();</span>
-<span class="nc" id="L202">			final ExeState exeState = ExeState.checkFile(dotExe);</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (exeState == ExeState.OK)</span>
-<span class="nc" id="L204">				dotVersion = create(null, &quot;png&quot;).dotVersion();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (dotVersion == null) {</span>
+<span class="nc" id="L198">			final File dotExe = getDotExe();</span>
+<span class="nc" id="L199">			final ExeState exeState = ExeState.checkFile(dotExe);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (exeState == ExeState.OK)</span>
+<span class="nc" id="L201">				dotVersion = create(null, &quot;png&quot;).dotVersion();</span>
 			else
-<span class="nc" id="L206">				dotVersion = &quot;Error:&quot; + exeState.getTextMessage(dotExe);</span>
+<span class="nc" id="L203">				dotVersion = &quot;Error:&quot; + exeState.getTextMessage(dotExe);</span>
 
 		}
-<span class="nc" id="L209">		return dotVersion;</span>
+<span class="nc" id="L206">		return dotVersion;</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public boolean graphviz244onWindows() {
 		try {
-<span class="nc" id="L215">			return create(null, &quot;png&quot;).graphviz244onWindows();</span>
-<span class="nc" id="L216">		} catch (Exception e) {</span>
-<span class="nc" id="L217">			Logme.error(e);</span>
-<span class="nc" id="L218">			return false;</span>
+<span class="nc" id="L212">			return create(null, &quot;png&quot;).graphviz244onWindows();</span>
+<span class="nc" id="L213">		} catch (Exception e) {</span>
+<span class="nc" id="L214">			Logme.error(e);</span>
+<span class="nc" id="L215">			return false;</span>
 		}
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public int retrieveVersion(String s) {
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (s == null)</span>
-<span class="nc" id="L225">			return -1;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L222">			return -1;</span>
 
-<span class="nc" id="L227">		final Pattern p = Pattern.compile(&quot;\\s(\\d+)\\.(\\d\\d?)\\D&quot;);</span>
-<span class="nc" id="L228">		final Matcher m = p.matcher(s);</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L230">			return -1;</span>
+<span class="nc" id="L224">		final Pattern p = Pattern.compile(&quot;\\s(\\d+)\\.(\\d\\d?)\\D&quot;);</span>
+<span class="nc" id="L225">		final Matcher m = p.matcher(s);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L227">			return -1;</span>
 
-<span class="nc" id="L232">		return 100 * Integer.parseInt(m.group(1)) + Integer.parseInt(m.group(2));</span>
+<span class="nc" id="L229">		return 100 * Integer.parseInt(m.group(1)) + Integer.parseInt(m.group(2));</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public int getDotVersion() throws IOException, InterruptedException {
-<span class="nc" id="L237">		return retrieveVersion(dotVersion());</span>
+<span class="nc" id="L234">		return retrieveVersion(dotVersion());</span>
 	}
 
 }

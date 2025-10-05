@@ -38,62 +38,63 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L47">public class StdrptV1 implements Stdrpt {</span>
+<span class="fc" id="L48">public class StdrptV1 implements Stdrpt {</span>
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
 	public void printInfo(final PrintStream output, Diagram sys) {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (sys instanceof PSystemWelcome) {</span>
-<span class="nc" id="L53">			sys = null;</span>
-		}
-<span class="nc bnc" id="L55" title="All 4 branches missed.">		if (sys == null || sys instanceof PSystemError) {</span>
-<span class="nc" id="L56">			out(output, (PSystemError) sys);</span>
-		}
-<span class="nc" id="L58">	}</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (sys instanceof PSystemWelcome)</span>
+<span class="nc" id="L54">			sys = null;</span>
+
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">		if (sys == null || sys instanceof PSystemError)</span>
+<span class="fc" id="L57">			out(output, (PSystemError) sys);</span>
+
+<span class="fc" id="L59">	}</span>
 
 	public void errorLine(int lineError, File file) {
-<span class="nc" id="L61">		Log.error(&quot;Error line &quot; + (lineError + 1) + &quot; in file: &quot; + file.getPath());</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L62">		Log.error(&quot;Error line &quot; + (lineError + 1) + &quot; in file: &quot; + file.getPath());</span>
+<span class="fc" id="L63">	}</span>
 
 	private void out(final PrintStream output, final PSystemError err) {
-<span class="nc" id="L65">		output.println(&quot;protocolVersion=1&quot;);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (empty(err)) {</span>
-<span class="nc" id="L67">			output.println(&quot;status=NO_DATA&quot;);</span>
+<span class="fc" id="L66">		output.println(&quot;protocolVersion=1&quot;);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (empty(err)) {</span>
+<span class="nc" id="L68">			output.println(&quot;status=NO_DATA&quot;);</span>
 		} else {
-<span class="nc" id="L69">			output.println(&quot;status=ERROR&quot;);</span>
-<span class="nc" id="L70">			output.println(&quot;lineNumber=&quot; + (err.getLineLocation().getPosition() + 1));</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">			for (ErrorUml er : err.getErrorsUml()) {</span>
-<span class="nc" id="L72">				output.println(&quot;label=&quot; + er.getError());</span>
-<span class="nc" id="L73">			}</span>
+<span class="fc" id="L70">			output.println(&quot;status=ERROR&quot;);</span>
+<span class="fc" id="L71">			output.println(&quot;lineNumber=&quot; + (err.getLineLocation().getPosition() + 1));</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			for (ErrorUml er : err.getErrorsUml())</span>
+<span class="fc" id="L73">				output.println(&quot;label=&quot; + er.getError());</span>
+
 		}
-<span class="nc" id="L75">		output.flush();</span>
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L76">		output.flush();</span>
+<span class="fc" id="L77">	}</span>
 
 	private boolean empty(final PSystemError err) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (err == null) {</span>
-<span class="nc" id="L80">			return true;</span>
-		}
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (ErrorUml er : err.getErrorsUml()) {</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (PSystemAbstractFactory.EMPTY_DESCRIPTION.equals(er.getError()))</span>
-<span class="nc" id="L84">				return true;</span>
-<span class="nc" id="L85">		}</span>
-<span class="nc" id="L86">		return false;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (err == null)</span>
+<span class="nc" id="L81">			return true;</span>
+
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (ErrorUml er : err.getErrorsUml())</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			if (PSystemAbstractFactory.EMPTY_DESCRIPTION.equals(er.getError()))</span>
+<span class="nc" id="L85">				return true;</span>
+
+<span class="fc" id="L87">		return false;</span>
 	}
 
 	public void finalMessage(ErrorStatus error) {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (error.hasError()) {</span>
-<span class="nc" id="L91">			Log.error(&quot;Some diagram description contains errors&quot;);</span>
-		}
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (error.isNoData()) {</span>
-<span class="nc" id="L94">			Log.error(&quot;No diagram found&quot;);</span>
-		}
-<span class="nc" id="L96">	}</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (error.hasError())</span>
+<span class="fc" id="L92">			Log.error(&quot;Some diagram description contains errors&quot;);</span>
+
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (error.isEmpty())</span>
+<span class="nc" id="L95">			Log.error(&quot;No diagram found&quot;);</span>
+
+<span class="fc" id="L97">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -57,8 +57,8 @@ public class GlobalConfig {
 <span class="fc" id="L57">	private final Map&lt;GlobalConfigKey, Object&gt; keys = new EnumMap&lt;&gt;(GlobalConfigKey.class);</span>
 
 	public void put(GlobalConfigKey key, Object value) {
-<span class="nc" id="L60">		this.keys.put(key, value);</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L60">		this.keys.put(key, value);</span>
+<span class="fc" id="L61">	}</span>
 
 	public boolean boolValue(GlobalConfigKey key) {
 <span class="fc" id="L64">		return (Boolean) value(key);</span>
@@ -66,9 +66,9 @@ public class GlobalConfig {
 
 	public Object value(GlobalConfigKey key) {
 <span class="fc" id="L68">		final Object value = keys.get(key);</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (value == null)</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (value == null)</span>
 <span class="fc" id="L70">			return key.getDefaultValue();</span>
-<span class="nc" id="L71">		return value;</span>
+<span class="fc" id="L71">		return value;</span>
 	}
 
 	// ::done

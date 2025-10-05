@@ -40,13 +40,13 @@ public class PostScriptCommandLineTo implements PostScriptCommand {
 	private final double x;
 	private final double y;
 
-<span class="nc" id="L43">	public PostScriptCommandLineTo(double x, double y) {</span>
-<span class="nc" id="L44">		this.x = x;</span>
-<span class="nc" id="L45">		this.y = y;</span>
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L43">	public PostScriptCommandLineTo(double x, double y) {</span>
+<span class="fc" id="L44">		this.x = x;</span>
+<span class="fc" id="L45">		this.y = y;</span>
+<span class="fc" id="L46">	}</span>
 
 	public String toPostString() {
-<span class="nc" id="L49">		return EpsGraphics.format(x) + &quot; &quot; + EpsGraphics.format(y) + &quot; rlineto&quot;;</span>
+<span class="fc" id="L49">		return EpsGraphics.format(x) + &quot; &quot; + EpsGraphics.format(y) + &quot; rlineto&quot;;</span>
 	}
 
 }

@@ -67,7 +67,7 @@ package net.sourceforge.plantuml.core;
 	}
 
 	private static DiagramType getType(String text, final int p) {
-<span class="pc bpc" id="L70" title="10 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
+<span class="pc bpc" id="L70" title="12 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
 
 		case 'b':
 <span class="nc bnc" id="L73" title="All 2 branches missed.">			if (check(&quot;bpm&quot;, text, p))</span>
@@ -86,19 +86,19 @@ package net.sourceforge.plantuml.core;
 <span class="nc" id="L86">			return UNKNOWN;</span>
 
 		case 'd':
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (check(&quot;dot&quot;, text, p))</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (check(&quot;dot&quot;, text, p))</span>
 <span class="nc" id="L90">				return DOT;</span>
 			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (check(&quot;ditaa&quot;, text, p))</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (check(&quot;ditaa&quot;, text, p))</span>
 <span class="nc" id="L93">				return DITAA;</span>
 			// ::done
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (check(&quot;def&quot;, text, p))</span>
-<span class="fc" id="L96">				return DEFINITION;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (check(&quot;def&quot;, text, p))</span>
+<span class="nc" id="L96">				return DEFINITION;</span>
 <span class="nc" id="L97">			return UNKNOWN;</span>
 
 		case 'e':
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (check(&quot;ebnf&quot;, text, p))</span>
-<span class="fc" id="L101">				return EBNF;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (check(&quot;ebnf&quot;, text, p))</span>
+<span class="nc" id="L101">				return EBNF;</span>
 <span class="nc" id="L102">			return UNKNOWN;</span>
 
 		case 'f':

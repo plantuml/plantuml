@@ -83,18 +83,18 @@ public class FontStack {
 	}
 
 	private static boolean isWhitespaceOrDoubleQuote(char c) {
-<span class="pc bpc" id="L86" title="1 of 4 branches missed.">		return Character.isWhitespace(c) || c == '&quot;';</span>
+<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		return Character.isWhitespace(c) || c == '&quot;';</span>
 	}
 
 	private static String trimWhitespaceOrDoubleQuote(String s) {
 <span class="fc" id="L90">		int start = 0;</span>
 <span class="fc" id="L91">		int end = s.length();</span>
 
-<span class="pc bpc" id="L93" title="1 of 4 branches missed.">		while (start &lt; end &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(start)))</span>
-<span class="fc" id="L94">			start++;</span>
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">		while (start &lt; end &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(start)))</span>
+<span class="nc" id="L94">			start++;</span>
 
-<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		while (end &gt; start &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(end - 1)))</span>
-<span class="fc" id="L97">			end--;</span>
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">		while (end &gt; start &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(end - 1)))</span>
+<span class="nc" id="L97">			end--;</span>
 <span class="fc" id="L98">		return s.substring(start, end);</span>
 	}
 

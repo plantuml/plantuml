@@ -58,30 +58,30 @@ public class DriverTextEps implements UDriver&lt;UText, EpsGraphics&gt; {
 	private final ClipContainer clipContainer;
 	private final EpsStrategy strategy;
 
-<span class="nc" id="L61">	public DriverTextEps(ClipContainer clipContainer, EpsStrategy strategy) {</span>
-<span class="nc" id="L62">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L63">		this.strategy = strategy;</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L61">	public DriverTextEps(ClipContainer clipContainer, EpsStrategy strategy) {</span>
+<span class="fc" id="L62">		this.clipContainer = clipContainer;</span>
+<span class="fc" id="L63">		this.strategy = strategy;</span>
+<span class="fc" id="L64">	}</span>
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-<span class="nc" id="L67">		final UClip clip = clipContainer.getClip();</span>
-<span class="nc bnc" id="L68" title="All 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
+<span class="fc" id="L67">		final UClip clip = clipContainer.getClip();</span>
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
 <span class="nc" id="L69">			return;</span>
 
-<span class="nc" id="L71">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
+<span class="fc" id="L71">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
 <span class="nc" id="L73">			return;</span>
 
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (strategy == EpsStrategy.WITH_MACRO_AND_TEXT) {</span>
-<span class="nc" id="L76">			drawAsText(shape, x, y, param, eps, mapper);</span>
-<span class="nc" id="L77">			return;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (strategy == EpsStrategy.WITH_MACRO_AND_TEXT) {</span>
+<span class="fc" id="L76">			drawAsText(shape, x, y, param, eps, mapper);</span>
+<span class="fc" id="L77">			return;</span>
 		}
 
-<span class="nc" id="L80">		final TextLayout textLayout = UFontContext.EPS.createTextLayout(shape);</span>
+<span class="fc" id="L80">		final TextLayout textLayout = UFontContext.EPS.createTextLayout(shape);</span>
 
-<span class="nc" id="L82">		MinMax dim = null;</span>
+<span class="fc" id="L82">		MinMax dim = null;</span>
 
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
 <span class="nc" id="L85">			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">			if (extended != null) {</span>
 <span class="nc" id="L87">				eps.setStrokeColor(extended);</span>
@@ -94,10 +94,10 @@ public class DriverTextEps implements UDriver&lt;UText, EpsGraphics&gt; {
 			}
 		}
 
-<span class="nc" id="L97">		eps.setStrokeColor(fontConfiguration.getColor().toColor(mapper));</span>
-<span class="nc" id="L98">		drawPathIterator(eps, x, y, getOutline(textLayout));</span>
+<span class="fc" id="L97">		eps.setStrokeColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="fc" id="L98">		drawPathIterator(eps, x, y, getOutline(textLayout));</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
 <span class="nc" id="L101">			final HColor extended = fontConfiguration.getExtendedColor();</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">			if (extended != null)</span>
 <span class="nc" id="L103">				eps.setStrokeColor(extended.toColor(mapper));</span>
@@ -109,7 +109,7 @@ public class DriverTextEps implements UDriver&lt;UText, EpsGraphics&gt; {
 <span class="nc" id="L109">			eps.epsLine(x, y + 1.5, x + dim.getWidth(), y + 1.5);</span>
 <span class="nc" id="L110">			eps.setStrokeWidth(1, 0, 0);</span>
 		}
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">			if (dim == null)</span>
 <span class="nc" id="L114">				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));</span>
 
@@ -125,7 +125,7 @@ public class DriverTextEps implements UDriver&lt;UText, EpsGraphics&gt; {
 			}
 <span class="nc" id="L126">			eps.setStrokeWidth(1, 0, 0);</span>
 		}
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
 <span class="nc" id="L129">			final HColor extended = fontConfiguration.getExtendedColor();</span>
 <span class="nc bnc" id="L130" title="All 2 branches missed.">			if (extended != null)</span>
 <span class="nc" id="L131">				eps.setStrokeColor(extended.toColor(mapper));</span>
@@ -140,127 +140,127 @@ public class DriverTextEps implements UDriver&lt;UText, EpsGraphics&gt; {
 <span class="nc" id="L140">			eps.setStrokeWidth(1, 0, 0);</span>
 		}
 
-<span class="nc" id="L143">	}</span>
+<span class="fc" id="L143">	}</span>
 
 	private Shape getOutline(final TextLayout textLayout) {
-<span class="nc" id="L146">		return textLayout.getOutline(null);</span>
+<span class="fc" id="L146">		return textLayout.getOutline(null);</span>
 	}
 
 	private void drawAsText(UText shape, double x, double y, UParam param, EpsGraphics eps, ColorMapper mapper) {
-<span class="nc" id="L150">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="fc" id="L150">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
 		// final FontMetrics fm =
 		// g2dummy.getFontMetrics(fontConfiguration.getFont().getFont());
 		// final double ypos = y - fm.getDescent() + 0.5;
-<span class="nc" id="L154">		final double ypos = y - 1;</span>
+<span class="fc" id="L154">		final double ypos = y - 1;</span>
 
-<span class="nc" id="L156">		eps.setStrokeColor(fontConfiguration.getColor().toColor(mapper));</span>
-<span class="nc" id="L157">		((EpsGraphicsMacroAndText) eps).drawText(shape.getText(), fontConfiguration, x, ypos);</span>
+<span class="fc" id="L156">		eps.setStrokeColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="fc" id="L157">		((EpsGraphicsMacroAndText) eps).drawText(shape.getText(), fontConfiguration, x, ypos);</span>
 
-<span class="nc" id="L159">	}</span>
+<span class="fc" id="L159">	}</span>
 
 	static void drawPathIterator(EpsGraphics eps, double x, double y, Shape shape) {
-<span class="nc" id="L162">		final List&lt;Integer&gt; breaks = analyze(shape);</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (breaks.size() == 0) {</span>
+<span class="fc" id="L162">		final List&lt;Integer&gt; breaks = analyze(shape);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (breaks.size() == 0) {</span>
 <span class="nc" id="L164">			final PathIterator path = shape.getPathIterator(null);</span>
 <span class="nc" id="L165">			drawSingle(eps, x, y, path);</span>
 <span class="nc" id="L166">			return;</span>
 		}
 		// System.err.println(&quot;breaks=&quot; + breaks);
-<span class="nc" id="L169">		final PathIterator path = new PathIteratorLimited(shape, 0, breaks.get(0));</span>
-<span class="nc" id="L170">		drawSingle(eps, x, y, path);</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (int i = 0; i &lt; breaks.size() - 1; i++) {</span>
-<span class="nc" id="L172">			final PathIterator path2 = new PathIteratorLimited(shape, breaks.get(i) + 1, breaks.get(i + 1));</span>
-<span class="nc" id="L173">			drawSingle(eps, x, y, path2);</span>
+<span class="fc" id="L169">		final PathIterator path = new PathIteratorLimited(shape, 0, breaks.get(0));</span>
+<span class="fc" id="L170">		drawSingle(eps, x, y, path);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (int i = 0; i &lt; breaks.size() - 1; i++) {</span>
+<span class="fc" id="L172">			final PathIterator path2 = new PathIteratorLimited(shape, breaks.get(i) + 1, breaks.get(i + 1));</span>
+<span class="fc" id="L173">			drawSingle(eps, x, y, path2);</span>
 		}
-<span class="nc" id="L175">		final PathIterator path3 = new PathIteratorLimited(shape, breaks.get(breaks.size() - 1) + 1, Integer.MAX_VALUE);</span>
-<span class="nc" id="L176">		drawSingle(eps, x, y, path3);</span>
+<span class="fc" id="L175">		final PathIterator path3 = new PathIteratorLimited(shape, breaks.get(breaks.size() - 1) + 1, Integer.MAX_VALUE);</span>
+<span class="fc" id="L176">		drawSingle(eps, x, y, path3);</span>
 
-<span class="nc" id="L178">	}</span>
+<span class="fc" id="L178">	}</span>
 
 	private static void drawSingle(EpsGraphics eps, double x, double y, final PathIterator path) {
-<span class="nc" id="L181">		eps.newpath();</span>
-<span class="nc" id="L182">		final double coord[] = new double[6];</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
-<span class="nc" id="L184">			final int code = path.currentSegment(coord);</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (code == PathIterator.SEG_MOVETO)</span>
-<span class="nc" id="L186">				eps.moveto(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">			else if (code == PathIterator.SEG_LINETO)</span>
-<span class="nc" id="L188">				eps.lineto(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CLOSE)</span>
-<span class="nc" id="L190">				eps.closepath();</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
+<span class="fc" id="L181">		eps.newpath();</span>
+<span class="fc" id="L182">		final double coord[] = new double[6];</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
+<span class="fc" id="L184">			final int code = path.currentSegment(coord);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO)</span>
+<span class="fc" id="L186">				eps.moveto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			else if (code == PathIterator.SEG_LINETO)</span>
+<span class="fc" id="L188">				eps.lineto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			else if (code == PathIterator.SEG_CLOSE)</span>
+<span class="fc" id="L190">				eps.closepath();</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
 <span class="nc" id="L192">				eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
-<span class="nc" id="L194">				eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
+<span class="fc" id="L194">				eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
 			else
 <span class="nc" id="L196">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 
-<span class="nc" id="L198">			path.next();</span>
-<span class="nc" id="L199">		}</span>
+<span class="fc" id="L198">			path.next();</span>
+<span class="fc" id="L199">		}</span>
 
-<span class="nc" id="L201">		eps.fill(path.getWindingRule());</span>
-<span class="nc" id="L202">	}</span>
+<span class="fc" id="L201">		eps.fill(path.getWindingRule());</span>
+<span class="fc" id="L202">	}</span>
 
 	private static List&lt;Integer&gt; analyze(Shape shape) {
-<span class="nc" id="L205">		int count = PathIteratorLimited.count(shape);</span>
-<span class="nc" id="L206">		final List&lt;Integer&gt; closings = getClosings(shape.getPathIterator(null));</span>
-<span class="nc" id="L207">		final List&lt;Integer&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (Integer cl : closings) {</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (cl + 2 &gt;= count)</span>
-<span class="nc" id="L210">				break;</span>
+<span class="fc" id="L205">		int count = PathIteratorLimited.count(shape);</span>
+<span class="fc" id="L206">		final List&lt;Integer&gt; closings = getClosings(shape.getPathIterator(null));</span>
+<span class="fc" id="L207">		final List&lt;Integer&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		for (Integer cl : closings) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">			if (cl + 2 &gt;= count)</span>
+<span class="fc" id="L210">				break;</span>
 
-<span class="nc" id="L212">			final PathIterator path1 = new PathIteratorLimited(shape, 0, cl);</span>
-<span class="nc" id="L213">			final PathIterator path2 = new PathIteratorLimited(shape, cl + 1, Integer.MAX_VALUE);</span>
-<span class="nc" id="L214">			final double max1 = getMinMax(0, 0, path1).getMaxX();</span>
-<span class="nc" id="L215">			final double min2 = getMinMax(0, 0, path2).getMinX();</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">			if (min2 &gt; max1)</span>
-<span class="nc" id="L217">				result.add(cl);</span>
+<span class="fc" id="L212">			final PathIterator path1 = new PathIteratorLimited(shape, 0, cl);</span>
+<span class="fc" id="L213">			final PathIterator path2 = new PathIteratorLimited(shape, cl + 1, Integer.MAX_VALUE);</span>
+<span class="fc" id="L214">			final double max1 = getMinMax(0, 0, path1).getMaxX();</span>
+<span class="fc" id="L215">			final double min2 = getMinMax(0, 0, path2).getMinX();</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">			if (min2 &gt; max1)</span>
+<span class="fc" id="L217">				result.add(cl);</span>
 
-<span class="nc" id="L219">		}</span>
-<span class="nc" id="L220">		return result;</span>
+<span class="fc" id="L219">		}</span>
+<span class="fc" id="L220">		return result;</span>
 	}
 
 	private static List&lt;Integer&gt; getClosings(PathIterator path) {
-<span class="nc" id="L224">		final List&lt;Integer&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L225">		int current = 0;</span>
-<span class="nc" id="L226">		final double coord[] = new double[6];</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
-<span class="nc" id="L228">			final int code = path.currentSegment(coord);</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">			if (code == PathIterator.SEG_CLOSE)</span>
-<span class="nc" id="L230">				result.add(current);</span>
+<span class="fc" id="L224">		final List&lt;Integer&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L225">		int current = 0;</span>
+<span class="fc" id="L226">		final double coord[] = new double[6];</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
+<span class="fc" id="L228">			final int code = path.currentSegment(coord);</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if (code == PathIterator.SEG_CLOSE)</span>
+<span class="fc" id="L230">				result.add(current);</span>
 
-<span class="nc" id="L232">			current++;</span>
-<span class="nc" id="L233">			path.next();</span>
-<span class="nc" id="L234">		}</span>
-<span class="nc" id="L235">		return result;</span>
+<span class="fc" id="L232">			current++;</span>
+<span class="fc" id="L233">			path.next();</span>
+<span class="fc" id="L234">		}</span>
+<span class="fc" id="L235">		return result;</span>
 	}
 
 	static private MinMax getMinMax(double x, double y, PathIterator path) {
 
-<span class="nc" id="L240">		MinMax result = MinMax.getEmpty(false);</span>
+<span class="fc" id="L240">		MinMax result = MinMax.getEmpty(false);</span>
 
-<span class="nc" id="L242">		final double coord[] = new double[6];</span>
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
-<span class="nc" id="L244">			final int code = path.currentSegment(coord);</span>
-<span class="nc bnc" id="L245" title="All 2 branches missed.">			if (code == PathIterator.SEG_MOVETO) {</span>
-<span class="nc" id="L246">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_LINETO) {</span>
-<span class="nc" id="L248">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L249" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_CLOSE) {</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_CUBICTO) {</span>
+<span class="fc" id="L242">		final double coord[] = new double[6];</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
+<span class="fc" id="L244">			final int code = path.currentSegment(coord);</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO) {</span>
+<span class="fc" id="L246">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			} else if (code == PathIterator.SEG_LINETO) {</span>
+<span class="fc" id="L248">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">			} else if (code == PathIterator.SEG_CLOSE) {</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">			} else if (code == PathIterator.SEG_CUBICTO) {</span>
 <span class="nc" id="L251">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
 <span class="nc" id="L252">				result = result.addPoint(coord[2] + x, coord[3] + y);</span>
 <span class="nc" id="L253">				result = result.addPoint(coord[4] + x, coord[5] + y);</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">			} else if (code == PathIterator.SEG_QUADTO) {</span>
-<span class="nc" id="L255">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
-<span class="nc" id="L256">				result = result.addPoint(coord[2] + x, coord[3] + y);</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">			} else if (code == PathIterator.SEG_QUADTO) {</span>
+<span class="fc" id="L255">				result = result.addPoint(coord[0] + x, coord[1] + y);</span>
+<span class="fc" id="L256">				result = result.addPoint(coord[2] + x, coord[3] + y);</span>
 			} else {
 <span class="nc" id="L258">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 			}
-<span class="nc" id="L260">			path.next();</span>
-<span class="nc" id="L261">		}</span>
+<span class="fc" id="L260">			path.next();</span>
+<span class="fc" id="L261">		}</span>
 
-<span class="nc" id="L263">		return result;</span>
+<span class="fc" id="L263">		return result;</span>
 
 	}
 

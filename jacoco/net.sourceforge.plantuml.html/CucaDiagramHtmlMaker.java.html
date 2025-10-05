@@ -58,40 +58,40 @@ public final class CucaDiagramHtmlMaker {
 	private final CucaDiagram diagram;
 	private final SFile dir;
 
-<span class="nc" id="L61">	public CucaDiagramHtmlMaker(CucaDiagram diagram, SFile dir) {</span>
-<span class="nc" id="L62">		this.diagram = diagram;</span>
-<span class="nc" id="L63">		this.dir = dir;</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L61">	public CucaDiagramHtmlMaker(CucaDiagram diagram, SFile dir) {</span>
+<span class="fc" id="L62">		this.diagram = diagram;</span>
+<span class="fc" id="L63">		this.dir = dir;</span>
+<span class="fc" id="L64">	}</span>
 
 	public List&lt;FileImageData&gt; create() throws IOException {
-<span class="nc" id="L67">		dir.mkdirs();</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (dir.exists() == false)</span>
+<span class="fc" id="L67">		dir.mkdirs();</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (dir.exists() == false)</span>
 <span class="nc" id="L69">			throw new IOException(&quot;Cannot create &quot; + dir);</span>
 
-<span class="nc" id="L71">		final SFile f = dir.file(&quot;index.html&quot;);</span>
-<span class="nc" id="L72">		final PrintWriter pw = f.createPrintWriter();</span>
-<span class="nc" id="L73">		pw.println(&quot;&lt;html&gt;&quot;);</span>
-<span class="nc" id="L74">		printAllType(pw, LeafType.ENUM);</span>
-<span class="nc" id="L75">		printAllType(pw, LeafType.INTERFACE);</span>
-<span class="nc" id="L76">		printAllType(pw, LeafType.ANNOTATION);</span>
-<span class="nc" id="L77">		printAllType(pw, LeafType.ABSTRACT_CLASS);</span>
-<span class="nc" id="L78">		printAllType(pw, LeafType.CLASS);</span>
-<span class="nc" id="L79">		htmlClose(pw);</span>
-<span class="nc" id="L80">		return Arrays.asList(new FileImageData(dir, null));</span>
+<span class="fc" id="L71">		final SFile f = dir.file(&quot;index.html&quot;);</span>
+<span class="fc" id="L72">		final PrintWriter pw = f.createPrintWriter();</span>
+<span class="fc" id="L73">		pw.println(&quot;&lt;html&gt;&quot;);</span>
+<span class="fc" id="L74">		printAllType(pw, LeafType.ENUM);</span>
+<span class="fc" id="L75">		printAllType(pw, LeafType.INTERFACE);</span>
+<span class="fc" id="L76">		printAllType(pw, LeafType.ANNOTATION);</span>
+<span class="fc" id="L77">		printAllType(pw, LeafType.ABSTRACT_CLASS);</span>
+<span class="fc" id="L78">		printAllType(pw, LeafType.CLASS);</span>
+<span class="fc" id="L79">		htmlClose(pw);</span>
+<span class="fc" id="L80">		return Arrays.asList(new FileImageData(dir, null));</span>
 	}
 
 	private void printAllType(final PrintWriter pw, LeafType type) throws IOException {
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (hasSome(type)) {</span>
-<span class="nc" id="L85">			pw.println(&quot;&lt;h2&gt;&quot; + type.toHtml() + &quot;&lt;/h2&gt;&quot;);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			for (final Entity ent : diagram.leafs()) {</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">				if (ent.getLeafType() != type)</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (hasSome(type)) {</span>
+<span class="fc" id="L85">			pw.println(&quot;&lt;h2&gt;&quot; + type.toHtml() + &quot;&lt;/h2&gt;&quot;);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			for (final Entity ent : diagram.leafs()) {</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">				if (ent.getLeafType() != type)</span>
 <span class="nc" id="L88">					continue;</span>
 
-<span class="nc" id="L90">				export(ent);</span>
-<span class="nc" id="L91">				pw.println(&quot;&lt;li&gt;&quot;);</span>
-<span class="nc" id="L92">				pw.println(LinkHtmlPrinter.htmlLink(ent));</span>
-<span class="nc" id="L93">				pw.println(&quot;&lt;/li&gt;&quot;);</span>
-<span class="nc" id="L94">			}</span>
+<span class="fc" id="L90">				export(ent);</span>
+<span class="fc" id="L91">				pw.println(&quot;&lt;li&gt;&quot;);</span>
+<span class="fc" id="L92">				pw.println(LinkHtmlPrinter.htmlLink(ent));</span>
+<span class="fc" id="L93">				pw.println(&quot;&lt;/li&gt;&quot;);</span>
+<span class="fc" id="L94">			}</span>
 			// for (Map.Entry&lt;Code, IEntity&gt; ent : new TreeMap&lt;Code,
 			// IEntity&gt;(diagram.getLeafs()).entrySet()) {
 			// if (ent.getValue().getEntityType() != type) {
@@ -103,28 +103,28 @@ public final class CucaDiagramHtmlMaker {
 			// pw.println(&quot;&lt;/li&gt;&quot;);
 			// }
 		}
-<span class="nc" id="L106">	}</span>
+<span class="fc" id="L106">	}</span>
 
 	private boolean hasSome(final LeafType type) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Entity ent : diagram.leafs())</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (ent.getLeafType() == type)</span>
-<span class="nc" id="L111">				return true;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (Entity ent : diagram.leafs())</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (ent.getLeafType() == type)</span>
+<span class="fc" id="L111">				return true;</span>
 
-<span class="nc" id="L113">		return false;</span>
+<span class="fc" id="L113">		return false;</span>
 	}
 
 	private void export(Entity entity) throws IOException {
-<span class="nc" id="L117">		final SFile f = dir.file(LinkHtmlPrinter.urlOf(entity));</span>
-<span class="nc" id="L118">		final PrintWriter pw = f.createPrintWriter();</span>
-<span class="nc" id="L119">		pw.println(&quot;&lt;html&gt;&quot;);</span>
-<span class="nc" id="L120">		pw.println(&quot;&lt;title&gt;&quot; + StringUtils.unicodeForHtml(entity.getName()) + &quot;&lt;/title&gt;&quot;);</span>
-<span class="nc" id="L121">		pw.println(&quot;&lt;h2&gt;&quot; + entity.getLeafType().toHtml() + &quot;&lt;/h2&gt;&quot;);</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (CharSequence s : entity.getDisplay()) {</span>
-<span class="nc" id="L123">			pw.println(StringUtils.unicodeForHtml(s.toString()));</span>
-<span class="nc" id="L124">			pw.println(&quot;&lt;br&gt;&quot;);</span>
-<span class="nc" id="L125">		}</span>
-<span class="nc" id="L126">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (stereotype != null) {</span>
+<span class="fc" id="L117">		final SFile f = dir.file(LinkHtmlPrinter.urlOf(entity));</span>
+<span class="fc" id="L118">		final PrintWriter pw = f.createPrintWriter();</span>
+<span class="fc" id="L119">		pw.println(&quot;&lt;html&gt;&quot;);</span>
+<span class="fc" id="L120">		pw.println(&quot;&lt;title&gt;&quot; + StringUtils.unicodeForHtml(entity.getName()) + &quot;&lt;/title&gt;&quot;);</span>
+<span class="fc" id="L121">		pw.println(&quot;&lt;h2&gt;&quot; + entity.getLeafType().toHtml() + &quot;&lt;/h2&gt;&quot;);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (CharSequence s : entity.getDisplay()) {</span>
+<span class="fc" id="L123">			pw.println(StringUtils.unicodeForHtml(s.toString()));</span>
+<span class="fc" id="L124">			pw.println(&quot;&lt;br&gt;&quot;);</span>
+<span class="fc" id="L125">		}</span>
+<span class="fc" id="L126">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
 <span class="nc" id="L128">			pw.println(&quot;&lt;hr&gt;&quot;);</span>
 <span class="nc" id="L129">			pw.println(&quot;&lt;h3&gt;Stereotype&lt;/h3&gt;&quot;);</span>
 <span class="nc bnc" id="L130" title="All 2 branches missed.">			for (String s : stereotype.getLabels(diagram.getSkinParam().guillemet())) {</span>
@@ -133,9 +133,9 @@ public final class CucaDiagramHtmlMaker {
 <span class="nc" id="L133">			}</span>
 		}
 
-<span class="nc" id="L136">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (entity.getBodier().getFieldsToDisplay().size() == 0) {</span>
-<span class="nc" id="L138">			pw.println(&quot;&lt;h2&gt;No fields&lt;/h2&gt;&quot;);</span>
+<span class="fc" id="L136">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (entity.getBodier().getFieldsToDisplay().size() == 0) {</span>
+<span class="fc" id="L138">			pw.println(&quot;&lt;h2&gt;No fields&lt;/h2&gt;&quot;);</span>
 		} else {
 <span class="nc" id="L140">			pw.println(&quot;&lt;h2&gt;Fields:&lt;/h2&gt;&quot;);</span>
 <span class="nc" id="L141">			pw.println(&quot;&lt;ul&gt;&quot;);</span>
@@ -147,9 +147,9 @@ public final class CucaDiagramHtmlMaker {
 <span class="nc" id="L147">			pw.println(&quot;&lt;/ul&gt;&quot;);</span>
 		}
 
-<span class="nc" id="L150">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (entity.getBodier().getMethodsToDisplay().size() == 0) {</span>
-<span class="nc" id="L152">			pw.println(&quot;&lt;h2&gt;No methods&lt;/h2&gt;&quot;);</span>
+<span class="fc" id="L150">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (entity.getBodier().getMethodsToDisplay().size() == 0) {</span>
+<span class="fc" id="L152">			pw.println(&quot;&lt;h2&gt;No methods&lt;/h2&gt;&quot;);</span>
 		} else {
 <span class="nc" id="L154">			pw.println(&quot;&lt;h2&gt;Methods:&lt;/h2&gt;&quot;);</span>
 <span class="nc" id="L155">			pw.println(&quot;&lt;ul&gt;&quot;);</span>
@@ -161,10 +161,10 @@ public final class CucaDiagramHtmlMaker {
 <span class="nc" id="L161">			pw.println(&quot;&lt;/ul&gt;&quot;);</span>
 		}
 
-<span class="nc" id="L164">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
-<span class="nc" id="L165">		final Collection&lt;Link&gt; links = getLinksButNotes(entity);</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (links.size() == 0) {</span>
-<span class="nc" id="L167">			pw.println(&quot;&lt;h2&gt;No links&lt;/h2&gt;&quot;);</span>
+<span class="fc" id="L164">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
+<span class="fc" id="L165">		final Collection&lt;Link&gt; links = getLinksButNotes(entity);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (links.size() == 0) {</span>
+<span class="fc" id="L167">			pw.println(&quot;&lt;h2&gt;No links&lt;/h2&gt;&quot;);</span>
 		} else {
 <span class="nc" id="L169">			pw.println(&quot;&lt;h2&gt;Links:&lt;/h2&gt;&quot;);</span>
 <span class="nc" id="L170">			pw.println(&quot;&lt;ul&gt;&quot;);</span>
@@ -176,8 +176,8 @@ public final class CucaDiagramHtmlMaker {
 <span class="nc" id="L176">			pw.println(&quot;&lt;/ul&gt;&quot;);</span>
 		}
 
-<span class="nc" id="L179">		final Collection&lt;Entity&gt; notes = getNotes(entity);</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (notes.size() &gt; 0) {</span>
+<span class="fc" id="L179">		final Collection&lt;Entity&gt; notes = getNotes(entity);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (notes.size() &gt; 0) {</span>
 <span class="nc" id="L181">			pw.println(&quot;&lt;hr&gt;&quot;);</span>
 <span class="nc" id="L182">			pw.println(&quot;&lt;h2&gt;Notes:&lt;/h2&gt;&quot;);</span>
 <span class="nc" id="L183">			pw.println(&quot;&lt;ul&gt;&quot;);</span>
@@ -193,19 +193,19 @@ public final class CucaDiagramHtmlMaker {
 
 		}
 
-<span class="nc" id="L196">		htmlClose(pw);</span>
-<span class="nc" id="L197">	}</span>
+<span class="fc" id="L196">		htmlClose(pw);</span>
+<span class="fc" id="L197">	}</span>
 
 	private void htmlClose(final PrintWriter pw) {
-<span class="nc" id="L200">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
-<span class="nc" id="L201">		pw.println(&quot;&lt;a href=index.html&gt;Back to index&lt;/a&gt;&quot;);</span>
-<span class="nc" id="L202">		pw.println(&quot;&lt;/html&gt;&quot;);</span>
-<span class="nc" id="L203">		pw.close();</span>
-<span class="nc" id="L204">	}</span>
+<span class="fc" id="L200">		pw.println(&quot;&lt;hr&gt;&quot;);</span>
+<span class="fc" id="L201">		pw.println(&quot;&lt;a href=index.html&gt;Back to index&lt;/a&gt;&quot;);</span>
+<span class="fc" id="L202">		pw.println(&quot;&lt;/html&gt;&quot;);</span>
+<span class="fc" id="L203">		pw.close();</span>
+<span class="fc" id="L204">	}</span>
 
 	private Collection&lt;Entity&gt; getNotes(Entity ent) {
-<span class="nc" id="L207">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (Link link : diagram.getLinks()) {</span>
+<span class="fc" id="L207">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		for (Link link : diagram.getLinks()) {</span>
 <span class="nc bnc" id="L209" title="All 2 branches missed.">			if (link.contains(ent) == false)</span>
 <span class="nc" id="L210">				continue;</span>
 
@@ -213,12 +213,12 @@ public final class CucaDiagramHtmlMaker {
 <span class="nc" id="L213">				result.add(link.getOther(ent));</span>
 
 <span class="nc" id="L215">		}</span>
-<span class="nc" id="L216">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L216">		return Collections.unmodifiableList(result);</span>
 	}
 
 	private Collection&lt;Link&gt; getLinksButNotes(Entity ent) {
-<span class="nc" id="L220">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		for (Link link : diagram.getLinks()) {</span>
+<span class="fc" id="L220">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		for (Link link : diagram.getLinks()) {</span>
 <span class="nc bnc" id="L222" title="All 2 branches missed.">			if (link.contains(ent) == false)</span>
 <span class="nc" id="L223">				continue;</span>
 
@@ -227,7 +227,7 @@ public final class CucaDiagramHtmlMaker {
 
 <span class="nc" id="L228">			result.add(link);</span>
 <span class="nc" id="L229">		}</span>
-<span class="nc" id="L230">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L230">		return Collections.unmodifiableList(result);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -67,7 +67,7 @@ public class SvgOption {
 	private ConfigurationStore&lt;OptionKey&gt; options;
 
 	public String getInteractiveBaseFilename() {
-<span class="fc" id="L70">		return interactiveBaseFilename;</span>
+<span class="nc" id="L70">		return interactiveBaseFilename;</span>
 	}
 
 	public static SvgOption basic() {
@@ -93,8 +93,8 @@ public class SvgOption {
 	}
 
 	private String getValueFromOptions(OptionKey key) {
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (options == null)</span>
-<span class="nc" id="L97">			return null;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (options == null)</span>
+<span class="fc" id="L97">			return null;</span>
 <span class="fc" id="L98">		return options.getValue(key);</span>
 	}
 
@@ -110,10 +110,10 @@ public class SvgOption {
 	}
 
 	public SvgOption withTitle(Display titleDisplay) {
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (titleDisplay.size() &gt; 0) {</span>
-<span class="nc" id="L114">			title = StreamSupport.stream(titleDisplay.spliterator(), false) //</span>
-<span class="nc" id="L115">	            .map(CharSequence::toString) //</span>
-<span class="nc" id="L116">	            .collect(Collectors.joining(&quot;\n&quot;));</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (titleDisplay.size() &gt; 0) {</span>
+<span class="fc" id="L114">			title = StreamSupport.stream(titleDisplay.spliterator(), false) //</span>
+<span class="fc" id="L115">	            .map(CharSequence::toString) //</span>
+<span class="fc" id="L116">	            .collect(Collectors.joining(&quot;\n&quot;));</span>
 		}
 <span class="fc" id="L118">		return this;</span>
 	}
@@ -121,8 +121,8 @@ public class SvgOption {
 
 
 	public SvgOption withInteractive(String interactiveBaseFilename) {
-<span class="fc" id="L124">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
-<span class="fc" id="L125">		return this;</span>
+<span class="nc" id="L124">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
+<span class="nc" id="L125">		return this;</span>
 	}
 
 	public SvgOption withLengthAdjust(LengthAdjust lengthAdjust) {
@@ -189,7 +189,7 @@ public class SvgOption {
 	}
 
 	public boolean isInteractive() {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		return interactiveBaseFilename != null;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		return interactiveBaseFilename != null;</span>
 	}
 
 	public LengthAdjust getLengthAdjust() {

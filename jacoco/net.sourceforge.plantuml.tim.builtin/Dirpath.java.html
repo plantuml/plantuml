@@ -67,10 +67,10 @@ public class Dirpath extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (value == null)</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (value == null)</span>
 <span class="nc" id="L71">			return TValue.fromString(&quot;&quot;);</span>
 
-<span class="nc" id="L73">		return TValue.fromString(value);</span>
+<span class="fc" id="L73">		return TValue.fromString(value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

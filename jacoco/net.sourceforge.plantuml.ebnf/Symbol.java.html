@@ -35,36 +35,36 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-<span class="fc" id="L38">public enum Symbol {</span>
+<span class="nc" id="L38">public enum Symbol {</span>
 
-<span class="fc" id="L40">	LITTERAL, //</span>
+<span class="nc" id="L40">	LITTERAL, //</span>
 
 	// https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form
-<span class="fc" id="L43">	DEFINITION, // =</span>
-<span class="fc" id="L44">	CONCATENATION, // ,</span>
-<span class="fc" id="L45">	TERMINATION, // ;</span>
-<span class="fc" id="L46">	ALTERNATION, // |</span>
-<span class="fc" id="L47">	OPTIONAL_OPEN, // [</span>
-<span class="fc" id="L48">	OPTIONAL_CLOSE, // ]</span>
-<span class="fc" id="L49">	OPTIONAL, //</span>
-<span class="fc" id="L50">	REPETITION_SYMBOL, // *</span>
-<span class="fc" id="L51">	REPETITION_OPEN, // {</span>
-<span class="fc" id="L52">	REPETITION_CLOSE, // }</span>
-<span class="fc" id="L53">	REPETITION_MINUS_CLOSE, // }</span>
-<span class="fc" id="L54">	REPETITION_ZERO_OR_MORE, //</span>
-<span class="fc" id="L55">	REPETITION_ONE_OR_MORE, //</span>
-<span class="fc" id="L56">	GROUPING_OPEN, // (</span>
-<span class="fc" id="L57">	GROUPING_CLOSE, // )</span>
-<span class="fc" id="L58">	TERMINAL_STRING1, // &quot; &quot;</span>
-<span class="fc" id="L59">	TERMINAL_STRING2, // ' '</span>
-<span class="fc" id="L60">	COMMENT_TOKEN, // (* *)</span>
-<span class="fc" id="L61">	COMMENT_BELOW, // (* *)</span>
-<span class="fc" id="L62">	COMMENT_ABOVE, // (* *)</span>
-<span class="fc" id="L63">	SPECIAL_SEQUENCE, // ? ?</span>
-<span class="fc" id="L64">	NOT, // EXCEPTION -</span>
+<span class="nc" id="L43">	DEFINITION, // =</span>
+<span class="nc" id="L44">	CONCATENATION, // ,</span>
+<span class="nc" id="L45">	TERMINATION, // ;</span>
+<span class="nc" id="L46">	ALTERNATION, // |</span>
+<span class="nc" id="L47">	OPTIONAL_OPEN, // [</span>
+<span class="nc" id="L48">	OPTIONAL_CLOSE, // ]</span>
+<span class="nc" id="L49">	OPTIONAL, //</span>
+<span class="nc" id="L50">	REPETITION_SYMBOL, // *</span>
+<span class="nc" id="L51">	REPETITION_OPEN, // {</span>
+<span class="nc" id="L52">	REPETITION_CLOSE, // }</span>
+<span class="nc" id="L53">	REPETITION_MINUS_CLOSE, // }</span>
+<span class="nc" id="L54">	REPETITION_ZERO_OR_MORE, //</span>
+<span class="nc" id="L55">	REPETITION_ONE_OR_MORE, //</span>
+<span class="nc" id="L56">	GROUPING_OPEN, // (</span>
+<span class="nc" id="L57">	GROUPING_CLOSE, // )</span>
+<span class="nc" id="L58">	TERMINAL_STRING1, // &quot; &quot;</span>
+<span class="nc" id="L59">	TERMINAL_STRING2, // ' '</span>
+<span class="nc" id="L60">	COMMENT_TOKEN, // (* *)</span>
+<span class="nc" id="L61">	COMMENT_BELOW, // (* *)</span>
+<span class="nc" id="L62">	COMMENT_ABOVE, // (* *)</span>
+<span class="nc" id="L63">	SPECIAL_SEQUENCE, // ? ?</span>
+<span class="nc" id="L64">	NOT, // EXCEPTION -</span>
 	
 	// Special for regex
-<span class="fc" id="L67">	REGEX_GROUP;</span>
+<span class="nc" id="L67">	REGEX_GROUP;</span>
 
 	public int getPriority() {
 <span class="nc bnc" id="L70" title="All 4 branches missed.">		switch (this) {</span>

@@ -35,22 +35,22 @@
  */
 package net.sourceforge.plantuml.stats.api;
 
-<span class="nc" id="L38">public enum StatsColumn {</span>
+<span class="fc" id="L38">public enum StatsColumn {</span>
     // ::remove folder when __HAXE__
-<span class="nc" id="L40">	SESSION_ID(&quot;Session ID&quot;), DIAGRAM_TYPE(&quot;Diagram type&quot;), FORMAT(&quot;Format&quot;), VERSION(&quot;Version&quot;), STARTING(&quot;Starting&quot;),</span>
-<span class="nc" id="L41">	LAST(&quot;Last&quot;), DURATION_STRING(&quot;Duration&quot;), PARSED_COUNT(&quot;# Parsed&quot;), PARSED_MEAN_TIME(&quot;Mean parsing\\ntime (ms)&quot;),</span>
-<span class="nc" id="L42">	PARSED_STANDARD_DEVIATION(&quot;Standard\\ndeviation (ms)&quot;), PARSED_MAX_TIME(&quot;Max parsing\\ntime (ms)&quot;),</span>
-<span class="nc" id="L43">	GENERATED_COUNT(&quot;# Generated&quot;), GENERATED_MEAN_TIME(&quot;Mean generation\\ntime (ms)&quot;),</span>
-<span class="nc" id="L44">	GENERATED_STANDARD_DEVIATION(&quot;Standard\\ndeviation (ms)&quot;), GENERATED_MAX_TIME(&quot;Max generation\\ntime (ms)&quot;);</span>
+<span class="fc" id="L40">	SESSION_ID(&quot;Session ID&quot;), DIAGRAM_TYPE(&quot;Diagram type&quot;), FORMAT(&quot;Format&quot;), VERSION(&quot;Version&quot;), STARTING(&quot;Starting&quot;),</span>
+<span class="fc" id="L41">	LAST(&quot;Last&quot;), DURATION_STRING(&quot;Duration&quot;), PARSED_COUNT(&quot;# Parsed&quot;), PARSED_MEAN_TIME(&quot;Mean parsing\\ntime (ms)&quot;),</span>
+<span class="fc" id="L42">	PARSED_STANDARD_DEVIATION(&quot;Standard\\ndeviation (ms)&quot;), PARSED_MAX_TIME(&quot;Max parsing\\ntime (ms)&quot;),</span>
+<span class="fc" id="L43">	GENERATED_COUNT(&quot;# Generated&quot;), GENERATED_MEAN_TIME(&quot;Mean generation\\ntime (ms)&quot;),</span>
+<span class="fc" id="L44">	GENERATED_STANDARD_DEVIATION(&quot;Standard\\ndeviation (ms)&quot;), GENERATED_MAX_TIME(&quot;Max generation\\ntime (ms)&quot;);</span>
 
 	private final String title;
 
-<span class="nc" id="L48">	private StatsColumn(String title) {</span>
-<span class="nc" id="L49">		this.title = title;</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L48">	private StatsColumn(String title) {</span>
+<span class="fc" id="L49">		this.title = title;</span>
+<span class="fc" id="L50">	}</span>
 
 	public String getTitle() {
-<span class="nc" id="L53">		return title;</span>
+<span class="fc" id="L53">		return title;</span>
 	}
 
 }

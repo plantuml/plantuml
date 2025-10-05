@@ -45,18 +45,18 @@ class DiagramReturnError implements DiagramReturn {
 
 	private final String errorMessage;
 
-<span class="fc" id="L48">	DiagramReturnError(String errorMessage) {</span>
-<span class="fc" id="L49">		this.errorMessage = errorMessage;</span>
-<span class="fc" id="L50">	}</span>
+<span class="nc" id="L48">	DiagramReturnError(String errorMessage) {</span>
+<span class="nc" id="L49">		this.errorMessage = errorMessage;</span>
+<span class="nc" id="L50">	}</span>
 
 	@Override
 	public Diagram getDiagram() {
-<span class="fc" id="L54">		return null;</span>
+<span class="nc" id="L54">		return null;</span>
 	}
 
 	@Override
 	public String error() {
-<span class="fc" id="L59">		return errorMessage;</span>
+<span class="nc" id="L59">		return errorMessage;</span>
 	}
 
 	@Override

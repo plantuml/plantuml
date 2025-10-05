@@ -272,7 +272,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 	}
 
 	public static boolean isLetterOrEmojiOrUnderscoreOrDigit(char ch) {
-<span class="fc bfc" id="L275" title="All 6 branches covered.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
+<span class="pc bpc" id="L275" title="1 of 6 branches missed.">		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);</span>
 	}
 
 	public static boolean isLetterOrEmojiOrUnderscoreOrDollar(char ch) {
@@ -288,7 +288,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 	}
 
 	private static boolean isEmoji(char ch) {
-<span class="fc bfc" id="L291" title="All 4 branches covered.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);</span>
+<span class="pc bpc" id="L291" title="2 of 4 branches missed.">		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch);</span>
 	}
 
 }

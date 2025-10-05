@@ -46,6 +46,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -59,78 +60,78 @@ public class DirWatcher {
 	final private CliOptions option;
 	final private String pattern;
 
-<span class="nc" id="L62">	final private Map&lt;File, FileWatcher&gt; modifieds = new HashMap&lt;File, FileWatcher&gt;();</span>
+<span class="nc" id="L63">	final private Map&lt;File, FileWatcher&gt; modifieds = new HashMap&lt;File, FileWatcher&gt;();</span>
 
-<span class="nc" id="L64">	public DirWatcher(File dir, CliOptions option, String pattern) {</span>
-<span class="nc" id="L65">		this.dir = dir;</span>
-<span class="nc" id="L66">		this.option = option;</span>
-<span class="nc" id="L67">		this.pattern = pattern;</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L65">	public DirWatcher(File dir, CliOptions option, String pattern) {</span>
+<span class="nc" id="L66">		this.dir = dir;</span>
+<span class="nc" id="L67">		this.option = option;</span>
+<span class="nc" id="L68">		this.pattern = pattern;</span>
+<span class="nc" id="L69">	}</span>
 
 	public List&lt;GeneratedImage&gt; buildCreatedFiles() throws IOException, InterruptedException {
-<span class="nc" id="L71">		boolean error = false;</span>
-<span class="nc" id="L72">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">				if (error)</span>
-<span class="nc" id="L76">					continue;</span>
+<span class="nc" id="L72">		boolean error = false;</span>
+<span class="nc" id="L73">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				if (error)</span>
+<span class="nc" id="L77">					continue;</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">				if (f.isFile() == false)</span>
-<span class="nc" id="L79">					continue;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (f.isFile() == false)</span>
+<span class="nc" id="L80">					continue;</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
-<span class="nc" id="L82">					continue;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
+<span class="nc" id="L83">					continue;</span>
 
-<span class="nc" id="L84">				final FileWatcher watcher = modifieds.get(f);</span>
+<span class="nc" id="L85">				final FileWatcher watcher = modifieds.get(f);</span>
 
-<span class="nc bnc" id="L86" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
-<span class="nc" id="L87">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
-<span class="nc" id="L88">							option.getOutputDir(), option.getConfig(), option.getCharset(),</span>
-<span class="nc" id="L89">							option.getFileFormatOption());</span>
-<span class="nc" id="L90">					final Set&lt;File&gt; files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());</span>
-<span class="nc" id="L91">					files.add(f);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">					for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {</span>
-<span class="nc" id="L93">						result.add(g);</span>
-<span class="nc bnc" id="L94" title="All 4 branches missed.">						if (option.isFailfastOrFailfast2() &amp;&amp; g.lineErrorRaw() != -1) {</span>
-<span class="nc" id="L95">							error = true;</span>
+<span class="nc bnc" id="L87" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
+<span class="nc" id="L88">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L89">							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
+<span class="nc" id="L90">							option.getFileFormatOption());</span>
+<span class="nc" id="L91">					final Set&lt;File&gt; files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());</span>
+<span class="nc" id="L92">					files.add(f);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">					for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {</span>
+<span class="nc" id="L94">						result.add(g);</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">						if (option.isFailfastOrFailfast2() &amp;&amp; g.lineErrorRaw() != -1) {</span>
+<span class="nc" id="L96">							error = true;</span>
 						}
-<span class="nc" id="L97">					}</span>
-<span class="nc" id="L98">					modifieds.put(f, new FileWatcher(files));</span>
+<span class="nc" id="L98">					}</span>
+<span class="nc" id="L99">					modifieds.put(f, new FileWatcher(files));</span>
 				}
 			}
-<span class="nc" id="L101">		Collections.sort(result);</span>
-<span class="nc" id="L102">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L102">		Collections.sort(result);</span>
+<span class="nc" id="L103">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public File getErrorFile() throws IOException, InterruptedException {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">				if (f.isFile() == false)</span>
-<span class="nc" id="L109">					continue;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			for (File f : dir.listFiles()) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (f.isFile() == false)</span>
+<span class="nc" id="L110">					continue;</span>
 
-<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
-<span class="nc" id="L112">					continue;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
+<span class="nc" id="L113">					continue;</span>
 
-<span class="nc" id="L114">				final FileWatcher watcher = modifieds.get(f);</span>
+<span class="nc" id="L115">				final FileWatcher watcher = modifieds.get(f);</span>
 
-<span class="nc bnc" id="L116" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
-<span class="nc" id="L117">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
-<span class="nc" id="L118">							option.getOutputDir(), option.getConfig(), option.getCharset(),</span>
-<span class="nc" id="L119">							option.getFileFormatOption());</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">					if (sourceFileReader.hasError())</span>
-<span class="nc" id="L121">						return f;</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
+<span class="nc" id="L118">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L119">							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
+<span class="nc" id="L120">							option.getFileFormatOption());</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">					if (sourceFileReader.hasError())</span>
+<span class="nc" id="L122">						return f;</span>
 
 				}
 			}
-<span class="nc" id="L125">		return null;</span>
+<span class="nc" id="L126">		return null;</span>
 	}
 
 	private boolean fileToProcess(String name) {
-<span class="nc" id="L129">		return name.matches(pattern);</span>
+<span class="nc" id="L130">		return name.matches(pattern);</span>
 	}
 
 	public final File getDir() {
-<span class="nc" id="L133">		return dir;</span>
+<span class="nc" id="L134">		return dir;</span>
 	}
 
 	// public void setPattern(String pattern) {

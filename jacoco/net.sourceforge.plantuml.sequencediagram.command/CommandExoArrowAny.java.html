@@ -80,8 +80,8 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 <span class="fc" id="L80">		final boolean dotted = body.contains(&quot;--&quot;);</span>
 
 		final Display labels;
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (arg.get(&quot;LABEL&quot;, 0) == null)</span>
-<span class="fc" id="L84">			labels = Display.create(&quot;&quot;);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (arg.get(&quot;LABEL&quot;, 0) == null)</span>
+<span class="nc" id="L84">			labels = Display.create(&quot;&quot;);</span>
 		else
 <span class="fc" id="L86">			labels = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
@@ -102,7 +102,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 
 <span class="fc" id="L103">		final String activationSpec = arg.get(&quot;ACTIVATION&quot;, 0);</span>
 
-<span class="pc bpc" id="L105" title="1 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
+<span class="pc bpc" id="L105" title="3 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
 <span class="nc" id="L106">			diagram.activate(p, LifeEventType.CREATE, null);</span>
 
 <span class="pc bpc" id="L108" title="1 of 4 branches missed.">		if (messageExoType == MessageExoType.TO_RIGHT || messageExoType == MessageExoType.TO_LEFT) {</span>
@@ -155,13 +155,13 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 
 <span class="fc" id="L156">		final String s = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
 
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
 
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (activationSpec != null) {</span>
-<span class="pc bpc" id="L161" title="3 of 4 branches missed.">			switch (activationSpec.charAt(0)) {</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (activationSpec != null) {</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">			switch (activationSpec.charAt(0)) {</span>
 			case '+':
-<span class="fc" id="L163">				diagram.activate(p, LifeEventType.ACTIVATE, activationColor);</span>
-<span class="fc" id="L164">				break;</span>
+<span class="nc" id="L163">				diagram.activate(p, LifeEventType.ACTIVATE, activationColor);</span>
+<span class="nc" id="L164">				break;</span>
 			case '-':
 <span class="nc" id="L166">				diagram.activate(p, LifeEventType.DEACTIVATE, null);</span>
 <span class="nc" id="L167">				break;</span>
@@ -203,8 +203,8 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 
 	private boolean isShortArrow(RegexResult arg2) {
 <span class="fc" id="L205">		final String s = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
-<span class="pc bpc" id="L206" title="1 of 4 branches missed.">		if (s != null &amp;&amp; s.contains(&quot;?&quot;))</span>
-<span class="fc" id="L207">			return true;</span>
+<span class="pc bpc" id="L206" title="2 of 4 branches missed.">		if (s != null &amp;&amp; s.contains(&quot;?&quot;))</span>
+<span class="nc" id="L207">			return true;</span>
 
 <span class="fc" id="L209">		return false;</span>
 	}

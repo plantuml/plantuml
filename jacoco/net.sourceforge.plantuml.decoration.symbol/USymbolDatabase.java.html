@@ -59,31 +59,31 @@ import net.sourceforge.plantuml.style.SName;
 	}
 
 	private void drawDatabase(UGraphic ug, double width, double height, double shadowing) {
-<span class="fc" id="L62">		final UPath shape = UPath.none();</span>
-<span class="fc" id="L63">		shape.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L62">		final UPath shape = UPath.none();</span>
+<span class="nc" id="L63">		shape.setDeltaShadow(shadowing);</span>
 
-<span class="fc" id="L65">		shape.moveTo(0, 10);</span>
-<span class="fc" id="L66">		shape.cubicTo(0, 0, width / 2, 0, width / 2, 0);</span>
-<span class="fc" id="L67">		shape.cubicTo(width / 2, 0, width, 0, width, 10);</span>
-<span class="fc" id="L68">		shape.lineTo(width, height - 10);</span>
-<span class="fc" id="L69">		shape.cubicTo(width, height, width / 2, height, width / 2, height);</span>
-<span class="fc" id="L70">		shape.cubicTo(width / 2, height, 0, height, 0, height - 10);</span>
-<span class="fc" id="L71">		shape.lineTo(0, 10);</span>
+<span class="nc" id="L65">		shape.moveTo(0, 10);</span>
+<span class="nc" id="L66">		shape.cubicTo(0, 0, width / 2, 0, width / 2, 0);</span>
+<span class="nc" id="L67">		shape.cubicTo(width / 2, 0, width, 0, width, 10);</span>
+<span class="nc" id="L68">		shape.lineTo(width, height - 10);</span>
+<span class="nc" id="L69">		shape.cubicTo(width, height, width / 2, height, width / 2, height);</span>
+<span class="nc" id="L70">		shape.cubicTo(width / 2, height, 0, height, 0, height - 10);</span>
+<span class="nc" id="L71">		shape.lineTo(0, 10);</span>
 
-<span class="fc" id="L73">		ug.draw(shape);</span>
+<span class="nc" id="L73">		ug.draw(shape);</span>
 
-<span class="fc" id="L75">		final UPath closing = getClosingPath(width);</span>
-<span class="fc" id="L76">		ug.apply(HColors.none().bg()).draw(closing);</span>
-<span class="fc" id="L77">		ug.apply(new UTranslate(width, height)).draw(new UEmpty(10, 10));</span>
+<span class="nc" id="L75">		final UPath closing = getClosingPath(width);</span>
+<span class="nc" id="L76">		ug.apply(HColors.none().bg()).draw(closing);</span>
+<span class="nc" id="L77">		ug.apply(new UTranslate(width, height)).draw(new UEmpty(10, 10));</span>
 
-<span class="fc" id="L79">	}</span>
+<span class="nc" id="L79">	}</span>
 
 	private UPath getClosingPath(double width) {
-<span class="fc" id="L82">		final UPath closing = UPath.none();</span>
-<span class="fc" id="L83">		closing.moveTo(0, 10);</span>
-<span class="fc" id="L84">		closing.cubicTo(0, 20, width / 2, 20, width / 2, 20);</span>
-<span class="fc" id="L85">		closing.cubicTo(width / 2, 20, width, 20, width, 10);</span>
-<span class="fc" id="L86">		return closing;</span>
+<span class="nc" id="L82">		final UPath closing = UPath.none();</span>
+<span class="nc" id="L83">		closing.moveTo(0, 10);</span>
+<span class="nc" id="L84">		closing.cubicTo(0, 20, width / 2, 20, width / 2, 20);</span>
+<span class="nc" id="L85">		closing.cubicTo(width / 2, 20, width, 20, width, 10);</span>
+<span class="nc" id="L86">		return closing;</span>
 	}
 
 	class MyUGraphicDatabase extends AbstractUGraphicHorizontalLine {
@@ -92,13 +92,13 @@ import net.sourceforge.plantuml.style.SName;
 
 		@Override
 		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-<span class="fc" id="L95">			return new MyUGraphicDatabase(ug, endingX);</span>
+<span class="nc" id="L95">			return new MyUGraphicDatabase(ug, endingX);</span>
 		}
 
-<span class="fc" id="L98">		public MyUGraphicDatabase(UGraphic ug, double endingX) {</span>
-<span class="fc" id="L99">			super(ug);</span>
-<span class="fc" id="L100">			this.endingX = endingX;</span>
-<span class="fc" id="L101">		}</span>
+<span class="nc" id="L98">		public MyUGraphicDatabase(UGraphic ug, double endingX) {</span>
+<span class="nc" id="L99">			super(ug);</span>
+<span class="nc" id="L100">			this.endingX = endingX;</span>
+<span class="nc" id="L101">		}</span>
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
@@ -114,28 +114,28 @@ import net.sourceforge.plantuml.style.SName;
 	}
 
 	private Margin getMargin() {
-<span class="fc" id="L117">		return new Margin(10, 10, 24, 5);</span>
+<span class="nc" id="L117">		return new Margin(10, 10, 24, 5);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="fc" id="L123">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L123">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L126">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L127">				ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L128">				drawDatabase(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
-<span class="fc" id="L129">				final Margin margin = getMargin();</span>
-<span class="fc" id="L130">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
-<span class="fc" id="L131">				final UGraphic ug2 = new MyUGraphicDatabase(ug, dim.getWidth());</span>
-<span class="fc" id="L132">				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
-<span class="fc" id="L133">			}</span>
+<span class="nc" id="L126">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L127">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L128">				drawDatabase(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L129">				final Margin margin = getMargin();</span>
+<span class="nc" id="L130">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L131">				final UGraphic ug2 = new MyUGraphicDatabase(ug, dim.getWidth());</span>
+<span class="nc" id="L132">				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="nc" id="L133">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L136">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="fc" id="L137">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="fc" id="L138">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="nc" id="L136">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L137">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L138">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}

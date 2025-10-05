@@ -317,8 +317,8 @@ try {
 <span class="fc" id="L317">    flat_reorder(zz, g);</span>
 <span class="fc" id="L318">    nc = mincross_(zz, g, 2, 2, doBalance);</span>
     
-<span class="fc bfc" id="L320" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L321">	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L321">	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);</span>
     
 <span class="fc" id="L323">    save_vlist(g);</span>
 <span class="fc" id="L324">    return nc;</span>
@@ -957,8 +957,8 @@ try {
     ST_Agnode_s u, v, w;
     
     /* fix vlists of sub-clusters */
-<span class="fc bfc" id="L960" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L961">	rec_reset_vlists(zz, GD_clust(g).get_(c));</span>
+<span class="pc bpc" id="L960" title="1 of 2 branches missed.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L961">	rec_reset_vlists(zz, GD_clust(g).get_(c));</span>
     
 <span class="pc bpc" id="L963" title="1 of 2 branches missed.">    if (GD_rankleader(g)!=null)</span>
 <span class="fc bfc" id="L964" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>

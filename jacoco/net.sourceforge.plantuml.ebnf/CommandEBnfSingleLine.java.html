@@ -53,50 +53,50 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandEBnfSingleLine extends SingleLineCommand2&lt;PSystemEbnf&gt; {
 
 	public CommandEBnfSingleLine() {
-<span class="fc" id="L56">		super(true, getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L56">		super(true, getRegexConcat());</span>
+<span class="nc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandEBnfSingleLine.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L60">		return RegexConcat.build(CommandEBnfSingleLine.class.getName(), RegexLeaf.start(), //</span>
 
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L64">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L64">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;\\(\\*&quot;), //
 								new RegexLeaf(1, &quot;COMMENTA&quot;, &quot;(.*[^%s].*)&quot;), //
 								new RegexLeaf(&quot;\\*\\)&quot;), //
-<span class="fc" id="L68">								RegexLeaf.spaceZeroOrMore())), //</span>
+<span class="nc" id="L68">								RegexLeaf.spaceZeroOrMore())), //</span>
 
 				new RegexLeaf(1, &quot;ID&quot;, &quot;([%pLN_][-%pLN_]*)&quot;), //
 
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L74">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L74">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;\\(\\*&quot;), //
 								new RegexLeaf(1, &quot;COMMENTB&quot;, &quot;(.*[^%s].*)&quot;), //
 								new RegexLeaf(&quot;\\*\\)&quot;), //
-<span class="fc" id="L78">								RegexLeaf.spaceZeroOrMore())), //</span>
+<span class="nc" id="L78">								RegexLeaf.spaceZeroOrMore())), //</span>
 
-<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;EQUALS&quot;, &quot;(=)&quot;), //
-<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;LINE&quot;, &quot;(.*;)&quot;), //
-<span class="fc" id="L84">				RegexLeaf.end());</span>
+<span class="nc" id="L84">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L90">		final String id = arg.get(&quot;ID&quot;, 0);</span>
-<span class="fc" id="L91">		final String equals = arg.get(&quot;EQUALS&quot;, 0);</span>
-<span class="fc" id="L92">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
-<span class="fc" id="L93">		final String full = id + equals + line;</span>
+<span class="nc" id="L90">		final String id = arg.get(&quot;ID&quot;, 0);</span>
+<span class="nc" id="L91">		final String equals = arg.get(&quot;EQUALS&quot;, 0);</span>
+<span class="nc" id="L92">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
+<span class="nc" id="L93">		final String full = id + equals + line;</span>
 
-<span class="fc" id="L95">		final String commentAbove = arg.get(&quot;COMMENTA&quot;, 0);</span>
-<span class="fc" id="L96">		final String commentBelow = arg.get(&quot;COMMENTB&quot;, 0);</span>
+<span class="nc" id="L95">		final String commentAbove = arg.get(&quot;COMMENTA&quot;, 0);</span>
+<span class="nc" id="L96">		final String commentBelow = arg.get(&quot;COMMENTB&quot;, 0);</span>
 
-<span class="fc" id="L98">		final StringLocated string = new StringLocated(full, location);</span>
-<span class="fc" id="L99">		return diagram.addBlocLines(BlocLines.from(Collections.singletonList(string)), commentAbove, commentBelow);</span>
+<span class="nc" id="L98">		final StringLocated string = new StringLocated(full, location);</span>
+<span class="nc" id="L99">		return diagram.addBlocLines(BlocLines.from(Collections.singletonList(string)), commentAbove, commentBelow);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

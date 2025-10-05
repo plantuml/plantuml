@@ -146,8 +146,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="fc" id="L146">		final LeafType type = LeafType.getLeafType(typeString);</span>
 <span class="fc" id="L147">		final String visibilityString = line0.get(&quot;VISIBILITY&quot;, 0);</span>
 <span class="fc" id="L148">		VisibilityModifier visibilityModifier = null;</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (visibilityString != null)</span>
-<span class="fc" id="L150">			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + &quot;FOO&quot;, false);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (visibilityString != null)</span>
+<span class="nc" id="L150">			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + &quot;FOO&quot;, false);</span>
 
 <span class="fc" id="L152">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
 
@@ -211,8 +211,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (generic != null)</span>
 <span class="nc" id="L212">			entity.setGeneric(generic);</span>
 
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (typeString.contains(&quot;STATIC&quot;))</span>
-<span class="fc" id="L215">			entity.setStatic(true);</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (typeString.contains(&quot;STATIC&quot;))</span>
+<span class="nc" id="L215">			entity.setStatic(true);</span>
 
 <span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (lines.size() &gt; 1) {</span>
 			// entity.setCodeLine(lines.getAt(0).getLocation());

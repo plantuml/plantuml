@@ -47,30 +47,30 @@ public class DriverLineEps implements UDriver&lt;ULine, EpsGraphics&gt; {
 
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L50">	public DriverLineEps(ClipContainer clipContainer) {</span>
-<span class="nc" id="L51">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L50">	public DriverLineEps(ClipContainer clipContainer) {</span>
+<span class="fc" id="L51">		this.clipContainer = clipContainer;</span>
+<span class="fc" id="L52">	}</span>
 
 	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-<span class="nc" id="L55">		double x2 = x + shape.getDX();</span>
-<span class="nc" id="L56">		double y2 = y + shape.getDY();</span>
+<span class="fc" id="L55">		double x2 = x + shape.getDX();</span>
+<span class="fc" id="L56">		double y2 = y + shape.getDY();</span>
 
-<span class="nc" id="L58">		final UClip clip = clipContainer.getClip();</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (clip != null) {</span>
-<span class="nc" id="L60">			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (line == null) {</span>
+<span class="fc" id="L58">		final UClip clip = clipContainer.getClip();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (clip != null) {</span>
+<span class="fc" id="L60">			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (line == null) {</span>
 <span class="nc" id="L62">				return;</span>
 			}
-<span class="nc" id="L64">			x = line.x1;</span>
-<span class="nc" id="L65">			y = line.y1;</span>
-<span class="nc" id="L66">			x2 = line.x2;</span>
-<span class="nc" id="L67">			y2 = line.y2;</span>
+<span class="fc" id="L64">			x = line.x1;</span>
+<span class="fc" id="L65">			y = line.y1;</span>
+<span class="fc" id="L66">			x2 = line.x2;</span>
+<span class="fc" id="L67">			y2 = line.y2;</span>
 		}
 
-<span class="nc" id="L70">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>
-<span class="nc" id="L71">		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(),</span>
-<span class="nc" id="L72">				param.getStroke().getDashSpace());</span>
-<span class="nc" id="L73">		eps.epsLine(x, y, x2, y2);</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L70">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>
+<span class="fc" id="L71">		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(),</span>
+<span class="fc" id="L72">				param.getStroke().getDashSpace());</span>
+<span class="fc" id="L73">		eps.epsLine(x, y, x2, y2);</span>
+<span class="fc" id="L74">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

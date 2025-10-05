@@ -116,10 +116,10 @@ public class UFont {
 	}
 
 	public String getFamily(String text, UFontContext context) {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (context == UFontContext.EPS) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (context == UFontContext.EPS) {</span>
 //			if (fontStack.getFamily() == null)
 //				return &quot;Times-Roman&quot;;
-<span class="nc" id="L122">			return getUnderlayingFont(text).getPSName();</span>
+<span class="fc" id="L122">			return getUnderlayingFont(text).getPSName();</span>
 		}
 <span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (context == UFontContext.SVG) {</span>
 <span class="fc" id="L125">			String result = fontStack.getFullDefinition().replace('\&quot;', '\'');</span>
@@ -169,7 +169,7 @@ public class UFont {
 <span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (!(obj instanceof UFont))</span>
 <span class="nc" id="L170">			return false;</span>
 <span class="fc" id="L171">		UFont other = (UFont) obj;</span>
-<span class="pc bpc" id="L172" title="3 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; style == other.style &amp;&amp; size == other.size;</span>
+<span class="pc bpc" id="L172" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; style == other.style &amp;&amp; size == other.size;</span>
 	}
 
 	// ::done

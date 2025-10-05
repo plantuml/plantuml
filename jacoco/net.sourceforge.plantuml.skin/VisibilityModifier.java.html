@@ -255,8 +255,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc bfc" id="L255" title="All 2 branches covered.">		if (c == '-')</span>
 <span class="fc" id="L256">			return VisibilityModifier.PRIVATE_FIELD;</span>
 
-<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (c == '#')</span>
-<span class="fc" id="L259">			return VisibilityModifier.PROTECTED_FIELD;</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (c == '#')</span>
+<span class="nc" id="L259">			return VisibilityModifier.PROTECTED_FIELD;</span>
 
 <span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (c == '+')</span>
 <span class="fc" id="L262">			return VisibilityModifier.PUBLIC_FIELD;</span>
@@ -271,8 +271,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 	}
 
 	private static VisibilityModifier getVisibilityModifierForMethod(char c) {
-<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (c == '-')</span>
-<span class="fc" id="L275">			return VisibilityModifier.PRIVATE_METHOD;</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (c == '-')</span>
+<span class="nc" id="L275">			return VisibilityModifier.PRIVATE_METHOD;</span>
 
 <span class="fc bfc" id="L277" title="All 2 branches covered.">		if (c == '#')</span>
 <span class="fc" id="L278">			return VisibilityModifier.PROTECTED_METHOD;</span>
@@ -298,14 +298,14 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 	}
 
 	public String getXmiVisibility() {
-<span class="pc bpc" id="L301" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
-<span class="fc" id="L302">			return &quot;public&quot;;</span>
+<span class="nc bnc" id="L301" title="All 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
+<span class="nc" id="L302">			return &quot;public&quot;;</span>
 
-<span class="pc bpc" id="L304" title="1 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
-<span class="fc" id="L305">			return &quot;private&quot;;</span>
+<span class="nc bnc" id="L304" title="All 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
+<span class="nc" id="L305">			return &quot;private&quot;;</span>
 
-<span class="pc bpc" id="L307" title="3 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
-<span class="fc" id="L308">			return &quot;protected&quot;;</span>
+<span class="nc bnc" id="L307" title="All 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
+<span class="nc" id="L308">			return &quot;protected&quot;;</span>
 
 <span class="nc bnc" id="L310" title="All 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
 <span class="nc" id="L311">			return &quot;package&quot;;</span>

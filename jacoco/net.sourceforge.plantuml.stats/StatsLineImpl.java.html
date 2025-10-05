@@ -45,16 +45,16 @@ public class StatsLineImpl implements StatsLine {
 
 	private final Map&lt;StatsColumn, Object&gt; data;
 
-<span class="nc" id="L48">	public StatsLineImpl(Map&lt;StatsColumn, Object&gt; data) {</span>
-<span class="nc" id="L49">		this.data = data;</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L48">	public StatsLineImpl(Map&lt;StatsColumn, Object&gt; data) {</span>
+<span class="fc" id="L49">		this.data = data;</span>
+<span class="fc" id="L50">	}</span>
 
 	public Object getValue(StatsColumn column) {
-<span class="nc" id="L53">		return data.get(column);</span>
+<span class="fc" id="L53">		return data.get(column);</span>
 	}
 
 	public Collection&lt;StatsColumn&gt; getColumnHeaders() {
-<span class="nc" id="L57">		return data.keySet();</span>
+<span class="fc" id="L57">		return data.keySet();</span>
 	}
 
 }

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.cli;
 
 import java.net.InetAddress;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,7 +47,6 @@ import java.util.Properties;
 
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
-import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
@@ -56,143 +54,48 @@ import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
-<span class="nc" id="L59">public class OptionPrint {</span>
+<span class="nc" id="L57">public class OptionPrint {</span>
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	static public void printTestDot() throws InterruptedException {
-<span class="nc" id="L64">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L65">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (errorCode == 0)</span>
-<span class="nc" id="L68">				System.out.println(s);</span>
+	static public void printTestDot2() {
+<span class="nc" id="L62">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L63">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (errorCode == 0)</span>
+<span class="nc" id="L66">				System.out.println(s);</span>
 			else
-<span class="nc" id="L70">				System.err.println(s);</span>
+<span class="nc" id="L68">				System.err.println(s);</span>
 
-<span class="nc" id="L72">		exit(errorCode);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L70">		Exit.exit(errorCode);</span>
+<span class="nc" id="L71">	}</span>
 
-	static public void printHelp() throws InterruptedException {
 
-<span class="nc" id="L77">		final String charset = Charset.defaultCharset().displayName();</span>
+	public static void printLicense() {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (String s : License.getCurrent().getTextFull())</span>
+<span class="nc" id="L76">			System.out.println(s);</span>
+<span class="nc" id="L77">	}</span>
 
-<span class="nc" id="L79">		System.out.println(&quot;Usage: java -jar plantuml.jar [options] -gui&quot;);</span>
-<span class="nc" id="L80">		System.out.println(&quot;\t(to execute the GUI)&quot;);</span>
-<span class="nc" id="L81">		System.out.println(&quot;    or java -jar plantuml.jar [options] [file/dir] [file/dir] [file/dir]&quot;);</span>
-<span class="nc" id="L82">		System.out.println(&quot;\t(to process files or directories)&quot;);</span>
-<span class="nc" id="L83">		System.out.println();</span>
-<span class="nc" id="L84">		System.out.println(&quot;You can use the following wildcards in files/dirs:&quot;);</span>
-<span class="nc" id="L85">		System.out.println(&quot;\t*\tmeans any characters but '&quot; + SFile.separator + &quot;'&quot;);</span>
-<span class="nc" id="L86">		System.out.println(&quot;\t?\tone and only one character but '&quot; + SFile.separator + &quot;'&quot;);</span>
-<span class="nc" id="L87">		System.out.println(&quot;\t**\tmeans any characters (used to recurse through directories)&quot;);</span>
+	public static void printVersion() {
+<span class="nc" id="L80">		System.out.println(Version.fullDescription());</span>
+<span class="nc" id="L81">		System.out.println(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (String v : interestingProperties())</span>
+<span class="nc" id="L83">			System.out.println(v);</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (String v : interestingValues())</span>
+<span class="nc" id="L86">			System.out.println(v);</span>
+
 <span class="nc" id="L88">		System.out.println();</span>
-<span class="nc" id="L89">		final char separator = SFile.separatorChar;</span>
-<span class="nc" id="L90">		System.out.println(&quot;where options include:&quot;);</span>
-<span class="nc" id="L91">		System.out.println(&quot;    -author[s]\t\tTo print information about PlantUML authors&quot;);</span>
-<span class="nc" id="L92">		System.out.println(&quot;    -checkmetadata\t\tSkip PNG files that don't need to be regenerated&quot;);</span>
-<span class="nc" id="L93">		System.out.println(&quot;    -checkonly\t\tTo check the syntax of files without generating images&quot;);</span>
-<span class="nc" id="L94">		System.out.println(&quot;    -charset xxx\tTo use a specific charset (default is &quot; + charset + &quot;)&quot;);</span>
-<span class="nc" id="L95">		System.out.println(&quot;    -computeurl|-encodeurl\tTo compute the encoded URL of a PlantUML source file&quot;);</span>
-		// System.out.println(&quot; -config \&quot;file\&quot;\tTo read the provided config file
-<span class="nc" id="L97">		System.out.println(&quot;    -cypher\t\tTo cypher texts of diagrams so that you can share them&quot;);</span>
-<span class="nc" id="L98">		System.out.println(&quot;    -DVAR1=value\tTo set a preprocessing variable as if '!define VAR1 value' were used&quot;);</span>
-<span class="nc" id="L99">		System.out.println(&quot;    -darkmode\t\tTo use dark mode for diagrams&quot;);</span>
-<span class="nc" id="L100">		System.out.println(&quot;    -debugsvek\t\tTo generate intermediate svek files&quot;);</span>
-<span class="nc" id="L101">		System.out.println(&quot;    -decodeurl\t\tTo retrieve the PlantUML source from an encoded URL&quot;);</span>
-<span class="nc" id="L102">		System.out.println(&quot;    -disablestats\tTo disable statistics computation (default)&quot;);</span>
-<span class="nc" id="L103">		System.out.println(&quot;    -duration\t\tTo print the duration of complete diagrams processing&quot;);</span>
-<span class="nc" id="L104">		System.out.println(&quot;    -e[x]clude pattern\tTo exclude files that match the provided pattern&quot;);</span>
-<span class="nc" id="L105">		System.out.println(&quot;    -enablestats\tTo enable statistics computation&quot;);</span>
-<span class="nc" id="L106">		System.out.println(&quot;    -encodesprite 4|8|16[z] \&quot;file\&quot;\tTo encode a sprite at gray level (z for compression) from an image&quot;);</span>
-		// System.out.println(&quot;    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder&quot;);
-<span class="nc" id="L108">		System.out.println(&quot;    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs&quot;);</span>
-<span class="nc" id="L109">		System.out.println(&quot;    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster&quot;);</span>
-<span class="nc" id="L110">		System.out.println(&quot;    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')&quot;);</span>
-<span class="nc" id="L111">		System.out.println(&quot;    -filename \&quot;example.puml\&quot;\tTo override %filename% variable&quot;);</span>
-<span class="nc" id="L112">		System.out.println(&quot;    -graphvizdot \&quot;exe\&quot;\tTo specify dot executable&quot;);</span>
-<span class="nc" id="L113">		System.out.println(&quot;    -gui\t\tTo run the graphical user interface&quot;);</span>
-<span class="nc" id="L114">		System.out.println(&quot;    -h[elp]\t\tTo display this help message&quot;);</span>
-<span class="nc" id="L115">		System.out.println(&quot;    -htmlstats\t\tTo output general statistics in file plantuml-stats.html&quot;);</span>
-<span class="nc" id="L116">		System.out.println(&quot;    -I&quot; + separator + &quot;path&quot; + separator + &quot;to&quot; + separator + &quot;file\tTo include file as if '!include file' were used&quot;);</span>
-<span class="nc" id="L117">		System.out.println(&quot;    -I&quot; + separator + &quot;path&quot; + separator + &quot;to&quot; + separator + &quot;*.puml\tTo include files with pattern&quot;);</span>
-<span class="nc" id="L118">		System.out.println(&quot;    -language\t\tTo print the list of PlantUML keywords&quot;);</span>
-<span class="nc" id="L119">		System.out.println(&quot;    -loopstats\t\tTo continuously print statistics about usage&quot;);</span>
-<span class="nc" id="L120">		System.out.println(&quot;    -metadata\t\tTo retrieve PlantUML sources from PNG images&quot;);</span>
-<span class="nc" id="L121">		System.out.println(&quot;    -nbthread N\t\tTo use (N) threads for processing&quot;);</span>
-<span class="nc" id="L122">		System.out.println(&quot;    -nbthread auto\tTo use &quot; + CliOptions.defaultNbThreads() + &quot; threads for processing&quot;);</span>
-<span class="nc" id="L123">		System.out.println(&quot;    -noerror\t\tTo skip images when error in diagrams&quot;);</span>
-<span class="nc" id="L124">		System.out.println(&quot;    -nometadata\t\tTo NOT export metadata in PNG/SVG generated files&quot;);</span>
-<span class="nc" id="L125">		System.out.println(&quot;    -o[utput] \&quot;dir\&quot;\tTo generate images in the specified directory&quot;);</span>
-<span class="nc" id="L126">		System.out.println(&quot;    -overwrite\t\tTo allow to overwrite read only files&quot;);</span>
-<span class="nc" id="L127">		System.out.println(&quot;    -Ppragma1=value\tTo set pragma as if '!pragma pragma1 value' were used&quot;);</span>
-<span class="nc" id="L128">		System.out.println(&quot;    -p[ipe]\t\tTo use stdin for PlantUML source and stdout for PNG/SVG/EPS generation&quot;);</span>
-<span class="nc" id="L129">		System.out.println(&quot;    -picoweb\t\tTo start internal HTTP Server. See https://plantuml.com/picoweb&quot;);</span>
-<span class="nc" id="L130">		System.out.println(&quot;    -pipeimageindex N\tTo generate the Nth image with pipe option&quot;);</span>
-<span class="nc" id="L131">		System.out.println(&quot;    -preproc\t\tTo output preprocessor text of diagrams&quot;);</span>
-<span class="nc" id="L132">		System.out.println(&quot;    -printfonts\t\tTo print fonts available on your system&quot;);</span>
-<span class="nc" id="L133">		System.out.println(&quot;    -progress\t\tTo display a textual progress bar in console&quot;);</span>
-		// System.out.println(&quot;    -quiet\t\tTo NOT print error message into the console&quot;);
-<span class="nc" id="L135">		System.out.println(&quot;    -realtimestats\tTo generate statistics on the fly rather than at the end&quot;);</span>
-<span class="nc" id="L136">		System.out.println(&quot;    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used&quot;);</span>
-<span class="nc" id="L137">		System.out.println(&quot;    -splash\t\tTo display a splash screen with some progress bar&quot;);</span>
-<span class="nc" id="L138">		System.out.println(&quot;    -stdlib\t\tTo print standard library info&quot;);</span>
-<span class="nc" id="L139">		System.out.println(&quot;    -syntax\t\tTo report any syntax error from standard input without generating images&quot;);</span>
-<span class="nc" id="L140">		System.out.println(&quot;    -testdot\t\tTo test the installation of graphviz&quot;);</span>
-<span class="nc" id="L141">		System.out.println(&quot;    -theme xxx\t\tTo use a specific theme&quot;);</span>
-<span class="nc" id="L142">		System.out.println(&quot;    -timeout N\t\tProcessing timeout in (N) seconds. Defaults to 15 minutes (900 seconds).&quot;);</span>
-<span class="nc" id="L143">		System.out.println(&quot;    -teps\t\tTo generate images using EPS format&quot;);</span>
-<span class="nc" id="L144">		System.out.println(&quot;    -thtml\t\tTo generate HTML file for class diagram&quot;);</span>
-<span class="nc" id="L145">		System.out.println(&quot;    -tlatex:nopreamble\tTo generate images using LaTeX/Tikz format without preamble&quot;);</span>
-<span class="nc" id="L146">		System.out.println(&quot;    -tlatex\t\tTo generate images using LaTeX/Tikz format&quot;);</span>
-<span class="nc" id="L147">		System.out.println(&quot;    -tpdf\t\tTo generate images using PDF format&quot;);</span>
-<span class="nc" id="L148">		System.out.println(&quot;    -tpng\t\tTo generate images using PNG format (default)&quot;);</span>
-<span class="nc" id="L149">		System.out.println(&quot;    -tscxml\t\tTo generate SCXML file for state diagram&quot;);</span>
-<span class="nc" id="L150">		System.out.println(&quot;    -tsvg\t\tTo generate images using SVG format&quot;);</span>
-<span class="nc" id="L151">		System.out.println(&quot;    -ttxt\t\tTo generate images with ASCII art&quot;);</span>
-<span class="nc" id="L152">		System.out.println(&quot;    -tutxt\t\tTo generate images with ASCII art using Unicode characters&quot;);</span>
-<span class="nc" id="L153">		System.out.println(&quot;    -tvdx\t\tTo generate images using VDX format&quot;);</span>
-<span class="nc" id="L154">		System.out.println(&quot;    -txmi\t\tTo generate XMI file for class diagram&quot;);</span>
-<span class="nc" id="L155">		System.out.println(&quot;    -v[erbose]\t\tTo have log information&quot;);</span>
-<span class="nc" id="L156">		System.out.println(&quot;    -version\t\tTo display information about PlantUML and Java versions&quot;);</span>
-<span class="nc" id="L157">		System.out.println(&quot;    -xmlstats\t\tTo output general statistics in file plantuml-stats.xml&quot;);</span>
-<span class="nc" id="L158">		System.out.println();</span>
-<span class="nc" id="L159">		System.out.println(&quot;If needed, you can setup the environment variable GRAPHVIZ_DOT.&quot;);</span>
-<span class="nc" id="L160">		exit(0);</span>
-<span class="nc" id="L161">	}</span>
+<span class="nc" id="L89">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L90">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc" id="L92">			System.out.println(s);</span>
 
-	static private void exit(int errorCode) throws InterruptedException {
-<span class="nc bnc" id="L164" title="All 4 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SYSTEM_EXIT) || errorCode != 0)</span>
-<span class="nc" id="L165">			System.exit(errorCode);</span>
-
-<span class="nc" id="L167">		throw new InterruptedException(&quot;exit&quot;);</span>
-	}
-
-	public static void printLicense() throws InterruptedException {
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (String s : License.getCurrent().getTextFull())</span>
-<span class="nc" id="L172">			System.out.println(s);</span>
-<span class="nc" id="L173">		System.exit(0);</span>
-<span class="nc" id="L174">	}</span>
-
-	public static void printVersion() throws InterruptedException {
-<span class="nc" id="L177">		System.out.println(Version.fullDescription());</span>
-<span class="nc" id="L178">		System.out.println(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (String v : interestingProperties())</span>
-<span class="nc" id="L180">			System.out.println(v);</span>
-
-<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (String v : interestingValues())</span>
-<span class="nc" id="L183">			System.out.println(v);</span>
-
-<span class="nc" id="L185">		System.out.println();</span>
-<span class="nc" id="L186">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L187">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc" id="L189">			System.out.println(s);</span>
-
-<span class="nc" id="L191">		System.exit(0);</span>
-<span class="nc" id="L192">	}</span>
+<span class="nc" id="L94">		Exit.exit(errorCode);</span>
+<span class="nc" id="L95">	}</span>
 
 	public static Collection&lt;String&gt; interestingProperties() {
-<span class="fc" id="L195">		final Properties p = System.getProperties();</span>
+<span class="fc" id="L98">		final Properties p = System.getProperties();</span>
 //		final List&lt;String&gt; list1 = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;,
 //				&quot;java.runtime.version&quot;, &quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;file.encoding&quot;,
 //				&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
@@ -201,45 +104,45 @@ import net.sourceforge.plantuml.version.Version;
 //				&quot;file.encoding&quot;, &quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
 //		final List&lt;String&gt; all = withIp() ? list1 : list2;
 		final List&lt;String&gt; all;
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
-<span class="nc" id="L205">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;java.runtime.version&quot;,</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc" id="L108">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;java.runtime.version&quot;,</span>
 					&quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;os.version&quot;, &quot;OS Version&quot;, &quot;file.encoding&quot;,
 					&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
 		} else {
-<span class="fc" id="L209">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;file.encoding&quot;,</span>
+<span class="fc" id="L112">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;file.encoding&quot;,</span>
 					&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
 		}
-<span class="fc" id="L212">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i += 2) {</span>
-<span class="fc" id="L214">			result.add(all.get(i + 1) + &quot;: &quot; + p.getProperty(all.get(i)));</span>
+<span class="fc" id="L115">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i += 2) {</span>
+<span class="fc" id="L117">			result.add(all.get(i + 1) + &quot;: &quot; + p.getProperty(all.get(i)));</span>
 		}
-<span class="fc" id="L216">		return result;</span>
+<span class="fc" id="L119">		return result;</span>
 	}
 
 	public static Collection&lt;String&gt; interestingValues() {
-<span class="nc" id="L220">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L123">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 //		if (withIp() == false) {
 //			strings.add(&quot;Machine: &quot; + getHostName());
 //		}
 //		strings.add(&quot; &quot;);
 //		strings.add(&quot;Current Security Profile: &quot; + SecurityUtils.getSecurityProfile());
 //		strings.add(SecurityUtils.getSecurityProfile().longDescription());
-<span class="nc" id="L227">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L228">		strings.add(&quot;PLANTUML_LIMIT_SIZE: &quot; + GraphvizUtils.getenvImageLimit());</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
-<span class="nc" id="L230">			strings.add(&quot;Processors: &quot; + Runtime.getRuntime().availableProcessors());</span>
-<span class="nc" id="L231">			final long freeMemory = Runtime.getRuntime().freeMemory();</span>
-<span class="nc" id="L232">			final long maxMemory = Runtime.getRuntime().maxMemory();</span>
-<span class="nc" id="L233">			final long totalMemory = Runtime.getRuntime().totalMemory();</span>
-<span class="nc" id="L234">			final long usedMemory = totalMemory - freeMemory;</span>
-<span class="nc" id="L235">			final int threadActiveCount = Thread.activeCount();</span>
-<span class="nc" id="L236">			strings.add(&quot;Max Memory: &quot; + format(maxMemory));</span>
-<span class="nc" id="L237">			strings.add(&quot;Total Memory: &quot; + format(totalMemory));</span>
-<span class="nc" id="L238">			strings.add(&quot;Free Memory: &quot; + format(freeMemory));</span>
-<span class="nc" id="L239">			strings.add(&quot;Used Memory: &quot; + format(usedMemory));</span>
-<span class="nc" id="L240">			strings.add(&quot;Thread Active Count: &quot; + threadActiveCount);</span>
+<span class="nc" id="L130">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L131">		strings.add(&quot;PLANTUML_LIMIT_SIZE: &quot; + GraphvizUtils.getenvImageLimit());</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc" id="L133">			strings.add(&quot;Processors: &quot; + Runtime.getRuntime().availableProcessors());</span>
+<span class="nc" id="L134">			final long freeMemory = Runtime.getRuntime().freeMemory();</span>
+<span class="nc" id="L135">			final long maxMemory = Runtime.getRuntime().maxMemory();</span>
+<span class="nc" id="L136">			final long totalMemory = Runtime.getRuntime().totalMemory();</span>
+<span class="nc" id="L137">			final long usedMemory = totalMemory - freeMemory;</span>
+<span class="nc" id="L138">			final int threadActiveCount = Thread.activeCount();</span>
+<span class="nc" id="L139">			strings.add(&quot;Max Memory: &quot; + format(maxMemory));</span>
+<span class="nc" id="L140">			strings.add(&quot;Total Memory: &quot; + format(totalMemory));</span>
+<span class="nc" id="L141">			strings.add(&quot;Free Memory: &quot; + format(freeMemory));</span>
+<span class="nc" id="L142">			strings.add(&quot;Used Memory: &quot; + format(usedMemory));</span>
+<span class="nc" id="L143">			strings.add(&quot;Thread Active Count: &quot; + threadActiveCount);</span>
 		}
-<span class="nc" id="L242">		return Collections.unmodifiableCollection(strings);</span>
+<span class="nc" id="L145">		return Collections.unmodifiableCollection(strings);</span>
 	}
 
 //	private static boolean withIp() {
@@ -249,42 +152,40 @@ import net.sourceforge.plantuml.version.Version;
 	private static String hostname;
 
 	public static synchronized String getHostName() {
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		if (hostname == null) {</span>
-<span class="nc" id="L253">			hostname = getHostNameSlow();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (hostname == null) {</span>
+<span class="nc" id="L156">			hostname = getHostNameSlow();</span>
 		}
-<span class="nc" id="L255">		return hostname;</span>
+<span class="nc" id="L158">		return hostname;</span>
 	}
 
 	private static String getHostNameSlow() {
 		try {
-<span class="nc" id="L260">			final InetAddress addr = InetAddress.getLocalHost();</span>
-<span class="nc" id="L261">			return addr.getHostName();</span>
-<span class="nc" id="L262">		} catch (Throwable e) {</span>
-<span class="nc" id="L263">			final Map&lt;String, String&gt; env = System.getenv();</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;)) {</span>
-<span class="nc" id="L265">				return env.get(&quot;COMPUTERNAME&quot;);</span>
-<span class="nc bnc" id="L266" title="All 2 branches missed.">			} else if (env.containsKey(&quot;HOSTNAME&quot;)) {</span>
-<span class="nc" id="L267">				return env.get(&quot;HOSTNAME&quot;);</span>
+<span class="nc" id="L163">			final InetAddress addr = InetAddress.getLocalHost();</span>
+<span class="nc" id="L164">			return addr.getHostName();</span>
+<span class="nc" id="L165">		} catch (Throwable e) {</span>
+<span class="nc" id="L166">			final Map&lt;String, String&gt; env = System.getenv();</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;)) {</span>
+<span class="nc" id="L168">				return env.get(&quot;COMPUTERNAME&quot;);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			} else if (env.containsKey(&quot;HOSTNAME&quot;)) {</span>
+<span class="nc" id="L170">				return env.get(&quot;HOSTNAME&quot;);</span>
 			}
 		}
-<span class="nc" id="L270">		return &quot;Unknown Computer&quot;;</span>
+<span class="nc" id="L173">		return &quot;Unknown Computer&quot;;</span>
 	}
 
 	private static String format(final long value) {
-<span class="nc" id="L274">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
+<span class="nc" id="L177">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
 	}
 
-	public static void printAbout() throws InterruptedException {
-<span class="nc bnc" id="L278" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false)) {</span>
-<span class="nc" id="L279">			System.out.println(s);</span>
-<span class="nc" id="L280">		}</span>
-<span class="nc" id="L281">		exit(0);</span>
-<span class="nc" id="L282">	}</span>
+	public static void printAbout() {
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
+<span class="nc" id="L182">			System.out.println(s);</span>
 
-	public static void printLanguage() throws InterruptedException {
-<span class="nc" id="L285">		new LanguageDescriptor().print(System.out);</span>
-<span class="nc" id="L286">		exit(0);</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L184">	}</span>
+
+	public static void printLanguage() {
+<span class="nc" id="L187">		new LanguageDescriptor().print(System.out);</span>
+<span class="nc" id="L188">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

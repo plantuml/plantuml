@@ -56,44 +56,44 @@ public class ComponentRoseBoundary extends AbstractTextualComponent {
 
 	public ComponentRoseBoundary(Style style, Style stereo, Display stringsToDisplay, boolean head,
 			ISkinParam skinParam) {
-<span class="fc" id="L59">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
-<span class="fc" id="L60">		final Fashion biColor = getSymbolContext();</span>
+<span class="nc" id="L59">		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);</span>
+<span class="nc" id="L60">		final Fashion biColor = getSymbolContext();</span>
 
-<span class="fc" id="L62">		this.head = head;</span>
-<span class="fc" id="L63">		this.stickman = new Boundary(biColor);</span>
-<span class="fc" id="L64">	}</span>
+<span class="nc" id="L62">		this.head = head;</span>
+<span class="nc" id="L63">		this.stickman = new Boundary(biColor);</span>
+<span class="nc" id="L64">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L68">		final TextBlock textBlock = getTextBlock();</span>
-<span class="fc" id="L69">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L70">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
-<span class="fc" id="L71">		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;</span>
+<span class="nc" id="L68">		final TextBlock textBlock = getTextBlock();</span>
+<span class="nc" id="L69">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L70">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L71">		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;</span>
 
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (head) {</span>
-<span class="fc" id="L74">			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), dimStickman.getHeight())));</span>
-<span class="fc" id="L75">			ug = ug.apply(UTranslate.dx(delta));</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (head) {</span>
+<span class="nc" id="L74">			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), dimStickman.getHeight())));</span>
+<span class="nc" id="L75">			ug = ug.apply(UTranslate.dx(delta));</span>
 		} else {
-<span class="fc" id="L77">			textBlock.drawU(ug.apply(UTranslate.dx(getTextMiddlePostion(stringBounder))));</span>
-<span class="fc" id="L78">			ug = ug.apply(new UTranslate(delta, getTextHeight(stringBounder)));</span>
+<span class="nc" id="L77">			textBlock.drawU(ug.apply(UTranslate.dx(getTextMiddlePostion(stringBounder))));</span>
+<span class="nc" id="L78">			ug = ug.apply(new UTranslate(delta, getTextHeight(stringBounder)));</span>
 		}
-<span class="fc" id="L80">		stickman.drawU(ug);</span>
-<span class="fc" id="L81">	}</span>
+<span class="nc" id="L80">		stickman.drawU(ug);</span>
+<span class="nc" id="L81">	}</span>
 
 	private double getTextMiddlePostion(StringBounder stringBounder) {
-<span class="fc" id="L84">		return (getPreferredWidth(stringBounder) - getTextWidth(stringBounder)) / 2.0;</span>
+<span class="nc" id="L84">		return (getPreferredWidth(stringBounder) - getTextWidth(stringBounder)) / 2.0;</span>
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L89">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
-<span class="fc" id="L90">		return dimStickman.getHeight() + getTextHeight(stringBounder);</span>
+<span class="nc" id="L89">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L90">		return dimStickman.getHeight() + getTextHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L95">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
-<span class="fc" id="L96">		return Math.max(dimStickman.getWidth(), getTextWidth(stringBounder));</span>
+<span class="nc" id="L95">		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L96">		return Math.max(dimStickman.getWidth(), getTextWidth(stringBounder));</span>
 	}
 
 }

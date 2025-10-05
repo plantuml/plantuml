@@ -41,84 +41,84 @@ import java.util.Map;
 
 public class EpsGraphicsMacro extends EpsGraphics {
 
-<span class="nc" id="L44">	private final PostScriptData data = new PostScriptData();</span>
-<span class="nc" id="L45">	private final PostScriptCommandMacro rquadto = new PostScriptCommandMacro(&quot;rquadto&quot;);</span>
+<span class="fc" id="L44">	private final PostScriptData data = new PostScriptData();</span>
+<span class="fc" id="L45">	private final PostScriptCommandMacro rquadto = new PostScriptCommandMacro(&quot;rquadto&quot;);</span>
 
 	public EpsGraphicsMacro() {
-<span class="nc" id="L48">		super();</span>
-<span class="nc" id="L49">		rquadto.add(new PostScriptCommandRaw(&quot;3 index 3 index 4 2 roll rcurveto&quot;, true));</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L48">		super();</span>
+<span class="fc" id="L49">		rquadto.add(new PostScriptCommandRaw(&quot;3 index 3 index 4 2 roll rcurveto&quot;, true));</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	protected void append(String s, boolean checkConsistence) {
-<span class="nc bnc" id="L54" title="All 4 branches missed.">		if (checkConsistence &amp;&amp; s.indexOf(&quot;  &quot;) != -1)</span>
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">		if (checkConsistence &amp;&amp; s.indexOf(&quot;  &quot;) != -1)</span>
 <span class="nc" id="L55">			throw new IllegalArgumentException(s);</span>
 
-<span class="nc" id="L57">		data.add(new PostScriptCommandRaw(s, checkConsistence));</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L57">		data.add(new PostScriptCommandRaw(s, checkConsistence));</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	protected String getBodyString() {
-<span class="nc" id="L62">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L63">		sb.append(rquadto.getPostStringDefinition());</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (PostScriptCommandMacro macro : macros.keySet()) {</span>
-<span class="nc" id="L65">			sb.append(macro.getPostStringDefinition());</span>
-<span class="nc" id="L66">		}</span>
-<span class="nc" id="L67">		sb.append(data.toPostString());</span>
-<span class="nc" id="L68">		return sb.toString();</span>
+<span class="fc" id="L62">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L63">		sb.append(rquadto.getPostStringDefinition());</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (PostScriptCommandMacro macro : macros.keySet()) {</span>
+<span class="fc" id="L65">			sb.append(macro.getPostStringDefinition());</span>
+<span class="fc" id="L66">		}</span>
+<span class="fc" id="L67">		sb.append(data.toPostString());</span>
+<span class="fc" id="L68">		return sb.toString();</span>
 	}
 
 	// FONT
 	private double posX;
 	private double posY;
 	private int macroCpt;
-<span class="nc" id="L75">	private final Map&lt;PostScriptCommandMacro, String&gt; macros = new HashMap&lt;PostScriptCommandMacro, String&gt;();</span>
+<span class="fc" id="L75">	private final Map&lt;PostScriptCommandMacro, String&gt; macros = new HashMap&lt;PostScriptCommandMacro, String&gt;();</span>
 
 	@Override
 	public void newpath() {
-<span class="nc" id="L79">		append(&quot;0 setlinewidth&quot;, true);</span>
-<span class="nc" id="L80">		append(&quot;[] 0 setdash&quot;, true);</span>
-<span class="nc" id="L81">		appendColor(getColor());</span>
-<span class="nc" id="L82">		append(&quot;newpath&quot;, true);</span>
-<span class="nc" id="L83">	}</span>
+<span class="fc" id="L79">		append(&quot;0 setlinewidth&quot;, true);</span>
+<span class="fc" id="L80">		append(&quot;[] 0 setdash&quot;, true);</span>
+<span class="fc" id="L81">		appendColor(getColor());</span>
+<span class="fc" id="L82">		append(&quot;newpath&quot;, true);</span>
+<span class="fc" id="L83">	}</span>
 
 	@Override
 	public void closepath() {
-<span class="nc" id="L87">		macroInProgress.add(new PostScriptCommandRaw(&quot;closepath&quot;, true));</span>
-<span class="nc" id="L88">		closeMacro();</span>
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L87">		macroInProgress.add(new PostScriptCommandRaw(&quot;closepath&quot;, true));</span>
+<span class="fc" id="L88">		closeMacro();</span>
+<span class="fc" id="L89">	}</span>
 
 	@Override
 	public void fill(int windingRule) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (macroInProgress != null)</span>
-<span class="nc" id="L94">			closeMacro();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (macroInProgress != null)</span>
+<span class="fc" id="L94">			closeMacro();</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (windingRule == PathIterator.WIND_EVEN_ODD)</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (windingRule == PathIterator.WIND_EVEN_ODD)</span>
 <span class="nc" id="L97">			append(&quot;eofill&quot;, true);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		else if (windingRule == PathIterator.WIND_NON_ZERO)</span>
-<span class="nc" id="L99">			append(&quot;fill&quot;, true);</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		else if (windingRule == PathIterator.WIND_NON_ZERO)</span>
+<span class="fc" id="L99">			append(&quot;fill&quot;, true);</span>
 
-<span class="nc" id="L101">	}</span>
+<span class="fc" id="L101">	}</span>
 
-<span class="nc" id="L103">	private PostScriptCommandMacro macroInProgress = null;</span>
+<span class="fc" id="L103">	private PostScriptCommandMacro macroInProgress = null;</span>
 
 	@Override
 	public void moveto(double x1, double y1) {
-<span class="nc" id="L107">		data.add(new PostScriptCommandMoveTo(x1, y1));</span>
-<span class="nc" id="L108">		this.posX = x1;</span>
-<span class="nc" id="L109">		this.posY = y1;</span>
-<span class="nc" id="L110">		openMacro();</span>
-<span class="nc" id="L111">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L112">	}</span>
+<span class="fc" id="L107">		data.add(new PostScriptCommandMoveTo(x1, y1));</span>
+<span class="fc" id="L108">		this.posX = x1;</span>
+<span class="fc" id="L109">		this.posY = y1;</span>
+<span class="fc" id="L110">		openMacro();</span>
+<span class="fc" id="L111">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L112">	}</span>
 
 	@Override
 	public void lineto(double x1, double y1) {
-<span class="nc" id="L116">		final PostScriptCommand cmd = new PostScriptCommandLineTo(x1 - posX, y1 - posY);</span>
-<span class="nc" id="L117">		macroInProgress.add(cmd);</span>
-<span class="nc" id="L118">		this.posX = x1;</span>
-<span class="nc" id="L119">		this.posY = y1;</span>
-<span class="nc" id="L120">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L121">	}</span>
+<span class="fc" id="L116">		final PostScriptCommand cmd = new PostScriptCommandLineTo(x1 - posX, y1 - posY);</span>
+<span class="fc" id="L117">		macroInProgress.add(cmd);</span>
+<span class="fc" id="L118">		this.posX = x1;</span>
+<span class="fc" id="L119">		this.posY = y1;</span>
+<span class="fc" id="L120">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L121">	}</span>
 
 	@Override
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
@@ -134,59 +134,59 @@ public class EpsGraphicsMacro extends EpsGraphics {
 
 	@Override
 	public void quadto(double x1, double y1, double x2, double y2) {
-<span class="nc" id="L137">		final PostScriptCommandQuadTo cmd = new PostScriptCommandQuadTo(x1 - posX, y1 - posY, x2 - posX, y2 - posY);</span>
-<span class="nc" id="L138">		macroInProgress.add(cmd);</span>
-<span class="nc" id="L139">		this.posX = x2;</span>
-<span class="nc" id="L140">		this.posY = y2;</span>
-<span class="nc" id="L141">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L142">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L143">	}</span>
+<span class="fc" id="L137">		final PostScriptCommandQuadTo cmd = new PostScriptCommandQuadTo(x1 - posX, y1 - posY, x2 - posX, y2 - posY);</span>
+<span class="fc" id="L138">		macroInProgress.add(cmd);</span>
+<span class="fc" id="L139">		this.posX = x2;</span>
+<span class="fc" id="L140">		this.posY = y2;</span>
+<span class="fc" id="L141">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L142">		ensureVisible(x2, y2);</span>
+<span class="fc" id="L143">	}</span>
 
 	private void openMacro() {
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (macroInProgress != null)</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (macroInProgress != null)</span>
 <span class="nc" id="L147">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L149">		macroInProgress = new PostScriptCommandMacro(macroName());</span>
-<span class="nc" id="L150">	}</span>
+<span class="fc" id="L149">		macroInProgress = new PostScriptCommandMacro(macroName());</span>
+<span class="fc" id="L150">	}</span>
 
 	private String macroName() {
-<span class="nc" id="L153">		return &quot;P$&quot; + Integer.toString(macroCpt, 36);</span>
+<span class="fc" id="L153">		return &quot;P$&quot; + Integer.toString(macroCpt, 36);</span>
 	}
 
 	private void closeMacro() {
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (macroInProgress == null)</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (macroInProgress == null)</span>
 <span class="nc" id="L158">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L160">		final String existingName = macros.get(macroInProgress);</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (existingName == null) {</span>
-<span class="nc" id="L162">			macros.put(macroInProgress, macroInProgress.getName());</span>
-<span class="nc" id="L163">			append(macroName(), true);</span>
-<span class="nc" id="L164">			macroCpt++;</span>
+<span class="fc" id="L160">		final String existingName = macros.get(macroInProgress);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (existingName == null) {</span>
+<span class="fc" id="L162">			macros.put(macroInProgress, macroInProgress.getName());</span>
+<span class="fc" id="L163">			append(macroName(), true);</span>
+<span class="fc" id="L164">			macroCpt++;</span>
 		} else {
-<span class="nc" id="L166">			append(existingName, true);</span>
+<span class="fc" id="L166">			append(existingName, true);</span>
 		}
-<span class="nc" id="L168">		macroInProgress = null;</span>
-<span class="nc" id="L169">	}</span>
+<span class="fc" id="L168">		macroInProgress = null;</span>
+<span class="fc" id="L169">	}</span>
 
 	@Override
 	protected void epsHLine(double x, double ymin, double ymax) {
-<span class="nc" id="L173">		append(format(x) + &quot; &quot; + format(ymin) + &quot; moveto&quot;, true);</span>
-<span class="nc" id="L174">		final long diff = (long) ((ymax - ymin) * COEF);</span>
-<span class="nc" id="L175">		long nb = diff / (getDashVisible() + getDashSpace());</span>
-<span class="nc" id="L176">		final long lastY = (long) (ymin * COEF) + nb * (getDashVisible() + getDashSpace());</span>
-<span class="nc" id="L177">		long v = (long) (ymax * COEF) - lastY;</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (v &gt; getDashVisible()) {</span>
-<span class="nc" id="L179">			nb++;</span>
-<span class="nc" id="L180">			v = 0;</span>
+<span class="fc" id="L173">		append(format(x) + &quot; &quot; + format(ymin) + &quot; moveto&quot;, true);</span>
+<span class="fc" id="L174">		final long diff = (long) ((ymax - ymin) * COEF);</span>
+<span class="fc" id="L175">		long nb = diff / (getDashVisible() + getDashSpace());</span>
+<span class="fc" id="L176">		final long lastY = (long) (ymin * COEF) + nb * (getDashVisible() + getDashSpace());</span>
+<span class="fc" id="L177">		long v = (long) (ymax * COEF) - lastY;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (v &gt; getDashVisible()) {</span>
+<span class="fc" id="L179">			nb++;</span>
+<span class="fc" id="L180">			v = 0;</span>
 		}
-<span class="nc" id="L182">		append(nb + &quot;{&quot;, true);</span>
-<span class="nc" id="L183">		append(&quot;0 &quot; + getDashVisible() + &quot; rlineto&quot;, true);</span>
-<span class="nc" id="L184">		append(&quot;0 &quot; + getDashSpace() + &quot; rmoveto&quot;, true);</span>
-<span class="nc" id="L185">		append(&quot;} repeat&quot;, true);</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (v &gt; 0)</span>
+<span class="fc" id="L182">		append(nb + &quot;{&quot;, true);</span>
+<span class="fc" id="L183">		append(&quot;0 &quot; + getDashVisible() + &quot; rlineto&quot;, true);</span>
+<span class="fc" id="L184">		append(&quot;0 &quot; + getDashSpace() + &quot; rmoveto&quot;, true);</span>
+<span class="fc" id="L185">		append(&quot;} repeat&quot;, true);</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (v &gt; 0)</span>
 <span class="nc" id="L187">			append(&quot;0 &quot; + v + &quot; rlineto&quot;, true);</span>
 
-<span class="nc" id="L189">	}</span>
+<span class="fc" id="L189">	}</span>
 
 	@Override
 	protected void epsVLine(double y, double xmin, double xmax) {

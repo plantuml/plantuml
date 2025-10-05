@@ -95,7 +95,7 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	}
 
 	public static BlocLines from(List&lt;StringLocated&gt; lines) {
-<span class="fc" id="L98">		return new BlocLines(lines);</span>
+<span class="nc" id="L98">		return new BlocLines(lines);</span>
 	}
 
 	private static BlocLines loadInternal(final BufferedReader br, LineLocation location) throws IOException {
@@ -388,7 +388,7 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	}
 
 	public CharInspector inspector() {
-<span class="fc" id="L391">		return new CharInspectorImpl(this, false);</span>
+<span class="nc" id="L391">		return new CharInspectorImpl(this, false);</span>
 	}
 
 	public CharInspector inspectorWithNewlines() {
@@ -396,8 +396,8 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	}
 
 	public LineLocation getLocation() {
-<span class="fc bfc" id="L399" title="All 2 branches covered.">		if (lines.size() == 0)</span>
-<span class="fc" id="L400">			return null;</span>
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L400">			return null;</span>
 <span class="fc" id="L401">		return lines.get(0).getLocation();</span>
 	}
 

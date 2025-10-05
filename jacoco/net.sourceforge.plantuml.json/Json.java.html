@@ -257,14 +257,14 @@ public final class Json {
 	 * @return a new JSON array that contains the given strings
 	 */
 	public static JsonArray array(String... strings) {
-<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (strings == null) {</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (strings == null) {</span>
 <span class="nc" id="L261">			throw new NullPointerException(&quot;values is null&quot;);</span>
 		}
-<span class="nc" id="L263">		JsonArray array = new JsonArray();</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		for (String value : strings) {</span>
-<span class="nc" id="L265">			array.add(value);</span>
+<span class="fc" id="L263">		JsonArray array = new JsonArray();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (String value : strings) {</span>
+<span class="fc" id="L265">			array.add(value);</span>
 		}
-<span class="nc" id="L267">		return array;</span>
+<span class="fc" id="L267">		return array;</span>
 	}
 
 	/**

@@ -58,8 +58,8 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-<span class="nc" id="L61">	private static final Color LINK_NORMAL = Color.BLUE;</span>
-<span class="nc" id="L62">	private static final Color LINK_HOVER = new Color(127, 0, 127);</span>
+<span class="fc" id="L61">	private static final Color LINK_NORMAL = Color.BLUE;</span>
+<span class="fc" id="L62">	private static final Color LINK_HOVER = new Color(127, 0, 127);</span>
 
 	private static Splash singleton;
 
@@ -240,16 +240,16 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 <span class="nc" id="L240">	}</span>
 
 	public static void incTotal(int nb) {
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (singleton != null) {</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (singleton != null) {</span>
 <span class="nc" id="L244">			singleton.incTotalInternal(nb);</span>
 		}
-<span class="nc" id="L246">	}</span>
+<span class="fc" id="L246">	}</span>
 
 	public static void incDone(boolean error) {
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		if (singleton != null) {</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (singleton != null) {</span>
 <span class="nc" id="L250">			singleton.incDoneInternal(error);</span>
 		}
-<span class="nc" id="L252">	}</span>
+<span class="fc" id="L252">	}</span>
 
 	public synchronized static void disposeSplash() {
 <span class="nc bnc" id="L255" title="All 2 branches missed.">		if (singleton != null) {</span>

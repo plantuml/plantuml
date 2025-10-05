@@ -485,8 +485,8 @@ try {
     
 <span class="fc" id="L486">    GD_minrank(g, GD_minrank(g) + ND_rank(GD_leader(g)));</span>
 <span class="fc" id="L487">    GD_maxrank(g, GD_maxrank(g) + ND_rank(GD_leader(g)));</span>
-<span class="fc bfc" id="L488" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L489">	set_minmax(GD_clust(g).get_(c));</span>
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L489">	set_minmax(GD_clust(g).get_(c));</span>
 } finally {
 <span class="fc" id="L491">LEAVING(&quot;12fw0esv4unfin6waf9mknc1o&quot;,&quot;set_minmax&quot;);</span>
 }

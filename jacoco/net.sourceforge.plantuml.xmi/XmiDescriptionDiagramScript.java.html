@@ -48,18 +48,18 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 public class XmiDescriptionDiagramScript extends XmiDescriptionDiagramAbstract {
 
 	public XmiDescriptionDiagramScript(DescriptionDiagram diagram) throws ParserConfigurationException {
-<span class="fc" id="L51">		super(diagram);</span>
-<span class="fc" id="L52">	}</span>
+<span class="nc" id="L51">		super(diagram);</span>
+<span class="nc" id="L52">	}</span>
 
 	@Override
 	protected void addLink(Link link) {
-<span class="pc bpc" id="L56" title="2 of 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
 <span class="nc" id="L57">			return;</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (!link.getType().getStyle().isNormal()) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (!link.getType().getStyle().isNormal()) {</span>
 			// this is some kind of dashed line, which means it is a dependency
-<span class="fc" id="L60">			Element dependency = createDependency(link);</span>
-<span class="fc" id="L61">			ownedElement.appendChild(dependency);</span>
-<span class="fc" id="L62">			return;</span>
+<span class="nc" id="L60">			Element dependency = createDependency(link);</span>
+<span class="nc" id="L61">			ownedElement.appendChild(dependency);</span>
+<span class="nc" id="L62">			return;</span>
 		}
 
 <span class="nc" id="L65">		final String assId = diagram.getUniqueSequence(&quot;ass&quot;);</span>
@@ -124,35 +124,35 @@ public class XmiDescriptionDiagramScript extends XmiDescriptionDiagramAbstract {
 
 	private Element createDependency(Link link) {
 		// determine kind and direction
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (link.isInverted()) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (link.isInverted()) {</span>
 <span class="nc" id="L128">			return createDependencyClientSupplier(link.getEntity2(), link.getEntity1());</span>
 		} else {
-<span class="fc" id="L130">			return createDependencyClientSupplier(link.getEntity1(), link.getEntity2());</span>
+<span class="nc" id="L130">			return createDependencyClientSupplier(link.getEntity1(), link.getEntity2());</span>
 		}
 	}
 
 	private Element createRef(Entity entity) {
-<span class="fc" id="L135">		Element ref = document.createElement(&quot;UML:Component&quot;);</span>
-<span class="fc" id="L136">		ref.setAttribute(&quot;xmi.idref&quot;, entity.getUid());</span>
-<span class="fc" id="L137">		return ref;</span>
+<span class="nc" id="L135">		Element ref = document.createElement(&quot;UML:Component&quot;);</span>
+<span class="nc" id="L136">		ref.setAttribute(&quot;xmi.idref&quot;, entity.getUid());</span>
+<span class="nc" id="L137">		return ref;</span>
 
 	}
 
 	private Element createDependencyClientSupplier(Entity clientEntity, Entity supplierEntity) {
-<span class="fc" id="L142">		String depID = diagram.getUniqueSequence(&quot;dep&quot;);</span>
-<span class="fc" id="L143">		Element dependency = document.createElement(&quot;UML:Dependency&quot;);</span>
-<span class="fc" id="L144">		dependency.setAttribute(&quot;xmi.id&quot;, depID);</span>
-<span class="fc" id="L145">		Element client = document.createElement(&quot;UML:Dependency.client&quot;);</span>
-<span class="fc" id="L146">		Element supplier = document.createElement(&quot;UML:Dependency.supplier&quot;);</span>
-<span class="fc" id="L147">		Element clientRef = createRef(clientEntity);</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (clientRef != null)</span>
-<span class="fc" id="L149">			client.appendChild(clientRef);</span>
-<span class="fc" id="L150">		Element supplierRef = createRef(supplierEntity);</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (supplierRef != null)</span>
-<span class="fc" id="L152">			supplier.appendChild(supplierRef);</span>
-<span class="fc" id="L153">		dependency.appendChild(client);</span>
-<span class="fc" id="L154">		dependency.appendChild(supplier);</span>
-<span class="fc" id="L155">		return dependency;</span>
+<span class="nc" id="L142">		String depID = diagram.getUniqueSequence(&quot;dep&quot;);</span>
+<span class="nc" id="L143">		Element dependency = document.createElement(&quot;UML:Dependency&quot;);</span>
+<span class="nc" id="L144">		dependency.setAttribute(&quot;xmi.id&quot;, depID);</span>
+<span class="nc" id="L145">		Element client = document.createElement(&quot;UML:Dependency.client&quot;);</span>
+<span class="nc" id="L146">		Element supplier = document.createElement(&quot;UML:Dependency.supplier&quot;);</span>
+<span class="nc" id="L147">		Element clientRef = createRef(clientEntity);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (clientRef != null)</span>
+<span class="nc" id="L149">			client.appendChild(clientRef);</span>
+<span class="nc" id="L150">		Element supplierRef = createRef(supplierEntity);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (supplierRef != null)</span>
+<span class="nc" id="L152">			supplier.appendChild(supplierRef);</span>
+<span class="nc" id="L153">		dependency.appendChild(client);</span>
+<span class="nc" id="L154">		dependency.appendChild(supplier);</span>
+<span class="nc" id="L155">		return dependency;</span>
 	}
 
 

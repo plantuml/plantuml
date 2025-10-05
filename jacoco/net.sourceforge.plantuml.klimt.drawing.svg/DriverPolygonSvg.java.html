@@ -54,10 +54,10 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 <span class="fc" id="L54">		final double points[] = shape.getPointArray(x, y);</span>
 <span class="pc bpc" id="L55" title="1 of 2 branches missed.">		assert points.length % 2 == 0;</span>
 <span class="fc" id="L56">		final UClip clip = clipContainer.getClip();</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (clip != null)</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (clip != null)</span>
 <span class="fc bfc" id="L58" title="All 2 branches covered.">			for (int j = 0; j &lt; points.length; j += 2)</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">				if (clip.isInside(points[j], points[j + 1]) == false)</span>
-<span class="nc" id="L60">					return;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">				if (clip.isInside(points[j], points[j + 1]) == false)</span>
+<span class="fc" id="L60">					return;</span>
 
 <span class="fc" id="L62">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
 <span class="fc" id="L63">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>

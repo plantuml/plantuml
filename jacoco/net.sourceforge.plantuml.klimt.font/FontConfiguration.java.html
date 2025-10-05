@@ -173,13 +173,13 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style) {
-<span class="fc" id="L176">		return create(skinParam, style, null);</span>
+<span class="nc" id="L176">		return create(skinParam, style, null);</span>
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style, Colors colors) {
 <span class="fc" id="L180">		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="fc" id="L181">		final UStroke hyperlinkUnderlineStroke = skinParam.useUnderlineForHyperlink();</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
 <span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (color == null)</span>
 <span class="fc" id="L184">			color = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="fc" id="L185">		return create(style.getUFont(), color, hyperlinkColor, hyperlinkUnderlineStroke, skinParam.getTabSize());</span>

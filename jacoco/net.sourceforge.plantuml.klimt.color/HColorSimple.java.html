@@ -162,8 +162,8 @@ import net.sourceforge.plantuml.StringUtils;
 
 	@Override
 	public Color toColor(ColorMapper mapper) {
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (this.isTransparent())</span>
-<span class="nc" id="L166">			return getAwtColor();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (this.isTransparent())</span>
+<span class="fc" id="L166">			return getAwtColor();</span>
 <span class="fc" id="L167">		return mapper.fromColorSimple(this);</span>
 	}
 
@@ -226,9 +226,9 @@ import net.sourceforge.plantuml.StringUtils;
 
 	@Override
 	public HColor darkSchemeTheme() {
-<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (dark == null)</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (dark == null)</span>
 <span class="nc" id="L230">			return this;</span>
-<span class="nc" id="L231">		return dark;</span>
+<span class="fc" id="L231">		return dark;</span>
 	}
 
 }

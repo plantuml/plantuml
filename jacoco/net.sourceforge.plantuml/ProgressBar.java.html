@@ -57,82 +57,89 @@ import java.util.logging.LogRecord;
 <span class="fc" id="L57">	private static final AtomicInteger total = new AtomicInteger();</span>
 <span class="fc" id="L58">	private static final AtomicInteger done = new AtomicInteger();</span>
 
+	public static synchronized void reset() {
+<span class="fc" id="L61">		enable = false;</span>
+<span class="fc" id="L62">		last = null;</span>
+<span class="fc" id="L63">		total.set(0);</span>
+<span class="fc" id="L64">		done.set(0);</span>
+<span class="fc" id="L65">	}</span>
+
 	private synchronized static void print(String message) {
-<span class="fc" id="L61">		logger.log(Level.INFO, buildClearMessage() + message);</span>
-<span class="fc" id="L62">		last = message;</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L68">		logger.log(Level.INFO, buildClearMessage() + message);</span>
+<span class="fc" id="L69">		last = message;</span>
+<span class="fc" id="L70">	}</span>
 
 	public synchronized static void clear() {
-<span class="nc" id="L66">		logger.log(Level.INFO, buildClearMessage());</span>
-<span class="nc" id="L67">		last = null;</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L73">		logger.log(Level.INFO, buildClearMessage());</span>
+<span class="fc" id="L74">		last = null;</span>
+<span class="fc" id="L75">	}</span>
 
 	private static String buildClearMessage() {
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (last != null) {</span>
-<span class="fc" id="L72">			StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (int i = 0; i &lt; last.length(); i++) {</span>
-<span class="fc" id="L74">				sb.append(&quot;\b&quot;);</span>
-			}
-<span class="fc bfc" id="L76" title="All 2 branches covered.">			for (int i = 0; i &lt; last.length(); i++) {</span>
-<span class="fc" id="L77">				sb.append(&quot; &quot;);</span>
-			}
-<span class="fc bfc" id="L79" title="All 2 branches covered.">			for (int i = 0; i &lt; last.length(); i++) {</span>
-<span class="fc" id="L80">				sb.append(&quot;\b&quot;);</span>
-			}
-<span class="fc" id="L82">			return sb.toString();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (last != null) {</span>
+<span class="fc" id="L79">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (int i = 0; i &lt; last.length(); i++)</span>
+<span class="fc" id="L81">				sb.append(&quot;\b&quot;);</span>
+
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			for (int i = 0; i &lt; last.length(); i++)</span>
+<span class="fc" id="L84">				sb.append(&quot; &quot;);</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			for (int i = 0; i &lt; last.length(); i++)</span>
+<span class="fc" id="L87">				sb.append(&quot;\b&quot;);</span>
+
+<span class="fc" id="L89">			return sb.toString();</span>
 		}
-<span class="fc" id="L84">		return &quot;&quot;;</span>
+<span class="fc" id="L91">		return &quot;&quot;;</span>
 	}
 
 	public static void incTotal(int nb) {
-<span class="fc" id="L88">		total.addAndGet(nb);</span>
-<span class="fc" id="L89">		printBar(done.intValue(), total.intValue());</span>
-<span class="fc" id="L90">	}</span>
+<span class="fc" id="L95">		total.addAndGet(nb);</span>
+<span class="fc" id="L96">		printBar(done.intValue(), total.intValue());</span>
+<span class="fc" id="L97">	}</span>
 
 	private synchronized static void printBar(int done, int total) {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (enable == false) {</span>
-<span class="nc" id="L94">			return;</span>
-		}
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (total == 0) {</span>
-<span class="nc" id="L97">			return;</span>
-		}
-<span class="fc" id="L99">		print(&quot;[&quot; + getBar(done, total) + &quot;] &quot; + done + &quot;/&quot; + total);</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (enable == false)</span>
+<span class="fc" id="L101">			return;</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (total == 0)</span>
+<span class="nc" id="L104">			return;</span>
+
+<span class="fc" id="L106">		print(&quot;[&quot; + getBar(done, total) + &quot;] &quot; + done + &quot;/&quot; + total);</span>
+<span class="fc" id="L107">	}</span>
 
 	private static String getBar(int done, int total) {
-<span class="fc" id="L103">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L104">		final int width = 30;</span>
-<span class="fc" id="L105">		final int value = width * done / total;</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (int i = 0; i &lt; width; i++) {</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">			sb.append(i &lt; value ? '#' : ' ');</span>
-		}
-<span class="fc" id="L109">		return sb.toString();</span>
+<span class="fc" id="L110">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L111">		final int width = 30;</span>
+<span class="fc" id="L112">		final int value = width * done / total;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (int i = 0; i &lt; width; i++)</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			sb.append(i &lt; value ? '#' : ' ');</span>
+
+<span class="fc" id="L116">		return sb.toString();</span>
 	}
 
 	public static void incDone(boolean error) {
-<span class="fc" id="L113">		done.incrementAndGet();</span>
-<span class="fc" id="L114">		printBar(done.intValue(), total.intValue());</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L120">		done.incrementAndGet();</span>
+<span class="fc" id="L121">		printBar(done.intValue(), total.intValue());</span>
+<span class="fc" id="L122">	}</span>
 
 	public static void setEnable(boolean value) {
-<span class="fc" id="L118">		enable = value;</span>
-<span class="fc" id="L119">	}</span>
+<span class="fc" id="L125">		enable = value;</span>
+<span class="fc" id="L126">	}</span>
 
 	private static class StdErrHandler extends Handler {
-<span class="fc" id="L122">		public StdErrHandler() {</span>
-<span class="fc" id="L123">		}</span>
-
-		@Override
-		public void publish(LogRecord record) {
-<span class="fc" id="L127">			String message = record.getMessage();</span>
-<span class="fc" id="L128">			System.err.print(message);</span>
-<span class="fc" id="L129">			this.flush();</span>
+<span class="fc" id="L129">		public StdErrHandler() {</span>
 <span class="fc" id="L130">		}</span>
 
 		@Override
+		public void publish(LogRecord record) {
+<span class="fc" id="L134">			String message = record.getMessage();</span>
+<span class="fc" id="L135">			System.err.print(message);</span>
+<span class="fc" id="L136">			this.flush();</span>
+<span class="fc" id="L137">		}</span>
+
+		@Override
 		public void flush() {
-<span class="fc" id="L134">			System.err.flush();</span>
-<span class="fc" id="L135">		}</span>
+<span class="fc" id="L141">			System.err.flush();</span>
+<span class="fc" id="L142">		}</span>
 
 		/**
 		 * Override {@code StreamHandler.close} to do a flush but not to close the
@@ -140,8 +147,8 @@ import java.util.logging.LogRecord;
 		 */
 		@Override
 		public void close() {
-<span class="fc" id="L143">			flush();</span>
-<span class="fc" id="L144">		}</span>
+<span class="fc" id="L150">			flush();</span>
+<span class="fc" id="L151">		}</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

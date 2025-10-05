@@ -44,27 +44,27 @@ public class DefineSignature {
 
 	private final String key;
 	private final String fonctionName;
-<span class="nc" id="L47">	private final List&lt;Variables&gt; variables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L47">	private final List&lt;Variables&gt; variables = new ArrayList&lt;&gt;();</span>
 	private final boolean isMethod;
 
-<span class="nc" id="L50">	public DefineSignature(String key, String definitionQuoted) {</span>
-<span class="nc" id="L51">		this.key = key;</span>
-<span class="nc" id="L52">		this.isMethod = key.contains(&quot;(&quot;);</span>
+<span class="fc" id="L50">	public DefineSignature(String key, String definitionQuoted) {</span>
+<span class="fc" id="L51">		this.key = key;</span>
+<span class="fc" id="L52">		this.isMethod = key.contains(&quot;(&quot;);</span>
 
-<span class="nc" id="L54">		final StringTokenizer st = new StringTokenizer(key, &quot;(),&quot;);</span>
-<span class="nc" id="L55">		this.fonctionName = st.nextToken().trim();</span>
-<span class="nc" id="L56">		final Variables master = new Variables(fonctionName, definitionQuoted);</span>
+<span class="fc" id="L54">		final StringTokenizer st = new StringTokenizer(key, &quot;(),&quot;);</span>
+<span class="fc" id="L55">		this.fonctionName = st.nextToken().trim();</span>
+<span class="fc" id="L56">		final Variables master = new Variables(fonctionName, definitionQuoted);</span>
 
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		while (st.hasMoreTokens()) {</span>
 <span class="nc" id="L59">			final String var1 = st.nextToken().trim();</span>
 <span class="nc" id="L60">			master.add(new DefineVariable(var1));</span>
 <span class="nc" id="L61">		}</span>
 
-<span class="nc" id="L63">		final int count = master.countDefaultValue();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (int i = 0; i &lt;= count; i++) {</span>
-<span class="nc" id="L65">			variables.add(master.removeSomeDefaultValues(i));</span>
+<span class="fc" id="L63">		final int count = master.countDefaultValue();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (int i = 0; i &lt;= count; i++) {</span>
+<span class="fc" id="L65">			variables.add(master.removeSomeDefaultValues(i));</span>
 		}
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	public String toString() {

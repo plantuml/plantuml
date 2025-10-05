@@ -66,11 +66,11 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L66">	}</span>
 
 	static public String readSvg(SFile svgFile) throws IOException {
-<span class="nc" id="L69">		final BufferedReader br = svgFile.openBufferedReader();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (br == null)</span>
+<span class="fc" id="L69">		final BufferedReader br = svgFile.openBufferedReader();</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (br == null)</span>
 <span class="nc" id="L71">			return null;</span>
 
-<span class="nc" id="L73">		return readSvg(br, false, true);</span>
+<span class="fc" id="L73">		return readSvg(br, false, true);</span>
 	}
 
 	static public String readSvg(InputStream is) throws IOException {
@@ -95,7 +95,7 @@ import net.sourceforge.plantuml.utils.Log;
 		String s;
 <span class="fc bfc" id="L96" title="All 2 branches covered.">		while ((s = br.readLine()) != null) {</span>
 <span class="fc" id="L97">			sb.append(s);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			if (withNewline)</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (withNewline)</span>
 <span class="fc" id="L99">				sb.append(&quot;\n&quot;);</span>
 
 		}
@@ -106,8 +106,8 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	static public String readText(InputStream is) throws IOException {
-<span class="fc" id="L109">		final BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
-<span class="fc" id="L110">		return readSvg(br, true, true);</span>
+<span class="nc" id="L109">		final BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+<span class="nc" id="L110">		return readSvg(br, true, true);</span>
 	}
 
 	// ::comment when __CORE__
@@ -193,11 +193,11 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L193">	}</span>
 
 	static public String readFile(SFile svgFile) throws IOException {
-<span class="nc" id="L196">		final BufferedReader br = svgFile.openBufferedReader();</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (br == null)</span>
+<span class="fc" id="L196">		final BufferedReader br = svgFile.openBufferedReader();</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (br == null)</span>
 <span class="nc" id="L198">			return null;</span>
 
-<span class="nc" id="L200">		return readSvg(br, true, true);</span>
+<span class="fc" id="L200">		return readSvg(br, true, true);</span>
 	}
 
 	static public List&lt;String&gt; readStrings(InputStream is) throws IOException {

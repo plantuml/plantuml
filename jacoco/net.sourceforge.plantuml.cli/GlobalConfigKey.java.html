@@ -39,41 +39,32 @@ package net.sourceforge.plantuml.cli;
 
 <span class="fc" id="L40">	REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT(Boolean.FALSE), //</span>
 <span class="fc" id="L41">	VERBOSE(Boolean.FALSE), //</span>
-<span class="fc" id="L42">	EXTRACT_FROM_METADATA(Boolean.FALSE), //</span>
-<span class="fc" id="L43">	WORD(Boolean.FALSE), //</span>
-<span class="fc" id="L44">	SYSTEM_EXIT(Boolean.TRUE), //</span>
-<span class="fc" id="L45">	GUI(Boolean.FALSE), //</span>
-<span class="fc" id="L46">	PRINT_FONTS(Boolean.FALSE), //</span>
-<span class="fc" id="L47">	ENCODESPRITE(Boolean.FALSE), //</span>
-<span class="fc" id="L48">	DUMP_HTML_STATS(Boolean.FALSE), //</span>
-<span class="fc" id="L49">	DUMP_STATS(Boolean.FALSE), //</span>
-<span class="fc" id="L50">	LOOP_STATS(Boolean.FALSE), //</span>
-<span class="fc" id="L51">	OVERWRITE(Boolean.FALSE), //</span>
-<span class="fc" id="L52">	ENABLE_STATS(defaultForStats()), //</span>
-<span class="fc" id="L53">	STD_LIB(Boolean.FALSE), //</span>
-<span class="fc" id="L54">	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //</span>
-<span class="fc" id="L55">	CLIPBOARD_LOOP(Boolean.FALSE), //</span>
-<span class="fc" id="L56">	CLIPBOARD(Boolean.FALSE), //</span>
-<span class="fc" id="L57">	FILE_SEPARATOR(&quot;_&quot;), //</span>
-<span class="fc" id="L58">	TIMEOUT_MS(15 * 60 * 1000L);// 15 minutes</span>
+<span class="fc" id="L42">	WORD(Boolean.FALSE), //</span>
+	// SYSTEM_EXIT(Boolean.TRUE), //
+<span class="fc" id="L44">	GUI(Boolean.FALSE), //</span>
+<span class="fc" id="L45">	OVERWRITE(Boolean.FALSE), //</span>
+<span class="fc" id="L46">	ENABLE_STATS(defaultForStats()), //</span>
+<span class="fc" id="L47">	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //</span>
+<span class="fc" id="L48">	FILE_SEPARATOR(&quot;_&quot;), //</span>
+<span class="fc" id="L49">	TIMEOUT_MS(30_000L);// 30 seconds</span>
 
 	private final Object defaultValue;
 
-<span class="fc" id="L62">	GlobalConfigKey(Object defaultValue) {</span>
-<span class="fc" id="L63">		this.defaultValue = defaultValue;</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L53">	GlobalConfigKey(Object defaultValue) {</span>
+<span class="fc" id="L54">		this.defaultValue = defaultValue;</span>
+<span class="fc" id="L55">	}</span>
 
 	public Object getDefaultValue() {
-<span class="fc" id="L67">		return defaultValue;</span>
+<span class="fc" id="L58">		return defaultValue;</span>
 	}
 	
 	
 	private static boolean defaultForStats() {
-<span class="pc bpc" id="L72" title="2 of 4 branches missed.">		return isTrue(System.getProperty(&quot;PLANTUML_STATS&quot;)) || isTrue(System.getenv(&quot;PLANTUML_STATS&quot;));</span>
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">		return isTrue(System.getProperty(&quot;PLANTUML_STATS&quot;)) || isTrue(System.getenv(&quot;PLANTUML_STATS&quot;));</span>
 	}
 
 	private static boolean isTrue(final String value) {
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		return &quot;on&quot;.equalsIgnoreCase(value) || &quot;true&quot;.equalsIgnoreCase(value);</span>
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">		return &quot;on&quot;.equalsIgnoreCase(value) || &quot;true&quot;.equalsIgnoreCase(value);</span>
 	}
 
 

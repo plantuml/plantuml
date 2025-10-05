@@ -66,8 +66,8 @@ public final class Decompressor {
 			// Decompress rest of block based on the type
 <span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (type == 0)</span>
 <span class="nc" id="L68">				decompressUncompressedBlock();</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			else if (type == 1)</span>
-<span class="nc" id="L70">				decompressHuffmanBlock(FIXED_LITERAL_LENGTH_CODE, FIXED_DISTANCE_CODE);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			else if (type == 1)</span>
+<span class="fc" id="L70">				decompressHuffmanBlock(FIXED_LITERAL_LENGTH_CODE, FIXED_DISTANCE_CODE);</span>
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">			else if (type == 2) {</span>
 <span class="fc" id="L72">				CanonicalCode[] litLenAndDist = decodeHuffmanCodes();</span>
 <span class="fc" id="L73">				decompressHuffmanBlock(litLenAndDist[0], litLenAndDist[1]);</span>
@@ -255,8 +255,8 @@ public final class Decompressor {
 	private int decodeRunLength(int sym) throws IOException, DataFormatException {
 <span class="pc bpc" id="L256" title="2 of 4 branches missed.">		if (sym &lt; 257 || sym &gt; 287) // Cannot occur in the bit stream; indicates the decompressor is buggy</span>
 <span class="nc" id="L257">			throw new IllegalStateException(&quot;Invalid run length symbol: &quot; + sym);</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		else if (sym &lt;= 264)</span>
-<span class="nc" id="L259">			return sym - 254;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		else if (sym &lt;= 264)</span>
+<span class="fc" id="L259">			return sym - 254;</span>
 <span class="fc bfc" id="L260" title="All 2 branches covered.">		else if (sym &lt;= 284) {</span>
 <span class="fc" id="L261">			int numExtraBits = (sym - 261) / 4;</span>
 <span class="fc" id="L262">			return (((sym - 265) % 4 + 4) &lt;&lt; numExtraBits) + 3 + readInt(numExtraBits);</span>
@@ -271,11 +271,11 @@ public final class Decompressor {
 	private int decodeDistance(int sym) throws IOException, DataFormatException {
 <span class="pc bpc" id="L272" title="2 of 4 branches missed.">		if (sym &lt; 0 || sym &gt; 31) // Cannot occur in the bit stream; indicates the decompressor is buggy</span>
 <span class="nc" id="L273">			throw new IllegalStateException(&quot;Invalid distance symbol: &quot; + sym);</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (sym &lt;= 3)</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (sym &lt;= 3)</span>
 <span class="fc" id="L275">			return sym + 1;</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">		else if (sym &lt;= 29) {</span>
-<span class="nc" id="L277">			int numExtraBits = sym / 2 - 1;</span>
-<span class="nc" id="L278">			return ((sym % 2 + 2) &lt;&lt; numExtraBits) + 1 + readInt(numExtraBits);</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		else if (sym &lt;= 29) {</span>
+<span class="fc" id="L277">			int numExtraBits = sym / 2 - 1;</span>
+<span class="fc" id="L278">			return ((sym % 2 + 2) &lt;&lt; numExtraBits) + 1 + readInt(numExtraBits);</span>
 		} else // sym is 30 or 31
 <span class="nc" id="L280">			throw new DataFormatException(&quot;Reserved distance symbol: &quot; + sym);</span>
 	}

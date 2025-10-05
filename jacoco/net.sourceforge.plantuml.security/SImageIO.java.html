@@ -56,8 +56,8 @@ import javax.imageio.stream.ImageOutputStream;
 	// ::done
 
 	public static void write(RenderedImage image, String format, OutputStream os) throws IOException {
-<span class="nc" id="L59">		javax.imageio.ImageIO.write(image, format, os);</span>
-<span class="nc" id="L60">	}</span>
+<span class="fc" id="L59">		javax.imageio.ImageIO.write(image, format, os);</span>
+<span class="fc" id="L60">	}</span>
 
 	// ::comment when __CORE__
 	public static void write(RenderedImage image, String format, SFile file) throws IOException {
@@ -87,10 +87,10 @@ import javax.imageio.stream.ImageOutputStream;
 	}
 
 	public static ImageInputStream createImageInputStream(Object obj) throws IOException {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (obj instanceof SFile)</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (obj instanceof SFile)</span>
 <span class="nc" id="L91">			obj = ((SFile) obj).conv();</span>
 
-<span class="nc" id="L93">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
+<span class="fc" id="L93">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
 	}
 
 	public static ImageInputStream createImageInputStream(InputStream is) throws IOException {
@@ -98,7 +98,7 @@ import javax.imageio.stream.ImageOutputStream;
 	}
 
 	public static Iterator&lt;ImageReader&gt; getImageReaders(ImageInputStream iis) {
-<span class="nc" id="L101">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
+<span class="fc" id="L101">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
 	}
 	// ::done
 

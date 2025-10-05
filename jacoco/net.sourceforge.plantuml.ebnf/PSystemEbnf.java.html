@@ -64,24 +64,24 @@ import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemEbnf extends TitledDiagram {
 
-<span class="fc" id="L67">	private final List&lt;TextBlockable&gt; expressions = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L67">	private final List&lt;TextBlockable&gt; expressions = new ArrayList&lt;&gt;();</span>
 
 	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L70">		super(source, UmlDiagramType.EBNF, null, preprocessing);</span>
-<span class="fc" id="L71">	}</span>
+<span class="nc" id="L70">		super(source, UmlDiagramType.EBNF, null, preprocessing);</span>
+<span class="nc" id="L71">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L74">		return new DiagramDescription(&quot;(EBNF)&quot;);</span>
+<span class="nc" id="L74">		return new DiagramDescription(&quot;(EBNF)&quot;);</span>
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines blines, String commentAbove, String commentBelow) {
-<span class="fc" id="L78">		final boolean isCompact = getPragma().isDefine(PragmaKey.COMPACT);</span>
-<span class="fc" id="L79">		final CharInspector it = blines.inspector();</span>
-<span class="fc" id="L80">		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (tmp1.isEmpty())</span>
+<span class="nc" id="L78">		final boolean isCompact = getPragma().isDefine(PragmaKey.COMPACT);</span>
+<span class="nc" id="L79">		final CharInspector it = blines.inspector();</span>
+<span class="nc" id="L80">		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (tmp1.isEmpty())</span>
 <span class="nc" id="L82">			return CommandExecutionResult.error(&quot;Unparsable expression&quot;);</span>
-<span class="fc" id="L83">		expressions.add(tmp1);</span>
-<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L83">		expressions.add(tmp1);</span>
+<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
 
 	}
 

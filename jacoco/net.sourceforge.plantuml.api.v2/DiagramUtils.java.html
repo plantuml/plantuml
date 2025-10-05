@@ -60,44 +60,44 @@ import net.sourceforge.plantuml.security.SImageIO;
 
 	public static DiagramReturn exportDiagram(String... source) throws IOException {
 
-<span class="fc" id="L63">		final Reader reader = new StringReader(String.join(&quot;\n&quot;, source));</span>
+<span class="nc" id="L63">		final Reader reader = new StringReader(String.join(&quot;\n&quot;, source));</span>
 
-<span class="fc" id="L65">		final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.&lt;String&gt;emptyList(),</span>
-<span class="fc" id="L66">				java.nio.charset.StandardCharsets.UTF_8, Defines.createEmpty(), reader,</span>
-<span class="fc" id="L67">				FileSystem.getInstance().getCurrentDir(), &quot;string&quot;);</span>
+<span class="nc" id="L65">		final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.&lt;String&gt;emptyList(),</span>
+<span class="nc" id="L66">				java.nio.charset.StandardCharsets.UTF_8, Defines.createEmpty(), reader,</span>
+<span class="nc" id="L67">				FileSystem.getInstance().getCurrentDir(), &quot;string&quot;);</span>
 
-<span class="fc" id="L69">		final List&lt;BlockUml&gt; blocks = builder.getBlockUmls();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (blocks.size() == 0)</span>
-<span class="fc" id="L71">			return new DiagramReturnError(&quot;No @start/@end found&quot;);</span>
+<span class="nc" id="L69">		final List&lt;BlockUml&gt; blocks = builder.getBlockUmls();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (blocks.size() == 0)</span>
+<span class="nc" id="L71">			return new DiagramReturnError(&quot;No @start/@end found&quot;);</span>
 
-<span class="fc" id="L73">		final BlockUml blockUml = blocks.get(0);</span>
+<span class="nc" id="L73">		final BlockUml blockUml = blocks.get(0);</span>
 
-<span class="fc" id="L75">		final Diagram diagram = blockUml.getDiagram();</span>
+<span class="nc" id="L75">		final Diagram diagram = blockUml.getDiagram();</span>
 
-<span class="fc" id="L77">		return new DiagramReturn() {</span>
+<span class="nc" id="L77">		return new DiagramReturn() {</span>
 			@Override
 			public Diagram getDiagram() {
-<span class="fc" id="L80">				return diagram;</span>
+<span class="nc" id="L80">				return diagram;</span>
 			}
 
 			@Override
 			public String error() {
-<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (diagram instanceof PSystemError) {</span>
-<span class="fc" id="L86">					final PSystemError diagramError = (PSystemError) diagram;</span>
-<span class="fc" id="L87">					final ErrorUml error = diagramError.getFirstError();</span>
-<span class="fc" id="L88">					return error.getError();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if (diagram instanceof PSystemError) {</span>
+<span class="nc" id="L86">					final PSystemError diagramError = (PSystemError) diagram;</span>
+<span class="nc" id="L87">					final ErrorUml error = diagramError.getFirstError();</span>
+<span class="nc" id="L88">					return error.getError();</span>
 				}
-<span class="fc" id="L90">				return null;</span>
+<span class="nc" id="L90">				return null;</span>
 			}
 
 			@Override
 			public Optional&lt;Integer&gt; getErrorLine() {
-<span class="fc bfc" id="L95" title="All 2 branches covered.">				if (diagram instanceof PSystemError) {</span>
-<span class="fc" id="L96">					final PSystemError diagramError = (PSystemError) diagram;</span>
-<span class="fc" id="L97">					final ErrorUml error = diagramError.getFirstError();</span>
-<span class="fc" id="L98">					return Optional.of(error.getLineLocation().getPosition());</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (diagram instanceof PSystemError) {</span>
+<span class="nc" id="L96">					final PSystemError diagramError = (PSystemError) diagram;</span>
+<span class="nc" id="L97">					final ErrorUml error = diagramError.getFirstError();</span>
+<span class="nc" id="L98">					return Optional.of(error.getLineLocation().getPosition());</span>
 				}
-<span class="fc" id="L100">				return Optional.empty();</span>
+<span class="nc" id="L100">				return Optional.empty();</span>
 			}
 
 			@Override

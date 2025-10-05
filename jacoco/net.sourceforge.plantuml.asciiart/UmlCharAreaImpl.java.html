@@ -42,17 +42,17 @@ import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 <span class="fc" id="L42">public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {</span>
 
 	public void drawBoxSimple(int x, int y, int width, int height) {
-<span class="nc" id="L45">		this.drawHLine('-', y, x + 1, x + width - 1);</span>
-<span class="nc" id="L46">		this.drawHLine('-', y + height - 1, x + 1, x + width - 1);</span>
+<span class="fc" id="L45">		this.drawHLine('-', y, x + 1, x + width - 1);</span>
+<span class="fc" id="L46">		this.drawHLine('-', y + height - 1, x + 1, x + width - 1);</span>
 
-<span class="nc" id="L48">		this.drawVLine('|', x, y + 1, y + height - 1);</span>
-<span class="nc" id="L49">		this.drawVLine('|', x + width - 1, y + 1, y + height - 1);</span>
+<span class="fc" id="L48">		this.drawVLine('|', x, y + 1, y + height - 1);</span>
+<span class="fc" id="L49">		this.drawVLine('|', x + width - 1, y + 1, y + height - 1);</span>
 
-<span class="nc" id="L51">		this.drawChar(',', x, y);</span>
-<span class="nc" id="L52">		this.drawChar('.', x + width - 1, y);</span>
-<span class="nc" id="L53">		this.drawChar('`', x, y + height - 1);</span>
-<span class="nc" id="L54">		this.drawChar('\'', x + width - 1, y + height - 1);</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L51">		this.drawChar(',', x, y);</span>
+<span class="fc" id="L52">		this.drawChar('.', x + width - 1, y);</span>
+<span class="fc" id="L53">		this.drawChar('`', x, y + height - 1);</span>
+<span class="fc" id="L54">		this.drawChar('\'', x + width - 1, y + height - 1);</span>
+<span class="fc" id="L55">	}</span>
 
 	public void drawBoxSimpleUnicode(int x, int y, int width, int height) {
 <span class="fc" id="L58">		this.drawHLine('\u2500', y, x + 1, x + width - 1);</span>

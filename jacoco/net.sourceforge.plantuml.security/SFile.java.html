@@ -174,8 +174,8 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public void setWritable(boolean b) {
-<span class="nc" id="L177">		internal.setWritable(b);</span>
-<span class="nc" id="L178">	}</span>
+<span class="fc" id="L177">		internal.setWritable(b);</span>
+<span class="fc" id="L178">	}</span>
 
 	public void delete() {
 <span class="fc" id="L181">		internal.delete();</span>
@@ -220,14 +220,14 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public String getPrintablePath() {
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
 			try {
 <span class="nc" id="L225">				return internal.getCanonicalPath();</span>
 <span class="nc" id="L226">			} catch (IOException e) {</span>
 <span class="nc" id="L227">				Logme.error(e);</span>
 			}
 		}
-<span class="nc" id="L230">		return &quot;&quot;;</span>
+<span class="fc" id="L230">		return &quot;&quot;;</span>
 	}
 
 	public boolean canRead() {
@@ -247,7 +247,7 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public URI toURI() {
-<span class="nc" id="L250">		return internal.toURI();</span>
+<span class="fc" id="L250">		return internal.toURI();</span>
 	}
 
 	public boolean renameTo(SFile dest) {
@@ -415,9 +415,9 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	// ::done
 
 	public BufferedReader openBufferedReader() {
-<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (isFileOk()) {</span>
+<span class="pc bpc" id="L418" title="1 of 2 branches missed.">		if (isFileOk()) {</span>
 			try {
-<span class="nc" id="L420">				return new BufferedReader(new FileReader(internal));</span>
+<span class="fc" id="L420">				return new BufferedReader(new FileReader(internal));</span>
 <span class="nc" id="L421">			} catch (FileNotFoundException e) {</span>
 <span class="nc" id="L422">				Logme.error(e);</span>
 			}
@@ -450,7 +450,7 @@ public class SFile implements Comparable&lt;SFile&gt; {
 	}
 
 	public PrintWriter createPrintWriter(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-<span class="nc" id="L453">		return new PrintWriter(internal, charset);</span>
+<span class="fc" id="L453">		return new PrintWriter(internal, charset);</span>
 	}
 
 	public FileOutputStream createFileOutputStream() throws FileNotFoundException {

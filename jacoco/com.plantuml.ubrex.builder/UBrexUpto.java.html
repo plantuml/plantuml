@@ -41,16 +41,16 @@ import com.plantuml.ubrex.CompositeList;
 public class UBrexUpto extends UBrexPart {
 
 	public UBrexUpto(UBrexPart what, UBrexPart stop) {
-<span class="fc" id="L44">		super(buildChallenge(what, stop));</span>
-<span class="fc" id="L45">	}</span>
+<span class="nc" id="L44">		super(buildChallenge(what, stop));</span>
+<span class="nc" id="L45">	}</span>
 
 	private static Challenge buildChallenge(UBrexPart what, UBrexPart stop) {
-<span class="fc" id="L48">		final Challenge p1 = what.getChallenge();</span>
-<span class="fc" id="L49">		final Challenge p2 = stop.getChallenge();</span>
-<span class="fc" id="L50">		final CompositeList result = CompositeList.createEmpty();</span>
-<span class="fc" id="L51">		result.addChallenge(new ChallengeOneOrMoreUpToOldVersion(p1, p2));</span>
-<span class="fc" id="L52">		result.addChallenge(p2);</span>
-<span class="fc" id="L53">		return result;</span>
+<span class="nc" id="L48">		final Challenge p1 = what.getChallenge();</span>
+<span class="nc" id="L49">		final Challenge p2 = stop.getChallenge();</span>
+<span class="nc" id="L50">		final CompositeList result = CompositeList.createEmpty();</span>
+<span class="nc" id="L51">		result.addChallenge(new ChallengeOneOrMoreUpToOldVersion(p1, p2));</span>
+<span class="nc" id="L52">		result.addChallenge(p2);</span>
+<span class="nc" id="L53">		return result;</span>
 	}
 
 }

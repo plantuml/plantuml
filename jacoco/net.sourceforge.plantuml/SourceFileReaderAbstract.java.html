@@ -106,18 +106,18 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	}
 
 	public void setCheckMetadata(boolean checkMetadata) {
-<span class="nc" id="L109">		this.checkMetadata = checkMetadata;</span>
-<span class="nc" id="L110">	}</span>
+<span class="fc" id="L109">		this.checkMetadata = checkMetadata;</span>
+<span class="fc" id="L110">	}</span>
 
 	public boolean hasError() {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (final BlockUml b : builder.getBlockUmls())</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (b.getDiagram() instanceof PSystemError)</span>
-<span class="nc" id="L115">				return true;</span>
-<span class="nc" id="L116">		return false;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (final BlockUml b : builder.getBlockUmls())</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (b.getDiagram() instanceof PSystemError)</span>
+<span class="fc" id="L115">				return true;</span>
+<span class="fc" id="L116">		return false;</span>
 	}
 
 	public List&lt;BlockUml&gt; getBlocks() {
-<span class="nc" id="L120">		return builder.getBlockUmls();</span>
+<span class="fc" id="L120">		return builder.getBlockUmls();</span>
 	}
 
 	protected Reader getReader(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
@@ -165,7 +165,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 <span class="fc" id="L165">	}</span>
 
 	final public List&lt;GeneratedImage&gt; getGeneratedImages() throws IOException {
-<span class="pc" id="L168">		Log.info(() -&gt; &quot;Reading file: &quot; + file);</span>
+<span class="fc" id="L168">		Log.info(() -&gt; &quot;Reading file: &quot; + file);</span>
 
 <span class="fc" id="L170">		cpt = 0;</span>
 <span class="fc" id="L171">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
@@ -189,15 +189,15 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
 			final List&lt;FileImageData&gt; exportDiagrams;
-<span class="pc bpc" id="L192" title="3 of 4 branches missed.">			if (noerror &amp;&amp; system instanceof PSystemError) {</span>
-<span class="nc" id="L193">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
-<span class="nc" id="L194">				exportDiagrams</span>
-<span class="nc" id="L195">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">			if (noerror &amp;&amp; system instanceof PSystemError) {</span>
+<span class="fc" id="L193">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
+<span class="fc" id="L194">				exportDiagrams</span>
+<span class="fc" id="L195">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
 			} else
 <span class="fc" id="L197">				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);</span>
 
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">			if (exportDiagrams.size() &gt; 1)</span>
-<span class="nc" id="L200">				cpt += exportDiagrams.size() - 1;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">			if (exportDiagrams.size() &gt; 1)</span>
+<span class="fc" id="L200">				cpt += exportDiagrams.size() - 1;</span>
 
 <span class="fc bfc" id="L202" title="All 2 branches covered.">			for (FileImageData fdata : exportDiagrams) {</span>
 <span class="fc" id="L203">				final String desc = &quot;[&quot; + file.getName() + &quot;] &quot; + system.getDescription();</span>
@@ -209,7 +209,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 <span class="fc" id="L210">		}</span>
 
-<span class="pc" id="L212">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
+<span class="fc" id="L212">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
 
 <span class="fc" id="L214">		return Collections.unmodifiableList(result);</span>
 	}
@@ -217,9 +217,9 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
 
 	protected final void setNoerror(boolean noerror) {
-<span class="nc" id="L220">		this.noerror = noerror;</span>
+<span class="fc" id="L220">		this.noerror = noerror;</span>
 
-<span class="nc" id="L222">	}</span>
+<span class="fc" id="L222">	}</span>
 
 	final protected String getFileName() {
 <span class="fc" id="L225">		return file.getName();</span>

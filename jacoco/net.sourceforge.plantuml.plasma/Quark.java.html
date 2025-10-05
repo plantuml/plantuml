@@ -108,9 +108,9 @@ public class Quark&lt;DATA&gt; {
 <span class="fc" id="L108">	}</span>
 
 	public Quark&lt;DATA&gt; childIfExists(String name) {
-<span class="pc bpc" id="L111" title="2 of 4 branches missed.">		if (plasma.hasSeparator() &amp;&amp; name.contains(plasma.getSeparator()))</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">		if (plasma.hasSeparator() &amp;&amp; name.contains(plasma.getSeparator()))</span>
 <span class="nc" id="L112">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L113">		return children.get(name);</span>
+<span class="nc" id="L113">		return children.get(name);</span>
 	}
 
 	public Quark&lt;DATA&gt; child(String full) {
@@ -122,13 +122,13 @@ public class Quark&lt;DATA&gt; {
 <span class="fc" id="L122">		Quark&lt;DATA&gt; current = this;</span>
 		while (true) {
 <span class="fc" id="L124">			int idx = full.indexOf(separator);</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (idx == -1)</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (idx == -1)</span>
 <span class="fc" id="L126">				return current.getDirectChild(full);</span>
 
-<span class="fc" id="L128">			final String first = full.substring(0, idx);</span>
-<span class="fc" id="L129">			current = current.getDirectChild(first);</span>
-<span class="fc" id="L130">			full = clean(full.substring(idx + separator.length()));</span>
-<span class="fc" id="L131">		}</span>
+<span class="nc" id="L128">			final String first = full.substring(0, idx);</span>
+<span class="nc" id="L129">			current = current.getDirectChild(first);</span>
+<span class="nc" id="L130">			full = clean(full.substring(idx + separator.length()));</span>
+<span class="nc" id="L131">		}</span>
 	}
 
 	private Quark&lt;DATA&gt; getDirectChild(String name) {

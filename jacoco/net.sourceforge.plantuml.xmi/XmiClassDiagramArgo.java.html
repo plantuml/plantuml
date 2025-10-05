@@ -48,14 +48,14 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 	public XmiClassDiagramArgo(ClassDiagram classDiagram) throws ParserConfigurationException {
-<span class="fc" id="L51">		super(classDiagram);</span>
+<span class="nc" id="L51">		super(classDiagram);</span>
 
-<span class="fc" id="L53">		addPackage(ownedElementRoot, classDiagram.getRootGroup());</span>
+<span class="nc" id="L53">		addPackage(ownedElementRoot, classDiagram.getRootGroup());</span>
 
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (final Link link : classDiagram.getLinks())</span>
-<span class="fc" id="L56">			addLink(link);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (final Link link : classDiagram.getLinks())</span>
+<span class="nc" id="L56">			addLink(link);</span>
 
-<span class="fc" id="L58">	}</span>
+<span class="nc" id="L58">	}</span>
 
 	final protected Element createElementPackage(Entity group) {
 <span class="nc" id="L61">		final Element umlPackage = document.createElement(&quot;UML:Package&quot;);</span>
@@ -73,81 +73,81 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 	}
 
 	private void addPackage(Element element, Entity group) {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (final Entity ent : group.leafs()) {</span>
-<span class="fc" id="L77">			final Element cla = createEntityNode(ent);</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (cla == null)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (final Entity ent : group.leafs()) {</span>
+<span class="nc" id="L77">			final Element cla = createEntityNode(ent);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (cla == null)</span>
 <span class="nc" id="L79">				continue;</span>
 
-<span class="fc" id="L81">			element.appendChild(cla);</span>
-<span class="fc" id="L82">			done.add(ent);</span>
-<span class="fc" id="L83">		}</span>
+<span class="nc" id="L81">			element.appendChild(cla);</span>
+<span class="nc" id="L82">			done.add(ent);</span>
+<span class="nc" id="L83">		}</span>
 
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		for (final Entity childGroup : group.groups()) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (final Entity childGroup : group.groups()) {</span>
 <span class="nc" id="L86">			final Element result = createElementPackage(childGroup);</span>
 <span class="nc" id="L87">			element.appendChild(result);</span>
 <span class="nc" id="L88">			done.add(childGroup);</span>
 <span class="nc" id="L89">		}</span>
 
-<span class="fc" id="L91">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	// somehow temporary duplicate from XmiClassDiagramStar
 	private void addLink(Link link) {
-<span class="pc bpc" id="L95" title="1 of 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
-<span class="fc" id="L96">			return;</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
+<span class="nc" id="L96">			return;</span>
 
-<span class="fc" id="L98">		final String assId = classDiagram.getUniqueSequence(&quot;ass&quot;);</span>
-<span class="pc bpc" id="L99" title="2 of 4 branches missed.">		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {</span>
+<span class="nc" id="L98">		final String assId = classDiagram.getUniqueSequence(&quot;ass&quot;);</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {</span>
 <span class="nc" id="L100">			addExtension(link, assId);</span>
 <span class="nc" id="L101">			return;</span>
 		}
-<span class="fc" id="L103">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
-<span class="fc" id="L104">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
+<span class="nc" id="L103">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
+<span class="nc" id="L104">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
 		// association.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(classDiagram));
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
 <span class="nc" id="L107">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
 
-<span class="fc" id="L109">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
-<span class="fc" id="L110">		final Element end1 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
-<span class="fc" id="L111">		end1.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
-<span class="fc" id="L112">		end1.setAttribute(&quot;association&quot;, assId);</span>
-<span class="fc" id="L113">		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (link.getQuantifier1() != null)</span>
+<span class="nc" id="L109">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
+<span class="nc" id="L110">		final Element end1 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L111">		end1.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L112">		end1.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L113">		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (link.getQuantifier1() != null)</span>
 <span class="nc" id="L115">			end1.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier1()));</span>
 
-<span class="fc" id="L117">		final Element endparticipant1 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
+<span class="nc" id="L117">		final Element endparticipant1 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
 
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION)</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION)</span>
 <span class="nc" id="L120">			end1.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
 
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGREGATION)</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGREGATION)</span>
 <span class="nc" id="L123">			end1.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
 
-<span class="fc" id="L125">		end1.appendChild(endparticipant1);</span>
-<span class="fc" id="L126">		connection.appendChild(end1);</span>
+<span class="nc" id="L125">		end1.appendChild(endparticipant1);</span>
+<span class="nc" id="L126">		connection.appendChild(end1);</span>
 
-<span class="fc" id="L128">		final Element end2 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
-<span class="fc" id="L129">		end2.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
-<span class="fc" id="L130">		end2.setAttribute(&quot;association&quot;, assId);</span>
-<span class="fc" id="L131">		end2.setAttribute(&quot;type&quot;, link.getEntity2().getUid());</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (link.getQuantifier2() != null)</span>
+<span class="nc" id="L128">		final Element end2 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L129">		end2.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L130">		end2.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L131">		end2.setAttribute(&quot;type&quot;, link.getEntity2().getUid());</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (link.getQuantifier2() != null)</span>
 <span class="nc" id="L133">			end2.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier2()));</span>
 
-<span class="fc" id="L135">		final Element endparticipant2 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
+<span class="nc" id="L135">		final Element endparticipant2 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION)</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION)</span>
 <span class="nc" id="L138">			end2.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGREGATION)</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGREGATION)</span>
 <span class="nc" id="L141">			end2.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
 
-<span class="fc" id="L143">		end2.appendChild(endparticipant2);</span>
-<span class="fc" id="L144">		connection.appendChild(end2);</span>
+<span class="nc" id="L143">		end2.appendChild(endparticipant2);</span>
+<span class="nc" id="L144">		connection.appendChild(end2);</span>
 
-<span class="fc" id="L146">		association.appendChild(connection);</span>
+<span class="nc" id="L146">		association.appendChild(connection);</span>
 
-<span class="fc" id="L148">		ownedElementRoot.appendChild(association);</span>
+<span class="nc" id="L148">		ownedElementRoot.appendChild(association);</span>
 
-<span class="fc" id="L150">	}</span>
+<span class="nc" id="L150">	}</span>
 
 	private void addExtension(Link link, String assId) {
 <span class="nc" id="L153">		final Element association = document.createElement(&quot;UML:Generalization&quot;);</span>

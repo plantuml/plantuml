@@ -45,14 +45,14 @@ import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
-<span class="fc" id="L49">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
+<span class="nc" id="L49">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
 
-<span class="fc" id="L51">			svg.setFillColor(null);</span>
-<span class="fc" id="L52">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="nc" id="L51">			svg.setFillColor(null);</span>
+<span class="nc" id="L52">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="fc" id="L54">			svg.svgPath(x, y, shape.toUPath(), 0);</span>
+<span class="nc" id="L54">			svg.svgPath(x, y, shape.toUPath(), 0);</span>
 		}
-<span class="fc" id="L56">	}</span>
+<span class="nc" id="L56">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -64,24 +64,24 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	private final double roundCorner;
 
 	public ComponentRoseDivider(Style style, Display stringsToDisplay, ISkinParam skinParam) {
-<span class="fc" id="L67">		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam, stringsToDisplay, false);</span>
+<span class="nc" id="L67">		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L69">		this.background = getColorBackGround();</span>
-<span class="fc" id="L70">		this.borderColor = getColorLine();</span>
-<span class="fc" id="L71">		this.stroke = getStroke();</span>
-<span class="fc" id="L72">		this.roundCorner = getRoundCorner();</span>
-<span class="fc" id="L73">		this.shadow = getShadowing();</span>
+<span class="nc" id="L69">		this.background = getColorBackGround();</span>
+<span class="nc" id="L70">		this.borderColor = getColorLine();</span>
+<span class="nc" id="L71">		this.stroke = getStroke();</span>
+<span class="nc" id="L72">		this.roundCorner = getRoundCorner();</span>
+<span class="nc" id="L73">		this.shadow = getShadowing();</span>
 
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		this.empty = stringsToDisplay.get(0).length() == 0;</span>
-<span class="fc" id="L76">	}</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		this.empty = stringsToDisplay.get(0).length() == 0;</span>
+<span class="nc" id="L76">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L80">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L80">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
 
-<span class="fc" id="L82">		ug = ug.apply(background.bg());</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (empty) {</span>
-<span class="fc" id="L84">			drawSep(ug.apply(UTranslate.dy(dimensionToUse.getHeight() / 2)), dimensionToUse.getWidth());</span>
+<span class="nc" id="L82">		ug = ug.apply(background.bg());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (empty) {</span>
+<span class="nc" id="L84">			drawSep(ug.apply(UTranslate.dy(dimensionToUse.getHeight() / 2)), dimensionToUse.getWidth());</span>
 		} else {
 <span class="nc" id="L86">			final TextBlock textBlock = getTextBlock();</span>
 <span class="nc" id="L87">			final StringBounder stringBounder = ug.getStringBounder();</span>
@@ -101,37 +101,37 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 <span class="nc" id="L101">			ug.apply(new UTranslate(xpos, ypos)).draw(rect);</span>
 <span class="nc" id="L102">			textBlock.drawU(ug.apply(new UTranslate(xpos + deltaX, ypos + getMarginY())));</span>
 		}
-<span class="fc" id="L104">	}</span>
+<span class="nc" id="L104">	}</span>
 
 	private void drawSep(UGraphic ug, double width) {
-<span class="fc" id="L107">		ug = ug.apply(background);</span>
-<span class="fc" id="L108">		drawRectLong(ug.apply(UTranslate.dy(-1)), width);</span>
-<span class="fc" id="L109">		drawDoubleLine(ug, width);</span>
-<span class="fc" id="L110">	}</span>
+<span class="nc" id="L107">		ug = ug.apply(background);</span>
+<span class="nc" id="L108">		drawRectLong(ug.apply(UTranslate.dy(-1)), width);</span>
+<span class="nc" id="L109">		drawDoubleLine(ug, width);</span>
+<span class="nc" id="L110">	}</span>
 
 	private void drawRectLong(UGraphic ug, double width) {
-<span class="fc" id="L113">		final URectangle rectLong = URectangle.build(width, 3).rounded(roundCorner);</span>
-<span class="fc" id="L114">		rectLong.setDeltaShadow(shadow);</span>
+<span class="nc" id="L113">		final URectangle rectLong = URectangle.build(width, 3).rounded(roundCorner);</span>
+<span class="nc" id="L114">		rectLong.setDeltaShadow(shadow);</span>
 
-<span class="fc" id="L116">		ug = ug.apply(UStroke.simple());</span>
-<span class="fc" id="L117">		ug.draw(rectLong);</span>
-<span class="fc" id="L118">	}</span>
+<span class="nc" id="L116">		ug = ug.apply(UStroke.simple());</span>
+<span class="nc" id="L117">		ug.draw(rectLong);</span>
+<span class="nc" id="L118">	}</span>
 
 	private void drawDoubleLine(UGraphic ug, final double width) {
-<span class="fc" id="L121">		ug = ug.apply(UStroke.withThickness(stroke.getThickness() / 2)).apply(borderColor);</span>
-<span class="fc" id="L122">		final ULine line = ULine.hline(width);</span>
-<span class="fc" id="L123">		ug.apply(UTranslate.dy(-1)).draw(line);</span>
-<span class="fc" id="L124">		ug.apply(UTranslate.dy(2)).draw(line);</span>
-<span class="fc" id="L125">	}</span>
+<span class="nc" id="L121">		ug = ug.apply(UStroke.withThickness(stroke.getThickness() / 2)).apply(borderColor);</span>
+<span class="nc" id="L122">		final ULine line = ULine.hline(width);</span>
+<span class="nc" id="L123">		ug.apply(UTranslate.dy(-1)).draw(line);</span>
+<span class="nc" id="L124">		ug.apply(UTranslate.dy(2)).draw(line);</span>
+<span class="nc" id="L125">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L129">		return getTextHeight(stringBounder) + 20;</span>
+<span class="nc" id="L129">		return getTextHeight(stringBounder) + 20;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L134">		return getTextWidth(stringBounder) + 30;</span>
+<span class="nc" id="L134">		return getTextWidth(stringBounder) + 30;</span>
 	}
 
 }

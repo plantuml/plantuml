@@ -47,38 +47,38 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class Boundary extends AbstractTextBlock {
 
-<span class="fc" id="L50">	private final double margin = 4;</span>
+<span class="nc" id="L50">	private final double margin = 4;</span>
 
-<span class="fc" id="L52">	private final double radius = 12;</span>
-<span class="fc" id="L53">	private final double left = 17;</span>
+<span class="nc" id="L52">	private final double radius = 12;</span>
+<span class="nc" id="L53">	private final double left = 17;</span>
 
 	private final Fashion symbolContext;
 
-<span class="fc" id="L57">	public Boundary(Fashion symbolContext) {</span>
-<span class="fc" id="L58">		this.symbolContext = symbolContext;</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L57">	public Boundary(Fashion symbolContext) {</span>
+<span class="nc" id="L58">		this.symbolContext = symbolContext;</span>
+<span class="nc" id="L59">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L62">		double x = 0;</span>
-<span class="fc" id="L63">		double y = 0;</span>
-<span class="fc" id="L64">		x += margin;</span>
-<span class="fc" id="L65">		y += margin;</span>
-<span class="fc" id="L66">		ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L67">		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);</span>
-<span class="fc" id="L68">		circle.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L62">		double x = 0;</span>
+<span class="nc" id="L63">		double y = 0;</span>
+<span class="nc" id="L64">		x += margin;</span>
+<span class="nc" id="L65">		y += margin;</span>
+<span class="nc" id="L66">		ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L67">		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);</span>
+<span class="nc" id="L68">		circle.setDeltaShadow(symbolContext.getDeltaShadow());</span>
 
-<span class="fc" id="L70">		final UPath path1 = UPath.none();</span>
-<span class="fc" id="L71">		path1.moveTo(0, 0);</span>
-<span class="fc" id="L72">		path1.lineTo(0, radius * 2);</span>
-<span class="fc" id="L73">		path1.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L70">		final UPath path1 = UPath.none();</span>
+<span class="nc" id="L71">		path1.moveTo(0, 0);</span>
+<span class="nc" id="L72">		path1.lineTo(0, radius * 2);</span>
+<span class="nc" id="L73">		path1.setDeltaShadow(symbolContext.getDeltaShadow());</span>
 
-<span class="fc" id="L75">		final UPath path = UPath.none();</span>
-<span class="fc" id="L76">		path.moveTo(0, 0);</span>
-<span class="fc" id="L77">		path.lineTo(0, radius * 2);</span>
-<span class="fc" id="L78">		path.moveTo(0, radius);</span>
-<span class="fc" id="L79">		path.lineTo(left, radius);</span>
-<span class="fc" id="L80">		path.setDeltaShadow(symbolContext.getDeltaShadow());</span>
-<span class="fc" id="L81">		ug.apply(new UTranslate(x, y)).apply(HColors.none().bg()).draw(path);</span>
+<span class="nc" id="L75">		final UPath path = UPath.none();</span>
+<span class="nc" id="L76">		path.moveTo(0, 0);</span>
+<span class="nc" id="L77">		path.lineTo(0, radius * 2);</span>
+<span class="nc" id="L78">		path.moveTo(0, radius);</span>
+<span class="nc" id="L79">		path.lineTo(left, radius);</span>
+<span class="nc" id="L80">		path.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L81">		ug.apply(new UTranslate(x, y)).apply(HColors.none().bg()).draw(path);</span>
 
 		// final ULine line1 = ULine.dy(radius * 2);
 		// line1.setDeltaShadow(deltaShadow);
@@ -87,12 +87,12 @@ public class Boundary extends AbstractTextBlock {
 		// line2.setDeltaShadow(deltaShadow);
 		// ug.apply(new UTranslate(x, y + radius)).draw(line2);
 
-<span class="fc" id="L90">		ug.apply(new UTranslate(x + left, y)).draw(circle);</span>
+<span class="nc" id="L90">		ug.apply(new UTranslate(x + left, y)).draw(circle);</span>
 
-<span class="fc" id="L92">	}</span>
+<span class="nc" id="L92">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L95">		return new XDimension2D(radius * 2 + left + 2 * margin, radius * 2 + 2 * margin);</span>
+<span class="nc" id="L95">		return new XDimension2D(radius * 2 + left + 2 * margin, radius * 2 + 2 * margin);</span>
 	}
 
 }

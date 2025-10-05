@@ -80,22 +80,22 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final FontConfiguration fontConfiguration;
 
 	public static IEntityImage createForError(List&lt;String&gt; strings, boolean useRed) {
-<span class="nc" id="L83">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
+<span class="fc" id="L83">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
 				CreoleMode.NO_CREOLE, true);
 	}
 
 	private static HColor getForeColor(boolean useRed) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (useRed)</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (useRed)</span>
 <span class="nc" id="L89">			return HColors.BLACK;</span>
 
-<span class="nc" id="L91">		return HColors.MY_GREEN;</span>
+<span class="fc" id="L91">		return HColors.MY_GREEN;</span>
 	}
 
 	private static HColor getBackColor(boolean useRed) {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (useRed)</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (useRed)</span>
 <span class="nc" id="L96">			return HColors.RED_LIGHT;</span>
 
-<span class="nc" id="L98">		return HColors.BLACK;</span>
+<span class="fc" id="L98">		return HColors.BLACK;</span>
 	}
 
 	public static TextBlock createGreenOnBlackMonospaced(List&lt;String&gt; strings) {
@@ -146,8 +146,8 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private TextBlock getTextBlock() {
 <span class="fc" id="L148">		final Display display = Display.create(strings);</span>
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (mode == CreoleMode.NO_CREOLE)</span>
-<span class="nc" id="L150">			return new TextBlockRaw(strings, fontConfiguration);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (mode == CreoleMode.NO_CREOLE)</span>
+<span class="fc" id="L150">			return new TextBlockRaw(strings, fontConfiguration);</span>
 
 <span class="fc" id="L152">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);</span>
 
@@ -158,7 +158,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 <span class="fc" id="L158">		final XDimension2D size = calculateDimensionInternal(ug.getStringBounder());</span>
 <span class="fc" id="L159">		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));</span>
 
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (image != null) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (image != null) {</span>
 <span class="pc bpc" id="L162" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L163">				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))</span>
 <span class="nc" id="L164">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
@@ -178,7 +178,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
 <span class="fc" id="L180">		XDimension2D dim = getTextBlock().calculateDimension(stringBounder);</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (image != null) {</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (image != null) {</span>
 <span class="pc bpc" id="L182" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L183">				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());</span>
 <span class="fc bfc" id="L184" title="All 2 branches covered.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>
@@ -212,7 +212,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	@Override
 	public boolean isCrash() {
-<span class="nc" id="L215">		return isCrash;</span>
+<span class="fc" id="L215">		return isCrash;</span>
 	}
 
 }

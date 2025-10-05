@@ -126,9 +126,9 @@ try {
 <span class="fc" id="L126">			ok = _DTKEY(o, ky, sz);</span>
 			
 			
-<span class="fc bfc" id="L129" title="All 2 branches covered.">			if(n!=null) /* get the right one among all dictionaries */</span>
-<span class="fc" id="L130">			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);</span>
-<span class="pc bpc" id="L131" title="5 of 8 branches missed.">				if(((type &amp; (DT_NEXT|DT_FIRST))!=0 &amp;&amp; cmp &lt; 0) ||</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if(n!=null) /* get the right one among all dictionaries */</span>
+<span class="nc" id="L130">			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);</span>
+<span class="nc bnc" id="L131" title="All 8 branches missed.">				if(((type &amp; (DT_NEXT|DT_FIRST))!=0 &amp;&amp; cmp &lt; 0) ||</span>
 				   ((type &amp; (DT_PREV|DT_LAST))!=0 &amp;&amp; cmp &gt; 0) )
 <span class="nc" id="L133">UNSUPPORTED(&quot;5o3u9aaanyd9yh74sjfkkofmo&quot;); // 					goto a_dj;</span>
 			}

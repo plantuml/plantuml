@@ -51,19 +51,19 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCommentMultilines2 extends CommandMultilines2&lt;PSystemEbnf&gt; {
 
-<span class="fc" id="L54">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L54">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
 <span class="nc" id="L55">			() -&gt; Pattern2.cmpile(&quot;^.*\\*\\*\\)[%s]*$&quot;));</span>
 
 	public CommandCommentMultilines2() {
-<span class="fc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="nc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandCommentMultilines2.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L62">		return RegexConcat.build(CommandCommentMultilines2.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(\\*\\*&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
-<span class="fc" id="L66">				RegexLeaf.end());</span>
+<span class="nc" id="L66">				RegexLeaf.end());</span>
 	}
 
 	@Override

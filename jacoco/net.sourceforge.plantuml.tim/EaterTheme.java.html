@@ -94,19 +94,19 @@ public class EaterTheme extends Eater {
 <span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (from == null) {</span>
 			try {
 <span class="fc" id="L96">				final Theme theme = ThemeUtils.getReaderTheme(realName);</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">				if (theme != null)</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (theme != null)</span>
 <span class="fc" id="L98">					return theme;</span>
 
-<span class="nc" id="L100">				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));</span>
-<span class="nc bnc" id="L101" title="All 4 branches missed.">				if (localFile != null &amp;&amp; localFile.isOk()) {</span>
+<span class="fc" id="L100">				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));</span>
+<span class="pc bpc" id="L101" title="3 of 4 branches missed.">				if (localFile != null &amp;&amp; localFile.isOk()) {</span>
 <span class="nc" id="L102">					final BufferedReader br = localFile.getUnderlyingFile().openBufferedReader();</span>
 <span class="nc bnc" id="L103" title="All 2 branches missed.">					if (br != null)</span>
 <span class="nc" id="L104">						return new Theme(ReadLineReader.create(br, &quot;theme &quot; + realName));</span>
 				}
 <span class="nc" id="L106">			} catch (IOException e) {</span>
 <span class="nc" id="L107">				Logme.error(e);</span>
-<span class="nc" id="L108">			}</span>
-<span class="nc" id="L109">			throw new EaterException(&quot;Cannot load &quot; + realName, getStringLocated());</span>
+<span class="fc" id="L108">			}</span>
+<span class="fc" id="L109">			throw new EaterException(&quot;Cannot load &quot; + realName, getStringLocated());</span>
 		}
 
 <span class="nc bnc" id="L112" title="All 4 branches missed.">		if (from.startsWith(&quot;&lt;&quot;) &amp;&amp; from.endsWith(&quot;&gt;&quot;)) {</span>

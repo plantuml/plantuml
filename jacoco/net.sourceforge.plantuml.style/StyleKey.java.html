@@ -59,22 +59,22 @@ public class StyleKey {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L62">		final StringBuilder sb = new StringBuilder(snames + &quot; &quot;);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (level != -1)</span>
+<span class="fc" id="L62">		final StringBuilder sb = new StringBuilder(snames + &quot; &quot;);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (level != -1)</span>
 <span class="nc" id="L64">			sb.append(&quot; &quot; + level);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (isStared)</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (isStared)</span>
 <span class="nc" id="L66">			sb.append(&quot; (*)&quot;);</span>
-<span class="nc" id="L67">		return sb.toString();</span>
+<span class="fc" id="L67">		return sb.toString();</span>
 	}
 
 	public StyleKey addClickable(Url url) {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (url == null)</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (url == null)</span>
 <span class="nc" id="L72">			return this;</span>
 
-<span class="nc" id="L74">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
-<span class="nc" id="L75">		result.add(SName.clickable);</span>
+<span class="fc" id="L74">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
+<span class="fc" id="L75">		result.add(SName.clickable);</span>
 
-<span class="nc" id="L77">		return new StyleKey(result, level, isStared);</span>
+<span class="fc" id="L77">		return new StyleKey(result, level, isStared);</span>
 
 	}
 

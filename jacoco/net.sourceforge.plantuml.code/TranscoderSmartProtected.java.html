@@ -56,27 +56,27 @@ import java.io.IOException;
 		// Work in progress
 		// See https://github.com/plantuml/plantuml/issues/117
 
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (code.startsWith(&quot;~0&quot;))</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~0&quot;))</span>
 <span class="nc" id="L60">			return decodeZlib(code.substring(2));</span>
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (code.startsWith(&quot;~1&quot;))</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~1&quot;))</span>
 <span class="nc" id="L63">			return decodeHuffman(code.substring(2));</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (code.startsWith(&quot;~h&quot;))</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~h&quot;))</span>
 <span class="nc" id="L66">			return hexOnly.decode(code.substring(2));</span>
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (code.startsWith(&quot;~g&quot;))</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~g&quot;))</span>
 <span class="nc" id="L69">			return gzip.decode(code.substring(2));</span>
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (code.startsWith(&quot;~zip~&quot;))</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~zip~&quot;))</span>
 <span class="nc" id="L72">			return zip.decode(code.substring(5));</span>
 
-<span class="nc" id="L74">		return decodeZlib(code);</span>
+<span class="fc" id="L74">		return decodeZlib(code);</span>
 	}
 
 	private String decodeZlib(String code) {
 		try {
-<span class="nc" id="L79">			return zlib.decode(code);</span>
+<span class="fc" id="L79">			return zlib.decode(code);</span>
 <span class="nc" id="L80">		} catch (Exception ex) {</span>
 <span class="nc" id="L81">			return textProtectedDeflate2(code);</span>
 		}

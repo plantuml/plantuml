@@ -51,23 +51,23 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandComment extends UBrexSingleLineCommand2&lt;PSystemEbnf&gt; {
 
 	public UBrexCommandComment() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L54">		super(getRegexConcat());</span>
+<span class="nc" id="L55">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L58">		return UBrexConcat.build( //</span>
-<span class="fc" id="L59">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L58">		return UBrexConcat.build( //</span>
+<span class="nc" id="L59">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexLeaf(&quot;(*&quot;), //
 				new UBrexNamed(&quot;COMMENT&quot;, //
 						new UBrexUpto(//
 								new UBrexLeaf(&quot;〴.&quot;), //
-<span class="fc" id="L64">								UBrexConcat.build( //</span>
+<span class="nc" id="L64">								UBrexConcat.build( //</span>
 										new UBrexLeaf(&quot;*)&quot;), //
-<span class="fc" id="L66">										UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L66">										UBrexLeaf.spaceZeroOrMore(), //</span>
 										new UBrexLeaf(&quot;〒($)&quot;) //
 								))),
 //				new UBrexLeaf(&quot;〶$COMMENT=〄+〴.-&gt;〘*) 〇*〴s 〒($)〙&quot;), //
-<span class="fc" id="L70">				UBrexLeaf.end());</span>
+<span class="nc" id="L70">				UBrexLeaf.end());</span>
 	}
 
 	@Override

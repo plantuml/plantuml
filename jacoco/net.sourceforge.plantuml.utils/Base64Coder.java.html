@@ -49,30 +49,30 @@ public class Base64Coder {
 
 
 	// The line separator string of the operating system.
-<span class="nc" id="L52">	private static final String systemLineSeparator = System.getProperty(&quot;line.separator&quot;);</span>
+<span class="fc" id="L52">	private static final String systemLineSeparator = System.getProperty(&quot;line.separator&quot;);</span>
 
 	// Mapping table from 6-bit nibbles to Base64 characters.
-<span class="nc" id="L55">	private static final char[] map1 = new char[64];</span>
+<span class="fc" id="L55">	private static final char[] map1 = new char[64];</span>
 	static {
-<span class="nc" id="L57">		int i = 0;</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (char c = 'A'; c &lt;= 'Z'; c++)</span>
-<span class="nc" id="L59">			map1[i++] = c;</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (char c = 'a'; c &lt;= 'z'; c++)</span>
-<span class="nc" id="L61">			map1[i++] = c;</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (char c = '0'; c &lt;= '9'; c++)</span>
-<span class="nc" id="L63">			map1[i++] = c;</span>
-<span class="nc" id="L64">		map1[i++] = '+';</span>
-<span class="nc" id="L65">		map1[i++] = '/';</span>
+<span class="fc" id="L57">		int i = 0;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		for (char c = 'A'; c &lt;= 'Z'; c++)</span>
+<span class="fc" id="L59">			map1[i++] = c;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (char c = 'a'; c &lt;= 'z'; c++)</span>
+<span class="fc" id="L61">			map1[i++] = c;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (char c = '0'; c &lt;= '9'; c++)</span>
+<span class="fc" id="L63">			map1[i++] = c;</span>
+<span class="fc" id="L64">		map1[i++] = '+';</span>
+<span class="fc" id="L65">		map1[i++] = '/';</span>
 	}
 
 	// Mapping table from Base64 characters to 6-bit nibbles.
-<span class="nc" id="L69">	private static final byte[] map2 = new byte[128];</span>
+<span class="fc" id="L69">	private static final byte[] map2 = new byte[128];</span>
 	static {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int i = 0; i &lt; map2.length; i++)</span>
-<span class="nc" id="L72">			map2[i] = -1;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (int i = 0; i &lt; 64; i++)</span>
-<span class="nc" id="L74">			map2[map1[i]] = (byte) i;</span>
-<span class="nc" id="L75">	}</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 0; i &lt; map2.length; i++)</span>
+<span class="fc" id="L72">			map2[i] = -1;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (int i = 0; i &lt; 64; i++)</span>
+<span class="fc" id="L74">			map2[map1[i]] = (byte) i;</span>
+<span class="fc" id="L75">	}</span>
 
 	/**
 	 * Encodes a string into Base64 format. No blanks or line breaks are inserted.
@@ -135,7 +135,7 @@ public class Base64Coder {
 	 * @return A character array containing the Base64 encoded data.
 	 */
 	public static char[] encode(byte[] in) {
-<span class="nc" id="L138">		return encode(in, 0, in.length);</span>
+<span class="fc" id="L138">		return encode(in, 0, in.length);</span>
 	}
 
 	/**
@@ -161,28 +161,28 @@ public class Base64Coder {
 	 * @return A character array containing the Base64 encoded data.
 	 */
 	public static char[] encode(byte[] in, int iOff, int iLen) {
-<span class="nc" id="L164">		int oDataLen = (iLen * 4 + 2) / 3; // output length without padding</span>
-<span class="nc" id="L165">		int oLen = ((iLen + 2) / 3) * 4; // output length including padding</span>
-<span class="nc" id="L166">		char[] out = new char[oLen];</span>
-<span class="nc" id="L167">		int ip = iOff;</span>
-<span class="nc" id="L168">		int iEnd = iOff + iLen;</span>
-<span class="nc" id="L169">		int op = 0;</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		while (ip &lt; iEnd) {</span>
-<span class="nc" id="L171">			int i0 = in[ip++] &amp; 0xff;</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">			int i1 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			int i2 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
-<span class="nc" id="L174">			int o0 = i0 &gt;&gt;&gt; 2;</span>
-<span class="nc" id="L175">			int o1 = ((i0 &amp; 3) &lt;&lt; 4) | (i1 &gt;&gt;&gt; 4);</span>
-<span class="nc" id="L176">			int o2 = ((i1 &amp; 0xf) &lt;&lt; 2) | (i2 &gt;&gt;&gt; 6);</span>
-<span class="nc" id="L177">			int o3 = i2 &amp; 0x3F;</span>
-<span class="nc" id="L178">			out[op++] = map1[o0];</span>
-<span class="nc" id="L179">			out[op++] = map1[o1];</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">			out[op] = op &lt; oDataLen ? map1[o2] : '=';</span>
-<span class="nc" id="L181">			op++;</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">			out[op] = op &lt; oDataLen ? map1[o3] : '=';</span>
-<span class="nc" id="L183">			op++;</span>
-<span class="nc" id="L184">		}</span>
-<span class="nc" id="L185">		return out;</span>
+<span class="fc" id="L164">		int oDataLen = (iLen * 4 + 2) / 3; // output length without padding</span>
+<span class="fc" id="L165">		int oLen = ((iLen + 2) / 3) * 4; // output length including padding</span>
+<span class="fc" id="L166">		char[] out = new char[oLen];</span>
+<span class="fc" id="L167">		int ip = iOff;</span>
+<span class="fc" id="L168">		int iEnd = iOff + iLen;</span>
+<span class="fc" id="L169">		int op = 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		while (ip &lt; iEnd) {</span>
+<span class="fc" id="L171">			int i0 = in[ip++] &amp; 0xff;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			int i1 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			int i2 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
+<span class="fc" id="L174">			int o0 = i0 &gt;&gt;&gt; 2;</span>
+<span class="fc" id="L175">			int o1 = ((i0 &amp; 3) &lt;&lt; 4) | (i1 &gt;&gt;&gt; 4);</span>
+<span class="fc" id="L176">			int o2 = ((i1 &amp; 0xf) &lt;&lt; 2) | (i2 &gt;&gt;&gt; 6);</span>
+<span class="fc" id="L177">			int o3 = i2 &amp; 0x3F;</span>
+<span class="fc" id="L178">			out[op++] = map1[o0];</span>
+<span class="fc" id="L179">			out[op++] = map1[o1];</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			out[op] = op &lt; oDataLen ? map1[o2] : '=';</span>
+<span class="fc" id="L181">			op++;</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">			out[op] = op &lt; oDataLen ? map1[o3] : '=';</span>
+<span class="fc" id="L183">			op++;</span>
+<span class="fc" id="L184">		}</span>
+<span class="fc" id="L185">		return out;</span>
 	}
 
 	/**

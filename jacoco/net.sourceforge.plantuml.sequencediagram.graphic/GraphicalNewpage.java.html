@@ -48,32 +48,32 @@ class GraphicalNewpage extends GraphicalElement {
 	private final Component comp;
 
 	public GraphicalNewpage(double startingY, Component comp) {
-<span class="nc" id="L51">		super(startingY);</span>
-<span class="nc" id="L52">		this.comp = comp;</span>
-<span class="nc" id="L53">	}</span>
+<span class="fc" id="L51">		super(startingY);</span>
+<span class="fc" id="L52">		this.comp = comp;</span>
+<span class="fc" id="L53">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		// final double x = ug.getTranslateX();
-<span class="nc" id="L58">		ug = ug.apply(UTranslate.dy(getStartingY()));</span>
-<span class="nc" id="L59">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L60">		final XDimension2D dim = new XDimension2D(maxX, comp.getPreferredHeight(stringBounder));</span>
-<span class="nc" id="L61">		comp.drawU(ug, new Area(dim), context);</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L58">		ug = ug.apply(UTranslate.dy(getStartingY()));</span>
+<span class="fc" id="L59">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L60">		final XDimension2D dim = new XDimension2D(maxX, comp.getPreferredHeight(stringBounder));</span>
+<span class="fc" id="L61">		comp.drawU(ug, new Area(dim), context);</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L66">		return comp.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L66">		return comp.getPreferredHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L71">		return comp.getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L71">		return comp.getPreferredWidth(stringBounder);</span>
 	}
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-<span class="nc" id="L76">		return 0;</span>
+<span class="fc" id="L76">		return 0;</span>
 	}
 
 }

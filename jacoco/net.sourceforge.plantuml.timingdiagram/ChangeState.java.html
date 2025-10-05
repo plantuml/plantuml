@@ -54,72 +54,72 @@ public class ChangeState implements Comparable&lt;ChangeState&gt; {
 	private final String comment;
 	private final Colors colors;
 
-<span class="fc" id="L57">	public ChangeState(TimeTick when, String comment, Colors colors, String... states) {</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (states.length == 0)</span>
+<span class="nc" id="L57">	public ChangeState(TimeTick when, String comment, Colors colors, String... states) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (states.length == 0)</span>
 <span class="nc" id="L59">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L61">		this.when = when;</span>
-<span class="fc" id="L62">		this.states = states;</span>
-<span class="fc" id="L63">		this.comment = comment;</span>
-<span class="fc" id="L64">		this.colors = colors;</span>
-<span class="fc" id="L65">	}</span>
+<span class="nc" id="L61">		this.when = when;</span>
+<span class="nc" id="L62">		this.states = states;</span>
+<span class="nc" id="L63">		this.comment = comment;</span>
+<span class="nc" id="L64">		this.colors = colors;</span>
+<span class="nc" id="L65">	}</span>
 
 	public int compareTo(ChangeState other) {
-<span class="fc" id="L68">		return this.when.compareTo(other.when);</span>
+<span class="nc" id="L68">		return this.when.compareTo(other.when);</span>
 	}
 
 	public final TimeTick getWhen() {
-<span class="fc" id="L72">		return when;</span>
+<span class="nc" id="L72">		return when;</span>
 	}
 
 	public final String getState() {
-<span class="fc" id="L76">		return states[0];</span>
+<span class="nc" id="L76">		return states[0];</span>
 	}
 
 	public final List&lt;String&gt; getStates() {
-<span class="fc" id="L80">		return Arrays.asList(states);</span>
+<span class="nc" id="L80">		return Arrays.asList(states);</span>
 	}
 
 	public String getComment() {
-<span class="fc" id="L84">		return comment;</span>
+<span class="nc" id="L84">		return comment;</span>
 	}
 
 	public final HColor getBackColor(ISkinParam skinParam, Style style) {
-<span class="pc bpc" id="L88" title="2 of 4 branches missed.">		if (colors == null || colors.getColor(ColorType.BACK) == null)</span>
-<span class="fc" id="L89">			return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (colors == null || colors.getColor(ColorType.BACK) == null)</span>
+<span class="nc" id="L89">			return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
 <span class="nc" id="L91">		return colors.getColor(ColorType.BACK);</span>
 	}
 
 	private final HColor getLineColor(ISkinParam skinParam, Style style) {
-<span class="pc bpc" id="L95" title="2 of 4 branches missed.">		if (colors == null || colors.getColor(ColorType.LINE) == null)</span>
-<span class="fc" id="L96">			return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (colors == null || colors.getColor(ColorType.LINE) == null)</span>
+<span class="nc" id="L96">			return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 
 <span class="nc" id="L98">		return colors.getColor(ColorType.LINE);</span>
 	}
 
 	private UStroke getStroke(Style style) {
-<span class="fc" id="L102">		return style.getStroke();</span>
+<span class="nc" id="L102">		return style.getStroke();</span>
 	}
 
 	public Fashion getContext(ISkinParam skinParam, Style style) {
-<span class="fc" id="L106">		return new Fashion(getBackColor(skinParam, style), getLineColor(skinParam, style)).withStroke(getStroke(style));</span>
+<span class="nc" id="L106">		return new Fashion(getBackColor(skinParam, style), getLineColor(skinParam, style)).withStroke(getStroke(style));</span>
 	}
 
 	public final boolean isBlank() {
-<span class="fc" id="L110">		return states[0].equals(&quot;{...}&quot;);</span>
+<span class="nc" id="L110">		return states[0].equals(&quot;{...}&quot;);</span>
 	}
 
 	public final boolean isCompletelyHidden() {
-<span class="fc" id="L114">		return states[0].equals(&quot;{hidden}&quot;);</span>
+<span class="nc" id="L114">		return states[0].equals(&quot;{hidden}&quot;);</span>
 	}
 
 	public final boolean isFlat() {
-<span class="fc" id="L118">		return isFlat(states[0]);</span>
+<span class="nc" id="L118">		return isFlat(states[0]);</span>
 	}
 
 	public final static boolean isFlat(String state) {
-<span class="fc" id="L122">		return state.equals(&quot;{-}&quot;);</span>
+<span class="nc" id="L122">		return state.equals(&quot;{-}&quot;);</span>
 	}
 
 	// public final boolean isUnknown() {

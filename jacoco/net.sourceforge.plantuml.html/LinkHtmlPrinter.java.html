@@ -167,21 +167,21 @@ public final class LinkHtmlPrinter {
 	}
 
 	static String htmlLink(Entity ent) {
-<span class="nc" id="L170">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L171">		sb.append(&quot;&lt;a href=\&quot;&quot;);</span>
-<span class="nc" id="L172">		sb.append(urlOf(ent));</span>
-<span class="nc" id="L173">		sb.append(&quot;\&quot;&gt;&quot;);</span>
-<span class="nc" id="L174">		sb.append(StringUtils.unicodeForHtml(ent.getName()));</span>
-<span class="nc" id="L175">		sb.append(&quot;&lt;/a&gt;&quot;);</span>
-<span class="nc" id="L176">		return sb.toString();</span>
+<span class="fc" id="L170">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L171">		sb.append(&quot;&lt;a href=\&quot;&quot;);</span>
+<span class="fc" id="L172">		sb.append(urlOf(ent));</span>
+<span class="fc" id="L173">		sb.append(&quot;\&quot;&gt;&quot;);</span>
+<span class="fc" id="L174">		sb.append(StringUtils.unicodeForHtml(ent.getName()));</span>
+<span class="fc" id="L175">		sb.append(&quot;&lt;/a&gt;&quot;);</span>
+<span class="fc" id="L176">		return sb.toString();</span>
 	}
 
 	static String urlOf(Entity ent) {
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (ent.getLeafType() == LeafType.NOTE) {</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (ent.getLeafType() == LeafType.NOTE) {</span>
 <span class="nc" id="L181">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (ent.getName().matches(&quot;[-\\w_ .]+&quot;)) {</span>
-<span class="nc" id="L184">			return StringUtils.unicodeForHtml(ent.getName()) + &quot;.html&quot;;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (ent.getName().matches(&quot;[-\\w_ .]+&quot;)) {</span>
+<span class="fc" id="L184">			return StringUtils.unicodeForHtml(ent.getName()) + &quot;.html&quot;;</span>
 		}
 <span class="nc" id="L186">		return StringUtils.unicodeForHtml(ent.getUid()) + &quot;.html&quot;;</span>
 	}

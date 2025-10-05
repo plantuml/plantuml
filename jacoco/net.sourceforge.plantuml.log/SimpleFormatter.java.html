@@ -40,37 +40,37 @@ import java.io.StringWriter;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
-<span class="nc" id="L43">public class SimpleFormatter extends Formatter {</span>
+<span class="fc" id="L43">public class SimpleFormatter extends Formatter {</span>
     // ::remove folder when __HAXE__
 
 	@Override
 	public synchronized String format(LogRecord record) {
 		final String throwable;
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (record.getThrown() == null) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (record.getThrown() == null) {</span>
 <span class="nc" id="L50">			throwable = &quot;&quot;;</span>
 		} else {
-<span class="nc" id="L52">			final StringWriter sw = new StringWriter();</span>
-<span class="nc" id="L53">			final PrintWriter pw = new PrintWriter(sw);</span>
-<span class="nc" id="L54">			pw.println();</span>
-<span class="nc" id="L55">			record.getThrown().printStackTrace(pw);</span>
-<span class="nc" id="L56">			pw.close();</span>
-<span class="nc" id="L57">			throwable = sw.toString().trim();</span>
+<span class="fc" id="L52">			final StringWriter sw = new StringWriter();</span>
+<span class="fc" id="L53">			final PrintWriter pw = new PrintWriter(sw);</span>
+<span class="fc" id="L54">			pw.println();</span>
+<span class="fc" id="L55">			record.getThrown().printStackTrace(pw);</span>
+<span class="fc" id="L56">			pw.close();</span>
+<span class="fc" id="L57">			throwable = sw.toString().trim();</span>
 		}
 
-<span class="nc" id="L60">		final String message = record.getMessage();</span>
-<span class="nc" id="L61">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L60">		final String message = record.getMessage();</span>
+<span class="fc" id="L61">		final StringBuilder sb = new StringBuilder();</span>
 
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (message.trim().length() &gt; 0) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (message.trim().length() &gt; 0) {</span>
 <span class="nc" id="L64">			sb.append(message);</span>
 <span class="nc" id="L65">			sb.append(System.lineSeparator());</span>
 		}
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (throwable.length() &gt; 0) {</span>
-<span class="nc" id="L69">			sb.append(throwable);</span>
-<span class="nc" id="L70">			sb.append(System.lineSeparator());</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (throwable.length() &gt; 0) {</span>
+<span class="fc" id="L69">			sb.append(throwable);</span>
+<span class="fc" id="L70">			sb.append(System.lineSeparator());</span>
 		}
 
-<span class="nc" id="L73">		return sb.toString();</span>
+<span class="fc" id="L73">		return sb.toString();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

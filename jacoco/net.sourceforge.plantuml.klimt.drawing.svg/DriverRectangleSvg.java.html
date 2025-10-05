@@ -66,13 +66,13 @@ public class DriverRectangleSvg implements UDriver&lt;URectangle, SvgGraphics&gt
 <span class="fc" id="L66">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
 <span class="fc" id="L68">		final UClip clip = clipContainer.getClip();</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (clip != null) {</span>
-<span class="fc" id="L70">			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));</span>
-<span class="fc" id="L71">			x = r.x;</span>
-<span class="fc" id="L72">			y = r.y;</span>
-<span class="fc" id="L73">			width = r.width;</span>
-<span class="fc" id="L74">			height = r.height;</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (height &lt;= 0) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (clip != null) {</span>
+<span class="nc" id="L70">			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));</span>
+<span class="nc" id="L71">			x = r.x;</span>
+<span class="nc" id="L72">			y = r.y;</span>
+<span class="nc" id="L73">			width = r.width;</span>
+<span class="nc" id="L74">			height = r.height;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (height &lt;= 0) {</span>
 <span class="nc" id="L76">				return;</span>
 			}
 		}

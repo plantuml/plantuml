@@ -39,41 +39,41 @@ public class PostScriptCommandMacro implements PostScriptCommand {
     // ::remove folder when __HAXE__
 
 	final private String name;
-<span class="nc" id="L42">	final private PostScriptData data = new PostScriptData();</span>
+<span class="fc" id="L42">	final private PostScriptData data = new PostScriptData();</span>
 
-<span class="nc" id="L44">	public PostScriptCommandMacro(String name) {</span>
-<span class="nc" id="L45">		this.name = name;</span>
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L44">	public PostScriptCommandMacro(String name) {</span>
+<span class="fc" id="L45">		this.name = name;</span>
+<span class="fc" id="L46">	}</span>
 
 	public String getName() {
-<span class="nc" id="L49">		return name;</span>
+<span class="fc" id="L49">		return name;</span>
 	}
 
 	public void add(PostScriptCommand cmd) {
-<span class="nc" id="L53">		data.add(cmd);</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L53">		data.add(cmd);</span>
+<span class="fc" id="L54">	}</span>
 
 	public String toPostString() {
 <span class="nc" id="L57">		return name;</span>
 	}
 
 	public String getPostStringDefinition() {
-<span class="nc" id="L61">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L62">		sb.append(&quot;/&quot; + name + &quot; {\n&quot;);</span>
-<span class="nc" id="L63">		sb.append(data.toPostString());</span>
-<span class="nc" id="L64">		sb.append(&quot;} def\n&quot;);</span>
-<span class="nc" id="L65">		return sb.toString();</span>
+<span class="fc" id="L61">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L62">		sb.append(&quot;/&quot; + name + &quot; {\n&quot;);</span>
+<span class="fc" id="L63">		sb.append(data.toPostString());</span>
+<span class="fc" id="L64">		sb.append(&quot;} def\n&quot;);</span>
+<span class="fc" id="L65">		return sb.toString();</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L70">		return data.toPostString().hashCode();</span>
+<span class="fc" id="L70">		return data.toPostString().hashCode();</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L75">		final PostScriptCommandMacro other = (PostScriptCommandMacro) obj;</span>
-<span class="nc" id="L76">		return this.data.toPostString().equals(other.data.toPostString());</span>
+<span class="fc" id="L75">		final PostScriptCommandMacro other = (PostScriptCommandMacro) obj;</span>
+<span class="fc" id="L76">		return this.data.toPostString().equals(other.data.toPostString());</span>
 	}
 
 }

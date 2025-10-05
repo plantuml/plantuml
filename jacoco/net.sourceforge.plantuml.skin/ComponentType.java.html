@@ -86,8 +86,8 @@ import net.sourceforge.plantuml.style.Styleable;
 <span class="fc bfc" id="L86" title="All 2 branches covered.">		if (this == DESTROY)</span>
 <span class="fc" id="L87">			return LifeEventType.DESTROY.getStyleSignature();</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (this == DIVIDER)</span>
-<span class="fc" id="L90">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (this == DIVIDER)</span>
+<span class="nc" id="L90">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);</span>
 
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (this == ENGLOBER)</span>
 <span class="nc" id="L93">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.box);</span>

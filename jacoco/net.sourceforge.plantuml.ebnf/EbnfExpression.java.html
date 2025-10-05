@@ -57,57 +57,57 @@ import net.sourceforge.plantuml.utils.CharInspector;
 
 public class EbnfExpression implements TextBlockable {
 
-<span class="fc" id="L60">	private final List&lt;Token&gt; tokens = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">	private final List&lt;Token&gt; tokens = new ArrayList&lt;&gt;();</span>
 	private final boolean isCompact;
 	private final String commentAbove;
 	private final String commentBelow;
 
 	public static EbnfExpression create(CharInspector it, boolean isCompact, String commentAbove, String commentBelow) {
-<span class="fc" id="L66">		return new EbnfExpression(it, isCompact, commentAbove, commentBelow);</span>
+<span class="nc" id="L66">		return new EbnfExpression(it, isCompact, commentAbove, commentBelow);</span>
 	}
 
-<span class="fc" id="L69">	private EbnfExpression(CharInspector it, boolean isCompact, String commentAbove, String commentBelow) {</span>
-<span class="fc" id="L70">		this.isCompact = isCompact;</span>
-<span class="fc" id="L71">		this.commentAbove = commentAbove;</span>
-<span class="fc" id="L72">		this.commentBelow = commentBelow;</span>
+<span class="nc" id="L69">	private EbnfExpression(CharInspector it, boolean isCompact, String commentAbove, String commentBelow) {</span>
+<span class="nc" id="L70">		this.isCompact = isCompact;</span>
+<span class="nc" id="L71">		this.commentAbove = commentAbove;</span>
+<span class="nc" id="L72">		this.commentBelow = commentBelow;</span>
 		while (true) {
-<span class="fc" id="L74">			final char ch = it.peek(0);</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (Character.isWhitespace(ch)) {</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			} else if (ch == '-') {</span>
+<span class="nc" id="L74">			final char ch = it.peek(0);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (Character.isWhitespace(ch)) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			} else if (ch == '-') {</span>
 <span class="nc" id="L77">				tokens.add(new Token(Symbol.NOT, null));</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">			} else if (isLetterOrDigit(ch)) {</span>
-<span class="fc" id="L79">				final String litteral = readLitteral(it);</span>
-<span class="fc" id="L80">				tokens.add(new Token(Symbol.LITTERAL, litteral));</span>
-<span class="fc" id="L81">				continue;</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">			} else if (ch == '*') {</span>
-<span class="fc" id="L83">				tokens.add(new Token(Symbol.REPETITION_SYMBOL, null));</span>
-<span class="pc bpc" id="L84" title="3 of 4 branches missed.">			} else if (ch == '(' &amp;&amp; it.peek(1) == '*') {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			} else if (isLetterOrDigit(ch)) {</span>
+<span class="nc" id="L79">				final String litteral = readLitteral(it);</span>
+<span class="nc" id="L80">				tokens.add(new Token(Symbol.LITTERAL, litteral));</span>
+<span class="nc" id="L81">				continue;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			} else if (ch == '*') {</span>
+<span class="nc" id="L83">				tokens.add(new Token(Symbol.REPETITION_SYMBOL, null));</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">			} else if (ch == '(' &amp;&amp; it.peek(1) == '*') {</span>
 <span class="nc" id="L85">				final String comment = readComment(it);</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">				if (comment.trim().length() &gt; 0)</span>
 <span class="nc" id="L87">					tokens.add(new Token(Symbol.COMMENT_TOKEN, comment));</span>
 				continue;
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			} else if (ch == ',') {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			} else if (ch == ',') {</span>
 <span class="nc" id="L90">				tokens.add(new Token(Symbol.CONCATENATION, null));</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			} else if (ch == '|') {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			} else if (ch == '|') {</span>
 <span class="nc" id="L92">				tokens.add(new Token(Symbol.ALTERNATION, null));</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">			} else if (ch == '=') {</span>
-<span class="fc" id="L94">				tokens.add(new Token(Symbol.DEFINITION, null));</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			} else if (ch == '(') {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			} else if (ch == '=') {</span>
+<span class="nc" id="L94">				tokens.add(new Token(Symbol.DEFINITION, null));</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			} else if (ch == '(') {</span>
 <span class="nc" id="L96">				tokens.add(new Token(Symbol.GROUPING_OPEN, null));</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			} else if (ch == ')') {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			} else if (ch == ')') {</span>
 <span class="nc" id="L98">				tokens.add(new Token(Symbol.GROUPING_CLOSE, null));</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			} else if (ch == '[') {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			} else if (ch == '[') {</span>
 <span class="nc" id="L100">				tokens.add(new Token(Symbol.OPTIONAL_OPEN, null));</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			} else if (ch == ']') {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			} else if (ch == ']') {</span>
 <span class="nc" id="L102">				tokens.add(new Token(Symbol.OPTIONAL_CLOSE, null));</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			} else if (ch == '{') {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			} else if (ch == '{') {</span>
 <span class="nc" id="L104">				tokens.add(new Token(Symbol.REPETITION_OPEN, null));</span>
-<span class="pc bpc" id="L105" title="3 of 4 branches missed.">			} else if (ch == '}' &amp;&amp; it.peek(1) == '-') {</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">			} else if (ch == '}' &amp;&amp; it.peek(1) == '-') {</span>
 <span class="nc" id="L106">				tokens.add(new Token(Symbol.REPETITION_MINUS_CLOSE, null));</span>
 <span class="nc" id="L107">				it.jump();</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			} else if (ch == '}') {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			} else if (ch == '}') {</span>
 <span class="nc" id="L109">				tokens.add(new Token(Symbol.REPETITION_CLOSE, null));</span>
-<span class="pc bpc" id="L110" title="3 of 4 branches missed.">			} else if (ch == ';' || ch == 0) {</span>
+<span class="nc bnc" id="L110" title="All 4 branches missed.">			} else if (ch == ';' || ch == 0) {</span>
 				// it.next();
 <span class="nc" id="L112">				break;</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">			} else if (ch == '\&quot;') {</span>
@@ -123,10 +123,10 @@ public class EbnfExpression implements TextBlockable {
 <span class="nc" id="L123">				tokens.clear();</span>
 <span class="nc" id="L124">				return;</span>
 			}
-<span class="fc" id="L126">			it.jump();</span>
-<span class="fc" id="L127">			continue;</span>
+<span class="nc" id="L126">			it.jump();</span>
+<span class="nc" id="L127">			continue;</span>
 		}
-<span class="fc" id="L129">	}</span>
+<span class="nc" id="L129">	}</span>
 
 	private static String protect(final String litteral) {
 <span class="nc bnc" id="L132" title="All 2 branches missed.">		return litteral.length() == 0 ? &quot; &quot; : litteral;</span>
@@ -235,14 +235,14 @@ public class EbnfExpression implements TextBlockable {
 	}
 
 	private String readLitteral(CharInspector it) {
-<span class="fc" id="L238">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L238">		final StringBuilder sb = new StringBuilder();</span>
 		while (true) {
-<span class="fc" id="L240">			final char ch = it.peek(0);</span>
-<span class="fc bfc" id="L241" title="All 2 branches covered.">			if (isLetterOrDigit(ch) == false)</span>
-<span class="fc" id="L242">				return sb.toString();</span>
-<span class="fc" id="L243">			sb.append(ch);</span>
-<span class="fc" id="L244">			it.jump();</span>
-<span class="fc" id="L245">		}</span>
+<span class="nc" id="L240">			final char ch = it.peek(0);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (isLetterOrDigit(ch) == false)</span>
+<span class="nc" id="L242">				return sb.toString();</span>
+<span class="nc" id="L243">			sb.append(ch);</span>
+<span class="nc" id="L244">			it.jump();</span>
+<span class="nc" id="L245">		}</span>
 	}
 
 	private String readComment(CharInspector it) {
@@ -264,11 +264,11 @@ public class EbnfExpression implements TextBlockable {
 	}
 
 	private boolean isLetterOrDigit(char ch) {
-<span class="pc bpc" id="L267" title="2 of 6 branches missed.">		return ch == '-' || ch == '_' || Character.isLetterOrDigit(ch);</span>
+<span class="nc bnc" id="L267" title="All 6 branches missed.">		return ch == '-' || ch == '_' || Character.isLetterOrDigit(ch);</span>
 	}
 
 	public boolean isEmpty() {
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		return tokens.size() == 0;</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		return tokens.size() == 0;</span>
 	}
 
 }

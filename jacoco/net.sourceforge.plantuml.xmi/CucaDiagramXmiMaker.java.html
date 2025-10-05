@@ -56,29 +56,29 @@ public final class CucaDiagramXmiMaker {
 	private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
 
-<span class="fc" id="L59">	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {</span>
-<span class="fc" id="L60">		this.diagram = diagram;</span>
-<span class="fc" id="L61">		this.fileFormat = fileFormat;</span>
-<span class="fc" id="L62">	}</span>
+<span class="nc" id="L59">	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {</span>
+<span class="nc" id="L60">		this.diagram = diagram;</span>
+<span class="nc" id="L61">		this.fileFormat = fileFormat;</span>
+<span class="nc" id="L62">	}</span>
 
 	public static String getModel(UmlDiagram classDiagram) {
-<span class="fc" id="L65">		return &quot;model1&quot;;</span>
+<span class="nc" id="L65">		return &quot;model1&quot;;</span>
 	}
 
 	public void createFiles(OutputStream fos) throws IOException {
 		try {
 			final XmlDiagramTransformer xmi;
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			if (diagram instanceof StateDiagram)</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (diagram instanceof StateDiagram)</span>
 <span class="nc" id="L72">				xmi = createStateDiagram();</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">			else if (diagram instanceof DescriptionDiagram)</span>
-<span class="fc" id="L74">				xmi = createDescriptionDiagram();</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			else if (diagram instanceof ClassDiagram)</span>
-<span class="fc" id="L76">				xmi = createClassDiagram();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			else if (diagram instanceof DescriptionDiagram)</span>
+<span class="nc" id="L74">				xmi = createDescriptionDiagram();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			else if (diagram instanceof ClassDiagram)</span>
+<span class="nc" id="L76">				xmi = createClassDiagram();</span>
 			else
 <span class="nc" id="L78">				throw new UnsupportedOperationException(</span>
 <span class="nc" id="L79">						&quot;Diagram type &quot; + diagram.getUmlDiagramType() + &quot; is not supported in XMI&quot;);</span>
 
-<span class="fc" id="L81">			xmi.transformerXml(fos);</span>
+<span class="nc" id="L81">			xmi.transformerXml(fos);</span>
 <span class="nc" id="L82">		} catch (ParserConfigurationException e) {</span>
 <span class="nc" id="L83">			Log.error(e.toString());</span>
 <span class="nc" id="L84">			Logme.error(e);</span>
@@ -87,8 +87,8 @@ public final class CucaDiagramXmiMaker {
 <span class="nc" id="L87">			Log.error(e.toString());</span>
 <span class="nc" id="L88">			Logme.error(e);</span>
 <span class="nc" id="L89">			throw new IOException(e.toString());</span>
-<span class="fc" id="L90">		}</span>
-<span class="fc" id="L91">	}</span>
+<span class="nc" id="L90">		}</span>
+<span class="nc" id="L91">	}</span>
 
 	private XmlDiagramTransformer createStateDiagram() throws ParserConfigurationException {
 <span class="nc bnc" id="L94" title="All 2 branches missed.">		if (fileFormat == FileFormat.XMI_CUSTOM) {</span>
@@ -99,14 +99,14 @@ public final class CucaDiagramXmiMaker {
 	}
 
 	private XmlDiagramTransformer createClassDiagram() throws ParserConfigurationException {
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.XMI_STANDARD)</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (fileFormat == FileFormat.XMI_STANDARD)</span>
 <span class="nc" id="L103">			return new XmiClassDiagramStandard((ClassDiagram) diagram);</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		else if (fileFormat == FileFormat.XMI_ARGO)</span>
-<span class="fc" id="L105">			return new XmiClassDiagramArgo((ClassDiagram) diagram);</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		else if (fileFormat == FileFormat.XMI_SCRIPT)</span>
-<span class="fc" id="L107">			return new XmiClassDiagramScript((ClassDiagram) diagram);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		else if (fileFormat == FileFormat.XMI_STAR)</span>
-<span class="fc" id="L109">			return new XmiClassDiagramStar((ClassDiagram) diagram);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		else if (fileFormat == FileFormat.XMI_ARGO)</span>
+<span class="nc" id="L105">			return new XmiClassDiagramArgo((ClassDiagram) diagram);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		else if (fileFormat == FileFormat.XMI_SCRIPT)</span>
+<span class="nc" id="L107">			return new XmiClassDiagramScript((ClassDiagram) diagram);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		else if (fileFormat == FileFormat.XMI_STAR)</span>
+<span class="nc" id="L109">			return new XmiClassDiagramStar((ClassDiagram) diagram);</span>
 <span class="nc bnc" id="L110" title="All 2 branches missed.">		else if (fileFormat == FileFormat.XMI_CUSTOM)</span>
 <span class="nc" id="L111">			return new XmiCucaDiagramCustom&lt;&gt;(XmiClassDiagramCustom.class, diagram);</span>
 		else
@@ -114,14 +114,14 @@ public final class CucaDiagramXmiMaker {
 	}
 
 	private XmlDiagramTransformer createDescriptionDiagram() throws ParserConfigurationException {
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (fileFormat == FileFormat.XMI_SCRIPT) {</span>
-<span class="fc" id="L118">			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		} else if (fileFormat == FileFormat.XMI_CUSTOM) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (fileFormat == FileFormat.XMI_SCRIPT) {</span>
+<span class="nc" id="L118">			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		} else if (fileFormat == FileFormat.XMI_CUSTOM) {</span>
 <span class="nc" id="L120">			return new XmiCucaDiagramCustom&lt;&gt;(XmiDescriptionDiagramCustom.class, diagram);</span>
 		} else {
 			// dont care about which file format is specified, to keep backwards
 			// compatibility
-<span class="fc" id="L124">			return new XmiDescriptionDiagramStandard((DescriptionDiagram) diagram);</span>
+<span class="nc" id="L124">			return new XmiDescriptionDiagramStandard((DescriptionDiagram) diagram);</span>
 		}
 	}
 

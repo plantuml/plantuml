@@ -76,8 +76,8 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 			FileFormatOption fileFormatOption) throws IOException {
 <span class="fc" id="L77">		super(file, fileFormatOption, defines, config, charset);</span>
 <span class="fc" id="L78">		FileSystem.getInstance().setCurrentDir(SFile.fromFile(file.getAbsoluteFile().getParentFile()));</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (outputDirectory == null)</span>
-<span class="nc" id="L80">			outputDirectory = file.getAbsoluteFile().getParentFile();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (outputDirectory == null)</span>
+<span class="fc" id="L80">			outputDirectory = file.getAbsoluteFile().getParentFile();</span>
 <span class="pc bpc" id="L81" title="1 of 2 branches missed.">		else if (outputDirectory.isAbsolute() == false)</span>
 <span class="nc" id="L82">			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath()).conv();</span>
 

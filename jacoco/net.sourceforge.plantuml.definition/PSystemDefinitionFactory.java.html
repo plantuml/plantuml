@@ -49,16 +49,16 @@ public class PSystemDefinitionFactory extends PSystemBasicFactory&lt;PSystemDefi
 
 	@Override
 	public PSystemDefinition initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.DEFINITION)</span>
-<span class="fc" id="L53">			return new PSystemDefinition(source, startLine, preprocessing);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.DEFINITION)</span>
+<span class="nc" id="L53">			return new PSystemDefinition(source, startLine, preprocessing);</span>
 
 <span class="nc" id="L55">		return null;</span>
 	}
 
 	@Override
 	public PSystemDefinition executeLine(UmlSource source, PSystemDefinition system, String line, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L60">		system.doCommandLine(line);</span>
-<span class="fc" id="L61">		return system;</span>
+<span class="nc" id="L60">		system.doCommandLine(line);</span>
+<span class="nc" id="L61">		return system;</span>
 	}
 	
 	@Override

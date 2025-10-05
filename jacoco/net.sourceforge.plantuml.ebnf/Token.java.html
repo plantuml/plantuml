@@ -40,12 +40,12 @@ public class Token {
 	private final Symbol symbol;
 	private final String data;
 
-<span class="fc" id="L43">	public Token(Symbol symbol, String data) {</span>
-<span class="fc" id="L44">		this.symbol = symbol;</span>
-<span class="fc" id="L45">		this.data = data;</span>
-<span class="pc bpc" id="L46" title="1 of 4 branches missed.">		if (data != null &amp;&amp; data.length() == 0)</span>
+<span class="nc" id="L43">	public Token(Symbol symbol, String data) {</span>
+<span class="nc" id="L44">		this.symbol = symbol;</span>
+<span class="nc" id="L45">		this.data = data;</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">		if (data != null &amp;&amp; data.length() == 0)</span>
 <span class="nc" id="L47">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L48">	}</span>
+<span class="nc" id="L48">	}</span>
 
 	@Override
 	public String toString() {

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CliParsed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cli</a> &gt; <span class="el_source">CliParsed.java</span></div><h1>CliParsed.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.cli;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.utils.Peeker;
+import net.sourceforge.plantuml.utils.PeekerUtils;
+
+<span class="fc" id="L50">public class CliParsed {</span>
+
+<span class="fc" id="L52">	private final Map&lt;CliFlag, List&lt;Object&gt;&gt; lists = new EnumMap&lt;&gt;(CliFlag.class);</span>
+<span class="fc" id="L53">	private final Map&lt;CliFlag, Map&lt;String, String&gt;&gt; maps = new EnumMap&lt;&gt;(CliFlag.class);</span>
+<span class="fc" id="L54">	private final List&lt;String&gt; args = new ArrayList&lt;&gt;();</span>
+
+	public void putValue(CliFlag flag, Object value) {
+<span class="fc" id="L57">		final List&lt;Object&gt; list = lists.computeIfAbsent(flag, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L58">		list.add(value);</span>
+<span class="fc" id="L59">	}</span>
+
+	private void putMapValue(CliFlag flag, String key, String value) {
+<span class="fc" id="L62">		final Map&lt;String, String&gt; map = maps.computeIfAbsent(flag, k -&gt; new LinkedHashMap&lt;&gt;());</span>
+<span class="fc" id="L63">		map.put(key, value);</span>
+<span class="fc" id="L64">	}</span>
+
+	public boolean isTrue(CliFlag flag) {
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (maps.containsKey(flag))</span>
+<span class="fc" id="L68">			return true;</span>
+
+<span class="fc" id="L70">		final List&lt;Object&gt; list = lists.get(flag);</span>
+
+		// Useless: cannot be Boolean.FALSE
+<span class="fc bfc" id="L73" title="All 6 branches covered.">		if (list != null &amp;&amp; list.size() &gt; 0 &amp;&amp; list.get(0) instanceof Boolean)</span>
+<span class="fc" id="L74">			return (Boolean) list.get(0);</span>
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		return list != null;</span>
+	}
+
+	public String getString(CliFlag flag) {
+<span class="fc" id="L80">		final List&lt;Object&gt; list = lists.get(flag);</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">		if (list != null &amp;&amp; list.size() &gt; 0)</span>
+<span class="fc" id="L82">			return (String) list.get(0);</span>
+
+<span class="fc" id="L84">		return flag.getDefaultValue();</span>
+	}
+
+	public Object getObject(CliFlag flag) {
+<span class="fc" id="L88">		final List&lt;Object&gt; list = lists.get(flag);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (list != null)</span>
+<span class="fc" id="L90">			return list.get(0);</span>
+
+<span class="nc" id="L92">		return flag.getDefaultValue();</span>
+	}
+
+	public Object getFromType(Class&lt;?&gt; clazz) {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (List&lt;Object&gt; list : lists.values())</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (list.size() == 1) {</span>
+<span class="fc" id="L98">				final Object element = list.get(0);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">				if (element.getClass() == clazz)</span>
+<span class="fc" id="L100">					return element;</span>
+			}
+
+<span class="fc" id="L103">		return null;</span>
+	}
+
+	public Map&lt;String, String&gt; getMap(CliFlag flag) {
+<span class="fc" id="L107">		return maps.get(flag);</span>
+	}
+
+	public List&lt;Object&gt; getList(CliFlag flag) {
+<span class="fc" id="L111">		return lists.get(flag);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L116">		final Map&lt;CliFlag, Object&gt; merge = new EnumMap&lt;&gt;(CliFlag.class);</span>
+<span class="fc" id="L117">		merge.putAll(lists);</span>
+<span class="fc" id="L118">		merge.putAll(maps);</span>
+<span class="fc" id="L119">		return merge.toString();</span>
+	}
+
+	public CliAction getImmediateAction() {
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (Entry&lt;CliFlag, List&lt;Object&gt;&gt; entry : lists.entrySet())</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			if (entry.getKey().getType() == Arity.UNARY_IMMEDIATE_ACTION &amp;&amp; entry.getValue().size() == 1) {</span>
+<span class="fc" id="L125">				final Object data = entry.getValue().get(0);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">				if (data instanceof CliAction)</span>
+<span class="fc" id="L127">					return (CliAction) data;</span>
+			}
+<span class="fc" id="L129">		return null;</span>
+	}
+
+	public void triggerNonImmediateCliAction() {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (Entry&lt;CliFlag, List&lt;Object&gt;&gt; entry : lists.entrySet())</span>
+<span class="fc bfc" id="L134" title="All 4 branches covered.">			if (entry.getKey().getType() != Arity.UNARY_IMMEDIATE_ACTION &amp;&amp; entry.getValue().size() == 1) {</span>
+<span class="fc" id="L135">				final Object data = entry.getValue().get(0);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">				if (data instanceof CliAction)</span>
+<span class="fc" id="L137">					((CliAction) data).runAction();</span>
+
+			}
+
+<span class="fc" id="L141">	}</span>
+
+	public static CliParsed parse(String... args) {
+<span class="fc" id="L144">		final CliParsed result = new CliParsed();</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (final Peeker&lt;String&gt; peeker = PeekerUtils.peeker(Arrays.asList(args)); peeker.peek(0) != null; peeker</span>
+<span class="fc" id="L146">				.jump()) {</span>
+
+<span class="fc" id="L148">			final String peek0 = peeker.peek(0);</span>
+<span class="fc" id="L149">			boolean found = false;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			for (CliFlag flag : CliFlag.values()) {</span>
+<span class="fc bfc" id="L151" title="All 4 branches covered.">				if (found || flag.match(peek0) == false)</span>
+<span class="fc" id="L152">					continue;</span>
+
+<span class="fc" id="L154">				found = true;</span>
+<span class="pc bpc" id="L155" title="1 of 6 branches missed.">				switch (flag.getType()) {</span>
+
+				case UNARY_BOOLEAN:
+<span class="fc" id="L158">					final Object foo = flag.getFoo();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">					result.putValue(flag, foo == null ? Boolean.TRUE : foo);</span>
+<span class="fc" id="L160">					break;</span>
+
+				case UNARY_IMMEDIATE_ACTION:
+<span class="fc" id="L163">					result.putValue(flag, flag.getFoo());</span>
+<span class="fc" id="L164">					break;</span>
+
+				case BINARY_NEXT_ARGUMENT_VALUE:
+<span class="fc" id="L167">					peeker.jump();</span>
+<span class="fc" id="L168">					result.putValue(flag, peeker.peek(0));</span>
+<span class="fc" id="L169">					break;</span>
+
+				case UNARY_INLINE_KEY_OR_KEY_VALUE:
+<span class="fc" id="L172">					final String s = peeker.peek(0).substring(2);</span>
+<span class="fc" id="L173">					final int eqIndex = s.indexOf('=');</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">					final String k = eqIndex &lt; 0 ? s : s.substring(0, eqIndex);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">					final String v = eqIndex &lt; 0 ? null : s.substring(eqIndex + 1);</span>
+<span class="fc" id="L176">					result.putMapValue(flag, k, v);</span>
+<span class="fc" id="L177">					break;</span>
+
+				case UNARY_OPTIONAL_COLON:
+<span class="fc" id="L180">					final int colon = peek0.indexOf(':');</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">					if (colon == -1) {</span>
+<span class="fc" id="L182">						result.lists.computeIfAbsent(flag, k1 -&gt; new ArrayList&lt;&gt;());</span>
+					} else
+<span class="fc bfc" id="L184" title="All 2 branches covered.">						for (String part : peek0.substring(colon + 1).split(&quot;:&quot;))</span>
+<span class="fc" id="L185">							result.putValue(flag, part);</span>
+					break;
+				}
+			}
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (found == false)</span>
+<span class="fc" id="L190">				result.args.add(peek0);</span>
+
+		}
+
+<span class="fc" id="L194">		return result;</span>
+
+	}
+
+	public List&lt;String&gt; getRemainingArgs() {
+<span class="fc" id="L199">		return Collections.unmodifiableList(args);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

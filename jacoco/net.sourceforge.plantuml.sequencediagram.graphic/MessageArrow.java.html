@@ -85,11 +85,11 @@ import net.sourceforge.plantuml.url.Url;
 	private double getRightEndInternal(StringBounder stringBounder) {
 <span class="fc" id="L86">		final Segment segment = getParticipantAt(stringBounder, NotePosition.RIGHT)</span>
 <span class="fc" id="L87">				.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment();</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (segment.getLength() == 0) {</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (segment.getLength() == 0) {</span>
 <span class="fc" id="L89">			return segment.getPos1();</span>
 		}
-<span class="fc" id="L91">		final double rectWidth = compAliveBox.getPreferredWidth(stringBounder);</span>
-<span class="fc" id="L92">		return segment.getPos2() - rectWidth;</span>
+<span class="nc" id="L91">		final double rectWidth = compAliveBox.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L92">		return segment.getPos2() - rectWidth;</span>
 	}
 
 	@Override
@@ -106,25 +106,25 @@ import net.sourceforge.plantuml.url.Url;
 	public int getDirection(StringBounder stringBounder) {
 <span class="fc" id="L107">		final double x1 = p1.getParticipantBox().getCenterX(stringBounder);</span>
 <span class="fc" id="L108">		final double x2 = p2.getParticipantBox().getCenterX(stringBounder);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (x1 &lt; x2) {</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (x1 &lt; x2) {</span>
 <span class="fc" id="L110">			return 1;</span>
 		}
-<span class="fc" id="L112">		return -1;</span>
+<span class="nc" id="L112">		return -1;</span>
 	}
 
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
 <span class="fc" id="L116">		final int direction = getDirection(stringBounder);</span>
-<span class="fc bfc" id="L117" title="All 4 branches covered.">		if (direction == 1 &amp;&amp; position == NotePosition.RIGHT) {</span>
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		if (direction == 1 &amp;&amp; position == NotePosition.RIGHT) {</span>
 <span class="fc" id="L118">			return p2;</span>
 		}
-<span class="pc bpc" id="L120" title="1 of 4 branches missed.">		if (direction == 1 &amp;&amp; position == NotePosition.LEFT) {</span>
+<span class="pc bpc" id="L120" title="2 of 4 branches missed.">		if (direction == 1 &amp;&amp; position == NotePosition.LEFT) {</span>
 <span class="fc" id="L121">			return p1;</span>
 		}
-<span class="pc bpc" id="L123" title="1 of 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.RIGHT) {</span>
-<span class="fc" id="L124">			return p1;</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.RIGHT) {</span>
+<span class="nc" id="L124">			return p1;</span>
 		}
-<span class="pc bpc" id="L126" title="2 of 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.LEFT) {</span>
-<span class="fc" id="L127">			return p2;</span>
+<span class="nc bnc" id="L126" title="All 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.LEFT) {</span>
+<span class="nc" id="L127">			return p2;</span>
 		}
 <span class="nc" id="L129">		throw new IllegalArgumentException();</span>
 	}

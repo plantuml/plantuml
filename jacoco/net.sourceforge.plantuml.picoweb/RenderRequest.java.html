@@ -27,20 +27,20 @@ public class RenderRequest {
 	}
 
 	public static RenderRequest fromJson(String json) {
-<span class="nc" id="L30">		final JsonObject parsed = Json.parse(json).asObject();</span>
+<span class="fc" id="L30">		final JsonObject parsed = Json.parse(json).asObject();</span>
 		final String[] options;
 
-<span class="nc bnc" id="L33" title="All 2 branches missed.">		if (parsed.contains(&quot;options&quot;)) {</span>
-<span class="nc" id="L34">			final JsonArray jsonArray = parsed.get(&quot;options&quot;).asArray();</span>
-<span class="nc" id="L35">			options = new String[jsonArray.size()];</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">			for (int i = 0; i &lt; jsonArray.size(); i++) {</span>
-<span class="nc" id="L37">				options[i] = jsonArray.get(i).asString();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		if (parsed.contains(&quot;options&quot;)) {</span>
+<span class="fc" id="L34">			final JsonArray jsonArray = parsed.get(&quot;options&quot;).asArray();</span>
+<span class="fc" id="L35">			options = new String[jsonArray.size()];</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			for (int i = 0; i &lt; jsonArray.size(); i++) {</span>
+<span class="fc" id="L37">				options[i] = jsonArray.get(i).asString();</span>
 			}
-<span class="nc" id="L39">		} else {</span>
-<span class="nc" id="L40">			options = new String[0];</span>
+<span class="fc" id="L39">		} else {</span>
+<span class="fc" id="L40">			options = new String[0];</span>
 		}
 
-<span class="nc" id="L43">		return new RenderRequest(options, parsed.get(&quot;source&quot;).asString());</span>
+<span class="fc" id="L43">		return new RenderRequest(options, parsed.get(&quot;source&quot;).asString());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

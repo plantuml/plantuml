@@ -67,7 +67,7 @@ public class ComponentTextParticipant extends AbstractComponentText {
 <span class="fc" id="L67">		int boxWidth = textWidth+2;</span>
 
 <span class="fc" id="L69">		charArea.fillRect(' ', 0, 0, boxWidth, height);</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (fileFormat == FileFormat.UTXT) {</span>
 <span class="fc" id="L71">			charArea.drawBoxSimpleUnicode(0, 0, boxWidth, height);</span>
 <span class="fc bfc" id="L72" title="All 2 branches covered.">			if (type == ComponentType.PARTICIPANT_TAIL) {</span>
 <span class="fc" id="L73">				charArea.drawChar('\u2534', (width - 1) / 2, 0);</span>
@@ -76,18 +76,18 @@ public class ComponentTextParticipant extends AbstractComponentText {
 <span class="fc" id="L76">				charArea.drawChar('\u252c', (width - 1) / 2, height - 1);</span>
 			}
 		} else {
-<span class="nc" id="L79">			charArea.drawBoxSimple(0, 0, boxWidth, height);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (type == ComponentType.PARTICIPANT_TAIL) {</span>
-<span class="nc" id="L81">				charArea.drawChar('+', (width - 1) / 2, 0);</span>
+<span class="fc" id="L79">			charArea.drawBoxSimple(0, 0, boxWidth, height);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			if (type == ComponentType.PARTICIPANT_TAIL) {</span>
+<span class="fc" id="L81">				charArea.drawChar('+', (width - 1) / 2, 0);</span>
 			}
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (type == ComponentType.PARTICIPANT_HEAD) {</span>
-<span class="nc" id="L84">				charArea.drawChar('+', (width - 1) / 2, height - 1);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (type == ComponentType.PARTICIPANT_HEAD) {</span>
+<span class="fc" id="L84">				charArea.drawChar('+', (width - 1) / 2, height - 1);</span>
 			}
 		}
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (fileFormat == FileFormat.UTXT) {</span>
 <span class="fc" id="L88">			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 1, 1);</span>
 		} else {
-<span class="nc" id="L90">			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 1, 1);</span>
+<span class="fc" id="L90">			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 1, 1);</span>
 		}
 <span class="fc" id="L92">	}</span>
 

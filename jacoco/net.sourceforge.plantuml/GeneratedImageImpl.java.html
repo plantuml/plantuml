@@ -71,11 +71,11 @@ public class GeneratedImageImpl implements GeneratedImage {
 	}
 
 	public int lineErrorRaw() {
-<span class="nc" id="L74">		final Diagram system = blockUml.getDiagram();</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (system instanceof PSystemError) {</span>
-<span class="nc" id="L76">			return ((PSystemError) system).getLineLocation().getPosition();</span>
+<span class="fc" id="L74">		final Diagram system = blockUml.getDiagram();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (system instanceof PSystemError) {</span>
+<span class="fc" id="L76">			return ((PSystemError) system).getLineLocation().getPosition();</span>
 		}
-<span class="nc" id="L78">		return -1;</span>
+<span class="fc" id="L78">		return -1;</span>
 	}
 
 	@Override
