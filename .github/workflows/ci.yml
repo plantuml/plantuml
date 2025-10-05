@@ -48,9 +48,6 @@ jobs:
       - name: Build with Ant
         run: ant -noinput
 
-      - name: Check PlantUML version
-        run: java -jar plantuml.jar -version
-        
       - name: Upload plantuml.jar
         if: always()
         uses: actions/upload-artifact@v4
