@@ -61,14 +61,14 @@ public class LifeEventTile extends AbstractTile {
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="nc" id="L64">		super.callbackY_internal(y);</span>
+<span class="fc" id="L64">		super.callbackY_internal(y);</span>
 		// System.err.println(&quot;LifeEventTile::updateStairs &quot; + lifeEvent + &quot; &quot; +
 		// livingSpace.getParticipant() + &quot; y=&quot; + y);
-<span class="nc" id="L67">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L67">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
+<span class="fc" id="L68">	}</span>
 
 	public Event getEvent() {
-<span class="nc" id="L71">		return lifeEvent;</span>
+<span class="fc" id="L71">		return lifeEvent;</span>
 	}
 
 	@Override
@@ -78,14 +78,14 @@ public class LifeEventTile extends AbstractTile {
 
 	public LifeEventTile(LifeEvent lifeEvent, TileArguments tileArguments, LivingSpace livingSpace, Rose skin,
 			ISkinParam skinParam, YGauge currentY) {
-<span class="nc" id="L81">		super(tileArguments.getStringBounder(), currentY);</span>
-<span class="nc" id="L82">		this.lifeEvent = lifeEvent;</span>
-<span class="nc" id="L83">		this.tileArguments = tileArguments;</span>
-<span class="nc" id="L84">		this.livingSpace = livingSpace;</span>
-<span class="nc" id="L85">		this.skin = skin;</span>
-<span class="nc" id="L86">		this.skinParam = skinParam;</span>
-<span class="nc" id="L87">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="nc" id="L88">	}</span>
+<span class="fc" id="L81">		super(tileArguments.getStringBounder(), currentY);</span>
+<span class="fc" id="L82">		this.lifeEvent = lifeEvent;</span>
+<span class="fc" id="L83">		this.tileArguments = tileArguments;</span>
+<span class="fc" id="L84">		this.livingSpace = livingSpace;</span>
+<span class="fc" id="L85">		this.skin = skin;</span>
+<span class="fc" id="L86">		this.skinParam = skinParam;</span>
+<span class="fc" id="L87">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L88">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
@@ -114,39 +114,39 @@ public class LifeEventTile extends AbstractTile {
 <span class="nc" id="L114">	}</span>
 
 	public boolean isDestroyWithoutMessage() {
-<span class="nc bnc" id="L117" title="All 4 branches missed.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
+<span class="pc bpc" id="L117" title="2 of 4 branches missed.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
 	}
 
 	public double getPreferredHeight() {
 //		if (lifeEvent.isActivate()) {
 //			return 20;
 //		}
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (isDestroyWithoutMessage()) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (isDestroyWithoutMessage()) {</span>
 <span class="nc" id="L125">			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam, null);</span>
 <span class="nc" id="L126">			final XDimension2D dimCross = cross.getPreferredDimension(getStringBounder());</span>
 <span class="nc" id="L127">			return dimCross.getHeight();</span>
 		}
-<span class="nc" id="L129">		return 0;</span>
+<span class="fc" id="L129">		return 0;</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L133">	}</span>
+<span class="fc" id="L133">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L136">		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
-<span class="nc" id="L138">				? CommunicationTile.LIVE_DELTA_SIZE</span>
-<span class="nc" id="L139">				: 0;</span>
-<span class="nc" id="L140">		return livingSpace.getPosC(getStringBounder()).addFixed(-liveDeltaWidthAdjustment);</span>
+<span class="fc" id="L136">		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
+<span class="fc" id="L138">				? CommunicationTile.LIVE_DELTA_SIZE</span>
+<span class="pc" id="L139">				: 0;</span>
+<span class="fc" id="L140">		return livingSpace.getPosC(getStringBounder()).addFixed(-liveDeltaWidthAdjustment);</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L144">		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
-<span class="nc" id="L146">				? levelAt * CommunicationTile.LIVE_DELTA_SIZE</span>
-<span class="nc" id="L147">				: 0;</span>
+<span class="fc" id="L144">		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
+<span class="fc" id="L146">				? levelAt * CommunicationTile.LIVE_DELTA_SIZE</span>
+<span class="pc" id="L147">				: 0;</span>
 
-<span class="nc" id="L149">		return livingSpace.getPosC(getStringBounder()).addFixed(liveDeltaWidthAdjustment);</span>
+<span class="fc" id="L149">		return livingSpace.getPosC(getStringBounder()).addFixed(liveDeltaWidthAdjustment);</span>
 	}
 
 }

@@ -93,22 +93,22 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 <span class="fc" id="L93">			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
 		}
 
-<span class="nc" id="L96">		livingSpaces.drawLifeLines(ug.apply(UTranslate.dy(headHeight)), height, context);</span>
+<span class="fc" id="L96">		livingSpaces.drawLifeLines(ug.apply(UTranslate.dy(headHeight)), height, context);</span>
 
-<span class="nc" id="L98">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (playingSpace.isShowFootbox()) {</span>
-<span class="nc" id="L100">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(height + headHeight)), context, VerticalAlignment.TOP);</span>
+<span class="fc" id="L98">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (playingSpace.isShowFootbox()) {</span>
+<span class="fc" id="L100">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(height + headHeight)), context, VerticalAlignment.TOP);</span>
 		}
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (ymax == 0) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (ymax == 0) {</span>
 <span class="nc" id="L103">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)));</span>
 		} else {
-<span class="nc" id="L105">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);</span>
+<span class="fc" id="L105">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);</span>
 			// playingSpace.drawForeground(new
 			// UGraphicNewpages(ug.apply(UTranslate.dy(headHeight)), ymin, ymax));
-<span class="nc" id="L108">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
+<span class="fc" id="L108">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
 		}
 		// drawNewPages(ug.apply(UTranslate.dy(headHeight)));
-<span class="nc" id="L111">	}</span>
+<span class="fc" id="L111">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
 <span class="fc" id="L114">		return playingSpace.getMinX(stringBounder);</span>

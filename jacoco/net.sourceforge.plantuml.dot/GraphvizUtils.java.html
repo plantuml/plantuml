@@ -104,7 +104,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 <span class="nc" id="L104">			} catch (Exception e) {</span>
 <span class="nc" id="L105">				result.add(red + e.toString());</span>
 <span class="nc" id="L106">				Logme.error(e);</span>
-<span class="nc" id="L107">				error = -1;</span>
+<span class="nc" id="L107">				error = 11;</span>
 <span class="nc" id="L108">			}</span>
 <span class="nc" id="L109">			return error;</span>
 		}
@@ -128,29 +128,29 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 <span class="nc" id="L128">				final int v = GraphvizRuntimeEnvironment.getInstance().getDotVersion();</span>
 <span class="nc bnc" id="L129" title="All 2 branches missed.">				if (v == -1) {</span>
 <span class="nc" id="L130">					result.add(&quot;Warning : cannot determine dot version&quot;);</span>
-<span class="nc" id="L131">					error = -2;</span>
+<span class="nc" id="L131">					error = 12;</span>
 <span class="nc bnc" id="L132" title="All 2 branches missed.">				} else if (v &lt; DOT_VERSION_LIMIT) {</span>
 <span class="nc" id="L133">					result.add(bold + &quot;Warning : Your dot installation seems old&quot;);</span>
 <span class="nc" id="L134">					result.add(bold + &quot;Some diagrams may have issues&quot;);</span>
-<span class="nc" id="L135">					error = -3;</span>
+<span class="nc" id="L135">					error = 13;</span>
 				} else {
 <span class="nc" id="L137">					final String err = getTestCreateSimpleFile();</span>
 <span class="nc bnc" id="L138" title="All 2 branches missed.">					if (err == null) {</span>
 <span class="nc" id="L139">						result.add(bold + &quot;Installation seems OK. File generation OK&quot;);</span>
 					} else {
 <span class="nc" id="L141">						result.add(red + err);</span>
-<span class="nc" id="L142">						error = -4;</span>
+<span class="nc" id="L142">						error = 14;</span>
 					}
 				}
 <span class="nc" id="L145">			} catch (Exception e) {</span>
 <span class="nc" id="L146">				result.add(red + e.toString());</span>
 <span class="nc" id="L147">				Logme.error(e);</span>
-<span class="nc" id="L148">				error = -5;</span>
+<span class="nc" id="L148">				error = 15;</span>
 <span class="nc" id="L149">			}</span>
 		} else {
 <span class="nc" id="L151">			result.add(red + &quot;Error: &quot; + exeState.getTextMessage());</span>
 <span class="nc" id="L152">			result.add(&quot;Error: only sequence diagrams will be generated&quot;);</span>
-<span class="nc" id="L153">			error = -6;</span>
+<span class="nc" id="L153">			error = 16;</span>
 		}
 
 <span class="nc" id="L156">		return error;</span>

@@ -99,13 +99,13 @@ public class PlayingSpace implements Bordered {
 
 	public void drawBackground(UGraphic ug) {
 <span class="fc" id="L101">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
-<span class="nc" id="L102">		drawUInternal(interceptor, false);</span>
-<span class="nc" id="L103">	}</span>
+<span class="fc" id="L102">		drawUInternal(interceptor, false);</span>
+<span class="fc" id="L103">	}</span>
 
 	public void drawForeground(UGraphic ug) {
-<span class="nc" id="L106">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
-<span class="nc" id="L107">		drawUInternal(interceptor, false);</span>
-<span class="nc" id="L108">	}</span>
+<span class="fc" id="L106">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
+<span class="fc" id="L107">		drawUInternal(interceptor, false);</span>
+<span class="fc" id="L108">	}</span>
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
 <span class="fc" id="L111">		final StringBounder stringBounder = ug.getStringBounder();</span>
