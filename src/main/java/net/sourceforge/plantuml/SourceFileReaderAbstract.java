@@ -76,7 +76,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	private FileFormatOption fileFormatOption;
 	private boolean checkMetadata;
-	private boolean noerror;
+	private boolean noErrorImage;
 
 	final private Charset charset;
 
@@ -178,7 +178,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				Logme.error(t);
-				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noerror)
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noErrorImage)
 					continue;
 
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
@@ -189,7 +189,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
 			final List<FileImageData> exportDiagrams;
-			if (noerror && system instanceof PSystemError) {
+			if (noErrorImage && system instanceof PSystemError) {
 				exportDiagrams = new ArrayList<FileImageData>();
 				exportDiagrams
 						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
@@ -216,8 +216,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
 
-	protected final void setNoerror(boolean noerror) {
-		this.noerror = noerror;
+	protected final void setNoErrorImage(boolean noErrorImage) {
+		this.noErrorImage = noErrorImage;
 
 	}
 

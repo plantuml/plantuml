@@ -15,10 +15,28 @@ import net.sourceforge.plantuml.Run;
 class RunFlagSkinparamTest extends AbstractCliTest {
 	@Test
 	@StdIo
-	void testSvg(StdOut out) throws IOException, InterruptedException {
+	void testSvg1(StdOut out) throws IOException, InterruptedException {
 		Path file = aliceBob_hello(tempDir, "test.txt");
 
 		Run.main(new String[] { "-SVAR=FOO", "-svg", file.toAbsolutePath().toString() });
+
+		assertLs("[test.svg, test.txt]", tempDir);
+		final Path svgFile = tempDir.resolve("test.svg");
+		assertTrue(Files.exists(svgFile));
+
+		Run.main(new String[] { "-metadata", svgFile.toAbsolutePath().toString() });
+
+		assertTrue(out.capturedString().contains("test.svg"));
+		assertLineSplitContains(out.capturedString(), "@startuml", "skinparamlocked VAR FOO", "alice->bob : hello",
+				"@enduml");
+	}
+
+	@Test
+	@StdIo
+	void testSvg2(StdOut out) throws IOException, InterruptedException {
+		Path file = aliceBob_hello(tempDir, "test.txt");
+
+		Run.main(new String[] { "--skinparam", "VAR=FOO", "-svg", file.toAbsolutePath().toString() });
 
 		assertLs("[test.svg, test.txt]", tempDir);
 		final Path svgFile = tempDir.resolve("test.svg");

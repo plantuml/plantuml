@@ -50,10 +50,15 @@ public class HelpTable {
 		lines.add(cells);
 	}
 
-	public int size(int cols) {
+	private int sizeFirstColumn() {
 		int result = 0;
-		for (String[] line : lines)
-			result = Math.max(result, line[cols].length());
+		for (String[] line : lines) {
+			final int idx = line[0].indexOf('\n');
+			if (idx == -1)
+				result = Math.max(result, line[0].length());
+			else
+				result = Math.max(result, idx);
+		}
 		return result;
 	}
 
@@ -64,6 +69,9 @@ public class HelpTable {
 	}
 
 	private static String format(String s, int size, char format) {
+		if (s.length() == size - 1)
+			return s + " ";
+
 		final StringBuilder result = new StringBuilder(s);
 		while (result.length() < size)
 			result.append(format);
@@ -71,17 +79,26 @@ public class HelpTable {
 	}
 
 	public void printMe(PrintStream out) {
-		final int size0 = size(0);
-		int i = 0;
-		for (String[] line : lines)
+		final int size0 = sizeFirstColumn();
+		for (String[] line : lines) {
 			if (line[0].length() == 0) {
 				out.println();
 				out.println(line[1] + ":");
-				// out.println();
+				continue;
+			}
+			final String firstCol[] = line[0].split("\n");
+			final String secondCol[] = line[1].split("\n");
 
-			} else
-				out.println(format(line[0] + " ", size0 + 2, '.') + " " + line[1]);
+			if (firstCol.length == 2) {
+				out.println(firstCol[0]);
+				out.println("     " + format(firstCol[1] + " ", size0 + 2 - 5, '.') + " " + secondCol[0]);
 
+			} else {
+				out.println(format(line[0] + " ", size0 + 2, '.') + " " + secondCol[0]);
+				for (int i = 1; i < secondCol.length; i++)
+					out.println(format(" ", size0 + 2, ' ') + " " + secondCol[i]);
+			}
+		}
 	}
 
 }

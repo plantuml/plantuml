@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -104,30 +105,20 @@ public class CliOptions {
 		if (limitSize != null)
 			System.setProperty("PLANTUML_LIMIT_SIZE", limitSize);
 
-		final Map<String, String> flagInclude = flags.getMap(CliFlag.INCLUDE);
-		if (flagInclude != null)
-			for (String key : flagInclude.keySet())
-				initInclude(key);
+		for (String key : flags.getMap(CliFlag.INCLUDE, CliFlag.INCLUDE_LONG).keySet())
+			initInclude(key);
 
-		final List<Object> flagTheme = flags.getList(CliFlag.THEME);
-		if (flagTheme != null)
-			for (Object theme : flagTheme)
-				config.add("!theme " + theme);
+		for (Object theme : flags.getList(CliFlag.THEME))
+			config.add("!theme " + theme);
 
-		final List<Object> flagConfig = flags.getList(CliFlag.CONFIG);
-		if (flagConfig != null)
-			for (Object fileName : flagConfig)
-				addInConfig(fileName.toString());
+		for (Object fileName : flags.getList(CliFlag.CONFIG))
+			addInConfig(fileName.toString());
 
-		final Map<String, String> flagPragma = flags.getMap(CliFlag.PRAGMA);
-		if (flagPragma != null)
-			for (Entry<String, String> ent : flagPragma.entrySet())
-				config.add("!pragma " + ent.getKey() + " " + ent.getValue());
+		for (Entry<String, String> ent : flags.getMap(CliFlag.PRAGMA, CliFlag.PRAGMA_LONG).entrySet())
+			config.add("!pragma " + ent.getKey() + " " + ent.getValue());
 
-		final Map<String, String> flagSkinparam = flags.getMap(CliFlag.SKINPARAM);
-		if (flagSkinparam != null)
-			for (Entry<String, String> ent : flagSkinparam.entrySet())
-				config.add("skinparamlocked " + ent.getKey() + " " + ent.getValue());
+		for (Entry<String, String> ent : flags.getMap(CliFlag.SKINPARAM, CliFlag.SKINPARAM_LONG).entrySet())
+			config.add("skinparamlocked " + ent.getKey() + " " + ent.getValue());
 
 //		for (int i = 0; i < arg.length; i++) {
 //			String s = arg[i];
@@ -307,9 +298,7 @@ public class CliOptions {
 //	}
 
 	private Map<String, String> defines() {
-		final Map<String, String> result = flags.getMap(CliFlag.DEFINE);
-		if (result == null)
-			return Collections.emptyMap();
+		final Map<String, String> result = flags.getMap(CliFlag.DEFINE, CliFlag.DEFINE_LONG);
 		return Collections.unmodifiableMap(result);
 	}
 
@@ -325,7 +314,14 @@ public class CliOptions {
 		if (this.fileFormatOption != null)
 			return fileFormatOption;
 
-		FileFormat format = (FileFormat) flags.getFromType(FileFormat.class);
+		FileFormat format = null;
+		final String formatFlag = flags.getString(CliFlag.FORMAT);
+		if (formatFlag != null)
+			format = FileFormat.fromCli(formatFlag);
+
+		if (format == null)
+			format = (FileFormat) flags.getFromType(FileFormat.class);
+
 		if (format == null)
 			format = FileFormat.PNG;
 

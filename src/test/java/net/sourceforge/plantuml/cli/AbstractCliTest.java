@@ -30,13 +30,14 @@ public class AbstractCliTest {
 	void setUp() {
 		System.setProperty(Exit.DISABLE_PROPERTY, "true");
 		GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, false);
+		GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, null);
 	}
-	
+
 	@AfterEach
 	void tearDown() {
 		GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, false);
+		GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, null);
 	}
-
 
 	public int assertExitCode(ThrowingRunnable action) throws Exception {
 		try {
@@ -98,6 +99,15 @@ public class AbstractCliTest {
 		for (int i = 0; i + expected.size() <= lines.size(); i++)
 			if (lines.subList(i, i + expected.size()).equals(expected))
 				throw new AssertionError(lines);
+	}
+
+	public String cleanControlChars(String s) {
+		return s.replaceAll("\\p{Cntrl}", "");
+	}
+
+	public void assertEqualsButControlChars(String expected, String actual) {
+		assertEquals(cleanControlChars(expected), cleanControlChars(actual));
+
 	}
 
 }

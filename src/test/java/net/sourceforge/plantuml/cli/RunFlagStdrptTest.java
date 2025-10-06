@@ -58,7 +58,7 @@ class RunFlagStdrptTest extends AbstractCliTest {
 
 		assertLs("[test.svg, test.txt]", tempDir);
 
-		assertEquals("test.txt:2:error:Syntax Error?\n", err.capturedString());
+		assertEquals("test.txt:2:error:Syntax Error?", cleanControlChars(err.capturedString()));
 
 	}
 

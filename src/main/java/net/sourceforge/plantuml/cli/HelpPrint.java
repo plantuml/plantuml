@@ -48,7 +48,7 @@ public class HelpPrint {
 		System.out.println();
 		System.out.println("Usage:");
 		System.out.println("  java -jar plantuml.jar [options] [file|dir]...");
-		System.out.println("  java -jar plantuml.jar [options] -gui");
+		System.out.println("  java -jar plantuml.jar [options] --gui");
 		System.out.println();
 		System.out.println("Description:");
 		System.out.println(
@@ -88,23 +88,26 @@ public class HelpPrint {
 		System.out.println("  java -jar plantuml.jar \"**/*.puml\"");
 		System.out.println();
 		System.out.println("  # Check syntax only (CI)");
-		System.out.println("  java -jar plantuml.jar -checkonly src/diagrams");
+		System.out.println("  java -jar plantuml.jar --check-syntax src/diagrams");
 		System.out.println();
 		System.out.println("  # Read from stdin and write to stdout (SVG)");
-		System.out.println("  cat diagram.puml | java -jar plantuml.jar -tsvg -pipe > out.svg");
+		System.out.println("  cat diagram.puml | java -jar plantuml.jar --svg -pipe > out.svg");
 		System.out.println();
 		System.out.println("  # Encode a sprite from an image");
-		System.out.println("  java -jar plantuml.jar -encodesprite myicon.png");
+		System.out.println("  java -jar plantuml.jar --sprite 16z myicon.png");
 		System.out.println();
 		System.out.println("  # Use a define");
 		System.out.println("  java -jar plantuml.jar -DAUTHOR=John diagram.puml");
+		System.out.println();
+		System.out.println("  # Change output directory");
+		System.out.println("  java -jar plantuml.jar --format svg --output-dir out diagrams/");
 		System.out.println();
 		System.out.println("Exit codes:");
 		System.out.println("  0   Success");
 		System.out.println("  >0  Error (syntax error or processing failure)");
 		System.out.println();
 		System.out.println("See also:");
-		System.out.println("  java -jar plantuml.jar -help:more");
+		System.out.println("  java -jar plantuml.jar --help-more");
 		System.out.println("  Documentation: https://plantuml.com");
 	}
 
@@ -124,23 +127,6 @@ public class HelpPrint {
 			}
 		}
 		return table;
-	}
-
-	private void printHelpOld() throws InterruptedException {
-
-		final char separator = SFile.separatorChar;
-		System.out.println("where options include:");
-		System.out.println("    -debugsvek\t\tTo generate intermediate svek files");
-		System.out.println(
-				"    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
-		// System.out.println(" -extractstdlib\tTo extract PlantUML Standard Library
-		// into stdlib folder");
-		System.out.println("    -filename \"example.puml\"\tTo override %filename% variable");
-		System.out.println("    -pipeimageindex N\tTo generate the Nth image with pipe option");
-		System.out.println("    -printfonts\t\tTo print fonts available on your system");
-		System.out.println("    -stdlib\t\tTo print standard library info");
-		System.out.println("    -syntax\t\tTo report any syntax error from standard input without generating images");
-		// exit(0);
 	}
 
 }

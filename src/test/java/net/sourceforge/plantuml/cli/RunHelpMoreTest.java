@@ -11,7 +11,7 @@ class RunHelpMoreTest extends AbstractCliTest {
 	@Test
 	void testHelp() throws IOException, InterruptedException {
 
-		Run.main(new String[] { "-help:more" });
+		Run.main(new String[] { "--help-more" });
 
 	}
 

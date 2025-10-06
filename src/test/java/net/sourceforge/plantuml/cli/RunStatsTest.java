@@ -54,7 +54,7 @@ class RunStatsTest extends AbstractCliTest {
 		for (int i = 0; i < 12; i++)
 			Run.main(new String[] { "-enablestats", "-svg", tempDir.toAbsolutePath().toString() });
 
-		Run.main(new String[] { "-dumpstats" });
+		Run.main(new String[] { "--export-stats" });
 
 		assertTrue(out.capturedString().contains("ID"));
 		assertTrue(out.capturedString().contains("Mean(ms)"));
@@ -70,7 +70,7 @@ class RunStatsTest extends AbstractCliTest {
 		for (int i = 0; i < 12; i++)
 			Run.main(new String[] { "-enablestats", "-svg", tempDir.toAbsolutePath().toString() });
 
-		Run.main(new String[] { "-dumphtmlstats" });
+		Run.main(new String[] { "--export-stats-html" });
 
 		assertTrue(html.exists());
 		assertFalse(xml.exists());

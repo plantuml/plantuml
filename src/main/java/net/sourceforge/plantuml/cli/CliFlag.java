@@ -50,47 +50,50 @@ public enum CliFlag {
 	// General:
 
 	@CliFlagDoc(value = "Show this help", level = 0)
-	HELP("-help", aliases("-h", "-?", "--help"), Arity.UNARY_IMMEDIATE_ACTION, HelpPrint::printHelp),
+	HELP("--help", aliases("-h", "-?", DEPRECATED("-help")), Arity.UNARY_IMMEDIATE_ACTION, HelpPrint::printHelp),
 
 	@CliFlagDoc(value = "Show extended help (advanced options)", level = 0)
-	HELP_MORE("-help:more", aliases("-h:more", "-?:more", "--help:more"), Arity.UNARY_IMMEDIATE_ACTION,
+	HELP_MORE("--help-more", aliases(DEPRECATED("-h:more"), DEPRECATED("-help:more")), Arity.UNARY_IMMEDIATE_ACTION,
 			HelpPrint::printHelpMore),
 
 	@CliFlagDoc(value = "Show PlantUML and Java version", level = 0)
-	VERSION("-version", aliases("--version"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printVersion),
+	VERSION("--version", aliases(DEPRECATED("-version")), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printVersion),
 
 	@CliFlagDoc(value = "Show information about PlantUML authors", level = 0)
-	AUTHOR("-author", aliases("-authors", "-about"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printAbout), //
+	AUTHOR("--author", aliases("--about", DEPRECATED("-authors"), DEPRECATED("-about")), Arity.UNARY_IMMEDIATE_ACTION,
+			OptionPrint::printAbout), //
 
 	@CliFlagDoc(value = "Launch the graphical user interface", level = 0)
-	GUI("-gui", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true)),
+	GUI("--gui", aliases(DEPRECATED("-gui")), Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true)),
 
 	@CliFlagDoc(value = "Render diagrams in dark mode", level = 0)
-	DARK_MODE("-darkmode", Arity.UNARY_BOOLEAN),
+	DARK_MODE("--dark-mode", aliases(DEPRECATED("-darkmode")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Enable verbose logging", level = 0)
-	VERBOSE("-verbose", aliases("-v", "--verbose"), Arity.UNARY_BOOLEAN,
+	VERBOSE("--verbose", aliases(DEPRECATED("-v"), DEPRECATED("-verbose")), Arity.UNARY_BOOLEAN,
 			() -> GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true)),
 
 	@CliFlagDoc(value = "Print total processing time", level = 0)
-	DURATION("-duration", Arity.UNARY_BOOLEAN),
+	DURATION("--duration", aliases(DEPRECATED("-duration")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Show a textual progress bar", level = 0)
-	PROGRESS("-progress", Arity.UNARY_BOOLEAN),
+	PROGRESS("--progress-bar", aliases(DEPRECATED("-progress")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Show splash screen with progress bar", level = 0)
-	SPLASH("-splash", Arity.UNARY_BOOLEAN),
+	SPLASH("--splash-screen", aliases(DEPRECATED("-splash")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Check Graphviz installation", level = 0)
-	TEST_DOT("-testdot", Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printTestDot2),
+	TEST_DOT("--check-graphviz", aliases(DEPRECATED("-testdot")), Arity.UNARY_IMMEDIATE_ACTION,
+			OptionPrint::printCheckGraphviz),
 
-	@CliFlagDoc(value = "Start internal HTTP server for rendering", level = 0)
-	PICOWEB("-picoweb", Arity.UNARY_OPTIONAL_COLON),
+	@CliFlagDoc(value = "Start internal HTTP server for rendering (default port : 4242)", usage = "--http-server[:<port>]", level = 0)
+	PICOWEB("--http-server", aliases(DEPRECATED("-picoweb")), Arity.UNARY_OPTIONAL_COLON),
 
 	// Input & preprocessing:
 
 	@CliFlagDoc(value = "Read source from stdin, write result to stdout", level = 0, newGroup = "Input & preprocessing")
-	PIPE("-pipe", aliases("-p"), Arity.UNARY_BOOLEAN),
+	PIPE("--pipe", aliases("-p", DEPRECATED("-pipe")), Arity.UNARY_BOOLEAN),
 
 	PIPEMAP("-pipemap", Arity.UNARY_BOOLEAN), //
 	PIPEDELIMITOR("-pipedelimitor", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
@@ -98,98 +101,105 @@ public enum CliFlag {
 
 	@CliFlagDoc("Generate the Nth image with pipe option")
 	@CliDefaultValue("0")
-	PIPE_IMAGE_INDEX("-pipeimageindex", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	PIPE_IMAGE_INDEX("--pipe-image-index", aliases(DEPRECATED("-pipeimageindex")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Define a preprocessing variable (as with '!define VAR value')", usage="-DVAR=value", level = 0)
+	@CliFlagDoc(value = "Define a preprocessing variable (equivalent to '!define <var> <value>')", usage = "-D<var>=<value>,\n--define <VAR>=<value>", level = 0)
 	DEFINE("-D", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+	DEFINE_LONG("--define", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Include external file (as with '!include file')", usage="-Ifile", level = 1)
+	@CliFlagDoc(value = "Include external file (as with '!include <file>')", usage = "-I<file>,\n--include <file>", level = 1)
 	INCLUDE("-I", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+	INCLUDE_LONG("--include", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Set pragma (as with '!pragma key value')", usage="-Pkey=value", level = 1)
+	@CliFlagDoc(value = "Set pragma (equivalent to '!pragma <key> <value>')", usage = "-P<key>=<value>,\n--pragma <key>=<value>", level = 1)
 	PRAGMA("-P", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+	PRAGMA_LONG("--pragma", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Set skin parameter (as with 'skinparam key value')", usage="-Skey=value", level = 1)
+	@CliFlagDoc(value = "Set skin parameter (equivalent to 'skinparam <key> <value>')", usage = "-S<key>=<value>,\n--skinparam <key>=<value>", level = 1)
 	SKINPARAM("-S", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
+	SKINPARAM_LONG("--skinparam", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Apply a theme", usage="-theme name", level = 1)
-	THEME("-theme", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Apply a theme", usage = "--theme <name>", level = 1)
+	THEME("--theme", aliases(DEPRECATED("-theme")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Specify configuration file", usage="-config file", level = 1)
-	CONFIG("-config", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Specify configuration file", usage = "--config <file>", level = 1)
+	CONFIG("--config", aliases(DEPRECATED("-config")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Use a specific input charset", usage="-charset name", level = 1)
+	@CliFlagDoc(value = "Use a specific input charset", usage = "--charset <name>", level = 1)
 	@CliDefaultValue("UTF-8")
-	CHARSET("-charset", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	CHARSET("--charset", aliases(DEPRECATED("-charset")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
 	// Execution control:
 
-	@CliFlagDoc(value = "Check syntax without generating images", level = 0, newGroup = "Execution control")
-	CHECK_ONLY("-checkonly", Arity.UNARY_BOOLEAN),
-
-	@CliFlagDoc(value = "Skip image generation when syntax errors are present", level = 0)
-	NO_ERROR("-noerror", Arity.UNARY_BOOLEAN),
+	@CliFlagDoc(value = "Check diagram syntax without generating images", level = 0, newGroup = "Execution control")
+	CHECK_ONLY("--check-syntax", aliases("--syntax-check", DEPRECATED("-checkonly")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Stop at the first syntax error", level = 0)
-	FAIL_FAST("-failfast", Arity.UNARY_BOOLEAN),
+	FAIL_FAST("--stop-on-error", aliases(DEPRECATED("-failfast")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Pre-check syntax of all inputs and stop faster on error", level = 0)
-	FAIL_FAST2("-failfast2", Arity.UNARY_BOOLEAN),
+	FAIL_FAST2("--check-before-run", aliases(DEPRECATED("-failfast2")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Set GraphViz processing timeout in seconds", usage="-timeout N",  level = 1)
-	TIMEOUT("-timeout", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Do not generate error images for diagrams with syntax errors", level = 0)
+	NO_ERROR_IMAGE("--no-error-image", aliases(DEPRECATED("-noerror")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Use N threads for processing", usage="-nbthread N|auto",  level = 1)
-	NB_THREAD("-nbthread", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Set Graphviz processing timeout (in seconds)", usage = "--graphviz-timeout <seconds>", level = 1)
+	TIMEOUT("--graphviz-timeout", aliases(DEPRECATED("-timeout")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc(value = "Use <n> threads for processing  (auto = available processors)", usage = "--threads <n|auto>", level = 1)
+	NB_THREAD("--threads", aliases(DEPRECATED("-nbthread")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
 	// Metadata & assets:
-	@CliFlagDoc(value = "Extract PlantUML source from PNG/SVG with metadata", level = 0, newGroup = "Metadata & assets")
-	RETRIEVE_METADATA("-metadata", Arity.UNARY_BOOLEAN),
+	@CliFlagDoc(value = "Extract embedded PlantUML source from PNG or SVG metadata", level = 0, newGroup = "Metadata & assets")
+	RETRIEVE_METADATA("--extract-source", aliases(DEPRECATED("-metadata")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Do not export metadata in generated files", level = 1)
-	NO_METADATA("-nometadata", Arity.UNARY_BOOLEAN),
+	@CliFlagDoc(value = "Do not include metadata in generated files", level = 1)
+	NO_METADATA("--disable-metadata", aliases(DEPRECATED("-nometadata")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Skip PNG/SVG files that are already up-to-date (faster rebuilds)", level = 0)
-	CHECK_METADATA("-checkmetadata", Arity.UNARY_BOOLEAN),
+	@CliFlagDoc(value = "Skip PNG/SVG files that are already up-to-date (using metadata)", level = 0)
+	CHECK_METADATA("--skip-fresh", aliases(DEPRECATED("-checkmetadata")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Encode a sprite from an image", usage="-sprite 4|8|16[z] file",  level = 0)
-	ENCODE_SPRITE("-sprite", aliases("-encodesprite"), Arity.UNARY_BOOLEAN),
+	@CliFlagDoc(value = "Encode a sprite definition from an image file", usage = "--sprite <4|8|16[z]> <file>", level = 0)
+	ENCODE_SPRITE("--encode-sprite", aliases(DEPRECATED("-sprite"), DEPRECATED("-encodesprite")), Arity.UNARY_BOOLEAN),
 
 	@CliFlagDoc(value = "Obfuscate diagram texts for secure sharing", level = 0)
-	CYPHER("-cypher", Arity.UNARY_BOOLEAN),
+	CYPHER("--obfuscate", aliases(DEPRECATED("-cypher")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Compute encoded URL from a PlantUML source file", level = 1)
-	COMPUTE_URL("-computeurl", aliases("-encodeurl"), Arity.UNARY_BOOLEAN), //
+	@CliFlagDoc(value = "Generate an encoded PlantUML URL from a source file", level = 1)
+	COMPUTE_URL("--encode-url", aliases("--compute-url", DEPRECATED("-computeurl"), DEPRECATED("-encodeurl")),
+			Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Decode an encoded PlantUML URL", usage="-decodeurl string",  level = 1)
-	DECODE_URL("-decodeurl", Arity.UNARY_BOOLEAN),
+	@CliFlagDoc(value = "Decode a PlantUML encoded URL back to its source", usage = "--decode-url <string>", level = 1)
+	DECODE_URL("--decode-url", aliases(DEPRECATED("-decodeurl")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Print the list of PlantUML keywords", level = 1)
-	LANGUAGE("-language", Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printLanguage),
+	@CliFlagDoc(value = "Print the list of PlantUML language keywords", level = 1)
+	LANGUAGE("--list-keywords", aliases(DEPRECATED("-language")), Arity.UNARY_IMMEDIATE_ACTION,
+			OptionPrint::printListKeywords),
 
-	@CliFlagDoc(value = "Specify Graphviz 'dot' executable path", usage="-graphvizdot path",  level = 1)
-	GRAPHVIZ_DOT("-graphvizdot", aliases("-graphviz_dot"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Specify the path to the Graphviz 'dot' executable", usage = "--dot-path <path-to-dot-exe>", level = 1)
+	GRAPHVIZ_DOT("--dot-path", aliases(DEPRECATED("-graphvizdot"), DEPRECATED("-graphviz_dot")),
+			Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Start an FTP server (rarely used)", level = 1)
-	FTP("-ftp", Arity.UNARY_OPTIONAL_COLON),
+	@CliFlagDoc(value = "Start a local FTP server for diagram rendering (rarely used)", level = 1)
+	FTP("--ftp-server", aliases(DEPRECATED("-ftp")), Arity.UNARY_OPTIONAL_COLON),
 
-	
 	// Output control
-	@CliFlagDoc(value = "Generate images in the specified directory", usage="-output dir",  level = 1, newGroup = "Output control")
-	OUTPUT_DIR("-output", aliases("-odir", "output_dir"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Generate output files in the specified directory", usage = "--output-dir <dir>", level = 1, newGroup = "Output control")
+	OUTPUT_DIR("--output-dir", aliases("-o", DEPRECATED("output_dir"), DEPRECATED("-output"), DEPRECATED("-odir")),
+			Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Allow overwriting read-only files", level = 1)
-	OVERWRITE("-overwrite", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),
+	@CliFlagDoc(value = "Allow overwriting of read-only output files", level = 1)
+	OVERWRITE("--overwrite", aliases("--force-overwrite", DEPRECATED("-overwrite")), Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),
 
-	@CliFlagDoc(value = "Exclude files matching the given pattern", usage="-exclude pattern",  level = 1)
-	EXCLUDE("-exclude", aliases("-x"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+	@CliFlagDoc(value = "Exclude input files matching the given pattern", usage = "--exclude <pattern>", level = 1)
+	EXCLUDE("--exclude", aliases("-x", DEPRECATED("-exclude")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	
 	// Other
 
-	CLIPBOARD("-clipboard", Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runOnce), //
+	CLIPBOARD("--clipboard", Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runOnce), //
 
-	CLIPBOARDLOOP("-clipboardloop", Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runLoop), //
+	CLIPBOARDLOOP("--clipboardloop", Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runLoop), //
 
 	@CliFlagDoc("Generate intermediate Svek files")
 	DEBUG_SVEK("-debugsvek", aliases("-debug_svek"), Arity.UNARY_BOOLEAN),
@@ -222,81 +232,87 @@ public enum CliFlag {
 
 	// Output format (choose one)
 
-	@CliFlagDoc(value = "Generate images in EPS format", level = 0, newGroup = "Output format (choose one)")
-	T_EPS("-teps", aliases("-eps"), Arity.UNARY_BOOLEAN, FileFormat.EPS),
-	T_EPS_TEXT("-teps:text", aliases("-eps:text"), Arity.UNARY_BOOLEAN, FileFormat.EPS_TEXT),
+	@CliFlagDoc(value = "Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt)", level = 0, usage = "--format <name>, -f <name>", newGroup = "Output format (choose one)")
+	FORMAT("--format", aliases("-f"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Generate HTML file for class diagram", level = 1)
-	T_HTML("-thtml", aliases("-html"), Arity.UNARY_BOOLEAN, FileFormat.HTML),
+	@CliFlagDoc(value = "Generate images in EPS format", level = 0, newGroup = "Available formats")
+	T_EPS("--eps", aliases(DEPRECATED("-teps"), DEPRECATED("-eps")), Arity.UNARY_BOOLEAN, FileFormat.EPS),
+	T_EPS_TEXT("--teps:text", aliases(DEPRECATED("-teps:text"), DEPRECATED("-eps:text")), Arity.UNARY_BOOLEAN,
+			FileFormat.EPS_TEXT),
 
-	@CliFlagDoc(value = "Generate LaTeX/Tikz without preamble", level = 1)
-	T_LATEX_NOPREAMBLE("-tlatex:nopreamble", aliases("-latex:nopreamble"), Arity.UNARY_BOOLEAN,
-			FileFormat.LATEX_NO_PREAMBLE),
+	@CliFlagDoc(value = "Generate HTML files for class diagrams", level = 1)
+	T_HTML("--html", aliases(DEPRECATED("-thtml"), DEPRECATED("-html")), Arity.UNARY_BOOLEAN, FileFormat.HTML),
 
-	@CliFlagDoc(value = "Generate LaTeX/Tikz output", level = 0)
-	T_LATEX("-tlatex", aliases("-latex"), Arity.UNARY_BOOLEAN, FileFormat.LATEX),
+	@CliFlagDoc(value = "Generate LaTeX/TikZ output", level = 0)
+	T_LATEX("--latex", aliases(DEPRECATED("-tlatex"), DEPRECATED("-latex")), Arity.UNARY_BOOLEAN, FileFormat.LATEX),
+
+	@CliFlagDoc(value = "Generate LaTeX/TikZ output without preamble", level = 1)
+	T_LATEX_NOPREAMBLE("--latex-nopreamble", aliases(DEPRECATED("-tlatex:nopreamble"), DEPRECATED("-latex:nopreamble")),
+			Arity.UNARY_BOOLEAN, FileFormat.LATEX_NO_PREAMBLE),
 
 	@CliFlagDoc(value = "Generate PDF images", level = 1)
-	T_PDF("-tpdf", aliases("-pdf"), Arity.UNARY_BOOLEAN, FileFormat.PDF),
+	T_PDF("--pdf", aliases(DEPRECATED("-tpdf"), DEPRECATED("-pdf")), Arity.UNARY_BOOLEAN, FileFormat.PDF),
 
 	@CliFlagDoc(value = "Generate PNG images (default)", level = 0)
-	T_PNG("-tpng", aliases("-png"), Arity.UNARY_BOOLEAN, FileFormat.PNG),
+	T_PNG("--png", aliases(DEPRECATED("-tpng"), DEPRECATED("-png")), Arity.UNARY_BOOLEAN, FileFormat.PNG),
 
-	T_BASE64("-tbase64", aliases("-base64"), Arity.UNARY_BOOLEAN, FileFormat.BASE64),
-	T_BRAILLE("-tbraille", aliases("-braille"), Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
+	T_BASE64("--tbase64", Arity.UNARY_BOOLEAN, FileFormat.BASE64),
+	T_BRAILLE("--tbraille", Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
 
-	@CliFlagDoc(value = "Generate SCXML file for state diagram", level = 1)
-	T_SCXML("-tscxml", Arity.UNARY_BOOLEAN, FileFormat.SCXML),
+	@CliFlagDoc(value = "Generate SCXML files for state diagrams", level = 1)
+	T_SCXML("--scxml", aliases(DEPRECATED("-tscxml")), Arity.UNARY_BOOLEAN, FileFormat.SCXML),
 
 	@CliFlagDoc(value = "Generate SVG images", level = 0)
-	T_SVG("-tsvg", aliases("-svg"), Arity.UNARY_BOOLEAN, FileFormat.SVG),
+	T_SVG("--svg", aliases(DEPRECATED("-tsvg"), DEPRECATED("-svg")), Arity.UNARY_BOOLEAN, FileFormat.SVG),
 
 	@CliFlagDoc(value = "Generate ASCII art diagrams", level = 0)
-	T_TXT("-ttxt", aliases("-txt"), Arity.UNARY_BOOLEAN, FileFormat.ATXT),
+	T_TXT("--txt", aliases(DEPRECATED("-ttxt"), DEPRECATED("-txt")), Arity.UNARY_BOOLEAN, FileFormat.ATXT),
 
-	@CliFlagDoc(value = "Generate ASCII art diagrams using Unicode", level = 0)
-	T_UTXT("-tutxt", aliases("-utxt"), Arity.UNARY_BOOLEAN, FileFormat.UTXT),
+	@CliFlagDoc(value = "Generate ASCII art diagrams using Unicode characters", level = 0)
+	T_UTXT("--utxt", aliases(DEPRECATED("-tutxt"), DEPRECATED("-utxt")), Arity.UNARY_BOOLEAN, FileFormat.UTXT),
 
-	@CliFlagDoc(value = "Generate VDX images", level = 1)
-	T_VDX("-tvdx", aliases("-vdx"), Arity.UNARY_BOOLEAN, FileFormat.VDX),
+	@CliFlagDoc(value = "Generate VDX files", level = 1)
+	T_VDX("--vdx", aliases(DEPRECATED("-tvdx"), DEPRECATED("-vdx")), Arity.UNARY_BOOLEAN, FileFormat.VDX),
 
 	@CliFlagDoc(value = "Generate XMI files for class diagrams", level = 1)
-	T_XMI("-txmi", aliases("-xmi"), Arity.UNARY_BOOLEAN, FileFormat.XMI_STANDARD),
-	T_XMI_ARGO("-txmi:argo", aliases("-xmi:argo"), Arity.UNARY_BOOLEAN, FileFormat.XMI_ARGO),
-	T_XMI_CUSTOM("-txmi:custom", aliases("-xmi:custom"), Arity.UNARY_BOOLEAN, FileFormat.XMI_CUSTOM),
-	T_XMI_SCRIPT("-txmi:script", aliases("-xmi:script"), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),
-	T_XMI_STAR("-txmi:star", aliases("-xmi:star"), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),
+	T_XMI("--xmi", aliases(DEPRECATED("-txmi"), DEPRECATED("-xmi")), Arity.UNARY_BOOLEAN, FileFormat.XMI_STANDARD),
+	T_XMI_ARGO("--txmi:argo", aliases(DEPRECATED("-xmi:argo")), Arity.UNARY_BOOLEAN, FileFormat.XMI_ARGO),
+	T_XMI_CUSTOM("--txmi:custom", aliases(DEPRECATED("-xmi:custom")), Arity.UNARY_BOOLEAN, FileFormat.XMI_CUSTOM),
+	T_XMI_SCRIPT("--txmi:script", aliases(DEPRECATED("-xmi:script")), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),
+	T_XMI_STAR("--txmi:star", aliases(DEPRECATED("-xmi:star")), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),
 
 	@CliFlagDoc(value = "Output preprocessor text of diagrams", level = 1)
 	PREPROCESS("-preproc", Arity.UNARY_BOOLEAN, FileFormat.PREPROC),
 
 	// ************************ stats
 
-	@CliFlagDoc(value = "Disable statistics computation (default)", level = 1, newGroup = "Statistics")
-	DISABLE_STATS("-disablestats", Arity.UNARY_BOOLEAN,
+	@CliFlagDoc(value = "Disable statistics collection (default behavior)", level = 1, newGroup = "Statistics")
+	DISABLE_STATS("--disable-stats", aliases(DEPRECATED("-disablestats")), Arity.UNARY_BOOLEAN,
+			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, false)),
+
+	@CliFlagDoc(value = "Enable statistics collection", level = 1)
+	ENABLE_STATS("--enable-stats", aliases(DEPRECATED("-enablestats")), Arity.UNARY_BOOLEAN,
 			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),
 
-	@CliFlagDoc(value = "Enable statistics computation", level = 1)
-	ENABLE_STATS("-enablestats", Arity.UNARY_BOOLEAN,
-			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),
+	@CliFlagDoc(value = "Export collected statistics to an HTML report and exit", level = 1)
+	DUMPHTMLSTATS("--export-stats-html", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::outHtml),
 
-	DUMPHTMLSTATS("-dumphtmlstats", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::outHtml),
-
-	DUMPSTATS("-dumpstats", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::dumpStats),
+	@CliFlagDoc(value = "Export collected statistics to a text report and exit", level = 1)
+	DUMPSTATS("--export-stats", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::dumpStats),
 
 	@CliFlagDoc(value = "Output general statistics in HTML format", level = 1)
-	HTML_STATS("-htmlstats", Arity.UNARY_BOOLEAN, () -> StatsUtils.setHtmlStats(true)),
-
-	@CliFlagDoc(value = "Generate statistics on the fly", level = 1)
-	REALTIME_STATS("-realtimestats", Arity.UNARY_BOOLEAN, () -> StatsUtils.setRealTimeStats(true)),
+	HTML_STATS("--html-stats", aliases(DEPRECATED("-htmlstats")), Arity.UNARY_BOOLEAN,
+			() -> StatsUtils.setHtmlStats(true)),
 
 	@CliFlagDoc(value = "Output general statistics in XML format", level = 1)
-	XML_STATS("-xmlstats", Arity.UNARY_BOOLEAN, () -> StatsUtils.setXmlStats(true)),
-	
-	@CliFlagDoc(value = "Continuously print usage statistics", level = 1)
-	LOOP_STATS("-loopstats", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::loopStats);
+	XML_STATS("--xml-stats", aliases(DEPRECATED("-xmlstats")), Arity.UNARY_BOOLEAN, () -> StatsUtils.setXmlStats(true)),
 
+	@CliFlagDoc(value = "Generate statistics in real time during processing", level = 1)
+	REALTIME_STATS("--realtime-stats", aliases(DEPRECATED("-realtimestats")), Arity.UNARY_BOOLEAN,
+			() -> StatsUtils.setRealTimeStats(true)),
 
+	@CliFlagDoc(value = "Continuously print usage statistics during execution", level = 1)
+	LOOP_STATS("--loop-stats", aliases(DEPRECATED("-loopstats")), Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::loopStats);
 
 	private final String flag;
 	private final List<String> aliases;
@@ -337,6 +353,10 @@ public enum CliFlag {
 		return Arrays.asList(names);
 	}
 
+	private static String DEPRECATED(String option) {
+		return option;
+	}
+
 	public String getFlag() {
 		return flag;
 	}
@@ -350,8 +370,13 @@ public enum CliFlag {
 	}
 
 	boolean match(String tmp) {
-		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON)
-			return (tmp.startsWith(flag));
+		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON) {
+			for (String alias : aliases)
+				if (tmp.startsWith(alias))
+					return true;
+
+			return tmp.startsWith(flag);
+		}
 
 		for (String alias : aliases)
 			if (tmp.equals(alias))
@@ -387,13 +412,21 @@ public enum CliFlag {
 	public String getUsage() {
 		try {
 			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
-			if (annotation != null && !annotation.usage().isEmpty())
-				return annotation.usage();
+			if (annotation != null && !annotation.usage().isEmpty()) {
+				final String usage = annotation.usage();
+				if (usage.startsWith("--"))
+					return "     " + usage;
+				return " " + usage;
+			}
 
 		} catch (NoSuchFieldException e) {
 			// Should never happen for enum constants
 		}
-		return getFlag();
+		for (String alias : aliases)
+			if (alias.length() == 2)
+				return " " + alias + ", " + getFlag();
+
+		return "     " + getFlag();
 	}
 
 	public int getFlagLevel() {

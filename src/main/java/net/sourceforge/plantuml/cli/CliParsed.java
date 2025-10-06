@@ -104,11 +104,32 @@ public class CliParsed {
 	}
 
 	public Map<String, String> getMap(CliFlag flag) {
-		return maps.get(flag);
+		final Map<String, String> result = maps.get(flag);
+		if (result == null)
+			return Collections.emptyMap();
+		return result;
 	}
 
 	public List<Object> getList(CliFlag flag) {
-		return lists.get(flag);
+		final List<Object> result = lists.get(flag);
+		if (result == null)
+			return Collections.emptyList();
+		return result;
+	}
+
+	public Map<String, String> getMap(CliFlag mapFlag, CliFlag listFlag) {
+		final Map<String, String> result = new LinkedHashMap<String, String>(getMap(mapFlag));
+
+		for (Object s : getList(listFlag)) {
+			final String keyValue[] = s.toString().split("=");
+			if (keyValue.length == 1)
+				result.put(keyValue[0], null);
+			else if (keyValue.length == 2)
+				result.put(keyValue[0], keyValue[1]);
+		}
+
+		return Collections.unmodifiableMap(result);
+
 	}
 
 	@Override

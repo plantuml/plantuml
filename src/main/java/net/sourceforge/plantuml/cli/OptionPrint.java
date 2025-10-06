@@ -58,7 +58,7 @@ public class OptionPrint {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
-	static public void printTestDot2() {
+	static public void printCheckGraphviz() {
 		final ReportLog result = new ReportLog();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result)
@@ -183,7 +183,7 @@ public class OptionPrint {
 
 	}
 
-	public static void printLanguage() {
+	public static void printListKeywords() {
 		new LanguageDescriptor().print(System.out);
 	}
 

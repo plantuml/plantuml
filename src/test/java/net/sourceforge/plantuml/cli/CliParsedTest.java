@@ -56,7 +56,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define1() {
+	void define10() {
 		final CliParsed parsed = CliParsed.parse("-DFOO=42");
 		assertEquals("{DEFINE={FOO=42}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));
@@ -65,7 +65,16 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define2() {
+	void define11() {
+		final CliParsed parsed = CliParsed.parse("--define", "FOO=42");
+		assertEquals("{DEFINE_LONG=[FOO=42]}", parsed.toString());
+		assertTrue(parsed.isTrue(CliFlag.DEFINE_LONG));
+		final List<Object> map = parsed.getList(CliFlag.DEFINE_LONG);
+		assertEquals("[FOO=42]", map.toString());
+	}
+
+	@Test
+	void define20() {
 		final CliParsed parsed = CliParsed.parse("-DFOO=42", "-DDUMMY=43");
 		assertEquals("{DEFINE={FOO=42, DUMMY=43}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));
@@ -74,7 +83,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define3() {
+	void define30() {
 		final CliParsed parsed = CliParsed.parse("-DDUMMY");
 		assertEquals("{DEFINE={DUMMY=null}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));

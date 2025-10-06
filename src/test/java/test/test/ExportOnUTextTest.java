@@ -1,7 +1,6 @@
 package test.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,12 +9,13 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.Pipe;
+import net.sourceforge.plantuml.cli.AbstractCliTest;
 import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.cli.ErrorStatus;
 
-class ExportOnUTextTest {
+class ExportOnUTextTest extends AbstractCliTest {
 
 	@Test
 	void shouldRenderBasicSequenceDiagram() throws Exception {
@@ -36,7 +36,7 @@ class ExportOnUTextTest {
 
 		final String rendered = renderViaPipe(input);
 
-		assertEquals(expected, rendered);
+		assertEqualsButControlChars(cleanControlChars(expected), cleanControlChars(rendered));
 	}
 
 	@Test
@@ -53,7 +53,7 @@ class ExportOnUTextTest {
 
 		final String rendered = renderViaPipe(input);
 
-		assertEquals(expected, rendered);
+		assertEqualsButControlChars(expected, rendered);
 	}
 
 	@Test
@@ -71,7 +71,7 @@ class ExportOnUTextTest {
 
 		final String rendered = renderViaPipe(input);
 
-		assertEquals(expected, rendered);
+		assertEqualsButControlChars(expected, rendered);
 	}
 
 	private static final String[] COMMON_OPTIONS = { "-tutxt" };

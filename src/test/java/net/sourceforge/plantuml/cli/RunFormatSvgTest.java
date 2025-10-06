@@ -18,6 +18,46 @@ class RunFormatSvgTest extends AbstractCliTest {
 
 		Run.main(new String[] { "-tsvg", file.toAbsolutePath().toString() });
 
+		assertNow();
+	}
+
+	@Test
+	void testSvg10() throws IOException, InterruptedException {
+		final Path file = aliceBob_hello(tempDir, "test.txt");
+
+		Run.main(new String[] { "-svg", file.toAbsolutePath().toString() });
+
+		assertNow();
+	}
+
+	@Test
+	void testSvg20() throws IOException, InterruptedException {
+		final Path file = aliceBob_hello(tempDir, "test.txt");
+
+		Run.main(new String[] { "-f", "svg", file.toAbsolutePath().toString() });
+
+		assertNow();
+	}
+
+	@Test
+	void testSvg30() throws IOException, InterruptedException {
+		final Path file = aliceBob_hello(tempDir, "test.txt");
+
+		Run.main(new String[] { "--format", "svg", file.toAbsolutePath().toString() });
+
+		assertNow();
+	}
+
+	@Test
+	void testSvg40() throws IOException, InterruptedException {
+		final Path file = aliceBob_hello(tempDir, "test.txt");
+
+		Run.main(new String[] { "--svg", file.toAbsolutePath().toString() });
+
+		assertNow();
+	}
+
+	private void assertNow() throws IOException {
 		assertLs("[test.svg, test.txt]", tempDir);
 
 		final Path svgFile = tempDir.resolve("test.svg");
@@ -31,6 +71,5 @@ class RunFormatSvgTest extends AbstractCliTest {
 		assertTrue(content.contains("hello"));
 		assertTrue(content.contains("data-diagram-type=\"SEQUENCE\""));
 	}
-
 
 }

@@ -348,8 +348,8 @@ public enum FileFormat {
 		if (cpt == 0)
 			return changeName(fileName, getFileSuffix());
 
-		return changeName(fileName,
-				(String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR) + String.format("%03d", cpt) + getFileSuffix());
+		return changeName(fileName, (String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR)
+				+ String.format("%03d", cpt) + getFileSuffix());
 	}
 
 //	private SFile computeFilename(SFile pngFile, int i) {
@@ -407,5 +407,13 @@ public enum FileFormat {
 		return false;
 	}
 	// ::done
+
+	public static FileFormat fromCli(String formatFlag) {
+		switch (formatFlag) {
+		case "svg":
+			return FileFormat.SVG;
+		}
+		return null;
+	}
 
 }

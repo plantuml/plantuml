@@ -525,7 +525,7 @@ public class Run {
 		}
 
 		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));
-		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isTrue(CliFlag.NO_ERROR));
+		((SourceFileReaderAbstract) sourceFileReader).setNoErrorImage(option.isTrue(CliFlag.NO_ERROR_IMAGE));
 		return sourceFileReader;
 	}
 
