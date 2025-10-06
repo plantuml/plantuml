@@ -61,11 +61,11 @@ public class LifeEventTile extends AbstractTile {
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L64">		super.callbackY_internal(y);</span>
+<span class="nc" id="L64">		super.callbackY_internal(y);</span>
 		// System.err.println(&quot;LifeEventTile::updateStairs &quot; + lifeEvent + &quot; &quot; +
 		// livingSpace.getParticipant() + &quot; y=&quot; + y);
-<span class="fc" id="L67">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L67">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
+<span class="nc" id="L68">	}</span>
 
 	public Event getEvent() {
 <span class="fc" id="L71">		return lifeEvent;</span>
@@ -104,14 +104,14 @@ public class LifeEventTile extends AbstractTile {
 	public void drawU(UGraphic ug) {
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (isDestroyWithoutMessage()) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (isDestroyWithoutMessage()) {</span>
 <span class="nc" id="L108">			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam,</span>
 					null);
 <span class="nc" id="L110">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
 <span class="nc" id="L111">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
 <span class="nc" id="L112">			cross.drawU(ug.apply(UTranslate.dx(x - dimCross.getWidth() / 2)), null, (Context2D) ug);</span>
 		}
-<span class="fc" id="L114">	}</span>
+<span class="nc" id="L114">	}</span>
 
 	public boolean isDestroyWithoutMessage() {
 <span class="pc bpc" id="L117" title="2 of 4 branches missed.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
