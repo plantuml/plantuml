@@ -61,11 +61,11 @@ public class LifeEventTile extends AbstractTile {
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L64">		super.callbackY_internal(y);</span>
+<span class="nc" id="L64">		super.callbackY_internal(y);</span>
 		// System.err.println(&quot;LifeEventTile::updateStairs &quot; + lifeEvent + &quot; &quot; +
 		// livingSpace.getParticipant() + &quot; y=&quot; + y);
-<span class="fc" id="L67">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L67">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
+<span class="nc" id="L68">	}</span>
 
 	public Event getEvent() {
 <span class="fc" id="L71">		return lifeEvent;</span>

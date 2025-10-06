@@ -244,49 +244,68 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 		// Set transition node stereotype to make it visually distinct
 <span class="nc" id="L245">		transitionNode.setStereotype(Stereotype.build(&quot;&lt;&lt;transition&gt;&gt;&quot;));</span>
 
-		// Create first link: source -&gt; transition node (no arrow decoration on intermediate link)
-		// Use original length to maintain layout
-<span class="nc" id="L249">		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L251">		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source, transitionNode,</span>
+		// STEP 1: Create invisible direct link from source to target for positioning
+		// This ensures states are positioned based on their direct relationships
+		// Use fixed length=3 to get minlen=2, providing minimal space for transition node between states
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		final LinkArg positioningLinkArg = LinkArg.build(Display.NULL, 3, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L251">		Link positioningLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source, target,</span>
+				linkType, positioningLinkArg);
+<span class="nc" id="L253">		positioningLink.setInvis(true);  // Make it invisible so it only affects layout</span>
+<span class="nc" id="L254">		positioningLink.setWeight(10.0);  // High weight to strongly influence positioning</span>
+		// Keep constraint=true (default) so it positions the states
+
+<span class="nc bnc" id="L257" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
+<span class="nc" id="L258">			positioningLink = positioningLink.getInv();</span>
+
+		// STEP 2: Create first link: source -&gt; transition node (no arrow decoration on intermediate link)
+		// Use length=2 to get minlen=1, which places transition node at rank(source)+1
+<span class="nc" id="L262">		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L264">		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source, transitionNode,</span>
 				firstLinkType, firstLinkArg);
+		// Keep constraint=true but use low weight so the invisible edge dominates horizontal positioning
+<span class="nc" id="L267">		firstLink.setWeight(0.1);</span>
 
-		// Create second link: transition node -&gt; target (with original arrow decoration)
-		// Use minimum length (1) for the second link
-<span class="nc bnc" id="L256" title="All 2 branches missed.">		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 1, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L257">		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode, target,</span>
+		// STEP 3: Create second link: transition node -&gt; target (with original arrow decoration)
+		// Use length=2 to get minlen=1, placing target at rank(transition)+1 = rank(source)+2
+		// This matches the invisible edge minlen=2
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L273">		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode, target,</span>
 				linkType, secondLinkArg);
+		// Keep constraint=true so both edges participate in ranking consistently
+<span class="nc" id="L276">		secondLink.setWeight(0.1);</span>
 
-		// Handle direction for both links
-<span class="nc bnc" id="L261" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP) {</span>
-<span class="nc" id="L262">			firstLink = firstLink.getInv();</span>
-<span class="nc" id="L263">			secondLink = secondLink.getInv();</span>
+		// Handle direction for visible links
+<span class="nc bnc" id="L279" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP) {</span>
+<span class="nc" id="L280">			firstLink = firstLink.getInv();</span>
+<span class="nc" id="L281">			secondLink = secondLink.getInv();</span>
 		}
 
 		// Apply styles (but filter out &quot;node&quot; keyword to avoid issues)
-<span class="nc" id="L267">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (arrowStyle != null) {</span>
+<span class="nc" id="L285">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		if (arrowStyle != null) {</span>
 			// Remove &quot;node&quot; from the style string since it's not a visual style
-<span class="nc" id="L270">			final String filteredStyle = arrowStyle.replaceAll(&quot;(?i),?node,?&quot;, &quot;&quot;).replaceAll(&quot;,,&quot;, &quot;,&quot;).replaceAll(&quot;^,|,$&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">			if (!filteredStyle.isEmpty()) {</span>
-<span class="nc" id="L272">				firstLink.applyStyle(filteredStyle);</span>
-<span class="nc" id="L273">				secondLink.applyStyle(filteredStyle);</span>
+<span class="nc" id="L288">			final String filteredStyle = arrowStyle.replaceAll(&quot;(?i),?node,?&quot;, &quot;&quot;).replaceAll(&quot;,,&quot;, &quot;,&quot;).replaceAll(&quot;^,|,$&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">			if (!filteredStyle.isEmpty()) {</span>
+<span class="nc" id="L290">				firstLink.applyStyle(filteredStyle);</span>
+<span class="nc" id="L291">				secondLink.applyStyle(filteredStyle);</span>
 			}
 		}
 
-		// Add both links to the diagram
-<span class="nc" id="L278">		diagram.addLink(firstLink);</span>
-<span class="nc" id="L279">		diagram.addLink(secondLink);</span>
+		// Add all links to the diagram: invisible positioning link first, then visible node-style links
+<span class="nc" id="L296">		diagram.addLink(positioningLink);</span>
+<span class="nc" id="L297">		diagram.addLink(firstLink);</span>
+<span class="nc" id="L298">		diagram.addLink(secondLink);</span>
 
-<span class="nc" id="L281">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L300">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String generateTransitionNodeId(Entity source, Entity target, Display label) {
 		// Generate a unique ID for the transition node based on source, target, and label
-<span class="nc" id="L286">		String sourceId = source.getName();</span>
-<span class="nc" id="L287">		String targetId = target.getName();</span>
-<span class="nc" id="L288">		String labelText = label.toString().replaceAll(&quot;[^a-zA-Z0-9_]&quot;, &quot;_&quot;);</span>
-<span class="nc" id="L289">		return &quot;transition_&quot; + sourceId + &quot;_&quot; + targetId + &quot;_&quot; + labelText + &quot;_&quot; + System.currentTimeMillis();</span>
+<span class="nc" id="L305">		String sourceId = source.getName();</span>
+<span class="nc" id="L306">		String targetId = target.getName();</span>
+<span class="nc" id="L307">		String labelText = label.toString().replaceAll(&quot;[^a-zA-Z0-9_]&quot;, &quot;_&quot;);</span>
+<span class="nc" id="L308">		return &quot;transition_&quot; + sourceId + &quot;_&quot; + targetId + &quot;_&quot; + labelText + &quot;_&quot; + System.currentTimeMillis();</span>
 	}
 
 }
