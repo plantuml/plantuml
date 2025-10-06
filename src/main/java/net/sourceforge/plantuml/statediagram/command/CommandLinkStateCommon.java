@@ -244,20 +244,38 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		// Set transition node stereotype to make it visually distinct
 		transitionNode.setStereotype(Stereotype.build("<<transition>>"));
 
-		// Create first link: source -> transition node (no arrow decoration on intermediate link)
-		// Use original length to maintain layout
+		// STEP 1: Create invisible direct link from source to target for positioning
+		// This ensures states are positioned based on their direct relationships
+		// Use fixed length=3 to get minlen=2, providing minimal space for transition node between states
+		final LinkArg positioningLinkArg = LinkArg.build(Display.NULL, 3, diagram.getSkinParam().classAttributeIconSize() > 0);
+		Link positioningLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source, target,
+				linkType, positioningLinkArg);
+		positioningLink.setInvis(true);  // Make it invisible so it only affects layout
+		positioningLink.setWeight(10.0);  // High weight to strongly influence positioning
+		// Keep constraint=true (default) so it positions the states
+
+		if (dir == Direction.LEFT || dir == Direction.UP)
+			positioningLink = positioningLink.getInv();
+
+		// STEP 2: Create first link: source -> transition node (no arrow decoration on intermediate link)
+		// Use length=2 to get minlen=1, which places transition node at rank(source)+1
 		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, length, diagram.getSkinParam().classAttributeIconSize() > 0);
+		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2, diagram.getSkinParam().classAttributeIconSize() > 0);
 		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source, transitionNode,
 				firstLinkType, firstLinkArg);
+		// Keep constraint=true but use low weight so the invisible edge dominates horizontal positioning
+		firstLink.setWeight(0.1);
 
-		// Create second link: transition node -> target (with original arrow decoration)
-		// Use minimum length (1) for the second link
-		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 1, diagram.getSkinParam().classAttributeIconSize() > 0);
+		// STEP 3: Create second link: transition node -> target (with original arrow decoration)
+		// Use length=2 to get minlen=1, placing target at rank(transition)+1 = rank(source)+2
+		// This matches the invisible edge minlen=2
+		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2, diagram.getSkinParam().classAttributeIconSize() > 0);
 		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode, target,
 				linkType, secondLinkArg);
+		// Keep constraint=true so both edges participate in ranking consistently
+		secondLink.setWeight(0.1);
 
-		// Handle direction for both links
+		// Handle direction for visible links
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			firstLink = firstLink.getInv();
 			secondLink = secondLink.getInv();
@@ -274,7 +292,8 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			}
 		}
 
-		// Add both links to the diagram
+		// Add all links to the diagram: invisible positioning link first, then visible node-style links
+		diagram.addLink(positioningLink);
 		diagram.addLink(firstLink);
 		diagram.addLink(secondLink);
 
