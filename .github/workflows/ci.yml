@@ -416,7 +416,8 @@ jobs:
 
   trigger_plantuml_eclipse_release:
     needs: [ workflow_config, upload, build_artifacts ]
-    if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
+    if: needs.workflow_config.outputs.do_release == 'true'
+    #if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     uses: ./.github/workflows/trigger-plantuml-eclipse-release.yml
     with:
       release-version: ${{ needs.build_artifacts.outputs.release_version }}
