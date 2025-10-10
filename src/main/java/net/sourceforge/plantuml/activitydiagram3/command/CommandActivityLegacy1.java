@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -56,7 +57,10 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("-"), //
+				new RegexOr( //
+					new RegexLeaf("-"), //
+					new RegexLeaf("[*]")), //
+				RegexLeaf.spaceZeroOrOne(), //
 				new RegexLeaf(1, "LABEL", "(.*)"), //
 				RegexLeaf.end());
 	}

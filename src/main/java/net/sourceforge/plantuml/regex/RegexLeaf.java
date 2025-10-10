@@ -76,6 +76,14 @@ public class RegexLeaf implements IRegex {
 		return new RegexLeaf("[%s]*");
 	}
 
+	public static RegexLeaf spaceOne() {
+		return new RegexLeaf("[%s]");
+	}
+
+	public static RegexLeaf spaceZeroOrOne() {
+		return new RegexLeaf("(?:[%s])?");
+	}
+
 	public static RegexLeaf spaceOneOrMore() {
 		return new RegexLeaf("[%s]+");
 	}
