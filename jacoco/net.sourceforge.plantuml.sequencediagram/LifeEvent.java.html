@@ -72,19 +72,19 @@ public class LifeEvent extends AbstractEvent implements Event {
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		return this.p == someone;</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		return this.p == someone;</span>
 	}
 
 	public boolean isActivate() {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		return type == LifeEventType.ACTIVATE;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		return type == LifeEventType.ACTIVATE;</span>
 	}
 
 	public boolean isDeactivateOrDestroy() {
-<span class="nc bnc" id="L83" title="All 4 branches missed.">		return type == LifeEventType.DEACTIVATE || type == LifeEventType.DESTROY;</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">		return type == LifeEventType.DEACTIVATE || type == LifeEventType.DESTROY;</span>
 	}
 
 	public boolean isDeactivate() {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		return type == LifeEventType.DEACTIVATE;</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		return type == LifeEventType.DEACTIVATE;</span>
 	}
 
 	public boolean isDestroy(Participant p) {
