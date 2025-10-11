@@ -84,7 +84,7 @@ public class CommunicationExoTile extends AbstractTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L87">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+<span class="nc" id="L87">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
 	}
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
@@ -108,9 +108,9 @@ public class CommunicationExoTile extends AbstractTile {
 
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		final double textDeltaX = isFromLeftBorderMessage()</span>
 <span class="fc" id="L110">																? getPoint1(stringBounder).getCurrentValue() - x1</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">																: isFromRightBorderMessage()</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">																: isFromRightBorderMessage()</span>
 <span class="fc" id="L112">																		? getPoint2(stringBounder).getCurrentValue() - x2</span>
-<span class="fc" id="L113">																		: 0;</span>
+<span class="pc" id="L113">																		: 0;</span>
 
 <span class="fc" id="L115">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
 <span class="fc bfc" id="L116" title="All 2 branches covered.">		if (level &gt; 0) {</span>
@@ -241,11 +241,11 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	public boolean isFromRightBorderMessage() {
-<span class="fc bfc" id="L244" title="All 4 branches covered.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
+<span class="pc bpc" id="L244" title="1 of 4 branches missed.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
 	}
 
 	public boolean isFromLeftBorderMessage() {
-<span class="fc bfc" id="L248" title="All 4 branches covered.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

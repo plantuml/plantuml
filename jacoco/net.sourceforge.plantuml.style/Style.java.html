@@ -158,8 +158,8 @@ public class Style {
 <span class="fc" id="L158">		Style result = this;</span>
 <span class="fc bfc" id="L159" title="All 2 branches covered.">		if (colors != null) {</span>
 <span class="fc" id="L160">			final HColor back = colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (back != null)</span>
-<span class="fc" id="L162">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (back != null)</span>
+<span class="nc" id="L162">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
 
 <span class="fc" id="L164">			final HColor line = colors.getColor(ColorType.LINE);</span>
 <span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (line != null)</span>
@@ -177,8 +177,8 @@ public class Style {
 <span class="fc" id="L177">		Style result = this;</span>
 <span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (symbolContext != null) {</span>
 <span class="fc" id="L179">			final HColor back = symbolContext.getBackColor();</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (back != null)</span>
-<span class="fc" id="L181">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			if (back != null)</span>
+<span class="nc" id="L181">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
 
 		}
 <span class="fc" id="L184">		return result;</span>
@@ -215,7 +215,7 @@ public class Style {
 
 	public Fashion getSymbolContext(HColorSet set, Colors colors) {
 <span class="fc bfc" id="L217" title="All 2 branches covered.">		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (backColor == null)</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (backColor == null)</span>
 <span class="fc" id="L219">			backColor = value(PName.BackGroundColor).asColor(set);</span>
 <span class="fc bfc" id="L220" title="All 2 branches covered.">		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);</span>
 <span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (foreColor == null)</span>

@@ -100,22 +100,22 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 <span class="nc" id="L100">	}</span>
 
 	public void goParallel() {
-<span class="fc" id="L103">		this.parallel = true;</span>
-<span class="fc" id="L104">	}</span>
+<span class="nc" id="L103">		this.parallel = true;</span>
+<span class="nc" id="L104">	}</span>
 
 	public void setParallelBrother(AbstractMessage brother) {
-<span class="fc" id="L107">		this.parallelBrother = brother;</span>
-<span class="fc" id="L108">	}</span>
+<span class="nc" id="L107">		this.parallelBrother = brother;</span>
+<span class="nc" id="L108">	}</span>
 
 	public boolean isParallel() {
 <span class="fc" id="L111">		return parallel;</span>
 	}
 
 	public boolean isParallelWith(AbstractMessage message) {
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		boolean hasParallelBrother = parallelBrother != null;</span>
-<span class="fc bfc" id="L116" title="All 8 branches covered.">		return (this == message)</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
+<span class="pc bpc" id="L116" title="5 of 8 branches missed.">		return (this == message)</span>
 				|| (hasParallelBrother &amp;&amp; parallelBrother == message)
-<span class="fc bfc" id="L118" title="All 2 branches covered.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
+<span class="pc bnc" id="L118" title="All 2 branches missed.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
 	}
 
 	final public Url getUrl() {
@@ -144,20 +144,20 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	public final boolean addLifeEvent(LifeEvent lifeEvent) {
 <span class="fc" id="L145">		lifeEvent.setMessage(this);</span>
 
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (this.isSelfMessage()) {</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
-<span class="fc" id="L149">				return true;</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (this.isSelfMessage()) {</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
+<span class="nc" id="L149">				return true;</span>
 		}
 
 <span class="fc" id="L152">		lifeEventsType.add(lifeEvent.getType());</span>
-<span class="fc bfc" id="L153" title="All 4 branches covered.">		if (lifeEventsType.size() == 1 &amp;&amp; isActivate())</span>
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		if (lifeEventsType.size() == 1 &amp;&amp; isActivate())</span>
 <span class="fc" id="L154">			firstIsActivate = true;</span>
 
 <span class="fc bfc" id="L156" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE</span>
 <span class="pc bpc" id="L157" title="1 of 2 branches missed.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
 <span class="nc" id="L158">			return false;</span>
 
-<span class="fc bfc" id="L160" title="All 4 branches covered.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
 <span class="fc" id="L161">			noActivationAuthorized2.add(lifeEvent.getParticipant());</span>
 
 <span class="fc" id="L163">		return true;</span>
@@ -195,13 +195,13 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public final Display getLabelNumbered() {
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (getMessageNumber() == null)</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (getMessageNumber() == null)</span>
 <span class="fc" id="L199">			return getLabel();</span>
 
-<span class="fc" id="L201">		Display result = Display.empty();</span>
-<span class="fc" id="L202">		result = result.add(new MessageNumber(getMessageNumber()));</span>
-<span class="fc" id="L203">		result = result.addAll(getLabel());</span>
-<span class="fc" id="L204">		return result;</span>
+<span class="nc" id="L201">		Display result = Display.empty();</span>
+<span class="nc" id="L202">		result = result.add(new MessageNumber(getMessageNumber()));</span>
+<span class="nc" id="L203">		result = result.addAll(getLabel());</span>
+<span class="nc" id="L204">		return result;</span>
 	}
 
 	public final ArrowConfiguration getArrowConfiguration() {
