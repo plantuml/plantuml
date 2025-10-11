@@ -42,6 +42,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -69,37 +70,50 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 public enum FileFormat {
 	// ::remove file when __HAXE__
 	// ::comment when __CORE__
-	EPS("application/postscript"), //
-	EPS_TEXT("application/postscript"), //
-	ATXT("text/plain"), //
-	UTXT("text/plain;charset=UTF-8"), //
-	XMI_STANDARD("application/vnd.xmi+xml"), //
-	XMI_STAR("application/vnd.xmi+xml"), //
-	XMI_ARGO("application/vnd.xmi+xml"), //
-	XMI_CUSTOM("application/vnd.xmi+xml"), //
-	XMI_SCRIPT("application/vnd.xmi+xml"), //
-	SCXML("application/scxml+xml"), //
-	GRAPHML("application/graphml+xml"), //
-	PDF("application/pdf"), //
-	HTML("text/html"), //
-	HTML5("text/html"), //
-	VDX("application/vnd.visio.xml"), //
-	LATEX("application/x-latex"), //
-	LATEX_NO_PREAMBLE("application/x-latex"), //
-	BASE64("text/plain; charset=x-user-defined"), //
-	BRAILLE_PNG("image/png"), //
-	PREPROC("text/plain"), //
-	DEBUG("text/plain"), //
+	EPS("eps", "application/postscript"), //
+	EPS_TEXT("eps-text", "application/postscript"), //
+	ATXT("txt", "text/plain"), //
+	UTXT("utxt", "text/plain;charset=UTF-8"), //
+	XMI_STANDARD("xmi", "application/vnd.xmi+xml"), //
+	XMI_STAR("xmi-star", "application/vnd.xmi+xml"), //
+	XMI_ARGO("xmi-argo", "application/vnd.xmi+xml"), //
+	XMI_CUSTOM("xmi-custom", "application/vnd.xmi+xml"), //
+	XMI_SCRIPT("xmi-script", "application/vnd.xmi+xml"), //
+	SCXML("scxml", "application/scxml+xml"), //
+	GRAPHML("graphml", "application/graphml+xml"), //
+	PDF("pdf", "application/pdf"), //
+	HTML("html", "text/html"), //
+	HTML5("html5", "text/html"), //
+	VDX("vdx", "application/vnd.visio.xml"), //
+	LATEX("eps", "application/x-latex"), //
+	LATEX_NO_PREAMBLE("eps-no-preamble", "application/x-latex"), //
+	BASE64("base64", "text/plain; charset=x-user-defined"), //
+	BRAILLE_PNG("braille-png", "image/png"), //
+	PREPROC("preproc", "text/plain"), //
+	DEBUG("debug", "text/plain"), //
 	// ::done
-	PNG("image/png"), //
-	PNG_EMPTY("image/png"), //
-	RAW("image/raw"), //
-	SVG("image/svg+xml"); //
+	PNG("png", "image/png"), //
+	PNG_EMPTY("png-empty", "image/png"), //
+	RAW("raw", "image/raw"), //
+	SVG("svg", "image/svg+xml"); //
 
 	private final String mimeType;
+	private final String name;
+	private final static Map<String, FileFormat> byName;
 
-	FileFormat(String mimeType) {
+	static {
+		byName = new HashMap<>();
+		for (FileFormat format : values())
+			byName.put(format.name, format);
+	}
+
+	public static FileFormat fromCli(String formatName) {
+		return byName.get(formatName);
+	}
+
+	private FileFormat(String name, String mimeType) {
 		this.mimeType = mimeType;
+		this.name = name;
 	}
 
 	public String getMimeType() {
@@ -407,13 +421,5 @@ public enum FileFormat {
 		return false;
 	}
 	// ::done
-
-	public static FileFormat fromCli(String formatFlag) {
-		switch (formatFlag) {
-		case "svg":
-			return FileFormat.SVG;
-		}
-		return null;
-	}
 
 }
