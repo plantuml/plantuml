@@ -348,8 +348,8 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="fc bfc" id="L348" title="All 2 branches covered.">		if (cpt == 0)</span>
 <span class="fc" id="L349">			return changeName(fileName, getFileSuffix());</span>
 
-<span class="fc" id="L351">		return changeName(fileName,</span>
-<span class="fc" id="L352">				(String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR) + String.format(&quot;%03d&quot;, cpt) + getFileSuffix());</span>
+<span class="fc" id="L351">		return changeName(fileName, (String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR)</span>
+<span class="fc" id="L352">				+ String.format(&quot;%03d&quot;, cpt) + getFileSuffix());</span>
 	}
 
 //	private SFile computeFilename(SFile pngFile, int i) {
@@ -407,6 +407,14 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="nc" id="L407">		return false;</span>
 	}
 	// ::done
+
+	public static FileFormat fromCli(String formatFlag) {
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">		switch (formatFlag) {</span>
+		case &quot;svg&quot;:
+<span class="fc" id="L414">			return FileFormat.SVG;</span>
+		}
+<span class="nc" id="L416">		return null;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

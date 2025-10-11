@@ -76,7 +76,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	private FileFormatOption fileFormatOption;
 	private boolean checkMetadata;
-	private boolean noerror;
+	private boolean noErrorImage;
 
 	final private Charset charset;
 
@@ -178,7 +178,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 <span class="fc" id="L178">				system = blockUml.getDiagram();</span>
 <span class="nc" id="L179">			} catch (Throwable t) {</span>
 <span class="nc" id="L180">				Logme.error(t);</span>
-<span class="nc bnc" id="L181" title="All 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noerror)</span>
+<span class="nc bnc" id="L181" title="All 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noErrorImage)</span>
 <span class="nc" id="L182">					continue;</span>
 
 <span class="nc" id="L184">				return getCrashedImage(blockUml, t, suggested.getFile(0));</span>
@@ -189,7 +189,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
 			final List&lt;FileImageData&gt; exportDiagrams;
-<span class="fc bfc" id="L192" title="All 4 branches covered.">			if (noerror &amp;&amp; system instanceof PSystemError) {</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">			if (noErrorImage &amp;&amp; system instanceof PSystemError) {</span>
 <span class="fc" id="L193">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
 <span class="fc" id="L194">				exportDiagrams</span>
 <span class="fc" id="L195">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
@@ -216,8 +216,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
 
-	protected final void setNoerror(boolean noerror) {
-<span class="fc" id="L220">		this.noerror = noerror;</span>
+	protected final void setNoErrorImage(boolean noErrorImage) {
+<span class="fc" id="L220">		this.noErrorImage = noErrorImage;</span>
 
 <span class="fc" id="L222">	}</span>
 

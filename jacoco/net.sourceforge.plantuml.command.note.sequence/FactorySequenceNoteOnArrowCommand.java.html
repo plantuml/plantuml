@@ -115,7 +115,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 	
 <span class="fc" id="L117">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L118">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
+<span class="fc" id="L118">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
 
 
 	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
@@ -125,11 +125,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L128">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L129">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="nc" id="L130">				lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L131">				final Display display = lines.toDisplay();</span>
-<span class="nc" id="L132">				return executeInternal(diagram, line0, diagram.manageVariable(display));</span>
+<span class="fc" id="L128">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L129">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L130">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L131">				final Display display = lines.toDisplay();</span>
+<span class="fc" id="L132">				return executeInternal(diagram, line0, diagram.manageVariable(display));</span>
 			}
 
 		};
@@ -151,7 +151,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L151">		final NoteStyle style = NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0));</span>
 <span class="fc" id="L152">		final String backcolor0 = line0.get(&quot;COLOR&quot;, 0);</span>
 <span class="fc" id="L153">		Colors colors = Colors.empty().add(ColorType.BACK,</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));</span>
 <span class="fc" id="L155">		final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L156">		final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
 <span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>

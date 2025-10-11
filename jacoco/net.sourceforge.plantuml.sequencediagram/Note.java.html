@@ -84,8 +84,8 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	}
 
 	public Note(Participant p, NotePosition position, Display strings, StyleBuilder styleBuilder) {
-<span class="nc" id="L87">		this(p, null, position, strings, styleBuilder);</span>
-<span class="nc" id="L88">	}</span>
+<span class="fc" id="L87">		this(p, null, position, strings, styleBuilder);</span>
+<span class="fc" id="L88">	}</span>
 
 	public Note(Display strings, NotePosition position, NoteStyle style, StyleBuilder styleBuilder) {
 <span class="fc" id="L91">		this(null, null, position, strings, styleBuilder);</span>
@@ -121,11 +121,11 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	}
 
 	public Participant getParticipant() {
-<span class="nc" id="L124">		return p;</span>
+<span class="fc" id="L124">		return p;</span>
 	}
 
 	public Participant getParticipant2() {
-<span class="nc" id="L128">		return p2;</span>
+<span class="fc" id="L128">		return p2;</span>
 	}
 
 	public Display getDisplay() {
@@ -161,8 +161,8 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	}
 
 	public final void setNoteStyle(NoteStyle style) {
-<span class="nc" id="L164">		this.noteStyle = style;</span>
-<span class="nc" id="L165">	}</span>
+<span class="fc" id="L164">		this.noteStyle = style;</span>
+<span class="fc" id="L165">	}</span>
 
 	public ISkinParam getSkinParamBackcolored(ISkinParam skinParam) {
 <span class="fc" id="L168">		return colors.mute(skinParam);</span>
@@ -180,11 +180,11 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 <span class="fc" id="L180">	private boolean parallel = false;</span>
 
 	public void goParallel() {
-<span class="nc" id="L183">		this.parallel = true;</span>
-<span class="nc" id="L184">	}</span>
+<span class="fc" id="L183">		this.parallel = true;</span>
+<span class="fc" id="L184">	}</span>
 
 	public boolean isParallel() {
-<span class="nc" id="L187">		return parallel;</span>
+<span class="fc" id="L187">		return parallel;</span>
 	}
 
 }

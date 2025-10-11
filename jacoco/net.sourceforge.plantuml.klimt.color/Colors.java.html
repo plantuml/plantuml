@@ -70,10 +70,10 @@ public class Colors {
 	}
 
 	private Colors copy() {
-<span class="nc" id="L73">		final Colors result = new Colors();</span>
-<span class="nc" id="L74">		result.map.putAll(this.map);</span>
-<span class="nc" id="L75">		result.lineStyle = this.lineStyle;</span>
-<span class="nc" id="L76">		return result;</span>
+<span class="fc" id="L73">		final Colors result = new Colors();</span>
+<span class="fc" id="L74">		result.map.putAll(this.map);</span>
+<span class="fc" id="L75">		result.lineStyle = this.lineStyle;</span>
+<span class="fc" id="L76">		return result;</span>
 	}
 
 <span class="fc" id="L79">	private Colors() {</span>
@@ -130,12 +130,12 @@ public class Colors {
 	}
 
 	public Colors add(ColorType type, HColor color) {
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (color == null)</span>
 <span class="fc" id="L134">			return this;</span>
 
-<span class="nc" id="L136">		final Colors result = copy();</span>
-<span class="nc" id="L137">		result.map.put(type, color);</span>
-<span class="nc" id="L138">		return result;</span>
+<span class="fc" id="L136">		final Colors result = copy();</span>
+<span class="fc" id="L137">		result.map.put(type, color);</span>
+<span class="fc" id="L138">		return result;</span>
 	}
 
 	private Colors add(ColorType colorType, Colors other) {

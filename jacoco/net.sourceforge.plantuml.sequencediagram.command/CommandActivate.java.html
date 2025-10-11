@@ -78,7 +78,7 @@ public class CommandActivate extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc" id="L78">		final Participant p = diagram.getOrCreateParticipant(location,</span>
 <span class="fc" id="L79">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
 <span class="fc" id="L80">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
 <span class="fc" id="L82">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">		final HColor lineColor = line == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(line);</span>
 <span class="fc" id="L84">		final String error = diagram.activate(p, type, backColor, lineColor);</span>
