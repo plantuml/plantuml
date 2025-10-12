@@ -10,8 +10,8 @@ class LanguageDescriptorTest {
 
 	@Test
 	@StdIo
-	void testGetCypher(StdErr err) {
-		new LanguageDescriptor().getCypher();
+	void testGetObfuscate(StdErr err) {
+		new LanguageDescriptor().getObfuscate();
 		// Lazy test to check that there are no warning
 		assertEquals("", err.capturedString());
 	}

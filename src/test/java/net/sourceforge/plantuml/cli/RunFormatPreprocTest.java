@@ -12,24 +12,36 @@ import net.sourceforge.plantuml.Run;
 
 class RunFormatPreprocTest extends AbstractCliTest {
 
-	// wip @Test
-	void testSvg() throws IOException, InterruptedException {
+	@Test
+	void testPreproc() throws IOException, InterruptedException {
 		final Path file = aliceBob_hello(tempDir, "test.txt");
 
-		Run.main(new String[] { "-f", "preproc", file.toAbsolutePath().toString() });
+		Run.main(new String[] { "-f", "preproc", "--define", "hello=byebye", file.toAbsolutePath().toString() });
 
-		assertLs("[test.svg, test.txt]", tempDir);
+		assertLs("[test.preproc, test.txt]", tempDir);
 
-		final Path svgFile = tempDir.resolve("test.svg");
-		assertTrue(Files.exists(svgFile));
+		final Path resultFile = tempDir.resolve("test.preproc");
+		assertTrue(Files.exists(resultFile));
 
-		final String content = new String(Files.readAllBytes(svgFile), java.nio.charset.StandardCharsets.UTF_8);
+		final String content = new String(Files.readAllBytes(resultFile), java.nio.charset.StandardCharsets.UTF_8);
 
-		assertTrue(content.contains("<svg "));
-		assertTrue(content.contains("alice"));
-		assertTrue(content.contains("bob"));
-		assertTrue(content.contains("hello"));
-		assertTrue(content.contains("data-diagram-type=\"SEQUENCE\""));
+		assertTrue(content.contains("alice->bob : byebye"));
+	}
+
+	@Test
+	void testPreproc2() throws IOException, InterruptedException {
+		final Path file = aliceBob_hello(tempDir, "test.txt");
+
+		Run.main(new String[] { "--preproc", "--define", "hello=byebye", file.toAbsolutePath().toString() });
+
+		assertLs("[test.preproc, test.txt]", tempDir);
+
+		final Path resultFile = tempDir.resolve("test.preproc");
+		assertTrue(Files.exists(resultFile));
+
+		final String content = new String(Files.readAllBytes(resultFile), java.nio.charset.StandardCharsets.UTF_8);
+
+		assertTrue(content.contains("alice->bob : byebye"));
 	}
 
 }

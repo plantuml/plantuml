@@ -81,7 +81,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
-import net.sourceforge.plantuml.utils.Cypher;
+import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
@@ -236,7 +236,6 @@ public class Run {
 	private final ErrorStatus errorStatus;
 	private final String charset;
 	private final List<File> files = new ArrayList<>();
-	private Cypher cypher;
 
 	public Run(CliOptions option, ErrorStatus errorStatus, String charset) {
 		this.option = option;
@@ -248,8 +247,6 @@ public class Run {
 			for (final File f : group.getFiles())
 				files.add(f);
 		}
-		if (option.getPreprocessorOutputMode() == OptionPreprocOutputMode.CYPHER)
-			this.cypher = new LanguageDescriptor().getCypher();
 
 		Log.info(() -> "Found " + size() + " files");
 	}
@@ -339,8 +336,9 @@ public class Run {
 		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return;
 
-		if (option.getPreprocessorOutputMode() != null) {
-			extractPreproc(sourceFileReader);
+		if (option.getFileFormatOption().getFileFormat() == FileFormat.PREPROC
+				|| option.getFileFormatOption().getFileFormat() == FileFormat.OBFUSCATE) {
+			extractPreprocessingSource(sourceFileReader);
 			return;
 		}
 		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
@@ -529,22 +527,26 @@ public class Run {
 		return sourceFileReader;
 	}
 
-	private void extractPreproc(final ISourceFileReader sourceFileReader) throws IOException {
+	private void extractPreprocessingSource(final ISourceFileReader sourceFileReader) throws IOException {
+
+		final FileFormat format = option.getFileFormatOption().getFileFormat();
+		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE ? new LanguageDescriptor().getObfuscate() : null;
+
 		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
-					.withPreprocFormat();
+					.withPreprocFormat(option.getFileFormatOption().getFileFormat());
 			final SFile file = suggested.getFile(0);
 			Log.info(() -> "Export preprocessing source to " + file.getPrintablePath());
 			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {
 				int level = 0;
 				for (CharSequence cs : blockUml.getDefinition(true)) {
 					String s = cs.toString();
-					if (cypher != null) {
+					if (obfuscate != null) {
 						if (s.contains("skinparam") && s.contains("{"))
 							level++;
 
 						if (level == 0 && s.contains("skinparam") == false)
-							s = cypher.cypher(s);
+							s = obfuscate.obfuscate(s);
 
 						if (level > 0 && s.contains("}"))
 							level--;

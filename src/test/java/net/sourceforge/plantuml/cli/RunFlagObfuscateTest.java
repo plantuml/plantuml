@@ -16,17 +16,17 @@ import net.sourceforge.plantuml.Run;
 
 @Execution(ExecutionMode.SAME_THREAD)
 @Isolated
-class RunFlagCypherTest extends AbstractCliTest {
+class RunFlagObfuscateTest extends AbstractCliTest {
 
 	@Test
 	void test1() throws IOException, InterruptedException {
 		aliceBob_hello(tempDir, "test.txt");
 
-		Run.main(new String[] { "-cypher", tempDir.toAbsolutePath().toString() });
+		Run.main(new String[] { "--obfuscate", tempDir.toAbsolutePath().toString() });
 
-		assertLs("[test.preproc, test.txt]", tempDir);
+		assertLs("[test.obfuscate, test.txt]", tempDir);
 
-		final Path preprocFile = tempDir.resolve("test.preproc");
+		final Path preprocFile = tempDir.resolve("test.obfuscate");
 		assertTrue(Files.exists(preprocFile));
 
 		final String preproc = new String(Files.readAllBytes(preprocFile), java.nio.charset.StandardCharsets.UTF_8);
@@ -41,11 +41,11 @@ class RunFlagCypherTest extends AbstractCliTest {
 		final Path file = tempDir.resolve("test.txt");
 		Files.writeString(file, String.join(System.lineSeparator(), "@startuml", "italic->fafafa : hello", "@enduml"));
 
-		Run.main(new String[] { "-cypher", tempDir.toAbsolutePath().toString() });
+		Run.main(new String[] { "--obfuscate", tempDir.toAbsolutePath().toString() });
 
-		assertLs("[test.preproc, test.txt]", tempDir);
+		assertLs("[test.obfuscate, test.txt]", tempDir);
 
-		final Path preprocFile = tempDir.resolve("test.preproc");
+		final Path preprocFile = tempDir.resolve("test.obfuscate");
 		assertTrue(Files.exists(preprocFile));
 
 		final String preproc = new String(Files.readAllBytes(preprocFile), java.nio.charset.StandardCharsets.UTF_8);

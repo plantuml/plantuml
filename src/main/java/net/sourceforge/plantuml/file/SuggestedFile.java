@@ -54,8 +54,8 @@ public class SuggestedFile {
 		this.initialCpt = initialCpt;
 	}
 
-	public SuggestedFile withPreprocFormat() {
-		return new SuggestedFile(outputFile, FileFormat.PREPROC, initialCpt);
+	public SuggestedFile withPreprocFormat(FileFormat format) {
+		return new SuggestedFile(outputFile, format, initialCpt);
 	}
 
 	@Override

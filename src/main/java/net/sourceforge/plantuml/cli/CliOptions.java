@@ -42,14 +42,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.OptionPreprocOutputMode;
 import net.sourceforge.plantuml.Stdrpt;
 import net.sourceforge.plantuml.StdrptNull;
 import net.sourceforge.plantuml.StdrptPipe0;
@@ -421,14 +419,6 @@ public class CliOptions {
 		} catch (Exception e) {
 			return 0;
 		}
-	}
-
-	public final OptionPreprocOutputMode getPreprocessorOutputMode() {
-		if (isTrue(CliFlag.CYPHER))
-			return OptionPreprocOutputMode.CYPHER;
-		if (isTrue(CliFlag.PREPROCESS))
-			return OptionPreprocOutputMode.NORMAL;
-		return null;
 	}
 
 	public String getFileDir() {

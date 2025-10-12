@@ -52,7 +52,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.log.Logme;
 
-public class Cypher {
+public class Obfuscate {
 	// ::remove file when __HAXE__
 
 	final private static Pattern p = Pattern.compile("[\\p{L}\\p{N}]+");
@@ -62,8 +62,8 @@ public class Cypher {
 	private final Set<String> except = new HashSet<>();
 	private final List<String> words = new ArrayList<>();
 
-	public Cypher() {
-		final InputStream is = Cypher.class.getResourceAsStream("words.txt");
+	public Obfuscate() {
+		final InputStream is = Obfuscate.class.getResourceAsStream("words.txt");
 		if (is != null)
 			try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 				String s;
@@ -79,7 +79,7 @@ public class Cypher {
 		Collections.shuffle(words, rnd);
 	}
 
-	public synchronized String cypher(String s) {
+	public synchronized String obfuscate(String s) {
 
 		final Matcher m = p.matcher(s);
 		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
@@ -133,7 +133,7 @@ public class Cypher {
 	public void addException(String word) {
 		word = word.toLowerCase();
 		if (words.contains(word)) {
-			System.err.println("CypherWarning:" + word);
+			System.err.println("Obfuscate Warning:" + word);
 			words.remove(word);
 		}
 		except.add(word);

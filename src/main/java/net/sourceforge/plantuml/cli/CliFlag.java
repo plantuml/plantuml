@@ -49,7 +49,7 @@ public enum CliFlag {
 
 	// General:
 
-	@CliFlagDoc(value = "Show this help", level = 0)
+	@CliFlagDoc(value = "Show help and usage information", level = 0)
 	HELP("--help", aliases("-h", "-?", DEPRECATED("-help")), Arity.UNARY_IMMEDIATE_ACTION, HelpPrint::printHelp),
 
 	@CliFlagDoc(value = "Show extended help (advanced options)", level = 0)
@@ -162,9 +162,6 @@ public enum CliFlag {
 	@CliFlagDoc(value = "Encode a sprite definition from an image file", usage = "--sprite <4|8|16[z]> <file>", level = 0)
 	ENCODE_SPRITE("--encode-sprite", aliases(DEPRECATED("-sprite"), DEPRECATED("-encodesprite")), Arity.UNARY_BOOLEAN),
 
-	@CliFlagDoc(value = "Obfuscate diagram texts for secure sharing", level = 0)
-	CYPHER("--obfuscate", aliases(DEPRECATED("-cypher")), Arity.UNARY_BOOLEAN),
-
 	@CliFlagDoc(value = "Generate an encoded PlantUML URL from a source file", level = 1)
 	COMPUTE_URL("--encode-url", aliases("--compute-url", DEPRECATED("-computeurl"), DEPRECATED("-encodeurl")),
 			Arity.UNARY_BOOLEAN),
@@ -234,7 +231,7 @@ public enum CliFlag {
 
 	@CliFlagDoc(value = "Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt)", level = 0, usage = "--format <name>, -f <name>", newGroup = "Output format (choose one)")
 	FORMAT("--format", aliases("-f"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
-
+	
 	@CliFlagDoc(value = "Generate images in EPS format", level = 0, newGroup = "Available formats")
 	T_EPS("--eps", aliases(DEPRECATED("-teps"), DEPRECATED("-eps")), Arity.UNARY_BOOLEAN, FileFormat.EPS),
 	T_EPS_TEXT("--teps:text", aliases(DEPRECATED("-teps:text"), DEPRECATED("-eps:text")), Arity.UNARY_BOOLEAN,
@@ -249,6 +246,9 @@ public enum CliFlag {
 	@CliFlagDoc(value = "Generate LaTeX/TikZ output without preamble", level = 1)
 	T_LATEX_NOPREAMBLE("--latex-nopreamble", aliases(DEPRECATED("-tlatex:nopreamble"), DEPRECATED("-latex:nopreamble")),
 			Arity.UNARY_BOOLEAN, FileFormat.LATEX_NO_PREAMBLE),
+	
+	@CliFlagDoc(value = "Replace text in diagrams with obfuscated strings to share diagrams safely", level = 0)
+	OBFUSCATE("--obfuscate", aliases(DEPRECATED("-cypher")), Arity.UNARY_BOOLEAN, FileFormat.OBFUSCATE),
 
 	@CliFlagDoc(value = "Generate PDF images", level = 1)
 	T_PDF("--pdf", aliases(DEPRECATED("-tpdf"), DEPRECATED("-pdf")), Arity.UNARY_BOOLEAN, FileFormat.PDF),
@@ -256,8 +256,8 @@ public enum CliFlag {
 	@CliFlagDoc(value = "Generate PNG images (default)", level = 0)
 	T_PNG("--png", aliases(DEPRECATED("-tpng"), DEPRECATED("-png")), Arity.UNARY_BOOLEAN, FileFormat.PNG),
 
-	T_BASE64("--tbase64", Arity.UNARY_BOOLEAN, FileFormat.BASE64),
-	T_BRAILLE("--tbraille", Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
+	@CliFlagDoc(value = "Generate the preprocessed source after applying !include, !define... (no rendering)", level = 0)
+	PREPROCESS("--preproc", aliases(DEPRECATED("-preproc")),  Arity.UNARY_BOOLEAN, FileFormat.PREPROC),
 
 	@CliFlagDoc(value = "Generate SCXML files for state diagrams", level = 1)
 	T_SCXML("--scxml", aliases(DEPRECATED("-tscxml")), Arity.UNARY_BOOLEAN, FileFormat.SCXML),
@@ -281,8 +281,9 @@ public enum CliFlag {
 	T_XMI_SCRIPT("--txmi:script", aliases(DEPRECATED("-xmi:script")), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),
 	T_XMI_STAR("--txmi:star", aliases(DEPRECATED("-xmi:star")), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),
 
-	@CliFlagDoc(value = "Output preprocessor text of diagrams", level = 1)
-	PREPROCESS("-preproc", Arity.UNARY_BOOLEAN, FileFormat.PREPROC),
+	T_BASE64("--tbase64", Arity.UNARY_BOOLEAN, FileFormat.BASE64),
+	T_BRAILLE("--tbraille", Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
+
 
 	// ************************ stats
 

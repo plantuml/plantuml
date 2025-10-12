@@ -43,7 +43,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.utils.Cypher;
+import net.sourceforge.plantuml.utils.Obfuscate;
 
 public class LanguageDescriptor {
 
@@ -302,25 +302,25 @@ public class LanguageDescriptor {
 		keyword.add("@end" + type);
 	}
 
-	public Cypher getCypher() {
-		final Cypher cypher = new Cypher();
+	public Obfuscate getObfuscate() {
+		final Obfuscate result = new Obfuscate();
 		for (String s : type)
-			cypher.addException(s);
+			result.addException(s);
 
 		for (String s : keyword)
-			cypher.addException(s.replace("@", ""));
+			result.addException(s.replace("@", ""));
 
 		for (String s : preproc)
-			cypher.addException(s.substring(1));
+			result.addException(s.substring(1));
 
 		for (String s : SkinParam.getPossibleValues())
-			cypher.addException(s);
+			result.addException(s);
 
 		for (String s : HColorSet.instance().names())
-			cypher.addException(s);
+			result.addException(s);
 
-		cypher.addException("o");
-		return cypher;
+		result.addException("o");
+		return result;
 	}
 
 	public void print(PrintStream ps) {

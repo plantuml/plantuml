@@ -90,6 +90,7 @@ public enum FileFormat {
 	BASE64("base64", "text/plain; charset=x-user-defined"), //
 	BRAILLE_PNG("braille-png", "image/png"), //
 	PREPROC("preproc", "text/plain"), //
+	OBFUSCATE("obfuscate", "text/plain"), //
 	DEBUG("debug", "text/plain"), //
 	// ::done
 	PNG("png", "image/png"), //
