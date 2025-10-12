@@ -54,8 +54,8 @@ public class SuggestedFile {
 <span class="fc" id="L54">		this.initialCpt = initialCpt;</span>
 <span class="fc" id="L55">	}</span>
 
-	public SuggestedFile withPreprocFormat() {
-<span class="fc" id="L58">		return new SuggestedFile(outputFile, FileFormat.PREPROC, initialCpt);</span>
+	public SuggestedFile withPreprocFormat(FileFormat format) {
+<span class="fc" id="L58">		return new SuggestedFile(outputFile, format, initialCpt);</span>
 	}
 
 	@Override

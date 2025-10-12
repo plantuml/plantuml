@@ -197,8 +197,8 @@ public class CommunicationTileSelf extends AbstractTile {
 
 	public Real getMinX() {
 <span class="fc bfc" id="L199" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,</span>
-<span class="fc" id="L201">					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,</span>
+<span class="pc" id="L201">					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;</span>
 <span class="fc" id="L202">			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth() - liveDeltaWidthAdjustment);</span>
 		}
 <span class="fc" id="L204">		return getPoint1(getStringBounder());</span>

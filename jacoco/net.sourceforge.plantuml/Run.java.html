@@ -81,7 +81,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
-import net.sourceforge.plantuml.utils.Cypher;
+import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
@@ -236,26 +236,23 @@ public class Run {
 	private final ErrorStatus errorStatus;
 	private final String charset;
 <span class="fc" id="L238">	private final List&lt;File&gt; files = new ArrayList&lt;&gt;();</span>
-	private Cypher cypher;
 
-<span class="fc" id="L241">	public Run(CliOptions option, ErrorStatus errorStatus, String charset) {</span>
-<span class="fc" id="L242">		this.option = option;</span>
-<span class="fc" id="L243">		this.errorStatus = errorStatus;</span>
-<span class="fc" id="L244">		this.charset = charset;</span>
+<span class="fc" id="L240">	public Run(CliOptions option, ErrorStatus errorStatus, String charset) {</span>
+<span class="fc" id="L241">		this.option = option;</span>
+<span class="fc" id="L242">		this.errorStatus = errorStatus;</span>
+<span class="fc" id="L243">		this.charset = charset;</span>
 
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (String s : option.getRemainingArgs()) {</span>
-<span class="fc" id="L247">			final FileGroup group = new FileGroup(s, option.getExcludes());</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">			for (final File f : group.getFiles())</span>
-<span class="fc" id="L249">				files.add(f);</span>
-<span class="fc" id="L250">		}</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (option.getPreprocessorOutputMode() == OptionPreprocOutputMode.CYPHER)</span>
-<span class="fc" id="L252">			this.cypher = new LanguageDescriptor().getCypher();</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (String s : option.getRemainingArgs()) {</span>
+<span class="fc" id="L246">			final FileGroup group = new FileGroup(s, option.getExcludes());</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			for (final File f : group.getFiles())</span>
+<span class="fc" id="L248">				files.add(f);</span>
+<span class="fc" id="L249">		}</span>
 
-<span class="fc" id="L254">		Log.info(() -&gt; &quot;Found &quot; + size() + &quot; files&quot;);</span>
-<span class="fc" id="L255">	}</span>
+<span class="fc" id="L251">		Log.info(() -&gt; &quot;Found &quot; + size() + &quot; files&quot;);</span>
+<span class="fc" id="L252">	}</span>
 
 	public int size() {
-<span class="fc" id="L258">		return files.size();</span>
+<span class="fc" id="L255">		return files.size();</span>
 	}
 
 	@FunctionalInterface
@@ -265,321 +262,326 @@ public class Run {
 	}
 
 	private boolean checkError() throws InterruptedException {
-<span class="fc" id="L268">		final AtomicBoolean hasError = new AtomicBoolean();</span>
-<span class="fc" id="L269">		processInParallel(file -&gt; {</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">			if (hasError.get())</span>
-<span class="fc" id="L271">				return;</span>
-<span class="fc" id="L272">			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">			if (sourceFileReader.hasError()) {</span>
-<span class="fc" id="L274">				hasError.set(true);</span>
-<span class="fc" id="L275">				errorStatus.incError();</span>
+<span class="fc" id="L265">		final AtomicBoolean hasError = new AtomicBoolean();</span>
+<span class="fc" id="L266">		processInParallel(file -&gt; {</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">			if (hasError.get())</span>
+<span class="fc" id="L268">				return;</span>
+<span class="fc" id="L269">			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">			if (sourceFileReader.hasError()) {</span>
+<span class="fc" id="L271">				hasError.set(true);</span>
+<span class="fc" id="L272">				errorStatus.incError();</span>
 			}
-<span class="fc" id="L277">		});</span>
+<span class="fc" id="L274">		});</span>
 
-<span class="fc" id="L279">		return hasError.get();</span>
+<span class="fc" id="L276">		return hasError.get();</span>
 
 	}
 
 	private void computeUrl() throws IOException {
-<span class="fc bfc" id="L284" title="All 2 branches covered.">		for (File f : files) {</span>
-<span class="fc" id="L285">			final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);</span>
-<span class="fc bfc" id="L286" title="All 2 branches covered.">			for (BlockUml s : sourceFileReader.getBlocks())</span>
-<span class="fc" id="L287">				System.out.println(s.getEncodedUrl());</span>
-<span class="fc" id="L288">		}</span>
-<span class="fc" id="L289">	}</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">		for (File f : files) {</span>
+<span class="fc" id="L282">			final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">			for (BlockUml s : sourceFileReader.getBlocks())</span>
+<span class="fc" id="L284">				System.out.println(s.getEncodedUrl());</span>
+<span class="fc" id="L285">		}</span>
+<span class="fc" id="L286">	}</span>
 
 	private void processInputsInParallel() throws InterruptedException {
-<span class="fc" id="L292">		SFile lockFile = null;</span>
+<span class="fc" id="L289">		SFile lockFile = null;</span>
 		try {
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
-<span class="nc" id="L295">				final SFile dir = new SFile(option.getRemainingArgs().get(0));</span>
-<span class="nc" id="L296">				final SFile javaIsRunningFile = dir.file(&quot;javaisrunning.tmp&quot;);</span>
-<span class="nc" id="L297">				javaIsRunningFile.delete();</span>
-<span class="nc" id="L298">				lockFile = dir.file(&quot;javaumllock.tmp&quot;);</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
+<span class="nc" id="L292">				final SFile dir = new SFile(option.getRemainingArgs().get(0));</span>
+<span class="nc" id="L293">				final SFile javaIsRunningFile = dir.file(&quot;javaisrunning.tmp&quot;);</span>
+<span class="nc" id="L294">				javaIsRunningFile.delete();</span>
+<span class="nc" id="L295">				lockFile = dir.file(&quot;javaumllock.tmp&quot;);</span>
 			}
-<span class="fc" id="L300">			processInParallel(file -&gt; {</span>
-<span class="pc bpc" id="L301" title="1 of 4 branches missed.">				if (errorStatus.hasError() &amp;&amp; option.isFailfastOrFailfast2())</span>
-<span class="fc" id="L302">					return;</span>
+<span class="fc" id="L297">			processInParallel(file -&gt; {</span>
+<span class="pc bpc" id="L298" title="1 of 4 branches missed.">				if (errorStatus.hasError() &amp;&amp; option.isFailfastOrFailfast2())</span>
+<span class="fc" id="L299">					return;</span>
 
-<span class="fc" id="L304">				manageFileInternal(file);</span>
-<span class="fc" id="L305">				incDone(errorStatus.hasError());</span>
-<span class="fc" id="L306">			});</span>
+<span class="fc" id="L301">				manageFileInternal(file);</span>
+<span class="fc" id="L302">				incDone(errorStatus.hasError());</span>
+<span class="fc" id="L303">			});</span>
 		} finally {
-<span class="pc bpc" id="L308" title="1 of 2 branches missed.">			if (lockFile != null)</span>
-<span class="nc" id="L309">				lockFile.delete();</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">			if (lockFile != null)</span>
+<span class="nc" id="L306">				lockFile.delete();</span>
 		}
-<span class="fc" id="L311">	}</span>
+<span class="fc" id="L308">	}</span>
 
 	private void processInParallel(FileTask task) throws InterruptedException {
-<span class="fc" id="L314">		Log.info(() -&gt; &quot;Using several threads: &quot; + option.getNbThreads());</span>
-<span class="fc" id="L315">		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());</span>
+<span class="fc" id="L311">		Log.info(() -&gt; &quot;Using several threads: &quot; + option.getNbThreads());</span>
+<span class="fc" id="L312">		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());</span>
 
-<span class="fc bfc" id="L317" title="All 2 branches covered.">		for (File f : files)</span>
-<span class="fc" id="L318">			executor.submit(() -&gt; {</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">		for (File f : files)</span>
+<span class="fc" id="L315">			executor.submit(() -&gt; {</span>
 				try {
-<span class="fc" id="L320">					task.processFile(f);</span>
-<span class="nc" id="L321">				} catch (IOException | InterruptedException e) {</span>
-<span class="nc" id="L322">					Logme.error(e);</span>
-<span class="fc" id="L323">				}</span>
-<span class="fc" id="L324">			});</span>
+<span class="fc" id="L317">					task.processFile(f);</span>
+<span class="nc" id="L318">				} catch (IOException | InterruptedException e) {</span>
+<span class="nc" id="L319">					Logme.error(e);</span>
+<span class="fc" id="L320">				}</span>
+<span class="fc" id="L321">			});</span>
 
-<span class="fc" id="L326">		executor.shutdown();</span>
-<span class="fc" id="L327">		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);</span>
-<span class="fc" id="L328">	}</span>
+<span class="fc" id="L323">		executor.shutdown();</span>
+<span class="fc" id="L324">		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);</span>
+<span class="fc" id="L325">	}</span>
 
 	private void manageFileInternal(File f) throws IOException, InterruptedException {
-<span class="fc" id="L331">		Log.info(() -&gt; &quot;Working on &quot; + f.getPath());</span>
-<span class="fc" id="L332">		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);</span>
+<span class="fc" id="L328">		Log.info(() -&gt; &quot;Working on &quot; + f.getPath());</span>
+<span class="fc" id="L329">		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);</span>
 
-<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (sourceFileReader.hasError())</span>
-<span class="fc" id="L335">			errorStatus.incError();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (sourceFileReader.hasError())</span>
+<span class="fc" id="L332">			errorStatus.incError();</span>
 		else
-<span class="fc" id="L337">			errorStatus.incOk();</span>
+<span class="fc" id="L334">			errorStatus.incOk();</span>
 
-<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (option.isTrue(CliFlag.CHECK_ONLY))</span>
-<span class="fc" id="L340">			return;</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">		if (option.isTrue(CliFlag.CHECK_ONLY))</span>
+<span class="fc" id="L337">			return;</span>
 
-<span class="fc bfc" id="L342" title="All 2 branches covered.">		if (option.getPreprocessorOutputMode() != null) {</span>
-<span class="fc" id="L343">			extractPreproc(sourceFileReader);</span>
-<span class="fc" id="L344">			return;</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (option.getFileFormatOption().getFileFormat() == FileFormat.PREPROC</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">				|| option.getFileFormatOption().getFileFormat() == FileFormat.OBFUSCATE) {</span>
+<span class="fc" id="L341">			extractPreprocessingSource(sourceFileReader);</span>
+<span class="fc" id="L342">			return;</span>
 		}
-<span class="fc" id="L346">		final List&lt;GeneratedImage&gt; result = sourceFileReader.getGeneratedImages();</span>
-<span class="fc" id="L347">		final Stdrpt rpt = option.getStdrpt();</span>
-<span class="fc bfc" id="L348" title="All 2 branches covered.">		if (result.size() == 0) {</span>
-<span class="fc" id="L349">			Log.error(&quot;Warning: no image in &quot; + f.getPath());</span>
-<span class="fc" id="L350">			rpt.printInfo(System.err, null);</span>
-<span class="fc" id="L351">			return;</span>
+<span class="fc" id="L344">		final List&lt;GeneratedImage&gt; result = sourceFileReader.getGeneratedImages();</span>
+<span class="fc" id="L345">		final Stdrpt rpt = option.getStdrpt();</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">		if (result.size() == 0) {</span>
+<span class="fc" id="L347">			Log.error(&quot;Warning: no image in &quot; + f.getPath());</span>
+<span class="fc" id="L348">			rpt.printInfo(System.err, null);</span>
+<span class="fc" id="L349">			return;</span>
 		}
-<span class="fc bfc" id="L353" title="All 2 branches covered.">		for (BlockUml s : sourceFileReader.getBlocks())</span>
-<span class="fc" id="L354">			rpt.printInfo(System.err, s.getDiagram());</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		for (BlockUml s : sourceFileReader.getBlocks())</span>
+<span class="fc" id="L352">			rpt.printInfo(System.err, s.getDiagram());</span>
 
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (result.size() != 0) {</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">			for (GeneratedImage image : result) {</span>
-<span class="fc" id="L358">				final int lineError = image.lineErrorRaw();</span>
-<span class="fc bfc" id="L359" title="All 2 branches covered.">				if (lineError != -1) {</span>
-<span class="fc" id="L360">					rpt.errorLine(lineError, f);</span>
-<span class="fc" id="L361">					errorStatus.incError();</span>
-<span class="fc" id="L362">					return;</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (result.size() != 0) {</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">			for (GeneratedImage image : result) {</span>
+<span class="fc" id="L356">				final int lineError = image.lineErrorRaw();</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">				if (lineError != -1) {</span>
+<span class="fc" id="L358">					rpt.errorLine(lineError, f);</span>
+<span class="fc" id="L359">					errorStatus.incError();</span>
+<span class="fc" id="L360">					return;</span>
 				}
-<span class="fc" id="L364">			}</span>
-<span class="fc" id="L365">			errorStatus.incOk();</span>
+<span class="fc" id="L362">			}</span>
+<span class="fc" id="L363">			errorStatus.incOk();</span>
 		}
-<span class="fc" id="L367">	}</span>
+<span class="fc" id="L365">	}</span>
 
 	private static void runGui(final CliOptions option) {
 		try {
-<span class="nc" id="L371">			UIManager.setLookAndFeel(&quot;com.sun.java.swing.plaf.windows.WindowsLookAndFeel&quot;);</span>
-<span class="nc" id="L372">		} catch (Exception e) {</span>
-<span class="nc" id="L373">		}</span>
-<span class="nc" id="L374">		final List&lt;String&gt; list = option.getRemainingArgs();</span>
-<span class="nc" id="L375">		File dir = null;</span>
-<span class="nc bnc" id="L376" title="All 2 branches missed.">		if (list.size() == 1) {</span>
-<span class="nc" id="L377">			final File f = new File(list.get(0));</span>
-<span class="nc bnc" id="L378" title="All 4 branches missed.">			if (f.exists() &amp;&amp; f.isDirectory())</span>
-<span class="nc" id="L379">				dir = f;</span>
+<span class="nc" id="L369">			UIManager.setLookAndFeel(&quot;com.sun.java.swing.plaf.windows.WindowsLookAndFeel&quot;);</span>
+<span class="nc" id="L370">		} catch (Exception e) {</span>
+<span class="nc" id="L371">		}</span>
+<span class="nc" id="L372">		final List&lt;String&gt; list = option.getRemainingArgs();</span>
+<span class="nc" id="L373">		File dir = null;</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (list.size() == 1) {</span>
+<span class="nc" id="L375">			final File f = new File(list.get(0));</span>
+<span class="nc bnc" id="L376" title="All 4 branches missed.">			if (f.exists() &amp;&amp; f.isDirectory())</span>
+<span class="nc" id="L377">				dir = f;</span>
 
 		}
 		try {
-<span class="nc" id="L383">			new MainWindow(option, dir);</span>
-<span class="nc" id="L384">		} catch (java.awt.HeadlessException e) {</span>
-<span class="nc" id="L385">			System.err.println(&quot;There is an issue with your server. You will find some tips here:&quot;);</span>
-<span class="nc" id="L386">			System.err.println(&quot;https://forum.plantuml.net/3399/problem-with-x11-and-headless-exception&quot;);</span>
-<span class="nc" id="L387">			System.err.println(&quot;https://plantuml.com/en/faq#239d64f675c3e515&quot;);</span>
-<span class="nc" id="L388">			throw e;</span>
-<span class="nc" id="L389">		}</span>
-<span class="nc" id="L390">	}</span>
+<span class="nc" id="L381">			new MainWindow(option, dir);</span>
+<span class="nc" id="L382">		} catch (java.awt.HeadlessException e) {</span>
+<span class="nc" id="L383">			System.err.println(&quot;There is an issue with your server. You will find some tips here:&quot;);</span>
+<span class="nc" id="L384">			System.err.println(&quot;https://forum.plantuml.net/3399/problem-with-x11-and-headless-exception&quot;);</span>
+<span class="nc" id="L385">			System.err.println(&quot;https://plantuml.com/en/faq#239d64f675c3e515&quot;);</span>
+<span class="nc" id="L386">			throw e;</span>
+<span class="nc" id="L387">		}</span>
+<span class="nc" id="L388">	}</span>
 
 	public static void forceOpenJdkResourceLoad() {
-<span class="pc bpc" id="L393" title="1 of 2 branches missed.">		if (isOpenJdkRunning()) {</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">		if (isOpenJdkRunning()) {</span>
 			// see https://github.com/plantuml/plantuml/issues/123
-<span class="fc" id="L395">			Log.info(() -&gt; &quot;Forcing resource load on OpenJdk&quot;);</span>
-<span class="fc" id="L396">			final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);</span>
-<span class="fc" id="L397">			final Graphics2D gg = imDummy.createGraphics();</span>
-<span class="fc" id="L398">			final String text = &quot;Alice&quot;;</span>
-<span class="fc" id="L399">			final Font font = new Font(&quot;SansSerif&quot;, Font.PLAIN, 12);</span>
-<span class="fc" id="L400">			final FontMetrics fm = gg.getFontMetrics(font);</span>
-<span class="fc" id="L401">			final Rectangle2D rect = fm.getStringBounds(text, gg);</span>
+<span class="fc" id="L393">			Log.info(() -&gt; &quot;Forcing resource load on OpenJdk&quot;);</span>
+<span class="fc" id="L394">			final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);</span>
+<span class="fc" id="L395">			final Graphics2D gg = imDummy.createGraphics();</span>
+<span class="fc" id="L396">			final String text = &quot;Alice&quot;;</span>
+<span class="fc" id="L397">			final Font font = new Font(&quot;SansSerif&quot;, Font.PLAIN, 12);</span>
+<span class="fc" id="L398">			final FontMetrics fm = gg.getFontMetrics(font);</span>
+<span class="fc" id="L399">			final Rectangle2D rect = fm.getStringBounds(text, gg);</span>
 		}
-<span class="fc" id="L403">	}</span>
+<span class="fc" id="L401">	}</span>
 
 	public static boolean isOpenJdkRunning() {
-<span class="fc" id="L406">		final String jvmName = System.getProperty(&quot;java.vm.name&quot;);</span>
-<span class="pc bpc" id="L407" title="2 of 4 branches missed.">		if (jvmName != null &amp;&amp; jvmName.toLowerCase().contains(&quot;openjdk&quot;))</span>
-<span class="fc" id="L408">			return true;</span>
+<span class="fc" id="L404">		final String jvmName = System.getProperty(&quot;java.vm.name&quot;);</span>
+<span class="pc bpc" id="L405" title="2 of 4 branches missed.">		if (jvmName != null &amp;&amp; jvmName.toLowerCase().contains(&quot;openjdk&quot;))</span>
+<span class="fc" id="L406">			return true;</span>
 
-<span class="nc" id="L410">		return false;</span>
+<span class="nc" id="L408">		return false;</span>
 	}
 
 	static private final String httpProtocol = &quot;http://&quot;;
 	static private final String httpsProtocol = &quot;https://&quot;;
 
 	private static void encodeSprite(List&lt;String&gt; remainingArgs) throws IOException {
-<span class="fc" id="L417">		SpriteGrayLevel level = SpriteGrayLevel.GRAY_16;</span>
-<span class="fc" id="L418">		boolean compressed = false;</span>
+<span class="fc" id="L415">		SpriteGrayLevel level = SpriteGrayLevel.GRAY_16;</span>
+<span class="fc" id="L416">		boolean compressed = false;</span>
 		final String path;
-<span class="pc bpc" id="L420" title="2 of 4 branches missed.">		if (remainingArgs.size() &gt; 1 &amp;&amp; remainingArgs.get(0).matches(&quot;(4|8|16)z?&quot;)) {</span>
-<span class="pc bpc" id="L421" title="1 of 2 branches missed.">			if (remainingArgs.get(0).startsWith(&quot;8&quot;))</span>
-<span class="nc" id="L422">				level = SpriteGrayLevel.GRAY_8;</span>
+<span class="pc bpc" id="L418" title="2 of 4 branches missed.">		if (remainingArgs.size() &gt; 1 &amp;&amp; remainingArgs.get(0).matches(&quot;(4|8|16)z?&quot;)) {</span>
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">			if (remainingArgs.get(0).startsWith(&quot;8&quot;))</span>
+<span class="nc" id="L420">				level = SpriteGrayLevel.GRAY_8;</span>
 
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">			if (remainingArgs.get(0).startsWith(&quot;4&quot;))</span>
-<span class="nc" id="L425">				level = SpriteGrayLevel.GRAY_4;</span>
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">			if (remainingArgs.get(0).startsWith(&quot;4&quot;))</span>
+<span class="nc" id="L423">				level = SpriteGrayLevel.GRAY_4;</span>
 
-<span class="fc" id="L427">			compressed = StringUtils.goLowerCase(remainingArgs.get(0)).endsWith(&quot;z&quot;);</span>
-<span class="fc" id="L428">			path = remainingArgs.get(1);</span>
+<span class="fc" id="L425">			compressed = StringUtils.goLowerCase(remainingArgs.get(0)).endsWith(&quot;z&quot;);</span>
+<span class="fc" id="L426">			path = remainingArgs.get(1);</span>
 		} else {
-<span class="nc" id="L430">			path = remainingArgs.get(0);</span>
+<span class="nc" id="L428">			path = remainingArgs.get(0);</span>
 		}
 
 		final String fileName;
 		final URL source;
-<span class="fc" id="L435">		final String lowerPath = StringUtils.goLowerCase(path);</span>
-<span class="pc bpc" id="L436" title="2 of 4 branches missed.">		if (lowerPath.startsWith(httpProtocol) || lowerPath.startsWith(httpsProtocol)) {</span>
-<span class="nc" id="L437">			source = new java.net.URL(path);</span>
-<span class="nc" id="L438">			final String p = source.getPath();</span>
-<span class="nc" id="L439">			fileName = p.substring(p.lastIndexOf('/') + 1, p.length());</span>
-<span class="nc" id="L440">		} else {</span>
-<span class="fc" id="L441">			final SFile f = new SFile(path);</span>
-<span class="fc" id="L442">			source = f.toURI().toURL();</span>
-<span class="fc" id="L443">			fileName = f.getName();</span>
+<span class="fc" id="L433">		final String lowerPath = StringUtils.goLowerCase(path);</span>
+<span class="pc bpc" id="L434" title="2 of 4 branches missed.">		if (lowerPath.startsWith(httpProtocol) || lowerPath.startsWith(httpsProtocol)) {</span>
+<span class="nc" id="L435">			source = new java.net.URL(path);</span>
+<span class="nc" id="L436">			final String p = source.getPath();</span>
+<span class="nc" id="L437">			fileName = p.substring(p.lastIndexOf('/') + 1, p.length());</span>
+<span class="nc" id="L438">		} else {</span>
+<span class="fc" id="L439">			final SFile f = new SFile(path);</span>
+<span class="fc" id="L440">			source = f.toURI().toURL();</span>
+<span class="fc" id="L441">			fileName = f.getName();</span>
 		}
 
-<span class="pc bpc" id="L446" title="1 of 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L447">			return;</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L445">			return;</span>
 
 		final BufferedImage im;
-<span class="fc" id="L450">		try (InputStream stream = source.openStream()) {</span>
-<span class="fc" id="L451">			im = SImageIO.read(stream);</span>
+<span class="fc" id="L448">		try (InputStream stream = source.openStream()) {</span>
+<span class="fc" id="L449">			im = SImageIO.read(stream);</span>
 		}
-<span class="fc" id="L453">		final String name = getSpriteName(fileName);</span>
-<span class="pc bpc" id="L454" title="1 of 2 branches missed.">		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level)</span>
-<span class="fc" id="L455">				: SpriteUtils.encode(im, name, level);</span>
-<span class="fc" id="L456">		System.out.println(s);</span>
-<span class="fc" id="L457">	}</span>
+<span class="fc" id="L451">		final String name = getSpriteName(fileName);</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level)</span>
+<span class="fc" id="L453">				: SpriteUtils.encode(im, name, level);</span>
+<span class="fc" id="L454">		System.out.println(s);</span>
+<span class="fc" id="L455">	}</span>
 
 	private static String getSpriteName(String fileName) {
-<span class="fc" id="L460">		final String s = getSpriteNameInternal(fileName);</span>
-<span class="pc bpc" id="L461" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
-<span class="nc" id="L462">			return &quot;test&quot;;</span>
+<span class="fc" id="L458">		final String s = getSpriteNameInternal(fileName);</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
+<span class="nc" id="L460">			return &quot;test&quot;;</span>
 
-<span class="fc" id="L464">		return s;</span>
+<span class="fc" id="L462">		return s;</span>
 	}
 
 	private static String getSpriteNameInternal(String fileName) {
-<span class="fc" id="L468">		final StringBuilder sb = new StringBuilder();</span>
-<span class="pc bpc" id="L469" title="1 of 2 branches missed.">		for (char c : fileName.toCharArray())</span>
-<span class="fc bfc" id="L470" title="All 2 branches covered.">			if ((&quot;&quot; + c).matches(&quot;[\\p{L}0-9_]&quot;))</span>
-<span class="fc" id="L471">				sb.append(c);</span>
+<span class="fc" id="L466">		final StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">		for (char c : fileName.toCharArray())</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">			if ((&quot;&quot; + c).matches(&quot;[\\p{L}0-9_]&quot;))</span>
+<span class="fc" id="L469">				sb.append(c);</span>
 			else
-<span class="fc" id="L473">				return sb.toString();</span>
+<span class="fc" id="L471">				return sb.toString();</span>
 
-<span class="nc" id="L475">		return sb.toString();</span>
+<span class="nc" id="L473">		return sb.toString();</span>
 	}
 
 	private static void goFtp(CliOptions option) throws IOException {
-<span class="nc" id="L479">		final int ftpPort = option.getFtpPort();</span>
-<span class="nc" id="L480">		System.err.println(&quot;ftpPort=&quot; + ftpPort);</span>
-<span class="nc" id="L481">		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());</span>
-<span class="nc" id="L482">		ftpServer.go();</span>
-<span class="nc" id="L483">	}</span>
+<span class="nc" id="L477">		final int ftpPort = option.getFtpPort();</span>
+<span class="nc" id="L478">		System.err.println(&quot;ftpPort=&quot; + ftpPort);</span>
+<span class="nc" id="L479">		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());</span>
+<span class="nc" id="L480">		ftpServer.go();</span>
+<span class="nc" id="L481">	}</span>
 
 	private static void goPicoweb(CliOptions option) throws IOException {
-<span class="nc" id="L486">		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress(),</span>
-<span class="nc" id="L487">				option.getPicowebEnableStop());</span>
-<span class="nc" id="L488">	}</span>
+<span class="nc" id="L484">		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress(),</span>
+<span class="nc" id="L485">				option.getPicowebEnableStop());</span>
+<span class="nc" id="L486">	}</span>
 
 	public static void printFonts() {
-<span class="nc" id="L491">		final Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();</span>
-<span class="nc bnc" id="L492" title="All 2 branches missed.">		for (Font f : fonts)</span>
-<span class="nc" id="L493">			System.out.println(</span>
-<span class="nc" id="L494">					&quot;f=&quot; + f + &quot;/&quot; + f.getPSName() + &quot;/&quot; + f.getName() + &quot;/&quot; + f.getFontName() + &quot;/&quot; + f.getFamily());</span>
+<span class="nc" id="L489">		final Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">		for (Font f : fonts)</span>
+<span class="nc" id="L491">			System.out.println(</span>
+<span class="nc" id="L492">					&quot;f=&quot; + f + &quot;/&quot; + f.getPSName() + &quot;/&quot; + f.getName() + &quot;/&quot; + f.getFontName() + &quot;/&quot; + f.getFamily());</span>
 
-<span class="nc" id="L496">		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
-<span class="nc bnc" id="L497" title="All 2 branches missed.">		for (String n : name)</span>
-<span class="nc" id="L498">			System.out.println(&quot;n=&quot; + n);</span>
+<span class="nc" id="L494">		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">		for (String n : name)</span>
+<span class="nc" id="L496">			System.out.println(&quot;n=&quot; + n);</span>
 
-<span class="nc" id="L500">	}</span>
+<span class="nc" id="L498">	}</span>
 
 	private static void incDone(boolean error) {
-<span class="fc" id="L503">		Splash.incDone(error);</span>
-<span class="fc" id="L504">		ProgressBar.incDone(error);</span>
-<span class="fc" id="L505">	}</span>
+<span class="fc" id="L501">		Splash.incDone(error);</span>
+<span class="fc" id="L502">		ProgressBar.incDone(error);</span>
+<span class="fc" id="L503">	}</span>
 
 	private static void incTotal(int nb) {
-<span class="fc" id="L508">		Splash.incTotal(nb);</span>
-<span class="fc" id="L509">		ProgressBar.incTotal(nb);</span>
-<span class="fc" id="L510">	}</span>
+<span class="fc" id="L506">		Splash.incTotal(nb);</span>
+<span class="fc" id="L507">		ProgressBar.incTotal(nb);</span>
+<span class="fc" id="L508">	}</span>
 
 	private static ISourceFileReader getSourceFileReader(File f, CliOptions option, String charset) throws IOException {
 		final ISourceFileReader sourceFileReader;
-<span class="fc" id="L514">		final FileFormatOption fileFormatOption = option.getFileFormatOption();</span>
+<span class="fc" id="L512">		final FileFormatOption fileFormatOption = option.getFileFormatOption();</span>
 
-<span class="fc" id="L516">		File outputDir = option.getOutputDir();</span>
-<span class="pc bpc" id="L517" title="1 of 4 branches missed.">		if (outputDir != null &amp;&amp; outputDir.getPath().endsWith(&quot;$&quot;)) {</span>
-<span class="nc" id="L518">			final String path = outputDir.getPath();</span>
-<span class="nc" id="L519">			outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();</span>
-<span class="nc" id="L520">			sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,</span>
-<span class="nc" id="L521">					option.getConfig(), charset, fileFormatOption);</span>
-<span class="nc" id="L522">		} else {</span>
-<span class="fc" id="L523">			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),</span>
+<span class="fc" id="L514">		File outputDir = option.getOutputDir();</span>
+<span class="pc bpc" id="L515" title="1 of 4 branches missed.">		if (outputDir != null &amp;&amp; outputDir.getPath().endsWith(&quot;$&quot;)) {</span>
+<span class="nc" id="L516">			final String path = outputDir.getPath();</span>
+<span class="nc" id="L517">			outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();</span>
+<span class="nc" id="L518">			sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,</span>
+<span class="nc" id="L519">					option.getConfig(), charset, fileFormatOption);</span>
+<span class="nc" id="L520">		} else {</span>
+<span class="fc" id="L521">			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),</span>
 					charset, fileFormatOption);
 		}
 
-<span class="fc" id="L527">		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));</span>
-<span class="fc" id="L528">		((SourceFileReaderAbstract) sourceFileReader).setNoErrorImage(option.isTrue(CliFlag.NO_ERROR_IMAGE));</span>
-<span class="fc" id="L529">		return sourceFileReader;</span>
+<span class="fc" id="L525">		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));</span>
+<span class="fc" id="L526">		((SourceFileReaderAbstract) sourceFileReader).setNoErrorImage(option.isTrue(CliFlag.NO_ERROR_IMAGE));</span>
+<span class="fc" id="L527">		return sourceFileReader;</span>
 	}
 
-	private void extractPreproc(final ISourceFileReader sourceFileReader) throws IOException {
-<span class="fc bfc" id="L533" title="All 2 branches covered.">		for (BlockUml blockUml : sourceFileReader.getBlocks()) {</span>
-<span class="fc" id="L534">			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)</span>
-<span class="fc" id="L535">					.withPreprocFormat();</span>
-<span class="fc" id="L536">			final SFile file = suggested.getFile(0);</span>
-<span class="pc" id="L537">			Log.info(() -&gt; &quot;Export preprocessing source to &quot; + file.getPrintablePath());</span>
-<span class="pc bpc" id="L538" title="1 of 2 branches missed.">			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {</span>
-<span class="fc" id="L539">				int level = 0;</span>
-<span class="fc bfc" id="L540" title="All 2 branches covered.">				for (CharSequence cs : blockUml.getDefinition(true)) {</span>
-<span class="fc" id="L541">					String s = cs.toString();</span>
-<span class="fc bfc" id="L542" title="All 2 branches covered.">					if (cypher != null) {</span>
-<span class="pc bpc" id="L543" title="3 of 4 branches missed.">						if (s.contains(&quot;skinparam&quot;) &amp;&amp; s.contains(&quot;{&quot;))</span>
-<span class="nc" id="L544">							level++;</span>
+	private void extractPreprocessingSource(final ISourceFileReader sourceFileReader) throws IOException {
 
-<span class="pc bpc" id="L546" title="2 of 4 branches missed.">						if (level == 0 &amp;&amp; s.contains(&quot;skinparam&quot;) == false)</span>
-<span class="fc" id="L547">							s = cypher.cypher(s);</span>
+<span class="fc" id="L532">		final FileFormat format = option.getFileFormatOption().getFileFormat();</span>
+<span class="fc bfc" id="L533" title="All 2 branches covered.">		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE ? new LanguageDescriptor().getObfuscate() : null;</span>
 
-<span class="pc bpc" id="L549" title="3 of 4 branches missed.">						if (level &gt; 0 &amp;&amp; s.contains(&quot;}&quot;))</span>
-<span class="nc" id="L550">							level--;</span>
+<span class="fc bfc" id="L535" title="All 2 branches covered.">		for (BlockUml blockUml : sourceFileReader.getBlocks()) {</span>
+<span class="fc" id="L536">			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)</span>
+<span class="fc" id="L537">					.withPreprocFormat(option.getFileFormatOption().getFileFormat());</span>
+<span class="fc" id="L538">			final SFile file = suggested.getFile(0);</span>
+<span class="pc" id="L539">			Log.info(() -&gt; &quot;Export preprocessing source to &quot; + file.getPrintablePath());</span>
+<span class="pc bpc" id="L540" title="1 of 2 branches missed.">			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {</span>
+<span class="fc" id="L541">				int level = 0;</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">				for (CharSequence cs : blockUml.getDefinition(true)) {</span>
+<span class="fc" id="L543">					String s = cs.toString();</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">					if (obfuscate != null) {</span>
+<span class="pc bpc" id="L545" title="3 of 4 branches missed.">						if (s.contains(&quot;skinparam&quot;) &amp;&amp; s.contains(&quot;{&quot;))</span>
+<span class="nc" id="L546">							level++;</span>
+
+<span class="pc bpc" id="L548" title="2 of 4 branches missed.">						if (level == 0 &amp;&amp; s.contains(&quot;skinparam&quot;) == false)</span>
+<span class="fc" id="L549">							s = obfuscate.obfuscate(s);</span>
+
+<span class="pc bpc" id="L551" title="3 of 4 branches missed.">						if (level &gt; 0 &amp;&amp; s.contains(&quot;}&quot;))</span>
+<span class="nc" id="L552">							level--;</span>
 
 					}
-<span class="fc" id="L553">					pw.println(s);</span>
-<span class="fc" id="L554">				}</span>
+<span class="fc" id="L555">					pw.println(s);</span>
+<span class="fc" id="L556">				}</span>
 			}
-<span class="fc" id="L556">		}</span>
-<span class="fc" id="L557">	}</span>
+<span class="fc" id="L558">		}</span>
+<span class="fc" id="L559">	}</span>
 
 	private static void extractMetadata(File f) throws IOException {
-<span class="fc" id="L560">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="fc" id="L561">		System.out.println(f);</span>
-<span class="fc" id="L562">		System.out.println();</span>
-<span class="fc bfc" id="L563" title="All 2 branches covered.">		if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
-<span class="fc" id="L564">			final SFile file = SFile.fromFile(f);</span>
-<span class="fc" id="L565">			final String svg = FileUtils.readFile(file);</span>
-<span class="fc" id="L566">			final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="fc bfc" id="L567" title="All 2 branches covered.">			if (idx &gt; 0) {</span>
-<span class="fc" id="L568">				String part = svg.substring(idx + SvgGraphics.META_HEADER.length());</span>
-<span class="fc" id="L569">				final int idxEnd = part.indexOf(&quot;]&quot;);</span>
-<span class="pc bpc" id="L570" title="1 of 2 branches missed.">				if (idxEnd &gt; 0) {</span>
-<span class="fc" id="L571">					part = part.substring(0, idxEnd);</span>
-<span class="fc" id="L572">					part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
-<span class="fc" id="L573">					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
-<span class="fc" id="L574">					System.out.println(decoded);</span>
+<span class="fc" id="L562">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="fc" id="L563">		System.out.println(f);</span>
+<span class="fc" id="L564">		System.out.println();</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">		if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
+<span class="fc" id="L566">			final SFile file = SFile.fromFile(f);</span>
+<span class="fc" id="L567">			final String svg = FileUtils.readFile(file);</span>
+<span class="fc" id="L568">			final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">			if (idx &gt; 0) {</span>
+<span class="fc" id="L570">				String part = svg.substring(idx + SvgGraphics.META_HEADER.length());</span>
+<span class="fc" id="L571">				final int idxEnd = part.indexOf(&quot;]&quot;);</span>
+<span class="pc bpc" id="L572" title="1 of 2 branches missed.">				if (idxEnd &gt; 0) {</span>
+<span class="fc" id="L573">					part = part.substring(0, idxEnd);</span>
+<span class="fc" id="L574">					part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
+<span class="fc" id="L575">					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
+<span class="fc" id="L576">					System.out.println(decoded);</span>
 				}
 			}
-<span class="fc" id="L577">		} else {</span>
-<span class="fc" id="L578">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
-<span class="fc" id="L579">			System.out.println(data);</span>
+<span class="fc" id="L579">		} else {</span>
+<span class="fc" id="L580">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
+<span class="fc" id="L581">			System.out.println(data);</span>
 		}
-<span class="fc" id="L581">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="fc" id="L582">	}</span>
+<span class="fc" id="L583">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="fc" id="L584">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

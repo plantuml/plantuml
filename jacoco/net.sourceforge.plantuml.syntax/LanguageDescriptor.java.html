@@ -43,7 +43,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.utils.Cypher;
+import net.sourceforge.plantuml.utils.Obfuscate;
 
 public class LanguageDescriptor {
 
@@ -302,25 +302,25 @@ public class LanguageDescriptor {
 <span class="fc" id="L302">		keyword.add(&quot;@end&quot; + type);</span>
 <span class="fc" id="L303">	}</span>
 
-	public Cypher getCypher() {
-<span class="fc" id="L306">		final Cypher cypher = new Cypher();</span>
+	public Obfuscate getObfuscate() {
+<span class="fc" id="L306">		final Obfuscate result = new Obfuscate();</span>
 <span class="fc bfc" id="L307" title="All 2 branches covered.">		for (String s : type)</span>
-<span class="fc" id="L308">			cypher.addException(s);</span>
+<span class="fc" id="L308">			result.addException(s);</span>
 
 <span class="fc bfc" id="L310" title="All 2 branches covered.">		for (String s : keyword)</span>
-<span class="fc" id="L311">			cypher.addException(s.replace(&quot;@&quot;, &quot;&quot;));</span>
+<span class="fc" id="L311">			result.addException(s.replace(&quot;@&quot;, &quot;&quot;));</span>
 
 <span class="fc bfc" id="L313" title="All 2 branches covered.">		for (String s : preproc)</span>
-<span class="fc" id="L314">			cypher.addException(s.substring(1));</span>
+<span class="fc" id="L314">			result.addException(s.substring(1));</span>
 
 <span class="fc bfc" id="L316" title="All 2 branches covered.">		for (String s : SkinParam.getPossibleValues())</span>
-<span class="fc" id="L317">			cypher.addException(s);</span>
+<span class="fc" id="L317">			result.addException(s);</span>
 
 <span class="fc bfc" id="L319" title="All 2 branches covered.">		for (String s : HColorSet.instance().names())</span>
-<span class="fc" id="L320">			cypher.addException(s);</span>
+<span class="fc" id="L320">			result.addException(s);</span>
 
-<span class="fc" id="L322">		cypher.addException(&quot;o&quot;);</span>
-<span class="fc" id="L323">		return cypher;</span>
+<span class="fc" id="L322">		result.addException(&quot;o&quot;);</span>
+<span class="fc" id="L323">		return result;</span>
 	}
 
 	public void print(PrintStream ps) {

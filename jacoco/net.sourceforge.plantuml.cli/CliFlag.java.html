@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 
 	// General:
 
-<span class="fc" id="L52">	@CliFlagDoc(value = &quot;Show this help&quot;, level = 0)</span>
+<span class="fc" id="L52">	@CliFlagDoc(value = &quot;Show help and usage information&quot;, level = 0)</span>
 <span class="fc" id="L53">	HELP(&quot;--help&quot;, aliases(&quot;-h&quot;, &quot;-?&quot;, DEPRECATED(&quot;-help&quot;)), Arity.UNARY_IMMEDIATE_ACTION, HelpPrint::printHelp),</span>
 
 <span class="fc" id="L55">	@CliFlagDoc(value = &quot;Show extended help (advanced options)&quot;, level = 0)</span>
@@ -162,93 +162,93 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 <span class="fc" id="L162">	@CliFlagDoc(value = &quot;Encode a sprite definition from an image file&quot;, usage = &quot;--sprite &lt;4|8|16[z]&gt; &lt;file&gt;&quot;, level = 0)</span>
 <span class="fc" id="L163">	ENCODE_SPRITE(&quot;--encode-sprite&quot;, aliases(DEPRECATED(&quot;-sprite&quot;), DEPRECATED(&quot;-encodesprite&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L165">	@CliFlagDoc(value = &quot;Obfuscate diagram texts for secure sharing&quot;, level = 0)</span>
-<span class="fc" id="L166">	CYPHER(&quot;--obfuscate&quot;, aliases(DEPRECATED(&quot;-cypher&quot;)), Arity.UNARY_BOOLEAN),</span>
-
-<span class="fc" id="L168">	@CliFlagDoc(value = &quot;Generate an encoded PlantUML URL from a source file&quot;, level = 1)</span>
-<span class="fc" id="L169">	COMPUTE_URL(&quot;--encode-url&quot;, aliases(&quot;--compute-url&quot;, DEPRECATED(&quot;-computeurl&quot;), DEPRECATED(&quot;-encodeurl&quot;)),</span>
+<span class="fc" id="L165">	@CliFlagDoc(value = &quot;Generate an encoded PlantUML URL from a source file&quot;, level = 1)</span>
+<span class="fc" id="L166">	COMPUTE_URL(&quot;--encode-url&quot;, aliases(&quot;--compute-url&quot;, DEPRECATED(&quot;-computeurl&quot;), DEPRECATED(&quot;-encodeurl&quot;)),</span>
 			Arity.UNARY_BOOLEAN),
 
-<span class="fc" id="L172">	@CliFlagDoc(value = &quot;Decode a PlantUML encoded URL back to its source&quot;, usage = &quot;--decode-url &lt;string&gt;&quot;, level = 1)</span>
-<span class="fc" id="L173">	DECODE_URL(&quot;--decode-url&quot;, aliases(DEPRECATED(&quot;-decodeurl&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L169">	@CliFlagDoc(value = &quot;Decode a PlantUML encoded URL back to its source&quot;, usage = &quot;--decode-url &lt;string&gt;&quot;, level = 1)</span>
+<span class="fc" id="L170">	DECODE_URL(&quot;--decode-url&quot;, aliases(DEPRECATED(&quot;-decodeurl&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L175">	@CliFlagDoc(value = &quot;Print the list of PlantUML language keywords&quot;, level = 1)</span>
-<span class="fc" id="L176">	LANGUAGE(&quot;--list-keywords&quot;, aliases(DEPRECATED(&quot;-language&quot;)), Arity.UNARY_IMMEDIATE_ACTION,</span>
+<span class="fc" id="L172">	@CliFlagDoc(value = &quot;Print the list of PlantUML language keywords&quot;, level = 1)</span>
+<span class="fc" id="L173">	LANGUAGE(&quot;--list-keywords&quot;, aliases(DEPRECATED(&quot;-language&quot;)), Arity.UNARY_IMMEDIATE_ACTION,</span>
 			OptionPrint::printListKeywords),
 
-<span class="fc" id="L179">	@CliFlagDoc(value = &quot;Specify the path to the Graphviz 'dot' executable&quot;, usage = &quot;--dot-path &lt;path-to-dot-exe&gt;&quot;, level = 1)</span>
-<span class="fc" id="L180">	GRAPHVIZ_DOT(&quot;--dot-path&quot;, aliases(DEPRECATED(&quot;-graphvizdot&quot;), DEPRECATED(&quot;-graphviz_dot&quot;)),</span>
+<span class="fc" id="L176">	@CliFlagDoc(value = &quot;Specify the path to the Graphviz 'dot' executable&quot;, usage = &quot;--dot-path &lt;path-to-dot-exe&gt;&quot;, level = 1)</span>
+<span class="fc" id="L177">	GRAPHVIZ_DOT(&quot;--dot-path&quot;, aliases(DEPRECATED(&quot;-graphvizdot&quot;), DEPRECATED(&quot;-graphviz_dot&quot;)),</span>
 			Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-<span class="fc" id="L183">	@CliFlagDoc(value = &quot;Start a local FTP server for diagram rendering (rarely used)&quot;, level = 1)</span>
-<span class="fc" id="L184">	FTP(&quot;--ftp-server&quot;, aliases(DEPRECATED(&quot;-ftp&quot;)), Arity.UNARY_OPTIONAL_COLON),</span>
+<span class="fc" id="L180">	@CliFlagDoc(value = &quot;Start a local FTP server for diagram rendering (rarely used)&quot;, level = 1)</span>
+<span class="fc" id="L181">	FTP(&quot;--ftp-server&quot;, aliases(DEPRECATED(&quot;-ftp&quot;)), Arity.UNARY_OPTIONAL_COLON),</span>
 
 	// Output control
-<span class="fc" id="L187">	@CliFlagDoc(value = &quot;Generate output files in the specified directory&quot;, usage = &quot;--output-dir &lt;dir&gt;&quot;, level = 1, newGroup = &quot;Output control&quot;)</span>
-<span class="fc" id="L188">	OUTPUT_DIR(&quot;--output-dir&quot;, aliases(&quot;-o&quot;, DEPRECATED(&quot;output_dir&quot;), DEPRECATED(&quot;-output&quot;), DEPRECATED(&quot;-odir&quot;)),</span>
+<span class="fc" id="L184">	@CliFlagDoc(value = &quot;Generate output files in the specified directory&quot;, usage = &quot;--output-dir &lt;dir&gt;&quot;, level = 1, newGroup = &quot;Output control&quot;)</span>
+<span class="fc" id="L185">	OUTPUT_DIR(&quot;--output-dir&quot;, aliases(&quot;-o&quot;, DEPRECATED(&quot;output_dir&quot;), DEPRECATED(&quot;-output&quot;), DEPRECATED(&quot;-odir&quot;)),</span>
 			Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-<span class="fc" id="L191">	@CliFlagDoc(value = &quot;Allow overwriting of read-only output files&quot;, level = 1)</span>
-<span class="fc" id="L192">	OVERWRITE(&quot;--overwrite&quot;, aliases(&quot;--force-overwrite&quot;, DEPRECATED(&quot;-overwrite&quot;)), Arity.UNARY_BOOLEAN,</span>
-<span class="fc" id="L193">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),</span>
+<span class="fc" id="L188">	@CliFlagDoc(value = &quot;Allow overwriting of read-only output files&quot;, level = 1)</span>
+<span class="fc" id="L189">	OVERWRITE(&quot;--overwrite&quot;, aliases(&quot;--force-overwrite&quot;, DEPRECATED(&quot;-overwrite&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L190">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),</span>
 
-<span class="fc" id="L195">	@CliFlagDoc(value = &quot;Exclude input files matching the given pattern&quot;, usage = &quot;--exclude &lt;pattern&gt;&quot;, level = 1)</span>
-<span class="fc" id="L196">	EXCLUDE(&quot;--exclude&quot;, aliases(&quot;-x&quot;, DEPRECATED(&quot;-exclude&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L192">	@CliFlagDoc(value = &quot;Exclude input files matching the given pattern&quot;, usage = &quot;--exclude &lt;pattern&gt;&quot;, level = 1)</span>
+<span class="fc" id="L193">	EXCLUDE(&quot;--exclude&quot;, aliases(&quot;-x&quot;, DEPRECATED(&quot;-exclude&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
 	// Other
 
-<span class="fc" id="L200">	CLIPBOARD(&quot;--clipboard&quot;, Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runOnce), //</span>
+<span class="fc" id="L197">	CLIPBOARD(&quot;--clipboard&quot;, Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runOnce), //</span>
 
-<span class="fc" id="L202">	CLIPBOARDLOOP(&quot;--clipboardloop&quot;, Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runLoop), //</span>
+<span class="fc" id="L199">	CLIPBOARDLOOP(&quot;--clipboardloop&quot;, Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runLoop), //</span>
 
-<span class="fc" id="L204">	@CliFlagDoc(&quot;Generate intermediate Svek files&quot;)</span>
-<span class="fc" id="L205">	DEBUG_SVEK(&quot;-debugsvek&quot;, aliases(&quot;-debug_svek&quot;), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L201">	@CliFlagDoc(&quot;Generate intermediate Svek files&quot;)</span>
+<span class="fc" id="L202">	DEBUG_SVEK(&quot;-debugsvek&quot;, aliases(&quot;-debug_svek&quot;), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L207">	@CliFlagDoc(&quot;Pretend input files are located in given directory&quot;)</span>
+<span class="fc" id="L204">	@CliFlagDoc(&quot;Pretend input files are located in given directory&quot;)</span>
 	FILE_DIR(&quot;-filedir&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-<span class="fc" id="L210">	@CliFlagDoc(&quot;Override %filename% variable&quot;)</span>
+<span class="fc" id="L207">	@CliFlagDoc(&quot;Override %filename% variable&quot;)</span>
 	FILENAME(&quot;-filename&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-<span class="pc" id="L213">	HEADLESS(&quot;-headless&quot;, Arity.UNARY_BOOLEAN, () -&gt; System.setProperty(&quot;java.awt.headless&quot;, &quot;true&quot;)),</span>
+<span class="pc" id="L210">	HEADLESS(&quot;-headless&quot;, Arity.UNARY_BOOLEAN, () -&gt; System.setProperty(&quot;java.awt.headless&quot;, &quot;true&quot;)),</span>
 
-<span class="fc" id="L215">	@CliFlagDoc(&quot;List fonts available on your system&quot;)</span>
+<span class="fc" id="L212">	@CliFlagDoc(&quot;List fonts available on your system&quot;)</span>
 	PRINT_FONTS(&quot;-printfonts&quot;, Arity.UNARY_IMMEDIATE_ACTION, Run::printFonts),
 
-<span class="fc" id="L218">	@CliFlagDoc(&quot;Print standard library information&quot;)</span>
+<span class="fc" id="L215">	@CliFlagDoc(&quot;Print standard library information&quot;)</span>
 	STD_LIB(&quot;-stdlib&quot;, Arity.UNARY_IMMEDIATE_ACTION, Stdlib::printStdLib),
 
-<span class="fc" id="L221">	STDRPT(&quot;-stdrpt&quot;, Arity.UNARY_OPTIONAL_COLON),</span>
+<span class="fc" id="L218">	STDRPT(&quot;-stdrpt&quot;, Arity.UNARY_OPTIONAL_COLON),</span>
 
-<span class="fc" id="L223">	@CliFlagDoc(&quot;Report syntax errors from stdin without generating images&quot;)</span>
+<span class="fc" id="L220">	@CliFlagDoc(&quot;Report syntax errors from stdin without generating images&quot;)</span>
 	SYNTAX(&quot;-syntax&quot;, Arity.UNARY_BOOLEAN),
 
-<span class="fc" id="L226">	LICENSE(&quot;-license&quot;, aliases(&quot;-licence&quot;), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printLicense),</span>
+<span class="fc" id="L223">	LICENSE(&quot;-license&quot;, aliases(&quot;-licence&quot;), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printLicense),</span>
 
-<span class="pc" id="L228">	WORD(&quot;-word&quot;, Arity.UNARY_BOOLEAN, () -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.WORD, true)),</span>
+<span class="pc" id="L225">	WORD(&quot;-word&quot;, Arity.UNARY_BOOLEAN, () -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.WORD, true)),</span>
 
-<span class="fc" id="L230">	USE_SEPARATOR_MINUS(&quot;-useseparatorminus&quot;, Arity.UNARY_BOOLEAN,</span>
-<span class="fc" id="L231">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, &quot;-&quot;)),</span>
+<span class="fc" id="L227">	USE_SEPARATOR_MINUS(&quot;-useseparatorminus&quot;, Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L228">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.FILE_SEPARATOR, &quot;-&quot;)),</span>
 
 	// Output format (choose one)
 
-<span class="fc" id="L235">	@CliFlagDoc(value = &quot;Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt)&quot;, level = 0, usage = &quot;--format &lt;name&gt;, -f &lt;name&gt;&quot;, newGroup = &quot;Output format (choose one)&quot;)</span>
-<span class="fc" id="L236">	FORMAT(&quot;--format&quot;, aliases(&quot;-f&quot;), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
-
-<span class="fc" id="L238">	@CliFlagDoc(value = &quot;Generate images in EPS format&quot;, level = 0, newGroup = &quot;Available formats&quot;)</span>
-<span class="fc" id="L239">	T_EPS(&quot;--eps&quot;, aliases(DEPRECATED(&quot;-teps&quot;), DEPRECATED(&quot;-eps&quot;)), Arity.UNARY_BOOLEAN, FileFormat.EPS),</span>
-<span class="fc" id="L240">	T_EPS_TEXT(&quot;--teps:text&quot;, aliases(DEPRECATED(&quot;-teps:text&quot;), DEPRECATED(&quot;-eps:text&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L232">	@CliFlagDoc(value = &quot;Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt)&quot;, level = 0, usage = &quot;--format &lt;name&gt;, -f &lt;name&gt;&quot;, newGroup = &quot;Output format (choose one)&quot;)</span>
+<span class="fc" id="L233">	FORMAT(&quot;--format&quot;, aliases(&quot;-f&quot;), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+	
+<span class="fc" id="L235">	@CliFlagDoc(value = &quot;Generate images in EPS format&quot;, level = 0, newGroup = &quot;Available formats&quot;)</span>
+<span class="fc" id="L236">	T_EPS(&quot;--eps&quot;, aliases(DEPRECATED(&quot;-teps&quot;), DEPRECATED(&quot;-eps&quot;)), Arity.UNARY_BOOLEAN, FileFormat.EPS),</span>
+<span class="fc" id="L237">	T_EPS_TEXT(&quot;--teps:text&quot;, aliases(DEPRECATED(&quot;-teps:text&quot;), DEPRECATED(&quot;-eps:text&quot;)), Arity.UNARY_BOOLEAN,</span>
 			FileFormat.EPS_TEXT),
 
-<span class="fc" id="L243">	@CliFlagDoc(value = &quot;Generate HTML files for class diagrams&quot;, level = 1)</span>
-<span class="fc" id="L244">	T_HTML(&quot;--html&quot;, aliases(DEPRECATED(&quot;-thtml&quot;), DEPRECATED(&quot;-html&quot;)), Arity.UNARY_BOOLEAN, FileFormat.HTML),</span>
+<span class="fc" id="L240">	@CliFlagDoc(value = &quot;Generate HTML files for class diagrams&quot;, level = 1)</span>
+<span class="fc" id="L241">	T_HTML(&quot;--html&quot;, aliases(DEPRECATED(&quot;-thtml&quot;), DEPRECATED(&quot;-html&quot;)), Arity.UNARY_BOOLEAN, FileFormat.HTML),</span>
 
-<span class="fc" id="L246">	@CliFlagDoc(value = &quot;Generate LaTeX/TikZ output&quot;, level = 0)</span>
-<span class="fc" id="L247">	T_LATEX(&quot;--latex&quot;, aliases(DEPRECATED(&quot;-tlatex&quot;), DEPRECATED(&quot;-latex&quot;)), Arity.UNARY_BOOLEAN, FileFormat.LATEX),</span>
+<span class="fc" id="L243">	@CliFlagDoc(value = &quot;Generate LaTeX/TikZ output&quot;, level = 0)</span>
+<span class="fc" id="L244">	T_LATEX(&quot;--latex&quot;, aliases(DEPRECATED(&quot;-tlatex&quot;), DEPRECATED(&quot;-latex&quot;)), Arity.UNARY_BOOLEAN, FileFormat.LATEX),</span>
 
-<span class="fc" id="L249">	@CliFlagDoc(value = &quot;Generate LaTeX/TikZ output without preamble&quot;, level = 1)</span>
-<span class="fc" id="L250">	T_LATEX_NOPREAMBLE(&quot;--latex-nopreamble&quot;, aliases(DEPRECATED(&quot;-tlatex:nopreamble&quot;), DEPRECATED(&quot;-latex:nopreamble&quot;)),</span>
+<span class="fc" id="L246">	@CliFlagDoc(value = &quot;Generate LaTeX/TikZ output without preamble&quot;, level = 1)</span>
+<span class="fc" id="L247">	T_LATEX_NOPREAMBLE(&quot;--latex-nopreamble&quot;, aliases(DEPRECATED(&quot;-tlatex:nopreamble&quot;), DEPRECATED(&quot;-latex:nopreamble&quot;)),</span>
 			Arity.UNARY_BOOLEAN, FileFormat.LATEX_NO_PREAMBLE),
+	
+<span class="fc" id="L250">	@CliFlagDoc(value = &quot;Replace text in diagrams with obfuscated strings to share diagrams safely&quot;, level = 0)</span>
+<span class="fc" id="L251">	OBFUSCATE(&quot;--obfuscate&quot;, aliases(DEPRECATED(&quot;-cypher&quot;)), Arity.UNARY_BOOLEAN, FileFormat.OBFUSCATE),</span>
 
 <span class="fc" id="L253">	@CliFlagDoc(value = &quot;Generate PDF images&quot;, level = 1)</span>
 <span class="fc" id="L254">	T_PDF(&quot;--pdf&quot;, aliases(DEPRECATED(&quot;-tpdf&quot;), DEPRECATED(&quot;-pdf&quot;)), Arity.UNARY_BOOLEAN, FileFormat.PDF),</span>
@@ -256,8 +256,8 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 <span class="fc" id="L256">	@CliFlagDoc(value = &quot;Generate PNG images (default)&quot;, level = 0)</span>
 <span class="fc" id="L257">	T_PNG(&quot;--png&quot;, aliases(DEPRECATED(&quot;-tpng&quot;), DEPRECATED(&quot;-png&quot;)), Arity.UNARY_BOOLEAN, FileFormat.PNG),</span>
 
-<span class="fc" id="L259">	T_BASE64(&quot;--tbase64&quot;, Arity.UNARY_BOOLEAN, FileFormat.BASE64),</span>
-<span class="fc" id="L260">	T_BRAILLE(&quot;--tbraille&quot;, Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),</span>
+<span class="fc" id="L259">	@CliFlagDoc(value = &quot;Generate the preprocessed source after applying !include, !define... (no rendering)&quot;, level = 0)</span>
+<span class="fc" id="L260">	PREPROCESS(&quot;--preproc&quot;, aliases(DEPRECATED(&quot;-preproc&quot;)),  Arity.UNARY_BOOLEAN, FileFormat.PREPROC),</span>
 
 <span class="fc" id="L262">	@CliFlagDoc(value = &quot;Generate SCXML files for state diagrams&quot;, level = 1)</span>
 <span class="fc" id="L263">	T_SCXML(&quot;--scxml&quot;, aliases(DEPRECATED(&quot;-tscxml&quot;)), Arity.UNARY_BOOLEAN, FileFormat.SCXML),</span>
@@ -281,38 +281,39 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 <span class="fc" id="L281">	T_XMI_SCRIPT(&quot;--txmi:script&quot;, aliases(DEPRECATED(&quot;-xmi:script&quot;)), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),</span>
 <span class="fc" id="L282">	T_XMI_STAR(&quot;--txmi:star&quot;, aliases(DEPRECATED(&quot;-xmi:star&quot;)), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),</span>
 
-<span class="fc" id="L284">	@CliFlagDoc(value = &quot;Output preprocessor text of diagrams&quot;, level = 1)</span>
-	PREPROCESS(&quot;-preproc&quot;, Arity.UNARY_BOOLEAN, FileFormat.PREPROC),
+<span class="fc" id="L284">	T_BASE64(&quot;--tbase64&quot;, Arity.UNARY_BOOLEAN, FileFormat.BASE64),</span>
+<span class="fc" id="L285">	T_BRAILLE(&quot;--tbraille&quot;, Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),</span>
+
 
 	// ************************ stats
 
-<span class="fc" id="L289">	@CliFlagDoc(value = &quot;Disable statistics collection (default behavior)&quot;, level = 1, newGroup = &quot;Statistics&quot;)</span>
-<span class="fc" id="L290">	DISABLE_STATS(&quot;--disable-stats&quot;, aliases(DEPRECATED(&quot;-disablestats&quot;)), Arity.UNARY_BOOLEAN,</span>
-<span class="nc" id="L291">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, false)),</span>
+<span class="fc" id="L290">	@CliFlagDoc(value = &quot;Disable statistics collection (default behavior)&quot;, level = 1, newGroup = &quot;Statistics&quot;)</span>
+<span class="fc" id="L291">	DISABLE_STATS(&quot;--disable-stats&quot;, aliases(DEPRECATED(&quot;-disablestats&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="nc" id="L292">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, false)),</span>
 
-<span class="fc" id="L293">	@CliFlagDoc(value = &quot;Enable statistics collection&quot;, level = 1)</span>
-<span class="fc" id="L294">	ENABLE_STATS(&quot;--enable-stats&quot;, aliases(DEPRECATED(&quot;-enablestats&quot;)), Arity.UNARY_BOOLEAN,</span>
-<span class="fc" id="L295">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),</span>
+<span class="fc" id="L294">	@CliFlagDoc(value = &quot;Enable statistics collection&quot;, level = 1)</span>
+<span class="fc" id="L295">	ENABLE_STATS(&quot;--enable-stats&quot;, aliases(DEPRECATED(&quot;-enablestats&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L296">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),</span>
 
-<span class="fc" id="L297">	@CliFlagDoc(value = &quot;Export collected statistics to an HTML report and exit&quot;, level = 1)</span>
+<span class="fc" id="L298">	@CliFlagDoc(value = &quot;Export collected statistics to an HTML report and exit&quot;, level = 1)</span>
 	DUMPHTMLSTATS(&quot;--export-stats-html&quot;, Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::outHtml),
 
-<span class="fc" id="L300">	@CliFlagDoc(value = &quot;Export collected statistics to a text report and exit&quot;, level = 1)</span>
+<span class="fc" id="L301">	@CliFlagDoc(value = &quot;Export collected statistics to a text report and exit&quot;, level = 1)</span>
 	DUMPSTATS(&quot;--export-stats&quot;, Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::dumpStats),
 
-<span class="fc" id="L303">	@CliFlagDoc(value = &quot;Output general statistics in HTML format&quot;, level = 1)</span>
-<span class="fc" id="L304">	HTML_STATS(&quot;--html-stats&quot;, aliases(DEPRECATED(&quot;-htmlstats&quot;)), Arity.UNARY_BOOLEAN,</span>
-<span class="fc" id="L305">			() -&gt; StatsUtils.setHtmlStats(true)),</span>
+<span class="fc" id="L304">	@CliFlagDoc(value = &quot;Output general statistics in HTML format&quot;, level = 1)</span>
+<span class="fc" id="L305">	HTML_STATS(&quot;--html-stats&quot;, aliases(DEPRECATED(&quot;-htmlstats&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L306">			() -&gt; StatsUtils.setHtmlStats(true)),</span>
 
-<span class="fc" id="L307">	@CliFlagDoc(value = &quot;Output general statistics in XML format&quot;, level = 1)</span>
-<span class="fc" id="L308">	XML_STATS(&quot;--xml-stats&quot;, aliases(DEPRECATED(&quot;-xmlstats&quot;)), Arity.UNARY_BOOLEAN, () -&gt; StatsUtils.setXmlStats(true)),</span>
+<span class="fc" id="L308">	@CliFlagDoc(value = &quot;Output general statistics in XML format&quot;, level = 1)</span>
+<span class="fc" id="L309">	XML_STATS(&quot;--xml-stats&quot;, aliases(DEPRECATED(&quot;-xmlstats&quot;)), Arity.UNARY_BOOLEAN, () -&gt; StatsUtils.setXmlStats(true)),</span>
 
-<span class="fc" id="L310">	@CliFlagDoc(value = &quot;Generate statistics in real time during processing&quot;, level = 1)</span>
-<span class="fc" id="L311">	REALTIME_STATS(&quot;--realtime-stats&quot;, aliases(DEPRECATED(&quot;-realtimestats&quot;)), Arity.UNARY_BOOLEAN,</span>
-<span class="fc" id="L312">			() -&gt; StatsUtils.setRealTimeStats(true)),</span>
+<span class="fc" id="L311">	@CliFlagDoc(value = &quot;Generate statistics in real time during processing&quot;, level = 1)</span>
+<span class="fc" id="L312">	REALTIME_STATS(&quot;--realtime-stats&quot;, aliases(DEPRECATED(&quot;-realtimestats&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L313">			() -&gt; StatsUtils.setRealTimeStats(true)),</span>
 
-<span class="fc" id="L314">	@CliFlagDoc(value = &quot;Continuously print usage statistics during execution&quot;, level = 1)</span>
-<span class="fc" id="L315">	LOOP_STATS(&quot;--loop-stats&quot;, aliases(DEPRECATED(&quot;-loopstats&quot;)), Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::loopStats);</span>
+<span class="fc" id="L315">	@CliFlagDoc(value = &quot;Continuously print usage statistics during execution&quot;, level = 1)</span>
+<span class="fc" id="L316">	LOOP_STATS(&quot;--loop-stats&quot;, aliases(DEPRECATED(&quot;-loopstats&quot;)), Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::loopStats);</span>
 
 	private final String flag;
 	private final List&lt;String&gt; aliases;
@@ -320,141 +321,141 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 	private final Object foo;
 
 	CliFlag(String flag, Arity type) {
-<span class="fc" id="L323">		this(flag, Collections.emptyList(), type, null);</span>
-<span class="fc" id="L324">	}</span>
+<span class="fc" id="L324">		this(flag, Collections.emptyList(), type, null);</span>
+<span class="fc" id="L325">	}</span>
 
 	CliFlag(String flag, List&lt;String&gt; aliases, Arity type) {
-<span class="fc" id="L327">		this(flag, aliases, type, null);</span>
-<span class="fc" id="L328">	}</span>
+<span class="fc" id="L328">		this(flag, aliases, type, null);</span>
+<span class="fc" id="L329">	}</span>
 
 	CliFlag(String flag, Arity type, CliAction foo) {
-<span class="fc" id="L331">		this(flag, Collections.emptyList(), type, foo);</span>
-<span class="fc" id="L332">	}</span>
+<span class="fc" id="L332">		this(flag, Collections.emptyList(), type, foo);</span>
+<span class="fc" id="L333">	}</span>
 
 	CliFlag(String flag, Arity type, Object foo) {
-<span class="fc" id="L335">		this(flag, Collections.emptyList(), type, foo);</span>
-<span class="fc" id="L336">	}</span>
+<span class="fc" id="L336">		this(flag, Collections.emptyList(), type, foo);</span>
+<span class="fc" id="L337">	}</span>
 
-<span class="fc" id="L338">	CliFlag(String flag, List&lt;String&gt; aliases, Arity type, Object foo) {</span>
-<span class="fc" id="L339">		this.type = type;</span>
-<span class="fc" id="L340">		this.flag = flag;</span>
-<span class="fc" id="L341">		this.aliases = aliases;</span>
-<span class="fc" id="L342">		this.foo = foo;</span>
-<span class="fc" id="L343">	}</span>
+<span class="fc" id="L339">	CliFlag(String flag, List&lt;String&gt; aliases, Arity type, Object foo) {</span>
+<span class="fc" id="L340">		this.type = type;</span>
+<span class="fc" id="L341">		this.flag = flag;</span>
+<span class="fc" id="L342">		this.aliases = aliases;</span>
+<span class="fc" id="L343">		this.foo = foo;</span>
+<span class="fc" id="L344">	}</span>
 
-<span class="fc" id="L345">	CliFlag(String flag, List&lt;String&gt; aliases, Arity type, CliAction foo) {</span>
-<span class="fc" id="L346">		this.type = type;</span>
-<span class="fc" id="L347">		this.flag = flag;</span>
-<span class="fc" id="L348">		this.aliases = aliases;</span>
-<span class="fc" id="L349">		this.foo = foo;</span>
-<span class="fc" id="L350">	}</span>
+<span class="fc" id="L346">	CliFlag(String flag, List&lt;String&gt; aliases, Arity type, CliAction foo) {</span>
+<span class="fc" id="L347">		this.type = type;</span>
+<span class="fc" id="L348">		this.flag = flag;</span>
+<span class="fc" id="L349">		this.aliases = aliases;</span>
+<span class="fc" id="L350">		this.foo = foo;</span>
+<span class="fc" id="L351">	}</span>
 
 	private static List&lt;String&gt; aliases(String... names) {
-<span class="fc" id="L353">		return Arrays.asList(names);</span>
+<span class="fc" id="L354">		return Arrays.asList(names);</span>
 	}
 
 	private static String DEPRECATED(String option) {
-<span class="fc" id="L357">		return option;</span>
+<span class="fc" id="L358">		return option;</span>
 	}
 
 	public String getFlag() {
-<span class="fc" id="L361">		return flag;</span>
+<span class="fc" id="L362">		return flag;</span>
 	}
 
 	public List&lt;String&gt; getAliases() {
-<span class="nc" id="L365">		return aliases;</span>
+<span class="nc" id="L366">		return aliases;</span>
 	}
 
 	public Arity getType() {
-<span class="fc" id="L369">		return type;</span>
+<span class="fc" id="L370">		return type;</span>
 	}
 
 	boolean match(String tmp) {
-<span class="fc bfc" id="L373" title="All 4 branches covered.">		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON) {</span>
-<span class="fc bfc" id="L374" title="All 2 branches covered.">			for (String alias : aliases)</span>
-<span class="fc bfc" id="L375" title="All 2 branches covered.">				if (tmp.startsWith(alias))</span>
-<span class="fc" id="L376">					return true;</span>
+<span class="fc bfc" id="L374" title="All 4 branches covered.">		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON) {</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">			for (String alias : aliases)</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">				if (tmp.startsWith(alias))</span>
+<span class="fc" id="L377">					return true;</span>
 
-<span class="fc" id="L378">			return tmp.startsWith(flag);</span>
+<span class="fc" id="L379">			return tmp.startsWith(flag);</span>
 		}
 
-<span class="fc bfc" id="L381" title="All 2 branches covered.">		for (String alias : aliases)</span>
-<span class="fc bfc" id="L382" title="All 2 branches covered.">			if (tmp.equals(alias))</span>
-<span class="fc" id="L383">				return true;</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">		for (String alias : aliases)</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">			if (tmp.equals(alias))</span>
+<span class="fc" id="L384">				return true;</span>
 
-<span class="fc" id="L385">		return tmp.equals(flag);</span>
+<span class="fc" id="L386">		return tmp.equals(flag);</span>
 	}
 
 	public String getFlagDoc() {
 		try {
-<span class="fc" id="L390">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="pc bpc" id="L391" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
-<span class="fc" id="L392">				return annotation.value();</span>
+<span class="fc" id="L391">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="pc bpc" id="L392" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
+<span class="fc" id="L393">				return annotation.value();</span>
 
-<span class="nc" id="L394">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L395">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L396">		}</span>
-<span class="fc" id="L397">		return null;</span>
+<span class="fc" id="L397">		}</span>
+<span class="fc" id="L398">		return null;</span>
 	}
 
 	public String getNewgroup() {
 		try {
-<span class="fc" id="L402">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="pc bpc" id="L403" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
-<span class="fc" id="L404">				return annotation.newGroup();</span>
+<span class="fc" id="L403">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="pc bpc" id="L404" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
+<span class="fc" id="L405">				return annotation.newGroup();</span>
 
-<span class="nc" id="L406">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L407">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L408">		}</span>
-<span class="fc" id="L409">		return &quot;&quot;;</span>
+<span class="fc" id="L409">		}</span>
+<span class="fc" id="L410">		return &quot;&quot;;</span>
 	}
 
 	public String getUsage() {
 		try {
-<span class="fc" id="L414">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="pc bpc" id="L415" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.usage().isEmpty()) {</span>
-<span class="fc" id="L416">				final String usage = annotation.usage();</span>
-<span class="fc bfc" id="L417" title="All 2 branches covered.">				if (usage.startsWith(&quot;--&quot;))</span>
-<span class="fc" id="L418">					return &quot;     &quot; + usage;</span>
-<span class="fc" id="L419">				return &quot; &quot; + usage;</span>
+<span class="fc" id="L415">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="pc bpc" id="L416" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.usage().isEmpty()) {</span>
+<span class="fc" id="L417">				final String usage = annotation.usage();</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">				if (usage.startsWith(&quot;--&quot;))</span>
+<span class="fc" id="L419">					return &quot;     &quot; + usage;</span>
+<span class="fc" id="L420">				return &quot; &quot; + usage;</span>
 			}
 
-<span class="nc" id="L422">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L423">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L424">		}</span>
-<span class="fc bfc" id="L425" title="All 2 branches covered.">		for (String alias : aliases)</span>
-<span class="fc bfc" id="L426" title="All 2 branches covered.">			if (alias.length() == 2)</span>
-<span class="fc" id="L427">				return &quot; &quot; + alias + &quot;, &quot; + getFlag();</span>
+<span class="fc" id="L425">		}</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">		for (String alias : aliases)</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">			if (alias.length() == 2)</span>
+<span class="fc" id="L428">				return &quot; &quot; + alias + &quot;, &quot; + getFlag();</span>
 
-<span class="fc" id="L429">		return &quot;     &quot; + getFlag();</span>
+<span class="fc" id="L430">		return &quot;     &quot; + getFlag();</span>
 	}
 
 	public int getFlagLevel() {
 		try {
-<span class="fc" id="L434">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="fc bfc" id="L435" title="All 2 branches covered.">			if (annotation != null)</span>
-<span class="fc" id="L436">				return annotation.level();</span>
+<span class="fc" id="L435">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">			if (annotation != null)</span>
+<span class="fc" id="L437">				return annotation.level();</span>
 
-<span class="nc" id="L438">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L439">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L440">		}</span>
-<span class="fc" id="L441">		return -1;</span>
+<span class="fc" id="L441">		}</span>
+<span class="fc" id="L442">		return -1;</span>
 	}
 
 	public String getDefaultValue() {
 		try {
-<span class="fc" id="L446">			final CliDefaultValue annotation = CliFlag.class.getField(this.name()).getAnnotation(CliDefaultValue.class);</span>
-<span class="pc bpc" id="L447" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
-<span class="fc" id="L448">				return annotation.value();</span>
+<span class="fc" id="L447">			final CliDefaultValue annotation = CliFlag.class.getField(this.name()).getAnnotation(CliDefaultValue.class);</span>
+<span class="pc bpc" id="L448" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
+<span class="fc" id="L449">				return annotation.value();</span>
 
-<span class="nc" id="L450">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L451">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L452">		}</span>
-<span class="fc" id="L453">		return null;</span>
+<span class="fc" id="L453">		}</span>
+<span class="fc" id="L454">		return null;</span>
 	}
 
 	public Object getFoo() {
-<span class="fc" id="L457">		return foo;</span>
+<span class="fc" id="L458">		return foo;</span>
 	}
 
 }
