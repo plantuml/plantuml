@@ -98,7 +98,7 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 		final String start = arg.get("START", 0);
 		final String end = arg.get("END", 0);
 		if (start != null && end != null) {
-			player.setStartEnd(Double.parseDouble(start), Double.parseDouble(end));
+			player.setStartEnd(start, end);
 		}
 		return CommandExecutionResult.ok();
 	}
