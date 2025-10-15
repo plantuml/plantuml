@@ -300,36 +300,31 @@ public class PlayerAnalog extends Player {
 		};
 	}
 
-	public void setStartEnd(double start, double end) {
-<span class="nc" id="L304">		this.start = start;</span>
-<span class="nc" id="L305">		this.end = end;</span>
-<span class="nc" id="L306">	}</span>
-
 	public void setStartEnd(String startStr, String endStr) {
-<span class="nc" id="L309">		this.startStr = startStr;</span>
-<span class="nc" id="L310">		this.endStr = endStr;</span>
-<span class="nc" id="L311">		this.start = Double.parseDouble(startStr);</span>
-<span class="nc" id="L312">		this.end = Double.parseDouble(endStr);</span>
-<span class="nc" id="L313">	}</span>
+<span class="nc" id="L304">		this.startStr = startStr;</span>
+<span class="nc" id="L305">		this.endStr = endStr;</span>
+<span class="nc" id="L306">		this.start = Double.parseDouble(startStr);</span>
+<span class="nc" id="L307">		this.end = Double.parseDouble(endStr);</span>
+<span class="nc" id="L308">	}</span>
 
 	public void setTicks(int ticksEvery) {
-<span class="nc" id="L316">		this.ticksEvery = ticksEvery;</span>
-<span class="nc" id="L317">	}</span>
+<span class="nc" id="L311">		this.ticksEvery = ticksEvery;</span>
+<span class="nc" id="L312">	}</span>
 
 	@Override
 	protected StyleSignature getStyleSignature() {
-<span class="nc" id="L321">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.analog)</span>
-<span class="nc" id="L322">				.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L316">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.analog)</span>
+<span class="nc" id="L317">				.withTOBECHANGED(stereotype);</span>
 	}
 
 	private void drawConstraints(final UGraphic ug) {
-<span class="nc bnc" id="L326" title="All 2 branches missed.">		for (TimeConstraint constraint : constraints) {</span>
-<span class="nc" id="L327">			constraint.drawU(ug, ruler);</span>
-<span class="nc" id="L328">		}</span>
-<span class="nc" id="L329">	}</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">		for (TimeConstraint constraint : constraints) {</span>
+<span class="nc" id="L322">			constraint.drawU(ug, ruler);</span>
+<span class="nc" id="L323">		}</span>
+<span class="nc" id="L324">	}</span>
 
 	private double getHeightForConstraints(StringBounder stringBounder) {
-<span class="nc" id="L332">		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);</span>
+<span class="nc" id="L327">		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);</span>
 	}
 
 }
