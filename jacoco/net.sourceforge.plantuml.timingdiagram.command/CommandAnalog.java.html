@@ -98,7 +98,7 @@ public class CommandAnalog extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="nc" id="L98">		final String start = arg.get(&quot;START&quot;, 0);</span>
 <span class="nc" id="L99">		final String end = arg.get(&quot;END&quot;, 0);</span>
 <span class="nc bnc" id="L100" title="All 4 branches missed.">		if (start != null &amp;&amp; end != null) {</span>
-<span class="nc" id="L101">			player.setStartEnd(Double.parseDouble(start), Double.parseDouble(end));</span>
+<span class="nc" id="L101">			player.setStartEnd(start, end);</span>
 		}
 <span class="nc" id="L103">		return CommandExecutionResult.ok();</span>
 	}
