@@ -300,11 +300,6 @@ public class PlayerAnalog extends Player {
 		};
 	}
 
-	public void setStartEnd(double start, double end) {
-		this.start = start;
-		this.end = end;
-	}
-
 	public void setStartEnd(String startStr, String endStr) {
 		this.startStr = startStr;
 		this.endStr = endStr;
