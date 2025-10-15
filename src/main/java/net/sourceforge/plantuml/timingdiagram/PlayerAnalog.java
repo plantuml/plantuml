@@ -73,6 +73,8 @@ public class PlayerAnalog extends Player {
 	private Double initialState;
 	private Double start;
 	private Double end;
+	private String startStr;
+	private String endStr;
 	private Integer ticksEvery;
 
 	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
@@ -246,7 +248,17 @@ public class PlayerAnalog extends Player {
 	}
 
 	private TextBlock getTextBlock(double value) {
-		final Display display = Display.getWithNewlines(skinParam.getPragma(), "" + value);
+		String formattedValue;
+		// Use original string format for min/max if available
+		if (startStr != null && value == start) {
+			formattedValue = startStr;
+		} else if (endStr != null && value == end) {
+			formattedValue = endStr;
+		} else {
+			// For other values, format as integer if it's a whole number
+			formattedValue = (value == Math.floor(value)) ? String.format("%.0f", value) : String.valueOf(value);
+		}
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), formattedValue);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
@@ -291,6 +303,13 @@ public class PlayerAnalog extends Player {
 	public void setStartEnd(double start, double end) {
 		this.start = start;
 		this.end = end;
+	}
+
+	public void setStartEnd(String startStr, String endStr) {
+		this.startStr = startStr;
+		this.endStr = endStr;
+		this.start = Double.parseDouble(startStr);
+		this.end = Double.parseDouble(endStr);
 	}
 
 	public void setTicks(int ticksEvery) {
