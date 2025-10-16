@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -61,77 +60,77 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="nc" id="L64">		return message;</span>
+<span class="nc" id="L63">		return message;</span>
 	}
 
 	@Override
 	public double getContactPointRelative() {
-<span class="nc" id="L69">		return tile.getContactPointRelative();</span>
+<span class="nc" id="L68">		return tile.getContactPointRelative();</span>
 	}
 
 	public CommunicationTileSelfNoteLeft(CommunicationTileSelf tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
 																			  Note noteOnMessage, YGauge currentY) {
-<span class="nc" id="L74">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
-<span class="nc" id="L75">		this.tile = tile;</span>
-<span class="nc" id="L76">		this.message = message;</span>
-<span class="nc" id="L77">		this.skin = skin;</span>
-<span class="nc" id="L78">		this.skinParam = skinParam;</span>
-<span class="nc" id="L79">		this.noteOnMessage = noteOnMessage;</span>
-<span class="nc" id="L80">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L73">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
+<span class="nc" id="L74">		this.tile = tile;</span>
+<span class="nc" id="L75">		this.message = message;</span>
+<span class="nc" id="L76">		this.skin = skin;</span>
+<span class="nc" id="L77">		this.skinParam = skinParam;</span>
+<span class="nc" id="L78">		this.noteOnMessage = noteOnMessage;</span>
+<span class="nc" id="L79">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="nc" id="L80">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L85">		return yGauge;</span>
+<span class="nc" id="L84">		return yGauge;</span>
 	}
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="nc" id="L90">		super.callbackY_internal(y);</span>
-<span class="nc" id="L91">		tile.callbackY(y);</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L89">		super.callbackY_internal(y);</span>
+<span class="nc" id="L90">		tile.callbackY(y);</span>
+<span class="nc" id="L91">	}</span>
 
 	private Component getComponent(StringBounder stringBounder) {
-<span class="nc" id="L95">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,</span>
-<span class="nc" id="L96">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
-<span class="nc" id="L97">				noteOnMessage.getColors());</span>
-<span class="nc" id="L98">		return comp;</span>
+<span class="nc" id="L94">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,</span>
+<span class="nc" id="L95">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
+<span class="nc" id="L96">				noteOnMessage.getColors());</span>
+<span class="nc" id="L97">		return comp;</span>
 	}
 
 	private Real getNotePosition(StringBounder stringBounder) {
-<span class="nc" id="L102">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L103">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L101">		final Component comp = getComponent(stringBounder);</span>
+<span class="nc" id="L102">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
 		//return livingSpace.getPosC(stringBounder).addFixed(-dim.getWidth());
-<span class="nc" id="L105">		return tile.getMinX().addFixed(-dim.getWidth());</span>
+<span class="nc" id="L104">		return tile.getMinX().addFixed(-dim.getWidth());</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L109">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L110">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L111">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L112">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L113">		tile.drawU(ug);</span>
-<span class="nc" id="L114">		final Real p = getNotePosition(stringBounder);</span>
+<span class="nc" id="L108">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L109">		final Component comp = getComponent(stringBounder);</span>
+<span class="nc" id="L110">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L111">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L112">		tile.drawU(ug);</span>
+<span class="nc" id="L113">		final Real p = getNotePosition(stringBounder);</span>
 
-<span class="nc" id="L116">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
-<span class="nc" id="L117">	}</span>
+<span class="nc" id="L115">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
+<span class="nc" id="L116">	}</span>
 
 	public double getPreferredHeight() {
-<span class="nc" id="L120">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L122">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
+<span class="nc" id="L119">		final Component comp = getComponent(getStringBounder());</span>
+<span class="nc" id="L120">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L121">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L126">		tile.addConstraints();</span>
-<span class="nc" id="L127">	}</span>
+<span class="nc" id="L125">		tile.addConstraints();</span>
+<span class="nc" id="L126">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L130">		return getNotePosition(getStringBounder());</span>
+<span class="nc" id="L129">		return getNotePosition(getStringBounder());</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L134">		return tile.getMaxX();</span>
+<span class="nc" id="L133">		return tile.getMaxX();</span>
 	}
 
 }

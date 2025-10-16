@@ -155,16 +155,16 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">		} else if (ev instanceof Divider) {</span>
 <span class="nc" id="L156">			final Divider divider = (Divider) ev;</span>
 <span class="nc" id="L157">			tiles.add(new DividerTile(divider, tileArguments, currentY));</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		} else if (ev instanceof GroupingStart) {</span>
-<span class="nc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
-<span class="nc" id="L160">			final GroupingTile groupingTile = new GroupingTile(it, start,</span>
-<span class="nc" id="L161">					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
+<span class="pc bfc" id="L158" title="All 2 branches covered.">		} else if (ev instanceof GroupingStart) {</span>
+<span class="fc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
+<span class="fc" id="L160">			final GroupingTile groupingTile = new GroupingTile(it, start,</span>
+<span class="fc" id="L161">					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
 					tileArguments, currentY);
 			if (YGauge.USE_ME == false)
-<span class="nc" id="L164">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
-<span class="nc" id="L165">			tiles.add(groupingTile);</span>
+<span class="fc" id="L164">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L165">			tiles.add(groupingTile);</span>
 			if (YGauge.USE_ME == false)
-<span class="nc" id="L167">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L167">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
 
 <span class="pc bpc" id="L169" title="3 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
 <span class="nc" id="L170">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>

@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
@@ -64,7 +63,7 @@ public class LivingSpace {
 	private final ComponentType headType;
 	private final ComponentType tailType;
 	private final MutingLine mutingLine;
-<span class="fc" id="L67">	private final Rose rose = new Rose();</span>
+<span class="fc" id="L66">	private final Rose rose = new Rose();</span>
 	private final LiveBoxes liveboxes;
 
 	// private final Rose skin;
@@ -76,77 +75,77 @@ public class LivingSpace {
 	private Real posC;
 	private Real posD;
 
-<span class="fc" id="L79">	private boolean create = false;</span>
-<span class="fc" id="L80">	private double createY = 0;</span>
+<span class="fc" id="L78">	private boolean create = false;</span>
+<span class="fc" id="L79">	private double createY = 0;</span>
 
 	private final ParticipantEnglober englober;
 
 	public int getLevelAt(Tile tile, EventsHistoryMode mode) {
 		// assert mode == EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE;
-<span class="fc" id="L86">		return liveboxes.getLevelAt(tile.getEvent(), mode);</span>
+<span class="fc" id="L85">		return liveboxes.getLevelAt(tile.getEvent(), mode);</span>
 	}
 
 	public void addStepForLivebox(Event event, double y) {
-<span class="fc" id="L90">		liveboxes.addStep(event, y);</span>
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L89">		liveboxes.addStep(event, y);</span>
+<span class="fc" id="L90">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L95">		return p.getCode() + &quot; B=&quot; + posB.getCurrentValue() + &quot;/C=&quot; + currentValue(posC) + &quot;/D=&quot; + currentValue(posD);</span>
+<span class="nc" id="L94">		return p.getCode() + &quot; B=&quot; + posB.getCurrentValue() + &quot;/C=&quot; + currentValue(posC) + &quot;/D=&quot; + currentValue(posD);</span>
 	}
 
 	private static String currentValue(Real pos) {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (pos == null) {</span>
-<span class="nc" id="L100">			return null;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (pos == null) {</span>
+<span class="nc" id="L99">			return null;</span>
 		}
-<span class="nc" id="L102">		return &quot;&quot; + pos.getCurrentValue();</span>
+<span class="nc" id="L101">		return &quot;&quot; + pos.getCurrentValue();</span>
 	}
 
 	public LivingSpace(Participant p, ParticipantEnglober englober, Rose skin, ISkinParam skinParam, Real position,
-<span class="fc" id="L106">			List&lt;Event&gt; events) {</span>
-<span class="fc" id="L107">		this.p = p;</span>
+<span class="fc" id="L105">			List&lt;Event&gt; events) {</span>
+<span class="fc" id="L106">		this.p = p;</span>
 		// this.skin = skin;
-<span class="fc" id="L109">		this.skinParam = skinParam;</span>
-<span class="fc" id="L110">		this.englober = englober;</span>
-<span class="fc" id="L111">		this.posB = position;</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
-<span class="fc" id="L113">			headType = ComponentType.PARTICIPANT_HEAD;</span>
-<span class="fc" id="L114">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
-<span class="nc" id="L116">			headType = ComponentType.ACTOR_HEAD;</span>
-<span class="nc" id="L117">			tailType = ComponentType.ACTOR_TAIL;</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.BOUNDARY) {</span>
-<span class="nc" id="L119">			headType = ComponentType.BOUNDARY_HEAD;</span>
-<span class="nc" id="L120">			tailType = ComponentType.BOUNDARY_TAIL;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.CONTROL) {</span>
-<span class="nc" id="L122">			headType = ComponentType.CONTROL_HEAD;</span>
-<span class="nc" id="L123">			tailType = ComponentType.CONTROL_TAIL;</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ENTITY) {</span>
-<span class="nc" id="L125">			headType = ComponentType.ENTITY_HEAD;</span>
-<span class="nc" id="L126">			tailType = ComponentType.ENTITY_TAIL;</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.QUEUE) {</span>
-<span class="nc" id="L128">			headType = ComponentType.QUEUE_HEAD;</span>
-<span class="nc" id="L129">			tailType = ComponentType.QUEUE_TAIL;</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.DATABASE) {</span>
-<span class="nc" id="L131">			headType = ComponentType.DATABASE_HEAD;</span>
-<span class="nc" id="L132">			tailType = ComponentType.DATABASE_TAIL;</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.COLLECTIONS) {</span>
-<span class="nc" id="L134">			headType = ComponentType.COLLECTIONS_HEAD;</span>
-<span class="nc" id="L135">			tailType = ComponentType.COLLECTIONS_TAIL;</span>
+<span class="fc" id="L108">		this.skinParam = skinParam;</span>
+<span class="fc" id="L109">		this.englober = englober;</span>
+<span class="fc" id="L110">		this.posB = position;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
+<span class="fc" id="L112">			headType = ComponentType.PARTICIPANT_HEAD;</span>
+<span class="fc" id="L113">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
+<span class="nc" id="L115">			headType = ComponentType.ACTOR_HEAD;</span>
+<span class="nc" id="L116">			tailType = ComponentType.ACTOR_TAIL;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.BOUNDARY) {</span>
+<span class="nc" id="L118">			headType = ComponentType.BOUNDARY_HEAD;</span>
+<span class="nc" id="L119">			tailType = ComponentType.BOUNDARY_TAIL;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.CONTROL) {</span>
+<span class="nc" id="L121">			headType = ComponentType.CONTROL_HEAD;</span>
+<span class="nc" id="L122">			tailType = ComponentType.CONTROL_TAIL;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ENTITY) {</span>
+<span class="nc" id="L124">			headType = ComponentType.ENTITY_HEAD;</span>
+<span class="nc" id="L125">			tailType = ComponentType.ENTITY_TAIL;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.QUEUE) {</span>
+<span class="nc" id="L127">			headType = ComponentType.QUEUE_HEAD;</span>
+<span class="nc" id="L128">			tailType = ComponentType.QUEUE_TAIL;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.DATABASE) {</span>
+<span class="nc" id="L130">			headType = ComponentType.DATABASE_HEAD;</span>
+<span class="nc" id="L131">			tailType = ComponentType.DATABASE_TAIL;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.COLLECTIONS) {</span>
+<span class="nc" id="L133">			headType = ComponentType.COLLECTIONS_HEAD;</span>
+<span class="nc" id="L134">			tailType = ComponentType.COLLECTIONS_TAIL;</span>
 		} else {
-<span class="nc" id="L137">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L136">			throw new IllegalArgumentException();</span>
 		}
 		// this.stairs2.addStep2(0, p.getInitialLife());
 		// this.stairs2.addStep2(0, 0);
 		// this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
-<span class="fc" id="L142">		this.mutingLine = new MutingLine(skin, skinParam, events, p);</span>
-<span class="fc" id="L143">		this.liveboxes = new LiveBoxes(p, events, skin, skinParam);</span>
-<span class="fc" id="L144">	}</span>
+<span class="fc" id="L141">		this.mutingLine = new MutingLine(skin, skinParam, events, p);</span>
+<span class="fc" id="L142">		this.liveboxes = new LiveBoxes(p, events, skin, skinParam);</span>
+<span class="fc" id="L143">	}</span>
 
 	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
-<span class="fc" id="L147">		mutingLine.drawLine(ug, context, createY, height);</span>
-<span class="fc" id="L148">		liveboxes.drawBoxes(ug, context, createY, height);</span>
-<span class="fc" id="L149">	}</span>
+<span class="fc" id="L146">		mutingLine.drawLine(ug, context, createY, height);</span>
+<span class="fc" id="L147">		liveboxes.drawBoxes(ug, context, createY, height);</span>
+<span class="fc" id="L148">	}</span>
 
 	// public void addDelayTile(DelayTile tile) {
 	// System.err.println(&quot;addDelayTile &quot; + this + &quot; &quot; + tile);
@@ -154,107 +153,107 @@ public class LivingSpace {
 
 	public void drawHead(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
 			HorizontalAlignment horizontalAlignment) {
-<span class="pc bpc" id="L157" title="3 of 4 branches missed.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
-<span class="nc" id="L158">			return;</span>
+<span class="pc bpc" id="L156" title="3 of 4 branches missed.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="nc" id="L157">			return;</span>
 		}
-<span class="fc" id="L160">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
-<span class="fc" id="L161">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L162">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L164">			ug = ug.apply(UTranslate.dx(-dim.getWidth()));</span>
+<span class="fc" id="L159">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
+<span class="fc" id="L160">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L161">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L163">			ug = ug.apply(UTranslate.dx(-dim.getWidth()));</span>
 		}
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER) {</span>
-<span class="nc" id="L167">			ug = ug.apply(UTranslate.dy(-dim.getHeight() / 2));</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER) {</span>
+<span class="nc" id="L166">			ug = ug.apply(UTranslate.dy(-dim.getHeight() / 2));</span>
 		}
-<span class="fc" id="L169">		final Area area = new Area(dim);</span>
-<span class="fc" id="L170">		final Url url = getParticipant().getUrl();</span>
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L172">			ug.startUrl(url);</span>
+<span class="fc" id="L168">		final Area area = new Area(dim);</span>
+<span class="fc" id="L169">		final Url url = getParticipant().getUrl();</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L171">			ug.startUrl(url);</span>
 		}
-<span class="fc" id="L174">		comp.drawU(ug, area, context);</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L176">			ug.closeUrl();</span>
+<span class="fc" id="L173">		comp.drawU(ug, area, context);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L175">			ug.closeUrl();</span>
 		}
-<span class="fc" id="L178">	}</span>
+<span class="fc" id="L177">	}</span>
 
 	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-<span class="fc" id="L181">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
-<span class="fc" id="L182">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L183">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L184">		return dim;</span>
+<span class="fc" id="L180">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
+<span class="fc" id="L181">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L182">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L183">		return dim;</span>
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L188">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L187">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
 	}
 
 	public Real getPosC(StringBounder stringBounder) {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (posC == null) {</span>
-<span class="fc" id="L193">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (posC == null) {</span>
+<span class="fc" id="L192">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
 		}
-<span class="fc" id="L195">		return posC;</span>
+<span class="fc" id="L194">		return posC;</span>
 	}
 
 	public Real getPosC2(StringBounder stringBounder) {
-<span class="fc" id="L199">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
-<span class="fc" id="L200">		return getPosC(stringBounder).addFixed(delta);</span>
+<span class="fc" id="L198">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
+<span class="fc" id="L199">		return getPosC(stringBounder).addFixed(delta);</span>
 	}
 
 	public Real getPosD(StringBounder stringBounder) {
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (posD == null) {</span>
-<span class="fc" id="L205">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (posD == null) {</span>
+<span class="fc" id="L204">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
 		}
 		// System.err.println(&quot;LivingSpace::getPosD &quot;+posD.getCurrentValue());
-<span class="fc" id="L208">		return posD;</span>
+<span class="fc" id="L207">		return posD;</span>
 	}
 
 	public Real getPosB(StringBounder stringBounder) {
-<span class="fc" id="L212">		return posB;</span>
+<span class="fc" id="L211">		return posB;</span>
 	}
 
 	public Participant getParticipant() {
-<span class="fc" id="L216">		return p;</span>
+<span class="fc" id="L215">		return p;</span>
 	}
 
 	public void goCreate(double y) {
-<span class="nc" id="L220">		this.createY = y;</span>
-<span class="nc" id="L221">		this.create = true;</span>
-<span class="nc" id="L222">	}</span>
+<span class="nc" id="L219">		this.createY = y;</span>
+<span class="nc" id="L220">		this.create = true;</span>
+<span class="nc" id="L221">	}</span>
 
 	public void goCreate() {
-<span class="nc" id="L225">		this.create = true;</span>
-<span class="nc" id="L226">	}</span>
+<span class="nc" id="L224">		this.create = true;</span>
+<span class="nc" id="L225">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc" id="L229">		mutingLine.delayOn(y, height);</span>
-<span class="nc" id="L230">		liveboxes.delayOn(y, height);</span>
-<span class="nc" id="L231">	}</span>
+<span class="nc" id="L228">		mutingLine.delayOn(y, height);</span>
+<span class="nc" id="L229">		liveboxes.delayOn(y, height);</span>
+<span class="nc" id="L230">	}</span>
 
 	public ParticipantEnglober getEnglober() {
-<span class="fc" id="L234">		return englober;</span>
+<span class="fc" id="L233">		return englober;</span>
 	}
 
 	private double marginBefore;
 	private double marginAfter;
 
 	public void ensureMarginBefore(double margin) {
-<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (margin &lt; 0)</span>
-<span class="nc" id="L242">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L243">		this.marginBefore = Math.max(marginBefore, margin);</span>
-<span class="nc" id="L244">	}</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L241">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L242">		this.marginBefore = Math.max(marginBefore, margin);</span>
+<span class="nc" id="L243">	}</span>
 
 	public void ensureMarginAfter(double margin) {
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		if (margin &lt; 0)</span>
-<span class="nc" id="L248">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L249">		this.marginAfter = Math.max(marginAfter, margin);</span>
-<span class="nc" id="L250">	}</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L247">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L248">		this.marginAfter = Math.max(marginAfter, margin);</span>
+<span class="nc" id="L249">	}</span>
 
 	public Real getPosA(StringBounder stringBounder) {
-<span class="fc" id="L253">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
+<span class="fc" id="L252">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
 	}
 
 	public Real getPosE(StringBounder stringBounder) {
-<span class="fc" id="L257">		return getPosD(stringBounder).addFixed(marginAfter);</span>
+<span class="fc" id="L256">		return getPosD(stringBounder).addFixed(marginAfter);</span>
 	}
 
 }
