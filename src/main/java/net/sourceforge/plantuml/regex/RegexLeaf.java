@@ -80,8 +80,8 @@ public class RegexLeaf implements IRegex {
 		return new RegexLeaf("[%s]");
 	}
 
-	public static RegexLeaf spaceZeroOrOne() {
-		return new RegexLeaf("(?:[%s])?");
+	public static RegexOptional spaceZeroOrOne() {
+		return new RegexOptional(spaceOne());
 	}
 
 	public static RegexLeaf spaceOneOrMore() {
