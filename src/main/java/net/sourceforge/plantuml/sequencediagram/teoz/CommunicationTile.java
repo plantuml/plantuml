@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.LineParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -96,6 +97,10 @@ public class CommunicationTile extends AbstractTile {
 			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());
 		else
 			this.yGauge = YGauge.create(currentY.getMax(), dim.getHeight());
+	}
+
+	private boolean sequenceMessageSpan() {
+		return skinParam.getPragma().isTrue(PragmaKey.SEQUENCE_MESSAGE_SPAN);
 	}
 
 	@Override
@@ -189,7 +194,7 @@ public class CommunicationTile extends AbstractTile {
 			if (level1 == 1)
 				x1 -= LIVE_DELTA_SIZE;
 			else if (level1 > 2)
-				x1 += LIVE_DELTA_SIZE*(level1-2);
+				x1 += LIVE_DELTA_SIZE * (level1 - 2);
 
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = Area.create(x1 - x2, dim.getHeight());
@@ -247,6 +252,9 @@ public class CommunicationTile extends AbstractTile {
 	}
 
 	public void addConstraints() {
+		if (sequenceMessageSpan())
+			return;
+
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();

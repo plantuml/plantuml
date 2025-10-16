@@ -39,6 +39,7 @@ public enum PragmaKey {
 	
 	// Temporary pragma
 	SVGNEWDATA,
+	SEQUENCE_MESSAGE_SPAN,
 	
 	// For debug
 	EMULATE_NO_GRAPHVIZ_INSTALLATION,
