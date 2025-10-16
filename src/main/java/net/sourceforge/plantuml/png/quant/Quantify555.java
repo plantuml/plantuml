@@ -112,6 +112,8 @@ public final class Quantify555 {
 	private static final int TRANSPARENT_CUBE = CUBE_COUNT_RGB555; // 32768
 	private static final int TOTAL_CUBE_SLOTS = CUBE_COUNT_RGB555 + 1;
 
+	private static final int MIN_CUBES_THRESHOLD = 32;
+	
 	/**
 	 * Attempts to quantize an image to <= 256 colors using the Cube555 structure.
 	 * 
@@ -150,6 +152,12 @@ public final class Quantify555 {
 			final int sub = cubeIndex == TRANSPARENT_CUBE ? 0 : subColorIndex512(argb);
 			cube.increment(sub);
 
+		}
+
+		// Abort if there are not enough cubes, risk of over-quantization
+		if (nbCubes < MIN_CUBES_THRESHOLD) {
+			Log.info(() -> "...abort, not enough distinct colors");
+			return null;
 		}
 
 		// Step 2: Build the final indexed image

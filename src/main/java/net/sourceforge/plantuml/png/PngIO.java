@@ -79,7 +79,9 @@ public class PngIO {
 			final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;
 			Log.info(() -> "Trying to pack image. hasAlpha=" + hasAlpha);
 
-			BufferedImage tmp = Quantify555.packMeIfPossible(bufferedImage);
+			BufferedImage tmp = null;
+			if (hasAlpha == false)
+				tmp = Quantify555.packMeIfPossible(bufferedImage);
 			if (tmp == null)
 				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);
 
