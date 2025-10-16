@@ -47,14 +47,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 public class TextBlockHorizontal extends AbstractTextBlock implements TextBlock {
     // ::remove file when __HAXE__
 
-<span class="nc" id="L50">	private final List&lt;TextBlock&gt; blocks = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L50">	private final List&lt;TextBlock&gt; blocks = new ArrayList&lt;&gt;();</span>
 	private final VerticalAlignment alignment;
 
-<span class="nc" id="L53">	TextBlockHorizontal(TextBlock b1, TextBlock b2, VerticalAlignment alignment) {</span>
-<span class="nc" id="L54">		this.blocks.add(b1);</span>
-<span class="nc" id="L55">		this.blocks.add(b2);</span>
-<span class="nc" id="L56">		this.alignment = alignment;</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L53">	TextBlockHorizontal(TextBlock b1, TextBlock b2, VerticalAlignment alignment) {</span>
+<span class="fc" id="L54">		this.blocks.add(b1);</span>
+<span class="fc" id="L55">		this.blocks.add(b2);</span>
+<span class="fc" id="L56">		this.alignment = alignment;</span>
+<span class="fc" id="L57">	}</span>
 
 <span class="nc" id="L59">	public TextBlockHorizontal(List&lt;TextBlock&gt; all, VerticalAlignment alignment) {</span>
 <span class="nc bnc" id="L60" title="All 2 branches missed.">		if (all.size() &lt; 2) {</span>
@@ -65,27 +65,27 @@ public class TextBlockHorizontal extends AbstractTextBlock implements TextBlock 
 <span class="nc" id="L65">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L68">		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		for (int i = 1; i &lt; blocks.size(); i++) {</span>
-<span class="nc" id="L70">			dim = dim.mergeLR(blocks.get(i).calculateDimension(stringBounder));</span>
+<span class="fc" id="L68">		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		for (int i = 1; i &lt; blocks.size(); i++) {</span>
+<span class="fc" id="L70">			dim = dim.mergeLR(blocks.get(i).calculateDimension(stringBounder));</span>
 		}
-<span class="nc" id="L72">		return dim;</span>
+<span class="fc" id="L72">		return dim;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L76">		double x = 0;</span>
-<span class="nc" id="L77">		final XDimension2D dimtotal = calculateDimension(ug.getStringBounder());</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (TextBlock block : blocks) {</span>
-<span class="nc" id="L79">			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (alignment == VerticalAlignment.CENTER) {</span>
-<span class="nc" id="L81">				final double dy = (dimtotal.getHeight() - dimb.getHeight()) / 2;</span>
-<span class="nc" id="L82">				block.drawU(ug.apply(new UTranslate(x, dy)));</span>
-<span class="nc" id="L83">			} else {</span>
+<span class="fc" id="L76">		double x = 0;</span>
+<span class="fc" id="L77">		final XDimension2D dimtotal = calculateDimension(ug.getStringBounder());</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (TextBlock block : blocks) {</span>
+<span class="fc" id="L79">			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (alignment == VerticalAlignment.CENTER) {</span>
+<span class="fc" id="L81">				final double dy = (dimtotal.getHeight() - dimb.getHeight()) / 2;</span>
+<span class="fc" id="L82">				block.drawU(ug.apply(new UTranslate(x, dy)));</span>
+<span class="fc" id="L83">			} else {</span>
 <span class="nc" id="L84">				block.drawU(ug.apply(UTranslate.dx(x)));</span>
 			}
-<span class="nc" id="L86">			x += dimb.getWidth();</span>
-<span class="nc" id="L87">		}</span>
-<span class="nc" id="L88">	}</span>
+<span class="fc" id="L86">			x += dimb.getWidth();</span>
+<span class="fc" id="L87">		}</span>
+<span class="fc" id="L88">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
