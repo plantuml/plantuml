@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
@@ -52,55 +53,56 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAnalog extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandAnalog() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandAnalog.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandAnalog.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;COMPACT&quot;, &quot;(compact)&quot;), //
-<span class="fc" id="L63">								RegexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L64">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(&quot;analog&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L67">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L68">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				new RegexOptional(//
 						new RegexConcat( //
-								new RegexLeaf(&quot;between&quot;), //
-<span class="fc" id="L71">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexOr(new RegexLeaf(&quot;between&quot;), new RegexLeaf(&quot;from&quot;)), //
+<span class="fc" id="L72">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;START&quot;, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
-<span class="fc" id="L73">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(&quot;and&quot;), //
-<span class="fc" id="L75">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L74">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexOr(new RegexLeaf(&quot;and&quot;), new RegexLeaf(&quot;to&quot;)), //
+<span class="fc" id="L76">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;END&quot;, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
-<span class="fc" id="L77">								RegexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L78">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L81">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
-<span class="fc" id="L82">				RegexLeaf.end());</span>
+<span class="fc" id="L82">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+<span class="fc" id="L83">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L87">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
-<span class="nc" id="L88">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L89">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L89">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
+<span class="nc" id="L90">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L91">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
 
-<span class="nc" id="L91">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
-<span class="nc" id="L93">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		else if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
-<span class="nc" id="L95">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
+<span class="nc" id="L93">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
+<span class="nc" id="L95">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		else if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
+<span class="nc" id="L97">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		final PlayerAnalog player = diagram.createAnalog(code, full, compact != null, stereotype);</span>
-<span class="nc" id="L98">		final String start = arg.get(&quot;START&quot;, 0);</span>
-<span class="nc" id="L99">		final String end = arg.get(&quot;END&quot;, 0);</span>
-<span class="nc bnc" id="L100" title="All 4 branches missed.">		if (start != null &amp;&amp; end != null) {</span>
-<span class="nc" id="L101">			player.setStartEnd(start, end);</span>
-		}
-<span class="nc" id="L103">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		final PlayerAnalog player = diagram.createAnalog(code, full, compact != null, stereotype);</span>
+<span class="nc" id="L100">		final String start = arg.get(&quot;START&quot;, 0);</span>
+<span class="nc" id="L101">		final String end = arg.get(&quot;END&quot;, 0);</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (start != null &amp;&amp; end != null)</span>
+<span class="nc" id="L103">			player.setBounds(start, end);</span>
+
+<span class="nc" id="L105">		return CommandExecutionResult.ok();</span>
 	}
 
 }

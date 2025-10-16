@@ -41,17 +41,17 @@ public class TimeTick implements Comparable&lt;TimeTick&gt; {
 	private final BigDecimal time;
 	private final TimingFormat format;
 
-<span class="nc" id="L44">	public TimeTick(BigDecimal time, TimingFormat format) {</span>
-<span class="nc" id="L45">		this.time = time;</span>
-<span class="nc" id="L46">		this.format = format;</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L44">	public TimeTick(BigDecimal time, TimingFormat format) {</span>
+<span class="fc" id="L45">		this.time = time;</span>
+<span class="fc" id="L46">		this.format = format;</span>
+<span class="fc" id="L47">	}</span>
 
 	public final BigDecimal getTime() {
-<span class="nc" id="L50">		return time;</span>
+<span class="fc" id="L50">		return time;</span>
 	}
 
 	public int compareTo(TimeTick other) {
-<span class="nc" id="L54">		return this.time.compareTo(other.time);</span>
+<span class="fc" id="L54">		return this.time.compareTo(other.time);</span>
 	}
 
 	public final TimingFormat getFormat() {

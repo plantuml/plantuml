@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeduceFormat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram</a> &gt; <span class="el_source">DeduceFormat.java</span></div><h1>DeduceFormat.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+final class DeduceFormat {
+
+	private final boolean forceSign;
+	private final char groupingSep;
+	private final char decimalSep;
+	private final int minFractionDigits;
+	private final int maxFractionDigits;
+
+	private DeduceFormat(boolean forceSign, char groupingSep, char decimalSep, int minFractionDigits,
+<span class="fc" id="L50">			int maxFractionDigits) {</span>
+<span class="fc" id="L51">		this.forceSign = forceSign;</span>
+<span class="fc" id="L52">		this.groupingSep = groupingSep;</span>
+<span class="fc" id="L53">		this.decimalSep = decimalSep;</span>
+<span class="fc" id="L54">		this.minFractionDigits = minFractionDigits;</span>
+<span class="fc" id="L55">		this.maxFractionDigits = maxFractionDigits;</span>
+<span class="fc" id="L56">	}</span>
+
+	public DeduceFormat mergeWith(DeduceFormat other) {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (other == null)</span>
+<span class="nc" id="L60">			return this;</span>
+
+<span class="pc bpc" id="L62" title="2 of 4 branches missed.">		final boolean mergedForceSign = this.forceSign || other.forceSign;</span>
+
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		final char mergedDecimal = this.decimalSep != '\0' ? this.decimalSep : other.decimalSep;</span>
+
+		char mergedGrouping;
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (this.groupingSep == '\0')</span>
+<span class="fc" id="L68">			mergedGrouping = other.groupingSep;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		else if (other.groupingSep == '\0')</span>
+<span class="nc" id="L70">			mergedGrouping = this.groupingSep;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		else if (this.groupingSep == other.groupingSep)</span>
+<span class="nc" id="L72">			mergedGrouping = this.groupingSep;</span>
+		else
+<span class="nc" id="L74">			mergedGrouping = '\0';</span>
+
+<span class="fc" id="L76">		final int mergedMinFrac = Math.min(this.minFractionDigits, other.minFractionDigits);</span>
+<span class="fc" id="L77">		final int mergedMaxFrac = Math.max(this.maxFractionDigits, other.maxFractionDigits);</span>
+
+<span class="pc bpc" id="L79" title="5 of 6 branches missed.">		if (mergedGrouping != '\0' &amp;&amp; mergedDecimal != '\0' &amp;&amp; mergedGrouping == mergedDecimal)</span>
+<span class="nc" id="L80">			mergedGrouping = '\0';</span>
+
+<span class="fc" id="L82">		return new DeduceFormat(mergedForceSign, mergedGrouping, mergedDecimal, mergedMinFrac, mergedMaxFrac);</span>
+	}
+
+	public DecimalFormat getDecimalFormat() {
+<span class="fc" id="L86">		final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (decimalSep != '\0')</span>
+<span class="fc" id="L89">			symbols.setDecimalSeparator(decimalSep);</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (groupingSep != '\0')</span>
+<span class="fc" id="L92">			symbols.setGroupingSeparator(groupingSep);</span>
+
+<span class="fc" id="L94">		final StringBuilder pattern = new StringBuilder();</span>
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (forceSign)</span>
+<span class="fc" id="L97">			pattern.append(&quot;+&quot;);</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (groupingSep != '\0')</span>
+<span class="fc" id="L100">			pattern.append(&quot;#,##0&quot;);</span>
+		else
+<span class="fc" id="L102">			pattern.append(&quot;0&quot;);</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (minFractionDigits &gt; 0) {</span>
+<span class="fc" id="L105">			pattern.append(&quot;.&quot;);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			for (int i = 0; i &lt; minFractionDigits; i++)</span>
+<span class="fc" id="L107">				pattern.append(&quot;0&quot;);</span>
+
+		}
+
+<span class="fc" id="L111">		final DecimalFormat df = new DecimalFormat(pattern.toString(), symbols);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		df.setGroupingUsed(groupingSep != '\0');</span>
+<span class="fc" id="L113">		df.setMinimumFractionDigits(minFractionDigits);</span>
+<span class="fc" id="L114">		df.setMaximumFractionDigits(maxFractionDigits);</span>
+
+<span class="fc" id="L116">		return df;</span>
+	}
+
+<span class="fc" id="L119">	static class CharCount {</span>
+		char ch;
+		int count;
+
+		public void init(char newOne) {
+<span class="fc" id="L124">			ch = newOne;</span>
+<span class="fc" id="L125">			count = 1;</span>
+<span class="fc" id="L126">		}</span>
+	}
+
+	public static DeduceFormat from(String number) {
+
+<span class="fc" id="L131">		final CharCount nonDigit1 = new CharCount();</span>
+<span class="fc" id="L132">		final CharCount nonDigit2 = new CharCount();</span>
+
+<span class="fc" id="L134">		char sign = '\0';</span>
+<span class="fc bfc" id="L135" title="All 4 branches covered.">		if (number.charAt(0) == '+' || number.charAt(0) == '-') {</span>
+<span class="fc" id="L136">			sign = number.charAt(0);</span>
+<span class="fc" id="L137">			number = number.substring(1);</span>
+		}
+
+<span class="fc" id="L140">		int fractionDigits = 0;</span>
+
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (int i = 0; i &lt; number.length(); i++) {</span>
+<span class="fc" id="L143">			final char ch = number.charAt(i);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">			if (Character.isDigit(ch)) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">				if (nonDigit1.count &gt; 0)</span>
+<span class="fc" id="L146">					fractionDigits++;</span>
+				continue;
+			}
+
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (nonDigit1.count == 0) {</span>
+<span class="fc" id="L151">				nonDigit1.init(ch);</span>
+<span class="fc" id="L152">				fractionDigits = 0;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			} else if (nonDigit1.ch == ch) {</span>
+<span class="nc" id="L154">				nonDigit1.count++;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			} else if (nonDigit2.count == 0) {</span>
+<span class="fc" id="L156">				nonDigit2.init(ch);</span>
+<span class="fc" id="L157">				fractionDigits = 0;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			} else if (nonDigit2.ch == ch) {</span>
+<span class="nc" id="L159">				nonDigit2.count++;</span>
+			} else
+<span class="fc" id="L161">				return null;</span>
+		}
+
+<span class="fc bfc" id="L164" title="All 4 branches covered.">		if (nonDigit1.count &gt; 0 &amp;&amp; nonDigit2.count &gt; 0)</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			return new DeduceFormat(sign == '+', nonDigit1.ch, nonDigit2.ch, fractionDigits, fractionDigits);</span>
+
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		return new DeduceFormat(sign == '+', '\0', nonDigit1.ch, fractionDigits, fractionDigits);</span>
+
+	}
+
+	@Override
+	public String toString() {
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (minFractionDigits == maxFractionDigits)</span>
+<span class="fc" id="L174">			return &quot;DeduceFormat{&quot; + &quot;forceSign=&quot; + forceSign + &quot;, groupingSep=&quot;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">					+ (groupingSep == '\0' ? &quot;none&quot; : &quot;'&quot; + groupingSep + &quot;'&quot;) + &quot;, decimalSep=&quot;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">					+ (decimalSep == '\0' ? &quot;none&quot; : &quot;'&quot; + decimalSep + &quot;'&quot;) + &quot;, fractionDigits=&quot; + minFractionDigits</span>
+					+ '}';
+
+<span class="fc" id="L179">		return &quot;DeduceFormat{&quot; + &quot;forceSign=&quot; + forceSign + &quot;, groupingSep=&quot;</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				+ (groupingSep == '\0' ? &quot;none&quot; : &quot;'&quot; + groupingSep + &quot;'&quot;) + &quot;, decimalSep=&quot;</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">				+ (decimalSep == '\0' ? &quot;none&quot; : &quot;'&quot; + decimalSep + &quot;'&quot;) + &quot;, minFractionDigits=&quot; + minFractionDigits</span>
+				+ &quot;, maxFractionDigits=&quot; + maxFractionDigits + '}';
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

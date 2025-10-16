@@ -77,11 +77,11 @@ public class RegexLeaf implements IRegex {
 	}
 
 	public static RegexLeaf spaceOne() {
-<span class="nc" id="L80">		return new RegexLeaf(&quot;[%s]&quot;);</span>
+<span class="fc" id="L80">		return new RegexLeaf(&quot;[%s]&quot;);</span>
 	}
 
-	public static RegexLeaf spaceZeroOrOne() {
-<span class="fc" id="L84">		return new RegexLeaf(&quot;(?:[%s])?&quot;);</span>
+	public static RegexOptional spaceZeroOrOne() {
+<span class="fc" id="L84">		return new RegexOptional(spaceOne());</span>
 	}
 
 	public static RegexLeaf spaceOneOrMore() {

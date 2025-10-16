@@ -57,17 +57,15 @@ public class CommandActivityLegacy1 extends SingleLineCommand2&lt;ActivityDiagra
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L59">		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //</span>
-				new RegexOr( //
-					new RegexLeaf(&quot;-&quot;), //
-					new RegexLeaf(&quot;[*]&quot;)), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrOne(), //</span>
+				new RegexLeaf(&quot;[-*]&quot;), //
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrOne(), //</span>
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end());</span>
+<span class="fc" id="L63">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0)), BoxStyle.PLAIN, null, Colors.empty(),</span>
+<span class="nc" id="L68">		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0)), BoxStyle.PLAIN, null, Colors.empty(),</span>
 				null);
 	}
 

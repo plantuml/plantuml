@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.Player;
 import net.sourceforge.plantuml.timingdiagram.PlayerAnalog;
@@ -50,27 +51,26 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandTicks extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandTicks() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandTicks.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandTicks.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PLAYER&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;ticks&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;num&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;on&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;multiple&quot;), //
-<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOr(new RegexLeaf(&quot;every&quot;),
+<span class="fc" id="L64">						new RegexConcat(new RegexLeaf(&quot;num&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;on&quot;),</span>
+<span class="fc" id="L65">								RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;multiple&quot;))),</span>
+<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NUM&quot;, &quot;([0-9]+)&quot;), //
-<span class="fc" id="L69">				RegexLeaf.end());</span>
+<span class="fc" id="L68">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 <span class="nc" id="L74">		final String code = arg.get(&quot;PLAYER&quot;, 0);</span>
 <span class="nc" id="L75">		final Player player = diagram.getPlayer(code);</span>
 <span class="nc bnc" id="L76" title="All 2 branches missed.">		if (player == null) {</span>
