@@ -111,7 +111,7 @@ public static boolean check_control_points(CArray&lt;ST_pointf&gt; cp) {
 try {
 <span class="fc" id="L112">    double dis1 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(1));</span>
 <span class="fc" id="L113">    double dis2 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(2));</span>
-<span class="fc bfc" id="L114" title="All 4 branches covered.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
 <span class="fc" id="L115">        return true;</span>
     else
 <span class="fc" id="L117">        return false;</span>
@@ -134,11 +134,11 @@ try {
     /* if any control point of the segment is outside the bounding box */
 <span class="pc bpc" id="L135" title="2 of 4 branches missed.">    if (cp.get__(0).x &gt; bb.UR.x || cp.get__(0).x &lt; bb.LL.x ||</span>
 <span class="pc bpc" id="L136" title="2 of 4 branches missed.">        cp.get__(0).y &gt; bb.UR.y || cp.get__(0).y &lt; bb.LL.y ||</span>
-<span class="fc bfc" id="L137" title="All 4 branches covered.">        cp.get__(1).x &gt; bb.UR.x || cp.get__(1).x &lt; bb.LL.x ||</span>
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">        cp.get__(1).y &gt; bb.UR.y || cp.get__(1).y &lt; bb.LL.y ||</span>
-<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        cp.get__(2).x &gt; bb.UR.x || cp.get__(2).x &lt; bb.LL.x ||</span>
-<span class="pc bpc" id="L140" title="1 of 4 branches missed.">        cp.get__(2).y &gt; bb.UR.y || cp.get__(2).y &lt; bb.LL.y ||</span>
-<span class="pc bpc" id="L141" title="1 of 4 branches missed.">        cp.get__(3).x &gt; bb.UR.x || cp.get__(3).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L137" title="1 of 4 branches missed.">        cp.get__(1).x &gt; bb.UR.x || cp.get__(1).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">        cp.get__(1).y &gt; bb.UR.y || cp.get__(1).y &lt; bb.LL.y ||</span>
+<span class="pc bpc" id="L139" title="2 of 4 branches missed.">        cp.get__(2).x &gt; bb.UR.x || cp.get__(2).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L140" title="2 of 4 branches missed.">        cp.get__(2).y &gt; bb.UR.y || cp.get__(2).y &lt; bb.LL.y ||</span>
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">        cp.get__(3).x &gt; bb.UR.x || cp.get__(3).x &lt; bb.LL.x ||</span>
 <span class="pc bpc" id="L142" title="2 of 4 branches missed.">        cp.get__(3).y &gt; bb.UR.y || cp.get__(3).y &lt; bb.LL.y) {</span>
     	
         /* if the segment is sufficiently refined */
@@ -148,12 +148,12 @@ try {
 <span class="fc bfc" id="L148" title="All 2 branches covered.">            for (i = 0; i &lt; 4; i++) {</span>
 <span class="fc bfc" id="L149" title="All 2 branches covered.">                if (cp.get__(i).x &gt; bb.UR.x)</span>
 <span class="fc" id="L150">                    bb.UR.x = cp.get__(i).x;</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">                else if (cp.get__(i).x &lt; bb.LL.x)</span>
-<span class="fc" id="L152">                    bb.LL.x = cp.get__(i).x;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                else if (cp.get__(i).x &lt; bb.LL.x)</span>
+<span class="nc" id="L152">                    bb.LL.x = cp.get__(i).x;</span>
 <span class="pc bpc" id="L153" title="1 of 2 branches missed.">                if (cp.get__(i).y &gt; bb.UR.y)</span>
 <span class="nc" id="L154">                    bb.UR.y = cp.get__(i).y;</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">                else if (cp.get__(i).y &lt; bb.LL.y)</span>
-<span class="fc" id="L156">                    bb.LL.y = cp.get__(i).y;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                else if (cp.get__(i).y &lt; bb.LL.y)</span>
+<span class="nc" id="L156">                    bb.LL.y = cp.get__(i).y;</span>
             }
 <span class="fc" id="L158">        }</span>
         else { /* else refine the segment */

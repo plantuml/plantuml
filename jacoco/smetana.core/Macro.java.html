@@ -375,7 +375,7 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define GD_flip(g) (GD_rankdir(g) &amp; 1)
 	public static boolean GD_flip(ST_Agraph_s g) {
-<span class="fc bfc" id="L378" title="All 2 branches covered.">		return (GD_rankdir(g) &amp; 1) != 0;</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		return (GD_rankdir(g) &amp; 1) != 0;</span>
 	}
 
 	// #define GD_realrankdir(g) ((((Agraphinfo_t*)AGDATA(g))-&gt;rankdir) &gt;&gt; 2)
@@ -1081,8 +1081,8 @@ import smetana.core.debug.SmetanaDebug;
 	}
 
 	public static void ED_dist(ST_Agedge_s e, double v) {
-<span class="fc" id="L1084">		((ST_Agedgeinfo_t) e.data).dist = v;</span>
-<span class="fc" id="L1085">	}</span>
+<span class="nc" id="L1084">		((ST_Agedgeinfo_t) e.data).dist = v;</span>
+<span class="nc" id="L1085">	}</span>
 
 	// #define ED_weight(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;weight)
 	public static int ED_weight(ST_Agedge_s e) {
@@ -1707,11 +1707,11 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define streq(a,b) (*(a)==*(b)&amp;&amp;!strcmp(a,b))
 	public static boolean streq(CString a, CString b) {
-<span class="pc bpc" id="L1710" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
+<span class="nc bnc" id="L1710" title="All 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
 	}
 
 	public static boolean streq(CString a, String b) {
-<span class="fc" id="L1714">		return streq(a, new CString(b));</span>
+<span class="nc" id="L1714">		return streq(a, new CString(b));</span>
 	}
 
 	public static final int ARR_NONE = 0;

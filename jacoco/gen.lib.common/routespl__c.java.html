@@ -80,48 +80,48 @@ import smetana.core.ZType;
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;simpleSplineRoute&quot;, key=&quot;7ebl6qohcfpf1b9ucih5r9qgp&quot;, definition=&quot;pointf* simpleSplineRoute (pointf tp, pointf hp, Ppoly_t poly, int* n_spl_pts,     int polyline)&quot;)
 public static CArray&lt;ST_pointf&gt; simpleSplineRoute(Globals zz, final ST_pointf tp, final ST_pointf hp, final ST_Ppoly_t poly, int[] n_spl_pts, boolean polyline) {
 // WARNING!! STRUCT
-<span class="fc" id="L83">return simpleSplineRoute_w_(zz, tp.copy(), hp.copy(), (ST_Ppoly_t) poly.copy(), n_spl_pts, polyline);</span>
+<span class="nc" id="L83">return simpleSplineRoute_w_(zz, tp.copy(), hp.copy(), (ST_Ppoly_t) poly.copy(), n_spl_pts, polyline);</span>
 }
 private static CArray&lt;ST_pointf&gt; simpleSplineRoute_w_(Globals zz, final ST_pointf tp, final ST_pointf hp, final ST_Ppoly_t poly, int[] n_spl_pts, boolean polyline) {
-<span class="fc" id="L86">ENTERING(&quot;7ebl6qohcfpf1b9ucih5r9qgp&quot;,&quot;simpleSplineRoute&quot;);</span>
+<span class="nc" id="L86">ENTERING(&quot;7ebl6qohcfpf1b9ucih5r9qgp&quot;,&quot;simpleSplineRoute&quot;);</span>
 try {
-<span class="fc" id="L88">    final ST_Ppoly_t pl = new ST_Ppoly_t(), spl = new ST_Ppoly_t();</span>
-<span class="fc" id="L89">    final CArray&lt;ST_pointf&gt; eps = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
-<span class="fc" id="L90">    final CArray&lt;ST_pointf&gt; evs = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
+<span class="nc" id="L88">    final ST_Ppoly_t pl = new ST_Ppoly_t(), spl = new ST_Ppoly_t();</span>
+<span class="nc" id="L89">    final CArray&lt;ST_pointf&gt; eps = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
+<span class="nc" id="L90">    final CArray&lt;ST_pointf&gt; evs = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
     int i;
-<span class="fc" id="L92">    eps.get__(0).x = tp.x;</span>
-<span class="fc" id="L93">    eps.get__(0).y = tp.y;</span>
-<span class="fc" id="L94">    eps.get__(1).x = hp.x;</span>
-<span class="fc" id="L95">    eps.get__(1).y = hp.y;</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    if (Pshortestpath(zz, poly, eps, pl) &lt; 0)</span>
+<span class="nc" id="L92">    eps.get__(0).x = tp.x;</span>
+<span class="nc" id="L93">    eps.get__(0).y = tp.y;</span>
+<span class="nc" id="L94">    eps.get__(1).x = hp.x;</span>
+<span class="nc" id="L95">    eps.get__(1).y = hp.y;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    if (Pshortestpath(zz, poly, eps, pl) &lt; 0)</span>
 <span class="nc" id="L97">        return null;</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">    if (polyline)</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">    if (polyline)</span>
 <span class="nc" id="L99">	make_polyline (zz, pl, spl);</span>
     else {
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">	if (poly.pn &gt; zz.edgen) {</span>
-<span class="fc" id="L102">	    zz.edges = CArray.&lt;ST_Pedge_t&gt;REALLOC__(poly.pn, zz.edges, ZType.ST_Pedge_t);</span>
-<span class="fc" id="L103">	    zz.edgen = poly.pn;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">	if (poly.pn &gt; zz.edgen) {</span>
+<span class="nc" id="L102">	    zz.edges = CArray.&lt;ST_Pedge_t&gt;REALLOC__(poly.pn, zz.edges, ZType.ST_Pedge_t);</span>
+<span class="nc" id="L103">	    zz.edgen = poly.pn;</span>
 	}
-<span class="fc bfc" id="L105" title="All 2 branches covered.">	for (i = 0; i &lt; poly.pn; i++) {</span>
-<span class="fc" id="L106">	    zz.edges.get__(i).a.___(poly.ps.get__(i));</span>
-<span class="fc" id="L107">	    zz.edges.get__(i).b.___(poly.ps.get__((i + 1) % poly.pn));</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">	for (i = 0; i &lt; poly.pn; i++) {</span>
+<span class="nc" id="L106">	    zz.edges.get__(i).a.___(poly.ps.get__(i));</span>
+<span class="nc" id="L107">	    zz.edges.get__(i).b.___(poly.ps.get__((i + 1) % poly.pn));</span>
 	}
-<span class="fc" id="L109">	    evs.get__(0).x = 0;</span>
-<span class="fc" id="L110">	    evs.get__(0).y = 0;</span>
-<span class="fc" id="L111">	    evs.get__(1).x = 0;</span>
-<span class="fc" id="L112">	    evs.get__(1).y = 0;</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">	if (Proutespline(zz, zz.edges, poly.pn, pl, evs, spl) &lt; 0)</span>
+<span class="nc" id="L109">	    evs.get__(0).x = 0;</span>
+<span class="nc" id="L110">	    evs.get__(0).y = 0;</span>
+<span class="nc" id="L111">	    evs.get__(1).x = 0;</span>
+<span class="nc" id="L112">	    evs.get__(1).y = 0;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">	if (Proutespline(zz, zz.edges, poly.pn, pl, evs, spl) &lt; 0)</span>
 <span class="nc" id="L114">            return null;</span>
     }
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">    if (mkspacep(zz, spl.pn))</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">    if (mkspacep(zz, spl.pn))</span>
 <span class="nc" id="L117">	return null;</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">    for (i = 0; i &lt; spl.pn; i++) {</span>
-<span class="fc" id="L119">        zz.ps.get__(i).___(spl.ps.get__(i));</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">    for (i = 0; i &lt; spl.pn; i++) {</span>
+<span class="nc" id="L119">        zz.ps.get__(i).___(spl.ps.get__(i));</span>
     }
-<span class="fc" id="L121">    n_spl_pts[0] = spl.pn;</span>
-<span class="fc" id="L122">    return zz.ps;</span>
+<span class="nc" id="L121">    n_spl_pts[0] = spl.pn;</span>
+<span class="nc" id="L122">    return zz.ps;</span>
 } finally {
-<span class="fc" id="L124">LEAVING(&quot;7ebl6qohcfpf1b9ucih5r9qgp&quot;,&quot;simpleSplineRoute&quot;);</span>
+<span class="nc" id="L124">LEAVING(&quot;7ebl6qohcfpf1b9ucih5r9qgp&quot;,&quot;simpleSplineRoute&quot;);</span>
 }
 }
 

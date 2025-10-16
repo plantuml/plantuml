@@ -79,16 +79,18 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="pc bpc" id="L79" title="2 of 4 branches missed.">			final boolean hasAlpha = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_4BYTE_ABGR;</span>
 <span class="fc" id="L80">			Log.info(() -&gt; &quot;Trying to pack image. hasAlpha=&quot; + hasAlpha);</span>
 
-<span class="fc" id="L82">			BufferedImage tmp = Quantify555.packMeIfPossible(bufferedImage);</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (tmp == null)</span>
-<span class="fc" id="L84">				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);</span>
+<span class="fc" id="L82">			BufferedImage tmp = null;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (hasAlpha == false)</span>
+<span class="fc" id="L84">				tmp = Quantify555.packMeIfPossible(bufferedImage);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (tmp == null)</span>
+<span class="fc" id="L86">				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);</span>
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (tmp != null)</span>
-<span class="fc" id="L87">				image = tmp;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (tmp != null)</span>
+<span class="fc" id="L89">				image = tmp;</span>
 		}
 
-<span class="fc" id="L90">		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);</span>
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L92">		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);</span>
+<span class="fc" id="L93">	}</span>
 
 //	/** writes a BufferedImage of type TYPE_INT_ARGB to PNG using PNGJ */
 //	public static void writeARGB(BufferedImage bi, OutputStream os, String metadata) {

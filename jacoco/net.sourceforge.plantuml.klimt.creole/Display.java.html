@@ -293,12 +293,12 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="fc bfc" id="L293" title="All 2 branches covered.">				} else if (c2 == 't') {</span>
 <span class="fc" id="L294">					current.append('\t');</span>
 <span class="fc" id="L295">					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);</span>
-<span class="fc bfc" id="L296" title="All 2 branches covered.">				} else if (c2 == '\\') {</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">				} else if (c2 == '\\') {</span>
 <span class="fc" id="L297">					current.append(c2);</span>
 <span class="fc" id="L298">					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);</span>
 				} else {
-<span class="fc" id="L300">					current.append(c);</span>
-<span class="fc" id="L301">					current.append(c2);</span>
+<span class="nc" id="L300">					current.append(c);</span>
+<span class="nc" id="L301">					current.append(c2);</span>
 				}
 <span class="pc bpc" id="L303" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {</span>
 				// current.append('\t');

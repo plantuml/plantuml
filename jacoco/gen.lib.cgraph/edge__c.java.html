@@ -226,7 +226,7 @@ try {
     
 <span class="fc bfc" id="L227" title="All 2 branches covered.">    if (e.tag.objtype == AGOUTEDGE) {</span>
 <span class="fc" id="L228">	rv = agnxtout(zz, g, e);</span>
-<span class="fc bfc" id="L229" title="All 2 branches covered.">	if (rv == null) {</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">	if (rv == null) {</span>
 	    do {
 <span class="pc bpc" id="L231" title="1 of 2 branches missed.">		rv = (rv) == null ? agfstin(zz, g, n) : agnxtin(zz, g,rv);</span>
 <span class="pc bpc" id="L232" title="1 of 4 branches missed.">	    } while (rv!=null &amp;&amp; rv.node == n);</span>

@@ -112,20 +112,20 @@ try {
     double a, b, c;
     double disc, b_over_2a, c_over_a;
 <span class="fc" id="L114">    a = coeff[2]; b = coeff[1]; c = coeff[0];</span>
-<span class="pc bpc" id="L115" title="1 of 4 branches missed.">    if ((((a) &lt; 1E-7) &amp;&amp; ((a) &gt; -1E-7)))</span>
+<span class="pc bpc" id="L115" title="2 of 4 branches missed.">    if ((((a) &lt; 1E-7) &amp;&amp; ((a) &gt; -1E-7)))</span>
 <span class="fc" id="L116">	return solve1(coeff, roots);</span>
-<span class="fc" id="L117">    b_over_2a = b / (2 * a);</span>
-<span class="fc" id="L118">    c_over_a = c / a;</span>
-<span class="fc" id="L119">    disc = b_over_2a * b_over_2a - c_over_a;</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">    if (disc &lt; 0)</span>
-<span class="fc" id="L121">	return 0;</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">    else if (disc == 0) {</span>
+<span class="nc" id="L117">    b_over_2a = b / (2 * a);</span>
+<span class="nc" id="L118">    c_over_a = c / a;</span>
+<span class="nc" id="L119">    disc = b_over_2a * b_over_2a - c_over_a;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">    if (disc &lt; 0)</span>
+<span class="nc" id="L121">	return 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">    else if (disc == 0) {</span>
 <span class="nc" id="L123">	roots[0] = -b_over_2a;</span>
 <span class="nc" id="L124">	return 1;</span>
     } else {
-<span class="fc" id="L126">	roots[0] = -b_over_2a + Math.sqrt(disc);</span>
-<span class="fc" id="L127">	roots[1] = -2 * b_over_2a - roots[0];</span>
-<span class="fc" id="L128">	return 2;</span>
+<span class="nc" id="L126">	roots[0] = -b_over_2a + Math.sqrt(disc);</span>
+<span class="nc" id="L127">	roots[1] = -2 * b_over_2a - roots[0];</span>
+<span class="nc" id="L128">	return 2;</span>
     }
 } finally {
 <span class="fc" id="L131">LEAVING(&quot;9b5238tdddphds1x726z0osdm&quot;,&quot;solve2&quot;);</span>
