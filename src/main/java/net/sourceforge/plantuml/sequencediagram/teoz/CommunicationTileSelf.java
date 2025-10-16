@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Log;
 
-public class CommunicationTileSelf extends AbstractTile {
+public class CommunicationTileSelf extends AbstractCommunicationTile {
 
 	private final LivingSpace livingSpace1;
 	private final Message message;
@@ -74,7 +74,7 @@ public class CommunicationTileSelf extends AbstractTile {
 
 	public CommunicationTileSelf(StringBounder stringBounder, LivingSpace livingSpace1, Message message, Rose skin,
 			ISkinParam skinParam, LivingSpaces livingSpaces, YGauge currentY) {
-		super(stringBounder, currentY);
+		super(stringBounder, skinParam, currentY);
 		this.livingSpace1 = livingSpace1;
 		this.livingSpaces = livingSpaces;
 		this.message = message;
@@ -151,6 +151,9 @@ public class CommunicationTileSelf extends AbstractTile {
 	}
 
 	public void addConstraints() {
+		if (sequenceMessageSpan())
+			return;
+
 		if (isReverseDefine()) {
 			final LivingSpace previous = getPrevious();
 			if (previous != null) {

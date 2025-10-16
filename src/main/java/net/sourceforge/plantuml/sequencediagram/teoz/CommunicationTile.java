@@ -53,12 +53,11 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.LineParam;
-import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 
-public class CommunicationTile extends AbstractTile {
+public class CommunicationTile extends AbstractCommunicationTile {
 
 	private final LivingSpace livingSpace1;
 	private final LivingSpace livingSpace2;
@@ -79,7 +78,7 @@ public class CommunicationTile extends AbstractTile {
 
 	public CommunicationTile(StringBounder stringBounder, LivingSpaces livingSpaces, Message message, Rose skin,
 			ISkinParam skinParam, YGauge currentY) {
-		super(stringBounder, currentY);
+		super(stringBounder, skinParam, currentY);
 		this.livingSpace1 = livingSpaces.get(message.getParticipant1());
 		this.livingSpace2 = livingSpaces.get(message.getParticipant2());
 		this.livingSpaces = livingSpaces;
@@ -97,10 +96,6 @@ public class CommunicationTile extends AbstractTile {
 			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());
 		else
 			this.yGauge = YGauge.create(currentY.getMax(), dim.getHeight());
-	}
-
-	private boolean sequenceMessageSpan() {
-		return skinParam.getPragma().isTrue(PragmaKey.SEQUENCE_MESSAGE_SPAN);
 	}
 
 	@Override
