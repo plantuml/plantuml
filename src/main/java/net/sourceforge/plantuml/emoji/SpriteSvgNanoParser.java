@@ -63,14 +63,15 @@ public class SpriteSvgNanoParser implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
+			final HColor backColor) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final ColorMapper colorMapper = ug.getColorMapper();
-				if (colorMapper == ColorMapper.MONOCHROME) {
+				if (colorMapper == ColorMapper.MONOCHROME)
 					ug.draw(img.monochrome().scale(scale));
-				} else if (forcedColor == null)
+				else if (forcedColor == null)
 					ug.draw(img.scale(scale));
 				else
 					ug.draw(img.muteColor(forcedColor.toColor(colorMapper)).scale(scale));

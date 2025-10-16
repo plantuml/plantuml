@@ -122,14 +122,6 @@ public class UGraphicWithScale {
 		return angle;
 	}
 
-	public double getEffectiveScale() {
-		final double scaleX = at.getScaleX();
-		final double scaleY = at.getScaleY();
-		if (scaleX == scaleY)
-			return scale * scaleX;
-		return scale * Math.sqrt(scaleX * scaleY);
-	}
-
 	public double getInitialScale() {
 		return scale;
 	}

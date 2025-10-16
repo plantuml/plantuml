@@ -188,7 +188,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 
 		final String strokeWidth = extract(DATA_STROKE_WIDTH, s);
 		if (strokeWidth != null) {
-			final double scale = ugs.getEffectiveScale();
+			final double scale = ugs.getInitialScale();
 			ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));
 		}
 
