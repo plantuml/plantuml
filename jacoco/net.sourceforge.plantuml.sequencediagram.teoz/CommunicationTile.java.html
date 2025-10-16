@@ -264,15 +264,15 @@ public class CommunicationTile extends AbstractTile {
 <span class="fc bfc" id="L264" title="All 2 branches covered.">		if (isReverse(getStringBounder())) {</span>
 <span class="fc" id="L265">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
 <span class="fc" id="L266">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">			if (level1 &gt; 0)</span>
-<span class="nc" id="L268">				point1 = point1.addFixed(-LIVE_DELTA_SIZE);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">			if (level1 &gt; 0)</span>
+<span class="fc" id="L268">				point1 = point1.addFixed(-LIVE_DELTA_SIZE);</span>
 
 <span class="fc" id="L270">			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);</span>
 <span class="fc" id="L271">			point1.ensureBiggerThan(point2.addFixed(width));</span>
 <span class="fc" id="L272">		} else {</span>
 <span class="fc" id="L273">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">			if (level2 &gt; 0)</span>
-<span class="nc" id="L275">				point2 = point2.addFixed(-LIVE_DELTA_SIZE);</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">			if (level2 &gt; 0)</span>
+<span class="fc" id="L275">				point2 = point2.addFixed(-LIVE_DELTA_SIZE);</span>
 
 <span class="fc" id="L277">			point2.ensureBiggerThan(point1.addFixed(width));</span>
 		}

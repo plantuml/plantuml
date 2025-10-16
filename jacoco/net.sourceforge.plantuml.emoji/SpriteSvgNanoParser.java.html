@@ -63,47 +63,48 @@ public class SpriteSvgNanoParser implements Sprite {
 <span class="nc" id="L63">	}</span>
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
-<span class="nc" id="L67">		return new AbstractTextBlock() {</span>
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
+			final HColor backColor) {
+<span class="nc" id="L68">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L70">				final ColorMapper colorMapper = ug.getColorMapper();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">				if (colorMapper == ColorMapper.MONOCHROME) {</span>
-<span class="nc" id="L72">					ug.draw(img.monochrome().scale(scale));</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">				} else if (forcedColor == null)</span>
-<span class="nc" id="L74">					ug.draw(img.scale(scale));</span>
+<span class="nc" id="L71">				final ColorMapper colorMapper = ug.getColorMapper();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">				if (colorMapper == ColorMapper.MONOCHROME)</span>
+<span class="nc" id="L73">					ug.draw(img.monochrome().scale(scale));</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				else if (forcedColor == null)</span>
+<span class="nc" id="L75">					ug.draw(img.scale(scale));</span>
 				else
-<span class="nc" id="L76">					ug.draw(img.muteColor(forcedColor.toColor(colorMapper)).scale(scale));</span>
+<span class="nc" id="L77">					ug.draw(img.muteColor(forcedColor.toColor(colorMapper)).scale(scale));</span>
 
-<span class="nc" id="L78">			}</span>
+<span class="nc" id="L79">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L81">				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);</span>
+<span class="nc" id="L82">				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);</span>
 			}
 		};
 	}
 
 	public static Sprite fromInternal(String name) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (name.endsWith(&quot;.png&quot;))</span>
-<span class="nc" id="L88">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (name.endsWith(&quot;.png&quot;))</span>
+<span class="nc" id="L89">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L90">		final InputStream is = getInternalSprite(name + &quot;.png&quot;);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L92">			return null;</span>
+<span class="nc" id="L91">		final InputStream is = getInternalSprite(name + &quot;.png&quot;);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L93">			return null;</span>
 
 		try {
-<span class="nc" id="L95">			return new SpriteSvgNanoParser(SImageIO.read(is));</span>
-<span class="nc" id="L96">		} catch (IOException e) {</span>
-<span class="nc" id="L97">			Logme.error(e);</span>
-<span class="nc" id="L98">			return null;</span>
+<span class="nc" id="L96">			return new SpriteSvgNanoParser(SImageIO.read(is));</span>
+<span class="nc" id="L97">		} catch (IOException e) {</span>
+<span class="nc" id="L98">			Logme.error(e);</span>
+<span class="nc" id="L99">			return null;</span>
 		}
 
 	}
 
 	public static InputStream getInternalSprite(final String inner) {
-<span class="nc" id="L104">		final String path = &quot;/sprites/&quot; + inner;</span>
-<span class="nc" id="L105">		final InputStream is = SpriteSvgNanoParser.class.getResourceAsStream(path);</span>
-<span class="nc" id="L106">		return is;</span>
+<span class="nc" id="L105">		final String path = &quot;/sprites/&quot; + inner;</span>
+<span class="nc" id="L106">		final InputStream is = SpriteSvgNanoParser.class.getResourceAsStream(path);</span>
+<span class="nc" id="L107">		return is;</span>
 	}
 
 }

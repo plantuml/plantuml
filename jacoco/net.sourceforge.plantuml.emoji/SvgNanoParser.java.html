@@ -188,7 +188,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 
 <span class="nc" id="L189">		final String strokeWidth = extract(DATA_STROKE_WIDTH, s);</span>
 <span class="nc bnc" id="L190" title="All 2 branches missed.">		if (strokeWidth != null) {</span>
-<span class="nc" id="L191">			final double scale = ugs.getEffectiveScale();</span>
+<span class="nc" id="L191">			final double scale = ugs.getInitialScale();</span>
 <span class="nc" id="L192">			ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));</span>
 		}
 

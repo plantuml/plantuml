@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 	public void addStep(Event event, double y) {
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (event.dealWith(p)) {</span>
-<span class="pc bpc" id="L79" title="5 of 6 branches missed.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
+<span class="pc bpc" id="L79" title="3 of 6 branches missed.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
 <span class="nc" id="L80">				y += 5.0;</span>
 
 <span class="fc" id="L82">			eventsStep.put(event, y);</span>
@@ -97,17 +97,17 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 		// System.err.println(&quot;---&gt;EventsHistory for &quot; + p + &quot; &quot; + event);
 <span class="pc bpc" id="L98" title="1 of 2 branches missed.">		for (Iterator&lt;Event&gt; it = events.iterator(); it.hasNext();) {</span>
 <span class="fc" id="L99">			final Event current = it.next();</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (current instanceof LifeEvent) {</span>
-<span class="nc" id="L101">				final LifeEvent le = (LifeEvent) current;</span>
-<span class="nc bnc" id="L102" title="All 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
-<span class="nc" id="L103">					level++;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">			if (current instanceof LifeEvent) {</span>
+<span class="fc" id="L101">				final LifeEvent le = (LifeEvent) current;</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
+<span class="fc" id="L103">					level++;</span>
 
-<span class="nc bnc" id="L105" title="All 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
 <span class="nc" id="L106">					level = Math.max(0, level - 1);</span>
 
 			}
 <span class="fc bfc" id="L109" title="All 2 branches covered.">			if (event == current) {</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				if (current instanceof AbstractMessage) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">				if (current instanceof AbstractMessage) {</span>
 <span class="fc" id="L111">					boolean seenActivate = false;</span>
 <span class="fc" id="L112">					boolean seenDeactivate = false;</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">					while (it.hasNext()) {</span>
@@ -289,15 +289,15 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L289">		int max = 0;</span>
 <span class="fc" id="L290">		int level = 0;</span>
 <span class="fc bfc" id="L291" title="All 2 branches covered.">		for (Event current : events) {</span>
-<span class="pc bpc" id="L292" title="1 of 2 branches missed.">			if (current instanceof LifeEvent) {</span>
-<span class="nc" id="L293">				final LifeEvent le = (LifeEvent) current;</span>
-<span class="nc bnc" id="L294" title="All 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
-<span class="nc" id="L295">					level++;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if (current instanceof LifeEvent) {</span>
+<span class="fc" id="L293">				final LifeEvent le = (LifeEvent) current;</span>
+<span class="pc bpc" id="L294" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
+<span class="fc" id="L295">					level++;</span>
 
-<span class="nc bnc" id="L297" title="All 2 branches missed.">				if (level &gt; max)</span>
-<span class="nc" id="L298">					max = level;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">				if (level &gt; max)</span>
+<span class="fc" id="L298">					max = level;</span>
 
-<span class="nc bnc" id="L300" title="All 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
+<span class="pc bpc" id="L300" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
 <span class="nc" id="L301">					level--;</span>
 
 			}
