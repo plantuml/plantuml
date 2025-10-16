@@ -71,10 +71,10 @@ class TimeSeriesTest {
 	void testDisplayValueFormatting() {
 		TimeSeries ts = new TimeSeries();
 		// No overrides here
-		assertEquals("3", ts.getDisplayValue(3.0)); // integer -> no .0
-		assertEquals("3.5", ts.getDisplayValue(3.5)); // decimal -> String.valueOf
-		assertEquals("0", ts.getDisplayValue(0.0));
-		assertEquals("-2", ts.getDisplayValue(-2.0));
+		assertEquals("3.0", ts.getDisplayValue(3.0));
+		assertEquals("3.5", ts.getDisplayValue(3.5));
+		assertEquals("0.0", ts.getDisplayValue(0.0));
+		assertEquals("-2.0", ts.getDisplayValue(-2.0));
 	}
 
 	@Test

@@ -106,7 +106,7 @@ public class TimeSeries {
 		if (format != null)
 			return format.format(value);
 
-		return String.valueOf(value);
+		return "" + value;
 	}
 
 	public double getValueAt(TimeTick tick) {
