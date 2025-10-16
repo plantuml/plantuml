@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
@@ -67,11 +68,11 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexOptional(//
 						new RegexConcat( //
-								new RegexLeaf("between"), //
+								new RegexOr(new RegexLeaf("between"), new RegexLeaf("from")), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "START", "(-?[0-9]*\\.?[0-9]+)"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("and"), //
+								new RegexOr(new RegexLeaf("and"), new RegexLeaf("to")), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "END", "(-?[0-9]*\\.?[0-9]+)"), //
 								RegexLeaf.spaceOneOrMore())), //
@@ -83,7 +84,8 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		final String full = arg.get("FULL", 0);
@@ -97,9 +99,9 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 		final PlayerAnalog player = diagram.createAnalog(code, full, compact != null, stereotype);
 		final String start = arg.get("START", 0);
 		final String end = arg.get("END", 0);
-		if (start != null && end != null) {
-			player.setStartEnd(start, end);
-		}
+		if (start != null && end != null)
+			player.setBounds(start, end);
+
 		return CommandExecutionResult.ok();
 	}
 

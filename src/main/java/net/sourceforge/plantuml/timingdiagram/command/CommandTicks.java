@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.Player;
 import net.sourceforge.plantuml.timingdiagram.PlayerAnalog;
@@ -59,18 +60,17 @@ public class CommandTicks extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("ticks"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("num"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("on"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("multiple"), //
+				new RegexOr(new RegexLeaf("every"),
+						new RegexConcat(new RegexLeaf("num"), RegexLeaf.spaceOneOrMore(), new RegexLeaf("on"),
+								RegexLeaf.spaceOneOrMore(), new RegexLeaf("multiple"))),
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "NUM", "([0-9]+)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String code = arg.get("PLAYER", 0);
 		final Player player = diagram.getPlayer(code);
 		if (player == null) {

@@ -37,9 +37,6 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -65,46 +62,17 @@ import net.sourceforge.plantuml.utils.Position;
 
 public class PlayerAnalog extends Player {
 
-	private final SortedMap<TimeTick, Double> values = new TreeMap<TimeTick, Double>();
+	private final TimeSeries timeSeries = new TimeSeries();
 
 	private final List<TimeConstraint> constraints = new ArrayList<>();
 
 	private final double ymargin = 8;
 	private Double initialState;
-	private Double start;
-	private Double end;
-	private String startStr;
-	private String endStr;
 	private Integer ticksEvery;
 
 	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
 		super(code, skinParam, ruler, compact, stereotype, null);
 		this.suggestedHeight = 100;
-	}
-
-	private double getMin() {
-		if (start != null)
-			return start;
-
-		double min = 0;
-		for (Double val : values.values())
-			min = Math.min(min, val);
-
-		return min;
-	}
-
-	private double getMax() {
-		if (end != null)
-			return end;
-
-		double max = 0;
-		for (Double val : values.values())
-			max = Math.max(max, val);
-
-		if (max == 0)
-			return 10;
-
-		return max;
 	}
 
 	@Override
@@ -115,32 +83,9 @@ public class PlayerAnalog extends Player {
 	@Override
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		final double value = getValueAt(stringBounder, tick);
+		final double value = timeSeries.getValueAt(tick);
 		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, value)),
 				new XPoint2D(x, getYpos(stringBounder, value)));
-	}
-
-	private double getValueAt(StringBounder stringBounder, TimeTick tick) {
-		final Double result = values.get(tick);
-		if (result != null)
-			return result;
-
-		Entry<TimeTick, Double> last = null;
-		for (Entry<TimeTick, Double> ent : values.entrySet()) {
-			if (ent.getKey().compareTo(tick) > 0) {
-				final double v2 = ent.getValue();
-				if (last == null)
-					return v2;
-
-				final double t2 = ent.getKey().getTime().doubleValue();
-				final double v1 = last.getValue();
-				final double t1 = last.getKey().getTime().doubleValue();
-				final double p = (tick.getTime().doubleValue() - t1) / (t2 - t1);
-				return v1 + (v2 - v1) * p;
-			}
-			last = ent;
-		}
-		return last.getValue();
 	}
 
 	@Override
@@ -159,7 +104,7 @@ public class PlayerAnalog extends Player {
 		if (now == null)
 			this.initialState = value;
 		else
-			this.values.put(now, value);
+			this.timeSeries.put(now, value);
 
 		if (this.initialState == null)
 			this.initialState = value;
@@ -181,7 +126,8 @@ public class PlayerAnalog extends Player {
 	}
 
 	private double getYpos(StringBounder stringBounder, double value) {
-		final double y = (value - getMin()) * (suggestedHeight - 2 * ymargin) / (getMax() - getMin());
+		final double y = (value - timeSeries.getMin()) * (suggestedHeight - 2 * ymargin)
+				/ (timeSeries.getMax() - timeSeries.getMin());
 		return getHeightForConstraints(stringBounder) + suggestedHeight - ymargin - y;
 	}
 
@@ -201,11 +147,12 @@ public class PlayerAnalog extends Player {
 
 	private double getMaxWidthForTicks(StringBounder stringBounder) {
 		if (ticksEvery == null)
-			return Math.max(getWidthLabel(stringBounder, getMin()), getWidthLabel(stringBounder, getMax()));
+			return Math.max(getWidthLabel(stringBounder, timeSeries.getMin()),
+					getWidthLabel(stringBounder, timeSeries.getMax()));
 
 		double result = 0;
-		final int first = (int) Math.ceil(getMin());
-		final int last = (int) Math.floor(getMax());
+		final int first = (int) Math.ceil(timeSeries.getMin());
+		final int last = (int) Math.floor(timeSeries.getMax());
 		for (int i = first; i <= last; i++)
 			if (i % ticksEvery == 0)
 				result = Math.max(result, getWidthLabel(stringBounder, i));
@@ -221,11 +168,11 @@ public class PlayerAnalog extends Player {
 		title.drawU(ug.apply(UTranslate.dy(y)));
 
 		if (ticksEvery == null) {
-			drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), getMin(), fullAvailableWidth);
-			drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), getMax(), fullAvailableWidth);
+			drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), timeSeries.getMin(), fullAvailableWidth);
+			drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), timeSeries.getMax(), fullAvailableWidth);
 		} else {
-			final int first = (int) Math.ceil(getMin());
-			final int last = (int) Math.floor(getMax());
+			final int first = (int) Math.ceil(timeSeries.getMin());
+			final int last = (int) Math.floor(timeSeries.getMax());
 			for (int i = first; i <= last; i++)
 				if (i % ticksEvery == 0)
 					drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), i, fullAvailableWidth);
@@ -248,24 +195,15 @@ public class PlayerAnalog extends Player {
 	}
 
 	private TextBlock getTextBlock(double value) {
-		String formattedValue;
-		// Use original string format for min/max if available
-		if (startStr != null && value == start) {
-			formattedValue = startStr;
-		} else if (endStr != null && value == end) {
-			formattedValue = endStr;
-		} else {
-			// For other values, format as integer if it's a whole number
-			formattedValue = (value == Math.floor(value)) ? String.format("%.0f", value) : String.valueOf(value);
-		}
+		final String formattedValue = timeSeries.getDisplayValue(value);
 		final Display display = Display.getWithNewlines(skinParam.getPragma(), formattedValue);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	private void drawTickHlines(UGraphic ug) {
 		ug = TimingRuler.applyForVLines(ug, getStyle(), skinParam);
-		final int first = (int) Math.ceil(getMin());
-		final int last = (int) Math.floor(getMax());
+		final int first = (int) Math.ceil(timeSeries.getMin());
+		final int last = (int) Math.floor(timeSeries.getMax());
 		final ULine hline = ULine.hline(ruler.getWidth());
 		for (int i = first; i <= last; i++)
 			if (i % ticksEvery == 0)
@@ -283,7 +221,7 @@ public class PlayerAnalog extends Player {
 				ug = getContext().apply(ug);
 				double lastx = 0;
 				double lastValue = initialState == null ? 0 : initialState;
-				for (Map.Entry<TimeTick, Double> ent : values.entrySet()) {
+				for (Map.Entry<TimeTick, Double> ent : timeSeries.entrySet()) {
 					final double y1 = getYpos(ug.getStringBounder(), lastValue);
 					final double y2 = getYpos(ug.getStringBounder(), ent.getValue());
 					final double x = ruler.getPosInPixel(ent.getKey());
@@ -300,11 +238,8 @@ public class PlayerAnalog extends Player {
 		};
 	}
 
-	public void setStartEnd(String startStr, String endStr) {
-		this.startStr = startStr;
-		this.endStr = endStr;
-		this.start = Double.parseDouble(startStr);
-		this.end = Double.parseDouble(endStr);
+	public void setBounds(String min, String max) {
+		timeSeries.setBounds(min, max);
 	}
 
 	public void setTicks(int ticksEvery) {
@@ -318,9 +253,8 @@ public class PlayerAnalog extends Player {
 	}
 
 	private void drawConstraints(final UGraphic ug) {
-		for (TimeConstraint constraint : constraints) {
+		for (TimeConstraint constraint : constraints) 
 			constraint.drawU(ug, ruler);
-		}
 	}
 
 	private double getHeightForConstraints(StringBounder stringBounder) {
