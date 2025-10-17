@@ -65,6 +65,7 @@ public class SvgOption {
 	private String interactiveBaseFilename;
 	private final Map<String, String> rootAttributes = new LinkedHashMap<>();
 	private ConfigurationStore<OptionKey> options;
+	private double edgeCornerRadius = 0;
 
 	public String getInteractiveBaseFilename() {
 		return interactiveBaseFilename;
@@ -175,6 +176,11 @@ public class SvgOption {
 		return this;
 	}
 
+	public SvgOption withEdgeCornerRadius(double edgeCornerRadius) {
+		this.edgeCornerRadius = edgeCornerRadius;
+		return this;
+	}
+
 	public Map<String, String> getRootAttributes() {
 		return Collections.unmodifiableMap(rootAttributes);
 	}
@@ -226,6 +232,10 @@ public class SvgOption {
 
 	public String getFont() {
 		return font;
+	}
+
+	public double getEdgeCornerRadius() {
+		return edgeCornerRadius;
 	}
 
 }

@@ -814,6 +814,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
+	public double getEdgeCornerRadius() {
+		return getAsInt("edgecornerradius", 0);
+	}
+
+	@Override
 
 	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
 		final String key = param.getDiagonalKey();

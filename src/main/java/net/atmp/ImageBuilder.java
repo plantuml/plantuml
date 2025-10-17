@@ -438,6 +438,7 @@ public class ImageBuilder {
 		if (skinParam != null) {
 			option = option.withLengthAdjust(skinParam.getlengthAdjust());
 			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());
+			option = option.withEdgeCornerRadius(skinParam.getEdgeCornerRadius());
 		}
 
 		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);

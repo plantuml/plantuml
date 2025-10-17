@@ -679,6 +679,13 @@ public class SvgGraphics {
 			s = s.replace(k, ent.getValue());
 		}
 		s = removeXmlHeader(s);
+
+		// Apply rounded corners to orthogonal edges if configured
+		final double radius = option.getEdgeCornerRadius();
+		if (radius > 0) {
+			s = net.sourceforge.plantuml.svek.SvgPathRounder.roundOrthogonalPaths(s, radius);
+		}
+
 		// s = s.replace("<", "\n<").replace(">", ">\n");
 		os.write(s.getBytes());
 	}

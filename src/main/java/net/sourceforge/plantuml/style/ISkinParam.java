@@ -119,6 +119,8 @@ public interface ISkinParam extends ISkinSimple {
 
 	public double getRanksep();
 
+	public double getEdgeCornerRadius();
+
 	public double getRoundCorner(CornerParam param, Stereotype stereotype);
 
 	public double getDiagonalCorner(CornerParam param, Stereotype stereotype);
