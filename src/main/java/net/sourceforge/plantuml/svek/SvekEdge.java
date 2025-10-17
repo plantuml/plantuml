@@ -862,6 +862,18 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		DotPath todraw = dotPath.copy();
 
+		// Apply corner rounding if pragma is set
+		final String radiusStr = pragma.getValue(PragmaKey.EDGE_CORNER_RADIUS);
+		if (radiusStr != null) {
+			try {
+				final double radius = Double.parseDouble(radiusStr);
+				if (radius > 0)
+					todraw.muteToRoundOrthogonalPaths(radius);
+			} catch (NumberFormatException e) {
+				// Ignore invalid radius values
+			}
+		}
+
 		UTranslate magneticForce1 = UTranslate.none();
 		if (getSvekNode1() != null) {
 			final MagneticBorder magneticBorder1 = getSvekNode1().getMagneticBorder();
