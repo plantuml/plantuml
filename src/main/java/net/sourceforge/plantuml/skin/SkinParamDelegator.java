@@ -172,6 +172,11 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
+	public double getEdgeCornerRadius() {
+		return skinParam.getEdgeCornerRadius();
+	}
+
+	@Override
 	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
 		return skinParam.getRoundCorner(param, stereotype);
 	}
