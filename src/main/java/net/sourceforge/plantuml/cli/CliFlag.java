@@ -229,7 +229,7 @@ public enum CliFlag {
 
 	// Output format (choose one)
 
-	@CliFlagDoc(value = "Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt)", level = 0, usage = "--format <name>, -f <name>", newGroup = "Output format (choose one)")
+	@CliFlagDoc(value = "Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)", level = 0, usage = "-f <name>, --format <name>", newGroup = "Output format (choose one)")
 	FORMAT("--format", aliases("-f"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 	
 	@CliFlagDoc(value = "Generate images in EPS format", level = 0, newGroup = "Available formats")
