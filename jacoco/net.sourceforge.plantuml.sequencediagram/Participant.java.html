@@ -154,12 +154,12 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 <span class="fc" id="L154">	private List&lt;Fashion&gt; liveBackcolors = new ArrayList&lt;&gt;();</span>
 
 	public final void incInitialLife(Fashion colors) {
-<span class="fc" id="L157">		initialLife++;</span>
-<span class="fc" id="L158">		this.liveBackcolors.add(colors);</span>
-<span class="fc" id="L159">	}</span>
+<span class="nc" id="L157">		initialLife++;</span>
+<span class="nc" id="L158">		this.liveBackcolors.add(colors);</span>
+<span class="nc" id="L159">	}</span>
 
 	public Fashion getLiveSpecificBackColors(int which) {
-<span class="fc" id="L162">		return liveBackcolors.get(which);</span>
+<span class="nc" id="L162">		return liveBackcolors.get(which);</span>
 	}
 
 	public Colors getColors() {

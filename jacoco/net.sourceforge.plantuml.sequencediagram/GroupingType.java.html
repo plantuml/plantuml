@@ -35,32 +35,32 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-<span class="fc" id="L38">public enum GroupingType {</span>
-<span class="fc" id="L39">	START, ELSE, END;</span>
+<span class="nc" id="L38">public enum GroupingType {</span>
+<span class="nc" id="L39">	START, ELSE, END;</span>
 
 	public static GroupingType getType(String s) {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;opt&quot;)) {</span>
-<span class="fc" id="L43">			return GroupingType.START;</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		} else if (s.equalsIgnoreCase(&quot;alt&quot;)) {</span>
-<span class="fc" id="L45">			return GroupingType.START;</span>
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;loop&quot;)) {</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		if (s.equalsIgnoreCase(&quot;opt&quot;)) {</span>
+<span class="nc" id="L43">			return GroupingType.START;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;alt&quot;)) {</span>
+<span class="nc" id="L45">			return GroupingType.START;</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;loop&quot;)) {</span>
 <span class="nc" id="L47">			return GroupingType.START;</span>
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;par&quot;)) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;par&quot;)) {</span>
 <span class="nc" id="L49">			return GroupingType.START;</span>
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;par2&quot;)) {</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;par2&quot;)) {</span>
 <span class="nc" id="L51">			return GroupingType.START;</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;break&quot;)) {</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;break&quot;)) {</span>
 <span class="nc" id="L53">			return GroupingType.START;</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">		} else if (s.equalsIgnoreCase(&quot;group&quot;)) {</span>
-<span class="fc" id="L55">			return GroupingType.START;</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;critical&quot;)) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;group&quot;)) {</span>
+<span class="nc" id="L55">			return GroupingType.START;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;critical&quot;)) {</span>
 <span class="nc" id="L57">			return GroupingType.START;</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;also&quot;)) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;also&quot;)) {</span>
 <span class="nc" id="L59">			return GroupingType.ELSE;</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		} else if (s.equalsIgnoreCase(&quot;else&quot;)) {</span>
-<span class="fc" id="L61">			return GroupingType.ELSE;</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;end&quot;)) {</span>
-<span class="fc" id="L63">			return GroupingType.END;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;else&quot;)) {</span>
+<span class="nc" id="L61">			return GroupingType.ELSE;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		} else if (s.equalsIgnoreCase(&quot;end&quot;)) {</span>
+<span class="nc" id="L63">			return GroupingType.END;</span>
 		}
 
 <span class="nc" id="L66">		throw new IllegalArgumentException();</span>
