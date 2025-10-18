@@ -92,45 +92,45 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 
 	// Input &amp; preprocessing:
 
-<span class="fc" id="L95">	@CliFlagDoc(value = &quot;Read source from stdin, write result to stdout&quot;, level = 0, newGroup = &quot;Input &amp; preprocessing&quot;)</span>
-<span class="fc" id="L96">	PIPE(&quot;--pipe&quot;, aliases(&quot;-p&quot;, DEPRECATED(&quot;-pipe&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L95">	@CliFlagDoc(value = &quot;Exclude input files matching the given pattern&quot;, usage = &quot;--exclude &lt;pattern&gt;&quot;, level = 1, newGroup = &quot;Input &amp; preprocessing&quot;)</span>
+<span class="fc" id="L96">	EXCLUDE(&quot;--exclude&quot;, aliases(&quot;-x&quot;, DEPRECATED(&quot;-exclude&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
-<span class="fc" id="L98">	PIPEMAP(&quot;-pipemap&quot;, Arity.UNARY_BOOLEAN), //</span>
-<span class="fc" id="L99">	PIPEDELIMITOR(&quot;-pipedelimitor&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
-<span class="fc" id="L100">	PIPENOSTDERR(&quot;-pipenostderr&quot;, Arity.UNARY_BOOLEAN), //</span>
+<span class="fc" id="L98">	@CliFlagDoc(value = &quot;Read source from stdin, write result to stdout&quot;, level = 0)</span>
+<span class="fc" id="L99">	PIPE(&quot;--pipe&quot;, aliases(&quot;-p&quot;, DEPRECATED(&quot;-pipe&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L102">	@CliFlagDoc(&quot;Generate the Nth image with pipe option&quot;)</span>
+<span class="fc" id="L101">	PIPEMAP(&quot;-pipemap&quot;, Arity.UNARY_BOOLEAN), //</span>
+<span class="fc" id="L102">	PIPEDELIMITOR(&quot;-pipedelimitor&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
+<span class="fc" id="L103">	PIPENOSTDERR(&quot;-pipenostderr&quot;, Arity.UNARY_BOOLEAN), //</span>
+
+<span class="fc" id="L105">	@CliFlagDoc(&quot;Generate the Nth image with pipe option&quot;)</span>
 	@CliDefaultValue(&quot;0&quot;)
-<span class="fc" id="L104">	PIPE_IMAGE_INDEX(&quot;--pipe-image-index&quot;, aliases(DEPRECATED(&quot;-pipeimageindex&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L107">	PIPE_IMAGE_INDEX(&quot;--pipe-image-index&quot;, aliases(DEPRECATED(&quot;-pipeimageindex&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
-<span class="fc" id="L106">	@CliFlagDoc(value = &quot;Define a preprocessing variable (equivalent to '!define &lt;var&gt; &lt;value&gt;')&quot;, usage = &quot;-D&lt;var&gt;=&lt;value&gt;,\n--define &lt;VAR&gt;=&lt;value&gt;&quot;, level = 0)</span>
+<span class="fc" id="L109">	@CliFlagDoc(value = &quot;Define a preprocessing variable (equivalent to '!define &lt;var&gt; &lt;value&gt;')&quot;, usage = &quot;-D&lt;var&gt;=&lt;value&gt;,\n--define &lt;VAR&gt;=&lt;value&gt;&quot;, level = 0)</span>
 	DEFINE(&quot;-D&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
-<span class="fc" id="L108">	DEFINE_LONG(&quot;--define&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
+<span class="fc" id="L111">	DEFINE_LONG(&quot;--define&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L110">	@CliFlagDoc(value = &quot;Include external file (as with '!include &lt;file&gt;')&quot;, usage = &quot;-I&lt;file&gt;,\n--include &lt;file&gt;&quot;, level = 1)</span>
+<span class="fc" id="L113">	@CliFlagDoc(value = &quot;Include external file (as with '!include &lt;file&gt;')&quot;, usage = &quot;-I&lt;file&gt;,\n--include &lt;file&gt;&quot;, level = 1)</span>
 	INCLUDE(&quot;-I&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
-<span class="fc" id="L112">	INCLUDE_LONG(&quot;--include&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
+<span class="fc" id="L115">	INCLUDE_LONG(&quot;--include&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L114">	@CliFlagDoc(value = &quot;Set pragma (equivalent to '!pragma &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-P&lt;key&gt;=&lt;value&gt;,\n--pragma &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
+<span class="fc" id="L117">	@CliFlagDoc(value = &quot;Set pragma (equivalent to '!pragma &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-P&lt;key&gt;=&lt;value&gt;,\n--pragma &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
 	PRAGMA(&quot;-P&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
-<span class="fc" id="L116">	PRAGMA_LONG(&quot;--pragma&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
+<span class="fc" id="L119">	PRAGMA_LONG(&quot;--pragma&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L118">	@CliFlagDoc(value = &quot;Set skin parameter (equivalent to 'skinparam &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-S&lt;key&gt;=&lt;value&gt;,\n--skinparam &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
+<span class="fc" id="L121">	@CliFlagDoc(value = &quot;Set skin parameter (equivalent to 'skinparam &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-S&lt;key&gt;=&lt;value&gt;,\n--skinparam &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
 	SKINPARAM(&quot;-S&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
-<span class="fc" id="L120">	SKINPARAM_LONG(&quot;--skinparam&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
+<span class="fc" id="L123">	SKINPARAM_LONG(&quot;--skinparam&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L122">	@CliFlagDoc(value = &quot;Apply a theme&quot;, usage = &quot;--theme &lt;name&gt;&quot;, level = 1)</span>
-<span class="fc" id="L123">	THEME(&quot;--theme&quot;, aliases(DEPRECATED(&quot;-theme&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L125">	@CliFlagDoc(value = &quot;Apply a theme&quot;, usage = &quot;--theme &lt;name&gt;&quot;, level = 1)</span>
+<span class="fc" id="L126">	THEME(&quot;--theme&quot;, aliases(DEPRECATED(&quot;-theme&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
-<span class="fc" id="L125">	@CliFlagDoc(value = &quot;Specify configuration file&quot;, usage = &quot;--config &lt;file&gt;&quot;, level = 1)</span>
-<span class="fc" id="L126">	CONFIG(&quot;--config&quot;, aliases(DEPRECATED(&quot;-config&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L128">	@CliFlagDoc(value = &quot;Specify configuration file&quot;, usage = &quot;--config &lt;file&gt;&quot;, level = 1)</span>
+<span class="fc" id="L129">	CONFIG(&quot;--config&quot;, aliases(DEPRECATED(&quot;-config&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
-<span class="fc" id="L128">	@CliFlagDoc(value = &quot;Use a specific input charset&quot;, usage = &quot;--charset &lt;name&gt;&quot;, level = 1)</span>
+<span class="fc" id="L131">	@CliFlagDoc(value = &quot;Use a specific input charset&quot;, usage = &quot;--charset &lt;name&gt;&quot;, level = 1)</span>
 	@CliDefaultValue(&quot;UTF-8&quot;)
-<span class="fc" id="L130">	CHARSET(&quot;--charset&quot;, aliases(DEPRECATED(&quot;-charset&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
-
-<span class="fc" id="L132">	@CliFlagDoc(value = &quot;Exclude input files matching the given pattern&quot;, usage = &quot;--exclude &lt;pattern&gt;&quot;, level = 1)</span>
-<span class="fc" id="L133">	EXCLUDE(&quot;--exclude&quot;, aliases(&quot;-x&quot;, DEPRECATED(&quot;-exclude&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L133">	CHARSET(&quot;--charset&quot;, aliases(DEPRECATED(&quot;-charset&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
 	// Execution control:
 

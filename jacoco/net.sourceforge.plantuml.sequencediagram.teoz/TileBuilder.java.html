@@ -181,8 +181,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L181" title="1 of 2 branches missed.">		} else if (ev instanceof LifeEvent) {</span>
 <span class="fc" id="L182">			final LifeEvent lifeEvent = (LifeEvent) ev;</span>
 <span class="fc" id="L183">			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());</span>
-<span class="fc" id="L184">			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));</span>
-<span class="pc bnc" id="L185" title="All 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
+<span class="nc" id="L184">			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
 <span class="nc" id="L186">			final Newpage newpage = (Newpage) ev;</span>
 <span class="nc" id="L187">			tiles.add(new NewpageTile(newpage, tileArguments, currentY));</span>
 <span class="nc" id="L188">		} else {</span>
