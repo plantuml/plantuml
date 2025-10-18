@@ -92,7 +92,10 @@ public enum CliFlag {
 
 	// Input & preprocessing:
 
-	@CliFlagDoc(value = "Read source from stdin, write result to stdout", level = 0, newGroup = "Input & preprocessing")
+	@CliFlagDoc(value = "Exclude input files matching the given pattern", usage = "--exclude <pattern>", level = 1, newGroup = "Input & preprocessing")
+	EXCLUDE("--exclude", aliases("-x", DEPRECATED("-exclude")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
+	@CliFlagDoc(value = "Read source from stdin, write result to stdout", level = 0)
 	PIPE("--pipe", aliases("-p", DEPRECATED("-pipe")), Arity.UNARY_BOOLEAN),
 
 	PIPEMAP("-pipemap", Arity.UNARY_BOOLEAN), //
@@ -188,9 +191,6 @@ public enum CliFlag {
 	@CliFlagDoc(value = "Allow overwriting of read-only output files", level = 1)
 	OVERWRITE("--overwrite", aliases("--force-overwrite", DEPRECATED("-overwrite")), Arity.UNARY_BOOLEAN,
 			() -> GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),
-
-	@CliFlagDoc(value = "Exclude input files matching the given pattern", usage = "--exclude <pattern>", level = 1)
-	EXCLUDE("--exclude", aliases("-x", DEPRECATED("-exclude")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
 	// Other
 
