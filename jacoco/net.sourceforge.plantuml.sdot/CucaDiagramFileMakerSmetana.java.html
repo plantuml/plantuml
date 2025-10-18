@@ -486,8 +486,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 <span class="fc" id="L487">		final ST_GVC_s gvc = gvContext(zz);</span>
 <span class="fc" id="L488">		SmetanaDebug.reset();</span>
-<span class="pc bpc" id="L489" title="1 of 2 branches missed.">		if (rankdir == Rankdir.LEFT_TO_RIGHT)</span>
-<span class="nc" id="L490">			agsafeset(zz, g, new CString(&quot;rankdir&quot;), new CString(&quot;LR&quot;), new CString(&quot;LR&quot;));</span>
+<span class="fc bfc" id="L489" title="All 2 branches covered.">		if (rankdir == Rankdir.LEFT_TO_RIGHT)</span>
+<span class="fc" id="L490">			agsafeset(zz, g, new CString(&quot;rankdir&quot;), new CString(&quot;LR&quot;), new CString(&quot;LR&quot;));</span>
 <span class="fc" id="L491">		gvLayoutJobs(zz, gvc, g);</span>
 <span class="fc" id="L492">		SmetanaDebug.printMe();</span>
 
@@ -615,7 +615,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					CreoleMode.SIMPLE_LINE, null, null);
 
 <span class="fc" id="L617">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
-<span class="pc bpc" id="L618" title="3 of 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
+<span class="pc bpc" id="L618" title="1 of 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
 				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 			}
 

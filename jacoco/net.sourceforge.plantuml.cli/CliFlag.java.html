@@ -129,68 +129,68 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 	@CliDefaultValue(&quot;UTF-8&quot;)
 <span class="fc" id="L130">	CHARSET(&quot;--charset&quot;, aliases(DEPRECATED(&quot;-charset&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
+<span class="fc" id="L132">	@CliFlagDoc(value = &quot;Exclude input files matching the given pattern&quot;, usage = &quot;--exclude &lt;pattern&gt;&quot;, level = 1)</span>
+<span class="fc" id="L133">	EXCLUDE(&quot;--exclude&quot;, aliases(&quot;-x&quot;, DEPRECATED(&quot;-exclude&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+
 	// Execution control:
 
-<span class="fc" id="L134">	@CliFlagDoc(value = &quot;Check diagram syntax without generating images&quot;, level = 0, newGroup = &quot;Execution control&quot;)</span>
-<span class="fc" id="L135">	CHECK_ONLY(&quot;--check-syntax&quot;, aliases(&quot;--syntax-check&quot;, DEPRECATED(&quot;-checkonly&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L137">	@CliFlagDoc(value = &quot;Check diagram syntax without generating images&quot;, level = 0, newGroup = &quot;Execution control&quot;)</span>
+<span class="fc" id="L138">	CHECK_ONLY(&quot;--check-syntax&quot;, aliases(&quot;--syntax-check&quot;, DEPRECATED(&quot;-checkonly&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L137">	@CliFlagDoc(value = &quot;Stop at the first syntax error&quot;, level = 0)</span>
-<span class="fc" id="L138">	FAIL_FAST(&quot;--stop-on-error&quot;, aliases(DEPRECATED(&quot;-failfast&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L140">	@CliFlagDoc(value = &quot;Stop at the first syntax error&quot;, level = 0)</span>
+<span class="fc" id="L141">	FAIL_FAST(&quot;--stop-on-error&quot;, aliases(DEPRECATED(&quot;-failfast&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L140">	@CliFlagDoc(value = &quot;Pre-check syntax of all inputs and stop faster on error&quot;, level = 0)</span>
-<span class="fc" id="L141">	FAIL_FAST2(&quot;--check-before-run&quot;, aliases(DEPRECATED(&quot;-failfast2&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L143">	@CliFlagDoc(value = &quot;Pre-check syntax of all inputs and stop faster on error&quot;, level = 0)</span>
+<span class="fc" id="L144">	FAIL_FAST2(&quot;--check-before-run&quot;, aliases(DEPRECATED(&quot;-failfast2&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L143">	@CliFlagDoc(value = &quot;Do not generate error images for diagrams with syntax errors&quot;, level = 0)</span>
-<span class="fc" id="L144">	NO_ERROR_IMAGE(&quot;--no-error-image&quot;, aliases(DEPRECATED(&quot;-noerror&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L146">	@CliFlagDoc(value = &quot;Do not generate error images for diagrams with syntax errors&quot;, level = 0)</span>
+<span class="fc" id="L147">	NO_ERROR_IMAGE(&quot;--no-error-image&quot;, aliases(DEPRECATED(&quot;-noerror&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L146">	@CliFlagDoc(value = &quot;Set Graphviz processing timeout (in seconds)&quot;, usage = &quot;--graphviz-timeout &lt;seconds&gt;&quot;, level = 1)</span>
-<span class="fc" id="L147">	TIMEOUT(&quot;--graphviz-timeout&quot;, aliases(DEPRECATED(&quot;-timeout&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L149">	@CliFlagDoc(value = &quot;Set Graphviz processing timeout (in seconds)&quot;, usage = &quot;--graphviz-timeout &lt;seconds&gt;&quot;, level = 1)</span>
+<span class="fc" id="L150">	TIMEOUT(&quot;--graphviz-timeout&quot;, aliases(DEPRECATED(&quot;-timeout&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
-<span class="fc" id="L149">	@CliFlagDoc(value = &quot;Use &lt;n&gt; threads for processing  (auto = available processors)&quot;, usage = &quot;--threads &lt;n|auto&gt;&quot;, level = 1)</span>
-<span class="fc" id="L150">	NB_THREAD(&quot;--threads&quot;, aliases(DEPRECATED(&quot;-nbthread&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L152">	@CliFlagDoc(value = &quot;Use &lt;n&gt; threads for processing  (auto = available processors)&quot;, usage = &quot;--threads &lt;n|auto&gt;&quot;, level = 1)</span>
+<span class="fc" id="L153">	NB_THREAD(&quot;--threads&quot;, aliases(DEPRECATED(&quot;-nbthread&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
 	// Metadata &amp; assets:
-<span class="fc" id="L153">	@CliFlagDoc(value = &quot;Extract embedded PlantUML source from PNG or SVG metadata&quot;, level = 0, newGroup = &quot;Metadata &amp; assets&quot;)</span>
-<span class="fc" id="L154">	RETRIEVE_METADATA(&quot;--extract-source&quot;, aliases(DEPRECATED(&quot;-metadata&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L156">	@CliFlagDoc(value = &quot;Extract embedded PlantUML source from PNG or SVG metadata&quot;, level = 0, newGroup = &quot;Metadata &amp; assets&quot;)</span>
+<span class="fc" id="L157">	RETRIEVE_METADATA(&quot;--extract-source&quot;, aliases(DEPRECATED(&quot;-metadata&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L156">	@CliFlagDoc(value = &quot;Do not include metadata in generated files&quot;, level = 1)</span>
-<span class="fc" id="L157">	NO_METADATA(&quot;--disable-metadata&quot;, aliases(DEPRECATED(&quot;-nometadata&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L159">	@CliFlagDoc(value = &quot;Do not include metadata in generated files&quot;, level = 1)</span>
+<span class="fc" id="L160">	NO_METADATA(&quot;--disable-metadata&quot;, aliases(DEPRECATED(&quot;-nometadata&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L159">	@CliFlagDoc(value = &quot;Skip PNG/SVG files that are already up-to-date (using metadata)&quot;, level = 0)</span>
-<span class="fc" id="L160">	CHECK_METADATA(&quot;--skip-fresh&quot;, aliases(DEPRECATED(&quot;-checkmetadata&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L162">	@CliFlagDoc(value = &quot;Skip PNG/SVG files that are already up-to-date (using metadata)&quot;, level = 0)</span>
+<span class="fc" id="L163">	CHECK_METADATA(&quot;--skip-fresh&quot;, aliases(DEPRECATED(&quot;-checkmetadata&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L162">	@CliFlagDoc(value = &quot;Encode a sprite definition from an image file&quot;, usage = &quot;--sprite &lt;4|8|16[z]&gt; &lt;file&gt;&quot;, level = 0)</span>
-<span class="fc" id="L163">	ENCODE_SPRITE(&quot;--encode-sprite&quot;, aliases(DEPRECATED(&quot;-sprite&quot;), DEPRECATED(&quot;-encodesprite&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L165">	@CliFlagDoc(value = &quot;Encode a sprite definition from an image file&quot;, usage = &quot;--sprite &lt;4|8|16[z]&gt; &lt;file&gt;&quot;, level = 0)</span>
+<span class="fc" id="L166">	ENCODE_SPRITE(&quot;--encode-sprite&quot;, aliases(DEPRECATED(&quot;-sprite&quot;), DEPRECATED(&quot;-encodesprite&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L165">	@CliFlagDoc(value = &quot;Generate an encoded PlantUML URL from a source file&quot;, level = 1)</span>
-<span class="fc" id="L166">	COMPUTE_URL(&quot;--encode-url&quot;, aliases(&quot;--compute-url&quot;, DEPRECATED(&quot;-computeurl&quot;), DEPRECATED(&quot;-encodeurl&quot;)),</span>
+<span class="fc" id="L168">	@CliFlagDoc(value = &quot;Generate an encoded PlantUML URL from a source file&quot;, level = 1)</span>
+<span class="fc" id="L169">	COMPUTE_URL(&quot;--encode-url&quot;, aliases(&quot;--compute-url&quot;, DEPRECATED(&quot;-computeurl&quot;), DEPRECATED(&quot;-encodeurl&quot;)),</span>
 			Arity.UNARY_BOOLEAN),
 
-<span class="fc" id="L169">	@CliFlagDoc(value = &quot;Decode a PlantUML encoded URL back to its source&quot;, usage = &quot;--decode-url &lt;string&gt;&quot;, level = 1)</span>
-<span class="fc" id="L170">	DECODE_URL(&quot;--decode-url&quot;, aliases(DEPRECATED(&quot;-decodeurl&quot;)), Arity.UNARY_BOOLEAN),</span>
+<span class="fc" id="L172">	@CliFlagDoc(value = &quot;Decode a PlantUML encoded URL back to its source&quot;, usage = &quot;--decode-url &lt;string&gt;&quot;, level = 1)</span>
+<span class="fc" id="L173">	DECODE_URL(&quot;--decode-url&quot;, aliases(DEPRECATED(&quot;-decodeurl&quot;)), Arity.UNARY_BOOLEAN),</span>
 
-<span class="fc" id="L172">	@CliFlagDoc(value = &quot;Print the list of PlantUML language keywords&quot;, level = 1)</span>
-<span class="fc" id="L173">	LANGUAGE(&quot;--list-keywords&quot;, aliases(DEPRECATED(&quot;-language&quot;)), Arity.UNARY_IMMEDIATE_ACTION,</span>
+<span class="fc" id="L175">	@CliFlagDoc(value = &quot;Print the list of PlantUML language keywords&quot;, level = 1)</span>
+<span class="fc" id="L176">	LANGUAGE(&quot;--list-keywords&quot;, aliases(DEPRECATED(&quot;-language&quot;)), Arity.UNARY_IMMEDIATE_ACTION,</span>
 			OptionPrint::printListKeywords),
 
-<span class="fc" id="L176">	@CliFlagDoc(value = &quot;Specify the path to the Graphviz 'dot' executable&quot;, usage = &quot;--dot-path &lt;path-to-dot-exe&gt;&quot;, level = 1)</span>
-<span class="fc" id="L177">	GRAPHVIZ_DOT(&quot;--dot-path&quot;, aliases(DEPRECATED(&quot;-graphvizdot&quot;), DEPRECATED(&quot;-graphviz_dot&quot;)),</span>
+<span class="fc" id="L179">	@CliFlagDoc(value = &quot;Specify the path to the Graphviz 'dot' executable&quot;, usage = &quot;--dot-path &lt;path-to-dot-exe&gt;&quot;, level = 1)</span>
+<span class="fc" id="L180">	GRAPHVIZ_DOT(&quot;--dot-path&quot;, aliases(DEPRECATED(&quot;-graphvizdot&quot;), DEPRECATED(&quot;-graphviz_dot&quot;)),</span>
 			Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-<span class="fc" id="L180">	@CliFlagDoc(value = &quot;Start a local FTP server for diagram rendering (rarely used)&quot;, level = 1)</span>
-<span class="fc" id="L181">	FTP(&quot;--ftp-server&quot;, aliases(DEPRECATED(&quot;-ftp&quot;)), Arity.UNARY_OPTIONAL_COLON),</span>
+<span class="fc" id="L183">	@CliFlagDoc(value = &quot;Start a local FTP server for diagram rendering (rarely used)&quot;, level = 1)</span>
+<span class="fc" id="L184">	FTP(&quot;--ftp-server&quot;, aliases(DEPRECATED(&quot;-ftp&quot;)), Arity.UNARY_OPTIONAL_COLON),</span>
 
 	// Output control
-<span class="fc" id="L184">	@CliFlagDoc(value = &quot;Generate output files in the specified directory&quot;, usage = &quot;--output-dir &lt;dir&gt;&quot;, level = 1, newGroup = &quot;Output control&quot;)</span>
-<span class="fc" id="L185">	OUTPUT_DIR(&quot;--output-dir&quot;, aliases(&quot;-o&quot;, DEPRECATED(&quot;output_dir&quot;), DEPRECATED(&quot;-output&quot;), DEPRECATED(&quot;-odir&quot;)),</span>
+<span class="fc" id="L187">	@CliFlagDoc(value = &quot;Generate output files in the specified directory&quot;, usage = &quot;--output-dir &lt;dir&gt;&quot;, level = 1, newGroup = &quot;Output control&quot;)</span>
+<span class="fc" id="L188">	OUTPUT_DIR(&quot;--output-dir&quot;, aliases(&quot;-o&quot;, DEPRECATED(&quot;output_dir&quot;), DEPRECATED(&quot;-output&quot;), DEPRECATED(&quot;-odir&quot;)),</span>
 			Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-<span class="fc" id="L188">	@CliFlagDoc(value = &quot;Allow overwriting of read-only output files&quot;, level = 1)</span>
-<span class="fc" id="L189">	OVERWRITE(&quot;--overwrite&quot;, aliases(&quot;--force-overwrite&quot;, DEPRECATED(&quot;-overwrite&quot;)), Arity.UNARY_BOOLEAN,</span>
-<span class="fc" id="L190">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),</span>
-
-<span class="fc" id="L192">	@CliFlagDoc(value = &quot;Exclude input files matching the given pattern&quot;, usage = &quot;--exclude &lt;pattern&gt;&quot;, level = 1)</span>
-<span class="fc" id="L193">	EXCLUDE(&quot;--exclude&quot;, aliases(&quot;-x&quot;, DEPRECATED(&quot;-exclude&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
+<span class="fc" id="L191">	@CliFlagDoc(value = &quot;Allow overwriting of read-only output files&quot;, level = 1)</span>
+<span class="fc" id="L192">	OVERWRITE(&quot;--overwrite&quot;, aliases(&quot;--force-overwrite&quot;, DEPRECATED(&quot;-overwrite&quot;)), Arity.UNARY_BOOLEAN,</span>
+<span class="fc" id="L193">			() -&gt; GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, true)),</span>
 
 	// Other
 

@@ -103,8 +103,8 @@ try {
 <span class="pc bpc" id="L103" title="1 of 6 branches missed.">	if(((type&amp;(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */</span>
 	   (((type&amp;(DT_FIRST|DT_LAST))!=0) &amp;&amp; (dt.meth.type&amp;(DT_OBAG|DT_OSET)) == 0 ) )
 <span class="fc bfc" id="L105" title="All 2 branches covered.">	{	for(d = dt; d!=null; d = d.view)</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )</span>
-<span class="nc" id="L107">				break;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )</span>
+<span class="fc" id="L107">				break;</span>
 <span class="fc" id="L108">		dt.walk = d;</span>
 <span class="fc" id="L109">		return o;</span>
 	}

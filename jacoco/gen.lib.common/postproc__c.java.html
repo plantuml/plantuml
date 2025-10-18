@@ -207,9 +207,9 @@ try {
     int c;
 <span class="fc" id="L208">    final ST_boxf bb = new ST_boxf(), new_bb = new ST_boxf();</span>
 <span class="fc" id="L209">    bb.___(GD_bb(g));</span>
-<span class="pc bpc" id="L210" title="2 of 4 branches missed.">    if (rankdir == RANKDIR_LR || rankdir == RANKDIR_BT) {</span>
-<span class="nc" id="L211">    	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.UR.y)));</span>
-<span class="nc" id="L212">    	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.LL.y)));</span>
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">    if (rankdir == RANKDIR_LR || rankdir == RANKDIR_BT) {</span>
+<span class="fc" id="L211">    	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.UR.y)));</span>
+<span class="fc" id="L212">    	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.LL.y)));</span>
     } else {
 <span class="fc" id="L214">	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.LL.y)));</span>
 <span class="fc" id="L215">	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.UR.y)));</span>
@@ -241,8 +241,8 @@ try {
 <span class="pc bpc" id="L241" title="3 of 4 branches missed.">    if (!shift &amp;&amp; zz.Rankdir == 0)</span>
 <span class="nc" id="L242">	return;</span>
 <span class="fc bfc" id="L243" title="All 2 branches covered.">    for (v = agfstnode(zz, g); v!=null; v = agnxtnode(zz, g, v)) {</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">	if (zz.Rankdir!=0)</span>
-<span class="nc" id="L245">	    gv_nodesize(v, false);</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">	if (zz.Rankdir!=0)</span>
+<span class="fc" id="L245">	    gv_nodesize(v, false);</span>
 <span class="fc" id="L246">	ND_coord(v).___(map_point(zz, ND_coord(v)));</span>
 <span class="pc bpc" id="L247" title="1 of 2 branches missed.">	if (ND_xlabel(v)!=null)</span>
 <span class="nc" id="L248">UNSUPPORTED(&quot;3fy0l7w2v24hzrvlpstpknwl7&quot;); // 	    ND_xlabel(v)-&gt;pos = map_point(ND_xlabel(v)-&gt;pos);</span>
@@ -758,8 +758,8 @@ try {
 <span class="fc" id="L758">    zz.Rankdir = GD_rankdir(g);</span>
 <span class="fc" id="L759">    zz.Flip = GD_flip(g);</span>
     /* Handle cluster labels */
-<span class="pc bpc" id="L761" title="1 of 2 branches missed.">    if (zz.Flip)</span>
-<span class="nc" id="L762">   	place_flip_graph_label(g);</span>
+<span class="fc bfc" id="L761" title="All 2 branches covered.">    if (zz.Flip)</span>
+<span class="fc" id="L762">   	place_flip_graph_label(g);</span>
     else
 <span class="fc" id="L764">	place_graph_label(g);</span>
     /* Everything has been placed except the root graph label, if any.
@@ -803,13 +803,13 @@ try {
 <span class="nc" id="L803">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
     }
 <span class="pc bpc" id="L805" title="1 of 2 branches missed.">    if (allowTranslation!=0) {</span>
-<span class="pc bpc" id="L806" title="4 of 5 branches missed.">	switch (zz.Rankdir) {</span>
+<span class="pc bpc" id="L806" title="3 of 5 branches missed.">	switch (zz.Rankdir) {</span>
 	case RANKDIR_TB:
 <span class="fc" id="L808">	    zz.Offset.___(GD_bb(g).LL);</span>
 <span class="fc" id="L809">	    break;</span>
 	case RANKDIR_LR:
-<span class="nc" id="L811">	    zz.Offset.___(pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x));</span>
-<span class="nc" id="L812">	    break;</span>
+<span class="fc" id="L811">	    zz.Offset.___(pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x));</span>
+<span class="fc" id="L812">	    break;</span>
 	case RANKDIR_BT:
 <span class="nc" id="L814">UNSUPPORTED(&quot;96ajwnh79ja9g57xmut6dmh9d&quot;); // 	    Offset = pointfof(GD_bb(g).LL.x, -GD_bb(g).UR.y);</span>
 <span class="nc" id="L815">	    break;</span>
@@ -862,12 +862,12 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;place_flip_graph_label&quot;, key=&quot;ehe7n8wkl4thn86tisjzdotpq&quot;, definition=&quot;static void place_flip_graph_label(graph_t * g)&quot;)
 public static void place_flip_graph_label(ST_Agraph_s g) {
-<span class="nc" id="L865">	ENTERING(&quot;3zsjtcmcfxhkmaagi0on4dy20&quot;,&quot;place_flip_graph_label&quot;);</span>
+<span class="fc" id="L865">	ENTERING(&quot;3zsjtcmcfxhkmaagi0on4dy20&quot;,&quot;place_flip_graph_label&quot;);</span>
 	try {
 	    int c;
-<span class="nc" id="L868">	    final ST_pointf p = new ST_pointf(), d = new ST_pointf();</span>
+<span class="fc" id="L868">	    final ST_pointf p = new ST_pointf(), d = new ST_pointf();</span>
 
-<span class="nc bnc" id="L870" title="All 6 branches missed.">	    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set==0) {</span>
+<span class="pc bpc" id="L870" title="5 of 6 branches missed.">	    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set==0) {</span>
 <span class="nc bnc" id="L871" title="All 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_TOP)!=0) {</span>
 <span class="nc" id="L872">	    	    d.___(GD_border(g)[RIGHT_IX]);</span>
 <span class="nc" id="L873">	    	    p.x = GD_bb(g).UR.x - d.x / 2;</span>
@@ -887,12 +887,12 @@ public static void place_flip_graph_label(ST_Agraph_s g) {
 <span class="nc" id="L887">	    	GD_label(g).set = 1;</span>
 	        }
 	    
-<span class="nc bnc" id="L890" title="All 2 branches missed.">	    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="pc bpc" id="L890" title="1 of 2 branches missed.">	    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
 <span class="nc" id="L891">	    	place_flip_graph_label(GD_clust(g).get_(c));</span>
 	} finally {
-<span class="nc" id="L893">		LEAVING(&quot;72zw1alhd5vd0g6mhum507rvx&quot;, &quot;place_graph_label&quot;);</span>
+<span class="fc" id="L893">		LEAVING(&quot;72zw1alhd5vd0g6mhum507rvx&quot;, &quot;place_graph_label&quot;);</span>
 	}
-<span class="nc" id="L895">}</span>
+<span class="fc" id="L895">}</span>
 
 
 

@@ -166,11 +166,11 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 
 	private Direction getDirection(RegexResult arg) {
 <span class="fc" id="L168">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (dir == null) {</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (dir == null) {</span>
 <span class="fc" id="L170">			return StringUtils.getQueueDirection(getQueue(arg));</span>
 			// return Direction.DOWN;
 		}
-<span class="nc" id="L173">		return StringUtils.getQueueDirection(dir);</span>
+<span class="fc" id="L173">		return StringUtils.getQueueDirection(dir);</span>
 	}
 
 	private String getQueue(RegexResult arg) {
@@ -206,7 +206,7 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 <span class="fc" id="L206">		final LinkType linkType = getLinkType(arg);</span>
 <span class="fc" id="L207">		final Direction dir = getDirection(arg);</span>
 		final String queue;
-<span class="pc bpc" id="L209" title="1 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="fc bfc" id="L209" title="All 4 branches covered.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
 <span class="fc" id="L210">			queue = &quot;-&quot;;</span>
 		else
 <span class="fc" id="L212">			queue = getQueue(arg);</span>
@@ -227,8 +227,8 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 <span class="fc" id="L227">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,</span>
 <span class="fc" id="L228">				linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())</span>
 <span class="fc" id="L229">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
-<span class="pc bpc" id="L230" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
-<span class="nc" id="L231">			link = link.getInv();</span>
+<span class="fc bfc" id="L230" title="All 4 branches covered.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
+<span class="fc" id="L231">			link = link.getInv();</span>
 
 <span class="fc" id="L233">		link.setLinkArrow(labels.getLinkArrow());</span>
 <span class="fc" id="L234">		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
@@ -258,7 +258,7 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 					USymbols.INTERFACE);
 		}
 
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		final char codeChar = ident.length() &gt; 2 ? ident.charAt(0) : 0;</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		final char codeChar = ident.length() &gt; 2 ? ident.charAt(0) : 0;</span>
 <span class="fc" id="L262">		final boolean endWithSlash = ident.endsWith(&quot;/&quot;);</span>
 <span class="fc" id="L263">		ident = diagram.cleanId(ident);</span>
 <span class="fc" id="L264">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, ident);</span>

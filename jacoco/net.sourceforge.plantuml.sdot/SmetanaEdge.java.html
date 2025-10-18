@@ -217,27 +217,27 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
 <span class="fc" id="L218">		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()</span>
 <span class="fc" id="L219">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (extremityFactory2 == null)</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (extremityFactory2 == null)</span>
 <span class="fc" id="L221">			return;</span>
 
-<span class="nc" id="L223">		final XPoint2D p0 = dotPath.getStartPoint();</span>
-<span class="nc" id="L224">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
+<span class="fc" id="L223">		final XPoint2D p0 = dotPath.getStartPoint();</span>
+<span class="fc" id="L224">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
 
 		try {
-<span class="nc" id="L227">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (extremity2 != null) {</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
-<span class="nc" id="L230">					final double decorationLength = extremity2.getDecorationLength();</span>
-<span class="nc" id="L231">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
+<span class="fc" id="L227">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (extremity2 != null) {</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
+<span class="fc" id="L230">					final double decorationLength = extremity2.getDecorationLength();</span>
+<span class="fc" id="L231">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
 				}
-<span class="nc" id="L233">				extremity2.drawU(ug);</span>
+<span class="fc" id="L233">				extremity2.drawU(ug);</span>
 			}
 
 <span class="nc" id="L236">		} catch (UnsupportedOperationException e) {</span>
 <span class="nc" id="L237">			e.printStackTrace();</span>
 <span class="nc" id="L238">			System.err.println(&quot;CANNOT DRAW printExtremityAtStart&quot;);</span>
-<span class="nc" id="L239">		}</span>
-<span class="nc" id="L240">	}</span>
+<span class="fc" id="L239">		}</span>
+<span class="fc" id="L240">	}</span>
 
 	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
 <span class="fc" id="L243">		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()</span>

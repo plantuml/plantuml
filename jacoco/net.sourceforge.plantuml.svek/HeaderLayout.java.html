@@ -107,11 +107,11 @@ import net.sourceforge.plantuml.utils.MathUtils;
 <span class="fc" id="L107">		final double yName = diffHeight / 2 + stereoDim.getHeight();</span>
 <span class="fc" id="L108">		name.drawU(ug.apply(new UTranslate(xName, yName)));</span>
 
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (genericDim.getWidth() &gt; 0) {</span>
-<span class="nc" id="L111">			final double delta = 4;</span>
-<span class="nc" id="L112">			final double xGeneric = width - genericDim.getWidth() + delta;</span>
-<span class="nc" id="L113">			final double yGeneric = -delta;</span>
-<span class="nc" id="L114">			generic.drawU(ug.apply(new UTranslate(xGeneric, yGeneric)));</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (genericDim.getWidth() &gt; 0) {</span>
+<span class="fc" id="L111">			final double delta = 4;</span>
+<span class="fc" id="L112">			final double xGeneric = width - genericDim.getWidth() + delta;</span>
+<span class="fc" id="L113">			final double yGeneric = -delta;</span>
+<span class="fc" id="L114">			generic.drawU(ug.apply(new UTranslate(xGeneric, yGeneric)));</span>
 		}
 <span class="fc" id="L116">	}</span>
 

@@ -130,7 +130,7 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 	}
 
 	private boolean isMethod(int i, List&lt;CharSequence&gt; rawBody) {
-<span class="pc bpc" id="L133" title="7 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
+<span class="pc bpc" id="L133" title="3 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
 <span class="nc bnc" id="L134" title="All 2 branches missed.">				&amp;&amp; isMethod(rawBody.get(i + 1))) {</span>
 <span class="nc" id="L135">			return true;</span>
 		}
@@ -231,12 +231,12 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 <span class="fc" id="L231">		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf, style);</span>
 
 <span class="fc" id="L233">		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), skinParam, leaf, style);</span>
-<span class="pc bpc" id="L234" title="2 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
+<span class="pc bpc" id="L234" title="1 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
 <span class="nc" id="L235">			return fields.asBlockMemberImpl();</span>
-<span class="pc bpc" id="L236" title="2 of 4 branches missed.">		else if (showMethods &amp;&amp; showFields == false)</span>
-<span class="nc" id="L237">			return methods.asBlockMemberImpl();</span>
-<span class="pc bpc" id="L238" title="3 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
-<span class="nc" id="L239">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc bfc" id="L236" title="All 4 branches covered.">		else if (showMethods &amp;&amp; showFields == false)</span>
+<span class="fc" id="L237">			return methods.asBlockMemberImpl();</span>
+<span class="pc bpc" id="L238" title="1 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
+<span class="fc" id="L239">			return TextBlockUtils.empty(0, 0);</span>
 
 <span class="fc" id="L241">		final TextBlock bb1 = fields.asBlockMemberImpl();</span>
 <span class="fc" id="L242">		final TextBlock bb2 = methods.asBlockMemberImpl();</span>
