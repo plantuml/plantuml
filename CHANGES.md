@@ -1,3 +1,9 @@
+## V1.2025.9 (Oct 18, 2025)
+- [🐛 Improve number format support in timing diagram analog scale](https://github.com/plantuml/plantuml/pull/2382)
+- [⚗️ experimental support for `!pragma sequenceMessageSpan true`](https://github.com/plantuml/plantuml/issues/2386)
+- [⚗️ Introduce new command-line interface (beta)](https://github.com/plantuml/plantuml/issues/2377)
+- [📦️ update standard library (archimate)](https://github.com/plantuml/plantuml/commit/0b839d95d20dd3fce8c6990b85e681883947ac17)
+
 ## V1.2025.8 (Oct 4, 2025)
 - [🍱 [Archimate] Remove duplicate sprites and replace PNG sprites with SVG counterparts by @jeanmarc](https://github.com/plantuml/plantuml/pull/2327)
 - [🔊 Improve error message for WBS diagram root validation (replace error 44) by @The-Lum](https://github.com/plantuml/plantuml/pull/2330)
