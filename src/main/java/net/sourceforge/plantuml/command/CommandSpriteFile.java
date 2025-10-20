@@ -81,11 +81,17 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 		final Sprite sprite;
 		try {
 			if (src.startsWith("jar:")) {
-				final String inner = src.substring(4) + ".png";
-				final InputStream is = SpriteImage.getInternalSprite(inner);
-				if (is == null)
-					return CommandExecutionResult.error("No such internal sprite: " + inner);
-
+				String inner;
+				InputStream is;
+				final String name = src.substring(4);
+				inner =  name + ".svg";
+				is = SpriteSvgNanoParser.getInternalSprite(inner);
+				if (is == null) {
+					inner = name + ".png";
+					is = SpriteImage.getInternalSprite(inner);
+					if (is == null)
+						return CommandExecutionResult.error("No such internal sprite: " + name);
+				}
 				sprite = new SpriteImage(SImageIO.read(is));
 			} else if (src.contains("~")) {
 				final int idx = src.lastIndexOf("~");
