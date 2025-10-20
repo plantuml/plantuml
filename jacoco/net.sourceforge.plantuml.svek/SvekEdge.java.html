@@ -1239,5 +1239,10 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 <span class="nc" id="L1239">		dotPathInit.moveEndPoint(dx, dy);</span>
 <span class="nc" id="L1240">	}</span>
 
+	public void replaceDotPath(net.sourceforge.plantuml.klimt.shape.DotPath newPath) {
+<span class="nc" id="L1243">		this.dotPath = newPath;</span>
+<span class="nc" id="L1244">		this.dotPathInit = newPath.copy();</span>
+<span class="nc" id="L1245">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

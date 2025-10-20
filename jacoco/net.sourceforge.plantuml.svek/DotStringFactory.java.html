@@ -51,9 +51,11 @@ import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.dot.ProcessState;
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.PragmaKey;
@@ -71,185 +73,185 @@ public final class DotStringFactory implements Moveable {
 	private final Cluster root;
 
 	public DotStringFactory(Bibliotekon bibliotekon, Cluster root, UmlDiagramType umlDiagramType,
-<span class="fc" id="L74">			ISkinParam skinParam) {</span>
-<span class="fc" id="L75">		this.bibliotekon = bibliotekon;</span>
-<span class="fc" id="L76">		this.skinParam = skinParam;</span>
-<span class="fc" id="L77">		this.umlDiagramType = umlDiagramType;</span>
-<span class="fc" id="L78">		this.root = root;</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L76">			ISkinParam skinParam) {</span>
+<span class="fc" id="L77">		this.bibliotekon = bibliotekon;</span>
+<span class="fc" id="L78">		this.skinParam = skinParam;</span>
+<span class="fc" id="L79">		this.umlDiagramType = umlDiagramType;</span>
+<span class="fc" id="L80">		this.root = root;</span>
+<span class="fc" id="L81">	}</span>
 
 	private double getHorizontalDzeta(StringBounder stringBounder) {
-<span class="nc" id="L82">		double max = 0;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (SvekEdge l : getBibliotekon().allLines()) {</span>
-<span class="nc" id="L84">			final double c = l.getHorizontalDzeta(stringBounder);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (c &gt; max)</span>
-<span class="nc" id="L86">				max = c;</span>
+<span class="nc" id="L84">		double max = 0;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (SvekEdge l : getBibliotekon().allLines()) {</span>
+<span class="nc" id="L86">			final double c = l.getHorizontalDzeta(stringBounder);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (c &gt; max)</span>
+<span class="nc" id="L88">				max = c;</span>
 
-<span class="nc" id="L88">		}</span>
-<span class="nc" id="L89">		return max / 10;</span>
+<span class="nc" id="L90">		}</span>
+<span class="nc" id="L91">		return max / 10;</span>
 	}
 
 	public Bibliotekon getBibliotekon() {
-<span class="fc" id="L93">		return bibliotekon;</span>
+<span class="fc" id="L95">		return bibliotekon;</span>
 	}
 
 	private double getVerticalDzeta(StringBounder stringBounder) {
-<span class="nc" id="L97">		double max = 0;</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (SvekEdge l : getBibliotekon().allLines()) {</span>
-<span class="nc" id="L99">			final double c = l.getVerticalDzeta(stringBounder);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (c &gt; max)</span>
-<span class="nc" id="L101">				max = c;</span>
+<span class="nc" id="L99">		double max = 0;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (SvekEdge l : getBibliotekon().allLines()) {</span>
+<span class="nc" id="L101">			final double c = l.getVerticalDzeta(stringBounder);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (c &gt; max)</span>
+<span class="nc" id="L103">				max = c;</span>
 
-<span class="nc" id="L103">		}</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR))</span>
-<span class="nc" id="L105">			return max / 100;</span>
-<span class="nc" id="L106">		return max / 10;</span>
+<span class="nc" id="L105">		}</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR))</span>
+<span class="nc" id="L107">			return max / 100;</span>
+<span class="nc" id="L108">		return max / 10;</span>
 	}
 
 	// ::comment when __CORE__
 	private String createDotString(StringBounder stringBounder, DotMode dotMode, String... dotStrings) {
-<span class="nc" id="L111">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L113">		final StringBuilder sb = new StringBuilder();</span>
 
-<span class="nc" id="L113">		double nodesep = getHorizontalDzeta(stringBounder);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (nodesep &lt; getMinNodeSep())</span>
-<span class="nc" id="L115">			nodesep = getMinNodeSep();</span>
+<span class="nc" id="L115">		double nodesep = getHorizontalDzeta(stringBounder);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (nodesep &lt; getMinNodeSep())</span>
+<span class="nc" id="L117">			nodesep = getMinNodeSep();</span>
 
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (skinParam.getNodesep() != 0)</span>
-<span class="nc" id="L118">			nodesep = skinParam.getNodesep();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (skinParam.getNodesep() != 0)</span>
+<span class="nc" id="L120">			nodesep = skinParam.getNodesep();</span>
 
-<span class="nc" id="L120">		final String nodesepInches = SvekUtils.pixelToInches(nodesep);</span>
+<span class="nc" id="L122">		final String nodesepInches = SvekUtils.pixelToInches(nodesep);</span>
 		// Log.println(&quot;nodesep=&quot; + nodesepInches);
-<span class="nc" id="L122">		double ranksep = getVerticalDzeta(stringBounder);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (ranksep &lt; getMinRankSep())</span>
-<span class="nc" id="L124">			ranksep = getMinRankSep();</span>
+<span class="nc" id="L124">		double ranksep = getVerticalDzeta(stringBounder);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (ranksep &lt; getMinRankSep())</span>
+<span class="nc" id="L126">			ranksep = getMinRankSep();</span>
 
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (skinParam.getRanksep() != 0)</span>
-<span class="nc" id="L127">			ranksep = skinParam.getRanksep();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (skinParam.getRanksep() != 0)</span>
+<span class="nc" id="L129">			ranksep = skinParam.getRanksep();</span>
 
-<span class="nc" id="L129">		final String ranksepInches = SvekUtils.pixelToInches(ranksep);</span>
+<span class="nc" id="L131">		final String ranksepInches = SvekUtils.pixelToInches(ranksep);</span>
 		// Log.println(&quot;ranksep=&quot; + ranksepInches);
-<span class="nc" id="L131">		sb.append(&quot;digraph unix {&quot;);</span>
-<span class="nc" id="L132">		SvekUtils.println(sb);</span>
+<span class="nc" id="L133">		sb.append(&quot;digraph unix {&quot;);</span>
+<span class="nc" id="L134">		SvekUtils.println(sb);</span>
 
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (String s : dotStrings) {</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (s.startsWith(&quot;ranksep&quot;))</span>
-<span class="nc" id="L136">				sb.append(&quot;ranksep=&quot; + ranksepInches + &quot;;&quot;);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			else if (s.startsWith(&quot;nodesep&quot;))</span>
-<span class="nc" id="L138">				sb.append(&quot;nodesep=&quot; + nodesepInches + &quot;;&quot;);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (String s : dotStrings) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (s.startsWith(&quot;ranksep&quot;))</span>
+<span class="nc" id="L138">				sb.append(&quot;ranksep=&quot; + ranksepInches + &quot;;&quot;);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			else if (s.startsWith(&quot;nodesep&quot;))</span>
+<span class="nc" id="L140">				sb.append(&quot;nodesep=&quot; + nodesepInches + &quot;;&quot;);</span>
 			else
-<span class="nc" id="L140">				sb.append(s);</span>
+<span class="nc" id="L142">				sb.append(s);</span>
 
-<span class="nc" id="L142">			SvekUtils.println(sb);</span>
+<span class="nc" id="L144">			SvekUtils.println(sb);</span>
 		}
 		// sb.append(&quot;newrank=true;&quot;);
 		// SvekUtils.println(sb);
-<span class="nc" id="L146">		sb.append(&quot;remincross=true;&quot;);</span>
-<span class="nc" id="L147">		SvekUtils.println(sb);</span>
-<span class="nc" id="L148">		sb.append(&quot;searchsize=500;&quot;);</span>
+<span class="nc" id="L148">		sb.append(&quot;remincross=true;&quot;);</span>
 <span class="nc" id="L149">		SvekUtils.println(sb);</span>
+<span class="nc" id="L150">		sb.append(&quot;searchsize=500;&quot;);</span>
+<span class="nc" id="L151">		SvekUtils.println(sb);</span>
 		// if (OptionFlags.USE_COMPOUND) {
 		// sb.append(&quot;compound=true;&quot;);
 		// SvekUtils.println(sb);
 		// }
 
-<span class="nc" id="L155">		final DotSplines dotSplines = skinParam.getDotSplines();</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (dotSplines == DotSplines.POLYLINE) {</span>
-<span class="nc" id="L157">			sb.append(&quot;splines=polyline;&quot;);</span>
-<span class="nc" id="L158">			SvekUtils.println(sb);</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		} else if (dotSplines == DotSplines.ORTHO) {</span>
-<span class="nc" id="L160">			sb.append(&quot;splines=ortho;&quot;);</span>
-<span class="nc" id="L161">			sb.append(&quot;forcelabels=true;&quot;);</span>
-<span class="nc" id="L162">			SvekUtils.println(sb);</span>
+<span class="nc" id="L157">		final DotSplines dotSplines = skinParam.getDotSplines();</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (dotSplines == DotSplines.POLYLINE) {</span>
+<span class="nc" id="L159">			sb.append(&quot;splines=polyline;&quot;);</span>
+<span class="nc" id="L160">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		} else if (dotSplines == DotSplines.ORTHO) {</span>
+<span class="nc" id="L162">			sb.append(&quot;splines=ortho;&quot;);</span>
+<span class="nc" id="L163">			sb.append(&quot;forcelabels=true;&quot;);</span>
+<span class="nc" id="L164">			SvekUtils.println(sb);</span>
 		}
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (skinParam.getRankdir() == Rankdir.LEFT_TO_RIGHT) {</span>
-<span class="nc" id="L166">			sb.append(&quot;rankdir=LR;&quot;);</span>
-<span class="nc" id="L167">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (skinParam.getRankdir() == Rankdir.LEFT_TO_RIGHT) {</span>
+<span class="nc" id="L168">			sb.append(&quot;rankdir=LR;&quot;);</span>
+<span class="nc" id="L169">			SvekUtils.println(sb);</span>
 		}
 
-<span class="nc" id="L170">		manageMinMaxCluster(sb);</span>
+<span class="nc" id="L172">		manageMinMaxCluster(sb);</span>
 
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines0())</span>
-<span class="nc" id="L174">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines1())</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines0())</span>
 <span class="nc" id="L176">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines1())</span>
+<span class="nc" id="L178">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
 
-<span class="nc" id="L178">			root.printCluster3_forKermor(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),</span>
+<span class="nc" id="L180">			root.printCluster3_forKermor(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),</span>
 					umlDiagramType);
 
 		} else {
-<span class="nc" id="L182">			root.printCluster1(sb, getBibliotekon().allLines(), stringBounder);</span>
+<span class="nc" id="L184">			root.printCluster1(sb, getBibliotekon().allLines(), stringBounder);</span>
 
-<span class="nc bnc" id="L184" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines0())</span>
-<span class="nc" id="L185">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines0())</span>
+<span class="nc" id="L187">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
 
-<span class="nc" id="L187">			root.printCluster2(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),</span>
+<span class="nc" id="L189">			root.printCluster2(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),</span>
 					umlDiagramType);
 
-<span class="nc bnc" id="L190" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines1())</span>
-<span class="nc" id="L191">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			for (SvekEdge line : getBibliotekon().lines1())</span>
+<span class="nc" id="L193">				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);</span>
 
 		}
 
-<span class="nc" id="L195">		SvekUtils.println(sb);</span>
-<span class="nc" id="L196">		sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L197">		SvekUtils.println(sb);</span>
+<span class="nc" id="L198">		sb.append(&quot;}&quot;);</span>
 
-<span class="nc" id="L198">		return sb.toString();</span>
+<span class="nc" id="L200">		return sb.toString();</span>
 	}
 	// ::done
 
 	private void manageMinMaxCluster(final StringBuilder sb) {
-<span class="nc" id="L203">		final List&lt;String&gt; minPointCluster = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L204">		final List&lt;String&gt; maxPointCluster = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (Cluster cluster : getBibliotekon().allCluster()) {</span>
-<span class="nc" id="L206">			final String minPoint = cluster.getMinPoint(umlDiagramType);</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">			if (minPoint != null)</span>
-<span class="nc" id="L208">				minPointCluster.add(minPoint);</span>
+<span class="nc" id="L205">		final List&lt;String&gt; minPointCluster = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L206">		final List&lt;String&gt; maxPointCluster = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		for (Cluster cluster : getBibliotekon().allCluster()) {</span>
+<span class="nc" id="L208">			final String minPoint = cluster.getMinPoint(umlDiagramType);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (minPoint != null)</span>
+<span class="nc" id="L210">				minPointCluster.add(minPoint);</span>
 
-<span class="nc" id="L210">			final String maxPoint = cluster.getMaxPoint(umlDiagramType);</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (maxPoint != null)</span>
-<span class="nc" id="L212">				maxPointCluster.add(maxPoint);</span>
+<span class="nc" id="L212">			final String maxPoint = cluster.getMaxPoint(umlDiagramType);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (maxPoint != null)</span>
+<span class="nc" id="L214">				maxPointCluster.add(maxPoint);</span>
 
-<span class="nc" id="L214">		}</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (minPointCluster.size() &gt; 0) {</span>
-<span class="nc" id="L216">			sb.append(&quot;{rank=min;&quot;);</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">			for (String s : minPointCluster) {</span>
-<span class="nc" id="L218">				sb.append(s);</span>
-<span class="nc" id="L219">				sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;]&quot;);</span>
-<span class="nc" id="L220">				sb.append(&quot;;&quot;);</span>
-<span class="nc" id="L221">			}</span>
-<span class="nc" id="L222">			sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L223">			SvekUtils.println(sb);</span>
+<span class="nc" id="L216">		}</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (minPointCluster.size() &gt; 0) {</span>
+<span class="nc" id="L218">			sb.append(&quot;{rank=min;&quot;);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			for (String s : minPointCluster) {</span>
+<span class="nc" id="L220">				sb.append(s);</span>
+<span class="nc" id="L221">				sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;]&quot;);</span>
+<span class="nc" id="L222">				sb.append(&quot;;&quot;);</span>
+<span class="nc" id="L223">			}</span>
+<span class="nc" id="L224">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L225">			SvekUtils.println(sb);</span>
 		}
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (maxPointCluster.size() &gt; 0) {</span>
-<span class="nc" id="L226">			sb.append(&quot;{rank=max;&quot;);</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">			for (String s : maxPointCluster) {</span>
-<span class="nc" id="L228">				sb.append(s);</span>
-<span class="nc" id="L229">				sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;]&quot;);</span>
-<span class="nc" id="L230">				sb.append(&quot;;&quot;);</span>
-<span class="nc" id="L231">			}</span>
-<span class="nc" id="L232">			sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L233">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (maxPointCluster.size() &gt; 0) {</span>
+<span class="nc" id="L228">			sb.append(&quot;{rank=max;&quot;);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			for (String s : maxPointCluster) {</span>
+<span class="nc" id="L230">				sb.append(s);</span>
+<span class="nc" id="L231">				sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;]&quot;);</span>
+<span class="nc" id="L232">				sb.append(&quot;;&quot;);</span>
+<span class="nc" id="L233">			}</span>
+<span class="nc" id="L234">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L235">			SvekUtils.println(sb);</span>
 		}
-<span class="nc" id="L235">	}</span>
+<span class="nc" id="L237">	}</span>
 
 	private int getMinRankSep() {
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.ACTIVITY) {</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.ACTIVITY) {</span>
 			// return 29;
-<span class="nc" id="L240">			return 40;</span>
+<span class="nc" id="L242">			return 40;</span>
 		}
-<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR))</span>
-<span class="nc" id="L243">			return 40;</span>
-<span class="nc" id="L244">		return 60;</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR))</span>
+<span class="nc" id="L245">			return 40;</span>
+<span class="nc" id="L246">		return 60;</span>
 	}
 
 	private int getMinNodeSep() {
-<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.ACTIVITY) {</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.ACTIVITY) {</span>
 			// return 15;
-<span class="nc" id="L250">			return 20;</span>
+<span class="nc" id="L252">			return 20;</span>
 		}
-<span class="nc" id="L252">		return 35;</span>
+<span class="nc" id="L254">		return 35;</span>
 	}
 
 	// ::uncomment when __CORE__
@@ -261,199 +263,382 @@ public final class DotStringFactory implements Moveable {
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {
-<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (graphvizVersion == null)</span>
-<span class="fc" id="L265">			graphvizVersion = getGraphvizVersionInternal();</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (graphvizVersion == null)</span>
+<span class="fc" id="L267">			graphvizVersion = getGraphvizVersionInternal();</span>
 
-<span class="fc" id="L267">		return graphvizVersion;</span>
+<span class="fc" id="L269">		return graphvizVersion;</span>
 	}
 
 	private GraphvizVersion getGraphvizVersionInternal() {
-<span class="fc" id="L271">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;foo;&quot;, &quot;svg&quot;);</span>
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
-<span class="nc" id="L273">			return GraphvizJs.getGraphvizVersion(false);</span>
+<span class="fc" id="L273">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;foo;&quot;, &quot;svg&quot;);</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
+<span class="nc" id="L275">			return GraphvizJs.getGraphvizVersion(false);</span>
 
-<span class="fc" id="L275">		final File f = graphviz.getDotExe();</span>
-<span class="fc" id="L276">		return GraphvizRuntimeEnvironment.getInstance().getVersion(f);</span>
+<span class="fc" id="L277">		final File f = graphviz.getDotExe();</span>
+<span class="fc" id="L278">		return GraphvizRuntimeEnvironment.getInstance().getVersion(f);</span>
 	}
 
 	public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotOptions)
 			throws IOException {
-<span class="nc" id="L281">		String dotString = createDotString(stringBounder, dotMode, dotOptions);</span>
+<span class="nc" id="L283">		String dotString = createDotString(stringBounder, dotMode, dotOptions);</span>
 
-<span class="nc bnc" id="L283" title="All 2 branches missed.">		if (basefile != null) {</span>
-<span class="nc" id="L284">			final SFile f = basefile.getTraceFile(&quot;svek.dot&quot;);</span>
-<span class="nc" id="L285">			SvekUtils.traceString(f, dotString);</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">		if (basefile != null) {</span>
+<span class="nc" id="L286">			final SFile f = basefile.getTraceFile(&quot;svek.dot&quot;);</span>
+<span class="nc" id="L287">			SvekUtils.traceString(f, dotString);</span>
 		}
 
-<span class="nc" id="L288">		Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, dotString, &quot;svg&quot;);</span>
-<span class="nc" id="L289">		ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L290">		Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, dotString, &quot;svg&quot;);</span>
+<span class="nc" id="L291">		ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
 		try {
-<span class="nc" id="L291">			final ProcessState state = graphviz.createFile3(baos);</span>
-<span class="nc" id="L292">			baos.close();</span>
-<span class="nc bnc" id="L293" title="All 2 branches missed.">			if (state.differs(ProcessState.TERMINATED_OK()))</span>
-<span class="nc" id="L294">				throw new IllegalStateException(&quot;Timeout4 &quot; + state, state.getCause());</span>
+<span class="nc" id="L293">			final ProcessState state = graphviz.createFile3(baos);</span>
+<span class="nc" id="L294">			baos.close();</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">			if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L296">				throw new IllegalStateException(&quot;Timeout4 &quot; + state, state.getCause());</span>
 
-<span class="nc" id="L296">		} catch (GraphvizJsRuntimeException e) {</span>
-<span class="nc" id="L297">			System.err.println(&quot;GraphvizJsRuntimeException&quot;);</span>
-<span class="nc" id="L298">			graphvizVersion = GraphvizJs.getGraphvizVersion(true);</span>
-<span class="nc" id="L299">			dotString = createDotString(stringBounder, dotMode, dotOptions);</span>
-<span class="nc" id="L300">			graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, dotString, &quot;svg&quot;);</span>
-<span class="nc" id="L301">			baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L302">			final ProcessState state = graphviz.createFile3(baos);</span>
-<span class="nc" id="L303">			baos.close();</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">			if (state.differs(ProcessState.TERMINATED_OK()))</span>
-<span class="nc" id="L305">				throw new IllegalStateException(&quot;Timeout4 &quot; + state, state.getCause());</span>
+<span class="nc" id="L298">		} catch (GraphvizJsRuntimeException e) {</span>
+<span class="nc" id="L299">			System.err.println(&quot;GraphvizJsRuntimeException&quot;);</span>
+<span class="nc" id="L300">			graphvizVersion = GraphvizJs.getGraphvizVersion(true);</span>
+<span class="nc" id="L301">			dotString = createDotString(stringBounder, dotMode, dotOptions);</span>
+<span class="nc" id="L302">			graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, dotString, &quot;svg&quot;);</span>
+<span class="nc" id="L303">			baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L304">			final ProcessState state = graphviz.createFile3(baos);</span>
+<span class="nc" id="L305">			baos.close();</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">			if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L307">				throw new IllegalStateException(&quot;Timeout4 &quot; + state, state.getCause());</span>
 
-<span class="nc" id="L307">		}</span>
-<span class="nc" id="L308">		final byte[] result = baos.toByteArray();</span>
-<span class="nc" id="L309">		final String s = new String(result, UTF_8);</span>
+<span class="nc" id="L309">		}</span>
+<span class="nc" id="L310">		final byte[] result = baos.toByteArray();</span>
+<span class="nc" id="L311">		final String s = new String(result, UTF_8);</span>
 
-<span class="nc bnc" id="L311" title="All 2 branches missed.">		if (basefile != null) {</span>
-<span class="nc" id="L312">			final SFile f = basefile.getTraceFile(&quot;svek.svg&quot;);</span>
-<span class="nc" id="L313">			SvekUtils.traceString(f, s);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		if (basefile != null) {</span>
+<span class="nc" id="L314">			final SFile f = basefile.getTraceFile(&quot;svek.svg&quot;);</span>
+<span class="nc" id="L315">			SvekUtils.traceString(f, s);</span>
 		}
 
-<span class="nc" id="L316">		return s;</span>
+<span class="nc" id="L318">		return s;</span>
 	}
 
 	public boolean illegalDotExe() {
-<span class="fc" id="L320">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
-<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
-<span class="nc" id="L322">			return false;</span>
+<span class="fc" id="L322">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (graphviz instanceof GraphvizJs)</span>
+<span class="nc" id="L324">			return false;</span>
 
-<span class="fc" id="L324">		final File dotExe = graphviz.getDotExe();</span>
-<span class="pc bpc" id="L325" title="4 of 6 branches missed.">		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;</span>
+<span class="fc" id="L326">		final File dotExe = graphviz.getDotExe();</span>
+<span class="pc bpc" id="L327" title="4 of 6 branches missed.">		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;</span>
 	}
 
 	public File getDotExe() {
-<span class="fc" id="L329">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
-<span class="fc" id="L330">		return graphviz.getDotExe();</span>
+<span class="fc" id="L331">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, &quot;svg&quot;);</span>
+<span class="fc" id="L332">		return graphviz.getDotExe();</span>
 	}
 
-<span class="fc" id="L333">	private static final Pattern pGraph = Pattern.compile(&quot;(?m)\\&lt;svg\\s+width=\&quot;(\\d+)pt\&quot;\\s+height=\&quot;(\\d+)pt\&quot;&quot;);</span>
+<span class="fc" id="L335">	private static final Pattern pGraph = Pattern.compile(&quot;(?m)\\&lt;svg\\s+width=\&quot;(\\d+)pt\&quot;\\s+height=\&quot;(\\d+)pt\&quot;&quot;);</span>
 
 	public void solve(final String svg) throws IOException, InterruptedException {
-<span class="nc bnc" id="L336" title="All 2 branches missed.">		if (svg.length() == 0)</span>
-<span class="nc" id="L337">			throw new EmptySvgException();</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		if (svg.length() == 0)</span>
+<span class="nc" id="L339">			throw new EmptySvgException();</span>
 
-<span class="nc" id="L339">		final Matcher mGraph = pGraph.matcher(svg);</span>
-<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (mGraph.find() == false)</span>
-<span class="nc" id="L341">			throw new IllegalStateException();</span>
+<span class="nc" id="L341">		final Matcher mGraph = pGraph.matcher(svg);</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (mGraph.find() == false)</span>
+<span class="nc" id="L343">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L343">		final int fullHeight = Integer.parseInt(mGraph.group(2));</span>
+<span class="nc" id="L345">		final int fullHeight = Integer.parseInt(mGraph.group(2));</span>
 
-<span class="nc" id="L345">		final Point2DFunction move = new YDelta(fullHeight);</span>
-<span class="nc" id="L346">		final SvgResult svgResult = new SvgResult(svg, move);</span>
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		for (SvekNode node : getBibliotekon().allNodes()) {</span>
-<span class="nc" id="L348">			int idx = svg.indexOf(&quot;&lt;title&gt;&quot; + node.getUid() + &quot;&lt;/title&gt;&quot;);</span>
-<span class="nc bnc" id="L349" title="All 4 branches missed.">			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS</span>
-<span class="nc bnc" id="L350" title="All 4 branches missed.">					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER</span>
-<span class="nc bnc" id="L351" title="All 4 branches missed.">					|| node.getType() == ShapeType.DIAMOND || node.getType() == ShapeType.RECTANGLE_PORT) {</span>
-<span class="nc" id="L352">				final List&lt;XPoint2D&gt; points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc" id="L353">				final XPoint2D min = SvekUtils.getMinXY(points);</span>
-<span class="nc" id="L354">				node.moveDelta(min.getX(), min.getY());</span>
-<span class="nc bnc" id="L355" title="All 2 branches missed.">			} else if (node.getType() == ShapeType.ROUND_RECTANGLE) {</span>
-<span class="nc" id="L356">				final int idx2 = svg.indexOf(&quot;d=\&quot;&quot;, idx + 1);</span>
-<span class="nc" id="L357">				idx = svg.indexOf(&quot;points=\&quot;&quot;, idx + 1);</span>
+<span class="nc" id="L347">		final Point2DFunction move = new YDelta(fullHeight);</span>
+<span class="nc" id="L348">		final SvgResult svgResult = new SvgResult(svg, move);</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">		for (SvekNode node : getBibliotekon().allNodes()) {</span>
+<span class="nc" id="L350">			int idx = svg.indexOf(&quot;&lt;title&gt;&quot; + node.getUid() + &quot;&lt;/title&gt;&quot;);</span>
+<span class="nc bnc" id="L351" title="All 4 branches missed.">			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS</span>
+<span class="nc bnc" id="L352" title="All 4 branches missed.">					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER</span>
+<span class="nc bnc" id="L353" title="All 4 branches missed.">					|| node.getType() == ShapeType.DIAMOND || node.getType() == ShapeType.RECTANGLE_PORT) {</span>
+<span class="nc" id="L354">				final List&lt;XPoint2D&gt; points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L355">				final XPoint2D min = SvekUtils.getMinXY(points);</span>
+<span class="nc" id="L356">				node.moveDelta(min.getX(), min.getY());</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">			} else if (node.getType() == ShapeType.ROUND_RECTANGLE) {</span>
+<span class="nc" id="L358">				final int idx2 = svg.indexOf(&quot;d=\&quot;&quot;, idx + 1);</span>
+<span class="nc" id="L359">				idx = svg.indexOf(&quot;points=\&quot;&quot;, idx + 1);</span>
 				final List&lt;XPoint2D&gt; points;
-<span class="nc bnc" id="L359" title="All 6 branches missed.">				if (idx2 != -1 &amp;&amp; (idx == -1 || idx2 &lt; idx)) {</span>
+<span class="nc bnc" id="L361" title="All 6 branches missed.">				if (idx2 != -1 &amp;&amp; (idx == -1 || idx2 &lt; idx)) {</span>
 					// GraphViz 2.30
-<span class="nc" id="L361">					points = svgResult.substring(idx2).extractList(SvgResult.D_EQUALS);</span>
+<span class="nc" id="L363">					points = svgResult.substring(idx2).extractList(SvgResult.D_EQUALS);</span>
 				} else {
-<span class="nc" id="L363">					points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc bnc" id="L364" title="All 2 branches missed.">					for (int i = 0; i &lt; 3; i++) {</span>
-<span class="nc" id="L365">						idx = svg.indexOf(&quot;points=\&quot;&quot;, idx + 1);</span>
-<span class="nc" id="L366">						points.addAll(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));</span>
+<span class="nc" id="L365">					points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">					for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L367">						idx = svg.indexOf(&quot;points=\&quot;&quot;, idx + 1);</span>
+<span class="nc" id="L368">						points.addAll(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));</span>
 					}
 				}
-<span class="nc" id="L369">				final XPoint2D min = SvekUtils.getMinXY(points);</span>
-<span class="nc" id="L370">				node.moveDelta(min.getX(), min.getY());</span>
-<span class="nc bnc" id="L371" title="All 4 branches missed.">			} else if (node.getType() == ShapeType.OCTAGON || node.getType() == ShapeType.HEXAGON) {</span>
-<span class="nc" id="L372">				idx = svg.indexOf(&quot;points=\&quot;&quot;, idx + 1);</span>
-<span class="nc" id="L373">				final int starting = idx;</span>
-<span class="nc" id="L374">				final List&lt;XPoint2D&gt; points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc" id="L375">				final XPoint2D min = SvekUtils.getMinXY(points);</span>
+<span class="nc" id="L371">				final XPoint2D min = SvekUtils.getMinXY(points);</span>
+<span class="nc" id="L372">				node.moveDelta(min.getX(), min.getY());</span>
+<span class="nc bnc" id="L373" title="All 4 branches missed.">			} else if (node.getType() == ShapeType.OCTAGON || node.getType() == ShapeType.HEXAGON) {</span>
+<span class="nc" id="L374">				idx = svg.indexOf(&quot;points=\&quot;&quot;, idx + 1);</span>
+<span class="nc" id="L375">				final int starting = idx;</span>
+<span class="nc" id="L376">				final List&lt;XPoint2D&gt; points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L377">				final XPoint2D min = SvekUtils.getMinXY(points);</span>
 				// corner1.manage(minX, minY);
-<span class="nc" id="L377">				node.moveDelta(min.getX(), min.getY());</span>
-<span class="nc" id="L378">				node.setPolygon(min.getX(), min.getY(), points);</span>
-<span class="nc bnc" id="L379" title="All 4 branches missed.">			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.OVAL) {</span>
-<span class="nc" id="L380">				final double cx = SvekUtils.getValue(svg, idx, &quot;cx&quot;);</span>
-<span class="nc" id="L381">				final double cy = SvekUtils.getValue(svg, idx, &quot;cy&quot;) + fullHeight;</span>
-<span class="nc" id="L382">				final double rx = SvekUtils.getValue(svg, idx, &quot;rx&quot;);</span>
-<span class="nc" id="L383">				final double ry = SvekUtils.getValue(svg, idx, &quot;ry&quot;);</span>
-<span class="nc" id="L384">				node.moveDelta(cx - rx, cy - ry);</span>
-<span class="nc" id="L385">			} else {</span>
-<span class="nc" id="L386">				throw new IllegalStateException(node.getType().toString() + &quot; &quot; + node.getUid());</span>
+<span class="nc" id="L379">				node.moveDelta(min.getX(), min.getY());</span>
+<span class="nc" id="L380">				node.setPolygon(min.getX(), min.getY(), points);</span>
+<span class="nc bnc" id="L381" title="All 4 branches missed.">			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.OVAL) {</span>
+<span class="nc" id="L382">				final double cx = SvekUtils.getValue(svg, idx, &quot;cx&quot;);</span>
+<span class="nc" id="L383">				final double cy = SvekUtils.getValue(svg, idx, &quot;cy&quot;) + fullHeight;</span>
+<span class="nc" id="L384">				final double rx = SvekUtils.getValue(svg, idx, &quot;rx&quot;);</span>
+<span class="nc" id="L385">				final double ry = SvekUtils.getValue(svg, idx, &quot;ry&quot;);</span>
+<span class="nc" id="L386">				node.moveDelta(cx - rx, cy - ry);</span>
+<span class="nc" id="L387">			} else {</span>
+<span class="nc" id="L388">				throw new IllegalStateException(node.getType().toString() + &quot; &quot; + node.getUid());</span>
 			}
-<span class="nc" id="L388">		}</span>
+<span class="nc" id="L390">		}</span>
 
-<span class="nc bnc" id="L390" title="All 2 branches missed.">		for (Cluster cluster : getBibliotekon().allCluster()) {</span>
-<span class="nc bnc" id="L391" title="All 2 branches missed.">			if (cluster.getGroup().isPacked())</span>
-<span class="nc" id="L392">				continue;</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">		for (Cluster cluster : getBibliotekon().allCluster()) {</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">			if (cluster.getGroup().isPacked())</span>
+<span class="nc" id="L394">				continue;</span>
 
-<span class="nc" id="L394">			int idx = getClusterIndex(svg, cluster.getColor());</span>
-<span class="nc" id="L395">			final int starting = idx;</span>
-<span class="nc" id="L396">			final List&lt;XPoint2D&gt; points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc" id="L397">			final XPoint2D min = SvekUtils.getMinXY(points);</span>
-<span class="nc" id="L398">			final XPoint2D max = SvekUtils.getMaxXY(points);</span>
-<span class="nc" id="L399">			cluster.setPosition(min, max);</span>
+<span class="nc" id="L396">			int idx = getClusterIndex(svg, cluster.getColor());</span>
+<span class="nc" id="L397">			final int starting = idx;</span>
+<span class="nc" id="L398">			final List&lt;XPoint2D&gt; points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L399">			final XPoint2D min = SvekUtils.getMinXY(points);</span>
+<span class="nc" id="L400">			final XPoint2D max = SvekUtils.getMaxXY(points);</span>
+<span class="nc" id="L401">			cluster.setPosition(min, max);</span>
 
-<span class="nc bnc" id="L401" title="All 4 branches missed.">			if (cluster.getTitleAndAttributeWidth() == 0 || cluster.getTitleAndAttributeHeight() == 0)</span>
-<span class="nc" id="L402">				continue;</span>
+<span class="nc bnc" id="L403" title="All 4 branches missed.">			if (cluster.getTitleAndAttributeWidth() == 0 || cluster.getTitleAndAttributeHeight() == 0)</span>
+<span class="nc" id="L404">				continue;</span>
 
-<span class="nc" id="L404">			idx = getClusterIndex(svg, cluster.getTitleColor());</span>
-<span class="nc" id="L405">			final List&lt;XPoint2D&gt; pointsTitle = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc" id="L406">			cluster.setTitlePosition(SvekUtils.getMinXY(pointsTitle));</span>
+<span class="nc" id="L406">			idx = getClusterIndex(svg, cluster.getTitleColor());</span>
+<span class="nc" id="L407">			final List&lt;XPoint2D&gt; pointsTitle = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L408">			cluster.setTitlePosition(SvekUtils.getMinXY(pointsTitle));</span>
 
-<span class="nc bnc" id="L408" title="All 2 branches missed.">			if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">				if (cluster.getGroup().getNotes(Position.TOP).size() &gt; 0) {</span>
-<span class="nc" id="L410">					final List&lt;XPoint2D&gt; noteUp = svgResult.substring(getClusterIndex(svg, cluster.getColorNoteTop()))</span>
-<span class="nc" id="L411">							.extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc" id="L412">					cluster.setNoteTopPosition(SvekUtils.getMinXY(noteUp));</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">			if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">				if (cluster.getGroup().getNotes(Position.TOP).size() &gt; 0) {</span>
+<span class="nc" id="L412">					final List&lt;XPoint2D&gt; noteUp = svgResult.substring(getClusterIndex(svg, cluster.getColorNoteTop()))</span>
+<span class="nc" id="L413">							.extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L414">					cluster.setNoteTopPosition(SvekUtils.getMinXY(noteUp));</span>
 				}
-<span class="nc bnc" id="L414" title="All 2 branches missed.">				if (cluster.getGroup().getNotes(Position.BOTTOM).size() &gt; 0) {</span>
-<span class="nc" id="L415">					final List&lt;XPoint2D&gt; noteBottom = svgResult</span>
-<span class="nc" id="L416">							.substring(getClusterIndex(svg, cluster.getColorNoteBottom()))</span>
-<span class="nc" id="L417">							.extractList(SvgResult.POINTS_EQUALS);</span>
-<span class="nc" id="L418">					cluster.setNoteBottomPosition(SvekUtils.getMinXY(noteBottom));</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">				if (cluster.getGroup().getNotes(Position.BOTTOM).size() &gt; 0) {</span>
+<span class="nc" id="L417">					final List&lt;XPoint2D&gt; noteBottom = svgResult</span>
+<span class="nc" id="L418">							.substring(getClusterIndex(svg, cluster.getColorNoteBottom()))</span>
+<span class="nc" id="L419">							.extractList(SvgResult.POINTS_EQUALS);</span>
+<span class="nc" id="L420">					cluster.setNoteBottomPosition(SvekUtils.getMinXY(noteBottom));</span>
 				}
 			}
-<span class="nc" id="L421">		}</span>
+<span class="nc" id="L423">		}</span>
 
-<span class="nc bnc" id="L423" title="All 2 branches missed.">		for (SvekEdge line : getBibliotekon().allLines())</span>
-<span class="nc" id="L424">			line.solveLine(svgResult);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">		for (SvekEdge line : getBibliotekon().allLines())</span>
+<span class="nc" id="L426">			line.solveLine(svgResult);</span>
 
-<span class="nc bnc" id="L426" title="All 2 branches missed.">		for (SvekEdge line : getBibliotekon().allLines())</span>
-<span class="nc" id="L427">			line.manageCollision(getBibliotekon().allNodes());</span>
+		// Align edges at label nodes for orthogonal routing
+<span class="nc bnc" id="L429" title="All 2 branches missed.">		if (skinParam.getDotSplines() == DotSplines.ORTHO)</span>
+<span class="nc" id="L430">			alignEdgesAtLabelNodes();</span>
 
-<span class="nc" id="L429">	}</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">		for (SvekEdge line : getBibliotekon().allLines())</span>
+<span class="nc" id="L433">			line.manageCollision(getBibliotekon().allNodes());</span>
+
+<span class="nc" id="L435">	}</span>
+
+	/**
+	 * Insert horizontal corners in orthogonal edges to align them through label node centers.
+	 * This handles the case where edges entering and leaving a label node are horizontally misaligned.
+	 */
+	private void alignEdgesAtLabelNodes() {
+		// Find all nodes that are edge labels (typically named &quot;transition_...&quot;)
+<span class="nc" id="L443">		final List&lt;SvekNode&gt; labelNodes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">		for (SvekNode node : getBibliotekon().allNodes()) {</span>
+<span class="nc" id="L445">			final Entity entity = getBibliotekon().getLeaf(node);</span>
+<span class="nc bnc" id="L446" title="All 6 branches missed.">			if (entity != null &amp;&amp; entity.getName() != null &amp;&amp; entity.getName().startsWith(&quot;transition_&quot;)) {</span>
+<span class="nc" id="L447">				labelNodes.add(node);</span>
+			}
+<span class="nc" id="L449">		}</span>
+
+		// For each label node, find edges connecting through it and align them
+<span class="nc bnc" id="L452" title="All 2 branches missed.">		for (SvekNode labelNode : labelNodes) {</span>
+<span class="nc" id="L453">			alignEdgesThroughLabel(labelNode);</span>
+<span class="nc" id="L454">		}</span>
+<span class="nc" id="L455">	}</span>
+
+	/**
+	 * Align edges that pass through a specific label node
+	 */
+	private void alignEdgesThroughLabel(SvekNode labelNode) {
+		// Find edges coming into and out of this label node
+<span class="nc" id="L462">		final Entity labelEntity = getBibliotekon().getLeaf(labelNode);</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">		if (labelEntity == null)</span>
+<span class="nc" id="L464">			return;</span>
+
+		// Get all edges connected to this label node
+<span class="nc" id="L467">		final List&lt;SvekEdge&gt; connectedEdges = getBibliotekon().getAllLineConnectedTo(labelEntity);</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">		if (connectedEdges.size() != 2)</span>
+<span class="nc" id="L469">			return; // We need exactly 2 edges (one in, one out)</span>
+
+		// Determine which edge is incoming and which is outgoing
+<span class="nc" id="L472">		final SvekEdge edge0 = connectedEdges.get(0);</span>
+<span class="nc" id="L473">		final SvekEdge edge1 = connectedEdges.get(1);</span>
+
+<span class="nc bnc" id="L475" title="All 4 branches missed.">		if (edge0.getDotPath() == null || edge1.getDotPath() == null)</span>
+<span class="nc" id="L476">			return;</span>
+
+		// The edge whose endpoint is above the label is incoming (ends at label)
+		// The edge whose startpoint is below the label is outgoing (starts from label)
+<span class="nc" id="L480">		final double labelCenterY = labelNode.getMinY() + labelNode.getHeight() / 2.0;</span>
+<span class="nc" id="L481">		final double edge0EndY = edge0.getDotPath().getEndPoint().getY();</span>
+<span class="nc" id="L482">		final double edge0StartY = edge0.getDotPath().getStartPoint().getY();</span>
+
+		SvekEdge edgeIn, edgeOut;
+		// If edge0 ends near the label (incoming to label), then edge1 starts from label (outgoing)
+<span class="nc bnc" id="L486" title="All 2 branches missed.">		if (Math.abs(edge0EndY - labelCenterY) &lt; Math.abs(edge0StartY - labelCenterY)) {</span>
+<span class="nc" id="L487">			edgeIn = edge0;</span>
+<span class="nc" id="L488">			edgeOut = edge1;</span>
+		} else {
+<span class="nc" id="L490">			edgeIn = edge1;</span>
+<span class="nc" id="L491">			edgeOut = edge0;</span>
+		}
+
+<span class="nc" id="L494">		insertCornersForAlignment(edgeIn, edgeOut, labelNode);</span>
+<span class="nc" id="L495">	}</span>
+
+	/**
+	 * Insert horizontal corners in edges to align them at the label node center.
+	 * This creates new paths with straight line segments and right-angle corners.
+	 */
+	private void insertCornersForAlignment(SvekEdge edgeIn, SvekEdge edgeOut, SvekNode labelNode) {
+<span class="nc" id="L502">		final net.sourceforge.plantuml.klimt.shape.DotPath pathIn = edgeIn.getDotPath();</span>
+<span class="nc" id="L503">		final net.sourceforge.plantuml.klimt.shape.DotPath pathOut = edgeOut.getDotPath();</span>
+
+<span class="nc bnc" id="L505" title="All 4 branches missed.">		if (pathIn == null || pathOut == null)</span>
+<span class="nc" id="L506">			return;</span>
+
+		// Get the label node center position
+<span class="nc" id="L509">		final double labelCenterX = labelNode.getMinX() + labelNode.getWidth() / 2.0;</span>
+<span class="nc" id="L510">		final double labelCenterY = labelNode.getMinY() + labelNode.getHeight() / 2.0;</span>
+
+		// Get edge endpoints
+<span class="nc" id="L513">		final XPoint2D inStart = pathIn.getStartPoint();</span>
+<span class="nc" id="L514">		final XPoint2D inEnd = pathIn.getEndPoint();</span>
+<span class="nc" id="L515">		final XPoint2D outStart = pathOut.getStartPoint();</span>
+<span class="nc" id="L516">		final XPoint2D outEnd = pathOut.getEndPoint();</span>
+
+		// Check if edges are misaligned horizontally
+<span class="nc" id="L519">		final double xDiff = Math.abs(inEnd.getX() - outStart.getX());</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">		if (xDiff &lt; 5.0) // Already aligned</span>
+<span class="nc" id="L521">			return;</span>
+
+		// Check if they connect through this label (vertically adjacent)
+<span class="nc" id="L524">		final double yGap = Math.abs(inEnd.getY() - outStart.getY());</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">		if (yGap &gt; 30.0) // Not connected through this label</span>
+<span class="nc" id="L526">			return;</span>
+
+		// Rebuild incoming edge with corner to align at label center
+<span class="nc" id="L529">		final net.sourceforge.plantuml.klimt.shape.DotPath newPathIn = rebuildPathWithCorner(</span>
+			inStart, inEnd, labelCenterX, labelCenterY, true
+		);
+<span class="nc bnc" id="L532" title="All 2 branches missed.">		if (newPathIn != null) {</span>
+<span class="nc" id="L533">			edgeIn.replaceDotPath(newPathIn);</span>
+		}
+
+		// Rebuild outgoing edge with corner to align at label center
+<span class="nc" id="L537">		final net.sourceforge.plantuml.klimt.shape.DotPath newPathOut = rebuildPathWithCorner(</span>
+			outStart, outEnd, labelCenterX, labelCenterY, false
+		);
+<span class="nc bnc" id="L540" title="All 2 branches missed.">		if (newPathOut != null) {</span>
+<span class="nc" id="L541">			edgeOut.replaceDotPath(newPathOut);</span>
+		}
+<span class="nc" id="L543">	}</span>
+
+	/**
+	 * Rebuild a path with a horizontal corner to route through the target X coordinate.
+	 * Creates straight line segments: start -&gt; corner1 -&gt; corner2 -&gt; end
+	 * The horizontal segment is placed at the start/end Y coordinate to avoid obscuring the label.
+	 */
+	private net.sourceforge.plantuml.klimt.shape.DotPath rebuildPathWithCorner(
+			XPoint2D start, XPoint2D end, double targetX, double targetY, boolean isIncoming) {
+
+<span class="nc" id="L553">		final double startX = start.getX();</span>
+<span class="nc" id="L554">		final double startY = start.getY();</span>
+<span class="nc" id="L555">		final double endX = end.getX();</span>
+<span class="nc" id="L556">		final double endY = end.getY();</span>
+
+		// Check if we need to add a corner
+<span class="nc bnc" id="L559" title="All 4 branches missed.">		if (Math.abs(startX - targetX) &lt; 1.0 &amp;&amp; Math.abs(endX - targetX) &lt; 1.0) {</span>
+<span class="nc" id="L560">			return null; // Already aligned, no change needed</span>
+		}
+
+		// Create path with vertical alignment at targetX
+		// Pattern for incoming: start → vertical → horizontal → vertical (aligned at targetX) → end
+		// Pattern for outgoing: start → vertical (aligned at targetX) → horizontal → vertical → end
+<span class="nc" id="L566">		final List&lt;XCubicCurve2D&gt; beziers = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L568" title="All 2 branches missed.">		if (isIncoming) {</span>
+			// Incoming edge: vertical → horizontal → vertical (aligned at targetX)
+<span class="nc" id="L570">			final double horizontalY = endY - 20;</span>
+
+			// Segment 1: vertical from start down to horizontal routing level
+<span class="nc" id="L573">			beziers.add(new XCubicCurve2D(</span>
+				startX, startY, startX, startY,
+				startX, horizontalY, startX, horizontalY
+			));
+
+			// Segment 2: horizontal jog from startX to targetX
+<span class="nc" id="L579">			beziers.add(new XCubicCurve2D(</span>
+				startX, horizontalY, startX, horizontalY,
+				targetX, horizontalY, targetX, horizontalY
+			));
+
+			// Segment 3: vertical aligned segment at targetX down to endY (path ends at targetX)
+<span class="nc" id="L585">			beziers.add(new XCubicCurve2D(</span>
+				targetX, horizontalY, targetX, horizontalY,
+				targetX, endY, targetX, endY
+			));
+
+<span class="nc" id="L590">		} else {</span>
+			// Outgoing edge: vertical (aligned at targetX) → horizontal → vertical
+<span class="nc" id="L592">			final double horizontalY = startY + 20;</span>
+
+			// Segment 1: vertical aligned segment at targetX from startY (path starts at targetX)
+<span class="nc" id="L595">			beziers.add(new XCubicCurve2D(</span>
+				targetX, startY, targetX, startY,
+				targetX, horizontalY, targetX, horizontalY
+			));
+
+			// Segment 2: horizontal jog from targetX to endX
+<span class="nc" id="L601">			beziers.add(new XCubicCurve2D(</span>
+				targetX, horizontalY, targetX, horizontalY,
+				endX, horizontalY, endX, horizontalY
+			));
+
+			// Segment 3: vertical down to actual end point
+<span class="nc" id="L607">			beziers.add(new XCubicCurve2D(</span>
+				endX, horizontalY, endX, horizontalY,
+				endX, endY, endX, endY
+			));
+		}
+
+<span class="nc" id="L613">		return net.sourceforge.plantuml.klimt.shape.DotPath.fromBeziers(beziers);</span>
+	}
 
 	private int getClusterIndex(final String svg, int colorInt) {
-<span class="nc" id="L432">		final String colorString = StringUtils.goLowerCase(StringUtils.sharp000000(colorInt));</span>
-<span class="nc" id="L433">		final String keyTitle1 = &quot;=\&quot;&quot; + colorString + &quot;\&quot;&quot;;</span>
-<span class="nc" id="L434">		int idx = svg.indexOf(keyTitle1);</span>
-<span class="nc bnc" id="L435" title="All 2 branches missed.">		if (idx == -1) {</span>
-<span class="nc" id="L436">			final String keyTitle2 = &quot;stroke:&quot; + colorString + &quot;;&quot;;</span>
-<span class="nc" id="L437">			idx = svg.indexOf(keyTitle2);</span>
+<span class="nc" id="L617">		final String colorString = StringUtils.goLowerCase(StringUtils.sharp000000(colorInt));</span>
+<span class="nc" id="L618">		final String keyTitle1 = &quot;=\&quot;&quot; + colorString + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L619">		int idx = svg.indexOf(keyTitle1);</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">		if (idx == -1) {</span>
+<span class="nc" id="L621">			final String keyTitle2 = &quot;stroke:&quot; + colorString + &quot;;&quot;;</span>
+<span class="nc" id="L622">			idx = svg.indexOf(keyTitle2);</span>
 		}
-<span class="nc bnc" id="L439" title="All 2 branches missed.">		if (idx == -1)</span>
-<span class="nc" id="L440">			throw new IllegalStateException(&quot;Cannot find color &quot; + colorString);</span>
+<span class="nc bnc" id="L624" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L625">			throw new IllegalStateException(&quot;Cannot find color &quot; + colorString);</span>
 
-<span class="nc" id="L442">		return idx;</span>
+<span class="nc" id="L627">		return idx;</span>
 	}
 	// ::done
 
 	public void moveDelta(double deltaX, double deltaY) {
-<span class="nc bnc" id="L447" title="All 2 branches missed.">		for (SvekNode sh : getBibliotekon().allNodes())</span>
-<span class="nc" id="L448">			sh.moveDelta(deltaX, deltaY);</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">		for (SvekNode sh : getBibliotekon().allNodes())</span>
+<span class="nc" id="L633">			sh.moveDelta(deltaX, deltaY);</span>
 
-<span class="nc bnc" id="L450" title="All 2 branches missed.">		for (SvekEdge line : getBibliotekon().allLines())</span>
-<span class="nc" id="L451">			line.moveDelta(deltaX, deltaY);</span>
+<span class="nc bnc" id="L635" title="All 2 branches missed.">		for (SvekEdge line : getBibliotekon().allLines())</span>
+<span class="nc" id="L636">			line.moveDelta(deltaX, deltaY);</span>
 
-<span class="nc bnc" id="L453" title="All 2 branches missed.">		for (Cluster cl : getBibliotekon().allCluster())</span>
-<span class="nc" id="L454">			cl.moveDelta(deltaX, deltaY);</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">		for (Cluster cl : getBibliotekon().allCluster())</span>
+<span class="nc" id="L639">			cl.moveDelta(deltaX, deltaY);</span>
 
-<span class="nc" id="L456">	}</span>
+<span class="nc" id="L641">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
