@@ -1127,7 +1127,7 @@ public class SvgGraphics {
 
 	/**
 	 * Closes the most recently opened link if necessary.
-	 * 
+	 *
 	 * Validates state to ensure no nested or invalid link closures occur.
 	 */
 	private void closeTopActiveLinkIfNeeded() {
