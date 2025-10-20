@@ -50,37 +50,38 @@ package net.sourceforge.plantuml.skin;
 <span class="fc" id="L50">	COMPACT, //</span>
 <span class="fc" id="L51">	DEFAULT_LABEL_ANGLE, //</span>
 <span class="fc" id="L52">	DEFAULT_LABEL_DISTANCE, //</span>
-<span class="fc" id="L53">	GRAPH_ATTRIBUTES, //</span>
-<span class="fc" id="L54">	HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED, //</span>
-<span class="fc" id="L55">	KERMOR, //</span>
-<span class="fc" id="L56">	LABEL_ANGLE, //</span>
-<span class="fc" id="L57">	LABEL_DISTANCE, //</span>
-<span class="fc" id="L58">	RATIO, //</span>
-<span class="fc" id="L59">	SHOW_DEPRECATION, //</span>
-<span class="fc" id="L60">	SVG_FONT, //</span>
-<span class="fc" id="L61">	SVG_INTERACTIVE, //</span>
-<span class="fc" id="L62">	SVEK_TRACE, //</span>
-<span class="fc" id="L63">	TEOZ, //</span>
-<span class="fc" id="L64">	TEX_SYSTEM, //</span>
-<span class="fc" id="L65">	TEX_PREAMBLE, //</span>
-<span class="fc" id="L66">	USE_INTERMEDIATE_PACKAGES, //</span>
-<span class="fc" id="L67">	USE_VERTICAL_IF;</span>
+<span class="fc" id="L53">	EDGE_CORNER_RADIUS, //</span>
+<span class="fc" id="L54">	GRAPH_ATTRIBUTES, //</span>
+<span class="fc" id="L55">	HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED, //</span>
+<span class="fc" id="L56">	KERMOR, //</span>
+<span class="fc" id="L57">	LABEL_ANGLE, //</span>
+<span class="fc" id="L58">	LABEL_DISTANCE, //</span>
+<span class="fc" id="L59">	RATIO, //</span>
+<span class="fc" id="L60">	SHOW_DEPRECATION, //</span>
+<span class="fc" id="L61">	SVG_FONT, //</span>
+<span class="fc" id="L62">	SVG_INTERACTIVE, //</span>
+<span class="fc" id="L63">	SVEK_TRACE, //</span>
+<span class="fc" id="L64">	TEOZ, //</span>
+<span class="fc" id="L65">	TEX_SYSTEM, //</span>
+<span class="fc" id="L66">	TEX_PREAMBLE, //</span>
+<span class="fc" id="L67">	USE_INTERMEDIATE_PACKAGES, //</span>
+<span class="fc" id="L68">	USE_VERTICAL_IF;</span>
 
 	private static String simplify(String s) {
-<span class="fc" id="L70">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L71">		final StringBuilder result = new StringBuilder();</span>
 
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
-<span class="pc bpc" id="L73" title="1 of 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
-<span class="fc" id="L74">				result.append(Character.toLowerCase(c));</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
+<span class="pc bpc" id="L74" title="1 of 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
+<span class="fc" id="L75">				result.append(Character.toLowerCase(c));</span>
 
-<span class="fc" id="L76">		return result.toString();</span>
+<span class="fc" id="L77">		return result.toString();</span>
 	}
 
 	public static PragmaKey lazyFrom(String s) {
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (PragmaKey key : values())</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (simplify(s).equals(simplify(key.name())))</span>
-<span class="fc" id="L82">				return key;</span>
-<span class="fc" id="L83">		return null;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (PragmaKey key : values())</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (simplify(s).equals(simplify(key.name())))</span>
+<span class="fc" id="L83">				return key;</span>
+<span class="fc" id="L84">		return null;</span>
 	}
 
 }

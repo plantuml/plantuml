@@ -502,5 +502,204 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 <span class="nc" id="L502">		this.codeLine = codeLine;</span>
 <span class="nc" id="L503">	}</span>
 
+	/**
+	 * Round corners in orthogonal paths by replacing sharp 90-degree corners
+	 * with smooth curves.
+	 *
+	 * @param radius Corner radius in pixels
+	 */
+	public void muteToRoundOrthogonalPaths(double radius) {
+<span class="nc bnc" id="L512" title="All 4 branches missed.">		if (radius &lt;= 0 || beziers.size() &lt; 2)</span>
+<span class="nc" id="L513">			return;</span>
+
+<span class="nc bnc" id="L515" title="All 2 branches missed.">		if (!isOrthogonalPathInternal())</span>
+<span class="nc" id="L516">			return;</span>
+
+		// Build list of all points in the path
+<span class="nc" id="L519">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">		if (beziers.size() &gt; 0) {</span>
+<span class="nc" id="L521">			points.add(beziers.get(0).getP1());</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">			for (XCubicCurve2D bez : beziers)</span>
+<span class="nc" id="L523">				points.add(bez.getP2());</span>
+		}
+
+<span class="nc bnc" id="L526" title="All 2 branches missed.">		if (points.size() &lt; 3)</span>
+<span class="nc" id="L527">			return;</span>
+
+		// Detect corners
+<span class="nc" id="L530">		final List&lt;Integer&gt; corners = detectCorners(points);</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">		if (corners.isEmpty())</span>
+<span class="nc" id="L532">			return;</span>
+
+		// Build new path with rounded corners
+<span class="nc" id="L535">		final List&lt;XPoint2D&gt; newPoints = buildRoundedPath(points, corners, radius);</span>
+
+		// Build beziers from new points
+<span class="nc" id="L538">		final List&lt;XCubicCurve2D&gt; newBeziers = buildBeziersFromPoints(newPoints, points, corners);</span>
+
+		// Replace beziers
+<span class="nc" id="L541">		beziers.clear();</span>
+<span class="nc" id="L542">		beziers.addAll(newBeziers);</span>
+<span class="nc" id="L543">	}</span>
+
+	/**
+	 * Detect corners in the path where segments meet at 90 degrees
+	 */
+	private List&lt;Integer&gt; detectCorners(List&lt;XPoint2D&gt; points) {
+<span class="nc" id="L549">		final List&lt;Integer&gt; corners = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size() - 1; i++) {</span>
+<span class="nc" id="L551">			final XPoint2D prev = points.get(i - 1);</span>
+<span class="nc" id="L552">			final XPoint2D curr = points.get(i);</span>
+<span class="nc" id="L553">			final XPoint2D next = points.get(i + 1);</span>
+
+			// Calculate direction vectors
+<span class="nc" id="L556">			double dx1 = curr.getX() - prev.getX();</span>
+<span class="nc" id="L557">			double dy1 = curr.getY() - prev.getY();</span>
+<span class="nc" id="L558">			double dx2 = next.getX() - curr.getX();</span>
+<span class="nc" id="L559">			double dy2 = next.getY() - curr.getY();</span>
+
+<span class="nc" id="L561">			final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
+<span class="nc" id="L562">			final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
+
+<span class="nc bnc" id="L564" title="All 4 branches missed.">			if (len1 &lt; 0.01 || len2 &lt; 0.01)</span>
+<span class="nc" id="L565">				continue;</span>
+
+			// Normalize
+<span class="nc" id="L568">			dx1 /= len1;</span>
+<span class="nc" id="L569">			dy1 /= len1;</span>
+<span class="nc" id="L570">			dx2 /= len2;</span>
+<span class="nc" id="L571">			dy2 /= len2;</span>
+
+			// Check if perpendicular (dot product ≈ 0 for 90 degrees)
+<span class="nc" id="L574">			final double dotProduct = dx1 * dx2 + dy1 * dy2;</span>
+<span class="nc bnc" id="L575" title="All 2 branches missed.">			if (Math.abs(dotProduct) &lt; 0.1)</span>
+<span class="nc" id="L576">				corners.add(i);</span>
+		}
+<span class="nc" id="L578">		return corners;</span>
+	}
+
+	/**
+	 * Build new path with truncated corners ready for rounding
+	 */
+	private List&lt;XPoint2D&gt; buildRoundedPath(List&lt;XPoint2D&gt; points, List&lt;Integer&gt; corners, double radius) {
+<span class="nc" id="L585">		final List&lt;XPoint2D&gt; newPoints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L586">		newPoints.add(points.get(0)); // Start point</span>
+
+<span class="nc bnc" id="L588" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size() - 1; i++) {</span>
+<span class="nc bnc" id="L589" title="All 2 branches missed.">			if (corners.contains(i)) {</span>
+				// This is a corner - add truncated points around it
+<span class="nc" id="L591">				final XPoint2D prev = points.get(i - 1);</span>
+<span class="nc" id="L592">				final XPoint2D curr = points.get(i);</span>
+<span class="nc" id="L593">				final XPoint2D next = points.get(i + 1);</span>
+
+				// Direction vectors
+<span class="nc" id="L596">				double dx1 = curr.getX() - prev.getX();</span>
+<span class="nc" id="L597">				double dy1 = curr.getY() - prev.getY();</span>
+<span class="nc" id="L598">				double dx2 = next.getX() - curr.getX();</span>
+<span class="nc" id="L599">				double dy2 = next.getY() - curr.getY();</span>
+
+<span class="nc" id="L601">				final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
+<span class="nc" id="L602">				final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
+
+<span class="nc" id="L604">				dx1 /= len1;</span>
+<span class="nc" id="L605">				dy1 /= len1;</span>
+<span class="nc" id="L606">				dx2 /= len2;</span>
+<span class="nc" id="L607">				dy2 /= len2;</span>
+
+<span class="nc" id="L609">				final double truncDist1 = Math.min(radius, len1 / 2);</span>
+<span class="nc" id="L610">				final double truncDist2 = Math.min(radius, len2 / 2);</span>
+
+				// Add point before corner
+<span class="nc" id="L613">				final double beforeX = curr.getX() - dx1 * truncDist1;</span>
+<span class="nc" id="L614">				final double beforeY = curr.getY() - dy1 * truncDist1;</span>
+<span class="nc" id="L615">				newPoints.add(new XPoint2D(beforeX, beforeY));</span>
+
+				// Add the corner point itself (will be used as control point)
+<span class="nc" id="L618">				newPoints.add(curr);</span>
+
+				// Add point after corner
+<span class="nc" id="L621">				final double afterX = curr.getX() + dx2 * truncDist2;</span>
+<span class="nc" id="L622">				final double afterY = curr.getY() + dy2 * truncDist2;</span>
+<span class="nc" id="L623">				newPoints.add(new XPoint2D(afterX, afterY));</span>
+<span class="nc" id="L624">			} else {</span>
+				// Regular point
+<span class="nc" id="L626">				newPoints.add(points.get(i));</span>
+			}
+		}
+
+<span class="nc" id="L630">		newPoints.add(points.get(points.size() - 1)); // End point</span>
+<span class="nc" id="L631">		return newPoints;</span>
+	}
+
+	/**
+	 * Build bezier curves from the rounded path points
+	 */
+	private List&lt;XCubicCurve2D&gt; buildBeziersFromPoints(List&lt;XPoint2D&gt; newPoints, List&lt;XPoint2D&gt; originalPoints,
+			List&lt;Integer&gt; corners) {
+<span class="nc" id="L639">		final List&lt;XCubicCurve2D&gt; newBeziers = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L640" title="All 2 branches missed.">		for (int i = 0; i &lt; newPoints.size() - 1; i++) {</span>
+<span class="nc" id="L641">			final XPoint2D p1 = newPoints.get(i);</span>
+<span class="nc" id="L642">			final XPoint2D p2 = newPoints.get(i + 1);</span>
+
+			// Check if next point is a control point (corner)
+<span class="nc bnc" id="L645" title="All 2 branches missed.">			if (i + 2 &lt; newPoints.size()) {</span>
+<span class="nc" id="L646">				final XPoint2D p3 = newPoints.get(i + 2);</span>
+
+				// Check if p2 was originally a corner point
+<span class="nc" id="L649">				boolean isCornerControl = false;</span>
+<span class="nc bnc" id="L650" title="All 2 branches missed.">				for (int cornerIdx : corners) {</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">					if (originalPoints.get(cornerIdx).equals(p2)) {</span>
+<span class="nc" id="L652">						isCornerControl = true;</span>
+<span class="nc" id="L653">						break;</span>
+					}
+<span class="nc" id="L655">				}</span>
+
+<span class="nc bnc" id="L657" title="All 2 branches missed.">				if (isCornerControl) {</span>
+					// Create rounded corner with p2 as control point
+					// For circular arc approximation
+<span class="nc" id="L660">					final double dx1 = p2.getX() - p1.getX();</span>
+<span class="nc" id="L661">					final double dy1 = p2.getY() - p1.getY();</span>
+<span class="nc" id="L662">					final double dx2 = p3.getX() - p2.getX();</span>
+<span class="nc" id="L663">					final double dy2 = p3.getY() - p2.getY();</span>
+<span class="nc" id="L664">					final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
+<span class="nc" id="L665">					final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
+
+<span class="nc" id="L667">					final double controlDist = Math.min(len1, len2) * 0.55228;</span>
+
+<span class="nc" id="L669">					final double ctrl1X = p1.getX() + (dx1 / len1) * controlDist;</span>
+<span class="nc" id="L670">					final double ctrl1Y = p1.getY() + (dy1 / len1) * controlDist;</span>
+<span class="nc" id="L671">					final double ctrl2X = p3.getX() - (dx2 / len2) * controlDist;</span>
+<span class="nc" id="L672">					final double ctrl2Y = p3.getY() - (dy2 / len2) * controlDist;</span>
+
+<span class="nc" id="L674">					newBeziers.add(new XCubicCurve2D(p1.getX(), p1.getY(), ctrl1X, ctrl1Y,</span>
+<span class="nc" id="L675">							ctrl2X, ctrl2Y, p3.getX(), p3.getY()));</span>
+
+<span class="nc" id="L677">					i++; // Skip the control point and the next point</span>
+<span class="nc" id="L678">					continue;</span>
+				}
+			}
+
+			// Regular straight segment
+<span class="nc" id="L683">			newBeziers.add(new XCubicCurve2D(p1.getX(), p1.getY(), p1.getX(), p1.getY(),</span>
+<span class="nc" id="L684">					p2.getX(), p2.getY(), p2.getX(), p2.getY()));</span>
+		}
+<span class="nc" id="L686">		return newBeziers;</span>
+	}
+
+	/**
+	 * Check if path consists of orthogonal (horizontal/vertical) segments
+	 */
+	private boolean isOrthogonalPathInternal() {
+<span class="nc bnc" id="L693" title="All 2 branches missed.">		for (XCubicCurve2D curve : beziers) {</span>
+<span class="nc" id="L694">			final double dx = Math.abs(curve.x2 - curve.x1);</span>
+<span class="nc" id="L695">			final double dy = Math.abs(curve.y2 - curve.y1);</span>
+
+			// Check if segment is either horizontal or vertical (not diagonal)
+<span class="nc bnc" id="L698" title="All 4 branches missed.">			if (dx &gt; 0.1 &amp;&amp; dy &gt; 0.1)</span>
+<span class="nc" id="L699">				return false;</span>
+<span class="nc" id="L700">		}</span>
+<span class="nc" id="L701">		return true;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
