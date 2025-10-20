@@ -1239,4 +1239,9 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		dotPathInit.moveEndPoint(dx, dy);
 	}
 
+	public void replaceDotPath(net.sourceforge.plantuml.klimt.shape.DotPath newPath) {
+		this.dotPath = newPath;
+		this.dotPathInit = newPath.copy();
+	}
+
 }
