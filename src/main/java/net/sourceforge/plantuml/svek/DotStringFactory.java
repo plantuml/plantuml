@@ -51,9 +51,11 @@ import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.dot.ProcessState;
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.PragmaKey;
@@ -423,9 +425,192 @@ public final class DotStringFactory implements Moveable {
 		for (SvekEdge line : getBibliotekon().allLines())
 			line.solveLine(svgResult);
 
+		// Align edges at label nodes for orthogonal routing
+		if (skinParam.getDotSplines() == DotSplines.ORTHO)
+			alignEdgesAtLabelNodes();
+
 		for (SvekEdge line : getBibliotekon().allLines())
 			line.manageCollision(getBibliotekon().allNodes());
 
+	}
+
+	/**
+	 * Insert horizontal corners in orthogonal edges to align them through label node centers.
+	 * This handles the case where edges entering and leaving a label node are horizontally misaligned.
+	 */
+	private void alignEdgesAtLabelNodes() {
+		// Find all nodes that are edge labels (typically named "transition_...")
+		final List<SvekNode> labelNodes = new ArrayList<>();
+		for (SvekNode node : getBibliotekon().allNodes()) {
+			final Entity entity = getBibliotekon().getLeaf(node);
+			if (entity != null && entity.getName() != null && entity.getName().startsWith("transition_")) {
+				labelNodes.add(node);
+			}
+		}
+
+		// For each label node, find edges connecting through it and align them
+		for (SvekNode labelNode : labelNodes) {
+			alignEdgesThroughLabel(labelNode);
+		}
+	}
+
+	/**
+	 * Align edges that pass through a specific label node
+	 */
+	private void alignEdgesThroughLabel(SvekNode labelNode) {
+		// Find edges coming into and out of this label node
+		final Entity labelEntity = getBibliotekon().getLeaf(labelNode);
+		if (labelEntity == null)
+			return;
+
+		// Get all edges connected to this label node
+		final List<SvekEdge> connectedEdges = getBibliotekon().getAllLineConnectedTo(labelEntity);
+		if (connectedEdges.size() != 2)
+			return; // We need exactly 2 edges (one in, one out)
+
+		// Determine which edge is incoming and which is outgoing
+		final SvekEdge edge0 = connectedEdges.get(0);
+		final SvekEdge edge1 = connectedEdges.get(1);
+
+		if (edge0.getDotPath() == null || edge1.getDotPath() == null)
+			return;
+
+		// The edge whose endpoint is above the label is incoming (ends at label)
+		// The edge whose startpoint is below the label is outgoing (starts from label)
+		final double labelCenterY = labelNode.getMinY() + labelNode.getHeight() / 2.0;
+		final double edge0EndY = edge0.getDotPath().getEndPoint().getY();
+		final double edge0StartY = edge0.getDotPath().getStartPoint().getY();
+
+		SvekEdge edgeIn, edgeOut;
+		// If edge0 ends near the label (incoming to label), then edge1 starts from label (outgoing)
+		if (Math.abs(edge0EndY - labelCenterY) < Math.abs(edge0StartY - labelCenterY)) {
+			edgeIn = edge0;
+			edgeOut = edge1;
+		} else {
+			edgeIn = edge1;
+			edgeOut = edge0;
+		}
+
+		insertCornersForAlignment(edgeIn, edgeOut, labelNode);
+	}
+
+	/**
+	 * Insert horizontal corners in edges to align them at the label node center.
+	 * This creates new paths with straight line segments and right-angle corners.
+	 */
+	private void insertCornersForAlignment(SvekEdge edgeIn, SvekEdge edgeOut, SvekNode labelNode) {
+		final net.sourceforge.plantuml.klimt.shape.DotPath pathIn = edgeIn.getDotPath();
+		final net.sourceforge.plantuml.klimt.shape.DotPath pathOut = edgeOut.getDotPath();
+
+		if (pathIn == null || pathOut == null)
+			return;
+
+		// Get the label node center position
+		final double labelCenterX = labelNode.getMinX() + labelNode.getWidth() / 2.0;
+		final double labelCenterY = labelNode.getMinY() + labelNode.getHeight() / 2.0;
+
+		// Get edge endpoints
+		final XPoint2D inStart = pathIn.getStartPoint();
+		final XPoint2D inEnd = pathIn.getEndPoint();
+		final XPoint2D outStart = pathOut.getStartPoint();
+		final XPoint2D outEnd = pathOut.getEndPoint();
+
+		// Check if edges are misaligned horizontally
+		final double xDiff = Math.abs(inEnd.getX() - outStart.getX());
+		if (xDiff < 5.0) // Already aligned
+			return;
+
+		// Check if they connect through this label (vertically adjacent)
+		final double yGap = Math.abs(inEnd.getY() - outStart.getY());
+		if (yGap > 30.0) // Not connected through this label
+			return;
+
+		// Rebuild incoming edge with corner to align at label center
+		final net.sourceforge.plantuml.klimt.shape.DotPath newPathIn = rebuildPathWithCorner(
+			inStart, inEnd, labelCenterX, labelCenterY, true
+		);
+		if (newPathIn != null) {
+			edgeIn.replaceDotPath(newPathIn);
+		}
+
+		// Rebuild outgoing edge with corner to align at label center
+		final net.sourceforge.plantuml.klimt.shape.DotPath newPathOut = rebuildPathWithCorner(
+			outStart, outEnd, labelCenterX, labelCenterY, false
+		);
+		if (newPathOut != null) {
+			edgeOut.replaceDotPath(newPathOut);
+		}
+	}
+
+	/**
+	 * Rebuild a path with a horizontal corner to route through the target X coordinate.
+	 * Creates straight line segments: start -> corner1 -> corner2 -> end
+	 * The horizontal segment is placed at the start/end Y coordinate to avoid obscuring the label.
+	 */
+	private net.sourceforge.plantuml.klimt.shape.DotPath rebuildPathWithCorner(
+			XPoint2D start, XPoint2D end, double targetX, double targetY, boolean isIncoming) {
+
+		final double startX = start.getX();
+		final double startY = start.getY();
+		final double endX = end.getX();
+		final double endY = end.getY();
+
+		// Check if we need to add a corner
+		if (Math.abs(startX - targetX) < 1.0 && Math.abs(endX - targetX) < 1.0) {
+			return null; // Already aligned, no change needed
+		}
+
+		// Create path with vertical alignment at targetX
+		// Pattern for incoming: start → vertical → horizontal → vertical (aligned at targetX) → end
+		// Pattern for outgoing: start → vertical (aligned at targetX) → horizontal → vertical → end
+		final List<XCubicCurve2D> beziers = new ArrayList<>();
+
+		if (isIncoming) {
+			// Incoming edge: vertical → horizontal → vertical (aligned at targetX)
+			final double horizontalY = endY - 20;
+
+			// Segment 1: vertical from start down to horizontal routing level
+			beziers.add(new XCubicCurve2D(
+				startX, startY, startX, startY,
+				startX, horizontalY, startX, horizontalY
+			));
+
+			// Segment 2: horizontal jog from startX to targetX
+			beziers.add(new XCubicCurve2D(
+				startX, horizontalY, startX, horizontalY,
+				targetX, horizontalY, targetX, horizontalY
+			));
+
+			// Segment 3: vertical aligned segment at targetX down to endY (path ends at targetX)
+			beziers.add(new XCubicCurve2D(
+				targetX, horizontalY, targetX, horizontalY,
+				targetX, endY, targetX, endY
+			));
+
+		} else {
+			// Outgoing edge: vertical (aligned at targetX) → horizontal → vertical
+			final double horizontalY = startY + 20;
+
+			// Segment 1: vertical aligned segment at targetX from startY (path starts at targetX)
+			beziers.add(new XCubicCurve2D(
+				targetX, startY, targetX, startY,
+				targetX, horizontalY, targetX, horizontalY
+			));
+
+			// Segment 2: horizontal jog from targetX to endX
+			beziers.add(new XCubicCurve2D(
+				targetX, horizontalY, targetX, horizontalY,
+				endX, horizontalY, endX, horizontalY
+			));
+
+			// Segment 3: vertical down to actual end point
+			beziers.add(new XCubicCurve2D(
+				endX, horizontalY, endX, horizontalY,
+				endX, endY, endX, endY
+			));
+		}
+
+		return net.sourceforge.plantuml.klimt.shape.DotPath.fromBeziers(beziers);
 	}
 
 	private int getClusterIndex(final String svg, int colorInt) {
