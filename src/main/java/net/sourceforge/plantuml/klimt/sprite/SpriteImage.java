@@ -90,8 +90,7 @@ public class SpriteImage implements Sprite {
 			throw new IllegalArgumentException();
 
 		try {
-			InputStream is;
-			is = getInternalSprite(name + ".svg");
+			InputStream is = getInternalSprite(name + ".svg");
 			if (is != null)
 				return new SvgNanoParser(FileUtils.readAllBytes(is));
 			is = getInternalSprite(name + ".png");
@@ -106,7 +105,7 @@ public class SpriteImage implements Sprite {
 
 	}
 
-	public static InputStream getInternalSprite(final String inner) {
+	private static InputStream getInternalSprite(final String inner) {
 		final String path = "/sprites/" + inner;
 		Log.info(() -> "Triying " + path);
 		final InputStream is = SpriteImage.class.getResourceAsStream(path);
