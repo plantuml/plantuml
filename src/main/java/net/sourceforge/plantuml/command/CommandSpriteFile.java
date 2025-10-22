@@ -44,7 +44,6 @@ import java.util.zip.ZipInputStream;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.emoji.SpriteSvgNanoParser;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteSvg;
