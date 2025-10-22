@@ -121,12 +121,12 @@ public class LiveBoxesDrawer {
 <span class="nc" id="L121">	}</span>
 
 	public void drawDestroyIfNeeded(UGraphic ug, Step step) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (step.isDestroy()) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (step.isDestroy()) {</span>
 <span class="nc" id="L125">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
 <span class="nc" id="L126">			cross.drawU(ug.apply(new UTranslate(-dimCross.getWidth() / 2, step.getValue() - dimCross.getHeight() / 2)),</span>
 					null, context);
 		}
-<span class="nc" id="L129">	}</span>
+<span class="fc" id="L129">	}</span>
 
 	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
 <span class="nc" id="L132">		final double width = getWidth(ug.getStringBounder());</span>

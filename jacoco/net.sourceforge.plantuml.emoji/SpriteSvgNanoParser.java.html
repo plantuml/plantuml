@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.emoji;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
@@ -58,53 +57,30 @@ public class SpriteSvgNanoParser implements Sprite {
 
 	private final UImage img;
 
-<span class="nc" id="L61">	public SpriteSvgNanoParser(BufferedImage img) {</span>
-<span class="nc" id="L62">		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L60">	public SpriteSvgNanoParser(BufferedImage img) {</span>
+<span class="nc" id="L61">		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L62">	}</span>
 
 	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
 			final HColor backColor) {
-<span class="nc" id="L68">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L67">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L71">				final ColorMapper colorMapper = ug.getColorMapper();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">				if (colorMapper == ColorMapper.MONOCHROME)</span>
-<span class="nc" id="L73">					ug.draw(img.monochrome().scale(scale));</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				else if (forcedColor == null)</span>
-<span class="nc" id="L75">					ug.draw(img.scale(scale));</span>
+<span class="nc" id="L70">				final ColorMapper colorMapper = ug.getColorMapper();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">				if (colorMapper == ColorMapper.MONOCHROME)</span>
+<span class="nc" id="L72">					ug.draw(img.monochrome().scale(scale));</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">				else if (forcedColor == null)</span>
+<span class="nc" id="L74">					ug.draw(img.scale(scale));</span>
 				else
-<span class="nc" id="L77">					ug.draw(img.muteColor(forcedColor.toColor(colorMapper)).scale(scale));</span>
+<span class="nc" id="L76">					ug.draw(img.muteColor(forcedColor.toColor(colorMapper)).scale(scale));</span>
 
-<span class="nc" id="L79">			}</span>
+<span class="nc" id="L78">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L82">				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);</span>
+<span class="nc" id="L81">				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);</span>
 			}
 		};
-	}
-
-	public static Sprite fromInternal(String name) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (name.endsWith(&quot;.png&quot;))</span>
-<span class="nc" id="L89">			throw new IllegalArgumentException();</span>
-
-<span class="nc" id="L91">		final InputStream is = getInternalSprite(name + &quot;.png&quot;);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L93">			return null;</span>
-
-		try {
-<span class="nc" id="L96">			return new SpriteSvgNanoParser(SImageIO.read(is));</span>
-<span class="nc" id="L97">		} catch (IOException e) {</span>
-<span class="nc" id="L98">			Logme.error(e);</span>
-<span class="nc" id="L99">			return null;</span>
-		}
-
-	}
-
-	public static InputStream getInternalSprite(final String inner) {
-<span class="nc" id="L105">		final String path = &quot;/sprites/&quot; + inner;</span>
-<span class="nc" id="L106">		final InputStream is = SpriteSvgNanoParser.class.getResourceAsStream(path);</span>
-<span class="nc" id="L107">		return is;</span>
 	}
 
 }
