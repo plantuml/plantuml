@@ -106,7 +106,7 @@ public enum CliFlag {
 	@CliDefaultValue("0")
 	PIPE_IMAGE_INDEX("--pipe-image-index", aliases(DEPRECATED("-pipeimageindex")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	@CliFlagDoc(value = "Define a preprocessing variable (equivalent to '!define <var> <value>')", usage = "-D<var>=<value>,\n--define <VAR>=<value>", level = 0)
+	@CliFlagDoc(value = "Define a preprocessing variable (equivalent to '!define <var> <value>')", usage = "-d, --define <VAR>=<value>", level = 0)
 	DEFINE("-D", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 	DEFINE_LONG("--define", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
@@ -229,7 +229,7 @@ public enum CliFlag {
 
 	// Output format (choose one)
 
-	@CliFlagDoc(value = "Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)", level = 0, usage = "-f <name>, --format <name>", newGroup = "Output format (choose one)")
+	@CliFlagDoc(value = "Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)", level = 0, usage = "-f, --format <name>", newGroup = "Output format (choose one)")
 	FORMAT("--format", aliases("-f"), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 	
 	@CliFlagDoc(value = "Generate images in EPS format", level = 0, newGroup = "Available formats")

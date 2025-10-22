@@ -46,7 +46,7 @@ public enum Arity {
 	/** Option with a key and an optional value, e.g. -ftp or -ftp:8080*/
 	UNARY_OPTIONAL_COLON,
 
-	/** Option with an argument or a key/value, e.g. -DSOME_FLAG or -DKEY=VALUE  */
+	/** Option with an argument or a key/value, e.g. -DSOME_FLAG or -DKEY=VALUE or -D SOME_FLAG or -D KEY=VALUE  */
 	UNARY_INLINE_KEY_OR_KEY_VALUE,
 
 	/** Option with a single value, e.g. -graphvizdot "foo.exe" */
