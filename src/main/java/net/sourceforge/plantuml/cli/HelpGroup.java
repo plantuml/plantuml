@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2025, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -35,20 +35,54 @@
  */
 package net.sourceforge.plantuml.cli;
 
-public enum Arity {
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.TreeSet;
 
-	/** Option without any value, e.g. -verbose */
-	UNARY_BOOLEAN,
+public class HelpGroup implements Iterable<CliFlag> {
 
-	/** Option without any value that break the usual behaviour, e.g. -help, -testdot */
-	UNARY_IMMEDIATE_ACTION,
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
-	/** Option with a key and an optional value, e.g. -ftp or -ftp:8080*/
-	UNARY_OPTIONAL_COLON,
+	private static final Comparator<CliFlag> COMPARATOR = new Comparator<CliFlag>() {
 
-	/** Option with an argument or a key/value, e.g. -DSOME_FLAG or -DKEY=VALUE or -D SOME_FLAG or -D KEY=VALUE  */
-	UNARY_INLINE_KEY_OR_KEY_VALUE,
+		private String clean(String s) {
+			// Just because we what "-v, --verbose" and "--version" to be sorted %-)
+			final String onlyLetters = s.replaceAll("\\W", "").toLowerCase(Locale.US);
+			if (s.trim().startsWith("--"))
+				return onlyLetters.charAt(0) + onlyLetters;
+			return onlyLetters;
+		}
 
-	/** Option with a single value, e.g. -graphvizdot "foo.exe" */
-	BINARY_NEXT_ARGUMENT_VALUE;
+		@Override
+		public int compare(CliFlag flag1, CliFlag flag2) {
+			final String usage1 = clean(flag1.getUsage());
+			final String usage2 = clean(flag2.getUsage());
+			return usage1.compareTo(usage2);
+		}
+	};
+
+	private final String title;
+	private final Collection<CliFlag> flags = new TreeSet<>(COMPARATOR);
+
+	public HelpGroup(String title) {
+		this.title = title;
+	}
+
+	public void append(CliFlag flag) {
+		this.flags.add(flag);
+
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	@Override
+	public Iterator<CliFlag> iterator() {
+		return flags.iterator();
+	}
+
 }

@@ -74,6 +74,16 @@ class CliParsedTest {
 	}
 
 	@Test
+	void define12() {
+		final CliParsed parsed = CliParsed.parse("-D", "FOO=42");
+		assertEquals("{DEFINE={FOO=42}}", parsed.toString());
+		assertTrue(parsed.isTrue(CliFlag.DEFINE));
+		final Map<String, String> map = parsed.getMap(CliFlag.DEFINE);
+		assertEquals("{FOO=42}", map.toString());
+	}
+
+
+	@Test
 	void define20() {
 		final CliParsed parsed = CliParsed.parse("-DFOO=42", "-DDUMMY=43");
 		assertEquals("{DEFINE={FOO=42, DUMMY=43}}", parsed.toString());

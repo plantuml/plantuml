@@ -190,7 +190,12 @@ public class CliParsed {
 					break;
 
 				case UNARY_INLINE_KEY_OR_KEY_VALUE:
-					final String s = peeker.peek(0).substring(2);
+					String s = peeker.peek(0).substring(2);
+					if (s.length() == 0) {
+						peeker.jump();
+						s = peeker.peek(0);
+					}
+
 					final int eqIndex = s.indexOf('=');
 					final String k = eqIndex < 0 ? s : s.substring(0, eqIndex);
 					final String v = eqIndex < 0 ? null : s.substring(eqIndex + 1);
