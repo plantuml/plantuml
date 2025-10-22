@@ -117,6 +117,7 @@ public enum TokenOperator {
 		case '+':
 			return ADDITION;
 
+		case '-':
 		case TokenType.COMMERCIAL_MINUS_SIGN:
 			return SUBSTRACTION;
 
