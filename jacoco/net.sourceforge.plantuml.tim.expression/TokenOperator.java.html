@@ -117,38 +117,39 @@ package net.sourceforge.plantuml.tim.expression;
 		case '+':
 <span class="fc" id="L118">			return ADDITION;</span>
 
+		case '-':
 		case TokenType.COMMERCIAL_MINUS_SIGN:
-<span class="fc" id="L121">			return SUBSTRACTION;</span>
+<span class="fc" id="L122">			return SUBSTRACTION;</span>
 
 		case '&lt;':
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			return (ch2 == '=') ? LESS_THAN_OR_EQUALS : LESS_THAN;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			return (ch2 == '=') ? LESS_THAN_OR_EQUALS : LESS_THAN;</span>
 
 		case '&gt;':
-<span class="fc bfc" id="L127" title="All 2 branches covered.">			return (ch2 == '=') ? GREATER_THAN_OR_EQUALS : GREATER_THAN;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			return (ch2 == '=') ? GREATER_THAN_OR_EQUALS : GREATER_THAN;</span>
 
 		case '=':
-<span class="fc bfc" id="L130" title="All 2 branches covered.">			return (ch2 == '=') ? EQUALS : null;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">			return (ch2 == '=') ? EQUALS : null;</span>
 
 		case '!':
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			return (ch2 == '=') ? NOT_EQUALS : null;</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			return (ch2 == '=') ? NOT_EQUALS : null;</span>
 
 		case '&amp;':
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			return (ch2 == '&amp;') ? LOGICAL_AND : null;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			return (ch2 == '&amp;') ? LOGICAL_AND : null;</span>
 
 		case '|':
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">			return (ch2 == '|') ? LOGICAL_OR : null;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			return (ch2 == '|') ? LOGICAL_OR : null;</span>
 		}
-<span class="fc" id="L141">		return null;</span>
+<span class="fc" id="L142">		return null;</span>
 	}
 
 	public final int getPrecedence() {
-<span class="fc" id="L145">		return precedence;</span>
+<span class="fc" id="L146">		return precedence;</span>
 	}
 
 	public abstract TValue operate(TValue v1, TValue v2);
 
 	public final String getDisplay() {
-<span class="fc" id="L151">		return display;</span>
+<span class="fc" id="L152">		return display;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

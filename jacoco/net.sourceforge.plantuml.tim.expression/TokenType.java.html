@@ -87,54 +87,63 @@ import net.sourceforge.plantuml.tim.EaterException;
 <span class="pc bpc" id="L87" title="3 of 4 branches missed.">		if (manageColon &amp;&amp; ch == ':')</span>
 <span class="nc" id="L88">			return null;</span>
 
-<span class="pc bpc" id="L90" title="1 of 4 branches missed.">		if (ch == '-' &amp;&amp; isTheMinusAnOperation(lastToken))</span>
+<span class="pc bpc" id="L90" title="1 of 4 branches missed.">		if (ch == '-' &amp;&amp; isSubtractionOperator(lastToken))</span>
 <span class="fc" id="L91">			ch = COMMERCIAL_MINUS_SIGN;</span>
 
 <span class="fc" id="L93">		final TokenOperator tokenOperator = TokenOperator.getTokenOperator(ch, eater.peekCharN2());</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (TLineType.isQuote(ch)) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (TLineType.isQuote(ch))</span>
 <span class="fc" id="L95">			return new Token(eater.eatAndGetQuotedString(), TokenType.QUOTED_STRING, null);</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		} else if (tokenOperator != null) {</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (tokenOperator.getDisplay().length() == 1) {</span>
-<span class="fc" id="L98">				eater.eatOneChar();</span>
-<span class="fc" id="L99">				return new Token(ch, TokenType.OPERATOR, null);</span>
+		
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		else if (tokenOperator != null) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (tokenOperator.getDisplay().length() == 1) {</span>
+<span class="fc" id="L99">				eater.eatOneChar();</span>
+<span class="fc" id="L100">				return new Token(ch, TokenType.OPERATOR, null);</span>
 			}
 
-<span class="fc" id="L102">			return new Token(&quot;&quot; + eater.eatOneChar() + eater.eatOneChar(), TokenType.OPERATOR, null);</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		} else if (ch == '=') {</span>
-<span class="fc" id="L104">			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (ch == '(') {</span>
-<span class="fc" id="L106">			return new Token(eater.eatOneChar(), TokenType.OPEN_PAREN_MATH, null);</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		} else if (ch == ')') {</span>
-<span class="fc" id="L108">			return new Token(eater.eatOneChar(), TokenType.CLOSE_PAREN_MATH, null);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		} else if (ch == ',') {</span>
-<span class="fc" id="L110">			return new Token(eater.eatOneChar(), TokenType.COMMA, null);</span>
-<span class="pc bpc" id="L111" title="1 of 4 branches missed.">		} else if (TLineType.isLatinDigit(ch) || ch == '-') {</span>
-<span class="fc" id="L112">			return new Token(eater.eatAndGetNumber(), TokenType.NUMBER, null);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		} else if (TLineType.isSpaceChar(ch)) {</span>
-<span class="fc" id="L114">			return new Token(eater.eatAndGetSpaces(), TokenType.SPACES, null);</span>
-		}
-<span class="fc" id="L116">		return new Token(eatAndGetTokenPlainText(eater), TokenType.PLAIN_TEXT, null);</span>
+<span class="fc" id="L103">			return new Token(&quot;&quot; + eater.eatOneChar() + eater.eatOneChar(), TokenType.OPERATOR, null);</span>
+			
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (ch == '=') </span>
+<span class="fc" id="L106">			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);</span>
+		
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		 else if (ch == '(') </span>
+<span class="fc" id="L109">			return new Token(eater.eatOneChar(), TokenType.OPEN_PAREN_MATH, null);</span>
+		
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		 else if (ch == ')') </span>
+<span class="fc" id="L112">			return new Token(eater.eatOneChar(), TokenType.CLOSE_PAREN_MATH, null);</span>
+		
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		 else if (ch == ',') </span>
+<span class="fc" id="L115">			return new Token(eater.eatOneChar(), TokenType.COMMA, null);</span>
+		
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		 else if (TLineType.isLatinDigit(ch) || ch == '-')</span>
+<span class="fc" id="L118">			return new Token(eater.eatAndGetNumber(), TokenType.NUMBER, null);</span>
+			
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		 else if (TLineType.isSpaceChar(ch)) </span>
+<span class="fc" id="L121">			return new Token(eater.eatAndGetSpaces(), TokenType.SPACES, null);</span>
+		
+<span class="fc" id="L123">		return new Token(eatAndGetTokenPlainText(eater), TokenType.PLAIN_TEXT, null);</span>
 	}
 
-	private static boolean isTheMinusAnOperation(Token lastToken) {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (lastToken == null)</span>
-<span class="nc" id="L121">			return false;</span>
-<span class="fc" id="L122">		final TokenType type = lastToken.getTokenType();</span>
-<span class="pc bpc" id="L123" title="4 of 8 branches missed.">		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA</span>
+	private static boolean isSubtractionOperator(Token lastToken) {
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (lastToken == null)</span>
+<span class="nc" id="L128">			return false;</span>
+		
+<span class="fc" id="L130">		final TokenType type = lastToken.getTokenType();</span>
+<span class="pc bpc" id="L131" title="4 of 8 branches missed.">		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA</span>
 				|| type == TokenType.AFFECTATION)
-<span class="nc" id="L125">			return false;</span>
-<span class="fc" id="L126">		return true;</span>
+<span class="nc" id="L133">			return false;</span>
+		
+<span class="fc" id="L135">		return true;</span>
 	}
 
 	static private String eatAndGetTokenPlainText(Eater eater) throws EaterException {
-<span class="fc" id="L130">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L139">		final StringBuilder result = new StringBuilder();</span>
 		while (true) {
-<span class="fc" id="L132">			final char ch = eater.peekChar();</span>
-<span class="fc bfc" id="L133" title="All 4 branches covered.">			if (ch == 0 || TokenType.isPlainTextBreak(ch, eater.peekCharN2()))</span>
-<span class="fc" id="L134">				return result.toString();</span>
+<span class="fc" id="L141">			final char ch = eater.peekChar();</span>
+<span class="fc bfc" id="L142" title="All 4 branches covered.">			if (ch == 0 || TokenType.isPlainTextBreak(ch, eater.peekCharN2()))</span>
+<span class="fc" id="L143">				return result.toString();</span>
 
-<span class="fc" id="L136">			result.append(eater.eatOneChar());</span>
-<span class="fc" id="L137">		}</span>
+<span class="fc" id="L145">			result.append(eater.eatOneChar());</span>
+<span class="fc" id="L146">		}</span>
 	}
 
 }
