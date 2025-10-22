@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.emoji;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
@@ -82,29 +81,6 @@ public class SpriteSvgNanoParser implements Sprite {
 				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);
 			}
 		};
-	}
-
-	public static Sprite fromInternal(String name) {
-		if (name.endsWith(".png"))
-			throw new IllegalArgumentException();
-
-		final InputStream is = getInternalSprite(name + ".png");
-		if (is == null)
-			return null;
-
-		try {
-			return new SpriteSvgNanoParser(SImageIO.read(is));
-		} catch (IOException e) {
-			Logme.error(e);
-			return null;
-		}
-
-	}
-
-	public static InputStream getInternalSprite(final String inner) {
-		final String path = "/sprites/" + inner;
-		final InputStream is = SpriteSvgNanoParser.class.getResourceAsStream(path);
-		return is;
 	}
 
 }
