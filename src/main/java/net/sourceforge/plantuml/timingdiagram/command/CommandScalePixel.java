@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -56,6 +57,10 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("scale"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "TICK", "(\\d+)"), //
+				new RegexOptional(//
+					new RegexConcat( //
+								RegexLeaf.spaceZeroOrOne(), //
+								new RegexLeaf(1, "UNIT", "([smhdyY])"))), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -67,7 +72,24 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final long tick = Long.parseLong(arg.get("TICK", 0));
+		long tick = Long.parseLong(arg.get("TICK", 0));
+		final char unit = arg.get("UNIT", 0).toLowerCase().charAt(0);
+		switch (unit) {
+		case 'm':
+			tick = tick * 60L;
+			break;
+		case 'h':
+			tick = tick * 3600L;
+			break;
+		case 'd':
+			tick = tick * 3600L * 24L;
+			break;
+		case 'y':
+			tick = tick * 3600L * 8766L; // 24 * 365.25 = 8766
+			break;
+		default:
+			// second unit by default!
+		}
 		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
 		if (tick <= 0 || pixel <= 0)
 			return CommandExecutionResult.error("Bad value");
