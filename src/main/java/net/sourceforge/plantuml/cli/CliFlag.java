@@ -110,15 +110,15 @@ public enum CliFlag {
 	DEFINE("-D", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 	DEFINE_LONG("--define", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Include external file (as with '!include <file>')", usage = "-I<file>,\n--include <file>", level = 1)
+	@CliFlagDoc(value = "Include external file (as with '!include <file>')", usage = "-I, --include <file>", level = 1)
 	INCLUDE("-I", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 	INCLUDE_LONG("--include", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Set pragma (equivalent to '!pragma <key> <value>')", usage = "-P<key>=<value>,\n--pragma <key>=<value>", level = 1)
+	@CliFlagDoc(value = "Set pragma (equivalent to '!pragma <key> <value>')", usage = "-P, --pragma <key>=<value>", level = 1)
 	PRAGMA("-P", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 	PRAGMA_LONG("--pragma", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 
-	@CliFlagDoc(value = "Set skin parameter (equivalent to 'skinparam <key> <value>')", usage = "-S<key>=<value>,\n--skinparam <key>=<value>", level = 1)
+	@CliFlagDoc(value = "Set skin parameter (equivalent to 'skinparam <key> <value>')", usage = "--skinparam <key>=<value>", level = 1)
 	SKINPARAM("-S", Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 	SKINPARAM_LONG("--skinparam", Arity.BINARY_NEXT_ARGUMENT_VALUE), //
 

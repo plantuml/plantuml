@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.cli;
 
 import java.nio.charset.Charset;
-
-import net.sourceforge.plantuml.security.SFile;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelpPrint {
 	// ::remove file when __CORE__
@@ -63,22 +63,19 @@ public class HelpPrint {
 		System.out.println("General:");
 	}
 
-
 	static public void printHelp() {
 		final String charset = Charset.defaultCharset().displayName();
 		printHeader();
 		getHelpTable(0).printMe(System.out);
 		printFooter();
 	}
-	
+
 	static public void printHelpMore() {
 		final String charset = Charset.defaultCharset().displayName();
 		printHeader();
 		getHelpTable(1).printMe(System.out);
 		printFooter();
 	}
-
-
 
 	private static void printFooter() {
 		System.out.println();
@@ -114,6 +111,9 @@ public class HelpPrint {
 	private static HelpTable getHelpTable(int limit) {
 		final HelpTable table = new HelpTable();
 
+		final List<HelpGroup> groups = new ArrayList<>();
+		groups.add(new HelpGroup("General"));
+
 		for (CliFlag flag : CliFlag.values()) {
 			final String doc = flag.getFlagDoc();
 			final int level = flag.getFlagLevel();
@@ -121,11 +121,19 @@ public class HelpPrint {
 
 			if (doc != null && level <= limit) {
 				if (newgroup.length() > 0)
-					table.newLine("", newgroup);
+					groups.add(new HelpGroup(newgroup));
 
-				table.newLine(flag.getUsage(), doc);
+				groups.get(groups.size() - 1).append(flag);
 			}
 		}
+
+		for (HelpGroup group : groups) {
+			table.newLine("", group.getTitle());
+
+			for (CliFlag flag : group)
+				table.newLine(flag.getUsage(), flag.getFlagDoc());
+		}
+
 		return table;
 	}
 
