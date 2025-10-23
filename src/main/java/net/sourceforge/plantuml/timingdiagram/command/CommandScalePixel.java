@@ -72,7 +72,7 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		long tick = Long.parseLong(arg.get("TICK", 0)) * getUnitFactor(arg.get("UNIT", 0));
+		final long tick = Long.parseLong(arg.get("TICK", 0)) * getUnitFactor(arg.get("UNIT", 0));
 		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
 		if (tick <= 0 || pixel <= 0)
 			return CommandExecutionResult.error("Bad value");
