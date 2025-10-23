@@ -54,10 +54,10 @@ import java.util.List;
 <span class="fc" id="L54">		int result = 0;</span>
 <span class="fc bfc" id="L55" title="All 2 branches covered.">		for (String[] line : lines) {</span>
 <span class="fc" id="L56">			final int idx = line[0].indexOf('\n');</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">			if (idx == -1)</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">			if (idx == -1)</span>
 <span class="fc" id="L58">				result = Math.max(result, line[0].length());</span>
 			else
-<span class="fc" id="L60">				result = Math.max(result, idx);</span>
+<span class="nc" id="L60">				result = Math.max(result, idx);</span>
 <span class="fc" id="L61">		}</span>
 <span class="fc" id="L62">		return result;</span>
 	}
@@ -89,9 +89,9 @@ import java.util.List;
 <span class="fc" id="L89">			final String firstCol[] = line[0].split(&quot;\n&quot;);</span>
 <span class="fc" id="L90">			final String secondCol[] = line[1].split(&quot;\n&quot;);</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (firstCol.length == 2) {</span>
-<span class="fc" id="L93">				out.println(firstCol[0]);</span>
-<span class="fc" id="L94">				out.println(&quot;     &quot; + format(firstCol[1] + &quot; &quot;, size0 + 2 - 5, '.') + &quot; &quot; + secondCol[0]);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (firstCol.length == 2) {</span>
+<span class="nc" id="L93">				out.println(firstCol[0]);</span>
+<span class="nc" id="L94">				out.println(&quot;     &quot; + format(firstCol[1] + &quot; &quot;, size0 + 2 - 5, '.') + &quot; &quot; + secondCol[0]);</span>
 
 			} else {
 <span class="fc" id="L97">				out.println(format(line[0] + &quot; &quot;, size0 + 2, '.') + &quot; &quot; + secondCol[0]);</span>

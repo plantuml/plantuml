@@ -105,18 +105,18 @@ import net.sourceforge.plantuml.style.ISkinParam;
 			}
 <span class="fc bfc" id="L106" title="All 2 branches covered.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
 <span class="fc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
-<span class="fc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
+<span class="pc bpc" id="L108" title="3 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
+<span class="nc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.LEFT)</span>
 <span class="nc" id="L112">					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);</span>
-<span class="pc bpc" id="L114" title="1 of 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
 <span class="fc" id="L115">					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
-<span class="fc" id="L118">					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">							reverse ? livingSpace1 : livingSpace2, noteOnMessage, currentY);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
+<span class="nc" id="L118">					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">							reverse ? livingSpace1 : livingSpace2, noteOnMessage, currentY);</span>
 <span class="nc bnc" id="L120" title="All 2 branches missed.">				else if (notePosition == NotePosition.BOTTOM)</span>
 <span class="nc" id="L121">					result = new CommunicationTileNoteBottom(result, msg, skin, skinParam, noteOnMessage, currentY);</span>
 <span class="nc bnc" id="L122" title="All 2 branches missed.">				else if (notePosition == NotePosition.TOP)</span>
@@ -166,9 +166,9 @@ import net.sourceforge.plantuml.style.ISkinParam;
 			if (YGauge.USE_ME == false)
 <span class="fc" id="L167">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
 
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
-<span class="fc" id="L170">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>
-<span class="fc" id="L171">			tiles.add(new ElseTile(anElse, skin, skinParam, parent, currentY));</span>
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
+<span class="nc" id="L170">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>
+<span class="nc" id="L171">			tiles.add(new ElseTile(anElse, skin, skinParam, parent, currentY));</span>
 <span class="pc bpc" id="L172" title="1 of 2 branches missed.">		} else if (ev instanceof Reference) {</span>
 <span class="nc" id="L173">			final Reference ref = (Reference) ev;</span>
 <span class="nc" id="L174">			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref), currentY));</span>

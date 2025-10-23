@@ -106,19 +106,19 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 	@CliDefaultValue(&quot;0&quot;)
 <span class="fc" id="L107">	PIPE_IMAGE_INDEX(&quot;--pipe-image-index&quot;, aliases(DEPRECATED(&quot;-pipeimageindex&quot;)), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 
-<span class="fc" id="L109">	@CliFlagDoc(value = &quot;Define a preprocessing variable (equivalent to '!define &lt;var&gt; &lt;value&gt;')&quot;, usage = &quot;-D&lt;var&gt;=&lt;value&gt;,\n--define &lt;VAR&gt;=&lt;value&gt;&quot;, level = 0)</span>
+<span class="fc" id="L109">	@CliFlagDoc(value = &quot;Define a preprocessing variable (equivalent to '!define &lt;var&gt; &lt;value&gt;')&quot;, usage = &quot;-d, --define &lt;VAR&gt;=&lt;value&gt;&quot;, level = 0)</span>
 	DEFINE(&quot;-D&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 <span class="fc" id="L111">	DEFINE_LONG(&quot;--define&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L113">	@CliFlagDoc(value = &quot;Include external file (as with '!include &lt;file&gt;')&quot;, usage = &quot;-I&lt;file&gt;,\n--include &lt;file&gt;&quot;, level = 1)</span>
+<span class="fc" id="L113">	@CliFlagDoc(value = &quot;Include external file (as with '!include &lt;file&gt;')&quot;, usage = &quot;-I, --include &lt;file&gt;&quot;, level = 1)</span>
 	INCLUDE(&quot;-I&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 <span class="fc" id="L115">	INCLUDE_LONG(&quot;--include&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L117">	@CliFlagDoc(value = &quot;Set pragma (equivalent to '!pragma &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-P&lt;key&gt;=&lt;value&gt;,\n--pragma &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
+<span class="fc" id="L117">	@CliFlagDoc(value = &quot;Set pragma (equivalent to '!pragma &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-P, --pragma &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
 	PRAGMA(&quot;-P&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 <span class="fc" id="L119">	PRAGMA_LONG(&quot;--pragma&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
-<span class="fc" id="L121">	@CliFlagDoc(value = &quot;Set skin parameter (equivalent to 'skinparam &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;-S&lt;key&gt;=&lt;value&gt;,\n--skinparam &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
+<span class="fc" id="L121">	@CliFlagDoc(value = &quot;Set skin parameter (equivalent to 'skinparam &lt;key&gt; &lt;value&gt;')&quot;, usage = &quot;--skinparam &lt;key&gt;=&lt;value&gt;&quot;, level = 1)</span>
 	SKINPARAM(&quot;-S&quot;, Arity.UNARY_INLINE_KEY_OR_KEY_VALUE), //
 <span class="fc" id="L123">	SKINPARAM_LONG(&quot;--skinparam&quot;, Arity.BINARY_NEXT_ARGUMENT_VALUE), //</span>
 
@@ -229,7 +229,7 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 
 	// Output format (choose one)
 
-<span class="fc" id="L232">	@CliFlagDoc(value = &quot;Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)&quot;, level = 0, usage = &quot;-f &lt;name&gt;, --format &lt;name&gt;&quot;, newGroup = &quot;Output format (choose one)&quot;)</span>
+<span class="fc" id="L232">	@CliFlagDoc(value = &quot;Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)&quot;, level = 0, usage = &quot;-f, --format &lt;name&gt;&quot;, newGroup = &quot;Output format (choose one)&quot;)</span>
 <span class="fc" id="L233">	FORMAT(&quot;--format&quot;, aliases(&quot;-f&quot;), Arity.BINARY_NEXT_ARGUMENT_VALUE),</span>
 	
 <span class="fc" id="L235">	@CliFlagDoc(value = &quot;Generate images in EPS format&quot;, level = 0, newGroup = &quot;Available formats&quot;)</span>

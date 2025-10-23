@@ -92,8 +92,8 @@ public class CommunicationTile extends AbstractCommunicationTile {
 <span class="fc" id="L92">		final ArrowComponent comp = getComponent(getStringBounder());</span>
 <span class="fc" id="L93">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (message.isParallel())</span>
-<span class="fc" id="L96">			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (message.isParallel())</span>
+<span class="nc" id="L96">			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());</span>
 		else
 <span class="fc" id="L98">			this.yGauge = YGauge.create(currentY.getMax(), dim.getHeight());</span>
 <span class="fc" id="L99">	}</span>
@@ -147,7 +147,7 @@ public class CommunicationTile extends AbstractCommunicationTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L150">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+<span class="nc" id="L150">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;
@@ -186,8 +186,8 @@ public class CommunicationTile extends AbstractCommunicationTile {
 <span class="fc bfc" id="L186" title="All 2 branches covered.">		if (isReverse(stringBounder)) {</span>
 <span class="fc" id="L187">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
 <span class="fc" id="L188">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (level1 == 1)</span>
-<span class="fc" id="L190">				x1 -= LIVE_DELTA_SIZE;</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">			if (level1 == 1)</span>
+<span class="nc" id="L190">				x1 -= LIVE_DELTA_SIZE;</span>
 <span class="fc bfc" id="L191" title="All 2 branches covered.">			else if (level1 &gt; 2)</span>
 <span class="fc" id="L192">				x1 += LIVE_DELTA_SIZE * (level1 - 2);</span>
 

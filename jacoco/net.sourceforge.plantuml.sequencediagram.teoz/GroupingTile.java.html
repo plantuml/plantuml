@@ -88,7 +88,7 @@ public class GroupingTile extends AbstractTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L91">		return 0;</span>
+<span class="nc" id="L91">		return 0;</span>
 	}
 
 	@Override
@@ -102,8 +102,8 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L102">		final Real firstY = currentY.getMax();</span>
 <span class="fc" id="L103">		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();</span>
 <span class="fc" id="L104">		this.start = start;</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		this.display = start.getTitle().equals(&quot;group&quot;) ? Display.create(start.getComment())</span>
-<span class="fc" id="L106">				: Display.create(start.getTitle(), start.getComment());</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		this.display = start.getTitle().equals(&quot;group&quot;) ? Display.create(start.getComment())</span>
+<span class="pc" id="L106">				: Display.create(start.getTitle(), start.getComment());</span>
 <span class="fc" id="L107">		this.skin = tileArgumentsOriginal.getSkin();</span>
 		// this.skinParam = tileArgumentsOriginal.getSkinParam();
 <span class="fc" id="L109">		this.skinParam = tileArgumentsBackColorChanged.getSkinParam();</span>
@@ -119,7 +119,7 @@ public class GroupingTile extends AbstractTile {
 
 <span class="pc bpc" id="L120" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
 <span class="fc" id="L121">			final Event ev = it.next();</span>
-<span class="fc bfc" id="L122" title="All 4 branches covered.">			if (ev instanceof GroupingLeaf &amp;&amp; ((Grouping) ev).getType() == GroupingType.END)</span>
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">			if (ev instanceof GroupingLeaf &amp;&amp; ((Grouping) ev).getType() == GroupingType.END)</span>
 <span class="fc" id="L123">				break;</span>
 
 <span class="fc bfc" id="L125" title="All 2 branches covered.">			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this, currentY)) {</span>
@@ -135,9 +135,9 @@ public class GroupingTile extends AbstractTile {
 <span class="fc bfc" id="L135" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
 <span class="fc" id="L136">			bodyHeight += tile.getPreferredHeight();</span>
 <span class="fc" id="L137">			final Event ev = tile.getEvent();</span>
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">			if (ev instanceof GroupingLeaf &amp;&amp; ((Grouping) ev).getType() == GroupingType.ELSE) {</span>
-<span class="fc" id="L139">				allElses.add(tile);</span>
-<span class="fc" id="L140">				continue;</span>
+<span class="pc bpc" id="L138" title="3 of 4 branches missed.">			if (ev instanceof GroupingLeaf &amp;&amp; ((Grouping) ev).getType() == GroupingType.ELSE) {</span>
+<span class="nc" id="L139">				allElses.add(tile);</span>
+<span class="nc" id="L140">				continue;</span>
 			}
 <span class="fc" id="L142">			min2.add(tile.getMinX().addFixed(-MARGINX));</span>
 <span class="fc" id="L143">			final Real m = tile.getMaxX();</span>
@@ -149,8 +149,8 @@ public class GroupingTile extends AbstractTile {
 <span class="nc" id="L149">			min2.add(tileArgumentsOriginal.getXOrigin());</span>
 
 <span class="fc" id="L151">		this.min = RealUtils.min(min2);</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (Tile anElse : allElses)</span>
-<span class="fc" id="L153">			max2.add(anElse.getMaxX());</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		for (Tile anElse : allElses)</span>
+<span class="nc" id="L153">			max2.add(anElse.getMaxX());</span>
 
 <span class="fc" id="L155">		max2.add(this.min.addFixed(width + 16));</span>
 <span class="fc" id="L156">		this.max = RealUtils.max(max2);</span>
@@ -207,10 +207,10 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L207">		final Blotter blotter = new Blotter(dimensionToUse, back, round);</span>
 
 <span class="fc bfc" id="L209" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (tile instanceof ElseTile) {</span>
-<span class="fc" id="L211">				final ElseTile elseTile = (ElseTile) tile;</span>
-<span class="fc" id="L212">				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;</span>
-<span class="fc" id="L213">				blotter.addChange(ypos + 1, elseTile.getBackColorGeneral());</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">			if (tile instanceof ElseTile) {</span>
+<span class="nc" id="L211">				final ElseTile elseTile = (ElseTile) tile;</span>
+<span class="nc" id="L212">				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;</span>
+<span class="nc" id="L213">				blotter.addChange(ypos + 1, elseTile.getBackColorGeneral());</span>
 			}
 
 <span class="fc" id="L216">		blotter.closeChanges();</span>
@@ -241,27 +241,27 @@ public class GroupingTile extends AbstractTile {
 
 <span class="fc" id="L242">		final List&lt;Double&gt; ys = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L243" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L244" title="All 2 branches covered.">			if (tile instanceof ElseTile) {</span>
-<span class="fc" id="L245">				final ElseTile elseTile = (ElseTile) tile;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">			if (tile instanceof ElseTile) {</span>
+<span class="nc" id="L245">				final ElseTile elseTile = (ElseTile) tile;</span>
 				final double ypos;
 				if (YGauge.USE_ME)
 					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getYGauge().getMin().getCurrentValue()
 							+ MARGINY_MAGIC / 2;
 				else
-<span class="fc" id="L251">					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;</span>
-<span class="fc" id="L252">				ys.add(ypos);</span>
+<span class="nc" id="L251">					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;</span>
+<span class="nc" id="L252">				ys.add(ypos);</span>
 			}
 <span class="fc" id="L254">		}</span>
 <span class="fc" id="L255">		final double totalHeight = getTotalHeight(stringBounder);</span>
 <span class="fc" id="L256">		ys.add(totalHeight);</span>
 <span class="fc" id="L257">		int i = 0;</span>
 <span class="fc bfc" id="L258" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (tile instanceof ElseTile) {</span>
-<span class="fc" id="L260">				final ElseTile elseTile = (ElseTile) tile;</span>
-<span class="fc" id="L261">				final Component comp = elseTile.getComponent(stringBounder);</span>
-<span class="fc" id="L262">				final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), ys.get(i + 1) - ys.get(i));</span>
-<span class="fc" id="L263">				comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), ys.get(i))), area, (Context2D) ug);</span>
-<span class="fc" id="L264">				i++;</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">			if (tile instanceof ElseTile) {</span>
+<span class="nc" id="L260">				final ElseTile elseTile = (ElseTile) tile;</span>
+<span class="nc" id="L261">				final Component comp = elseTile.getComponent(stringBounder);</span>
+<span class="nc" id="L262">				final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), ys.get(i + 1) - ys.get(i));</span>
+<span class="nc" id="L263">				comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), ys.get(i))), area, (Context2D) ug);</span>
+<span class="nc" id="L264">				i++;</span>
 			}
 <span class="fc" id="L266">		}</span>
 <span class="fc" id="L267">	}</span>
@@ -296,9 +296,9 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L296">				final GroupingTile groupingTile = (GroupingTile) tile;</span>
 <span class="fc" id="L297">				fillPositionalSubGroupTiles(stringBounder, y, full, groupingTile);</span>
 			}
-<span class="fc bfc" id="L299" title="All 2 branches covered.">			if (tile instanceof TileParallel) {</span>
-<span class="fc" id="L300">				final TileParallel tileParallel = (TileParallel) tile;</span>
-<span class="fc" id="L301">				fillPositionalParallelTiles(stringBounder, y, full, tileParallel);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">			if (tile instanceof TileParallel) {</span>
+<span class="nc" id="L300">				final TileParallel tileParallel = (TileParallel) tile;</span>
+<span class="nc" id="L301">				fillPositionalParallelTiles(stringBounder, y, full, tileParallel);</span>
 			}
 <span class="fc" id="L303">			y = new TimeHook(y.getValue() + tile.getPreferredHeight());</span>
 <span class="fc" id="L304">		}</span>
@@ -314,20 +314,20 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L314">	}</span>
 
 	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List&lt;CommonTile&gt; full, TileParallel tileParallel) {
-<span class="fc" id="L317">		final double yPointAll = tileParallel.getContactPointRelative();</span>
-<span class="fc bfc" id="L318" title="All 2 branches covered.">		for (Tile tile : tileParallel.getTiles()) {</span>
+<span class="nc" id="L317">		final double yPointAll = tileParallel.getContactPointRelative();</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		for (Tile tile : tileParallel.getTiles()) {</span>
 
-<span class="fc" id="L320">			final double yPoint = tile.getContactPointRelative();</span>
-<span class="fc" id="L321">			final double adjustment = yPointAll - yPoint;</span>
-<span class="fc" id="L322">			TimeHook yAdjusted = new TimeHook(yArg.getValue() + adjustment);</span>
+<span class="nc" id="L320">			final double yPoint = tile.getContactPointRelative();</span>
+<span class="nc" id="L321">			final double adjustment = yPointAll - yPoint;</span>
+<span class="nc" id="L322">			TimeHook yAdjusted = new TimeHook(yArg.getValue() + adjustment);</span>
 
-<span class="fc" id="L324">			tile.callbackY(yAdjusted);</span>
-<span class="fc" id="L325">			full.add((CommonTile) tile);</span>
+<span class="nc" id="L324">			tile.callbackY(yAdjusted);</span>
+<span class="nc" id="L325">			full.add((CommonTile) tile);</span>
 
-<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L328">				fillPositionalSubGroupTiles(stringBounder, yAdjusted, full, (GroupingTile) tile);</span>
-<span class="fc" id="L329">		}</span>
-<span class="fc" id="L330">	}</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">			if (tile instanceof GroupingTile)</span>
+<span class="nc" id="L328">				fillPositionalSubGroupTiles(stringBounder, yAdjusted, full, (GroupingTile) tile);</span>
+<span class="nc" id="L329">		}</span>
+<span class="nc" id="L330">	}</span>
 
 	private double getHeaderHeight(StringBounder stringBounder) {
 <span class="fc" id="L333">		return getPreferredDimensionIfEmpty(stringBounder).getHeight() + 10;</span>
@@ -341,46 +341,46 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L341">		tiles = removeEmptyCloseToParallel(tiles);</span>
 <span class="fc" id="L342">		final List&lt;Tile&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L343" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="pc bpc" id="L344" title="1 of 4 branches missed.">			if (!isParallel(tile) || result.size() == 0) {</span>
+<span class="pc bpc" id="L344" title="3 of 4 branches missed.">			if (!isParallel(tile) || result.size() == 0) {</span>
 <span class="fc" id="L345">				result.add(tile);</span>
 <span class="fc bfc" id="L346" title="All 2 branches covered.">				if (tile instanceof LifeEventTile == false)</span>
 <span class="fc" id="L347">					pending = null;</span>
-<span class="fc bfc" id="L348" title="All 2 branches covered.">			} else if (pending == null) {</span>
-<span class="fc" id="L349">				pending = new TileParallel(stringBounder, null);</span>
-<span class="fc" id="L350">				moveRecentParallelTilesToPending(result, pending);</span>
-<span class="fc" id="L351">				pending.add(tile);</span>
-<span class="fc" id="L352">				result.add(pending);</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">			} else if (pending == null) {</span>
+<span class="nc" id="L349">				pending = new TileParallel(stringBounder, null);</span>
+<span class="nc" id="L350">				moveRecentParallelTilesToPending(result, pending);</span>
+<span class="nc" id="L351">				pending.add(tile);</span>
+<span class="nc" id="L352">				result.add(pending);</span>
 			} else {
-<span class="fc" id="L354">				moveRecentParallelTilesToPending(result, pending);</span>
-<span class="fc" id="L355">				pending.add(tile);</span>
+<span class="nc" id="L354">				moveRecentParallelTilesToPending(result, pending);</span>
+<span class="nc" id="L355">				pending.add(tile);</span>
 			}
 <span class="fc" id="L357">		}</span>
 <span class="fc" id="L358">		return result;</span>
 	}
 
 	private static void moveRecentParallelTilesToPending(List&lt;Tile&gt; result, TileParallel pending) {
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if (result.size() == 0)</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		if (result.size() == 0)</span>
 <span class="nc" id="L363">			return;</span>
 
-<span class="fc" id="L365">		int capture = 1;</span>
-<span class="fc bfc" id="L366" title="All 2 branches covered.">		while (result.get(result.size() - capture) instanceof LifeEventTile)</span>
-<span class="fc" id="L367">			capture++;</span>
+<span class="nc" id="L365">		int capture = 1;</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">		while (result.get(result.size() - capture) instanceof LifeEventTile)</span>
+<span class="nc" id="L367">			capture++;</span>
 
-<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (result.get(result.size() - capture) == pending)</span>
-<span class="fc" id="L370">			capture--;</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (result.get(result.size() - capture) == pending)</span>
+<span class="nc" id="L370">			capture--;</span>
 
-<span class="fc bfc" id="L372" title="All 2 branches covered.">		for (int i = result.size() - capture; i &lt; result.size(); i++)</span>
-<span class="fc" id="L373">			pending.add(result.get(i));</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">		for (int i = result.size() - capture; i &lt; result.size(); i++)</span>
+<span class="nc" id="L373">			pending.add(result.get(i));</span>
 
-<span class="fc bfc" id="L375" title="All 2 branches covered.">		for (int i = 1; i &lt;= capture; i++)</span>
-<span class="fc" id="L376">			result.remove(result.size() - 1);</span>
-<span class="fc" id="L377">	}</span>
+<span class="nc bnc" id="L375" title="All 2 branches missed.">		for (int i = 1; i &lt;= capture; i++)</span>
+<span class="nc" id="L376">			result.remove(result.size() - 1);</span>
+<span class="nc" id="L377">	}</span>
 
 	private static List&lt;Tile&gt; removeEmptyCloseToParallel(List&lt;Tile&gt; tiles) {
 <span class="fc" id="L380">		final List&lt;Tile&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L381" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L382" title="All 2 branches covered.">			if (isParallel(tile))</span>
-<span class="fc" id="L383">				removeHeadEmpty(result);</span>
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">			if (isParallel(tile))</span>
+<span class="nc" id="L383">				removeHeadEmpty(result);</span>
 
 <span class="fc" id="L385">			result.add(tile);</span>
 <span class="fc" id="L386">		}</span>
@@ -389,19 +389,19 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private static void removeHeadEmpty(List&lt;Tile&gt; tiles) {
-<span class="pc bpc" id="L392" title="1 of 4 branches missed.">		while (tiles.size() &gt; 0 &amp;&amp; tiles.get(tiles.size() - 1) instanceof EmptyTile)</span>
-<span class="fc" id="L393">			tiles.remove(tiles.size() - 1);</span>
+<span class="nc bnc" id="L392" title="All 4 branches missed.">		while (tiles.size() &gt; 0 &amp;&amp; tiles.get(tiles.size() - 1) instanceof EmptyTile)</span>
+<span class="nc" id="L393">			tiles.remove(tiles.size() - 1);</span>
 
-<span class="fc" id="L395">	}</span>
+<span class="nc" id="L395">	}</span>
 
 	public static boolean isParallel(Tile tile) {
-<span class="pc bpc" id="L398" title="1 of 4 branches missed.">		return tile instanceof TileParallel == false &amp;&amp; tile.getEvent().isParallel();</span>
+<span class="pc bpc" id="L398" title="2 of 4 branches missed.">		return tile instanceof TileParallel == false &amp;&amp; tile.getEvent().isParallel();</span>
 	}
 
 	void addYNewPages(Collection&lt;Double&gt; yNewPages) {
 <span class="fc bfc" id="L402" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L403" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L404">				((GroupingTile) tile).addYNewPages(yNewPages);</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">			if (tile instanceof GroupingTile)</span>
+<span class="nc" id="L404">				((GroupingTile) tile).addYNewPages(yNewPages);</span>
 
 <span class="pc bpc" id="L406" title="1 of 2 branches missed.">			if (tile instanceof NewpageTile) {</span>
 <span class="nc" id="L407">				final double y = ((NewpageTile) tile).getTimeHook().getValue();</span>

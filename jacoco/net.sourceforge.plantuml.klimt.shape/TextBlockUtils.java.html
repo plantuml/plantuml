@@ -109,13 +109,13 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 	}
 
 	public static TextBlock mergeLR(TextBlock b1, TextBlock b2, VerticalAlignment verticallAlignment) {
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (b1 == EMPTY_TEXT_BLOCK)</span>
 <span class="nc" id="L113">			return b2;</span>
 
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (b2 == EMPTY_TEXT_BLOCK)</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (b2 == EMPTY_TEXT_BLOCK)</span>
 <span class="nc" id="L116">			return b1;</span>
 
-<span class="fc" id="L118">		return new TextBlockHorizontal(b1, b2, verticallAlignment);</span>
+<span class="nc" id="L118">		return new TextBlockHorizontal(b1, b2, verticallAlignment);</span>
 	}
 
 	public static TextBlock mergeTB(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {

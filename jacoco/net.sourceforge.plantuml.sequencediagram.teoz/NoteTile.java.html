@@ -93,13 +93,13 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	protected static ComponentType getNoteComponentType(NoteStyle noteStyle) {
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (noteStyle == NoteStyle.HEXAGONAL)</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (noteStyle == NoteStyle.HEXAGONAL)</span>
 <span class="nc" id="L97">			return ComponentType.NOTE_HEXAGONAL;</span>
 
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (noteStyle == NoteStyle.BOX)</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (noteStyle == NoteStyle.BOX)</span>
 <span class="nc" id="L100">			return ComponentType.NOTE_BOX;</span>
 
-<span class="fc" id="L102">		return ComponentType.NOTE;</span>
+<span class="nc" id="L102">		return ComponentType.NOTE;</span>
 	}
 
 	public void drawU(UGraphic ug) {

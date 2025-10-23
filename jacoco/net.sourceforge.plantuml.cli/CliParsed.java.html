@@ -190,34 +190,39 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 <span class="fc" id="L190">					break;</span>
 
 				case UNARY_INLINE_KEY_OR_KEY_VALUE:
-<span class="fc" id="L193">					final String s = peeker.peek(0).substring(2);</span>
-<span class="fc" id="L194">					final int eqIndex = s.indexOf('=');</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">					final String k = eqIndex &lt; 0 ? s : s.substring(0, eqIndex);</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">					final String v = eqIndex &lt; 0 ? null : s.substring(eqIndex + 1);</span>
-<span class="fc" id="L197">					result.putMapValue(flag, k, v);</span>
-<span class="fc" id="L198">					break;</span>
+<span class="fc" id="L193">					String s = peeker.peek(0).substring(2);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">					if (s.length() == 0) {</span>
+<span class="fc" id="L195">						peeker.jump();</span>
+<span class="fc" id="L196">						s = peeker.peek(0);</span>
+					}
+
+<span class="fc" id="L199">					final int eqIndex = s.indexOf('=');</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">					final String k = eqIndex &lt; 0 ? s : s.substring(0, eqIndex);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">					final String v = eqIndex &lt; 0 ? null : s.substring(eqIndex + 1);</span>
+<span class="fc" id="L202">					result.putMapValue(flag, k, v);</span>
+<span class="fc" id="L203">					break;</span>
 
 				case UNARY_OPTIONAL_COLON:
-<span class="fc" id="L201">					final int colon = peek0.indexOf(':');</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">					if (colon == -1) {</span>
-<span class="fc" id="L203">						result.lists.computeIfAbsent(flag, k1 -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L206">					final int colon = peek0.indexOf(':');</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">					if (colon == -1) {</span>
+<span class="fc" id="L208">						result.lists.computeIfAbsent(flag, k1 -&gt; new ArrayList&lt;&gt;());</span>
 					} else
-<span class="fc bfc" id="L205" title="All 2 branches covered.">						for (String part : peek0.substring(colon + 1).split(&quot;:&quot;))</span>
-<span class="fc" id="L206">							result.putValue(flag, part);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">						for (String part : peek0.substring(colon + 1).split(&quot;:&quot;))</span>
+<span class="fc" id="L211">							result.putValue(flag, part);</span>
 					break;
 				}
 			}
-<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (found == false)</span>
-<span class="fc" id="L211">				result.args.add(peek0);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">			if (found == false)</span>
+<span class="fc" id="L216">				result.args.add(peek0);</span>
 
 		}
 
-<span class="fc" id="L215">		return result;</span>
+<span class="fc" id="L220">		return result;</span>
 
 	}
 
 	public List&lt;String&gt; getRemainingArgs() {
-<span class="fc" id="L220">		return Collections.unmodifiableList(args);</span>
+<span class="fc" id="L225">		return Collections.unmodifiableList(args);</span>
 	}
 
 }

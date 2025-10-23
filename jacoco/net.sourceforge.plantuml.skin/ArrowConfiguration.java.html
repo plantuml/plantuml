@@ -200,7 +200,7 @@ public class ArrowConfiguration {
 	}
 
 	public boolean isHidden() {
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		return body == ArrowBody.HIDDEN;</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		return body == ArrowBody.HIDDEN;</span>
 	}
 
 	public ArrowHead getHead() {
@@ -238,7 +238,7 @@ public class ArrowConfiguration {
 	}
 
 	public static UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
-<span class="fc" id="L241">		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));</span>
+<span class="nc" id="L241">		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));</span>
 	}
 
 	public UGraphic applyStroke(UGraphic ug, Style style) {

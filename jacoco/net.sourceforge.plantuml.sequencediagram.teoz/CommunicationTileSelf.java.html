@@ -69,7 +69,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L72">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+<span class="nc" id="L72">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
 	}
 
 	public CommunicationTileSelf(StringBounder stringBounder, LivingSpace livingSpace1, Message message, Rose skin,
@@ -104,10 +104,10 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="fc" id="L104">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
 <span class="fc" id="L105">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
 
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (message.isActivate())</span>
-<span class="fc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		else if (message.isDeactivate())</span>
-<span class="fc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (message.isActivate())</span>
+<span class="nc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		else if (message.isDeactivate())</span>
+<span class="nc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">		else if (message.isDestroy())</span>
 <span class="nc" id="L112">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
 
@@ -162,7 +162,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 			}
 <span class="fc" id="L163">		} else {</span>
 <span class="fc" id="L164">			final LivingSpace next = getNext();</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (next != null) {</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (next != null) {</span>
 <span class="fc" id="L166">				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());</span>
 			}
 		}
@@ -185,13 +185,13 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	private LivingSpace getNext() {
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
 <span class="fc" id="L189">			final LivingSpace current = it.next();</span>
-<span class="fc bfc" id="L190" title="All 4 branches covered.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
+<span class="pc bpc" id="L190" title="1 of 4 branches missed.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
 <span class="fc" id="L191">				return it.next();</span>
 			}
 <span class="fc" id="L193">		}</span>
-<span class="fc" id="L194">		return null;</span>
+<span class="nc" id="L194">		return null;</span>
 	}
 
 	private Real getPoint1(final StringBounder stringBounder) {

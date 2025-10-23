@@ -73,7 +73,7 @@ public class LifeEventTile extends AbstractTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L76">		return 0;</span>
+<span class="nc" id="L76">		return 0;</span>
 	}
 
 	public LifeEventTile(LifeEvent lifeEvent, TileArguments tileArguments, LivingSpace livingSpace, Rose skin,
@@ -114,7 +114,7 @@ public class LifeEventTile extends AbstractTile {
 <span class="fc" id="L114">	}</span>
 
 	public boolean isDestroyWithoutMessage() {
-<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
+<span class="pc bpc" id="L117" title="2 of 4 branches missed.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
 	}
 
 	public double getPreferredHeight() {
@@ -134,17 +134,17 @@ public class LifeEventTile extends AbstractTile {
 
 	public Real getMinX() {
 <span class="fc" id="L136">		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
 <span class="fc" id="L138">				? CommunicationTile.LIVE_DELTA_SIZE</span>
-<span class="fc" id="L139">				: 0;</span>
+<span class="pc" id="L139">				: 0;</span>
 <span class="fc" id="L140">		return livingSpace.getPosC(getStringBounder()).addFixed(-liveDeltaWidthAdjustment);</span>
 	}
 
 	public Real getMaxX() {
 <span class="fc" id="L144">		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		final double liveDeltaWidthAdjustment = levelAt &gt; 0</span>
 <span class="fc" id="L146">				? levelAt * CommunicationTile.LIVE_DELTA_SIZE</span>
-<span class="fc" id="L147">				: 0;</span>
+<span class="pc" id="L147">				: 0;</span>
 
 <span class="fc" id="L149">		return livingSpace.getPosC(getStringBounder()).addFixed(liveDeltaWidthAdjustment);</span>
 	}

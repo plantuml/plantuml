@@ -151,7 +151,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L151">		final NoteStyle style = NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0));</span>
 <span class="fc" id="L152">		final String backcolor0 = line0.get(&quot;COLOR&quot;, 0);</span>
 <span class="fc" id="L153">		Colors colors = Colors.empty().add(ColorType.BACK,</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));</span>
 <span class="fc" id="L155">		final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L156">		final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
 <span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
