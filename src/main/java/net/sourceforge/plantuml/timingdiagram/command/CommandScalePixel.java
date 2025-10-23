@@ -60,7 +60,7 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 				new RegexOptional(//
 					new RegexConcat( //
 								RegexLeaf.spaceZeroOrOne(), //
-								new RegexLeaf(1, "UNIT", "([smhdyY])"))), //
+								new RegexLeaf(1, "UNIT", "([smhdDyY])"))), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -72,30 +72,35 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		long tick = Long.parseLong(arg.get("TICK", 0));
-		final char unit = arg.get("UNIT", 0).toLowerCase().charAt(0);
-		switch (unit) {
-		case 'm':
-			tick = tick * 60L;
-			break;
-		case 'h':
-			tick = tick * 3600L;
-			break;
-		case 'd':
-			tick = tick * 3600L * 24L;
-			break;
-		case 'y':
-			tick = tick * 3600L * 8766L; // 24 * 365.25 = 8766
-			break;
-		default:
-			// second unit by default!
-		}
+		long tick = Long.parseLong(arg.get("TICK", 0)) * getUnitFactor(arg.get("UNIT", 0));
 		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
 		if (tick <= 0 || pixel <= 0)
 			return CommandExecutionResult.error("Bad value");
 
 		diagram.scaleInPixels(tick, pixel);
 		return CommandExecutionResult.ok();
+	}
+
+	private long getUnitFactor(String unit) {
+        if (unit == null)
+            return 1;
+
+        switch (unit) {
+        case "s":
+            return 1;
+        case "m":
+            return 60;
+		case "h":
+			return 3600;
+		case "D":
+		case "d":
+			return 3600L * 24L;
+        case "Y":
+        case "y":
+            return 3600L * 8766L; // 24 * 365.25 = 8766;
+		default:
+			return 1;
+        }
 	}
 
 }
