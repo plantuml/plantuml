@@ -82,25 +82,25 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	private long getUnitFactor(String unit) {
-        if (unit == null)
-            return 1;
+		if (unit == null)
+			return 1;
 
-        switch (unit) {
-        case "s":
-            return 1;
-        case "m":
-            return 60;
+		switch (unit) {
+		case "s":
+			return 1;
+		case "m":
+			return 60;
 		case "h":
 			return 3600;
 		case "D":
 		case "d":
 			return 3600L * 24L;
-        case "Y":
-        case "y":
-            return 3600L * 8766L; // 24 * 365.25 = 8766;
+		case "Y":
+		case "y":
+			return 3600L * 8766L; // 24 * 365.25 = 8766;
 		default:
 			return 1;
-        }
+		}
 	}
 
 }
