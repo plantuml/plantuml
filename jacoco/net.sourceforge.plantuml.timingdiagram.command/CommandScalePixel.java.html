@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -48,32 +49,58 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandScalePixel extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandScalePixel() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandScalePixel.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandScalePixel.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;scale&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;TICK&quot;, &quot;(\\d+)&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOptional(//
+					new RegexConcat( //
+<span class="fc" id="L62">								RegexLeaf.spaceZeroOrOne(), //</span>
+								new RegexLeaf(1, &quot;UNIT&quot;, &quot;([smhdDyY])&quot;))), //
+<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;PIXEL&quot;, &quot;(\\d+)&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;pixels?&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		final long tick = Long.parseLong(arg.get(&quot;TICK&quot;, 0));</span>
-<span class="nc" id="L71">		final long pixel = Long.parseLong(arg.get(&quot;PIXEL&quot;, 0));</span>
-<span class="nc bnc" id="L72" title="All 4 branches missed.">		if (tick &lt;= 0 || pixel &lt;= 0)</span>
-<span class="nc" id="L73">			return CommandExecutionResult.error(&quot;Bad value&quot;);</span>
+<span class="nc" id="L75">		final long tick = Long.parseLong(arg.get(&quot;TICK&quot;, 0)) * getUnitFactor(arg.get(&quot;UNIT&quot;, 0));</span>
+<span class="nc" id="L76">		final long pixel = Long.parseLong(arg.get(&quot;PIXEL&quot;, 0));</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">		if (tick &lt;= 0 || pixel &lt;= 0)</span>
+<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;Bad value&quot;);</span>
 
-<span class="nc" id="L75">		diagram.scaleInPixels(tick, pixel);</span>
-<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L80">		diagram.scaleInPixels(tick, pixel);</span>
+<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
+	}
+
+	private long getUnitFactor(String unit) {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (unit == null)</span>
+<span class="nc" id="L86">			return 1;</span>
+
+<span class="nc bnc" id="L88" title="All 6 branches missed.">		switch (unit) {</span>
+		case &quot;s&quot;:
+<span class="nc" id="L90">			return 1;</span>
+		case &quot;m&quot;:
+<span class="nc" id="L92">			return 60;</span>
+		case &quot;h&quot;:
+<span class="nc" id="L94">			return 3600;</span>
+		case &quot;D&quot;:
+		case &quot;d&quot;:
+<span class="nc" id="L97">			return 3600L * 24L;</span>
+		case &quot;Y&quot;:
+		case &quot;y&quot;:
+<span class="nc" id="L100">			return 3600L * 8766L; // 24 * 365.25 = 8766;</span>
+		default:
+<span class="nc" id="L102">			return 1;</span>
+		}
 	}
 
 }
