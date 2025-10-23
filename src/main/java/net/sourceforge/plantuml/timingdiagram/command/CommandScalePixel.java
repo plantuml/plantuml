@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -56,6 +57,10 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("scale"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "TICK", "(\\d+)"), //
+				new RegexOptional(//
+					new RegexConcat( //
+								RegexLeaf.spaceZeroOrOne(), //
+								new RegexLeaf(1, "UNIT", "([smhdDyY])"))), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -67,13 +72,35 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final long tick = Long.parseLong(arg.get("TICK", 0));
+		final long tick = Long.parseLong(arg.get("TICK", 0)) * getUnitFactor(arg.get("UNIT", 0));
 		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
 		if (tick <= 0 || pixel <= 0)
 			return CommandExecutionResult.error("Bad value");
 
 		diagram.scaleInPixels(tick, pixel);
 		return CommandExecutionResult.ok();
+	}
+
+	private long getUnitFactor(String unit) {
+		if (unit == null)
+			return 1;
+
+		switch (unit) {
+		case "s":
+			return 1;
+		case "m":
+			return 60;
+		case "h":
+			return 3600;
+		case "D":
+		case "d":
+			return 3600L * 24L;
+		case "Y":
+		case "y":
+			return 3600L * 8766L; // 24 * 365.25 = 8766;
+		default:
+			return 1;
+		}
 	}
 
 }
