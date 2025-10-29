@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	// ::remove file when __CORE__
@@ -172,6 +173,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final SuggestedFile suggested = getSuggestedFile(blockUml);
+
+			EmbeddedDiagram.clearImageSvgCache();
 
 			final Diagram system;
 			try {

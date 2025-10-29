@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashMap;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.core.Diagram;
@@ -152,6 +153,12 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	private final List<StringLocated> list;
 	private final ISkinSimple skinParam;
 	private BufferedImage image;
+	private final static ThreadLocal<HashMap<String, String>> imageSvgCache = new ThreadLocal<HashMap<String, String>>() {
+		@Override
+		protected HashMap<String, String> initialValue() {
+			return new HashMap<String, String>();
+		}
+	};
 
 	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> system) {
 		this.list = system;
@@ -204,11 +211,19 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private String getImageSvg() throws IOException, InterruptedException {
-		final Diagram system = getSystem();
-		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
-		os.close();
-		return new String(os.toByteArray());
+		String svg = imageSvgCache.get().get(list.toString());
+		if (svg == null) {
+			final Diagram system = getSystem();
+			final ByteArrayOutputStream os = new ByteArrayOutputStream();
+			system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
+			os.close();
+			svg = new String(os.toByteArray());
+			
+			if (svg != null)
+				imageSvgCache.get().put(list.toString(), svg);
+		}
+
+		return svg;
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
@@ -243,4 +258,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		return Arrays.asList(Neutron.create(this));
 	}
 
+	public static void clearImageSvgCache() {
+		imageSvgCache.get().clear();
+	}
 }
