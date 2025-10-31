@@ -54,16 +54,14 @@ public class CommandChartLegend extends SingleLineCommand2<ChartDiagram> {
 		return RegexConcat.build(CommandChartLegend.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("legend"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(0, "POSITION", "(left|right|top|bottom)"), //
+				new RegexLeaf(1, "POSITION", "(left|right|top|bottom)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		System.err.println("DEBUG CommandChartLegend: CALLED!");
-		final String position = arg.get("POSITION", 1);
-		System.err.println("DEBUG CommandChartLegend: position = '" + position + "'");
+		final String position = arg.get("POSITION", 0);
 
 		ChartDiagram.LegendPosition legendPosition;
 		switch (position.toLowerCase()) {

@@ -58,12 +58,14 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
+		// Add chart-specific commands first to take priority
 		cmds.add(new CommandChartXAxis());
 		cmds.add(new CommandChartYAxis());
 		cmds.add(new CommandChartBar());
 		cmds.add(new CommandChartLine());
 		cmds.add(new CommandChartLegend());
+		// Add common commands last so they don't override chart-specific ones
+		CommonCommands.addCommonCommands1(cmds);
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -274,7 +275,13 @@ public class ChartRenderer {
 			return new XDimension2D(0, 0);
 
 		final UFont font = UFont.sansSerif(10);
-		final FontConfiguration fontConfig = FontConfiguration.create(font, skinParam.getIHtmlColorSet().getColorOrWhite(null), null, null);
+		HColor fontColor = HColors.BLACK;
+		try {
+			fontColor = skinParam.getIHtmlColorSet().getColor("#000000");
+		} catch (Exception e) {
+			// Use default black
+		}
+		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
 		double maxWidth = 0;
 		double totalHeight = 0;
