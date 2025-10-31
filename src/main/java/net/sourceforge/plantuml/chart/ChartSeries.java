@@ -50,12 +50,14 @@ public class ChartSeries {
 	private final List<Double> values;
 	private HColor color;
 	private boolean useSecondaryAxis;
+	private boolean showLabels;
 
 	public ChartSeries(String name, SeriesType type, List<Double> values) {
 		this.name = name;
 		this.type = type;
 		this.values = new ArrayList<>(values);
 		this.useSecondaryAxis = false;
+		this.showLabels = false;
 	}
 
 	public String getName() {
@@ -84,5 +86,13 @@ public class ChartSeries {
 
 	public void setUseSecondaryAxis(boolean useSecondaryAxis) {
 		this.useSecondaryAxis = useSecondaryAxis;
+	}
+
+	public boolean isShowLabels() {
+		return showLabels;
+	}
+
+	public void setShowLabels(boolean showLabels) {
+		this.showLabels = showLabels;
 	}
 }

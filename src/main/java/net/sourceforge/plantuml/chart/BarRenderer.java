@@ -38,7 +38,14 @@ import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -67,6 +74,7 @@ public class BarRenderer {
 		final double categoryWidth = plotWidth / categoryCount;
 		final double barWidth = categoryWidth * 0.6; // 60% of category width
 		final double barOffset = (categoryWidth - barWidth) / 2;
+		final StringBounder stringBounder = ug.getStringBounder();
 
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
 			final double value = values.get(i);
@@ -76,6 +84,36 @@ public class BarRenderer {
 
 			final URectangle rect = URectangle.build(barWidth, barHeight);
 			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+
+			// Draw label if enabled
+			if (series.isShowLabels()) {
+				drawLabel(ug, value, x + barWidth / 2, y - 5, stringBounder);
+			}
 		}
+	}
+
+	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
+		try {
+			final String label = formatValue(value);
+			final UFont font = UFont.sansSerif(10).bold();
+			final HColor labelColor = skinParam.getIHtmlColorSet().getColor("#000000");
+			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			final double labelX = x - textDim.getWidth() / 2;
+			final double labelY = y - textDim.getHeight() - 2;
+			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));
+		} catch (Exception e) {
+			// Silently ignore rendering errors
+		}
+	}
+
+	private String formatValue(double value) {
+		if (Math.abs(value) < 0.01 && value != 0)
+			return String.format("%.2e", value);
+		if (value == (long) value)
+			return String.format("%d", (long) value);
+		return String.format("%.2f", value);
 	}
 }

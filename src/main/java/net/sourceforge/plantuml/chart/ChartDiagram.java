@@ -55,10 +55,15 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChartDiagram extends UmlDiagram {
 
+	public enum LegendPosition {
+		NONE, LEFT, RIGHT, TOP, BOTTOM
+	}
+
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private final List<ChartSeries> series = new ArrayList<>();
 	private final ChartAxis yAxis = new ChartAxis();
 	private ChartAxis y2Axis;
+	private LegendPosition legendPosition = LegendPosition.NONE;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -95,7 +100,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		return new ChartRenderer(getSkinParam(), xAxisLabels, series, yAxis, y2Axis);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, series, yAxis, y2Axis, legendPosition);
 	}
 
 	// Command methods
@@ -154,5 +159,14 @@ public class ChartDiagram extends UmlDiagram {
 
 	public ChartAxis getY2Axis() {
 		return y2Axis;
+	}
+
+	public CommandExecutionResult setLegendPosition(LegendPosition position) {
+		this.legendPosition = position;
+		return CommandExecutionResult.ok();
+	}
+
+	public LegendPosition getLegendPosition() {
+		return legendPosition;
 	}
 }

@@ -61,17 +61,26 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 		return RegexConcat.build(CommandChartLine.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("line"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf(1, "NAME", "\"([^\"]+)\"")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("<<y2>>")), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(0, "Y2", "y2"))), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(0, "LABELS", "labels"))), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
+		final String name = arg.getLazzy("NAME", 0);
 		final String data = arg.get("DATA", 0);
 		final String colorStr = arg.getLazzy("COLOR", 0);
 
@@ -79,8 +88,8 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 		if (values == null)
 			return CommandExecutionResult.error("Invalid number format in line data");
 
-		final ChartSeries series = new ChartSeries("line" + diagram.getSeries().size(), ChartSeries.SeriesType.LINE,
-				values);
+		final String seriesName = name != null ? name : "line" + diagram.getSeries().size();
+		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.LINE, values);
 
 		if (colorStr != null) {
 			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor("#" + colorStr);
@@ -88,8 +97,13 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 		}
 
 		// Check if this line should use the secondary y-axis
-		if (arg.get("<<y2>>", 0) != null) {
+		if (arg.toString().contains("Y2=")) {
 			series.setUseSecondaryAxis(true);
+		}
+
+		// Check if labels keyword was present
+		if (arg.toString().contains("LABELS=")) {
+			series.setShowLabels(true);
 		}
 
 		return diagram.addSeries(series);

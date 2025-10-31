@@ -39,7 +39,14 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -67,6 +74,7 @@ public class LineRenderer {
 
 		final List<Double> values = series.getValues();
 		final double categoryWidth = plotWidth / categoryCount;
+		final StringBounder stringBounder = ug.getStringBounder();
 
 		// Draw line segments
 		for (int i = 0; i < Math.min(values.size() - 1, categoryCount - 1); i++) {
@@ -93,6 +101,36 @@ public class LineRenderer {
 
 			final UEllipse marker = UEllipse.build(markerSize, markerSize);
 			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(marker);
+
+			// Draw label if enabled
+			if (series.isShowLabels()) {
+				drawLabel(ug, value, (i + 0.5) * categoryWidth, y - 8, stringBounder);
+			}
 		}
+	}
+
+	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
+		try {
+			final String label = formatValue(value);
+			final UFont font = UFont.sansSerif(10).bold();
+			final HColor labelColor = skinParam.getIHtmlColorSet().getColor("#000000");
+			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			final double labelX = x - textDim.getWidth() / 2;
+			final double labelY = y - textDim.getHeight() - 2;
+			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));
+		} catch (Exception e) {
+			// Silently ignore rendering errors
+		}
+	}
+
+	private String formatValue(double value) {
+		if (Math.abs(value) < 0.01 && value != 0)
+			return String.format("%.2e", value);
+		if (value == (long) value)
+			return String.format("%d", (long) value);
+		return String.format("%.2f", value);
 	}
 }

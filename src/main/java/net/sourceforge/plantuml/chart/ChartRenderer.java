@@ -61,26 +61,40 @@ public class ChartRenderer {
 	private final List<ChartSeries> series;
 	private final ChartAxis yAxis;
 	private final ChartAxis y2Axis;
+	private final ChartDiagram.LegendPosition legendPosition;
 
 	// Layout constants
 	private static final double MARGIN = 20;
 	private static final double AXIS_LABEL_SPACE = 40;
 	private static final double TITLE_SPACE = 30;
 	private static final double TICK_SIZE = 5;
+	private static final double LEGEND_MARGIN = 10;
+	private static final double LEGEND_SYMBOL_SIZE = 12;
+	private static final double LEGEND_TEXT_SPACING = 5;
+	private static final double LEGEND_ITEM_SPACING = 15;
 
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, List<ChartSeries> series,
-			ChartAxis yAxis, ChartAxis y2Axis) {
+			ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition) {
 		this.skinParam = skinParam;
 		this.xAxisLabels = xAxisLabels;
 		this.series = series;
 		this.yAxis = yAxis;
 		this.y2Axis = y2Axis;
+		this.legendPosition = legendPosition;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		final double width = MARGIN + AXIS_LABEL_SPACE + getPlotWidth() + (y2Axis != null ? AXIS_LABEL_SPACE : 0)
-				+ MARGIN;
-		final double height = MARGIN + TITLE_SPACE + getPlotHeight() + AXIS_LABEL_SPACE + MARGIN;
+		final XDimension2D legendDim = calculateLegendDimension(stringBounder);
+		double width = MARGIN + AXIS_LABEL_SPACE + getPlotWidth() + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + MARGIN;
+		double height = MARGIN + TITLE_SPACE + getPlotHeight() + AXIS_LABEL_SPACE + MARGIN;
+
+		// Add space for legend
+		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {
+			width += legendDim.getWidth() + LEGEND_MARGIN;
+		} else if (legendPosition == ChartDiagram.LegendPosition.TOP || legendPosition == ChartDiagram.LegendPosition.BOTTOM) {
+			height += legendDim.getHeight() + LEGEND_MARGIN;
+		}
+
 		return new XDimension2D(width, height);
 	}
 
@@ -95,11 +109,19 @@ public class ChartRenderer {
 		// Apply stroke and color
 		ug = ug.apply(lineColor).apply(UStroke.withThickness(1.0));
 
-		// Calculate positions
-		final double leftMargin = MARGIN + AXIS_LABEL_SPACE;
-		final double topMargin = MARGIN + TITLE_SPACE;
+		// Calculate legend dimensions and adjust layout
+		final XDimension2D legendDim = calculateLegendDimension(stringBounder);
+		double leftMargin = MARGIN + AXIS_LABEL_SPACE;
+		double topMargin = MARGIN + TITLE_SPACE;
 		final double plotWidth = getPlotWidth();
 		final double plotHeight = getPlotHeight();
+
+		// Adjust margins for legend position
+		if (legendPosition == ChartDiagram.LegendPosition.LEFT) {
+			leftMargin += legendDim.getWidth() + LEGEND_MARGIN;
+		} else if (legendPosition == ChartDiagram.LegendPosition.TOP) {
+			topMargin += legendDim.getHeight() + LEGEND_MARGIN;
+		}
 
 		// Draw axes
 		drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, yAxis, true,
@@ -116,6 +138,9 @@ public class ChartRenderer {
 		// Draw series data
 		final UGraphic ugPlot = ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin)));
 		drawSeries(ugPlot, plotWidth, plotHeight, stringBounder);
+
+		// Draw legend
+		drawLegend(ug, leftMargin, topMargin, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
 	}
 
 	private void drawYAxis(UGraphic ug, double height, ChartAxis axis, boolean leftSide, HColor lineColor,
@@ -242,5 +267,108 @@ public class ChartRenderer {
 
 	private StyleSignatureBasic getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram);
+	}
+
+	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {
+		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())
+			return new XDimension2D(0, 0);
+
+		final UFont font = UFont.sansSerif(10);
+		final FontConfiguration fontConfig = FontConfiguration.create(font, skinParam.getIHtmlColorSet().getColorOrWhite(null), null, null);
+
+		double maxWidth = 0;
+		double totalHeight = 0;
+
+		for (ChartSeries s : series) {
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())
+					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
+			final XDimension2D dim = textBlock.calculateDimension(stringBounder);
+
+			if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {
+				maxWidth = Math.max(maxWidth, dim.getWidth());
+				totalHeight += dim.getHeight() + LEGEND_ITEM_SPACING;
+			} else {
+				maxWidth += dim.getWidth() + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + LEGEND_ITEM_SPACING;
+				totalHeight = Math.max(totalHeight, dim.getHeight());
+			}
+		}
+
+		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {
+			return new XDimension2D(maxWidth + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + LEGEND_MARGIN * 2,
+					totalHeight);
+		} else {
+			return new XDimension2D(maxWidth, totalHeight + LEGEND_MARGIN * 2);
+		}
+	}
+
+	private void drawLegend(UGraphic ug, double leftMargin, double topMargin, double plotWidth, double plotHeight,
+			HColor lineColor, HColor fontColor, StringBounder stringBounder) {
+		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())
+			return;
+
+		final UFont font = UFont.sansSerif(10);
+		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+
+		double x = 0;
+		double y = 0;
+
+		// Calculate starting position based on legend position
+		switch (legendPosition) {
+		case LEFT:
+			x = MARGIN;
+			y = topMargin;
+			break;
+		case RIGHT:
+			x = leftMargin + plotWidth + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + LEGEND_MARGIN;
+			y = topMargin;
+			break;
+		case TOP:
+			x = leftMargin;
+			y = MARGIN;
+			break;
+		case BOTTOM:
+			x = leftMargin;
+			y = topMargin + plotHeight + AXIS_LABEL_SPACE + LEGEND_MARGIN;
+			break;
+		default:
+			return;
+		}
+
+		double currentX = x;
+		double currentY = y;
+
+		for (int i = 0; i < series.size(); i++) {
+			final ChartSeries s = series.get(i);
+			final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(i);
+
+			// Draw legend symbol
+			if (s.getType() == ChartSeries.SeriesType.BAR) {
+				// Draw small rectangle for bar
+				final net.sourceforge.plantuml.klimt.shape.URectangle rect = net.sourceforge.plantuml.klimt.shape.URectangle
+						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);
+				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))
+						.draw(rect);
+			} else if (s.getType() == ChartSeries.SeriesType.LINE) {
+				// Draw small line for line chart
+				final ULine line = ULine.hline(LEGEND_SYMBOL_SIZE);
+				ug.apply(color).apply(UStroke.withThickness(2.0))
+						.apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY + LEGEND_SYMBOL_SIZE / 2)))
+						.draw(line);
+			}
+
+			// Draw series name
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())
+					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
+			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			textBlock.drawU(ug.apply(UTranslate.dx(currentX + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING)
+					.compose(UTranslate.dy(currentY))));
+
+			// Move to next item position
+			if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {
+				currentY += textDim.getHeight() + LEGEND_ITEM_SPACING;
+			} else {
+				currentX += LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + textDim.getWidth() + LEGEND_ITEM_SPACING;
+			}
+		}
 	}
 }

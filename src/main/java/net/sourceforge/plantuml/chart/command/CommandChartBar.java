@@ -61,15 +61,22 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 		return RegexConcat.build(CommandChartBar.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("bar"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf(1, "NAME", "\"([^\"]+)\"")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(0, "LABELS", "labels"))), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
+		final String name = arg.getLazzy("NAME", 0);
 		final String data = arg.get("DATA", 0);
 		final String colorStr = arg.getLazzy("COLOR", 0);
 
@@ -77,12 +84,17 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 		if (values == null)
 			return CommandExecutionResult.error("Invalid number format in bar data");
 
-		final ChartSeries series = new ChartSeries("bar" + diagram.getSeries().size(), ChartSeries.SeriesType.BAR,
-				values);
+		final String seriesName = name != null ? name : "bar" + diagram.getSeries().size();
+		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.BAR, values);
 
 		if (colorStr != null) {
 			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor("#" + colorStr);
 			series.setColor(color);
+		}
+
+		// Check if LABELS keyword was present
+		if (arg.toString().contains("LABELS=")) {
+			series.setShowLabels(true);
 		}
 
 		return diagram.addSeries(series);

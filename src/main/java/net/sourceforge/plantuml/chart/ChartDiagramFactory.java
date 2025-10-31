@@ -38,6 +38,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
+import net.sourceforge.plantuml.chart.command.CommandChartLegend;
 import net.sourceforge.plantuml.chart.command.CommandChartLine;
 import net.sourceforge.plantuml.chart.command.CommandChartXAxis;
 import net.sourceforge.plantuml.chart.command.CommandChartYAxis;
@@ -62,6 +63,7 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandChartYAxis());
 		cmds.add(new CommandChartBar());
 		cmds.add(new CommandChartLine());
+		cmds.add(new CommandChartLegend());
 	}
 
 	@Override
