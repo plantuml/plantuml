@@ -108,6 +108,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
+import net.sourceforge.plantuml.chart.ChartDiagramFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.wire.WireDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
@@ -221,6 +222,7 @@ public class PSystemBuilder {
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
+		factories.add(new ChartDiagramFactory());
 
 		// ::uncomment when __CORE__
 		// factories.add(new PSystemSudokuFactory());

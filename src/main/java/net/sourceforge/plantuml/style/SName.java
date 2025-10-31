@@ -183,7 +183,8 @@ public enum SName {
 	spotRecord, //
 
 	wbsDiagram, //
-	yamlDiagram; //
+	yamlDiagram, //
+	chartDiagram; //
 
 	private static final Map<String, SName> ALL = new HashMap<>();
 
