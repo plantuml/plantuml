@@ -64,7 +64,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="nc" id="L67">		return message;</span>
+<span class="fc" id="L67">		return message;</span>
 	}
 
 	@Override
@@ -98,51 +98,51 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="nc" id="L101">		super.callbackY_internal(y);</span>
-<span class="nc" id="L102">		final ArrowComponent comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L103">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L104">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
-<span class="nc" id="L105">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
+<span class="fc" id="L101">		super.callbackY_internal(y);</span>
+<span class="fc" id="L102">		final ArrowComponent comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L103">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L104">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
+<span class="fc" id="L105">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
 
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (message.isActivate())</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (message.isActivate())</span>
 <span class="nc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		else if (message.isDeactivate())</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		else if (message.isDeactivate())</span>
 <span class="nc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		else if (message.isDestroy())</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		else if (message.isDestroy())</span>
 <span class="nc" id="L112">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
 
-<span class="nc" id="L114">	}</span>
+<span class="fc" id="L114">	}</span>
 
 	public void drawU(UGraphic ug) {
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
-<span class="nc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L120">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L122">		double x1 = getMinX().getCurrentValue();</span>
-<span class="nc" id="L123">		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
-<span class="nc" id="L124">		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
-<span class="nc" id="L125">		Log.info(() -&gt; &quot;CommunicationTileSelf::drawU levelIgnore=&quot; + levelIgnore + &quot; levelConsidere=&quot; + levelConsidere);</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (!isReverseDefine()) {</span>
-<span class="nc" id="L127">			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (levelIgnore &lt; levelConsidere) {</span>
+<span class="fc" id="L119">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L120">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L122">		double x1 = getMinX().getCurrentValue();</span>
+<span class="fc" id="L123">		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
+<span class="fc" id="L124">		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
+<span class="pc" id="L125">		Log.info(() -&gt; &quot;CommunicationTileSelf::drawU levelIgnore=&quot; + levelIgnore + &quot; levelConsidere=&quot; + levelConsidere);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (!isReverseDefine()) {</span>
+<span class="fc" id="L127">			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (levelIgnore &lt; levelConsidere) {</span>
 <span class="nc" id="L129">				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere - levelIgnore);</span>
 			}
 		}
 
-<span class="nc" id="L133">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L133">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
 		// if (message.isActivate()) {
 		// area.setDeltaX1(CommunicationTile.LIVE_DELTA_SIZE);
 		// } else if (message.isDeactivate()) {
 		// // area.setDeltaX1(CommunicationTile.LIVE_DELTA_SIZE);
 		// // x1 += CommunicationTile.LIVE_DELTA_SIZE * levelConsidere;
 		// }
-<span class="nc" id="L140">		area.setDeltaX1((levelIgnore - levelConsidere) * CommunicationTile.LIVE_DELTA_SIZE);</span>
-<span class="nc" id="L141">		area.setLevel(levelIgnore);</span>
-<span class="nc" id="L142">		area.setLiveDeltaSize(CommunicationTile.LIVE_DELTA_SIZE);</span>
-<span class="nc" id="L143">		ug = ug.apply(UTranslate.dx(x1));</span>
-<span class="nc" id="L144">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="nc" id="L145">	}</span>
+<span class="fc" id="L140">		area.setDeltaX1((levelIgnore - levelConsidere) * CommunicationTile.LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L141">		area.setLevel(levelIgnore);</span>
+<span class="fc" id="L142">		area.setLiveDeltaSize(CommunicationTile.LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L143">		ug = ug.apply(UTranslate.dx(x1));</span>
+<span class="fc" id="L144">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L145">	}</span>
 
 	public double getPreferredHeight() {
 <span class="fc" id="L148">		final Component comp = getComponent(getStringBounder());</span>
@@ -151,46 +151,46 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	public void addConstraints() {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (sequenceMessageSpan())</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (sequenceMessageSpan())</span>
 <span class="nc" id="L155">			return;</span>
 
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (isReverseDefine()) {</span>
-<span class="nc" id="L158">			final LivingSpace previous = getPrevious();</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (previous != null) {</span>
-<span class="nc" id="L160">				livingSpace1.getPosC(getStringBounder())</span>
-<span class="nc" id="L161">						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L158">			final LivingSpace previous = getPrevious();</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (previous != null) {</span>
+<span class="fc" id="L160">				livingSpace1.getPosC(getStringBounder())</span>
+<span class="fc" id="L161">						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));</span>
 			}
-<span class="nc" id="L163">		} else {</span>
-<span class="nc" id="L164">			final LivingSpace next = getNext();</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (next != null) {</span>
-<span class="nc" id="L166">				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());</span>
+<span class="fc" id="L163">		} else {</span>
+<span class="fc" id="L164">			final LivingSpace next = getNext();</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (next != null) {</span>
+<span class="fc" id="L166">				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());</span>
 			}
 		}
-<span class="nc" id="L169">	}</span>
+<span class="fc" id="L169">	}</span>
 
 	private boolean isReverseDefine() {
 <span class="fc" id="L172">		return message.getArrowConfiguration().isReverseDefine();</span>
 	}
 
 	private LivingSpace getPrevious() {
-<span class="nc" id="L176">		LivingSpace previous = null;</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
-<span class="nc" id="L178">			final LivingSpace current = it.next();</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (current == livingSpace1) {</span>
-<span class="nc" id="L180">				return previous;</span>
+<span class="fc" id="L176">		LivingSpace previous = null;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L178">			final LivingSpace current = it.next();</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (current == livingSpace1) {</span>
+<span class="fc" id="L180">				return previous;</span>
 			}
-<span class="nc" id="L182">			previous = current;</span>
-<span class="nc" id="L183">		}</span>
+<span class="fc" id="L182">			previous = current;</span>
+<span class="fc" id="L183">		}</span>
 <span class="nc" id="L184">		return null;</span>
 	}
 
 	private LivingSpace getNext() {
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
-<span class="nc" id="L189">			final LivingSpace current = it.next();</span>
-<span class="nc bnc" id="L190" title="All 4 branches missed.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
-<span class="nc" id="L191">				return it.next();</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L189">			final LivingSpace current = it.next();</span>
+<span class="pc bpc" id="L190" title="1 of 4 branches missed.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
+<span class="fc" id="L191">				return it.next();</span>
 			}
-<span class="nc" id="L193">		}</span>
+<span class="fc" id="L193">		}</span>
 <span class="nc" id="L194">		return null;</span>
 	}
 
@@ -199,10 +199,10 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	public Real getMinX() {
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (isReverseDefine()) {</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,</span>
-<span class="nc" id="L204">					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;</span>
-<span class="nc" id="L205">			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth() - liveDeltaWidthAdjustment);</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,</span>
+<span class="fc" id="L204">					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;</span>
+<span class="fc" id="L205">			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth() - liveDeltaWidthAdjustment);</span>
 		}
 <span class="fc" id="L207">		return getPoint1(getStringBounder());</span>
 	}
