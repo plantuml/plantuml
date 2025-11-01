@@ -82,6 +82,7 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.warning.JawsWarning;
 import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -179,6 +180,10 @@ public class Display implements Iterable<CharSequence> {
 		final List<CharSequence> tmp = new ArrayList<>();
 		for (StringLocated s : data)
 			tmp.add(s.getString());
+
+		if (tmp.size() > 2)
+			if (tmp.get(tmp.size() - 1).toString().isEmpty() && tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))
+				tmp.remove(tmp.size() - 1);
 
 		final Display result = create(tmp);
 		// CreoleParser.checkColor(result);
