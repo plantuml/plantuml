@@ -333,6 +333,10 @@ public class ChartRenderer {
 				final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
 						xAxisLabels.size(), axis);
 				lineRenderer.draw(ug, s, color);
+			} else if (s.getType() == ChartSeries.SeriesType.AREA) {
+				final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight,
+						xAxisLabels.size(), axis);
+				areaRenderer.draw(ug, s, color);
 			}
 		}
 	}
@@ -458,6 +462,12 @@ public class ChartRenderer {
 				ug.apply(color).apply(UStroke.withThickness(2.0))
 						.apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY + LEGEND_SYMBOL_SIZE / 2)))
 						.draw(line);
+			} else if (s.getType() == ChartSeries.SeriesType.AREA) {
+				// Draw small filled rectangle for area chart
+				final net.sourceforge.plantuml.klimt.shape.URectangle rect = net.sourceforge.plantuml.klimt.shape.URectangle
+						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);
+				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))
+						.draw(rect);
 			}
 
 			// Draw series name

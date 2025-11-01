@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 public class ChartSeries {
 
 	public enum SeriesType {
-		BAR, LINE
+		BAR, LINE, AREA
 	}
 
 	private final String name;
