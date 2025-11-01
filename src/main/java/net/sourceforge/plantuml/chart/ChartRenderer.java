@@ -189,15 +189,15 @@ public class ChartRenderer {
 		final UFont font = UFont.sansSerif(10);
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
-		// Left axis (Y): 270 degrees (reads from top to bottom)
-		// Right axis (Y2): 90 degrees (reads from bottom to top)
-		final int orientation = leftSide ? 270 : 90;
+		// Left axis (Y): 90 degrees (reads from bottom to top)
+		// Right axis (Y2): 270 degrees (reads from top to bottom)
+		final int orientation = leftSide ? 90 : 270;
 		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(text, fontConfig).withOrientation(orientation);
 		final double textWidth = stringBounder.calculateDimension(font, text).getWidth();
 
 		// Position the rotated text centered vertically along the axis
 		final double xPos = leftSide ? -AXIS_LABEL_SPACE + 5 : AXIS_LABEL_SPACE - 5;
-		final double yPos = leftSide ? height / 2 - textWidth / 2 : height / 2 + textWidth / 2;
+		final double yPos = leftSide ? height / 2 + textWidth / 2 : height / 2 - textWidth / 2;
 
 		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);
 	}
