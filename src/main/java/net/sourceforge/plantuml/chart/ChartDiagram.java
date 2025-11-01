@@ -59,12 +59,18 @@ public class ChartDiagram extends UmlDiagram {
 		NONE, LEFT, RIGHT, TOP, BOTTOM
 	}
 
+	public enum GridMode {
+		OFF, MAJOR, BOTH
+	}
+
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
 	private final List<ChartSeries> series = new ArrayList<>();
 	private final ChartAxis yAxis = new ChartAxis();
 	private ChartAxis y2Axis;
 	private LegendPosition legendPosition = LegendPosition.NONE;
+	private GridMode xGridMode = GridMode.OFF;
+	private GridMode yGridMode = GridMode.OFF;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -101,7 +107,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, series, yAxis, y2Axis, legendPosition);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode);
 	}
 
 	// Command methods
@@ -173,5 +179,29 @@ public class ChartDiagram extends UmlDiagram {
 
 	public LegendPosition getLegendPosition() {
 		return legendPosition;
+	}
+
+	public CommandExecutionResult setGridMode(GridMode mode) {
+		this.xGridMode = mode;
+		this.yGridMode = mode;
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult setXGridMode(GridMode mode) {
+		this.xGridMode = mode;
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult setYGridMode(GridMode mode) {
+		this.yGridMode = mode;
+		return CommandExecutionResult.ok();
+	}
+
+	public GridMode getXGridMode() {
+		return xGridMode;
+	}
+
+	public GridMode getYGridMode() {
+		return yGridMode;
 	}
 }

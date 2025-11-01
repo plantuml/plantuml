@@ -64,6 +64,8 @@ public class ChartRenderer {
 	private final ChartAxis yAxis;
 	private final ChartAxis y2Axis;
 	private final ChartDiagram.LegendPosition legendPosition;
+	private final ChartDiagram.GridMode xGridMode;
+	private final ChartDiagram.GridMode yGridMode;
 
 	// Layout constants
 	private static final double MARGIN = 20;
@@ -76,7 +78,7 @@ public class ChartRenderer {
 	private static final double LEGEND_ITEM_SPACING = 15;
 
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, List<ChartSeries> series,
-			ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition) {
+			ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode) {
 		this.skinParam = skinParam;
 		this.xAxisLabels = xAxisLabels;
 		this.xAxisTitle = xAxisTitle;
@@ -84,6 +86,8 @@ public class ChartRenderer {
 		this.yAxis = yAxis;
 		this.y2Axis = y2Axis;
 		this.legendPosition = legendPosition;
+		this.xGridMode = xGridMode;
+		this.yGridMode = yGridMode;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -132,16 +136,16 @@ public class ChartRenderer {
 		}
 
 		// Draw axes
-		drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, yAxis, true,
+		drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
 				lineColor, fontColor, stringBounder);
 
 		if (y2Axis != null) {
-			drawYAxis(ug.apply(UTranslate.dx(leftMargin + plotWidth).compose(UTranslate.dy(topMargin))), plotHeight,
+			drawYAxis(ug.apply(UTranslate.dx(leftMargin + plotWidth).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth,
 					y2Axis, false, lineColor, fontColor, stringBounder);
 		}
 
 		drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin + plotHeight))), plotWidth,
-				lineColor, fontColor, stringBounder);
+				plotHeight, lineColor, fontColor, stringBounder);
 
 		// Draw series data
 		final UGraphic ugPlot = ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin)));
@@ -151,7 +155,7 @@ public class ChartRenderer {
 		drawLegend(ug, leftMargin, topMargin, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
 	}
 
-	private void drawYAxis(UGraphic ug, double height, ChartAxis axis, boolean leftSide, HColor lineColor,
+	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, HColor lineColor,
 			HColor fontColor, StringBounder stringBounder) {
 		// Draw axis line
 		ug.draw(ULine.vline(height));
@@ -161,9 +165,25 @@ public class ChartRenderer {
 		final UFont font = UFont.sansSerif(10);
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
+		// Calculate grid line color (lighter than axis color)
+		HColor gridColor = lineColor;
+		try {
+			gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
+		} catch (Exception e) {
+			// Use default line color
+		}
+
 		for (int i = 0; i <= numTicks; i++) {
 			final double y = height * (1.0 - (double) i / numTicks);
 			final double value = axis.getMin() + (axis.getMax() - axis.getMin()) * i / numTicks;
+
+			// Draw grid lines if enabled (horizontal lines for Y axis)
+			if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
+				// Draw horizontal grid line across the plot area
+				final ULine gridLine = ULine.hline(width);
+				final UStroke gridStroke = UStroke.withThickness(0.5);
+				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
+			}
 
 			// Draw tick
 			if (leftSide)
@@ -246,7 +266,7 @@ public class ChartRenderer {
 		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);
 	}
 
-	private void drawXAxis(UGraphic ug, double width, HColor lineColor, HColor fontColor,
+	private void drawXAxis(UGraphic ug, double width, double height, HColor lineColor, HColor fontColor,
 			StringBounder stringBounder) {
 		// Draw axis line
 		ug.draw(ULine.hline(width));
@@ -259,8 +279,23 @@ public class ChartRenderer {
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 		final double categoryWidth = width / xAxisLabels.size();
 
+		// Calculate grid line color (lighter than axis color)
+		HColor gridColor = lineColor;
+		try {
+			gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
+		} catch (Exception e) {
+			// Use default line color
+		}
+
 		for (int i = 0; i < xAxisLabels.size(); i++) {
 			final double x = (i + 0.5) * categoryWidth;
+
+			// Draw vertical grid line if enabled (vertical lines for X axis)
+			if (xGridMode != ChartDiagram.GridMode.OFF) {
+				final ULine gridLine = ULine.vline(-height);
+				final UStroke gridStroke = UStroke.withThickness(0.5);
+				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(x)).draw(gridLine);
+			}
 
 			// Draw tick
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
