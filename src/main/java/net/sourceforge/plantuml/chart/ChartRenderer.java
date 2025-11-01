@@ -59,6 +59,7 @@ public class ChartRenderer {
 
 	private final ISkinParam skinParam;
 	private final List<String> xAxisLabels;
+	private final String xAxisTitle;
 	private final List<ChartSeries> series;
 	private final ChartAxis yAxis;
 	private final ChartAxis y2Axis;
@@ -74,10 +75,11 @@ public class ChartRenderer {
 	private static final double LEGEND_TEXT_SPACING = 5;
 	private static final double LEGEND_ITEM_SPACING = 15;
 
-	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, List<ChartSeries> series,
+	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, List<ChartSeries> series,
 			ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition) {
 		this.skinParam = skinParam;
 		this.xAxisLabels = xAxisLabels;
+		this.xAxisTitle = xAxisTitle;
 		this.series = series;
 		this.yAxis = yAxis;
 		this.y2Axis = y2Axis;
@@ -88,6 +90,11 @@ public class ChartRenderer {
 		final XDimension2D legendDim = calculateLegendDimension(stringBounder);
 		double width = MARGIN + AXIS_LABEL_SPACE + getPlotWidth() + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + MARGIN;
 		double height = MARGIN + TITLE_SPACE + getPlotHeight() + AXIS_LABEL_SPACE + MARGIN;
+
+		// Add space for X-axis title if present
+		if (xAxisTitle != null && !xAxisTitle.isEmpty()) {
+			height += 20; // Extra space for X-axis title
+		}
 
 		// Add space for legend
 		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {
@@ -186,18 +193,55 @@ public class ChartRenderer {
 
 	private void drawVerticalText(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
 			StringBounder stringBounder) {
-		final UFont font = UFont.sansSerif(10);
+		// Parse Creole formatting and extract plain text with font style
+		String plainText = text;
+		UFont font = UFont.sansSerif(10);
+
+		// Handle Creole formatting markers
+		if (text.startsWith("**") && text.endsWith("**") && text.length() > 4) {
+			// Bold
+			plainText = text.substring(2, text.length() - 2);
+			font = font.bold();
+		} else if (text.startsWith("//") && text.endsWith("//") && text.length() > 4) {
+			// Italic
+			plainText = text.substring(2, text.length() - 2);
+			font = font.italic();
+		} else if (text.startsWith("\"\"") && text.endsWith("\"\"") && text.length() > 4) {
+			// Monospaced
+			plainText = text.substring(2, text.length() - 2);
+			font = UFont.monospaced(10);
+		} else if (text.startsWith("__") && text.endsWith("__") && text.length() > 4) {
+			// Underlined
+			plainText = text.substring(2, text.length() - 2);
+			// Underline will be handled by FontConfiguration
+		} else if (text.startsWith("--") && text.endsWith("--") && text.length() > 4) {
+			// Strike-through
+			plainText = text.substring(2, text.length() - 2);
+			// Strike will be handled by FontConfiguration
+		} else if (text.startsWith("~~") && text.endsWith("~~") && text.length() > 4) {
+			// Wave underline
+			plainText = text.substring(2, text.length() - 2);
+			// Wave will be handled by FontConfiguration
+		}
+
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
-		// Left axis (Y): 90 degrees (reads from bottom to top)
-		// Right axis (Y2): 270 degrees (reads from top to bottom)
-		final int orientation = leftSide ? 90 : 270;
-		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(text, fontConfig).withOrientation(orientation);
-		final double textWidth = stringBounder.calculateDimension(font, text).getWidth();
+		// Left axis (Y): 270 degrees (reads from bottom to top) - was reversed
+		// Right axis (Y2): 90 degrees (reads from top to bottom) - was reversed
+		final int orientation = leftSide ? 270 : 90;
+		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(plainText, fontConfig).withOrientation(orientation);
+
+		// Calculate dimensions of the text
+		final double textWidth = stringBounder.calculateDimension(font, plainText).getWidth();
+		final double textHeight = stringBounder.calculateDimension(font, plainText).getHeight();
 
 		// Position the rotated text centered vertically along the axis
-		final double xPos = leftSide ? -AXIS_LABEL_SPACE + 5 : AXIS_LABEL_SPACE - 5;
-		final double yPos = leftSide ? height / 2 + textWidth / 2 : height / 2 - textWidth / 2;
+		// When rotated, we need to position based on where the text baseline starts
+		// For 270° rotation (left), text starts at bottom and goes up
+		// For 90° rotation (right), text starts at top and goes down
+		final double xPos = leftSide ? -AXIS_LABEL_SPACE + textHeight / 2 : AXIS_LABEL_SPACE - textHeight / 2;
+		// Center the text vertically - add half the text width since that becomes the vertical span
+		final double yPos = leftSide ? (height / 2 + textWidth / 2) : (height / 2 - textWidth / 2);
 
 		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);
 	}
@@ -226,6 +270,15 @@ public class ChartRenderer {
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
 			final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
 			textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
+		}
+
+		// Draw X-axis title if present
+		if (xAxisTitle != null && !xAxisTitle.isEmpty()) {
+			final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)
+					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+			final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
+			final double titleY = TICK_SIZE + 25; // Position below the labels
+			titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
 		}
 	}
 

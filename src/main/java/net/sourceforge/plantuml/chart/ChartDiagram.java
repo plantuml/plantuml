@@ -60,6 +60,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private final List<String> xAxisLabels = new ArrayList<>();
+	private String xAxisTitle;
 	private final List<ChartSeries> series = new ArrayList<>();
 	private final ChartAxis yAxis = new ChartAxis();
 	private ChartAxis y2Axis;
@@ -100,7 +101,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		return new ChartRenderer(getSkinParam(), xAxisLabels, series, yAxis, y2Axis, legendPosition);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, series, yAxis, y2Axis, legendPosition);
 	}
 
 	// Command methods
@@ -109,6 +110,10 @@ public class ChartDiagram extends UmlDiagram {
 		this.xAxisLabels.clear();
 		this.xAxisLabels.addAll(labels);
 		return CommandExecutionResult.ok();
+	}
+
+	public void setXAxisTitle(String title) {
+		this.xAxisTitle = title;
 	}
 
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {

@@ -57,6 +57,8 @@ public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
 		return RegexConcat.build(CommandChartXAxis.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("x-axis"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
 				RegexLeaf.end());
 	}
@@ -64,8 +66,10 @@ public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		final String title = arg.getLazzy("TITLE", 0);
 		final String data = arg.get("DATA", 0);
 		final List<String> labels = parseLabels(data);
+		diagram.setXAxisTitle(title);
 		return diagram.setXAxisLabels(labels);
 	}
 
