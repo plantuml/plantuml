@@ -93,7 +93,8 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 		}
 
 		// Check if LABELS keyword was present
-		if (arg.toString().contains("LABELS=")) {
+		final String labelsStr = arg.getLazzy("LABELS", 0);
+		if (labelsStr != null) {
 			series.setShowLabels(true);
 		}
 

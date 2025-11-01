@@ -144,7 +144,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 		final HColor textColor = fontConfiguration.getColor();
 		svg.setFillColor(textColor.toSvg(mapper));
 		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
-				width, fontConfiguration.getAttributes(), backColor);
+				width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());
 
 		if (extraLine != null) {
 			svg.setStrokeColor(extraLine.toSvg(mapper));

@@ -97,12 +97,14 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 		}
 
 		// Check if this line should use the secondary y-axis
-		if (arg.toString().contains("Y2=")) {
+		final String y2Str = arg.getLazzy("Y2", 0);
+		if (y2Str != null) {
 			series.setUseSecondaryAxis(true);
 		}
 
 		// Check if labels keyword was present
-		if (arg.toString().contains("LABELS=")) {
+		final String labelsStr = arg.getLazzy("LABELS", 0);
+		if (labelsStr != null) {
 			series.setShowLabels(true);
 		}
 

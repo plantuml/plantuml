@@ -85,20 +85,18 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		for (StyledString styledString : strings) {
 			final FontConfiguration fc = styledString.getStyle() == FontStyle.BOLD ? fontConfiguration.bold()
 					: fontConfiguration;
-			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper);
+			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper, shape.getOrientation());
 		}
 	}
 
 	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text,
-			double x, double y, ColorMapper mapper) {
+			double x, double y, ColorMapper mapper, int orientation) {
 		final UFont font = fontConfiguration.getFont();
 		final HColor extended = fontConfiguration.getExtendedColor();
 
 		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
-
-		final int orientation = 0;
 
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
@@ -117,6 +115,13 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 			final AffineTransform orig = g2d.getTransform();
 			g2d.translate(x, y);
 			g2d.rotate(Math.PI / 2);
+			g2d.drawString(text, 0, 0);
+			g2d.setTransform(orig);
+
+		} else if (orientation == 270) {
+			final AffineTransform orig = g2d.getTransform();
+			g2d.translate(x, y);
+			g2d.rotate(-Math.PI / 2);
 			g2d.drawString(text, 0, 0);
 			g2d.setTransform(orig);
 

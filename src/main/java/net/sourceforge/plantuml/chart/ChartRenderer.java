@@ -178,19 +178,28 @@ public class ChartRenderer {
 			}
 		}
 
-		// Draw axis title
+		// Draw axis title vertically
 		if (axis.getTitle() != null && !axis.getTitle().isEmpty()) {
-			final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), axis.getTitle())
-					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
-			final double titleHeight = titleBlock.calculateDimension(stringBounder).getHeight();
-			final double titleY = height / 2 - titleHeight / 2;
-
-			if (leftSide) {
-				titleBlock.drawU(ug.apply(UTranslate.dx(-AXIS_LABEL_SPACE + 5).compose(UTranslate.dy(titleY))));
-			} else {
-				titleBlock.drawU(ug.apply(UTranslate.dx(AXIS_LABEL_SPACE - 5).compose(UTranslate.dy(titleY))));
-			}
+			drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, stringBounder);
 		}
+	}
+
+	private void drawVerticalText(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
+			StringBounder stringBounder) {
+		final UFont font = UFont.sansSerif(10);
+		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+
+		// Create rotated text (270 degrees = -90 degrees, reads from top to bottom)
+		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(text, fontConfig).withOrientation(270);
+		final double textWidth = stringBounder.calculateDimension(font, text).getWidth();
+		final double textHeight = stringBounder.calculateDimension(font, text).getHeight();
+
+		// Position the rotated text centered vertically along the axis
+		// When rotated 270 degrees, the text reads from top to bottom
+		final double xPos = leftSide ? -AXIS_LABEL_SPACE + 5 : AXIS_LABEL_SPACE - 5;
+		final double yPos = height / 2 - textWidth / 2; // Center the text along the axis
+
+		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);
 	}
 
 	private void drawXAxis(UGraphic ug, double width, HColor lineColor, HColor fontColor,
