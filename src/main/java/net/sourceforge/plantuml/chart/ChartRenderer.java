@@ -66,6 +66,7 @@ public class ChartRenderer {
 	private final ChartDiagram.LegendPosition legendPosition;
 	private final ChartDiagram.GridMode xGridMode;
 	private final ChartDiagram.GridMode yGridMode;
+	private final ChartDiagram.StackMode stackMode;
 
 	// Layout constants
 	private static final double MARGIN = 20;
@@ -78,7 +79,7 @@ public class ChartRenderer {
 	private static final double LEGEND_ITEM_SPACING = 15;
 
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, List<ChartSeries> series,
-			ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode) {
+			ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode, ChartDiagram.StackMode stackMode) {
 		this.skinParam = skinParam;
 		this.xAxisLabels = xAxisLabels;
 		this.xAxisTitle = xAxisTitle;
@@ -88,6 +89,7 @@ public class ChartRenderer {
 		this.legendPosition = legendPosition;
 		this.xGridMode = xGridMode;
 		this.yGridMode = yGridMode;
+		this.stackMode = stackMode;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -321,22 +323,53 @@ public class ChartRenderer {
 		if (xAxisLabels.isEmpty() || series.isEmpty())
 			return;
 
-		for (ChartSeries s : series) {
-			final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
-			final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(series.indexOf(s));
+		// Separate bar series from other series for grouped/stacked rendering
+		final java.util.List<ChartSeries> barSeries = new java.util.ArrayList<>();
+		final java.util.List<HColor> barColors = new java.util.ArrayList<>();
 
+		for (ChartSeries s : series) {
 			if (s.getType() == ChartSeries.SeriesType.BAR) {
-				final BarRenderer barRenderer = new BarRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(),
-						axis);
-				barRenderer.draw(ug, s, color);
-			} else if (s.getType() == ChartSeries.SeriesType.LINE) {
-				final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
-						xAxisLabels.size(), axis);
-				lineRenderer.draw(ug, s, color);
-			} else if (s.getType() == ChartSeries.SeriesType.AREA) {
-				final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight,
-						xAxisLabels.size(), axis);
-				areaRenderer.draw(ug, s, color);
+				barSeries.add(s);
+				final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(series.indexOf(s));
+				barColors.add(color);
+			}
+		}
+
+		// Render bar series (grouped or stacked based on stackMode)
+		if (!barSeries.isEmpty()) {
+			// For now, assume all bar series use the same axis (primary Y axis)
+			// Future enhancement could support mixed axes in grouped/stacked mode
+			final ChartAxis axis = barSeries.get(0).isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
+			final BarRenderer barRenderer = new BarRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(), axis);
+
+			if (barSeries.size() == 1) {
+				// Single bar series - use simple rendering
+				barRenderer.draw(ug, barSeries.get(0), barColors.get(0));
+			} else {
+				// Multiple bar series - use grouped or stacked rendering
+				if (stackMode == ChartDiagram.StackMode.STACKED) {
+					barRenderer.drawStacked(ug, barSeries, barColors);
+				} else {
+					barRenderer.drawGrouped(ug, barSeries, barColors);
+				}
+			}
+		}
+
+		// Render non-bar series (line, area)
+		for (ChartSeries s : series) {
+			if (s.getType() != ChartSeries.SeriesType.BAR) {
+				final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
+				final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(series.indexOf(s));
+
+				if (s.getType() == ChartSeries.SeriesType.LINE) {
+					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
+							xAxisLabels.size(), axis);
+					lineRenderer.draw(ug, s, color);
+				} else if (s.getType() == ChartSeries.SeriesType.AREA) {
+					final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight,
+							xAxisLabels.size(), axis);
+					areaRenderer.draw(ug, s, color);
+				}
 			}
 		}
 	}

@@ -63,6 +63,10 @@ public class ChartDiagram extends UmlDiagram {
 		OFF, MAJOR, BOTH
 	}
 
+	public enum StackMode {
+		GROUPED, STACKED
+	}
+
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
 	private final List<ChartSeries> series = new ArrayList<>();
@@ -71,6 +75,7 @@ public class ChartDiagram extends UmlDiagram {
 	private LegendPosition legendPosition = LegendPosition.NONE;
 	private GridMode xGridMode = GridMode.OFF;
 	private GridMode yGridMode = GridMode.OFF;
+	private StackMode stackMode = StackMode.GROUPED;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -107,7 +112,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode);
 	}
 
 	// Command methods
@@ -203,5 +208,14 @@ public class ChartDiagram extends UmlDiagram {
 
 	public GridMode getYGridMode() {
 		return yGridMode;
+	}
+
+	public CommandExecutionResult setStackMode(StackMode mode) {
+		this.stackMode = mode;
+		return CommandExecutionResult.ok();
+	}
+
+	public StackMode getStackMode() {
+		return stackMode;
 	}
 }
