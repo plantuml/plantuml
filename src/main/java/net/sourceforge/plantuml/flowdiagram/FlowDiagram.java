@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -91,8 +92,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		return new DiagramDescription("Flow Diagram");
 	}
 
-	public FlowDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.FLOW, null, preprocessing);
+	public FlowDiagram(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.FLOW, null, preprocessing);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {

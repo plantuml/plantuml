@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -62,8 +63,8 @@ public class FilesDiagram extends UmlDiagram {
 
 	private final FilesListing list;
 
-	public FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.FILES, null, preprocessing);
+	public FilesDiagram(PathSystem pathSystem, UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.FILES, null, preprocessing);
 
 		final ISkinParam skinParam = getSkinParam();
 		try {

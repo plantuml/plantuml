@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemColorsFactory extends PSystemSingleLineFactory {
@@ -48,10 +49,10 @@ public class PSystemColorsFactory extends PSystemSingleLineFactory {
 	private static final Pattern pattern = Pattern.compile("^colors?\\s*(#?\\w+)?\\s*$");
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected AbstractPSystem executeLine(PathSystem pathSystem, UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final Matcher matcher = pattern.matcher(line);
 		if (matcher.matches()) 
-			return new PSystemColors(source, matcher.group(1), preprocessing);
+			return new PSystemColors(pathSystem, source, matcher.group(1), preprocessing);
 		
 		return null;
 	}

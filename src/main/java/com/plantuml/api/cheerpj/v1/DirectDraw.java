@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 
 public class DirectDraw {
@@ -98,7 +99,9 @@ public class DirectDraw {
 		try {
 			text = Utils.cleanText(text);
 
-			final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(), UTF_8,
+			final PathSystem pathSystem = PathSystem.fetch();
+
+			final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, Collections.<String>emptyList(), UTF_8,
 					Defines.createEmpty(), new StringReader(text), null, "string");
 			List<BlockUml> blocks = builder.getBlockUmls();
 

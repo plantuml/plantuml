@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteCommand
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOnArrowCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOverSeveralCommand;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.command.CommandActivate;
 import net.sourceforge.plantuml.sequencediagram.command.CommandActivate2;
@@ -85,8 +86,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class SequenceDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public SequenceDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		return new SequenceDiagram(source, previous, preprocessing);
+	public SequenceDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new SequenceDiagram(pathSystem, source, previous, preprocessing);
 	}
 
 	@Override

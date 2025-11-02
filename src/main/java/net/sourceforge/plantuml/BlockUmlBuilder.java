@@ -50,6 +50,7 @@ import java.util.Set;
 import com.plantuml.api.cheerpj.WasmLog;
 
 import net.sourceforge.plantuml.file.AParentFolderRegular;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -69,26 +70,26 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	private final ImportedFiles importedFiles;
 	private final Charset charset;
 
-	/**
-	 * @deprecated being kept for backwards compatibility, perhaps other projects
-	 *             are using this?
-	 */
-	@Deprecated
-	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, SFile newCurrentDir,
-			String desc) throws IOException {
-		this(config, charsetOrDefault(charset), defines, readerInit, newCurrentDir, desc);
-	}
+//	/**
+//	 * @deprecated being kept for backwards compatibility, perhaps other projects
+//	 *             are using this?
+//	 */
+//	@Deprecated
+//	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, SFile newCurrentDir,
+//			String desc) throws IOException {
+//		this(config, charsetOrDefault(charset), defines, readerInit, newCurrentDir, desc);
+//	}
+//
+//	/**
+//	 * @deprecated being kept for backwards compatibility, perhaps other projects
+//	 *             are using this?
+//	 */
+//	@Deprecated
+//	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader) throws IOException {
+//		this(config, charset, defines, reader, null, null);
+//	}
 
-	/**
-	 * @deprecated being kept for backwards compatibility, perhaps other projects
-	 *             are using this?
-	 */
-	@Deprecated
-	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader) throws IOException {
-		this(config, charset, defines, reader, null, null);
-	}
-
-	public BlockUmlBuilder(List<String> config, Charset charset, Defines defines, Reader readerInit,
+	public BlockUmlBuilder(PathSystem pathSystem, List<String> config, Charset charset, Defines defines, Reader readerInit,
 			SFile newCurrentDir, String desc) throws IOException {
 
 		this.charset = requireNonNull(charset);
@@ -131,7 +132,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 						current.add(s);
 
 					WasmLog.log("...text loaded...");
-					final BlockUml uml = new BlockUml(current, defines.cloneMe(), null, this, charset);
+					final BlockUml uml = new BlockUml(pathSystem, current, defines.cloneMe(), null, this, charset);
 					usedFiles.addAll(uml.getIncluded());
 					blocks.add(uml);
 					current = null;

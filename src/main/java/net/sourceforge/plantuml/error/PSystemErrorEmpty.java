@@ -38,13 +38,14 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class PSystemErrorEmpty extends PSystemError {
 
-	public PSystemErrorEmpty(UmlSource source, List<StringLocated> trace, ErrorUml singleError, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemErrorEmpty(PathSystem pathSystem, UmlSource source, List<StringLocated> trace, ErrorUml singleError, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		this.trace = trace;
 		this.singleError = singleError;
 

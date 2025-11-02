@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
@@ -97,7 +98,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		this.file = file;
 		this.charset = charsetOrDefault(charsetName);
 		this.fileFormatOption = fileFormatOption;
-		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
+		final PathSystem pathSystem = PathSystem.fetch().changeCurrentDirectory(file.toPath().getParent().normalize());
+		this.builder = new BlockUmlBuilder(pathSystem, config, charset, defines, getReader(charset),
 				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));
 	}
 
@@ -178,13 +180,15 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				Logme.error(t);
-				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noErrorImage)
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
+						|| noErrorImage)
 					continue;
 
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
 			}
 
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) && system instanceof PSystemError)
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
+					&& system instanceof PSystemError)
 				continue;
 
 			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);

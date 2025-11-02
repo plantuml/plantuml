@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.shape.Line;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -128,7 +129,8 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		return null;
 	}
 
-	public static EmbeddedDiagram createAndSkip(String type, Iterator<CharSequence> it, ISkinSimple skinParam) {
+	public static EmbeddedDiagram createAndSkip(PathSystem pathSystem, String type, Iterator<CharSequence> it,
+			ISkinSimple skinParam) {
 		final List<String> result = new ArrayList<String>();
 		result.add("@start" + type);
 		int nested = 1;
@@ -145,21 +147,23 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 			result.add(s2.toString());
 		}
 		result.add("@end" + type);
-		return EmbeddedDiagram.from(skinParam, result);
+		return EmbeddedDiagram.from(pathSystem, skinParam, result);
 
 	}
 
 	private final List<StringLocated> list;
 	private final ISkinSimple skinParam;
+	private final PathSystem pathSystem;
 	private BufferedImage image;
 
-	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> system) {
+	private EmbeddedDiagram(PathSystem pathSystem, ISkinSimple skinParam, List<StringLocated> system) {
+		this.pathSystem = pathSystem;
 		this.list = system;
 		this.skinParam = skinParam;
 	}
 
-	public static EmbeddedDiagram from(ISkinSimple skinParam, List<String> strings) {
-		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));
+	public static EmbeddedDiagram from(PathSystem pathSystem, ISkinSimple skinParam, List<String> strings) {
+		return new EmbeddedDiagram(pathSystem, skinParam, BlockUml.convert(strings));
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -231,9 +235,8 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final Previous previous = skinParam == null ? Previous.createEmpty()
-				: Previous.createFrom(skinParam.values());
-		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), previous, null, null);
+		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());
+		final BlockUml blockUml = new BlockUml(pathSystem, list, Defines.createEmpty(), previous, null, null);
 		return blockUml.getDiagram();
 
 	}

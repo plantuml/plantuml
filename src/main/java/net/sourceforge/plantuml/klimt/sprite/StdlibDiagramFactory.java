@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -53,8 +54,8 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public StdlibDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		return new StdlibDiagram(source, previous, preprocessing);
+	public StdlibDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new StdlibDiagram(pathSystem, source, previous, preprocessing);
 	}
 	
 	@Override

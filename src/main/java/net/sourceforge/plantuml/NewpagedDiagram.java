@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -57,9 +58,9 @@ public class NewpagedDiagram extends AbstractPSystem {
 
 	private final List<Diagram> diagrams = new ArrayList<>();
 
-	public NewpagedDiagram(UmlSource source, AbstractPSystem diag1, AbstractPSystem diag2,
+	public NewpagedDiagram(PathSystem pathSystem, UmlSource source, AbstractPSystem diag1, AbstractPSystem diag2,
 			PreprocessingArtifact preprocessingArtifact) {
-		super(source, preprocessingArtifact);
+		super(pathSystem, source, preprocessingArtifact);
 		if (diag1 instanceof NewpagedDiagram)
 			throw new IllegalArgumentException();
 

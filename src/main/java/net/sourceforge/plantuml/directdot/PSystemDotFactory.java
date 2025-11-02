@@ -40,6 +40,7 @@ import java.util.regex.Matcher;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -66,24 +67,24 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 	}
 
 	@Override
-	public PSystemDot initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
+	public PSystemDot initDiagram(PathSystem pathSystem, UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		data = null;
 		return null;
 	}
 
 	@Override
-	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line, PreprocessingArtifact preprocessing) {
+	public PSystemDot executeLine(PathSystem pathSystem, UmlSource source, PSystemDot system, String line, PreprocessingArtifact preprocessing) {
 		if (system == null && isGraphvizDotHeader(line)) {
 			data = new StringBuilder(line);
 			data.append("\n");
-			return new PSystemDot(source, data.toString(), preprocessing);
+			return new PSystemDot(pathSystem, source, data.toString(), preprocessing);
 		}
 		if (data == null || system == null)
 			return null;
 
 		data.append(line);
 		data.append("\n");
-		return new PSystemDot(source, data.toString(), preprocessing);
+		return new PSystemDot(pathSystem, source, data.toString(), preprocessing);
 	}
 
     private boolean isGraphvizDotHeader(String line) {

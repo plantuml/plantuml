@@ -57,14 +57,15 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagram extends UmlDiagram {
 	// ::remove file when __CORE__
 
-	public ListSpriteDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.HELP, previous, preprocessing);
+	public ListSpriteDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.HELP, previous, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

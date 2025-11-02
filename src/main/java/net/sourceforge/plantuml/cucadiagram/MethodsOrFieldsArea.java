@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.TextBlockWithUrl;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -93,11 +94,11 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 	private final Entity leaf;
 	private final Style style;
 
-	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, Entity leaf, Style style) {
-		this(members, skinParam, HorizontalAlignment.LEFT, leaf, style);
+	public MethodsOrFieldsArea(PathSystem pathSystem, Display members, ISkinParam skinParam, Entity leaf, Style style) {
+		this(pathSystem, members, skinParam, HorizontalAlignment.LEFT, leaf, style);
 	}
 
-	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, HorizontalAlignment align, Entity leaf,
+	public MethodsOrFieldsArea(PathSystem pathSystem, Display members, ISkinParam skinParam, HorizontalAlignment align, Entity leaf,
 			Style style) {
 		this.style = style;
 		this.leaf = leaf;
@@ -112,7 +113,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			final CharSequence cs = it.next();
 			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));
 			if (type != null)
-				embeddeds.add(EmbeddedDiagram.createAndSkip(type, it, skinParam));
+				embeddeds.add(EmbeddedDiagram.createAndSkip(pathSystem, type, it, skinParam));
 			else
 				result.add(cs);
 

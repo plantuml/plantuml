@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -280,7 +281,7 @@ public class TContext {
 		// %trim
 	}
 
-	public TContext(ImportedFiles importedFiles, Defines defines, Charset charset,
+	public TContext(PathSystem pathSystem, ImportedFiles importedFiles, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer) {
 		this.definitionsContainer = definitionsContainer;
 		this.importedFiles = importedFiles;

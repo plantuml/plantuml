@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -93,8 +94,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return new DiagramDescription("(Timing Diagram)");
 	}
 
-	public TimingDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.TIMING, null, preprocessing);
+	public TimingDiagram(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.TIMING, null, preprocessing);
 	}
 
 	@Override

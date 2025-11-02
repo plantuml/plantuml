@@ -42,14 +42,15 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 // This class doesnt feel like a wonderful idea, just a stepping stone towards something
 public abstract class PlainDiagram extends AbstractPSystem {
 	// ::remove file when __HAXE__
 
-	public PlainDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PlainDiagram(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 	}
 
 	@Override

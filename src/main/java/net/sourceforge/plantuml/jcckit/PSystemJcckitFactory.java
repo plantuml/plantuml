@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -63,13 +64,13 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	@Override
-	public PSystemJcckit initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
+	public PSystemJcckit initDiagram(PathSystem pathSystem, UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		this.data = null;
 		this.width = 640;
 		this.height = 400;
 		extractDimension(startLine);
 		data = new StringBuilder();
-		return createSystem(source, preprocessing);
+		return createSystem(pathSystem, source, preprocessing);
 
 	}
 
@@ -88,7 +89,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		return "" + width + "-" + height;
 	}
 
-	private PSystemJcckit createSystem(UmlSource source, PreprocessingArtifact preprocessing) {
+	private PSystemJcckit createSystem(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
 		final Properties p = new Properties();
 		try {
 			final String tmp = data.toString();
@@ -101,23 +102,23 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 			Logme.error(e);
 			return null;
 		}
-		return new PSystemJcckit(source, p, width, height, preprocessing);
+		return new PSystemJcckit(pathSystem, source, p, width, height, preprocessing);
 	}
 
 	@Override
-	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line,
+	public PSystemJcckit executeLine(PathSystem pathSystem, UmlSource source, PSystemJcckit system, String line,
 			PreprocessingArtifact preprocessing) {
 		if (system == null && line.startsWith("jcckit")) {
 			data = new StringBuilder();
 			extractDimension(line);
-			return createSystem(source, preprocessing);
+			return createSystem(pathSystem, source, preprocessing);
 		}
 		if (data == null)
 			return null;
 
 		data.append(StringUtils.trin(line));
 		data.append(BackSlash.NEWLINE);
-		return createSystem(source, preprocessing);
+		return createSystem(pathSystem, source, preprocessing);
 	}
 
 	@Override

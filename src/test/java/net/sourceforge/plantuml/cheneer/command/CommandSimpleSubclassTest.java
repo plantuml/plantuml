@@ -14,6 +14,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -23,7 +24,7 @@ public class CommandSimpleSubclassTest {
 
 	private final Command<ChenEerDiagram> command = new CommandSimpleSubclass();
 
-	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(new ArrayList<>(), false), null, new PreprocessingArtifact());
+	private final ChenEerDiagram diagram = new ChenEerDiagram(PathSystem.fetch(), UmlSource.create(new ArrayList<>(), false), null, new PreprocessingArtifact());
 
 	@Test
 	void test_parseSubset() {

@@ -37,20 +37,21 @@ package net.sourceforge.plantuml.oregon;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemOregonFactory extends PSystemBasicFactory<PSystemOregon> {
 
 	@Override
-	public PSystemOregon initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
+	public PSystemOregon initDiagram(PathSystem pathSystem, UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		return null;
 	}
 
 	@Override
-	public PSystemOregon executeLine(UmlSource source, PSystemOregon system, String line, PreprocessingArtifact preprocessing) {
+	public PSystemOregon executeLine(PathSystem pathSystem, UmlSource source, PSystemOregon system, String line, PreprocessingArtifact preprocessing) {
 		if (system == null && line.equalsIgnoreCase("run oregon trail"))
-			return new PSystemOregon(source, preprocessing);
+			return new PSystemOregon(pathSystem, source, preprocessing);
 
 		if (system == null)
 			return null;

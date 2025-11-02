@@ -84,6 +84,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -107,8 +108,8 @@ public abstract class PSystemError extends PlainDiagram {
 	protected List<StringLocated> trace;
 	protected ErrorUml singleError;
 
-	public PSystemError(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemError(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 	}
 
 	@Override
@@ -292,7 +293,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock getWelcome() throws IOException {
-		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())
+		return new PSystemWelcome(getPathSystem(), getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())
 				.getGraphicStrings();
 	}
 

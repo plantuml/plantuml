@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -55,8 +56,8 @@ public class GitDiagram extends UmlDiagram {
 
 	private final Collection<GNode> gnodes;
 
-	public GitDiagram(UmlSource source, GitTextArea textArea, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.GIT, null, preprocessing);
+	public GitDiagram(PathSystem pathSystem, UmlSource source, GitTextArea textArea, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.GIT, null, preprocessing);
 		this.gnodes = new GNodeBuilder(textArea.getAllCommits()).getAllNodes();
 		new GNodeBuilder(textArea.getAllCommits());
 	}

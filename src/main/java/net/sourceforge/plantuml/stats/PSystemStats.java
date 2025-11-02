@@ -39,18 +39,19 @@ import java.io.IOException;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemStats extends PlainStringsDiagram {
 
-	PSystemStats(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	PSystemStats(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		final StatsImpl stats = (StatsImpl) StatsUtils.getStats();
 		strings.addAll(new CreoleConverter(stats).toCreole());
 	}
 
 	public static PSystemStats create(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
-		return new PSystemStats(source, preprocessing);
+		return new PSystemStats(PathSystem.fetch(), source, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

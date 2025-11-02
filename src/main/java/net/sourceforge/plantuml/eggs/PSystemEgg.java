@@ -40,13 +40,14 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemEgg extends PlainStringsDiagram {
 	// ::remove file when __CORE__
 
-	PSystemEgg(UmlSource source, String sentence, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	PSystemEgg(PathSystem pathSystem, UmlSource source, String sentence, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		final StringTokenizer st = new StringTokenizer(sentence, "|");
 		while (st.hasMoreTokens()) {
 			strings.add(st.nextToken());

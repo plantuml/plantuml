@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -75,9 +75,9 @@ public class JsonDiagram extends TitledDiagram {
 	private final List<Highlighted> highlighted;
 	private final boolean handwritten;
 
-	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<Highlighted> highlighted,
+	public JsonDiagram(PathSystem pathSystem, UmlSource source, UmlDiagramType type, JsonValue json, List<Highlighted> highlighted,
 			StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
-		super(source, type, null, preprocessing);
+		super(pathSystem, source, type, null, preprocessing);
 		this.handwritten = styleExtractor.isHandwritten();
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {
 			this.root = new JsonArray();

@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -51,7 +52,7 @@ public class PSystemErrorUtils {
 //		if (source.isEmpty()) {
 //			return new PSystemErrorEmpty(source, list, singleError);
 //		}
-		return new PSystemErrorV2(source, list, singleError, preprocessing);
+		return new PSystemErrorV2(PathSystem.fetch(), source, list, singleError, preprocessing);
 	}
 
 	public static PSystemError merge(Collection<PSystemError> ps) {

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -72,8 +73,8 @@ public class StdlibDiagram extends UmlDiagram {
 	private static final int WIDTH = 1800;
 	private String name;
 
-	public StdlibDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.HELP, previous, preprocessing);
+	public StdlibDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.HELP, previous, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

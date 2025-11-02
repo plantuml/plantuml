@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlo
 import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -68,8 +69,8 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public CompositeDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		return new CompositeDiagram(source, previous, preprocessing);
+	public CompositeDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new CompositeDiagram(pathSystem, source, previous, preprocessing);
 	}
 	
 	@Override

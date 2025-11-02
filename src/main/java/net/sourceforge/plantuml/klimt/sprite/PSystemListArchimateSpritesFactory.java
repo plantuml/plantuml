@@ -39,16 +39,17 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListArchimateSpritesFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected AbstractPSystem executeLine(PathSystem pathSystem, UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.startsWith("listsprite")) 
-			return new PSystemListArchimateSprites(source, preprocessing);
+			return new PSystemListArchimateSprites(pathSystem, source, preprocessing);
 		
 		return null;
 	}

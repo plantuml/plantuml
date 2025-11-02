@@ -88,6 +88,7 @@ import net.sourceforge.plantuml.klimt.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
@@ -126,7 +127,7 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
+	final public Diagram createPSystem(PathSystem pathSystem, List<StringLocated> source, List<StringLocated> rawSource,
 			Previous previous, PreprocessingArtifact preprocessing) {
 
 		WasmLog.log("..compiling diagram...");
@@ -151,7 +152,7 @@ public class PSystemBuilder {
 
 			final DiagramType diagramType = umlSource.getDiagramType();
 			if (diagramType == DiagramType.UNKNOWN)
-				return new PSystemUnsupported(umlSource, preprocessing);
+				return new PSystemUnsupported(pathSystem, umlSource, preprocessing);
 
 			final List<PSystemError> errors = new ArrayList<>();
 			for (PSystemFactory systemFactory : factories) {
@@ -159,7 +160,7 @@ public class PSystemBuilder {
 					continue;
 
 				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-				final Diagram sys = systemFactory.createSystem(umlSource, previous, preprocessing);
+				final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;
@@ -167,7 +168,7 @@ public class PSystemBuilder {
 				errors.add((PSystemError) sys);
 			}
 			if (errors.size() == 0)
-				return new PSystemUnsupported(umlSource, preprocessing);
+				return new PSystemUnsupported(pathSystem, umlSource, preprocessing);
 
 			result = PSystemErrorUtils.merge(errors);
 			return result;

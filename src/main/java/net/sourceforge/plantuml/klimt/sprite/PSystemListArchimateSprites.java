@@ -48,13 +48,14 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListArchimateSprites extends PlainDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemListArchimateSprites(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemListArchimateSprites(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 	}
 
 	@Override

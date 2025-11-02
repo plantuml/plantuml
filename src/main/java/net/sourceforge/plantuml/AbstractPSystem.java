@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -68,6 +66,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -97,6 +96,11 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 
 	private String namespaceSeparator = null;
 	private final PreprocessingArtifact preprocessing;
+	private final PathSystem pathSystem;
+
+	public final PathSystem getPathSystem() {
+		return pathSystem;
+	}
 
 	public void setNamespaceSeparator(String namespaceSeparator) {
 		this.namespaceSeparator = namespaceSeparator;
@@ -106,9 +110,10 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		return namespaceSeparator;
 	}
 
-	public AbstractPSystem(UmlSource source, PreprocessingArtifact preprocessing) {
+	public AbstractPSystem(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
 		this.source = Objects.requireNonNull(source);
 		this.preprocessing = preprocessing;
+		this.pathSystem = pathSystem;
 	}
 
 	private String getVersion() {
@@ -288,8 +293,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	public Collection<Warning> getWarnings() {
 		return preprocessing.getWarnings();
 	}
-	
-	
+
 	@Override
 	public InstallationRequirement getInstallationRequirement() {
 		return InstallationRequirement.NONE;

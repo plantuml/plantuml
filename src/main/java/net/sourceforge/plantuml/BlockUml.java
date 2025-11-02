@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -79,15 +80,16 @@ public class BlockUml {
 	private final Previous previous;
 	private final Set<FileWithSuffix> included = new HashSet<>();
 	private final PreprocessingArtifact preprocessingArtifact;
+	private final PathSystem pathSystem;
 
 	public Set<FileWithSuffix> getIncluded() {
 		return Collections.unmodifiableSet(included);
 	}
 
-	@Deprecated
-	BlockUml(String... strings) {
-		this(convert(strings), Defines.createEmpty(), null, null, null);
-	}
+//	@Deprecated
+//	BlockUml(String... strings) {
+//		this(convert(strings), Defines.createEmpty(), null, null, null);
+//	}
 
 	// ::comment when __CORE__
 	public String getEncodedUrl() throws IOException {
@@ -134,9 +136,10 @@ public class BlockUml {
 //		this(strings, defines, skinMap, definitions, charsetOrDefault(definitions.getCharset()));
 //	}
 
-	public BlockUml(List<StringLocated> strings, Defines defines, Previous previous,
+	public BlockUml(PathSystem pathSystem, List<StringLocated> strings, Defines defines, Previous previous,
 			DefinitionsContainer definitions, Charset charset) {
 		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);
+		this.pathSystem = pathSystem;
 		this.localDefines = defines;
 		this.previous = previous;
 
@@ -144,8 +147,8 @@ public class BlockUml {
 			this.data = new ArrayList<>(this.rawSource);
 			this.preprocessingArtifact = new PreprocessingArtifact();
 		} else {
-			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,
-					this.rawSource.get(0));
+			final TimLoader timLoader = new TimLoader(pathSystem, definitions.getImportedFiles(), defines, charset,
+					definitions, this.rawSource.get(0));
 			this.included.addAll(timLoader.load(this.rawSource));
 			List<StringLocated> tmp = timLoader.getResultList();
 			tmp = Jaws.expands0(tmp);
@@ -189,9 +192,9 @@ public class BlockUml {
 	public Diagram getDiagram() {
 		if (system == null) {
 			if (preprocessorError)
-				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);
+				system = new PSystemErrorPreprocessor(pathSystem, data, debug, preprocessingArtifact);
 			else
-				system = new PSystemBuilder().createPSystem(data, rawSource, previous, preprocessingArtifact);
+				system = new PSystemBuilder().createPSystem(pathSystem, data, rawSource, previous, preprocessingArtifact);
 		}
 		return system;
 	}

@@ -76,6 +76,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementParenthe
 import net.sourceforge.plantuml.descdiagram.command.CommandNewpage;
 import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
 import net.sourceforge.plantuml.descdiagram.command.CommandTogether;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObject;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectMultilines;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
@@ -87,8 +88,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class ClassDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ClassDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		return new ClassDiagram(source, previous, preprocessing);
+	public ClassDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new ClassDiagram(pathSystem, source, previous, preprocessing);
 	}
 
 	@Override

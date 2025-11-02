@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -55,8 +56,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.CLASS, previous, preprocessingArtifact);
+	public ClassDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+		super(pathSystem, source, UmlDiagramType.CLASS, previous, preprocessingArtifact);
 	}
 
 	private boolean allowMixing;

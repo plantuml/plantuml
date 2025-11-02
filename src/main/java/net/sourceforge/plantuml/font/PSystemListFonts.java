@@ -40,13 +40,14 @@ import java.awt.GraphicsEnvironment;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListFonts extends PlainStringsDiagram {
 	// ::remove folder when __CORE__
 
-	public PSystemListFonts(UmlSource source, String text, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemListFonts(PathSystem pathSystem, UmlSource source, String text, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		strings.add("   <b><size:16>Fonts available:");
 		strings.add(" ");
 		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();

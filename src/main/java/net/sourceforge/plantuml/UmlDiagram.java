@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
@@ -73,8 +74,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 //		super(style, source, type);
 //	}
 
-	public UmlDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, type, previous, preprocessing);
+	public UmlDiagram(PathSystem pathSystem, UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, type, previous, preprocessing);
 	}
 
 	final public int getMinwidth() {

@@ -40,13 +40,14 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemVersionFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected AbstractPSystem executeLine(PathSystem pathSystem, UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
 			if (line.matches("(?i)^(authors?|about)\\s*$"))
 				return PSystemVersion.createShowAuthors2(source, preprocessing);
@@ -66,18 +67,18 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 
 			if (line.matches("(?i)^keygen\\s*$")) {
 				line = line.trim();
-				return new PSystemKeygen(source, "", preprocessing);
+				return new PSystemKeygen(pathSystem, source, "", preprocessing);
 			}
 			if (line.matches("(?i)^keyimport(\\s+[0-9a-z]+)?\\s*$")) {
 				line = line.trim();
 				final String key = line.substring("keyimport".length()).trim();
-				return new PSystemKeygen(source, key, preprocessing);
+				return new PSystemKeygen(pathSystem, source, key, preprocessing);
 			}
 			if (line.matches("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$")) {
 				final Pattern p = Pattern.compile("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$");
 				final Matcher m = p.matcher(line);
 				if (m.find())
-					return new PSystemKeycheck(source, m.group(1), m.group(2), preprocessing);
+					return new PSystemKeycheck(pathSystem, source, m.group(1), m.group(2), preprocessing);
 
 			}
 			// ::done

@@ -40,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 
@@ -62,9 +64,11 @@ public abstract class DiagramUtils {
 
 		final Reader reader = new StringReader(String.join("\n", source));
 
-		final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(),
-				java.nio.charset.StandardCharsets.UTF_8, Defines.createEmpty(), reader,
-				FileSystem.getInstance().getCurrentDir(), "string");
+		final PathSystem pathSystem = PathSystem.fetch();
+
+		final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, Collections.<String>emptyList(),
+				StandardCharsets.UTF_8, Defines.createEmpty(), reader, FileSystem.getInstance().getCurrentDir(),
+				"string");
 
 		final List<BlockUml> blocks = builder.getBlockUmls();
 		if (blocks.size() == 0)

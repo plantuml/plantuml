@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -49,8 +50,8 @@ public class HelpFactory extends PSystemCommandFactory {
 	// ::comment when __HAXE__
 
 	@Override
-	public Help createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		return new Help(source, preprocessing);
+	public Help createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new Help(pathSystem, source, preprocessing);
 	}
 
 	@Override

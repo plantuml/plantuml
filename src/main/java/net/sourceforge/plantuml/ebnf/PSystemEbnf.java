@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -66,8 +67,8 @@ public class PSystemEbnf extends TitledDiagram {
 
 	private final List<TextBlockable> expressions = new ArrayList<>();
 
-	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.EBNF, null, preprocessing);
+	public PSystemEbnf(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.EBNF, null, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

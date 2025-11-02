@@ -40,13 +40,14 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
-	public ChenEerDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.CHEN_EER, previous, preprocessingArtifact);
+	public ChenEerDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+		super(pathSystem, source, UmlDiagramType.CHEN_EER, previous, preprocessingArtifact);
 	}
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();

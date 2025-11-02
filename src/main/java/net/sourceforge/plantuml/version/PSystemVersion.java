@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -64,7 +65,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 public class PSystemVersion extends PlainStringsDiagram {
 
 	PSystemVersion(UmlSource source, boolean withImage, List<String> args, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+		super(PathSystem.fetch(), source, preprocessing);
 		this.strings.addAll(args);
 		try {
 			if (withImage) {
@@ -77,7 +78,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	private PSystemVersion(UmlSource source, List<String> args, BufferedImage image, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+		super(PathSystem.fetch(), source, preprocessing);
 		this.strings.addAll(args);
 		this.image = image;
 		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;

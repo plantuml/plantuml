@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDot extends AbstractPSystem {
@@ -60,8 +61,8 @@ public class PSystemDot extends AbstractPSystem {
 
 	private final String data;
 
-	public PSystemDot(UmlSource source, String data, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemDot(PathSystem pathSystem, UmlSource source, String data, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		this.data = data;
 	}
 

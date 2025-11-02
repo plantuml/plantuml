@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -59,8 +60,8 @@ public class ActivityDiagram extends CucaDiagram {
 	private Entity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
-	public ActivityDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.ACTIVITY, previous, preprocessing);
+	public ActivityDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.ACTIVITY, previous, preprocessing);
 		setNamespaceSeparator(null);
 	}
 

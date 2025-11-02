@@ -47,14 +47,15 @@ import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDedication extends PlainDiagram {
 
 	private final BufferedImage img;
 
-	public PSystemDedication(UmlSource source, BufferedImage img, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemDedication(PathSystem pathSystem, UmlSource source, BufferedImage img, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		this.img = Objects.requireNonNull(img);
 	}
 

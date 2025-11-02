@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
@@ -105,8 +106,8 @@ public class SequenceDiagram extends UmlDiagram {
 		return cpt;
 	}
 
-	public SequenceDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.SEQUENCE, previous, preprocessing);
+	public SequenceDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.SEQUENCE, previous, preprocessing);
 	}
 
 	@Deprecated

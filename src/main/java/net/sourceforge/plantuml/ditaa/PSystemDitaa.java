@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -66,10 +67,10 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final List<String> data = new ArrayList<>();
 	private int nbStartingSpace = Integer.MAX_VALUE;
 
-	public PSystemDitaa(UmlSource source, boolean performSeparationOfCommonEdges, boolean dropShadows,
+	public PSystemDitaa(PathSystem pathSystem, UmlSource source, boolean performSeparationOfCommonEdges, boolean dropShadows,
 			boolean allCornersAreRound, boolean transparentBackground, float scale,
 			PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+		super(pathSystem, source, preprocessing);
 
 		options.setDropShadows(dropShadows);
 		options.renderingOptions.setBackgroundColor(transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);

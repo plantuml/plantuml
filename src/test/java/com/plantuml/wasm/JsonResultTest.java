@@ -21,6 +21,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 
 class JsonResultTest {
@@ -63,7 +64,9 @@ class JsonResultTest {
 	public void testOk() throws IOException {
 
 		final String text = "@startuml\nalice->bob\n@enduml";
-		final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(), UTF_8,
+		final PathSystem pathSystem = PathSystem.fetch();
+
+		final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, Collections.<String>emptyList(), UTF_8,
 				Defines.createEmpty(), new StringReader(text), null, "string");
 		final BlockUml block = builder.getBlockUmls().get(0);
 		final Diagram diagram = block.getDiagram();
@@ -92,7 +95,9 @@ class JsonResultTest {
 	public void testError() throws IOException {
 
 		final String text = "@startuml\nalicebob\n@enduml";
-		final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(), UTF_8,
+		final PathSystem pathSystem = PathSystem.fetch();
+
+		final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, Collections.<String>emptyList(), UTF_8,
 				Defines.createEmpty(), new StringReader(text), null, "string");
 		final BlockUml block = builder.getBlockUmls().get(0);
 		final Diagram diagram = block.getDiagram();

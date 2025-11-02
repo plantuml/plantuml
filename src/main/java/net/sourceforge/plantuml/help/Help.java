@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -66,8 +67,8 @@ public class Help extends UmlDiagram {
 		return new DiagramDescription("(Help)");
 	}
 
-	public Help(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.HELP, null, preprocessing);
+	public Help(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.HELP, null, preprocessing);
 	}
 
 	@Override

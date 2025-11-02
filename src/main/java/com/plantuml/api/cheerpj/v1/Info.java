@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 
 //::revert when __CORE__
@@ -96,7 +97,10 @@ public class Info {
 
 		try {
 			text = Utils.cleanText(text);
-			final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(), UTF_8,
+
+			final PathSystem pathSystem = PathSystem.fetch();
+
+			final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, Collections.<String>emptyList(), UTF_8,
 					Defines.createEmpty(), new StringReader(text), null, "string");
 			List<BlockUml> blocks = builder.getBlockUmls();
 

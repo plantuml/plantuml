@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLatex extends AbstractPSystem {
@@ -58,8 +59,8 @@ public class PSystemLatex extends AbstractPSystem {
 	private Color color = Color.BLACK;
 	private Color backColor = Color.WHITE;
 
-	public PSystemLatex(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemLatex(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

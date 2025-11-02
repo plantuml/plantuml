@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -59,8 +60,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 	// ::remove folder when __HAXE__
 
-	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, type, previous, preprocessingArtifact);
+	public AbstractClassOrObjectDiagram(PathSystem pathSystem, UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+		super(pathSystem, source, type, previous, preprocessingArtifact);
 		setNamespaceSeparator(".");
 	}
 

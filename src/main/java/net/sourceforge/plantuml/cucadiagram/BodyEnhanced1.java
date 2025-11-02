@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.TextBlockVertical2;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -74,10 +75,12 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	private final Entity entity;
 	private final boolean inEllipse;
 	private final Style style;
+	private final PathSystem pathSystem;
 
-	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam, Entity entity,
-			Style style) {
+	BodyEnhanced1(PathSystem pathSystem, HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam,
+			Entity entity, Style style) {
 		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);
+		this.pathSystem = pathSystem;
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
 
@@ -89,9 +92,11 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		this.inEllipse = false;
 	}
 
-	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, Entity entity, Style style) {
+	BodyEnhanced1(PathSystem pathSystem, HorizontalAlignment align, Display display, ISkinParam skinParam,
+			Entity entity, Style style) {
 		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);
 
+		this.pathSystem = pathSystem;
 		this.style = style;
 		this.entity = entity;
 
@@ -189,13 +194,13 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	private TextBlock buildTextBlock(Display display, char separator, TextBlock title, StringBounder stringBounder) {
 		// TextBlock result = display.create9(titleConfig, align, skinParam,
 		// LineBreakStrategy.NONE);
-		TextBlock result = new MethodsOrFieldsArea(display, skinParam, align, entity, style);
+		TextBlock result = new MethodsOrFieldsArea(pathSystem, display, skinParam, align, entity, style);
 		result = decorate(result, separator, title, stringBounder);
 		return result;
 	}
 
 	private static final Pattern p = Pattern.compile("^(\\s+)");
-	
+
 	private static List<CharSequence> buildTreeOrTable(String init, ListIterator<CharSequence> it) {
 		final List<CharSequence> result = new ArrayList<>();
 		final Matcher m = p.matcher(init);

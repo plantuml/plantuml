@@ -38,13 +38,14 @@ package net.sourceforge.plantuml.donors;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemSkinparameterListFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected AbstractPSystem executeLine(PathSystem pathSystem, UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		if (line.matches("(?i)^(skinparameters)\\s*$")) 
 			return PSystemSkinparameterList.create(source, preprocessing);
 		

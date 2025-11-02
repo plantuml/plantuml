@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -48,10 +49,10 @@ public class PSystemRIPFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected AbstractPSystem executeLine(PathSystem pathSystem, UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		if (line.equalsIgnoreCase("jean canouet")) {
 			try {
-				return new PSystemRIP(source, preprocessing);
+				return new PSystemRIP(pathSystem, source, preprocessing);
 			} catch (IOException e) {
 				Log.error("Error " + e);
 				Logme.error(e);

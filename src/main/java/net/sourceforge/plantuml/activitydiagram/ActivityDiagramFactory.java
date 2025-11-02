@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.command.UBrexCommandRankDir;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -62,9 +63,9 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 	// ::remove folder when __HAXE__
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, Previous previous,
+	public ActivityDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-		return new ActivityDiagram(source, previous, preprocessing);
+		return new ActivityDiagram(pathSystem, source, previous, preprocessing);
 	}
 
 	@Override

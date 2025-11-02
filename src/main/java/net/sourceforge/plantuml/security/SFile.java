@@ -484,4 +484,8 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return new NFolderRegular(getSanitizedPath().getParent());
 	}
 
+	public Path toPath() {
+		return internal.toPath();
+	}
+
 }

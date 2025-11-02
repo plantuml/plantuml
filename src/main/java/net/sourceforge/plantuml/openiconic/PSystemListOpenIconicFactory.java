@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListOpenIconicFactory extends PSystemSingleLineFactory {
@@ -46,10 +47,10 @@ public class PSystemListOpenIconicFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected AbstractPSystem executeLine(PathSystem pathSystem, UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.startsWith("listopeniconic"))
-			return new PSystemListOpenIconic(source, preprocessing);
+			return new PSystemListOpenIconic(pathSystem, source, preprocessing);
 
 		return null;
 	}

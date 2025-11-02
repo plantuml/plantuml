@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -98,7 +99,8 @@ public class SourceStringReader {
 	public SourceStringReader(Defines defines, String source, Charset charset, List<String> config,
 			SFile newCurrentDir) {
 		try {
-			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
+			final PathSystem pathSystem = PathSystem.fetch().changeCurrentDirectory(newCurrentDir.toPath());
+			final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, config, charset, defines, new StringReader(source),
 					newCurrentDir, "string");
 			this.blocks = builder.getBlockUmls();
 		} catch (IOException e) {

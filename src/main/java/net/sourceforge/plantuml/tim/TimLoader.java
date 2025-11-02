@@ -40,6 +40,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
@@ -54,9 +55,9 @@ public class TimLoader {
 	private List<StringLocated> resultList;
 	private PreprocessingArtifact preprocessingArtifact;
 
-	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
+	public TimLoader(PathSystem pathSystem, ImportedFiles importedFiles, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer, StringLocated location) {
-		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
+		this.context = new TContext(pathSystem, importedFiles, defines, charset, definitionsContainer);
 		try {
 			defines.copyTo(global, location);
 		} catch (EaterException e) {

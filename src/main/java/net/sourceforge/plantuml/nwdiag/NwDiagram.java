@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.core.NServer;
 import net.sourceforge.plantuml.nwdiag.core.NStackable;
 import net.sourceforge.plantuml.nwdiag.core.Network;
@@ -95,8 +96,8 @@ public class NwDiagram extends UmlDiagram {
 		return new DiagramDescription("(Nwdiag)");
 	}
 
-	public NwDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.NWDIAG, null, preprocessing);
+	public NwDiagram(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, UmlDiagramType.NWDIAG, null, preprocessing);
 	}
 
 	public void init() {

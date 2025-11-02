@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.creole.Stripe;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
@@ -62,13 +63,16 @@ public class CreoleParser implements SheetBuilder {
 
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
+	private final PathSystem pathSystem;
 	private final HorizontalAlignment horizontalAlignment;
 	private final CreoleMode creoleMode;
 	private final FontConfiguration stereotype;
 
-	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotype) {
+	public CreoleParser(PathSystem pathSystem, FontConfiguration fontConfiguration,
+			HorizontalAlignment horizontalAlignment, ISkinSimple skinParam, CreoleMode creoleMode,
+			FontConfiguration stereotype) {
 		this.stereotype = stereotype;
+		this.pathSystem = pathSystem;
 		this.creoleMode = creoleMode;
 		this.fontConfiguration = fontConfiguration;
 		this.skinParam = Objects.requireNonNull(skinParam);
@@ -143,7 +147,7 @@ public class CreoleParser implements SheetBuilder {
 				final List<Stripe> stripes;
 				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));
 				if (type != null) {
-					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);
+					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(pathSystem, type, it, skinParam);
 					if (checkColor)
 						stripes = null;
 					else {

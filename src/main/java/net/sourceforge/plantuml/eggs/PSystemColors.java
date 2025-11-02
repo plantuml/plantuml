@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -79,8 +80,8 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	private final String paletteCentralColor;
 	private final double size = 60;
 
-	public PSystemColors(UmlSource source, String option, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemColors(PathSystem pathSystem, UmlSource source, String option, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		if (option == null)
 			this.paletteCentralColor = null;
 		else

@@ -41,14 +41,15 @@ import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemRIP extends PlainStringsDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemRIP(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
-		super(source, preprocessing);
+	public PSystemRIP(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
+		super(pathSystem, source, preprocessing);
 		strings.add(" To my Grandfather,");
 		strings.add(" A mon grand-pere,");
 		strings.add(" ");

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 
 //::revert when __CORE__
@@ -62,7 +63,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 //::done
 
 public class Svg {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public static Object convert(String mode, String text) {
 		final long start = System.currentTimeMillis();
@@ -74,7 +75,10 @@ public class Svg {
 			if ("dark".equalsIgnoreCase(mode))
 				format = format.withColorMapper(ColorMapper.DARK_MODE);
 			text = Utils.cleanText(text);
-			final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(), UTF_8,
+
+			final PathSystem pathSystem = PathSystem.fetch();
+
+			final BlockUmlBuilder builder = new BlockUmlBuilder(pathSystem, Collections.<String>emptyList(), UTF_8,
 					Defines.createEmpty(), new StringReader(text), null, "string");
 			List<BlockUml> blocks = builder.getBlockUmls();
 

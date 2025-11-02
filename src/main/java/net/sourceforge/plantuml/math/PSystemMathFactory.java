@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.math;
 
+import java.nio.file.Path;
+
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -48,15 +51,15 @@ public class PSystemMathFactory extends PSystemBasicFactory<PSystemMath> {
 	}
 
 	@Override
-	public PSystemMath initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
+	public PSystemMath initDiagram(PathSystem pathSystem, UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		if (getDiagramType() == DiagramType.MATH)
-			return new PSystemMath(source, preprocessing);
+			return new PSystemMath(pathSystem, source, preprocessing);
 
 		return null;
 	}
 
 	@Override
-	public PSystemMath executeLine(UmlSource source, PSystemMath system, String line, PreprocessingArtifact preprocessing) {
+	public PSystemMath executeLine(PathSystem pathSystem, UmlSource source, PSystemMath system, String line, PreprocessingArtifact preprocessing) {
 		system.doCommandLine(line);
 		return system;
 	}

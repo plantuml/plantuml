@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
@@ -60,12 +61,12 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 		return this;
 	}
 
-	public static PSystemLicense create(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
-		return new PSystemLicense(source, preprocessing);
+	public static PSystemLicense create(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
+		return new PSystemLicense(pathSystem, source, preprocessing);
 	}
 
-	public PSystemLicense(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemLicense(PathSystem pathSystem, UmlSource source, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 	}
 
 	private TextBlock getGraphicStrings(List<String> strings) {

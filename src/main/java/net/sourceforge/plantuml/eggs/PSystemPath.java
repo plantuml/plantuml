@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemPath extends AbstractPSystem {
@@ -51,8 +52,8 @@ public class PSystemPath extends AbstractPSystem {
 
 	private final GraphicsPath path;
 
-	public PSystemPath(UmlSource source, String s, PreprocessingArtifact preprocessing) {
-		super(source, preprocessing);
+	public PSystemPath(PathSystem pathSystem, UmlSource source, String s, PreprocessingArtifact preprocessing) {
+		super(pathSystem, source, preprocessing);
 		this.path = new GraphicsPath(ColorMapper.IDENTITY, s);
 	}
 
