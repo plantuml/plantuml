@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.chart;
 
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -163,7 +164,6 @@ public class ChartRenderer {
 		ug.draw(ULine.vline(height));
 
 		// Draw ticks and labels
-		final int numTicks = 5;
 		final UFont font = UFont.sansSerif(10);
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
@@ -175,35 +175,77 @@ public class ChartRenderer {
 			// Use default line color
 		}
 
-		for (int i = 0; i <= numTicks; i++) {
-			final double y = height * (1.0 - (double) i / numTicks);
-			final double value = axis.getMin() + (axis.getMax() - axis.getMin()) * i / numTicks;
+		// Use custom ticks if defined, otherwise use automatic ticks
+		if (axis.hasCustomTicks()) {
+			// Draw custom ticks
+			for (Map.Entry<Double, String> entry : axis.getCustomTicks().entrySet()) {
+				final double value = entry.getKey();
+				final String label = entry.getValue();
 
-			// Draw grid lines if enabled (horizontal lines for Y axis)
-			if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
-				// Draw horizontal grid line across the plot area
-				final ULine gridLine = ULine.hline(width);
-				final UStroke gridStroke = UStroke.withThickness(0.5);
-				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
+				// Calculate y position based on value
+				final double y = height * (1.0 - (value - axis.getMin()) / (axis.getMax() - axis.getMin()));
+
+				// Skip if outside axis range
+				if (y < 0 || y > height)
+					continue;
+
+				// Draw grid lines if enabled (horizontal lines for Y axis)
+				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
+					final ULine gridLine = ULine.hline(width);
+					final UStroke gridStroke = UStroke.withThickness(0.5);
+					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
+				}
+
+				// Draw tick
+				if (leftSide)
+					ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
+				else
+					ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
+
+				// Draw custom label
+				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+						.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
+				final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
+
+				if (leftSide) {
+					final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+					textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
+				} else {
+					textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
+				}
 			}
+		} else {
+			// Draw automatic ticks
+			final int numTicks = 5;
+			for (int i = 0; i <= numTicks; i++) {
+				final double y = height * (1.0 - (double) i / numTicks);
+				final double value = axis.getMin() + (axis.getMax() - axis.getMin()) * i / numTicks;
 
-			// Draw tick
-			if (leftSide)
-				ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
-			else
-				ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
+				// Draw grid lines if enabled (horizontal lines for Y axis)
+				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
+					final ULine gridLine = ULine.hline(width);
+					final UStroke gridStroke = UStroke.withThickness(0.5);
+					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
+				}
 
-			// Draw label
-			final String label = formatValue(value);
-			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
-					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
-			final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
+				// Draw tick
+				if (leftSide)
+					ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
+				else
+					ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
 
-			if (leftSide) {
-				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
-				textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
-			} else {
-				textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
+				// Draw label
+				final String label = formatValue(value);
+				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+						.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
+				final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
+
+				if (leftSide) {
+					final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+					textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
+				} else {
+					textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
+				}
 			}
 		}
 

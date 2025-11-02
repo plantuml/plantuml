@@ -34,18 +34,23 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class ChartAxis {
 
 	private String title;
 	private double min;
 	private double max;
 	private boolean autoScale;
+	private Map<Double, String> customTicks;
 
 	public ChartAxis() {
 		this.title = "";
 		this.min = 0;
 		this.max = 100;
 		this.autoScale = true;
+		this.customTicks = null;
 	}
 
 	public ChartAxis(String title, double min, double max) {
@@ -53,6 +58,7 @@ public class ChartAxis {
 		this.min = min;
 		this.max = max;
 		this.autoScale = false;
+		this.customTicks = null;
 	}
 
 	public String getTitle() {
@@ -108,5 +114,26 @@ public class ChartAxis {
 			if (value > max)
 				max = value;
 		}
+	}
+
+	/**
+	 * Get custom tick labels map
+	 */
+	public Map<Double, String> getCustomTicks() {
+		return customTicks;
+	}
+
+	/**
+	 * Set custom tick labels. The map keys are tick values and values are labels.
+	 */
+	public void setCustomTicks(Map<Double, String> customTicks) {
+		this.customTicks = customTicks;
+	}
+
+	/**
+	 * Check if custom ticks are defined
+	 */
+	public boolean hasCustomTicks() {
+		return customTicks != null && !customTicks.isEmpty();
 	}
 }

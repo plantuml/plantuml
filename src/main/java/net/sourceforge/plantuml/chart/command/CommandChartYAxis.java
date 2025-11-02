@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -58,6 +61,11 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 				new RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(2, "RANGE", "([0-9.]+)\\s*-->\\s*([0-9.]+)")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf("ticks"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf(1, "TICKS", "\\[(.*)\\]"))), //
 				RegexLeaf.end());
 	}
 
@@ -68,6 +76,7 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 		final String title = arg.getLazzy("TITLE", 0);
 		final String minStr = arg.getLazzy("RANGE", 0);
 		final String maxStr = arg.getLazzy("RANGE", 1);
+		final String ticksStr = arg.getLazzy("TICKS", 0);
 
 		Double min = null;
 		Double max = null;
@@ -81,9 +90,68 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 			}
 		}
 
+		// Parse custom ticks if present
+		Map<Double, String> customTicks = null;
+		if (ticksStr != null) {
+			customTicks = parseCustomTicks(ticksStr);
+			if (customTicks == null) {
+				return CommandExecutionResult.error("Invalid tick format. Expected: [value:\"label\", ...]");
+			}
+		}
+
+		// Set axis properties
+		final CommandExecutionResult result;
 		if (axisType.startsWith("y2"))
-			return diagram.setY2Axis(title, min, max);
+			result = diagram.setY2Axis(title, min, max);
 		else
-			return diagram.setYAxis(title, min, max);
+			result = diagram.setYAxis(title, min, max);
+
+		// Set custom ticks if parsed successfully
+		if (customTicks != null) {
+			if (axisType.startsWith("y2")) {
+				if (diagram.getY2Axis() != null) {
+					diagram.getY2Axis().setCustomTicks(customTicks);
+				}
+			} else {
+				diagram.getYAxis().setCustomTicks(customTicks);
+			}
+		}
+
+		return result;
+	}
+
+	private Map<Double, String> parseCustomTicks(String ticksStr) {
+		final Map<Double, String> ticks = new LinkedHashMap<>();
+		if (ticksStr == null || ticksStr.trim().isEmpty())
+			return ticks;
+
+		// Parse format: 0:"Low", 50:"Mid", 100:"High"
+		final String[] pairs = ticksStr.split(",");
+		for (String pair : pairs) {
+			pair = pair.trim();
+			// Match value:"label"
+			final int colonIndex = pair.indexOf(':');
+			if (colonIndex < 0)
+				return null;
+
+			final String valueStr = pair.substring(0, colonIndex).trim();
+			String label = pair.substring(colonIndex + 1).trim();
+
+			// Remove quotes from label
+			if (label.startsWith("\"") && label.endsWith("\"") && label.length() > 1) {
+				label = label.substring(1, label.length() - 1);
+			} else {
+				return null; // Invalid format
+			}
+
+			try {
+				final double value = Double.parseDouble(valueStr);
+				ticks.put(value, label);
+			} catch (NumberFormatException e) {
+				return null;
+			}
+		}
+
+		return ticks;
 	}
 }
