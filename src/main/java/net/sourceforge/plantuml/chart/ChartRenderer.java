@@ -355,7 +355,7 @@ public class ChartRenderer {
 			}
 		}
 
-		// Render non-bar series (line, area)
+		// Render non-bar series (line, area, scatter)
 		for (ChartSeries s : series) {
 			if (s.getType() != ChartSeries.SeriesType.BAR) {
 				final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
@@ -369,6 +369,10 @@ public class ChartRenderer {
 					final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight,
 							xAxisLabels.size(), axis);
 					areaRenderer.draw(ug, s, color);
+				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
+					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,
+							xAxisLabels.size(), axis);
+					scatterRenderer.draw(ug, s, color);
 				}
 			}
 		}
@@ -501,6 +505,9 @@ public class ChartRenderer {
 						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);
 				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))
 						.draw(rect);
+			} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
+				// Draw marker shape for scatter plot
+				drawLegendScatterMarker(ug, color, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, s.getMarkerShape());
 			}
 
 			// Draw series name
@@ -516,6 +523,26 @@ public class ChartRenderer {
 			} else {
 				currentX += LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + textDim.getWidth() + LEGEND_ITEM_SPACING;
 			}
+		}
+	}
+
+	private void drawLegendScatterMarker(UGraphic ug, HColor color, double x, double y, double size, ChartSeries.MarkerShape shape) {
+		switch (shape) {
+		case CIRCLE:
+			final net.sourceforge.plantuml.klimt.shape.UEllipse circle = net.sourceforge.plantuml.klimt.shape.UEllipse.build(size, size);
+			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(circle);
+			break;
+		case SQUARE:
+			final net.sourceforge.plantuml.klimt.shape.URectangle square = net.sourceforge.plantuml.klimt.shape.URectangle.build(size, size);
+			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(square);
+			break;
+		case TRIANGLE:
+			final net.sourceforge.plantuml.klimt.shape.UPolygon triangle = new net.sourceforge.plantuml.klimt.shape.UPolygon();
+			triangle.addPoint(0, -size / 2);
+			triangle.addPoint(-size / 2, size / 2);
+			triangle.addPoint(size / 2, size / 2);
+			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);
+			break;
 		}
 	}
 }

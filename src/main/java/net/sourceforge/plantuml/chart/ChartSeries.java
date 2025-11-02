@@ -42,7 +42,11 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 public class ChartSeries {
 
 	public enum SeriesType {
-		BAR, LINE, AREA
+		BAR, LINE, AREA, SCATTER
+	}
+
+	public enum MarkerShape {
+		CIRCLE, SQUARE, TRIANGLE
 	}
 
 	private final String name;
@@ -51,6 +55,7 @@ public class ChartSeries {
 	private HColor color;
 	private boolean useSecondaryAxis;
 	private boolean showLabels;
+	private MarkerShape markerShape;
 
 	public ChartSeries(String name, SeriesType type, List<Double> values) {
 		this.name = name;
@@ -58,6 +63,7 @@ public class ChartSeries {
 		this.values = new ArrayList<>(values);
 		this.useSecondaryAxis = false;
 		this.showLabels = false;
+		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
 	}
 
 	public String getName() {
@@ -94,5 +100,13 @@ public class ChartSeries {
 
 	public void setShowLabels(boolean showLabels) {
 		this.showLabels = showLabels;
+	}
+
+	public MarkerShape getMarkerShape() {
+		return markerShape;
+	}
+
+	public void setMarkerShape(MarkerShape markerShape) {
+		this.markerShape = markerShape;
 	}
 }
