@@ -69,6 +69,7 @@ public class ChartDiagram extends UmlDiagram {
 
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
+	private Integer xAxisTickSpacing;
 	private final List<ChartSeries> series = new ArrayList<>();
 	private final ChartAxis yAxis = new ChartAxis();
 	private ChartAxis y2Axis;
@@ -112,7 +113,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode);
 	}
 
 	// Command methods
@@ -125,6 +126,14 @@ public class ChartDiagram extends UmlDiagram {
 
 	public void setXAxisTitle(String title) {
 		this.xAxisTitle = title;
+	}
+
+	public void setXAxisTickSpacing(Integer spacing) {
+		this.xAxisTickSpacing = spacing;
+	}
+
+	public Integer getXAxisTickSpacing() {
+		return xAxisTickSpacing;
 	}
 
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {

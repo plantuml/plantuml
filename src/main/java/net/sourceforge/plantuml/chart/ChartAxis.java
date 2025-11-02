@@ -44,6 +44,7 @@ public class ChartAxis {
 	private double max;
 	private boolean autoScale;
 	private Map<Double, String> customTicks;
+	private Double tickSpacing;
 
 	public ChartAxis() {
 		this.title = "";
@@ -51,6 +52,7 @@ public class ChartAxis {
 		this.max = 100;
 		this.autoScale = true;
 		this.customTicks = null;
+		this.tickSpacing = null;
 	}
 
 	public ChartAxis(String title, double min, double max) {
@@ -59,6 +61,7 @@ public class ChartAxis {
 		this.max = max;
 		this.autoScale = false;
 		this.customTicks = null;
+		this.tickSpacing = null;
 	}
 
 	public String getTitle() {
@@ -135,5 +138,26 @@ public class ChartAxis {
 	 */
 	public boolean hasCustomTicks() {
 		return customTicks != null && !customTicks.isEmpty();
+	}
+
+	/**
+	 * Get tick spacing value
+	 */
+	public Double getTickSpacing() {
+		return tickSpacing;
+	}
+
+	/**
+	 * Set tick spacing. The value represents the interval between ticks.
+	 */
+	public void setTickSpacing(Double tickSpacing) {
+		this.tickSpacing = tickSpacing;
+	}
+
+	/**
+	 * Check if custom tick spacing is defined
+	 */
+	public boolean hasTickSpacing() {
+		return tickSpacing != null && tickSpacing > 0;
 	}
 }

@@ -60,6 +60,11 @@ public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new net.sourceforge.plantuml.regex.RegexOptional(new net.sourceforge.plantuml.regex.RegexConcat( //
+						new RegexLeaf("spacing"), //
+						net.sourceforge.plantuml.regex.RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf(1, "SPACING", "([0-9]+)"))), //
 				RegexLeaf.end());
 	}
 
@@ -68,8 +73,23 @@ public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
 			ParserPass currentPass) {
 		final String title = arg.getLazzy("TITLE", 0);
 		final String data = arg.get("DATA", 0);
+		final String spacingStr = arg.getLazzy("SPACING", 0);
 		final List<String> labels = parseLabels(data);
 		diagram.setXAxisTitle(title);
+
+		// Parse tick spacing if present
+		if (spacingStr != null) {
+			try {
+				final int spacing = Integer.parseInt(spacingStr);
+				if (spacing <= 0) {
+					return CommandExecutionResult.error("X-axis spacing must be greater than 0");
+				}
+				diagram.setXAxisTickSpacing(spacing);
+			} catch (NumberFormatException e) {
+				return CommandExecutionResult.error("Invalid number format in spacing value");
+			}
+		}
+
 		return diagram.setXAxisLabels(labels);
 	}
 

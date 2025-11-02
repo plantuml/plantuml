@@ -66,6 +66,11 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 						new RegexLeaf("ticks"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf(1, "TICKS", "\\[(.*)\\]"))), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf("spacing"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf(1, "SPACING", "([0-9.]+)"))), //
 				RegexLeaf.end());
 	}
 
@@ -77,6 +82,7 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 		final String minStr = arg.getLazzy("RANGE", 0);
 		final String maxStr = arg.getLazzy("RANGE", 1);
 		final String ticksStr = arg.getLazzy("TICKS", 0);
+		final String spacingStr = arg.getLazzy("SPACING", 0);
 
 		Double min = null;
 		Double max = null;
@@ -99,6 +105,19 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 			}
 		}
 
+		// Parse tick spacing if present
+		Double tickSpacing = null;
+		if (spacingStr != null) {
+			try {
+				tickSpacing = Double.parseDouble(spacingStr);
+				if (tickSpacing <= 0) {
+					return CommandExecutionResult.error("Tick spacing must be greater than 0");
+				}
+			} catch (NumberFormatException e) {
+				return CommandExecutionResult.error("Invalid number format in spacing value");
+			}
+		}
+
 		// Set axis properties
 		final CommandExecutionResult result;
 		if (axisType.startsWith("y2"))
@@ -114,6 +133,17 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 				}
 			} else {
 				diagram.getYAxis().setCustomTicks(customTicks);
+			}
+		}
+
+		// Set tick spacing if parsed successfully
+		if (tickSpacing != null) {
+			if (axisType.startsWith("y2")) {
+				if (diagram.getY2Axis() != null) {
+					diagram.getY2Axis().setTickSpacing(tickSpacing);
+				}
+			} else {
+				diagram.getYAxis().setTickSpacing(tickSpacing);
 			}
 		}
 

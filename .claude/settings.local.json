@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew compileJava:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(java:*)",
+      "Bash(xvfb-run timeout:*)",
+      "Bash(cat:*)",
+      "Bash(git log:*)",
+      "Bash(./gradlew jar:*)",
+      "Bash(xvfb-run:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
