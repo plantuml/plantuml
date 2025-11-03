@@ -50,15 +50,15 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
+public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 
-	public CommandChartYAxis() {
+	public CommandChartVAxis() {
 		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandChartYAxis.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "AXIS", "(y2?-axis)"), //
+		return RegexConcat.build(CommandChartVAxis.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf(1, "AXIS", "(v2?-axis)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -131,14 +131,14 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 
 		// Set axis properties
 		final CommandExecutionResult result;
-		if (axisType.startsWith("y2"))
+		if (axisType.startsWith("v2"))
 			result = diagram.setY2Axis(title, min, max);
 		else
 			result = diagram.setYAxis(title, min, max);
 
 		// Set custom ticks if parsed successfully
 		if (customTicks != null) {
-			if (axisType.startsWith("y2")) {
+			if (axisType.startsWith("v2")) {
 				if (diagram.getY2Axis() != null) {
 					diagram.getY2Axis().setCustomTicks(customTicks);
 				}
@@ -149,7 +149,7 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 
 		// Set tick spacing if parsed successfully
 		if (tickSpacing != null) {
-			if (axisType.startsWith("y2")) {
+			if (axisType.startsWith("v2")) {
 				if (diagram.getY2Axis() != null) {
 					diagram.getY2Axis().setTickSpacing(tickSpacing);
 				}

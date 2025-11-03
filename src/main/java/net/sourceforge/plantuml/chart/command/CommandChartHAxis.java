@@ -47,15 +47,15 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
+public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 
-	public CommandChartXAxis() {
+	public CommandChartHAxis() {
 		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandChartXAxis.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("x-axis"), //
+		return RegexConcat.build(CommandChartHAxis.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("h-axis"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //

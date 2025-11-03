@@ -40,13 +40,13 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.chart.command.CommandChartArea;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
 import net.sourceforge.plantuml.chart.command.CommandChartGrid;
+import net.sourceforge.plantuml.chart.command.CommandChartHAxis;
 import net.sourceforge.plantuml.chart.command.CommandChartLegend;
 import net.sourceforge.plantuml.chart.command.CommandChartLine;
 import net.sourceforge.plantuml.chart.command.CommandChartOrientation;
 import net.sourceforge.plantuml.chart.command.CommandChartScatter;
 import net.sourceforge.plantuml.chart.command.CommandChartStackMode;
-import net.sourceforge.plantuml.chart.command.CommandChartXAxis;
-import net.sourceforge.plantuml.chart.command.CommandChartYAxis;
+import net.sourceforge.plantuml.chart.command.CommandChartVAxis;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
@@ -64,8 +64,8 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
 		// Add chart-specific commands first to take priority
-		cmds.add(new CommandChartXAxis());
-		cmds.add(new CommandChartYAxis());
+		cmds.add(new CommandChartHAxis());
+		cmds.add(new CommandChartVAxis());
 		cmds.add(new CommandChartBar());
 		cmds.add(new CommandChartLine());
 		cmds.add(new CommandChartArea());
