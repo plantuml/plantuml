@@ -70,6 +70,7 @@ public class ChartRenderer {
 	private final ChartDiagram.GridMode yGridMode;
 	private final ChartDiagram.StackMode stackMode;
 	private final ChartDiagram.Orientation orientation;
+	private final List<ChartAnnotation> annotations;
 
 	// Layout constants
 	private static final double MARGIN = 20;
@@ -84,7 +85,7 @@ public class ChartRenderer {
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, Integer xAxisTickSpacing,
 			List<ChartSeries> series, ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition,
 			ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode, ChartDiagram.StackMode stackMode,
-			ChartDiagram.Orientation orientation) {
+			ChartDiagram.Orientation orientation, List<ChartAnnotation> annotations) {
 		this.skinParam = skinParam;
 		this.orientation = orientation;
 
@@ -119,6 +120,7 @@ public class ChartRenderer {
 		this.series = series;
 		this.legendPosition = legendPosition;
 		this.stackMode = stackMode;
+		this.annotations = annotations;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -194,6 +196,9 @@ public class ChartRenderer {
 		// Draw series data
 		final UGraphic ugPlot = ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin)));
 		drawSeries(ugPlot, plotWidth, plotHeight, stringBounder);
+
+		// Draw annotations
+		drawAnnotations(ugPlot, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
 
 		// Draw legend
 		drawLegend(ug, leftMargin, topMargin, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
@@ -372,8 +377,8 @@ public class ChartRenderer {
 
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
-		// Left axis (Y): 90 degrees (reads from top to bottom)
-		// Right axis (Y2): 270 degrees (reads from bottom to top)
+		// Left axis (Y): 90 degrees (reads from bottom to top)
+		// Right axis (Y2): 270 degrees (reads from top to bottom)
 		final int orientation = leftSide ? 90 : 270;
 		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(plainText, fontConfig).withOrientation(orientation);
 
@@ -755,6 +760,95 @@ public class ChartRenderer {
 			triangle.addPoint(size / 2, size / 2);
 			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);
 			break;
+		}
+	}
+
+	private void drawAnnotations(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor,
+			StringBounder stringBounder) {
+		if (annotations == null || annotations.isEmpty())
+			return;
+
+		final UFont font = UFont.sansSerif(10);
+		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+
+		for (ChartAnnotation annotation : annotations) {
+			// Calculate the pixel position of the annotation
+			double x = 0;
+			double y = 0;
+
+			// Handle X position (categorical or numeric)
+			if (annotation.getXPosition() instanceof Double) {
+				// Numeric X position - convert to pixel coordinate
+				double xValue = (Double) annotation.getXPosition();
+				if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
+					// For horizontal, numeric axis is Y
+					y = plotHeight * (1.0 - (xValue - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
+				} else {
+					// For vertical, numeric X would map across the plot width
+					// This is unusual but support it for flexibility
+					x = plotWidth * ((xValue - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
+				}
+			} else if (annotation.getXPosition() instanceof String) {
+				// Categorical X position - find index in labels
+				String xLabel = (String) annotation.getXPosition();
+				int index = xAxisLabels.indexOf(xLabel);
+				if (index < 0)
+					continue; // Label not found, skip this annotation
+
+				if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
+					// For horizontal, categories are on Y axis
+					y = plotHeight * (index + 0.5) / xAxisLabels.size();
+				} else {
+					// For vertical, categories are on X axis
+					x = plotWidth * (index + 0.5) / xAxisLabels.size();
+				}
+			}
+
+			// Handle Y position (always numeric)
+			if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
+				// For horizontal, numeric axis is X (yAxis holds the numeric range)
+				x = plotWidth * ((annotation.getYPosition() - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
+			} else {
+				// For vertical, numeric axis is Y
+				y = plotHeight * (1.0 - (annotation.getYPosition() - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
+			}
+
+			// Create text block for annotation
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), annotation.getText())
+					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
+			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+
+			// Draw arrow if requested
+			if (annotation.isShowArrow()) {
+				// Draw arrow from text to point
+				final double arrowStartX = x;
+				final double arrowStartY = y - 20; // Offset above the point
+				final double arrowEndX = x;
+				final double arrowEndY = y - 5; // End near the point
+
+				// Draw arrow line
+				final ULine arrowLine = new ULine(arrowEndX - arrowStartX, arrowEndY - arrowStartY);
+				ug.apply(lineColor).apply(UStroke.withThickness(1.0))
+						.apply(UTranslate.dx(arrowStartX).compose(UTranslate.dy(arrowStartY)))
+						.draw(arrowLine);
+
+				// Draw arrowhead (small triangle)
+				final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();
+				arrowhead.addPoint(0, 0);
+				arrowhead.addPoint(-3, -5);
+				arrowhead.addPoint(3, -5);
+				ug.apply(lineColor).apply(lineColor.bg())
+						.apply(UTranslate.dx(arrowEndX).compose(UTranslate.dy(arrowEndY)))
+						.draw(arrowhead);
+
+				// Position text above arrow
+				textBlock.drawU(ug.apply(UTranslate.dx(arrowStartX - textDim.getWidth() / 2)
+						.compose(UTranslate.dy(arrowStartY - textDim.getHeight() - 2))));
+			} else {
+				// Draw text near the point without arrow
+				textBlock.drawU(ug.apply(UTranslate.dx(x - textDim.getWidth() / 2)
+						.compose(UTranslate.dy(y - textDim.getHeight() - 5))));
+			}
 		}
 	}
 

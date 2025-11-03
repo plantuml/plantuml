@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.chart.command.CommandChartAnnotation;
 import net.sourceforge.plantuml.chart.command.CommandChartArea;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
 import net.sourceforge.plantuml.chart.command.CommandChartGrid;
@@ -74,6 +75,7 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandChartGrid());
 		cmds.add(new CommandChartStackMode());
 		cmds.add(new CommandChartOrientation());
+		cmds.add(new CommandChartAnnotation());
 		// Add common commands last so they don't override chart-specific ones
 		CommonCommands.addCommonCommands1(cmds);
 	}

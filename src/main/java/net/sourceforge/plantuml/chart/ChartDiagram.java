@@ -84,6 +84,7 @@ public class ChartDiagram extends UmlDiagram {
 	private GridMode yGridMode = GridMode.OFF;
 	private StackMode stackMode = StackMode.GROUPED;
 	private Orientation orientation = Orientation.VERTICAL;
+	private final List<ChartAnnotation> annotations = new ArrayList<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -127,11 +128,11 @@ public class ChartDiagram extends UmlDiagram {
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
-			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation);
+			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
 		}
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
 	// Command methods
@@ -273,5 +274,14 @@ public class ChartDiagram extends UmlDiagram {
 
 	public Orientation getOrientation() {
 		return orientation;
+	}
+
+	public CommandExecutionResult addAnnotation(ChartAnnotation annotation) {
+		this.annotations.add(annotation);
+		return CommandExecutionResult.ok();
+	}
+
+	public List<ChartAnnotation> getAnnotations() {
+		return annotations;
 	}
 }
