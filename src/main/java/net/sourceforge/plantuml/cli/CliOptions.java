@@ -186,7 +186,7 @@ public class CliOptions {
 	public int getPicowebPort() {
 		final String picoweb = flags.getString(CliFlag.PICOWEB);
 		if (picoweb == null)
-			return 4242;
+			return 8080;
 
 		final String[] parts = picoweb.split(":");
 		return Integer.parseInt(parts[0]);

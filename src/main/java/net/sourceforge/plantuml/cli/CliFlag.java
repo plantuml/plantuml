@@ -87,7 +87,7 @@ public enum CliFlag {
 	TEST_DOT("--check-graphviz", aliases(DEPRECATED("-testdot")), Arity.UNARY_IMMEDIATE_ACTION,
 			OptionPrint::printCheckGraphviz),
 
-	@CliFlagDoc(value = "Start internal HTTP server for rendering (default port : 4242)", usage = "--http-server[:<port>]", level = 0)
+	@CliFlagDoc(value = "Start internal HTTP server for rendering (default port : 8080)", usage = "--http-server[:<port>]", level = 0)
 	PICOWEB("--http-server", aliases(DEPRECATED("-picoweb")), Arity.UNARY_OPTIONAL_COLON),
 
 	// Input & preprocessing:
