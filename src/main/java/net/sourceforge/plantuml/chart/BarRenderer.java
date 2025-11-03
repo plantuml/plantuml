@@ -49,7 +49,12 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class BarRenderer {
 
@@ -75,6 +80,10 @@ public class BarRenderer {
 		this.horizontal = horizontal;
 	}
 
+	private StyleSignatureBasic getBarStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.bar);
+	}
+
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
 		if (horizontal) {
 			drawHorizontal(ug, series, color);
@@ -94,6 +103,18 @@ public class BarRenderer {
 		final double barOffset = (categoryWidth - barWidth) / 2;
 		final StringBounder stringBounder = ug.getStringBounder();
 
+		// Get bar style
+		final Style barStyle = getBarStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract line color and thickness for bar borders
+		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		if (lineColor == null) {
+			lineColor = color; // Use fill color if no line color specified
+		}
+		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
+		final UStroke stroke = UStroke.withThickness(lineThickness);
+
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
 			final double value = values.get(i);
 			final double x = i * categoryWidth + barOffset;
@@ -101,7 +122,7 @@ public class BarRenderer {
 			final double y = plotHeight - barHeight;
 
 			final URectangle rect = URectangle.build(barWidth, barHeight);
-			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+			ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {
@@ -120,6 +141,18 @@ public class BarRenderer {
 		final double barOffset = (categoryHeight - barHeight) / 2;
 		final StringBounder stringBounder = ug.getStringBounder();
 
+		// Get bar style
+		final Style barStyle = getBarStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract line color and thickness for bar borders
+		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		if (lineColor == null) {
+			lineColor = color; // Use fill color if no line color specified
+		}
+		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
+		final UStroke stroke = UStroke.withThickness(lineThickness);
+
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
 			final double value = values.get(i);
 			final double y = i * categoryHeight + barOffset;
@@ -127,7 +160,7 @@ public class BarRenderer {
 			final double x = 0; // Start from left
 
 			final URectangle rect = URectangle.build(barWidth, barHeight);
-			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+			ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {
@@ -150,6 +183,14 @@ public class BarRenderer {
 		final double barWidth = groupWidth / seriesCount;
 		final double groupOffset = (categoryWidth - groupWidth) / 2;
 
+		// Get bar style
+		final Style barStyle = getBarStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract line thickness for bar borders
+		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
+		final UStroke stroke = UStroke.withThickness(lineThickness);
+
 		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
 			for (int seriesIndex = 0; seriesIndex < seriesCount; seriesIndex++) {
 				final ChartSeries series = barSeries.get(seriesIndex);
@@ -164,8 +205,14 @@ public class BarRenderer {
 				final double barHeight = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight);
 				final double y = plotHeight - barHeight;
 
+				// Extract line color for this bar's border
+				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+				if (lineColor == null) {
+					lineColor = color; // Use fill color if no line color specified
+				}
+
 				final URectangle rect = URectangle.build(barWidth, barHeight);
-				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
@@ -190,6 +237,14 @@ public class BarRenderer {
 		// Track cumulative heights for each category
 		final Map<Integer, Double> cumulativeHeights = new HashMap<>();
 
+		// Get bar style
+		final Style barStyle = getBarStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract line thickness for bar borders
+		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
+		final UStroke stroke = UStroke.withThickness(lineThickness);
+
 		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
 			double cumulativeY = plotHeight; // Start from the bottom
 
@@ -208,8 +263,14 @@ public class BarRenderer {
 				// Stack this bar on top of previous bars
 				cumulativeY -= barHeight;
 
+				// Extract line color for this bar's border
+				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+				if (lineColor == null) {
+					lineColor = color; // Use fill color if no line color specified
+				}
+
 				final URectangle rect = URectangle.build(barWidth, barHeight);
-				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(cumulativeY))).draw(rect);
+				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(cumulativeY))).draw(rect);
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {

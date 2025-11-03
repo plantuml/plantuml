@@ -206,20 +206,41 @@ public class ChartRenderer {
 
 	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, HColor lineColor,
 			HColor fontColor, StringBounder stringBounder) {
+		// Get axis-specific style
+		final Style axisStyle = getAxisStyleSignature(false)
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract styled properties
+		final HColor styledLineColor = axisStyle.value(PName.LineColor)
+			.asColor(skinParam.getIHtmlColorSet());
+		final double lineThickness = axisStyle.value(PName.LineThickness)
+			.asDouble();
+		final FontConfiguration fontConfig = axisStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
+
+		// Use styled properties for axis line
+		final HColor actualLineColor = styledLineColor != null ? styledLineColor : lineColor;
+		ug = ug.apply(actualLineColor).apply(UStroke.withThickness(lineThickness));
+
 		// Draw axis line
 		ug.draw(ULine.vline(height));
 
-		// Draw ticks and labels
-		final UFont font = UFont.sansSerif(10);
-		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+		// Get grid style
+		final Style gridStyle = getGridStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		// Calculate grid line color (lighter than axis color)
-		HColor gridColor = lineColor;
-		try {
-			gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
-		} catch (Exception e) {
-			// Use default line color
+		// Extract grid properties
+		HColor gridColor = gridStyle.value(PName.LineColor)
+			.asColor(skinParam.getIHtmlColorSet());
+		if (gridColor == null) {
+			// Fallback to default
+			try {
+				gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
+			} catch (Exception e) {
+				gridColor = lineColor;
+			}
 		}
+		final double gridThickness = gridStyle.value(PName.LineThickness).asDouble();
+		final UStroke gridStroke = UStroke.withThickness(gridThickness);
 
 		// Use custom ticks if defined, otherwise use automatic ticks
 		if (axis.hasCustomTicks()) {
@@ -238,7 +259,6 @@ public class ChartRenderer {
 				// Draw grid lines if enabled (horizontal lines for Y axis)
 				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
 					final ULine gridLine = ULine.hline(width);
-					final UStroke gridStroke = UStroke.withThickness(0.5);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 				}
 
@@ -278,7 +298,6 @@ public class ChartRenderer {
 				// Draw grid lines if enabled (horizontal lines for Y axis)
 				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
 					final ULine gridLine = ULine.hline(width);
-					final UStroke gridStroke = UStroke.withThickness(0.5);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 				}
 
@@ -311,7 +330,6 @@ public class ChartRenderer {
 				// Draw grid lines if enabled (horizontal lines for Y axis)
 				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
 					final ULine gridLine = ULine.hline(width);
-					final UStroke gridStroke = UStroke.withThickness(0.5);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 				}
 
@@ -406,6 +424,21 @@ public class ChartRenderer {
 			return;
 		}
 
+		// Get axis-specific style
+		final Style axisStyle = getAxisStyleSignature(true)
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract styled properties
+		final HColor styledLineColor = axisStyle.value(PName.LineColor)
+			.asColor(skinParam.getIHtmlColorSet());
+		final double lineThickness = axisStyle.value(PName.LineThickness)
+			.asDouble();
+		final FontConfiguration fontConfig = axisStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
+
+		// Use styled properties for axis line
+		final HColor actualLineColor = styledLineColor != null ? styledLineColor : lineColor;
+		ug = ug.apply(actualLineColor).apply(UStroke.withThickness(lineThickness));
+
 		// Draw axis line
 		ug.draw(ULine.hline(width));
 
@@ -413,17 +446,25 @@ public class ChartRenderer {
 		if (xAxisLabels.isEmpty())
 			return;
 
-		final UFont font = UFont.sansSerif(10);
-		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 		final double categoryWidth = width / xAxisLabels.size();
 
-		// Calculate grid line color (lighter than axis color)
-		HColor gridColor = lineColor;
-		try {
-			gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
-		} catch (Exception e) {
-			// Use default line color
+		// Get grid style
+		final Style gridStyle = getGridStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract grid properties
+		HColor gridColor = gridStyle.value(PName.LineColor)
+			.asColor(skinParam.getIHtmlColorSet());
+		if (gridColor == null) {
+			// Fallback to default
+			try {
+				gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
+			} catch (Exception e) {
+				gridColor = lineColor;
+			}
 		}
+		final double gridThickness = gridStyle.value(PName.LineThickness).asDouble();
+		final UStroke gridStroke = UStroke.withThickness(gridThickness);
 
 		// Determine which labels to show based on spacing
 		final int spacing = (xAxisTickSpacing != null && xAxisTickSpacing > 0) ? xAxisTickSpacing : 1;
@@ -435,7 +476,6 @@ public class ChartRenderer {
 			// Draw grid lines for all positions, but only show labels based on spacing
 			if (xGridMode != ChartDiagram.GridMode.OFF && i % spacing == 0) {
 				final ULine gridLine = ULine.vline(-height);
-				final UStroke gridStroke = UStroke.withThickness(0.5);
 				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(x)).draw(gridLine);
 			}
 
@@ -543,10 +583,23 @@ public class ChartRenderer {
 		final java.util.List<ChartSeries> barSeries = new java.util.ArrayList<>();
 		final java.util.List<HColor> barColors = new java.util.ArrayList<>();
 
+		// Get bar style for default colors
+		final Style barStyle = getBarStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+
 		for (ChartSeries s : series) {
 			if (s.getType() == ChartSeries.SeriesType.BAR) {
 				barSeries.add(s);
-				final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(series.indexOf(s));
+
+				// Extract bar color - priority: explicit color > style color > default color
+				HColor color = s.getColor();
+				if (color == null) {
+					// Try to get color from style
+					color = barStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+					if (color == null) {
+						// Use default color
+						color = getDefaultColor(series.indexOf(s));
+					}
+				}
 				barColors.add(color);
 			}
 		}
@@ -576,7 +629,41 @@ public class ChartRenderer {
 		for (ChartSeries s : series) {
 			if (s.getType() != ChartSeries.SeriesType.BAR) {
 				final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
-				final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(series.indexOf(s));
+
+				// Get series-specific style based on type
+				StyleSignatureBasic signature;
+				switch (s.getType()) {
+					case LINE:
+						signature = getLineStyleSignature();
+						break;
+					case AREA:
+						signature = getAreaStyleSignature();
+						break;
+					case SCATTER:
+						signature = getScatterStyleSignature();
+						break;
+					default:
+						signature = getStyleSignature();
+				}
+
+				final Style seriesStyle = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+				// Extract series color - priority: explicit color > style color > default color
+				HColor color = s.getColor();
+				if (color == null) {
+					// Try to get color from style
+					color = seriesStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+					if (color == null) {
+						// For area charts, try BackGroundColor
+						if (s.getType() == ChartSeries.SeriesType.AREA) {
+							color = seriesStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+						}
+					}
+					if (color == null) {
+						// Use default color
+						color = getDefaultColor(series.indexOf(s));
+					}
+				}
 
 				if (s.getType() == ChartSeries.SeriesType.LINE) {
 					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
@@ -625,18 +712,49 @@ public class ChartRenderer {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram);
 	}
 
+	private StyleSignatureBasic getBarStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.bar);
+	}
+
+	private StyleSignatureBasic getLineStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.line);
+	}
+
+	private StyleSignatureBasic getAreaStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.area);
+	}
+
+	private StyleSignatureBasic getScatterStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	}
+
+	private StyleSignatureBasic getAxisStyleSignature(boolean horizontal) {
+		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
+	}
+
+	private StyleSignatureBasic getGridStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.grid);
+	}
+
+	private StyleSignatureBasic getLegendStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.legend);
+	}
+
+	private StyleSignatureBasic getAnnotationStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.annotation);
+	}
+
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {
 		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())
 			return new XDimension2D(0, 0);
 
-		final UFont font = UFont.sansSerif(10);
-		HColor fontColor = HColors.BLACK;
-		try {
-			fontColor = skinParam.getIHtmlColorSet().getColor("#000000");
-		} catch (Exception e) {
-			// Use default black
-		}
-		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+		// Get legend style
+		final Style legendStyle = getLegendStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract legend font configuration
+		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
 
 		double maxWidth = 0;
 		double totalHeight = 0;
@@ -668,8 +786,12 @@ public class ChartRenderer {
 		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())
 			return;
 
-		final UFont font = UFont.sansSerif(10);
-		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+		// Get legend style
+		final Style legendStyle = getLegendStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract legend properties
+		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
 
 		double x = 0;
 		double y = 0;
@@ -768,8 +890,28 @@ public class ChartRenderer {
 		if (annotations == null || annotations.isEmpty())
 			return;
 
-		final UFont font = UFont.sansSerif(10);
-		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+		// Get annotation style
+		final Style annotationStyle = getAnnotationStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract annotation properties
+		final FontConfiguration fontConfig = annotationStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
+
+		// Extract arrow line color
+		HColor arrowColor = annotationStyle.value(PName.LineColor)
+			.asColor(skinParam.getIHtmlColorSet());
+		if (arrowColor == null) {
+			// Fallback to black
+			arrowColor = HColors.BLACK;
+			try {
+				arrowColor = skinParam.getIHtmlColorSet().getColor("#000000");
+			} catch (Exception e) {
+				arrowColor = lineColor;
+			}
+		}
+
+		// Extract arrow line thickness
+		final double arrowThickness = annotationStyle.value(PName.LineThickness).asDouble();
 
 		for (ChartAnnotation annotation : annotations) {
 			// Calculate the pixel position of the annotation
@@ -820,14 +962,6 @@ public class ChartRenderer {
 
 			// Draw arrow if requested
 			if (annotation.isShowArrow()) {
-				// Use black color for arrow to ensure visibility
-				HColor arrowColor = HColors.BLACK;
-				try {
-					arrowColor = skinParam.getIHtmlColorSet().getColor("#000000");
-				} catch (Exception e) {
-					arrowColor = lineColor;
-				}
-
 				// Check if there's enough space above the point for text + arrow
 				final double minSpaceAbove = textDim.getHeight() + 40;
 				final boolean placeAbove = y > minSpaceAbove;
@@ -847,7 +981,7 @@ public class ChartRenderer {
 
 					if (arrowLength > 0) {
 						final ULine arrowLine = new ULine(0, arrowLength);
-						ug.apply(arrowColor).apply(UStroke.withThickness(2.0))
+						ug.apply(arrowColor).apply(UStroke.withThickness(arrowThickness))
 								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))
 								.draw(arrowLine);
 
@@ -875,7 +1009,7 @@ public class ChartRenderer {
 
 					if (arrowLength > 0) {
 						final ULine arrowLine = new ULine(0, -arrowLength);
-						ug.apply(arrowColor).apply(UStroke.withThickness(2.0))
+						ug.apply(arrowColor).apply(UStroke.withThickness(arrowThickness))
 								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))
 								.draw(arrowLine);
 

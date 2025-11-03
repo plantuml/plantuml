@@ -184,7 +184,18 @@ public enum SName {
 
 	wbsDiagram, //
 	yamlDiagram, //
-	chartDiagram; //
+	chartDiagram, //
+
+	// Chart elements
+	bar, //
+	line, //
+	area, //
+	scatter, //
+	axis, //
+	hAxis, //
+	vAxis, //
+	grid, //
+	annotation; //
 
 	private static final Map<String, SName> ALL = new HashMap<>();
 
