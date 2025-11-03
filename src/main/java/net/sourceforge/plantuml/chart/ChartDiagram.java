@@ -67,6 +67,10 @@ public class ChartDiagram extends UmlDiagram {
 		GROUPED, STACKED
 	}
 
+	public enum Orientation {
+		VERTICAL, HORIZONTAL
+	}
+
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
 	private Integer xAxisTickSpacing;
@@ -77,6 +81,7 @@ public class ChartDiagram extends UmlDiagram {
 	private GridMode xGridMode = GridMode.OFF;
 	private GridMode yGridMode = GridMode.OFF;
 	private StackMode stackMode = StackMode.GROUPED;
+	private Orientation orientation = Orientation.VERTICAL;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -113,7 +118,7 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation);
 	}
 
 	// Command methods
@@ -226,5 +231,14 @@ public class ChartDiagram extends UmlDiagram {
 
 	public StackMode getStackMode() {
 		return stackMode;
+	}
+
+	public CommandExecutionResult setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+		return CommandExecutionResult.ok();
+	}
+
+	public Orientation getOrientation() {
+		return orientation;
 	}
 }

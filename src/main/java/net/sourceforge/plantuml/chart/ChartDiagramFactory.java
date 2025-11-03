@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.chart.command.CommandChartBar;
 import net.sourceforge.plantuml.chart.command.CommandChartGrid;
 import net.sourceforge.plantuml.chart.command.CommandChartLegend;
 import net.sourceforge.plantuml.chart.command.CommandChartLine;
+import net.sourceforge.plantuml.chart.command.CommandChartOrientation;
 import net.sourceforge.plantuml.chart.command.CommandChartScatter;
 import net.sourceforge.plantuml.chart.command.CommandChartStackMode;
 import net.sourceforge.plantuml.chart.command.CommandChartXAxis;
@@ -72,6 +73,7 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandChartLegend());
 		cmds.add(new CommandChartGrid());
 		cmds.add(new CommandChartStackMode());
+		cmds.add(new CommandChartOrientation());
 		// Add common commands last so they don't override chart-specific ones
 		CommonCommands.addCommonCommands1(cmds);
 	}

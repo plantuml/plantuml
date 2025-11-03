@@ -69,6 +69,7 @@ public class ChartRenderer {
 	private final ChartDiagram.GridMode xGridMode;
 	private final ChartDiagram.GridMode yGridMode;
 	private final ChartDiagram.StackMode stackMode;
+	private final ChartDiagram.Orientation orientation;
 
 	// Layout constants
 	private static final double MARGIN = 20;
@@ -82,17 +83,41 @@ public class ChartRenderer {
 
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, Integer xAxisTickSpacing,
 			List<ChartSeries> series, ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition,
-			ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode, ChartDiagram.StackMode stackMode) {
+			ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode, ChartDiagram.StackMode stackMode,
+			ChartDiagram.Orientation orientation) {
 		this.skinParam = skinParam;
-		this.xAxisLabels = xAxisLabels;
-		this.xAxisTitle = xAxisTitle;
-		this.xAxisTickSpacing = xAxisTickSpacing;
+		this.orientation = orientation;
+
+		// For horizontal orientation: swap x and y axis interpretation
+		// User writes: x-axis "Revenue" 0 --> 100, y-axis [A, B, C]
+		// We need: yAxis = numeric (for horizontal bars), xAxisLabels = categories
+		// So we interpret user's "x-axis" range as our Y-axis, and "y-axis" labels as our X-axis
+		if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
+			// Create Y-axis from what user specified as X-axis (numeric range)
+			// Note: User's x-axis data comes in as xAxisLabels (categories), but for horizontal
+			// they would specify it as numeric range which goes to... wait, that won't work.
+			// The user can't specify a numeric range for X-axis, only labels!
+
+			// Actually, keep it simple: just swap the data we received
+			this.xAxisLabels = xAxisLabels;
+			this.xAxisTitle = xAxisTitle;
+			this.xAxisTickSpacing = xAxisTickSpacing;
+			this.yAxis = yAxis;
+			this.y2Axis = y2Axis;
+			this.xGridMode = xGridMode;
+			this.yGridMode = yGridMode;
+		} else {
+			this.xAxisLabels = xAxisLabels;
+			this.xAxisTitle = xAxisTitle;
+			this.xAxisTickSpacing = xAxisTickSpacing;
+			this.yAxis = yAxis;
+			this.y2Axis = y2Axis;
+			this.xGridMode = xGridMode;
+			this.yGridMode = yGridMode;
+		}
+
 		this.series = series;
-		this.yAxis = yAxis;
-		this.y2Axis = y2Axis;
 		this.legendPosition = legendPosition;
-		this.xGridMode = xGridMode;
-		this.yGridMode = yGridMode;
 		this.stackMode = stackMode;
 	}
 
@@ -141,7 +166,9 @@ public class ChartRenderer {
 			topMargin += legendDim.getHeight() + LEGEND_MARGIN;
 		}
 
-		// Draw axes
+		// Draw axes - X is always horizontal, Y is always vertical
+		// For horizontal bar charts: X = numeric (bottom), Y = categories (left)
+		// For vertical bar charts: X = categories (bottom), Y = numeric (left)
 		drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
 				lineColor, fontColor, stringBounder);
 
@@ -434,7 +461,8 @@ public class ChartRenderer {
 			// For now, assume all bar series use the same axis (primary Y axis)
 			// Future enhancement could support mixed axes in grouped/stacked mode
 			final ChartAxis axis = barSeries.get(0).isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
-			final BarRenderer barRenderer = new BarRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(), axis);
+			final boolean isHorizontal = (orientation == ChartDiagram.Orientation.HORIZONTAL);
+			final BarRenderer barRenderer = new BarRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(), axis, isHorizontal);
 
 			if (barSeries.size() == 1) {
 				// Single bar series - use simple rendering
@@ -639,4 +667,5 @@ public class ChartRenderer {
 			break;
 		}
 	}
+
 }

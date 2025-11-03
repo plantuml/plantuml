@@ -58,17 +58,32 @@ public class BarRenderer {
 	private final double plotHeight;
 	private final int categoryCount;
 	private final ChartAxis axis;
+	private final boolean horizontal;
 
 	public BarRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
 			ChartAxis axis) {
+		this(skinParam, plotWidth, plotHeight, categoryCount, axis, false);
+	}
+
+	public BarRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
+			ChartAxis axis, boolean horizontal) {
 		this.skinParam = skinParam;
 		this.plotWidth = plotWidth;
 		this.plotHeight = plotHeight;
 		this.categoryCount = categoryCount;
 		this.axis = axis;
+		this.horizontal = horizontal;
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
+		if (horizontal) {
+			drawHorizontal(ug, series, color);
+		} else {
+			drawVertical(ug, series, color);
+		}
+	}
+
+	private void drawVertical(UGraphic ug, ChartSeries series, HColor color) {
 		// This method is for single-series rendering (backward compatibility)
 		if (categoryCount == 0)
 			return;
@@ -91,6 +106,32 @@ public class BarRenderer {
 			// Draw label if enabled
 			if (series.isShowLabels()) {
 				drawLabel(ug, value, x + barWidth / 2, y - 5, stringBounder);
+			}
+		}
+	}
+
+	private void drawHorizontal(UGraphic ug, ChartSeries series, HColor color) {
+		if (categoryCount == 0)
+			return;
+
+		final List<Double> values = series.getValues();
+		final double categoryHeight = plotHeight / categoryCount;
+		final double barHeight = categoryHeight * 0.6; // 60% of category height
+		final double barOffset = (categoryHeight - barHeight) / 2;
+		final StringBounder stringBounder = ug.getStringBounder();
+
+		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
+			final double value = values.get(i);
+			final double y = i * categoryHeight + barOffset;
+			final double barWidth = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotWidth);
+			final double x = 0; // Start from left
+
+			final URectangle rect = URectangle.build(barWidth, barHeight);
+			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+
+			// Draw label if enabled
+			if (series.isShowLabels()) {
+				drawLabelHorizontal(ug, value, barWidth + 5, y + barHeight / 2, stringBounder);
 			}
 		}
 	}
@@ -190,6 +231,22 @@ public class BarRenderer {
 			final double labelX = x - textDim.getWidth() / 2;
 			final double labelY = y - textDim.getHeight() - 2;
 			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));
+		} catch (Exception e) {
+			// Silently ignore rendering errors
+		}
+	}
+
+	private void drawLabelHorizontal(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
+		try {
+			final String label = formatValue(value);
+			final UFont font = UFont.sansSerif(10).bold();
+			final HColor labelColor = skinParam.getIHtmlColorSet().getColor("#000000");
+			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
+			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			final double labelY = y - textDim.getHeight() / 2;
+			textBlock.drawU(ug.apply(UTranslate.dx(x).compose(UTranslate.dy(labelY))));
 		} catch (Exception e) {
 			// Silently ignore rendering errors
 		}
