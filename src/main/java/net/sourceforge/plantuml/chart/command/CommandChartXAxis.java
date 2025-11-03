@@ -59,7 +59,9 @@ public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(2, "RANGE", "([0-9.]+)\\s*-->\\s*([0-9.]+)")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "DATA", "\\[(.*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new net.sourceforge.plantuml.regex.RegexConcat( //
 						new RegexLeaf("spacing"), //
@@ -72,8 +74,23 @@ public class CommandChartXAxis extends SingleLineCommand2<ChartDiagram> {
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String title = arg.getLazzy("TITLE", 0);
-		final String data = arg.get("DATA", 0);
+		final String minStr = arg.getLazzy("RANGE", 0);
+		final String maxStr = arg.getLazzy("RANGE", 1);
+		final String data = arg.getLazzy("DATA", 0);
 		final String spacingStr = arg.getLazzy("SPACING", 0);
+
+		// If numeric range is provided, this is for horizontal bar chart mode
+		if (minStr != null && maxStr != null) {
+			try {
+				final double min = Double.parseDouble(minStr);
+				final double max = Double.parseDouble(maxStr);
+				return diagram.setXAxis(title, min, max);
+			} catch (NumberFormatException e) {
+				return CommandExecutionResult.error("Invalid number format in axis range");
+			}
+		}
+
+		// Otherwise, parse as labels
 		final List<String> labels = parseLabels(data);
 		diagram.setXAxisTitle(title);
 

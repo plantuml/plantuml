@@ -34,7 +34,9 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -62,6 +64,8 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(2, "RANGE", "([0-9.]+)\\s*-->\\s*([0-9.]+)")), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf(1, "LABELS", "\\[([^\\]]+)\\]")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf("ticks"), //
 						RegexLeaf.spaceOneOrMore(), //
@@ -81,8 +85,15 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 		final String title = arg.getLazzy("TITLE", 0);
 		final String minStr = arg.getLazzy("RANGE", 0);
 		final String maxStr = arg.getLazzy("RANGE", 1);
+		final String labelsStr = arg.getLazzy("LABELS", 0);
 		final String ticksStr = arg.getLazzy("TICKS", 0);
 		final String spacingStr = arg.getLazzy("SPACING", 0);
+
+		// If labels are provided, this is for horizontal bar chart mode
+		if (labelsStr != null) {
+			final List<String> labels = parseLabels(labelsStr);
+			return diagram.setYAxisLabels(labels);
+		}
 
 		Double min = null;
 		Double max = null;
@@ -147,6 +158,23 @@ public class CommandChartYAxis extends SingleLineCommand2<ChartDiagram> {
 			}
 		}
 
+		return result;
+	}
+
+	private List<String> parseLabels(String data) {
+		final List<String> result = new ArrayList<>();
+		if (data == null || data.trim().isEmpty())
+			return result;
+
+		// Split by comma, handling quoted strings
+		final String[] parts = data.split(",");
+		for (String part : parts) {
+			String label = part.trim();
+			// Remove quotes if present
+			if (label.startsWith("\"") && label.endsWith("\""))
+				label = label.substring(1, label.length() - 1);
+			result.add(label);
+		}
 		return result;
 	}
 

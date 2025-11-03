@@ -74,6 +74,8 @@ public class ChartDiagram extends UmlDiagram {
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
 	private Integer xAxisTickSpacing;
+	private final ChartAxis xAxis = new ChartAxis();  // For numeric x-axis (horizontal bar charts)
+	private final List<String> yAxisLabels = new ArrayList<>();
 	private final List<ChartSeries> series = new ArrayList<>();
 	private final ChartAxis yAxis = new ChartAxis();
 	private ChartAxis y2Axis;
@@ -118,6 +120,14 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
+		// For horizontal orientation, swap x and y axis data:
+		// User writes: y-axis [labels], x-axis numeric
+		// We pass to renderer: xAxisLabels=[labels], yAxis=numeric (swapped)
+		if (orientation == Orientation.HORIZONTAL) {
+			// Swap the axes
+			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation);
+		}
+
 		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation);
 	}
 
@@ -141,6 +151,20 @@ public class ChartDiagram extends UmlDiagram {
 		return xAxisTickSpacing;
 	}
 
+	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
+		if (title != null)
+			xAxis.setTitle(title);
+		if (min != null)
+			xAxis.setMin(min);
+		if (max != null)
+			xAxis.setMax(max);
+		return CommandExecutionResult.ok();
+	}
+
+	public ChartAxis getXAxis() {
+		return xAxis;
+	}
+
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {
 		if (title != null)
 			yAxis.setTitle(title);
@@ -148,6 +172,12 @@ public class ChartDiagram extends UmlDiagram {
 			yAxis.setMin(min);
 		if (max != null)
 			yAxis.setMax(max);
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult setYAxisLabels(List<String> labels) {
+		this.yAxisLabels.clear();
+		this.yAxisLabels.addAll(labels);
 		return CommandExecutionResult.ok();
 	}
 
