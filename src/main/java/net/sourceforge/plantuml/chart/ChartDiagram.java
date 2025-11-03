@@ -120,14 +120,17 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		// For horizontal orientation, swap x and y axis data:
-		// User writes: y-axis [labels], x-axis numeric
-		// We pass to renderer: xAxisLabels=[labels], yAxis=numeric (swapped)
+		// For horizontal orientation, use h-axis data where vertical mode uses y-axis, and vice versa
+		// User writes: v-axis [labels], h-axis numeric
+		// For horizontal bars: xAxis=numeric (horizontal), yAxisLabels=categories (vertical)
+		// We need to pass to renderer properly based on what it expects
 		if (orientation == Orientation.HORIZONTAL) {
-			// Swap the axes
+			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
+			// This way bars grow along the correct axis
 			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation);
 		}
 
+		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
 		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation);
 	}
 

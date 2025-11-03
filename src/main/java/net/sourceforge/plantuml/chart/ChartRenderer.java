@@ -166,19 +166,30 @@ public class ChartRenderer {
 			topMargin += legendDim.getHeight() + LEGEND_MARGIN;
 		}
 
-		// Draw axes - X is always horizontal, Y is always vertical
-		// For horizontal bar charts: X = numeric (bottom), Y = categories (left)
-		// For vertical bar charts: X = categories (bottom), Y = numeric (left)
-		drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
-				lineColor, fontColor, stringBounder);
+		// Draw axes based on orientation
+		if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
+			// For horizontal bars: categories on left (vertical), numeric on bottom (horizontal)
+			// xAxisLabels = categories (draw vertically on left)
+			// yAxis = numeric (draw horizontally at bottom)
+			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight,
+					plotHeight, lineColor, fontColor, stringBounder);
+			drawYAxisHorizontally(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin + plotHeight))), plotWidth,
+					plotHeight, yAxis, lineColor, fontColor, stringBounder);
+		} else {
+			// For vertical bars: categories on bottom (horizontal), numeric on left (vertical)
+			// xAxisLabels = categories (draw horizontally at bottom)
+			// yAxis = numeric (draw vertically on left)
+			drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
+					lineColor, fontColor, stringBounder);
 
-		if (y2Axis != null) {
-			drawYAxis(ug.apply(UTranslate.dx(leftMargin + plotWidth).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth,
-					y2Axis, false, lineColor, fontColor, stringBounder);
+			if (y2Axis != null) {
+				drawYAxis(ug.apply(UTranslate.dx(leftMargin + plotWidth).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth,
+						y2Axis, false, lineColor, fontColor, stringBounder);
+			}
+
+			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin + plotHeight))), plotWidth,
+					plotHeight, lineColor, fontColor, stringBounder);
 		}
-
-		drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin + plotHeight))), plotWidth,
-				plotHeight, lineColor, fontColor, stringBounder);
 
 		// Draw series data
 		final UGraphic ugPlot = ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin)));
@@ -384,6 +395,12 @@ public class ChartRenderer {
 
 	private void drawXAxis(UGraphic ug, double width, double height, HColor lineColor, HColor fontColor,
 			StringBounder stringBounder) {
+		// For horizontal orientation, draw category labels vertically on the left
+		if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
+			drawCategoriesVerticallyOnLeft(ug, height, lineColor, fontColor, stringBounder);
+			return;
+		}
+
 		// Draw axis line
 		ug.draw(ULine.hline(width));
 
@@ -436,6 +453,79 @@ public class ChartRenderer {
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
 			final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
 			final double titleY = TICK_SIZE + 25; // Position below the labels
+			titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
+		}
+	}
+
+	private void drawCategoriesVerticallyOnLeft(UGraphic ug, double height, HColor lineColor, HColor fontColor,
+			StringBounder stringBounder) {
+		// Draw vertical axis line on the left
+		ug.draw(ULine.vline(height));
+
+		if (xAxisLabels.isEmpty())
+			return;
+
+		final UFont font = UFont.sansSerif(10);
+		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+		final double categoryHeight = height / xAxisLabels.size();
+
+		for (int i = 0; i < xAxisLabels.size(); i++) {
+			final double y = (i + 0.5) * categoryHeight;
+
+			// Draw tick mark pointing left
+			ug.apply(UTranslate.dx(-TICK_SIZE).compose(UTranslate.dy(y))).draw(ULine.hline(TICK_SIZE));
+
+			// Draw label to the left of the tick
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisLabels.get(i))
+					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
+			final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
+			final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+			textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
+		}
+	}
+
+	private void drawYAxisHorizontally(UGraphic ug, double width, double height, ChartAxis axis, HColor lineColor,
+			HColor fontColor, StringBounder stringBounder) {
+		// Draw horizontal axis line
+		ug.draw(ULine.hline(width));
+
+		// Draw ticks and labels
+		final UFont font = UFont.sansSerif(10);
+		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
+
+		// Calculate grid line color (lighter than axis color)
+		HColor gridColor = lineColor;
+		try {
+			gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
+		} catch (Exception e) {
+			// Use default line color
+		}
+
+		// Use automatic ticks (similar to vertical Y-axis logic)
+		final double range = axis.getMax() - axis.getMin();
+		final int NUM_TICKS = 5;
+
+		for (int i = 0; i <= NUM_TICKS; i++) {
+			final double value = axis.getMin() + (i * range / NUM_TICKS);
+			final double x = width * i / NUM_TICKS;
+
+			// Draw tick mark pointing down
+			ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
+
+			// Draw label below the tick
+			final String label = String.format("%.0f", value);
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+			final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+			textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
+		}
+
+		// Draw axis title if present
+		if (axis.getTitle() != null && !axis.getTitle().isEmpty()) {
+			final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), axis.getTitle())
+					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+			final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
+			final double titleY = TICK_SIZE + 25;
 			titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
 		}
 	}
