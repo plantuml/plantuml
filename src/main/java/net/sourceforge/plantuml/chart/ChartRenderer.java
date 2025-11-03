@@ -820,30 +820,75 @@ public class ChartRenderer {
 
 			// Draw arrow if requested
 			if (annotation.isShowArrow()) {
-				// Draw arrow from text to point
-				final double arrowStartX = x;
-				final double arrowStartY = y - 20; // Offset above the point
-				final double arrowEndX = x;
-				final double arrowEndY = y - 5; // End near the point
+				// Use black color for arrow to ensure visibility
+				HColor arrowColor = HColors.BLACK;
+				try {
+					arrowColor = skinParam.getIHtmlColorSet().getColor("#000000");
+				} catch (Exception e) {
+					arrowColor = lineColor;
+				}
 
-				// Draw arrow line
-				final ULine arrowLine = new ULine(arrowEndX - arrowStartX, arrowEndY - arrowStartY);
-				ug.apply(lineColor).apply(UStroke.withThickness(1.0))
-						.apply(UTranslate.dx(arrowStartX).compose(UTranslate.dy(arrowStartY)))
-						.draw(arrowLine);
+				// Check if there's enough space above the point for text + arrow
+				final double minSpaceAbove = textDim.getHeight() + 40;
+				final boolean placeAbove = y > minSpaceAbove;
 
-				// Draw arrowhead (small triangle)
-				final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();
-				arrowhead.addPoint(0, 0);
-				arrowhead.addPoint(-3, -5);
-				arrowhead.addPoint(3, -5);
-				ug.apply(lineColor).apply(lineColor.bg())
-						.apply(UTranslate.dx(arrowEndX).compose(UTranslate.dy(arrowEndY)))
-						.draw(arrowhead);
+				if (placeAbove) {
+					// Position text above the data point with arrow pointing down
+					final double textX = x - textDim.getWidth() / 2;
+					final double textY = y - textDim.getHeight() - 40;
 
-				// Position text above arrow
-				textBlock.drawU(ug.apply(UTranslate.dx(arrowStartX - textDim.getWidth() / 2)
-						.compose(UTranslate.dy(arrowStartY - textDim.getHeight() - 2))));
+					// Draw text first
+					textBlock.drawU(ug.apply(UTranslate.dx(textX).compose(UTranslate.dy(textY))));
+
+					// Draw arrow from bottom of text to data point
+					final double arrowStartY = textY + textDim.getHeight() + 5;
+					final double arrowEndY = y - 5;
+					final double arrowLength = arrowEndY - arrowStartY;
+
+					if (arrowLength > 0) {
+						final ULine arrowLine = new ULine(0, arrowLength);
+						ug.apply(arrowColor).apply(UStroke.withThickness(2.0))
+								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))
+								.draw(arrowLine);
+
+						// Draw arrowhead pointing down
+						final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();
+						arrowhead.addPoint(0, 0);
+						arrowhead.addPoint(-5, -8);
+						arrowhead.addPoint(5, -8);
+						ug.apply(arrowColor).apply(arrowColor.bg())
+								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowEndY)))
+								.draw(arrowhead);
+					}
+				} else {
+					// Position text below the data point with arrow pointing up
+					final double textX = x - textDim.getWidth() / 2;
+					final double textY = y + 40;
+
+					// Draw text below
+					textBlock.drawU(ug.apply(UTranslate.dx(textX).compose(UTranslate.dy(textY))));
+
+					// Draw arrow from top of text to data point
+					final double arrowStartY = textY - 5;
+					final double arrowEndY = y + 5;
+					final double arrowLength = arrowStartY - arrowEndY;
+
+					if (arrowLength > 0) {
+						final ULine arrowLine = new ULine(0, -arrowLength);
+						ug.apply(arrowColor).apply(UStroke.withThickness(2.0))
+								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))
+								.draw(arrowLine);
+
+						// Draw arrowhead pointing up
+						final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();
+						arrowhead.addPoint(0, 0);
+						arrowhead.addPoint(-5, 8);
+						arrowhead.addPoint(5, 8);
+						ug.apply(arrowColor).apply(arrowColor.bg())
+								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowEndY)))
+								.draw(arrowhead);
+					}
+				}
 			} else {
 				// Draw text near the point without arrow
 				textBlock.drawU(ug.apply(UTranslate.dx(x - textDim.getWidth() / 2)

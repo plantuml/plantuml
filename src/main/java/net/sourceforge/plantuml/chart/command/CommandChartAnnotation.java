@@ -75,7 +75,7 @@ public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(0, "ARROW", "<<arrow>>")), //
+				new RegexOptional(new RegexLeaf(1, "ARROW", "<<(arrow)>>")), //
 				RegexLeaf.end());
 	}
 
