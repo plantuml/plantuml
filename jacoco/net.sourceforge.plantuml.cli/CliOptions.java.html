@@ -186,7 +186,7 @@ public class CliOptions {
 	public int getPicowebPort() {
 <span class="nc" id="L187">		final String picoweb = flags.getString(CliFlag.PICOWEB);</span>
 <span class="nc bnc" id="L188" title="All 2 branches missed.">		if (picoweb == null)</span>
-<span class="nc" id="L189">			return 4242;</span>
+<span class="nc" id="L189">			return 8080;</span>
 
 <span class="nc" id="L191">		final String[] parts = picoweb.split(&quot;:&quot;);</span>
 <span class="nc" id="L192">		return Integer.parseInt(parts[0]);</span>
