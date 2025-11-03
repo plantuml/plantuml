@@ -1,2 +1,0 @@
-- Prefix java commands with "xvfb-run -a"
-- Never use "git add -A", always "git add -u"
