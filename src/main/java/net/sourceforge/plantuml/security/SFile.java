@@ -76,11 +76,11 @@ import net.sourceforge.plantuml.nio.NFolderRegular;
  */
 public class SFile implements Comparable<SFile>, InputFile {
 
-	public static String separator = File.separator;
+	public static final String separator = File.separator;
 
-	public static String pathSeparator = File.pathSeparator;
+	public static final String pathSeparator = File.pathSeparator;
 
-	public static char separatorChar = File.separatorChar;
+	public static final char separatorChar = File.separatorChar;
 
 	private final File internal;
 
@@ -161,9 +161,9 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return this.internal.compareTo(other.internal);
 	}
 
-	public String getPath() {
-		return internal.getPath();
-	}
+//	public String getPath() {
+//		return internal.getPath();
+//	}
 
 	public long length() {
 		return internal.length();
@@ -231,7 +231,9 @@ public class SFile implements Comparable<SFile>, InputFile {
 	}
 
 	public boolean canRead() {
-		return internal.canRead();
+		if (isFileOk())
+			return internal.canRead();
+		return false;
 	}
 
 	public void deleteOnExit() {
@@ -318,7 +320,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 */
 	// ::comment when __CORE__
 	private boolean isDenied() throws IOException {
-		SFile securityPath = SecurityUtils.getSecurityPath();
+		final SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
 			return false;
 		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());
@@ -337,7 +339,9 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * @see Path#normalize()
 	 */
 	private Path getSanitizedPath() throws IOException {
-		return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();
+		if (isFileOk())
+			return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();
+		return null;
 	}
 
 	private String getCleanPathSecure() {
@@ -457,16 +461,8 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return new FileOutputStream(internal);
 	}
 
-	public FileOutputStream createFileOutputStream(boolean append) throws FileNotFoundException {
-		return new FileOutputStream(internal, append);
-	}
-
 	public PrintStream createPrintStream() throws FileNotFoundException {
 		return new PrintStream(internal);
-	}
-
-	public PrintStream createPrintStream(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		return new PrintStream(internal, charset);
 	}
 
 	public PrintStream createPrintStream(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
