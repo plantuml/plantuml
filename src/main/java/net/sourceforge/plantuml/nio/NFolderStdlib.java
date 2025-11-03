@@ -33,45 +33,49 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
 
-import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.preproc.Stdlib;
 
-public class AParentFolderZip implements AParentFolder {
+public final class NFolderStdlib implements NFolder {
 
-	private final SFile zipFile;
-	private final String parent;
+	private final Stdlib stdlib;
+	private final Path pathInsideStdlib;
+
+	/** Creates a folder view of the ZIP root. */
+	public NFolderStdlib(Stdlib stdlib) {
+		this(stdlib, Paths.get(""));
+	}
+
+	private NFolderStdlib(Stdlib stdlib, Path pathInsideStdlib) {
+		this.stdlib = Objects.requireNonNull(stdlib);
+		this.pathInsideStdlib = Objects.requireNonNull(pathInsideStdlib).normalize();
+	}
+
+	@Override
+	public InputFile getInputFile(Path nameOrPath) throws IOException {
+		return new InputFileStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());
+	}
+
+	@Override
+	public OutputFile getOutputFile(Path nameOrPath) throws IOException {
+		throw new UnsupportedOperationException(String.valueOf(nameOrPath));
+	}
+
+	@Override
+	public NFolder getSubfolder(Path nameOrPath) throws IOException {
+		return new NFolderStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());
+	}
 
 	@Override
 	public String toString() {
-		return "AParentFolderZip::" + zipFile + " " + parent;
-	}
-
-	public AParentFolderZip(SFile zipFile, String entry) {
-		this.zipFile = zipFile;
-		final int idx = entry.lastIndexOf('/');
-		if (idx == -1) {
-			parent = "";
-		} else {
-			parent = entry.substring(0, idx + 1);
-		}
-	}
-
-	public AFile getAFile(String nameOrPath) throws IOException {
-		return new AFileZipEntry(zipFile, merge(parent + nameOrPath));
-	}
-
-	String merge(String full) {
-		// full = full.replaceFirst("\\.", "Z");
-		while (true) {
-			int len = full.length();
-			full = full.replaceFirst("[^/]+/\\.\\./", "");
-			if (full.length() == len) {
-				return full;
-			}
-		}
+		final String prefix = pathInsideStdlib.toString().replace('\\', '/');
+		return stdlib.getName() + "!" + prefix;
 	}
 
 }

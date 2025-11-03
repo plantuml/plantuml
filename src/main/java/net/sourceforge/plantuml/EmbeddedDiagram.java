@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.shape.Line;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -233,7 +234,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	private Diagram getSystem() throws IOException, InterruptedException {
 		final Previous previous = skinParam == null ? Previous.createEmpty()
 				: Previous.createFrom(skinParam.values());
-		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), previous, null, null);
+		final BlockUml blockUml = new BlockUml(PathSystem.fetch(), list, Defines.createEmpty(), previous, null, null);
 		return blockUml.getDiagram();
 
 	}

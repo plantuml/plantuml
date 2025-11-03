@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -98,7 +97,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		this.charset = charsetOrDefault(charsetName);
 		this.fileFormatOption = fileFormatOption;
 		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
-				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));
+				SFile.fromFile(file.getAbsoluteFile().getParentFile()), file.getName());
 	}
 
 	protected final FileFormatOption getFileFormatOption() {
@@ -124,7 +123,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);
 	}
 
-	public final Set<FileWithSuffix> getIncludedFiles() throws IOException {
+	public final Set<File> getIncludedFiles() throws IOException {
 		return builder.getIncludedFiles();
 	}
 
@@ -178,13 +177,15 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				Logme.error(t);
-				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noErrorImage)
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
+						|| noErrorImage)
 					continue;
 
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
 			}
 
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) && system instanceof PSystemError)
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
+					&& system instanceof PSystemError)
 				continue;
 
 			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);

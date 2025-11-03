@@ -36,20 +36,15 @@ package net.sourceforge.plantuml.tim;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import net.sourceforge.plantuml.file.AFile;
-import net.sourceforge.plantuml.file.AParentFolder;
-import net.sourceforge.plantuml.file.AParentFolderRegular;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
-import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.theme.Theme;
@@ -62,10 +57,10 @@ public class EaterTheme extends Eater {
 	private String name;
 	private String from;
 	private TContext context;
-	private final ImportedFiles importedFiles;
-	private ImportedFiles newImportedFiles;
+	private final PathSystem importedFiles;
+	private PathSystem newImportedFiles;
 
-	public EaterTheme(StringLocated s, ImportedFiles importedFiles) {
+	public EaterTheme(StringLocated s, PathSystem importedFiles) {
 		super(s);
 		this.importedFiles = importedFiles;
 		this.newImportedFiles = importedFiles;
@@ -97,9 +92,9 @@ public class EaterTheme extends Eater {
 				if (theme != null)
 					return theme;
 
-				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));
-				if (localFile != null && localFile.isOk()) {
-					final BufferedReader br = localFile.getUnderlyingFile().openBufferedReader();
+				final InputFile localFile = importedFiles.getInputFile(ThemeUtils.getFilename(realName));
+				if (localFile != null) {
+					final Reader br = localFile.getReader(UTF_8);
 					if (br != null)
 						return new Theme(ReadLineReader.create(br, "theme " + realName));
 				}
@@ -128,16 +123,18 @@ public class EaterTheme extends Eater {
 		}
 
 		try {
-			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
-			final Reader tmp = file.getReader(UTF_8);
-			if (tmp == null)
-				throw new EaterException("No such theme " + realName, getStringLocated());
-
-			final AFile fromDir = importedFiles.getAFile(from);
-			final AParentFolder parent = new AParentFolderRegular(fromDir.getUnderlyingFile());
-			newImportedFiles = importedFiles.withCurrentDir(parent);
-
-			return new Theme(ReadLineReader.create(tmp, "theme " + realName));
+			throw new IOException("To be finished");
+//			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
+//			final Reader tmp = file.getReader(UTF_8);
+//			if (tmp == null)
+//				throw new EaterException("No such theme " + realName, getStringLocated());
+//
+//			final AFile fromDir = importedFiles.getAFile(from);
+//			final AParentFolder parent = new AParentFolderRegular(fromDir.getUnderlyingFile());
+//			
+//			newImportedFiles = importedFiles.changeCurrentDirectory(from);
+//
+//			return new Theme(ReadLineReader.create(tmp, "theme " + realName));
 		} catch (IOException e) {
 			Logme.error(e);
 			throw new EaterException("Cannot load " + realName, getStringLocated());
@@ -149,7 +146,7 @@ public class EaterTheme extends Eater {
 		return name;
 	}
 
-	public ImportedFiles getNewImportedFiles() {
+	public PathSystem getNewImportedFiles() {
 		return newImportedFiles;
 	}
 

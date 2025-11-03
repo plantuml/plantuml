@@ -36,11 +36,13 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -435,6 +437,16 @@ public class Stdlib {
 			final int rgb = (alpha << 24) + (red << 16) + (green << 8) + blue;
 			colors.add(rgb);
 		}
+	}
+
+	public InputStream newInputStream(Path path) throws IOException {
+		final String pathString = path.toString().toLowerCase().replace(".puml", "").replace('\\', '/');
+		final byte[] data = loadPumlResource(pathString);
+		return new ByteArrayInputStream(data);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

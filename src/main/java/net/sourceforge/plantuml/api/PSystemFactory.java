@@ -39,12 +39,13 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public interface PSystemFactory {
 
-	Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
+	Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
 
 	DiagramType getDiagramType();
 

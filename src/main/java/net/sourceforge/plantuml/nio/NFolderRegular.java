@@ -33,12 +33,44 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Objects;
 
-public interface AParentFolder {
+import net.sourceforge.plantuml.security.SFile;
 
-	public AFile getAFile(String nameOrPath) throws IOException;
+public class NFolderRegular implements NFolder {
+
+	private final Path dir;
+
+	public NFolderRegular(Path dir) {
+		this.dir = Objects.requireNonNull(dir);
+	}
+
+	@Override
+	public InputFile getInputFile(Path nameOrPath) throws IOException {
+		if (nameOrPath.isAbsolute())
+			return SFile.fromFile(nameOrPath.toFile());
+
+		return SFile.fromFile(dir.resolve(nameOrPath).toFile());
+	}
+
+	@Override
+	public OutputFile getOutputFile(Path nameOrPath) throws IOException {
+		throw new UnsupportedOperationException(nameOrPath.toString());
+	}
+
+	@Override
+	public NFolder getSubfolder(Path nameOrPath) throws IOException {
+		final Path sub = dir.resolve(nameOrPath).normalize();
+		return new NFolderRegular(sub);
+	}
+
+	@Override
+	public String toString() {
+		return "NFolderRegular[" + dir + "]";
+	}
 
 }

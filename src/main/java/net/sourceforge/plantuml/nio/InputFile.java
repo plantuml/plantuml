@@ -33,31 +33,21 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
-import net.sourceforge.plantuml.preproc.ReadLine;
-import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
-import net.sourceforge.plantuml.text.StringLocated;
+public interface InputFile {
 
-public class AParentFolderStdlib implements AParentFolder {
+	InputStream newInputStream() throws IOException;
+	
+	NFolder getParentFolder() throws IOException;
 
-	private final StringLocated location;
-	private final String libname;
-
-	public AParentFolderStdlib(StringLocated location, String libname) {
-		this.location = location;
-		this.libname = libname;
+	public default Reader getReader(Charset charset) throws IOException {
+		return new InputStreamReader(newInputStream(), charset);
 	}
-
-	@Override
-	public AFile getAFile(String nameOrPath) throws IOException {
-		throw new IllegalStateException();
-	}
-
-	public ReadLine getReader(String what) throws IOException {
-		return PreprocessorUtils.getReaderStdlibInclude(location, libname + "/" + what);
-	}
-
 }

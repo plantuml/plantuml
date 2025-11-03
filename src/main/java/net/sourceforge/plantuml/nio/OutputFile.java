@@ -30,48 +30,16 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.gitlog;
+package net.sourceforge.plantuml.nio;
 
-import java.util.Iterator;
+import java.io.IOException;
+import java.io.OutputStream;
 
-import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.command.PSystemAbstractFactory;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.nio.PathSystem;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.text.StringLocated;
+public interface OutputFile {
 
-public class GitDiagramFactory extends PSystemAbstractFactory {
-
-	public GitDiagramFactory() {
-		super(DiagramType.GIT);
-	}
-
-	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		final GitTextArea textArea = new GitTextArea();
-
-		final Iterator<StringLocated> it = source.iterator2();
-		it.next();
-		while (true) {
-			final String line = it.next().getString();
-			if (it.hasNext() == false)
-				break;
-
-			textArea.add(line);
-		}
-		return new GitDiagram(source, textArea, preprocessing);
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.GIT;
-	}
+	OutputStream newOutputStream() throws IOException;
 
 }
