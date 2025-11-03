@@ -320,10 +320,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
 <span class="fc" id="L322">		final double y = getYPoint(stringBounder);</span>
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
 <span class="fc" id="L324">			return new XPoint2D(dimensionToUse.getWidth() + getPaddingX(), y);</span>
 
-<span class="nc" id="L326">		return new XPoint2D(getPaddingX(), y);</span>
+<span class="fc" id="L326">		return new XPoint2D(getPaddingX(), y);</span>
 	}
 
 	@Override

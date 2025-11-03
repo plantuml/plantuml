@@ -343,20 +343,20 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 	}
 
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
-<span class="nc" id="L346">		manageShadow(deltaShadow);</span>
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L348">			final Element elt = document.createElement(&quot;ellipse&quot;);</span>
-<span class="nc" id="L349">			elt.setAttribute(&quot;cx&quot;, format(x));</span>
-<span class="nc" id="L350">			elt.setAttribute(&quot;cy&quot;, format(y));</span>
-<span class="nc" id="L351">			elt.setAttribute(&quot;rx&quot;, format(xRadius));</span>
-<span class="nc" id="L352">			elt.setAttribute(&quot;ry&quot;, format(yRadius));</span>
-<span class="nc" id="L353">			fillMe(elt);</span>
-<span class="nc" id="L354">			styleMe(elt);</span>
-<span class="nc" id="L355">			addFilterShadowId(elt, deltaShadow);</span>
-<span class="nc" id="L356">			getG().appendChild(elt);</span>
+<span class="fc" id="L346">		manageShadow(deltaShadow);</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L348">			final Element elt = document.createElement(&quot;ellipse&quot;);</span>
+<span class="fc" id="L349">			elt.setAttribute(&quot;cx&quot;, format(x));</span>
+<span class="fc" id="L350">			elt.setAttribute(&quot;cy&quot;, format(y));</span>
+<span class="fc" id="L351">			elt.setAttribute(&quot;rx&quot;, format(xRadius));</span>
+<span class="fc" id="L352">			elt.setAttribute(&quot;ry&quot;, format(yRadius));</span>
+<span class="fc" id="L353">			fillMe(elt);</span>
+<span class="fc" id="L354">			styleMe(elt);</span>
+<span class="fc" id="L355">			addFilterShadowId(elt, deltaShadow);</span>
+<span class="fc" id="L356">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L358">		ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);</span>
-<span class="nc" id="L359">	}</span>
+<span class="fc" id="L358">		ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);</span>
+<span class="fc" id="L359">	}</span>
 
 	public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
 <span class="nc bnc" id="L362" title="All 2 branches missed.">		if (hidden == false) {</span>
@@ -724,18 +724,18 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="fc" id="L724">	}</span>
 
 	public void svgPath(double x, double y, UPath path, double deltaShadow) {
-<span class="nc" id="L727">		manageShadow(deltaShadow);</span>
-<span class="nc" id="L728">		ensureVisible(x, y);</span>
-<span class="nc" id="L729">		final StringBuilder sb = new StringBuilder(path.size() * 12);</span>
-<span class="nc bnc" id="L730" title="All 2 branches missed.">		for (USegment seg : path) {</span>
-<span class="nc" id="L731">			final USegmentType type = seg.getSegmentType();</span>
-<span class="nc" id="L732">			final double coord[] = seg.getCoord();</span>
-<span class="nc bnc" id="L733" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
-<span class="nc" id="L734">				sb.append(&quot;M&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
-<span class="nc" id="L735">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="nc bnc" id="L736" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
-<span class="nc" id="L737">				sb.append(&quot;L&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
-<span class="nc" id="L738">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
+<span class="fc" id="L727">		manageShadow(deltaShadow);</span>
+<span class="fc" id="L728">		ensureVisible(x, y);</span>
+<span class="fc" id="L729">		final StringBuilder sb = new StringBuilder(path.size() * 12);</span>
+<span class="fc bfc" id="L730" title="All 2 branches covered.">		for (USegment seg : path) {</span>
+<span class="fc" id="L731">			final USegmentType type = seg.getSegmentType();</span>
+<span class="fc" id="L732">			final double coord[] = seg.getCoord();</span>
+<span class="fc bfc" id="L733" title="All 2 branches covered.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="fc" id="L734">				sb.append(&quot;M&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
+<span class="fc" id="L735">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
+<span class="pc bpc" id="L736" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="fc" id="L737">				sb.append(&quot;L&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
+<span class="fc" id="L738">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
 <span class="nc bnc" id="L739" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
 <span class="nc" id="L740">				sb.append(&quot;Q&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
 <span class="nc" id="L741">						+ format(coord[3] + y) + &quot; &quot;);</span>
@@ -759,24 +759,24 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 <span class="nc" id="L759">				Log.println(&quot;unknown3 &quot; + seg);</span>
 			}
 
-<span class="nc" id="L762">		}</span>
-<span class="nc bnc" id="L763" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L764">			final Element elt = document.createElement(&quot;path&quot;);</span>
-<span class="nc" id="L765">			elt.setAttribute(&quot;d&quot;, sb.toString().trim());</span>
-<span class="nc" id="L766">			styleMe(elt);</span>
-<span class="nc" id="L767">			fillMe(elt);</span>
-<span class="nc" id="L768">			final String id = path.getComment();</span>
-<span class="nc bnc" id="L769" title="All 2 branches missed.">			if (id != null)</span>
+<span class="fc" id="L762">		}</span>
+<span class="pc bpc" id="L763" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L764">			final Element elt = document.createElement(&quot;path&quot;);</span>
+<span class="fc" id="L765">			elt.setAttribute(&quot;d&quot;, sb.toString().trim());</span>
+<span class="fc" id="L766">			styleMe(elt);</span>
+<span class="fc" id="L767">			fillMe(elt);</span>
+<span class="fc" id="L768">			final String id = path.getComment();</span>
+<span class="pc bpc" id="L769" title="1 of 2 branches missed.">			if (id != null)</span>
 <span class="nc" id="L770">				elt.setAttribute(&quot;id&quot;, id);</span>
 
-<span class="nc" id="L772">			final String codeLine = path.getCodeLine();</span>
-<span class="nc bnc" id="L773" title="All 2 branches missed.">			if (codeLine != null)</span>
+<span class="fc" id="L772">			final String codeLine = path.getCodeLine();</span>
+<span class="pc bpc" id="L773" title="1 of 2 branches missed.">			if (codeLine != null)</span>
 <span class="nc" id="L774">				elt.setAttribute(&quot;codeLine&quot;, codeLine);</span>
 
-<span class="nc" id="L776">			addFilterShadowId(elt, deltaShadow);</span>
-<span class="nc" id="L777">			getG().appendChild(elt);</span>
+<span class="fc" id="L776">			addFilterShadowId(elt, deltaShadow);</span>
+<span class="fc" id="L777">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L779">	}</span>
+<span class="fc" id="L779">	}</span>
 
 	private void fillMe(Element elt) {
 <span class="fc bfc" id="L782" title="All 2 branches covered.">		if (fill.matches(&quot;#[0-9A-Fa-f]{8}&quot;)) {</span>
