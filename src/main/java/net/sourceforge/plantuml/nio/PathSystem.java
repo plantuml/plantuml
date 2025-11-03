@@ -114,7 +114,10 @@ public class PathSystem {
 			// Expand to the user's home directory
 			final String home = System.getProperty("user.home");
 			final Path homePath = Paths.get(home).resolve(path.substring(2)).normalize();
-			return SFile.fromFile(homePath.toFile());
+			final SFile result = SFile.fromFile(homePath.toFile());
+			if (result.isFileOk())
+				return result;
+			return null;
 		}
 
 		return currentFolder.getInputFile(Paths.get(path));
@@ -128,6 +131,5 @@ public class PathSystem {
 		// Nothing right now
 
 	}
-
 
 }

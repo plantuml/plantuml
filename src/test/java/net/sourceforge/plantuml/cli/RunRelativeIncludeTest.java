@@ -37,8 +37,7 @@ class RunRelativeIncludeTest extends AbstractCliTest {
 		// deepest file first
 		final Path logoPuml = logoDir.resolve("logo.puml");
 		Files.writeString(logoPuml,
-				String.join(System.lineSeparator(),
-						"skinparam titleFontSize 14", "title PlantUML logo included"),
+				String.join(System.lineSeparator(), "title PlantUML logo included"),
 				StandardCharsets.UTF_8);
 
 		// header.puml includes the logo using a path relative to itself

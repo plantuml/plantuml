@@ -231,7 +231,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	}
 
 	public boolean canRead() {
-		if (isFileOk())
+		if (exists())
 			return internal.canRead();
 		return false;
 	}
@@ -339,9 +339,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * @see Path#normalize()
 	 */
 	private Path getSanitizedPath() throws IOException {
-		if (isFileOk())
-			return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();
-		return null;
+		return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();
 	}
 
 	private String getCleanPathSecure() {
@@ -481,7 +479,9 @@ public class SFile implements Comparable<SFile>, InputFile {
 	}
 
 	public Path toPath() throws IOException {
-		return getSanitizedPath();
+		if (isFileOk())
+			return getSanitizedPath();
+		return null;
 	}
 
 }

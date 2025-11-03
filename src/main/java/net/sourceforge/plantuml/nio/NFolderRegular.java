@@ -51,10 +51,17 @@ public class NFolderRegular implements NFolder {
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
+		final SFile result;
 		if (nameOrPath.isAbsolute())
-			return SFile.fromFile(nameOrPath.toFile());
+			result = SFile.fromFile(nameOrPath.toFile());
+		else
+			result = SFile.fromFile(dir.resolve(nameOrPath).toFile());
 
-		return SFile.fromFile(dir.resolve(nameOrPath).toFile());
+		if (result.canRead())
+			return result;
+		
+		return null;
+
 	}
 
 	@Override
