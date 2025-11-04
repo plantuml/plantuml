@@ -879,8 +879,29 @@ public class ChartRenderer {
 				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))
 						.draw(rect);
 			} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
+				// Get marker shape from style (same logic as ScatterRenderer)
+				ChartSeries.MarkerShape markerShape = s.getMarkerShape();
+				try {
+					final Style scatterStyle = getScatterStyle(s);
+					final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();
+					if (styleMarkerShape != null && !styleMarkerShape.isEmpty()) {
+						switch (styleMarkerShape.toLowerCase()) {
+							case "circle":
+								markerShape = ChartSeries.MarkerShape.CIRCLE;
+								break;
+							case "square":
+								markerShape = ChartSeries.MarkerShape.SQUARE;
+								break;
+							case "triangle":
+								markerShape = ChartSeries.MarkerShape.TRIANGLE;
+								break;
+						}
+					}
+				} catch (Exception e) {
+					// Use default
+				}
 				// Draw marker shape for scatter plot
-				drawLegendScatterMarker(ug, color, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, s.getMarkerShape());
+				drawLegendScatterMarker(ug, color, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, markerShape);
 			}
 
 			// Draw series name
