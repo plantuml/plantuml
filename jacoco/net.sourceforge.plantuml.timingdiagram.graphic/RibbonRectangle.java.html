@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RibbonRectangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.graphic</a> &gt; <span class="el_source">RibbonRectangle.java</span></div><h1>RibbonRectangle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingNote;
+import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+import net.sourceforge.plantuml.utils.Position;
+
+<span class="nc" id="L68">public class RibbonRectangle implements PDrawing {</span>
+
+<span class="nc" id="L70">	private final List&lt;ChangeState&gt; changes = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L71">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
+
+	private final ISkinParam skinParam;
+	private final TimingRuler ruler;
+	private String initialState;
+	private Colors initialColors;
+	private final List&lt;TimingNote&gt; notes;
+	private final boolean compact;
+	private final TextBlock title;
+	private final int suggestedHeight;
+	private final Style style;
+
+	public RibbonRectangle(TimingRuler ruler, ISkinParam skinParam, List&lt;TimingNote&gt; notes, boolean compact,
+<span class="nc" id="L84">			TextBlock title, int suggestedHeight, Style style) {</span>
+<span class="nc" id="L85">		this.style = style;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		this.suggestedHeight = suggestedHeight == 0 ? 24 : suggestedHeight;</span>
+<span class="nc" id="L87">		this.compact = compact;</span>
+<span class="nc" id="L88">		this.ruler = ruler;</span>
+<span class="nc" id="L89">		this.skinParam = skinParam;</span>
+<span class="nc" id="L90">		this.notes = notes;</span>
+<span class="nc" id="L91">		this.title = title;</span>
+<span class="nc" id="L92">	}</span>
+
+	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+<span class="nc" id="L95">		final double x = ruler.getPosInPixel(tick);</span>
+<span class="nc" id="L96">		final double y = getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)</span>
+<span class="nc" id="L97">				+ getHeightForTopComment(stringBounder) + getRibbonHeight() / 2;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (ChangeState change : changes)</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (change.getWhen().compareTo(tick) == 0)</span>
+<span class="nc" id="L100">				return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));</span>
+
+<span class="nc" id="L102">		return new IntricatedPoint(new XPoint2D(x, y - getRibbonHeight() / 2),</span>
+<span class="nc" id="L103">				new XPoint2D(x, y + getRibbonHeight() / 2));</span>
+	}
+
+	public void addChange(ChangeState change) {
+<span class="nc" id="L107">		this.changes.add(change);</span>
+<span class="nc" id="L108">	}</span>
+
+	private double getPosInPixel(ChangeState change) {
+<span class="nc" id="L111">		return ruler.getPosInPixel(change.getWhen());</span>
+	}
+
+	private FontConfiguration getFontConfiguration() {
+<span class="nc" id="L115">		return FontConfiguration.create(skinParam, style);</span>
+
+	}
+
+	private TextBlock createTextBlock(String value) {
+<span class="nc" id="L120">		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);</span>
+<span class="nc" id="L121">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	public TextBlock getPart1(double fullAvailableWidth) {
+<span class="nc" id="L125">		return new AbstractTextBlock() {</span>
+			public void drawU(UGraphic ug) {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (compact) {</span>
+<span class="nc" id="L128">					final double titleHeight = title.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L129">					final double dy = (getRibbonHeight() - titleHeight) / 2;</span>
+<span class="nc" id="L130">					title.drawU(ug.apply(UTranslate.dy(dy)));</span>
+				}
+<span class="nc" id="L132">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L135">				double width = getInitialWidth(stringBounder);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">				if (compact)</span>
+<span class="nc" id="L137">					width += title.calculateDimension(stringBounder).getWidth() + 10;</span>
+
+<span class="nc" id="L139">				return new XDimension2D(width, getRibbonHeight());</span>
+			}
+		};
+	}
+
+	public UDrawable getPart2() {
+<span class="nc" id="L145">		return new UDrawable() {</span>
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L147">				drawPart2(ug);</span>
+<span class="nc" id="L148">			}</span>
+		};
+	}
+
+	private void drawNotes(UGraphic ug, final Position position) {
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (TimingNote note : notes)</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (note.getPosition() == position) {</span>
+<span class="nc" id="L155">				final TimeTick when = note.getWhen();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				final double x = when == null ? 0 : ruler.getPosInPixel(when);</span>
+<span class="nc" id="L157">				note.drawU(ug.apply(UTranslate.dx(x)));</span>
+			}
+<span class="nc" id="L159">	}</span>
+
+	private double getInitialWidth(final StringBounder stringBounder) {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (initialState == null)</span>
+<span class="nc" id="L163">			return 0;</span>
+
+<span class="nc" id="L165">		return createTextBlock(initialState).calculateDimension(stringBounder).getWidth() + 24;</span>
+	}
+
+	private void drawHexa(UGraphic ug, double len, ChangeState change) {
+
+<span class="nc" id="L170">		final URectangle shape = URectangle.build(len, getRibbonHeight());</span>
+<span class="nc" id="L171">		change.getContext(skinParam, style).apply(ug).draw(shape);</span>
+
+<span class="nc" id="L173">	}</span>
+
+	private void drawFlat(UGraphic ug, double len, ChangeState change) {
+<span class="nc" id="L176">		final ULine line = ULine.hline(len);</span>
+<span class="nc" id="L177">		change.getContext(skinParam, style).apply(ug).apply(UTranslate.dy(getRibbonHeight() / 2)).draw(line);</span>
+<span class="nc" id="L178">	}</span>
+
+	private double getRibbonHeight() {
+<span class="nc" id="L181">		return suggestedHeight;</span>
+	}
+
+	private void drawPentaB(UGraphic ug, double len, ChangeState change) {
+<span class="nc" id="L185">		final PentaBShapeRectangle shape = PentaBShapeRectangle.create(len, getRibbonHeight(),</span>
+<span class="nc" id="L186">				change.getContext(skinParam, style));</span>
+<span class="nc" id="L187">		shape.drawU(ug);</span>
+<span class="nc" id="L188">	}</span>
+
+	private void drawPentaA(UGraphic ug, double len, ChangeState change) {
+<span class="nc" id="L191">		Fashion context = change.getContext(skinParam, style);</span>
+<span class="nc" id="L192">		final HColor back = initialColors.getColor(ColorType.BACK);</span>
+<span class="nc" id="L193">		final HColor line = initialColors.getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (back != null)</span>
+<span class="nc" id="L195">			context = context.withBackColor(back);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (line != null)</span>
+<span class="nc" id="L197">			context = context.withForeColor(line);</span>
+
+<span class="nc" id="L199">		final PentaAShapeRectangle shape = PentaAShapeRectangle.create(len, getRibbonHeight(), context);</span>
+<span class="nc" id="L200">		shape.drawU(ug);</span>
+<span class="nc" id="L201">	}</span>
+
+	private double getHeightForConstraints(StringBounder stringBounder) {
+<span class="nc" id="L204">		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);</span>
+	}
+
+	private double getHeightForNotes(StringBounder stringBounder, Position position) {
+<span class="nc" id="L208">		double height = 0;</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		for (TimingNote note : notes)</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (note.getPosition() == position)</span>
+<span class="nc" id="L211">				height = Math.max(height, note.getHeight(stringBounder));</span>
+
+<span class="nc" id="L213">		return height;</span>
+	}
+
+	private double getMarginX() {
+<span class="nc" id="L217">		return 12;</span>
+	}
+
+	public void setInitialState(String initialState, Colors initialColors) {
+<span class="nc" id="L221">		this.initialState = initialState;</span>
+<span class="nc" id="L222">		this.initialColors = initialColors;</span>
+<span class="nc" id="L223">	}</span>
+
+	public void addConstraint(TimeConstraint constraint) {
+<span class="nc" id="L226">		this.constraints.add(constraint);</span>
+<span class="nc" id="L227">	}</span>
+
+	public double getFullHeight(StringBounder stringBounder) {
+<span class="nc" id="L230">		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)</span>
+<span class="nc" id="L231">				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()</span>
+<span class="nc" id="L232">				+ getHeightForNotes(stringBounder, Position.BOTTOM) + getBottomMargin();</span>
+	}
+
+	private double getBottomMargin() {
+<span class="nc" id="L236">		return 10;</span>
+	}
+
+	private void drawPart2(UGraphic ug) {
+<span class="nc" id="L240">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="nc" id="L242">		final UGraphic ugRibbon = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)</span>
+<span class="nc" id="L243">				+ getHeightForTopComment(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)));</span>
+
+<span class="nc" id="L245">		drawBeforeZeroState(ugRibbon);</span>
+<span class="nc" id="L246">		drawBeforeZeroStateLabel(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));</span>
+<span class="nc" id="L247">		drawStates(ugRibbon);</span>
+<span class="nc" id="L248">		drawStatesLabels(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));</span>
+
+<span class="nc" id="L250">		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) / 2)));</span>
+
+<span class="nc" id="L252">		drawNotes(ug, Position.TOP);</span>
+<span class="nc" id="L253">		drawNotes(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) + getRibbonHeight()</span>
+<span class="nc" id="L254">				+ getHeightForNotes(stringBounder, Position.TOP))), Position.BOTTOM);</span>
+<span class="nc" id="L255">	}</span>
+
+	private void drawBeforeZeroState(UGraphic ug) {
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (initialState == null)</span>
+<span class="nc" id="L259">			return;</span>
+<span class="nc" id="L260">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (changes.size() == 0) {</span>
+<span class="nc" id="L262">			drawSingle(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))),</span>
+<span class="nc" id="L263">					getInitialWidth(stringBounder) + ruler.getWidth());</span>
+		} else {
+<span class="nc" id="L265">			final double a = getPosInPixel(changes.get(0));</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">			if (ChangeState.isFlat(initialState))</span>
+<span class="nc" id="L267">				drawFlat(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,</span>
+<span class="nc" id="L268">						changes.get(0));</span>
+			else
+<span class="nc" id="L270">				drawPentaA(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,</span>
+<span class="nc" id="L271">						changes.get(0));</span>
+		}
+<span class="nc" id="L273">	}</span>
+
+	private void drawBeforeZeroStateLabel(final UGraphic ug) {
+<span class="nc" id="L276">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L277" title="All 4 branches missed.">		if (initialState != null &amp;&amp; ChangeState.isFlat(initialState) == false) {</span>
+<span class="nc" id="L278">			final TextBlock initial = createTextBlock(initialState);</span>
+<span class="nc" id="L279">			final XDimension2D dimInital = initial.calculateDimension(stringBounder);</span>
+<span class="nc" id="L280">			initial.drawU(ug.apply(new UTranslate(-getMarginX() - dimInital.getWidth(), -dimInital.getHeight() / 2)));</span>
+		}
+<span class="nc" id="L282">	}</span>
+
+	private void drawSingle(UGraphic ug, double len) {
+<span class="nc" id="L285">		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L286">		final HColor line = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L287">		final Fashion context = new Fashion(back, back).withStroke(style.getStroke());</span>
+<span class="nc" id="L288">		ug = context.apply(ug);</span>
+
+<span class="nc" id="L290">		final ULine border = ULine.hline(len);</span>
+<span class="nc" id="L291">		final double height = getRibbonHeight();</span>
+
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (ChangeState.isFlat(initialState)) {</span>
+<span class="nc" id="L294">			ug = ug.apply(line);</span>
+<span class="nc" id="L295">			ug.apply(UTranslate.dy(height / 2)).draw(border);</span>
+<span class="nc" id="L296">			return;</span>
+		}
+
+<span class="nc" id="L299">		final URectangle rect = URectangle.build(len, height);</span>
+<span class="nc" id="L300">		ug.draw(rect);</span>
+
+<span class="nc" id="L302">		ug = ug.apply(line);</span>
+<span class="nc" id="L303">		ug.draw(border);</span>
+<span class="nc" id="L304">		ug.apply(UTranslate.dy(height)).draw(border);</span>
+
+<span class="nc" id="L306">	}</span>
+
+	private void drawStates(UGraphic ug) {
+<span class="nc bnc" id="L309" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size() - 1; i++) {</span>
+<span class="nc" id="L310">			final double a = getPosInPixel(changes.get(i));</span>
+<span class="nc" id="L311">			final double b = getPosInPixel(changes.get(i + 1));</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">			assert b &gt; a;</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (changes.get(i).isFlat())</span>
+<span class="nc" id="L314">				drawFlat(ug.apply(UTranslate.dx(a)), b - a, changes.get(i));</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">			else if (changes.get(i).isCompletelyHidden() == false)</span>
+<span class="nc" id="L316">				drawHexa(ug.apply(UTranslate.dx(a)), b - a, changes.get(i));</span>
+		}
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (changes.size() &gt;= 1) {</span>
+<span class="nc" id="L319">			final ChangeState last = changes.get(changes.size() - 1);</span>
+<span class="nc" id="L320">			final double a = getPosInPixel(last);</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">			if (last.isFlat())</span>
+<span class="nc" id="L322">				drawFlat(ug.apply(UTranslate.dx(a)), ruler.getWidth() - a, last);</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">			else if (last.isCompletelyHidden() == false)</span>
+<span class="nc" id="L324">				drawPentaB(ug.apply(UTranslate.dx(a)), ruler.getWidth() - a, last);</span>
+		}
+<span class="nc" id="L326">	}</span>
+
+	private void drawStatesLabels(UGraphic ug) {
+<span class="nc" id="L329">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
+<span class="nc" id="L331">			final ChangeState change = changes.get(i);</span>
+<span class="nc" id="L332">			final double x = ruler.getPosInPixel(change.getWhen());</span>
+<span class="nc bnc" id="L333" title="All 6 branches missed.">			if (change.isBlank() == false &amp;&amp; change.isCompletelyHidden() == false &amp;&amp; change.isFlat() == false) {</span>
+<span class="nc" id="L334">				final TextBlock state = createTextBlock(change.getState());</span>
+<span class="nc" id="L335">				final XDimension2D dim = state.calculateDimension(stringBounder);</span>
+				final double xtext;
+<span class="nc bnc" id="L337" title="All 2 branches missed.">				if (i == changes.size() - 1) {</span>
+<span class="nc" id="L338">					xtext = x + getMarginX();</span>
+				} else {
+<span class="nc" id="L340">					final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());</span>
+<span class="nc" id="L341">					xtext = (x + x2) / 2 - dim.getWidth() / 2;</span>
+				}
+<span class="nc" id="L343">				state.drawU(ug.apply(new UTranslate(xtext, -dim.getHeight() / 2)));</span>
+			}
+<span class="nc" id="L345">			final TextBlock commentTopBlock = getCommentTopBlock(change);</span>
+<span class="nc" id="L346">			final XDimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L347">			commentTopBlock</span>
+<span class="nc" id="L348">					.drawU(ug.apply(new UTranslate(x + getMarginX(), -getRibbonHeight() / 2 - dimComment.getHeight())));</span>
+		}
+<span class="nc" id="L350">	}</span>
+
+	private TextBlock getCommentTopBlock(final ChangeState change) {
+<span class="nc bnc" id="L353" title="All 2 branches missed.">		if (change.getComment() == null)</span>
+<span class="nc" id="L354">			return TextBlockUtils.empty(0, 0);</span>
+
+<span class="nc" id="L356">		return createTextBlock(change.getComment());</span>
+	}
+
+	private double getHeightForTopComment(StringBounder stringBounder) {
+<span class="nc" id="L360">		double result = 0;</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">		for (ChangeState change : changes)</span>
+<span class="nc" id="L362">			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());</span>
+
+<span class="nc" id="L364">		return result;</span>
+	}
+
+	private void drawConstraints(final UGraphic ug) {
+<span class="nc bnc" id="L368" title="All 2 branches missed.">		for (TimeConstraint constraint : constraints)</span>
+<span class="nc" id="L369">			constraint.drawU(ug, ruler);</span>
+<span class="nc" id="L370">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
