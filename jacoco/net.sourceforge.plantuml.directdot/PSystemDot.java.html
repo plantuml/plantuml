@@ -72,24 +72,30 @@ public class PSystemDot extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-<span class="nc" id="L75">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,</span>
+<span class="nc" id="L75">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, filter(data),</span>
 <span class="nc" id="L76">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
 <span class="nc bnc" id="L77" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
 <span class="nc" id="L78">			final TextBlock result = GraphicStrings</span>
 <span class="nc" id="L79">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
 <span class="nc" id="L80">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
 		}
-<span class="nc" id="L82">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
-<span class="nc" id="L83">		final ProcessState state = graphviz.createFile3(counter);</span>
+
+<span class="nc" id="L83">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
+<span class="nc" id="L84">		final ProcessState state = graphviz.createFile3(counter);</span>
 		// if (state.differs(ProcessState.TERMINATED_OK())) {
 		// throw new IllegalStateException(&quot;Timeout1 &quot; + state);
 		// }
-<span class="nc bnc" id="L87" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
-<span class="nc" id="L88">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
-<span class="nc" id="L89">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
+<span class="nc" id="L89">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
+<span class="nc" id="L90">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
 		}
 
-<span class="nc" id="L92">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L93">		return ImageDataSimple.ok();</span>
+	}
+
+	private String filter(String data) {
+<span class="nc" id="L97">		data = data.replaceAll(&quot;(?i)\\bjavascript:&quot;, &quot;js:&quot;);</span>
+<span class="nc" id="L98">		return data;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
