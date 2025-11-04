@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
@@ -60,6 +61,8 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartBar.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("bar"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf(1, "STEREO", "(\\<\\<.+?\\>\\>)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "NAME", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -76,6 +79,7 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
+		final String stereo = arg.getLazzy("STEREO", 0);
 		final String name = arg.getLazzy("NAME", 0);
 		final String data = arg.get("DATA", 0);
 		final String colorStr = arg.getLazzy("COLOR", 0);
@@ -86,6 +90,10 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 
 		final String seriesName = name != null ? name : "bar" + diagram.getSeries().size();
 		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.BAR, values);
+
+		if (stereo != null) {
+			series.setStereotype(Stereotype.build(stereo));
+		}
 
 		if (colorStr != null) {
 			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor("#" + colorStr);
