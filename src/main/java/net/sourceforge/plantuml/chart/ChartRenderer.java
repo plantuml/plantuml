@@ -857,32 +857,70 @@ public class ChartRenderer {
 
 		for (int i = 0; i < series.size(); i++) {
 			final ChartSeries s = series.get(i);
-			final HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(i);
+			HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(i);
 
 			// Draw legend symbol
 			if (s.getType() == ChartSeries.SeriesType.BAR) {
+				// Get bar color from style if not explicitly set
+				if (s.getColor() == null) {
+					final Style barStyle = getBarStyle(s);
+					HColor styleColor = barStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+					if (styleColor != null) {
+						color = styleColor;
+					}
+				}
 				// Draw small rectangle for bar
 				final net.sourceforge.plantuml.klimt.shape.URectangle rect = net.sourceforge.plantuml.klimt.shape.URectangle
 						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);
 				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))
 						.draw(rect);
 			} else if (s.getType() == ChartSeries.SeriesType.LINE) {
+				// Get line color from style if not explicitly set
+				if (s.getColor() == null) {
+					final Style lineStyle = getLineStyle(s);
+					HColor styleColor = lineStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+					if (styleColor != null) {
+						color = styleColor;
+					}
+				}
 				// Draw small line for line chart
 				final ULine line = ULine.hline(LEGEND_SYMBOL_SIZE);
 				ug.apply(color).apply(UStroke.withThickness(2.0))
 						.apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY + LEGEND_SYMBOL_SIZE / 2)))
 						.draw(line);
 			} else if (s.getType() == ChartSeries.SeriesType.AREA) {
+				// Get area color from style if not explicitly set
+				if (s.getColor() == null) {
+					final Style areaStyle = getAreaStyle(s);
+					HColor styleColor = areaStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+					if (styleColor != null) {
+						color = styleColor;
+					}
+				}
 				// Draw small filled rectangle for area chart
 				final net.sourceforge.plantuml.klimt.shape.URectangle rect = net.sourceforge.plantuml.klimt.shape.URectangle
 						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);
 				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))
 						.draw(rect);
 			} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
+				// Get scatter style
+				final Style scatterStyle = getScatterStyle(s);
+
+				// Get marker color from style - priority: MarkerColor > LineColor > explicit color
+				HColor markerColor = color;
+				HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());
+				if (styleMarkerColor != null) {
+					markerColor = styleMarkerColor;
+				} else if (s.getColor() == null) {
+					HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+					if (styleLineColor != null) {
+						markerColor = styleLineColor;
+					}
+				}
+
 				// Get marker shape from style (same logic as ScatterRenderer)
 				ChartSeries.MarkerShape markerShape = s.getMarkerShape();
 				try {
-					final Style scatterStyle = getScatterStyle(s);
 					final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();
 					if (styleMarkerShape != null && !styleMarkerShape.isEmpty()) {
 						switch (styleMarkerShape.toLowerCase()) {
@@ -901,7 +939,7 @@ public class ChartRenderer {
 					// Use default
 				}
 				// Draw marker shape for scatter plot
-				drawLegendScatterMarker(ug, color, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, markerShape);
+				drawLegendScatterMarker(ug, markerColor, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, markerShape);
 			}
 
 			// Draw series name

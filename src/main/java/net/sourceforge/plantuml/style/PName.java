@@ -63,6 +63,7 @@ public enum PName {
 	// Chart-specific properties
 	MarkerShape, //
 	MarkerSize, //
+	MarkerColor, //
 	BarWidth;
 
 	public static PName getFromName(String name, StyleScheme scheme) {

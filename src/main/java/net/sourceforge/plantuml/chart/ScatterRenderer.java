@@ -96,6 +96,18 @@ public class ScatterRenderer {
 		// Get scatter style (with stereotype support)
 		final Style scatterStyle = getScatterStyle(series);
 
+		// Extract marker color from style - priority: MarkerColor > LineColor > explicit color
+		HColor markerColor = color;
+		HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());
+		if (styleMarkerColor != null) {
+			markerColor = styleMarkerColor;
+		} else {
+			HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			if (styleLineColor != null && color == null) {
+				markerColor = styleLineColor;
+			}
+		}
+
 		// Extract marker size from style (default 8)
 		double markerSize = 8.0;
 		try {
@@ -134,7 +146,7 @@ public class ScatterRenderer {
 			final double x = (i + 0.5) * categoryWidth;
 			final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
-			drawMarker(ug, color, x, y, markerSize, markerShape);
+			drawMarker(ug, markerColor, x, y, markerSize, markerShape);
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {
