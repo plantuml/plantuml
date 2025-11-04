@@ -108,16 +108,16 @@ public class CommunicationExoTile extends AbstractTile {
 
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		final double textDeltaX = isFromLeftBorderMessage()</span>
 <span class="fc" id="L110">																? getPoint1(stringBounder).getCurrentValue() - x1</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">																: isFromRightBorderMessage()</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">																: isFromRightBorderMessage()</span>
 <span class="fc" id="L112">																		? getPoint2(stringBounder).getCurrentValue() - x2</span>
-<span class="fc" id="L113">																		: 0;</span>
+<span class="pc" id="L113">																		: 0;</span>
 
 <span class="fc" id="L115">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (level &gt; 0) {</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">			if (message.getType().isRightBorder())</span>
-<span class="fc" id="L118">				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (level &gt; 0) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (message.getType().isRightBorder())</span>
+<span class="nc" id="L118">				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;</span>
 			else
-<span class="fc" id="L120">				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);</span>
+<span class="nc" id="L120">				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);</span>
 		}
 
 <span class="fc" id="L123">		final ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
@@ -241,11 +241,11 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	public boolean isFromRightBorderMessage() {
-<span class="fc bfc" id="L244" title="All 4 branches covered.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
+<span class="pc bpc" id="L244" title="1 of 4 branches missed.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
 	}
 
 	public boolean isFromLeftBorderMessage() {
-<span class="fc bfc" id="L248" title="All 4 branches covered.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

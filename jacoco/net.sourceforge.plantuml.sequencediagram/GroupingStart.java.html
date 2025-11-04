@@ -47,25 +47,25 @@ import net.sourceforge.plantuml.url.Url;
 
 public class GroupingStart extends Grouping {
 
-<span class="fc" id="L50">	private final List&lt;GroupingLeaf&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L50">	private final List&lt;GroupingLeaf&gt; children = new ArrayList&lt;&gt;();</span>
 	private final HColor backColorGeneral;
 
 	final private GroupingStart parent;
-<span class="fc" id="L54">	private boolean parallel = false;</span>
+<span class="nc" id="L54">	private boolean parallel = false;</span>
 
 	public GroupingStart(String title, String comment, HColor backColorGeneral, HColor backColorElement,
 			GroupingStart parent, StyleBuilder styleBuilder) {
-<span class="fc" id="L58">		super(title, comment, GroupingType.START, backColorElement, styleBuilder);</span>
-<span class="fc" id="L59">		this.backColorGeneral = backColorGeneral;</span>
-<span class="fc" id="L60">		this.parent = parent;</span>
-<span class="fc" id="L61">	}</span>
+<span class="nc" id="L58">		super(title, comment, GroupingType.START, backColorElement, styleBuilder);</span>
+<span class="nc" id="L59">		this.backColorGeneral = backColorGeneral;</span>
+<span class="nc" id="L60">		this.parent = parent;</span>
+<span class="nc" id="L61">	}</span>
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L64">		final Style[] result = super.getUsedStyles();</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (result[0] != null)</span>
-<span class="fc" id="L66">			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);</span>
+<span class="nc" id="L64">		final Style[] result = super.getUsedStyles();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (result[0] != null)</span>
+<span class="nc" id="L66">			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);</span>
 
-<span class="fc" id="L68">		return result;</span>
+<span class="nc" id="L68">		return result;</span>
 	}
 
 	List&lt;GroupingLeaf&gt; getChildren() {
@@ -73,8 +73,8 @@ public class GroupingStart extends Grouping {
 	}
 
 	public void addChildren(GroupingLeaf g) {
-<span class="fc" id="L76">		children.add(g);</span>
-<span class="fc" id="L77">	}</span>
+<span class="nc" id="L76">		children.add(g);</span>
+<span class="nc" id="L77">	}</span>
 
 	public int getLevel() {
 <span class="nc bnc" id="L80" title="All 2 branches missed.">		if (parent == null)</span>
@@ -85,7 +85,7 @@ public class GroupingStart extends Grouping {
 
 	@Override
 	public HColor getBackColorGeneral() {
-<span class="fc" id="L88">		return backColorGeneral;</span>
+<span class="nc" id="L88">		return backColorGeneral;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
@@ -102,7 +102,7 @@ public class GroupingStart extends Grouping {
 
 	@Override
 	public boolean isParallel() {
-<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		return parallel || isPar2GroupStart();</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">		return parallel || isPar2GroupStart();</span>
 	}
 
 	public void goParallel() {
@@ -110,7 +110,7 @@ public class GroupingStart extends Grouping {
 <span class="nc" id="L110">	}</span>
 
 	public boolean isPar2GroupStart() {
-<span class="fc" id="L113">		return getTitle().equals(&quot;par2&quot;);</span>
+<span class="nc" id="L113">		return getTitle().equals(&quot;par2&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
