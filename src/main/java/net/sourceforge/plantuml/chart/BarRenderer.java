@@ -84,6 +84,15 @@ public class BarRenderer {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.bar);
 	}
 
+	private Style getBarStyle(ChartSeries series) {
+		StyleSignatureBasic signature = getBarStyleSignature();
+		if (series != null && series.getStereotype() != null) {
+			return signature.withTOBECHANGED(series.getStereotype())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
 		if (horizontal) {
 			drawHorizontal(ug, series, color);
@@ -99,13 +108,23 @@ public class BarRenderer {
 
 		final List<Double> values = series.getValues();
 		final double categoryWidth = plotWidth / categoryCount;
-		final double barWidth = categoryWidth * 0.6; // 60% of category width
-		final double barOffset = (categoryWidth - barWidth) / 2;
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		// Get bar style
-		final Style barStyle = getBarStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		// Get bar style (with stereotype support)
+		final Style barStyle = getBarStyle(series);
+
+		// Extract bar width ratio from style (default 0.6 = 60%)
+		double barWidthRatio = 0.6;
+		try {
+			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();
+			if (styleBarWidth != null && styleBarWidth > 0 && styleBarWidth <= 1.0) {
+				barWidthRatio = styleBarWidth;
+			}
+		} catch (Exception e) {
+			// Use default
+		}
+		final double barWidth = categoryWidth * barWidthRatio;
+		final double barOffset = (categoryWidth - barWidth) / 2;
 
 		// Extract line color and thickness for bar borders
 		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -137,13 +156,23 @@ public class BarRenderer {
 
 		final List<Double> values = series.getValues();
 		final double categoryHeight = plotHeight / categoryCount;
-		final double barHeight = categoryHeight * 0.6; // 60% of category height
-		final double barOffset = (categoryHeight - barHeight) / 2;
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		// Get bar style
-		final Style barStyle = getBarStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		// Get bar style (with stereotype support)
+		final Style barStyle = getBarStyle(series);
+
+		// Extract bar width ratio from style (default 0.6 = 60%)
+		double barWidthRatio = 0.6;
+		try {
+			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();
+			if (styleBarWidth != null && styleBarWidth > 0 && styleBarWidth <= 1.0) {
+				barWidthRatio = styleBarWidth;
+			}
+		} catch (Exception e) {
+			// Use default
+		}
+		final double barHeight = categoryHeight * barWidthRatio;
+		final double barOffset = (categoryHeight - barHeight) / 2;
 
 		// Extract line color and thickness for bar borders
 		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -231,15 +260,26 @@ public class BarRenderer {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double categoryWidth = plotWidth / categoryCount;
-		final double barWidth = categoryWidth * 0.6; // 60% of category width
-		final double barOffset = (categoryWidth - barWidth) / 2;
-
-		// Track cumulative heights for each category
-		final Map<Integer, Double> cumulativeHeights = new HashMap<>();
 
 		// Get bar style
 		final Style barStyle = getBarStyleSignature()
 			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract bar width ratio from style (default 0.6 = 60%)
+		double barWidthRatio = 0.6;
+		try {
+			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();
+			if (styleBarWidth != null && styleBarWidth > 0 && styleBarWidth <= 1.0) {
+				barWidthRatio = styleBarWidth;
+			}
+		} catch (Exception e) {
+			// Use default
+		}
+		final double barWidth = categoryWidth * barWidthRatio;
+		final double barOffset = (categoryWidth - barWidth) / 2;
+
+		// Track cumulative heights for each category
+		final Map<Integer, Double> cumulativeHeights = new HashMap<>();
 
 		// Extract line thickness for bar borders
 		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();

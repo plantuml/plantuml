@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class ChartSeries {
 
@@ -56,6 +57,7 @@ public class ChartSeries {
 	private boolean useSecondaryAxis;
 	private boolean showLabels;
 	private MarkerShape markerShape;
+	private Stereotype stereotype;
 
 	public ChartSeries(String name, SeriesType type, List<Double> values) {
 		this.name = name;
@@ -108,5 +110,13 @@ public class ChartSeries {
 
 	public void setMarkerShape(MarkerShape markerShape) {
 		this.markerShape = markerShape;
+	}
+
+	public Stereotype getStereotype() {
+		return stereotype;
+	}
+
+	public void setStereotype(Stereotype stereotype) {
+		this.stereotype = stereotype;
 	}
 }

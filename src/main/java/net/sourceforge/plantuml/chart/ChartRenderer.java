@@ -583,17 +583,17 @@ public class ChartRenderer {
 		final java.util.List<ChartSeries> barSeries = new java.util.ArrayList<>();
 		final java.util.List<HColor> barColors = new java.util.ArrayList<>();
 
-		// Get bar style for default colors
-		final Style barStyle = getBarStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-
 		for (ChartSeries s : series) {
 			if (s.getType() == ChartSeries.SeriesType.BAR) {
 				barSeries.add(s);
 
-				// Extract bar color - priority: explicit color > style color > default color
+				// Get bar style with stereotype support
+				final Style barStyle = getBarStyle(s);
+
+				// Extract bar color - priority: explicit color > stereotype style > element style > default color
 				HColor color = s.getColor();
 				if (color == null) {
-					// Try to get color from style
+					// Try to get color from style (with stereotype if present)
 					color = barStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 					if (color == null) {
 						// Use default color
@@ -630,23 +630,21 @@ public class ChartRenderer {
 			if (s.getType() != ChartSeries.SeriesType.BAR) {
 				final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
 
-				// Get series-specific style based on type
-				StyleSignatureBasic signature;
+				// Get series-specific style based on type (with stereotype support)
+				Style seriesStyle;
 				switch (s.getType()) {
 					case LINE:
-						signature = getLineStyleSignature();
+						seriesStyle = getLineStyle(s);
 						break;
 					case AREA:
-						signature = getAreaStyleSignature();
+						seriesStyle = getAreaStyle(s);
 						break;
 					case SCATTER:
-						signature = getScatterStyleSignature();
+						seriesStyle = getScatterStyle(s);
 						break;
 					default:
-						signature = getStyleSignature();
+						seriesStyle = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 				}
-
-				final Style seriesStyle = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 				// Extract series color - priority: explicit color > style color > default color
 				HColor color = s.getColor();
@@ -716,16 +714,52 @@ public class ChartRenderer {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.bar);
 	}
 
+	private Style getBarStyle(ChartSeries series) {
+		StyleSignatureBasic signature = getBarStyleSignature();
+		if (series.getStereotype() != null) {
+			return signature.withTOBECHANGED(series.getStereotype())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
 	private StyleSignatureBasic getLineStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.line);
+	}
+
+	private Style getLineStyle(ChartSeries series) {
+		StyleSignatureBasic signature = getLineStyleSignature();
+		if (series.getStereotype() != null) {
+			return signature.withTOBECHANGED(series.getStereotype())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private StyleSignatureBasic getAreaStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.area);
 	}
 
+	private Style getAreaStyle(ChartSeries series) {
+		StyleSignatureBasic signature = getAreaStyleSignature();
+		if (series.getStereotype() != null) {
+			return signature.withTOBECHANGED(series.getStereotype())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
 	private StyleSignatureBasic getScatterStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	}
+
+	private Style getScatterStyle(ChartSeries series) {
+		StyleSignatureBasic signature = getScatterStyleSignature();
+		if (series.getStereotype() != null) {
+			return signature.withTOBECHANGED(series.getStereotype())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private StyleSignatureBasic getAxisStyleSignature(boolean horizontal) {

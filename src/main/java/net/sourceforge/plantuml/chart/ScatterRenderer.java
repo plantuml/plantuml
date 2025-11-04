@@ -50,6 +50,10 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class ScatterRenderer {
 
@@ -68,6 +72,19 @@ public class ScatterRenderer {
 		this.axis = axis;
 	}
 
+	private StyleSignatureBasic getScatterStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	}
+
+	private Style getScatterStyle(ChartSeries series) {
+		StyleSignatureBasic signature = getScatterStyleSignature();
+		if (series != null && series.getStereotype() != null) {
+			return signature.withTOBECHANGED(series.getStereotype())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
 		if (categoryCount == 0)
 			return;
@@ -75,7 +92,41 @@ public class ScatterRenderer {
 		final List<Double> values = series.getValues();
 		final double categoryWidth = plotWidth / categoryCount;
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double markerSize = 8;
+
+		// Get scatter style (with stereotype support)
+		final Style scatterStyle = getScatterStyle(series);
+
+		// Extract marker size from style (default 8)
+		double markerSize = 8.0;
+		try {
+			final Double styleMarkerSize = scatterStyle.value(PName.MarkerSize).asDouble();
+			if (styleMarkerSize != null && styleMarkerSize > 0) {
+				markerSize = styleMarkerSize;
+			}
+		} catch (Exception e) {
+			// Use default
+		}
+
+		// Extract marker shape from style (default to series marker or CIRCLE)
+		ChartSeries.MarkerShape markerShape = series.getMarkerShape();
+		try {
+			final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();
+			if (styleMarkerShape != null && !styleMarkerShape.isEmpty()) {
+				switch (styleMarkerShape.toLowerCase()) {
+					case "circle":
+						markerShape = ChartSeries.MarkerShape.CIRCLE;
+						break;
+					case "square":
+						markerShape = ChartSeries.MarkerShape.SQUARE;
+						break;
+					case "triangle":
+						markerShape = ChartSeries.MarkerShape.TRIANGLE;
+						break;
+				}
+			}
+		} catch (Exception e) {
+			// Use default
+		}
 
 		// Draw markers at data points (no connecting lines)
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
@@ -83,7 +134,7 @@ public class ScatterRenderer {
 			final double x = (i + 0.5) * categoryWidth;
 			final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
-			drawMarker(ug, color, x, y, markerSize, series.getMarkerShape());
+			drawMarker(ug, color, x, y, markerSize, markerShape);
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {

@@ -8,7 +8,8 @@
       "Bash(cat:*)",
       "Bash(git log:*)",
       "Bash(./gradlew jar:*)",
-      "Bash(xvfb-run:*)"
+      "Bash(xvfb-run:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
