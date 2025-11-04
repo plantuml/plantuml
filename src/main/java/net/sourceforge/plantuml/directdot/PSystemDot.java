@@ -72,13 +72,14 @@ public class PSystemDot extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, filter(data),
 				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings
 					.createForError(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
 			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);
 		}
+
 		final CounterOutputStream counter = new CounterOutputStream(os);
 		final ProcessState state = graphviz.createFile3(counter);
 		// if (state.differs(ProcessState.TERMINATED_OK())) {
@@ -90,5 +91,10 @@ public class PSystemDot extends AbstractPSystem {
 		}
 
 		return ImageDataSimple.ok();
+	}
+
+	private String filter(String data) {
+		data = data.replaceAll("(?i)\\bjavascript:", "js:");
+		return data;
 	}
 }
