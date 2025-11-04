@@ -33,31 +33,46 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Objects;
 
-import net.sourceforge.plantuml.preproc.ReadLine;
-import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
-import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.security.SFile;
 
-public class AParentFolderStdlib implements AParentFolder {
+public class NFolderRegular implements NFolder {
 
-	private final StringLocated location;
-	private final String libname;
+	private final Path dir;
 
-	public AParentFolderStdlib(StringLocated location, String libname) {
-		this.location = location;
-		this.libname = libname;
+	public NFolderRegular(Path dir) {
+		this.dir = Objects.requireNonNull(dir);
 	}
 
 	@Override
-	public AFile getAFile(String nameOrPath) throws IOException {
-		throw new IllegalStateException();
+	public InputFile getInputFile(Path nameOrPath) throws IOException {
+		final SFile result;
+		if (nameOrPath.isAbsolute())
+			result = SFile.fromFile(nameOrPath.toFile());
+		else
+			result = SFile.fromFile(dir.resolve(nameOrPath).toFile());
+
+		if (result.canRead())
+			return result;
+		
+		return null;
+
 	}
 
-	public ReadLine getReader(String what) throws IOException {
-		return PreprocessorUtils.getReaderStdlibInclude(location, libname + "/" + what);
+	@Override
+	public NFolder getSubfolder(Path nameOrPath) throws IOException {
+		final Path sub = dir.resolve(nameOrPath).normalize();
+		return new NFolderRegular(sub);
+	}
+
+	@Override
+	public String toString() {
+		return "NFolderRegular[" + dir + "]";
 	}
 
 }

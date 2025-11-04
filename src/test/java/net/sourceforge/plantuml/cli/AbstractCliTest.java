@@ -19,7 +19,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class AbstractCliTest {
 
 	@TempDir
-	Path tempDir;
+	public Path tempDir;
 
 	@FunctionalInterface
 	public interface ThrowingRunnable {

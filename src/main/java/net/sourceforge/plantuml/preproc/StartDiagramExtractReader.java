@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.preproc;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -54,9 +53,9 @@ public class StartDiagramExtractReader implements ReadLine {
 	private final ReadLine raw;
 	private boolean finished = false;
 
-	public static ReadLine build(FileWithSuffix f2, StringLocated s, Charset charset) {
-		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());
-	}
+//	public static ReadLine build(FileWithSuffix f2, StringLocated s, Charset charset) {
+//		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());
+//	}
 
 	public static ReadLine build(SURL url, StringLocated s, String uid, Charset charset) {
 		return new StartDiagramExtractReader(getReadLine(url, s, charset), uid);
@@ -104,17 +103,17 @@ public class StartDiagramExtractReader implements ReadLine {
 		return false;
 	}
 
-	private static ReadLine getReadLine(FileWithSuffix f2, StringLocated s, Charset charset) {
-		try {
-			final Reader tmp1 = f2.getReader(charset);
-			if (tmp1 == null)
-				return new ReadLineSimple(s, "Cannot open " + f2.getDescription());
-
-			return uncommentAndMerge(ReadLineReader.create(tmp1, f2.getDescription()));
-		} catch (IOException e) {
-			return new ReadLineSimple(s, e.toString());
-		}
-	}
+//	private static ReadLine getReadLine(FileWithSuffix f2, StringLocated s, Charset charset) {
+//		try {
+//			final Reader tmp1 = f2.getReader(charset);
+//			if (tmp1 == null)
+//				return new ReadLineSimple(s, "Cannot open " + f2.getDescription());
+//
+//			return uncommentAndMerge(ReadLineReader.create(tmp1, f2.getDescription()));
+//		} catch (IOException e) {
+//			return new ReadLineSimple(s, e.toString());
+//		}
+//	}
 
 	private static ReadLine getReadLine(InputStream is, String description) {
 		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(is, StandardCharsets.UTF_8), description));
@@ -132,10 +131,10 @@ public class StartDiagramExtractReader implements ReadLine {
 		return new UncommentReadLine(new ReadFilterMergeLines().applyFilter(reader));
 	}
 
-	static public boolean containsStartDiagram(FileWithSuffix f2, StringLocated s, Charset charset) throws IOException {
-		final ReadLine r = getReadLine(f2, s, charset);
-		return containsStartDiagram(r);
-	}
+//	static public boolean containsStartDiagram(FileWithSuffix f2, StringLocated s, Charset charset) throws IOException {
+//		final ReadLine r = getReadLine(f2, s, charset);
+//		return containsStartDiagram(r);
+//	}
 
 	static public boolean containsStartDiagram(SURL url, StringLocated s, Charset charset) throws IOException {
 		final ReadLine r = getReadLine(url, s, charset);

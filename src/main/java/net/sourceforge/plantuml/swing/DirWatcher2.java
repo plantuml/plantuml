@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class DirWatcher2 {
 	// ::remove file when __CORE__
@@ -99,8 +98,7 @@ public class DirWatcher2 {
 									try {
 										final List<GeneratedImage> generatedImages = sourceFileReader
 												.getGeneratedImages();
-										final Set<File> files = FileWithSuffix
-												.convert(sourceFileReader.getIncludedFiles());
+										final Set<File> files = sourceFileReader.getIncludedFiles();
 										files.add(f);
 										modifieds.put(f, new FileWatcher(files));
 										return Collections.unmodifiableList(generatedImages);

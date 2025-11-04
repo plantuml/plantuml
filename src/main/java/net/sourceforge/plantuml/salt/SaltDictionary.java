@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainer;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -61,8 +62,10 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 
 	private final Map<String, Element> data = new HashMap<String, Element>();
 	private final ConfigurationStore<OptionKey> option;
+	private final PathSystem pathSystem;
 
-	public SaltDictionary(ConfigurationStore<OptionKey> option) {
+	public SaltDictionary(PathSystem pathSystem, ConfigurationStore<OptionKey> option) {
+		this.pathSystem = pathSystem;
 		this.option = option;
 	}
 
@@ -161,6 +164,11 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 	@Override
 	public ConfigurationStore<OptionKey> options() {
 		return option;
+	}
+
+	@Override
+	public PathSystem getPathSystem() {
+		return pathSystem;
 	}
 
 }
