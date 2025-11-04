@@ -55,16 +55,16 @@ public class Blotter implements UDrawable {
 	private final HColor defaultBackcolor;
 	private final double round;
 	private HColor last;
-<span class="nc" id="L58">	private final SortedMap&lt;Double, HColor&gt; changes = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L58">	private final SortedMap&lt;Double, HColor&gt; changes = new TreeMap&lt;&gt;();</span>
 
-<span class="nc" id="L60">	public Blotter(XDimension2D dim, HColor defaultBackcolor, double round) {</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (defaultBackcolor == null)</span>
+<span class="fc" id="L60">	public Blotter(XDimension2D dim, HColor defaultBackcolor, double round) {</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (defaultBackcolor == null)</span>
 <span class="nc" id="L62">			defaultBackcolor = HColors.transparent();</span>
-<span class="nc" id="L63">		this.round = round;</span>
-<span class="nc" id="L64">		this.dim = dim;</span>
-<span class="nc" id="L65">		this.defaultBackcolor = defaultBackcolor;</span>
-<span class="nc" id="L66">		this.last = defaultBackcolor;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L63">		this.round = round;</span>
+<span class="fc" id="L64">		this.dim = dim;</span>
+<span class="fc" id="L65">		this.defaultBackcolor = defaultBackcolor;</span>
+<span class="fc" id="L66">		this.last = defaultBackcolor;</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	public String toString() {
@@ -73,19 +73,19 @@ public class Blotter implements UDrawable {
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L76">		HColor current = defaultBackcolor;</span>
-<span class="nc" id="L77">		double y = 0;</span>
-<span class="nc" id="L78">		int i = 0;</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (Entry&lt;Double, HColor&gt; ent : changes.entrySet()) {</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (current.isTransparent() == false) {</span>
+<span class="fc" id="L76">		HColor current = defaultBackcolor;</span>
+<span class="fc" id="L77">		double y = 0;</span>
+<span class="fc" id="L78">		int i = 0;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		for (Entry&lt;Double, HColor&gt; ent : changes.entrySet()) {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (current.isTransparent() == false) {</span>
 <span class="nc" id="L81">				final UShape rect = getRectangleBackground(i, ent.getKey() - y);</span>
 <span class="nc" id="L82">				ug.apply(current).apply(current.bg()).apply(UTranslate.dy(y)).draw(rect);</span>
 			}
-<span class="nc" id="L84">			y = ent.getKey();</span>
-<span class="nc" id="L85">			current = ent.getValue();</span>
-<span class="nc" id="L86">			i++;</span>
-<span class="nc" id="L87">		}</span>
-<span class="nc" id="L88">	}</span>
+<span class="fc" id="L84">			y = ent.getKey();</span>
+<span class="fc" id="L85">			current = ent.getValue();</span>
+<span class="fc" id="L86">			i++;</span>
+<span class="fc" id="L87">		}</span>
+<span class="fc" id="L88">	}</span>
 
 	private UShape getRectangleBackground(int i, double height) {
 <span class="nc" id="L91">		final double width = dim.getWidth();</span>
@@ -124,8 +124,8 @@ public class Blotter implements UDrawable {
 	}
 
 	public void closeChanges() {
-<span class="nc" id="L127">		changes.put(dim.getHeight(), defaultBackcolor);</span>
-<span class="nc" id="L128">	}</span>
+<span class="fc" id="L127">		changes.put(dim.getHeight(), defaultBackcolor);</span>
+<span class="fc" id="L128">	}</span>
 
 	public void addChange(double ypos, HColor color) {
 <span class="nc bnc" id="L131" title="All 2 branches missed.">		if (color == null)</span>

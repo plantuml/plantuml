@@ -112,10 +112,10 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public boolean isParallelWith(AbstractMessage message) {
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
-<span class="nc bnc" id="L116" title="All 8 branches missed.">		return (this == message)</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
+<span class="pc bpc" id="L116" title="4 of 8 branches missed.">		return (this == message)</span>
 				|| (hasParallelBrother &amp;&amp; parallelBrother == message)
-<span class="nc bnc" id="L118" title="All 2 branches missed.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
+<span class="pc bnc" id="L118" title="All 2 branches missed.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
 	}
 
 	final public Url getUrl() {
@@ -144,9 +144,9 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	public final boolean addLifeEvent(LifeEvent lifeEvent) {
 <span class="fc" id="L145">		lifeEvent.setMessage(this);</span>
 
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (this.isSelfMessage()) {</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
-<span class="nc" id="L149">				return true;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (this.isSelfMessage()) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
+<span class="fc" id="L149">				return true;</span>
 		}
 
 <span class="fc" id="L152">		lifeEventsType.add(lifeEvent.getType());</span>
@@ -157,7 +157,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 <span class="pc bpc" id="L157" title="1 of 2 branches missed.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
 <span class="nc" id="L158">			return false;</span>
 
-<span class="pc bpc" id="L160" title="1 of 4 branches missed.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
+<span class="fc bfc" id="L160" title="All 4 branches covered.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
 <span class="fc" id="L161">			noActivationAuthorized2.add(lifeEvent.getParticipant());</span>
 
 <span class="fc" id="L163">		return true;</span>
@@ -277,11 +277,11 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public String getPart1Anchor() {
-<span class="nc" id="L280">		return this.anchor1;</span>
+<span class="fc" id="L280">		return this.anchor1;</span>
 	}
 
 	public String getPart2Anchor() {
-<span class="nc" id="L284">		return this.anchor2;</span>
+<span class="fc" id="L284">		return this.anchor2;</span>
 	}
 
 	public abstract Participant getParticipant1();

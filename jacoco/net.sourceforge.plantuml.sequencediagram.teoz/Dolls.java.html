@@ -78,8 +78,8 @@ public class Dolls {
 	}
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
-<span class="nc" id="L81">		double result = 0;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (Doll doll : alls.values()) {</span>
+<span class="fc" id="L81">		double result = 0;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		for (Doll doll : alls.values()) {</span>
 <span class="nc" id="L83">			double height = 0;</span>
 <span class="nc bnc" id="L84" title="All 2 branches missed.">			for (Doll current = doll; current != null; current = current.getParent())</span>
 <span class="nc" id="L85">				height += current.getTitlePreferredHeight();</span>
@@ -88,7 +88,7 @@ public class Dolls {
 <span class="nc" id="L88">				result = height;</span>
 
 <span class="nc" id="L90">		}</span>
-<span class="nc" id="L91">		return result;</span>
+<span class="fc" id="L91">		return result;</span>
 	}
 
 	public void addConstraints(StringBounder stringBounder) {
@@ -101,10 +101,10 @@ public class Dolls {
 <span class="fc" id="L101">	}</span>
 
 	public void drawEnglobers(UGraphic ug, double height, Context2D context) {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (Doll doll : alls.values())</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		for (Doll doll : alls.values())</span>
 <span class="nc" id="L105">			doll.drawMe(ug, height, context, doll.getParent());</span>
 
-<span class="nc" id="L107">	}</span>
+<span class="fc" id="L107">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
 <span class="nc bnc" id="L110" title="All 2 branches missed.">		if (size() == 0)</span>
