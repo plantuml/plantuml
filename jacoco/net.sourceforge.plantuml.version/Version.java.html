@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 
 	// Warning, &quot;version&quot; should be the same in gradle.properties and Version.java
 	// Any idea anyone how to magically synchronize those :-) ?
-	private static final String version = &quot;1.2025.10&quot;;
+	private static final String version = &quot;1.2025.11beta1&quot;;
 
 	public static String versionString() {
 <span class="fc" id="L52">		return version;</span>
@@ -80,14 +80,14 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 	}
 
 	public static long compileTime() {
-<span class="fc" id="L83">		return 1762276849182L;</span>
+<span class="nc" id="L83">		return 1762276849182L;</span>
 	}
 
 	public static String compileTimeString() {
 <span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (version.contains(&quot;beta&quot;))</span>
-<span class="nc" id="L88">			return &quot;Unknown compile time&quot;;</span>
+<span class="fc" id="L88">			return &quot;Unknown compile time&quot;;</span>
 
-<span class="fc" id="L90">		return new Date(Version.compileTime()).toString();</span>
+<span class="nc" id="L90">		return new Date(Version.compileTime()).toString();</span>
 	}
 
 	// ::comment when __CORE__
