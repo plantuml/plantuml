@@ -152,95 +152,102 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	private final List&lt;StringLocated&gt; list;
 	private final ISkinSimple skinParam;
 	private BufferedImage image;
+	private String svg;
 
-<span class="fc" id="L156">	private EmbeddedDiagram(ISkinSimple skinParam, List&lt;StringLocated&gt; system) {</span>
-<span class="fc" id="L157">		this.list = system;</span>
-<span class="fc" id="L158">		this.skinParam = skinParam;</span>
-<span class="fc" id="L159">	}</span>
+<span class="fc" id="L157">	private EmbeddedDiagram(ISkinSimple skinParam, List&lt;StringLocated&gt; system) {</span>
+<span class="fc" id="L158">		this.list = system;</span>
+<span class="fc" id="L159">		this.skinParam = skinParam;</span>
+<span class="fc" id="L160">	}</span>
 
 	public static EmbeddedDiagram from(ISkinSimple skinParam, List&lt;String&gt; strings) {
-<span class="fc" id="L162">		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));</span>
+<span class="fc" id="L163">		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L166">		return 0;</span>
+<span class="fc" id="L167">		return 0;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		try {
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
-<span class="nc" id="L172">				final String imageSvg = getImageSvg();</span>
-<span class="nc" id="L173">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="nc" id="L174">				return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
+<span class="nc" id="L173">				final String imageSvg = getImageSvg();</span>
+<span class="nc" id="L174">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="nc" id="L175">				return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
 			}
-<span class="fc" id="L176">			final BufferedImage im = getImage();</span>
-<span class="fc" id="L177">			return new XDimension2D(im.getWidth(), im.getHeight());</span>
-<span class="nc" id="L178">		} catch (IOException e) {</span>
-<span class="nc" id="L179">			Logme.error(e);</span>
-<span class="nc" id="L180">		} catch (InterruptedException e) {</span>
-<span class="nc" id="L181">			Logme.error(e);</span>
-<span class="nc" id="L182">		}</span>
-<span class="nc" id="L183">		return new XDimension2D(42, 42);</span>
+<span class="fc" id="L177">			final BufferedImage im = getImage();</span>
+<span class="fc" id="L178">			return new XDimension2D(im.getWidth(), im.getHeight());</span>
+<span class="nc" id="L179">		} catch (IOException e) {</span>
+<span class="nc" id="L180">			Logme.error(e);</span>
+<span class="nc" id="L181">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L182">			Logme.error(e);</span>
+<span class="nc" id="L183">		}</span>
+<span class="nc" id="L184">		return new XDimension2D(42, 42);</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		try {
-<span class="fc" id="L188">			final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">			if (isSvg) {</span>
-<span class="nc" id="L190">				final String imageSvg = getImageSvg();</span>
-<span class="nc" id="L191">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="nc" id="L192">				ug.draw(svg);</span>
-<span class="nc" id="L193">				return;</span>
+<span class="fc" id="L189">			final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			if (isSvg) {</span>
+<span class="nc" id="L191">				final String imageSvg = getImageSvg();</span>
+<span class="nc" id="L192">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="nc" id="L193">				ug.draw(svg);</span>
+<span class="nc" id="L194">				return;</span>
 			}
-<span class="fc" id="L195">			final BufferedImage im = getImage();</span>
-<span class="fc" id="L196">			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="fc" id="L197">			ug.draw(image);</span>
-<span class="nc" id="L198">		} catch (IOException e) {</span>
-<span class="nc" id="L199">			Logme.error(e);</span>
-<span class="nc" id="L200">		} catch (InterruptedException e) {</span>
-<span class="nc" id="L201">			Logme.error(e);</span>
-<span class="pc" id="L202">		}</span>
+<span class="fc" id="L196">			final BufferedImage im = getImage();</span>
+<span class="fc" id="L197">			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L198">			ug.draw(image);</span>
+<span class="nc" id="L199">		} catch (IOException e) {</span>
+<span class="nc" id="L200">			Logme.error(e);</span>
+<span class="nc" id="L201">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L202">			Logme.error(e);</span>
+<span class="pc" id="L203">		}</span>
 
-<span class="fc" id="L204">	}</span>
+<span class="fc" id="L205">	}</span>
 
 	private String getImageSvg() throws IOException, InterruptedException {
-<span class="nc" id="L207">		final Diagram system = getSystem();</span>
-<span class="nc" id="L208">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="nc" id="L209">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
-<span class="nc" id="L210">		os.close();</span>
-<span class="nc" id="L211">		return new String(os.toByteArray());</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (svg == null)</span>
+<span class="nc" id="L209">			svg = getImageSvgSlow();</span>
+<span class="nc" id="L210">		return svg;</span>
+
+	}
+
+	private String getImageSvgSlow() throws IOException, InterruptedException {
+<span class="nc" id="L215">		final Diagram system = getSystem();</span>
+<span class="nc" id="L216">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="nc" id="L217">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L218">		os.close();</span>
+<span class="nc" id="L219">		return new String(os.toByteArray());</span>
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
-<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (image == null)</span>
-<span class="fc" id="L216">			image = getImageSlow();</span>
-
-<span class="fc" id="L218">		return image;</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (image == null)</span>
+<span class="fc" id="L224">			image = getImageSlow();</span>
+<span class="fc" id="L225">		return image;</span>
 	}
 
 	private BufferedImage getImageSlow() throws IOException, InterruptedException {
-<span class="fc" id="L222">		final Diagram system = getSystem();</span>
-<span class="fc" id="L223">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L224">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
-<span class="fc" id="L225">		os.close();</span>
-<span class="fc" id="L226">		return SImageIO.read(os.toByteArray());</span>
+<span class="fc" id="L229">		final Diagram system = getSystem();</span>
+<span class="fc" id="L230">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L231">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc" id="L232">		os.close();</span>
+<span class="fc" id="L233">		return SImageIO.read(os.toByteArray());</span>
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="nc" id="L230">		return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L237">		return HorizontalAlignment.LEFT;</span>
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty()</span>
-<span class="fc" id="L235">				: Previous.createFrom(skinParam.values());</span>
-<span class="fc" id="L236">		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), previous, null, null);</span>
-<span class="fc" id="L237">		return blockUml.getDiagram();</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty()</span>
+<span class="fc" id="L242">				: Previous.createFrom(skinParam.values());</span>
+<span class="fc" id="L243">		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), previous, null, null);</span>
+<span class="fc" id="L244">		return blockUml.getDiagram();</span>
 
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L243">		return Arrays.asList(Neutron.create(this));</span>
+<span class="nc" id="L250">		return Arrays.asList(Neutron.create(this));</span>
 	}
 
 }
