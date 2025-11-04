@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.PDrawing;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.timingdiagram.graphic.Ribbon;
+import net.sourceforge.plantuml.timingdiagram.graphic.RibbonRectangle;
 import net.sourceforge.plantuml.utils.Position;
 
 public final class PlayerRobustConcise extends Player {
@@ -99,6 +100,9 @@ public final class PlayerRobustConcise extends Player {
 		if (type == TimingStyle.ROBUST)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust)
 					.withTOBECHANGED(stereotype);
+		if (type == TimingStyle.RECTANGLE)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.rectangle)
+					.withTOBECHANGED(stereotype);
 		throw new IllegalStateException();
 	}
 
@@ -106,6 +110,9 @@ public final class PlayerRobustConcise extends Player {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		if (type == TimingStyle.CONCISE)
 			return new Ribbon(ruler, skinParam, notes, isCompact(), getTitle(), suggestedHeight, style);
+
+		if (type == TimingStyle.RECTANGLE)
+			return new RibbonRectangle(ruler, skinParam, notes, isCompact(), getTitle(), suggestedHeight, style);
 
 		if (type == TimingStyle.ROBUST) {
 			final Style style0 = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)

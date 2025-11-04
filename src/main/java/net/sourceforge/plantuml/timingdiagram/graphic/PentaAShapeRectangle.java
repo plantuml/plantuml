@@ -32,10 +32,42 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.timingdiagram;
+package net.sourceforge.plantuml.timingdiagram.graphic;
 
-public enum TimingStyle {
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 
-	ROBUST, CONCISE, RECTANGLE
+public class PentaAShapeRectangle implements UDrawable {
+
+	private final double width;
+	private final double height;
+	private final Fashion context;
+
+	private PentaAShapeRectangle(double width, double height, Fashion context) {
+		this.width = width;
+		this.height = height;
+		this.context = context;
+	}
+
+	public static PentaAShapeRectangle create(double width, double height, Fashion context) {
+		return new PentaAShapeRectangle(width, height, context);
+	}
+
+	public void drawU(UGraphic ug) {
+		final URectangle polygon = URectangle.build(width, height);
+		context.withForeColor(context.getBackColor()).apply(ug).draw(polygon);
+
+		final UPath path = UPath.none();
+		path.moveTo(0, 0);
+		path.lineTo(width, 0);
+		path.lineTo(width, height);
+		path.lineTo(0, height);
+
+		context.apply(ug).draw(path);
+
+	}
 
 }

@@ -66,7 +66,7 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 						new RegexConcat( //
 								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf(1, "TYPE", "(robust|concise)"), //
+				new RegexLeaf(1, "TYPE", "(robust|concise|rectangle)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
