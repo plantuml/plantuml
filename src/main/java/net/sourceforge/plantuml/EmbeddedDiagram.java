@@ -152,6 +152,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	private final List<StringLocated> list;
 	private final ISkinSimple skinParam;
 	private BufferedImage image;
+	private String svg;
 
 	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> system) {
 		this.list = system;
@@ -204,6 +205,13 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private String getImageSvg() throws IOException, InterruptedException {
+		if (svg == null)
+			svg = getImageSvgSlow();
+		return svg;
+
+	}
+
+	private String getImageSvgSlow() throws IOException, InterruptedException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
@@ -214,7 +222,6 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	private BufferedImage getImage() throws IOException, InterruptedException {
 		if (image == null)
 			image = getImageSlow();
-
 		return image;
 	}
 
