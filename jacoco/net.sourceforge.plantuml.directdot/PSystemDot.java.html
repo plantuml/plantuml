@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.directdot;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.AbstractPSystem;
@@ -61,41 +63,72 @@ public class PSystemDot extends AbstractPSystem {
 	private final String data;
 
 	public PSystemDot(UmlSource source, String data, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L64">		super(source, preprocessing);</span>
-<span class="nc" id="L65">		this.data = data;</span>
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L66">		super(source, preprocessing);</span>
+<span class="nc" id="L67">		this.data = data;</span>
+<span class="nc" id="L68">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L69">		return new DiagramDescription(&quot;(Dot)&quot;);</span>
+<span class="nc" id="L71">		return new DiagramDescription(&quot;(Dot)&quot;);</span>
 	}
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-<span class="nc" id="L75">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, filter(data),</span>
-<span class="nc" id="L76">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
-<span class="nc" id="L78">			final TextBlock result = GraphicStrings</span>
-<span class="nc" id="L79">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
-<span class="nc" id="L80">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc" id="L77">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, filter(data),</span>
+<span class="nc" id="L78">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
+<span class="nc" id="L80">			final TextBlock result = GraphicStrings</span>
+<span class="nc" id="L81">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
+<span class="nc" id="L82">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
 		}
 
-<span class="nc" id="L83">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
-<span class="nc" id="L84">		final ProcessState state = graphviz.createFile3(counter);</span>
+<span class="nc" id="L85">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
+<span class="nc" id="L86">		final ProcessState state = graphviz.createFile3(counter);</span>
 		// if (state.differs(ProcessState.TERMINATED_OK())) {
 		// throw new IllegalStateException(&quot;Timeout1 &quot; + state);
 		// }
-<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
-<span class="nc" id="L89">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
-<span class="nc" id="L90">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
+<span class="nc" id="L91">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
+<span class="nc" id="L92">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
 		}
 
-<span class="nc" id="L93">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L95">		return ImageDataSimple.ok();</span>
 	}
 
 	private String filter(String data) {
-<span class="nc" id="L97">		data = data.replaceAll(&quot;(?i)\\bjavascript:&quot;, &quot;js:&quot;);</span>
-<span class="nc" id="L98">		return data;</span>
+<span class="nc" id="L99">		data = data.replaceAll(&quot;(?i)\\bjavascript:&quot;, &quot;js:&quot;);</span>
+
+<span class="nc" id="L101">		data = data.replaceAll(&quot;(?i)&lt;\\s*/?\\s*script[^&gt;]*&gt;&quot;, &quot;&quot;);</span>
+
+<span class="nc" id="L103">		data = sanitizeDotAttribute(data, &quot;fontname&quot;);</span>
+<span class="nc" id="L104">		data = sanitizeDotAttribute(data, &quot;label&quot;);</span>
+<span class="nc" id="L105">		data = sanitizeDotAttribute(data, &quot;xlabel&quot;);</span>
+<span class="nc" id="L106">		data = sanitizeDotAttribute(data, &quot;URL&quot;);</span>
+<span class="nc" id="L107">		data = sanitizeDotAttribute(data, &quot;href&quot;);</span>
+<span class="nc" id="L108">		data = sanitizeDotAttribute(data, &quot;tooltip&quot;);</span>
+
+<span class="nc" id="L110">		return data;</span>
+	}
+
+	private String sanitizeDotAttribute(String dot, String attrName) {
+<span class="nc" id="L114">		final Pattern p = Pattern.compile(&quot;(?i)(&quot; + attrName + &quot;)\\s*=\\s*\&quot;([^\&quot;]*)\&quot;&quot;);</span>
+<span class="nc" id="L115">		final Matcher m = p.matcher(dot);</span>
+<span class="nc" id="L116">		final StringBuffer sb = new StringBuffer();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		while (m.find()) {</span>
+<span class="nc" id="L118">			final String originalValue = m.group(2);</span>
+<span class="nc" id="L119">			final String safeValue = sanitizeAttributeValue(originalValue);</span>
+<span class="nc" id="L120">			m.appendReplacement(sb, m.group(1) + &quot;=\&quot;&quot; + safeValue + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L121">		}</span>
+<span class="nc" id="L122">		m.appendTail(sb);</span>
+<span class="nc" id="L123">		return sb.toString();</span>
+	}
+
+	private String sanitizeAttributeValue(String value) {
+<span class="nc" id="L127">		value = value.replace(&quot;&lt;&quot;, &quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L128">		value = value.replace(&quot;\&quot;&quot;, &quot;&quot;).replace(&quot;'&quot;, &quot;&quot;);</span>
+<span class="nc" id="L129">		value = value.replaceAll(&quot;(?i)on[a-z]+\\s*=&quot;, &quot;&quot;);</span>
+
+<span class="nc" id="L131">		return value;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
