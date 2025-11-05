@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -471,6 +472,11 @@ public class SkinParamDelegator implements ISkinParam {
 	@Override
 	public ConfigurationStore<OptionKey> options() {
 		return skinParam.options();
+	}
+
+	@Override
+	public PathSystem getPathSystem() {
+		return skinParam.getPathSystem();
 	}
 
 }

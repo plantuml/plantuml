@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.file.AParentFolder;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
@@ -51,10 +50,8 @@ public class Define {
 	private final String definitionQuoted;
 	private final boolean emptyParentheses;
 	private Pattern pattern;
-	private final AParentFolder currentDir;
 
-	public Define(String key, List<String> lines, boolean emptyParentheses, AParentFolder currentDir) {
-		this.currentDir = currentDir;
+	public Define(String key, List<String> lines, boolean emptyParentheses) {
 		this.emptyParentheses = emptyParentheses;
 		if (lines == null) {
 			this.definition = null;

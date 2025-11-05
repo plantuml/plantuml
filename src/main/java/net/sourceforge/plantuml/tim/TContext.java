@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
@@ -51,24 +52,20 @@ import java.util.Set;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.file.AFile;
-import net.sourceforge.plantuml.file.AParentFolder;
-import net.sourceforge.plantuml.file.AParentFolderStdlib;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
-import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
@@ -79,7 +76,6 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.theme.Theme;
-import net.sourceforge.plantuml.theme.ThemeUtils;
 import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
 import net.sourceforge.plantuml.tim.builtin.AlwaysTrue;
 import net.sourceforge.plantuml.tim.builtin.Backslash;
@@ -178,18 +174,18 @@ public class TContext {
 
 	public final FunctionsSet functionsSet = new FunctionsSet();
 
-	private ImportedFiles importedFiles;
 	private final Charset charset;
 
 	private final Map<String, Sub> subs = new HashMap<String, Sub>();
 	private final DefinitionsContainer definitionsContainer;
 
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
-	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<>();
+	private final Set<File> filesUsedCurrent = new HashSet<>();
 
 	private final PreprocessingArtifact preprocessingArtifact = new PreprocessingArtifact();
+	private PathSystem pathSystem;
 
-	public Set<FileWithSuffix> getFilesUsedCurrent() {
+	public Set<File> getFilesUsedCurrent() {
 		return Collections.unmodifiableSet(filesUsedCurrent);
 	}
 
@@ -280,10 +276,10 @@ public class TContext {
 		// %trim
 	}
 
-	public TContext(ImportedFiles importedFiles, Defines defines, Charset charset,
+	public TContext(PathSystem pathSystem, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer) {
+		this.pathSystem = pathSystem;
 		this.definitionsContainer = definitionsContainer;
-		this.importedFiles = importedFiles;
 		this.charset = requireNonNull(charset);
 		this.addStandardFunctions(defines);
 	}
@@ -596,7 +592,7 @@ public class TContext {
 			final SFile file = FileSystem.getInstance()
 					.getFile(applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation())));
 			if (file.exists() && file.isDirectory() == false) {
-				importedFiles.addImportFile(file);
+				pathSystem.addImportFile(file);
 				return;
 			}
 		} catch (IOException e) {
@@ -612,15 +608,16 @@ public class TContext {
 		log.analyze(this, memory);
 	}
 
-	public FileWithSuffix getFileWithSuffix(String from, String realName) throws IOException {
-		final String s = ThemeUtils.getFullPath(from, realName);
-		final FileWithSuffix file = importedFiles.getFile(s, null);
-		return file;
-
-	}
+//	public FileWithSuffix getFileWithSuffix(String from, String realName) throws IOException {
+//		throw new IOException("to be finished");
+////		final String s = ThemeUtils.getFullPath(from, realName);
+////		final FileWithSuffix file = importedFiles.getFile(s, null);
+////		return file;
+//
+//	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-		ImportedFiles saveImportedFiles = null;
+		PathSystem saveImportedFiles = null;
 		try {
 			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
 			include.analyze(this, memory);
@@ -631,10 +628,10 @@ public class TContext {
 				final String filename = what.substring(0, idx);
 				final String blocname = what.substring(idx + 1);
 				try {
-					final FileWithSuffix f2 = importedFiles.getFile(filename, null);
-					if (f2.fileOk()) {
-						saveImportedFiles = this.importedFiles;
-						this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
+					final InputFile f2 = pathSystem.getFile(filename, null);
+					if (f2 != null) {
+						saveImportedFiles = this.pathSystem;
+						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
 						final Reader reader = f2.getReader(charset);
 						if (reader == null)
 							throw new EaterException("cannot include " + what, s);
@@ -661,7 +658,7 @@ public class TContext {
 			executeLinesInternal(memory, sub.lines(), null);
 		} finally {
 			if (saveImportedFiles != null)
-				this.importedFiles = saveImportedFiles;
+				this.pathSystem = saveImportedFiles;
 
 		}
 	}
@@ -702,14 +699,14 @@ public class TContext {
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
-		final EaterTheme eater = new EaterTheme(s.getTrimmed(), importedFiles);
+		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
 		eater.analyze(this, memory);
 		final Theme theme = eater.getTheme();
 		if (theme == null)
 			throw new EaterException("No such theme " + eater.getName(), s);
 
-		final ImportedFiles saveImportedFiles = this.importedFiles;
-		this.importedFiles = eater.getNewImportedFiles();
+		final PathSystem saveImportedFiles = this.pathSystem;
+		this.pathSystem = eater.getNewImportedFiles();
 
 		try {
 			final List<StringLocated> body = new ArrayList<>();
@@ -726,7 +723,7 @@ public class TContext {
 			throw new EaterException("Error reading theme " + e, s);
 		} finally {
 			this.themeMetadata = theme.getMetadata();
-			this.importedFiles = saveImportedFiles;
+			this.pathSystem = saveImportedFiles;
 			try {
 				theme.close();
 			} catch (IOException e) {
@@ -781,7 +778,7 @@ public class TContext {
 		}
 
 		ReadLine reader = null;
-		ImportedFiles saveImportedFiles = null;
+		PathSystem saveImportedFiles = null;
 		try {
 			if (what.startsWith("http://") || what.startsWith("https://")) {
 				final SURL url = SURL.create(what);
@@ -791,39 +788,42 @@ public class TContext {
 				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
 			} else if (what.startsWith("<") && what.endsWith(">")) {
 				final String stdlibPath = what.substring(1, what.length() - 1);
-				final String libname = stdlibPath.substring(0, stdlibPath.indexOf('/'));
-				saveImportedFiles = this.importedFiles;
-				this.importedFiles = this.importedFiles.withCurrentDir(new AParentFolderStdlib(s, libname));
+//				final String libname = stdlibPath.substring(0, stdlibPath.indexOf('/'));
+				saveImportedFiles = this.pathSystem;
+				InputFile toto =  this.pathSystem.getInputFile(what);
+				this.pathSystem = this.pathSystem.changeCurrentDirectory(toto.getParentFolder());
+				// this.importedFiles = this.importedFiles.withCurrentDir(new AParentFolderStdlib(s, libname));
 				reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
 				// ::comment when __CORE__
 			} else if (what.startsWith("[") && what.endsWith("]")) {
-				reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1, what.length() - 1));
+				throw new IOException("To be finished");
+				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1, what.length() - 1));
 				// ::done
-			} else if (importedFiles.getCurrentDir() instanceof AParentFolderStdlib) {
-				final AParentFolderStdlib folderStdlib = (AParentFolderStdlib) importedFiles.getCurrentDir();
-				reader = folderStdlib.getReader(what);
+//			} else if (importedFiles.getCurrentDir() instanceof AParentFolderStdlib) {
+//				final AParentFolderStdlib folderStdlib = (AParentFolderStdlib) importedFiles.getCurrentDir();
+//				reader = folderStdlib.getReader(what);
 			} else {
-				final FileWithSuffix f2 = importedFiles.getFile(what, suf);
-				if (f2.fileOk()) {
+				final InputFile f2 = this.pathSystem.getInputFile(what);
+				if (f2!=null) {
 					if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(f2))
 						return;
 
 					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
 						throw new EaterException("This file has already been included", s);
 
-					if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
-						reader = StartDiagramExtractReader.build(f2, s, charset);
-					} else {
+//					if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
+//						reader = StartDiagramExtractReader.build(f2, s, charset);
+//					} else {
 						final Reader tmp = f2.getReader(charset);
 						if (tmp == null)
 							throw new EaterException("Cannot include file", s);
 
 						reader = ReadLineReader.create(tmp, what, s.getLocation());
-					}
-					saveImportedFiles = this.importedFiles;
-					this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
+//					}
+					saveImportedFiles = this.pathSystem;
+					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
 					assert reader != null;
-					filesUsedCurrent.add(f2);
+					// filesUsedCurrent.add(f2);
 				}
 			}
 			if (reader != null)
@@ -840,7 +840,7 @@ public class TContext {
 					} while (true);
 				} finally {
 					if (saveImportedFiles != null)
-						this.importedFiles = saveImportedFiles;
+						this.pathSystem = saveImportedFiles;
 
 				}
 
