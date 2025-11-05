@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 <span class="fc" id="L73">			result = NUMBER;</span>
 <span class="fc bfc" id="L74" title="All 2 branches covered.">		else if (TLineType.isSpaceChar(ch))</span>
 <span class="fc" id="L75">			result = SPACES;</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		else if (TokenOperator.getTokenOperator(ch, ch2) != null)</span>
+<span class="pc bpc" id="L76" title="1 of 4 branches missed.">		else if (ch == '-' || TokenOperator.getTokenOperator(ch, ch2) != null)</span>
 <span class="fc" id="L77">			result = OPERATOR;</span>
 
 <span class="fc" id="L79">		return result;</span>
@@ -93,7 +93,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 <span class="fc" id="L93">		final TokenOperator tokenOperator = TokenOperator.getTokenOperator(ch, eater.peekCharN2());</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (TLineType.isQuote(ch))</span>
 <span class="fc" id="L95">			return new Token(eater.eatAndGetQuotedString(), TokenType.QUOTED_STRING, null);</span>
-		
+
 <span class="fc bfc" id="L97" title="All 2 branches covered.">		else if (tokenOperator != null) {</span>
 <span class="fc bfc" id="L98" title="All 2 branches covered.">			if (tokenOperator.getDisplay().length() == 1) {</span>
 <span class="fc" id="L99">				eater.eatOneChar();</span>
@@ -101,37 +101,37 @@ import net.sourceforge.plantuml.tim.EaterException;
 			}
 
 <span class="fc" id="L103">			return new Token(&quot;&quot; + eater.eatOneChar() + eater.eatOneChar(), TokenType.OPERATOR, null);</span>
-			
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (ch == '=') </span>
+
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (ch == '=')</span>
 <span class="fc" id="L106">			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);</span>
-		
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		 else if (ch == '(') </span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		else if (ch == '(')</span>
 <span class="fc" id="L109">			return new Token(eater.eatOneChar(), TokenType.OPEN_PAREN_MATH, null);</span>
-		
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		 else if (ch == ')') </span>
+
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		else if (ch == ')')</span>
 <span class="fc" id="L112">			return new Token(eater.eatOneChar(), TokenType.CLOSE_PAREN_MATH, null);</span>
-		
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		 else if (ch == ',') </span>
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		else if (ch == ',')</span>
 <span class="fc" id="L115">			return new Token(eater.eatOneChar(), TokenType.COMMA, null);</span>
-		
-<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		 else if (TLineType.isLatinDigit(ch) || ch == '-')</span>
+
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		else if (TLineType.isLatinDigit(ch) || ch == '-')</span>
 <span class="fc" id="L118">			return new Token(eater.eatAndGetNumber(), TokenType.NUMBER, null);</span>
-			
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		 else if (TLineType.isSpaceChar(ch)) </span>
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		else if (TLineType.isSpaceChar(ch))</span>
 <span class="fc" id="L121">			return new Token(eater.eatAndGetSpaces(), TokenType.SPACES, null);</span>
-		
+
 <span class="fc" id="L123">		return new Token(eatAndGetTokenPlainText(eater), TokenType.PLAIN_TEXT, null);</span>
 	}
 
 	private static boolean isSubtractionOperator(Token lastToken) {
 <span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (lastToken == null)</span>
 <span class="nc" id="L128">			return false;</span>
-		
+
 <span class="fc" id="L130">		final TokenType type = lastToken.getTokenType();</span>
 <span class="pc bpc" id="L131" title="4 of 8 branches missed.">		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA</span>
 				|| type == TokenType.AFFECTATION)
 <span class="nc" id="L133">			return false;</span>
-		
+
 <span class="fc" id="L135">		return true;</span>
 	}
 
