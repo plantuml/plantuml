@@ -37,12 +37,14 @@ package net.sourceforge.plantuml;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.nio.PathSystem;
 
 public interface DefinitionsContainer {
 	// ::remove file when __HAXE__
 
-	public ImportedFiles getImportedFiles();
+	// public ImportedFiles getImportedFiles();
+	
+	public PathSystem getPathSystem();
 
 	public String getCharset();
 	

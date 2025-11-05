@@ -42,6 +42,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -63,6 +64,7 @@ final public class UmlSource {
 
 	final private List<StringLocated> source;
 	final private List<StringLocated> rawSource;
+	final private PathSystem pathSystem = PathSystem.fetch();
 
 	public UmlSource removeInitialSkinparam() {
 		if (hasInitialSkinparam(source) == false)
@@ -264,6 +266,10 @@ final public class UmlSource {
 			return m.group(1);
 
 		return null;
+	}
+
+	public PathSystem getPathSystem() {
+		return pathSystem;
 	}
 
 }

@@ -81,6 +81,7 @@ import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -112,12 +113,14 @@ public class SkinParam implements ISkinParam {
 	private String skin = "plantuml.skin";
 	private StyleBuilder styleBuilder;
 	private final Pragma pragma;
+	private final PathSystem pathSystem;
 	private final ConfigurationStore<OptionKey> option;
 
-	private SkinParam(UmlDiagramType type, Pragma pragma, ConfigurationStore<OptionKey> option) {
+	private SkinParam(PathSystem pathSystem, UmlDiagramType type, Pragma pragma, ConfigurationStore<OptionKey> option) {
 		this.type = type;
 		this.pragma = pragma;
 		this.option = option;
+		this.pathSystem = pathSystem;
 	}
 
 	@Override
@@ -218,8 +221,9 @@ public class SkinParam implements ISkinParam {
 		paramsPendingForStyleMigration.clear();
 	}
 
-	public static SkinParam create(UmlDiagramType type, Pragma pragma, ConfigurationStore<OptionKey> option) {
-		return new SkinParam(type, pragma, option);
+	public static SkinParam create(PathSystem pathSystem, UmlDiagramType type, Pragma pragma,
+			ConfigurationStore<OptionKey> option) {
+		return new SkinParam(pathSystem, type, pragma, option);
 	}
 
 	private final Map<String, List<String>> cacheCleanForKey = new HashMap<String, List<String>>();
@@ -1246,6 +1250,11 @@ public class SkinParam implements ISkinParam {
 	@Override
 	public ConfigurationStore<OptionKey> options() {
 		return option;
+	}
+
+	@Override
+	public PathSystem getPathSystem() {
+		return pathSystem;
 	}
 
 }

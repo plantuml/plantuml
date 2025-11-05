@@ -54,15 +54,15 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.NFolder;
+import net.sourceforge.plantuml.nio.NFolderRegular;
 
 /**
  * Secure replacement for java.io.File.
@@ -74,13 +74,13 @@ import net.sourceforge.plantuml.log.Logme;
  * file, so that it cannot be printed to end users.
  *
  */
-public class SFile implements Comparable<SFile> {
+public class SFile implements Comparable<SFile>, InputFile {
 
-	public static String separator = File.separator;
+	public static final String separator = File.separator;
 
-	public static String pathSeparator = File.pathSeparator;
+	public static final String pathSeparator = File.pathSeparator;
 
-	public static char separatorChar = File.separatorChar;
+	public static final char separatorChar = File.separatorChar;
 
 	private final File internal;
 
@@ -161,9 +161,9 @@ public class SFile implements Comparable<SFile> {
 		return this.internal.compareTo(other.internal);
 	}
 
-	public String getPath() {
-		return internal.getPath();
-	}
+//	public String getPath() {
+//		return internal.getPath();
+//	}
 
 	public long length() {
 		return internal.length();
@@ -181,17 +181,17 @@ public class SFile implements Comparable<SFile> {
 		internal.delete();
 	}
 
-	public Collection<SFile> listFiles() {
-		final File[] tmp = internal.listFiles();
-		if (tmp == null)
-			return Collections.emptyList();
-
-		final List<SFile> result = new ArrayList<>(tmp.length);
-		for (File f : tmp)
-			result.add(new SFile(f));
-
-		return Collections.unmodifiableCollection(result);
-	}
+//	public Collection<SFile> listFiles() {
+//		final File[] tmp = internal.listFiles();
+//		if (tmp == null)
+//			return Collections.emptyList();
+//
+//		final List<SFile> result = new ArrayList<>(tmp.length);
+//		for (File f : tmp)
+//			result.add(new SFile(f));
+//
+//		return Collections.unmodifiableCollection(result);
+//	}
 
 	public String[] list() {
 		return internal.list();
@@ -231,7 +231,9 @@ public class SFile implements Comparable<SFile> {
 	}
 
 	public boolean canRead() {
-		return internal.canRead();
+		if (exists())
+			return internal.canRead();
+		return false;
 	}
 
 	public void deleteOnExit() {
@@ -318,7 +320,7 @@ public class SFile implements Comparable<SFile> {
 	 */
 	// ::comment when __CORE__
 	private boolean isDenied() throws IOException {
-		SFile securityPath = SecurityUtils.getSecurityPath();
+		final SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
 			return false;
 		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());
@@ -457,21 +459,29 @@ public class SFile implements Comparable<SFile> {
 		return new FileOutputStream(internal);
 	}
 
-	public FileOutputStream createFileOutputStream(boolean append) throws FileNotFoundException {
-		return new FileOutputStream(internal, append);
-	}
-
 	public PrintStream createPrintStream() throws FileNotFoundException {
 		return new PrintStream(internal);
-	}
-
-	public PrintStream createPrintStream(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		return new PrintStream(internal, charset);
 	}
 
 	public PrintStream createPrintStream(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
 		return new PrintStream(internal, charset.name());
 	}
 	// ::done
+
+	@Override
+	public InputStream newInputStream() {
+		return openFile();
+	}
+
+	@Override
+	public NFolder getParentFolder() throws IOException {
+		return new NFolderRegular(getSanitizedPath().getParent());
+	}
+
+	public Path toPath() throws IOException {
+		if (isFileOk())
+			return getSanitizedPath();
+		return null;
+	}
 
 }

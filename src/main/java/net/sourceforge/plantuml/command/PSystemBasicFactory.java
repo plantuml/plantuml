@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
@@ -67,7 +68,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		source = source.removeInitialSkinparam();
 		final IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
