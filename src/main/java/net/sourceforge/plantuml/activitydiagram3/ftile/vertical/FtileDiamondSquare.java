@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
@@ -97,11 +97,11 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
 		label.drawU(ug.apply(new UTranslate(lx, ly)));
 
-		final XDimension2D dimWeat = west.calculateDimension(stringBounder);
-		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + Hexagon.hexagonHalfSize)));
+		final XDimension2D dimWest = west.calculateDimension(stringBounder);
+		west.drawU(ug.apply(new UTranslate(-dimWest.getWidth(), -dimWest.getHeight() + Hexagon.hexagonHalfSize)));
 
 		final XDimension2D dimEast = east.calculateDimension(stringBounder);
-		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + Hexagon.hexagonHalfSize)));
+		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + Hexagon.hexagonHalfSize + 5)));
 
 	}
 
