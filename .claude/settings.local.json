@@ -9,7 +9,9 @@
       "Bash(git log:*)",
       "Bash(./gradlew jar:*)",
       "Bash(xvfb-run:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(timeout 5s java:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
