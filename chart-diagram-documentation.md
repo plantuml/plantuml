@@ -39,7 +39,9 @@ Multiple bar series are displayed side-by-side by default:
 
 ```plantuml
 @startchart
-' TODO Bars and h-axis scale missing
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+stackMode grouped
 bar "Revenue" [45, 62, 58, 70] #3498db
 bar "Profit" [35, 48, 52, 61] #2ecc71
 @endchart
@@ -51,7 +53,8 @@ Bars can be stacked on top of each other:
 
 ```plantuml
 @startchart
-' TODO Bars and h-axis scale missing
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
 stackMode stacked
 bar "Revenue" [45, 62, 58, 70] #3498db
 bar "Costs" [25, 30, 28, 32] #e74c3c
@@ -102,11 +105,24 @@ Scatter plots display data as individual points with customizable marker shapes:
 
 ```plantuml
 @startchart
-' TODO shapes are correct but colours are both black
+<style>
+.datapoints {
+  MarkerColor #1f77b4
+  MarkerShape circle
+  MarkerSize 10
+}
+.highlights {
+  MarkerColor #e74c3c
+  MarkerShape triangle
+  MarkerSize 10
+}
+</style>
+
 h-axis [Q1, Q2, Q3, Q4, Q5]
 v-axis 0 --> 100
-scatter "Data Points" [20, 40, 60, 80, 70] #1f77b4 <<circle>>
-scatter "Highlights" [30, 55, 65, 75, 85] #e74c3c <<square>>
+scatter <<datapoints>> "Data Points" [20, 40, 60, 80, 70]
+scatter <<highlights>> "Highlights" [30, 55, 65, 75, 85]
+legend right
 @endchart
 ```
 
@@ -114,6 +130,8 @@ Available marker shapes:
 - `circle` (default)
 - `square`
 - `triangle`
+
+**Note:** For scatter plots with custom marker shapes, use stereotype-based styling with the `MarkerColor`, `MarkerShape`, and `MarkerSize` properties in a style block. This provides the most reliable color and shape control
 
 ## Axes Configuration
 
@@ -314,7 +332,6 @@ Use stereotypes to apply CSS class-based styling:
 
 ```plantuml
 @startchart
-' TODO Bars and h-axis scale missing
 <style>
   .primary {
     BackGroundColor #3498db
@@ -332,6 +349,8 @@ Use stereotypes to apply CSS class-based styling:
   }
 </style>
 
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
 bar <<primary>> "Revenue" [45, 62, 58, 70]
 bar <<success>> "Profit" [35, 48, 52, 61]
 bar <<danger>> "Costs" [25, 30, 28, 32]
