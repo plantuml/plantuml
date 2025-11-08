@@ -1,0 +1,587 @@
+# Chart Diagram
+
+## Introduction
+
+PlantUML now supports chart diagrams, allowing you to create various types of charts directly within your PlantUML documents. Chart diagrams support bar charts, line charts, area charts, and scatter plots with advanced styling capabilities, multiple axes, annotations, and full integration with the PlantUML style system.
+
+## Simple Example
+
+A simple bar chart is created using the `@startchart` and `@endchart` keywords:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Revenue" 0 --> 100
+bar "Sales" [45, 62, 58, 70] #3498db
+legend right
+@endchart
+```
+
+This will display a basic bar chart with quarterly data.
+
+## Chart Types
+
+### Bar Chart
+
+Bar charts display data as vertical or horizontal bars. Use the `bar` keyword to create a bar series:
+
+```plantuml
+@startchart
+h-axis [Jan, Feb, Mar, Apr]
+v-axis 0 --> 100
+bar "Revenue" [45, 62, 58, 70] #1f77b4
+@endchart
+```
+
+#### Grouped Bars
+
+Multiple bar series are displayed side-by-side by default:
+
+```plantuml
+@startchart
+' TODO Bars and h-axis scale missing
+bar "Revenue" [45, 62, 58, 70] #3498db
+bar "Profit" [35, 48, 52, 61] #2ecc71
+@endchart
+```
+
+#### Stacked Bars
+
+Bars can be stacked on top of each other:
+
+```plantuml
+@startchart
+' TODO Bars and h-axis scale missing
+stackMode stacked
+bar "Revenue" [45, 62, 58, 70] #3498db
+bar "Costs" [25, 30, 28, 32] #e74c3c
+@endchart
+```
+
+#### Horizontal Bars
+
+Bars can be oriented horizontally:
+
+```plantuml
+@startchart
+orientation horizontal
+v-axis [Product A, Product B, Product C]
+h-axis "Revenue" 0 --> 100
+bar [75, 55, 30] #3498db
+@endchart
+```
+
+### Line Chart
+
+Line charts connect data points with lines. Use the `line` keyword:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4, Q5, Q6]
+v-axis "Performance" 0 --> 100
+line "Sales" [45, 62, 58, 70, 83, 78] #1f77b4
+line "Target" [50, 55, 60, 65, 70, 75] #ff7f0e
+@endchart
+```
+
+### Area Chart
+
+Area charts are similar to line charts but with filled regions:
+
+```plantuml
+@startchart
+h-axis [Jan, Feb, Mar, Apr, May, Jun]
+v-axis 0 --> 100
+area "Profit" [35, 48, 52, 61, 75, 68] #2ca02c
+@endchart
+```
+
+### Scatter Chart
+
+Scatter plots display data as individual points with customizable marker shapes:
+
+```plantuml
+@startchart
+' TODO shapes are correct but colours are both black
+h-axis [Q1, Q2, Q3, Q4, Q5]
+v-axis 0 --> 100
+scatter "Data Points" [20, 40, 60, 80, 70] #1f77b4 <<circle>>
+scatter "Highlights" [30, 55, 65, 75, 85] #e74c3c <<square>>
+@endchart
+```
+
+Available marker shapes:
+- `circle` (default)
+- `square`
+- `triangle`
+
+## Axes Configuration
+
+### Horizontal Axis
+
+The horizontal axis (x-axis) is configured using the `h-axis` keyword:
+
+```plantuml
+h-axis "Quarters" [Q1, Q2, Q3, Q4]
+```
+
+For numeric ranges:
+
+```plantuml
+h-axis "Time" 0 --> 100
+```
+
+Custom tick spacing:
+
+```plantuml
+h-axis [Jan, Feb, Mar, Apr, May, Jun] spacing 2
+```
+
+### Vertical Axis
+
+The vertical axis (y-axis) is configured using the `v-axis` keyword:
+
+```plantuml
+v-axis "Revenue ($M)" 0 --> 100
+```
+
+Custom tick labels:
+
+```plantuml
+v-axis "Performance" ticks [0:"Poor", 50:"Average", 100:"Excellent"]
+```
+
+### Secondary Y-Axis
+
+A secondary v-axis (v2) can be added on the right side for dual-scale charts:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Revenue" 0 --> 100
+v2-axis "Market Share %" 0 --> 50
+
+bar "Sales" [45, 62, 58, 70]
+line "Market Share" [15, 20, 18, 25] y2
+@endchart
+```
+
+Use the `v2` flag in series commands to bind them to the secondary axis.
+
+## Data Series Options
+
+### Series Name
+
+Add a series name for display in the legend:
+
+```plantuml
+bar "Revenue" [45, 62, 58, 70]
+```
+
+### Colors
+
+Specify colors using hex codes or color names:
+
+```plantuml
+bar [45, 62, 58, 70] #3498db
+bar [35, 48, 52, 61] #2ecc71
+bar [25, 30, 28, 32] red
+```
+
+### Data Labels
+
+Display values on data points using the `labels` keyword:
+
+```plantuml
+bar "Sales" [45, 62, 58, 70] labels
+line "Target" [50, 55, 60, 65] labels
+```
+
+## Layout Options
+
+### Legend
+
+Display a legend showing all series:
+
+```plantuml
+legend right
+```
+
+Available positions:
+- `left` - Left side of chart
+- `right` - Right side of chart
+- `top` - Top of chart
+- `bottom` - Bottom of chart
+
+### Grid Lines
+
+Display grid lines for better readability:
+
+```plantuml
+grid major              ' Both axes, major lines only
+grid both               ' Both axes, major and minor lines
+grid x-axis off         ' Turn off X-axis grid
+grid y-axis major       ' Y-axis major lines only
+```
+
+## Annotations
+
+Add text annotations to highlight specific data points:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4, Q5]
+bar [45, 62, 58, 70, 83]
+
+annotation "Peak sales" at (Q5, 83) <<arrow>>
+annotation "Note" at (Q2, 62)
+@endchart
+```
+
+Annotations can include:
+- Text label
+- Position coordinates (x, y)
+- Optional `<<arrow>>` pointing to the data point
+
+## Styling
+
+### Inline Styling
+
+Apply colors directly to series:
+
+```plantuml
+bar "Revenue" [45, 62, 58, 70] #3498db
+line "Target" [50, 55, 60, 65] #e74c3c
+```
+
+### Style Blocks
+
+Use PlantUML's style system for comprehensive styling:
+
+```plantuml
+@startchart
+<style>
+chartDiagram {
+  BackGroundColor white
+  FontName Arial
+  FontSize 12
+
+  bar {
+    LineColor #2c3e50
+    LineThickness 2.0
+    BackGroundColor #3498db
+    BarWidth 0.7
+  }
+
+  line {
+    LineColor #e74c3c
+    LineThickness 2.5
+  }
+
+  scatter {
+    MarkerShape square
+    MarkerSize 14
+    MarkerColor #9b59b6
+  }
+
+  axis {
+    LineColor #34495e
+    LineThickness 1.5
+    FontSize 11
+    FontColor #7f8c8d
+  }
+
+  grid {
+    LineColor #ecf0f1
+    LineThickness 0.8
+  }
+
+  legend {
+    FontSize 12
+    FontColor #2c3e50
+    BackGroundColor #f5f5f5
+    Padding 10
+    Margin 5
+  }
+}
+</style>
+@endchart
+```
+
+### Stereotypes
+
+Use stereotypes to apply CSS class-based styling:
+
+```plantuml
+@startchart
+' TODO Bars and h-axis scale missing
+<style>
+  .primary {
+    BackGroundColor #3498db
+    LineColor #2980b9
+  }
+
+  .success {
+    BackGroundColor #2ecc71
+    LineColor #27ae60
+  }
+
+  .danger {
+    BackGroundColor #e74c3c
+    LineColor #c0392b
+  }
+</style>
+
+bar <<primary>> "Revenue" [45, 62, 58, 70]
+bar <<success>> "Profit" [35, 48, 52, 61]
+bar <<danger>> "Costs" [25, 30, 28, 32]
+@endchart
+```
+
+### Custom Properties
+
+Chart-specific style properties:
+
+| Property | Elements | Values | Description |
+|----------|----------|--------|-------------|
+| `BarWidth` | bar | 0.0-1.0 | Width of bars (0.7 = 70% of available space) |
+| `MarkerShape` | scatter | circle, square, triangle | Shape of scatter markers |
+| `MarkerSize` | scatter | 8-20 | Size of scatter markers in pixels |
+| `MarkerColor` | scatter | Hex/Named color | Color of scatter markers |
+
+## Complete Example
+
+Here's a comprehensive example demonstrating multiple features:
+
+```plantuml
+@startchart
+title Quarterly Performance Dashboard
+
+<style>
+chartDiagram {
+  BackGroundColor white
+  FontName Arial
+  FontSize 12
+
+  bar {
+    LineColor #2c3e50
+    LineThickness 2.0
+    BarWidth 0.7
+  }
+
+  line {
+    LineThickness 2.5
+  }
+
+  scatter {
+    MarkerShape triangle
+    MarkerSize 12
+    MarkerColor #9b59b6
+  }
+
+  axis {
+    LineColor #34495e
+    LineThickness 1.5
+    FontSize 11
+    FontColor #7f8c8d
+  }
+
+  grid {
+    LineColor #ecf0f1
+    LineThickness 0.8
+  }
+
+  legend {
+    FontSize 11
+    FontColor #2c3e50
+  }
+
+  .primary {
+    BackGroundColor #3498db
+  }
+
+  .success {
+    BackGroundColor #2ecc71
+  }
+
+  .danger {
+    BackGroundColor #e74c3c
+  }
+
+  .target {
+    LineColor #f39c12
+    LineThickness 3.0
+  }
+}
+</style>
+
+' Chart configuration
+h-axis "Quarters" [Q1, Q2, Q3, Q4, Q5, Q6]
+v-axis "Performance ($M)" 0 --> 100
+v2-axis "Cost ($M)" 0 --> 50
+
+' Data series with stereotypes
+bar <<primary>> "Revenue" [45, 62, 58, 70, 83, 78]
+bar <<success>> "Profit" [35, 48, 52, 61, 75, 68]
+bar <<danger>> "Expenses" [25, 30, 28, 32, 38, 35]
+line <<target>> "Target" [50, 55, 60, 65, 70, 75]
+scatter "Milestones" [55, 58, 62, 68, 80, 73]
+
+' Layout
+legend right
+grid major
+
+' Annotations
+annotation "Peak achieved" at (Q5, 83) <<arrow>>
+annotation "Target met" at (Q6, 75)
+
+@endchart
+```
+
+## Mixed Chart Types
+
+Combine multiple chart types in a single diagram:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Value" 0 --> 100
+
+bar "Actuals" [45, 62, 58, 70] #3498db
+line "Forecast" [50, 65, 68, 75] #e74c3c
+scatter "Key Events" [48, 63, 65, 72] #9b59b6 <<circle>>
+
+legend right
+@endchart
+```
+
+## Dual-Axis Charts
+
+Plot two series with different scales on the same chart:
+
+```plantuml
+@startchart
+title Revenue vs Market Share
+
+h-axis "Quarters" [Q1, Q2, Q3, Q4]
+v-axis "Revenue ($M)" 0 --> 100
+v2-axis "Market Share %" 0 --> 50
+
+bar "Revenue" [45, 62, 58, 70] #3498db
+line "Market Share" [15, 20, 18, 25] #2ecc71 y2
+
+legend right
+grid major
+@endchart
+```
+
+## Style Properties Reference
+
+### Standard PlantUML Properties
+
+These properties work across all PlantUML diagram types:
+
+| Property | Description | Example Values |
+|----------|-------------|----------------|
+| `BackGroundColor` | Fill color | `#3498db`, `white`, `lightblue` |
+| `LineColor` | Stroke color | `#2c3e50`, `black`, `#333` |
+| `LineThickness` | Line width | `1.0`, `2.5`, `0.5` |
+| `FontName` | Font family | `Arial`, `Helvetica`, `Courier` |
+| `FontSize` | Font size | `10`, `12`, `14` |
+| `FontColor` | Text color | `#000000`, `black`, `#555` |
+| `FontStyle` | Font style | `bold`, `italic` |
+| `Padding` | Internal spacing | `10`, `15`, `20` |
+| `Margin` | External spacing | `5`, `10`, `15` |
+
+### Chart-Specific Properties
+
+These properties are unique to chart diagrams:
+
+| Property | Applies To | Description | Values |
+|----------|-----------|-------------|--------|
+| `BarWidth` | bar | Width of bars relative to available space | `0.5` to `1.0` (default: 0.7) |
+| `MarkerShape` | scatter | Shape of scatter plot markers | `circle`, `square`, `triangle` |
+| `MarkerSize` | scatter | Size of scatter plot markers | `8` to `20` (default: 10) |
+| `MarkerColor` | scatter | Color of scatter plot markers | Hex or named colors |
+
+## Syntax Summary
+
+### Chart Types
+
+```plantuml
+bar [<<stereotype>>] ["name"] [data] [#color] [labels]
+line [<<stereotype>>] ["name"] [data] [#color] [y2] [labels]
+area [<<stereotype>>] ["name"] [data] [#color] [y2] [labels]
+scatter [<<stereotype>>] ["name"] [data] [#color] [y2] [labels] [<<marker>>]
+```
+
+### Axes
+
+```plantuml
+h-axis ["title"] [labels] [spacing N]
+v-axis ["title"] [min --> max] [ticks [...]]
+v2-axis ["title"] [min --> max]
+```
+
+### Layout
+
+```plantuml
+legend left|right|top|bottom
+grid [x-axis|y-axis] on|off|major|both
+orientation vertical|horizontal
+stackMode grouped|stacked
+```
+
+### Annotations
+
+```plantuml
+annotation "text" at (x, y) [<<arrow>>]
+```
+
+## Tips and Best Practices
+
+1. **Data Range**: Ensure your axis ranges encompass all data points. If not specified, axes will auto-scale.
+
+2. **Color Consistency**: Use stereotypes for consistent coloring across multiple charts in your documentation.
+
+3. **Legend Position**: Place legends where they don't obscure data. `right` is commonly used for vertical charts.
+
+4. **Grid Lines**: Use `major` for cleaner charts, `both` for detailed analysis.
+
+5. **Mixed Types**: When mixing bars and lines, consider using different y-axes if the value scales differ significantly.
+
+6. **Annotations**: Use arrows sparingly to highlight only the most important data points.
+
+7. **Bar Width**: Adjust `BarWidth` based on the number of data points. More points = narrower bars.
+
+8. **Labels**: Value labels can clutter dense charts. Use them selectively.
+
+## Implementation Details
+
+Chart diagrams are implemented in the `net.sourceforge.plantuml.chart` package with the following key components:
+
+### Core Classes
+
+- **ChartDiagram** - Main diagram class holding chart state
+- **ChartSeries** - Represents a data series (bar, line, area, scatter)
+- **ChartAxis** - Represents an axis with title, range, and ticks
+- **ChartAnnotation** - Text annotations with optional arrows
+- **ChartRenderer** - Main rendering engine for layout and drawing
+
+### Command Classes
+
+Each chart command is implemented as a separate parser class:
+
+- `CommandChartBar` - Bar series
+- `CommandChartLine` - Line series
+- `CommandChartArea` - Area series
+- `CommandChartScatter` - Scatter series
+- `CommandChartHAxis` - Horizontal axis
+- `CommandChartVAxis` - Vertical axes (primary and secondary)
+- `CommandChartGrid` - Grid display
+- `CommandChartLegend` - Legend configuration
+- `CommandChartAnnotation` - Annotations
+- `CommandChartOrientation` - Chart orientation
+- `CommandChartStackMode` - Bar stacking mode
+
+All command classes are located in: `/src/main/java/net/sourceforge/plantuml/chart/command/`
