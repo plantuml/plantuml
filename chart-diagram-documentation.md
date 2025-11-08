@@ -140,19 +140,32 @@ Available marker shapes:
 The horizontal axis (x-axis) is configured using the `h-axis` keyword:
 
 ```plantuml
+@startchart
 h-axis "Quarters" [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar [45, 62, 58, 70] #3498db
+@endchart
 ```
 
 For numeric ranges:
 
 ```plantuml
-h-axis "Time" 0 --> 100
+@startchart
+orientation horizontal
+v-axis [Product A, Product B, Product C]
+h-axis "Revenue" 0 --> 100
+bar [45, 62, 58] #3498db
+@endchart
 ```
 
 Custom tick spacing:
 
 ```plantuml
+@startchart
 h-axis [Jan, Feb, Mar, Apr, May, Jun] spacing 2
+v-axis 0 --> 100
+bar [45, 62, 58, 70, 83, 78] #3498db
+@endchart
 ```
 
 ### Vertical Axis
@@ -160,13 +173,22 @@ h-axis [Jan, Feb, Mar, Apr, May, Jun] spacing 2
 The vertical axis (y-axis) is configured using the `v-axis` keyword:
 
 ```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
 v-axis "Revenue ($M)" 0 --> 100
+bar [45, 62, 58, 70] #3498db
+@endchart
 ```
 
 Custom tick labels:
 
 ```plantuml
-v-axis "Performance" ticks [0:"Poor", 50:"Average", 100:"Excellent"]
+@startchart
+title Performance
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100 ticks [0:"Poor", 50:"Average", 100:"Excellent"]
+bar [30, 60, 85, 95] #3498db
+@endchart
 ```
 
 ### Secondary Y-Axis
@@ -193,7 +215,12 @@ Use the `v2` flag in series commands to bind them to the secondary axis.
 Add a series name for display in the legend:
 
 ```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
 bar "Revenue" [45, 62, 58, 70]
+legend right
+@endchart
 ```
 
 ### Colors
@@ -201,9 +228,14 @@ bar "Revenue" [45, 62, 58, 70]
 Specify colors using hex codes or color names:
 
 ```plantuml
-bar [45, 62, 58, 70] #3498db
-bar [35, 48, 52, 61] #2ecc71
-bar [25, 30, 28, 32] red
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar "Series 1" [45, 62, 58, 70] #3498db
+bar "Series 2" [35, 48, 52, 61] #2ecc71
+bar "Series 3" [25, 30, 28, 32] #red
+legend right
+@endchart
 ```
 
 ### Data Labels
@@ -211,8 +243,13 @@ bar [25, 30, 28, 32] red
 Display values on data points using the `labels` keyword:
 
 ```plantuml
-bar "Sales" [45, 62, 58, 70] labels
-line "Target" [50, 55, 60, 65] labels
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar "Sales" [45, 62, 58, 70] #3498db labels
+line "Target" [50, 55, 60, 65] #ff7f0e labels
+legend right
+@endchart
 ```
 
 ## Layout Options
@@ -222,7 +259,13 @@ line "Target" [50, 55, 60, 65] labels
 Display a legend showing all series:
 
 ```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar "Revenue" [45, 62, 58, 70] #3498db
+bar "Profit" [35, 48, 52, 61] #2ecc71
 legend right
+@endchart
 ```
 
 Available positions:
@@ -233,14 +276,66 @@ Available positions:
 
 ### Grid Lines
 
-Display grid lines for better readability:
+Display grid lines for better readability.
+
+Major grid lines only (default):
 
 ```plantuml
-grid major              ' Both axes, major lines only
-grid both               ' Both axes, major and minor lines
-grid x-axis off         ' Turn off X-axis grid
-grid y-axis major       ' Y-axis major lines only
+@startchart
+h-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct]
+v-axis 0 --> 100
+bar [45, 62, 58, 70, 83, 78, 65, 72, 80, 85] #3498db
+grid major
+@endchart
 ```
+
+Major grid lines align with the primary tick marks on both axes.
+
+Enable grid with `both` option:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8]
+v-axis "Revenue ($M)" 0 --> 100
+bar [45, 62, 58, 70, 83, 78, 65, 72] #3498db
+grid both
+@endchart
+```
+
+**Note:** The `grid both` option is supported for future compatibility, but currently renders the same grid lines as `grid major`. Minor grid line subdivision is planned for a future release
+
+Grid on Y-axis only:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar [45, 62, 58, 70] #3498db
+grid x-axis off
+grid y-axis major
+@endchart
+```
+
+Grid on X-axis only:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar [45, 62, 58, 70] #3498db
+grid y-axis off
+grid x-axis major
+@endchart
+```
+
+Available grid options:
+- `grid major` - Both axes, major lines only
+- `grid both` - Both axes, major and minor lines
+- `grid off` - Turn off all grid lines
+- `grid x-axis major` - X-axis major lines only
+- `grid x-axis off` - Turn off X-axis grid
+- `grid y-axis major` - Y-axis major lines only
+- `grid y-axis off` - Turn off Y-axis grid
 
 ## Annotations
 
@@ -556,51 +651,3 @@ stackMode grouped|stacked
 ```plantuml
 annotation "text" at (x, y) [<<arrow>>]
 ```
-
-## Tips and Best Practices
-
-1. **Data Range**: Ensure your axis ranges encompass all data points. If not specified, axes will auto-scale.
-
-2. **Color Consistency**: Use stereotypes for consistent coloring across multiple charts in your documentation.
-
-3. **Legend Position**: Place legends where they don't obscure data. `right` is commonly used for vertical charts.
-
-4. **Grid Lines**: Use `major` for cleaner charts, `both` for detailed analysis.
-
-5. **Mixed Types**: When mixing bars and lines, consider using different y-axes if the value scales differ significantly.
-
-6. **Annotations**: Use arrows sparingly to highlight only the most important data points.
-
-7. **Bar Width**: Adjust `BarWidth` based on the number of data points. More points = narrower bars.
-
-8. **Labels**: Value labels can clutter dense charts. Use them selectively.
-
-## Implementation Details
-
-Chart diagrams are implemented in the `net.sourceforge.plantuml.chart` package with the following key components:
-
-### Core Classes
-
-- **ChartDiagram** - Main diagram class holding chart state
-- **ChartSeries** - Represents a data series (bar, line, area, scatter)
-- **ChartAxis** - Represents an axis with title, range, and ticks
-- **ChartAnnotation** - Text annotations with optional arrows
-- **ChartRenderer** - Main rendering engine for layout and drawing
-
-### Command Classes
-
-Each chart command is implemented as a separate parser class:
-
-- `CommandChartBar` - Bar series
-- `CommandChartLine` - Line series
-- `CommandChartArea` - Area series
-- `CommandChartScatter` - Scatter series
-- `CommandChartHAxis` - Horizontal axis
-- `CommandChartVAxis` - Vertical axes (primary and secondary)
-- `CommandChartGrid` - Grid display
-- `CommandChartLegend` - Legend configuration
-- `CommandChartAnnotation` - Annotations
-- `CommandChartOrientation` - Chart orientation
-- `CommandChartStackMode` - Bar stacking mode
-
-All command classes are located in: `/src/main/java/net/sourceforge/plantuml/chart/command/`
