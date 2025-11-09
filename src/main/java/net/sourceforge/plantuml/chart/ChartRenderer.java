@@ -627,9 +627,33 @@ public class ChartRenderer {
 			}
 		}
 
-		// Render non-bar series (line, area, scatter)
+		// Separate area series for stacked rendering
+		final java.util.List<ChartSeries> areaSeries = new java.util.ArrayList<>();
+		final java.util.List<HColor> areaColors = new java.util.ArrayList<>();
+
+		// Render non-bar, non-area series (line, scatter) first
 		for (ChartSeries s : series) {
-			if (s.getType() != ChartSeries.SeriesType.BAR) {
+			if (s.getType() == ChartSeries.SeriesType.AREA) {
+				areaSeries.add(s);
+
+				// Get area style with stereotype support
+				final Style areaStyle = getAreaStyle(s);
+
+				// Extract series color - priority: explicit color > style color > default color
+				HColor color = s.getColor();
+				if (color == null) {
+					// Try to get color from style
+					color = areaStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+					if (color == null) {
+						color = areaStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+					}
+					if (color == null) {
+						// Use default color
+						color = getDefaultColor(series.indexOf(s));
+					}
+				}
+				areaColors.add(color);
+			} else if (s.getType() != ChartSeries.SeriesType.BAR) {
 				final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
 
 				// Get series-specific style based on type (with stereotype support)
@@ -637,9 +661,6 @@ public class ChartRenderer {
 				switch (s.getType()) {
 					case LINE:
 						seriesStyle = getLineStyle(s);
-						break;
-					case AREA:
-						seriesStyle = getAreaStyle(s);
 						break;
 					case SCATTER:
 						seriesStyle = getScatterStyle(s);
@@ -654,12 +675,6 @@ public class ChartRenderer {
 					// Try to get color from style
 					color = seriesStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 					if (color == null) {
-						// For area charts, try BackGroundColor
-						if (s.getType() == ChartSeries.SeriesType.AREA) {
-							color = seriesStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-						}
-					}
-					if (color == null) {
 						// Use default color
 						color = getDefaultColor(series.indexOf(s));
 					}
@@ -669,14 +684,42 @@ public class ChartRenderer {
 					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
 							xAxisLabels.size(), axis);
 					lineRenderer.draw(ug, s, color);
-				} else if (s.getType() == ChartSeries.SeriesType.AREA) {
-					final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight,
-							xAxisLabels.size(), axis);
-					areaRenderer.draw(ug, s, color);
 				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
 					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,
 							xAxisLabels.size(), axis);
 					scatterRenderer.draw(ug, s, color);
+				}
+			}
+		}
+
+		// Render area series with stacking
+		if (!areaSeries.isEmpty()) {
+			// For now, assume all area series use the same axis (primary Y axis)
+			final ChartAxis axis = areaSeries.get(0).isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
+			final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(), axis);
+
+			// Track cumulative values for stacking
+			java.util.List<Double> cumulativeValues = null;
+
+			for (int i = 0; i < areaSeries.size(); i++) {
+				final ChartSeries areaSer = areaSeries.get(i);
+				final HColor color = areaColors.get(i);
+
+				// Draw this area with the baseline from previous areas
+				areaRenderer.draw(ug, areaSer, color, cumulativeValues);
+
+				// Update cumulative values for next series
+				if (cumulativeValues == null) {
+					cumulativeValues = new java.util.ArrayList<>(areaSer.getValues());
+				} else {
+					// Add current series values to cumulative
+					for (int j = 0; j < Math.min(areaSer.getValues().size(), cumulativeValues.size()); j++) {
+						cumulativeValues.set(j, cumulativeValues.get(j) + areaSer.getValues().get(j));
+					}
+					// If current series has more values than cumulative, add them
+					for (int j = cumulativeValues.size(); j < areaSer.getValues().size(); j++) {
+						cumulativeValues.add(areaSer.getValues().get(j));
+					}
 				}
 			}
 		}

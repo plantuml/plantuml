@@ -94,8 +94,10 @@ Area charts are similar to line charts but with filled regions:
 ```plantuml
 @startchart
 h-axis [Jan, Feb, Mar, Apr, May, Jun]
-v-axis 0 --> 100
-area "Profit" [35, 48, 52, 61, 75, 68] #2ca02c
+v-axis 0 --> 140 spacing 20
+area "Product A" [45, 62, 58, 70, 83, 78] #3498db
+area "Product B" [25, 35, 42, 38, 45, 40] #2ecc71
+legend right
 @endchart
 ```
 
@@ -190,6 +192,19 @@ v-axis 0 --> 100 ticks [0:"Poor", 50:"Average", 100:"Excellent"]
 bar [30, 60, 85, 95] #3498db
 @endchart
 ```
+
+Custom tick spacing:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Revenue ($K)" 0 --> 100 spacing 25
+bar [45, 62, 58, 70] #3498db
+grid major
+@endchart
+```
+
+This displays tick marks and grid lines at intervals of 25 (0, 25, 50, 75, 100) instead of the default 5 evenly-spaced ticks.
 
 ### Secondary Y-Axis
 
@@ -344,10 +359,13 @@ Add text annotations to highlight specific data points:
 ```plantuml
 @startchart
 h-axis [Q1, Q2, Q3, Q4, Q5]
-bar [45, 62, 58, 70, 83]
+v-axis 0 --> 100
+bar "Sales" [45, 62, 58, 70, 83] #3498db
+line "Target" [50, 55, 60, 65, 70] #ff7f0e
 
 annotation "Peak sales" at (Q5, 83) <<arrow>>
-annotation "Note" at (Q2, 62)
+annotation "Target line" at (Q3, 60)
+legend right
 @endchart
 ```
 
@@ -633,8 +651,8 @@ scatter [<<stereotype>>] ["name"] [data] [#color] [y2] [labels] [<<marker>>]
 
 ```plantuml
 h-axis ["title"] [labels] [spacing N]
-v-axis ["title"] [min --> max] [ticks [...]]
-v2-axis ["title"] [min --> max]
+v-axis ["title"] [min --> max] [ticks [...]] [spacing N]
+v2-axis ["title"] [min --> max] [spacing N]
 ```
 
 ### Layout
