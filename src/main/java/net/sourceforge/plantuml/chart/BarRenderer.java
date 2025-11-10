@@ -137,15 +137,32 @@ public class BarRenderer {
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
 			final double value = values.get(i);
 			final double x = i * categoryWidth + barOffset;
-			final double barHeight = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight);
-			final double y = plotHeight - barHeight;
+
+			// For negative values, bar extends from zero down to the value
+			// For positive values, bar extends from zero up to the value
+			final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+			final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+			final double y;
+			final double barHeight;
+			if (value < 0) {
+				// Negative: bar top at zero, extends downward
+				y = zeroY;
+				barHeight = valueY - zeroY;
+			} else {
+				// Positive: bar top at value, extends downward to zero
+				y = valueY;
+				barHeight = zeroY - valueY;
+			}
 
 			final URectangle rect = URectangle.build(barWidth, barHeight);
 			ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {
-				drawLabel(ug, value, x + barWidth / 2, y - 5, stringBounder);
+				// Label at the end of the bar (top for positive, bottom for negative)
+				final double labelY = value < 0 ? y + barHeight + 5 : y - 5;
+				drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);
 			}
 		}
 	}
@@ -231,8 +248,22 @@ public class BarRenderer {
 
 				final double value = values.get(categoryIndex);
 				final double x = categoryIndex * categoryWidth + groupOffset + seriesIndex * barWidth;
-				final double barHeight = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight);
-				final double y = plotHeight - barHeight;
+
+				// Calculate bar position and height relative to zero
+				final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+				final double y;
+				final double barHeight;
+				if (value < 0) {
+					// Negative: bar top at zero, extends downward
+					y = zeroY;
+					barHeight = valueY - zeroY;
+				} else {
+					// Positive: bar top at value, extends downward to zero
+					y = valueY;
+					barHeight = zeroY - valueY;
+				}
 
 				// Extract line color for this bar's border
 				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -245,7 +276,9 @@ public class BarRenderer {
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
-					drawLabel(ug, value, x + barWidth / 2, y - 5, stringBounder);
+					// Label at the end of the bar (top for positive, bottom for negative)
+					final double labelY = value < 0 ? y + barHeight + 5 : y - 5;
+					drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);
 				}
 			}
 		}
@@ -286,7 +319,12 @@ public class BarRenderer {
 		final UStroke stroke = UStroke.withThickness(lineThickness);
 
 		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
-			double cumulativeY = plotHeight; // Start from the bottom
+			// Calculate zero position
+			final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+			// Track cumulative positions for positive and negative stacks separately
+			double cumulativePositiveY = zeroY; // Positive bars grow upward from zero
+			double cumulativeNegativeY = zeroY; // Negative bars grow downward from zero
 
 			for (int seriesIndex = 0; seriesIndex < barSeries.size(); seriesIndex++) {
 				final ChartSeries series = barSeries.get(seriesIndex);
@@ -298,10 +336,22 @@ public class BarRenderer {
 
 				final double value = values.get(categoryIndex);
 				final double x = categoryIndex * categoryWidth + barOffset;
-				final double barHeight = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight);
+				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
-				// Stack this bar on top of previous bars
-				cumulativeY -= barHeight;
+				final double y;
+				final double barHeight;
+
+				if (value < 0) {
+					// Negative values stack downward from zero
+					barHeight = valueY - zeroY;
+					y = cumulativeNegativeY;
+					cumulativeNegativeY += barHeight;
+				} else {
+					// Positive values stack upward from zero
+					barHeight = zeroY - valueY;
+					cumulativePositiveY -= barHeight;
+					y = cumulativePositiveY;
+				}
 
 				// Extract line color for this bar's border
 				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -310,11 +360,13 @@ public class BarRenderer {
 				}
 
 				final URectangle rect = URectangle.build(barWidth, barHeight);
-				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(cumulativeY))).draw(rect);
+				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
-					drawLabel(ug, value, x + barWidth / 2, cumulativeY - 5, stringBounder);
+					// Label at the end of the bar segment
+					final double labelY = value < 0 ? y + barHeight + 5 : y - 5;
+					drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);
 				}
 			}
 		}

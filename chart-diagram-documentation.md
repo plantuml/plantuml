@@ -30,6 +30,7 @@ Bar charts display data as vertical or horizontal bars. Use the `bar` keyword to
 h-axis [Jan, Feb, Mar, Apr]
 v-axis 0 --> 100
 bar "Revenue" [45, 62, 58, 70] #1f77b4
+legend right
 @endchart
 ```
 
@@ -44,6 +45,7 @@ v-axis 0 --> 100
 stackMode grouped
 bar "Revenue" [45, 62, 58, 70] #3498db
 bar "Profit" [35, 48, 52, 61] #2ecc71
+legend right
 @endchart
 ```
 
@@ -58,6 +60,7 @@ v-axis 0 --> 100
 stackMode stacked
 bar "Revenue" [45, 62, 58, 70] #3498db
 bar "Costs" [25, 30, 28, 32] #e74c3c
+legend right
 @endchart
 ```
 
@@ -81,9 +84,10 @@ Line charts connect data points with lines. Use the `line` keyword:
 ```plantuml
 @startchart
 h-axis [Q1, Q2, Q3, Q4, Q5, Q6]
-v-axis "Performance" 0 --> 100
+v-axis "Performance" 0 --> 100 spacing 20
 line "Sales" [45, 62, 58, 70, 83, 78] #1f77b4
 line "Target" [50, 55, 60, 65, 70, 75] #ff7f0e
+legend right
 @endchart
 ```
 
@@ -200,11 +204,24 @@ Custom tick spacing:
 h-axis [Q1, Q2, Q3, Q4]
 v-axis "Revenue ($K)" 0 --> 100 spacing 25
 bar [45, 62, 58, 70] #3498db
-grid major
 @endchart
 ```
 
 This displays tick marks and grid lines at intervals of 25 (0, 25, 50, 75, 100) instead of the default 5 evenly-spaced ticks.
+
+Negative axis values:
+
+```plantuml
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Profit/Loss ($K)" -50 --> 50 spacing 25
+bar "Product A" [-20, 10, 30, 25] #3498db
+line "Break Even" [0, 0, 0, 0] #e74c3c
+grid major
+@endchart
+```
+
+When the v-axis range includes zero, the horizontal axis is automatically positioned at the zero line, providing a clear visual separation between positive and negative values.
 
 ### Secondary Y-Axis
 
@@ -300,24 +317,9 @@ Major grid lines only (default):
 h-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct]
 v-axis 0 --> 100
 bar [45, 62, 58, 70, 83, 78, 65, 72, 80, 85] #3498db
-grid major
+grid y-axis major
 @endchart
 ```
-
-Major grid lines align with the primary tick marks on both axes.
-
-Enable grid with `both` option:
-
-```plantuml
-@startchart
-h-axis [Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8]
-v-axis "Revenue ($M)" 0 --> 100
-bar [45, 62, 58, 70, 83, 78, 65, 72] #3498db
-grid both
-@endchart
-```
-
-**Note:** The `grid both` option is supported for future compatibility, but currently renders the same grid lines as `grid major`. Minor grid line subdivision is planned for a future release
 
 Grid on Y-axis only:
 
@@ -328,18 +330,6 @@ v-axis 0 --> 100
 bar [45, 62, 58, 70] #3498db
 grid x-axis off
 grid y-axis major
-@endchart
-```
-
-Grid on X-axis only:
-
-```plantuml
-@startchart
-h-axis [Q1, Q2, Q3, Q4]
-v-axis 0 --> 100
-bar [45, 62, 58, 70] #3498db
-grid y-axis off
-grid x-axis major
 @endchart
 ```
 
@@ -561,7 +551,6 @@ scatter "Milestones" [55, 58, 62, 68, 80, 73]
 
 ' Layout
 legend right
-grid major
 
 ' Annotations
 annotation "Peak achieved" at (Q5, 83) <<arrow>>
@@ -603,7 +592,6 @@ bar "Revenue" [45, 62, 58, 70] #3498db
 line "Market Share" [15, 20, 18, 25] #2ecc71 y2
 
 legend right
-grid major
 @endchart
 ```
 

@@ -170,6 +170,17 @@ public class ChartRenderer {
 			topMargin += legendDim.getHeight() + LEGEND_MARGIN;
 		}
 
+		// Calculate X-axis position (align with zero if axis includes zero)
+		double xAxisY = topMargin + plotHeight;
+		if (orientation != ChartDiagram.Orientation.HORIZONTAL && yAxis != null) {
+			// Check if Y-axis range includes zero
+			if (yAxis.getMin() <= 0 && yAxis.getMax() >= 0) {
+				// Calculate Y position of zero
+				final double zeroRatio = (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin());
+				xAxisY = topMargin + plotHeight * (1.0 - zeroRatio);
+			}
+		}
+
 		// Draw axes based on orientation
 		if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
 			// For horizontal bars: categories on left (vertical), numeric on bottom (horizontal)
@@ -191,7 +202,7 @@ public class ChartRenderer {
 						y2Axis, false, lineColor, fontColor, stringBounder);
 			}
 
-			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin + plotHeight))), plotWidth,
+			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(xAxisY))), plotWidth,
 					plotHeight, lineColor, fontColor, stringBounder);
 		}
 
@@ -471,26 +482,46 @@ public class ChartRenderer {
 		// Determine which labels to show based on spacing
 		final int spacing = (xAxisTickSpacing != null && xAxisTickSpacing > 0) ? xAxisTickSpacing : 1;
 
-		for (int i = 0; i < xAxisLabels.size(); i++) {
-			final double x = (i + 0.5) * categoryWidth;
+		// Draw vertical grid lines at category boundaries spanning the full plot height
+		// Grid lines should span from top of plot to bottom of plot
+		// The height parameter represents the full plot height
+		if (xGridMode != ChartDiagram.GridMode.OFF) {
+			// Calculate the vertical span needed for grid lines
+			// When x-axis is at zero position, need to draw both up and down
+			final double gridUpward = yAxis != null && yAxis.getMin() <= 0 && yAxis.getMax() >= 0
+				? (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()) * height
+				: 0;
+			final double gridDownward = height - gridUpward;
 
-			// Draw vertical grid line if enabled (vertical lines for X axis)
-			// Draw grid lines for all positions, but only show labels based on spacing
-			if (xGridMode != ChartDiagram.GridMode.OFF && i % spacing == 0) {
-				final ULine gridLine = ULine.vline(-height);
-				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(x)).draw(gridLine);
+			for (int i = 0; i <= xAxisLabels.size(); i++) {
+				final double gridX = i * categoryWidth;
+				// Draw line upward from axis
+				if (gridUpward > 0) {
+					final ULine gridLineUp = ULine.vline(-gridUpward);
+					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(gridX)).draw(gridLineUp);
+				}
+				// Draw line downward from axis
+				if (gridDownward > 0) {
+					final ULine gridLineDown = ULine.vline(gridDownward);
+					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(gridX)).draw(gridLineDown);
+				}
 			}
+		}
+
+		// Draw ticks and labels at category centers
+		for (int i = 0; i < xAxisLabels.size(); i++) {
+			final double labelX = (i + 0.5) * categoryWidth; // Center position for labels
 
 			// Only draw tick and label every N positions based on spacing
 			if (i % spacing == 0) {
-				// Draw tick
-				ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
+				// Draw tick at label position
+				ug.apply(UTranslate.dx(labelX)).draw(ULine.vline(TICK_SIZE));
 
 				// Draw label
 				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisLabels.get(i))
 						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
 				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
-				textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
+				textBlock.drawU(ug.apply(UTranslate.dx(labelX - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
 			}
 		}
 
