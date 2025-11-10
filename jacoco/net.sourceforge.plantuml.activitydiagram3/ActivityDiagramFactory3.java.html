@@ -89,84 +89,85 @@ import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-<span class="fc" id="L95">public class ActivityDiagramFactory3 extends PSystemCommandFactory {</span>
+<span class="fc" id="L96">public class ActivityDiagramFactory3 extends PSystemCommandFactory {</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 
-<span class="fc" id="L100">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="fc" id="L101">		cmds.add(new CommandFootboxIgnored());</span>
 
-<span class="fc" id="L102">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L103">		cmds.add(new CommandSwimlane());</span>
-<span class="fc" id="L104">		cmds.add(new CommandSwimlane2());</span>
-<span class="fc" id="L105">		cmds.add(new CommandPartition3());</span>
-<span class="fc" id="L106">		cmds.add(new CommandEndPartition3());</span>
+<span class="fc" id="L103">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L104">		cmds.add(new CommandSwimlane());</span>
+<span class="fc" id="L105">		cmds.add(new CommandSwimlane2());</span>
+<span class="fc" id="L106">		cmds.add(new CommandPartition3());</span>
+<span class="fc" id="L107">		cmds.add(new CommandEndPartition3());</span>
 		// cmds.add(new CommandGroup3());
-<span class="fc" id="L108">		cmds.add(new CommandGroupEnd3());</span>
-<span class="fc" id="L109">		cmds.add(new CommandArrow3());</span>
-<span class="fc" id="L110">		cmds.add(new CommandArrowLong3());</span>
-<span class="fc" id="L111">		cmds.add(new CommandRepeat3());</span>
-<span class="fc" id="L112">		cmds.add(new CommandActivity3());</span>
-<span class="fc" id="L113">		cmds.add(new CommandIf4());</span>
-<span class="fc" id="L114">		cmds.add(new CommandIf2());</span>
-<span class="fc" id="L115">		cmds.add(CommandDecoratorMultine.create(new CommandIf2(), 50));</span>
-<span class="fc" id="L116">		cmds.add(new CommandIfLegacy1());</span>
-<span class="fc" id="L117">		cmds.add(new CommandElseIf3());</span>
-<span class="fc" id="L118">		cmds.add(new CommandElseIf2());</span>
-<span class="fc" id="L119">		cmds.add(new CommandElse3());</span>
-<span class="fc" id="L120">		cmds.add(CommandDecoratorMultine.create(new CommandElse3(), 50));</span>
-<span class="fc" id="L121">		cmds.add(new CommandElseLegacy1());</span>
-<span class="fc" id="L122">		cmds.add(new CommandEndif3());</span>
+<span class="fc" id="L109">		cmds.add(new CommandGroupEnd3());</span>
+<span class="fc" id="L110">		cmds.add(new CommandArrow3());</span>
+<span class="fc" id="L111">		cmds.add(new CommandArrowLong3());</span>
+<span class="fc" id="L112">		cmds.add(new CommandRepeat3());</span>
+<span class="fc" id="L113">		cmds.add(new CommandActivity3());</span>
+<span class="fc" id="L114">		cmds.add(new CommandIf4());</span>
+<span class="fc" id="L115">		cmds.add(new CommandIf2());</span>
+<span class="fc" id="L116">		cmds.add(CommandDecoratorMultine.create(new CommandIf2(), 50));</span>
+<span class="fc" id="L117">		cmds.add(new CommandIfLegacy1());</span>
+<span class="fc" id="L118">		cmds.add(new CommandElseIf3());</span>
+<span class="fc" id="L119">		cmds.add(new CommandElseIf2());</span>
+<span class="fc" id="L120">		cmds.add(new CommandElse3());</span>
+<span class="fc" id="L121">		cmds.add(CommandDecoratorMultine.create(new CommandElse3(), 50));</span>
+<span class="fc" id="L122">		cmds.add(new CommandElseLegacy1());</span>
+<span class="fc" id="L123">		cmds.add(new CommandEndif3());</span>
 
-<span class="fc" id="L124">		cmds.add(new CommandSwitch());</span>
-<span class="fc" id="L125">		cmds.add(new CommandCase());</span>
-<span class="fc" id="L126">		cmds.add(new CommandEndSwitch());</span>
+<span class="fc" id="L125">		cmds.add(new CommandSwitch());</span>
+<span class="fc" id="L126">		cmds.add(new CommandCase());</span>
+<span class="fc" id="L127">		cmds.add(new CommandEndSwitch());</span>
 
-<span class="fc" id="L128">		cmds.add(new CommandRepeatWhile3());</span>
-<span class="fc" id="L129">		cmds.add(new CommandRepeatWhile3Multilines());</span>
-<span class="fc" id="L130">		cmds.add(new CommandBackward3());</span>
-<span class="fc" id="L131">		cmds.add(new CommandBackwardLong3());</span>
-<span class="fc" id="L132">		cmds.add(new CommandWhile3());</span>
-<span class="fc" id="L133">		cmds.add(new CommandWhileEnd3());</span>
+<span class="fc" id="L129">		cmds.add(new CommandRepeatWhile3());</span>
+<span class="fc" id="L130">		cmds.add(new CommandRepeatWhile3Multilines());</span>
+<span class="fc" id="L131">		cmds.add(new CommandBackward3());</span>
+<span class="fc" id="L132">		cmds.add(new CommandBackwardLong3());</span>
+<span class="fc" id="L133">		cmds.add(new CommandWhile3());</span>
+<span class="fc" id="L134">		cmds.add(new CommandWhileEnd3());</span>
 
-<span class="fc" id="L135">		cmds.add(new CommandFork3());</span>
-<span class="fc" id="L136">		cmds.add(new CommandForkAgain3());</span>
-<span class="fc" id="L137">		cmds.add(new CommandForkEnd3());</span>
+<span class="fc" id="L136">		cmds.add(new CommandFork3());</span>
+<span class="fc" id="L137">		cmds.add(new CommandForkAgain3());</span>
+<span class="fc" id="L138">		cmds.add(new CommandForkEnd3());</span>
 
-<span class="fc" id="L139">		cmds.add(new CommandSplit3());</span>
-<span class="fc" id="L140">		cmds.add(new CommandSplitAgain3());</span>
-<span class="fc" id="L141">		cmds.add(new CommandSplitEnd3());</span>
+<span class="fc" id="L140">		cmds.add(new CommandSplit3());</span>
+<span class="fc" id="L141">		cmds.add(new CommandSplitAgain3());</span>
+<span class="fc" id="L142">		cmds.add(new CommandSplitEnd3());</span>
 		// cmds.add(new CommandGroup3());
 		// cmds.add(new CommandGroupEnd3());
-<span class="fc" id="L144">		cmds.add(new CommandStart3());</span>
-<span class="fc" id="L145">		cmds.add(new CommandStop3());</span>
-<span class="fc" id="L146">		cmds.add(new CommandCircleSpot3());</span>
-<span class="fc" id="L147">		cmds.add(new CommandBreak());</span>
-<span class="fc" id="L148">		cmds.add(new CommandEnd3());</span>
-<span class="fc" id="L149">		cmds.add(new CommandKill3());</span>
-<span class="fc" id="L150">		cmds.add(new CommandLink3());</span>
-<span class="fc" id="L151">		cmds.add(new CommandNote3());</span>
-<span class="fc" id="L152">		cmds.add(new CommandNoteLong3());</span>
+<span class="fc" id="L145">		cmds.add(new CommandStart3());</span>
+<span class="fc" id="L146">		cmds.add(new CommandStop3());</span>
+<span class="fc" id="L147">		cmds.add(new CommandCircleSpot3());</span>
+<span class="fc" id="L148">		cmds.add(new CommandBreak());</span>
+<span class="fc" id="L149">		cmds.add(new CommandEnd3());</span>
+<span class="fc" id="L150">		cmds.add(new CommandKill3());</span>
+<span class="fc" id="L151">		cmds.add(new CommandLink3());</span>
+<span class="fc" id="L152">		cmds.add(new CommandNote3());</span>
+<span class="fc" id="L153">		cmds.add(new CommandNoteLong3());</span>
 
-<span class="fc" id="L154">		cmds.add(new CommandActivityLong3());</span>
-<span class="fc" id="L155">		cmds.add(new CommandActivityLegacy1());</span>
+<span class="fc" id="L155">		cmds.add(new CommandActivityLong3());</span>
+<span class="fc" id="L156">		cmds.add(new CommandActivityLegacy1());</span>
 
-<span class="fc" id="L157">		cmds.add(new CommandLabel());</span>
-<span class="fc" id="L158">		cmds.add(new CommandGoto());</span>
-<span class="fc" id="L159">		cmds.add(CommandDecoratorMultine.create(new CommandElseIf2(), 50));</span>
-<span class="fc" id="L160">	}</span>
+<span class="fc" id="L158">		cmds.add(new CommandLabel());</span>
+<span class="fc" id="L159">		cmds.add(new CommandGoto());</span>
+<span class="fc" id="L160">		cmds.add(CommandDecoratorMultine.create(new CommandElseIf2(), 50));</span>
+<span class="fc" id="L161">	}</span>
 
 	@Override
-	public ActivityDiagram3 createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L164">		return new ActivityDiagram3(source, previous, preprocessing);</span>
+	public ActivityDiagram3 createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L165">		return new ActivityDiagram3(source, previous, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L169">		return UmlDiagramType.ACTIVITY;</span>
+<span class="fc" id="L170">		return UmlDiagramType.ACTIVITY;</span>
 	}
 
 }

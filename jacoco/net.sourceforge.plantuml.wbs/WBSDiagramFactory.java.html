@@ -43,35 +43,36 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WBSDiagramFactory extends PSystemCommandFactory {
 
 	public WBSDiagramFactory() {
-<span class="fc" id="L52">		super(DiagramType.WBS);</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(DiagramType.WBS);</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L57">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L58">		cmds.add(new CommandWBSItemNew(1));</span>
-<span class="fc" id="L59">		cmds.add(new CommandWBSItemNew(0));</span>
-<span class="fc" id="L60">		cmds.add(new CommandWBSItemMultilineNew());</span>
-<span class="fc" id="L61">		cmds.add(new CommandWBSItemOld(1));</span>
-<span class="fc" id="L62">		cmds.add(new CommandWBSItemOld(0));</span>
-<span class="fc" id="L63">		cmds.add(new CommandWBSItemMultilineOld());</span>
-<span class="fc" id="L64">		cmds.add(new CommandWBSLink());</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L58">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L59">		cmds.add(new CommandWBSItemNew(1));</span>
+<span class="fc" id="L60">		cmds.add(new CommandWBSItemNew(0));</span>
+<span class="fc" id="L61">		cmds.add(new CommandWBSItemMultilineNew());</span>
+<span class="fc" id="L62">		cmds.add(new CommandWBSItemOld(1));</span>
+<span class="fc" id="L63">		cmds.add(new CommandWBSItemOld(0));</span>
+<span class="fc" id="L64">		cmds.add(new CommandWBSItemMultilineOld());</span>
+<span class="fc" id="L65">		cmds.add(new CommandWBSLink());</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
-	public WBSDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L69">		return new WBSDiagram(source, preprocessing);</span>
+	public WBSDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L70">		return new WBSDiagram(source, preprocessing);</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L74">		return UmlDiagramType.WBS;</span>
+<span class="nc" id="L75">		return UmlDiagramType.WBS;</span>
 	}
 
 

@@ -78,11 +78,11 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 <span class="fc" id="L78">		FileSystem.getInstance().setCurrentDir(SFile.fromFile(file.getAbsoluteFile().getParentFile()));</span>
 <span class="fc bfc" id="L79" title="All 2 branches covered.">		if (outputDirectory == null)</span>
 <span class="fc" id="L80">			outputDirectory = file.getAbsoluteFile().getParentFile();</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		else if (outputDirectory.isAbsolute() == false)</span>
-<span class="nc" id="L82">			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath()).conv();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		else if (outputDirectory.isAbsolute() == false)</span>
+<span class="fc" id="L82">			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath()).conv();</span>
 
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (outputDirectory.exists() == false)</span>
-<span class="nc" id="L85">			outputDirectory.mkdirs();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (outputDirectory.exists() == false)</span>
+<span class="fc" id="L85">			outputDirectory.mkdirs();</span>
 
 <span class="fc" id="L87">		this.outputDirectory = outputDirectory;</span>
 

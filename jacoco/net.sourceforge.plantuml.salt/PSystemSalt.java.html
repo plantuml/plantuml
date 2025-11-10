@@ -100,7 +100,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	@Deprecated
 	public PSystemSalt(UmlSource source, List&lt;String&gt; data, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L102">		super(source, UmlDiagramType.SALT, null, preprocessing);</span>
-<span class="fc" id="L103">		this.dictionary = new SaltDictionary(preprocessing.getOption());</span>
+<span class="fc" id="L103">		this.dictionary = new SaltDictionary(source.getPathSystem(), preprocessing.getOption());</span>
 <span class="fc" id="L104">		this.data = data;</span>
 <span class="fc" id="L105">	}</span>
 

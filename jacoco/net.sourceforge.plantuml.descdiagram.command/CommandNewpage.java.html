@@ -65,8 +65,8 @@ public class CommandNewpage extends SingleLineCommand2&lt;UmlDiagram&gt; {
 	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 <span class="nc" id="L67">		final int dpi = diagram.getSkinParam().getDpi();</span>
-<span class="nc" id="L68">		final UmlDiagram emptyDiagram = (UmlDiagram) factory.createEmptyDiagram(diagram.getSource(),</span>
-<span class="nc" id="L69">				diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
+<span class="nc" id="L68">		final UmlDiagram emptyDiagram = (UmlDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
+<span class="nc" id="L69">				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
 <span class="nc bnc" id="L70" title="All 2 branches missed.">		if (dpi != 96)</span>
 <span class="nc" id="L71">			emptyDiagram.setParam(&quot;dpi&quot;, &quot;&quot; + dpi);</span>
 

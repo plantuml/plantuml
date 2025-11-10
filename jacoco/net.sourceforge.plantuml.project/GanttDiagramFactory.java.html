@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.command.CommandColorTask;
 import net.sourceforge.plantuml.project.command.CommandFootboxGantt;
@@ -83,81 +84,81 @@ import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	static private final List&lt;Subject&lt;GanttDiagram&gt;&gt; subjects() {
-<span class="fc" id="L86">		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,</span>
+<span class="fc" id="L87">		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,</span>
 				SubjectDaysAsDates.ME, SubjectResource.ME, SubjectToday.ME, SubjectSeparator.ME);
 	}
 
 	public GanttDiagramFactory() {
-<span class="fc" id="L91">		super(DiagramType.GANTT);</span>
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L92">		super(DiagramType.GANTT);</span>
+<span class="fc" id="L93">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L96">		CommonCommands.addTitleCommands(cmds);</span>
-<span class="fc" id="L97">		CommonCommands.addCommonCommands2(cmds);</span>
-<span class="fc" id="L98">		CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="fc" id="L97">		CommonCommands.addTitleCommands(cmds);</span>
+<span class="fc" id="L98">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="fc" id="L99">		CommonCommands.addCommonScaleCommands(cmds);</span>
 
-<span class="fc" id="L100">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
-<span class="fc" id="L101">		cmds.add(CommandStyleImport.ME);</span>
+<span class="fc" id="L101">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
+<span class="fc" id="L102">		cmds.add(CommandStyleImport.ME);</span>
 
-<span class="fc" id="L103">		cmds.add(CommandNope.ME);</span>
+<span class="fc" id="L104">		cmds.add(CommandNope.ME);</span>
 
-<span class="fc" id="L105">		addLanguageCommands(cmds);</span>
+<span class="fc" id="L106">		addLanguageCommands(cmds);</span>
 
-<span class="fc" id="L107">		cmds.add(new CommandGanttArrow());</span>
-<span class="fc" id="L108">		cmds.add(new CommandGanttArrow2());</span>
-<span class="fc" id="L109">		cmds.add(new CommandColorTask());</span>
-<span class="fc" id="L110">		cmds.add(new CommandSeparator());</span>
-<span class="fc" id="L111">		cmds.add(new CommandWeekNumberStrategy());</span>
-<span class="fc" id="L112">		cmds.add(new CommandGroupStart());</span>
-<span class="fc" id="L113">		cmds.add(new CommandGroupEnd());</span>
+<span class="fc" id="L108">		cmds.add(new CommandGanttArrow());</span>
+<span class="fc" id="L109">		cmds.add(new CommandGanttArrow2());</span>
+<span class="fc" id="L110">		cmds.add(new CommandColorTask());</span>
+<span class="fc" id="L111">		cmds.add(new CommandSeparator());</span>
+<span class="fc" id="L112">		cmds.add(new CommandWeekNumberStrategy());</span>
+<span class="fc" id="L113">		cmds.add(new CommandGroupStart());</span>
+<span class="fc" id="L114">		cmds.add(new CommandGroupEnd());</span>
 
-<span class="fc" id="L115">		cmds.add(new CommandLanguage());</span>
-<span class="fc" id="L116">		cmds.add(new CommandPrintScale());</span>
-<span class="fc" id="L117">		cmds.add(new CommandPrintBetween());</span>
-<span class="fc" id="L118">		cmds.add(new CommandNoteBottom());</span>
-<span class="fc" id="L119">		cmds.add(new CommandFootboxGantt());</span>
-<span class="fc" id="L120">		cmds.add(new CommandLabelOnColumn());</span>
-<span class="fc" id="L121">		cmds.add(new CommandHideResourceName());</span>
-<span class="fc" id="L122">		cmds.add(new CommandHideResourceFootbox());</span>
-<span class="fc" id="L123">		cmds.add(new CommandHideClosed());</span>
-<span class="fc" id="L124">		cmds.add(new CommandTaskCompleteDefault());</span>
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L116">		cmds.add(new CommandLanguage());</span>
+<span class="fc" id="L117">		cmds.add(new CommandPrintScale());</span>
+<span class="fc" id="L118">		cmds.add(new CommandPrintBetween());</span>
+<span class="fc" id="L119">		cmds.add(new CommandNoteBottom());</span>
+<span class="fc" id="L120">		cmds.add(new CommandFootboxGantt());</span>
+<span class="fc" id="L121">		cmds.add(new CommandLabelOnColumn());</span>
+<span class="fc" id="L122">		cmds.add(new CommandHideResourceName());</span>
+<span class="fc" id="L123">		cmds.add(new CommandHideResourceFootbox());</span>
+<span class="fc" id="L124">		cmds.add(new CommandHideClosed());</span>
+<span class="fc" id="L125">		cmds.add(new CommandTaskCompleteDefault());</span>
+<span class="fc" id="L126">	}</span>
 
 	private void addLanguageCommands(List&lt;Command&gt; cmd) {
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">			for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences()) {</span>
-<span class="fc" id="L130">				cmd.add(NaturalCommand.create(sentenceA));</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences()) {</span>
-<span class="fc" id="L132">					final String signatureA = sentenceA.getSignature();</span>
-<span class="fc" id="L133">					final String signatureB = sentenceB.getSignature();</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">					if (signatureA.equals(signatureB) == false)</span>
-<span class="fc" id="L135">						cmd.add(NaturalCommand.create(new SentenceAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB)));</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences()) {</span>
+<span class="fc" id="L131">				cmd.add(NaturalCommand.create(sentenceA));</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences()) {</span>
+<span class="fc" id="L133">					final String signatureA = sentenceA.getSignature();</span>
+<span class="fc" id="L134">					final String signatureB = sentenceB.getSignature();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">					if (signatureA.equals(signatureB) == false)</span>
+<span class="fc" id="L136">						cmd.add(NaturalCommand.create(new SentenceAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB)));</span>
 
-<span class="fc" id="L137">				}</span>
-<span class="fc" id="L138">			}</span>
+<span class="fc" id="L138">				}</span>
+<span class="fc" id="L139">			}</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">			for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences())</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences())</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">					for (SentenceSimple&lt;GanttDiagram&gt; sentenceC : subject.getSentences()) {</span>
-<span class="fc" id="L144">						final String signatureA = sentenceA.getSignature();</span>
-<span class="fc" id="L145">						final String signatureB = sentenceB.getSignature();</span>
-<span class="fc" id="L146">						final String signatureC = sentenceC.getSignature();</span>
-<span class="fc bfc" id="L147" title="All 4 branches covered.">						if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">								&amp;&amp; signatureC.equals(signatureB) == false)</span>
-<span class="fc" id="L149">							cmd.add(NaturalCommand.create(new SentenceAndAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB, sentenceC)));</span>
-<span class="fc" id="L150">					}</span>
-<span class="fc" id="L151">	}</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences())</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences())</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">					for (SentenceSimple&lt;GanttDiagram&gt; sentenceC : subject.getSentences()) {</span>
+<span class="fc" id="L145">						final String signatureA = sentenceA.getSignature();</span>
+<span class="fc" id="L146">						final String signatureB = sentenceB.getSignature();</span>
+<span class="fc" id="L147">						final String signatureC = sentenceC.getSignature();</span>
+<span class="fc bfc" id="L148" title="All 4 branches covered.">						if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">								&amp;&amp; signatureC.equals(signatureB) == false)</span>
+<span class="fc" id="L150">							cmd.add(NaturalCommand.create(new SentenceAndAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB, sentenceC)));</span>
+<span class="fc" id="L151">					}</span>
+<span class="fc" id="L152">	}</span>
 
 	@Override
-	public GanttDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L155">		return new GanttDiagram(source, preprocessing);</span>
+	public GanttDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L156">		return new GanttDiagram(source, preprocessing);</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L160">		return UmlDiagramType.GANTT;</span>
+<span class="fc" id="L161">		return UmlDiagramType.GANTT;</span>
 	}
 
 

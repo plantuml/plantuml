@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.preproc.ImportedFiles,net.sourceforge.plantuml.preproc.Defines,java.nio.charset.Charset,net.sourceforge.plantuml.DefinitionsContainer,net.sourceforge.plantuml.text.StringLocated)" class="member-name-link">TimLoader</a><wbr>(<a href="../preproc/ImportedFiles.html" title="class in net.sourceforge.plantuml.preproc">ImportedFiles</a>&nbsp;importedFiles,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.preproc.Defines,java.nio.charset.Charset,net.sourceforge.plantuml.DefinitionsContainer,net.sourceforge.plantuml.text.StringLocated)" class="member-name-link">TimLoader</a><wbr>(<a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
  <a href="../preproc/Defines.html" title="class in net.sourceforge.plantuml.preproc">Defines</a>&nbsp;defines,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset,
  <a href="../DefinitionsContainer.html" title="interface in net.sourceforge.plantuml">DefinitionsContainer</a>&nbsp;definitionsContainer,
@@ -122,7 +122,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPreprocessorError()" class="member-name-link">isPreprocessorError</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../preproc/FileWithSuffix.html" title="class in net.sourceforge.plantuml.preproc">FileWithSuffix</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load(java.util.List)" class="member-name-link">load</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
@@ -143,9 +143,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.preproc.ImportedFiles,net.sourceforge.plantuml.preproc.Defines,java.nio.charset.Charset,net.sourceforge.plantuml.DefinitionsContainer,net.sourceforge.plantuml.text.StringLocated)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.preproc.Defines,java.nio.charset.Charset,net.sourceforge.plantuml.DefinitionsContainer,net.sourceforge.plantuml.text.StringLocated)">
 <h3>TimLoader</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimLoader</span><wbr><span class="parameters">(<a href="../preproc/ImportedFiles.html" title="class in net.sourceforge.plantuml.preproc">ImportedFiles</a>&nbsp;importedFiles,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimLoader</span><wbr><span class="parameters">(<a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
  <a href="../preproc/Defines.html" title="class in net.sourceforge.plantuml.preproc">Defines</a>&nbsp;defines,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset,
  <a href="../DefinitionsContainer.html" title="interface in net.sourceforge.plantuml">DefinitionsContainer</a>&nbsp;definitionsContainer,
@@ -163,7 +163,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="load(java.util.List)">
 <h3>load</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../preproc/FileWithSuffix.html" title="class in net.sourceforge.plantuml.preproc">FileWithSuffix</a>&gt;</span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list)</span></div>
 </section>
 </li>
 <li>

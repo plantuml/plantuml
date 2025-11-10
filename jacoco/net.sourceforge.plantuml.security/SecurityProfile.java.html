@@ -146,7 +146,7 @@ package net.sourceforge.plantuml.security;
 	 * Retrieve the timeout for URL.
 	 */
 	public long getTimeout() {
-<span class="nc bnc" id="L149" title="All 6 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L149" title="5 of 6 branches missed.">		switch (this) {</span>
 		case SANDBOX:
 <span class="nc" id="L151">			return 1000L;</span>
 		case ALLOWLIST:
@@ -154,7 +154,7 @@ package net.sourceforge.plantuml.security;
 		case INTERNET:
 <span class="nc" id="L155">			return 1000L * 10;</span>
 		case LEGACY:
-<span class="nc" id="L157">			return 1000L * 60;</span>
+<span class="fc" id="L157">			return 1000L * 60;</span>
 		case UNSECURE:
 <span class="nc" id="L159">			return 1000L * 60 * 5;</span>
 		}

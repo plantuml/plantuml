@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.file.AParentFolder;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
@@ -51,80 +50,78 @@ public class Define {
 	private final String definitionQuoted;
 	private final boolean emptyParentheses;
 	private Pattern pattern;
-	private final AParentFolder currentDir;
 
-<span class="fc" id="L56">	public Define(String key, List&lt;String&gt; lines, boolean emptyParentheses, AParentFolder currentDir) {</span>
-<span class="fc" id="L57">		this.currentDir = currentDir;</span>
-<span class="fc" id="L58">		this.emptyParentheses = emptyParentheses;</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (lines == null) {</span>
-<span class="nc" id="L60">			this.definition = null;</span>
-<span class="nc" id="L61">			this.definitionQuoted = null;</span>
+<span class="fc" id="L54">	public Define(String key, List&lt;String&gt; lines, boolean emptyParentheses) {</span>
+<span class="fc" id="L55">		this.emptyParentheses = emptyParentheses;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (lines == null) {</span>
+<span class="nc" id="L57">			this.definition = null;</span>
+<span class="nc" id="L58">			this.definitionQuoted = null;</span>
 		} else {
-<span class="fc" id="L63">			final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">			for (final Iterator&lt;String&gt; it = lines.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L65">				sb.append(it.next());</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">				if (it.hasNext()) {</span>
-<span class="nc" id="L67">					sb.append('\n');</span>
+<span class="fc" id="L60">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			for (final Iterator&lt;String&gt; it = lines.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L62">				sb.append(it.next());</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">				if (it.hasNext()) {</span>
+<span class="nc" id="L64">					sb.append('\n');</span>
 				}
 			}
-<span class="fc" id="L70">			this.definition = sb.toString();</span>
-<span class="fc" id="L71">			this.definitionQuoted = Matcher.quoteReplacement(definition);</span>
+<span class="fc" id="L67">			this.definition = sb.toString();</span>
+<span class="fc" id="L68">			this.definitionQuoted = Matcher.quoteReplacement(definition);</span>
 		}
-<span class="fc" id="L73">		this.signature = new DefineSignature(key, this.definitionQuoted);</span>
+<span class="fc" id="L70">		this.signature = new DefineSignature(key, this.definitionQuoted);</span>
 
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L72">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L79">		return signature.toString();</span>
+<span class="nc" id="L76">		return signature.toString();</span>
 	}
 
 	public String apply(String line) {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (definition == null) {</span>
-<span class="nc" id="L84">			return line;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (definition == null) {</span>
+<span class="nc" id="L81">			return line;</span>
 		}
 		// if (getFunctionName().indexOf('_') &gt;= 0 &amp;&amp; line.indexOf('_') == -1) {
 		// return line;
 		// }
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (/* line.length() &lt; getFunctionName().length() || */line.contains(getFunctionName()) == false) {</span>
-<span class="nc" id="L90">			return line;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (/* line.length() &lt; getFunctionName().length() || */line.contains(getFunctionName()) == false) {</span>
+<span class="nc" id="L87">			return line;</span>
 		}
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (signature.isMethod()) {</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (line.indexOf('(') == -1) {</span>
-<span class="nc" id="L94">				return line;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (signature.isMethod()) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (line.indexOf('(') == -1) {</span>
+<span class="nc" id="L91">				return line;</span>
 			}
-<span class="nc" id="L96">			line = apply1(line);</span>
+<span class="nc" id="L93">			line = apply1(line);</span>
 		} else {
-<span class="nc" id="L98">			line = apply2(line);</span>
+<span class="nc" id="L95">			line = apply2(line);</span>
 		}
-<span class="nc" id="L100">		return line;</span>
+<span class="nc" id="L97">		return line;</span>
 	}
 
 	private String apply2(String line) {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (pattern == null) {</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			final String regex = &quot;\\b&quot; + signature.getKey() + &quot;\\b&quot; + (emptyParentheses ? &quot;(\\(\\))?&quot; : &quot;&quot;);</span>
-<span class="nc" id="L106">			pattern = Pattern.compile(regex);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (pattern == null) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			final String regex = &quot;\\b&quot; + signature.getKey() + &quot;\\b&quot; + (emptyParentheses ? &quot;(\\(\\))?&quot; : &quot;&quot;);</span>
+<span class="nc" id="L103">			pattern = Pattern.compile(regex);</span>
 		}
 
-<span class="nc" id="L109">		line = BackSlash.translateBackSlashes(line);</span>
-<span class="nc" id="L110">		line = pattern.matcher(line).replaceAll(definitionQuoted);</span>
-<span class="nc" id="L111">		line = BackSlash.untranslateBackSlashes(line);</span>
-<span class="nc" id="L112">		return line;</span>
+<span class="nc" id="L106">		line = BackSlash.translateBackSlashes(line);</span>
+<span class="nc" id="L107">		line = pattern.matcher(line).replaceAll(definitionQuoted);</span>
+<span class="nc" id="L108">		line = BackSlash.untranslateBackSlashes(line);</span>
+<span class="nc" id="L109">		return line;</span>
 	}
 
 	private String apply1(String line) {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (Variables vars : signature.getVariationVariables()) {</span>
-<span class="nc" id="L117">			line = vars.applyOn(line);</span>
-<span class="nc" id="L118">		}</span>
-<span class="nc" id="L119">		return line;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (Variables vars : signature.getVariationVariables()) {</span>
+<span class="nc" id="L114">			line = vars.applyOn(line);</span>
+<span class="nc" id="L115">		}</span>
+<span class="nc" id="L116">		return line;</span>
 	}
 
 	public final String getFunctionName() {
-<span class="nc" id="L123">		return signature.getFonctionName();</span>
+<span class="nc" id="L120">		return signature.getFonctionName();</span>
 	}
 
 	public TValue asTVariable() {
-<span class="fc" id="L127">		return TValue.fromString(definition);</span>
+<span class="fc" id="L124">		return TValue.fromString(definition);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

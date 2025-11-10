@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.preproc;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -52,131 +51,131 @@ import net.sourceforge.plantuml.utils.StartUtils;
 public class StartDiagramExtractReader implements ReadLine {
 
 	private final ReadLine raw;
-<span class="nc" id="L55">	private boolean finished = false;</span>
+<span class="nc" id="L54">	private boolean finished = false;</span>
 
-	public static ReadLine build(FileWithSuffix f2, StringLocated s, Charset charset) {
-<span class="nc" id="L58">		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());</span>
-	}
+//	public static ReadLine build(FileWithSuffix f2, StringLocated s, Charset charset) {
+//		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());
+//	}
 
 	public static ReadLine build(SURL url, StringLocated s, String uid, Charset charset) {
-<span class="nc" id="L62">		return new StartDiagramExtractReader(getReadLine(url, s, charset), uid);</span>
+<span class="nc" id="L61">		return new StartDiagramExtractReader(getReadLine(url, s, charset), uid);</span>
 	}
 
 	public static ReadLine build(InputStream is, String desc) {
-<span class="nc" id="L66">		return new StartDiagramExtractReader(getReadLine(is, desc), null);</span>
+<span class="nc" id="L65">		return new StartDiagramExtractReader(getReadLine(is, desc), null);</span>
 	}
 
-<span class="nc" id="L69">	private StartDiagramExtractReader(ReadLine raw, String suf) {</span>
-<span class="nc" id="L70">		int bloc = 0;</span>
-<span class="nc" id="L71">		String uid = null;</span>
-<span class="nc bnc" id="L72" title="All 4 branches missed.">		if (suf != null &amp;&amp; suf.matches(&quot;\\d+&quot;))</span>
-<span class="nc" id="L73">			bloc = Integer.parseInt(suf);</span>
+<span class="nc" id="L68">	private StartDiagramExtractReader(ReadLine raw, String suf) {</span>
+<span class="nc" id="L69">		int bloc = 0;</span>
+<span class="nc" id="L70">		String uid = null;</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">		if (suf != null &amp;&amp; suf.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L72">			bloc = Integer.parseInt(suf);</span>
 		else
-<span class="nc" id="L75">			uid = suf;</span>
+<span class="nc" id="L74">			uid = suf;</span>
 
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (bloc &lt; 0)</span>
-<span class="nc" id="L78">			bloc = 0;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (bloc &lt; 0)</span>
+<span class="nc" id="L77">			bloc = 0;</span>
 
-<span class="nc" id="L80">		this.raw = raw;</span>
-<span class="nc" id="L81">		StringLocated s = null;</span>
+<span class="nc" id="L79">		this.raw = raw;</span>
+<span class="nc" id="L80">		StringLocated s = null;</span>
 		try {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
-<span class="nc bnc" id="L84" title="All 4 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">					if (bloc == 0)</span>
-<span class="nc" id="L86">						return;</span>
-<span class="nc" id="L87">					bloc--;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
+<span class="nc bnc" id="L83" title="All 4 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">					if (bloc == 0)</span>
+<span class="nc" id="L85">						return;</span>
+<span class="nc" id="L86">					bloc--;</span>
 				}
 			}
-<span class="nc" id="L90">		} catch (IOException e) {</span>
-<span class="nc" id="L91">			Logme.error(e);</span>
-<span class="nc" id="L92">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L93">		}</span>
-<span class="nc" id="L94">		finished = true;</span>
-<span class="nc" id="L95">	}</span>
+<span class="nc" id="L89">		} catch (IOException e) {</span>
+<span class="nc" id="L90">			Logme.error(e);</span>
+<span class="nc" id="L91">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L92">		}</span>
+<span class="nc" id="L93">		finished = true;</span>
+<span class="nc" id="L94">	}</span>
 
 	private boolean checkUid(String uid, StringLocated s) {
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (uid == null)</span>
-<span class="nc" id="L99">			return true;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (uid == null)</span>
+<span class="nc" id="L98">			return true;</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
-<span class="nc" id="L102">			return true;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
+<span class="nc" id="L101">			return true;</span>
 
-<span class="nc" id="L104">		return false;</span>
+<span class="nc" id="L103">		return false;</span>
 	}
 
-	private static ReadLine getReadLine(FileWithSuffix f2, StringLocated s, Charset charset) {
-		try {
-<span class="fc" id="L109">			final Reader tmp1 = f2.getReader(charset);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (tmp1 == null)</span>
-<span class="nc" id="L111">				return new ReadLineSimple(s, &quot;Cannot open &quot; + f2.getDescription());</span>
-
-<span class="fc" id="L113">			return uncommentAndMerge(ReadLineReader.create(tmp1, f2.getDescription()));</span>
-<span class="nc" id="L114">		} catch (IOException e) {</span>
-<span class="nc" id="L115">			return new ReadLineSimple(s, e.toString());</span>
-		}
-	}
+//	private static ReadLine getReadLine(FileWithSuffix f2, StringLocated s, Charset charset) {
+//		try {
+//			final Reader tmp1 = f2.getReader(charset);
+//			if (tmp1 == null)
+//				return new ReadLineSimple(s, &quot;Cannot open &quot; + f2.getDescription());
+//
+//			return uncommentAndMerge(ReadLineReader.create(tmp1, f2.getDescription()));
+//		} catch (IOException e) {
+//			return new ReadLineSimple(s, e.toString());
+//		}
+//	}
 
 	private static ReadLine getReadLine(InputStream is, String description) {
-<span class="fc" id="L120">		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(is, StandardCharsets.UTF_8), description));</span>
+<span class="fc" id="L119">		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(is, StandardCharsets.UTF_8), description));</span>
 	}
 
 	private static ReadLine getReadLine(SURL url, StringLocated s, Charset charset) {
-<span class="nc" id="L124">		final InputStream tmp = url.openStream();</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (tmp == null)</span>
-<span class="nc" id="L126">			return new ReadLineSimple(s, &quot;Cannot connect&quot;);</span>
+<span class="nc" id="L123">		final InputStream tmp = url.openStream();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L125">			return new ReadLineSimple(s, &quot;Cannot connect&quot;);</span>
 
-<span class="nc" id="L128">		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(tmp, charset), url.toString()));</span>
+<span class="nc" id="L127">		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(tmp, charset), url.toString()));</span>
 	}
 
 	private static ReadLine uncommentAndMerge(ReadLine reader) {
-<span class="fc" id="L132">		return new UncommentReadLine(new ReadFilterMergeLines().applyFilter(reader));</span>
+<span class="fc" id="L131">		return new UncommentReadLine(new ReadFilterMergeLines().applyFilter(reader));</span>
 	}
 
-	static public boolean containsStartDiagram(FileWithSuffix f2, StringLocated s, Charset charset) throws IOException {
-<span class="fc" id="L136">		final ReadLine r = getReadLine(f2, s, charset);</span>
-<span class="fc" id="L137">		return containsStartDiagram(r);</span>
-	}
+//	static public boolean containsStartDiagram(FileWithSuffix f2, StringLocated s, Charset charset) throws IOException {
+//		final ReadLine r = getReadLine(f2, s, charset);
+//		return containsStartDiagram(r);
+//	}
 
 	static public boolean containsStartDiagram(SURL url, StringLocated s, Charset charset) throws IOException {
-<span class="nc" id="L141">		final ReadLine r = getReadLine(url, s, charset);</span>
-<span class="nc" id="L142">		return containsStartDiagram(r);</span>
+<span class="nc" id="L140">		final ReadLine r = getReadLine(url, s, charset);</span>
+<span class="nc" id="L141">		return containsStartDiagram(r);</span>
 	}
 
 	static public boolean containsStartDiagram(InputStream is, String description) throws IOException {
-<span class="fc" id="L146">		final ReadLine r = getReadLine(is, description);</span>
-<span class="fc" id="L147">		return containsStartDiagram(r);</span>
+<span class="fc" id="L145">		final ReadLine r = getReadLine(is, description);</span>
+<span class="fc" id="L146">		return containsStartDiagram(r);</span>
 	}
 
 	private static boolean containsStartDiagram(final ReadLine r) throws IOException {
 		try {
-<span class="fc" id="L152">			StringLocated s = null;</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">			while ((s = r.readLine()) != null)</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()))</span>
-<span class="nc" id="L155">					return true;</span>
+<span class="fc" id="L151">			StringLocated s = null;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			while ((s = r.readLine()) != null)</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()))</span>
+<span class="nc" id="L154">					return true;</span>
 
 		} finally {
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			if (r != null)</span>
-<span class="fc" id="L159">				r.close();</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			if (r != null)</span>
+<span class="fc" id="L158">				r.close();</span>
 
 		}
-<span class="fc" id="L162">		return false;</span>
+<span class="fc" id="L161">		return false;</span>
 	}
 
 	public StringLocated readLine() throws IOException {
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (finished)</span>
-<span class="nc" id="L167">			return null;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L166">			return null;</span>
 
-<span class="nc" id="L169">		final StringLocated result = raw.readLine();</span>
-<span class="nc bnc" id="L170" title="All 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isArobaseEndDiagram(result.getString())) {</span>
-<span class="nc" id="L171">			finished = true;</span>
-<span class="nc" id="L172">			return null;</span>
+<span class="nc" id="L168">		final StringLocated result = raw.readLine();</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isArobaseEndDiagram(result.getString())) {</span>
+<span class="nc" id="L170">			finished = true;</span>
+<span class="nc" id="L171">			return null;</span>
 		}
-<span class="nc" id="L174">		return result;</span>
+<span class="nc" id="L173">		return result;</span>
 	}
 
 	public void close() throws IOException {
-<span class="nc" id="L178">		raw.close();</span>
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L177">		raw.close();</span>
+<span class="nc" id="L178">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

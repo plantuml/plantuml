@@ -94,7 +94,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 			PreprocessingArtifact preprocessing) {
 <span class="fc" id="L95">		super(source, preprocessing);</span>
 <span class="fc" id="L96">		this.type = type;</span>
-<span class="fc" id="L97">		this.skinParam = SkinParam.create(type, Pragma.createEmpty(), preprocessing.getOption());</span>
+<span class="fc" id="L97">		this.skinParam = SkinParam.create(source.getPathSystem(), type, Pragma.createEmpty(), preprocessing.getOption());</span>
 <span class="fc bfc" id="L98" title="All 2 branches covered.">		if (previous != null)</span>
 <span class="fc" id="L99">			this.skinParam.copyAllFrom(previous);</span>
 

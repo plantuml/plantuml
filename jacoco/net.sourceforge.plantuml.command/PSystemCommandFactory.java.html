@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -58,98 +59,98 @@ import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
-<span class="fc" id="L61">	private final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">	private final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
 
 	protected abstract void initCommandsList(List&lt;Command&gt; cmds);
 
-	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
+	public abstract AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
 
 	protected PSystemCommandFactory() {
-<span class="fc" id="L68">		this(DiagramType.UML);</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L69">		this(DiagramType.UML);</span>
+<span class="fc" id="L70">	}</span>
 
 	protected PSystemCommandFactory(DiagramType type) {
-<span class="fc" id="L72">		super(type);</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L73">		super(type);</span>
+<span class="fc" id="L74">	}</span>
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L77">		IteratorCounter2 it = source.iterator2();</span>
-<span class="fc" id="L78">		final StringLocated startLine = it.next();</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)</span>
-<span class="nc" id="L80">			throw new UnsupportedOperationException();</span>
+	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L78">		IteratorCounter2 it = source.iterator2();</span>
+<span class="fc" id="L79">		final StringLocated startLine = it.next();</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)</span>
+<span class="nc" id="L81">			throw new UnsupportedOperationException();</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (source.isEmpty()) {</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (it.hasNext())</span>
-<span class="fc" id="L84">				it.next();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (source.isEmpty()) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			if (it.hasNext())</span>
+<span class="fc" id="L85">				it.next();</span>
 
-<span class="fc" id="L86">			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);</span>
+<span class="fc" id="L87">			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);</span>
 		}
-<span class="fc" id="L88">		AbstractPSystem sys = createEmptyDiagram(source, previous, preprocessing);</span>
+<span class="fc" id="L89">		AbstractPSystem sys = createEmptyDiagram(pathSystem, source, previous, preprocessing);</span>
 
-<span class="fc" id="L90">		final Set&lt;ParserPass&gt; requiredPass = sys.getRequiredPass();</span>
+<span class="fc" id="L91">		final Set&lt;ParserPass&gt; requiredPass = sys.getRequiredPass();</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (ParserPass pass : requiredPass) {</span>
-<span class="fc" id="L93">			sys.startingPass(pass);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {</span>
-<span class="fc" id="L96">					it = source.iterator2();</span>
-<span class="fc" id="L97">					it.next();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		for (ParserPass pass : requiredPass) {</span>
+<span class="fc" id="L94">			sys.startingPass(pass);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {</span>
+<span class="fc" id="L97">					it = source.iterator2();</span>
+<span class="fc" id="L98">					it.next();</span>
 					// For next pass
-<span class="fc" id="L99">					break;</span>
+<span class="fc" id="L100">					break;</span>
 				}
-<span class="fc" id="L101">				sys = executeFewLines(sys, source, it, pass, preprocessing);</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">				if (sys instanceof PSystemError)</span>
-<span class="fc" id="L103">					return sys;</span>
+<span class="fc" id="L102">				sys = executeFewLines(sys, source, it, pass, preprocessing);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">				if (sys instanceof PSystemError)</span>
+<span class="fc" id="L104">					return sys;</span>
 			}
-<span class="fc" id="L105">		}</span>
-<span class="fc" id="L106">		return finalizeDiagram(sys, source, it, preprocessing);</span>
+<span class="fc" id="L106">		}</span>
+<span class="fc" id="L107">		return finalizeDiagram(sys, source, it, preprocessing);</span>
 
 	}
 
 	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it, PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (sys == null)</span>
-<span class="nc" id="L112">			return null;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (sys == null)</span>
+<span class="nc" id="L113">			return null;</span>
 
-<span class="fc" id="L114">		final String err = sys.checkFinalError();</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (err != null) {</span>
-<span class="nc" id="L116">			final LineLocation location = it.next().getLocation();</span>
-<span class="nc" id="L117">			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);</span>
+<span class="fc" id="L115">		final String err = sys.checkFinalError();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (err != null) {</span>
+<span class="nc" id="L117">			final LineLocation location = it.next().getLocation();</span>
+<span class="nc" id="L118">			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);</span>
 		}
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (source.getTotalLineCount() == 2) {</span>
-<span class="nc" id="L120">			final LineLocation location = it.next().getLocation();</span>
-<span class="nc" id="L121">			return buildEmptyError(source, location, it.getTrace(), preprocessing);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (source.getTotalLineCount() == 2) {</span>
+<span class="nc" id="L121">			final LineLocation location = it.next().getLocation();</span>
+<span class="nc" id="L122">			return buildEmptyError(source, location, it.getTrace(), preprocessing);</span>
 		}
-<span class="fc" id="L123">		sys.makeDiagramReady();</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (sys.isOk() == false)</span>
-<span class="fc" id="L125">			return null;</span>
+<span class="fc" id="L124">		sys.makeDiagramReady();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (sys.isOk() == false)</span>
+<span class="fc" id="L126">			return null;</span>
 
-<span class="fc" id="L127">		return sys;</span>
+<span class="fc" id="L128">		return sys;</span>
 	}
 
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L132">		final Step step = getCandidate(it);</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (step == null) {</span>
-<span class="fc" id="L134">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, it.peek().getLocation(), getUmlDiagramType());</span>
-<span class="fc" id="L135">			it.next();</span>
-<span class="fc" id="L136">			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
+<span class="fc" id="L133">		final Step step = getCandidate(it);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (step == null) {</span>
+<span class="fc" id="L135">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, it.peek().getLocation(), getUmlDiagramType());</span>
+<span class="fc" id="L136">			it.next();</span>
+<span class="fc" id="L137">			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
 		}
 
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (step.command.isEligibleFor(currentPass) == false)</span>
-<span class="fc" id="L140">			return sys;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (step.command.isEligibleFor(currentPass) == false)</span>
+<span class="fc" id="L141">			return sys;</span>
 
-<span class="fc" id="L142">		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines, currentPass);</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (result.isOk() == false) {</span>
-<span class="fc" id="L144">			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();</span>
-<span class="fc" id="L145">			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),</span>
-<span class="fc" id="L146">					location, getUmlDiagramType());</span>
-<span class="fc" id="L147">			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace(), preprocessing);</span>
+<span class="fc" id="L143">		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines, currentPass);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (result.isOk() == false) {</span>
+<span class="fc" id="L145">			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();</span>
+<span class="fc" id="L146">			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),</span>
+<span class="fc" id="L147">					location, getUmlDiagramType());</span>
+<span class="fc" id="L148">			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace(), preprocessing);</span>
 		}
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (result.getNewDiagram() != null)</span>
-<span class="nc" id="L150">			sys = result.getNewDiagram();</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (result.getNewDiagram() != null)</span>
+<span class="nc" id="L151">			sys = result.getNewDiagram();</span>
 
-<span class="fc" id="L152">		return sys;</span>
+<span class="fc" id="L153">		return sys;</span>
 
 	}
 
@@ -157,79 +158,79 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		final Command command;
 		final BlocLines blocLines;
 
-<span class="fc" id="L160">		Step(Command command, BlocLines blocLines) {</span>
-<span class="fc" id="L161">			this.command = command;</span>
-<span class="fc" id="L162">			this.blocLines = blocLines;</span>
-<span class="fc" id="L163">		}</span>
+<span class="fc" id="L161">		Step(Command command, BlocLines blocLines) {</span>
+<span class="fc" id="L162">			this.command = command;</span>
+<span class="fc" id="L163">			this.blocLines = blocLines;</span>
+<span class="fc" id="L164">		}</span>
 
 	}
 
 	private Step getCandidate(final IteratorCounter2 it) {
-<span class="fc" id="L168">		final BlocLines single = BlocLines.single(it.peek());</span>
-<span class="fc" id="L169">		synchronized (cmds) {</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">			if (cmds.size() == 0)</span>
-<span class="fc" id="L171">				initCommandsList(cmds);</span>
-<span class="fc" id="L172">		}</span>
+<span class="fc" id="L169">		final BlocLines single = BlocLines.single(it.peek());</span>
+<span class="fc" id="L170">		synchronized (cmds) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (cmds.size() == 0)</span>
+<span class="fc" id="L172">				initCommandsList(cmds);</span>
+<span class="fc" id="L173">		}</span>
 
-<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (Command cmd : cmds) {</span>
-<span class="fc" id="L175">			final CommandControl result = cmd.isValid(single);</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (result == CommandControl.OK) {</span>
-<span class="fc" id="L177">				it.next();</span>
-<span class="fc" id="L178">				return new Step(cmd, single);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		for (Command cmd : cmds) {</span>
+<span class="fc" id="L176">			final CommandControl result = cmd.isValid(single);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (result == CommandControl.OK) {</span>
+<span class="fc" id="L178">				it.next();</span>
+<span class="fc" id="L179">				return new Step(cmd, single);</span>
 			}
-<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (result == CommandControl.OK_PARTIAL) {</span>
-<span class="fc" id="L181">				final IteratorCounter2 cloned = it.cloneMe();</span>
-<span class="fc" id="L182">				final BlocLines lines = isMultilineCommandOk(cloned, cmd);</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">				if (lines == null)</span>
-<span class="fc" id="L184">					continue;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			if (result == CommandControl.OK_PARTIAL) {</span>
+<span class="fc" id="L182">				final IteratorCounter2 cloned = it.cloneMe();</span>
+<span class="fc" id="L183">				final BlocLines lines = isMultilineCommandOk(cloned, cmd);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">				if (lines == null)</span>
+<span class="fc" id="L185">					continue;</span>
 
-<span class="fc" id="L186">				it.copyStateFrom(cloned);</span>
-<span class="fc" id="L187">				return new Step(cmd, lines);</span>
+<span class="fc" id="L187">				it.copyStateFrom(cloned);</span>
+<span class="fc" id="L188">				return new Step(cmd, lines);</span>
 			}
-<span class="fc" id="L189">		}</span>
-<span class="fc" id="L190">		return null;</span>
+<span class="fc" id="L190">		}</span>
+<span class="fc" id="L191">		return null;</span>
 	}
 
 	private BlocLines isMultilineCommandOk(IteratorCounter2 it, Command cmd) {
-<span class="fc" id="L194">		BlocLines lines = BlocLines.create();</span>
-<span class="fc" id="L195">		int nb = 0;</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		while (it.hasNext()) {</span>
-<span class="fc" id="L197">			lines = addOneSingleLineManageEmbedded2(it, lines);</span>
-<span class="fc" id="L198">			final CommandControl result = cmd.isValid(lines);</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">			if (result == CommandControl.NOT_OK)</span>
-<span class="fc" id="L200">				return null;</span>
+<span class="fc" id="L195">		BlocLines lines = BlocLines.create();</span>
+<span class="fc" id="L196">		int nb = 0;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L198">			lines = addOneSingleLineManageEmbedded2(it, lines);</span>
+<span class="fc" id="L199">			final CommandControl result = cmd.isValid(lines);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">			if (result == CommandControl.NOT_OK)</span>
+<span class="fc" id="L201">				return null;</span>
 
-<span class="fc bfc" id="L202" title="All 2 branches covered.">			if (result == CommandControl.OK)</span>
-<span class="fc" id="L203">				return lines;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			if (result == CommandControl.OK)</span>
+<span class="fc" id="L204">				return lines;</span>
 
-<span class="fc" id="L205">			nb++;</span>
-<span class="pc bpc" id="L206" title="1 of 4 branches missed.">			if (cmd instanceof CommandDecoratorMultine &amp;&amp; nb &gt; ((CommandDecoratorMultine) cmd).getNbMaxLines())</span>
-<span class="nc" id="L207">				return null;</span>
+<span class="fc" id="L206">			nb++;</span>
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">			if (cmd instanceof CommandDecoratorMultine &amp;&amp; nb &gt; ((CommandDecoratorMultine) cmd).getNbMaxLines())</span>
+<span class="nc" id="L208">				return null;</span>
 
-<span class="fc" id="L209">		}</span>
-<span class="fc" id="L210">		return null;</span>
+<span class="fc" id="L210">		}</span>
+<span class="fc" id="L211">		return null;</span>
 	}
 
 	private static BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
-<span class="fc" id="L214">		final StringLocated linetoBeAdded = it.next();</span>
-<span class="fc" id="L215">		lines = lines.add(linetoBeAdded);</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getTrimmed().getString()) != null) {</span>
-<span class="fc" id="L217">			int nested = 1;</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
-<span class="fc" id="L219">				final StringLocated s = it.next();</span>
-<span class="fc" id="L220">				lines = lines.add(s);</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">				if (EmbeddedDiagram.getEmbeddedType(s.getTrimmed().getString()) != null)</span>
+<span class="fc" id="L215">		final StringLocated linetoBeAdded = it.next();</span>
+<span class="fc" id="L216">		lines = lines.add(linetoBeAdded);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getTrimmed().getString()) != null) {</span>
+<span class="fc" id="L218">			int nested = 1;</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
+<span class="fc" id="L220">				final StringLocated s = it.next();</span>
+<span class="fc" id="L221">				lines = lines.add(s);</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">				if (EmbeddedDiagram.getEmbeddedType(s.getTrimmed().getString()) != null)</span>
 					// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
-<span class="nc" id="L223">					nested++;</span>
-<span class="fc bfc" id="L224" title="All 2 branches covered.">				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
-<span class="fc" id="L225">					nested--;</span>
-<span class="pc bpc" id="L226" title="1 of 2 branches missed.">					if (nested == 0)</span>
-<span class="fc" id="L227">						return lines;</span>
+<span class="nc" id="L224">					nested++;</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L226">					nested--;</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">					if (nested == 0)</span>
+<span class="fc" id="L228">						return lines;</span>
 				}
-<span class="fc" id="L229">			}</span>
+<span class="fc" id="L230">			}</span>
 		}
 
-<span class="fc" id="L232">		return lines;</span>
+<span class="fc" id="L233">		return lines;</span>
 	}
 
 }

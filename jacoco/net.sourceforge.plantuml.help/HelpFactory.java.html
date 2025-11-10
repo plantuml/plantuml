@@ -41,30 +41,31 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-<span class="fc" id="L47">public class HelpFactory extends PSystemCommandFactory {</span>
+<span class="fc" id="L48">public class HelpFactory extends PSystemCommandFactory {</span>
 	// ::comment when __CORE__
 	// ::comment when __HAXE__
 
 	@Override
-	public Help createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L53">		return new Help(source, preprocessing);</span>
+	public Help createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L54">		return new Help(source, preprocessing);</span>
 	}
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L58">		cmds.add(new CommandHelpColor());</span>
-<span class="fc" id="L59">		cmds.add(new CommandHelpFont());</span>
-<span class="fc" id="L60">		cmds.add(new CommandHelpKeyword());</span>
-<span class="fc" id="L61">		cmds.add(new CommandHelpType());</span>
-<span class="fc" id="L62">		cmds.add(new CommandHelpTheme());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L59">		cmds.add(new CommandHelpColor());</span>
+<span class="fc" id="L60">		cmds.add(new CommandHelpFont());</span>
+<span class="fc" id="L61">		cmds.add(new CommandHelpKeyword());</span>
+<span class="fc" id="L62">		cmds.add(new CommandHelpType());</span>
+<span class="fc" id="L63">		cmds.add(new CommandHelpTheme());</span>
+<span class="fc" id="L64">	}</span>
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L67">		return UmlDiagramType.HELP;</span>
+<span class="fc" id="L68">		return UmlDiagramType.HELP;</span>
 	}
 
 }

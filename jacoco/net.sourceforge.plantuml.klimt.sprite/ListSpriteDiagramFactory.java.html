@@ -42,28 +42,29 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-<span class="fc" id="L48">public class ListSpriteDiagramFactory extends PSystemCommandFactory {</span>
+<span class="fc" id="L49">public class ListSpriteDiagramFactory extends PSystemCommandFactory {</span>
 	// ::remove file when __CORE__
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L53">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L54">		CommonCommands.addCommonCommands2(cmds);</span>
-<span class="fc" id="L55">		CommonCommands.addCommonScaleCommands(cmds);</span>
-<span class="fc" id="L56">		cmds.add(new CommandListSprite());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L54">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L55">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="fc" id="L56">		CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="fc" id="L57">		cmds.add(new CommandListSprite());</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
-	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L61">		return new ListSpriteDiagram(source, previous, preprocessing);</span>
+	public ListSpriteDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L62">		return new ListSpriteDiagram(source, previous, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L66">		return null;</span>
+<span class="fc" id="L67">		return null;</span>
 	}
 
 }

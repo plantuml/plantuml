@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainer;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -59,108 +60,115 @@ import net.sourceforge.plantuml.text.Guillemet;
 
 public class SaltDictionary implements SpriteContainer, ISkinSimple {
 
-<span class="fc" id="L62">	private final Map&lt;String, Element&gt; data = new HashMap&lt;String, Element&gt;();</span>
+<span class="fc" id="L63">	private final Map&lt;String, Element&gt; data = new HashMap&lt;String, Element&gt;();</span>
 	private final ConfigurationStore&lt;OptionKey&gt; option;
+	private final PathSystem pathSystem;
 
-<span class="fc" id="L65">	public SaltDictionary(ConfigurationStore&lt;OptionKey&gt; option) {</span>
-<span class="fc" id="L66">		this.option = option;</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L67">	public SaltDictionary(PathSystem pathSystem, ConfigurationStore&lt;OptionKey&gt; option) {</span>
+<span class="fc" id="L68">		this.pathSystem = pathSystem;</span>
+<span class="fc" id="L69">		this.option = option;</span>
+<span class="fc" id="L70">	}</span>
 
 	public void put(String name, Element element) {
-<span class="nc" id="L70">		data.put(name, element);</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L73">		data.put(name, element);</span>
+<span class="nc" id="L74">	}</span>
 
 	public Element get(String name) {
-<span class="nc" id="L74">		final Element result = Objects.requireNonNull(data.get(Objects.requireNonNull(name)));</span>
-<span class="nc" id="L75">		return new WrappedElement(result);</span>
+<span class="nc" id="L77">		final Element result = Objects.requireNonNull(data.get(Objects.requireNonNull(name)));</span>
+<span class="nc" id="L78">		return new WrappedElement(result);</span>
 	}
 
 	@Override
 	public Sprite getSprite(String name) {
-<span class="nc" id="L80">		return sprites.get(name);</span>
+<span class="nc" id="L83">		return sprites.get(name);</span>
 	}
 
 	@Override
 	public String getValue(String key) {
-<span class="nc" id="L85">		return null;</span>
+<span class="nc" id="L88">		return null;</span>
 	}
 
 	@Override
 	public double getPadding() {
-<span class="fc" id="L90">		return 0;</span>
+<span class="fc" id="L93">		return 0;</span>
 	}
 
 	@Override
 	public Guillemet guillemet() {
-<span class="fc" id="L95">		return Guillemet.GUILLEMET;</span>
+<span class="fc" id="L98">		return Guillemet.GUILLEMET;</span>
 	}
 
 	@Override
 	public String getMonospacedFamily() {
-<span class="nc" id="L100">		return Parser.MONOSPACED;</span>
+<span class="nc" id="L103">		return Parser.MONOSPACED;</span>
 	}
 
 	@Override
 	public int getTabSize() {
-<span class="nc" id="L105">		return 8;</span>
+<span class="nc" id="L108">		return 8;</span>
 	}
 
 	@Override
 	public HColorSet getIHtmlColorSet() {
-<span class="nc" id="L110">		return HColorSet.instance();</span>
+<span class="nc" id="L113">		return HColorSet.instance();</span>
 	}
 
 	@Override
 	public int getDpi() {
-<span class="nc" id="L115">		return 96;</span>
+<span class="nc" id="L118">		return 96;</span>
 	}
 
-<span class="fc" id="L118">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
+<span class="fc" id="L121">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
 
 	public void addSprite(String name, Sprite sprite) {
-<span class="nc" id="L121">		sprites.put(name, sprite);</span>
+<span class="nc" id="L124">		sprites.put(name, sprite);</span>
 
-<span class="nc" id="L123">	}</span>
+<span class="nc" id="L126">	}</span>
 
 	@Override
 	public void copyAllFrom(Map&lt;String, String&gt; other) {
-<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L130">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Map&lt;String, String&gt; values() {
-<span class="nc" id="L132">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L135">		throw new UnsupportedOperationException();</span>
 	}
 
 	public double minClassWidthTOBEREMOVED(Style style) {
-<span class="nc" id="L136">		return 0;</span>
+<span class="nc" id="L139">		return 0;</span>
 	}
 
 	@Override
 	public String transformStringForSizeHack(String s) {
-<span class="nc" id="L141">		return s;</span>
+<span class="nc" id="L144">		return s;</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode) {
-<span class="nc" id="L147">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L150">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
-<span class="fc" id="L153">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
+<span class="fc" id="L156">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
 	}
 
 	@Override
 	public Pragma getPragma() {
-<span class="nc" id="L158">		return Pragma.createEmpty();</span>
+<span class="nc" id="L161">		return Pragma.createEmpty();</span>
 	}
 
 	@Override
 	public ConfigurationStore&lt;OptionKey&gt; options() {
-<span class="nc" id="L163">		return option;</span>
+<span class="nc" id="L166">		return option;</span>
+	}
+
+	@Override
+	public PathSystem getPathSystem() {
+<span class="nc" id="L171">		return pathSystem;</span>
 	}
 
 }

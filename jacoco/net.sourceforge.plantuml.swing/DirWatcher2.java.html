@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class DirWatcher2 {
 	// ::remove file when __CORE__
@@ -64,74 +63,73 @@ public class DirWatcher2 {
 	final private CliOptions option;
 	final private String pattern;
 
-<span class="nc" id="L67">	final private Map&lt;File, FileWatcher&gt; modifieds = new ConcurrentHashMap&lt;File, FileWatcher&gt;();</span>
+<span class="nc" id="L66">	final private Map&lt;File, FileWatcher&gt; modifieds = new ConcurrentHashMap&lt;File, FileWatcher&gt;();</span>
 	final private ExecutorService executorService;
 
-<span class="nc" id="L70">	public DirWatcher2(File dir, CliOptions option, String pattern) {</span>
-<span class="nc" id="L71">		this.dir = dir;</span>
-<span class="nc" id="L72">		this.option = option;</span>
-<span class="nc" id="L73">		this.pattern = pattern;</span>
-<span class="nc" id="L74">		final int nb = CliOptions.defaultNbThreads();</span>
-<span class="nc" id="L75">		this.executorService = Executors.newFixedThreadPool(nb);</span>
+<span class="nc" id="L69">	public DirWatcher2(File dir, CliOptions option, String pattern) {</span>
+<span class="nc" id="L70">		this.dir = dir;</span>
+<span class="nc" id="L71">		this.option = option;</span>
+<span class="nc" id="L72">		this.pattern = pattern;</span>
+<span class="nc" id="L73">		final int nb = CliOptions.defaultNbThreads();</span>
+<span class="nc" id="L74">		this.executorService = Executors.newFixedThreadPool(nb);</span>
 
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L76">	}</span>
 
 	public Map&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt; buildCreatedFiles() throws IOException, InterruptedException {
-<span class="nc" id="L80">		final Map&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt; result = new TreeMap&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt;();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			for (final File f : dir.listFiles()) {</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">				if (f.isFile() == false)</span>
-<span class="nc" id="L84">					continue;</span>
+<span class="nc" id="L79">		final Map&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt; result = new TreeMap&lt;File, Future&lt;List&lt;GeneratedImage&gt;&gt;&gt;();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			for (final File f : dir.listFiles()) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">				if (f.isFile() == false)</span>
+<span class="nc" id="L83">					continue;</span>
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
-<span class="nc" id="L87">					continue;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if (fileToProcess(f.getName()) == false)</span>
+<span class="nc" id="L86">					continue;</span>
 
-<span class="nc" id="L89">				final FileWatcher watcher = modifieds.get(f);</span>
+<span class="nc" id="L88">				final FileWatcher watcher = modifieds.get(f);</span>
 
-<span class="nc bnc" id="L91" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
-<span class="nc" id="L92">					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,</span>
-<span class="nc" id="L93">							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
-<span class="nc" id="L94">							option.getFileFormatOption());</span>
-<span class="nc" id="L95">					modifieds.put(f, new FileWatcher(Collections.singleton(f)));</span>
-<span class="nc" id="L96">					final Future&lt;List&lt;GeneratedImage&gt;&gt; value = executorService</span>
-<span class="nc" id="L97">							.submit(new Callable&lt;List&lt;GeneratedImage&gt;&gt;() {</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
+<span class="nc" id="L91">					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,</span>
+<span class="nc" id="L92">							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
+<span class="nc" id="L93">							option.getFileFormatOption());</span>
+<span class="nc" id="L94">					modifieds.put(f, new FileWatcher(Collections.singleton(f)));</span>
+<span class="nc" id="L95">					final Future&lt;List&lt;GeneratedImage&gt;&gt; value = executorService</span>
+<span class="nc" id="L96">							.submit(new Callable&lt;List&lt;GeneratedImage&gt;&gt;() {</span>
 								public List&lt;GeneratedImage&gt; call() throws Exception {
 									try {
-<span class="nc" id="L100">										final List&lt;GeneratedImage&gt; generatedImages = sourceFileReader</span>
-<span class="nc" id="L101">												.getGeneratedImages();</span>
-<span class="nc" id="L102">										final Set&lt;File&gt; files = FileWithSuffix</span>
-<span class="nc" id="L103">												.convert(sourceFileReader.getIncludedFiles());</span>
-<span class="nc" id="L104">										files.add(f);</span>
-<span class="nc" id="L105">										modifieds.put(f, new FileWatcher(files));</span>
-<span class="nc" id="L106">										return Collections.unmodifiableList(generatedImages);</span>
-<span class="nc" id="L107">									} catch (Exception e) {</span>
-<span class="nc" id="L108">										Logme.error(e);</span>
-<span class="nc" id="L109">										return Collections.emptyList();</span>
+<span class="nc" id="L99">										final List&lt;GeneratedImage&gt; generatedImages = sourceFileReader</span>
+<span class="nc" id="L100">												.getGeneratedImages();</span>
+<span class="nc" id="L101">										final Set&lt;File&gt; files = sourceFileReader.getIncludedFiles();</span>
+<span class="nc" id="L102">										files.add(f);</span>
+<span class="nc" id="L103">										modifieds.put(f, new FileWatcher(files));</span>
+<span class="nc" id="L104">										return Collections.unmodifiableList(generatedImages);</span>
+<span class="nc" id="L105">									} catch (Exception e) {</span>
+<span class="nc" id="L106">										Logme.error(e);</span>
+<span class="nc" id="L107">										return Collections.emptyList();</span>
 									}
 								}
 							});
-<span class="nc" id="L113">					result.put(f, value);</span>
+<span class="nc" id="L111">					result.put(f, value);</span>
 				}
 			}
-<span class="nc" id="L116">		return Collections.unmodifiableMap(result);</span>
+<span class="nc" id="L114">		return Collections.unmodifiableMap(result);</span>
 	}
 
 	private boolean fileToProcess(String name) {
-<span class="nc" id="L120">		return name.matches(pattern);</span>
+<span class="nc" id="L118">		return name.matches(pattern);</span>
 	}
 
 	public final File getDir() {
-<span class="nc" id="L124">		return dir;</span>
+<span class="nc" id="L122">		return dir;</span>
 	}
 
 	public void cancel() {
-<span class="nc" id="L128">		executorService.shutdownNow();</span>
-<span class="nc" id="L129">	}</span>
+<span class="nc" id="L126">		executorService.shutdownNow();</span>
+<span class="nc" id="L127">	}</span>
 
 	public void waitEnd() throws InterruptedException {
-<span class="nc" id="L132">		executorService.shutdown();</span>
-<span class="nc" id="L133">		executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);</span>
-<span class="nc" id="L134">	}</span>
+<span class="nc" id="L130">		executorService.shutdown();</span>
+<span class="nc" id="L131">		executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L132">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

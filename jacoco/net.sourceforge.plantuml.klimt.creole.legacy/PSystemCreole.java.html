@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -59,29 +60,30 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class PSystemCreole extends PlainDiagram {
 	// ::remove file when __CORE__
 
-<span class="fc" id="L62">	private final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L63">	private final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
 
 	public PSystemCreole(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L65">		super(source, preprocessing);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L66">		super(source, preprocessing);</span>
+<span class="fc" id="L67">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L69">		return new DiagramDescription(&quot;(Creole)&quot;);</span>
+<span class="nc" id="L70">		return new DiagramDescription(&quot;(Creole)&quot;);</span>
 	}
 
 	public void doCommandLine(String line) {
-<span class="nc" id="L73">		lines.add(line);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L74">		lines.add(line);</span>
+<span class="nc" id="L75">	}</span>
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L78">		final Display display = Display.create(lines);</span>
-<span class="nc" id="L79">		final UFont font = UFont.serif(14);</span>
-<span class="nc" id="L80">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);</span>
-<span class="nc" id="L81">		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE, Pragma.createEmpty(), getPreprocessingArtifact().getOption());</span>
-<span class="nc" id="L82">		final Sheet sheet = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)</span>
-<span class="nc" id="L83">				.createSheet(display);</span>
-<span class="nc" id="L84">		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);</span>
+<span class="nc" id="L79">		final Display display = Display.create(lines);</span>
+<span class="nc" id="L80">		final UFont font = UFont.serif(14);</span>
+<span class="nc" id="L81">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);</span>
+<span class="nc" id="L82">		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), UmlDiagramType.SEQUENCE, Pragma.createEmpty(),</span>
+<span class="nc" id="L83">				getPreprocessingArtifact().getOption());</span>
+<span class="nc" id="L84">		final Sheet sheet = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)</span>
+<span class="nc" id="L85">				.createSheet(display);</span>
+<span class="nc" id="L86">		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);</span>
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
 		// final UGraphic2 ug = fileFormat.createUGraphic(ColorMapper.IDENTITY, 1,

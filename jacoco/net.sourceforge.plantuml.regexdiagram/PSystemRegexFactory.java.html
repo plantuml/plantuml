@@ -43,31 +43,32 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemRegexFactory extends PSystemCommandFactory {
 
 	public PSystemRegexFactory() {
-<span class="fc" id="L52">		super(DiagramType.REGEX);</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(DiagramType.REGEX);</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc" id="L57">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L58">		CommonCommands.addCommonCommands1(cmds);</span>
 //		cmds.add(new CommandUseDescriptiveNames());
 //		cmds.add(new CommandLanguage());
-<span class="nc" id="L60">		cmds.add(new CommandRegexfSingleLine());</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L61">		cmds.add(new CommandRegexfSingleLine());</span>
+<span class="nc" id="L62">	}</span>
 
 	@Override
-	public PSystemRegex createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L65">		return new PSystemRegex(source, preprocessing);</span>
+	public PSystemRegex createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L66">		return new PSystemRegex(source, preprocessing);</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L70">		return UmlDiagramType.REGEX;</span>
+<span class="nc" id="L71">		return UmlDiagramType.REGEX;</span>
 	}
 
 

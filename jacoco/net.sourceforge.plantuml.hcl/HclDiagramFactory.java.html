@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.yaml.Highlighted;
@@ -55,32 +56,32 @@ import net.sourceforge.plantuml.yaml.Highlighted;
 public class HclDiagramFactory extends PSystemAbstractFactory {
 
 	public HclDiagramFactory() {
-<span class="fc" id="L58">		super(DiagramType.HCL);</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L59">		super(DiagramType.HCL);</span>
+<span class="fc" id="L60">	}</span>
 
 	@Override
-	public Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L63">		final List&lt;Highlighted&gt; highlighted = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L64">		JsonValue data = null;</span>
-<span class="nc" id="L65">		StyleExtractor styleExtractor = null;</span>
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L64">		final List&lt;Highlighted&gt; highlighted = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L65">		JsonValue data = null;</span>
+<span class="nc" id="L66">		StyleExtractor styleExtractor = null;</span>
 		try {
-<span class="nc" id="L67">			final HclSource list = new HclSource();</span>
-<span class="nc" id="L68">			styleExtractor = new StyleExtractor(source.iterator2());</span>
-<span class="nc" id="L69">			final Iterator&lt;String&gt; it = styleExtractor.getIterator();</span>
-<span class="nc" id="L70">			it.next();</span>
+<span class="nc" id="L68">			final HclSource list = new HclSource();</span>
+<span class="nc" id="L69">			styleExtractor = new StyleExtractor(source.iterator2());</span>
+<span class="nc" id="L70">			final Iterator&lt;String&gt; it = styleExtractor.getIterator();</span>
+<span class="nc" id="L71">			it.next();</span>
 			while (true) {
-<span class="nc" id="L72">				final String line = it.next();</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">				if (it.hasNext() == false)</span>
-<span class="nc" id="L74">					break;</span>
+<span class="nc" id="L73">				final String line = it.next();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (it.hasNext() == false)</span>
+<span class="nc" id="L75">					break;</span>
 
-<span class="nc" id="L76">				list.add(line);</span>
-<span class="nc" id="L77">			}</span>
-<span class="nc" id="L78">			HclParser parser = new HclParser(list);</span>
-<span class="nc" id="L79">			data = parser.parseMe();</span>
-<span class="nc" id="L80">		} catch (Exception e) {</span>
-<span class="nc" id="L81">			Logme.error(e);</span>
-<span class="nc" id="L82">		}</span>
-<span class="nc" id="L83">		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor, preprocessing);</span>
+<span class="nc" id="L77">				list.add(line);</span>
+<span class="nc" id="L78">			}</span>
+<span class="nc" id="L79">			HclParser parser = new HclParser(list);</span>
+<span class="nc" id="L80">			data = parser.parseMe();</span>
+<span class="nc" id="L81">		} catch (Exception e) {</span>
+<span class="nc" id="L82">			Logme.error(e);</span>
+<span class="nc" id="L83">		}</span>
+<span class="nc" id="L84">		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor, preprocessing);</span>
 //		if (styleExtractor != null) {
 //			styleExtractor.applyStyles(result.getSkinParam());
 //			final String title = styleExtractor.getTitle();
@@ -88,12 +89,12 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 //				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
 //						VerticalAlignment.CENTER));
 //		}
-<span class="nc" id="L91">		return result;</span>
+<span class="nc" id="L92">		return result;</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L96">		return UmlDiagramType.HCL;</span>
+<span class="nc" id="L97">		return UmlDiagramType.HCL;</span>
 	}
 
 

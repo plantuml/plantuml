@@ -36,11 +36,13 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -74,125 +76,125 @@ public class Stdlib {
 
 	// ::comment when __CORE__
 
-<span class="fc" id="L77">	private static final ConcurrentMap&lt;String, Stdlib&gt; all = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L79">	private static final ConcurrentMap&lt;String, Stdlib&gt; all = new ConcurrentHashMap&lt;&gt;();</span>
 
-<span class="fc" id="L79">	private final List&lt;Integer&gt; colors = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L80">	private final Map&lt;String, byte[]&gt; puml = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L81">	private final Map&lt;String, byte[]&gt; json = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L82">	private final Map&lt;String, StdlibSprite&gt; sprites = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L83">	private final Map&lt;String, SvgNanoParser&gt; svgs = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L84">	private final List&lt;FutureBufferedImage&gt; images = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L81">	private final List&lt;Integer&gt; colors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L82">	private final Map&lt;String, byte[]&gt; puml = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L83">	private final Map&lt;String, byte[]&gt; json = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L84">	private final Map&lt;String, StdlibSprite&gt; sprites = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L85">	private final Map&lt;String, SvgNanoParser&gt; svgs = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L86">	private final List&lt;FutureBufferedImage&gt; images = new ArrayList&lt;&gt;();</span>
 
 	private final String name;
-<span class="fc" id="L87">	private final Map&lt;String, String&gt; info = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L89">	private final Map&lt;String, String&gt; info = new HashMap&lt;String, String&gt;();</span>
 
-<span class="fc" id="L89">	private Stdlib(String name) throws IOException {</span>
-<span class="fc" id="L90">		this.name = name;</span>
-<span class="fc" id="L91">		try (final InputStream is = getInternalInputStream(SpmChannel.INFO)) {</span>
-<span class="fc" id="L92">			final List&lt;String&gt; pathInfo = FileUtils.readStrings(is);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">			for (String s : pathInfo)</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if (s.contains(&quot;=&quot;)) {</span>
-<span class="fc" id="L95">					final String data[] = s.split(&quot;=&quot;);</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">					if (data.length == 2)</span>
-<span class="fc" id="L97">						this.info.put(data[0], data[1]);</span>
+<span class="fc" id="L91">	private Stdlib(String name) throws IOException {</span>
+<span class="fc" id="L92">		this.name = name;</span>
+<span class="fc" id="L93">		try (final InputStream is = getInternalInputStream(SpmChannel.INFO)) {</span>
+<span class="fc" id="L94">			final List&lt;String&gt; pathInfo = FileUtils.readStrings(is);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			for (String s : pathInfo)</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">				if (s.contains(&quot;=&quot;)) {</span>
+<span class="fc" id="L97">					final String data[] = s.split(&quot;=&quot;);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">					if (data.length == 2)</span>
+<span class="fc" id="L99">						this.info.put(data[0], data[1]);</span>
 				}
 		}
 
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L103">	}</span>
 
 	public static byte[] getPumlResource(String fullname) {
-<span class="fc" id="L104">		fullname = fullname.toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;);</span>
-<span class="fc" id="L105">		final int last = fullname.indexOf('/');</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (last == -1)</span>
-<span class="nc" id="L107">			return null;</span>
+<span class="fc" id="L106">		fullname = fullname.toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;);</span>
+<span class="fc" id="L107">		final int last = fullname.indexOf('/');</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (last == -1)</span>
+<span class="nc" id="L109">			return null;</span>
 
 		try {
-<span class="fc" id="L110">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
-<span class="pc bpc" id="L111" title="2 of 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
-<span class="nc" id="L112">				return null;</span>
+<span class="fc" id="L112">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
+<span class="nc" id="L114">				return null;</span>
 
-<span class="fc" id="L114">			return folder.loadPumlResource(fullname.substring(last + 1));</span>
-<span class="nc" id="L115">		} catch (IOException e) {</span>
-<span class="nc" id="L116">			Logme.error(e);</span>
-<span class="nc" id="L117">			return null;</span>
+<span class="fc" id="L116">			return folder.loadPumlResource(fullname.substring(last + 1));</span>
+<span class="nc" id="L117">		} catch (IOException e) {</span>
+<span class="nc" id="L118">			Logme.error(e);</span>
+<span class="nc" id="L119">			return null;</span>
 		}
 	}
 
 	public static byte[] getJsonResource(String fullname) {
-<span class="nc" id="L122">		final int last = fullname.indexOf('/');</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (last == -1)</span>
-<span class="nc" id="L124">			return null;</span>
+<span class="nc" id="L124">		final int last = fullname.indexOf('/');</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (last == -1)</span>
+<span class="nc" id="L126">			return null;</span>
 
 		try {
-<span class="nc" id="L127">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
-<span class="nc bnc" id="L128" title="All 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
-<span class="nc" id="L129">				return null;</span>
+<span class="nc" id="L129">			final Stdlib folder = retrieve(fullname.substring(0, last));</span>
+<span class="nc bnc" id="L130" title="All 4 branches missed.">			if (folder == null || folder.info.size() == 0)</span>
+<span class="nc" id="L131">				return null;</span>
 
-<span class="nc" id="L131">			return folder.loadJsonResource(fullname.substring(last + 1));</span>
+<span class="nc" id="L133">			return folder.loadJsonResource(fullname.substring(last + 1));</span>
 
-<span class="nc" id="L133">		} catch (IOException e) {</span>
-<span class="nc" id="L134">			Logme.error(e);</span>
-<span class="nc" id="L135">			return null;</span>
+<span class="nc" id="L135">		} catch (IOException e) {</span>
+<span class="nc" id="L136">			Logme.error(e);</span>
+<span class="nc" id="L137">			return null;</span>
 		}
 	}
 
 	private byte[] loadPumlResource(String file) throws IOException {
-<span class="fc" id="L140">		synchronized (puml) {</span>
-<span class="fc" id="L141">			initMapIfNeeded(puml, SpmChannel.PUML);</span>
-<span class="fc" id="L142">			return puml.get(file);</span>
+<span class="fc" id="L142">		synchronized (puml) {</span>
+<span class="fc" id="L143">			initMapIfNeeded(puml, SpmChannel.PUML);</span>
+<span class="fc" id="L144">			return puml.get(file);</span>
 		}
 	}
 
 	private byte[] loadJsonResource(String file) throws IOException {
-<span class="nc" id="L147">		synchronized (json) {</span>
-<span class="nc" id="L148">			initMapIfNeeded(json, SpmChannel.JSON);</span>
-<span class="nc" id="L149">			return json.get(file);</span>
+<span class="nc" id="L149">		synchronized (json) {</span>
+<span class="nc" id="L150">			initMapIfNeeded(json, SpmChannel.JSON);</span>
+<span class="nc" id="L151">			return json.get(file);</span>
 		}
 	}
 
 	private void initMapIfNeeded(Map&lt;String, byte[]&gt; map, SpmChannel channel) throws IOException {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (map.size() == 0) {</span>
-<span class="fc" id="L155">			try (InputStream is = getInternalInputStream(channel); DataInputStream dis = new DataInputStream(is)) {</span>
-<span class="fc" id="L156">				final int nb = dis.readInt();</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">				for (int i = 0; i &lt; nb; i++) {</span>
-<span class="fc" id="L158">					final String name = dis.readUTF();</span>
-<span class="fc" id="L159">					final int len = dis.readInt();</span>
-<span class="fc" id="L160">					final byte data[] = FileUtils.readExactly(dis, len);</span>
-<span class="fc" id="L161">					map.put(name.toLowerCase(), data);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (map.size() == 0) {</span>
+<span class="fc" id="L157">			try (InputStream is = getInternalInputStream(channel); DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="fc" id="L158">				final int nb = dis.readInt();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">				for (int i = 0; i &lt; nb; i++) {</span>
+<span class="fc" id="L160">					final String name = dis.readUTF();</span>
+<span class="fc" id="L161">					final int len = dis.readInt();</span>
+<span class="fc" id="L162">					final byte data[] = FileUtils.readExactly(dis, len);</span>
+<span class="fc" id="L163">					map.put(name.toLowerCase(), data);</span>
 				}
 			}
 		}
-<span class="fc" id="L165">	}</span>
+<span class="fc" id="L167">	}</span>
 
 	public static Stdlib retrieve(final String name) throws IOException {
-<span class="fc" id="L168">		return all.computeIfAbsent(name, key -&gt; {</span>
+<span class="fc" id="L170">		return all.computeIfAbsent(name, key -&gt; {</span>
 			try {
-<span class="fc" id="L170">				final Stdlib result = new Stdlib(key);</span>
-<span class="fc" id="L171">				final String link = result.getLinkFromInfo();</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">				if (link != null)</span>
-<span class="fc" id="L173">					return retrieve(link);</span>
+<span class="fc" id="L172">				final Stdlib result = new Stdlib(key);</span>
+<span class="fc" id="L173">				final String link = result.getLinkFromInfo();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">				if (link != null)</span>
+<span class="fc" id="L175">					return retrieve(link);</span>
 
-<span class="fc" id="L175">				return result;</span>
-<span class="nc" id="L176">			} catch (IOException e) {</span>
-<span class="nc" id="L177">				throw new UncheckedIOException(e);</span>
+<span class="fc" id="L177">				return result;</span>
+<span class="nc" id="L178">			} catch (IOException e) {</span>
+<span class="nc" id="L179">				throw new UncheckedIOException(e);</span>
 			}
 		});
 	}
 
 	private String getLinkFromInfo() {
-<span class="fc" id="L183">		return info.get(&quot;link&quot;);</span>
+<span class="fc" id="L185">		return info.get(&quot;link&quot;);</span>
 	}
 
 	static private int read1byte(InputStream is) throws IOException {
-<span class="nc" id="L187">		return is.read() &amp; 0xFF;</span>
+<span class="nc" id="L189">		return is.read() &amp; 0xFF;</span>
 	}
 
 	static int read2bytes(InputStream is) throws IOException {
-<span class="nc" id="L191">		return (read1byte(is) &lt;&lt; 8) + read1byte(is);</span>
+<span class="nc" id="L193">		return (read1byte(is) &lt;&lt; 8) + read1byte(is);</span>
 	}
 
 	private InputStream getInternalInputStream(SpmChannel channel) throws IOException {
-<span class="fc" id="L195">		return channel.getInternalInputStream(name);</span>
+<span class="fc" id="L197">		return channel.getInternalInputStream(name);</span>
 	}
 
 //	public static void extractStdLib() throws IOException {
@@ -203,12 +205,12 @@ public class Stdlib {
 //	}
 
 	public static Collection&lt;String&gt; getAllFolderNames() throws IOException {
-<span class="fc" id="L206">		final InputStream home = SpmChannel.inputStream(&quot;stdlib/home.spm&quot;);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (home == null)</span>
-<span class="nc" id="L208">			throw new IOException(&quot;Cannot access to /stdlib files&quot;);</span>
+<span class="fc" id="L208">		final InputStream home = SpmChannel.inputStream(&quot;stdlib/home.spm&quot;);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (home == null)</span>
+<span class="nc" id="L210">			throw new IOException(&quot;Cannot access to /stdlib files&quot;);</span>
 
-<span class="fc" id="L210">		try (final BufferedReader br = new BufferedReader(new InputStreamReader(home))) {</span>
-<span class="fc" id="L211">			return new TreeSet&lt;&gt;(br.lines().collect(Collectors.toList()));</span>
+<span class="fc" id="L212">		try (final BufferedReader br = new BufferedReader(new InputStreamReader(home))) {</span>
+<span class="fc" id="L213">			return new TreeSet&lt;&gt;(br.lines().collect(Collectors.toList()));</span>
 		}
 	}
 
@@ -253,7 +255,7 @@ public class Stdlib {
 //			dataStream.close();
 //			spriteStream.close();
 //		}
-<span class="nc" id="L256">	}</span>
+<span class="nc" id="L258">	}</span>
 
 //	public Collection&lt;String&gt; getAllFilenamesWithSprites() throws IOException {
 //		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();
@@ -320,122 +322,132 @@ public class Stdlib {
 
 	public static void addInfoVersion(List&lt;String&gt; strings, boolean details) {
 		try {
-<span class="fc bfc" id="L323" title="All 2 branches covered.">			for (String name : getAllFolderNames()) {</span>
-<span class="fc" id="L324">				final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">				if (details) {</span>
-<span class="fc" id="L326">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
-<span class="fc" id="L327">					strings.add(&quot;Version &quot; + folder.getVersion());</span>
-<span class="fc" id="L328">					strings.add(&quot;Delivered by &quot; + folder.getSource());</span>
-<span class="fc" id="L329">					strings.add(&quot; &quot;);</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">			for (String name : getAllFolderNames()) {</span>
+<span class="fc" id="L326">				final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">				if (details) {</span>
+<span class="fc" id="L328">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
+<span class="fc" id="L329">					strings.add(&quot;Version &quot; + folder.getVersion());</span>
+<span class="fc" id="L330">					strings.add(&quot;Delivered by &quot; + folder.getSource());</span>
+<span class="fc" id="L331">					strings.add(&quot; &quot;);</span>
 				} else {
-<span class="nc" id="L331">					strings.add(&quot;* &quot; + name + &quot; (Version &quot; + folder.getVersion() + &quot;)&quot;);</span>
+<span class="nc" id="L333">					strings.add(&quot;* &quot; + name + &quot; (Version &quot; + folder.getVersion() + &quot;)&quot;);</span>
 				}
-<span class="fc" id="L333">			}</span>
-<span class="nc" id="L334">		} catch (IOException e) {</span>
-<span class="nc" id="L335">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L336">			return;</span>
-<span class="fc" id="L337">		}</span>
-<span class="fc" id="L338">	}</span>
+<span class="fc" id="L335">			}</span>
+<span class="nc" id="L336">		} catch (IOException e) {</span>
+<span class="nc" id="L337">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L338">			return;</span>
+<span class="fc" id="L339">		}</span>
+<span class="fc" id="L340">	}</span>
 
 	public String getVersion() {
-<span class="fc" id="L341">		String result = info.get(&quot;VERSION&quot;);</span>
-<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L343">			result = info.get(&quot;version&quot;);</span>
-<span class="fc" id="L344">		return result;</span>
+<span class="fc" id="L343">		String result = info.get(&quot;VERSION&quot;);</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L345">			result = info.get(&quot;version&quot;);</span>
+<span class="fc" id="L346">		return result;</span>
 	}
 
 	public String getSource() {
-<span class="fc" id="L348">		String result = info.get(&quot;SOURCE&quot;);</span>
-<span class="pc bpc" id="L349" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L350">			result = info.get(&quot;source&quot;);</span>
-<span class="fc" id="L351">		return result;</span>
+<span class="fc" id="L350">		String result = info.get(&quot;SOURCE&quot;);</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L352">			result = info.get(&quot;source&quot;);</span>
+<span class="fc" id="L353">		return result;</span>
 	}
 
 	public Map&lt;String, String&gt; getMetadata() {
-<span class="nc" id="L355">		return Collections.unmodifiableMap(info);</span>
+<span class="nc" id="L357">		return Collections.unmodifiableMap(info);</span>
 
 	}
 
 	public static void printStdLib() {
-<span class="nc" id="L360">		final List&lt;String&gt; print = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L361">		addInfoVersion(print, true);</span>
-<span class="nc bnc" id="L362" title="All 2 branches missed.">		for (String s : print)</span>
-<span class="nc" id="L363">			System.out.println(s.replace(&quot;&lt;b&gt;&quot;, &quot;&quot;));</span>
+<span class="nc" id="L362">		final List&lt;String&gt; print = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L363">		addInfoVersion(print, true);</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		for (String s : print)</span>
+<span class="nc" id="L365">			System.out.println(s.replace(&quot;&lt;b&gt;&quot;, &quot;&quot;));</span>
 
-<span class="nc" id="L365">	}</span>
+<span class="nc" id="L367">	}</span>
 	// ::done
 
 	public Sprite readSprite(String name) throws IOException {
-<span class="fc" id="L369">		synchronized (sprites) {</span>
-<span class="fc bfc" id="L370" title="All 2 branches covered.">			if (sprites.size() == 0) {</span>
-<span class="fc" id="L371">				try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);</span>
-<span class="fc" id="L372">						DataInputStream dis = new DataInputStream(is)) {</span>
-<span class="fc" id="L373">					final int nb = dis.readInt();</span>
-<span class="fc bfc" id="L374" title="All 2 branches covered.">					for (int i = 0; i &lt; nb; i++) {</span>
-<span class="fc" id="L375">						final String spriteName = dis.readUTF();</span>
-<span class="fc" id="L376">						final int width = dis.readInt();</span>
-<span class="fc" id="L377">						final int height = dis.readInt();</span>
+<span class="fc" id="L371">		synchronized (sprites) {</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">			if (sprites.size() == 0) {</span>
+<span class="fc" id="L373">				try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);</span>
+<span class="fc" id="L374">						DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="fc" id="L375">					final int nb = dis.readInt();</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">					for (int i = 0; i &lt; nb; i++) {</span>
+<span class="fc" id="L377">						final String spriteName = dis.readUTF();</span>
+<span class="fc" id="L378">						final int width = dis.readInt();</span>
+<span class="fc" id="L379">						final int height = dis.readInt();</span>
 
-<span class="fc" id="L379">						final int nbLines = (height + 1) / 2;</span>
-<span class="fc" id="L380">						final byte data[] = FileUtils.readExactly(dis, width * nbLines);</span>
-<span class="fc" id="L381">						final StdlibSprite sprite = new StdlibSprite(width, height, data);</span>
-<span class="fc" id="L382">						sprites.put(spriteName, sprite);</span>
+<span class="fc" id="L381">						final int nbLines = (height + 1) / 2;</span>
+<span class="fc" id="L382">						final byte data[] = FileUtils.readExactly(dis, width * nbLines);</span>
+<span class="fc" id="L383">						final StdlibSprite sprite = new StdlibSprite(width, height, data);</span>
+<span class="fc" id="L384">						sprites.put(spriteName, sprite);</span>
 					}
 				}
 			}
-<span class="fc" id="L386">			return sprites.get(name);</span>
+<span class="fc" id="L388">			return sprites.get(name);</span>
 		}
 	}
 
 	public Sprite readSvgSprite(String name) throws IOException {
-<span class="nc" id="L391">		synchronized (svgs) {</span>
-<span class="nc bnc" id="L392" title="All 2 branches missed.">			if (svgs.size() == 0) {</span>
-<span class="nc" id="L393">				try (InputStream is = getInternalInputStream(SpmChannel.SVG);</span>
-<span class="nc" id="L394">						DataInputStream dis = new DataInputStream(is)) {</span>
-<span class="nc" id="L395">					final int nb = dis.readInt();</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">					for (int i = 0; i &lt; nb; i++) {</span>
-<span class="nc" id="L397">						final String spriteName = dis.readUTF();</span>
-<span class="nc" id="L398">						final String svg = dis.readUTF();</span>
-<span class="nc" id="L399">						svgs.put(spriteName, new SvgNanoParser(svg));</span>
+<span class="nc" id="L393">		synchronized (svgs) {</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">			if (svgs.size() == 0) {</span>
+<span class="nc" id="L395">				try (InputStream is = getInternalInputStream(SpmChannel.SVG);</span>
+<span class="nc" id="L396">						DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="nc" id="L397">					final int nb = dis.readInt();</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">					for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L399">						final String spriteName = dis.readUTF();</span>
+<span class="nc" id="L400">						final String svg = dis.readUTF();</span>
+<span class="nc" id="L401">						svgs.put(spriteName, new SvgNanoParser(svg));</span>
 					}
 				}
 			}
-<span class="nc" id="L403">			return svgs.get(name);</span>
+<span class="nc" id="L405">			return svgs.get(name);</span>
 		}
 
 	}
 
 	public FutureBufferedImage readDataImagePng(int num) throws IOException {
-<span class="nc" id="L409">		synchronized (images) {</span>
-<span class="nc bnc" id="L410" title="All 2 branches missed.">			if (images.size() == 0) {</span>
-<span class="nc" id="L411">				try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);</span>
-<span class="nc" id="L412">						DataInputStream dis = new DataInputStream(is)) {</span>
-<span class="nc" id="L413">					final int nb = dis.readInt();</span>
-<span class="nc" id="L414">					readColorTable(dis);</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">					for (int i = 0; i &lt; nb; i++) {</span>
-<span class="nc" id="L416">						final int width = dis.readInt();</span>
-<span class="nc" id="L417">						final int height = dis.readInt();</span>
-<span class="nc" id="L418">						final byte data[] = FileUtils.readExactly(dis, width * height * 2);</span>
-<span class="nc" id="L419">						images.add(new FutureBufferedImage(colors, width, height, data));</span>
+<span class="nc" id="L411">		synchronized (images) {</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">			if (images.size() == 0) {</span>
+<span class="nc" id="L413">				try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);</span>
+<span class="nc" id="L414">						DataInputStream dis = new DataInputStream(is)) {</span>
+<span class="nc" id="L415">					final int nb = dis.readInt();</span>
+<span class="nc" id="L416">					readColorTable(dis);</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">					for (int i = 0; i &lt; nb; i++) {</span>
+<span class="nc" id="L418">						final int width = dis.readInt();</span>
+<span class="nc" id="L419">						final int height = dis.readInt();</span>
+<span class="nc" id="L420">						final byte data[] = FileUtils.readExactly(dis, width * height * 2);</span>
+<span class="nc" id="L421">						images.add(new FutureBufferedImage(colors, width, height, data));</span>
 					}
 				}
 			}
-<span class="nc" id="L423">			return images.get(num);</span>
+<span class="nc" id="L425">			return images.get(num);</span>
 		}
 
 	}
 
 	private void readColorTable(InputStream is) throws IOException {
-<span class="nc" id="L429">		final int size = read2bytes(is);</span>
-<span class="nc bnc" id="L430" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc" id="L431">			final int alpha = read1byte(is);</span>
-<span class="nc" id="L432">			final int red = read1byte(is);</span>
-<span class="nc" id="L433">			final int green = read1byte(is);</span>
-<span class="nc" id="L434">			final int blue = read1byte(is);</span>
-<span class="nc" id="L435">			final int rgb = (alpha &lt;&lt; 24) + (red &lt;&lt; 16) + (green &lt;&lt; 8) + blue;</span>
-<span class="nc" id="L436">			colors.add(rgb);</span>
+<span class="nc" id="L431">		final int size = read2bytes(is);</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L433">			final int alpha = read1byte(is);</span>
+<span class="nc" id="L434">			final int red = read1byte(is);</span>
+<span class="nc" id="L435">			final int green = read1byte(is);</span>
+<span class="nc" id="L436">			final int blue = read1byte(is);</span>
+<span class="nc" id="L437">			final int rgb = (alpha &lt;&lt; 24) + (red &lt;&lt; 16) + (green &lt;&lt; 8) + blue;</span>
+<span class="nc" id="L438">			colors.add(rgb);</span>
 		}
-<span class="nc" id="L438">	}</span>
+<span class="nc" id="L440">	}</span>
+
+	public InputStream newInputStream(Path path) throws IOException {
+<span class="fc" id="L443">		final String pathString = path.toString().toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;).replace('\\', '/');</span>
+<span class="fc" id="L444">		final byte[] data = loadPumlResource(pathString);</span>
+<span class="fc" id="L445">		return new ByteArrayInputStream(data);</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L449">		return name;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

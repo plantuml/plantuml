@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -56,8 +57,8 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -77,49 +78,50 @@ public class BlockUml {
 	private Diagram system;
 	private final Defines localDefines;
 	private final Previous previous;
-<span class="fc" id="L80">	private final Set&lt;FileWithSuffix&gt; included = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L81">	private final Set&lt;File&gt; included = new HashSet&lt;&gt;();</span>
 	private final PreprocessingArtifact preprocessingArtifact;
+	private final PathSystem pathSystem;
 
-	public Set&lt;FileWithSuffix&gt; getIncluded() {
-<span class="fc" id="L84">		return Collections.unmodifiableSet(included);</span>
+	public Set&lt;File&gt; getIncluded() {
+<span class="fc" id="L86">		return Collections.unmodifiableSet(included);</span>
 	}
 
 	@Deprecated
 	BlockUml(String... strings) {
-<span class="nc" id="L89">		this(convert(strings), Defines.createEmpty(), null, null, null);</span>
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L91">		this(PathSystem.fetch(), convert(strings), Defines.createEmpty(), null, null, null);</span>
+<span class="nc" id="L92">	}</span>
 
 	// ::comment when __CORE__
 	public String getEncodedUrl() throws IOException {
-<span class="fc" id="L94">		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();</span>
-<span class="fc" id="L95">		final String source = getDiagram().getSource().getPlainString(&quot;\n&quot;);</span>
-<span class="fc" id="L96">		final String encoded = transcoder.encode(source);</span>
-<span class="fc" id="L97">		return encoded;</span>
+<span class="fc" id="L96">		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();</span>
+<span class="fc" id="L97">		final String source = getDiagram().getSource().getPlainString(&quot;\n&quot;);</span>
+<span class="fc" id="L98">		final String encoded = transcoder.encode(source);</span>
+<span class="fc" id="L99">		return encoded;</span>
 	}
 	// ::done
 
 	public String getFlashData() {
-<span class="nc" id="L102">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (StringLocated line : data) {</span>
-<span class="nc" id="L104">			sb.append(line.getString());</span>
-<span class="nc" id="L105">			sb.append('\r');</span>
-<span class="nc" id="L106">			sb.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="nc" id="L107">		}</span>
-<span class="nc" id="L108">		return sb.toString();</span>
+<span class="nc" id="L104">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (StringLocated line : data) {</span>
+<span class="nc" id="L106">			sb.append(line.getString());</span>
+<span class="nc" id="L107">			sb.append('\r');</span>
+<span class="nc" id="L108">			sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="nc" id="L109">		}</span>
+<span class="nc" id="L110">		return sb.toString();</span>
 	}
 
 	public static List&lt;StringLocated&gt; convert(String... strings) {
-<span class="nc" id="L112">		return convert(Arrays.asList(strings));</span>
+<span class="nc" id="L114">		return convert(Arrays.asList(strings));</span>
 	}
 
 	public static List&lt;StringLocated&gt; convert(List&lt;String&gt; strings) {
-<span class="fc" id="L116">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L117">		LineLocationImpl location = new LineLocationImpl(&quot;block&quot;, null);</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (String s : strings) {</span>
-<span class="fc" id="L119">			location = location.oneLineRead();</span>
-<span class="fc" id="L120">			result.add(new StringLocated(s, location));</span>
-<span class="fc" id="L121">		}</span>
-<span class="fc" id="L122">		return result;</span>
+<span class="fc" id="L118">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L119">		LineLocationImpl location = new LineLocationImpl(&quot;block&quot;, null);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (String s : strings) {</span>
+<span class="fc" id="L121">			location = location.oneLineRead();</span>
+<span class="fc" id="L122">			result.add(new StringLocated(s, location));</span>
+<span class="fc" id="L123">		}</span>
+<span class="fc" id="L124">		return result;</span>
 	}
 
 	private boolean preprocessorError;
@@ -134,115 +136,117 @@ public class BlockUml {
 //		this(strings, defines, skinMap, definitions, charsetOrDefault(definitions.getCharset()));
 //	}
 
-	public BlockUml(List&lt;StringLocated&gt; strings, Defines defines, Previous previous,
-<span class="fc" id="L138">			DefinitionsContainer definitions, Charset charset) {</span>
-<span class="fc" id="L139">		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);</span>
-<span class="fc" id="L140">		this.localDefines = defines;</span>
-<span class="fc" id="L141">		this.previous = previous;</span>
+	public BlockUml(PathSystem pathSystem, List&lt;StringLocated&gt; strings, Defines defines, Previous previous,
+<span class="fc" id="L140">			DefinitionsContainer definitions, Charset charset) {</span>
+<span class="fc" id="L141">		this.pathSystem = pathSystem;</span>
+<span class="fc" id="L142">		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);</span>
+<span class="fc" id="L143">		this.localDefines = defines;</span>
+<span class="fc" id="L144">		this.previous = previous;</span>
 
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (definitions == null) {</span>
-<span class="fc" id="L144">			this.data = new ArrayList&lt;&gt;(this.rawSource);</span>
-<span class="fc" id="L145">			this.preprocessingArtifact = new PreprocessingArtifact();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (definitions == null) {</span>
+<span class="fc" id="L147">			this.data = new ArrayList&lt;&gt;(this.rawSource);</span>
+<span class="fc" id="L148">			this.preprocessingArtifact = new PreprocessingArtifact();</span>
 		} else {
-<span class="fc" id="L147">			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,</span>
-<span class="fc" id="L148">					this.rawSource.get(0));</span>
-<span class="fc" id="L149">			this.included.addAll(timLoader.load(this.rawSource));</span>
-<span class="fc" id="L150">			List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
-<span class="fc" id="L151">			tmp = Jaws.expands0(tmp);</span>
-<span class="fc" id="L152">			tmp = Jaws.expandsJawsForPreprocessor(tmp);</span>
-<span class="fc" id="L153">			this.data = tmp;</span>
-<span class="fc" id="L154">			this.debug = timLoader.getDebug();</span>
-<span class="fc" id="L155">			this.preprocessorError = timLoader.isPreprocessorError();</span>
-<span class="fc" id="L156">			this.preprocessingArtifact = timLoader.getPreprocessingArtifact();</span>
+<span class="fc" id="L150">			final TimLoader timLoader = new TimLoader(pathSystem, /*definitions.getImportedFiles(),*/ defines, charset,</span>
+<span class="fc" id="L151">					definitions, this.rawSource.get(0));</span>
+<span class="fc" id="L152">			this.included.addAll(timLoader.load(this.rawSource));</span>
+<span class="fc" id="L153">			List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
+<span class="fc" id="L154">			tmp = Jaws.expands0(tmp);</span>
+<span class="fc" id="L155">			tmp = Jaws.expandsJawsForPreprocessor(tmp);</span>
+<span class="fc" id="L156">			this.data = tmp;</span>
+<span class="fc" id="L157">			this.debug = timLoader.getDebug();</span>
+<span class="fc" id="L158">			this.preprocessorError = timLoader.isPreprocessorError();</span>
+<span class="fc" id="L159">			this.preprocessingArtifact = timLoader.getPreprocessingArtifact();</span>
 		}
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L161">	}</span>
 
 	// ::comment when __CORE__
 	public String getFileOrDirname() {
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))</span>
-<span class="nc" id="L163">			return null;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))</span>
+<span class="nc" id="L166">			return null;</span>
 
-<span class="fc" id="L165">		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));</span>
-<span class="fc" id="L166">		final boolean ok = m.find();</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (ok == false)</span>
-<span class="fc" id="L168">			return null;</span>
+<span class="fc" id="L168">		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));</span>
+<span class="fc" id="L169">		final boolean ok = m.find();</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (ok == false)</span>
+<span class="fc" id="L171">			return null;</span>
 
-<span class="nc" id="L170">		String result = m.group(1);</span>
-<span class="nc" id="L171">		final int x = result.indexOf(',');</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (x != -1)</span>
-<span class="nc" id="L173">			result = result.substring(0, x);</span>
+<span class="nc" id="L173">		String result = m.group(1);</span>
+<span class="nc" id="L174">		final int x = result.indexOf(',');</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (x != -1)</span>
+<span class="nc" id="L176">			result = result.substring(0, x);</span>
 
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		for (int i = 0; i &lt; result.length(); i++) {</span>
-<span class="nc" id="L176">			final char c = result.charAt(i);</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (&quot;&lt;&gt;|&quot;.indexOf(c) != -1)</span>
-<span class="nc" id="L178">				return null;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (int i = 0; i &lt; result.length(); i++) {</span>
+<span class="nc" id="L179">			final char c = result.charAt(i);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (&quot;&lt;&gt;|&quot;.indexOf(c) != -1)</span>
+<span class="nc" id="L181">				return null;</span>
 
 		}
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (result.startsWith(&quot;file://&quot;))</span>
-<span class="nc" id="L182">			result = result.substring(&quot;file://&quot;.length());</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (result.startsWith(&quot;file://&quot;))</span>
+<span class="nc" id="L185">			result = result.substring(&quot;file://&quot;.length());</span>
 
-<span class="nc" id="L184">		result = result.replaceAll(&quot;\\.\\w\\w\\w$&quot;, &quot;&quot;);</span>
-<span class="nc" id="L185">		return result;</span>
+<span class="nc" id="L187">		result = result.replaceAll(&quot;\\.\\w\\w\\w$&quot;, &quot;&quot;);</span>
+<span class="nc" id="L188">		return result;</span>
 	}
 	// ::done
 
 	public Diagram getDiagram() {
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (system == null) {</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">			if (preprocessorError)</span>
-<span class="fc" id="L192">				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (system == null) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">			if (preprocessorError)</span>
+<span class="fc" id="L195">				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);</span>
 			else
-<span class="fc" id="L194">				system = new PSystemBuilder().createPSystem(data, rawSource, previous, preprocessingArtifact);</span>
+<span class="fc" id="L197">				system = new PSystemBuilder().createPSystem(pathSystem, data, rawSource, previous,</span>
+						preprocessingArtifact);
 		}
-<span class="fc" id="L196">		return system;</span>
+<span class="fc" id="L200">		return system;</span>
 	}
 
 	public final List&lt;StringLocated&gt; getData() {
-<span class="fc" id="L200">		return data;</span>
+<span class="fc" id="L204">		return data;</span>
 	}
 
 	// ::comment when __CORE__
 	private String internalEtag() {
 		try {
-<span class="nc" id="L206">			final AsciiEncoder coder = new AsciiEncoder();</span>
-<span class="nc" id="L207">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">			for (StringLocated s : data)</span>
-<span class="nc" id="L209">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
+<span class="nc" id="L210">			final AsciiEncoder coder = new AsciiEncoder();</span>
+<span class="nc" id="L211">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">			for (StringLocated s : data)</span>
+<span class="nc" id="L213">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
 
-<span class="nc" id="L211">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L212">			return coder.encode(digest);</span>
-<span class="nc" id="L213">		} catch (Exception e) {</span>
-<span class="nc" id="L214">			Logme.error(e);</span>
-<span class="nc" id="L215">			return &quot;NOETAG&quot;;</span>
+<span class="nc" id="L215">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L216">			return coder.encode(digest);</span>
+<span class="nc" id="L217">		} catch (Exception e) {</span>
+<span class="nc" id="L218">			Logme.error(e);</span>
+<span class="nc" id="L219">			return &quot;NOETAG&quot;;</span>
 		}
 	}
 
 	public String etag() {
-<span class="nc" id="L220">		return Version.etag() + internalEtag();</span>
+<span class="nc" id="L224">		return Version.etag() + internalEtag();</span>
 	}
 	// ::done
 
 	public long lastModified() {
-<span class="nc" id="L225">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
+<span class="nc" id="L229">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
 	}
 
 	public boolean isStartDef(String name) {
-<span class="nc" id="L229">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
-<span class="nc" id="L230">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
+<span class="nc" id="L233">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
+<span class="nc" id="L234">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
 	}
 
 	public List&lt;String&gt; getDefinition(boolean withHeader) {
-<span class="fc" id="L234">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">		for (StringLocated s : data)</span>
-<span class="fc" id="L236">			result.add(s.getString());</span>
+<span class="fc" id="L238">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		for (StringLocated s : data)</span>
+<span class="fc" id="L240">			result.add(s.getString());</span>
 
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (withHeader)</span>
-<span class="fc" id="L239">			return Collections.unmodifiableList(result);</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (withHeader)</span>
+<span class="fc" id="L243">			return Collections.unmodifiableList(result);</span>
 
-<span class="nc" id="L241">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
+<span class="nc" id="L245">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
 	}
 
 	public Defines getLocalDefines() {
-<span class="nc" id="L245">		return localDefines;</span>
+<span class="nc" id="L249">		return localDefines;</span>
 	}
 
 }

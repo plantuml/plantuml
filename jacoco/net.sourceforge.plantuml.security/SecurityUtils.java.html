@@ -311,8 +311,8 @@ import net.sourceforge.plantuml.utils.Log;
 	 * @return the manager.
 	 */
 	public static SecurityAuthorizeManager getAuthenticationManager(SecurityCredentials credentialConfiguration) {
-<span class="nc bnc" id="L314" title="All 2 branches missed.">		if (credentialConfiguration == SecurityCredentials.NONE) {</span>
-<span class="nc" id="L315">			return PUBLIC_AUTH_MANAGER;</span>
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">		if (credentialConfiguration == SecurityCredentials.NONE) {</span>
+<span class="fc" id="L315">			return PUBLIC_AUTH_MANAGER;</span>
 <span class="nc bnc" id="L316" title="All 2 branches missed.">		} else if (&quot;tokenauth&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
 <span class="nc" id="L317">			return TOKEN_AUTH_MANAGER;</span>
 <span class="nc bnc" id="L318" title="All 2 branches missed.">		} else if (&quot;basicauth&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>

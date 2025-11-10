@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAnalog;
@@ -67,43 +68,43 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandTicks;
 import net.sourceforge.plantuml.timingdiagram.command.CommandTimeMessage;
 import net.sourceforge.plantuml.timingdiagram.command.CommandUseDateFormat;
 
-<span class="fc" id="L70">public class TimingDiagramFactory extends PSystemCommandFactory {</span>
+<span class="fc" id="L71">public class TimingDiagramFactory extends PSystemCommandFactory {</span>
 
 	@Override
-	public TimingDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L74">		return new TimingDiagram(source, preprocessing);</span>
+	public TimingDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L75">		return new TimingDiagram(source, preprocessing);</span>
 	}
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L79">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L80">		cmds.add(new CommandFootboxIgnored());</span>
-<span class="fc" id="L81">		cmds.add(new CommandRobustConcise());</span>
-<span class="fc" id="L82">		cmds.add(new CommandClock());</span>
-<span class="fc" id="L83">		cmds.add(new CommandAnalog());</span>
-<span class="fc" id="L84">		cmds.add(new CommandBinary());</span>
-<span class="fc" id="L85">		cmds.add(new CommandDefineStateShort());</span>
-<span class="fc" id="L86">		cmds.add(new CommandDefineStateLong());</span>
-<span class="fc" id="L87">		cmds.add(new CommandChangeStateByPlayerCode());</span>
-<span class="fc" id="L88">		cmds.add(new CommandChangeStateByTime());</span>
-<span class="fc" id="L89">		cmds.add(new CommandAtTime());</span>
-<span class="fc" id="L90">		cmds.add(new CommandAtPlayer());</span>
-<span class="fc" id="L91">		cmds.add(new CommandTimeMessage());</span>
-<span class="fc" id="L92">		cmds.add(new CommandNote());</span>
-<span class="fc" id="L93">		cmds.add(new CommandNoteLong());</span>
-<span class="fc" id="L94">		cmds.add(new CommandConstraint());</span>
-<span class="fc" id="L95">		cmds.add(new CommandScalePixel());</span>
-<span class="fc" id="L96">		cmds.add(new CommandHideTimeAxis());</span>
-<span class="fc" id="L97">		cmds.add(new CommandHighlight());</span>
-<span class="fc" id="L98">		cmds.add(new CommandModeCompact());</span>
-<span class="fc" id="L99">		cmds.add(new CommandTicks());</span>
-<span class="fc" id="L100">		cmds.add(new CommandPixelHeight());</span>
-<span class="fc" id="L101">		cmds.add(new CommandUseDateFormat());</span>
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L80">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L81">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="fc" id="L82">		cmds.add(new CommandRobustConcise());</span>
+<span class="fc" id="L83">		cmds.add(new CommandClock());</span>
+<span class="fc" id="L84">		cmds.add(new CommandAnalog());</span>
+<span class="fc" id="L85">		cmds.add(new CommandBinary());</span>
+<span class="fc" id="L86">		cmds.add(new CommandDefineStateShort());</span>
+<span class="fc" id="L87">		cmds.add(new CommandDefineStateLong());</span>
+<span class="fc" id="L88">		cmds.add(new CommandChangeStateByPlayerCode());</span>
+<span class="fc" id="L89">		cmds.add(new CommandChangeStateByTime());</span>
+<span class="fc" id="L90">		cmds.add(new CommandAtTime());</span>
+<span class="fc" id="L91">		cmds.add(new CommandAtPlayer());</span>
+<span class="fc" id="L92">		cmds.add(new CommandTimeMessage());</span>
+<span class="fc" id="L93">		cmds.add(new CommandNote());</span>
+<span class="fc" id="L94">		cmds.add(new CommandNoteLong());</span>
+<span class="fc" id="L95">		cmds.add(new CommandConstraint());</span>
+<span class="fc" id="L96">		cmds.add(new CommandScalePixel());</span>
+<span class="fc" id="L97">		cmds.add(new CommandHideTimeAxis());</span>
+<span class="fc" id="L98">		cmds.add(new CommandHighlight());</span>
+<span class="fc" id="L99">		cmds.add(new CommandModeCompact());</span>
+<span class="fc" id="L100">		cmds.add(new CommandTicks());</span>
+<span class="fc" id="L101">		cmds.add(new CommandPixelHeight());</span>
+<span class="fc" id="L102">		cmds.add(new CommandUseDateFormat());</span>
+<span class="fc" id="L103">	}</span>
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L106">		return UmlDiagramType.TIMING;</span>
+<span class="fc" id="L107">		return UmlDiagramType.TIMING;</span>
 	}
 
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PathSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.nio</a> &gt; <span class="el_source">PathSystem.java</span></div><h1>PathSystem.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.nio;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SURL;
+
+// Replacement for FileSystem
+//See ImportedFiles
+//See TContext::executeInclude
+//See PreprocessorUtils
+
+public class PathSystem {
+
+	public static PathSystem fetch() {
+<span class="fc" id="L54">		return new PathSystem(new NFolderRegular(Paths.get(&quot;&quot;)));</span>
+	}
+
+	private final NFolder currentFolder;
+
+<span class="fc" id="L59">	private PathSystem(NFolder currentFolder) {</span>
+<span class="fc" id="L60">		this.currentFolder = currentFolder;</span>
+<span class="fc" id="L61">	}</span>
+
+//	public Path asPath() {
+//		return currentFolder;
+//	}
+
+	public PathSystem changeCurrentDirectory(Path newCurrentDir) throws IOException {
+<span class="fc" id="L68">		return new PathSystem(currentFolder.getSubfolder(newCurrentDir));</span>
+	}
+
+	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
+<span class="fc" id="L72">		return new PathSystem(newCurrentDir);</span>
+	}
+
+	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (newCurrentDir == null)</span>
+<span class="fc" id="L77">			return this;</span>
+<span class="fc" id="L78">		return changeCurrentDirectory(newCurrentDir.toPath());</span>
+	}
+
+	public PathSystem withCurrentDir(NFolder parentFile) {
+<span class="fc" id="L82">		return new PathSystem(parentFile);</span>
+	}
+
+	public NFolder getCurrentDir() {
+<span class="nc" id="L86">		return currentFolder;</span>
+	}
+
+	public InputFile getFile(String filename, String suffix) throws IOException {
+<span class="nc" id="L90">		return getInputFile(filename);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L95">		return currentFolder.toString();</span>
+	}
+
+	public InputFile getInputFile(String path) throws IOException {
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="fc" id="L100">			final SURL url = SURL.create(path);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L102">				throw new IOException(&quot;Cannot open URL &quot; + path);</span>
+<span class="fc" id="L103">			return new InputFileUrl(url);</span>
+		}
+
+<span class="pc bpc" id="L106" title="1 of 4 branches missed.">		if (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)) {</span>
+<span class="fc" id="L107">			final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
+<span class="fc" id="L108">			final String libname = full.substring(0, full.indexOf('/'));</span>
+<span class="fc" id="L109">			final String filepath = full.substring(libname.length() + 1);</span>
+<span class="fc" id="L110">			return new InputFileStdlib(Stdlib.retrieve(libname), Paths.get(filepath));</span>
+		}
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (path.startsWith(&quot;::&quot;)) {</span>
+			// non-standard syntax: resolve from process launch directory
+<span class="fc" id="L115">			String rel = path.substring(2); // remove leading &quot;::&quot;</span>
+			// allow both ::/foo.puml and ::./foo.puml
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (rel.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L118">				rel = rel.substring(1);</span>
+<span class="fc" id="L119">			final Path target = Paths.get(&quot;&quot;).toAbsolutePath().resolve(rel).normalize();</span>
+<span class="fc" id="L120">			final SFile result = SFile.fromFile(target.toFile());</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
+<span class="fc" id="L122">				return result;</span>
+<span class="nc" id="L123">			return null;</span>
+		}
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (path.startsWith(&quot;~/&quot;)) {</span>
+			// Expand to the user's home directory
+<span class="fc" id="L127">			final String home = System.getProperty(&quot;user.home&quot;);</span>
+<span class="fc" id="L128">			final Path homePath = Paths.get(home).resolve(path.substring(2)).normalize();</span>
+<span class="fc" id="L129">			final SFile result = SFile.fromFile(homePath.toFile());</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
+<span class="fc" id="L131">				return result;</span>
+<span class="nc" id="L132">			return null;</span>
+		}
+
+<span class="fc" id="L135">		return currentFolder.getInputFile(Paths.get(path));</span>
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L139">		System.out.println(PathSystem.fetch());</span>
+<span class="nc" id="L140">	}</span>
+
+	public void addImportFile(SFile file) {
+		// Nothing right now
+
+<span class="nc" id="L145">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

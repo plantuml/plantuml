@@ -424,7 +424,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final <a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PSystemBuilder.</span><code><a href="../../PSystemBuilder.html#createPSystem(java.util.List,java.util.List,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createPSystem</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">PSystemBuilder.</span><code><a href="../../PSystemBuilder.html#createPSystem(net.sourceforge.plantuml.nio.PathSystem,java.util.List,java.util.List,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createPSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;rawSource,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
@@ -525,7 +526,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PSystemFactory.</span><code><a href="../../api/PSystemFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">PSystemFactory.</span><code><a href="../../api/PSystemFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -676,17 +678,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final <a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PSystemBasicFactory.</span><code><a href="../../command/PSystemBasicFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">PSystemBasicFactory.</span><code><a href="../../command/PSystemBasicFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>final <a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">PSystemCommandFactory.</span><code><a href="../../command/PSystemCommandFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second odd-row-color"><span class="type-name-label">PSystemCommandFactory.</span><code><a href="../../command/PSystemCommandFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>final <a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PSystemSingleLineFactory.</span><code><a href="../../command/PSystemSingleLineFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">PSystemSingleLineFactory.</span><code><a href="../../command/PSystemSingleLineFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -878,7 +883,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PSystemWelcomeFactory.</span><code><a href="../../eggs/PSystemWelcomeFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">PSystemWelcomeFactory.</span><code><a href="../../eggs/PSystemWelcomeFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -952,7 +958,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilesDiagramFactory.</span><code><a href="../../filesdiagram/FilesDiagramFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">FilesDiagramFactory.</span><code><a href="../../filesdiagram/FilesDiagramFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1005,7 +1012,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">GitDiagramFactory.</span><code><a href="../../gitlog/GitDiagramFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">GitDiagramFactory.</span><code><a href="../../gitlog/GitDiagramFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1021,7 +1029,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">HclDiagramFactory.</span><code><a href="../../hcl/HclDiagramFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">HclDiagramFactory.</span><code><a href="../../hcl/HclDiagramFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1074,7 +1083,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">JsonDiagramFactory.</span><code><a href="../../jsondiagram/JsonDiagramFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">JsonDiagramFactory.</span><code><a href="../../jsondiagram/JsonDiagramFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1447,7 +1457,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">YamlDiagramFactory.</span><code><a href="../../yaml/YamlDiagramFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color"><span class="type-name-label">YamlDiagramFactory.</span><code><a href="../../yaml/YamlDiagramFactory.html#createSystem(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createSystem</a><wbr>(<a href="../../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>

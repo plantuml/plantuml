@@ -55,24 +55,20 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.file">net.sourceforge.plantuml.file</a></div>
-<div class="col-last even-row-color">
-<div class="block">Provides classes used to manage Folder and File.</div>
-</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.preproc">net.sourceforge.plantuml.preproc</a></div>
-<div class="col-last odd-row-color">
-<div class="block">Provides classes used to manage 
- <a href="https://plantuml.com/preprocessing" target="_top">
- Preprocessing</a> of PlantUML input.</div>
-</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.preproc2">net.sourceforge.plantuml.preproc2</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.preproc">net.sourceforge.plantuml.preproc</a></div>
 <div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/preprocessing" target="_top">
  Preprocessing</a> of PlantUML input.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.theme">net.sourceforge.plantuml.theme</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.preproc2">net.sourceforge.plantuml.preproc2</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/preprocessing" target="_top">
+ Preprocessing</a> of PlantUML input.</div>
+</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.theme">net.sourceforge.plantuml.theme</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage
  <a href="https://plantuml.com/theme" target="_top">
  Theme</a>.</div>
@@ -80,20 +76,6 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-uses">
 <ul class="block-list">
-<li>
-<section class="detail" id="net.sourceforge.plantuml.file">
-<h2>Uses of <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a> in <a href="../../file/package-summary.html">net.sourceforge.plantuml.file</a></h2>
-<div class="caption"><span>Methods in <a href="../../file/package-summary.html">net.sourceforge.plantuml.file</a> that return <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AParentFolderStdlib.</span><code><a href="../../file/AParentFolderStdlib.html#getReader(java.lang.String)" class="member-name-link">getReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;what)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.preproc">
 <h2>Uses of <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a> in <a href="../package-summary.html">net.sourceforge.plantuml.preproc</a></h2>
@@ -143,29 +125,24 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;desc)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StartDiagramExtractReader.</span><code><a href="../StartDiagramExtractReader.html#build(net.sourceforge.plantuml.preproc.FileWithSuffix,net.sourceforge.plantuml.text.StringLocated,java.nio.charset.Charset)" class="member-name-link">build</a><wbr>(<a href="../FileWithSuffix.html" title="class in net.sourceforge.plantuml.preproc">FileWithSuffix</a>&nbsp;f2,
- <a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;s,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StartDiagramExtractReader.</span><code><a href="../StartDiagramExtractReader.html#build(net.sourceforge.plantuml.security.SURL,net.sourceforge.plantuml.text.StringLocated,java.lang.String,java.nio.charset.Charset)" class="member-name-link">build</a><wbr>(<a href="../../security/SURL.html" title="class in net.sourceforge.plantuml.security">SURL</a>&nbsp;url,
+<div class="col-second odd-row-color"><span class="type-name-label">StartDiagramExtractReader.</span><code><a href="../StartDiagramExtractReader.html#build(net.sourceforge.plantuml.security.SURL,net.sourceforge.plantuml.text.StringLocated,java.lang.String,java.nio.charset.Charset)" class="member-name-link">build</a><wbr>(<a href="../../security/SURL.html" title="class in net.sourceforge.plantuml.security">SURL</a>&nbsp;url,
  <a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;s,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uid,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReadLineReader.</span><code><a href="../ReadLineReader.html#create(byte%5B%5D,java.lang.String)" class="member-name-link">create</a><wbr>(byte[]&nbsp;data,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ReadLineReader.</span><code><a href="../ReadLineReader.html#create(byte%5B%5D,java.lang.String)" class="member-name-link">create</a><wbr>(byte[]&nbsp;data,
+<div class="col-second odd-row-color"><span class="type-name-label">ReadLineReader.</span><code><a href="../ReadLineReader.html#create(java.io.Reader,java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ReadLineReader.</span><code><a href="../ReadLineReader.html#create(java.io.Reader,java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ReadLineReader.</span><code><a href="../ReadLineReader.html#create(java.io.Reader,java.lang.String,net.sourceforge.plantuml.utils.LineLocation)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="col-second even-row-color"><span class="type-name-label">ReadLineReader.</span><code><a href="../ReadLineReader.html#create(java.io.Reader,java.lang.String,net.sourceforge.plantuml.utils.LineLocation)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;parent)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.preproc</a> with parameters of type <a href="../ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></span></div>
 <div class="summary-table three-column-summary">

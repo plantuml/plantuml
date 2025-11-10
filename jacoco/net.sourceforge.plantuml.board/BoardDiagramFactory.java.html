@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -50,29 +51,29 @@ public class BoardDiagramFactory extends PSystemCommandFactory {
 	// ::remove folder when __CORE__
 
 	public BoardDiagramFactory() {
-<span class="fc" id="L53">		super(DiagramType.BOARD);</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(DiagramType.BOARD);</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc" id="L58">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L59">		cmds.add(new CommandBoardPlus());</span>
+<span class="nc" id="L59">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L60">		cmds.add(new CommandBoardPlus());</span>
 		// cmds.add(new CommandMindMapTabulation());
 //		cmds.add(new CommandMindMapOrgmode());
 //		cmds.add(new CommandMindMapOrgmodeMultiline());
 //		cmds.add(new CommandMindMapRoot());
 //		cmds.add(new CommandMindMapPlus());
 //		cmds.add(new CommandMindMapDirection());
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L67">	}</span>
 
 	@Override
-	public BoardDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L70">		return new BoardDiagram(source, preprocessing);</span>
+	public BoardDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L71">		return new BoardDiagram(source, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L75">		return UmlDiagramType.BOARD;</span>
+<span class="nc" id="L76">		return UmlDiagramType.BOARD;</span>
 	}
 
 }

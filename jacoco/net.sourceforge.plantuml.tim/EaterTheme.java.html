@@ -36,20 +36,15 @@ package net.sourceforge.plantuml.tim;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import net.sourceforge.plantuml.file.AFile;
-import net.sourceforge.plantuml.file.AParentFolder;
-import net.sourceforge.plantuml.file.AParentFolderRegular;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
-import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.theme.Theme;
@@ -62,95 +57,97 @@ public class EaterTheme extends Eater {
 	private String name;
 	private String from;
 	private TContext context;
-	private final ImportedFiles importedFiles;
-	private ImportedFiles newImportedFiles;
+	private final PathSystem importedFiles;
+	private PathSystem newImportedFiles;
 
-	public EaterTheme(StringLocated s, ImportedFiles importedFiles) {
-<span class="fc" id="L69">		super(s);</span>
-<span class="fc" id="L70">		this.importedFiles = importedFiles;</span>
-<span class="fc" id="L71">		this.newImportedFiles = importedFiles;</span>
-<span class="fc" id="L72">	}</span>
+	public EaterTheme(StringLocated s, PathSystem importedFiles) {
+<span class="fc" id="L64">		super(s);</span>
+<span class="fc" id="L65">		this.importedFiles = importedFiles;</span>
+<span class="fc" id="L66">		this.newImportedFiles = importedFiles;</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="fc" id="L76">		skipSpaces();</span>
-<span class="fc" id="L77">		checkAndEatChar(&quot;!theme&quot;);</span>
-<span class="fc" id="L78">		skipSpaces();</span>
-<span class="fc" id="L79">		this.name = this.eatAllToEnd();</span>
+<span class="fc" id="L71">		skipSpaces();</span>
+<span class="fc" id="L72">		checkAndEatChar(&quot;!theme&quot;);</span>
+<span class="fc" id="L73">		skipSpaces();</span>
+<span class="fc" id="L74">		this.name = this.eatAllToEnd();</span>
 
-<span class="fc" id="L81">		final int x = this.name.toLowerCase().indexOf(&quot; from &quot;);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (x != -1) {</span>
-<span class="nc" id="L83">			final String fromTmp = this.name.substring(x + &quot; from &quot;.length()).trim();</span>
-<span class="nc" id="L84">			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));</span>
-<span class="nc" id="L85">			this.name = this.name.substring(0, x).trim();</span>
-<span class="nc" id="L86">			this.context = context;</span>
+<span class="fc" id="L76">		final int x = this.name.toLowerCase().indexOf(&quot; from &quot;);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (x != -1) {</span>
+<span class="nc" id="L78">			final String fromTmp = this.name.substring(x + &quot; from &quot;.length()).trim();</span>
+<span class="nc" id="L79">			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));</span>
+<span class="nc" id="L80">			this.name = this.name.substring(0, x).trim();</span>
+<span class="nc" id="L81">			this.context = context;</span>
 		}
 
-<span class="fc" id="L89">		this.realName = context.applyFunctionsAndVariables(memory, new StringLocated(this.name, getLineLocation()));</span>
+<span class="fc" id="L84">		this.realName = context.applyFunctionsAndVariables(memory, new StringLocated(this.name, getLineLocation()));</span>
 
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L86">	}</span>
 
 	public final Theme getTheme() throws EaterException {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (from == null) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (from == null) {</span>
 			try {
-<span class="fc" id="L96">				final Theme theme = ThemeUtils.getReaderTheme(realName);</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (theme != null)</span>
-<span class="fc" id="L98">					return theme;</span>
+<span class="fc" id="L91">				final Theme theme = ThemeUtils.getReaderTheme(realName);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">				if (theme != null)</span>
+<span class="fc" id="L93">					return theme;</span>
 
-<span class="fc" id="L100">				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));</span>
-<span class="pc bpc" id="L101" title="3 of 4 branches missed.">				if (localFile != null &amp;&amp; localFile.isOk()) {</span>
-<span class="nc" id="L102">					final BufferedReader br = localFile.getUnderlyingFile().openBufferedReader();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (br != null)</span>
-<span class="nc" id="L104">						return new Theme(ReadLineReader.create(br, &quot;theme &quot; + realName));</span>
+<span class="fc" id="L95">				final InputFile localFile = importedFiles.getInputFile(ThemeUtils.getFilename(realName));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">				if (localFile != null) {</span>
+<span class="nc" id="L97">					final Reader br = localFile.getReader(UTF_8);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">					if (br != null)</span>
+<span class="nc" id="L99">						return new Theme(ReadLineReader.create(br, &quot;theme &quot; + realName));</span>
 				}
-<span class="nc" id="L106">			} catch (IOException e) {</span>
-<span class="nc" id="L107">				Logme.error(e);</span>
-<span class="fc" id="L108">			}</span>
-<span class="fc" id="L109">			throw new EaterException(&quot;Cannot load &quot; + realName, getStringLocated());</span>
+<span class="nc" id="L101">			} catch (IOException e) {</span>
+<span class="nc" id="L102">				Logme.error(e);</span>
+<span class="fc" id="L103">			}</span>
+<span class="fc" id="L104">			throw new EaterException(&quot;Cannot load &quot; + realName, getStringLocated());</span>
 		}
 
-<span class="nc bnc" id="L112" title="All 4 branches missed.">		if (from.startsWith(&quot;&lt;&quot;) &amp;&amp; from.endsWith(&quot;&gt;&quot;)) {</span>
-<span class="nc" id="L113">			final Theme theme = ThemeUtils.getReaderTheme(realName, from);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (theme == null)</span>
-<span class="nc" id="L115">				throw new EaterException(&quot;No such theme &quot; + realName + &quot; in &quot; + from, getStringLocated());</span>
-<span class="nc" id="L116">			return theme;</span>
-<span class="nc bnc" id="L117" title="All 4 branches missed.">		} else if (from.startsWith(&quot;http://&quot;) || from.startsWith(&quot;https://&quot;)) {</span>
-<span class="nc" id="L118">			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (url == null)</span>
-<span class="nc" id="L120">				throw new EaterException(&quot;Cannot open URL&quot;, getStringLocated());</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">		if (from.startsWith(&quot;&lt;&quot;) &amp;&amp; from.endsWith(&quot;&gt;&quot;)) {</span>
+<span class="nc" id="L108">			final Theme theme = ThemeUtils.getReaderTheme(realName, from);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (theme == null)</span>
+<span class="nc" id="L110">				throw new EaterException(&quot;No such theme &quot; + realName + &quot; in &quot; + from, getStringLocated());</span>
+<span class="nc" id="L111">			return theme;</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">		} else if (from.startsWith(&quot;http://&quot;) || from.startsWith(&quot;https://&quot;)) {</span>
+<span class="nc" id="L113">			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L115">				throw new EaterException(&quot;Cannot open URL&quot;, getStringLocated());</span>
 
 			try {
-<span class="nc" id="L123">				return new Theme(PreprocessorUtils.getReaderInclude(url, getStringLocated(), UTF_8));</span>
-<span class="nc" id="L124">			} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L125">				Logme.error(e);</span>
-<span class="nc" id="L126">				throw new EaterException(&quot;Cannot decode charset&quot;, getStringLocated());</span>
+<span class="nc" id="L118">				return new Theme(PreprocessorUtils.getReaderInclude(url, getStringLocated(), UTF_8));</span>
+<span class="nc" id="L119">			} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L120">				Logme.error(e);</span>
+<span class="nc" id="L121">				throw new EaterException(&quot;Cannot decode charset&quot;, getStringLocated());</span>
 			}
 		}
 
 		try {
-<span class="nc" id="L131">			final FileWithSuffix file = context.getFileWithSuffix(from, realName);</span>
-<span class="nc" id="L132">			final Reader tmp = file.getReader(UTF_8);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (tmp == null)</span>
-<span class="nc" id="L134">				throw new EaterException(&quot;No such theme &quot; + realName, getStringLocated());</span>
-
-<span class="nc" id="L136">			final AFile fromDir = importedFiles.getAFile(from);</span>
-<span class="nc" id="L137">			final AParentFolder parent = new AParentFolderRegular(fromDir.getUnderlyingFile());</span>
-<span class="nc" id="L138">			newImportedFiles = importedFiles.withCurrentDir(parent);</span>
-
-<span class="nc" id="L140">			return new Theme(ReadLineReader.create(tmp, &quot;theme &quot; + realName));</span>
-<span class="nc" id="L141">		} catch (IOException e) {</span>
-<span class="nc" id="L142">			Logme.error(e);</span>
-<span class="nc" id="L143">			throw new EaterException(&quot;Cannot load &quot; + realName, getStringLocated());</span>
+<span class="nc" id="L126">			throw new IOException(&quot;To be finished&quot;);</span>
+//			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
+//			final Reader tmp = file.getReader(UTF_8);
+//			if (tmp == null)
+//				throw new EaterException(&quot;No such theme &quot; + realName, getStringLocated());
+//
+//			final AFile fromDir = importedFiles.getAFile(from);
+//			final AParentFolder parent = new AParentFolderRegular(fromDir.getUnderlyingFile());
+//			
+//			newImportedFiles = importedFiles.changeCurrentDirectory(from);
+//
+//			return new Theme(ReadLineReader.create(tmp, &quot;theme &quot; + realName));
+<span class="nc" id="L138">		} catch (IOException e) {</span>
+<span class="nc" id="L139">			Logme.error(e);</span>
+<span class="nc" id="L140">			throw new EaterException(&quot;Cannot load &quot; + realName, getStringLocated());</span>
 		}
 
 	}
 
 	public String getName() {
-<span class="nc" id="L149">		return name;</span>
+<span class="nc" id="L146">		return name;</span>
 	}
 
-	public ImportedFiles getNewImportedFiles() {
-<span class="fc" id="L153">		return newImportedFiles;</span>
+	public PathSystem getNewImportedFiles() {
+<span class="fc" id="L150">		return newImportedFiles;</span>
 	}
 
 }

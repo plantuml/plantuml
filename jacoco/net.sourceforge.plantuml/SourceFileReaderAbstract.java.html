@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -84,145 +83,147 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	private int cpt;
 
 	protected final SuggestedFile getSuggestedFile(File outputDirectory, String newName) {
-<span class="fc" id="L87">		final File outFile = new File(outputDirectory, newName);</span>
-<span class="fc" id="L88">		return SuggestedFile.fromOutputFile(outFile, getFileFormatOption().getFileFormat(), cpt++);</span>
+<span class="fc" id="L86">		final File outFile = new File(outputDirectory, newName);</span>
+<span class="fc" id="L87">		return SuggestedFile.fromOutputFile(outFile, getFileFormatOption().getFileFormat(), cpt++);</span>
 	}
 
 	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List&lt;String&gt; config,
-<span class="fc" id="L92">			String charsetName) throws IOException {</span>
+<span class="fc" id="L91">			String charsetName) throws IOException {</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (file.exists() == false)</span>
-<span class="nc" id="L95">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (file.exists() == false)</span>
+<span class="nc" id="L94">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L97">		this.file = file;</span>
-<span class="fc" id="L98">		this.charset = charsetOrDefault(charsetName);</span>
-<span class="fc" id="L99">		this.fileFormatOption = fileFormatOption;</span>
-<span class="fc" id="L100">		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),</span>
-<span class="fc" id="L101">				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));</span>
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L96">		this.file = file;</span>
+<span class="fc" id="L97">		this.charset = charsetOrDefault(charsetName);</span>
+<span class="fc" id="L98">		this.fileFormatOption = fileFormatOption;</span>
+<span class="fc" id="L99">		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),</span>
+<span class="fc" id="L100">				SFile.fromFile(file.getAbsoluteFile().getParentFile()), file.getName());</span>
+<span class="fc" id="L101">	}</span>
 
 	protected final FileFormatOption getFileFormatOption() {
-<span class="fc" id="L105">		return fileFormatOption;</span>
+<span class="fc" id="L104">		return fileFormatOption;</span>
 	}
 
 	public void setCheckMetadata(boolean checkMetadata) {
-<span class="fc" id="L109">		this.checkMetadata = checkMetadata;</span>
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L108">		this.checkMetadata = checkMetadata;</span>
+<span class="fc" id="L109">	}</span>
 
 	public boolean hasError() {
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (final BlockUml b : builder.getBlockUmls())</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (b.getDiagram() instanceof PSystemError)</span>
-<span class="fc" id="L115">				return true;</span>
-<span class="fc" id="L116">		return false;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (final BlockUml b : builder.getBlockUmls())</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (b.getDiagram() instanceof PSystemError)</span>
+<span class="fc" id="L114">				return true;</span>
+<span class="fc" id="L115">		return false;</span>
 	}
 
 	public List&lt;BlockUml&gt; getBlocks() {
-<span class="fc" id="L120">		return builder.getBlockUmls();</span>
+<span class="fc" id="L119">		return builder.getBlockUmls();</span>
 	}
 
 	protected Reader getReader(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
-<span class="fc" id="L124">		return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);</span>
+<span class="fc" id="L123">		return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);</span>
 	}
 
-	public final Set&lt;FileWithSuffix&gt; getIncludedFiles() throws IOException {
-<span class="nc" id="L128">		return builder.getIncludedFiles();</span>
+	public final Set&lt;File&gt; getIncludedFiles() throws IOException {
+<span class="nc" id="L127">		return builder.getIncludedFiles();</span>
 	}
 
 	@Override
 	public final ISourceFileReader setFileFormatOption(FileFormatOption fileFormatOption) {
-<span class="nc" id="L133">		this.fileFormatOption = fileFormatOption;</span>
-<span class="nc" id="L134">		return this;</span>
+<span class="nc" id="L132">		this.fileFormatOption = fileFormatOption;</span>
+<span class="nc" id="L133">		return this;</span>
 	}
 
 	protected boolean endsWithSlashOrAntislash(String newName) {
-<span class="nc bnc" id="L138" title="All 4 branches missed.">		return newName.endsWith(&quot;/&quot;) || newName.endsWith(&quot;\\&quot;);</span>
+<span class="nc bnc" id="L137" title="All 4 branches missed.">		return newName.endsWith(&quot;/&quot;) || newName.endsWith(&quot;\\&quot;);</span>
 	}
 
 	private List&lt;GeneratedImage&gt; getCrashedImage(BlockUml blockUml, Throwable t, SFile outputFile) throws IOException {
-<span class="nc" id="L142">		final GeneratedImage image = new GeneratedImageImpl(outputFile, &quot;Crash Error&quot;, blockUml, FileImageData.CRASH);</span>
-<span class="nc" id="L143">		try (OutputStream os = outputFile.createBufferedOutputStream()) {</span>
-<span class="nc" id="L144">			final String flash = blockUml.getFlashData();</span>
-<span class="nc" id="L145">			final CrashReportHandler report = new CrashReportHandler(t, null, flash);</span>
-<span class="nc" id="L146">			report.anErrorHasOccured(t, flash);</span>
-<span class="nc" id="L147">			report.youShouldSendThisDiagram();</span>
-<span class="nc" id="L148">			report.addEmptyLine();</span>
-<span class="nc" id="L149">			report.exportDiagramError(fileFormatOption, (long) 42, os);</span>
+<span class="nc" id="L141">		final GeneratedImage image = new GeneratedImageImpl(outputFile, &quot;Crash Error&quot;, blockUml, FileImageData.CRASH);</span>
+<span class="nc" id="L142">		try (OutputStream os = outputFile.createBufferedOutputStream()) {</span>
+<span class="nc" id="L143">			final String flash = blockUml.getFlashData();</span>
+<span class="nc" id="L144">			final CrashReportHandler report = new CrashReportHandler(t, null, flash);</span>
+<span class="nc" id="L145">			report.anErrorHasOccured(t, flash);</span>
+<span class="nc" id="L146">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L147">			report.addEmptyLine();</span>
+<span class="nc" id="L148">			report.exportDiagramError(fileFormatOption, (long) 42, os);</span>
 		}
-<span class="nc" id="L151">		return Collections.singletonList(image);</span>
+<span class="nc" id="L150">		return Collections.singletonList(image);</span>
 	}
 
 	protected void exportWarnOrErrIfWord(SFile f, Diagram system) throws FileNotFoundException {
-<span class="pc bpc" id="L155" title="3 of 4 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD) &amp;&amp; f != null) {</span>
-<span class="nc" id="L156">			final String warnOrError = system.getWarningOrError();</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (warnOrError != null) {</span>
-<span class="nc" id="L158">				final String name = f.getName().substring(0, f.getName().length() - 4) + &quot;.err&quot;;</span>
-<span class="nc" id="L159">				final SFile errorFile = f.getParentFile().file(name);</span>
-<span class="nc" id="L160">				try (PrintStream ps = SecurityUtils.createPrintStream(errorFile.createFileOutputStream())) {</span>
-<span class="nc" id="L161">					ps.print(warnOrError);</span>
+<span class="pc bpc" id="L154" title="3 of 4 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD) &amp;&amp; f != null) {</span>
+<span class="nc" id="L155">			final String warnOrError = system.getWarningOrError();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (warnOrError != null) {</span>
+<span class="nc" id="L157">				final String name = f.getName().substring(0, f.getName().length() - 4) + &quot;.err&quot;;</span>
+<span class="nc" id="L158">				final SFile errorFile = f.getParentFile().file(name);</span>
+<span class="nc" id="L159">				try (PrintStream ps = SecurityUtils.createPrintStream(errorFile.createFileOutputStream())) {</span>
+<span class="nc" id="L160">					ps.print(warnOrError);</span>
 				}
 			}
 		}
-<span class="fc" id="L165">	}</span>
+<span class="fc" id="L164">	}</span>
 
 	final public List&lt;GeneratedImage&gt; getGeneratedImages() throws IOException {
-<span class="fc" id="L168">		Log.info(() -&gt; &quot;Reading file: &quot; + file);</span>
+<span class="fc" id="L167">		Log.info(() -&gt; &quot;Reading file: &quot; + file);</span>
 
-<span class="fc" id="L170">		cpt = 0;</span>
-<span class="fc" id="L171">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L169">		cpt = 0;</span>
+<span class="fc" id="L170">		final List&lt;GeneratedImage&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (BlockUml blockUml : builder.getBlockUmls()) {</span>
-<span class="fc" id="L174">			final SuggestedFile suggested = getSuggestedFile(blockUml);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		for (BlockUml blockUml : builder.getBlockUmls()) {</span>
+<span class="fc" id="L173">			final SuggestedFile suggested = getSuggestedFile(blockUml);</span>
 
 			final Diagram system;
 			try {
-<span class="fc" id="L178">				system = blockUml.getDiagram();</span>
-<span class="nc" id="L179">			} catch (Throwable t) {</span>
-<span class="nc" id="L180">				Logme.error(t);</span>
-<span class="nc bnc" id="L181" title="All 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) || noErrorImage)</span>
+<span class="fc" id="L177">				system = blockUml.getDiagram();</span>
+<span class="nc" id="L178">			} catch (Throwable t) {</span>
+<span class="nc" id="L179">				Logme.error(t);</span>
+<span class="nc bnc" id="L180" title="All 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)</span>
+						|| noErrorImage)
 <span class="nc" id="L182">					continue;</span>
 
 <span class="nc" id="L184">				return getCrashedImage(blockUml, t, suggested.getFile(0));</span>
 <span class="fc" id="L185">			}</span>
 
-<span class="pc bpc" id="L187" title="3 of 4 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS) &amp;&amp; system instanceof PSystemError)</span>
-<span class="nc" id="L188">				continue;</span>
+<span class="pc bpc" id="L187" title="3 of 4 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)</span>
+					&amp;&amp; system instanceof PSystemError)
+<span class="nc" id="L189">				continue;</span>
 
 			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
 			final List&lt;FileImageData&gt; exportDiagrams;
-<span class="fc bfc" id="L192" title="All 4 branches covered.">			if (noErrorImage &amp;&amp; system instanceof PSystemError) {</span>
-<span class="fc" id="L193">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
-<span class="fc" id="L194">				exportDiagrams</span>
-<span class="fc" id="L195">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
+<span class="fc bfc" id="L193" title="All 4 branches covered.">			if (noErrorImage &amp;&amp; system instanceof PSystemError) {</span>
+<span class="fc" id="L194">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
+<span class="fc" id="L195">				exportDiagrams</span>
+<span class="fc" id="L196">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
 			} else
-<span class="fc" id="L197">				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);</span>
+<span class="fc" id="L198">				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);</span>
 
-<span class="fc bfc" id="L199" title="All 2 branches covered.">			if (exportDiagrams.size() &gt; 1)</span>
-<span class="fc" id="L200">				cpt += exportDiagrams.size() - 1;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">			if (exportDiagrams.size() &gt; 1)</span>
+<span class="fc" id="L201">				cpt += exportDiagrams.size() - 1;</span>
 
-<span class="fc bfc" id="L202" title="All 2 branches covered.">			for (FileImageData fdata : exportDiagrams) {</span>
-<span class="fc" id="L203">				final String desc = &quot;[&quot; + file.getName() + &quot;] &quot; + system.getDescription();</span>
-<span class="fc" id="L204">				final SFile f = fdata.getFile();</span>
-<span class="fc" id="L205">				exportWarnOrErrIfWord(f, system);</span>
-<span class="fc" id="L206">				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());</span>
-<span class="fc" id="L207">				result.add(generatedImage);</span>
-<span class="fc" id="L208">			}</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			for (FileImageData fdata : exportDiagrams) {</span>
+<span class="fc" id="L204">				final String desc = &quot;[&quot; + file.getName() + &quot;] &quot; + system.getDescription();</span>
+<span class="fc" id="L205">				final SFile f = fdata.getFile();</span>
+<span class="fc" id="L206">				exportWarnOrErrIfWord(f, system);</span>
+<span class="fc" id="L207">				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());</span>
+<span class="fc" id="L208">				result.add(generatedImage);</span>
+<span class="fc" id="L209">			}</span>
 
-<span class="fc" id="L210">		}</span>
+<span class="fc" id="L211">		}</span>
 
-<span class="fc" id="L212">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
+<span class="fc" id="L213">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
 
-<span class="fc" id="L214">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L215">		return Collections.unmodifiableList(result);</span>
 	}
 
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
 
 	protected final void setNoErrorImage(boolean noErrorImage) {
-<span class="fc" id="L220">		this.noErrorImage = noErrorImage;</span>
+<span class="fc" id="L221">		this.noErrorImage = noErrorImage;</span>
 
-<span class="fc" id="L222">	}</span>
+<span class="fc" id="L223">	}</span>
 
 	final protected String getFileName() {
-<span class="fc" id="L225">		return file.getName();</span>
+<span class="fc" id="L226">		return file.getName();</span>
 	}
 
 }

@@ -131,6 +131,7 @@ net.sourceforge.plantuml.log
 net.sourceforge.plantuml.math
 net.sourceforge.plantuml.mda
 net.sourceforge.plantuml.mindmap
+net.sourceforge.plantuml.nio
 net.sourceforge.plantuml.nwdiag
 net.sourceforge.plantuml.nwdiag.core
 net.sourceforge.plantuml.nwdiag.next

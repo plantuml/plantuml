@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlo
 import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -54,27 +55,27 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 
 	private final ISkinSimple skinParam;
 
-<span class="nc" id="L57">	public CompositeDiagramFactory(ISkinSimple skinParam) {</span>
-<span class="nc" id="L58">		this.skinParam = skinParam;</span>
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L58">	public CompositeDiagramFactory(ISkinSimple skinParam) {</span>
+<span class="nc" id="L59">		this.skinParam = skinParam;</span>
+<span class="nc" id="L60">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc" id="L63">		cmds.add(new CommandCreateBlock());</span>
-<span class="nc" id="L64">		cmds.add(new CommandLinkBlock());</span>
-<span class="nc" id="L65">		cmds.add(new CommandCreatePackageBlock());</span>
-<span class="nc" id="L66">		cmds.add(new CommandEndPackageBlock());</span>
-<span class="nc" id="L67">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L64">		cmds.add(new CommandCreateBlock());</span>
+<span class="nc" id="L65">		cmds.add(new CommandLinkBlock());</span>
+<span class="nc" id="L66">		cmds.add(new CommandCreatePackageBlock());</span>
+<span class="nc" id="L67">		cmds.add(new CommandEndPackageBlock());</span>
+<span class="nc" id="L68">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L69">	}</span>
 
 	@Override
-	public CompositeDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L72">		return new CompositeDiagram(source, previous, preprocessing);</span>
+	public CompositeDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L73">		return new CompositeDiagram(source, previous, preprocessing);</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L77">		return UmlDiagramType.COMPOSITE;</span>
+<span class="nc" id="L78">		return UmlDiagramType.COMPOSITE;</span>
 	}
 
 }

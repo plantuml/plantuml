@@ -47,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.api.ApiWarning;
-import net.sourceforge.plantuml.file.AParentFolder;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -60,79 +59,79 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
-<span class="fc" id="L63">	private final Map&lt;String, String&gt; environment = new LinkedHashMap&lt;String, String&gt;();</span>
-<span class="fc" id="L64">	private final Map&lt;String, Define&gt; values = new LinkedHashMap&lt;String, Define&gt;();</span>
+<span class="fc" id="L62">	private final Map&lt;String, String&gt; environment = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L63">	private final Map&lt;String, Define&gt; values = new LinkedHashMap&lt;String, Define&gt;();</span>
 
 	@Deprecated
 	@ApiWarning(willBeRemoved = &quot;in next major release&quot;)
-<span class="fc" id="L68">	public Defines() {</span>
-<span class="fc" id="L69">		environment.put(&quot;PLANTUML_VERSION&quot;, &quot;&quot; + Version.versionString());</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L67">	public Defines() {</span>
+<span class="fc" id="L68">		environment.put(&quot;PLANTUML_VERSION&quot;, &quot;&quot; + Version.versionString());</span>
+<span class="fc" id="L69">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L74">		return values.keySet().toString() + &quot; &quot; + environment.keySet();</span>
+<span class="nc" id="L73">		return values.keySet().toString() + &quot; &quot; + environment.keySet();</span>
 	}
 
 	public static Defines createEmpty() {
-<span class="fc" id="L78">		return new Defines();</span>
+<span class="fc" id="L77">		return new Defines();</span>
 	}
 
 	public void copyTo(TMemory memory, StringLocated location) throws EaterException {
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (Entry&lt;String, Define&gt; ent : values.entrySet()) {</span>
-<span class="fc" id="L83">			final String name = ent.getKey();</span>
-<span class="fc" id="L84">			final Define def = ent.getValue();</span>
-<span class="fc" id="L85">			memory.putVariable(name, def.asTVariable(), TVariableScope.GLOBAL, location);</span>
-<span class="fc" id="L86">		}</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (Entry&lt;String, Define&gt; ent : values.entrySet()) {</span>
+<span class="fc" id="L82">			final String name = ent.getKey();</span>
+<span class="fc" id="L83">			final Define def = ent.getValue();</span>
+<span class="fc" id="L84">			memory.putVariable(name, def.asTVariable(), TVariableScope.GLOBAL, location);</span>
+<span class="fc" id="L85">		}</span>
 
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L87">	}</span>
 
 	public void overrideFilename(String filename) {
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (filename != null) {</span>
-<span class="fc" id="L92">			environment.put(&quot;filename&quot;, filename);</span>
-<span class="fc" id="L93">			environment.put(&quot;filenameNoExtension&quot;, nameNoExtension(filename));</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (filename != null) {</span>
+<span class="fc" id="L91">			environment.put(&quot;filename&quot;, filename);</span>
+<span class="fc" id="L92">			environment.put(&quot;filenameNoExtension&quot;, nameNoExtension(filename));</span>
 		}
-<span class="fc" id="L95">	}</span>
+<span class="fc" id="L94">	}</span>
 
 	public void overrideDirPath(String fileDir) {
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (fileDir != null)</span>
-<span class="fc" id="L99">			environment.put(&quot;dirpath&quot;, fileDir.replace('\\', '/'));</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (fileDir != null)</span>
+<span class="fc" id="L98">			environment.put(&quot;dirpath&quot;, fileDir.replace('\\', '/'));</span>
+<span class="fc" id="L99">	}</span>
 
 	public void importFrom(Defines other) {
-<span class="fc" id="L103">		this.environment.putAll(other.environment);</span>
-<span class="fc" id="L104">		this.values.putAll(other.values);</span>
+<span class="fc" id="L102">		this.environment.putAll(other.environment);</span>
+<span class="fc" id="L103">		this.values.putAll(other.values);</span>
 		// magic = null;
-<span class="fc" id="L106">	}</span>
+<span class="fc" id="L105">	}</span>
 
 	public Defines cloneMe() {
-<span class="fc" id="L109">		final Defines result = new Defines();</span>
-<span class="fc" id="L110">		result.importFrom(this);</span>
-<span class="fc" id="L111">		return result;</span>
+<span class="fc" id="L108">		final Defines result = new Defines();</span>
+<span class="fc" id="L109">		result.importFrom(this);</span>
+<span class="fc" id="L110">		return result;</span>
 	}
 
 	public static Defines createWithFileName(SFile file) {
-<span class="nc" id="L115">		Objects.requireNonNull(file);</span>
-<span class="nc" id="L116">		final Defines result = createEmpty();</span>
-<span class="nc" id="L117">		result.overrideFilename(file.getName());</span>
-<span class="nc" id="L118">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-<span class="nc" id="L120">			result.environment.put(&quot;dirpath&quot;,</span>
-<span class="nc" id="L121">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
+<span class="nc" id="L114">		Objects.requireNonNull(file);</span>
+<span class="nc" id="L115">		final Defines result = createEmpty();</span>
+<span class="nc" id="L116">		result.overrideFilename(file.getName());</span>
+<span class="nc" id="L117">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L119">			result.environment.put(&quot;dirpath&quot;,</span>
+<span class="nc" id="L120">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
-<span class="nc" id="L123">		return result;</span>
+<span class="nc" id="L122">		return result;</span>
 	}
 
 	public static Defines createWithFileName(java.io.File file) {
-<span class="fc" id="L127">		Objects.requireNonNull(file);</span>
-<span class="fc" id="L128">		final Defines result = createEmpty();</span>
-<span class="fc" id="L129">		result.overrideFilename(file.getName());</span>
-<span class="fc" id="L130">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-<span class="nc" id="L132">			result.environment.put(&quot;dirpath&quot;,</span>
-<span class="nc" id="L133">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
+<span class="fc" id="L126">		Objects.requireNonNull(file);</span>
+<span class="fc" id="L127">		final Defines result = createEmpty();</span>
+<span class="fc" id="L128">		result.overrideFilename(file.getName());</span>
+<span class="fc" id="L129">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L131">			result.environment.put(&quot;dirpath&quot;,</span>
+<span class="nc" id="L132">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
-<span class="fc" id="L135">		return result;</span>
+<span class="fc" id="L134">		return result;</span>
 	}
 
 //	private static Defines createWithMap(Map&lt;String, String&gt; init) {
@@ -144,59 +143,59 @@ public class Defines implements Truth {
 //	}
 
 	public String getEnvironmentValue(String key) {
-<span class="fc" id="L147">		return this.environment.get(key);</span>
+<span class="fc" id="L146">		return this.environment.get(key);</span>
 	}
 
 	private static String nameNoExtension(String name) {
-<span class="fc" id="L151">		final int x = name.lastIndexOf('.');</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (x == -1)</span>
-<span class="nc" id="L153">			return name;</span>
+<span class="fc" id="L150">		final int x = name.lastIndexOf('.');</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (x == -1)</span>
+<span class="nc" id="L152">			return name;</span>
 
-<span class="fc" id="L155">		return name.substring(0, x);</span>
+<span class="fc" id="L154">		return name.substring(0, x);</span>
 	}
 
-	public void define(String name, List&lt;String&gt; value, boolean emptyParentheses, AParentFolder currentDir) {
-<span class="fc" id="L159">		values.put(name, new Define(name, value, emptyParentheses, currentDir));</span>
+	public void define(String name, List&lt;String&gt; value, boolean emptyParentheses) {
+<span class="fc" id="L158">		values.put(name, new Define(name, value, emptyParentheses));</span>
 		// magic = null;
-<span class="fc" id="L161">	}</span>
+<span class="fc" id="L160">	}</span>
 
 	public boolean isDefine(String expression) {
 		try {
-<span class="nc" id="L165">			final EvalBoolean eval = new EvalBoolean(expression, this);</span>
-<span class="nc" id="L166">			return eval.eval();</span>
-<span class="nc" id="L167">		} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L168">			Log.info(() -&gt; &quot;Error in &quot; + expression);</span>
-<span class="nc" id="L169">			return false;</span>
+<span class="nc" id="L164">			final EvalBoolean eval = new EvalBoolean(expression, this);</span>
+<span class="nc" id="L165">			return eval.eval();</span>
+<span class="nc" id="L166">		} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L167">			Log.info(() -&gt; &quot;Error in &quot; + expression);</span>
+<span class="nc" id="L168">			return false;</span>
 		}
 	}
 
 	public boolean isTrue(String name) {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (String key : values.keySet())</span>
-<span class="nc bnc" id="L175" title="All 4 branches missed.">			if (key.equals(name) || key.startsWith(name + &quot;(&quot;))</span>
-<span class="nc" id="L176">				return true;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (String key : values.keySet())</span>
+<span class="nc bnc" id="L174" title="All 4 branches missed.">			if (key.equals(name) || key.startsWith(name + &quot;(&quot;))</span>
+<span class="nc" id="L175">				return true;</span>
 
-<span class="nc" id="L178">		return false;</span>
+<span class="nc" id="L177">		return false;</span>
 	}
 
 	public void undefine(String name) {
-<span class="nc" id="L182">		values.remove(name);</span>
+<span class="nc" id="L181">		values.remove(name);</span>
 		// magic = null;
-<span class="nc" id="L184">	}</span>
+<span class="nc" id="L183">	}</span>
 
 	public List&lt;String&gt; applyDefines(String line) {
 		// System.err.println(&quot;line=&quot; + line + &quot; &quot; + values.size());
-<span class="nc" id="L188">		line = manageDate(line);</span>
-<span class="nc" id="L189">		line = manageEnvironment(line);</span>
-<span class="nc" id="L190">		line = method1(line);</span>
+<span class="nc" id="L187">		line = manageDate(line);</span>
+<span class="nc" id="L188">		line = manageEnvironment(line);</span>
+<span class="nc" id="L189">		line = method1(line);</span>
 		// line = values.size() &lt; 10 ? method1(line) : method2(line);
-<span class="nc" id="L192">		return Arrays.asList(line.split(&quot;\n&quot;));</span>
+<span class="nc" id="L191">		return Arrays.asList(line.split(&quot;\n&quot;));</span>
 	}
 
 	private String method1(String line) {
-<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (Define def : values.values())</span>
-<span class="nc" id="L197">			line = def.apply(line);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (Define def : values.values())</span>
+<span class="nc" id="L196">			line = def.apply(line);</span>
 
-<span class="nc" id="L199">		return line;</span>
+<span class="nc" id="L198">		return line;</span>
 	}
 
 //	private Map&lt;String, Collection&lt;Define&gt;&gt; getAll() {
@@ -244,33 +243,33 @@ public class Defines implements Truth {
 //	}
 
 	private String manageEnvironment(String line) {
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : environment.entrySet()) {</span>
-<span class="nc" id="L248">			final String key = Pattern.quote(&quot;%&quot; + ent.getKey() + &quot;%&quot;);</span>
-<span class="nc" id="L249">			line = line.replaceAll(key, ent.getValue());</span>
-<span class="nc" id="L250">		}</span>
-<span class="nc" id="L251">		return line;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : environment.entrySet()) {</span>
+<span class="nc" id="L247">			final String key = Pattern.quote(&quot;%&quot; + ent.getKey() + &quot;%&quot;);</span>
+<span class="nc" id="L248">			line = line.replaceAll(key, ent.getValue());</span>
+<span class="nc" id="L249">		}</span>
+<span class="nc" id="L250">		return line;</span>
 	}
 
 	private static final String DATE = &quot;(?i)%date(\\[(.+?)\\])?%&quot;;
-<span class="fc" id="L255">	private final static Pattern datePattern = Pattern.compile(DATE);</span>
+<span class="fc" id="L254">	private final static Pattern datePattern = Pattern.compile(DATE);</span>
 
 	private String manageDate(String line) {
-<span class="nc" id="L258">		final Matcher m = datePattern.matcher(line);</span>
-<span class="nc bnc" id="L259" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L260">			final String format = m.group(2);</span>
+<span class="nc" id="L257">		final Matcher m = datePattern.matcher(line);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L259">			final String format = m.group(2);</span>
 			String replace;
-<span class="nc bnc" id="L262" title="All 2 branches missed.">			if (format == null) {</span>
-<span class="nc" id="L263">				replace = new Date().toString();</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">			if (format == null) {</span>
+<span class="nc" id="L262">				replace = new Date().toString();</span>
 			} else {
 				try {
-<span class="nc" id="L266">					replace = new SimpleDateFormat(format).format(new Date());</span>
-<span class="nc" id="L267">				} catch (Exception e) {</span>
-<span class="nc" id="L268">					replace = &quot;(BAD DATE PATTERN:&quot; + format + &quot;)&quot;;</span>
-<span class="nc" id="L269">				}</span>
+<span class="nc" id="L265">					replace = new SimpleDateFormat(format).format(new Date());</span>
+<span class="nc" id="L266">				} catch (Exception e) {</span>
+<span class="nc" id="L267">					replace = &quot;(BAD DATE PATTERN:&quot; + format + &quot;)&quot;;</span>
+<span class="nc" id="L268">				}</span>
 			}
-<span class="nc" id="L271">			line = line.replaceAll(DATE, replace);</span>
+<span class="nc" id="L270">			line = line.replaceAll(DATE, replace);</span>
 		}
-<span class="nc" id="L273">		return line;</span>
+<span class="nc" id="L272">		return line;</span>
 	}
 
 }

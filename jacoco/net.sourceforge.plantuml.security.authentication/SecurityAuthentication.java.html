@@ -111,7 +111,7 @@ public class SecurityAuthentication implements SecurityCredentialsContainer {
 
 	@Override
 	public void eraseCredentials() {
-<span class="pc bpc" id="L114" title="2 of 4 branches missed.">		if (tokens != null &amp;&amp; !tokens.isEmpty()) {</span>
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">		if (tokens != null &amp;&amp; !tokens.isEmpty()) {</span>
 <span class="fc bfc" id="L115" title="All 2 branches covered.">			for (Object tokenVal : tokens.values()) {</span>
 <span class="fc bfc" id="L116" title="All 2 branches covered.">				if (tokenVal instanceof char[]) {</span>
 <span class="fc" id="L117">					Arrays.fill((char[]) tokenVal, '*');</span>

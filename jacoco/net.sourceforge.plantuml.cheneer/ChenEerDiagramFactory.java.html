@@ -51,36 +51,37 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagramFactory extends PSystemCommandFactory {
 
 	public ChenEerDiagramFactory() {
-<span class="fc" id="L60">		super(DiagramType.CHEN_EER);</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L61">		super(DiagramType.CHEN_EER);</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L65">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L66">		cmds.add(new CommandRankDir());</span>
+<span class="fc" id="L66">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L67">		cmds.add(new CommandRankDir());</span>
 
-<span class="fc" id="L68">		cmds.add(new CommandCreateEntity());</span>
-<span class="fc" id="L69">		cmds.add(new CommandCreateAttribute());</span>
-<span class="fc" id="L70">		cmds.add(new CommandAssociate());</span>
-<span class="fc" id="L71">		cmds.add(new CommandEndGroup());</span>
-<span class="fc" id="L72">		cmds.add(new CommandSimpleSubclass());</span>
-<span class="fc" id="L73">		cmds.add(new CommandMultiSubclass());</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L69">		cmds.add(new CommandCreateEntity());</span>
+<span class="fc" id="L70">		cmds.add(new CommandCreateAttribute());</span>
+<span class="fc" id="L71">		cmds.add(new CommandAssociate());</span>
+<span class="fc" id="L72">		cmds.add(new CommandEndGroup());</span>
+<span class="fc" id="L73">		cmds.add(new CommandSimpleSubclass());</span>
+<span class="fc" id="L74">		cmds.add(new CommandMultiSubclass());</span>
+<span class="fc" id="L75">	}</span>
 
 	@Override
-	public AbstractPSystem createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L78">		return new ChenEerDiagram(source, previous, preprocessing);</span>
+	public AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L79">		return new ChenEerDiagram(source, previous, preprocessing);</span>
 	}
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L83">		return UmlDiagramType.CHEN_EER;</span>
+<span class="nc" id="L84">		return UmlDiagramType.CHEN_EER;</span>
 	}
 
 }
