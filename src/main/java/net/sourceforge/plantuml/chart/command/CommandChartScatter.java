@@ -72,11 +72,11 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(0, "V2", "v2"))), //
+								new RegexLeaf(1, "V2", "(v2)"))), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(0, "LABELS", "labels"))), //
+								new RegexLeaf(1, "LABELS", "(labels)"))), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
