@@ -460,12 +460,29 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 		}
 
-		for (Ftile tile : tiles) {
-			if (differentSwimlane(this, tile)) {
-				conns.add(new ConnectionVerticalThenHorizontalCrossSwimlane(tile));
+		for (final Ftile tile : tiles) {
+			final Ftile origin = findLastWithPointOut(tile, stringBounder);
+			if (origin != null && differentSwimlane(origin, diamond2)) {
+				conns.add(new ConnectionVerticalThenHorizontalCrossSwimlane(origin));
 			}
 		}
+
 	}
+
+	private Ftile findLastWithPointOut(Ftile tile, StringBounder stringBounder) {
+		if (tile.calculateDimension(stringBounder).hasPointOut()) {
+			return tile;
+		}
+
+		for (Ftile child : tile.getMyChildren()) {
+			final Ftile found = findLastWithPointOut(child, stringBounder);
+			if (found != null) {
+				return found;
+			}
+		}
+		return null;
+	}
+
 
 	private int getFirstOutgoingArrow(StringBounder stringBounder) {
 		for (int i = 0; i < tiles.size() - 1; i++) {
