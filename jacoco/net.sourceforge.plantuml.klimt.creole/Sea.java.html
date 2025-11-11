@@ -93,9 +93,9 @@ public class Sea {
 <span class="nc bnc" id="L93" title="All 2 branches missed.">			if (atom instanceof AtomText) {</span>
 <span class="nc" id="L94">				AtomText atomText = (AtomText) atom;</span>
 <span class="nc" id="L95">				String text = atomText.getText();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (text.trim().isEmpty()) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (text.trim().isEmpty())</span>
 <span class="nc" id="L97">					continue;</span>
-				}
+
 <span class="nc" id="L99">				return (AtomText) atom;</span>
 			}
 <span class="nc" id="L101">		}</span>
@@ -105,112 +105,114 @@ public class Sea {
 	public void doAlignTikz() {
 		// #1628, make non-text vertical center with text
 <span class="nc" id="L107">		AtomText firstTextAtom = findFirstAtomText();</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (firstTextAtom == null) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (firstTextAtom == null)</span>
 <span class="nc" id="L109">			return;</span>
-		}
+
 <span class="nc" id="L111">		Position firstTextPosition = positions.get(firstTextAtom);</span>
 <span class="nc" id="L112">		double firstTextHeight = firstTextAtom.getFontHeight(stringBounder);</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">		for (Map.Entry&lt;Atom, Position&gt; entry : new LinkedHashMap&lt;&gt;(positions).entrySet()) {</span>
 <span class="nc" id="L114">			final Atom atom = entry.getKey();</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (atom instanceof AtomText) {</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (atom instanceof AtomText)</span>
 <span class="nc" id="L116">				continue;</span>
-			}
-<span class="nc" id="L118">			Position position = entry.getValue();</span>
-<span class="nc" id="L119">			double targetY = firstTextPosition.getMinY() - (position.getHeight() - firstTextHeight) / 2;</span>
-<span class="nc" id="L120">			double delta = targetY - position.getMinY();</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (delta != 0.0) {</span>
+
+<span class="nc" id="L118">			final Position position = entry.getValue();</span>
+<span class="nc" id="L119">			final double targetY = firstTextPosition.getMinY() - (position.getHeight() - firstTextHeight) / 2;</span>
+<span class="nc" id="L120">			final double delta = targetY - position.getMinY();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (delta != 0.0)</span>
 <span class="nc" id="L122">				positions.put(atom, position.translateY(delta));</span>
-			}
+
 <span class="nc" id="L124">		}</span>
 <span class="nc" id="L125">	}</span>
 
 	public void doAlignTikzBaseline() {
 		// #1606, make text the same baseline
-<span class="nc" id="L129">		AtomText firstTextAtom = findFirstAtomText();</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (firstTextAtom == null) {</span>
+<span class="nc" id="L129">		final AtomText firstTextAtom = findFirstAtomText();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (firstTextAtom == null)</span>
 <span class="nc" id="L131">			return;</span>
-		}
+
 <span class="nc" id="L133">		double firstTextHeight = firstTextAtom.getFontHeight(stringBounder);</span>
 <span class="nc bnc" id="L134" title="All 2 branches missed.">		for (Map.Entry&lt;Atom, Position&gt; entry : new LinkedHashMap&lt;&gt;(positions).entrySet()) {</span>
 <span class="nc" id="L135">			final Atom atom = entry.getKey();</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (!(atom instanceof AtomText)) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (!(atom instanceof AtomText))</span>
 <span class="nc" id="L137">				continue;</span>
-			}
-<span class="nc" id="L139">			double delta = firstTextHeight - ((AtomText) atom).getFontHeight(stringBounder);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (delta != 0.0) {</span>
+
+<span class="nc" id="L139">			final double delta = firstTextHeight - ((AtomText) atom).getFontHeight(stringBounder);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (delta != 0.0)</span>
 <span class="nc" id="L141">				positions.put(atom, entry.getValue().translateY(delta));</span>
-			}
+
 <span class="nc" id="L143">		}</span>
 <span class="nc bnc" id="L144" title="All 2 branches missed.">		if (positions.size() == 1) {</span>
 			// the only atom text, and we have hard-coded the minimum height to 10
-			// ref: net.sourceforge.plantuml.klimt.creole.legacy.AtomText.calculateDimension
-<span class="nc" id="L147">			double delta = (10 - firstTextHeight) / 2;</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (delta &gt; 0) {</span>
-<span class="nc" id="L149">				positions.put(firstTextAtom, positions.get(firstTextAtom).translateY(delta));</span>
-			}
+			// ref:AtomText::calculateDimension
+			// https://github.com/plantuml/plantuml/pull/2424
+			// https://github.com/plantuml/plantuml/issues/2055
+<span class="nc" id="L149">			final double delta = (10 - firstTextHeight) / 2;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (delta &gt; 0)</span>
+<span class="nc" id="L151">				positions.put(firstTextAtom, positions.get(firstTextAtom).translateY(delta));</span>
+
 		}
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L154">	}</span>
 
 	public void exportAllPositions(Map&lt;Atom, Position&gt; destination) {
-<span class="fc" id="L155">		destination.putAll(positions);</span>
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L157">		destination.putAll(positions);</span>
+<span class="fc" id="L158">	}</span>
 
 	public double getMinY() {
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (positions.size() == 0) {</span>
-<span class="nc" id="L160">			throw new IllegalStateException();</span>
-		}
-<span class="fc" id="L162">		double result = Double.MAX_VALUE;</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (Position pos : positions.values()) {</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (result &gt; pos.getMinY()) {</span>
-<span class="fc" id="L165">				result = pos.getMinY();</span>
-			}
-<span class="fc" id="L167">		}</span>
-<span class="fc" id="L168">		return result;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (positions.size() == 0)</span>
+<span class="nc" id="L162">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L164">		double result = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (Position pos : positions.values())</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (result &gt; pos.getMinY())</span>
+<span class="fc" id="L167">				result = pos.getMinY();</span>
+
+<span class="fc" id="L169">		return result;</span>
 	}
 
 	public double getMaxY() {
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (positions.size() == 0) {</span>
-<span class="nc" id="L173">			throw new IllegalStateException();</span>
-		}
-<span class="fc" id="L175">		Atom atom = null;</span>
-<span class="fc" id="L176">		double result = -Double.MAX_VALUE;</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (Map.Entry&lt;Atom, Position&gt; entry : positions.entrySet()) {</span>
-<span class="fc" id="L178">			Position pos = entry.getValue();</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (result &lt; pos.getMaxY()) {</span>
-<span class="fc" id="L180">				atom = entry.getKey();</span>
-<span class="fc" id="L181">				result = pos.getMaxY();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (positions.size() == 0)</span>
+<span class="nc" id="L174">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L176">		Atom atom = null;</span>
+<span class="fc" id="L177">		double result = -Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (Map.Entry&lt;Atom, Position&gt; entry : positions.entrySet()) {</span>
+<span class="fc" id="L179">			final Position pos = entry.getValue();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (result &lt; pos.getMaxY()) {</span>
+<span class="fc" id="L181">				atom = entry.getKey();</span>
+<span class="fc" id="L182">				result = pos.getMaxY();</span>
 			}
-<span class="fc" id="L183">		}</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (!stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="fc" id="L185">			return result;</span>
-		}
+<span class="fc" id="L184">		}</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (!stringBounder.matchesProperty(&quot;TIKZ&quot;))</span>
+<span class="fc" id="L186">			return result;</span>
+
 		// For TKIZ, make sure the strip has at least 1pt
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (atom instanceof AtomText) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (atom instanceof AtomText) {</span>
 			// the delta in AtomText should be larger than 1 already
-<span class="nc" id="L190">			AtomText atomText = (AtomText) atom;</span>
-<span class="nc" id="L191">			UFont font = atomText.getFontConfiguration().getFont();</span>
-<span class="nc" id="L192">			String text = atomText.getText();</span>
-<span class="nc" id="L193">			double height = stringBounder.calculateDimension(font, text).getHeight();</span>
-<span class="nc" id="L194">			double delta = result - height;</span>
-<span class="nc" id="L195">			return result + Math.max(1 - delta, 0);</span>
+<span class="nc" id="L191">			final AtomText atomText = (AtomText) atom;</span>
+<span class="nc" id="L192">			final UFont font = atomText.getFontConfiguration().getFont();</span>
+<span class="nc" id="L193">			final String text = atomText.getText();</span>
+<span class="nc" id="L194">			final double height = stringBounder.calculateDimension(font, text).getHeight();</span>
+<span class="nc" id="L195">			final double delta = result - height;</span>
+<span class="nc" id="L196">			return result + Math.max(1 - delta, 0);</span>
+			
 		} else {
-<span class="nc" id="L197">			return result + 1;</span>
+<span class="nc" id="L199">			return result + 1;</span>
 		}
 	}
 
 	public double getHeight() {
-<span class="fc" id="L202">		return getMaxY() - getMinY();</span>
+<span class="fc" id="L204">		return getMaxY() - getMinY();</span>
 	}
 
 	public MinMax update(MinMax minMax) {
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		for (Position position : positions.values()) {</span>
-<span class="fc" id="L207">			minMax = position.update(minMax);</span>
-<span class="fc" id="L208">		}</span>
-<span class="fc" id="L209">		return minMax;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (Position position : positions.values())</span>
+<span class="fc" id="L209">			minMax = position.update(minMax);</span>
+
+<span class="fc" id="L211">		return minMax;</span>
 	}
 
 	public final double getWidth() {
-<span class="fc" id="L213">		return currentX;</span>
+<span class="fc" id="L215">		return currentX;</span>
 	}
 
 }

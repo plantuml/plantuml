@@ -105,7 +105,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 			}
 <span class="fc bfc" id="L106" title="All 2 branches covered.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
 <span class="fc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
+<span class="pc bpc" id="L108" title="3 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
 <span class="nc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.LEFT)</span>
