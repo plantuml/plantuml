@@ -162,6 +162,12 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			final XDimension2D dim = bloc.calculateDimension(stringBounder);
 			x = Math.max(dim.getWidth(), x);
 			y += dim.getHeight();
+			if (stringBounder.matchesProperty("TIKZ") && dim.getHeight() == 10) {
+				// the modifier would add a hard-coded 1 to height
+				// ref1: net.sourceforge.plantuml.klimt.creole.legacy.AtomText.calculateDimension
+				// ref2: net.sourceforge.plantuml.skin.VisibilityModifier.getUBlock
+				y += 1;
+			}
 		}
 		x += smallIcon;
 

@@ -141,6 +141,14 @@ public class Sea {
 				positions.put(atom, entry.getValue().translateY(delta));
 			}
 		}
+		if (positions.size() == 1) {
+			// the only atom text, and we have hard-coded the minimum height to 10
+			// ref: net.sourceforge.plantuml.klimt.creole.legacy.AtomText.calculateDimension
+			double delta = (10 - firstTextHeight) / 2;
+			if (delta > 0) {
+				positions.put(firstTextAtom, positions.get(firstTextAtom).translateY(delta));
+			}
+		}
 	}
 
 	public void exportAllPositions(Map<Atom, Position> destination) {
