@@ -72,7 +72,7 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(0, "Y2", "y2"))), //
+								new RegexLeaf(0, "V2", "v2"))), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
@@ -125,9 +125,9 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 			}
 		}
 
-		// Check if this scatter should use the secondary y-axis
-		final String y2Str = arg.getLazzy("Y2", 0);
-		if (y2Str != null) {
+		// Check if this scatter should use the secondary v-axis
+		final String v2Str = arg.getLazzy("V2", 0);
+		if (v2Str != null) {
 			series.setUseSecondaryAxis(true);
 		}
 
