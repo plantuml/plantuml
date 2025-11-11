@@ -64,6 +64,7 @@ public class ChartRenderer {
 	private final List<String> xAxisLabels;
 	private final String xAxisTitle;
 	private final Integer xAxisTickSpacing;
+	private final ChartAxis.LabelPosition xAxisLabelPosition;
 	private final List<ChartSeries> series;
 	private final ChartAxis yAxis;
 	private final ChartAxis y2Axis;
@@ -85,9 +86,9 @@ public class ChartRenderer {
 	private static final double LEGEND_ITEM_SPACING = 15;
 
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, Integer xAxisTickSpacing,
-			List<ChartSeries> series, ChartAxis yAxis, ChartAxis y2Axis, ChartDiagram.LegendPosition legendPosition,
-			ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode, ChartDiagram.StackMode stackMode,
-			ChartDiagram.Orientation orientation, List<ChartAnnotation> annotations) {
+			ChartAxis.LabelPosition xAxisLabelPosition, List<ChartSeries> series, ChartAxis yAxis, ChartAxis y2Axis,
+			ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode,
+			ChartDiagram.StackMode stackMode, ChartDiagram.Orientation orientation, List<ChartAnnotation> annotations) {
 		this.skinParam = skinParam;
 		this.orientation = orientation;
 
@@ -105,6 +106,7 @@ public class ChartRenderer {
 			this.xAxisLabels = xAxisLabels;
 			this.xAxisTitle = xAxisTitle;
 			this.xAxisTickSpacing = xAxisTickSpacing;
+			this.xAxisLabelPosition = xAxisLabelPosition;
 			this.yAxis = yAxis;
 			this.y2Axis = y2Axis;
 			this.xGridMode = xGridMode;
@@ -113,6 +115,7 @@ public class ChartRenderer {
 			this.xAxisLabels = xAxisLabels;
 			this.xAxisTitle = xAxisTitle;
 			this.xAxisTickSpacing = xAxisTickSpacing;
+			this.xAxisLabelPosition = xAxisLabelPosition;
 			this.yAxis = yAxis;
 			this.y2Axis = y2Axis;
 			this.xGridMode = xGridMode;
@@ -367,66 +370,64 @@ public class ChartRenderer {
 			}
 		}
 
-		// Draw axis title vertically
+		// Draw axis title
 		if (axis.getTitle() != null && !axis.getTitle().isEmpty()) {
-			drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, stringBounder);
+			if (axis.getLabelPosition() == ChartAxis.LabelPosition.TOP) {
+				// Draw horizontally at top
+				drawHorizontalAxisTitle(ug, axis.getTitle(), height, leftSide, fontColor, stringBounder, true, fontConfig);
+			} else {
+				// Draw vertically (default)
+				drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, stringBounder, fontConfig);
+			}
 		}
 	}
 
 	private void drawVerticalText(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
-			StringBounder stringBounder) {
-		// Parse Creole formatting and extract plain text with font style
-		String plainText = text;
-		UFont font = UFont.sansSerif(10);
-
-		// Handle Creole formatting markers
-		if (text.startsWith("**") && text.endsWith("**") && text.length() > 4) {
-			// Bold
-			plainText = text.substring(2, text.length() - 2);
-			font = font.bold();
-		} else if (text.startsWith("//") && text.endsWith("//") && text.length() > 4) {
-			// Italic
-			plainText = text.substring(2, text.length() - 2);
-			font = font.italic();
-		} else if (text.startsWith("\"\"") && text.endsWith("\"\"") && text.length() > 4) {
-			// Monospaced
-			plainText = text.substring(2, text.length() - 2);
-			font = UFont.monospaced(10);
-		} else if (text.startsWith("__") && text.endsWith("__") && text.length() > 4) {
-			// Underlined
-			plainText = text.substring(2, text.length() - 2);
-			// Underline will be handled by FontConfiguration
-		} else if (text.startsWith("--") && text.endsWith("--") && text.length() > 4) {
-			// Strike-through
-			plainText = text.substring(2, text.length() - 2);
-			// Strike will be handled by FontConfiguration
-		} else if (text.startsWith("~~") && text.endsWith("~~") && text.length() > 4) {
-			// Wave underline
-			plainText = text.substring(2, text.length() - 2);
-			// Wave will be handled by FontConfiguration
-		}
-
-		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
-
+			StringBounder stringBounder, FontConfiguration axisFontConfig) {
+		// Use the provided font configuration (same as tick labels)
 		// Left axis (Y): 90 degrees (reads from bottom to top)
 		// Right axis (Y2): 270 degrees (reads from top to bottom)
 		final int orientation = leftSide ? 90 : 270;
-		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(plainText, fontConfig).withOrientation(orientation);
+		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(text, axisFontConfig).withOrientation(orientation);
 
-		// Calculate dimensions of the text
-		final double textWidth = stringBounder.calculateDimension(font, plainText).getWidth();
-		final double textHeight = stringBounder.calculateDimension(font, plainText).getHeight();
+		// Calculate dimensions of the text using the axis font
+		final UFont font = axisFontConfig.getFont();
+		final double textWidth = stringBounder.calculateDimension(font, text).getWidth();
+		final double textHeight = stringBounder.calculateDimension(font, text).getHeight();
 
 		// Position the rotated text centered vertically along the axis
 		// When rotated 90°, the baseline is the rotation point
 		// The text width becomes the vertical span after rotation
 		// To center: baseline should be at (height/2 + textWidth/2) for 90° or (height/2 - textWidth/2) for 270°
-		final double xPos = leftSide ? -AXIS_LABEL_SPACE + textHeight / 2 : AXIS_LABEL_SPACE - textHeight / 2;
+		// Add extra spacing (10 pixels) to move labels further from the axis
+		final double extraSpacing = 10;
+		final double xPos = leftSide ? -AXIS_LABEL_SPACE + textHeight / 2 - extraSpacing : AXIS_LABEL_SPACE - textHeight / 2 + extraSpacing;
 		// For 90° (left): baseline at top of text, so position at center + half width to center the text
 		// For 270° (right): baseline at bottom of text, so position at center - half width to center the text
 		final double yPos = leftSide ? (height / 2 + textWidth / 2) : (height / 2 - textWidth / 2);
 
 		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);
+	}
+
+	private void drawHorizontalAxisTitle(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
+			StringBounder stringBounder, boolean isVerticalAxis, FontConfiguration axisFontConfig) {
+		// Use the provided font configuration (same as tick labels)
+		final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), text)
+				.create(axisFontConfig, HorizontalAlignment.CENTER, skinParam);
+		final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+		final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
+
+		if (isVerticalAxis) {
+			// For vertical axis with label at top
+			final double xPos = leftSide ? -AXIS_LABEL_SPACE / 2 - textWidth / 2 : AXIS_LABEL_SPACE / 2 - textWidth / 2;
+			final double yPos = -textHeight - 15; // Position higher above the axis
+			textBlock.drawU(ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))));
+		} else {
+			// For horizontal axis with label at right
+			final double xPos = height + 10; // Position to the right
+			final double yPos = -textHeight / 2;
+			textBlock.drawU(ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))));
+		}
 	}
 
 	private void drawXAxis(UGraphic ug, double width, double height, HColor lineColor, HColor fontColor,
@@ -527,11 +528,20 @@ public class ChartRenderer {
 
 		// Draw X-axis title if present
 		if (xAxisTitle != null && !xAxisTitle.isEmpty()) {
-			final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)
-					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
-			final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
-			final double titleY = TICK_SIZE + 25; // Position below the labels
-			titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
+			if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {
+				// Draw at the right end of the axis
+				final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)
+						.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
+				final double textHeight = titleBlock.calculateDimension(stringBounder).getHeight();
+				titleBlock.drawU(ug.apply(UTranslate.dx(width + 10).compose(UTranslate.dy(-textHeight / 2))));
+			} else {
+				// Draw centered below the axis (default)
+				final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)
+						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+				final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
+				final double titleY = TICK_SIZE + 25; // Position below the labels
+				titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
+			}
 		}
 	}
 

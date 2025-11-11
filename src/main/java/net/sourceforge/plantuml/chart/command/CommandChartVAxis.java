@@ -39,6 +39,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.chart.ChartAxis;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -75,6 +76,8 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 						new RegexLeaf("spacing"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf(1, "SPACING", "([0-9.]+)"))), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf(1, "LABELTOP", "(label-top)")), //
 				RegexLeaf.end());
 	}
 
@@ -88,6 +91,7 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 		final String labelsStr = arg.getLazzy("LABELS", 0);
 		final String ticksStr = arg.getLazzy("TICKS", 0);
 		final String spacingStr = arg.getLazzy("SPACING", 0);
+		final String labelTopStr = arg.getLazzy("LABELTOP", 0);
 
 		// If labels are provided, this is for horizontal bar chart mode
 		if (labelsStr != null) {
@@ -155,6 +159,17 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 				}
 			} else {
 				diagram.getYAxis().setTickSpacing(tickSpacing);
+			}
+		}
+
+		// Set label position if label-top option is present
+		if (labelTopStr != null) {
+			if (axisType.startsWith("v2")) {
+				if (diagram.getY2Axis() != null) {
+					diagram.getY2Axis().setLabelPosition(ChartAxis.LabelPosition.TOP);
+				}
+			} else {
+				diagram.getYAxis().setLabelPosition(ChartAxis.LabelPosition.TOP);
 			}
 		}
 

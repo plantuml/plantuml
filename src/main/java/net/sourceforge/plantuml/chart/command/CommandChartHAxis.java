@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.chart.ChartAxis;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -67,6 +68,8 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 						new RegexLeaf("spacing"), //
 						net.sourceforge.plantuml.regex.RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf(1, "SPACING", "([0-9]+)"))), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "LABELRIGHT", "(label-right)")), //
 				RegexLeaf.end());
 	}
 
@@ -78,6 +81,7 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 		final String maxStr = arg.getLazzy("RANGE", 1);
 		final String data = arg.getLazzy("DATA", 0);
 		final String spacingStr = arg.getLazzy("SPACING", 0);
+		final String labelRightStr = arg.getLazzy("LABELRIGHT", 0);
 
 		// If numeric range is provided, this is for horizontal bar chart mode
 		if (minStr != null && maxStr != null) {
@@ -105,6 +109,11 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 			} catch (NumberFormatException e) {
 				return CommandExecutionResult.error("Invalid number format in spacing value");
 			}
+		}
+
+		// Set label position if label-right option is present
+		if (labelRightStr != null) {
+			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);
 		}
 
 		return diagram.setXAxisLabels(labels);

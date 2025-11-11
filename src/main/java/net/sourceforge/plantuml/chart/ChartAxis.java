@@ -39,12 +39,19 @@ import java.util.Map;
 
 public class ChartAxis {
 
+	public enum LabelPosition {
+		DEFAULT, // Vertical for v-axis, horizontal below for h-axis
+		TOP,     // Horizontal at top for v-axis
+		RIGHT    // At right for h-axis
+	}
+
 	private String title;
 	private double min;
 	private double max;
 	private boolean autoScale;
 	private Map<Double, String> customTicks;
 	private Double tickSpacing;
+	private LabelPosition labelPosition;
 
 	public ChartAxis() {
 		this.title = "";
@@ -53,6 +60,7 @@ public class ChartAxis {
 		this.autoScale = true;
 		this.customTicks = null;
 		this.tickSpacing = null;
+		this.labelPosition = LabelPosition.DEFAULT;
 	}
 
 	public ChartAxis(String title, double min, double max) {
@@ -62,6 +70,7 @@ public class ChartAxis {
 		this.autoScale = false;
 		this.customTicks = null;
 		this.tickSpacing = null;
+		this.labelPosition = LabelPosition.DEFAULT;
 	}
 
 	public String getTitle() {
@@ -159,5 +168,19 @@ public class ChartAxis {
 	 */
 	public boolean hasTickSpacing() {
 		return tickSpacing != null && tickSpacing > 0;
+	}
+
+	/**
+	 * Get label position
+	 */
+	public LabelPosition getLabelPosition() {
+		return labelPosition;
+	}
+
+	/**
+	 * Set label position
+	 */
+	public void setLabelPosition(LabelPosition labelPosition) {
+		this.labelPosition = labelPosition;
 	}
 }

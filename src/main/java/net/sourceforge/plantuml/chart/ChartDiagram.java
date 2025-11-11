@@ -74,6 +74,7 @@ public class ChartDiagram extends UmlDiagram {
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
 	private Integer xAxisTickSpacing;
+	private ChartAxis.LabelPosition xAxisLabelPosition = ChartAxis.LabelPosition.DEFAULT;
 	private final ChartAxis xAxis = new ChartAxis();  // For numeric x-axis (horizontal bar charts)
 	private final List<String> yAxisLabels = new ArrayList<>();
 	private final List<ChartSeries> series = new ArrayList<>();
@@ -128,11 +129,11 @@ public class ChartDiagram extends UmlDiagram {
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
-			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
+			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
 		}
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
 	// Command methods
@@ -145,6 +146,14 @@ public class ChartDiagram extends UmlDiagram {
 
 	public void setXAxisTitle(String title) {
 		this.xAxisTitle = title;
+	}
+
+	public void setXAxisLabelPosition(ChartAxis.LabelPosition position) {
+		this.xAxisLabelPosition = position;
+	}
+
+	public ChartAxis.LabelPosition getXAxisLabelPosition() {
+		return xAxisLabelPosition;
 	}
 
 	public void setXAxisTickSpacing(Integer spacing) {
