@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
@@ -293,6 +294,67 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 	}
 
+	class ConnectionCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
+
+		private final Branch branch;
+
+		public ConnectionCrossSwimlane(Ftile from, Ftile to, Branch branch) {
+			super(from, to);
+			this.branch = branch;
+		}
+
+		@Override
+		public void drawU(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());
+			snake.addPoint(getP1(stringBounder));
+			snake.addPoint(getP2(stringBounder));
+
+			ug.draw(snake);
+		}
+
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			final XPoint2D p1 = getP1(stringBounder);
+			final XPoint2D p2 = getP2(stringBounder);
+			final XPoint2D mp1a = translate1.getTranslated(p1);
+			final XPoint2D mp2b = translate2.getTranslated(p2);
+
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())
+							.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());
+
+			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+
+			if(mp1a.getX() > mp2b.getX()) {
+				snake.addPoint(mp1a.getX() - (dimDiamond1.getWidth() / 2), p1.getY() - (dimDiamond1.getHeight() / 2));
+			} else {
+				snake.addPoint(mp1a.getX() + (dimDiamond1.getWidth() / 2), p1.getY() - (dimDiamond1.getHeight() / 2));
+			}
+
+			snake.addPoint(mp2b.getX(), p1.getY() - (dimDiamond1.getHeight() / 2));
+			snake.addPoint(mp2b);
+			ug.draw(snake);
+		}
+
+		private XPoint2D getP1(final StringBounder stringBounder) {
+			return getTranslateDiamond1(stringBounder)
+							.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());
+		}
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+			return getTranslateOf(getFtile2(), stringBounder)
+							.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());
+		}
+	}
+
+	protected boolean differentSwimlane(Ftile ftile1, Ftile ftile2) {
+		final Swimlane swimlane1 = ftile1 != null ? ftile1.getSwimlaneOut() : null;
+		final Swimlane swimlane2 = ftile2 != null ? ftile2.getSwimlaneIn() : null;
+		return swimlane1 != null && swimlane2 != null && swimlane1 != swimlane2;
+	}
+
 	@Override
 	protected double getYdelta1a(StringBounder stringBounder) {
 		double max = 10;
@@ -316,9 +378,15 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 	private void addIngoingArrows(final List<Connection> conns) {
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));
-		for (int i = 1; i < tiles.size() - 1; i++) {
+		for (int i = 0; i < tiles.size(); i++) {
 			final Ftile tile = tiles.get(i);
-			conns.add(new ConnectionVerticalTop(tile, branches.get(i)));
+			if(i > 0 && i < tiles.size() - 1) {
+				conns.add(new ConnectionVerticalTop(tile, branches.get(i)));
+			}
+
+			if (differentSwimlane(this, tile)) {
+				conns.add(new ConnectionCrossSwimlane(diamond1, tile, branches.get(i)));
+			}
 		}
 	}
 
