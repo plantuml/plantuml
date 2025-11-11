@@ -63,7 +63,7 @@ public class CommunicationExoTile extends AbstractTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="nc" id="L66">		return message;</span>
+<span class="fc" id="L66">		return message;</span>
 	}
 
 	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Rose skin, ISkinParam skinParam,
@@ -100,48 +100,48 @@ public class CommunicationExoTile extends AbstractTile {
 	public void drawU(UGraphic ug) {
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
-<span class="nc" id="L103">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L104">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L105">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L106">		double x1 = getPoint1Value(stringBounder);</span>
-<span class="nc" id="L107">		double x2 = getPoint2Value(stringBounder);</span>
+<span class="fc" id="L103">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L104">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L105">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L106">		double x1 = getPoint1Value(stringBounder);</span>
+<span class="fc" id="L107">		double x2 = getPoint2Value(stringBounder);</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		final double textDeltaX = isFromLeftBorderMessage()</span>
-<span class="nc" id="L110">																? getPoint1(stringBounder).getCurrentValue() - x1</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">																: isFromRightBorderMessage()</span>
-<span class="nc" id="L112">																		? getPoint2(stringBounder).getCurrentValue() - x2</span>
-<span class="nc" id="L113">																		: 0;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		final double textDeltaX = isFromLeftBorderMessage()</span>
+<span class="fc" id="L110">																? getPoint1(stringBounder).getCurrentValue() - x1</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">																: isFromRightBorderMessage()</span>
+<span class="fc" id="L112">																		? getPoint2(stringBounder).getCurrentValue() - x2</span>
+<span class="pc" id="L113">																		: 0;</span>
 
-<span class="nc" id="L115">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (level &gt; 0) {</span>
+<span class="fc" id="L115">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (level &gt; 0) {</span>
 <span class="nc bnc" id="L117" title="All 2 branches missed.">			if (message.getType().isRightBorder())</span>
 <span class="nc" id="L118">				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;</span>
 			else
 <span class="nc" id="L120">				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);</span>
 		}
 
-<span class="nc" id="L123">		final ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
-<span class="nc" id="L124">		final MessageExoType type = message.getType();</span>
-<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_LEFT)</span>
-<span class="nc" id="L126">			x1 += ComponentRoseArrow.diamCircle / 2 + 2;</span>
+<span class="fc" id="L123">		final ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
+<span class="fc" id="L124">		final MessageExoType type = message.getType();</span>
+<span class="fc bfc" id="L125" title="All 4 branches covered.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_LEFT)</span>
+<span class="fc" id="L126">			x1 += ComponentRoseArrow.diamCircle / 2 + 2;</span>
 
-<span class="nc bnc" id="L128" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_LEFT)</span>
+<span class="pc bpc" id="L128" title="1 of 4 branches missed.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_LEFT)</span>
 <span class="nc" id="L129">			x1 += ComponentRoseArrow.diamCircle / 2 + 2;</span>
 
-<span class="nc bnc" id="L131" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_RIGHT)</span>
-<span class="nc" id="L132">			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;</span>
+<span class="fc bfc" id="L131" title="All 4 branches covered.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_RIGHT)</span>
+<span class="fc" id="L132">			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;</span>
 
-<span class="nc bnc" id="L134" title="All 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_RIGHT)</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_RIGHT)</span>
 <span class="nc" id="L135">			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;</span>
 
-<span class="nc" id="L137">		final Area area = Area.create(x2 - x1, dim.getHeight());</span>
-<span class="nc" id="L138">		area.setTextDeltaX(textDeltaX);</span>
-<span class="nc" id="L139">		ug = ug.apply(UTranslate.dx(x1));</span>
-<span class="nc" id="L140">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="nc" id="L141">	}</span>
+<span class="fc" id="L137">		final Area area = Area.create(x2 - x1, dim.getHeight());</span>
+<span class="fc" id="L138">		area.setTextDeltaX(textDeltaX);</span>
+<span class="fc" id="L139">		ug = ug.apply(UTranslate.dx(x1));</span>
+<span class="fc" id="L140">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L141">	}</span>
 
 	private boolean isShortArrow() {
-<span class="nc" id="L144">		return message.isShortArrow();</span>
+<span class="fc" id="L144">		return message.isShortArrow();</span>
 	}
 
 	@Override
@@ -158,13 +158,13 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L161">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L162">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L163">		final double width = dim.getWidth();</span>
+<span class="fc" id="L161">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L162">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L163">		final double width = dim.getWidth();</span>
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (message.getType().isRightBorder()) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (message.getType().isRightBorder()) {</span>
 		} else {
-<span class="nc" id="L167">			livingSpace.getPosC(getStringBounder()).ensureBiggerThan(tileArguments.getXOrigin().addFixed(width));</span>
+<span class="fc" id="L167">			livingSpace.getPosC(getStringBounder()).ensureBiggerThan(tileArguments.getXOrigin().addFixed(width));</span>
 		}
 
 		// final Real point1 = getPoint1(stringBounder);
@@ -178,18 +178,18 @@ public class CommunicationExoTile extends AbstractTile {
 		// point1.ensureBiggerThan(point2.addFixed(width));
 		// }
 		// }
-<span class="nc" id="L181">	}</span>
+<span class="fc" id="L181">	}</span>
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="nc" id="L185">		super.callbackY_internal(y);</span>
-<span class="nc" id="L186">		final ArrowComponent comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L187">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L188">		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();</span>
+<span class="fc" id="L185">		super.callbackY_internal(y);</span>
+<span class="fc" id="L186">		final ArrowComponent comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L187">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L188">		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();</span>
 
-<span class="nc" id="L190">		livingSpace.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
+<span class="fc" id="L190">		livingSpace.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
 
-<span class="nc" id="L192">	}</span>
+<span class="fc" id="L192">	}</span>
 
 	private Real getPoint1(final StringBounder stringBounder) {
 <span class="fc bfc" id="L195" title="All 2 branches covered.">		if (message.getType().isRightBorder())</span>
@@ -206,17 +206,17 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	private double getPoint1Value(final StringBounder stringBounder) {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (isFromLeftBorderMessage())</span>
-<span class="nc" id="L210">			return tileArguments.getBorder1();</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (isFromLeftBorderMessage())</span>
+<span class="fc" id="L210">			return tileArguments.getBorder1();</span>
 
-<span class="nc" id="L212">		return getPoint1(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L212">		return getPoint1(stringBounder).getCurrentValue();</span>
 	}
 
 	private double getPoint2Value(final StringBounder stringBounder) {
-<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (isFromRightBorderMessage())</span>
-<span class="nc" id="L217">			return tileArguments.getBorder2();</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (isFromRightBorderMessage())</span>
+<span class="fc" id="L217">			return tileArguments.getBorder2();</span>
 
-<span class="nc" id="L219">		return getPoint2(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L219">		return getPoint2(stringBounder).getCurrentValue();</span>
 	}
 
 	public Real getMinX() {
@@ -241,11 +241,11 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	public boolean isFromRightBorderMessage() {
-<span class="nc bnc" id="L244" title="All 4 branches missed.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
+<span class="pc bpc" id="L244" title="1 of 4 branches missed.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
 	}
 
 	public boolean isFromLeftBorderMessage() {
-<span class="nc bnc" id="L248" title="All 4 branches missed.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
