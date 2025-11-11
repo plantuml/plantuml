@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.cli;
+package net.sourceforge.plantuml.nio;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.Run;
+import net.sourceforge.plantuml.cli.AbstractCliTest;
 
 class RunRelativeIncludeTest extends AbstractCliTest {
 
@@ -37,8 +38,7 @@ class RunRelativeIncludeTest extends AbstractCliTest {
 		// deepest file first
 		final Path logoPuml = logoDir.resolve("logo.puml");
 		Files.writeString(logoPuml,
-				String.join(System.lineSeparator(),
-						"skinparam titleFontSize 14", "title PlantUML logo included"),
+				String.join(System.lineSeparator(), "title PlantUML logo included"),
 				StandardCharsets.UTF_8);
 
 		// header.puml includes the logo using a path relative to itself

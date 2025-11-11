@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 @Deprecated
 public class DirWatcher {
@@ -88,7 +87,7 @@ public class DirWatcher {
 					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
 							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
-					final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
+					final Set<File> files = sourceFileReader.getIncludedFiles();
 					files.add(f);
 					for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
 						result.add(g);

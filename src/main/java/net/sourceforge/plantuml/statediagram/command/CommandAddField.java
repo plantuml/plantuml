@@ -56,12 +56,11 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	public CommandAddField() {
 		super(getRegexConcat());
 	}
-	
+
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-		return pass == ParserPass.THREE;
+		return pass == ParserPass.ONE;
 	}
-
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //
@@ -75,8 +74,8 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String codeString = arg.getLazzy("CODE", 0);
 
 		final Quark<Entity> quark;

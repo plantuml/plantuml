@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -110,6 +111,12 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		this.source = Objects.requireNonNull(source);
 		this.preprocessing = preprocessing;
 	}
+	
+	public PathSystem getPathSystem() {
+		return PathSystem.fetch();
+	}
+
+
 
 	private String getVersion() {
 		final StringBuilder toAppend = new StringBuilder();

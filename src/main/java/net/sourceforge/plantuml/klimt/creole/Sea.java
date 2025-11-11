@@ -93,9 +93,9 @@ public class Sea {
 			if (atom instanceof AtomText) {
 				AtomText atomText = (AtomText) atom;
 				String text = atomText.getText();
-				if (text.trim().isEmpty()) {
+				if (text.trim().isEmpty())
 					continue;
-				}
+
 				return (AtomText) atom;
 			}
 		}
@@ -105,41 +105,51 @@ public class Sea {
 	public void doAlignTikz() {
 		// #1628, make non-text vertical center with text
 		AtomText firstTextAtom = findFirstAtomText();
-		if (firstTextAtom == null) {
+		if (firstTextAtom == null)
 			return;
-		}
+
 		Position firstTextPosition = positions.get(firstTextAtom);
 		double firstTextHeight = firstTextAtom.getFontHeight(stringBounder);
 		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
 			final Atom atom = entry.getKey();
-			if (atom instanceof AtomText) {
+			if (atom instanceof AtomText)
 				continue;
-			}
-			Position position = entry.getValue();
-			double targetY = firstTextPosition.getMinY() - (position.getHeight() - firstTextHeight) / 2;
-			double delta = targetY - position.getMinY();
-			if (delta != 0.0) {
+
+			final Position position = entry.getValue();
+			final double targetY = firstTextPosition.getMinY() - (position.getHeight() - firstTextHeight) / 2;
+			final double delta = targetY - position.getMinY();
+			if (delta != 0.0)
 				positions.put(atom, position.translateY(delta));
-			}
+
 		}
 	}
 
 	public void doAlignTikzBaseline() {
 		// #1606, make text the same baseline
-		AtomText firstTextAtom = findFirstAtomText();
-		if (firstTextAtom == null) {
+		final AtomText firstTextAtom = findFirstAtomText();
+		if (firstTextAtom == null)
 			return;
-		}
+
 		double firstTextHeight = firstTextAtom.getFontHeight(stringBounder);
 		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
 			final Atom atom = entry.getKey();
-			if (!(atom instanceof AtomText)) {
+			if (!(atom instanceof AtomText))
 				continue;
-			}
-			double delta = firstTextHeight - ((AtomText) atom).getFontHeight(stringBounder);
-			if (delta != 0.0) {
+
+			final double delta = firstTextHeight - ((AtomText) atom).getFontHeight(stringBounder);
+			if (delta != 0.0)
 				positions.put(atom, entry.getValue().translateY(delta));
-			}
+
+		}
+		if (positions.size() == 1) {
+			// the only atom text, and we have hard-coded the minimum height to 10
+			// ref:AtomText::calculateDimension
+			// https://github.com/plantuml/plantuml/pull/2424
+			// https://github.com/plantuml/plantuml/issues/2055
+			final double delta = (10 - firstTextHeight) / 2;
+			if (delta > 0)
+				positions.put(firstTextAtom, positions.get(firstTextAtom).translateY(delta));
+
 		}
 	}
 
@@ -148,43 +158,43 @@ public class Sea {
 	}
 
 	public double getMinY() {
-		if (positions.size() == 0) {
+		if (positions.size() == 0)
 			throw new IllegalStateException();
-		}
+
 		double result = Double.MAX_VALUE;
-		for (Position pos : positions.values()) {
-			if (result > pos.getMinY()) {
+		for (Position pos : positions.values())
+			if (result > pos.getMinY())
 				result = pos.getMinY();
-			}
-		}
+
 		return result;
 	}
 
 	public double getMaxY() {
-		if (positions.size() == 0) {
+		if (positions.size() == 0)
 			throw new IllegalStateException();
-		}
+
 		Atom atom = null;
 		double result = -Double.MAX_VALUE;
 		for (Map.Entry<Atom, Position> entry : positions.entrySet()) {
-			Position pos = entry.getValue();
+			final Position pos = entry.getValue();
 			if (result < pos.getMaxY()) {
 				atom = entry.getKey();
 				result = pos.getMaxY();
 			}
 		}
-		if (!stringBounder.matchesProperty("TIKZ")) {
+		if (!stringBounder.matchesProperty("TIKZ"))
 			return result;
-		}
+
 		// For TKIZ, make sure the strip has at least 1pt
 		if (atom instanceof AtomText) {
 			// the delta in AtomText should be larger than 1 already
-			AtomText atomText = (AtomText) atom;
-			UFont font = atomText.getFontConfiguration().getFont();
-			String text = atomText.getText();
-			double height = stringBounder.calculateDimension(font, text).getHeight();
-			double delta = result - height;
+			final AtomText atomText = (AtomText) atom;
+			final UFont font = atomText.getFontConfiguration().getFont();
+			final String text = atomText.getText();
+			final double height = stringBounder.calculateDimension(font, text).getHeight();
+			final double delta = result - height;
 			return result + Math.max(1 - delta, 0);
+			
 		} else {
 			return result + 1;
 		}
@@ -195,9 +205,9 @@ public class Sea {
 	}
 
 	public MinMax update(MinMax minMax) {
-		for (Position position : positions.values()) {
+		for (Position position : positions.values())
 			minMax = position.update(minMax);
-		}
+
 		return minMax;
 	}
 

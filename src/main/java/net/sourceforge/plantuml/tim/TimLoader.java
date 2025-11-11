@@ -34,16 +34,16 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class TimLoader {
@@ -53,10 +53,12 @@ public class TimLoader {
 	private boolean preprocessorError;
 	private List<StringLocated> resultList;
 	private PreprocessingArtifact preprocessingArtifact;
+	private final PathSystem pathSystem;
 
-	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
+	public TimLoader(PathSystem pathSystem, /*ImportedFiles importedFiles,*/ Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer, StringLocated location) {
-		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
+		this.pathSystem = pathSystem;
+		this.context = new TContext(pathSystem, /*importedFiles,*/ defines, charset, definitionsContainer);
 		try {
 			defines.copyTo(global, location);
 		} catch (EaterException e) {
@@ -64,7 +66,7 @@ public class TimLoader {
 		}
 	}
 
-	public Set<FileWithSuffix> load(List<StringLocated> list) {
+	public Set<File> load(List<StringLocated> list) {
 //		CodeIteratorImpl.indentNow(list);
 		try {
 			context.executeLines(global, list, null, false);
