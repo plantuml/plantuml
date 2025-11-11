@@ -164,8 +164,10 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			y += dim.getHeight();
 			if (stringBounder.matchesProperty("TIKZ") && dim.getHeight() == 10) {
 				// the modifier would add a hard-coded 1 to height
-				// ref1: net.sourceforge.plantuml.klimt.creole.legacy.AtomText.calculateDimension
-				// ref2: net.sourceforge.plantuml.skin.VisibilityModifier.getUBlock
+				// ref1: AtomText::calculateDimension
+				// ref2: VisibilityModifier::getUBlock
+				// https://github.com/plantuml/plantuml/pull/2424
+				// https://github.com/plantuml/plantuml/issues/2055
 				y += 1;
 			}
 		}
