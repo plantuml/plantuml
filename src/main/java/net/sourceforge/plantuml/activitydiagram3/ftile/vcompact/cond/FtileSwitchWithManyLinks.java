@@ -294,11 +294,11 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 	}
 
-	class ConnectionCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
+	class ConnectionHorizontalThenVerticalCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
 
 		private final Branch branch;
 
-		public ConnectionCrossSwimlane(Ftile from, Ftile to, Branch branch) {
+		public ConnectionHorizontalThenVerticalCrossSwimlane(Ftile from, Ftile to, Branch branch) {
 			super(from, to);
 			this.branch = branch;
 		}
@@ -349,6 +349,60 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 		}
 	}
 
+	class ConnectionVerticalThenHorizontalCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
+
+		public ConnectionVerticalThenHorizontalCrossSwimlane(Ftile from) {
+			super(from, diamond2);
+		}
+
+		@Override
+		public void drawU(UGraphic ug) {
+		}
+
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			final XPoint2D mp1a = translate1.getTranslated(getP1(stringBounder));
+			final XPoint2D mp2b = translate2.getTranslated(getP2(stringBounder));
+
+			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
+
+			final UPolygon arrow;
+			final Direction direction;
+
+			if(mp1a.getX() > mp2b.getX()) {
+				arrow = skinParam().arrows().asToLeft();
+				direction = Direction.LEFT;
+			} else {
+				arrow = skinParam().arrows().asToRight();
+				direction = Direction.RIGHT;
+			}
+
+			final Snake snake = Snake.create(skinParam(), arrowColor, arrow);
+
+			snake.addPoint(mp1a);
+			snake.addPoint(mp1a.getX(), mp2b.getY() + (dimDiamond2.getHeight() / 2));
+
+			if(direction == Direction.LEFT) {
+				snake.addPoint(mp2b.getX() + (dimDiamond2.getWidth() / 2), mp2b.getY() + (dimDiamond2.getHeight() /2));
+			} else {
+				snake.addPoint(mp2b.getX() - (dimDiamond2.getWidth() / 2), mp2b.getY() + (dimDiamond2.getHeight() /2));
+			}
+
+			ug.draw(snake);
+		}
+
+		private XPoint2D getP1(final StringBounder stringBounder) {
+			return getTranslateOf(getFtile1(), stringBounder)
+							.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());
+		}
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+			return getTranslateDiamond2(stringBounder)
+							.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());
+		}
+	}
+
 	protected boolean differentSwimlane(Ftile ftile1, Ftile ftile2) {
 		final Swimlane swimlane1 = ftile1 != null ? ftile1.getSwimlaneOut() : null;
 		final Swimlane swimlane2 = ftile2 != null ? ftile2.getSwimlaneIn() : null;
@@ -385,7 +439,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			}
 
 			if (differentSwimlane(this, tile)) {
-				conns.add(new ConnectionCrossSwimlane(diamond1, tile, branches.get(i)));
+				conns.add(new ConnectionHorizontalThenVerticalCrossSwimlane(diamond1, tile, branches.get(i)));
 			}
 		}
 	}
@@ -405,12 +459,18 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 				conns.add(new ConnectionVerticalBottom(tile, branches.get(i).getTextBlockSpecial()));
 
 		}
+
+		for (Ftile tile : tiles) {
+			if (differentSwimlane(this, tile)) {
+				conns.add(new ConnectionVerticalThenHorizontalCrossSwimlane(tile));
+			}
+		}
 	}
 
 	private int getFirstOutgoingArrow(StringBounder stringBounder) {
 		for (int i = 0; i < tiles.size() - 1; i++) {
 			final Ftile tile = tiles.get(i);
-			if (tile.calculateDimension(stringBounder).hasPointOut())
+			if (tile.calculateDimension(stringBounder).hasPointOut() && !differentSwimlane(this, tile))
 				return i;
 
 		}
@@ -420,7 +480,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 	private int getLastOutgoingArrow(StringBounder stringBounder) {
 		for (int i = tiles.size() - 1; i >= 0; i--) {
 			final Ftile tile = tiles.get(i);
-			if (tile.calculateDimension(stringBounder).hasPointOut())
+			if (tile.calculateDimension(stringBounder).hasPointOut() && !differentSwimlane(this, tile))
 				return i;
 
 		}
