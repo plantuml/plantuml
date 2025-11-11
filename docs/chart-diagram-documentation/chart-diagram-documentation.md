@@ -360,7 +360,7 @@ Grid on both axes:
 ```plantuml
 @startchart
 h-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct] grid
-v-axis -50 --> 100 grid
+v-axis 0 --> 100 grid
 bar [45, 62, 58, 70, 83, 78, 65, 72, 80, 85] #3498db
 @endchart
 ```
@@ -369,7 +369,7 @@ Grid on vertical axis only:
 
 ```plantuml
 @startchart
-h-axis [Q1, Q2, Q3, Q4] grid
+h-axis [Q1, Q2, Q3, Q4]
 v-axis 0 --> 100 grid
 bar [45, 62, 58, 70] #3498db
 @endchart
