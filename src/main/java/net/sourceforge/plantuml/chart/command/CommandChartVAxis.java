@@ -78,6 +78,8 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 						new RegexLeaf(1, "SPACING", "([0-9.]+)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "LABELTOP", "(label-top)")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf(1, "GRID", "(grid)")), //
 				RegexLeaf.end());
 	}
 
@@ -92,6 +94,7 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 		final String ticksStr = arg.getLazzy("TICKS", 0);
 		final String spacingStr = arg.getLazzy("SPACING", 0);
 		final String labelTopStr = arg.getLazzy("LABELTOP", 0);
+		final String gridStr = arg.getLazzy("GRID", 0);
 
 		// If labels are provided, this is for horizontal bar chart mode
 		if (labelsStr != null) {
@@ -171,6 +174,12 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 			} else {
 				diagram.getYAxis().setLabelPosition(ChartAxis.LabelPosition.TOP);
 			}
+		}
+
+		// Enable grid if grid option is present
+		if (gridStr != null) {
+			// Both primary and secondary Y-axis use the same grid mode
+			diagram.setYGridMode(ChartDiagram.GridMode.MAJOR);
 		}
 
 		return result;

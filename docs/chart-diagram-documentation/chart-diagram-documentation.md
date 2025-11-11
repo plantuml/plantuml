@@ -353,39 +353,32 @@ Available positions:
 
 ### Grid Lines
 
-Display grid lines for better readability.
+Display grid lines for better readability. Add the optional `grid` keyword at the end of any axis line to enable gridlines for that axis. By default, no grid lines are shown.
 
-Major grid lines only (default):
+Grid on both axes:
 
 ```plantuml
 @startchart
-h-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct]
-v-axis 0 --> 100
+h-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct] grid
+v-axis -50 --> 100 grid
 bar [45, 62, 58, 70, 83, 78, 65, 72, 80, 85] #3498db
-grid y-axis major
 @endchart
 ```
 
-Grid on Y-axis only:
+Grid on vertical axis only:
 
 ```plantuml
 @startchart
-h-axis [Q1, Q2, Q3, Q4]
-v-axis 0 --> 100
+h-axis [Q1, Q2, Q3, Q4] grid
+v-axis 0 --> 100 grid
 bar [45, 62, 58, 70] #3498db
-grid x-axis off
-grid y-axis major
 @endchart
 ```
 
-Available grid options:
-- `grid major` - Both axes, major lines only
-- `grid both` - Both axes, major and minor lines
-- `grid off` - Turn off all grid lines
-- `grid x-axis major` - X-axis major lines only
-- `grid x-axis off` - Turn off X-axis grid
-- `grid y-axis major` - Y-axis major lines only
-- `grid y-axis off` - Turn off Y-axis grid
+The `grid` keyword can be added to:
+- `h-axis` - Enable horizontal axis gridlines (vertical lines)
+- `v-axis` or `v2-axis` - Enable vertical axis gridlines (horizontal lines)
+- Major gridlines only are displayed
 
 ## Annotations
 

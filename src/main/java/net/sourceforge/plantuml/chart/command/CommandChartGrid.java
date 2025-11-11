@@ -54,41 +54,21 @@ public class CommandChartGrid extends SingleLineCommand2<ChartDiagram> {
 		return RegexConcat.build(CommandChartGrid.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("grid"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "AXIS", "(x-axis|y-axis)")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "MODE", "(on|off|major|both)"), //
+				new RegexLeaf(1, "AXIS", "(h-axis|v-axis)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final String axis = arg.getLazzy("AXIS", 0);
-		final String mode = arg.get("MODE", 0);
+		final String axis = arg.get("AXIS", 0);
 
-		ChartDiagram.GridMode gridMode;
-		switch (mode.toLowerCase()) {
-		case "on":
-		case "major":
-			gridMode = ChartDiagram.GridMode.MAJOR;
-			break;
-		case "both":
-			gridMode = ChartDiagram.GridMode.BOTH;
-			break;
-		case "off":
-			gridMode = ChartDiagram.GridMode.OFF;
-			break;
-		default:
-			return CommandExecutionResult.error("Invalid grid mode: " + mode);
-		}
+		// Enable major gridlines for the specified axis
+		final ChartDiagram.GridMode gridMode = ChartDiagram.GridMode.MAJOR;
 
-		// Apply to specific axis or both
-		if (axis == null || axis.isEmpty()) {
-			// No axis specified, apply to both
-			return diagram.setGridMode(gridMode);
-		} else if (axis.equals("x-axis")) {
+		if (axis.equals("h-axis")) {
 			return diagram.setXGridMode(gridMode);
-		} else if (axis.equals("y-axis")) {
+		} else if (axis.equals("v-axis")) {
 			return diagram.setYGridMode(gridMode);
 		} else {
 			return CommandExecutionResult.error("Invalid axis: " + axis);

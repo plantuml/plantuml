@@ -483,27 +483,38 @@ public class ChartRenderer {
 		// Determine which labels to show based on spacing
 		final int spacing = (xAxisTickSpacing != null && xAxisTickSpacing > 0) ? xAxisTickSpacing : 1;
 
-		// Draw vertical grid lines at category boundaries spanning the full plot height
+		// Draw vertical grid lines at category centers spanning the full plot height
 		// Grid lines should span from top of plot to bottom of plot
 		// The height parameter represents the full plot height
 		if (xGridMode != ChartDiagram.GridMode.OFF) {
-			// Calculate the vertical span needed for grid lines
-			// When x-axis is at zero position, need to draw both up and down
-			final double gridUpward = yAxis != null && yAxis.getMin() <= 0 && yAxis.getMax() >= 0
-				? (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()) * height
-				: 0;
-			final double gridDownward = height - gridUpward;
+			// Calculate where the x-axis is positioned within the plot
+			// When axis is at bottom (all positive values), draw upward by full height
+			// When axis crosses zero, draw both up (to top) and down (to bottom)
+			final double distanceToTop;
+			final double distanceToBottom;
 
-			for (int i = 0; i <= xAxisLabels.size(); i++) {
-				final double gridX = i * categoryWidth;
-				// Draw line upward from axis
-				if (gridUpward > 0) {
-					final ULine gridLineUp = ULine.vline(-gridUpward);
+			if (yAxis != null && yAxis.getMin() <= 0 && yAxis.getMax() >= 0) {
+				// Axis crosses zero - calculate distances to top and bottom
+				final double zeroRatio = (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin());
+				distanceToTop = height * (1.0 - zeroRatio);
+				distanceToBottom = height * zeroRatio;
+			} else {
+				// Axis is at bottom (all positive) or top (all negative)
+				distanceToTop = height;
+				distanceToBottom = 0;
+			}
+
+			// Draw grid lines at category centers (where data points are positioned)
+			for (int i = 0; i < xAxisLabels.size(); i++) {
+				final double gridX = (i + 0.5) * categoryWidth;
+				// Draw line upward to top of plot
+				if (distanceToTop > 0) {
+					final ULine gridLineUp = ULine.vline(-distanceToTop);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(gridX)).draw(gridLineUp);
 				}
-				// Draw line downward from axis
-				if (gridDownward > 0) {
-					final ULine gridLineDown = ULine.vline(gridDownward);
+				// Draw line downward to bottom of plot
+				if (distanceToBottom > 0) {
+					final ULine gridLineDown = ULine.vline(distanceToBottom);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(gridX)).draw(gridLineDown);
 				}
 			}

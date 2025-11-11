@@ -11,7 +11,8 @@
       "Bash(xvfb-run:*)",
       "Bash(git add:*)",
       "Bash(timeout 5s java:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(timeout 10s java:*)"
     ],
     "deny": [],
     "ask": []
