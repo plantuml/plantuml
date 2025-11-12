@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 	public void addStep(Event event, double y) {
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (event.dealWith(p)) {</span>
-<span class="pc bpc" id="L79" title="3 of 6 branches missed.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
+<span class="pc bpc" id="L79" title="5 of 6 branches missed.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
 <span class="nc" id="L80">				y += 5.0;</span>
 
 <span class="fc" id="L82">			eventsStep.put(event, y);</span>
@@ -112,8 +112,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L112">					boolean seenDeactivate = false;</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">					while (it.hasNext()) {</span>
 <span class="fc" id="L114">						final Event next = nextButSkippingNotes(it);</span>
-<span class="pc bpc" id="L115" title="1 of 4 branches missed.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))</span>
-<span class="fc" id="L116">							break;</span>
+<span class="pc bpc" id="L115" title="2 of 4 branches missed.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))</span>
+<span class="nc" id="L116">							break;</span>
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">						if (!(next instanceof LifeEvent))</span>
 <span class="fc" id="L118">							continue;</span>
 
@@ -175,10 +175,10 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 	}
 
 	private Fashion getActivateColor(Event event) {
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (event instanceof LifeEvent) {</span>
-<span class="fc" id="L179">			final LifeEvent le = (LifeEvent) event;</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			if (le.isActivate())</span>
-<span class="fc" id="L181">				return le.getSpecificColors();</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (event instanceof LifeEvent) {</span>
+<span class="nc" id="L179">			final LifeEvent le = (LifeEvent) event;</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (le.isActivate())</span>
+<span class="nc" id="L181">				return le.getSpecificColors();</span>
 
 		}
 <span class="pc bpc" id="L184" title="1 of 2 branches missed.">		for (Iterator&lt;Event&gt; it = events.iterator(); it.hasNext();) {</span>
@@ -232,7 +232,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 <span class="fc" id="L233">			final Double potentialPosition = eventsStep.get(event);</span>
 
-<span class="fc bfc" id="L235" title="All 4 branches covered.">			if (position == null || lastMessage == null)</span>
+<span class="pc bpc" id="L235" title="1 of 4 branches missed.">			if (position == null || lastMessage == null)</span>
 <span class="fc" id="L236">				position = potentialPosition;</span>
 <span class="pc bpc" id="L237" title="1 of 2 branches missed.">			else if (event instanceof LifeEvent) { // &amp;&amp; event.dealWith(p)) {</span>
 <span class="nc" id="L238">				LifeEvent le = (LifeEvent) event;</span>
@@ -249,7 +249,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="nc" id="L249">			} else</span>
 <span class="fc" id="L250">				position = potentialPosition;</span>
 
-<span class="fc bfc" id="L252" title="All 2 branches covered.">			if (event instanceof AbstractMessage) {</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">			if (event instanceof AbstractMessage) {</span>
 <span class="pc bpc" id="L253" title="1 of 2 branches missed.">				if (((AbstractMessage) event).isParallelWith(lastMessage))</span>
 <span class="nc" id="L254">					continue;</span>
 				else {
@@ -264,10 +264,10 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L264">				indent = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
 <span class="fc" id="L265">				final Fashion activateColor = getActivateColor(event);</span>
 <span class="fc" id="L266">				StyleBuilder styleBuilder = null;</span>
-<span class="fc bfc" id="L267" title="All 2 branches covered.">				if (event instanceof AbstractMessage)</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">				if (event instanceof AbstractMessage)</span>
 <span class="fc" id="L268">					styleBuilder = ((AbstractMessage) event).getStyleBuilder();</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">				if (event instanceof LifeEvent)</span>
-<span class="fc" id="L270">					styleBuilder = ((LifeEvent) event).getStyleBuilder();</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">				if (event instanceof LifeEvent)</span>
+<span class="nc" id="L270">					styleBuilder = ((LifeEvent) event).getStyleBuilder();</span>
 <span class="fc" id="L271">				final Step step = new Step(Math.max(createY, position), isNextEventADestroy(event), indent,</span>
 						activateColor, styleBuilder);
 <span class="fc" id="L273">				stair.addStep(step);</span>
@@ -315,11 +315,11 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 	public void drawBoxes(UGraphic ug, Context2D context, double createY, double endY) {
 <span class="fc" id="L316">		final Stairs stairs = getStairs(createY, endY);</span>
 <span class="fc" id="L317">		final int max = stairs.getMaxIndent();</span>
-<span class="fc bfc" id="L318" title="All 2 branches covered.">		if (max == 0)</span>
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		if (max == 0)</span>
 <span class="fc" id="L319">			drawDestroys(ug, stairs, context);</span>
 
-<span class="fc bfc" id="L321" title="All 2 branches covered.">		for (int i = 1; i &lt;= max; i++)</span>
-<span class="fc" id="L322">			drawOneLevel(ug, i, stairs, context);</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		for (int i = 1; i &lt;= max; i++)</span>
+<span class="nc" id="L322">			drawOneLevel(ug, i, stairs, context);</span>
 
 <span class="fc" id="L324">	}</span>
 
@@ -331,23 +331,23 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L331">	}</span>
 
 	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs stairs, Context2D context) {
-<span class="fc" id="L334">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());</span>
-<span class="fc" id="L335">		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));</span>
+<span class="nc" id="L334">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());</span>
+<span class="nc" id="L335">		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));</span>
 
-<span class="fc" id="L337">		boolean pending = true;</span>
-<span class="fc bfc" id="L338" title="All 2 branches covered.">		for (Iterator&lt;Step&gt; it = stairs.getSteps().iterator(); it.hasNext();) {</span>
-<span class="fc" id="L339">			final Step yposition = it.next();</span>
-<span class="fc" id="L340">			final int indent = yposition.getIndent();</span>
-<span class="fc bfc" id="L341" title="All 4 branches covered.">			if (pending &amp;&amp; indent == levelToDraw) {</span>
-<span class="fc" id="L342">				drawer.addStart(yposition.getValue(), yposition.getColors(), yposition.getStyleBuilder());</span>
-<span class="fc" id="L343">				pending = false;</span>
-<span class="pc bpc" id="L344" title="1 of 6 branches missed.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
-<span class="fc" id="L345">				drawer.doDrawing(ug, yposition.getValue());</span>
-<span class="fc" id="L346">				drawer.drawDestroyIfNeeded(ug, yposition);</span>
-<span class="fc" id="L347">				pending = true;</span>
+<span class="nc" id="L337">		boolean pending = true;</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		for (Iterator&lt;Step&gt; it = stairs.getSteps().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L339">			final Step yposition = it.next();</span>
+<span class="nc" id="L340">			final int indent = yposition.getIndent();</span>
+<span class="nc bnc" id="L341" title="All 4 branches missed.">			if (pending &amp;&amp; indent == levelToDraw) {</span>
+<span class="nc" id="L342">				drawer.addStart(yposition.getValue(), yposition.getColors(), yposition.getStyleBuilder());</span>
+<span class="nc" id="L343">				pending = false;</span>
+<span class="nc bnc" id="L344" title="All 6 branches missed.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
+<span class="nc" id="L345">				drawer.doDrawing(ug, yposition.getValue());</span>
+<span class="nc" id="L346">				drawer.drawDestroyIfNeeded(ug, yposition);</span>
+<span class="nc" id="L347">				pending = true;</span>
 			}
-<span class="fc" id="L349">		}</span>
-<span class="fc" id="L350">	}</span>
+<span class="nc" id="L349">		}</span>
+<span class="nc" id="L350">	}</span>
 
 	public void delayOn(double y, double height) {
 <span class="nc" id="L353">		delays.put(y, height);</span>

@@ -294,11 +294,11 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 	}
 
-	class ConnectionCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
+	class ConnectionHorizontalThenVerticalCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
 
 		private final Branch branch;
 
-<span class="nc" id="L301">		public ConnectionCrossSwimlane(Ftile from, Ftile to, Branch branch) {</span>
+<span class="nc" id="L301">		public ConnectionHorizontalThenVerticalCrossSwimlane(Ftile from, Ftile to, Branch branch) {</span>
 <span class="nc" id="L302">			super(from, to);</span>
 <span class="nc" id="L303">			this.branch = branch;</span>
 <span class="nc" id="L304">		}</span>
@@ -349,82 +349,159 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 		}
 	}
 
+	class ConnectionVerticalThenHorizontalCrossSwimlane extends AbstractConnection implements ConnectionTranslatable {
+
+<span class="nc" id="L354">		public ConnectionVerticalThenHorizontalCrossSwimlane(Ftile from) {</span>
+<span class="nc" id="L355">			super(from, diamond2);</span>
+<span class="nc" id="L356">		}</span>
+
+		@Override
+		public void drawU(UGraphic ug) {
+<span class="nc" id="L360">		}</span>
+
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+<span class="nc" id="L364">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L365">			final XPoint2D mp1a = translate1.getTranslated(getP1(stringBounder));</span>
+<span class="nc" id="L366">			final XPoint2D mp2b = translate2.getTranslated(getP2(stringBounder));</span>
+
+<span class="nc" id="L368">			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+
+			final UPolygon arrow;
+			final Direction direction;
+
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			if(mp1a.getX() &gt; mp2b.getX()) {</span>
+<span class="nc" id="L374">				arrow = skinParam().arrows().asToLeft();</span>
+<span class="nc" id="L375">				direction = Direction.LEFT;</span>
+			} else {
+<span class="nc" id="L377">				arrow = skinParam().arrows().asToRight();</span>
+<span class="nc" id="L378">				direction = Direction.RIGHT;</span>
+			}
+
+<span class="nc" id="L381">			final Snake snake = Snake.create(skinParam(), arrowColor, arrow);</span>
+
+<span class="nc" id="L383">			snake.addPoint(mp1a);</span>
+<span class="nc" id="L384">			snake.addPoint(mp1a.getX(), mp2b.getY() + (dimDiamond2.getHeight() / 2));</span>
+
+<span class="nc bnc" id="L386" title="All 2 branches missed.">			if(direction == Direction.LEFT) {</span>
+<span class="nc" id="L387">				snake.addPoint(mp2b.getX() + (dimDiamond2.getWidth() / 2), mp2b.getY() + (dimDiamond2.getHeight() /2));</span>
+			} else {
+<span class="nc" id="L389">				snake.addPoint(mp2b.getX() - (dimDiamond2.getWidth() / 2), mp2b.getY() + (dimDiamond2.getHeight() /2));</span>
+			}
+
+<span class="nc" id="L392">			ug.draw(snake);</span>
+<span class="nc" id="L393">		}</span>
+
+		private XPoint2D getP1(final StringBounder stringBounder) {
+<span class="nc" id="L396">			return getTranslateOf(getFtile1(), stringBounder)</span>
+<span class="nc" id="L397">							.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());</span>
+		}
+
+		private XPoint2D getP2(final StringBounder stringBounder) {
+<span class="nc" id="L401">			return getTranslateDiamond2(stringBounder)</span>
+<span class="nc" id="L402">							.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
+		}
+	}
+
 	protected boolean differentSwimlane(Ftile ftile1, Ftile ftile2) {
-<span class="nc bnc" id="L353" title="All 2 branches missed.">		final Swimlane swimlane1 = ftile1 != null ? ftile1.getSwimlaneOut() : null;</span>
-<span class="nc bnc" id="L354" title="All 2 branches missed.">		final Swimlane swimlane2 = ftile2 != null ? ftile2.getSwimlaneIn() : null;</span>
-<span class="nc bnc" id="L355" title="All 6 branches missed.">		return swimlane1 != null &amp;&amp; swimlane2 != null &amp;&amp; swimlane1 != swimlane2;</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">		final Swimlane swimlane1 = ftile1 != null ? ftile1.getSwimlaneOut() : null;</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">		final Swimlane swimlane2 = ftile2 != null ? ftile2.getSwimlaneIn() : null;</span>
+<span class="nc bnc" id="L409" title="All 6 branches missed.">		return swimlane1 != null &amp;&amp; swimlane2 != null &amp;&amp; swimlane1 != swimlane2;</span>
 	}
 
 	@Override
 	protected double getYdelta1a(StringBounder stringBounder) {
-<span class="nc" id="L360">		double max = 10;</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">		for (Branch branch : branches)</span>
-<span class="nc" id="L362">			max = Math.max(max, branch.getTextBlockPositive().calculateDimension(stringBounder).getHeight());</span>
+<span class="nc" id="L414">		double max = 10;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">		for (Branch branch : branches)</span>
+<span class="nc" id="L416">			max = Math.max(max, branch.getTextBlockPositive().calculateDimension(stringBounder).getHeight());</span>
 
-<span class="nc bnc" id="L364" title="All 2 branches missed.">		if (mode == Mode.BIG_DIAMOND) {</span>
-<span class="nc" id="L365">			final double diamondHeight = diamond1.calculateDimension(stringBounder).getHeight();</span>
-<span class="nc" id="L366">			max += diamondHeight / 2;</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (mode == Mode.BIG_DIAMOND) {</span>
+<span class="nc" id="L419">			final double diamondHeight = diamond1.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L420">			max += diamondHeight / 2;</span>
 		}
-<span class="nc" id="L368">		return max + 10;</span>
+<span class="nc" id="L422">		return max + 10;</span>
 	}
 
 	public Ftile addLinks(StringBounder stringBounder) {
-<span class="nc" id="L372">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L373">		addIngoingArrows(conns);</span>
-<span class="nc" id="L374">		addOutgoingArrows(stringBounder, conns);</span>
-<span class="nc" id="L375">		return FtileUtils.addConnection(this, conns);</span>
+<span class="nc" id="L426">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L427">		addIngoingArrows(conns);</span>
+<span class="nc" id="L428">		addOutgoingArrows(stringBounder, conns);</span>
+<span class="nc" id="L429">		return FtileUtils.addConnection(this, conns);</span>
 	}
 
 	private void addIngoingArrows(final List&lt;Connection&gt; conns) {
-<span class="nc" id="L379">		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));</span>
-<span class="nc" id="L380">		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));</span>
-<span class="nc bnc" id="L381" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
-<span class="nc" id="L382">			final Ftile tile = tiles.get(i);</span>
-<span class="nc bnc" id="L383" title="All 4 branches missed.">			if(i &gt; 0 &amp;&amp; i &lt; tiles.size() - 1) {</span>
-<span class="nc" id="L384">				conns.add(new ConnectionVerticalTop(tile, branches.get(i)));</span>
+<span class="nc" id="L433">		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));</span>
+<span class="nc" id="L434">		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="nc" id="L436">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L437" title="All 4 branches missed.">			if(i &gt; 0 &amp;&amp; i &lt; tiles.size() - 1) {</span>
+<span class="nc" id="L438">				conns.add(new ConnectionVerticalTop(tile, branches.get(i)));</span>
 			}
 
-<span class="nc bnc" id="L387" title="All 2 branches missed.">			if (differentSwimlane(this, tile)) {</span>
-<span class="nc" id="L388">				conns.add(new ConnectionCrossSwimlane(diamond1, tile, branches.get(i)));</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">			if (differentSwimlane(this, tile)) {</span>
+<span class="nc" id="L442">				conns.add(new ConnectionHorizontalThenVerticalCrossSwimlane(diamond1, tile, branches.get(i)));</span>
 			}
 		}
-<span class="nc" id="L391">	}</span>
+<span class="nc" id="L445">	}</span>
 
 	private void addOutgoingArrows(StringBounder stringBounder, final List&lt;Connection&gt; conns) {
-<span class="nc" id="L394">		final int firstOutgoingArrow = getFirstOutgoingArrow(stringBounder);</span>
-<span class="nc" id="L395">		final int lastOutgoingArrow = getLastOutgoingArrow(stringBounder);</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">		if (firstOutgoingArrow &lt; tiles.size())</span>
-<span class="nc" id="L397">			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(firstOutgoingArrow),</span>
-<span class="nc" id="L398">					branches.get(firstOutgoingArrow).getTextBlockSpecial()));</span>
-<span class="nc bnc" id="L399" title="All 2 branches missed.">		if (lastOutgoingArrow &gt; 0)</span>
-<span class="nc" id="L400">			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(lastOutgoingArrow),</span>
-<span class="nc" id="L401">					branches.get(lastOutgoingArrow).getTextBlockSpecial()));</span>
-<span class="nc bnc" id="L402" title="All 2 branches missed.">		for (int i = firstOutgoingArrow + 1; i &lt; lastOutgoingArrow; i++) {</span>
-<span class="nc" id="L403">			final Ftile tile = tiles.get(i);</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
-<span class="nc" id="L405">				conns.add(new ConnectionVerticalBottom(tile, branches.get(i).getTextBlockSpecial()));</span>
+<span class="nc" id="L448">		final int firstOutgoingArrow = getFirstOutgoingArrow(stringBounder);</span>
+<span class="nc" id="L449">		final int lastOutgoingArrow = getLastOutgoingArrow(stringBounder);</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">		if (firstOutgoingArrow &lt; tiles.size())</span>
+<span class="nc" id="L451">			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(firstOutgoingArrow),</span>
+<span class="nc" id="L452">					branches.get(firstOutgoingArrow).getTextBlockSpecial()));</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (lastOutgoingArrow &gt; 0)</span>
+<span class="nc" id="L454">			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(lastOutgoingArrow),</span>
+<span class="nc" id="L455">					branches.get(lastOutgoingArrow).getTextBlockSpecial()));</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		for (int i = firstOutgoingArrow + 1; i &lt; lastOutgoingArrow; i++) {</span>
+<span class="nc" id="L457">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L459">				conns.add(new ConnectionVerticalBottom(tile, branches.get(i).getTextBlockSpecial()));</span>
 
 		}
-<span class="nc" id="L408">	}</span>
+
+<span class="nc bnc" id="L463" title="All 2 branches missed.">		for (final Ftile tile : tiles) {</span>
+<span class="nc" id="L464">			final Ftile origin = findLastWithPointOut(tile, stringBounder);</span>
+<span class="nc bnc" id="L465" title="All 4 branches missed.">			if (origin != null &amp;&amp; differentSwimlane(origin, diamond2)) {</span>
+<span class="nc" id="L466">				conns.add(new ConnectionVerticalThenHorizontalCrossSwimlane(origin));</span>
+			}
+<span class="nc" id="L468">		}</span>
+
+<span class="nc" id="L470">	}</span>
+
+	private Ftile findLastWithPointOut(Ftile tile, StringBounder stringBounder) {
+<span class="nc bnc" id="L473" title="All 2 branches missed.">		if (tile.calculateDimension(stringBounder).hasPointOut()) {</span>
+<span class="nc" id="L474">			return tile;</span>
+		}
+
+<span class="nc bnc" id="L477" title="All 2 branches missed.">		for (Ftile child : tile.getMyChildren()) {</span>
+<span class="nc" id="L478">			final Ftile found = findLastWithPointOut(child, stringBounder);</span>
+<span class="nc bnc" id="L479" title="All 2 branches missed.">			if (found != null) {</span>
+<span class="nc" id="L480">				return found;</span>
+			}
+<span class="nc" id="L482">		}</span>
+<span class="nc" id="L483">		return null;</span>
+	}
+
 
 	private int getFirstOutgoingArrow(StringBounder stringBounder) {
-<span class="nc bnc" id="L411" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size() - 1; i++) {</span>
-<span class="nc" id="L412">			final Ftile tile = tiles.get(i);</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
-<span class="nc" id="L414">				return i;</span>
+<span class="nc bnc" id="L488" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size() - 1; i++) {</span>
+<span class="nc" id="L489">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L490" title="All 4 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut() &amp;&amp; !differentSwimlane(this, tile))</span>
+<span class="nc" id="L491">				return i;</span>
 
 		}
-<span class="nc" id="L417">		return tiles.size();</span>
+<span class="nc" id="L494">		return tiles.size();</span>
 	}
 
 	private int getLastOutgoingArrow(StringBounder stringBounder) {
-<span class="nc bnc" id="L421" title="All 2 branches missed.">		for (int i = tiles.size() - 1; i &gt;= 0; i--) {</span>
-<span class="nc" id="L422">			final Ftile tile = tiles.get(i);</span>
-<span class="nc bnc" id="L423" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
-<span class="nc" id="L424">				return i;</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">		for (int i = tiles.size() - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L499">			final Ftile tile = tiles.get(i);</span>
+<span class="nc bnc" id="L500" title="All 4 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut() &amp;&amp; !differentSwimlane(this, tile))</span>
+<span class="nc" id="L501">				return i;</span>
 
 		}
-<span class="nc" id="L427">		return -1;</span>
+<span class="nc" id="L504">		return -1;</span>
 	}
 
 }
