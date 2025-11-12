@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.nio;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
@@ -57,7 +58,7 @@ public class PathSystem {
 	private final NFolder currentFolder;
 
 	private PathSystem(NFolder currentFolder) {
-		this.currentFolder = currentFolder;
+		this.currentFolder = Objects.requireNonNull(currentFolder);
 	}
 
 //	public Path asPath() {
@@ -65,7 +66,10 @@ public class PathSystem {
 //	}
 
 	public PathSystem changeCurrentDirectory(Path newCurrentDir) throws IOException {
-		return new PathSystem(currentFolder.getSubfolder(newCurrentDir));
+		if (newCurrentDir == null)
+			return this;
+		final NFolder folder = currentFolder.getSubfolder(newCurrentDir);
+		return new PathSystem(folder);
 	}
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
