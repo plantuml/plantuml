@@ -134,7 +134,7 @@ public class ChartDiagram extends UmlDiagram {
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
 		// Use xAxis title if available (for coordinate-pair mode), otherwise use xAxisTitle
-		final String hAxisTitle = (xAxis != null && xAxis.getTitle() != null) ? xAxis.getTitle() : xAxisTitle;
+		final String hAxisTitle = (xAxis != null && xAxis.getTitle() != null && !xAxis.getTitle().isEmpty()) ? xAxis.getTitle() : xAxisTitle;
 		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series, xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
