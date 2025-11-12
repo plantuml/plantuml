@@ -62,14 +62,16 @@ public class ScatterRenderer {
 	private final double plotHeight;
 	private final int categoryCount;
 	private final ChartAxis axis;
+	private final ChartAxis xAxis;
 
 	public ScatterRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-			ChartAxis axis) {
+			ChartAxis axis, ChartAxis xAxis) {
 		this.skinParam = skinParam;
 		this.plotWidth = plotWidth;
 		this.plotHeight = plotHeight;
 		this.categoryCount = categoryCount;
 		this.axis = axis;
+		this.xAxis = xAxis;
 	}
 
 	private StyleSignatureBasic getScatterStyleSignature() {
@@ -86,11 +88,10 @@ public class ScatterRenderer {
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-		if (categoryCount == 0)
+		if (categoryCount == 0 && !series.hasExplicitXValues())
 			return;
 
 		final List<Double> values = series.getValues();
-		final double categoryWidth = plotWidth / categoryCount;
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		// Get scatter style (with stereotype support)
@@ -140,17 +141,41 @@ public class ScatterRenderer {
 			// Use default
 		}
 
-		// Draw markers at data points (no connecting lines)
-		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
-			final double value = values.get(i);
-			final double x = (i + 0.5) * categoryWidth;
-			final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+		if (series.hasExplicitXValues()) {
+			// Coordinate-pair mode: use explicit x-values
+			final List<Double> xValues = series.getXValues();
 
-			drawMarker(ug, markerColor, x, y, markerSize, markerShape);
+			// Draw markers at data points (no connecting lines)
+			for (int i = 0; i < values.size(); i++) {
+				final double xVal = xValues.get(i);
+				final double yVal = values.get(i);
 
-			// Draw label if enabled
-			if (series.isShowLabels()) {
-				drawLabel(ug, value, x, y - markerSize / 2 - 8, stringBounder);
+				final double x = xAxis.valueToPixel(xVal, 0, plotWidth);
+				final double y = plotHeight - (yVal - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+				drawMarker(ug, markerColor, x, y, markerSize, markerShape);
+
+				// Draw label if enabled
+				if (series.isShowLabels()) {
+					drawLabel(ug, yVal, x, y - markerSize / 2 - 8, stringBounder);
+				}
+			}
+		} else {
+			// Index-based mode: use category positioning
+			final double categoryWidth = plotWidth / categoryCount;
+
+			// Draw markers at data points (no connecting lines)
+			for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
+				final double value = values.get(i);
+				final double x = (i + 0.5) * categoryWidth;
+				final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+				drawMarker(ug, markerColor, x, y, markerSize, markerShape);
+
+				// Draw label if enabled
+				if (series.isShowLabels()) {
+					drawLabel(ug, value, x, y - markerSize / 2 - 8, stringBounder);
+				}
 			}
 		}
 	}

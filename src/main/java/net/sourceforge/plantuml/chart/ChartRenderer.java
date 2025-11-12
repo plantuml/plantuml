@@ -66,6 +66,7 @@ public class ChartRenderer {
 	private final Integer xAxisTickSpacing;
 	private final ChartAxis.LabelPosition xAxisLabelPosition;
 	private final List<ChartSeries> series;
+	private final ChartAxis xAxis;
 	private final ChartAxis yAxis;
 	private final ChartAxis y2Axis;
 	private final ChartDiagram.LegendPosition legendPosition;
@@ -86,7 +87,7 @@ public class ChartRenderer {
 	private static final double LEGEND_ITEM_SPACING = 15;
 
 	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, Integer xAxisTickSpacing,
-			ChartAxis.LabelPosition xAxisLabelPosition, List<ChartSeries> series, ChartAxis yAxis, ChartAxis y2Axis,
+			ChartAxis.LabelPosition xAxisLabelPosition, List<ChartSeries> series, ChartAxis xAxis, ChartAxis yAxis, ChartAxis y2Axis,
 			ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode,
 			ChartDiagram.StackMode stackMode, ChartDiagram.Orientation orientation, List<ChartAnnotation> annotations) {
 		this.skinParam = skinParam;
@@ -107,6 +108,7 @@ public class ChartRenderer {
 			this.xAxisTitle = xAxisTitle;
 			this.xAxisTickSpacing = xAxisTickSpacing;
 			this.xAxisLabelPosition = xAxisLabelPosition;
+			this.xAxis = xAxis;
 			this.yAxis = yAxis;
 			this.y2Axis = y2Axis;
 			this.xGridMode = xGridMode;
@@ -116,6 +118,7 @@ public class ChartRenderer {
 			this.xAxisTitle = xAxisTitle;
 			this.xAxisTickSpacing = xAxisTickSpacing;
 			this.xAxisLabelPosition = xAxisLabelPosition;
+			this.xAxis = xAxis;
 			this.yAxis = yAxis;
 			this.y2Axis = y2Axis;
 			this.xGridMode = xGridMode;
@@ -173,7 +176,7 @@ public class ChartRenderer {
 			topMargin += legendDim.getHeight() + LEGEND_MARGIN;
 		}
 
-		// Calculate X-axis position (align with zero if axis includes zero)
+		// Calculate X-axis position (align with zero if y-axis includes zero)
 		double xAxisY = topMargin + plotHeight;
 		if (orientation != ChartDiagram.Orientation.HORIZONTAL && yAxis != null) {
 			// Check if Y-axis range includes zero
@@ -181,6 +184,17 @@ public class ChartRenderer {
 				// Calculate Y position of zero
 				final double zeroRatio = (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin());
 				xAxisY = topMargin + plotHeight * (1.0 - zeroRatio);
+			}
+		}
+
+		// Calculate Y-axis position (align with zero if x-axis includes zero)
+		double yAxisX = leftMargin;
+		if (orientation != ChartDiagram.Orientation.HORIZONTAL && xAxis != null) {
+			// Check if X-axis range includes zero
+			if (xAxis.getMin() <= 0 && xAxis.getMax() >= 0) {
+				// Calculate X position of zero
+				final double zeroX = xAxis.valueToPixel(0, 0, plotWidth);
+				yAxisX = leftMargin + zeroX;
 			}
 		}
 
@@ -197,7 +211,7 @@ public class ChartRenderer {
 			// For vertical bars: categories on bottom (horizontal), numeric on left (vertical)
 			// xAxisLabels = categories (draw horizontally at bottom)
 			// yAxis = numeric (draw vertically on left)
-			drawYAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
+			drawYAxis(ug.apply(UTranslate.dx(yAxisX).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
 					lineColor, fontColor, stringBounder);
 
 			if (y2Axis != null) {
@@ -209,8 +223,11 @@ public class ChartRenderer {
 					plotHeight, lineColor, fontColor, stringBounder);
 		}
 
-		// Draw series data
+		// Draw grid lines (before series data so series draws on top)
 		final UGraphic ugPlot = ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin)));
+		drawGridLines(ugPlot, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
+
+		// Draw series data
 		drawSeries(ugPlot, plotWidth, plotHeight, stringBounder);
 
 		// Draw annotations
@@ -273,7 +290,8 @@ public class ChartRenderer {
 					continue;
 
 				// Draw grid lines if enabled (horizontal lines for Y axis)
-				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
+				// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
+				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
 					final ULine gridLine = ULine.hline(width);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 				}
@@ -312,7 +330,8 @@ public class ChartRenderer {
 				final double y = height * (1.0 - (value - axis.getMin()) / range);
 
 				// Draw grid lines if enabled (horizontal lines for Y axis)
-				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
+				// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
+				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
 					final ULine gridLine = ULine.hline(width);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 				}
@@ -344,7 +363,8 @@ public class ChartRenderer {
 				final double value = axis.getMin() + (axis.getMax() - axis.getMin()) * i / numTicks;
 
 				// Draw grid lines if enabled (horizontal lines for Y axis)
-				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF) {
+				// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
+				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
 					final ULine gridLine = ULine.hline(width);
 					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 				}
@@ -456,11 +476,9 @@ public class ChartRenderer {
 		// Draw axis line
 		ug.draw(ULine.hline(width));
 
-		// Draw labels
-		if (xAxisLabels.isEmpty())
-			return;
-
-		final double categoryWidth = width / xAxisLabels.size();
+		// Draw labels (only if we have categorical x-axis labels)
+		if (!xAxisLabels.isEmpty()) {
+			final double categoryWidth = width / xAxisLabels.size();
 
 		// Get grid style
 		final Style gridStyle = getGridStyleSignature()
@@ -554,6 +572,59 @@ public class ChartRenderer {
 				titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
 			}
 		}
+		} else if (xAxis != null) {
+			// Draw numeric x-axis ticks for coordinate-pair mode
+			final double range = xAxis.getMax() - xAxis.getMin();
+			final double tickInterval;
+
+			if (xAxisTickSpacing != null && xAxisTickSpacing > 0) {
+				// Spacing directly specifies the tick interval
+				tickInterval = xAxisTickSpacing;
+			} else {
+				// Default: approximately 10 ticks
+				tickInterval = range / 10.0;
+			}
+
+			// Find the starting tick value (round down to nearest multiple of tickInterval)
+			final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;
+
+			// Draw ticks and labels from start to end
+			for (double value = startValue; value <= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
+				// Skip if outside axis range
+				if (value < xAxis.getMin() - tickInterval * 0.01 || value > xAxis.getMax() + tickInterval * 0.01)
+					continue;
+
+				final double x = xAxis.valueToPixel(value, 0, width);
+
+				// Draw tick mark
+				ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
+
+				// Draw label
+				final String label = formatAxisValue(value);
+				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+				textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
+			}
+
+			// Draw X-axis title if present
+			if (xAxisTitle != null && !xAxisTitle.isEmpty()) {
+				if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {
+					// Draw at the right end of the axis
+					final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)
+							.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
+					final double textHeight = titleBlock.calculateDimension(stringBounder).getHeight();
+					titleBlock.drawU(ug.apply(UTranslate.dx(width + 10).compose(UTranslate.dy(-textHeight / 2))));
+				} else {
+					// Draw centered below the axis (default)
+					final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)
+							.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+					final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
+					final double titleY = TICK_SIZE + 25; // Position below the labels
+					titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
+				}
+			}
+		} // Close the if (!xAxisLabels.isEmpty()) / else if
 	}
 
 	private void drawCategoriesVerticallyOnLeft(UGraphic ug, double height, HColor lineColor, HColor fontColor,
@@ -629,8 +700,76 @@ public class ChartRenderer {
 		}
 	}
 
+	private void drawGridLines(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor,
+			StringBounder stringBounder) {
+		// Draw grid lines for coordinate-pair mode (numeric axes)
+		// UGraphic ug is at plot origin (leftMargin, topMargin)
+
+		if (xAxis == null || yAxis == null)
+			return; // Only draw grids for coordinate-pair mode
+
+		// Get grid style
+		final Style gridStyle = getGridStyleSignature()
+			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		// Extract grid properties
+		HColor gridColor = gridStyle.value(PName.LineColor)
+			.asColor(skinParam.getIHtmlColorSet());
+		if (gridColor == null) {
+			try {
+				gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
+			} catch (Exception e) {
+				gridColor = lineColor;
+			}
+		}
+		final double gridThickness = gridStyle.value(PName.LineThickness).asDouble();
+		final UStroke gridStroke = UStroke.withThickness(gridThickness);
+
+		// Draw vertical grid lines (h-axis)
+		if (xGridMode != ChartDiagram.GridMode.OFF && xAxis != null) {
+			final double range = xAxis.getMax() - xAxis.getMin();
+			final double tickInterval;
+
+			if (xAxisTickSpacing != null && xAxisTickSpacing > 0) {
+				tickInterval = xAxisTickSpacing;
+			} else {
+				tickInterval = range / 10.0;
+			}
+
+			final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;
+
+			for (double value = startValue; value <= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
+				if (value < xAxis.getMin() - tickInterval * 0.01 || value > xAxis.getMax() + tickInterval * 0.01)
+					continue;
+
+				final double x = xAxis.valueToPixel(value, 0, plotWidth);
+				final ULine gridLine = ULine.vline(plotHeight);
+				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(x)).draw(gridLine);
+			}
+		}
+
+		// Draw horizontal grid lines (v-axis)
+		if (yGridMode != ChartDiagram.GridMode.OFF && yAxis != null) {
+			if (yAxis.hasTickSpacing()) {
+				final double spacing = yAxis.getTickSpacing();
+				final double startValue = Math.ceil(yAxis.getMin() / spacing) * spacing;
+
+				for (double value = startValue; value <= yAxis.getMax(); value += spacing) {
+					if (value > yAxis.getMax() + spacing * 0.01)
+						break;
+
+					final double y = plotHeight * (1.0 - (value - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
+					final ULine gridLine = ULine.hline(plotWidth);
+					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
+				}
+			}
+		}
+	}
+
 	private void drawSeries(UGraphic ug, double plotWidth, double plotHeight, StringBounder stringBounder) {
-		if (xAxisLabels.isEmpty() || series.isEmpty())
+		// Check if we have series to render
+		boolean hasCoordinatePairs = !series.isEmpty() && series.get(0).hasExplicitXValues();
+		if ((xAxisLabels.isEmpty() && !hasCoordinatePairs) || series.isEmpty())
 			return;
 
 		// Separate bar series from other series for grouped/stacked rendering
@@ -734,11 +873,11 @@ public class ChartRenderer {
 
 				if (s.getType() == ChartSeries.SeriesType.LINE) {
 					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
-							xAxisLabels.size(), axis);
+							xAxisLabels.size(), axis, xAxis);
 					lineRenderer.draw(ug, s, color);
 				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
 					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,
-							xAxisLabels.size(), axis);
+							xAxisLabels.size(), axis, xAxis);
 					scatterRenderer.draw(ug, s, color);
 				}
 			}
@@ -878,6 +1017,15 @@ public class ChartRenderer {
 			return stereoStyle;
 		}
 		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
+	private String formatAxisValue(double value) {
+		// Format axis tick labels
+		if (Math.abs(value) < 0.01 && value != 0)
+			return String.format("%.2e", value);
+		if (value == (long) value)
+			return String.format("%d", (long) value);
+		return String.format("%.1f", value);
 	}
 
 	private StyleSignatureBasic getScatterStyleSignature() {

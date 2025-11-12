@@ -91,6 +91,48 @@ legend right
 @endchart
 ```
 
+```plantuml
+@startchart
+h-axis "x" -5 --> 5 spacing 1 label-right
+v-axis "f(x)" -5 --> 5 spacing 1 label-top
+line "Data1" [(-5,-5), (0,2), (5,5)] #1f77b4
+scatter "Data2" [(-2,2), (5,3)] #1f7744
+legend right
+@endchart
+```
+
+#### Coordinate-Pair Notation
+
+Line and scatter charts support an alternative coordinate-pair notation for plotting data at specific x-coordinates. This is useful for mathematical functions, irregular data points, or when you need precise control over point positioning.
+
+**Syntax**: `[(x1,y1), (x2,y2), (x3,y3), ...]`
+
+**Requirements**:
+- Only supported for `line` and `scatter` chart types
+- Requires numeric h-axis with explicit range (e.g., `h-axis "x" -5 --> 5`)
+- NOT compatible with categorical h-axis (e.g., `h-axis [Q1, Q2, Q3, Q4]`)
+- All series in a chart must use the same format (either all coordinate pairs or all index-based)
+- X-coordinates must fall within the h-axis range
+
+**Example**:
+```plantuml
+@startchart
+h-axis "t" -10 --> 10 spacing 2 label-right
+v-axis "f(t)" -10 --> 50 spacing 10 label-top
+line "Trajectory" [(-10,0), (2,10), (5,30), (8,45), (10,50)] #3498db
+scatter "Checkpoints" [(1,12), (6,34), (7,47)] #e74c3c
+legend right
+@endchart
+```
+
+![Coordinate pair example](coordinate-pair-example.png)
+
+**Behavior**:
+- Line charts connect points with straight line segments
+- Scatter charts display individual markers at each coordinate
+- Points can be unevenly spaced along the x-axis
+- Gaps between points are left empty (no interpolation)
+
 ### Area Chart
 
 Area charts are similar to line charts but with filled regions:

@@ -129,11 +129,13 @@ public class ChartDiagram extends UmlDiagram {
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
-			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
+			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series, xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
 		}
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
-		return new ChartRenderer(getSkinParam(), xAxisLabels, xAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+		// Use xAxis title if available (for coordinate-pair mode), otherwise use xAxisTitle
+		final String hAxisTitle = (xAxis != null && xAxis.getTitle() != null) ? xAxis.getTitle() : xAxisTitle;
+		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series, xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
 	// Command methods
@@ -207,9 +209,55 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
+		// Validation for coordinate-pair notation
+		if (series.hasExplicitXValues()) {
+			// Coordinate pairs only allowed for line and scatter charts
+			if (series.getType() != ChartSeries.SeriesType.LINE && series.getType() != ChartSeries.SeriesType.SCATTER) {
+				return CommandExecutionResult.error("Coordinate pair notation (x:y) is only supported for line and scatter charts");
+			}
+
+			// Coordinate pairs require numeric h-axis (not categorical labels)
+			if (!xAxisLabels.isEmpty()) {
+				return CommandExecutionResult.error("Coordinate pair notation requires numeric h-axis (e.g., h-axis \"x\" -5 --> 5), not categorical labels");
+			}
+
+			// Coordinate pairs require h-axis to be explicitly set
+			if (xAxis.isAutoScale() || xAxis.getMax() == xAxis.getMin()) {
+				return CommandExecutionResult.error("Coordinate pair notation requires explicit h-axis range (e.g., h-axis \"x\" -5 --> 5)");
+			}
+
+			// All series must use the same format
+			if (!this.series.isEmpty()) {
+				final boolean firstHasX = this.series.get(0).hasExplicitXValues();
+				if (firstHasX != series.hasExplicitXValues()) {
+					return CommandExecutionResult.error("All series must use the same data format (either all coordinate pairs or all index-based)");
+				}
+			}
+
+			// Validate x-coordinates fall within axis range
+			for (double x : series.getXValues()) {
+				if (x < xAxis.getMin() || x > xAxis.getMax()) {
+					return CommandExecutionResult.error("X-coordinate " + x + " is outside h-axis range [" + xAxis.getMin() + ", " + xAxis.getMax() + "]");
+				}
+			}
+
+			// Auto-scale x-axis to include all x-values
+			for (double x : series.getXValues()) {
+				xAxis.includeValue(x);
+			}
+		} else {
+			// Index-based mode: ensure consistency
+			if (!this.series.isEmpty()) {
+				final boolean firstHasX = this.series.get(0).hasExplicitXValues();
+				if (firstHasX != series.hasExplicitXValues()) {
+					return CommandExecutionResult.error("All series must use the same data format (either all coordinate pairs or all index-based)");
+				}
+			}
+		}
+
 		this.series.add(series);
 
-		// Auto-scale axes if needed
+		// Auto-scale y-axes if needed
 		final ChartAxis axis = series.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
 		for (double value : series.getValues()) {
 			axis.includeValue(value);

@@ -60,7 +60,7 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(2, "RANGE", "([0-9.]+)\\s*-->\\s*([0-9.]+)")), //
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(2, "RANGE", "(-?[0-9.]+)\\s*-->\\s*(-?[0-9.]+)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "DATA", "\\[(.*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -86,6 +86,29 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 		final String labelRightStr = arg.getLazzy("LABELRIGHT", 0);
 		final String gridStr = arg.getLazzy("GRID", 0);
 
+		// Parse tick spacing if present (do this first, before any returns)
+		if (spacingStr != null) {
+			try {
+				final int spacing = Integer.parseInt(spacingStr);
+				if (spacing <= 0) {
+					return CommandExecutionResult.error("X-axis spacing must be greater than 0");
+				}
+				diagram.setXAxisTickSpacing(spacing);
+			} catch (NumberFormatException e) {
+				return CommandExecutionResult.error("Invalid number format in spacing value");
+			}
+		}
+
+		// Set label position if label-right option is present (do this before any returns)
+		if (labelRightStr != null) {
+			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);
+		}
+
+		// Enable grid if grid option is present (do this before any returns)
+		if (gridStr != null) {
+			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);
+		}
+
 		// If numeric range is provided, this is for horizontal bar chart mode
 		if (minStr != null && maxStr != null) {
 			try {
@@ -100,29 +123,6 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 		// Otherwise, parse as labels
 		final List<String> labels = parseLabels(data);
 		diagram.setXAxisTitle(title);
-
-		// Parse tick spacing if present
-		if (spacingStr != null) {
-			try {
-				final int spacing = Integer.parseInt(spacingStr);
-				if (spacing <= 0) {
-					return CommandExecutionResult.error("X-axis spacing must be greater than 0");
-				}
-				diagram.setXAxisTickSpacing(spacing);
-			} catch (NumberFormatException e) {
-				return CommandExecutionResult.error("Invalid number format in spacing value");
-			}
-		}
-
-		// Set label position if label-right option is present
-		if (labelRightStr != null) {
-			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);
-		}
-
-		// Enable grid if grid option is present
-		if (gridStr != null) {
-			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);
-		}
 
 		return diagram.setXAxisLabels(labels);
 	}

@@ -58,53 +58,67 @@ public class LineRenderer {
 	private final double plotHeight;
 	private final int categoryCount;
 	private final ChartAxis axis;
+	private final ChartAxis xAxis;
 
 	public LineRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-			ChartAxis axis) {
+			ChartAxis axis, ChartAxis xAxis) {
 		this.skinParam = skinParam;
 		this.plotWidth = plotWidth;
 		this.plotHeight = plotHeight;
 		this.categoryCount = categoryCount;
 		this.axis = axis;
+		this.xAxis = xAxis;
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-		if (categoryCount == 0)
+		if (categoryCount == 0 && !series.hasExplicitXValues())
 			return;
 
 		final List<Double> values = series.getValues();
-		final double categoryWidth = plotWidth / categoryCount;
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		// Draw line segments
-		for (int i = 0; i < Math.min(values.size() - 1, categoryCount - 1); i++) {
-			final double value1 = values.get(i);
-			final double value2 = values.get(i + 1);
+		if (series.hasExplicitXValues()) {
+			// Coordinate-pair mode: use explicit x-values
+			final List<Double> xValues = series.getXValues();
 
-			final double x1 = (i + 0.5) * categoryWidth;
-			final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+			// Safety check
+			if (xAxis == null) {
+				System.err.println("ERROR: xAxis is null in coordinate-pair mode!");
+				return;
+			}
 
-			final double x2 = (i + 1.5) * categoryWidth;
-			final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+			// Draw line segments
+			for (int i = 0; i < values.size() - 1; i++) {
+				final double xVal1 = xValues.get(i);
+				final double yVal1 = values.get(i);
+				final double xVal2 = xValues.get(i + 1);
+				final double yVal2 = values.get(i + 1);
 
-			final ULine line = new ULine(x2 - x1, y2 - y1);
-			ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
-		}
+				final double x1 = xAxis.valueToPixel(xVal1, 0, plotWidth);
+				final double y1 = plotHeight - (yVal1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+				final double x2 = xAxis.valueToPixel(xVal2, 0, plotWidth);
+				final double y2 = plotHeight - (yVal2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
-		// Draw markers at data points
-		final double markerSize = 6;
-		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
-			final double value = values.get(i);
-			final double x = (i + 0.5) * categoryWidth - markerSize / 2;
-			final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight
-					- markerSize / 2;
+				final ULine line = new ULine(x2 - x1, y2 - y1);
+				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
+			}
+		} else {
+			// Index-based mode: use category positioning
+			final double categoryWidth = plotWidth / categoryCount;
 
-			final UEllipse marker = UEllipse.build(markerSize, markerSize);
-			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(marker);
+			// Draw line segments
+			for (int i = 0; i < Math.min(values.size() - 1, categoryCount - 1); i++) {
+				final double value1 = values.get(i);
+				final double value2 = values.get(i + 1);
 
-			// Draw label if enabled
-			if (series.isShowLabels()) {
-				drawLabel(ug, value, (i + 0.5) * categoryWidth, y - 8, stringBounder);
+				final double x1 = (i + 0.5) * categoryWidth;
+				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+				final double x2 = (i + 1.5) * categoryWidth;
+				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+
+				final ULine line = new ULine(x2 - x1, y2 - y1);
+				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
 			}
 		}
 	}

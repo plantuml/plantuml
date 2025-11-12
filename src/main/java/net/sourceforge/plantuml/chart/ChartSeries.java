@@ -53,6 +53,7 @@ public class ChartSeries {
 	private final String name;
 	private final SeriesType type;
 	private final List<Double> values;
+	private final List<Double> xValues; // null for index-based mode, non-null for coordinate pairs
 	private HColor color;
 	private boolean useSecondaryAxis;
 	private boolean showLabels;
@@ -63,6 +64,17 @@ public class ChartSeries {
 		this.name = name;
 		this.type = type;
 		this.values = new ArrayList<>(values);
+		this.xValues = null; // Index-based mode
+		this.useSecondaryAxis = false;
+		this.showLabels = false;
+		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
+	}
+
+	public ChartSeries(String name, SeriesType type, List<Double> xValues, List<Double> yValues) {
+		this.name = name;
+		this.type = type;
+		this.xValues = new ArrayList<>(xValues);
+		this.values = new ArrayList<>(yValues);
 		this.useSecondaryAxis = false;
 		this.showLabels = false;
 		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
@@ -78,6 +90,14 @@ public class ChartSeries {
 
 	public List<Double> getValues() {
 		return values;
+	}
+
+	public List<Double> getXValues() {
+		return xValues;
+	}
+
+	public boolean hasExplicitXValues() {
+		return xValues != null;
 	}
 
 	public HColor getColor() {
