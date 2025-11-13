@@ -172,7 +172,7 @@ class DrawableSetInitializer {
 <span class="fc" id="L172">				prepareLiveEvent(stringBounder, (LifeEvent) ev, range);</span>
 <span class="pc bpc" id="L173" title="1 of 2 branches missed.">			else if (ev instanceof GroupingLeaf)</span>
 <span class="nc" id="L174">				prepareGroupingLeaf(stringBounder, (GroupingLeaf) ev, range);</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			else if (ev instanceof GroupingStart)</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			else if (ev instanceof GroupingStart)</span>
 <span class="nc" id="L176">				prepareGroupingStart(stringBounder, (GroupingStart) ev, range);</span>
 <span class="pc bpc" id="L177" title="1 of 2 branches missed.">			else if (ev instanceof Newpage)</span>
 <span class="fc" id="L178">				prepareNewpage(stringBounder, (Newpage) ev, range);</span>
@@ -341,14 +341,14 @@ class DrawableSetInitializer {
 <span class="fc" id="L341">	final private InGroupablesStack inGroupableStack = new InGroupablesStack();</span>
 
 	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart start, ParticipantRange range) {
-<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (start.getType() != GroupingType.START)</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (start.getType() != GroupingType.START)</span>
 <span class="nc" id="L345">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L347">		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), start.getBackColorElement(),</span>
-<span class="nc" id="L348">				start.getBackColorGeneral());</span>
+<span class="fc" id="L347">		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), start.getBackColorElement(),</span>
+<span class="fc" id="L348">				start.getBackColorGeneral());</span>
 
-<span class="nc" id="L350">		final Component comp = drawableSet.getSkin().createComponent(null, ComponentType.GROUPING_SPACE, null,</span>
-<span class="nc" id="L351">				skinParam, Display.create(start.getComment()));</span>
+<span class="pc" id="L350">		final Component comp = drawableSet.getSkin().createComponent(null, ComponentType.GROUPING_SPACE, null,</span>
+<span class="fc" id="L351">				skinParam, Display.create(start.getComment()));</span>
 <span class="nc" id="L352">		final double preferredHeight = comp.getPreferredHeight(stringBounder);</span>
 <span class="nc" id="L353">		freeY2 = freeY2.add(preferredHeight, range);</span>
 

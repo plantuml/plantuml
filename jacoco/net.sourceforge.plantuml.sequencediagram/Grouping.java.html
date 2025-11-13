@@ -56,11 +56,11 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style styleHeader;
 
 	public StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L59">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);</span>
+<span class="fc" id="L59">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);</span>
 	}
 
 	private StyleSignatureBasic getHeaderStyleDefinition() {
-<span class="nc" id="L63">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);</span>
+<span class="fc" id="L63">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);</span>
 	}
 
 	public Style[] getUsedStyles() {
@@ -70,15 +70,15 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	}
 
 	public Grouping(String title, String comment, GroupingType type, HColor backColorElement,
-<span class="nc" id="L73">			StyleBuilder styleBuilder) {</span>
-<span class="nc" id="L74">		this.title = title;</span>
+<span class="fc" id="L73">			StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L74">		this.title = title;</span>
 		// this.styleBuilder = styleBuilder;
-<span class="nc" id="L76">		this.comment = comment;</span>
-<span class="nc" id="L77">		this.type = type;</span>
-<span class="nc" id="L78">		this.backColorElement = backColorElement;</span>
-<span class="nc" id="L79">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="nc" id="L80">		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
-<span class="nc" id="L81">	}</span>
+<span class="fc" id="L76">		this.comment = comment;</span>
+<span class="fc" id="L77">		this.type = type;</span>
+<span class="fc" id="L78">		this.backColorElement = backColorElement;</span>
+<span class="fc" id="L79">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L80">		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L81">	}</span>
 
 	@Override
 	public final String toString() {
@@ -90,7 +90,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	}
 
 	final public GroupingType getType() {
-<span class="nc" id="L93">		return type;</span>
+<span class="fc" id="L93">		return type;</span>
 	}
 
 	public abstract int getLevel();
@@ -98,11 +98,11 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	public abstract HColor getBackColorGeneral();
 
 	final public String getComment() {
-<span class="nc" id="L101">		return comment;</span>
+<span class="fc" id="L101">		return comment;</span>
 	}
 
 	public final HColor getBackColorElement() {
-<span class="nc" id="L105">		return backColorElement;</span>
+<span class="fc" id="L105">		return backColorElement;</span>
 	}
 
 	public abstract boolean isParallel();

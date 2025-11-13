@@ -77,39 +77,39 @@ public class CommandGrouping extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L80">		String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
-<span class="nc" id="L81">		final String s = arg.get(&quot;COLORS&quot;, 0);</span>
-<span class="nc" id="L82">		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
-<span class="nc" id="L83">		HColor backColorElement = null;</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (s != null) {</span>
+<span class="fc" id="L80">		String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L81">		final String s = arg.get(&quot;COLORS&quot;, 0);</span>
+<span class="fc" id="L82">		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
+<span class="fc" id="L83">		HColor backColorElement = null;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (s != null) {</span>
 <span class="nc" id="L85">			backColorElement = colorSet.getColor(s);</span>
 		}
-<span class="nc" id="L87">		final String s2 = arg.get(&quot;COLORS&quot;, 1);</span>
-<span class="nc" id="L88">		HColor backColorGeneral = null;</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (s2 != null) {</span>
+<span class="fc" id="L87">		final String s2 = arg.get(&quot;COLORS&quot;, 1);</span>
+<span class="fc" id="L88">		HColor backColorGeneral = null;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (s2 != null) {</span>
 <span class="nc" id="L90">			backColorGeneral = colorSet.getColor(s2);</span>
 		}
-<span class="nc" id="L92">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
-<span class="nc" id="L93">		final GroupingType groupingType = GroupingType.getType(type);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (&quot;group&quot;.equals(type)) {</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (StringUtils.isEmpty(comment)) {</span>
+<span class="fc" id="L92">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
+<span class="fc" id="L93">		final GroupingType groupingType = GroupingType.getType(type);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (&quot;group&quot;.equals(type)) {</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (StringUtils.isEmpty(comment)) {</span>
 <span class="nc" id="L96">				comment = &quot;group&quot;;</span>
 			} else {
-<span class="nc" id="L98">				final Matcher m = p.matcher(comment);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (m.find()) {</span>
+<span class="fc" id="L98">				final Matcher m = p.matcher(comment);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">				if (m.find()) {</span>
 <span class="nc" id="L100">					type = m.group(1);</span>
 <span class="nc" id="L101">					comment = m.group(2);</span>
 				}
 			}
 		}
 
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="nc" id="L107">		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="fc" id="L107">		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,</span>
 				parallel);
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (result == false) {</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (result == false) {</span>
 <span class="nc" id="L110">			return CommandExecutionResult.error(&quot;Cannot create group&quot;);</span>
 		}
-<span class="nc" id="L112">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L112">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
