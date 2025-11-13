@@ -3,12 +3,6 @@ name: Native Image - Snapshot
 on:
   workflow_dispatch:
   workflow_call:
-#  push:
-#    branches:
-#      - master
-#    paths-ignore:
-#      - '**.md'
-#      - 'docs/**'
 
 jobs:
   clean_release:
@@ -17,7 +11,7 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v5
- 
+
       - name: Clean release and tag
         run: |
           gh release delete snapshot-native --cleanup-tag -y || true
@@ -25,15 +19,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build_image_linux_amd64:
+  build_linux_amd64:
     name: 'Build Native Image linux-amd64'
     needs: clean_release
     runs-on: ubuntu-latest
     timeout-minutes: 90
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -47,20 +40,87 @@ jobs:
         run: |
           echo "VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)" >> $GITHUB_ENV
           echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
-          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test --stacktrace --info
 
-      - name: Archive Full & Headless Releases
+          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile \
+            -x test --stacktrace --info
+
+      - name: Archive Linux builds
         shell: bash
         run: |
-          zip -r "plantuml-full-linux-amd64-SNAPSHOT.zip" plantuml-gplv2/build/native/nativeFullCompile/
-          zip -r "plantuml-headless-linux-amd64-SNAPSHOT.zip" plantuml-gplv2/build/native/nativeHeadlessCompile/
-          ls -lh *.zip
+          zip -r plantuml-full-linux-amd64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeFullCompile/
+          zip -r plantuml-headless-linux-amd64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeHeadlessCompile/
 
-      - name: Upload binaries to release
+      - name: Upload build artifacts (Linux)
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-amd64
+          path: |
+            plantuml-full-linux-amd64-SNAPSHOT.zip
+            plantuml-headless-linux-amd64-SNAPSHOT.zip
+
+  build_windows_amd64:
+    name: 'Build Native Image windows-amd64'
+    needs: clean_release
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          distribution: liberica
+          cache: gradle
+
+      - name: Prepare env & build
+        shell: pwsh
+        run: |
+          $v = (Select-String gradle.properties -Pattern 'version').Line.Split()[-1]
+          "VERSION=$v" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+          $dt = (Get-Date).ToUniversalTime().ToString("yyyy-MM-dd 'at' HH:mm:ss '(UTC)'")
+          "DATETIME=$dt" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+          .\gradlew.bat :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile `
+            -x test --stacktrace --info
+
+      - name: Archive Windows builds
+        shell: pwsh
+        run: |
+          Compress-Archive plantuml-gplv2/build/native/nativeFullCompile/* plantuml-full-windows-amd64-SNAPSHOT.zip -Force
+          Compress-Archive plantuml-gplv2/build/native/nativeHeadlessCompile/* plantuml-headless-windows-amd64-SNAPSHOT.zip -Force
+
+      - name: Upload build artifacts (Windows)
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-amd64
+          path: |
+            plantuml-full-windows-amd64-SNAPSHOT.zip
+            plantuml-headless-windows-amd64-SNAPSHOT.zip
+
+  publish_release:
+    name: Publish combined release
+    needs:
+      - build_linux_amd64
+      - build_windows_amd64
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: artifacts/
+
+      - name: List artifacts
+        run: ls -lh artifacts/
+
+      - name: Upload all binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/native*/plantuml-*--SNAPSHOT.zip"
+          file: "artifacts/*.zip"
           file_glob: true
           tag: snapshot-native
           release_name: snapshot - Native Image (~v${{ env.VERSION }})
