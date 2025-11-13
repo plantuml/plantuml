@@ -76,8 +76,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 	public void addStep(Event event, double y) {
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (event.dealWith(p)) {</span>
-<span class="pc bpc" id="L79" title="3 of 6 branches missed.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
-<span class="nc" id="L80">				y += 5.0;</span>
+<span class="fc bfc" id="L79" title="All 6 branches covered.">			if (event instanceof LifeEvent &amp;&amp; ((LifeEvent) event).isDeactivate() &amp;&amp; eventsStep.containsValue(y))</span>
+<span class="fc" id="L80">				y += 5.0;</span>
 
 <span class="fc" id="L82">			eventsStep.put(event, y);</span>
 <span class="fc" id="L83">			event.setY(y);</span>
@@ -99,11 +99,11 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L99">			final Event current = it.next();</span>
 <span class="fc bfc" id="L100" title="All 2 branches covered.">			if (current instanceof LifeEvent) {</span>
 <span class="fc" id="L101">				final LifeEvent le = (LifeEvent) current;</span>
-<span class="pc bpc" id="L102" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
+<span class="fc bfc" id="L102" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
 <span class="fc" id="L103">					level++;</span>
 
-<span class="pc bpc" id="L105" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
-<span class="nc" id="L106">					level = Math.max(0, level - 1);</span>
+<span class="fc bfc" id="L105" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
+<span class="fc" id="L106">					level = Math.max(0, level - 1);</span>
 
 			}
 <span class="fc bfc" id="L109" title="All 2 branches covered.">			if (event == current) {</span>
@@ -112,37 +112,37 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L112">					boolean seenDeactivate = false;</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">					while (it.hasNext()) {</span>
 <span class="fc" id="L114">						final Event next = nextButSkippingNotes(it);</span>
-<span class="pc bpc" id="L115" title="2 of 4 branches missed.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))</span>
-<span class="nc" id="L116">							break;</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">						if (!(next instanceof LifeEvent))</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))</span>
+<span class="fc" id="L116">							break;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">						if (!(next instanceof LifeEvent))</span>
 <span class="fc" id="L118">							continue;</span>
 
-<span class="nc" id="L120">						final LifeEvent le = (LifeEvent) next;</span>
-<span class="nc" id="L121">						final AbstractMessage msg = (AbstractMessage) current;</span>
+<span class="fc" id="L120">						final LifeEvent le = (LifeEvent) next;</span>
+<span class="fc" id="L121">						final AbstractMessage msg = (AbstractMessage) current;</span>
 
-<span class="nc bnc" id="L123" title="All 2 branches missed.">						final boolean sameMessage = msg == le.getMessage()</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">								|| (le.getMessage() != null &amp;&amp; le.getMessage().isParallelWith(msg));</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">						if (!sameMessage)</span>
-<span class="nc" id="L126">							continue;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">						final boolean sameMessage = msg == le.getMessage()</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">								|| (le.getMessage() != null &amp;&amp; le.getMessage().isParallelWith(msg));</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">						if (!sameMessage)</span>
+<span class="fc" id="L126">							continue;</span>
 
-<span class="nc bnc" id="L128" title="All 6 branches missed.">						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE &amp;&amp; le.isActivate() &amp;&amp; msg.dealWith(p)</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">								&amp;&amp; le.getParticipant() == p) {</span>
-<span class="nc" id="L130">							seenActivate = true;</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">							if (seenDeactivate)</span>
+<span class="pc bpc" id="L128" title="1 of 6 branches missed.">						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE &amp;&amp; le.isActivate() &amp;&amp; msg.dealWith(p)</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">								&amp;&amp; le.getParticipant() == p) {</span>
+<span class="fc" id="L130">							seenActivate = true;</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">							if (seenDeactivate)</span>
 <span class="nc" id="L132">								break;</span>
-<span class="nc" id="L133">							level++;</span>
+<span class="fc" id="L133">							level++;</span>
 						}
 
-<span class="nc bnc" id="L136" title="All 4 branches missed.">						if (mode == EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE &amp;&amp; le.isDeactivateOrDestroy()</span>
-<span class="nc bnc" id="L137" title="All 4 branches missed.">								&amp;&amp; msg.dealWith(p) &amp;&amp; le.getParticipant() == p) {</span>
-<span class="nc" id="L138">							seenDeactivate = true;</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">							if (seenActivate)</span>
+<span class="fc bfc" id="L136" title="All 4 branches covered.">						if (mode == EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE &amp;&amp; le.isDeactivateOrDestroy()</span>
+<span class="pc bpc" id="L137" title="2 of 4 branches missed.">								&amp;&amp; msg.dealWith(p) &amp;&amp; le.getParticipant() == p) {</span>
+<span class="fc" id="L138">							seenDeactivate = true;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">							if (seenActivate)</span>
 <span class="nc" id="L140">								break;</span>
-<span class="nc" id="L141">							level = Math.max(0, level - 1);</span>
+<span class="fc" id="L141">							level = Math.max(0, level - 1);</span>
 						}
 
 						// System.err.println(&quot;Warning, this is message &quot; + current + &quot; next=&quot; + next);
-<span class="nc" id="L145">					}</span>
+<span class="fc" id="L145">					}</span>
 
 				}
 <span class="pc bpc" id="L148" title="1 of 2 branches missed.">				if (level &lt; 0)</span>
@@ -164,9 +164,9 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 <span class="fc bfc" id="L165" title="All 2 branches covered.">			if (current instanceof Message) {</span>
 <span class="fc" id="L166">				final Event next = nextButSkippingNotes(it);</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">				if (next instanceof LifeEvent) {</span>
-<span class="nc" id="L168">					final LifeEvent le = (LifeEvent) next;</span>
-<span class="nc" id="L169">					return le.isDestroy(p);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">				if (next instanceof LifeEvent) {</span>
+<span class="fc" id="L168">					final LifeEvent le = (LifeEvent) next;</span>
+<span class="fc" id="L169">					return le.isDestroy(p);</span>
 				}
 			}
 <span class="fc" id="L172">			return false;</span>
@@ -177,7 +177,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 	private Fashion getActivateColor(Event event) {
 <span class="fc bfc" id="L178" title="All 2 branches covered.">		if (event instanceof LifeEvent) {</span>
 <span class="fc" id="L179">			final LifeEvent le = (LifeEvent) event;</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			if (le.isActivate())</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (le.isActivate())</span>
 <span class="fc" id="L181">				return le.getSpecificColors();</span>
 
 		}
@@ -186,15 +186,15 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc bfc" id="L186" title="All 2 branches covered.">			if (event != current)</span>
 <span class="fc" id="L187">				continue;</span>
 
-<span class="pc bpc" id="L189" title="1 of 4 branches missed.">			if (current instanceof Message || current instanceof MessageExo) {</span>
+<span class="fc bfc" id="L189" title="All 4 branches covered.">			if (current instanceof Message || current instanceof MessageExo) {</span>
 <span class="fc" id="L190">				Event next = nextButSkippingNotes(it);</span>
-<span class="pc bpc" id="L191" title="3 of 4 branches missed.">				while (next instanceof LifeEvent &amp;&amp; ((LifeEvent) next).getMessage() == current) {</span>
-<span class="nc" id="L192">					final LifeEvent le = (LifeEvent) next;</span>
-<span class="nc bnc" id="L193" title="All 4 branches missed.">					if (le.isActivate() &amp;&amp; le.getParticipant() == p)</span>
-<span class="nc" id="L194">						return le.getSpecificColors();</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">				while (next instanceof LifeEvent &amp;&amp; ((LifeEvent) next).getMessage() == current) {</span>
+<span class="fc" id="L192">					final LifeEvent le = (LifeEvent) next;</span>
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">					if (le.isActivate() &amp;&amp; le.getParticipant() == p)</span>
+<span class="fc" id="L194">						return le.getSpecificColors();</span>
 
-<span class="nc" id="L196">					next = nextButSkippingNotes(it);</span>
-<span class="nc" id="L197">				}</span>
+<span class="fc" id="L196">					next = nextButSkippingNotes(it);</span>
+<span class="fc" id="L197">				}</span>
 			}
 <span class="fc" id="L199">			return null;</span>
 		}
@@ -234,19 +234,19 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 <span class="fc bfc" id="L235" title="All 4 branches covered.">			if (position == null || lastMessage == null)</span>
 <span class="fc" id="L236">				position = potentialPosition;</span>
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			else if (event instanceof LifeEvent) { // &amp;&amp; event.dealWith(p)) {</span>
-<span class="nc" id="L238">				LifeEvent le = (LifeEvent) event;</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">				if (le.dealWith(p)) {</span>
-<span class="nc bnc" id="L240" title="All 4 branches missed.">					if (le.getMessage() == null || !(le.getMessage().isParallelWith(lastMessage))) {</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">			else if (event instanceof LifeEvent) { // &amp;&amp; event.dealWith(p)) {</span>
+<span class="fc" id="L238">				LifeEvent le = (LifeEvent) event;</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">				if (le.dealWith(p)) {</span>
+<span class="pc bpc" id="L240" title="2 of 4 branches missed.">					if (le.getMessage() == null || !(le.getMessage().isParallelWith(lastMessage))) {</span>
 <span class="nc" id="L241">						position = potentialPosition;</span>
-<span class="nc bnc" id="L242" title="All 8 branches missed.">					} else if ((le.isActivate() &amp;&amp; seenDeactivate) || (le.isDeactivate() &amp;&amp; seenActivate)) {</span>
+<span class="pc bpc" id="L242" title="2 of 8 branches missed.">					} else if ((le.isActivate() &amp;&amp; seenDeactivate) || (le.isDeactivate() &amp;&amp; seenActivate)) {</span>
 <span class="nc" id="L243">						position = potentialPosition;</span>
 					}
-<span class="nc" id="L245">					seenActivate |= le.isActivate();</span>
-<span class="nc" id="L246">					seenDeactivate |= le.isDeactivate();</span>
+<span class="fc" id="L245">					seenActivate |= le.isActivate();</span>
+<span class="fc" id="L246">					seenDeactivate |= le.isDeactivate();</span>
 				} else
 					continue;
-<span class="nc" id="L249">			} else</span>
+<span class="fc" id="L249">			} else</span>
 <span class="fc" id="L250">				position = potentialPosition;</span>
 
 <span class="fc bfc" id="L252" title="All 2 branches covered.">			if (event instanceof AbstractMessage) {</span>
@@ -291,14 +291,14 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc bfc" id="L291" title="All 2 branches covered.">		for (Event current : events) {</span>
 <span class="fc bfc" id="L292" title="All 2 branches covered.">			if (current instanceof LifeEvent) {</span>
 <span class="fc" id="L293">				final LifeEvent le = (LifeEvent) current;</span>
-<span class="pc bpc" id="L294" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
+<span class="fc bfc" id="L294" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
 <span class="fc" id="L295">					level++;</span>
 
 <span class="fc bfc" id="L297" title="All 2 branches covered.">				if (level &gt; max)</span>
 <span class="fc" id="L298">					max = level;</span>
 
-<span class="pc bpc" id="L300" title="1 of 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
-<span class="nc" id="L301">					level--;</span>
+<span class="fc bfc" id="L300" title="All 4 branches covered.">				if (le.getParticipant() == p &amp;&amp; le.isDeactivateOrDestroy())</span>
+<span class="fc" id="L301">					level--;</span>
 
 			}
 <span class="fc" id="L304">		}</span>
@@ -341,7 +341,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc bfc" id="L341" title="All 4 branches covered.">			if (pending &amp;&amp; indent == levelToDraw) {</span>
 <span class="fc" id="L342">				drawer.addStart(yposition.getValue(), yposition.getColors(), yposition.getStyleBuilder());</span>
 <span class="fc" id="L343">				pending = false;</span>
-<span class="pc bpc" id="L344" title="1 of 6 branches missed.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
+<span class="fc bfc" id="L344" title="All 6 branches covered.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
 <span class="fc" id="L345">				drawer.doDrawing(ug, yposition.getValue());</span>
 <span class="fc" id="L346">				drawer.drawDestroyIfNeeded(ug, yposition);</span>
 <span class="fc" id="L347">				pending = true;</span>

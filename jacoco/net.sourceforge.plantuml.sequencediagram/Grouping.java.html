@@ -64,9 +64,9 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	}
 
 	public Style[] getUsedStyles() {
-<span class="nc" id="L67">		return new Style[] {</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">				style == null ? null : style.eventuallyOverride(PName.BackGroundColor, getBackColorGeneral()),</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">				styleHeader == null ? null : styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };</span>
+<span class="fc" id="L67">		return new Style[] {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">				style == null ? null : style.eventuallyOverride(PName.BackGroundColor, getBackColorGeneral()),</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">				styleHeader == null ? null : styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };</span>
 	}
 
 	public Grouping(String title, String comment, GroupingType type, HColor backColorElement,
@@ -86,7 +86,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	}
 
 	final public String getTitle() {
-<span class="nc" id="L89">		return title;</span>
+<span class="fc" id="L89">		return title;</span>
 	}
 
 	final public GroupingType getType() {

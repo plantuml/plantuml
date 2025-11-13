@@ -61,11 +61,11 @@ public class GroupingStart extends Grouping {
 <span class="fc" id="L61">	}</span>
 
 	public Style[] getUsedStyles() {
-<span class="nc" id="L64">		final Style[] result = super.getUsedStyles();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (result[0] != null)</span>
-<span class="nc" id="L66">			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);</span>
+<span class="fc" id="L64">		final Style[] result = super.getUsedStyles();</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (result[0] != null)</span>
+<span class="fc" id="L66">			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);</span>
 
-<span class="nc" id="L68">		return result;</span>
+<span class="fc" id="L68">		return result;</span>
 	}
 
 	List&lt;GroupingLeaf&gt; getChildren() {
@@ -102,7 +102,7 @@ public class GroupingStart extends Grouping {
 
 	@Override
 	public boolean isParallel() {
-<span class="nc bnc" id="L105" title="All 4 branches missed.">		return parallel || isPar2GroupStart();</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		return parallel || isPar2GroupStart();</span>
 	}
 
 	public void goParallel() {
@@ -110,7 +110,7 @@ public class GroupingStart extends Grouping {
 <span class="nc" id="L110">	}</span>
 
 	public boolean isPar2GroupStart() {
-<span class="nc" id="L113">		return getTitle().equals(&quot;par2&quot;);</span>
+<span class="fc" id="L113">		return getTitle().equals(&quot;par2&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

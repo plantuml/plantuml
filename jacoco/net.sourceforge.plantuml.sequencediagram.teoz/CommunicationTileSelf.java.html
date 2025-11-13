@@ -104,10 +104,10 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="fc" id="L104">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
 <span class="fc" id="L105">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
 
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (message.isActivate())</span>
-<span class="nc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		else if (message.isDeactivate())</span>
-<span class="nc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (message.isActivate())</span>
+<span class="fc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		else if (message.isDeactivate())</span>
+<span class="fc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">		else if (message.isDestroy())</span>
 <span class="nc" id="L112">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
 
@@ -156,7 +156,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 
 <span class="fc bfc" id="L157" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
 <span class="fc" id="L158">			final LivingSpace previous = getPrevious();</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (previous != null) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (previous != null) {</span>
 <span class="fc" id="L160">				livingSpace1.getPosC(getStringBounder())</span>
 <span class="fc" id="L161">						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));</span>
 			}

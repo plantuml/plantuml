@@ -92,8 +92,8 @@ public class CommandGrouping extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc" id="L92">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
 <span class="fc" id="L93">		final GroupingType groupingType = GroupingType.getType(type);</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (&quot;group&quot;.equals(type)) {</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (StringUtils.isEmpty(comment)) {</span>
-<span class="nc" id="L96">				comment = &quot;group&quot;;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			if (StringUtils.isEmpty(comment)) {</span>
+<span class="fc" id="L96">				comment = &quot;group&quot;;</span>
 			} else {
 <span class="fc" id="L98">				final Matcher m = p.matcher(comment);</span>
 <span class="pc bpc" id="L99" title="1 of 2 branches missed.">				if (m.find()) {</span>

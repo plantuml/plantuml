@@ -68,7 +68,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 	}
 
 	public GroupingStart getGroupingStart() {
-<span class="nc" id="L71">		return start;</span>
+<span class="fc" id="L71">		return start;</span>
 	}
 
 	@Override
@@ -78,8 +78,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 
 	@Override
 	public final HColor getBackColorGeneral() {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (backColorGeneral == null)</span>
-<span class="nc" id="L82">			return start.getBackColorGeneral();</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (backColorGeneral == null)</span>
+<span class="fc" id="L82">			return start.getBackColorGeneral();</span>
 
 <span class="nc" id="L84">		return backColorGeneral;</span>
 	}
@@ -99,7 +99,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 	@Override
 	public boolean isParallel() {
 		// only Par2 Group Leafs should return true.
-<span class="nc" id="L102">		return start.isPar2GroupStart();</span>
+<span class="fc" id="L102">		return start.isPar2GroupStart();</span>
 	}
 
 	private double posYendLevel;
@@ -127,7 +127,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 <span class="nc" id="L127">	}</span>
 
 	public final List&lt;Note&gt; getNoteOnMessages() {
-<span class="nc" id="L130">		return noteOnMessages;</span>
+<span class="fc" id="L130">		return noteOnMessages;</span>
 	}
 
 }

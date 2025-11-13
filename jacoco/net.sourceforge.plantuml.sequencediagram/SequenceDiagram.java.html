@@ -341,7 +341,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L341">	private LifeEvent pendingCreate = null;</span>
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor) {
-<span class="nc" id="L344">		return activate(p, lifeEventType, backcolor, null);</span>
+<span class="fc" id="L344">		return activate(p, lifeEventType, backcolor, null);</span>
 	}
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor, HColor linecolor) {
@@ -367,8 +367,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 		}
 <span class="pc bpc" id="L368" title="1 of 4 branches missed.">		if (lifeEventType == LifeEventType.ACTIVATE &amp;&amp; lastEventWithDeactivate instanceof AbstractMessage)</span>
 <span class="fc" id="L369">			activationState.push((AbstractMessage) lastEventWithDeactivate);</span>
-<span class="pc bpc" id="L370" title="3 of 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
-<span class="nc" id="L371">			activationState.pop();</span>
+<span class="pc bpc" id="L370" title="1 of 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
+<span class="fc" id="L371">			activationState.pop();</span>
 
 <span class="fc" id="L373">		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);</span>
 <span class="pc bpc" id="L374" title="1 of 2 branches missed.">		if (lastEventWithDeactivate instanceof AbstractMessage) {</span>
