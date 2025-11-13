@@ -124,7 +124,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 <span class="nc" id="L125">			}</span>
 <span class="fc" id="L126">			tiles.add(result);</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		} else if (ev instanceof MessageExo) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		} else if (ev instanceof MessageExo) {</span>
 <span class="fc" id="L128">			final MessageExo exo = (MessageExo) ev;</span>
 <span class="fc" id="L129">			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());</span>
 <span class="fc" id="L130">			Tile result = null;</span>
@@ -139,7 +139,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 							currentY);
 <span class="nc" id="L140">			}</span>
 <span class="fc" id="L141">			tiles.add(result);</span>
-<span class="pc bnc" id="L142" title="All 2 branches missed.">		} else if (ev instanceof Note) {</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		} else if (ev instanceof Note) {</span>
 <span class="nc" id="L143">			final Note note = (Note) ev;</span>
 <span class="nc" id="L144">			LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
 <span class="nc bnc" id="L145" title="All 2 branches missed.">			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());</span>
@@ -149,40 +149,40 @@ import net.sourceforge.plantuml.style.ISkinParam;
 			}
 <span class="nc" id="L150">			tiles.add(new NoteTile(tileArguments.getStringBounder(), livingSpace1, livingSpace2, note, skin, skinParam,</span>
 					currentY));
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		} else if (ev instanceof Notes) {</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		} else if (ev instanceof Notes) {</span>
 <span class="nc" id="L153">			final Notes notes = (Notes) ev;</span>
 <span class="nc" id="L154">			tiles.add(new NotesTile(tileArguments.getStringBounder(), livingSpaces, notes, skin, skinParam, currentY));</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		} else if (ev instanceof Divider) {</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		} else if (ev instanceof Divider) {</span>
 <span class="nc" id="L156">			final Divider divider = (Divider) ev;</span>
 <span class="nc" id="L157">			tiles.add(new DividerTile(divider, tileArguments, currentY));</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		} else if (ev instanceof GroupingStart) {</span>
-<span class="nc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
-<span class="nc" id="L160">			final GroupingTile groupingTile = new GroupingTile(it, start,</span>
-<span class="nc" id="L161">					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
+<span class="pc bfc" id="L158" title="All 2 branches covered.">		} else if (ev instanceof GroupingStart) {</span>
+<span class="fc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
+<span class="fc" id="L160">			final GroupingTile groupingTile = new GroupingTile(it, start,</span>
+<span class="fc" id="L161">					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
 					tileArguments, currentY);
 			if (YGauge.USE_ME == false)
-<span class="nc" id="L164">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
-<span class="nc" id="L165">			tiles.add(groupingTile);</span>
+<span class="fc" id="L164">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L165">			tiles.add(groupingTile);</span>
 			if (YGauge.USE_ME == false)
-<span class="nc" id="L167">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L167">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
 
-<span class="nc bnc" id="L169" title="All 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
 <span class="nc" id="L170">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>
 <span class="nc" id="L171">			tiles.add(new ElseTile(anElse, skin, skinParam, parent, currentY));</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		} else if (ev instanceof Reference) {</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		} else if (ev instanceof Reference) {</span>
 <span class="nc" id="L173">			final Reference ref = (Reference) ev;</span>
 <span class="nc" id="L174">			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref), currentY));</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		} else if (ev instanceof Delay) {</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		} else if (ev instanceof Delay) {</span>
 <span class="nc" id="L176">			final Delay delay = (Delay) ev;</span>
 <span class="nc" id="L177">			tiles.add(new DelayTile(delay, tileArguments, currentY));</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		} else if (ev instanceof HSpace) {</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		} else if (ev instanceof HSpace) {</span>
 <span class="nc" id="L179">			final HSpace hspace = (HSpace) ev;</span>
 <span class="nc" id="L180">			tiles.add(new HSpaceTile(hspace, tileArguments, currentY));</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		} else if (ev instanceof LifeEvent) {</span>
-<span class="nc" id="L182">			final LifeEvent lifeEvent = (LifeEvent) ev;</span>
-<span class="nc" id="L183">			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());</span>
-<span class="nc" id="L184">			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		} else if (ev instanceof LifeEvent) {</span>
+<span class="fc" id="L182">			final LifeEvent lifeEvent = (LifeEvent) ev;</span>
+<span class="fc" id="L183">			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());</span>
+<span class="fc" id="L184">			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));</span>
+<span class="pc bnc" id="L185" title="All 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
 <span class="nc" id="L186">			final Newpage newpage = (Newpage) ev;</span>
 <span class="nc" id="L187">			tiles.add(new NewpageTile(newpage, tileArguments, currentY));</span>
 <span class="nc" id="L188">		} else {</span>
