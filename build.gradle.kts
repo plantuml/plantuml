@@ -244,3 +244,40 @@ signing {
 		sign(closureOf<SignOperation> { sign(pdfJar.get()) })
 	}
 }
+
+subprojects {
+    // we create a light jar for each subproject that has the java plugin
+    plugins.withType<JavaPlugin> {
+        val lightJar = tasks.register("lightJar", Jar::class) {
+            archiveClassifier.set("light")
+
+            from(sourceSets["main"].output)
+
+            manifest {
+                attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
+                attributes["Implementation-Version"] = archiveVersion
+                attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
+                from(rootProject.layout.projectDirectory.file("manifest.txt"))
+            }
+
+            exclude("**/*.spm")
+            exclude("net/sourceforge/plantuml/emoji/data/**")
+
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        }
+
+        tasks.named("assemble") {
+            dependsOn(lightJar)
+        }
+
+        plugins.withType<PublishingPlugin> {
+            extensions.configure<PublishingExtension>("publishing") {
+                publications.matching { it.name == "maven" }.configureEach {
+                    if (this is MavenPublication) {
+                        artifact(lightJar.get())
+                    }
+                }
+            }
+        }
+    }
+}
