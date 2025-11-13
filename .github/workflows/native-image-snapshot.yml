@@ -25,17 +25,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build_images:
-    name: 'Build Native Image ${{ matrix.platform }}'
+  build_image_linux_amd64:
+    name: 'Build Native Image linux-amd64'
     needs: clean_release
+    runs-on: ubuntu-latest
     timeout-minutes: 90
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-        include:
-          - os: 'ubuntu-latest'
-            platform: 'linux-amd64'
-    runs-on: ${{matrix.os}}
+
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v5
@@ -47,37 +42,25 @@ jobs:
           distribution: liberica
           cache: gradle
 
-      - name: Set the release version
-        run: echo "VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)" >> $GITHUB_ENV
+      - name: Prepare env and build GPLv2 native image
         shell: bash
+        run: |
+          echo "VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)" >> $GITHUB_ENV
+          echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
+          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test --stacktrace --info
 
-      - name: Set the DateTime
+      - name: Archive Full & Headless Releases
         shell: bash
-        run: echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
-
-      - name: Build GPLv2 native image
-        shell: bash
-        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test --stacktrace --info
-
-      - name: Archive Full Release
-        uses: thedoctor0/zip-release@0.7.6
-        with:
-          type: 'zip'
-          filename: "plantuml-full-${{ matrix.platform }}-SNAPSHOT.zip"
-          directory: plantuml-gplv2/build/native/nativeFullCompile/
-
-      - name: Archive Headless Release
-        uses: thedoctor0/zip-release@0.7.6
-        with:
-          type: 'zip'
-          filename: "plantuml-headless-${{ matrix.platform }}-SNAPSHOT.zip"
-          directory: plantuml-gplv2/build/native/nativeHeadlessCompile/
+        run: |
+          zip -r "plantuml-full-linux-amd64-SNAPSHOT.zip" plantuml-gplv2/build/native/nativeFullCompile/
+          zip -r "plantuml-headless-linux-amd64-SNAPSHOT.zip" plantuml-gplv2/build/native/nativeHeadlessCompile/
+          ls -lh *.zip
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix.platform }}-SNAPSHOT.zip"
+          file: "plantuml-gplv2/build/native/native*/plantuml-*--SNAPSHOT.zip"
           file_glob: true
           tag: snapshot-native
           release_name: snapshot - Native Image (~v${{ env.VERSION }})
@@ -85,7 +68,7 @@ jobs:
           make_latest: false
           prerelease: true
           body: |
-              ## Version ~v${{ env.VERSION }} of the ${{ env.DATETIME }}
-              This is a [Native Image](https://www.graalvm.org/latest/reference-manual/native-image/) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
-              ⚠️  **It is not ready for general use** ⚠️
-              ⏱  _Snapshot taken the ${{ env.DATETIME }}_
+            ## Version ~v${{ env.VERSION }} of the ${{ env.DATETIME }}
+            This is a [Native Image](https://www.graalvm.org/latest/reference-manual/native-image/) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
+            ⚠️  **It is not ready for general use** ⚠️
+            ⏱  _Snapshot taken the ${{ env.DATETIME }}_
