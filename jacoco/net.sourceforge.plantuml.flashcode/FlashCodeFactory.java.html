@@ -39,10 +39,10 @@ package net.sourceforge.plantuml.flashcode;
 	// ::remove folder when __CORE__
 
 	public static FlashCodeUtils getFlashCodeUtils() {
-<span class="nc" id="L42">		final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
+<span class="fc" id="L42">		final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
 		try {
-<span class="nc" id="L44">			final Class cl = Class.forName(name);</span>
-<span class="nc" id="L45">			return (FlashCodeUtils) cl.newInstance();</span>
+<span class="fc" id="L44">			final Class cl = Class.forName(name);</span>
+<span class="fc" id="L45">			return (FlashCodeUtils) cl.newInstance();</span>
 <span class="nc" id="L46">		} catch (ClassNotFoundException e) {</span>
 <span class="nc" id="L47">			return new FlashCodeUtilsNone();</span>
 <span class="nc" id="L48">		} catch (InstantiationException e) {</span>
