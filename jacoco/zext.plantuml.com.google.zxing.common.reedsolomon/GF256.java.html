@@ -127,8 +127,8 @@ public final class GF256 {
    * @return product of a and b in GF(256)
    */
   int multiply(int a, int b) {
-<span class="pc bpc" id="L130" title="1 of 4 branches missed.">    if (a == 0 || b == 0) {</span>
-<span class="fc" id="L131">      return 0;</span>
+<span class="pc bpc" id="L130" title="2 of 4 branches missed.">    if (a == 0 || b == 0) {</span>
+<span class="nc" id="L131">      return 0;</span>
     }
 <span class="fc" id="L133">    int logSum = logTable[a] + logTable[b];</span>
     // index is a sped-up alternative to logSum % 255 since sum
