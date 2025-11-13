@@ -2,6 +2,7 @@ name: Native Image - Snapshot
 
 on:
   workflow_dispatch:
+  workflow_call:
 #  push:
 #    branches:
 #      - master
@@ -27,20 +28,13 @@ jobs:
   build_images:
     name: 'Build Native Image ${{ matrix.platform }}'
     needs: clean_release
+    timeout-minutes: 90
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        os: [ ubuntu-latest ]
         include:
           - os: 'ubuntu-latest'
             platform: 'linux-amd64'
-          - os: 'ubuntu-24.04-arm'
-            platform: 'linux-arm64'
-          - os: 'macos-latest'
-            platform: 'darwin-arm64'
-          - os: 'macos-13'
-            platform: 'darwin-amd64'
-          - os: 'windows-latest'
-            platform: 'win-amd64'
     runs-on: ${{matrix.os}}
     steps:
       - name: Checkout the repository
@@ -63,7 +57,7 @@ jobs:
 
       - name: Build GPLv2 native image
         shell: bash
-        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
+        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test --stacktrace --info
 
       - name: Archive Full Release
         uses: thedoctor0/zip-release@0.7.6
@@ -83,7 +77,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix. platform }}-SNAPSHOT.zip"
+          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix.platform }}-SNAPSHOT.zip"
           file_glob: true
           tag: snapshot-native
           release_name: snapshot - Native Image (~v${{ env.VERSION }})
