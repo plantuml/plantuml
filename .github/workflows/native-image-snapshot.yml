@@ -65,40 +65,37 @@ jobs:
     timeout-minutes: 90
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout the repository
+        uses: actions/checkout@v5
 
       - uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           cache: gradle
 
-      - name: Prepare env & build
+      - name: Move GraalVM from C to D
         shell: pwsh
         run: |
-          $v = (Select-String gradle.properties -Pattern 'version').Line.Split()[-1]
-          "VERSION=$v" | Out-File -FilePath $env:GITHUB_ENV -Append
+          $orig = "$env:JAVA_HOME"
+          Write-Host "Original JAVA_HOME: $orig"
 
-          $dt = (Get-Date).ToUniversalTime().ToString("yyyy-MM-dd 'at' HH:mm:ss '(UTC)'")
-          "DATETIME=$dt" | Out-File -FilePath $env:GITHUB_ENV -Append
+          $dest = "D:\graalvm"
+          New-Item -ItemType Directory -Force -Path $dest | Out-Null
 
-          .\gradlew.bat :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile `
-            -x test --stacktrace --info
+          Write-Host "Copying GraalVM to $dest ..."
+          Copy-Item -Path "$orig\*" -Destination $dest -Recurse -Force
 
-      - name: Archive Windows builds
+          "JAVA_HOME=$dest"    | Out-File -FilePath $env:GITHUB_ENV  -Encoding utf8 -Append
+          "GRAALVM_HOME=$dest" | Out-File -FilePath $env:GITHUB_ENV  -Encoding utf8 -Append
+          "$dest\bin"          | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+          Write-Host "New JAVA_HOME set to $dest"
+
+      - name: Build GPLv2 native image
         shell: pwsh
-        run: |
-          Compress-Archive plantuml-gplv2/build/native/nativeFullCompile/* plantuml-full-windows-amd64-SNAPSHOT.zip -Force
-          Compress-Archive plantuml-gplv2/build/native/nativeHeadlessCompile/* plantuml-headless-windows-amd64-SNAPSHOT.zip -Force
-
-      - name: Upload build artifacts (Windows)
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-amd64
-          path: |
-            plantuml-full-windows-amd64-SNAPSHOT.zip
-            plantuml-headless-windows-amd64-SNAPSHOT.zip
+        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test --stacktrace --info
 
   publish_release:
     name: Publish combined release
