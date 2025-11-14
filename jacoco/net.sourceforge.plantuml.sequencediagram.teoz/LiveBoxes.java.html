@@ -112,8 +112,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="fc" id="L112">					boolean seenDeactivate = false;</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">					while (it.hasNext()) {</span>
 <span class="fc" id="L114">						final Event next = nextButSkippingNotes(it);</span>
-<span class="pc bpc" id="L115" title="1 of 4 branches missed.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))</span>
-<span class="fc" id="L116">							break;</span>
+<span class="pc bpc" id="L115" title="2 of 4 branches missed.">						if (!(next instanceof LifeEvent || next instanceof AbstractMessage))</span>
+<span class="nc" id="L116">							break;</span>
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">						if (!(next instanceof LifeEvent))</span>
 <span class="fc" id="L118">							continue;</span>
 
