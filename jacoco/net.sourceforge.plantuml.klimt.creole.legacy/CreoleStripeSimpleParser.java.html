@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.creole.Stripe;
 import net.sourceforge.plantuml.klimt.creole.StripeStyle;
 import net.sourceforge.plantuml.klimt.creole.StripeStyleType;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -62,110 +63,111 @@ public class CreoleStripeSimpleParser {
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
 
-<span class="fc" id="L65">	static private final Pattern2 SECTION_TITLE_PATTERN = Pattern2.cmpile(&quot;^==([^=]*)==$&quot;);</span>
-<span class="fc" id="L66">	static private final Pattern2 SECTION_SEPARATOR_PATTERN = Pattern2.cmpile(&quot;^===*==$&quot;);</span>
-<span class="fc" id="L67">	static private final Pattern2 DOUBLE_DOT_DELIMITED_LINE = Pattern2.cmpile(&quot;^\\.\\.([^\\.]*)\\.\\.$&quot;);</span>
-<span class="fc" id="L68">	static private final Pattern2 ASTERISK_PREFIXED_LINE_PATTERN = Pattern2.cmpile(&quot;^(\\*+)([^*]+(?:[^*]|\\*\\*[^*]+\\*\\*)*)$&quot;);</span>
-<span class="fc" id="L69">	static private final Pattern2 ASTERISK_HEADER_LINE_PATTERN = Pattern2.cmpile(&quot;^(\\*+)([%s].+)$&quot;);</span>
-<span class="fc" id="L70">	static private final Pattern2 HASH_HEADING_PATTERN = Pattern2.cmpile(&quot;^(#+)(.+)$&quot;);</span>
-<span class="fc" id="L71">	static private final Pattern2 EQUALS_HEADING_PATTERN = Pattern2.cmpile(&quot;^(=+)(.+)$&quot;);</span>
-<span class="fc" id="L72">	static private final Pattern2 SECTION_HEADER_PATTERN = Pattern2.cmpile(&quot;^--([^-]*)--$&quot;);</span>
+<span class="fc" id="L66">	static private final Pattern2 SECTION_TITLE_PATTERN = Pattern2.cmpile(&quot;^==([^=]*)==$&quot;);</span>
+<span class="fc" id="L67">	static private final Pattern2 SECTION_SEPARATOR_PATTERN = Pattern2.cmpile(&quot;^===*==$&quot;);</span>
+<span class="fc" id="L68">	static private final Pattern2 DOUBLE_DOT_DELIMITED_LINE = Pattern2.cmpile(&quot;^\\.\\.([^\\.]*)\\.\\.$&quot;);</span>
+<span class="fc" id="L69">	static private final Pattern2 ASTERISK_PREFIXED_LINE_PATTERN = Pattern2.cmpile(&quot;^(\\*+)([^*]+(?:[^*]|\\*\\*[^*]+\\*\\*)*)$&quot;);</span>
+<span class="fc" id="L70">	static private final Pattern2 ASTERISK_HEADER_LINE_PATTERN = Pattern2.cmpile(&quot;^(\\*+)([%s].+)$&quot;);</span>
+<span class="fc" id="L71">	static private final Pattern2 HASH_HEADING_PATTERN = Pattern2.cmpile(&quot;^(#+)(.+)$&quot;);</span>
+<span class="fc" id="L72">	static private final Pattern2 EQUALS_HEADING_PATTERN = Pattern2.cmpile(&quot;^(=+)(.+)$&quot;);</span>
+<span class="fc" id="L73">	static private final Pattern2 SECTION_HEADER_PATTERN = Pattern2.cmpile(&quot;^--([^-]*)--$&quot;);</span>
 
 	public CreoleStripeSimpleParser(String line, CreoleContext creoleContext, FontConfiguration fontConfiguration,
-<span class="fc" id="L75">			ISkinSimple skinParam, CreoleMode mode) {</span>
+<span class="fc" id="L76">			ISkinSimple skinParam, CreoleMode mode) {</span>
 //		if (line.contains(&quot;&quot; + BackSlash.hiddenNewLine()))
 //			throw new IllegalArgumentException(line);
 
 		if (Jaws.TRACE)
 			System.err.println(&quot;CreoleStripeSimpleParser &quot; + line);
-<span class="fc" id="L81">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L82">		this.modeSimpleLine = mode;</span>
-<span class="fc" id="L83">		this.skinParam = Objects.requireNonNull(skinParam);</span>
+<span class="fc" id="L82">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L83">		this.modeSimpleLine = mode;</span>
+<span class="fc" id="L84">		this.skinParam = Objects.requireNonNull(skinParam);</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (mode == CreoleMode.NO_CREOLE) {</span>
-<span class="fc" id="L86">			this.line = line;</span>
-<span class="fc" id="L87">			this.style = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');</span>
-<span class="fc" id="L88">			return;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (mode == CreoleMode.NO_CREOLE) {</span>
+<span class="fc" id="L87">			this.line = line;</span>
+<span class="fc" id="L88">			this.style = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');</span>
+<span class="fc" id="L89">			return;</span>
 		}
 
-<span class="fc" id="L91">		final Matcher2 m4 = SECTION_HEADER_PATTERN.matcher(line);</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (m4.find()) {</span>
-<span class="fc" id="L93">			this.line = m4.group(1);</span>
-<span class="fc" id="L94">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '-');</span>
-<span class="fc" id="L95">			return;</span>
+<span class="fc" id="L92">		final Matcher2 m4 = SECTION_HEADER_PATTERN.matcher(line);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (m4.find()) {</span>
+<span class="fc" id="L94">			this.line = m4.group(1);</span>
+<span class="fc" id="L95">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '-');</span>
+<span class="fc" id="L96">			return;</span>
 		}
 
-<span class="fc" id="L98">		final Matcher2 m5 = SECTION_TITLE_PATTERN.matcher(line);</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (m5.find()) {</span>
-<span class="fc" id="L100">			this.line = m5.group(1);</span>
-<span class="fc" id="L101">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');</span>
-<span class="fc" id="L102">			return;</span>
+<span class="fc" id="L99">		final Matcher2 m5 = SECTION_TITLE_PATTERN.matcher(line);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (m5.find()) {</span>
+<span class="fc" id="L101">			this.line = m5.group(1);</span>
+<span class="fc" id="L102">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');</span>
+<span class="fc" id="L103">			return;</span>
 		}
-<span class="fc" id="L104">		final Matcher2 m5b = SECTION_SEPARATOR_PATTERN.matcher(line);</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (m5b.find()) {</span>
-<span class="nc" id="L106">			this.line = &quot;&quot;;</span>
-<span class="nc" id="L107">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');</span>
-<span class="nc" id="L108">			return;</span>
-		}
-
-<span class="fc" id="L111">		final Matcher2 m7 = DOUBLE_DOT_DELIMITED_LINE.matcher(line);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (m7.find()) {</span>
-<span class="nc" id="L113">			this.line = m7.group(1);</span>
-<span class="nc" id="L114">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '.');</span>
-<span class="nc" id="L115">			return;</span>
+<span class="fc" id="L105">		final Matcher2 m5b = SECTION_SEPARATOR_PATTERN.matcher(line);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (m5b.find()) {</span>
+<span class="nc" id="L107">			this.line = &quot;&quot;;</span>
+<span class="nc" id="L108">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');</span>
+<span class="nc" id="L109">			return;</span>
 		}
 
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
-<span class="fc" id="L119">			final Matcher2 m1 = ASTERISK_PREFIXED_LINE_PATTERN.matcher(line);</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (m1.find()) {</span>
-<span class="fc" id="L121">				this.line = StringUtils.trin(m1.group(2));</span>
-<span class="fc" id="L122">				final int order = m1.group(1).length() - 1;</span>
-<span class="fc" id="L123">				this.style = new StripeStyle(StripeStyleType.LIST_WITHOUT_NUMBER, order, '\0');</span>
-<span class="fc" id="L124">				return;</span>
+<span class="fc" id="L112">		final Matcher2 m7 = DOUBLE_DOT_DELIMITED_LINE.matcher(line);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (m7.find()) {</span>
+<span class="nc" id="L114">			this.line = m7.group(1);</span>
+<span class="nc" id="L115">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '.');</span>
+<span class="nc" id="L116">			return;</span>
+		}
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
+<span class="fc" id="L120">			final Matcher2 m1 = ASTERISK_PREFIXED_LINE_PATTERN.matcher(line);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (m1.find()) {</span>
+<span class="fc" id="L122">				this.line = StringUtils.trin(m1.group(2));</span>
+<span class="fc" id="L123">				final int order = m1.group(1).length() - 1;</span>
+<span class="fc" id="L124">				this.style = new StripeStyle(StripeStyleType.LIST_WITHOUT_NUMBER, order, '\0');</span>
+<span class="fc" id="L125">				return;</span>
 			}
 		}
 
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
-<span class="fc" id="L129">			final Matcher2 m1 = ASTERISK_HEADER_LINE_PATTERN.matcher(line);</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (m1.find()) {</span>
-<span class="nc" id="L131">				this.line = StringUtils.trin(m1.group(2));</span>
-<span class="nc" id="L132">				final int order = m1.group(1).length() - 1;</span>
-<span class="nc" id="L133">				this.style = new StripeStyle(StripeStyleType.LIST_WITHOUT_NUMBER, order, '\0');</span>
-<span class="nc" id="L134">				return;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
+<span class="fc" id="L130">			final Matcher2 m1 = ASTERISK_HEADER_LINE_PATTERN.matcher(line);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			if (m1.find()) {</span>
+<span class="nc" id="L132">				this.line = StringUtils.trin(m1.group(2));</span>
+<span class="nc" id="L133">				final int order = m1.group(1).length() - 1;</span>
+<span class="nc" id="L134">				this.style = new StripeStyle(StripeStyleType.LIST_WITHOUT_NUMBER, order, '\0');</span>
+<span class="nc" id="L135">				return;</span>
 			}
 		}
 
-<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
-<span class="fc" id="L139">			final Matcher2 m2 = HASH_HEADING_PATTERN.matcher(CharHidder.hide(line));</span>
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (m2.find()) {</span>
-<span class="nc" id="L141">				this.line = StringUtils.trin(CharHidder.unhide(m2.group(2)));</span>
-<span class="nc" id="L142">				final int order = CharHidder.unhide(m2.group(1)).length() - 1;</span>
-<span class="nc" id="L143">				this.style = new StripeStyle(StripeStyleType.LIST_WITH_NUMBER, order, '\0');</span>
-<span class="nc" id="L144">				return;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
+<span class="fc" id="L140">			final Matcher2 m2 = HASH_HEADING_PATTERN.matcher(CharHidder.hide(line));</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">			if (m2.find()) {</span>
+<span class="nc" id="L142">				this.line = StringUtils.trin(CharHidder.unhide(m2.group(2)));</span>
+<span class="nc" id="L143">				final int order = CharHidder.unhide(m2.group(1)).length() - 1;</span>
+<span class="nc" id="L144">				this.style = new StripeStyle(StripeStyleType.LIST_WITH_NUMBER, order, '\0');</span>
+<span class="nc" id="L145">				return;</span>
 			}
 		}
 
-<span class="fc" id="L148">		final Matcher2 m3 = EQUALS_HEADING_PATTERN.matcher(line);</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (m3.find()) {</span>
-<span class="fc" id="L150">			this.line = StringUtils.trin(m3.group(2));</span>
-<span class="fc" id="L151">			final int order = m3.group(1).length() - 1;</span>
-<span class="fc" id="L152">			this.style = new StripeStyle(StripeStyleType.HEADING, order, '\0');</span>
-<span class="fc" id="L153">			return;</span>
+<span class="fc" id="L149">		final Matcher2 m3 = EQUALS_HEADING_PATTERN.matcher(line);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (m3.find()) {</span>
+<span class="fc" id="L151">			this.line = StringUtils.trin(m3.group(2));</span>
+<span class="fc" id="L152">			final int order = m3.group(1).length() - 1;</span>
+<span class="fc" id="L153">			this.style = new StripeStyle(StripeStyleType.HEADING, order, '\0');</span>
+<span class="fc" id="L154">			return;</span>
 		}
 
-<span class="fc" id="L156">		this.line = line;</span>
-<span class="fc" id="L157">		this.style = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');</span>
+<span class="fc" id="L157">		this.line = line;</span>
+<span class="fc" id="L158">		this.style = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');</span>
 
-<span class="fc" id="L159">	}</span>
+<span class="fc" id="L160">	}</span>
 
-	public List&lt;Stripe&gt; createStripes(CreoleContext context) {
-<span class="fc" id="L162">		final List&lt;Stripe&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (String singleLine : line.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)) {</span>
-<span class="fc" id="L164">			final StripeSimple stripe = new StripeSimple(fontConfiguration, style, context, skinParam, modeSimpleLine);</span>
-<span class="fc" id="L165">			stripe.analyzeAndAdd(singleLine);</span>
-<span class="fc" id="L166">			result.add(stripe);</span>
+	public List&lt;Stripe&gt; createStripes(CreoleContext context, HorizontalAlignment align) {
+<span class="fc" id="L163">		final List&lt;Stripe&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (String singleLine : line.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)) {</span>
+<span class="fc" id="L165">			final StripeSimple stripe = new StripeSimple(fontConfiguration, style, context, skinParam, modeSimpleLine);</span>
+<span class="fc" id="L166">			stripe.setCellAlignment(align);</span>
+<span class="fc" id="L167">			stripe.analyzeAndAdd(singleLine);</span>
+<span class="fc" id="L168">			result.add(stripe);</span>
 		}
-<span class="fc" id="L168">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L170">		return Collections.unmodifiableList(result);</span>
 	}
 
 }

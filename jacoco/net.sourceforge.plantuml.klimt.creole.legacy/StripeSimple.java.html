@@ -81,8 +81,8 @@ public class StripeSimple implements Stripe {
 <span class="fc" id="L81">	private HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
 
 	public void setCellAlignment(HorizontalAlignment align) {
-<span class="nc" id="L84">		this.align = align;</span>
-<span class="nc" id="L85">	}</span>
+<span class="fc" id="L84">		this.align = align;</span>
+<span class="fc" id="L85">	}</span>
 
 	public HorizontalAlignment getCellAlignment() {
 <span class="fc" id="L88">		return align;</span>
@@ -144,127 +144,138 @@ public class StripeSimple implements Stripe {
 <span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)</span>
 <span class="nc" id="L145">			throw new IllegalArgumentException(line);</span>
 
-<span class="fc" id="L147">		line = CharHidder.hide(line);</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (style.getType() == StripeStyleType.HEADING) {</span>
-<span class="fc" id="L149">			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());</span>
-<span class="fc" id="L150">			modifyStripe(line);</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {</span>
-<span class="fc" id="L152">			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));</span>
-		} else {
-<span class="fc" id="L154">			modifyStripe(line);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (line.startsWith(&quot;&lt;r&gt;&quot;)) {</span>
+<span class="nc" id="L148">			setCellAlignment(HorizontalAlignment.RIGHT);</span>
+<span class="nc" id="L149">			line = line.substring(&quot;&lt;r&gt;&quot;.length());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		} else if (line.startsWith(&quot;&lt;l&gt;&quot;)) {</span>
+<span class="nc" id="L151">			setCellAlignment(HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L152">			line = line.substring(&quot;&lt;l&gt;&quot;.length());</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		} else if (line.startsWith(&quot;&lt;c&gt;&quot;)) {</span>
+<span class="nc" id="L154">			setCellAlignment(HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L155">			line = line.substring(&quot;&lt;c&gt;&quot;.length());</span>
 		}
-<span class="fc" id="L156">	}</span>
+
+<span class="fc" id="L158">		line = CharHidder.hide(line);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (style.getType() == StripeStyleType.HEADING) {</span>
+<span class="fc" id="L160">			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());</span>
+<span class="fc" id="L161">			modifyStripe(line);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {</span>
+<span class="fc" id="L163">			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));</span>
+		} else {
+<span class="fc" id="L165">			modifyStripe(line);</span>
+		}
+<span class="fc" id="L167">	}</span>
 
 	private static FontConfiguration fontConfigurationForHeading(FontConfiguration fontConfiguration, int order) {
-<span class="pc bpc" id="L159" title="3 of 4 branches missed.">		switch (order) {</span>
+<span class="pc bpc" id="L170" title="3 of 4 branches missed.">		switch (order) {</span>
 		case 0:
-<span class="nc" id="L161">			return fontConfiguration.bigger(4).bold();</span>
+<span class="nc" id="L172">			return fontConfiguration.bigger(4).bold();</span>
 		case 1:
-<span class="fc" id="L163">			return fontConfiguration.bigger(2).bold();</span>
+<span class="fc" id="L174">			return fontConfiguration.bigger(2).bold();</span>
 		case 2:
-<span class="nc" id="L165">			return fontConfiguration.bigger(1).bold();</span>
+<span class="nc" id="L176">			return fontConfiguration.bigger(1).bold();</span>
 		default:
-<span class="nc" id="L167">			return fontConfiguration.italic();</span>
+<span class="nc" id="L178">			return fontConfiguration.italic();</span>
 		}
 	}
 
 	public void addImage(String src, double scale) {
-<span class="nc" id="L172">		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale, null));</span>
-<span class="nc" id="L173">	}</span>
+<span class="nc" id="L183">		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale, null));</span>
+<span class="nc" id="L184">	}</span>
 
 	public void addQrcode(String src, double scale) {
-<span class="nc" id="L176">		atoms.add(AtomImg.createQrcode(src, scale));</span>
-<span class="nc" id="L177">	}</span>
+<span class="nc" id="L187">		atoms.add(AtomImg.createQrcode(src, scale));</span>
+<span class="nc" id="L188">	}</span>
 
 	public void addSpace(int size) {
-<span class="nc" id="L180">		atoms.add(AtomSpace.create(size));</span>
-<span class="nc" id="L181">	}</span>
+<span class="nc" id="L191">		atoms.add(AtomSpace.create(size));</span>
+<span class="nc" id="L192">	}</span>
 
 	public void addUrl(Url url) {
-<span class="fc" id="L184">		atoms.add(AtomTextUtils.createUrl(url, fontConfiguration, skinParam));</span>
-<span class="fc" id="L185">	}</span>
-
-	public void addSprite(String src, double scale, HColor forcedColor) {
-<span class="fc" id="L188">		final Sprite sprite = skinParam.getSprite(src);</span>
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (sprite != null) {</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			final HColor backColor = fontConfiguration.containsStyle(FontStyle.BACKCOLOR)</span>
-<span class="nc" id="L191">					? fontConfiguration.getExtendedColor()</span>
-<span class="fc" id="L192">					: null;</span>
-<span class="fc" id="L193">			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null, backColor));</span>
-		}
-
+<span class="fc" id="L195">		atoms.add(AtomTextUtils.createUrl(url, fontConfiguration, skinParam));</span>
 <span class="fc" id="L196">	}</span>
 
-	public void addOpenIcon(String src, double scale, HColor color) {
-<span class="nc" id="L199">		final OpenIcon openIcon = OpenIcon.retrieve(src);</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (openIcon != null)</span>
-<span class="nc" id="L201">			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));</span>
-<span class="nc" id="L202">	}</span>
-
-	public void addEmoji(String emojiName, double scale, String forcedColor) {
-<span class="nc" id="L205">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (emoji == null) {</span>
-<span class="nc" id="L207">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
-<span class="nc" id="L208">			return;</span>
+	public void addSprite(String src, double scale, HColor forcedColor) {
+<span class="fc" id="L199">		final Sprite sprite = skinParam.getSprite(src);</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (sprite != null) {</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			final HColor backColor = fontConfiguration.containsStyle(FontStyle.BACKCOLOR)</span>
+<span class="nc" id="L202">					? fontConfiguration.getExtendedColor()</span>
+<span class="fc" id="L203">					: null;</span>
+<span class="fc" id="L204">			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null, backColor));</span>
 		}
 
-<span class="nc" id="L211">		HColor col = null;</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L213">			col = null;</span>
-<span class="nc bnc" id="L214" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
-<span class="nc" id="L215">			col = fontConfiguration.getColor();</span>
+<span class="fc" id="L207">	}</span>
+
+	public void addOpenIcon(String src, double scale, HColor color) {
+<span class="nc" id="L210">		final OpenIcon openIcon = OpenIcon.retrieve(src);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (openIcon != null)</span>
+<span class="nc" id="L212">			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));</span>
+<span class="nc" id="L213">	}</span>
+
+	public void addEmoji(String emojiName, double scale, String forcedColor) {
+<span class="nc" id="L216">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (emoji == null) {</span>
+<span class="nc" id="L218">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
+<span class="nc" id="L219">			return;</span>
+		}
+
+<span class="nc" id="L222">		HColor col = null;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (forcedColor == null)</span>
+<span class="nc" id="L224">			col = null;</span>
+<span class="nc bnc" id="L225" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
+<span class="nc" id="L226">			col = fontConfiguration.getColor();</span>
 		else
 			try {
-<span class="nc" id="L218">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
-<span class="nc" id="L219">			} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L220">				col = null;</span>
-<span class="nc" id="L221">			}</span>
+<span class="nc" id="L229">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
+<span class="nc" id="L230">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L231">				col = null;</span>
+<span class="nc" id="L232">			}</span>
 
-<span class="nc" id="L223">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
-<span class="nc" id="L224">	}</span>
+<span class="nc" id="L234">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
+<span class="nc" id="L235">	}</span>
 
 	// ::comment when __CORE__
 	public void addMath(ScientificEquationSafe math) {
-<span class="nc" id="L228">		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
-<span class="nc" id="L229">	}</span>
+<span class="nc" id="L239">		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
+<span class="nc" id="L240">	}</span>
 	// ::done
 
 	private void modifyStripe(String line) {
-<span class="fc" id="L233">		final StringBuilder pending = new StringBuilder();</span>
+<span class="fc" id="L244">		final StringBuilder pending = new StringBuilder();</span>
 
-<span class="fc bfc" id="L235" title="All 2 branches covered.">		while (line.length() &gt; 0) {</span>
-<span class="fc" id="L236">			final Command cmd = searchCommand(line);</span>
-<span class="fc bfc" id="L237" title="All 2 branches covered.">			if (cmd == null) {</span>
-<span class="fc" id="L238">				pending.append(line.charAt(0));</span>
-<span class="fc" id="L239">				line = line.substring(1);</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		while (line.length() &gt; 0) {</span>
+<span class="fc" id="L247">			final Command cmd = searchCommand(line);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">			if (cmd == null) {</span>
+<span class="fc" id="L249">				pending.append(line.charAt(0));</span>
+<span class="fc" id="L250">				line = line.substring(1);</span>
 			} else {
-<span class="fc" id="L241">				addPending(pending);</span>
-<span class="fc" id="L242">				line = cmd.executeAndGetRemaining(line, this);</span>
+<span class="fc" id="L252">				addPending(pending);</span>
+<span class="fc" id="L253">				line = cmd.executeAndGetRemaining(line, this);</span>
 			}
-<span class="fc" id="L244">		}</span>
-<span class="fc" id="L245">		addPending(pending);</span>
-<span class="fc" id="L246">	}</span>
+<span class="fc" id="L255">		}</span>
+<span class="fc" id="L256">		addPending(pending);</span>
+<span class="fc" id="L257">	}</span>
 
 	private void addPending(StringBuilder pending) {
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (pending.length() == 0)</span>
-<span class="fc" id="L250">			return;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (pending.length() == 0)</span>
+<span class="fc" id="L261">			return;</span>
 
-<span class="fc" id="L252">		atoms.add(AtomTextUtils.createLegacy(pending.toString(), fontConfiguration));</span>
-<span class="fc" id="L253">		pending.setLength(0);</span>
-<span class="fc" id="L254">	}</span>
+<span class="fc" id="L263">		atoms.add(AtomTextUtils.createLegacy(pending.toString(), fontConfiguration));</span>
+<span class="fc" id="L264">		pending.setLength(0);</span>
+<span class="fc" id="L265">	}</span>
 
 	private Command searchCommand(String line) {
-<span class="fc" id="L257">		final List&lt;Command&gt; localList = commands.get(line.charAt(0));</span>
-<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (localList != null)</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">			for (Command cmd : localList)</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">				if (cmd.matchingSize(line) != 0)</span>
-<span class="fc" id="L261">					return cmd;</span>
+<span class="fc" id="L268">		final List&lt;Command&gt; localList = commands.get(line.charAt(0));</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">		if (localList != null)</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">			for (Command cmd : localList)</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">				if (cmd.matchingSize(line) != 0)</span>
+<span class="fc" id="L272">					return cmd;</span>
 
-<span class="fc" id="L263">		return null;</span>
+<span class="fc" id="L274">		return null;</span>
 	}
 
 	public ISkinSimple getSkinParam() {
-<span class="fc" id="L267">		return skinParam;</span>
+<span class="fc" id="L278">		return skinParam;</span>
 	}
 
 }
