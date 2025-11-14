@@ -84,6 +84,29 @@ gradle pdfJar
 
 The JAR file will be created in the `build/libs` directory.
 
+To build all artifacts from all sub-projects too, set environment variable CI to true first.
+You may use the Gradle wrapper (gradlew) to use proper version of Gradle.
+
+Linux:
+
+```
+export CI=true
+./gradlew build
+```
+
+Windows:
+
+```
+set CI=true
+gradlew build
+```
+
+To skip tests and javadoc, use :
+
+```
+gradlew build -x test -x javadoc
+```
+
 ### Contributing
 
 After successfully building the project, you are ready to start contributing to PlantUML! If you have any changes to contribute, please submit a pull request through the [PlantUML GitHub repository](https://github.com/plantuml/plantuml).
