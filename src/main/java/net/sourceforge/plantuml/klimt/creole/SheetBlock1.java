@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final Sheet sheet;
 	private List<Stripe> stripes;
@@ -153,43 +153,41 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 			}
 			sea.exportAllPositions(positions);
 		}
-		final int coef;
-		if (sheet.getHorizontalAlignment() == HorizontalAlignment.CENTER)
-			coef = 2;
-		else if (sheet.getHorizontalAlignment() == HorizontalAlignment.RIGHT)
-			coef = 1;
-		else
-			coef = 0;
 
-			double maxWidth = 0;
-			for (Double v : widths.values())
-				if (v > maxWidth)
-					maxWidth = v;
+		double maxWidth = 0;
+		for (Double v : widths.values())
+			if (v > maxWidth)
+				maxWidth = v;
 
-			for (Map.Entry<Stripe, Double> ent : widths.entrySet()) {
-			int coef2;
-			if (ent.getKey() instanceof StripeSimple) {
-				final HorizontalAlignment align = ((StripeSimple)ent.getKey()).getCellAlignment();
-
-				if (align == HorizontalAlignment.CENTER)
-					coef2 = 2;
-				else if (align == HorizontalAlignment.RIGHT)
-					coef2 = 1;
-				else
-					coef2 = 0;
-			}
-			else
-				coef2 = coef;
-
-				// final double diff = maxWidth - ent.getValue() + this.marginX1 +
-				// this.marginX2;
-				final double diff = maxWidth - ent.getValue();
-			if ((diff > 0) && (coef2 != 0)) {
-					for (Atom atom : ent.getKey().getAtoms()) {
+		for (Map.Entry<Stripe, Double> ent : widths.entrySet()) {
+			final double diff = maxWidth - ent.getValue();
+			if (diff > 0) {
+				final Stripe key = ent.getKey();
+				final int coef = getCoef(key);
+				if (coef > 0)
+					for (Atom atom : key.getAtoms()) {
 						final Position pos = positions.get(atom);
-					positions.put(atom, pos.translateX(diff / coef2));
+						positions.put(atom, pos.translateX(diff / coef));
 					}
-				}
+			}
+		}
+	}
+
+	private int getCoef(Stripe key) {
+		if (key instanceof StripeSimple)
+			return getCoef(((StripeSimple) key).getCellAlignment());
+
+		return getCoef(sheet.getHorizontalAlignment());
+	}
+
+	private int getCoef(HorizontalAlignment alignment) {
+		switch (alignment) {
+		case CENTER:
+			return 2;
+		case RIGHT:
+			return 1;
+		default:
+			return 0;
 		}
 	}
 
