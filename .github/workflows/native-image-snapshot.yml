@@ -94,11 +94,47 @@ jobs:
             plantuml-full-windows-amd64-SNAPSHOT.zip
             plantuml-headless-windows-amd64-SNAPSHOT.zip
 
+  build_macos_arm64:
+    name: 'Build Native Image darwin-arm64'
+    needs: clean_release
+    runs-on: macos-latest
+    timeout-minutes: 90
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          distribution: liberica
+          cache: gradle
+
+      - name: Build GPLv2 native image
+        shell: bash
+        run: |
+          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
+
+      - name: Archive macOS builds
+        shell: bash
+        run: |
+          zip -r plantuml-full-darwin-arm64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeFullCompile/
+          zip -r plantuml-headless-darwin-arm64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeHeadlessCompile/
+
+      - name: Upload build artifacts (macOS)
+        uses: actions/upload-artifact@v4
+        with:
+          name: darwin-arm64
+          path: |
+            plantuml-full-darwin-arm64-SNAPSHOT.zip
+            plantuml-headless-darwin-arm64-SNAPSHOT.zip
+
   publish_release:
     name: Publish combined release
     needs:
       - build_linux_amd64
       - build_windows_amd64
+      - build_macos_arm64
     runs-on: ubuntu-latest
 
     steps:
@@ -116,7 +152,8 @@ jobs:
       - name: Prepare env
         shell: bash
         run: |
-          echo "VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)" >> $GITHUB_ENV
+          VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
           echo "Resolved VERSION=$VERSION"
 
