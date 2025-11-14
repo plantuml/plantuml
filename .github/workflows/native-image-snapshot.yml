@@ -141,7 +141,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v5
         
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           merge-multiple: true
           path: artifacts/
