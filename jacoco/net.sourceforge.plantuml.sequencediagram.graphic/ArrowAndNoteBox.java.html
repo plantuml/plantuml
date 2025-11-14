@@ -64,11 +64,11 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 
 <span class="fc" id="L65">			final double diffHeightArrow = myHeight - arrowHeight;</span>
 <span class="fc" id="L66">			final double diffHeightNote = myHeight - noteHeight;</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (diffHeightArrow &gt; 0) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (diffHeightArrow &gt; 0) {</span>
 <span class="fc" id="L68">				arrow.pushToDown(diffHeightArrow / 2);</span>
 			}
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">			if (diffHeightNote &gt; 0) {</span>
-<span class="nc" id="L71">				noteBox.pushToDown(diffHeightNote / 2);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			if (diffHeightNote &gt; 0) {</span>
+<span class="fc" id="L71">				noteBox.pushToDown(diffHeightNote / 2);</span>
 			}
 <span class="fc" id="L73">		}</span>
 <span class="fc" id="L74">	}</span>
@@ -145,11 +145,11 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="nc" id="L148">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L148">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
 	}
 
 	public double getMinX(StringBounder stringBounder) {
-<span class="nc" id="L152">		return getStartingX(stringBounder);</span>
+<span class="fc" id="L152">		return getStartingX(stringBounder);</span>
 	}
 
 	public String toString(StringBounder stringBounder) {
