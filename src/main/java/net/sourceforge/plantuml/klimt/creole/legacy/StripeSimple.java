@@ -144,16 +144,7 @@ public class StripeSimple implements Stripe {
 		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)
 			throw new IllegalArgumentException(line);
 
-		if (line.startsWith("<r>")) {
-			setCellAlignment(HorizontalAlignment.RIGHT);
-			line = line.substring("<r>".length());
-		} else if (line.startsWith("<l>")) {
-			setCellAlignment(HorizontalAlignment.LEFT);
-			line = line.substring("<l>".length());
-		} else if (line.startsWith("<c>")) {
-			setCellAlignment(HorizontalAlignment.CENTER);
-			line = line.substring("<c>".length());
-		}
+		line = manageCellAlignment(line);
 
 		line = CharHidder.hide(line);
 		if (style.getType() == StripeStyleType.HEADING) {
@@ -164,6 +155,44 @@ public class StripeSimple implements Stripe {
 		} else {
 			modifyStripe(line);
 		}
+	}
+
+	private static final String LEFT_LONG = "<left>";
+	private static final String LEFT_SHORT = "<l>";
+	private static final String CENTER_LONG = "<center>";
+	private static final String CENTER_SHORT = "<c>";
+	private static final String RIGHT_LONG = "<right>";
+	private static final String RIGHT_SHORT = "<r>";
+
+	private String manageCellAlignment(String line) {
+		if (line.startsWith("<"))
+			if (line.startsWith(LEFT_SHORT)) {
+				setCellAlignment(HorizontalAlignment.LEFT);
+				line = line.substring(LEFT_SHORT.length());
+
+			} else if (line.startsWith(LEFT_LONG)) {
+				setCellAlignment(HorizontalAlignment.LEFT);
+				line = line.substring(LEFT_LONG.length());
+
+			} else if (line.startsWith(CENTER_LONG)) {
+				setCellAlignment(HorizontalAlignment.CENTER);
+				line = line.substring(CENTER_LONG.length());
+
+			} else if (line.startsWith(CENTER_SHORT)) {
+				setCellAlignment(HorizontalAlignment.CENTER);
+				line = line.substring(CENTER_SHORT.length());
+
+			} else if (line.startsWith(RIGHT_LONG)) {
+				setCellAlignment(HorizontalAlignment.RIGHT);
+				line = line.substring(RIGHT_LONG.length());
+
+			} else if (line.startsWith(RIGHT_SHORT)) {
+				setCellAlignment(HorizontalAlignment.RIGHT);
+				line = line.substring(RIGHT_SHORT.length());
+
+			}
+
+		return line;
 	}
 
 	private static FontConfiguration fontConfigurationForHeading(FontConfiguration fontConfiguration, int order) {
