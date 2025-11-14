@@ -161,25 +161,35 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		else
 			coef = 0;
 
-		if (coef != 0) {
 			double maxWidth = 0;
 			for (Double v : widths.values())
 				if (v > maxWidth)
 					maxWidth = v;
 
 			for (Map.Entry<Stripe, Double> ent : widths.entrySet()) {
+			int coef2;
+			if (ent.getKey() instanceof StripeSimple) {
+				final HorizontalAlignment align = ((StripeSimple)ent.getKey()).getCellAlignment();
+
+				if (align == HorizontalAlignment.CENTER)
+					coef2 = 2;
+				else if (align == HorizontalAlignment.RIGHT)
+					coef2 = 1;
+				else
+					coef2 = 0;
+			}
+			else
+				coef2 = coef;
+
 				// final double diff = maxWidth - ent.getValue() + this.marginX1 +
 				// this.marginX2;
 				final double diff = maxWidth - ent.getValue();
-				if (diff > 0) {
+			if ((diff > 0) && (coef2 != 0)) {
 					for (Atom atom : ent.getKey().getAtoms()) {
 						final Position pos = positions.get(atom);
-						positions.put(atom, pos.translateX(diff / coef));
+					positions.put(atom, pos.translateX(diff / coef2));
 					}
 				}
-
-			}
-
 		}
 	}
 

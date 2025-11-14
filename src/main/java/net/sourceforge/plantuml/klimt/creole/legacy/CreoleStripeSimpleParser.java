@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.creole.Stripe;
 import net.sourceforge.plantuml.klimt.creole.StripeStyle;
 import net.sourceforge.plantuml.klimt.creole.StripeStyleType;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -158,10 +159,11 @@ public class CreoleStripeSimpleParser {
 
 	}
 
-	public List<Stripe> createStripes(CreoleContext context) {
+	public List<Stripe> createStripes(CreoleContext context, HorizontalAlignment align) {
 		final List<Stripe> result = new ArrayList<>();
 		for (String singleLine : line.split("" + Jaws.BLOCK_E1_NEWLINE)) {
 			final StripeSimple stripe = new StripeSimple(fontConfiguration, style, context, skinParam, modeSimpleLine);
+			stripe.setCellAlignment(align);
 			stripe.analyzeAndAdd(singleLine);
 			result.add(stripe);
 		}

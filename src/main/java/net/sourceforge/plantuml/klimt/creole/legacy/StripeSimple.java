@@ -144,6 +144,17 @@ public class StripeSimple implements Stripe {
 		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)
 			throw new IllegalArgumentException(line);
 
+		if (line.startsWith("<r>")) {
+			setCellAlignment(HorizontalAlignment.RIGHT);
+			line = line.substring("<r>".length());
+		} else if (line.startsWith("<l>")) {
+			setCellAlignment(HorizontalAlignment.LEFT);
+			line = line.substring("<l>".length());
+		} else if (line.startsWith("<c>")) {
+			setCellAlignment(HorizontalAlignment.CENTER);
+			line = line.substring("<c>".length());
+		}
+
 		line = CharHidder.hide(line);
 		if (style.getType() == StripeStyleType.HEADING) {
 			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());

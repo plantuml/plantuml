@@ -107,7 +107,7 @@ public class CreoleParser implements SheetBuilder {
 			// ::done
 		}
 		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)
-				.createStripes(context);
+				.createStripes(context, lastStripe instanceof StripeSimple ? ((StripeSimple)lastStripe).getCellAlignment() : this.horizontalAlignment);
 	}
 
 	public static boolean isTableLine(String line) {
