@@ -114,14 +114,14 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		if (orientation == 90) {
 			final AffineTransform orig = g2d.getTransform();
 			g2d.translate(x, y);
-			g2d.rotate(Math.PI / 2);
+			g2d.rotate(-Math.PI / 2);
 			g2d.drawString(text, 0, 0);
 			g2d.setTransform(orig);
 
 		} else if (orientation == 270) {
 			final AffineTransform orig = g2d.getTransform();
 			g2d.translate(x, y);
-			g2d.rotate(-Math.PI / 2);
+			g2d.rotate(Math.PI / 2);
 			g2d.drawString(text, 0, 0);
 			g2d.setTransform(orig);
 
