@@ -495,8 +495,6 @@ Use PlantUML's style system for comprehensive styling:
     </style>
     @endchart
 
-![styling-comprehensive](out/styling-comprehensive.png)
-
 ### Stereotypes
 
 Use stereotypes to apply CSS class-based styling:
