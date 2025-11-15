@@ -750,18 +750,24 @@ public class ChartRenderer {
 
 		// Draw horizontal grid lines (v-axis)
 		if (yGridMode != ChartDiagram.GridMode.OFF && yAxis != null) {
+			final double range = yAxis.getMax() - yAxis.getMin();
+			final double tickInterval;
+
 			if (yAxis.hasTickSpacing()) {
-				final double spacing = yAxis.getTickSpacing();
-				final double startValue = Math.ceil(yAxis.getMin() / spacing) * spacing;
+				tickInterval = yAxis.getTickSpacing();
+			} else {
+				tickInterval = range / 10.0;
+			}
 
-				for (double value = startValue; value <= yAxis.getMax(); value += spacing) {
-					if (value > yAxis.getMax() + spacing * 0.01)
-						break;
+			final double startValue = Math.ceil(yAxis.getMin() / tickInterval) * tickInterval;
 
-					final double y = plotHeight * (1.0 - (value - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
-					final ULine gridLine = ULine.hline(plotWidth);
-					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
-				}
+			for (double value = startValue; value <= yAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
+				if (value < yAxis.getMin() - tickInterval * 0.01 || value > yAxis.getMax() + tickInterval * 0.01)
+					continue;
+
+				final double y = plotHeight * (1.0 - (value - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
+				final ULine gridLine = ULine.hline(plotWidth);
+				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 			}
 		}
 	}

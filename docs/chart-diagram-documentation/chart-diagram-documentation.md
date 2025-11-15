@@ -91,16 +91,6 @@ legend right
 @endchart
 ```
 
-```plantuml
-@startchart
-h-axis "x" -5 --> 5 spacing 1 label-right
-v-axis "f(x)" -5 --> 5 spacing 1 label-top
-line "Data1" [(-5,-5), (0,2), (5,5)] #1f77b4
-scatter "Data2" [(-2,2), (5,3)] #1f7744
-legend right
-@endchart
-```
-
 #### Coordinate-Pair Notation
 
 Line and scatter charts support an alternative coordinate-pair notation for plotting data at specific x-coordinates. This is useful for mathematical functions, irregular data points, or when you need precise control over point positioning.
@@ -403,11 +393,21 @@ Grid on both axes:
 @startchart
 h-axis [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct] grid
 v-axis 0 --> 100 grid
-bar [45, 62, 58, 70, 83, 78, 65, 72, 80, 85] #3498db
+line [45, 62, 58, 70, 83, 78, 65, 72, 80, 85] #3498db
 @endchart
 ```
 
 Grid on vertical axis only:
+
+```plantuml
+@startchart
+h-axis 0 --> 100
+v-axis 0 --> 100 grid
+scatter [(10,45), (25,62), (40,58), (55,70)] #3498db
+@endchart
+```
+
+Bar chart with v-axis grid:
 
 ```plantuml
 @startchart
@@ -533,7 +533,7 @@ Use stereotypes to apply CSS class-based styling:
 </style>
 
 h-axis [Q1, Q2, Q3, Q4]
-v-axis 0 --> 100
+v-axis 0 --> 100 grid
 bar <<primary>> "Revenue" [45, 62, 58, 70]
 bar <<success>> "Profit" [35, 48, 52, 61]
 bar <<danger>> "Costs" [25, 30, 28, 32]
