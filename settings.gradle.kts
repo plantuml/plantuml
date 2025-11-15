@@ -19,7 +19,8 @@ if (isCiBuild && !isDevTest) {
     include("plantuml-epl")
     include("plantuml-lgpl")
     include("plantuml-mit")
-    
+    include("plantuml-mit-light")
+
     // Only include plantuml-gplv2 if Java version is 11 or higher
     if (javaVersion.isCompatibleWith(JavaVersion.VERSION_11)) {
         include("plantuml-gplv2")
