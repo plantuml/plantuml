@@ -157,20 +157,26 @@ public class StripeSimple implements Stripe {
 		}
 	}
 
+	private static final String CENTER_SHORT = "<c>";
+	private static final String LEFT_SHORT = "<l>";
+	private static final String RIGHT_SHORT = "<r>";
+
 	private String manageCellAlignment(String line) {
-		if (line.startsWith("<r>")) {
-			setCellAlignment(HorizontalAlignment.RIGHT);
-			line = line.substring("<r>".length());
-			
-		} else if (line.startsWith("<l>")) {
-			setCellAlignment(HorizontalAlignment.LEFT);
-			line = line.substring("<l>".length());
-			
-		} else if (line.startsWith("<c>")) {
-			setCellAlignment(HorizontalAlignment.CENTER);
-			line = line.substring("<c>".length());
-			
-		}
+		if (line.startsWith("<"))
+			if (line.startsWith(RIGHT_SHORT)) {
+				setCellAlignment(HorizontalAlignment.RIGHT);
+				line = line.substring(RIGHT_SHORT.length());
+
+			} else if (line.startsWith(LEFT_SHORT)) {
+				setCellAlignment(HorizontalAlignment.LEFT);
+				line = line.substring(LEFT_SHORT.length());
+
+			} else if (line.startsWith(CENTER_SHORT)) {
+				setCellAlignment(HorizontalAlignment.CENTER);
+				line = line.substring(CENTER_SHORT.length());
+
+			}
+		
 		return line;
 	}
 
