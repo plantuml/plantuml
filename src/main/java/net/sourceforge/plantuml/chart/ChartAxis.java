@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChartAxis {
