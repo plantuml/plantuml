@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final Sheet sheet;
 	private List&lt;Stripe&gt; stripes;
@@ -153,88 +153,86 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 			}
 <span class="fc" id="L154">			sea.exportAllPositions(positions);</span>
 <span class="fc" id="L155">		}</span>
-		final int coef;
-<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (sheet.getHorizontalAlignment() == HorizontalAlignment.CENTER)</span>
-<span class="fc" id="L158">			coef = 2;</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		else if (sheet.getHorizontalAlignment() == HorizontalAlignment.RIGHT)</span>
-<span class="fc" id="L160">			coef = 1;</span>
-		else
-<span class="fc" id="L162">			coef = 0;</span>
 
-<span class="fc" id="L164">			double maxWidth = 0;</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">			for (Double v : widths.values())</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">				if (v &gt; maxWidth)</span>
-<span class="fc" id="L167">					maxWidth = v;</span>
+<span class="fc" id="L157">		double maxWidth = 0;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (Double v : widths.values())</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (v &gt; maxWidth)</span>
+<span class="fc" id="L160">				maxWidth = v;</span>
 
-<span class="fc bfc" id="L169" title="All 2 branches covered.">			for (Map.Entry&lt;Stripe, Double&gt; ent : widths.entrySet()) {</span>
-			int coef2;
-<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (ent.getKey() instanceof StripeSimple) {</span>
-<span class="fc" id="L172">				final HorizontalAlignment align = ((StripeSimple)ent.getKey()).getCellAlignment();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (Map.Entry&lt;Stripe, Double&gt; ent : widths.entrySet()) {</span>
+<span class="fc" id="L163">			final double diff = maxWidth - ent.getValue();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (diff &gt; 0) {</span>
+<span class="fc" id="L165">				final Stripe key = ent.getKey();</span>
+<span class="fc" id="L166">				final int coef = getCoef(key);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">				if (coef &gt; 0)</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">					for (Atom atom : key.getAtoms()) {</span>
+<span class="fc" id="L169">						final Position pos = positions.get(atom);</span>
+<span class="fc" id="L170">						positions.put(atom, pos.translateX(diff / coef));</span>
+<span class="fc" id="L171">					}</span>
+			}
+<span class="fc" id="L173">		}</span>
+<span class="fc" id="L174">	}</span>
 
-<span class="fc bfc" id="L174" title="All 2 branches covered.">				if (align == HorizontalAlignment.CENTER)</span>
-<span class="fc" id="L175">					coef2 = 2;</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">				else if (align == HorizontalAlignment.RIGHT)</span>
-<span class="fc" id="L177">					coef2 = 1;</span>
-				else
-<span class="fc" id="L179">					coef2 = 0;</span>
-<span class="fc" id="L180">			}</span>
-			else
-<span class="fc" id="L182">				coef2 = coef;</span>
+	private int getCoef(Stripe key) {
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		if (key instanceof StripeSimple)</span>
+<span class="fc" id="L178">			return getCoef(((StripeSimple) key).getCellAlignment());</span>
 
-				// final double diff = maxWidth - ent.getValue() + this.marginX1 +
-				// this.marginX2;
-<span class="fc" id="L186">				final double diff = maxWidth - ent.getValue();</span>
-<span class="fc bfc" id="L187" title="All 4 branches covered.">			if ((diff &gt; 0) &amp;&amp; (coef2 != 0)) {</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">					for (Atom atom : ent.getKey().getAtoms()) {</span>
-<span class="fc" id="L189">						final Position pos = positions.get(atom);</span>
-<span class="fc" id="L190">					positions.put(atom, pos.translateX(diff / coef2));</span>
-<span class="fc" id="L191">					}</span>
-				}
-<span class="fc" id="L193">		}</span>
-<span class="fc" id="L194">	}</span>
+<span class="fc" id="L180">		return getCoef(sheet.getHorizontalAlignment());</span>
+	}
+
+	private int getCoef(HorizontalAlignment alignment) {
+<span class="fc bfc" id="L184" title="All 3 branches covered.">		switch (alignment) {</span>
+		case CENTER:
+<span class="fc" id="L186">			return 2;</span>
+		case RIGHT:
+<span class="fc" id="L188">			return 1;</span>
+		default:
+<span class="fc" id="L190">			return 0;</span>
+		}
+	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L197">		initMap(stringBounder);</span>
-<span class="fc" id="L198">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
+<span class="fc" id="L195">		initMap(stringBounder);</span>
+<span class="fc" id="L196">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
 	}
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L203">		return null;</span>
+<span class="nc" id="L201">		return null;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L207">		initMap(ug.getStringBounder());</span>
-<span class="pc bpc" id="L208" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
-<span class="fc" id="L209">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
+<span class="fc" id="L205">		initMap(ug.getStringBounder());</span>
+<span class="pc bpc" id="L206" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
+<span class="fc" id="L207">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
 
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
-<span class="fc" id="L213">				final Position position = positions.get(atom);</span>
-<span class="fc" id="L214">				atom.drawU(position.translate(ug));</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
+<span class="fc" id="L211">				final Position position = positions.get(atom);</span>
+<span class="fc" id="L212">				atom.drawU(position.translate(ug));</span>
 				// position.drawDebug(ug);
-<span class="fc" id="L216">			}</span>
-<span class="fc" id="L217">	}</span>
+<span class="fc" id="L214">			}</span>
+<span class="fc" id="L215">	}</span>
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L220">		return 0;</span>
+<span class="nc" id="L218">		return 0;</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L224">		return -marginX1;</span>
+<span class="fc" id="L222">		return -marginX1;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L228">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
+<span class="fc" id="L226">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
 	}
 
 	public final double getMinimumWidth() {
-<span class="fc" id="L232">		return minimumWidth;</span>
+<span class="fc" id="L230">		return minimumWidth;</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L237">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L235">		throw new UnsupportedOperationException();</span>
 	}
 
 }

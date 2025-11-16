@@ -106,74 +106,77 @@ public class CreoleParser implements SheetBuilder {
 <span class="nc" id="L106">			return Arrays.asList(new StripeLatex(fontConfiguration));</span>
 			// ::done
 		}
-<span class="fc" id="L109">		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">				.createStripes(context, lastStripe instanceof StripeSimple ? ((StripeSimple)lastStripe).getCellAlignment() : this.horizontalAlignment);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		final HorizontalAlignment align = lastStripe instanceof StripeSimple</span>
+<span class="fc" id="L110">				? ((StripeSimple) lastStripe).getCellAlignment()</span>
+<span class="fc" id="L111">				: this.horizontalAlignment;</span>
+<span class="fc" id="L112">		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)</span>
+<span class="fc" id="L113">				.createStripes(context, align);</span>
 	}
 
 	public static boolean isTableLine(String line) {
-<span class="fc" id="L114">		return line.matches(&quot;^(\\&lt;#\\w+(,#?\\w+)?\\&gt;)?\\|(\\=)?.*\\|$&quot;);</span>
+<span class="fc" id="L117">		return line.matches(&quot;^(\\&lt;#\\w+(,#?\\w+)?\\&gt;)?\\|(\\=)?.*\\|$&quot;);</span>
 	}
 
 	public static boolean doesStartByColor(String line) {
-<span class="fc" id="L118">		return line.matches(&quot;^\\=?\\s*(\\&lt;#\\w+(,#?\\w+)?\\&gt;).*&quot;);</span>
+<span class="fc" id="L121">		return line.matches(&quot;^\\=?\\s*(\\&lt;#\\w+(,#?\\w+)?\\&gt;).*&quot;);</span>
 	}
 
-<span class="fc" id="L121">	private final Map&lt;Display, Sheet&gt; cache = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L124">	private final Map&lt;Display, Sheet&gt; cache = new HashMap&lt;&gt;();</span>
 
 	public Sheet createSheet(Display display) {
 		if (Jaws.TRACE)
 			System.err.println(&quot;createSheet &quot; + display);
-<span class="fc" id="L126">		Sheet result = cache.get(display);</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L128">			result = createSheetSlow(display, false);</span>
-<span class="fc" id="L129">			cache.put(display, result);</span>
+<span class="fc" id="L129">		Sheet result = cache.get(display);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L131">			result = createSheetSlow(display, false);</span>
+<span class="fc" id="L132">			cache.put(display, result);</span>
 		}
-<span class="fc" id="L131">		return result;</span>
+<span class="fc" id="L134">		return result;</span>
 	}
 
 	private Sheet createSheetSlow(Display display, boolean checkColor) {
-<span class="fc" id="L135">		final Sheet sheet = new Sheet(horizontalAlignment);</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (Display.isNull(display) == false) {</span>
-<span class="fc" id="L137">			final CreoleContext context = new CreoleContext();</span>
-<span class="fc" id="L138">			final Iterator&lt;CharSequence&gt; it = display.iterator();</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">			while (it.hasNext()) {</span>
-<span class="fc" id="L140">				final CharSequence cs = it.next();</span>
+<span class="fc" id="L138">		final Sheet sheet = new Sheet(horizontalAlignment);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (Display.isNull(display) == false) {</span>
+<span class="fc" id="L140">			final CreoleContext context = new CreoleContext();</span>
+<span class="fc" id="L141">			final Iterator&lt;CharSequence&gt; it = display.iterator();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			while (it.hasNext()) {</span>
+<span class="fc" id="L143">				final CharSequence cs = it.next();</span>
 				if (Jaws.TRACE)
 					System.err.println(&quot;createSheetSlow:&quot; + cs);
 				final List&lt;Stripe&gt; stripes;
-<span class="fc" id="L144">				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">				if (type != null) {</span>
-<span class="fc" id="L146">					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">					if (checkColor)</span>
-<span class="nc" id="L148">						stripes = null;</span>
+<span class="fc" id="L147">				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">				if (type != null) {</span>
+<span class="fc" id="L149">					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">					if (checkColor)</span>
+<span class="nc" id="L151">						stripes = null;</span>
 					else {
-<span class="fc" id="L150">						stripes = Arrays.asList(new Stripe() {</span>
+<span class="fc" id="L153">						stripes = Arrays.asList(new Stripe() {</span>
 							public Atom getLHeader() {
-<span class="nc" id="L152">								return null;</span>
+<span class="nc" id="L155">								return null;</span>
 							}
 
 							public List&lt;Atom&gt; getAtoms() {
-<span class="fc" id="L156">								return Arrays.asList(embeddedDiagram);</span>
+<span class="fc" id="L159">								return Arrays.asList(embeddedDiagram);</span>
 							}
 						});
 					}
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">				} else if (cs instanceof Stereotype) {</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">					if (display.showStereotype())</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))</span>
-<span class="nc" id="L163">							sheet.add(createStripes(st, context, sheet.getLastStripe(), stereotype));</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">				} else if (cs instanceof Stereotype) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">					if (display.showStereotype())</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))</span>
+<span class="nc" id="L166">							sheet.add(createStripes(st, context, sheet.getLastStripe(), stereotype));</span>
 
 					continue;
 				} else {
-<span class="fc" id="L167">					stripes = createStripes(skinParam.guillemet().manageGuillemet(cs.toString()), context,</span>
-<span class="fc" id="L168">							sheet.getLastStripe(), fontConfiguration);</span>
+<span class="fc" id="L170">					stripes = createStripes(skinParam.guillemet().manageGuillemet(cs.toString()), context,</span>
+<span class="fc" id="L171">							sheet.getLastStripe(), fontConfiguration);</span>
 				}
 
-<span class="fc bfc" id="L171" title="All 2 branches covered.">				if (stripes != null)</span>
-<span class="fc" id="L172">					sheet.add(stripes);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">				if (stripes != null)</span>
+<span class="fc" id="L175">					sheet.add(stripes);</span>
 
-<span class="fc" id="L174">			}</span>
+<span class="fc" id="L177">			}</span>
 		}
-<span class="fc" id="L176">		return sheet;</span>
+<span class="fc" id="L179">		return sheet;</span>
 	}
 
 //	public static void checkColor(Display result) throws NoSuchColorException {
