@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.chart;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -51,11 +50,12 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class ChartRenderer {
@@ -204,41 +204,41 @@ public class ChartRenderer {
 			// xAxisLabels = categories (draw vertically on left)
 			// yAxis = numeric (draw horizontally at bottom)
 			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin))), plotHeight,
-					plotHeight, lineColor, fontColor, stringBounder);
+					plotHeight, lineColor, fontColor);
 			drawYAxisHorizontally(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin + plotHeight))), plotWidth,
-					plotHeight, yAxis, lineColor, fontColor, stringBounder);
+					plotHeight, yAxis, lineColor, fontColor);
 		} else {
 			// For vertical bars: categories on bottom (horizontal), numeric on left (vertical)
 			// xAxisLabels = categories (draw horizontally at bottom)
 			// yAxis = numeric (draw vertically on left)
 			drawYAxis(ug.apply(UTranslate.dx(yAxisX).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
-					lineColor, fontColor, stringBounder);
+					lineColor, fontColor);
 
 			if (y2Axis != null) {
 				drawYAxis(ug.apply(UTranslate.dx(leftMargin + plotWidth).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth,
-						y2Axis, false, lineColor, fontColor, stringBounder);
+						y2Axis, false, lineColor, fontColor);
 			}
 
 			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(xAxisY))), plotWidth,
-					plotHeight, lineColor, fontColor, stringBounder);
+					plotHeight, lineColor, fontColor);
 		}
 
 		// Draw grid lines (before series data so series draws on top)
 		final UGraphic ugPlot = ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(topMargin)));
-		drawGridLines(ugPlot, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
+		drawGridLines(ugPlot, plotWidth, plotHeight, lineColor, fontColor);
 
 		// Draw series data
-		drawSeries(ugPlot, plotWidth, plotHeight, stringBounder);
+		drawSeries(ugPlot, plotWidth, plotHeight);
 
 		// Draw annotations
-		drawAnnotations(ugPlot, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
+		drawAnnotations(ugPlot, plotWidth, plotHeight, lineColor, fontColor);
 
 		// Draw legend
-		drawLegend(ug, leftMargin, topMargin, plotWidth, plotHeight, lineColor, fontColor, stringBounder);
+		drawLegend(ug, leftMargin, topMargin, plotWidth, plotHeight, lineColor, fontColor);
 	}
 
 	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, HColor lineColor,
-			HColor fontColor, StringBounder stringBounder) {
+			HColor fontColor) {
 		// Get axis-specific style
 		final Style axisStyle = getAxisStyleSignature(false)
 			.getMergedStyle(skinParam.getCurrentStyleBuilder());
@@ -276,6 +276,7 @@ public class ChartRenderer {
 		final UStroke gridStroke = UStroke.withThickness(gridThickness);
 
 		// Use custom ticks if defined, otherwise use automatic ticks
+		final StringBounder stringBounder = ug.getStringBounder();
 		if (axis.hasCustomTicks()) {
 			// Draw custom ticks
 			for (Map.Entry<Double, String> entry : axis.getCustomTicks().entrySet()) {
@@ -394,26 +395,26 @@ public class ChartRenderer {
 		if (axis.getTitle() != null && !axis.getTitle().isEmpty()) {
 			if (axis.getLabelPosition() == ChartAxis.LabelPosition.TOP) {
 				// Draw horizontally at top
-				drawHorizontalAxisTitle(ug, axis.getTitle(), height, leftSide, fontColor, stringBounder, true, fontConfig);
+				drawHorizontalAxisTitle(ug, axis.getTitle(), height, leftSide, fontColor, true, fontConfig);
 			} else {
 				// Draw vertically (default)
-				drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, stringBounder, fontConfig);
+				drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, fontConfig);
 			}
 		}
 	}
 
 	private void drawVerticalText(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
-			StringBounder stringBounder, FontConfiguration axisFontConfig) {
+			FontConfiguration axisFontConfig) {
 		// Use the provided font configuration (same as tick labels)
 		// Left axis (Y): 90 degrees (reads from bottom to top)
 		// Right axis (Y2): 270 degrees (reads from top to bottom)
 		final int orientation = leftSide ? 90 : 270;
-		final net.sourceforge.plantuml.klimt.shape.UText utext = net.sourceforge.plantuml.klimt.shape.UText.build(text, axisFontConfig).withOrientation(orientation);
+		final UText utext = UText.build(text, axisFontConfig).withOrientation(orientation);
 
 		// Calculate dimensions of the text using the axis font
 		final UFont font = axisFontConfig.getFont();
-		final double textWidth = stringBounder.calculateDimension(font, text).getWidth();
-		final double textHeight = stringBounder.calculateDimension(font, text).getHeight();
+		final double textWidth = ug.getStringBounder().calculateDimension(font, text).getWidth();
+		final double textHeight = ug.getStringBounder().calculateDimension(font, text).getHeight();
 
 		// Position the rotated text centered vertically along the axis
 		// When rotated 90°, the baseline is the rotation point
@@ -430,12 +431,12 @@ public class ChartRenderer {
 	}
 
 	private void drawHorizontalAxisTitle(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
-			StringBounder stringBounder, boolean isVerticalAxis, FontConfiguration axisFontConfig) {
+			boolean isVerticalAxis, FontConfiguration axisFontConfig) {
 		// Use the provided font configuration (same as tick labels)
 		final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), text)
 				.create(axisFontConfig, HorizontalAlignment.CENTER, skinParam);
-		final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
-		final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
+		final double textWidth = textBlock.calculateDimension(ug.getStringBounder()).getWidth();
+		final double textHeight = textBlock.calculateDimension(ug.getStringBounder()).getHeight();
 
 		if (isVerticalAxis) {
 			// For vertical axis with label at top
@@ -450,11 +451,10 @@ public class ChartRenderer {
 		}
 	}
 
-	private void drawXAxis(UGraphic ug, double width, double height, HColor lineColor, HColor fontColor,
-			StringBounder stringBounder) {
+	private void drawXAxis(UGraphic ug, double width, double height, HColor lineColor, HColor fontColor) {
 		// For horizontal orientation, draw category labels vertically on the left
 		if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
-			drawCategoriesVerticallyOnLeft(ug, height, lineColor, fontColor, stringBounder);
+			drawCategoriesVerticallyOnLeft(ug, height, lineColor, fontColor);
 			return;
 		}
 
@@ -477,6 +477,7 @@ public class ChartRenderer {
 		ug.draw(ULine.hline(width));
 
 		// Draw labels (only if we have categorical x-axis labels)
+		final StringBounder stringBounder = ug.getStringBounder();
 		if (!xAxisLabels.isEmpty()) {
 			final double categoryWidth = width / xAxisLabels.size();
 
@@ -627,8 +628,7 @@ public class ChartRenderer {
 		} // Close the if (!xAxisLabels.isEmpty()) / else if
 	}
 
-	private void drawCategoriesVerticallyOnLeft(UGraphic ug, double height, HColor lineColor, HColor fontColor,
-			StringBounder stringBounder) {
+	private void drawCategoriesVerticallyOnLeft(UGraphic ug, double height, HColor lineColor, HColor fontColor) {
 		// Draw vertical axis line on the left
 		ug.draw(ULine.vline(height));
 
@@ -648,14 +648,14 @@ public class ChartRenderer {
 			// Draw label to the left of the tick
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisLabels.get(i))
 					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
-			final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
-			final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+			final double textHeight = textBlock.calculateDimension(ug.getStringBounder()).getHeight();
+			final double textWidth = textBlock.calculateDimension(ug.getStringBounder()).getWidth();
 			textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
 		}
 	}
 
 	private void drawYAxisHorizontally(UGraphic ug, double width, double height, ChartAxis axis, HColor lineColor,
-			HColor fontColor, StringBounder stringBounder) {
+			HColor fontColor) {
 		// Draw horizontal axis line
 		ug.draw(ULine.hline(width));
 
@@ -686,7 +686,7 @@ public class ChartRenderer {
 			final String label = String.format("%.0f", value);
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
-			final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+			final double textWidth = textBlock.calculateDimension(ug.getStringBounder()).getWidth();
 			textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
 		}
 
@@ -694,14 +694,13 @@ public class ChartRenderer {
 		if (axis.getTitle() != null && !axis.getTitle().isEmpty()) {
 			final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), axis.getTitle())
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
-			final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();
+			final double titleWidth = titleBlock.calculateDimension(ug.getStringBounder()).getWidth();
 			final double titleY = TICK_SIZE + 25;
 			titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));
 		}
 	}
 
-	private void drawGridLines(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor,
-			StringBounder stringBounder) {
+	private void drawGridLines(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor) {
 		// Draw grid lines for coordinate-pair mode (numeric axes)
 		// UGraphic ug is at plot origin (leftMargin, topMargin)
 
@@ -772,7 +771,7 @@ public class ChartRenderer {
 		}
 	}
 
-	private void drawSeries(UGraphic ug, double plotWidth, double plotHeight, StringBounder stringBounder) {
+	private void drawSeries(UGraphic ug, double plotWidth, double plotHeight) {
 		// Check if we have series to render
 		boolean hasCoordinatePairs = !series.isEmpty() && series.get(0).hasExplicitXValues();
 		if ((xAxisLabels.isEmpty() && !hasCoordinatePairs) || series.isEmpty())
@@ -1112,7 +1111,7 @@ public class ChartRenderer {
 	}
 
 	private void drawLegend(UGraphic ug, double leftMargin, double topMargin, double plotWidth, double plotHeight,
-			HColor lineColor, HColor fontColor, StringBounder stringBounder) {
+			HColor lineColor, HColor fontColor) {
 		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())
 			return;
 
@@ -1241,7 +1240,7 @@ public class ChartRenderer {
 			// Draw series name
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())
 					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
-			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());
 			textBlock.drawU(ug.apply(UTranslate.dx(currentX + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING)
 					.compose(UTranslate.dy(currentY))));
 
@@ -1274,8 +1273,7 @@ public class ChartRenderer {
 		}
 	}
 
-	private void drawAnnotations(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor,
-			StringBounder stringBounder) {
+	private void drawAnnotations(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor) {
 		if (annotations == null || annotations.isEmpty())
 			return;
 
@@ -1347,7 +1345,7 @@ public class ChartRenderer {
 			// Create text block for annotation
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), annotation.getText())
 					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
-			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());
 
 			// Draw arrow if requested
 			if (annotation.isShowArrow()) {

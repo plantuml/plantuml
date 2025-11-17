@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.chart;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.chart.command.CommandChartAnnotation;
 import net.sourceforge.plantuml.chart.command.CommandChartArea;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 

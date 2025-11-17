@@ -42,11 +42,11 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -77,7 +77,6 @@ public class AreaRenderer {
 
 		final List<Double> values = series.getValues();
 		final double categoryWidth = plotWidth / categoryCount;
-		final StringBounder stringBounder = ug.getStringBounder();
 
 		// Create polygon for filled area
 		final UPolygon polygon = new UPolygon();
@@ -132,7 +131,7 @@ public class AreaRenderer {
 			final double x2 = (i + 1.5) * categoryWidth;
 			final double y2 = plotHeight - (topValue2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
-			final net.sourceforge.plantuml.klimt.shape.ULine line = new net.sourceforge.plantuml.klimt.shape.ULine(x2 - x1, y2 - y1);
+			final ULine line = new ULine(x2 - x1, y2 - y1);
 			ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
 		}
 
@@ -147,12 +146,12 @@ public class AreaRenderer {
 				}
 				final double x = (i + 0.5) * categoryWidth;
 				final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-				drawLabel(ug, value, x, y - 8, stringBounder);
+				drawLabel(ug, value, x, y - 8);
 			}
 		}
 	}
 
-	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
+	private void drawLabel(UGraphic ug, double value, double x, double y) {
 		try {
 			final String label = formatValue(value);
 			final UFont font = UFont.sansSerif(10).bold();
@@ -160,7 +159,7 @@ public class AreaRenderer {
 			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
-			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
+			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());
 			final double labelX = x - textDim.getWidth() / 2;
 			final double labelY = y - textDim.getHeight() - 2;
 			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));
