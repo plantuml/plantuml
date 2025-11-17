@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandChartHAxis.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">CommandChartHAxis.java</span></div><h1>CommandChartHAxis.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  David Fyfe
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.chart.ChartAxis;
+import net.sourceforge.plantuml.chart.ChartDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
+
+	public CommandChartHAxis() {
+<span class="nc" id="L54">		super(false, getRegexConcat());</span>
+<span class="nc" id="L55">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="nc" id="L58">		return RegexConcat.build(CommandChartHAxis.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;h-axis&quot;), //
+<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, &quot;TITLE&quot;, &quot;\&quot;([^\&quot;]+)\&quot;&quot;)), //
+<span class="nc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(2, &quot;RANGE&quot;, &quot;(-?[0-9.]+)\\s*--&gt;\\s*(-?[0-9.]+)&quot;)), //
+<span class="nc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;)), //
+<span class="nc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new net.sourceforge.plantuml.regex.RegexOptional(new net.sourceforge.plantuml.regex.RegexConcat( //
+						new RegexLeaf(&quot;spacing&quot;), //
+<span class="nc" id="L69">						net.sourceforge.plantuml.regex.RegexLeaf.spaceOneOrMore(), //</span>
+						new RegexLeaf(1, &quot;SPACING&quot;, &quot;([0-9]+)&quot;))), //
+<span class="nc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, &quot;LABELRIGHT&quot;, &quot;(label-right)&quot;)), //
+<span class="nc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, &quot;GRID&quot;, &quot;(grid)&quot;)), //
+<span class="nc" id="L75">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L81">		final String title = arg.getLazzy(&quot;TITLE&quot;, 0);</span>
+<span class="nc" id="L82">		final String minStr = arg.getLazzy(&quot;RANGE&quot;, 0);</span>
+<span class="nc" id="L83">		final String maxStr = arg.getLazzy(&quot;RANGE&quot;, 1);</span>
+<span class="nc" id="L84">		final String data = arg.getLazzy(&quot;DATA&quot;, 0);</span>
+<span class="nc" id="L85">		final String spacingStr = arg.getLazzy(&quot;SPACING&quot;, 0);</span>
+<span class="nc" id="L86">		final String labelRightStr = arg.getLazzy(&quot;LABELRIGHT&quot;, 0);</span>
+<span class="nc" id="L87">		final String gridStr = arg.getLazzy(&quot;GRID&quot;, 0);</span>
+
+		// Parse tick spacing if present (do this first, before any returns)
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (spacingStr != null) {</span>
+			try {
+<span class="nc" id="L92">				final int spacing = Integer.parseInt(spacingStr);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">				if (spacing &lt;= 0) {</span>
+<span class="nc" id="L94">					return CommandExecutionResult.error(&quot;X-axis spacing must be greater than 0&quot;);</span>
+				}
+<span class="nc" id="L96">				diagram.setXAxisTickSpacing(spacing);</span>
+<span class="nc" id="L97">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L98">				return CommandExecutionResult.error(&quot;Invalid number format in spacing value&quot;);</span>
+<span class="nc" id="L99">			}</span>
+		}
+
+		// Set label position if label-right option is present (do this before any returns)
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (labelRightStr != null) {</span>
+<span class="nc" id="L104">			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);</span>
+		}
+
+		// Enable grid if grid option is present (do this before any returns)
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (gridStr != null) {</span>
+<span class="nc" id="L109">			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);</span>
+		}
+
+		// If numeric range is provided, this is for horizontal bar chart mode
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null) {</span>
+			try {
+<span class="nc" id="L115">				final double min = Double.parseDouble(minStr);</span>
+<span class="nc" id="L116">				final double max = Double.parseDouble(maxStr);</span>
+<span class="nc" id="L117">				return diagram.setXAxis(title, min, max);</span>
+<span class="nc" id="L118">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L119">				return CommandExecutionResult.error(&quot;Invalid number format in axis range&quot;);</span>
+			}
+		}
+
+		// Otherwise, parse as labels
+<span class="nc" id="L124">		final List&lt;String&gt; labels = parseLabels(data);</span>
+<span class="nc" id="L125">		diagram.setXAxisTitle(title);</span>
+
+<span class="nc" id="L127">		return diagram.setXAxisLabels(labels);</span>
+	}
+
+	private List&lt;String&gt; parseLabels(String data) {
+<span class="nc" id="L131">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L133">			return result;</span>
+
+		// Split by comma, handling quoted strings
+<span class="nc" id="L136">		final String[] parts = data.split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (String part : parts) {</span>
+<span class="nc" id="L138">			String label = part.trim();</span>
+			// Remove quotes if present
+<span class="nc bnc" id="L140" title="All 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
+<span class="nc" id="L141">				label = label.substring(1, label.length() - 1);</span>
+<span class="nc" id="L142">			result.add(label);</span>
+		}
+<span class="nc" id="L144">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

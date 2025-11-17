@@ -85,12 +85,12 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="fc bfc" id="L85" title="All 2 branches covered.">		for (StyledString styledString : strings) {</span>
 <span class="pc bpc" id="L86" title="1 of 2 branches missed.">			final FontConfiguration fc = styledString.getStyle() == FontStyle.BOLD ? fontConfiguration.bold()</span>
 <span class="fc" id="L87">					: fontConfiguration;</span>
-<span class="fc" id="L88">			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper);</span>
+<span class="fc" id="L88">			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper, shape.getOrientation());</span>
 <span class="fc" id="L89">		}</span>
 <span class="fc" id="L90">	}</span>
 
 	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text,
-			double x, double y, ColorMapper mapper) {
+			double x, double y, ColorMapper mapper, int orientation) {
 <span class="fc" id="L94">		final UFont font = fontConfiguration.getFont();</span>
 <span class="fc" id="L95">		final HColor extended = fontConfiguration.getExtendedColor();</span>
 
@@ -98,10 +98,8 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="fc" id="L98">		final double height = max(10, dim.getHeight());</span>
 <span class="fc" id="L99">		final double width = dim.getWidth();</span>
 
-<span class="fc" id="L101">		final int orientation = 0;</span>
-
-<span class="fc" id="L103">		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);</span>
-<span class="fc" id="L104">		g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);</span>
+<span class="fc" id="L101">		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);</span>
+<span class="fc" id="L102">		g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);</span>
 		// https://stackoverflow.com/questions/31536952/how-to-fix-text-quality-in-java-graphics
 		// https://stackoverflow.com/questions/72818320/improve-java2d-drawing-quality-on-hi-resolution-monitors
 		/*
@@ -111,73 +109,87 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 		 * RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		 */
 
-<span class="fc" id="L114">		g2d.setFont(font.getUnderlayingFont(text));</span>
+<span class="fc" id="L112">		g2d.setFont(font.getUnderlayingFont(text));</span>
 
-		if (orientation == 90) {
-			final AffineTransform orig = g2d.getTransform();
-			g2d.translate(x, y);
-			g2d.rotate(Math.PI / 2);
-			g2d.drawString(text, 0, 0);
-			g2d.setTransform(orig);
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (orientation == 90) {</span>
+<span class="nc" id="L115">			final AffineTransform orig = g2d.getTransform();</span>
+<span class="nc" id="L116">			g2d.translate(x, y);</span>
+<span class="nc" id="L117">			g2d.rotate(-Math.PI / 2);</span>
+<span class="nc" id="L118">			g2d.drawString(text, 0, 0);</span>
+<span class="nc" id="L119">			g2d.setTransform(orig);</span>
 
-		} else if (orientation == 0) {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		} else if (orientation == 270) {</span>
+<span class="nc" id="L122">			final AffineTransform orig = g2d.getTransform();</span>
+<span class="nc" id="L123">			g2d.translate(x, y);</span>
+<span class="nc" id="L124">			g2d.rotate(Math.PI / 2);</span>
+<span class="nc" id="L125">			g2d.drawString(text, 0, 0);</span>
+<span class="nc" id="L126">			g2d.setTransform(orig);</span>
 
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
-<span class="nc" id="L126">				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (extended instanceof HColorGradient) {</span>
-<span class="nc" id="L128">					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		} else if (orientation == 270) {</span>
+<span class="nc" id="L129">			final AffineTransform orig = g2d.getTransform();</span>
+<span class="nc" id="L130">			g2d.translate(x, y);</span>
+<span class="nc" id="L131">			g2d.rotate(-Math.PI / 2);</span>
+<span class="nc" id="L132">			g2d.drawString(text, 0, 0);</span>
+<span class="nc" id="L133">			g2d.setTransform(orig);</span>
+
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		} else if (orientation == 0) {</span>
+
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
+<span class="nc" id="L138">				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (extended instanceof HColorGradient) {</span>
+<span class="nc" id="L140">					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,</span>
 							extended);
-<span class="nc" id="L130">					g2d.setPaint(paint);</span>
-<span class="nc" id="L131">					g2d.fill(area);</span>
-<span class="nc" id="L132">				} else {</span>
-<span class="nc" id="L133">					final Color backColor = extended.toColor(mapper);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">					if (backColor != null) {</span>
-<span class="nc" id="L135">						g2d.setColor(backColor);</span>
-<span class="nc" id="L136">						g2d.setBackground(backColor);</span>
-<span class="nc" id="L137">						g2d.fill(area);</span>
+<span class="nc" id="L142">					g2d.setPaint(paint);</span>
+<span class="nc" id="L143">					g2d.fill(area);</span>
+<span class="nc" id="L144">				} else {</span>
+<span class="nc" id="L145">					final Color backColor = extended.toColor(mapper);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					if (backColor != null) {</span>
+<span class="nc" id="L147">						g2d.setColor(backColor);</span>
+<span class="nc" id="L148">						g2d.setBackground(backColor);</span>
+<span class="nc" id="L149">						g2d.fill(area);</span>
 					}
 				}
 			}
-<span class="fc" id="L141">			visible.ensureVisible(x, y - height + 1.5);</span>
-<span class="fc" id="L142">			visible.ensureVisible(x + width, y + 1.5);</span>
+<span class="fc" id="L153">			visible.ensureVisible(x, y - height + 1.5);</span>
+<span class="fc" id="L154">			visible.ensureVisible(x + width, y + 1.5);</span>
 
-<span class="fc" id="L144">			g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
-<span class="fc" id="L145">			g2d.drawString(text, (float) x, (float) y);</span>
+<span class="fc" id="L156">			g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="fc" id="L157">			g2d.drawString(text, (float) x, (float) y);</span>
 
-<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">				if (extended != null)</span>
-<span class="fc" id="L149">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">				if (extended != null)</span>
+<span class="fc" id="L161">					g2d.setColor(extended.toColor(mapper));</span>
 
-<span class="fc" id="L151">				final UStroke stroke = fontConfiguration.getUnderlineStroke();</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">				if (stroke.getThickness() &gt; 0) {</span>
-<span class="fc" id="L153">					DriverLineG2d.manageStroke(stroke, g2d);</span>
-<span class="fc" id="L154">					final int ypos = (int) (y + 2.5);</span>
-<span class="fc" id="L155">					g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
-<span class="fc" id="L156">					g2d.setStroke(new BasicStroke());</span>
+<span class="fc" id="L163">				final UStroke stroke = fontConfiguration.getUnderlineStroke();</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				if (stroke.getThickness() &gt; 0) {</span>
+<span class="fc" id="L165">					DriverLineG2d.manageStroke(stroke, g2d);</span>
+<span class="fc" id="L166">					final int ypos = (int) (y + 2.5);</span>
+<span class="fc" id="L167">					g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="fc" id="L168">					g2d.setStroke(new BasicStroke());</span>
 				}
 			}
-<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
-<span class="fc" id="L160">				final int ypos = (int) (y + 2.5) - 1;</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">				if (extended != null)</span>
-<span class="fc" id="L162">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
+<span class="fc" id="L172">				final int ypos = (int) (y + 2.5) - 1;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">				if (extended != null)</span>
+<span class="fc" id="L174">					g2d.setColor(extended.toColor(mapper));</span>
 
-<span class="fc bfc" id="L164" title="All 2 branches covered.">				for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
-<span class="fc" id="L165">					g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
-<span class="fc" id="L166">					g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">				for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
+<span class="fc" id="L177">					g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
+<span class="fc" id="L178">					g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);</span>
 				}
 			}
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
-<span class="nc" id="L170">				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(text));</span>
-<span class="nc" id="L171">				final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">				if (extended != null)</span>
-<span class="nc" id="L173">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="nc" id="L182">				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(text));</span>
+<span class="nc" id="L183">				final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">				if (extended != null)</span>
+<span class="nc" id="L185">					g2d.setColor(extended.toColor(mapper));</span>
 
-<span class="nc" id="L175">				g2d.setStroke(new BasicStroke((float) 1.5));</span>
-<span class="nc" id="L176">				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
-<span class="nc" id="L177">				g2d.setStroke(new BasicStroke());</span>
+<span class="nc" id="L187">				g2d.setStroke(new BasicStroke((float) 1.5));</span>
+<span class="nc" id="L188">				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="nc" id="L189">				g2d.setStroke(new BasicStroke());</span>
 			}
 		}
-<span class="fc" id="L180">		return width;</span>
+<span class="fc" id="L192">		return width;</span>
 	}
 
 }

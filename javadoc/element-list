@@ -48,6 +48,8 @@ net.sourceforge.plantuml.board
 net.sourceforge.plantuml.bpm
 net.sourceforge.plantuml.braille
 net.sourceforge.plantuml.brotli
+net.sourceforge.plantuml.chart
+net.sourceforge.plantuml.chart.command
 net.sourceforge.plantuml.cheneer
 net.sourceforge.plantuml.cheneer.command
 net.sourceforge.plantuml.chronology

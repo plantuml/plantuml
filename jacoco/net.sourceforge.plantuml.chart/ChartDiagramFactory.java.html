@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartDiagramFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">ChartDiagramFactory.java</span></div><h1>ChartDiagramFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  David Fyfe
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.chart.command.CommandChartAnnotation;
+import net.sourceforge.plantuml.chart.command.CommandChartArea;
+import net.sourceforge.plantuml.chart.command.CommandChartBar;
+import net.sourceforge.plantuml.chart.command.CommandChartHAxis;
+import net.sourceforge.plantuml.chart.command.CommandChartLegend;
+import net.sourceforge.plantuml.chart.command.CommandChartLine;
+import net.sourceforge.plantuml.chart.command.CommandChartOrientation;
+import net.sourceforge.plantuml.chart.command.CommandChartScatter;
+import net.sourceforge.plantuml.chart.command.CommandChartStackMode;
+import net.sourceforge.plantuml.chart.command.CommandChartVAxis;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.nio.PathSystem;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public class ChartDiagramFactory extends PSystemCommandFactory {
+
+	public ChartDiagramFactory() {
+<span class="fc" id="L62">		super(DiagramType.CHART);</span>
+<span class="fc" id="L63">	}</span>
+
+	@Override
+	protected void initCommandsList(List&lt;Command&gt; cmds) {
+		// Add chart-specific commands first to take priority
+<span class="nc" id="L68">		cmds.add(new CommandChartHAxis());</span>
+<span class="nc" id="L69">		cmds.add(new CommandChartVAxis());</span>
+<span class="nc" id="L70">		cmds.add(new CommandChartBar());</span>
+<span class="nc" id="L71">		cmds.add(new CommandChartLine());</span>
+<span class="nc" id="L72">		cmds.add(new CommandChartArea());</span>
+<span class="nc" id="L73">		cmds.add(new CommandChartScatter());</span>
+<span class="nc" id="L74">		cmds.add(new CommandChartLegend());</span>
+<span class="nc" id="L75">		cmds.add(new CommandChartStackMode());</span>
+<span class="nc" id="L76">		cmds.add(new CommandChartOrientation());</span>
+<span class="nc" id="L77">		cmds.add(new CommandChartAnnotation());</span>
+		// Add common commands last so they don't override chart-specific ones
+<span class="nc" id="L79">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L80">	}</span>
+
+	@Override
+	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L84">		return new ChartDiagram(source, preprocessing);</span>
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+<span class="nc" id="L89">		return UmlDiagramType.CHART;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

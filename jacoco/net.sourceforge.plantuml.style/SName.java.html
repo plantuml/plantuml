@@ -183,19 +183,31 @@ import java.util.Map;
 <span class="fc" id="L183">	spotRecord, //</span>
 
 <span class="fc" id="L185">	wbsDiagram, //</span>
-<span class="fc" id="L186">	yamlDiagram; //</span>
+<span class="fc" id="L186">	yamlDiagram, //</span>
+<span class="fc" id="L187">	chartDiagram, //</span>
 
-<span class="fc" id="L188">	private static final Map&lt;String, SName&gt; ALL = new HashMap&lt;&gt;();</span>
+	// Chart elements
+<span class="fc" id="L190">	bar, //</span>
+<span class="fc" id="L191">	line, //</span>
+<span class="fc" id="L192">	area, //</span>
+<span class="fc" id="L193">	scatter, //</span>
+<span class="fc" id="L194">	axis, //</span>
+<span class="fc" id="L195">	hAxis, //</span>
+<span class="fc" id="L196">	vAxis, //</span>
+<span class="fc" id="L197">	grid, //</span>
+<span class="fc" id="L198">	annotation; //</span>
+
+<span class="fc" id="L200">	private static final Map&lt;String, SName&gt; ALL = new HashMap&lt;&gt;();</span>
 
 	static {
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		for (SName sname : SName.values()) {</span>
-<span class="fc" id="L192">			final String s = sname.name().replace(&quot;_&quot;, &quot;&quot;).toLowerCase();</span>
-<span class="fc" id="L193">			ALL.put(s, sname);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (SName sname : SName.values()) {</span>
+<span class="fc" id="L204">			final String s = sname.name().replace(&quot;_&quot;, &quot;&quot;).toLowerCase();</span>
+<span class="fc" id="L205">			ALL.put(s, sname);</span>
 		}
-<span class="fc" id="L195">	}</span>
+<span class="fc" id="L207">	}</span>
 
 	public static SName retrieve(String s) {
-<span class="fc" id="L198">		return ALL.get(s.toLowerCase());</span>
+<span class="fc" id="L210">		return ALL.get(s.toLowerCase());</span>
 	}
 
 }

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">ChartDiagram.java</span></div><h1>ChartDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  David Fyfe
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+
+public class ChartDiagram extends UmlDiagram {
+
+<span class="nc" id="L58">	public enum LegendPosition {</span>
+<span class="nc" id="L59">		NONE, LEFT, RIGHT, TOP, BOTTOM</span>
+	}
+
+<span class="nc" id="L62">	public enum GridMode {</span>
+<span class="nc" id="L63">		OFF, MAJOR, BOTH</span>
+	}
+
+<span class="nc" id="L66">	public enum StackMode {</span>
+<span class="nc" id="L67">		GROUPED, STACKED</span>
+	}
+
+<span class="nc" id="L70">	public enum Orientation {</span>
+<span class="nc" id="L71">		VERTICAL, HORIZONTAL</span>
+	}
+
+<span class="nc" id="L74">	private final List&lt;String&gt; xAxisLabels = new ArrayList&lt;&gt;();</span>
+	private String xAxisTitle;
+	private Integer xAxisTickSpacing;
+<span class="nc" id="L77">	private ChartAxis.LabelPosition xAxisLabelPosition = ChartAxis.LabelPosition.DEFAULT;</span>
+<span class="nc" id="L78">	private final ChartAxis xAxis = new ChartAxis();  // For numeric x-axis (horizontal bar charts)</span>
+<span class="nc" id="L79">	private final List&lt;String&gt; yAxisLabels = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L80">	private final List&lt;ChartSeries&gt; series = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L81">	private final ChartAxis yAxis = new ChartAxis();</span>
+	private ChartAxis y2Axis;
+<span class="nc" id="L83">	private LegendPosition legendPosition = LegendPosition.NONE;</span>
+<span class="nc" id="L84">	private GridMode xGridMode = GridMode.OFF;</span>
+<span class="nc" id="L85">	private GridMode yGridMode = GridMode.OFF;</span>
+<span class="nc" id="L86">	private StackMode stackMode = StackMode.GROUPED;</span>
+<span class="nc" id="L87">	private Orientation orientation = Orientation.VERTICAL;</span>
+<span class="nc" id="L88">	private final List&lt;ChartAnnotation&gt; annotations = new ArrayList&lt;&gt;();</span>
+
+	public DiagramDescription getDescription() {
+<span class="nc" id="L91">		return new DiagramDescription(&quot;Chart Diagram&quot;);</span>
+	}
+
+	public ChartDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L95">		super(source, UmlDiagramType.CHART, null, preprocessing);</span>
+<span class="nc" id="L96">	}</span>
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="nc" id="L102">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+<span class="nc" id="L107">		return new AbstractTextBlock() {</span>
+
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L110">				drawMe(ug);</span>
+<span class="nc" id="L111">			}</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L114">				return getRenderer().calculateDimension(stringBounder);</span>
+			}
+		};
+	}
+
+	private void drawMe(UGraphic ug) {
+<span class="nc" id="L120">		final ChartRenderer renderer = getRenderer();</span>
+<span class="nc" id="L121">		renderer.drawU(ug);</span>
+<span class="nc" id="L122">	}</span>
+
+	private ChartRenderer getRenderer() {
+		// For horizontal orientation, use h-axis data where vertical mode uses y-axis, and vice versa
+		// User writes: v-axis [labels], h-axis numeric
+		// For horizontal bars: xAxis=numeric (horizontal), yAxisLabels=categories (vertical)
+		// We need to pass to renderer properly based on what it expects
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (orientation == Orientation.HORIZONTAL) {</span>
+			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
+			// This way bars grow along the correct axis
+<span class="nc" id="L132">			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series, xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);</span>
+		}
+
+		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
+		// Use xAxis title if available (for coordinate-pair mode), otherwise use xAxisTitle
+<span class="nc bnc" id="L137" title="All 6 branches missed.">		final String hAxisTitle = (xAxis != null &amp;&amp; xAxis.getTitle() != null &amp;&amp; !xAxis.getTitle().isEmpty()) ? xAxis.getTitle() : xAxisTitle;</span>
+<span class="nc" id="L138">		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series, xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);</span>
+	}
+
+	// Command methods
+
+	public CommandExecutionResult setXAxisLabels(List&lt;String&gt; labels) {
+<span class="nc" id="L144">		this.xAxisLabels.clear();</span>
+<span class="nc" id="L145">		this.xAxisLabels.addAll(labels);</span>
+<span class="nc" id="L146">		return CommandExecutionResult.ok();</span>
+	}
+
+	public void setXAxisTitle(String title) {
+<span class="nc" id="L150">		this.xAxisTitle = title;</span>
+<span class="nc" id="L151">	}</span>
+
+	public void setXAxisLabelPosition(ChartAxis.LabelPosition position) {
+<span class="nc" id="L154">		this.xAxisLabelPosition = position;</span>
+<span class="nc" id="L155">	}</span>
+
+	public ChartAxis.LabelPosition getXAxisLabelPosition() {
+<span class="nc" id="L158">		return xAxisLabelPosition;</span>
+	}
+
+	public void setXAxisTickSpacing(Integer spacing) {
+<span class="nc" id="L162">		this.xAxisTickSpacing = spacing;</span>
+<span class="nc" id="L163">	}</span>
+
+	public Integer getXAxisTickSpacing() {
+<span class="nc" id="L166">		return xAxisTickSpacing;</span>
+	}
+
+	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L171">			xAxis.setTitle(title);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L173">			xAxis.setMin(min);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L175">			xAxis.setMax(max);</span>
+<span class="nc" id="L176">		return CommandExecutionResult.ok();</span>
+	}
+
+	public ChartAxis getXAxis() {
+<span class="nc" id="L180">		return xAxis;</span>
+	}
+
+	public CommandExecutionResult setYAxis(String title, Double min, Double max) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L185">			yAxis.setTitle(title);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L187">			yAxis.setMin(min);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L189">			yAxis.setMax(max);</span>
+<span class="nc" id="L190">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult setYAxisLabels(List&lt;String&gt; labels) {
+<span class="nc" id="L194">		this.yAxisLabels.clear();</span>
+<span class="nc" id="L195">		this.yAxisLabels.addAll(labels);</span>
+<span class="nc" id="L196">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult setY2Axis(String title, Double min, Double max) {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (y2Axis == null)</span>
+<span class="nc" id="L201">			y2Axis = new ChartAxis();</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L203">			y2Axis.setTitle(title);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L205">			y2Axis.setMin(min);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L207">			y2Axis.setMax(max);</span>
+<span class="nc" id="L208">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult addSeries(ChartSeries series) {
+		// Validation for coordinate-pair notation
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
+			// Coordinate pairs only allowed for line and scatter charts
+<span class="nc bnc" id="L215" title="All 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
+<span class="nc" id="L216">				return CommandExecutionResult.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
+			}
+
+			// Coordinate pairs require numeric h-axis (not categorical labels)
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			if (!xAxisLabels.isEmpty()) {</span>
+<span class="nc" id="L221">				return CommandExecutionResult.error(&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);</span>
+			}
+
+			// Coordinate pairs require h-axis to be explicitly set
+<span class="nc bnc" id="L225" title="All 4 branches missed.">			if (xAxis.isAutoScale() || xAxis.getMax() == xAxis.getMin()) {</span>
+<span class="nc" id="L226">				return CommandExecutionResult.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
+			}
+
+			// All series must use the same format
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (!this.series.isEmpty()) {</span>
+<span class="nc" id="L231">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="nc" id="L233">					return CommandExecutionResult.error(&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);</span>
+				}
+			}
+
+			// Validate x-coordinates fall within axis range
+<span class="nc bnc" id="L238" title="All 2 branches missed.">			for (double x : series.getXValues()) {</span>
+<span class="nc bnc" id="L239" title="All 4 branches missed.">				if (x &lt; xAxis.getMin() || x &gt; xAxis.getMax()) {</span>
+<span class="nc" id="L240">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot; + xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
+				}
+<span class="nc" id="L242">			}</span>
+
+			// Auto-scale x-axis to include all x-values
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			for (double x : series.getXValues()) {</span>
+<span class="nc" id="L246">				xAxis.includeValue(x);</span>
+<span class="nc" id="L247">			}</span>
+		} else {
+			// Index-based mode: ensure consistency
+<span class="nc bnc" id="L250" title="All 2 branches missed.">			if (!this.series.isEmpty()) {</span>
+<span class="nc" id="L251">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="nc" id="L253">					return CommandExecutionResult.error(&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);</span>
+				}
+			}
+		}
+
+<span class="nc" id="L258">		this.series.add(series);</span>
+
+		// Auto-scale y-axes if needed
+<span class="nc bnc" id="L261" title="All 4 branches missed.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		for (double value : series.getValues()) {</span>
+<span class="nc" id="L263">			axis.includeValue(value);</span>
+<span class="nc" id="L264">		}</span>
+
+<span class="nc" id="L266">		return CommandExecutionResult.ok();</span>
+	}
+
+	public List&lt;String&gt; getXAxisLabels() {
+<span class="nc" id="L270">		return xAxisLabels;</span>
+	}
+
+	public List&lt;ChartSeries&gt; getSeries() {
+<span class="nc" id="L274">		return series;</span>
+	}
+
+	public ChartAxis getYAxis() {
+<span class="nc" id="L278">		return yAxis;</span>
+	}
+
+	public ChartAxis getY2Axis() {
+<span class="nc" id="L282">		return y2Axis;</span>
+	}
+
+	public CommandExecutionResult setLegendPosition(LegendPosition position) {
+<span class="nc" id="L286">		this.legendPosition = position;</span>
+<span class="nc" id="L287">		return CommandExecutionResult.ok();</span>
+	}
+
+	public LegendPosition getLegendPosition() {
+<span class="nc" id="L291">		return legendPosition;</span>
+	}
+
+	public CommandExecutionResult setGridMode(GridMode mode) {
+<span class="nc" id="L295">		this.xGridMode = mode;</span>
+<span class="nc" id="L296">		this.yGridMode = mode;</span>
+<span class="nc" id="L297">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult setXGridMode(GridMode mode) {
+<span class="nc" id="L301">		this.xGridMode = mode;</span>
+<span class="nc" id="L302">		return CommandExecutionResult.ok();</span>
+	}
+
+	public CommandExecutionResult setYGridMode(GridMode mode) {
+<span class="nc" id="L306">		this.yGridMode = mode;</span>
+<span class="nc" id="L307">		return CommandExecutionResult.ok();</span>
+	}
+
+	public GridMode getXGridMode() {
+<span class="nc" id="L311">		return xGridMode;</span>
+	}
+
+	public GridMode getYGridMode() {
+<span class="nc" id="L315">		return yGridMode;</span>
+	}
+
+	public CommandExecutionResult setStackMode(StackMode mode) {
+<span class="nc" id="L319">		this.stackMode = mode;</span>
+<span class="nc" id="L320">		return CommandExecutionResult.ok();</span>
+	}
+
+	public StackMode getStackMode() {
+<span class="nc" id="L324">		return stackMode;</span>
+	}
+
+	public CommandExecutionResult setOrientation(Orientation orientation) {
+<span class="nc" id="L328">		this.orientation = orientation;</span>
+<span class="nc" id="L329">		return CommandExecutionResult.ok();</span>
+	}
+
+	public Orientation getOrientation() {
+<span class="nc" id="L333">		return orientation;</span>
+	}
+
+	public CommandExecutionResult addAnnotation(ChartAnnotation annotation) {
+<span class="nc" id="L337">		this.annotations.add(annotation);</span>
+<span class="nc" id="L338">		return CommandExecutionResult.ok();</span>
+	}
+
+	public List&lt;ChartAnnotation&gt; getAnnotations() {
+<span class="nc" id="L342">		return annotations;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

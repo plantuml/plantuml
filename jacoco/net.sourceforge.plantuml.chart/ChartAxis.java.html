@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartAxis.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">ChartAxis.java</span></div><h1>ChartAxis.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  David Fyfe
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.Map;
+
+public class ChartAxis {
+
+<span class="nc" id="L41">	public enum LabelPosition {</span>
+<span class="nc" id="L42">		DEFAULT, // Vertical for v-axis, horizontal below for h-axis</span>
+<span class="nc" id="L43">		TOP,     // Horizontal at top for v-axis</span>
+<span class="nc" id="L44">		RIGHT    // At right for h-axis</span>
+	}
+
+	private String title;
+	private double min;
+	private double max;
+	private boolean autoScale;
+	private Map&lt;Double, String&gt; customTicks;
+	private Double tickSpacing;
+	private LabelPosition labelPosition;
+
+<span class="nc" id="L55">	public ChartAxis() {</span>
+<span class="nc" id="L56">		this.title = &quot;&quot;;</span>
+<span class="nc" id="L57">		this.min = 0;</span>
+<span class="nc" id="L58">		this.max = 100;</span>
+<span class="nc" id="L59">		this.autoScale = true;</span>
+<span class="nc" id="L60">		this.customTicks = null;</span>
+<span class="nc" id="L61">		this.tickSpacing = null;</span>
+<span class="nc" id="L62">		this.labelPosition = LabelPosition.DEFAULT;</span>
+<span class="nc" id="L63">	}</span>
+
+<span class="nc" id="L65">	public ChartAxis(String title, double min, double max) {</span>
+<span class="nc" id="L66">		this.title = title;</span>
+<span class="nc" id="L67">		this.min = min;</span>
+<span class="nc" id="L68">		this.max = max;</span>
+<span class="nc" id="L69">		this.autoScale = false;</span>
+<span class="nc" id="L70">		this.customTicks = null;</span>
+<span class="nc" id="L71">		this.tickSpacing = null;</span>
+<span class="nc" id="L72">		this.labelPosition = LabelPosition.DEFAULT;</span>
+<span class="nc" id="L73">	}</span>
+
+	public String getTitle() {
+<span class="nc" id="L76">		return title;</span>
+	}
+
+	public void setTitle(String title) {
+<span class="nc" id="L80">		this.title = title;</span>
+<span class="nc" id="L81">	}</span>
+
+	public double getMin() {
+<span class="nc" id="L84">		return min;</span>
+	}
+
+	public void setMin(double min) {
+<span class="nc" id="L88">		this.min = min;</span>
+<span class="nc" id="L89">		this.autoScale = false;</span>
+<span class="nc" id="L90">	}</span>
+
+	public double getMax() {
+<span class="nc" id="L93">		return max;</span>
+	}
+
+	public void setMax(double max) {
+<span class="nc" id="L97">		this.max = max;</span>
+<span class="nc" id="L98">		this.autoScale = false;</span>
+<span class="nc" id="L99">	}</span>
+
+	public boolean isAutoScale() {
+<span class="nc" id="L102">		return autoScale;</span>
+	}
+
+	public void setAutoScale(boolean autoScale) {
+<span class="nc" id="L106">		this.autoScale = autoScale;</span>
+<span class="nc" id="L107">	}</span>
+
+	/**
+	 * Convert a data value to pixel coordinate
+	 */
+	public double valueToPixel(double value, double pixelMin, double pixelMax) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (max == min)</span>
+<span class="nc" id="L114">			return pixelMin;</span>
+<span class="nc" id="L115">		return pixelMin + (value - min) / (max - min) * (pixelMax - pixelMin);</span>
+	}
+
+	/**
+	 * Update axis range to include the given value
+	 */
+	public void includeValue(double value) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (autoScale) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (value &lt; min)</span>
+<span class="nc" id="L124">				min = value;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (value &gt; max)</span>
+<span class="nc" id="L126">				max = value;</span>
+		}
+<span class="nc" id="L128">	}</span>
+
+	/**
+	 * Get custom tick labels map
+	 */
+	public Map&lt;Double, String&gt; getCustomTicks() {
+<span class="nc" id="L134">		return customTicks;</span>
+	}
+
+	/**
+	 * Set custom tick labels. The map keys are tick values and values are labels.
+	 */
+	public void setCustomTicks(Map&lt;Double, String&gt; customTicks) {
+<span class="nc" id="L141">		this.customTicks = customTicks;</span>
+<span class="nc" id="L142">	}</span>
+
+	/**
+	 * Check if custom ticks are defined
+	 */
+	public boolean hasCustomTicks() {
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
+	}
+
+	/**
+	 * Get tick spacing value
+	 */
+	public Double getTickSpacing() {
+<span class="nc" id="L155">		return tickSpacing;</span>
+	}
+
+	/**
+	 * Set tick spacing. The value represents the interval between ticks.
+	 */
+	public void setTickSpacing(Double tickSpacing) {
+<span class="nc" id="L162">		this.tickSpacing = tickSpacing;</span>
+<span class="nc" id="L163">	}</span>
+
+	/**
+	 * Check if custom tick spacing is defined
+	 */
+	public boolean hasTickSpacing() {
+<span class="nc bnc" id="L169" title="All 4 branches missed.">		return tickSpacing != null &amp;&amp; tickSpacing &gt; 0;</span>
+	}
+
+	/**
+	 * Get label position
+	 */
+	public LabelPosition getLabelPosition() {
+<span class="nc" id="L176">		return labelPosition;</span>
+	}
+
+	/**
+	 * Set label position
+	 */
+	public void setLabelPosition(LabelPosition labelPosition) {
+<span class="nc" id="L183">		this.labelPosition = labelPosition;</span>
+<span class="nc" id="L184">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandChartAnnotation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">CommandChartAnnotation.java</span></div><h1>CommandChartAnnotation.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  David Fyfe
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import net.sourceforge.plantuml.chart.ChartAnnotation;
+import net.sourceforge.plantuml.chart.ChartDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+/**
+ * Command to parse annotation syntax:
+ * annotation &quot;text&quot; at (xPos, yPos)
+ * annotation &quot;text&quot; at (xPos, yPos) &lt;&lt;arrow&gt;&gt;
+ */
+public class CommandChartAnnotation extends SingleLineCommand2&lt;ChartDiagram&gt; {
+
+	public CommandChartAnnotation() {
+<span class="nc" id="L57">		super(false, getRegexConcat());</span>
+<span class="nc" id="L58">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="nc" id="L61">		return RegexConcat.build(CommandChartAnnotation.class.getName(), RegexLeaf.start(), //</span>
+				new RegexLeaf(&quot;annotation&quot;), //
+<span class="nc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;TEXT&quot;, &quot;\&quot;([^\&quot;]+)\&quot;&quot;), //
+<span class="nc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(&quot;at&quot;), //
+<span class="nc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;\\(&quot;), //
+<span class="nc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;XPOS&quot;, &quot;([^,]+)&quot;), //
+<span class="nc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;,&quot;), //
+<span class="nc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;YPOS&quot;, &quot;([^)]+)&quot;), //
+<span class="nc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;\\)&quot;), //
+<span class="nc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(1, &quot;ARROW&quot;, &quot;&lt;&lt;(arrow)&gt;&gt;&quot;)), //
+<span class="nc" id="L79">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L85">		final String text = arg.get(&quot;TEXT&quot;, 0);</span>
+<span class="nc" id="L86">		final String xPosStr = arg.get(&quot;XPOS&quot;, 0).trim();</span>
+<span class="nc" id="L87">		final String yPosStr = arg.get(&quot;YPOS&quot;, 0).trim();</span>
+<span class="nc" id="L88">		final String arrowStr = arg.getLazzy(&quot;ARROW&quot;, 0);</span>
+
+		// Parse X position - can be either a string (categorical) or numeric
+		Object xPosition;
+		try {
+<span class="nc" id="L93">			xPosition = Double.parseDouble(xPosStr);</span>
+<span class="nc" id="L94">		} catch (NumberFormatException e) {</span>
+			// Not a number, treat as categorical label
+<span class="nc" id="L96">			xPosition = xPosStr;</span>
+<span class="nc" id="L97">		}</span>
+
+		// Parse Y position - must be numeric
+		double yPosition;
+		try {
+<span class="nc" id="L102">			yPosition = Double.parseDouble(yPosStr);</span>
+<span class="nc" id="L103">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L104">			return CommandExecutionResult.error(&quot;Y position must be a numeric value: &quot; + yPosStr);</span>
+<span class="nc" id="L105">		}</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		final boolean showArrow = arrowStr != null;</span>
+<span class="nc" id="L108">		final ChartAnnotation annotation = new ChartAnnotation(text, xPosition, yPosition, showArrow);</span>
+
+<span class="nc" id="L110">		return diagram.addAnnotation(annotation);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

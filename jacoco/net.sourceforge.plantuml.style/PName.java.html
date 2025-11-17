@@ -59,14 +59,19 @@ package net.sourceforge.plantuml.style;
 <span class="fc" id="L59">	Image, //</span>
 <span class="fc" id="L60">	HorizontalAlignment, //</span>
 <span class="fc" id="L61">	ShowStereotype, //</span>
-<span class="fc" id="L62">	ImagePosition;</span>
+<span class="fc" id="L62">	ImagePosition, //</span>
+	// Chart-specific properties
+<span class="fc" id="L64">	MarkerShape, //</span>
+<span class="fc" id="L65">	MarkerSize, //</span>
+<span class="fc" id="L66">	MarkerColor, //</span>
+<span class="fc" id="L67">	BarWidth;</span>
 
 	public static PName getFromName(String name, StyleScheme scheme) {
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		for (PName prop : values())</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">			if (prop.name().equalsIgnoreCase(name))</span>
-<span class="fc" id="L67">				return prop;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		for (PName prop : values())</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (prop.name().equalsIgnoreCase(name))</span>
+<span class="fc" id="L72">				return prop;</span>
 
-<span class="nc" id="L69">		return null;</span>
+<span class="nc" id="L74">		return null;</span>
 	}
 
 }
