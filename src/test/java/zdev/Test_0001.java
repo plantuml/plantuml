@@ -17,22 +17,44 @@ import net.sourceforge.plantuml.preproc.Defines;
 
 /*
  * 
-
-You can use this file to put a test you are working on.
-Here is a simple example:
+https://github.com/plantuml/plantuml/issues/589
 
 @startuml
-alice->bob: this is a test
+participant server
+participant api
+database db
+
+activate server
+
+partition #lightgreen Creation 
+server -> api ++: [HTTP]\nPOST /api/job
+api --> server --: [HTTP]\n201 {"jobId": 1}
+end
+
+partition #lightsalmon Initialization 
+server -> api ++: [HTTP]\nPUT /api/job/1
+api --> server --: [HTTP]\n202 {}
+end
+
+partition #lightblue Fetching Result 
+loop #FFFFFFAA Polling until output is available
+ server -> api ++: [HTTP]\nGET /api/job/1
+ alt #FFFFFFAA Job still processing
+   api -[#blue]-> server : [HTTP]\n200 {}
+ else Job complete. Fetch output
+   api -[#blue]-> server --: [HTTP]\n303 {"URL": "/api/job/1/output"}
+   server -> api ++: [HTTP]\nGET /api/job/1/output
+   api --> server --: [HTTP]\n200 {... output ...}
+ end
+end
+   server -> db ++: Store output
+   deactivate server
+   deactivate db  
+end
 @enduml
 
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
-
  */
-public class Test_0000 {
+public class Test_0001 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
