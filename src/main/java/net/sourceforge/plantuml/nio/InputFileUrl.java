@@ -33,57 +33,32 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SURL;
 
-public class AFileRegular implements AFile {
+public class InputFileUrl implements InputFile {
 
-	private final SFile file;
+	private final SURL url;
 
-	@Override
-	public String toString() {
-		return "AFileRegular::" + file.getAbsolutePath();
-	}
-
-	public AFileRegular(SFile file) {
-		this.file = file;
-	}
-
-	public InputStream openFile() {
-		return file.openFile();
-	}
-
-	public boolean isOk() {
-		return file.exists() && file.isDirectory() == false;
+	public InputFileUrl(SURL url) {
+		this.url = url;
 	}
 
 	@Override
-	public int hashCode() {
-		return file.hashCode();
+	public InputStream newInputStream() throws IOException {
+		final InputStream is = url.openStream();
+		if (is == null)
+			throw new IOException("Cannot open URL " + url);
+		return url.openStream();
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof AFileRegular == false) {
-			return false;
-		}
-		return this.file.equals(((AFileRegular) obj).file);
-	}
-
-	public AParentFolder getParentFile() {
-		return new AParentFolderRegular(file.getParentFile());
-	}
-
-	public SFile getUnderlyingFile() {
-		return file;
-	}
-
-	public SFile getSystemFolder() throws IOException {
-		return file.getParentFile().getCanonicalFile();
+	public NFolder getParentFolder() throws IOException {
+		throw new UnsupportedOperationException();
 	}
 
 }

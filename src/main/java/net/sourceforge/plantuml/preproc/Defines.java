@@ -47,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.api.ApiWarning;
-import net.sourceforge.plantuml.file.AParentFolder;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -155,8 +154,8 @@ public class Defines implements Truth {
 		return name.substring(0, x);
 	}
 
-	public void define(String name, List<String> value, boolean emptyParentheses, AParentFolder currentDir) {
-		values.put(name, new Define(name, value, emptyParentheses, currentDir));
+	public void define(String name, List<String> value, boolean emptyParentheses) {
+		values.put(name, new Define(name, value, emptyParentheses));
 		// magic = null;
 	}
 

@@ -73,7 +73,7 @@ public enum TokenType {
 			result = NUMBER;
 		else if (TLineType.isSpaceChar(ch))
 			result = SPACES;
-		else if (TokenOperator.getTokenOperator(ch, ch2) != null)
+		else if (ch == '-' || TokenOperator.getTokenOperator(ch, ch2) != null)
 			result = OPERATOR;
 
 		return result;
@@ -93,7 +93,7 @@ public enum TokenType {
 		final TokenOperator tokenOperator = TokenOperator.getTokenOperator(ch, eater.peekCharN2());
 		if (TLineType.isQuote(ch))
 			return new Token(eater.eatAndGetQuotedString(), TokenType.QUOTED_STRING, null);
-		
+
 		else if (tokenOperator != null) {
 			if (tokenOperator.getDisplay().length() == 1) {
 				eater.eatOneChar();
@@ -101,37 +101,37 @@ public enum TokenType {
 			}
 
 			return new Token("" + eater.eatOneChar() + eater.eatOneChar(), TokenType.OPERATOR, null);
-			
-		} else if (ch == '=') 
+
+		} else if (ch == '=')
 			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);
-		
-		 else if (ch == '(') 
+
+		else if (ch == '(')
 			return new Token(eater.eatOneChar(), TokenType.OPEN_PAREN_MATH, null);
-		
-		 else if (ch == ')') 
+
+		else if (ch == ')')
 			return new Token(eater.eatOneChar(), TokenType.CLOSE_PAREN_MATH, null);
-		
-		 else if (ch == ',') 
+
+		else if (ch == ',')
 			return new Token(eater.eatOneChar(), TokenType.COMMA, null);
-		
-		 else if (TLineType.isLatinDigit(ch) || ch == '-')
+
+		else if (TLineType.isLatinDigit(ch) || ch == '-')
 			return new Token(eater.eatAndGetNumber(), TokenType.NUMBER, null);
-			
-		 else if (TLineType.isSpaceChar(ch)) 
+
+		else if (TLineType.isSpaceChar(ch))
 			return new Token(eater.eatAndGetSpaces(), TokenType.SPACES, null);
-		
+
 		return new Token(eatAndGetTokenPlainText(eater), TokenType.PLAIN_TEXT, null);
 	}
 
 	private static boolean isSubtractionOperator(Token lastToken) {
 		if (lastToken == null)
 			return false;
-		
+
 		final TokenType type = lastToken.getTokenType();
 		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA
 				|| type == TokenType.AFFECTATION)
 			return false;
-		
+
 		return true;
 	}
 

@@ -59,7 +59,12 @@ public enum PName {
 	Image, //
 	HorizontalAlignment, //
 	ShowStereotype, //
-	ImagePosition;
+	ImagePosition, //
+	// Chart-specific properties
+	MarkerShape, //
+	MarkerSize, //
+	MarkerColor, //
+	BarWidth;
 
 	public static PName getFromName(String name, StyleScheme scheme) {
 		for (PName prop : values())

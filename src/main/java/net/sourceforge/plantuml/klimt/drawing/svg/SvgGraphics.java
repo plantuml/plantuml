@@ -555,6 +555,12 @@ public class SvgGraphics {
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
+		text(text, x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, textLength, attributes, textBackColor, 0);
+	}
+
+	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
+			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
+			String textBackColor, int orientation) {
 		if (hidden == false) {
 			final Element elt = document.createElement("text");
 			// required for web-kit based browsers
@@ -562,6 +568,13 @@ public class SvgGraphics {
 			elt.setAttribute("x", format(x));
 			elt.setAttribute("y", format(y));
 			fillMe(elt);
+
+			// Add rotation if needed
+			if (orientation == 90) {
+				elt.setAttribute("transform", "rotate(-90 " + format(x) + " " + format(y) + ")");
+			} else if (orientation == 270) {
+				elt.setAttribute("transform", "rotate(90 " + format(x) + " " + format(y) + ")");
+			}
 			elt.setAttribute("font-size", format(fontSize));
 			// elt.setAttribute("text-anchor", "middle");
 

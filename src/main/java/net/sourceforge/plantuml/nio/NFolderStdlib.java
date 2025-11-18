@@ -33,12 +33,44 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
 
-public interface AParentFolder {
+import net.sourceforge.plantuml.preproc.Stdlib;
 
-	public AFile getAFile(String nameOrPath) throws IOException;
+public final class NFolderStdlib implements NFolder {
+
+	private final Stdlib stdlib;
+	private final Path pathInsideStdlib;
+
+	/** Creates a folder view of the ZIP root. */
+	public NFolderStdlib(Stdlib stdlib) {
+		this(stdlib, Paths.get(""));
+	}
+
+	private NFolderStdlib(Stdlib stdlib, Path pathInsideStdlib) {
+		this.stdlib = Objects.requireNonNull(stdlib);
+		this.pathInsideStdlib = Objects.requireNonNull(pathInsideStdlib).normalize();
+	}
+
+	@Override
+	public InputFile getInputFile(Path nameOrPath) throws IOException {
+		return new InputFileStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());
+	}
+
+	@Override
+	public NFolder getSubfolder(Path nameOrPath) throws IOException {
+		return new NFolderStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());
+	}
+
+	@Override
+	public String toString() {
+		final String prefix = pathInsideStdlib.toString().replace('\\', '/');
+		return stdlib.getName() + "!" + prefix;
+	}
 
 }

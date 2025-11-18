@@ -15,6 +15,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.svg.LengthAdjust;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.ComponentStyle;
@@ -46,7 +47,8 @@ class SkinParamTest {
 	@EnumSource(UmlDiagramType.class)
 	public void testDefaultValues(UmlDiagramType umlDiagramType) {
 
-		final SkinParam skinParam = SkinParam.create(umlDiagramType, Pragma.createEmpty(), ConfigurationStore.createEmpty());
+		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), umlDiagramType, Pragma.createEmpty(),
+				ConfigurationStore.createEmpty());
 		final Stereotype fooStereotype = Stereotype.build("<<foo>>");
 
 		assertThat(skinParam.actorStyle()).isEqualTo(ActorStyle.STICKMAN);
@@ -445,7 +447,8 @@ class SkinParamTest {
 	private SkinParam createSkinParam(String... keyValuePairs) {
 		// Using SEQUENCE here is an arbitrary decision that should not affect test
 		// outcome
-		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE, Pragma.createEmpty(), ConfigurationStore.createEmpty());
+		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), UmlDiagramType.SEQUENCE, Pragma.createEmpty(),
+				ConfigurationStore.createEmpty());
 		for (int i = 0; i < keyValuePairs.length; i += 2) {
 			skinParam.setParam(StringUtils.goLowerCase(keyValuePairs[i]), keyValuePairs[i + 1]);
 		}

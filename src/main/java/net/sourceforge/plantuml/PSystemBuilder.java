@@ -88,6 +88,7 @@ import net.sourceforge.plantuml.klimt.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
@@ -108,6 +109,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
+import net.sourceforge.plantuml.chart.ChartDiagramFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.wire.WireDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
@@ -126,7 +128,7 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
+	final public Diagram createPSystem(PathSystem pathSystem, List<StringLocated> source, List<StringLocated> rawSource,
 			Previous previous, PreprocessingArtifact preprocessing) {
 
 		WasmLog.log("..compiling diagram...");
@@ -159,7 +161,7 @@ public class PSystemBuilder {
 					continue;
 
 				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-				final Diagram sys = systemFactory.createSystem(umlSource, previous, preprocessing);
+				final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;
@@ -221,6 +223,7 @@ public class PSystemBuilder {
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
+		factories.add(new ChartDiagramFactory());
 
 		// ::uncomment when __CORE__
 		// factories.add(new PSystemSudokuFactory());

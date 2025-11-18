@@ -33,23 +33,37 @@
  *
  *
  */
-package net.sourceforge.plantuml.file;
+package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 
-import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.preproc.Stdlib;
 
-public interface AFile {
+public class InputFileStdlib implements InputFile {
 
-	public InputStream openFile();
+	private final Stdlib stdlib;
+	private final Path stdlibPath;
 
-	public boolean isOk();
+	public InputFileStdlib(Stdlib stdlib, Path stdlibPath) throws IOException {
+		this.stdlib = stdlib;
+		this.stdlibPath = stdlibPath.normalize();
+	}
 
-	public AParentFolder getParentFile();
+	@Override
+	public InputStream newInputStream() throws IOException {
+		return stdlib.newInputStream(stdlibPath);
+	}
 
-	public SFile getUnderlyingFile();
+	@Override
+	public NFolder getParentFolder() throws IOException {
+		return new NFolderStdlib(stdlib).getSubfolder(stdlibPath);
+	}
 
-	public SFile getSystemFolder() throws IOException;
+	@Override
+	public String toString() {
+		return stdlib.getName() + "!" + stdlibPath.toString().replace('\\', '/');
+	}
 
 }
