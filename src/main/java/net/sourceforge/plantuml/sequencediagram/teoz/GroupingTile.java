@@ -81,6 +81,7 @@ public class GroupingTile extends AbstractTile {
 	private final Display display;
 
 	private double bodyHeight;
+	private final TileArguments tileArguments;
 
 	public Event getEvent() {
 		return start;
@@ -99,6 +100,7 @@ public class GroupingTile extends AbstractTile {
 	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
 			TileArguments tileArgumentsOriginal, YGauge currentY) {
 		super(tileArgumentsBackColorChanged.getStringBounder(), currentY);
+		this.tileArguments = tileArgumentsOriginal;
 		final Real firstY = currentY.getMax();
 		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();
 		this.start = start;
@@ -171,7 +173,11 @@ public class GroupingTile extends AbstractTile {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
+		// final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(),
+		// getTotalHeight(stringBounder));
+		final double border1 = tileArguments.getBorder1();
+		final double border2 = tileArguments.getBorder2();
+		final Area area = Area.create(border2 - border1, getTotalHeight(stringBounder));
 
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
@@ -306,14 +312,15 @@ public class GroupingTile extends AbstractTile {
 
 	}
 
-	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full, GroupingTile groupingTile) {
+	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full,
+			GroupingTile groupingTile) {
 		final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
 		final ArrayList<CommonTile> local2 = new ArrayList<>();
-		fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles,
-				local2, full);
+		fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles, local2, full);
 	}
 
-	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List<CommonTile> full, TileParallel tileParallel) {
+	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List<CommonTile> full,
+			TileParallel tileParallel) {
 		final double yPointAll = tileParallel.getContactPointRelative();
 		for (Tile tile : tileParallel.getTiles()) {
 
