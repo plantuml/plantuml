@@ -24,6 +24,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.CliParsingException;
 import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.error.PSystemError;
 
@@ -175,7 +176,7 @@ class PipeTest {
 
 	@ParameterizedTest
 	@MethodSource("managePipeTestCases")
-	void should_managePipe_manage_success_cases_correctly(TestCase testCase) throws IOException, InterruptedException {
+	void should_managePipe_manage_success_cases_correctly(TestCase testCase) throws IOException, InterruptedException, CliParsingException {
 		option = CliParser.parse(testCase.getOptions().split(" "));
 		pipe = new Pipe(option, ps, new ByteArrayInputStream(testCase.getInput().getBytes(UTF_8)), UTF_8.name());
 

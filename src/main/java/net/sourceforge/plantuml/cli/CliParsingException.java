@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2025, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -31,16 +31,18 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
+ * 
  */
 package net.sourceforge.plantuml.cli;
 
-import java.io.IOException;
+public class CliParsingException extends Exception {
 
-public class CliParser {
+	public CliParsingException(String description) {
+		super(description);
+	}
 
-	public static CliOptions parse(String... arg) throws InterruptedException, IOException, CliParsingException {
-		return new CliOptions(arg);
+	public CliParsingException(CliFlag flag, String description) {
+		super(flag.getFlag() + " [" + flag.name() + "]: " + description);
 	}
 
 }

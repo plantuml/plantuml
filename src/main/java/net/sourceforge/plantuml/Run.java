@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.cli.CliAction;
 import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.CliParsingException;
 import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.cli.Exit;
 import net.sourceforge.plantuml.cli.GlobalConfig;
@@ -119,9 +120,10 @@ public class Run {
 			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
 		final ErrorStatus errorStatus = ErrorStatus.init();
-		final CliOptions option = CliParser.parse(argsArray);
+		CliOptions option = null;
 
 		try {
+			option = CliParser.parse(argsArray);
 
 			final String timeout = option.getString(CliFlag.TIMEOUT);
 			if (timeout != null && timeout.matches("\\d+"))
@@ -218,14 +220,17 @@ public class Run {
 			else
 				runner.processInputsInParallel();
 
+		} catch (CliParsingException e) {
+			System.err.println(e.getMessage());
+			Exit.exit(42);
 		} finally {
-			if (option.isTrue(CliFlag.DURATION)) {
+			if (option != null && option.isTrue(CliFlag.DURATION)) {
 				final double duration = (System.currentTimeMillis() - start) / 1000.0;
 				Log.error("Duration = " + duration + " seconds");
 			}
 		}
 
-		if (errorStatus.hasError() || errorStatus.isEmpty())
+		if (option != null && (errorStatus.hasError() || errorStatus.isEmpty()))
 			option.getStdrpt().finalMessage(errorStatus);
 
 		if (errorStatus.hasError())

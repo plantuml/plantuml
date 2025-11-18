@@ -1,5 +1,6 @@
 package net.sourceforge.plantuml.cli;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.StdErr;
 import org.junitpioneer.jupiter.StdIo;
 import org.junitpioneer.jupiter.StdOut;
 
@@ -84,8 +86,7 @@ class RunFlagIncludeTest extends AbstractCliTest {
 		final Path included = tempDir.resolve("included.tmp");
 		Files.writeString(included, String.join(System.lineSeparator(), "alice->bob: I am included"));
 
-		Run.main(new String[] { "-I", included.toAbsolutePath().toString(), "-svg",
-				file.toAbsolutePath().toString() });
+		Run.main(new String[] { "-I", included.toAbsolutePath().toString(), "-svg", file.toAbsolutePath().toString() });
 
 		assertLs("[included.tmp, test.svg, test.txt]", tempDir);
 
@@ -104,6 +105,33 @@ class RunFlagIncludeTest extends AbstractCliTest {
 		assertTrue(out.capturedString().contains("alice->bob: I am included"));
 
 		// System.out.println(content.split("\n")[0]);
+
+	}
+
+	@Test
+	@StdIo
+	void testError1(StdErr err) throws Exception {
+		assertExit(42, () -> {
+			Run.main(new String[] { "-I" });
+		});
+
+		assertLs("[]", tempDir);
+		// System.out.println(err.capturedString());
+
+		assertEquals("-I [INCLUDE]: missing value", err.capturedString().replaceAll("\\R", ""));
+
+	}
+
+	@Test
+	@StdIo
+	void testError2(StdErr err) throws Exception {
+		assertExit(42, () -> {
+			Run.main(new String[] { "-I", "*" });
+		});
+
+		assertLs("[]", tempDir);
+		// System.out.println(err.capturedString());
+		assertTrue(err.capturedString().startsWith("Cannot have a directory here "));
 
 	}
 

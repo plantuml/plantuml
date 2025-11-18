@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.cli;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -10,11 +11,12 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.Run;
 
 class CliParsedTest {
 
 	@Test
-	void graphvizdot() {
+	void graphvizdot() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-graphvizdot", "foo.exe");
 		assertEquals("{GRAPHVIZ_DOT=[foo.exe]}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.GRAPHVIZ_DOT));
@@ -22,14 +24,14 @@ class CliParsedTest {
 	}
 
 	@Test
-	void about() {
+	void about() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-about");
 		assertTrue(parsed.getObject(CliFlag.AUTHOR) instanceof CliAction);
 		assertTrue(parsed.isTrue(CliFlag.AUTHOR));
 	}
 
 	@Test
-	void tsvg() {
+	void tsvg() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-tsvg");
 		assertEquals("{T_SVG=[SVG]}", parsed.toString());
 		assertEquals(FileFormat.SVG, parsed.getObject(CliFlag.T_SVG));
@@ -37,7 +39,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void svg() {
+	void svg() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-svg");
 		assertEquals("{T_SVG=[SVG]}", parsed.toString());
 		assertEquals(FileFormat.SVG, parsed.getObject(CliFlag.T_SVG));
@@ -46,7 +48,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void charset() {
+	void charset() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-svg", "-charset", "us-ascii");
 		assertEquals("{CHARSET=[us-ascii], T_SVG=[SVG]}", parsed.toString());
 		assertEquals(FileFormat.SVG, parsed.getObject(CliFlag.T_SVG));
@@ -56,7 +58,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define10() {
+	void define10() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-DFOO=42");
 		assertEquals("{DEFINE={FOO=42}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));
@@ -65,7 +67,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define11() {
+	void define11() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("--define", "FOO=42");
 		assertEquals("{DEFINE_LONG=[FOO=42]}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE_LONG));
@@ -74,7 +76,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define12() {
+	void define12() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-D", "FOO=42");
 		assertEquals("{DEFINE={FOO=42}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));
@@ -82,9 +84,8 @@ class CliParsedTest {
 		assertEquals("{FOO=42}", map.toString());
 	}
 
-
 	@Test
-	void define20() {
+	void define20() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-DFOO=42", "-DDUMMY=43");
 		assertEquals("{DEFINE={FOO=42, DUMMY=43}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));
@@ -93,7 +94,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void define30() {
+	void define30() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-DDUMMY");
 		assertEquals("{DEFINE={DUMMY=null}}", parsed.toString());
 		assertTrue(parsed.isTrue(CliFlag.DEFINE));
@@ -102,7 +103,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void ftp() {
+	void ftp() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-ftp");
 		final List<Object> list = parsed.getList(CliFlag.FTP);
 		assertEquals(0, list.size());
@@ -111,7 +112,7 @@ class CliParsedTest {
 	}
 
 	@Test
-	void ftp42() {
+	void ftp42() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-ftp:42");
 		final List<Object> list = parsed.getList(CliFlag.FTP);
 		assertEquals("{FTP=[42]}", parsed.toString());
@@ -121,14 +122,14 @@ class CliParsedTest {
 	}
 
 	@Test
-	void stdrpt() {
+	void stdrpt() throws CliParsingException {
 		assertEquals("{STDRPT=[]}", CliParsed.parse("-stdrpt").toString());
 		assertEquals("{STDRPT=[1]}", CliParsed.parse("-stdrpt:1").toString());
 		assertEquals("{STDRPT=[2]}", CliParsed.parse("-stdrpt:2").toString());
 	}
 
 	@Test
-	void picoweb() {
+	void picoweb() throws CliParsingException {
 		assertEquals("{PICOWEB=[]}", CliParsed.parse("-picoweb").toString());
 		assertEquals("{PICOWEB=[8000]}", CliParsed.parse("-picoweb:8000").toString());
 
@@ -141,14 +142,14 @@ class CliParsedTest {
 	}
 
 	@Test
-	void png() {
+	void png() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-png");
 		assertEquals("{T_PNG=[PNG]}", parsed.toString());
 		assertEquals(FileFormat.PNG, parsed.getObject(CliFlag.T_PNG));
 	}
 
 	@Test
-	void testGetFromTypePng() {
+	void testGetFromTypePng() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-png");
 		assertEquals("{T_PNG=[PNG]}", parsed.toString());
 		assertEquals(FileFormat.PNG, parsed.getObject(CliFlag.T_PNG));
@@ -156,11 +157,18 @@ class CliParsedTest {
 	}
 
 	@Test
-	void testGetFromTypeSvg() {
+	void testGetFromTypeSvg() throws CliParsingException {
 		final CliParsed parsed = CliParsed.parse("-svg");
 		assertEquals("{T_SVG=[SVG]}", parsed.toString());
 		assertEquals(FileFormat.SVG, parsed.getObject(CliFlag.T_SVG));
 		assertEquals(FileFormat.SVG, parsed.getFromType(FileFormat.class));
+	}
+
+	@Test
+	void testMissingValue() throws CliParsingException {
+		CliParsingException ex = assertThrows(CliParsingException.class, () -> CliParsed.parse("-I"));
+		assertEquals("-I [INCLUDE]: missing value", ex.getMessage());
+
 	}
 
 }

@@ -161,7 +161,7 @@ public class CliParsed {
 
 	}
 
-	public static CliParsed parse(String... args) {
+	public static CliParsed parse(String... args) throws CliParsingException {
 		final CliParsed result = new CliParsed();
 		for (final Peeker<String> peeker = PeekerUtils.peeker(Arrays.asList(args)); peeker.peek(0) != null; peeker
 				.jump()) {
@@ -195,6 +195,9 @@ public class CliParsed {
 						peeker.jump();
 						s = peeker.peek(0);
 					}
+
+					if (s == null)
+						throw new CliParsingException(flag, "missing value");
 
 					final int eqIndex = s.indexOf('=');
 					final String k = eqIndex < 0 ? s : s.substring(0, eqIndex);

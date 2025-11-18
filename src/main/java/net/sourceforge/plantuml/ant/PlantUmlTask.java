@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.Splash;
 import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParsingException;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
@@ -79,7 +80,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 // Carriage Return in UTF-8 XML: &#13;
 // Line Feed in UTF-8 XML: &#10;
 public class PlantUmlTask extends Task {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private String dir = null;
 	private final CliOptions option = new CliOptions();
@@ -106,9 +107,8 @@ public class PlantUmlTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 
-		if (option.isTrue(CliFlag.SPLASH)) 
+		if (option.isTrue(CliFlag.SPLASH))
 			Splash.createSplash();
-		
 
 		this.log("Starting PlantUML");
 
@@ -128,9 +128,9 @@ public class PlantUmlTask extends Task {
 			if (executorService != null) {
 				executorService.shutdown();
 				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-				if (option.isTrue(CliFlag.SPLASH)) 
+				if (option.isTrue(CliFlag.SPLASH))
 					Splash.disposeSplash();
-				
+
 			}
 			this.log("Nb images generated: " + nbFiles.get());
 		} catch (IOException e) {
@@ -158,9 +158,9 @@ public class PlantUmlTask extends Task {
 		for (String src : srcFiles) {
 			final File f = new File(fromDir, src);
 			final boolean error = processingSingleFile(f);
-			if (error) 
+			if (error)
 				return f;
-			
+
 		}
 		return null;
 	}
@@ -175,17 +175,17 @@ public class PlantUmlTask extends Task {
 		for (String src : srcFiles) {
 			final File f = new File(fromDir, src);
 			final boolean error = processingSingleFile(f);
-			if (error) 
+			if (error)
 				return f;
-			
+
 		}
 
 		for (String src : srcDirs) {
 			final File dir = new File(fromDir, src);
 			final File errorFile = processingSingleDirectory(dir);
-			if (errorFile != null) 
+			if (errorFile != null)
 				return errorFile;
-			
+
 		}
 		return null;
 
@@ -196,14 +196,14 @@ public class PlantUmlTask extends Task {
 			this.log("Processing " + f.getAbsolutePath());
 		}
 		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET), option.getFileFormatOption());
+				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
+				option.getFileFormatOption());
 
-		if (option.isTrue(CliFlag.CHECK_ONLY)) 
+		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return sourceFileReader.hasError();
-		
-		if (executorService == null) 
+
+		if (executorService == null)
 			return doFile(f, sourceFileReader);
-		
 
 		Splash.incTotal(1);
 		executorService.submit(new Callable<Boolean>() {
@@ -220,21 +220,21 @@ public class PlantUmlTask extends Task {
 		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
 		boolean error = false;
 		for (GeneratedImage g : result) {
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) 
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE))
 				myLog(g + " " + g.getDescription());
-			
+
 			nbFiles.addAndGet(1);
-			if (g.lineErrorRaw() != -1) 
+			if (g.lineErrorRaw() != -1)
 				error = true;
-			
+
 		}
 		Splash.incDone(error);
-		if (error) 
+		if (error)
 			myLog("Error: " + f.getCanonicalPath());
-		
-		if (error && option.isFailfastOrFailfast2()) 
+
+		if (error && option.isFailfastOrFailfast2())
 			return true;
-		
+
 		return false;
 	}
 
@@ -283,7 +283,7 @@ public class PlantUmlTask extends Task {
 	public void setConfig(String s) {
 		try {
 			option.addInConfig(s);
-		} catch (IOException e) {
+		} catch (IOException | CliParsingException e) {
 			log("Error reading " + s);
 		}
 	}
@@ -293,61 +293,61 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setDebugSvek(String s) {
-		if ("true".equalsIgnoreCase(s)) 
+		if ("true".equalsIgnoreCase(s))
 			option.setValue(CliFlag.DEBUG_SVEK, true);
 	}
 
 	public void setVerbose(String s) {
-		if ("true".equalsIgnoreCase(s)) 
+		if ("true".equalsIgnoreCase(s))
 			GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);
 	}
 
 	public void setFormat(String s) {
-		if ("scxml".equalsIgnoreCase(s)) 
+		if ("scxml".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.SCXML));
-		
-		if ("xmi".equalsIgnoreCase(s)) 
+
+		if ("xmi".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));
-		
-		if ("xmi:argo".equalsIgnoreCase(s)) 
+
+		if ("xmi:argo".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
-		
-		if ("xmi:custom".equalsIgnoreCase(s)) 
+
+		if ("xmi:custom".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_CUSTOM));
-		
-		if ("xmi:script".equalsIgnoreCase(s)) 
+
+		if ("xmi:script".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));
-		
-		if ("xmi:start".equalsIgnoreCase(s)) 
+
+		if ("xmi:start".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
-		
-		if ("eps".equalsIgnoreCase(s)) 
+
+		if ("eps".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS));
-		
-		if ("braille".equalsIgnoreCase(s)) 
+
+		if ("braille".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));
-		
-		if ("pdf".equalsIgnoreCase(s)) 
+
+		if ("pdf".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.PDF));
-		
-		if ("latex".equalsIgnoreCase(s)) 
+
+		if ("latex".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX));
-		
-		if ("latex:nopreamble".equalsIgnoreCase(s)) 
+
+		if ("latex:nopreamble".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
-		
-		if ("eps:text".equalsIgnoreCase(s)) 
+
+		if ("eps:text".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));
-		
-		if ("svg".equalsIgnoreCase(s)) 
+
+		if ("svg".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));
-		
-		if ("txt".equalsIgnoreCase(s)) 
+
+		if ("txt".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
-		
-		if ("utxt".equalsIgnoreCase(s)) 
+
+		if ("utxt".equalsIgnoreCase(s))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
-		
+
 	}
 
 	public void setGraphvizDot(String s) {

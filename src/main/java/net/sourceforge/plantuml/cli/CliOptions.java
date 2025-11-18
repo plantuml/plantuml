@@ -91,7 +91,7 @@ public class CliOptions {
 	}
 
 	// ::comment when __CORE__
-	CliOptions(String... arg) throws InterruptedException, IOException {
+	CliOptions(String... arg) throws InterruptedException, IOException, CliParsingException {
 		if (arg.length == 0)
 			GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);
 
@@ -200,20 +200,26 @@ public class CliOptions {
 	}
 	// ::done
 
-	private void addFileInConfig(File file) throws IOException {
-		if (file.exists() && file.canRead())
+	private void addFileInConfig(File file) throws IOException, CliParsingException {
+		if (file.exists() && file.canRead()) {
+			if (file.isDirectory()) {
+				throw new CliParsingException("Cannot have a directory here " + file.getAbsolutePath());
+			}
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 				String s = null;
 				while ((s = br.readLine()) != null)
 					config.add(s);
 			}
+		} else {
+			throw new CliParsingException("Cannot read " + file.getAbsolutePath());
+		}
 	}
 
-	public void addInConfig(String filename) throws IOException {
+	public void addInConfig(String filename) throws IOException, CliParsingException {
 		addFileInConfig(new File(filename));
 	}
 
-	private void initInclude(String filename) throws IOException {
+	private void initInclude(String filename) throws IOException, CliParsingException {
 		if (filename == null)
 			return;
 

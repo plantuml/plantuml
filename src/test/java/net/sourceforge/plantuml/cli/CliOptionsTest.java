@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class CliOptionsTest {
 
 	@Test
-	void test1() throws InterruptedException, IOException {
+	void test1() throws InterruptedException, IOException, CliParsingException {
 		final CliOptions options = new CliOptions("-graphvizdot", "foo.exe");
 		assertEquals(null, options.flags.getString(CliFlag.OUTPUT_DIR));
 
@@ -18,7 +18,7 @@ class CliOptionsTest {
 	}
 
 	@Test
-	void test2() throws InterruptedException, IOException {
+	void test2() throws InterruptedException, IOException, CliParsingException {
 		final CliOptions options = new CliOptions("-graphvizdot", "foo.exe", "-output", "mydir");
 		assertEquals("mydir", options.flags.getString(CliFlag.OUTPUT_DIR));
 		
@@ -27,7 +27,7 @@ class CliOptionsTest {
 	}
 
 	@Test
-	void test3() throws InterruptedException, IOException {
+	void test3() throws InterruptedException, IOException, CliParsingException {
 		final CliOptions options = new CliOptions("-graphvizdot", "foo.exe", "-ofile", "myfile");
 		assertEquals(null, options.flags.getString(CliFlag.OUTPUT_DIR));
 
