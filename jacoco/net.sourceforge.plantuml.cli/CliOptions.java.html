@@ -91,7 +91,7 @@ public class CliOptions {
 <span class="fc" id="L91">	}</span>
 
 	// ::comment when __CORE__
-<span class="fc" id="L94">	CliOptions(String... arg) throws InterruptedException, IOException {</span>
+<span class="fc" id="L94">	CliOptions(String... arg) throws InterruptedException, IOException, CliParsingException {</span>
 <span class="fc bfc" id="L95" title="All 2 branches covered.">		if (arg.length == 0)</span>
 <span class="fc" id="L96">			GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);</span>
 
@@ -200,94 +200,100 @@ public class CliOptions {
 	}
 	// ::done
 
-	private void addFileInConfig(File file) throws IOException {
-<span class="pc bpc" id="L204" title="2 of 4 branches missed.">		if (file.exists() &amp;&amp; file.canRead())</span>
-<span class="fc" id="L205">			try (BufferedReader br = new BufferedReader(new FileReader(file))) {</span>
-<span class="fc" id="L206">				String s = null;</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">				while ((s = br.readLine()) != null)</span>
-<span class="fc" id="L208">					config.add(s);</span>
+	private void addFileInConfig(File file) throws IOException, CliParsingException {
+<span class="pc bpc" id="L204" title="2 of 4 branches missed.">		if (file.exists() &amp;&amp; file.canRead()) {</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">			if (file.isDirectory()) {</span>
+<span class="fc" id="L206">				throw new CliParsingException(&quot;Cannot have a directory here &quot; + file.getAbsolutePath());</span>
 			}
-<span class="fc" id="L210">	}</span>
+<span class="fc" id="L208">			try (BufferedReader br = new BufferedReader(new FileReader(file))) {</span>
+<span class="fc" id="L209">				String s = null;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">				while ((s = br.readLine()) != null)</span>
+<span class="fc" id="L211">					config.add(s);</span>
+			}
+		} else {
+<span class="nc" id="L214">			throw new CliParsingException(&quot;Cannot read &quot; + file.getAbsolutePath());</span>
+		}
+<span class="fc" id="L216">	}</span>
 
-	public void addInConfig(String filename) throws IOException {
-<span class="fc" id="L213">		addFileInConfig(new File(filename));</span>
-<span class="fc" id="L214">	}</span>
+	public void addInConfig(String filename) throws IOException, CliParsingException {
+<span class="fc" id="L219">		addFileInConfig(new File(filename));</span>
+<span class="fc" id="L220">	}</span>
 
-	private void initInclude(String filename) throws IOException {
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (filename == null)</span>
-<span class="fc" id="L218">			return;</span>
+	private void initInclude(String filename) throws IOException, CliParsingException {
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (filename == null)</span>
+<span class="fc" id="L224">			return;</span>
 
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (filename.contains(&quot;*&quot;))</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">			for (File f : new FileGroup(filename, Collections.&lt;String&gt;emptyList()).getFiles())</span>
-<span class="nc" id="L222">				addFileInConfig(f);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (filename.contains(&quot;*&quot;))</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			for (File f : new FileGroup(filename, Collections.&lt;String&gt;emptyList()).getFiles())</span>
+<span class="pc" id="L228">				addFileInConfig(f);</span>
 		else
-<span class="fc" id="L224">			addFileInConfig(new File(filename));</span>
+<span class="fc" id="L230">			addFileInConfig(new File(filename));</span>
 
-<span class="fc" id="L226">	}</span>
+<span class="fc" id="L232">	}</span>
 
 	public final File getOutputDir() {
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (outputDir != null)</span>
-<span class="nc" id="L230">			return outputDir;</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (outputDir != null)</span>
+<span class="nc" id="L236">			return outputDir;</span>
 
-<span class="fc" id="L232">		final String tmp = flags.getString(CliFlag.OUTPUT_DIR);</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (tmp != null)</span>
-<span class="fc" id="L234">			return new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(tmp));</span>
+<span class="fc" id="L238">		final String tmp = flags.getString(CliFlag.OUTPUT_DIR);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (tmp != null)</span>
+<span class="fc" id="L240">			return new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(tmp));</span>
 
-<span class="fc" id="L236">		return null;</span>
+<span class="fc" id="L242">		return null;</span>
 	}
 
 	public final static String getPattern() {
-<span class="fc" id="L240">		return &quot;(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|puml|hpp|hh)$&quot;;</span>
+<span class="fc" id="L246">		return &quot;(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|puml|hpp|hh)$&quot;;</span>
 	}
 
 	public void setOutputDir(File f) {
-<span class="nc" id="L244">		outputDir = f;</span>
-<span class="nc" id="L245">	}</span>
+<span class="nc" id="L250">		outputDir = f;</span>
+<span class="nc" id="L251">	}</span>
 
 	public final List&lt;String&gt; getExcludes() {
-<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (isTrue(CliFlag.EXCLUDE)) {</span>
-<span class="fc" id="L249">			final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">			for (Object s : flags.getList(CliFlag.EXCLUDE))</span>
-<span class="fc" id="L251">				result.add(s.toString());</span>
-<span class="fc" id="L252">			return Collections.unmodifiableList(result);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		if (isTrue(CliFlag.EXCLUDE)) {</span>
+<span class="fc" id="L255">			final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">			for (Object s : flags.getList(CliFlag.EXCLUDE))</span>
+<span class="fc" id="L257">				result.add(s.toString());</span>
+<span class="fc" id="L258">			return Collections.unmodifiableList(result);</span>
 		}
 
-<span class="fc" id="L255">		return Collections.emptyList();</span>
+<span class="fc" id="L261">		return Collections.emptyList();</span>
 	}
 
 	// ::comment when __CORE__
 	public Defines getDefaultDefines(SFile f) {
-<span class="nc" id="L260">		final Defines result = Defines.createWithFileName(f);</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet()) {</span>
-<span class="nc" id="L262">			String value = ent.getValue();</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">			if (value == null)</span>
-<span class="nc" id="L264">				value = &quot;&quot;;</span>
+<span class="nc" id="L266">		final Defines result = Defines.createWithFileName(f);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet()) {</span>
+<span class="nc" id="L268">			String value = ent.getValue();</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">			if (value == null)</span>
+<span class="nc" id="L270">				value = &quot;&quot;;</span>
 
-<span class="nc" id="L266">			result.define(ent.getKey(), Arrays.asList(value), false);</span>
-<span class="nc" id="L267">		}</span>
-<span class="nc" id="L268">		return result;</span>
+<span class="nc" id="L272">			result.define(ent.getKey(), Arrays.asList(value), false);</span>
+<span class="nc" id="L273">		}</span>
+<span class="nc" id="L274">		return result;</span>
 	}
 
 	public Defines getDefaultDefines(java.io.File f) {
-<span class="fc" id="L272">		final Defines result = Defines.createWithFileName(f);</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet()) {</span>
-<span class="fc" id="L274">			String value = ent.getValue();</span>
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">			if (value == null)</span>
-<span class="nc" id="L276">				value = &quot;&quot;;</span>
+<span class="fc" id="L278">		final Defines result = Defines.createWithFileName(f);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet()) {</span>
+<span class="fc" id="L280">			String value = ent.getValue();</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">			if (value == null)</span>
+<span class="nc" id="L282">				value = &quot;&quot;;</span>
 
-<span class="fc" id="L278">			result.define(ent.getKey(), Arrays.asList(value), false);</span>
-<span class="fc" id="L279">		}</span>
-<span class="fc" id="L280">		return result;</span>
+<span class="fc" id="L284">			result.define(ent.getKey(), Arrays.asList(value), false);</span>
+<span class="fc" id="L285">		}</span>
+<span class="fc" id="L286">		return result;</span>
 	}
 
 	public Defines getDefaultDefines() {
-<span class="fc" id="L284">		final Defines result = Defines.createEmpty();</span>
-<span class="fc" id="L285">		result.overrideFilename(flags.getString(CliFlag.FILENAME));</span>
-<span class="fc" id="L286">		result.overrideDirPath(flags.getString(CliFlag.FILE_DIR));</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet())</span>
-<span class="fc" id="L288">			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);</span>
+<span class="fc" id="L290">		final Defines result = Defines.createEmpty();</span>
+<span class="fc" id="L291">		result.overrideFilename(flags.getString(CliFlag.FILENAME));</span>
+<span class="fc" id="L292">		result.overrideDirPath(flags.getString(CliFlag.FILE_DIR));</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet())</span>
+<span class="fc" id="L294">			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);</span>
 
-<span class="fc" id="L290">		return result;</span>
+<span class="fc" id="L296">		return result;</span>
 	}
 	// ::done
 
@@ -296,45 +302,45 @@ public class CliOptions {
 //	}
 
 	private Map&lt;String, String&gt; defines() {
-<span class="fc" id="L299">		final Map&lt;String, String&gt; result = flags.getMap(CliFlag.DEFINE, CliFlag.DEFINE_LONG);</span>
-<span class="fc" id="L300">		return Collections.unmodifiableMap(result);</span>
+<span class="fc" id="L305">		final Map&lt;String, String&gt; result = flags.getMap(CliFlag.DEFINE, CliFlag.DEFINE_LONG);</span>
+<span class="fc" id="L306">		return Collections.unmodifiableMap(result);</span>
 	}
 
 	public List&lt;String&gt; getConfig() {
-<span class="fc" id="L304">		return Collections.unmodifiableList(config);</span>
+<span class="fc" id="L310">		return Collections.unmodifiableList(config);</span>
 	}
 
 	public final List&lt;String&gt; getRemainingArgs() {
-<span class="fc" id="L308">		return flags.getRemainingArgs();</span>
+<span class="fc" id="L314">		return flags.getRemainingArgs();</span>
 	}
 
 	public FileFormatOption getFileFormatOption() {
-<span class="fc bfc" id="L312" title="All 2 branches covered.">		if (this.fileFormatOption != null)</span>
-<span class="fc" id="L313">			return fileFormatOption;</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">		if (this.fileFormatOption != null)</span>
+<span class="fc" id="L319">			return fileFormatOption;</span>
 
-<span class="fc" id="L315">		FileFormat format = null;</span>
-<span class="fc" id="L316">		final String formatFlag = flags.getString(CliFlag.FORMAT);</span>
-<span class="fc bfc" id="L317" title="All 2 branches covered.">		if (formatFlag != null)</span>
-<span class="fc" id="L318">			format = FileFormat.fromCli(formatFlag);</span>
+<span class="fc" id="L321">		FileFormat format = null;</span>
+<span class="fc" id="L322">		final String formatFlag = flags.getString(CliFlag.FORMAT);</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (formatFlag != null)</span>
+<span class="fc" id="L324">			format = FileFormat.fromCli(formatFlag);</span>
 
-<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (format == null)</span>
-<span class="fc" id="L321">			format = (FileFormat) flags.getFromType(FileFormat.class);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		if (format == null)</span>
+<span class="fc" id="L327">			format = (FileFormat) flags.getFromType(FileFormat.class);</span>
 
-<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (format == null)</span>
-<span class="fc" id="L324">			format = FileFormat.PNG;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (format == null)</span>
+<span class="fc" id="L330">			format = FileFormat.PNG;</span>
 
-<span class="fc" id="L326">		this.fileFormatOption = new FileFormatOption(format);</span>
+<span class="fc" id="L332">		this.fileFormatOption = new FileFormatOption(format);</span>
 
-<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.DEBUG_SVEK))</span>
-<span class="fc" id="L329">			fileFormatOption.setDebugSvek(true);</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.DEBUG_SVEK))</span>
+<span class="fc" id="L335">			fileFormatOption.setDebugSvek(true);</span>
 
-<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.NO_METADATA))</span>
-<span class="fc" id="L332">			fileFormatOption.hideMetadata();</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.NO_METADATA))</span>
+<span class="fc" id="L338">			fileFormatOption.hideMetadata();</span>
 
-<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.DARK_MODE))</span>
-<span class="fc" id="L335">			this.fileFormatOption = this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE);</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.DARK_MODE))</span>
+<span class="fc" id="L341">			this.fileFormatOption = this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE);</span>
 
-<span class="fc" id="L337">		return fileFormatOption;</span>
+<span class="fc" id="L343">		return fileFormatOption;</span>
 	}
 //	// ::done
 //
@@ -343,13 +349,13 @@ public class CliOptions {
 //	}
 
 	public final int getNbThreads() {
-<span class="fc" id="L346">		final String value = flags.getString(CliFlag.NB_THREAD);</span>
-<span class="pc bpc" id="L347" title="1 of 4 branches missed.">		if (value != null &amp;&amp; &quot;auto&quot;.equalsIgnoreCase(value) == false)</span>
+<span class="fc" id="L352">		final String value = flags.getString(CliFlag.NB_THREAD);</span>
+<span class="pc bpc" id="L353" title="1 of 4 branches missed.">		if (value != null &amp;&amp; &quot;auto&quot;.equalsIgnoreCase(value) == false)</span>
 			try {
-<span class="fc" id="L349">				return Integer.parseInt(value);</span>
-<span class="nc" id="L350">			} catch (Throwable t) {</span>
+<span class="fc" id="L355">				return Integer.parseInt(value);</span>
+<span class="nc" id="L356">			} catch (Throwable t) {</span>
 			}
-<span class="fc" id="L352">		return defaultNbThreads();</span>
+<span class="fc" id="L358">		return defaultNbThreads();</span>
 	}
 
 //	public final void setNbThreads(int nb) {
@@ -357,7 +363,7 @@ public class CliOptions {
 //	}
 
 	public static int defaultNbThreads() {
-<span class="fc" id="L360">		return Runtime.getRuntime().availableProcessors();</span>
+<span class="fc" id="L366">		return Runtime.getRuntime().availableProcessors();</span>
 	}
 
 //	// ::comment when __CORE__
@@ -371,7 +377,7 @@ public class CliOptions {
 //	// ::done
 
 	public final boolean isFailfastOrFailfast2() {
-<span class="pc bpc" id="L374" title="3 of 4 branches missed.">		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);</span>
+<span class="pc bpc" id="L380" title="3 of 4 branches missed.">		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);</span>
 	}
 
 //	public final void setDebugSvek(boolean debugsvek) {
@@ -415,28 +421,28 @@ public class CliOptions {
 
 	public final int getImageIndex() {
 		try {
-<span class="fc" id="L418">			return Integer.parseInt(flags.getString(CliFlag.PIPE_IMAGE_INDEX));</span>
-<span class="nc" id="L419">		} catch (Exception e) {</span>
-<span class="nc" id="L420">			return 0;</span>
+<span class="fc" id="L424">			return Integer.parseInt(flags.getString(CliFlag.PIPE_IMAGE_INDEX));</span>
+<span class="nc" id="L425">		} catch (Exception e) {</span>
+<span class="nc" id="L426">			return 0;</span>
 		}
 	}
 
 	public String getFileDir() {
-<span class="fc" id="L425">		return flags.getString(CliFlag.FILE_DIR);</span>
+<span class="fc" id="L431">		return flags.getString(CliFlag.FILE_DIR);</span>
 	}
 
 	public boolean isTrue(CliFlag flag) {
-<span class="fc" id="L429">		return flags.isTrue(flag);</span>
+<span class="fc" id="L435">		return flags.isTrue(flag);</span>
 	}
 
 	public String getString(CliFlag flag) {
-<span class="fc" id="L433">		return flags.getString(flag);</span>
+<span class="fc" id="L439">		return flags.getString(flag);</span>
 	}
 
 	public void setValue(CliFlag flag, Object value) {
-<span class="nc" id="L437">		flags.putValue(flag, value);</span>
+<span class="nc" id="L443">		flags.putValue(flag, value);</span>
 
-<span class="nc" id="L439">	}</span>
+<span class="nc" id="L445">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

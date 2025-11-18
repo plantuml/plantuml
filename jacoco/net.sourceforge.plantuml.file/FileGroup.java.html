@@ -132,7 +132,7 @@ public class FileGroup {
 <span class="fc" id="L132">		final Matcher2 m = noStarInDirectory.matcher(pattern);</span>
 <span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (m.find()) {</span>
 <span class="fc" id="L134">			File dir = new File(&quot;.&quot;);</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">			if (m.group(1) != null) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (m.group(1) != null) {</span>
 <span class="fc" id="L136">				final String dirPart = m.group(1);</span>
 <span class="fc" id="L137">				dir = new File(dirPart);</span>
 			}

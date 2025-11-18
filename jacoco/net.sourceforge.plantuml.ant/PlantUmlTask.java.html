@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.Splash;
 import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParsingException;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
@@ -78,37 +79,36 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 
 // Carriage Return in UTF-8 XML: &amp;#13;
 // Line Feed in UTF-8 XML: &amp;#10;
-<span class="nc" id="L81">public class PlantUmlTask extends Task {</span>
-    // ::remove folder when __HAXE__
+<span class="nc" id="L82">public class PlantUmlTask extends Task {</span>
+	// ::remove folder when __HAXE__
 
-<span class="nc" id="L84">	private String dir = null;</span>
-<span class="nc" id="L85">	private final CliOptions option = new CliOptions();</span>
-<span class="nc" id="L86">	private List&lt;FileSet&gt; filesets = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L87">	private List&lt;FileList&gt; filelists = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L88">	private AtomicInteger nbFiles = new AtomicInteger(0);</span>
+<span class="nc" id="L85">	private String dir = null;</span>
+<span class="nc" id="L86">	private final CliOptions option = new CliOptions();</span>
+<span class="nc" id="L87">	private List&lt;FileSet&gt; filesets = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L88">	private List&lt;FileList&gt; filelists = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L89">	private AtomicInteger nbFiles = new AtomicInteger(0);</span>
 	private ExecutorService executorService;
 
 	/**
 	 * Add a set of files to touch
 	 */
 	public void addFileset(FileSet set) {
-<span class="nc" id="L95">		filesets.add(set);</span>
-<span class="nc" id="L96">	}</span>
+<span class="nc" id="L96">		filesets.add(set);</span>
+<span class="nc" id="L97">	}</span>
 
 	/**
 	 * Add a filelist to touch
 	 */
 	public void addFilelist(FileList list) {
-<span class="nc" id="L102">		filelists.add(list);</span>
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L103">		filelists.add(list);</span>
+<span class="nc" id="L104">	}</span>
 
 	// The method executing the task
 	@Override
 	public void execute() throws BuildException {
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (option.isTrue(CliFlag.SPLASH)) </span>
-<span class="nc" id="L110">			Splash.createSplash();</span>
-		
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (option.isTrue(CliFlag.SPLASH))</span>
+<span class="nc" id="L111">			Splash.createSplash();</span>
 
 <span class="nc" id="L113">		this.log(&quot;Starting PlantUML&quot;);</span>
 
@@ -128,9 +128,9 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc bnc" id="L128" title="All 2 branches missed.">			if (executorService != null) {</span>
 <span class="nc" id="L129">				executorService.shutdown();</span>
 <span class="nc" id="L130">				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">				if (option.isTrue(CliFlag.SPLASH)) </span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">				if (option.isTrue(CliFlag.SPLASH))</span>
 <span class="nc" id="L132">					Splash.disposeSplash();</span>
-				
+
 			}
 <span class="nc" id="L135">			this.log(&quot;Nb images generated: &quot; + nbFiles.get());</span>
 <span class="nc" id="L136">		} catch (IOException e) {</span>
@@ -158,9 +158,9 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc bnc" id="L158" title="All 2 branches missed.">		for (String src : srcFiles) {</span>
 <span class="nc" id="L159">			final File f = new File(fromDir, src);</span>
 <span class="nc" id="L160">			final boolean error = processingSingleFile(f);</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (error) </span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (error)</span>
 <span class="nc" id="L162">				return f;</span>
-			
+
 		}
 <span class="nc" id="L165">		return null;</span>
 	}
@@ -175,17 +175,17 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc bnc" id="L175" title="All 2 branches missed.">		for (String src : srcFiles) {</span>
 <span class="nc" id="L176">			final File f = new File(fromDir, src);</span>
 <span class="nc" id="L177">			final boolean error = processingSingleFile(f);</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (error) </span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (error)</span>
 <span class="nc" id="L179">				return f;</span>
-			
+
 		}
 
 <span class="nc bnc" id="L183" title="All 2 branches missed.">		for (String src : srcDirs) {</span>
 <span class="nc" id="L184">			final File dir = new File(fromDir, src);</span>
 <span class="nc" id="L185">			final File errorFile = processingSingleDirectory(dir);</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (errorFile != null) </span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (errorFile != null)</span>
 <span class="nc" id="L187">				return errorFile;</span>
-			
+
 		}
 <span class="nc" id="L190">		return null;</span>
 
@@ -196,14 +196,14 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc" id="L196">			this.log(&quot;Processing &quot; + f.getAbsolutePath());</span>
 		}
 <span class="nc" id="L198">		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
-<span class="nc" id="L199">				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET), option.getFileFormatOption());</span>
+<span class="nc" id="L199">				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
+<span class="nc" id="L200">				option.getFileFormatOption());</span>
 
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (option.isTrue(CliFlag.CHECK_ONLY)) </span>
-<span class="nc" id="L202">			return sourceFileReader.hasError();</span>
-		
-<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (executorService == null) </span>
-<span class="nc" id="L205">			return doFile(f, sourceFileReader);</span>
-		
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (option.isTrue(CliFlag.CHECK_ONLY))</span>
+<span class="nc" id="L203">			return sourceFileReader.hasError();</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (executorService == null)</span>
+<span class="nc" id="L206">			return doFile(f, sourceFileReader);</span>
 
 <span class="nc" id="L208">		Splash.incTotal(1);</span>
 <span class="nc" id="L209">		executorService.submit(new Callable&lt;Boolean&gt;() {</span>
@@ -220,21 +220,21 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc" id="L220">		final Collection&lt;GeneratedImage&gt; result = sourceFileReader.getGeneratedImages();</span>
 <span class="nc" id="L221">		boolean error = false;</span>
 <span class="nc bnc" id="L222" title="All 2 branches missed.">		for (GeneratedImage g : result) {</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) </span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE))</span>
 <span class="nc" id="L224">				myLog(g + &quot; &quot; + g.getDescription());</span>
-			
+
 <span class="nc" id="L226">			nbFiles.addAndGet(1);</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (g.lineErrorRaw() != -1) </span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (g.lineErrorRaw() != -1)</span>
 <span class="nc" id="L228">				error = true;</span>
-			
+
 <span class="nc" id="L230">		}</span>
 <span class="nc" id="L231">		Splash.incDone(error);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (error) </span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (error)</span>
 <span class="nc" id="L233">			myLog(&quot;Error: &quot; + f.getCanonicalPath());</span>
-		
-<span class="nc bnc" id="L235" title="All 4 branches missed.">		if (error &amp;&amp; option.isFailfastOrFailfast2()) </span>
+
+<span class="nc bnc" id="L235" title="All 4 branches missed.">		if (error &amp;&amp; option.isFailfastOrFailfast2())</span>
 <span class="nc" id="L236">			return true;</span>
-		
+
 <span class="nc" id="L238">		return false;</span>
 	}
 
@@ -283,7 +283,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 	public void setConfig(String s) {
 		try {
 <span class="nc" id="L285">			option.addInConfig(s);</span>
-<span class="nc" id="L286">		} catch (IOException e) {</span>
+<span class="nc" id="L286">		} catch (IOException | CliParsingException e) {</span>
 <span class="nc" id="L287">			log(&quot;Error reading &quot; + s);</span>
 <span class="nc" id="L288">		}</span>
 <span class="nc" id="L289">	}</span>
@@ -293,61 +293,61 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc" id="L293">	}</span>
 
 	public void setDebugSvek(String s) {
-<span class="nc bnc" id="L296" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s)) </span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L297">			option.setValue(CliFlag.DEBUG_SVEK, true);</span>
 <span class="nc" id="L298">	}</span>
 
 	public void setVerbose(String s) {
-<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s)) </span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L302">			GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);</span>
 <span class="nc" id="L303">	}</span>
 
 	public void setFormat(String s) {
-<span class="nc bnc" id="L306" title="All 2 branches missed.">		if (&quot;scxml&quot;.equalsIgnoreCase(s)) </span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		if (&quot;scxml&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L307">			option.setFileFormatOption(new FileFormatOption(FileFormat.SCXML));</span>
-		
-<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (&quot;xmi&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (&quot;xmi&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L310">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));</span>
-		
-<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (&quot;xmi:argo&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (&quot;xmi:argo&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L313">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));</span>
-		
-<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (&quot;xmi:custom&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (&quot;xmi:custom&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L316">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_CUSTOM));</span>
-		
-<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (&quot;xmi:script&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (&quot;xmi:script&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L319">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));</span>
-		
-<span class="nc bnc" id="L321" title="All 2 branches missed.">		if (&quot;xmi:start&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L321" title="All 2 branches missed.">		if (&quot;xmi:start&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L322">			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));</span>
-		
-<span class="nc bnc" id="L324" title="All 2 branches missed.">		if (&quot;eps&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L324" title="All 2 branches missed.">		if (&quot;eps&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L325">			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS));</span>
-		
-<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (&quot;braille&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (&quot;braille&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L328">			option.setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));</span>
-		
-<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (&quot;pdf&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (&quot;pdf&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L331">			option.setFileFormatOption(new FileFormatOption(FileFormat.PDF));</span>
-		
-<span class="nc bnc" id="L333" title="All 2 branches missed.">		if (&quot;latex&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L333" title="All 2 branches missed.">		if (&quot;latex&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L334">			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX));</span>
-		
-<span class="nc bnc" id="L336" title="All 2 branches missed.">		if (&quot;latex:nopreamble&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L336" title="All 2 branches missed.">		if (&quot;latex:nopreamble&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L337">			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));</span>
-		
-<span class="nc bnc" id="L339" title="All 2 branches missed.">		if (&quot;eps:text&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		if (&quot;eps:text&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L340">			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));</span>
-		
-<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (&quot;svg&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (&quot;svg&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L343">			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));</span>
-		
-<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (&quot;txt&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (&quot;txt&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L346">			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));</span>
-		
-<span class="nc bnc" id="L348" title="All 2 branches missed.">		if (&quot;utxt&quot;.equalsIgnoreCase(s)) </span>
+
+<span class="nc bnc" id="L348" title="All 2 branches missed.">		if (&quot;utxt&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L349">			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));</span>
-		
+
 <span class="nc" id="L351">	}</span>
 
 	public void setGraphvizDot(String s) {

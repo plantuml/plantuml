@@ -39,7 +39,7 @@ import java.io.IOException;
 
 <span class="nc" id="L40">public class CliParser {</span>
 
-	public static CliOptions parse(String... arg) throws InterruptedException, IOException {
+	public static CliOptions parse(String... arg) throws InterruptedException, IOException, CliParsingException {
 <span class="fc" id="L43">		return new CliOptions(arg);</span>
 	}
 
