@@ -1262,6 +1262,7 @@ public class SvgGraphics {
 				case DATA_SOURCE_LINE:
 				case DATA_QUALIFIED_NAME:
 				case DATA_ENTITY_UID:
+				case DATA_VISIBILITY_MODIFIER:
 					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 
@@ -1279,6 +1280,7 @@ public class SvgGraphics {
 				case DATA_UID:
 				case ID:
 				case DATA_SOURCE_LINE:
+				case DATA_VISIBILITY_MODIFIER:
 					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 				}
