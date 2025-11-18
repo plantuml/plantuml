@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -83,7 +85,7 @@ public enum VisibilityModifier {
 	public UDrawable getUDrawable(final int size, final HColor foregroundColor, final HColor backgoundColor) {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
+				drawWithGroup(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
 
 		};
@@ -106,9 +108,18 @@ public enum VisibilityModifier {
 				if (withInvisibleRectanble)
 					ug.apply(HColors.none()).draw(URectangle.build(size * 2, size));
 
-				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
+				drawWithGroup(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
 		};
+	}
+
+	private void drawWithGroup(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
+			double x, double y) {
+		final UGroup group = new UGroup();
+		group.put(UGroupType.DATA_VISIBILITY_MODIFIER, this.name());
+		ug.startGroup(group);
+		drawInternal(ug, size, foregroundColor, backgoundColor, x, y);
+		ug.closeGroup();
 	}
 
 	private void drawInternal(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
@@ -121,44 +132,44 @@ public enum VisibilityModifier {
 		ug = ug.apply(foregroundColor);
 		size = ensureEven(size);
 		switch (this) {
-		case PACKAGE_PRIVATE_FIELD:
-			drawTriangle(ug, false, size, x, y);
-			break;
+			case PACKAGE_PRIVATE_FIELD:
+				drawTriangle(ug, false, size, x, y);
+				break;
 
-		case PRIVATE_FIELD:
-			drawSquare(ug, false, size, x, y);
-			break;
+			case PRIVATE_FIELD:
+				drawSquare(ug, false, size, x, y);
+				break;
 
-		case PROTECTED_FIELD:
-			drawDiamond(ug, false, size, x, y);
-			break;
+			case PROTECTED_FIELD:
+				drawDiamond(ug, false, size, x, y);
+				break;
 
-		case PUBLIC_FIELD:
-			drawCircle(ug, false, size, x, y);
-			break;
+			case PUBLIC_FIELD:
+				drawCircle(ug, false, size, x, y);
+				break;
 
-		case PACKAGE_PRIVATE_METHOD:
-			drawTriangle(ug, true, size, x, y);
-			break;
+			case PACKAGE_PRIVATE_METHOD:
+				drawTriangle(ug, true, size, x, y);
+				break;
 
-		case PRIVATE_METHOD:
-			drawSquare(ug, true, size, x, y);
-			break;
+			case PRIVATE_METHOD:
+				drawSquare(ug, true, size, x, y);
+				break;
 
-		case PROTECTED_METHOD:
-			drawDiamond(ug, true, size, x, y);
-			break;
+			case PROTECTED_METHOD:
+				drawDiamond(ug, true, size, x, y);
+				break;
 
-		case PUBLIC_METHOD:
-			drawCircle(ug, true, size, x, y);
-			break;
+			case PUBLIC_METHOD:
+				drawCircle(ug, true, size, x, y);
+				break;
 
-		case IE_MANDATORY:
-			drawCircle(ug, true, size, x, y);
-			break;
+			case IE_MANDATORY:
+				drawCircle(ug, true, size, x, y);
+				break;
 
-		default:
-			throw new IllegalStateException();
+			default:
+				throw new IllegalStateException();
 		}
 	}
 

@@ -51,7 +51,8 @@ public enum UGroupType {
 	DATA_PARTICIPANT_1,
 	DATA_PARTICIPANT_2,
 	DATA_UID,
-	DATA_SOURCE_LINE;
+	DATA_SOURCE_LINE,
+	DATA_VISIBILITY_MODIFIER;
 
 	public String getSvgKeyAttributeName() {
 		return name().toLowerCase().replace('_', '-');
