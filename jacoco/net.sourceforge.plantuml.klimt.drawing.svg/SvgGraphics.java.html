@@ -1262,29 +1262,31 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 				case DATA_SOURCE_LINE:
 				case DATA_QUALIFIED_NAME:
 				case DATA_ENTITY_UID:
-<span class="nc" id="L1265">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
-<span class="nc" id="L1266">							typeIdent.getValue());</span>
+				case DATA_VISIBILITY_MODIFIER:
+<span class="nc" id="L1266">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
+<span class="nc" id="L1267">							typeIdent.getValue());</span>
 
 				}
-<span class="nc" id="L1269">			}</span>
+<span class="nc" id="L1270">			}</span>
 		} else {
-<span class="fc bfc" id="L1271" title="All 2 branches covered.">			for (Map.Entry&lt;UGroupType, String&gt; typeIdent : typeIdents.entrySet()) {</span>
-<span class="fc bfc" id="L1272" title="All 2 branches covered.">				if (typeIdent.getKey() == UGroupType.TITLE) {</span>
-<span class="fc" id="L1273">					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());</span>
-<span class="fc" id="L1274">					title.setTextContent(typeIdent.getValue());</span>
-<span class="fc" id="L1275">					pendingElements.get(0).appendChild(title);</span>
+<span class="fc bfc" id="L1272" title="All 2 branches covered.">			for (Map.Entry&lt;UGroupType, String&gt; typeIdent : typeIdents.entrySet()) {</span>
+<span class="fc bfc" id="L1273" title="All 2 branches covered.">				if (typeIdent.getKey() == UGroupType.TITLE) {</span>
+<span class="fc" id="L1274">					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());</span>
+<span class="fc" id="L1275">					title.setTextContent(typeIdent.getValue());</span>
+<span class="fc" id="L1276">					pendingElements.get(0).appendChild(title);</span>
 				}
 
-<span class="pc bpc" id="L1278" title="1 of 2 branches missed.">				switch (typeIdent.getKey()) {</span>
+<span class="pc bpc" id="L1279" title="1 of 2 branches missed.">				switch (typeIdent.getKey()) {</span>
 				case DATA_UID:
 				case ID:
 				case DATA_SOURCE_LINE:
-<span class="nc" id="L1282">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
-<span class="nc" id="L1283">							typeIdent.getValue());</span>
+				case DATA_VISIBILITY_MODIFIER:
+<span class="nc" id="L1284">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
+<span class="nc" id="L1285">							typeIdent.getValue());</span>
 				}
 
 				// if (option.isInteractive())
-<span class="fc bfc" id="L1287" title="All 2 branches covered.">				switch (typeIdent.getKey()) {</span>
+<span class="fc bfc" id="L1289" title="All 2 branches covered.">				switch (typeIdent.getKey()) {</span>
 				case CLASS:
 				case DATA_ENTITY:
 				case DATA_ENTITY_1:
@@ -1292,17 +1294,17 @@ import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavio
 				case DATA_PARTICIPANT:
 				case DATA_PARTICIPANT_1:
 				case DATA_PARTICIPANT_2:
-<span class="fc" id="L1295">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
-<span class="fc" id="L1296">							typeIdent.getValue());</span>
+<span class="fc" id="L1297">					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),</span>
+<span class="fc" id="L1298">							typeIdent.getValue());</span>
 				}
-<span class="fc" id="L1298">			}</span>
+<span class="fc" id="L1300">			}</span>
 
 		}
 
 		// Restore link state after group creation if needed
-<span class="fc" id="L1303">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1305">		addTopOpenedLinkIfNeeded();</span>
 
-<span class="fc" id="L1305">	}</span>
+<span class="fc" id="L1307">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
