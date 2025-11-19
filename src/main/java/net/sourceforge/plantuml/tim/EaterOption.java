@@ -52,13 +52,24 @@ public class EaterOption extends Eater {
 		skipSpaces();
 		final String key = eatAndGetVarname();
 		skipSpaces();
-		final TValue value = eatExpression(context, memory);
+		TValue value;
+		try {
+			value = eatExpression(context, memory);
+		} catch (EaterException e) {
+			// Sorry, not great...
+			value = null;
+		}
 		skipSpaces();
 		final OptionKey optionKey = OptionKey.lazyFrom(key);
 		if (optionKey == null)
 			context.getPreprocessingArtifact().addWarning(new Warning("No such !option " + key));
+		else if (value == null && optionKey.getDefaultValue() == null)
+			context.getPreprocessingArtifact().addWarning(new Warning("No default value for " + key));
+		else if (value == null)
+			context.getPreprocessingArtifact().getOption().define(optionKey, optionKey.getDefaultValue());
 		else
 			context.getPreprocessingArtifact().getOption().define(optionKey, value.toString());
+
 	}
 
 }

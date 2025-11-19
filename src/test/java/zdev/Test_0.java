@@ -32,7 +32,7 @@ However, if your test are interesting, you can add them to the "pdiff" project.
 See https://github.com/plantuml/pdiff
 
  */
-public class Test_0000 {
+public class Test_0 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
@@ -45,7 +45,7 @@ public class Test_0000 {
 		final File file = getJavaFile();
 		final FileFormatOption options = new FileFormatOption(FileFormat.PNG);
 
-		final File outputDirectory = new File("outputdev", "png").getAbsoluteFile();
+		final File outputDirectory = new File("outputdev").getAbsoluteFile();
 		outputDirectory.mkdirs();
 
 		final SourceFileReader reader = new SourceFileReader(Defines.createWithFileName(file), file, outputDirectory,
