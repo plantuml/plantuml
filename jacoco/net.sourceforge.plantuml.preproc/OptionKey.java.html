@@ -37,23 +37,37 @@ package net.sourceforge.plantuml.preproc;
 
 <span class="fc" id="L38">public enum OptionKey {</span>
 
-<span class="fc" id="L40">	LANGUAGE, USE_DESCRIPTIVE_NAMES, HANDWRITTEN, DEBUG, SVG_DESC, SVG_TITLE;</span>
+<span class="fc" id="L40">	LANGUAGE, USE_DESCRIPTIVE_NAMES, HANDWRITTEN(&quot;true&quot;), DEBUG(&quot;true&quot;), SVG_DESC, SVG_TITLE;</span>
+
+	private final String defaultValue;
+
+	private OptionKey() {
+<span class="fc" id="L45">		this(null);</span>
+<span class="fc" id="L46">	}</span>
+
+<span class="fc" id="L48">	private OptionKey(String defaultValue) {</span>
+<span class="fc" id="L49">		this.defaultValue = defaultValue;</span>
+<span class="fc" id="L50">	}</span>
+
+	public final String getDefaultValue() {
+<span class="nc" id="L53">		return defaultValue;</span>
+	}
 
 	public static String simplify(String s) {
-<span class="nc" id="L43">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L57">		final StringBuilder result = new StringBuilder();</span>
 
-<span class="nc bnc" id="L45" title="All 2 branches missed.">		for (char c : s.toCharArray())</span>
-<span class="nc bnc" id="L46" title="All 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
-<span class="nc" id="L47">				result.append(Character.toLowerCase(c));</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (char c : s.toCharArray())</span>
+<span class="nc bnc" id="L60" title="All 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
+<span class="nc" id="L61">				result.append(Character.toLowerCase(c));</span>
 
-<span class="nc" id="L49">		return result.toString();</span>
+<span class="nc" id="L63">		return result.toString();</span>
 	}
 
 	public static OptionKey lazyFrom(String s) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		for (OptionKey key : values())</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">			if (simplify(s).equals(simplify(key.name())))</span>
-<span class="nc" id="L55">				return key;</span>
-<span class="nc" id="L56">		return null;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (OptionKey key : values())</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (simplify(s).equals(simplify(key.name())))</span>
+<span class="nc" id="L69">				return key;</span>
+<span class="nc" id="L70">		return null;</span>
 	}
 
 }
