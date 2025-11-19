@@ -69,15 +69,15 @@ public class CommandCreoleEmoji implements Command {
 <span class="nc bnc" id="L69" title="All 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L70">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L72">		final String colorName1 = m.group(2);</span>
-<span class="nc" id="L73">		final String emoji = m.group(3);</span>
-<span class="nc" id="L74">		final double scale = Parser.getScale(m.group(4), 1);</span>
-<span class="nc" id="L75">		final String colorName2 = Parser.getColor(m.group(4));</span>
-		
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (stripe != null) {</span>
+<span class="nc" id="L73">			final String colorName1 = m.group(2);</span>
+<span class="nc" id="L74">			final String emoji = m.group(3);</span>
+<span class="nc" id="L75">			final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="nc" id="L76">			final String colorName2 = Parser.getColor(m.group(4));</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
+<span class="nc" id="L78">			stripe.addEmoji(emoji, scale, colorName);</span>
+		}
 
-
-<span class="nc" id="L80">		stripe.addEmoji(emoji, scale, colorName);</span>
 <span class="nc" id="L81">		return line.substring(m.group(1).length());</span>
 	}
 

@@ -78,7 +78,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 public class FtileBox extends AbstractFtile {
 
 	private final ClockwiseTopRightBottomLeft padding;
-	private final ClockwiseTopRightBottomLeft margin;
+	// private final ClockwiseTopRightBottomLeft margin;
 
 	private final TextBlock tb;
 <span class="fc" id="L84">	private double roundCorner = 25;</span>
@@ -168,7 +168,7 @@ public class FtileBox extends AbstractFtile {
 
 <span class="fc" id="L169">		this.horizontalAlignment = style.getHorizontalAlignment();</span>
 <span class="fc" id="L170">		this.padding = style.getPadding();</span>
-<span class="fc" id="L171">		this.margin = style.getMargin();</span>
+		// this.margin = style.getMargin();
 <span class="fc" id="L172">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
 <span class="fc" id="L173">		this.shadowing = style.getShadowing();</span>
 
