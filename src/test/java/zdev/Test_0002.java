@@ -21,9 +21,12 @@ import net.sourceforge.plantuml.preproc.Defines;
 https://github.com/plantuml/plantuml/issues/2436
 
 @startuml
-:<:robot:> the robot; <<foo>>
-:hello1;
-:hello2;
+repeat
+  :<:robot:> the robot; <<foo>>
+  :hello1;
+  :hello2;
+repeat while (again?)
+
 @enduml
 
  */

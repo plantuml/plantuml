@@ -45,13 +45,17 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.command.Command;
+import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleEmoji;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
@@ -61,7 +65,9 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class FtileBoxEmoji extends AbstractFtile {
 
-	private final TextBlock tb;
+	private static final int MARGIN = 5;
+	private final TextBlock emoji;
+	private final TextBlock name;
 
 	private final LinkRendering inRendering;
 	private final Swimlane swimlane;
@@ -112,21 +118,39 @@ public class FtileBoxEmoji extends AbstractFtile {
 
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 
-		this.tb = label.create(fc, HorizontalAlignment.LEFT, skinParam);
+		final Command commandCreoleEmoji = CommandCreoleEmoji.create();
+		final String s = label.get(0).toString();
+		if (commandCreoleEmoji.matchingSize(s) == 0) {
+			this.emoji = label.create(fc, HorizontalAlignment.LEFT, skinParam);
+			this.name = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		} else {
+			final String remaining = commandCreoleEmoji.executeAndGetRemaining(s, null);
+
+			this.emoji = Display.create(s.substring(0, s.length() - remaining.length())).create(fc,
+					HorizontalAlignment.LEFT, skinParam);
+			this.name = Display.create(s.substring(remaining.length())).create(fc, HorizontalAlignment.LEFT, skinParam);
+		}
 
 	}
 
 	public void drawU(UGraphic ug) {
-//		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
+		emoji.drawU(ug);
 
-		tb.drawU(ug);
+		if (name != TextBlockUtils.EMPTY_TEXT_BLOCK) {
+			final double delta = emoji.calculateDimension(ug.getStringBounder()).getWidth() + MARGIN;
+			name.drawU(ug.apply(UTranslate.dx(delta)));
+		}
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		XDimension2D dimRaw = tb.calculateDimension(stringBounder);
+		XDimension2D dimEmoji = emoji.calculateDimension(stringBounder);
+		XDimension2D dimName = name.calculateDimension(stringBounder);
 
-		return new FtileGeometry(dimRaw.getWidth(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0, dimRaw.getHeight());
+		final double width = dimEmoji.getWidth() + MARGIN + dimName.getWidth();
+		final double height = Math.max(dimEmoji.getHeight(), dimName.getHeight());
+
+		return new FtileGeometry(width, height, dimEmoji.getWidth() / 2, 0, dimEmoji.getHeight());
 	}
 
 	public Collection<Ftile> getMyChildren() {
