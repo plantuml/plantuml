@@ -120,15 +120,19 @@ public class FtileBoxEmoji extends AbstractFtile {
 
 		final Command commandCreoleEmoji = CommandCreoleEmoji.create();
 		final String s = label.get(0).toString();
-		if (commandCreoleEmoji.matchingSize(s) == 0) {
+		final int tmp = commandCreoleEmoji.matchingSize(s);
+		if (tmp == 0) {
 			this.emoji = label.create(fc, HorizontalAlignment.LEFT, skinParam);
 			this.name = TextBlockUtils.EMPTY_TEXT_BLOCK;
 		} else {
 			final String remaining = commandCreoleEmoji.executeAndGetRemaining(s, null);
 
-			this.emoji = Display.create(s.substring(0, s.length() - remaining.length())).create(fc,
-					HorizontalAlignment.LEFT, skinParam);
-			this.name = Display.create(s.substring(remaining.length())).create(fc, HorizontalAlignment.LEFT, skinParam);
+			final int position = s.length() - remaining.length();
+			final String part1 = s.substring(0, position);
+			final String part2 = s.substring(position);
+
+			this.emoji = Display.create(part1).create(fc, HorizontalAlignment.LEFT, skinParam);
+			this.name = Display.create(part2).create(fc, HorizontalAlignment.LEFT, skinParam);
 		}
 
 	}
