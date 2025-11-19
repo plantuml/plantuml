@@ -120,41 +120,45 @@ public class FtileBoxEmoji extends AbstractFtile {
 
 <span class="nc" id="L121">		final Command commandCreoleEmoji = CommandCreoleEmoji.create();</span>
 <span class="nc" id="L122">		final String s = label.get(0).toString();</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (commandCreoleEmoji.matchingSize(s) == 0) {</span>
-<span class="nc" id="L124">			this.emoji = label.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
-<span class="nc" id="L125">			this.name = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L123">		final int tmp = commandCreoleEmoji.matchingSize(s);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (tmp == 0) {</span>
+<span class="nc" id="L125">			this.emoji = label.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L126">			this.name = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 		} else {
-<span class="nc" id="L127">			final String remaining = commandCreoleEmoji.executeAndGetRemaining(s, null);</span>
+<span class="nc" id="L128">			final String remaining = commandCreoleEmoji.executeAndGetRemaining(s, null);</span>
 
-<span class="nc" id="L129">			this.emoji = Display.create(s.substring(0, s.length() - remaining.length())).create(fc,</span>
-					HorizontalAlignment.LEFT, skinParam);
-<span class="nc" id="L131">			this.name = Display.create(s.substring(remaining.length())).create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L130">			final int position = s.length() - remaining.length();</span>
+<span class="nc" id="L131">			final String part1 = s.substring(0, position);</span>
+<span class="nc" id="L132">			final String part2 = s.substring(position);</span>
+
+<span class="nc" id="L134">			this.emoji = Display.create(part1).create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L135">			this.name = Display.create(part2).create(fc, HorizontalAlignment.LEFT, skinParam);</span>
 		}
 
-<span class="nc" id="L134">	}</span>
+<span class="nc" id="L138">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L137">		emoji.drawU(ug);</span>
+<span class="nc" id="L141">		emoji.drawU(ug);</span>
 
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (name != TextBlockUtils.EMPTY_TEXT_BLOCK) {</span>
-<span class="nc" id="L140">			final double delta = emoji.calculateDimension(ug.getStringBounder()).getWidth() + MARGIN;</span>
-<span class="nc" id="L141">			name.drawU(ug.apply(UTranslate.dx(delta)));</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (name != TextBlockUtils.EMPTY_TEXT_BLOCK) {</span>
+<span class="nc" id="L144">			final double delta = emoji.calculateDimension(ug.getStringBounder()).getWidth() + MARGIN;</span>
+<span class="nc" id="L145">			name.drawU(ug.apply(UTranslate.dx(delta)));</span>
 		}
-<span class="nc" id="L143">	}</span>
+<span class="nc" id="L147">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L147">		XDimension2D dimEmoji = emoji.calculateDimension(stringBounder);</span>
-<span class="nc" id="L148">		XDimension2D dimName = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L151">		XDimension2D dimEmoji = emoji.calculateDimension(stringBounder);</span>
+<span class="nc" id="L152">		XDimension2D dimName = name.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L150">		final double width = dimEmoji.getWidth() + MARGIN + dimName.getWidth();</span>
-<span class="nc" id="L151">		final double height = Math.max(dimEmoji.getHeight(), dimName.getHeight());</span>
+<span class="nc" id="L154">		final double width = dimEmoji.getWidth() + MARGIN + dimName.getWidth();</span>
+<span class="nc" id="L155">		final double height = Math.max(dimEmoji.getHeight(), dimName.getHeight());</span>
 
-<span class="nc" id="L153">		return new FtileGeometry(width, height, dimEmoji.getWidth() / 2, 0, dimEmoji.getHeight());</span>
+<span class="nc" id="L157">		return new FtileGeometry(width, height, dimEmoji.getWidth() / 2, 0, dimEmoji.getHeight());</span>
 	}
 
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L157">		return Collections.emptyList();</span>
+<span class="nc" id="L161">		return Collections.emptyList();</span>
 	}
 
 }
