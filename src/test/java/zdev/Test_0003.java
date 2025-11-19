@@ -22,14 +22,15 @@ https://github.com/plantuml/plantuml/issues/2436
 
 @startuml
 repeat
-  :<:robot:>; <<foo>>
-  :hello;
+  :<:robot:> the robot; <<foo>>
+  :hello1;
   :hello2;
-repeat while (again)
+repeat while (again?)
+
 @enduml
 
  */
-public class Test_0002 {
+public class Test_0003 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
