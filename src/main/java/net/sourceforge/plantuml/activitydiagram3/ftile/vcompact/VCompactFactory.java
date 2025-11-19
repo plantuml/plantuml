@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileAssemblySimple;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxEmoji;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleEndCross;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleSpot;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
@@ -135,6 +136,9 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors, Stereotype stereotype,
 			StyleBuilder styleBuilder) {
+		if (stereotype != null && stereotype.isFoo())
+			return FtileBoxEmoji.create(colors.mute(skinParam), label, swimlane, stereotype, styleBuilder);
+
 		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype, styleBuilder);
 	}
 
