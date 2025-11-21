@@ -63,7 +63,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandGrouping.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf(1, "TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group)"), //
+				new RegexLeaf(1, "TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group|partition)"), //
 				new RegexLeaf(2, "COLORS", "((?<!else)(?<!also)(?<!end)#\\w+)?(?:[%s]+(#\\w+))?"), //
 				new RegexOptional(//
 						new RegexConcat( //
@@ -72,43 +72,45 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 						)), RegexLeaf.end());
 	}
 
-	static private final Pattern p = Pattern.compile("^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$");
+	static private final Pattern TRAILING_BRACKET_CONTENT_PATTERN = Pattern
+			.compile("^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$");
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-		String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
-		final String s = arg.get("COLORS", 0);
 		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();
-		HColor backColorElement = null;
-		if (s != null) {
-			backColorElement = colorSet.getColor(s);
-		}
-		final String s2 = arg.get("COLORS", 1);
-		HColor backColorGeneral = null;
-		if (s2 != null) {
-			backColorGeneral = colorSet.getColor(s2);
-		}
+
+		final HColor backColorElement = getColor(arg.get("COLORS", 0), colorSet);
+		final HColor backColorGeneral = getColor(arg.get("COLORS", 1), colorSet);
+
+		String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
 		String comment = arg.get("COMMENT", 0);
 		final GroupingType groupingType = GroupingType.getType(type);
-		if ("group".equals(type)) {
+		if ("group".equals(type))
 			if (StringUtils.isEmpty(comment)) {
 				comment = "group";
 			} else {
-				final Matcher m = p.matcher(comment);
+				final Matcher m = TRAILING_BRACKET_CONTENT_PATTERN.matcher(comment);
 				if (m.find()) {
 					type = m.group(1);
 					comment = m.group(2);
 				}
 			}
-		}
 
 		final boolean parallel = arg.get("PARALLEL", 0) != null;
 		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,
 				parallel);
-		if (result == false) {
+
+		if (result == false)
 			return CommandExecutionResult.error("Cannot create group");
-		}
+
 		return CommandExecutionResult.ok();
 	}
+
+	private HColor getColor(String color, HColorSet colorSet) throws NoSuchColorException {
+		if (color == null)
+			return null;
+		return colorSet.getColor(color);
+	}
+
 }

@@ -53,9 +53,9 @@ public class GroupingStart extends Grouping {
 	final private GroupingStart parent;
 	private boolean parallel = false;
 
-	public GroupingStart(String title, String comment, HColor backColorGeneral, HColor backColorElement,
+	public GroupingStart(GroupingType type, String title, String comment, HColor backColorGeneral, HColor backColorElement,
 			GroupingStart parent, StyleBuilder styleBuilder) {
-		super(title, comment, GroupingType.START, backColorElement, styleBuilder);
+		super(title, comment, type, backColorElement, styleBuilder);
 		this.backColorGeneral = backColorGeneral;
 		this.parent = parent;
 	}

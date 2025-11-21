@@ -35,34 +35,39 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Locale;
+
 public enum GroupingType {
-	START, ELSE, END;
+	START, START_PARTITION, ELSE, END;
 
 	public static GroupingType getType(String s) {
-		if (s.equalsIgnoreCase("opt")) {
+		switch (s.toLowerCase(Locale.US)) {
+		case "opt":
+		case "alt":
+		case "loop":
+		case "par":
+		case "par2":
+		case "break":
+		case "group":
+		case "critical":
 			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("alt")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("loop")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("par")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("par2")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("break")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("group")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("critical")) {
-			return GroupingType.START;
-		} else if (s.equalsIgnoreCase("also")) {
-			return GroupingType.ELSE;
-		} else if (s.equalsIgnoreCase("else")) {
-			return GroupingType.ELSE;
-		} else if (s.equalsIgnoreCase("end")) {
-			return GroupingType.END;
-		}
 
-		throw new IllegalArgumentException();
+		case "partition":
+			return GroupingType.START_PARTITION;
+
+		case "also":
+		case "else":
+			return GroupingType.ELSE;
+
+		case "end":
+			return GroupingType.END;
+
+		default:
+			throw new IllegalArgumentException(s);
+		}
+	}
+
+	public boolean isStart() {
+		return this == START || this == START_PARTITION;
 	}
 }

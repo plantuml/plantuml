@@ -187,7 +187,7 @@ public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
 	}
 
 	private Node buildGrouping(Node currentFragment, Grouping grouping) {
-		if (grouping.getType() == GroupingType.START) {
+		if (grouping.getType().isStart()) {
 			Element group = createUmlElement(grouping, "fragment", "CombinedFragment");
 			group.setAttribute("interactionOperator", grouping.getTitle());
 			currentFragment.appendChild(group);

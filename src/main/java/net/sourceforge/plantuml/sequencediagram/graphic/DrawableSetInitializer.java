@@ -341,7 +341,7 @@ class DrawableSetInitializer {
 	final private InGroupablesStack inGroupableStack = new InGroupablesStack();
 
 	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart start, ParticipantRange range) {
-		if (start.getType() != GroupingType.START)
+		if (start.getType().isStart() == false)
 			throw new IllegalStateException();
 
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), start.getBackColorElement(),

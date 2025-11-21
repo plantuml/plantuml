@@ -81,6 +81,7 @@ public class GroupingTile extends AbstractTile {
 	private final Display display;
 
 	private double bodyHeight;
+	private final TileArguments tileArguments;
 
 	public Event getEvent() {
 		return start;
@@ -99,6 +100,7 @@ public class GroupingTile extends AbstractTile {
 	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
 			TileArguments tileArgumentsOriginal, YGauge currentY) {
 		super(tileArgumentsBackColorChanged.getStringBounder(), currentY);
+		this.tileArguments = tileArgumentsOriginal;
 		final Real firstY = currentY.getMax();
 		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();
 		this.start = start;
@@ -158,7 +160,7 @@ public class GroupingTile extends AbstractTile {
 
 	}
 
-	private Component getComponent(StringBounder stringBounder) {
+	protected Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponent(start.getUsedStyles(), ComponentType.GROUPING_HEADER_TEOZ, null,
 				skinParam, display);
 		return comp;
@@ -168,23 +170,24 @@ public class GroupingTile extends AbstractTile {
 		return getComponent(stringBounder).getPreferredDimension(stringBounder);
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
+		final Area area = getArea(stringBounder);
 
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
 		if (YGauge.USE_ME) {
-			comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), getYGauge().getMin().getCurrentValue())), area,
-					(Context2D) ug);
+			comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getYGauge().getMin().getCurrentValue())),
+					area, (Context2D) ug);
 		} else {
 			if (((Context2D) ug).isBackground()) {
 				drawBackground(ug, area);
 				return;
 			}
-			comp.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())), area, (Context2D) ug);
+			comp.drawU(ug.apply(UTranslate.dx(minCurrentValueForDrawing())), area, (Context2D) ug);
 			drawAllElses(ug);
 		}
 
@@ -199,22 +202,20 @@ public class GroupingTile extends AbstractTile {
 		}
 	}
 
+	protected Area getArea(final StringBounder stringBounder) {
+		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
+		return area;
+	}
+
+	protected double minCurrentValueForDrawing() {
+		return min.getCurrentValue();
+	}
+
 	private void drawBackground(UGraphic ug, Area area) {
 		final Style style = start.getUsedStyles()[0];
 		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final double round = style.value(PName.RoundCorner).asDouble();
-		final XDimension2D dimensionToUse = area.getDimensionToUse();
-		final Blotter blotter = new Blotter(dimensionToUse, back, round);
-
-		for (Tile tile : tiles)
-			if (tile instanceof ElseTile) {
-				final ElseTile elseTile = (ElseTile) tile;
-				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
-				blotter.addChange(ypos + 1, elseTile.getBackColorGeneral());
-			}
-
-		blotter.closeChanges();
-		blotter.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())));
+		drawCompBackground(ug, area, back, round);
 
 		final StringBounder stringBounder = ug.getStringBounder();
 
@@ -231,7 +232,22 @@ public class GroupingTile extends AbstractTile {
 
 	}
 
-	private double getTotalHeight(StringBounder stringBounder) {
+	protected void drawCompBackground(UGraphic ug, Area area, final HColor back, final double round) {
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
+		final Blotter blotter = new Blotter(dimensionToUse, back, round);
+
+		for (Tile tile : tiles)
+			if (tile instanceof ElseTile) {
+				final ElseTile elseTile = (ElseTile) tile;
+				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
+				blotter.addChange(ypos + 1, elseTile.getBackColorGeneral());
+			}
+
+		blotter.closeChanges();
+		blotter.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())));
+	}
+
+	final protected double getTotalHeight(StringBounder stringBounder) {
 		final XDimension2D dimIfEmpty = getPreferredDimensionIfEmpty(stringBounder);
 		return bodyHeight + dimIfEmpty.getHeight() + MARGINY_MAGIC / 2;
 	}
@@ -306,14 +322,15 @@ public class GroupingTile extends AbstractTile {
 
 	}
 
-	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full, GroupingTile groupingTile) {
+	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full,
+			GroupingTile groupingTile) {
 		final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
 		final ArrayList<CommonTile> local2 = new ArrayList<>();
-		fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles,
-				local2, full);
+		fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles, local2, full);
 	}
 
-	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List<CommonTile> full, TileParallel tileParallel) {
+	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List<CommonTile> full,
+			TileParallel tileParallel) {
 		final double yPointAll = tileParallel.getContactPointRelative();
 		for (Tile tile : tileParallel.getTiles()) {
 
@@ -409,4 +426,19 @@ public class GroupingTile extends AbstractTile {
 			}
 		}
 	}
+	
+	public GroupingStart getGroupingStart() {
+		return start;
+	}
+
+	public TileArguments getTileArguments() {
+		return tileArguments;
+	}
+
+	public ISkinParam getSkinParam() {
+		return skinParam;
+	}
+
+
+
 }

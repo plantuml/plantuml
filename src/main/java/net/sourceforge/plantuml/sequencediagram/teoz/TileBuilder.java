@@ -157,9 +157,16 @@ public class TileBuilder {
 			tiles.add(new DividerTile(divider, tileArguments, currentY));
 		} else if (ev instanceof GroupingStart) {
 			final GroupingStart start = (GroupingStart) ev;
-			final GroupingTile groupingTile = new GroupingTile(it, start,
-					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),
-					tileArguments, currentY);
+			final AbstractTile groupingTile;
+			if (start.getType() == GroupingType.START_PARTITION)
+				groupingTile = new PartitionTile(it, start,
+						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),
+						tileArguments, currentY);
+			else
+				groupingTile = new GroupingTile(it, start,
+						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),
+						tileArguments, currentY);
+
 			if (YGauge.USE_ME == false)
 				tiles.add(new EmptyTile(4, groupingTile, currentY));
 			tiles.add(groupingTile);

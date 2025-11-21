@@ -385,7 +385,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public boolean grouping(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, boolean parallel) {
-		if (type != GroupingType.START && openGroupings.size() == 0)
+		if (type.isStart() == false && openGroupings.size() == 0)
 			return false;
 
 		if (backColorGeneral == null)
@@ -393,14 +393,20 @@ public class SequenceDiagram extends UmlDiagram {
 
 		final GroupingStart top = openGroupings.size() > 0 ? openGroupings.get(0) : null;
 
-		final Grouping g = type == GroupingType.START
-				? new GroupingStart(title, comment, backColorGeneral, backColorElement, top,
-						getSkinParam().getCurrentStyleBuilder())
-				: new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,
-						getSkinParam().getCurrentStyleBuilder());
+		final Grouping g;
+		switch (type) {
+		case START_PARTITION:
+		case START:
+			g = new GroupingStart(type, title, comment, backColorGeneral, backColorElement, top,
+					getSkinParam().getCurrentStyleBuilder());
+			break;
+		default:
+			g = new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,
+					getSkinParam().getCurrentStyleBuilder());
+		}
 		events.add(g);
 
-		if (type == GroupingType.START) {
+		if (type.isStart()) {
 			if (parallel)
 				((GroupingStart) g).goParallel();
 
