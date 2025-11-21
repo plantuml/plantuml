@@ -24,7 +24,7 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - uses: graalvm/setup-graalvm@v1
         with:
