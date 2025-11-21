@@ -301,8 +301,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	public CommandExecutionResult createClock(String code, String full, int period, int pulse, int offset,
 			boolean compact, Stereotype stereotype) {
-		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset,
-				compactByDefault, stereotype);
+		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,
+				stereotype);
 		players.put(code, player);
 		clocks.put(code, player);
 		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);
@@ -405,6 +405,10 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		if (sdf == null)
 			return TimingFormat.DATE;
 		return TimingFormat.create(sdf);
+	}
+
+	public void setStopAt(TimeTick timeTick) {
+		ruler.setStopAt(timeTick);
 	}
 
 }

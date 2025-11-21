@@ -71,7 +71,8 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandUseDateFormat;
 public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public TimingDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public TimingDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new TimingDiagram(source, preprocessing);
 	}
 
@@ -100,12 +101,12 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandTicks());
 		cmds.add(new CommandPixelHeight());
 		cmds.add(new CommandUseDateFormat());
+		// cmds.add(new CommandStopAt());
 	}
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.TIMING;
 	}
-
 
 }

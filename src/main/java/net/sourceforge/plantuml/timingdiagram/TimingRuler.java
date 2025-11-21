@@ -333,4 +333,10 @@ public class TimingRuler {
 		return (Math.abs(a));
 	}
 
+
+	public void setStopAt(TimeTick timeTick) {
+		// WIP
+		
+	}
+
 }
