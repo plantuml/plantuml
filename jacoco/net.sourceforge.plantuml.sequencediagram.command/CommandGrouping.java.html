@@ -63,7 +63,7 @@ public class CommandGrouping extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	static IRegex getRegexConcat() {
 <span class="fc" id="L64">		return RegexConcat.build(CommandGrouping.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(opt|alt|loop|par|par2|break|critical|else|end|also|group)&quot;), //
+				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(opt|alt|loop|par|par2|break|critical|else|end|also|group|partition)&quot;), //
 				new RegexLeaf(2, &quot;COLORS&quot;, &quot;((?&lt;!else)(?&lt;!also)(?&lt;!end)#\\w+)?(?:[%s]+(#\\w+))?&quot;), //
 				new RegexOptional(//
 						new RegexConcat( //
@@ -72,44 +72,46 @@ public class CommandGrouping extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc" id="L72">						)), RegexLeaf.end());</span>
 	}
 
-<span class="fc" id="L75">	static private final Pattern p = Pattern.compile(&quot;^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$&quot;);</span>
+<span class="fc" id="L75">	static private final Pattern TRAILING_BRACKET_CONTENT_PATTERN = Pattern</span>
+<span class="fc" id="L76">			.compile(&quot;^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$&quot;);</span>
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L80">		String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
-<span class="nc" id="L81">		final String s = arg.get(&quot;COLORS&quot;, 0);</span>
-<span class="nc" id="L82">		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
-<span class="nc" id="L83">		HColor backColorElement = null;</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (s != null) {</span>
-<span class="nc" id="L85">			backColorElement = colorSet.getColor(s);</span>
-		}
-<span class="nc" id="L87">		final String s2 = arg.get(&quot;COLORS&quot;, 1);</span>
-<span class="nc" id="L88">		HColor backColorGeneral = null;</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (s2 != null) {</span>
-<span class="nc" id="L90">			backColorGeneral = colorSet.getColor(s2);</span>
-		}
-<span class="nc" id="L92">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
-<span class="nc" id="L93">		final GroupingType groupingType = GroupingType.getType(type);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (&quot;group&quot;.equals(type)) {</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (StringUtils.isEmpty(comment)) {</span>
-<span class="nc" id="L96">				comment = &quot;group&quot;;</span>
+<span class="nc" id="L81">		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
+
+<span class="nc" id="L83">		final HColor backColorElement = getColor(arg.get(&quot;COLORS&quot;, 0), colorSet);</span>
+<span class="nc" id="L84">		final HColor backColorGeneral = getColor(arg.get(&quot;COLORS&quot;, 1), colorSet);</span>
+
+<span class="nc" id="L86">		String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc" id="L87">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
+<span class="nc" id="L88">		final GroupingType groupingType = GroupingType.getType(type);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (&quot;group&quot;.equals(type))</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (StringUtils.isEmpty(comment)) {</span>
+<span class="nc" id="L91">				comment = &quot;group&quot;;</span>
 			} else {
-<span class="nc" id="L98">				final Matcher m = p.matcher(comment);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (m.find()) {</span>
-<span class="nc" id="L100">					type = m.group(1);</span>
-<span class="nc" id="L101">					comment = m.group(2);</span>
+<span class="nc" id="L93">				final Matcher m = TRAILING_BRACKET_CONTENT_PATTERN.matcher(comment);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (m.find()) {</span>
+<span class="nc" id="L95">					type = m.group(1);</span>
+<span class="nc" id="L96">					comment = m.group(2);</span>
 				}
 			}
-		}
 
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="nc" id="L107">		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="nc" id="L101">		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,</span>
 				parallel);
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (result == false) {</span>
-<span class="nc" id="L110">			return CommandExecutionResult.error(&quot;Cannot create group&quot;);</span>
-		}
-<span class="nc" id="L112">		return CommandExecutionResult.ok();</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (result == false)</span>
+<span class="nc" id="L105">			return CommandExecutionResult.error(&quot;Cannot create group&quot;);</span>
+
+<span class="nc" id="L107">		return CommandExecutionResult.ok();</span>
 	}
+
+	private HColor getColor(String color, HColorSet colorSet) throws NoSuchColorException {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L112">			return null;</span>
+<span class="nc" id="L113">		return colorSet.getColor(color);</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

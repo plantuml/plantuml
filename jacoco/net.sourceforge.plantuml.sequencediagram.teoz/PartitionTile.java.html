@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PartitionTile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sequencediagram.teoz</a> &gt; <span class="el_source">PartitionTile.java</span></div><h1>PartitionTile.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sequencediagram.teoz;
+
+import java.util.Iterator;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.GroupingStart;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+
+public class PartitionTile extends GroupingTile {
+
+	public PartitionTile(Iterator&lt;Event&gt; it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
+			TileArguments tileArgumentsOriginal, YGauge currentY) {
+
+<span class="nc" id="L62">		super(it, start, tileArgumentsBackColorChanged, tileArgumentsOriginal, currentY);</span>
+<span class="nc" id="L63">	}</span>
+
+	@Override
+	protected Component getComponent(StringBounder stringBounder) {
+
+<span class="nc" id="L68">		return new Component() {</span>
+
+			@Override
+			public StyleSignature getStyleSignature() {
+<span class="nc" id="L72">				throw new UnsupportedOperationException();</span>
+			}
+
+			@Override
+			public Style[] getUsedStyles() {
+<span class="nc" id="L77">				throw new UnsupportedOperationException();</span>
+			}
+
+			@Override
+			public double getPreferredWidth(StringBounder stringBounder) {
+<span class="nc" id="L82">				throw new UnsupportedOperationException();</span>
+			}
+
+			@Override
+			public double getPreferredHeight(StringBounder stringBounder) {
+<span class="nc" id="L87">				throw new UnsupportedOperationException();</span>
+			}
+
+			@Override
+			public XDimension2D getPreferredDimension(StringBounder stringBounder) {
+<span class="nc" id="L92">				return new XDimension2D(10, 10);</span>
+			}
+
+			@Override
+			public void drawU(UGraphic ug, Area area, Context2D context) {
+<span class="nc" id="L97">				final Style style = getGroupingStart().getUsedStyles()[1];</span>
+<span class="nc" id="L98">				final Display display = Display.create(getGroupingStart().getComment());</span>
+<span class="nc" id="L99">				final TextBlock title = display.create(style.getFontConfiguration(getSkinParam().getIHtmlColorSet()),</span>
+<span class="nc" id="L100">						HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="nc" id="L101">				final double border1 = getBorder1();</span>
+<span class="nc" id="L102">				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;</span>
+
+<span class="nc" id="L104">				title.drawU(ug.apply(UTranslate.dx(border1 + delta)));</span>
+
+<span class="nc" id="L106">				final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
+
+<span class="nc" id="L108">				ug = style.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L109">				ug.apply(UTranslate.dx(border1)).draw(rect);</span>
+
+<span class="nc" id="L111">			}</span>
+		};
+	}
+
+	@Override
+	protected Area getArea(final StringBounder stringBounder) {
+<span class="nc" id="L117">		return Area.create(getWidth(), getTotalHeight(stringBounder));</span>
+	}
+
+	private double getWidth() {
+<span class="nc" id="L121">		return getBorder2() - getBorder1();</span>
+	}
+
+	private double getBorder2() {
+<span class="nc" id="L125">		return getTileArguments().getBorder2();</span>
+	}
+
+	private double getBorder1() {
+<span class="nc" id="L129">		return getTileArguments().getBorder1();</span>
+	}
+
+	@Override
+	protected double minCurrentValueForDrawing() {
+<span class="nc" id="L134">		return 0;</span>
+	}
+
+	@Override
+	protected void drawCompBackground(UGraphic ug, Area area, final HColor back, final double round) {
+<span class="nc" id="L139">		final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
+<span class="nc" id="L140">		ug.apply(UTranslate.dx(getBorder1())).apply(back.bg()).draw(rect);</span>
+<span class="nc" id="L141">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -341,7 +341,7 @@ class DrawableSetInitializer {
 <span class="fc" id="L341">	final private InGroupablesStack inGroupableStack = new InGroupablesStack();</span>
 
 	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart start, ParticipantRange range) {
-<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (start.getType() != GroupingType.START)</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (start.getType().isStart() == false)</span>
 <span class="nc" id="L345">			throw new IllegalStateException();</span>
 
 <span class="nc" id="L347">		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), start.getBackColorElement(),</span>
