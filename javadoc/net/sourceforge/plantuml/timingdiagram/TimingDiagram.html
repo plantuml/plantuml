@@ -222,15 +222,18 @@ implements <a href="Clocks.html" title="interface in net.sourceforge.plantuml.ti
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastPlayer(net.sourceforge.plantuml.timingdiagram.Player)" class="member-name-link">setLastPlayer</a><wbr>(<a href="Player.html" title="class in net.sourceforge.plantuml.timingdiagram">Player</a>&nbsp;player)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeAxisStategy(net.sourceforge.plantuml.timingdiagram.TimeAxisStategy)" class="member-name-link">setTimeAxisStategy</a><wbr>(<a href="TimeAxisStategy.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimeAxisStategy</a>&nbsp;newStrategy)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStopAt(net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">setStopAt</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;timeTick)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateNow(net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">updateNow</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;time)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeAxisStategy(net.sourceforge.plantuml.timingdiagram.TimeAxisStategy)" class="member-name-link">setTimeAxisStategy</a><wbr>(<a href="TimeAxisStategy.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimeAxisStategy</a>&nbsp;newStrategy)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useDateFormat(java.lang.String)" class="member-name-link">useDateFormat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dateFormat)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateNow(net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">updateNow</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;time)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useDateFormat(java.lang.String)" class="member-name-link">useDateFormat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dateFormat)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -493,6 +496,12 @@ implements <a href="Clocks.html" title="interface in net.sourceforge.plantuml.ti
 <dt>Specified by:</dt>
 <dd><code><a href="Clocks.html#getTimingFormatDate()">getTimingFormatDate</a></code>&nbsp;in interface&nbsp;<code><a href="Clocks.html" title="interface in net.sourceforge.plantuml.timingdiagram">Clocks</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setStopAt(net.sourceforge.plantuml.timingdiagram.TimeTick)">
+<h3>setStopAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStopAt</span><wbr><span class="parameters">(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;timeTick)</span></div>
 </section>
 </li>
 </ul>

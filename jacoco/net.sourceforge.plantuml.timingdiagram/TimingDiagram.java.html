@@ -301,8 +301,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	public CommandExecutionResult createClock(String code, String full, int period, int pulse, int offset,
 			boolean compact, Stereotype stereotype) {
-<span class="nc" id="L304">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset,</span>
-				compactByDefault, stereotype);
+<span class="nc" id="L304">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,</span>
+				stereotype);
 <span class="nc" id="L306">		players.put(code, player);</span>
 <span class="nc" id="L307">		clocks.put(code, player);</span>
 <span class="nc" id="L308">		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);</span>
@@ -406,6 +406,10 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 <span class="nc" id="L406">			return TimingFormat.DATE;</span>
 <span class="nc" id="L407">		return TimingFormat.create(sdf);</span>
 	}
+
+	public void setStopAt(TimeTick timeTick) {
+<span class="nc" id="L411">		ruler.setStopAt(timeTick);</span>
+<span class="nc" id="L412">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
