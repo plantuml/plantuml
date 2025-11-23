@@ -60,12 +60,27 @@ public enum PragmaKey {
 	SHOW_DEPRECATION, //
 	SVG_FONT, //
 	SVG_INTERACTIVE, //
-	SVEK_TRACE, //
-	TEOZ, //
+	SVEK_TRACE("true"), //
+	TEOZ("true"), //
 	TEX_SYSTEM, //
 	TEX_PREAMBLE, //
 	USE_INTERMEDIATE_PACKAGES, //
 	USE_VERTICAL_IF;
+	
+	private final String defaultValue;
+	
+	private PragmaKey() {
+		this(null);
+	}
+
+	private PragmaKey(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	public final String getDefaultValue() {
+		return defaultValue;
+	}
+
 
 	private static String simplify(String s) {
 		final StringBuilder result = new StringBuilder();

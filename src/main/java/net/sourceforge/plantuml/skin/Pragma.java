@@ -71,7 +71,11 @@ public class Pragma implements WarningHandler {
 	}
 
 	public String getValue(PragmaKey key) {
-		return values.get(key);
+		final String result = values.get(key);
+//		if (result == null && key.getDefaultValue() != null)
+//			return key.getDefaultValue();
+		
+		return result;
 	}
 
 	public boolean isTrue(PragmaKey key) {
