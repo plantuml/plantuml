@@ -355,10 +355,10 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="nc" id="L355">			pendingCreate = lifeEvent;</span>
 <span class="nc" id="L356">			return null;</span>
 		}
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">		if (lastEventWithDeactivate == null) {</span>
-<span class="nc bnc" id="L359" title="All 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
-<span class="nc" id="L360">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
-<span class="nc" id="L361">				return null;</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">		if (lastEventWithDeactivate == null) {</span>
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
+<span class="fc" id="L360">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
+<span class="fc" id="L361">				return null;</span>
 			}
 <span class="nc bnc" id="L363" title="All 2 branches missed.">			if (p.getInitialLife() == 0)</span>
 <span class="nc" id="L364">				return &quot;You cannot deactivate here&quot;;</span>

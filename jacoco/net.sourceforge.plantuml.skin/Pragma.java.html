@@ -71,31 +71,35 @@ public class Pragma implements WarningHandler {
 <span class="nc" id="L71">	}</span>
 
 	public String getValue(PragmaKey key) {
-<span class="fc" id="L74">		return values.get(key);</span>
+<span class="fc" id="L74">		final String result = values.get(key);</span>
+//		if (result == null &amp;&amp; key.getDefaultValue() != null)
+//			return key.getDefaultValue();
+		
+<span class="fc" id="L78">		return result;</span>
 	}
 
 	public boolean isTrue(PragmaKey key) {
-<span class="fc" id="L78">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L79" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
+<span class="fc" id="L82">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L83" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public boolean isFalse(PragmaKey key) {
-<span class="fc" id="L83">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L84" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
+<span class="fc" id="L87">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L88" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public static boolean legacyReplaceBackslashNByNewline() {
-<span class="fc" id="L88">		return true;</span>
+<span class="fc" id="L92">		return true;</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="nc" id="L93">		this.warnings.add(warning);</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L97">		this.warnings.add(warning);</span>
+<span class="nc" id="L98">	}</span>
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="fc" id="L98">		return this.warnings;</span>
+<span class="fc" id="L102">		return this.warnings;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
