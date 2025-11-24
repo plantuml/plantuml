@@ -58,48 +58,47 @@ public class Pragma implements WarningHandler {
 
 	public void define(String keyName, String value) {
 <span class="fc" id="L60">		final PragmaKey key = PragmaKey.lazyFrom(keyName);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (key != null)</span>
-<span class="fc" id="L62">			values.put(key, value);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (key != null) {</span>
+<span class="pc bpc" id="L62" title="3 of 4 branches missed.">			if (value == null &amp;&amp; key.getDefaultValue() != null)</span>
+<span class="nc" id="L63">				value = key.getDefaultValue();</span>
+<span class="fc" id="L64">			values.put(key, value);</span>
+		}
+<span class="fc" id="L66">	}</span>
 
 	public boolean isDefine(PragmaKey key) {
-<span class="fc" id="L66">		return values.containsKey(key);</span>
+<span class="fc" id="L69">		return values.containsKey(key);</span>
 	}
 
 	public void undefine(PragmaKey key) {
-<span class="nc" id="L70">		values.remove(key);</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L73">		values.remove(key);</span>
+<span class="nc" id="L74">	}</span>
 
 	public String getValue(PragmaKey key) {
-<span class="fc" id="L74">		final String result = values.get(key);</span>
-//		if (result == null &amp;&amp; key.getDefaultValue() != null)
-//			return key.getDefaultValue();
-		
-<span class="fc" id="L78">		return result;</span>
+<span class="fc" id="L77">		return values.get(key);</span>
 	}
 
 	public boolean isTrue(PragmaKey key) {
-<span class="fc" id="L82">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L83" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
+<span class="fc" id="L81">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public boolean isFalse(PragmaKey key) {
-<span class="fc" id="L87">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L88" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
+<span class="fc" id="L86">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public static boolean legacyReplaceBackslashNByNewline() {
-<span class="fc" id="L92">		return true;</span>
+<span class="fc" id="L91">		return true;</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="nc" id="L97">		this.warnings.add(warning);</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L96">		this.warnings.add(warning);</span>
+<span class="nc" id="L97">	}</span>
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="fc" id="L102">		return this.warnings;</span>
+<span class="fc" id="L101">		return this.warnings;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
