@@ -58,8 +58,11 @@ public class Pragma implements WarningHandler {
 
 	public void define(String keyName, String value) {
 		final PragmaKey key = PragmaKey.lazyFrom(keyName);
-		if (key != null)
+		if (key != null) {
+			if (value == null && key.getDefaultValue() != null)
+				value = key.getDefaultValue();
 			values.put(key, value);
+		}
 	}
 
 	public boolean isDefine(PragmaKey key) {
@@ -71,11 +74,7 @@ public class Pragma implements WarningHandler {
 	}
 
 	public String getValue(PragmaKey key) {
-		final String result = values.get(key);
-//		if (result == null && key.getDefaultValue() != null)
-//			return key.getDefaultValue();
-		
-		return result;
+		return values.get(key);
 	}
 
 	public boolean isTrue(PragmaKey key) {
