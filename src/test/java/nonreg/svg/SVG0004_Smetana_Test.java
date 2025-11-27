@@ -50,7 +50,7 @@ Expected result MUST be put between triple brackets
       <line style="stroke:#181818;stroke-width:0.5;"/>
       <line style="stroke:#181818;stroke-width:0.5;"/>
     </g>
-    <g class="link" data-entity-1="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-entity-2="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-uid="lnk5" id="link_Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............._Class 1 with ASCII special chars.r.n.t...........-............._.....................................-...............">
+    <g class="link" data-entity-1="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-entity-2="Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-link-type="dependency" data-uid="lnk5" id="link_Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............._Class 1 with ASCII special chars.r.n.t...........-............._.....................................-...............">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
       <path fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Hello</text>

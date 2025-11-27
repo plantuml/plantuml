@@ -109,6 +109,9 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		group.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
 		group.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
 		group.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
+		final String linkTypeName = link.getType().getLinkTypeName();
+		if (linkTypeName != null)
+			group.put(UGroupType.DATA_LINK_TYPE, linkTypeName);
 		ug.startGroup(group);
 
 		DotPath dotPath = getDotPathInternal();
