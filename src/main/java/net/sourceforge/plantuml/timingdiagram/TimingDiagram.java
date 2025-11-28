@@ -141,7 +141,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();
 			if (generalBackgroundColor != null)
 				ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg())
-						.draw(URectangle.build(getWidthTotal(stringBounder), player.getFullHeight(stringBounder)));
+						.draw(URectangle.build(getWidthTotal(stringBounder), player.panels().getFullHeight(stringBounder)));
 		}
 
 		final UTranslate widthPart1 = UTranslate.dx(part1MaxWidth);
@@ -162,15 +162,15 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 				if (player.isCompact() == false)
 					drawHorizontalSeparator(ugPlayer);
 				player.drawLeftPanel00(ugPlayer);
-				player.drawLeftPanel(ugPlayer.apply(UTranslate.dy(caption)), part1MaxWidth);
-				player.drawRightPanel(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
+				player.panels().drawLeftPanel(ugPlayer.apply(UTranslate.dy(caption)), part1MaxWidth);
+				player.panels().drawRightPanel(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
 			} else {
 				if (player.isCompact() == false)
 					drawHorizontalSeparator(ugPlayer.apply(UTranslate.dy(caption)));
 
 				player.drawLeftPanel00(ugPlayer);
-				player.drawLeftPanel(ugPlayer.apply(UTranslate.dy(caption)), part1MaxWidth);
-				player.drawRightPanel(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
+				player.panels().drawLeftPanel(ugPlayer.apply(UTranslate.dy(caption)), part1MaxWidth);
+				player.panels().drawRightPanel(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
 			}
 			first = false;
 		}
@@ -247,7 +247,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	private double getPart1MaxWidth(StringBounder stringBounder) {
 		double width = 0;
 		for (Player player : players.values()) {
-			final double widthLeftPanel = player.getLeftPanelWidth(stringBounder);
+			final double widthLeftPanel = player.panels().getLeftPanelWidth(stringBounder);
 			width = Math.max(width, widthLeftPanel);
 		}
 
@@ -264,8 +264,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		final UTranslate translate2 = getUTranslateForPlayer(player2, stringBounder)
 				.compose(UTranslate.dy(getHeightForCaptions(stringBounder)));
 
-		final IntricatedPoint pt1 = player1.getTimeProjection(stringBounder, message.getTick1());
-		final IntricatedPoint pt2 = player2.getTimeProjection(stringBounder, message.getTick2());
+		final IntricatedPoint pt1 = player1.panels().getTimeProjection(stringBounder, message.getTick1());
+		final IntricatedPoint pt2 = player2.panels().getTimeProjection(stringBounder, message.getTick2());
 
 		if (pt1 == null || pt2 == null)
 			return;
@@ -285,7 +285,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 //			if (y == 0) {
 //				y += getHeightHighlights(stringBounder);
 //			}
-			y += player.getFullHeight(stringBounder);
+			y += player.panels().getFullHeight(stringBounder);
 		}
 		if (candidat == null)
 			return UTranslate.dy(y);

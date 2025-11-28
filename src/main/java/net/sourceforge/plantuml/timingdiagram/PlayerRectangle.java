@@ -81,7 +81,8 @@ public final class PlayerRectangle extends Player {
 				.withTOBECHANGED(stereotype);
 	}
 
-	protected PlayerPanels getPlayerPanelsSlow() {
+	@Override
+	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FooRibbonRectangle result = new FooRibbonRectangle(ruler, skinParam, notes, suggestedHeight, style);
 		result.setInitialState(initialState, initialColors);

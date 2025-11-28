@@ -68,7 +68,8 @@ public class PlayerBinary extends Player {
 		this.suggestedHeight = 30;
 	}
 
-	protected PlayerPanels getPlayerPanelsSlow() {
+	@Override
+	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		return new FooBinary(ruler, skinParam, suggestedHeight, style, values, constraints, initialState, notes,

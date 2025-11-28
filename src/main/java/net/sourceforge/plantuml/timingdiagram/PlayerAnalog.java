@@ -64,7 +64,8 @@ public class PlayerAnalog extends Player {
 		this.suggestedHeight = 100;
 	}
 
-	protected PlayerPanels getPlayerPanelsSlow() {
+	@Override
+	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		return new FooAnalog(ruler, skinParam, suggestedHeight, style, timeSeries, constraints, initialState,

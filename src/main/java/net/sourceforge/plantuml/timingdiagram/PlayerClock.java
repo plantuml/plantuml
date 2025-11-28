@@ -62,7 +62,8 @@ public class PlayerClock extends Player {
 		this.suggestedHeight = 30;
 	}
 
-	protected PlayerPanels getPlayerPanelsSlow() {
+	@Override
+	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		return new FooClock(ruler, skinParam, suggestedHeight, style, period, pulse, offset);

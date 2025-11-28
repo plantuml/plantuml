@@ -81,7 +81,8 @@ public final class PlayerConcise extends Player {
 				.withTOBECHANGED(stereotype);
 	}
 
-	protected PlayerPanels getPlayerPanelsSlow() {
+	@Override
+	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FooRibbon result = new FooRibbon(ruler, skinParam, notes, /* isCompact(), getTitle(), */ suggestedHeight,
 				style);
