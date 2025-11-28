@@ -34,16 +34,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
@@ -52,24 +43,16 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooRibbon;
 
-public final class PlayerConcise extends Player {
-
-	private final Set<ChangeState> changes = new TreeSet<>();
-	private final List<TimeConstraint> constraints = new ArrayList<>();
-	private final Map<String, String> statesLabel = new LinkedHashMap<String, String>();
-
-	private String initialState;
-	private Colors initialColors;
+public final class PlayerConcise extends AbstractStatePlayer {
 
 	public PlayerConcise(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
 		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
-		this.suggestedHeight = 0;
 	}
 
 	@Override
-	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-		this.constraints.add(new TimeConstraint(1, tick1, tick2, message, skinParam, config));
+	protected double getConstraintOffset() {
+		return 1;
 	}
 
 	@Override
@@ -82,41 +65,14 @@ public final class PlayerConcise extends Player {
 	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FooRibbon result = new FooRibbon(ruler, skinParam, getNotes(), suggestedHeight, style);
-		result.setInitialState(initialState, initialColors);
-		for (ChangeState change : changes)
+		result.setInitialState(getInitialState(), getInitialColors());
+		for (ChangeState change : getChanges())
 			result.addChange(change);
 
-		for (TimeConstraint constraint : constraints)
+		for (TimeConstraint constraint : getConstraints())
 			result.addConstraint(constraint);
 
 		return result;
-	}
-
-	@Override
-	public final void setState(TimeTick now, String comment, Colors color, String... states) {
-		for (int i = 0; i < states.length; i++)
-			states[i] = decodeState(states[i]);
-
-		if (now == null) {
-			this.initialState = states[0];
-			this.initialColors = color;
-		} else {
-			this.changes.add(new ChangeState(now, comment, color, states));
-		}
-
-	}
-
-	private String decodeState(String code) {
-		final String label = statesLabel.get(code);
-		if (label == null)
-			return code;
-
-		return label;
-	}
-
-	@Override
-	public final void defineState(String stateCode, String label) {
-		statesLabel.put(stateCode, label);
 	}
 
 }
