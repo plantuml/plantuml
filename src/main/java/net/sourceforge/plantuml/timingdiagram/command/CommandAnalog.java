@@ -96,7 +96,7 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 		else if (arg.get("STEREOTYPE2", 0) != null)
 			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
 
-		final PlayerAnalog player = diagram.createAnalog(code, full, compact != null, stereotype);
+		final PlayerAnalog player = diagram.createPlayerAnalog(code, full, compact != null, stereotype);
 		final String start = arg.get("START", 0);
 		final String end = arg.get("END", 0);
 		if (start != null && end != null)

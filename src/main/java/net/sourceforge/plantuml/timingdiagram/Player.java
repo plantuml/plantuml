@@ -39,11 +39,11 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -52,9 +52,11 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
 
-public abstract class Player implements TimeProjected {
+public abstract class Player implements PlayerPanels {
 
 	protected final ISkinParam skinParam;
 	protected final TimingRuler ruler;
@@ -63,6 +65,7 @@ public abstract class Player implements TimeProjected {
 	protected int suggestedHeight;
 	protected final Stereotype stereotype;
 	private final HColor generalBackgroundColor;
+	private PlayerPanels cached;
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
@@ -119,14 +122,47 @@ public abstract class Player implements TimeProjected {
 
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
-	public abstract TextBlock getPart1(double fullAvailableWidth, double specialVSpace);
-
-	public abstract UDrawable getPart2();
-
-	public abstract double getFullHeight(StringBounder stringBounder);
+	public final void drawLeftPanel00(UGraphic ug) {
+		// if (isCompact() == false)
+		new PlayerFrame(getTitle(), skinParam).drawFrameTitle(ug);
+	}
 
 	public final void setHeight(int height) {
 		this.suggestedHeight = height;
 	}
+
+	@Override
+	public final void drawLeftPanel(UGraphic ug, final double fullAvailableWidth) {
+		getPlayerPanels().drawLeftPanel(ug, fullAvailableWidth);
+	}
+
+	@Override
+	public final double getLeftPanelWidth(StringBounder stringBounder) {
+		return getPlayerPanels().getLeftPanelWidth(stringBounder);
+	}
+
+	@Override
+	public final void drawRightPanel(UGraphic ug) {
+		getPlayerPanels().drawRightPanel(ug);
+	}
+
+	@Override
+	public final IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+		return getPlayerPanels().getTimeProjection(stringBounder, tick);
+	}
+
+	@Override
+	public final double getFullHeight(StringBounder stringBounder) {
+		return getPlayerPanels().getFullHeight(stringBounder);
+	}
+
+	private PlayerPanels getPlayerPanels() {
+		if (cached == null)
+			cached = getPlayerPanelsSlow();
+
+		return cached;
+	}
+
+	protected abstract PlayerPanels getPlayerPanelsSlow();
 
 }

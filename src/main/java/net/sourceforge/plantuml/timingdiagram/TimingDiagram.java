@@ -161,15 +161,16 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 			if (first) {
 				if (player.isCompact() == false)
 					drawHorizontalSeparator(ugPlayer);
-
-				player.getPart1(part1MaxWidth, caption).drawU(ugPlayer);
-				player.getPart2().drawU(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
+				player.drawLeftPanel00(ugPlayer);
+				player.drawLeftPanel(ugPlayer.apply(UTranslate.dy(caption)), part1MaxWidth);
+				player.drawRightPanel(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
 			} else {
 				if (player.isCompact() == false)
 					drawHorizontalSeparator(ugPlayer.apply(UTranslate.dy(caption)));
 
-				player.getPart1(part1MaxWidth, 0).drawU(ugPlayer.apply(UTranslate.dy(caption)));
-				player.getPart2().drawU(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
+				player.drawLeftPanel00(ugPlayer);
+				player.drawLeftPanel(ugPlayer.apply(UTranslate.dy(caption)), part1MaxWidth);
+				player.drawRightPanel(ugPlayer.apply(widthPart1).apply(UTranslate.dy(caption)));
 			}
 			first = false;
 		}
@@ -245,8 +246,10 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	private double getPart1MaxWidth(StringBounder stringBounder) {
 		double width = 0;
-		for (Player player : players.values())
-			width = Math.max(width, player.getPart1(0, 0).calculateDimension(stringBounder).getWidth());
+		for (Player player : players.values()) {
+			final double widthLeftPanel = player.getLeftPanelWidth(stringBounder);
+			width = Math.max(width, widthLeftPanel);
+		}
 
 		return width;
 	}
@@ -290,36 +293,54 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		throw new IllegalArgumentException();
 	}
 
-	public CommandExecutionResult createRobustConcise(String code, String full, TimingStyle type, boolean compact,
-			Stereotype stereotype, HColor backColor) {
-		final Player player = new PlayerRobustConcise(type, full, getSkinParam(), ruler, compactByDefault || compact,
-				stereotype, backColor);
+	public Player createPlayerRobust(String code, String full, boolean compact, Stereotype stereotype,
+			HColor backColor) {
+		final Player player = new PlayerRobust(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,
+				backColor);
 		players.put(code, player);
 		lastPlayer = player;
-		return CommandExecutionResult.ok();
+		return player;
 	}
 
-	public CommandExecutionResult createClock(String code, String full, int period, int pulse, int offset,
-			boolean compact, Stereotype stereotype) {
+	public Player createPlayerConcise(String code, String full, boolean compact, Stereotype stereotype,
+			HColor backColor) {
+		final Player player = new PlayerConcise(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,
+				backColor);
+		players.put(code, player);
+		lastPlayer = player;
+		return player;
+	}
+
+	public Player createPlayerRectangle(String code, String full, boolean compact, Stereotype stereotype,
+			HColor backColor) {
+		final Player player = new PlayerRectangle(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,
+				backColor);
+		players.put(code, player);
+		lastPlayer = player;
+		return player;
+	}
+
+	public PlayerClock createPlayerClock(String code, String full, int period, int pulse, int offset, boolean compact,
+			Stereotype stereotype) {
 		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,
 				stereotype);
 		players.put(code, player);
 		clocks.put(code, player);
 		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);
 		ruler.addTime(tick);
-		return CommandExecutionResult.ok();
+		return player;
 	}
 
-	public PlayerAnalog createAnalog(String code, String full, boolean compact, Stereotype stereotype) {
+	public PlayerAnalog createPlayerAnalog(String code, String full, boolean compact, Stereotype stereotype) {
 		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault, stereotype);
 		players.put(code, player);
 		return player;
 	}
 
-	public CommandExecutionResult createBinary(String code, String full, boolean compact, Stereotype stereotype) {
+	public Player createPlayerBinary(String code, String full, boolean compact, Stereotype stereotype) {
 		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);
 		players.put(code, player);
-		return CommandExecutionResult.ok();
+		return player;
 	}
 
 	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
