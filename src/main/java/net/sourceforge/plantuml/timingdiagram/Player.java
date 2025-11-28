@@ -34,6 +34,10 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -64,6 +68,20 @@ public abstract class Player {
 	protected final Stereotype stereotype;
 	private final HColor generalBackgroundColor;
 	private PlayerPanels cached;
+
+	private final List<TimingNote> notes = new ArrayList<>();
+
+	public final List<TimingNote> getNotes() {
+		return Collections.unmodifiableList(notes);
+	}
+
+	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
+		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+				SName.note);
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
+	}
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
@@ -111,8 +129,6 @@ public abstract class Player {
 	final protected TextBlock getTitle() {
 		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
-
-	public abstract void addNote(TimeTick now, Display note, Position position, Stereotype stereotype);
 
 	public abstract void defineState(String stateCode, String label);
 

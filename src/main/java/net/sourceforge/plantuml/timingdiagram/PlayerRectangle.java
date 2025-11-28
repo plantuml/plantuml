@@ -43,7 +43,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -52,13 +51,11 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooRibbonRectangle;
-import net.sourceforge.plantuml.utils.Position;
 
 public final class PlayerRectangle extends Player {
 
 	private final Set<ChangeState> changes = new TreeSet<>();
 	private final List<TimeConstraint> constraints = new ArrayList<>();
-	private final List<TimingNote> notes = new ArrayList<>();
 	private final Map<String, String> statesLabel = new LinkedHashMap<String, String>();
 
 	private String initialState;
@@ -84,7 +81,7 @@ public final class PlayerRectangle extends Player {
 	@Override
 	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final FooRibbonRectangle result = new FooRibbonRectangle(ruler, skinParam, notes, suggestedHeight, style);
+		final FooRibbonRectangle result = new FooRibbonRectangle(ruler, skinParam, getNotes(), suggestedHeight, style);
 		result.setInitialState(initialState, initialColors);
 		for (ChangeState change : changes)
 			result.addChange(change);
@@ -114,16 +111,6 @@ public final class PlayerRectangle extends Player {
 			return code;
 
 		return label;
-	}
-
-	@Override
-	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-
-		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
-				SName.note);
-		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
-
-		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
 
 	@Override

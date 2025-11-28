@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -44,7 +43,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooClock;
-import net.sourceforge.plantuml.utils.Position;
 
 public class PlayerClock extends Player {
 
@@ -74,11 +72,6 @@ public class PlayerClock extends Player {
 	protected StyleSignature getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock)
 				.withTOBECHANGED(stereotype);
-	}
-
-	@Override
-	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

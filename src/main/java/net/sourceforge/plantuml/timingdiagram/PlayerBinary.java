@@ -40,7 +40,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -50,7 +49,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooBinary;
-import net.sourceforge.plantuml.utils.Position;
 
 public class PlayerBinary extends Player {
 
@@ -61,8 +59,6 @@ public class PlayerBinary extends Player {
 	private final SortedMap<TimeTick, ChangeState> values = new TreeMap<>();
 	private ChangeState initialState;
 
-	private final List<TimingNote> notes = new ArrayList<>();
-
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
 		super(code, skinParam, ruler, compact, stereotype, null);
 		this.suggestedHeight = 30;
@@ -72,7 +68,7 @@ public class PlayerBinary extends Player {
 	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		return new FooBinary(ruler, skinParam, suggestedHeight, style, values, constraints, initialState, notes,
+		return new FooBinary(ruler, skinParam, suggestedHeight, style, values, constraints, initialState, getNotes(),
 				getStyleSignature());
 
 	}
@@ -81,15 +77,6 @@ public class PlayerBinary extends Player {
 	protected StyleSignature getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.binary)
 				.withTOBECHANGED(stereotype);
-	}
-
-	@Override
-	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
-				SName.note);
-		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
-
-		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
 
 	@Override

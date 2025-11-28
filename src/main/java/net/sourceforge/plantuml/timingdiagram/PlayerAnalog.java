@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -48,7 +47,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooAnalog;
-import net.sourceforge.plantuml.utils.Position;
 
 public class PlayerAnalog extends Player {
 
@@ -71,11 +69,6 @@ public class PlayerAnalog extends Player {
 		return new FooAnalog(ruler, skinParam, suggestedHeight, style, timeSeries, constraints, initialState,
 				ticksEvery);
 
-	}
-
-	@Override
-	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
