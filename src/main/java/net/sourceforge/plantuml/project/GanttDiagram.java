@@ -700,6 +700,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return openClose.daysInWeek();
 	}
 
+	public int daysInMonth() {
+		return 30;
+	}
+
 	public boolean isOpen(Day day) {
 		return openClose.getLoadAt(day) > 0;
 	}
