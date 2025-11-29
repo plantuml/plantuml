@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.timingdiagram.TimeSeries;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
-public class FooAnalog implements PlayerPanels {
+public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 
 	private final TimeSeries timeSeries;
 
