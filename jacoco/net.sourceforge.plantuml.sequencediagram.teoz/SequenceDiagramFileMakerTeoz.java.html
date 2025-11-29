@@ -142,9 +142,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 		private final int index;
 
-<span class="nc" id="L145">		Foo(int index) {</span>
-<span class="nc" id="L146">			this.index = index;</span>
-<span class="nc" id="L147">		}</span>
+<span class="fc" id="L145">		Foo(int index) {</span>
+<span class="fc" id="L146">			this.index = index;</span>
+<span class="fc" id="L147">		}</span>
 
 		public void drawU(UGraphic ug) {
 <span class="nc" id="L150">			drawInternal(ug, index);</span>
@@ -153,28 +153,28 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private UGraphic goDownAndCenterForEnglobers(UGraphic ug) {
-<span class="nc" id="L156">		ug = goDown(ug, title);</span>
-<span class="nc" id="L157">		ug = goDown(ug, header);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP)</span>
+<span class="fc" id="L156">		ug = goDown(ug, title);</span>
+<span class="fc" id="L157">		ug = goDown(ug, header);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP)</span>
 <span class="nc" id="L159">			ug = goDown(ug, legend);</span>
 
-<span class="nc" id="L161">		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;</span>
-<span class="nc" id="L162">		return ug.apply(UTranslate.dx(dx));</span>
+<span class="fc" id="L161">		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="fc" id="L162">		return ug.apply(UTranslate.dx(dx));</span>
 	}
 
 	private UGraphic goDown(UGraphic ug, TextBlock size) {
-<span class="nc" id="L166">		return ug.apply(UTranslate.dy(size.calculateDimension(stringBounder).getHeight()));</span>
+<span class="fc" id="L166">		return ug.apply(UTranslate.dy(size.calculateDimension(stringBounder).getHeight()));</span>
 	}
 
 	public void printAligned(UGraphic ug, HorizontalAlignment align, final TextBlock layer) {
-<span class="nc" id="L170">		double dx = 0;</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L170">		double dx = 0;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
 <span class="nc" id="L172">			dx = dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		else if (align == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L174">			dx = (dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		else if (align == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L174">			dx = (dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth()) / 2;</span>
 
-<span class="nc" id="L176">		layer.drawU(ug.apply(UTranslate.dx(dx)));</span>
-<span class="nc" id="L177">	}</span>
+<span class="fc" id="L176">		layer.drawU(ug.apply(UTranslate.dx(dx)));</span>
+<span class="fc" id="L177">	}</span>
 
 	private PlayingSpace createMainTile() {
 <span class="fc" id="L180">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
@@ -247,32 +247,32 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private void drawInternal(UGraphic ug, int index) {
-<span class="nc" id="L250">		body.setIndex(index);</span>
-<span class="nc" id="L251">		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="nc" id="L252">		ug = ug.apply(min1translate);</span>
+<span class="fc" id="L250">		body.setIndex(index);</span>
+<span class="fc" id="L251">		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="fc" id="L252">		ug = ug.apply(min1translate);</span>
 
-<span class="nc" id="L254">		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
-<span class="nc" id="L255">				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="fc" id="L254">		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
+<span class="fc" id="L255">				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 				new SimpleContext2D(true));
 
-<span class="nc" id="L258">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);</span>
-<span class="nc" id="L259">		ug = goDown(ug, header);</span>
+<span class="fc" id="L258">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);</span>
+<span class="fc" id="L259">		ug = goDown(ug, header);</span>
 
-<span class="nc" id="L261">		final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);</span>
-<span class="nc" id="L262">		final HorizontalAlignment titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())</span>
-<span class="nc" id="L263">				.getHorizontalAlignment();</span>
+<span class="fc" id="L261">		final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);</span>
+<span class="fc" id="L262">		final HorizontalAlignment titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())</span>
+<span class="fc" id="L263">				.getHorizontalAlignment();</span>
 
-<span class="nc" id="L265">		printAligned(ug, titleAlignment, title);</span>
-<span class="nc" id="L266">		ug = goDown(ug, title);</span>
+<span class="fc" id="L265">		printAligned(ug, titleAlignment, title);</span>
+<span class="fc" id="L266">		ug = goDown(ug, title);</span>
 
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {</span>
 <span class="nc" id="L269">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
 <span class="nc" id="L270">			ug = goDown(ug, legend);</span>
 		}
 
-<span class="nc" id="L273">		ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="nc" id="L274">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
-<span class="nc bnc" id="L275" title="All 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
+<span class="fc" id="L273">		ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="fc" id="L274">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
 				bodyFramed);
 <span class="nc" id="L277">		ug = goDown(ug, bodyFramed);</span>
 <span class="nc" id="L278">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>

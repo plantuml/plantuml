@@ -47,25 +47,46 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	public IRegex toRegex(String suffix) {
 <span class="fc" id="L49">		return new RegexConcat( //</span>
-				new RegexLeaf(4, &quot;COMPLEMENT&quot; + suffix, &quot;(\\d+)[%s]+(day|week)s?&quot; + //
-						&quot;(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?&quot; //
+				new RegexLeaf(4, &quot;COMPLEMENT&quot; + suffix, &quot;(\\d+)[%s]+(day|week|month)s?&quot; + //
+						&quot;(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month)s?)?&quot; //
 				)); //
 	}
 
+	@Override
 	public Failable&lt;Load&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="fc" id="L56">		final String nb1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		final int factor1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1).startsWith(&quot;w&quot;) ? system.daysInWeek() : 1;</span>
-<span class="fc" id="L58">		final int days1 = Integer.parseInt(nb1) * factor1;</span>
 
-<span class="fc" id="L60">		final String nb2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 2);</span>
-<span class="fc" id="L61">		int days2 = 0;</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (nb2 != null) {</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">			final int factor2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 3).startsWith(&quot;w&quot;) ? system.daysInWeek() : 1;</span>
-<span class="nc" id="L64">			days2 = Integer.parseInt(nb2) * factor2;</span>
+<span class="fc" id="L58">		final String prefix = &quot;COMPLEMENT&quot; + suffix;</span>
+
+<span class="fc" id="L60">		final int firstValue = Integer.parseInt(arg.get(prefix, 0));</span>
+<span class="fc" id="L61">		final String firstUnit = arg.get(prefix, 1);</span>
+<span class="fc" id="L62">		final int firstDays = toDays(system, firstValue, firstUnit);</span>
+
+<span class="fc" id="L64">		int secondDays = 0;</span>
+<span class="fc" id="L65">		final String secondValue = arg.get(prefix, 2);</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (secondValue != null) {</span>
+<span class="nc" id="L67">			final int value = Integer.parseInt(secondValue);</span>
+<span class="nc" id="L68">			final String unit = arg.get(prefix, 3);</span>
+<span class="nc" id="L69">			secondDays = toDays(system, value, unit);</span>
 		}
 
-<span class="fc" id="L67">		return Failable.ok(Load.inWinks(days1 + days2));</span>
+<span class="fc" id="L72">		final int totalDays = firstDays + secondDays;</span>
+<span class="fc" id="L73">		return Failable.ok(Load.inWinks(totalDays));</span>
 	}
 
+	private int toDays(GanttDiagram system, int value, String unit) {
+<span class="pc bpc" id="L77" title="3 of 4 branches missed.">		switch (unit.charAt(0)) {</span>
+		case 'D':
+		case 'd':
+<span class="fc" id="L80">			return value;</span>
+		case 'W':
+		case 'w':
+<span class="nc" id="L83">			return value * system.daysInWeek();</span>
+		case 'M':
+		case 'm':
+<span class="nc" id="L86">			return value * system.daysInMonth();</span>
+		default:
+<span class="nc" id="L88">			throw new IllegalArgumentException(&quot;unknown time unit: &quot; + unit);</span>
+		}
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -700,228 +700,232 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 <span class="nc" id="L700">		return openClose.daysInWeek();</span>
 	}
 
-	public boolean isOpen(Day day) {
-<span class="nc bnc" id="L704" title="All 2 branches missed.">		return openClose.getLoadAt(day) &gt; 0;</span>
+	public int daysInMonth() {
+<span class="nc" id="L704">		return 30;</span>
 	}
 
-<span class="fc" id="L707">	private static final Pattern p = Pattern.compile(&quot;([^:]+)(:(\\d+))?&quot;);</span>
+	public boolean isOpen(Day day) {
+<span class="nc bnc" id="L708" title="All 2 branches missed.">		return openClose.getLoadAt(day) &gt; 0;</span>
+	}
+
+<span class="fc" id="L711">	private static final Pattern p = Pattern.compile(&quot;([^:]+)(:(\\d+))?&quot;);</span>
 
 	public boolean affectResource(Task result, String description) {
-<span class="nc" id="L710">		final Matcher m = p.matcher(description);</span>
-<span class="nc bnc" id="L711" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L712">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L714">		final Matcher m = p.matcher(description);</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L716">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L714">		final Resource resource = getResource(m.group(1));</span>
-<span class="nc" id="L715">		int percentage = 100;</span>
-<span class="nc bnc" id="L716" title="All 2 branches missed.">		if (m.group(3) != null)</span>
-<span class="nc" id="L717">			percentage = Integer.parseInt(m.group(3));</span>
+<span class="nc" id="L718">		final Resource resource = getResource(m.group(1));</span>
+<span class="nc" id="L719">		int percentage = 100;</span>
+<span class="nc bnc" id="L720" title="All 2 branches missed.">		if (m.group(3) != null)</span>
+<span class="nc" id="L721">			percentage = Integer.parseInt(m.group(3));</span>
 
-<span class="nc bnc" id="L719" title="All 2 branches missed.">		if (percentage == 0)</span>
-<span class="nc" id="L720">			return false;</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">		if (percentage == 0)</span>
+<span class="nc" id="L724">			return false;</span>
 
-<span class="nc" id="L722">		result.addResource(resource, percentage);</span>
-<span class="nc" id="L723">		return true;</span>
+<span class="nc" id="L726">		result.addResource(resource, percentage);</span>
+<span class="nc" id="L727">		return true;</span>
 	}
 
 	public Resource getResource(String resourceName) {
-<span class="nc" id="L727">		Resource resource = resources.get(resourceName);</span>
-<span class="nc bnc" id="L728" title="All 2 branches missed.">		if (resource == null)</span>
-<span class="nc" id="L729">			resource = new Resource(resourceName);</span>
+<span class="nc" id="L731">		Resource resource = resources.get(resourceName);</span>
+<span class="nc bnc" id="L732" title="All 2 branches missed.">		if (resource == null)</span>
+<span class="nc" id="L733">			resource = new Resource(resourceName);</span>
 
-<span class="nc" id="L731">		resources.put(resourceName, resource);</span>
-<span class="nc" id="L732">		return resource;</span>
+<span class="nc" id="L735">		resources.put(resourceName, resource);</span>
+<span class="nc" id="L736">		return resource;</span>
 	}
 
 	public int getLoadForResource(Resource res, Day i) {
-<span class="nc" id="L736">		int result = 0;</span>
-<span class="nc bnc" id="L737" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
-<span class="nc bnc" id="L738" title="All 2 branches missed.">			if (task instanceof TaskSeparator)</span>
-<span class="nc" id="L739">				continue;</span>
+<span class="nc" id="L740">		int result = 0;</span>
+<span class="nc bnc" id="L741" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
+<span class="nc bnc" id="L742" title="All 2 branches missed.">			if (task instanceof TaskSeparator)</span>
+<span class="nc" id="L743">				continue;</span>
 
-<span class="nc" id="L741">			final TaskImpl task2 = (TaskImpl) task;</span>
-<span class="nc" id="L742">			result += task2.loadForResource(res, i);</span>
-<span class="nc" id="L743">		}</span>
-<span class="nc" id="L744">		return result;</span>
+<span class="nc" id="L745">			final TaskImpl task2 = (TaskImpl) task;</span>
+<span class="nc" id="L746">			result += task2.loadForResource(res, i);</span>
+<span class="nc" id="L747">		}</span>
+<span class="nc" id="L748">		return result;</span>
 	}
 
 	public Moment getExistingMoment(String id) {
-<span class="nc" id="L748">		Moment result = getExistingTask(id);</span>
-<span class="nc bnc" id="L749" title="All 2 branches missed.">		if (result == null) {</span>
-<span class="nc" id="L750">			Day start = null;</span>
-<span class="nc" id="L751">			Day end = null;</span>
-<span class="nc bnc" id="L752" title="All 2 branches missed.">			for (Map.Entry&lt;Day, String&gt; ent : nameDays.entrySet()) {</span>
-<span class="nc bnc" id="L753" title="All 2 branches missed.">				if (ent.getValue().equalsIgnoreCase(id) == false)</span>
-<span class="nc" id="L754">					continue;</span>
+<span class="nc" id="L752">		Moment result = getExistingTask(id);</span>
+<span class="nc bnc" id="L753" title="All 2 branches missed.">		if (result == null) {</span>
+<span class="nc" id="L754">			Day start = null;</span>
+<span class="nc" id="L755">			Day end = null;</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">			for (Map.Entry&lt;Day, String&gt; ent : nameDays.entrySet()) {</span>
+<span class="nc bnc" id="L757" title="All 2 branches missed.">				if (ent.getValue().equalsIgnoreCase(id) == false)</span>
+<span class="nc" id="L758">					continue;</span>
 
-<span class="nc" id="L756">				start = min(start, ent.getKey());</span>
-<span class="nc" id="L757">				end = max(end, ent.getKey());</span>
-<span class="nc" id="L758">			}</span>
-<span class="nc bnc" id="L759" title="All 2 branches missed.">			if (start != null)</span>
-<span class="nc" id="L760">				result = new MomentImpl(start, end);</span>
+<span class="nc" id="L760">				start = min(start, ent.getKey());</span>
+<span class="nc" id="L761">				end = max(end, ent.getKey());</span>
+<span class="nc" id="L762">			}</span>
+<span class="nc bnc" id="L763" title="All 2 branches missed.">			if (start != null)</span>
+<span class="nc" id="L764">				result = new MomentImpl(start, end);</span>
 
 		}
-<span class="nc" id="L763">		return result;</span>
+<span class="nc" id="L767">		return result;</span>
 	}
 
 	private Day min(Day d1, Day d2) {
-<span class="nc bnc" id="L767" title="All 2 branches missed.">		if (d1 == null)</span>
-<span class="nc" id="L768">			return d2;</span>
+<span class="nc bnc" id="L771" title="All 2 branches missed.">		if (d1 == null)</span>
+<span class="nc" id="L772">			return d2;</span>
 
-<span class="nc bnc" id="L770" title="All 2 branches missed.">		if (d1.compareTo(d2) &gt; 0)</span>
-<span class="nc" id="L771">			return d2;</span>
+<span class="nc bnc" id="L774" title="All 2 branches missed.">		if (d1.compareTo(d2) &gt; 0)</span>
+<span class="nc" id="L775">			return d2;</span>
 
-<span class="nc" id="L773">		return d1;</span>
+<span class="nc" id="L777">		return d1;</span>
 	}
 
 	private Day max(Day d1, Day d2) {
-<span class="nc bnc" id="L777" title="All 2 branches missed.">		if (d1 == null)</span>
-<span class="nc" id="L778">			return d2;</span>
+<span class="nc bnc" id="L781" title="All 2 branches missed.">		if (d1 == null)</span>
+<span class="nc" id="L782">			return d2;</span>
 
-<span class="nc bnc" id="L780" title="All 2 branches missed.">		if (d1.compareTo(d2) &lt; 0)</span>
-<span class="nc" id="L781">			return d2;</span>
+<span class="nc bnc" id="L784" title="All 2 branches missed.">		if (d1.compareTo(d2) &lt; 0)</span>
+<span class="nc" id="L785">			return d2;</span>
 
-<span class="nc" id="L783">		return d1;</span>
+<span class="nc" id="L787">		return d1;</span>
 	}
 
 	public void colorDay(Day day, HColor color) {
-<span class="fc" id="L787">		colorDaysInternal.put(day, color);</span>
-<span class="fc" id="L788">	}</span>
+<span class="fc" id="L791">		colorDaysInternal.put(day, color);</span>
+<span class="fc" id="L792">	}</span>
 
 	public void colorDay(DayOfWeek day, HColor color) {
-<span class="nc" id="L791">		colorDaysOfWeek.put(day, color);</span>
-<span class="nc" id="L792">	}</span>
-
-	public void nameDay(Day day, String name) {
-<span class="nc" id="L795">		nameDays.put(day, name);</span>
+<span class="nc" id="L795">		colorDaysOfWeek.put(day, color);</span>
 <span class="nc" id="L796">	}</span>
 
-	public Day getToday() {
-<span class="nc bnc" id="L799" title="All 2 branches missed.">		if (today == null)</span>
-<span class="nc" id="L800">			this.today = Day.today();</span>
+	public void nameDay(Day day, String name) {
+<span class="nc" id="L799">		nameDays.put(day, name);</span>
+<span class="nc" id="L800">	}</span>
 
-<span class="nc" id="L802">		return today;</span>
+	public Day getToday() {
+<span class="nc bnc" id="L803" title="All 2 branches missed.">		if (today == null)</span>
+<span class="nc" id="L804">			this.today = Day.today();</span>
+
+<span class="nc" id="L806">		return today;</span>
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {
-<span class="nc bnc" id="L806" title="All 2 branches missed.">		if (today == null)</span>
-<span class="nc" id="L807">			this.today = Day.today();</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">		if (today == null)</span>
+<span class="nc" id="L811">			this.today = Day.today();</span>
 
-<span class="nc" id="L809">		colorDaysToday.put(today, colors.getCenter());</span>
-<span class="nc" id="L810">	}</span>
+<span class="nc" id="L813">		colorDaysToday.put(today, colors.getCenter());</span>
+<span class="nc" id="L814">	}</span>
 
 	public CommandExecutionResult setToday(Day date) {
-<span class="nc" id="L813">		this.today = date;</span>
-<span class="nc" id="L814">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L817">		this.today = date;</span>
+<span class="nc" id="L818">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult deleteTask(Task task) {
-<span class="nc" id="L818">		task.setColors(new CenterBorderColor(HColors.WHITE, HColors.BLACK));</span>
-<span class="nc" id="L819">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L822">		task.setColors(new CenterBorderColor(HColors.WHITE, HColors.BLACK));</span>
+<span class="nc" id="L823">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setPrintInterval(Day start, Day end) {
-<span class="nc" id="L823">		this.printStart = start;</span>
-<span class="nc" id="L824">		this.printEnd = end;</span>
-<span class="nc" id="L825">	}</span>
+<span class="nc" id="L827">		this.printStart = start;</span>
+<span class="nc" id="L828">		this.printEnd = end;</span>
+<span class="nc" id="L829">	}</span>
 
 	public TaskDraw getTaskDraw(Task task) {
-<span class="fc" id="L828">		return draws.get(task);</span>
+<span class="fc" id="L832">		return draws.get(task);</span>
 	}
 
 	public CommandExecutionResult addNote(Display note, Stereotype stereotype) {
-<span class="nc" id="L832">		Task last = null;</span>
-<span class="nc bnc" id="L833" title="All 2 branches missed.">		for (Task current : tasks.values())</span>
-<span class="nc" id="L834">			last = current;</span>
-<span class="nc bnc" id="L835" title="All 2 branches missed.">		if (last == null)</span>
-<span class="nc" id="L836">			return CommandExecutionResult.error(&quot;No task defined&quot;);</span>
+<span class="nc" id="L836">		Task last = null;</span>
+<span class="nc bnc" id="L837" title="All 2 branches missed.">		for (Task current : tasks.values())</span>
+<span class="nc" id="L838">			last = current;</span>
+<span class="nc bnc" id="L839" title="All 2 branches missed.">		if (last == null)</span>
+<span class="nc" id="L840">			return CommandExecutionResult.error(&quot;No task defined&quot;);</span>
 
-<span class="nc" id="L838">		last.setNote(note, stereotype);</span>
-<span class="nc" id="L839">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L842">		last.setNote(note, stereotype);</span>
+<span class="nc" id="L843">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LoadPlanable getDefaultPlan() {
-<span class="nc" id="L843">		return openClose;</span>
+<span class="nc" id="L847">		return openClose;</span>
 	}
 
-<span class="fc" id="L846">	private boolean showFootbox = true;</span>
+<span class="fc" id="L850">	private boolean showFootbox = true;</span>
 
 	public void setShowFootbox(boolean footbox) {
-<span class="nc" id="L849">		this.showFootbox = footbox;</span>
+<span class="nc" id="L853">		this.showFootbox = footbox;</span>
 
-<span class="nc" id="L851">	}</span>
+<span class="nc" id="L855">	}</span>
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L855">		return ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L859">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 	public void setLabelStrategy(LabelStrategy strategy) {
-<span class="nc" id="L859">		this.labelStrategy = strategy;</span>
-<span class="nc" id="L860">	}</span>
+<span class="nc" id="L863">		this.labelStrategy = strategy;</span>
+<span class="nc" id="L864">	}</span>
 
 	private WeeklyHeaderStrategy weeklyHeaderStrategy;
 	private int weekStartingNumber;
 
 	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy, int weekStartingNumber) {
-<span class="nc" id="L866">		this.weeklyHeaderStrategy = weeklyHeaderStrategy;</span>
-<span class="nc" id="L867">		this.weekStartingNumber = weekStartingNumber;</span>
-<span class="nc" id="L868">	}</span>
+<span class="nc" id="L870">		this.weeklyHeaderStrategy = weeklyHeaderStrategy;</span>
+<span class="nc" id="L871">		this.weekStartingNumber = weekStartingNumber;</span>
+<span class="nc" id="L872">	}</span>
 
 	private boolean hideResourceName;
 	private boolean hideResourceFoobox;
 
 	public CommandExecutionResult hideResourceName() {
-<span class="nc" id="L874">		this.hideResourceName = true;</span>
-<span class="nc" id="L875">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L878">		this.hideResourceName = true;</span>
+<span class="nc" id="L879">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult hideResourceFootbox() {
-<span class="nc" id="L879">		this.hideResourceFoobox = true;</span>
-<span class="nc" id="L880">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L883">		this.hideResourceFoobox = true;</span>
+<span class="nc" id="L884">		return CommandExecutionResult.ok();</span>
 	}
 
-<span class="fc" id="L883">	private final Set&lt;Day&gt; verticalSeparatorBefore = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L887">	private final Set&lt;Day&gt; verticalSeparatorBefore = new HashSet&lt;&gt;();</span>
 
 	public void addVerticalSeparatorBefore(Day day) {
-<span class="nc" id="L886">		verticalSeparatorBefore.add(day);</span>
-<span class="nc" id="L887">	}</span>
-
-	public void setTaskDefaultCompletion(int defaultCompletion) {
-<span class="nc" id="L890">		this.defaultCompletion = defaultCompletion;</span>
+<span class="nc" id="L890">		verticalSeparatorBefore.add(day);</span>
 <span class="nc" id="L891">	}</span>
 
+	public void setTaskDefaultCompletion(int defaultCompletion) {
+<span class="nc" id="L894">		this.defaultCompletion = defaultCompletion;</span>
+<span class="nc" id="L895">	}</span>
+
 	public List&lt;TaskDrawRegular&gt; getAllTasksForResource(Resource res) {
-<span class="nc" id="L894">		final List&lt;TaskDrawRegular&gt; result = new ArrayList&lt;TaskDrawRegular&gt;();</span>
-<span class="nc bnc" id="L895" title="All 2 branches missed.">		for (Task task : tasks.values())</span>
-<span class="nc bnc" id="L896" title="All 2 branches missed.">			if (task.isAssignedTo(res)) {</span>
-<span class="nc" id="L897">				final TaskDrawRegular draw = (TaskDrawRegular) draws.get(task);</span>
-<span class="nc" id="L898">				result.add(draw);</span>
+<span class="nc" id="L898">		final List&lt;TaskDrawRegular&gt; result = new ArrayList&lt;TaskDrawRegular&gt;();</span>
+<span class="nc bnc" id="L899" title="All 2 branches missed.">		for (Task task : tasks.values())</span>
+<span class="nc bnc" id="L900" title="All 2 branches missed.">			if (task.isAssignedTo(res)) {</span>
+<span class="nc" id="L901">				final TaskDrawRegular draw = (TaskDrawRegular) draws.get(task);</span>
+<span class="nc" id="L902">				result.add(draw);</span>
 			}
 
-<span class="nc" id="L901">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L905">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public void setIt(Task result) {
-<span class="fc" id="L905">		this.it = result;</span>
-<span class="fc" id="L906">	}</span>
+<span class="fc" id="L909">		this.it = result;</span>
+<span class="fc" id="L910">	}</span>
 
 	public Task getIt() {
-<span class="nc" id="L909">		return it;</span>
+<span class="nc" id="L913">		return it;</span>
 	}
 
 	public final Resource getThey() {
-<span class="nc" id="L913">		return they;</span>
+<span class="nc" id="L917">		return they;</span>
 	}
 
 	public final void setThey(Resource they) {
-<span class="nc" id="L917">		this.they = they;</span>
-<span class="nc" id="L918">	}</span>
+<span class="nc" id="L921">		this.they = they;</span>
+<span class="nc" id="L922">	}</span>
 
-<span class="fc" id="L920">	private boolean hideClosed = false;</span>
+<span class="fc" id="L924">	private boolean hideClosed = false;</span>
 
 	public void setHideClosed(boolean hideClosed) {
-<span class="nc" id="L923">		this.hideClosed = hideClosed;</span>
-<span class="nc" id="L924">	}</span>
+<span class="nc" id="L927">		this.hideClosed = hideClosed;</span>
+<span class="nc" id="L928">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
