@@ -39,54 +39,63 @@ import java.time.Duration;
 import java.time.Instant;
 
 /**
- * Represents an abstract scheduled task with a fixed intrinsic workload
- * and dynamic temporal properties (start, end, duration).
+ * Represents an abstract scheduled task with intrinsic workload semantics
+ * and temporal properties (start, end, duration) that may or may not be fixed.
  *
- * <p>The class distinguishes three key concepts:</p>
+ * <p>The model distinguishes three concepts that must remain separate:</p>
  *
  * <ul>
- *   <li><b>Load</b> — a {@link Duration} representing the amount of work 
- *       required to complete the task if performed at full efficiency 
- *       (100% workload, i.e., 1 FTE).  
- *       This is an intrinsic characteristic of the task: the volume of work
- *       to be done, independent of how many people are assigned.</li>
+ *   <li><b>Load</b> — an {@link NGMLoad} representing the total amount of work
+ *       required for this task. When the load is fixed, the duration depends on
+ *       the assigned workload and the available calendar window.</li>
  *
- *   <li><b>Workload</b> — an {@link NGMWorkload} value expressing the effective 
- *       "full-time equivalent" allocation.  
- *       For example: 1 (100%), 1/2 (50%), 5/7 (weekdays only), 2 (two persons).  
- *       This determines how fast the task progresses relative to its load.</li>
+ *   <li><b>Workload</b> — an {@link NGMWorkload} expressing the effective
+ *       full-time-equivalent (FTE) allocation applied to the task.
+ *       For example: 1 (100%), 1/2 (50%), 5/7 (weekdays only), 2 (two persons).
+ *       This defines how quickly the work progresses.</li>
  *
- *   <li><b>Duration</b> — a {@link Duration} representing the calendar span 
- *       between the start and end instants.  
- *       Unlike load and workload, the duration is not intrinsic: it is the 
- *       result of scheduling decisions and resource assignment. 
- *       Duration may change if start, end, or workload changes.</li>
+ *   <li><b>Duration</b> — a {@link Duration} representing the calendar span
+ *       between the start and end instants. When the duration is fixed,
+ *       the load becomes the variable quantity: adding more or fewer resources
+ *       changes the total amount of work accumulated over that time window.</li>
  * </ul>
  *
- * <p><b>Why load and workload are final:</b></p>
- * <p>Both values are considered intrinsic properties of the task:</p>
+ * <p><b>Two types of tasks exist in this model:</b></p>
  * <ul>
- *   <li><b>Load</b> defines how much total work must be executed.</li>
- *   <li><b>Workload</b> defines the constant execution capacity allocated to this task.</li>
+ *   <li><b>Fixed-load tasks</b>: the total amount of work is intrinsic.  
+ *       The duration varies depending on the allocated workload.  
+ *       Example: developing a feature requires “80 hours of work”.</li>
+ *
+ *   <li><b>Fixed-duration tasks</b>: the calendar span is intrinsic.  
+ *       The load becomes the variable quantity.  
+ *       Example: crossing the Atlantic takes a fixed amount of time;
+ *       assigning different workloads does not change the duration,
+ *       only the resulting amount of accumulated work.</li>
  * </ul>
  *
- * <p>They do not change once the task exists. By contrast, the temporal
- * attributes—<code>start</code>, <code>end</code>, and <code>duration</code>—
- * may be updated as the task is rescheduled or as constraints evolve.</p>
+ * <p>This distinction is essential: a task cannot be correctly modeled unless
+ * we know whether its duration or its load is the intrinsic property.
+ * The previous Gantt implementation mixed these notions, which led to
+ * inconsistencies (especially when handling months or resource changes).</p>
+ *
+ * <p><b>Why workload is final:</b></p>
+ * <p>The workload allocation (FTE fraction) is considered a structural property
+ * of the task. It may influence the schedule but is not modified by it.
+ * By contrast, <code>start</code>, <code>end</code>, <code>duration</code>,
+ * and <code>load</code> may vary depending on the concrete type of task
+ * (fixed-load vs fixed-duration) and on external scheduling constraints.</p>
  */
 public abstract class NGMTask {
 
-    protected final Duration load;
     protected final NGMWorkload workload;
 
     /**
-     * Creates a new task with a fixed load and workload.
+     * Creates a new task with a fixed workload allocation.
      *
-     * @param load      the intrinsic amount of work required if executed at 100% capacity
-     * @param workload  the constant full-time-equivalent allocation applied to this task
+     * @param workload  the constant full-time-equivalent allocation
+     *                  applied to this task
      */
-    protected NGMTask(Duration load, NGMWorkload workload) {
-        this.load = load;
+    protected NGMTask(NGMWorkload workload) {
         this.workload = workload;
     }
 
@@ -108,14 +117,16 @@ public abstract class NGMTask {
     /** Sets the scheduled duration of the task. */
     public abstract void setDuration(Duration duration);
 
-    /** Returns the intrinsic work required by the task at 100% workload. */
-    public Duration getLoad() {
-        return load;
-    }
+    /** Returns the intrinsic or computed load of the task. */
+    public abstract NGMLoad getLoad();
+
+    /** Updates the load, depending on whether this is a fixed-load or fixed-duration task. */
+    public abstract void setLoad(NGMLoad load);
 
     /** Returns the constant FTE allocation applied to the task. */
     public NGMWorkload getWorkload() {
         return workload;
     }
 }
+
 
