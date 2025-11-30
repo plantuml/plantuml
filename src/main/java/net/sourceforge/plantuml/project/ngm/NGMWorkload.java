@@ -62,6 +62,10 @@ public class NGMWorkload {
      * A value of 1 represents 100% workload.
      */
     public Fraction value;
+
+	public static NGMWorkload fullTime() {
+		return new NGMWorkload();
+	}
     
     // In the future this will become more complex. We will probably use
     // something like: public Function<Instant, Fraction>
