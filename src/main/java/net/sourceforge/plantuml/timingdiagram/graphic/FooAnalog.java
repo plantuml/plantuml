@@ -37,13 +37,9 @@ package net.sourceforge.plantuml.timingdiagram.graphic;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.klimt.Fashion;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -51,7 +47,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
@@ -63,26 +58,15 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 
 	private final TimeSeries timeSeries;
 
-	private final List<TimeConstraint> constraints;
-
 	private final double ymargin = 8;
 	private final Double initialState;
 	private final Integer ticksEvery;
 
-	private final ISkinParam skinParam;
-	private final TimingRuler ruler;
-	private final int suggestedHeight;
-	private final Style style;
-
 	public FooAnalog(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, TimeSeries timeSeries,
 			List<TimeConstraint> constraints, Double initialState, Integer ticksEvery) {
+		super(ruler, skinParam, suggestedHeight, style, null);
 
-		this.style = style;
-		this.suggestedHeight = suggestedHeight;
-		this.ruler = ruler;
-		this.skinParam = skinParam;
 		this.timeSeries = timeSeries;
-		this.constraints = constraints;
 		this.initialState = initialState;
 		this.ticksEvery = ticksEvery;
 
@@ -158,10 +142,6 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 		label.drawU(ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), value) - dim.getHeight() / 2)));
 	}
 
-	private FontConfiguration getFontConfiguration() {
-		return FontConfiguration.create(skinParam, style);
-	}
-
 	private TextBlock getTextBlock(double value) {
 		final String formattedValue = timeSeries.getDisplayValue(value);
 		final Display display = Display.getWithNewlines(skinParam.getPragma(), formattedValue);
@@ -202,28 +182,8 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 
 	}
 
-	private Fashion getContext() {
-		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-
-		return new Fashion(backgroundColor, lineColor).withStroke(getStroke());
-	}
-
-	private UStroke getStroke() {
-		return style.getStroke();
-	}
-
 	public void setBounds(String min, String max) {
 		timeSeries.setBounds(min, max);
-	}
-
-	private void drawConstraints(final UGraphic ug) {
-		for (TimeConstraint constraint : constraints)
-			constraint.drawU(ug, ruler);
-	}
-
-	private double getHeightForConstraints(StringBounder stringBounder) {
-		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);
 	}
 
 }
