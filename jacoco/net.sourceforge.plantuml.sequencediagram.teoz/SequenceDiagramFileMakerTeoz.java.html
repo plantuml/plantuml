@@ -132,10 +132,10 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final double heightEnglober2;
 
 	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (this.index != index)</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (this.index != index)</span>
 <span class="nc" id="L136">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L138">		return diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).write(os);</span>
+<span class="nc" id="L138">		return diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).write(os);</span>
 	}
 
 	class Foo implements UDrawable {
