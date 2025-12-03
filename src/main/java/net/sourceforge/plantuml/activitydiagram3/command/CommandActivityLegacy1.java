@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
@@ -59,14 +61,20 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[-*]"), //
 				RegexLeaf.spaceZeroOrOne(), //
+				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf(1, "LABEL", "(.*)"), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+		final String stereo = arg.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereo != null) {
+			stereotype = Stereotype.build(stereo);
+		}
 		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN, null, Colors.empty(),
-				null);
+				stereotype);
 	}
 
 }
