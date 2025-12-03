@@ -80,8 +80,8 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="fc" id="L80">		ug = ug.apply(getForegroundColor());</span>
 <span class="fc" id="L81">		final UGraphic ug2 = getArrowConfiguration().applyStroke(ug);</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (getArrowConfiguration().isReverseDefine())</span>
-<span class="fc" id="L84">			drawLeftSide(ug, ug2, area, arrowHeight, textHeight, prefTextWidth);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (getArrowConfiguration().isReverseDefine())</span>
+<span class="nc" id="L84">			drawLeftSide(ug, ug2, area, arrowHeight, textHeight, prefTextWidth);</span>
 		else
 <span class="fc" id="L86">			drawRightSide(ug, ug2, area, arrowHeight, textHeight);</span>
 
@@ -92,49 +92,49 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="fc bfc" id="L92" title="All 2 branches covered.">		double x1 = area.getDeltaX1() &lt; 0 ? area.getDeltaX1() : 0;</span>
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">		double x2 = area.getDeltaX1() &gt; 0 ? -area.getDeltaX1() : 1;</span>
 <span class="fc" id="L94">		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
-<span class="fc" id="L96">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
-<span class="fc" id="L97">					.apply(getBackgroundColor().bg())</span>
-<span class="fc" id="L98">					.apply(new UTranslate(x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
+<span class="nc" id="L96">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
+<span class="nc" id="L97">					.apply(getBackgroundColor().bg())</span>
+<span class="nc" id="L98">					.apply(new UTranslate(x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
 							textHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
-<span class="fc" id="L100">					.draw(circle);</span>
-<span class="fc" id="L101">			x1 += ComponentRoseArrow.diamCircle / 2 + ComponentRoseArrow.thinCircle + 1;</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">			x1 -= getArrowConfiguration().getDressing1().getHead() == ArrowHead.NONE ? ComponentRoseArrow.thinCircle+1 : 0;</span>
+<span class="nc" id="L100">					.draw(circle);</span>
+<span class="nc" id="L101">			x1 += ComponentRoseArrow.diamCircle / 2 + ComponentRoseArrow.thinCircle + 1;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			x1 -= getArrowConfiguration().getDressing1().getHead() == ArrowHead.NONE ? ComponentRoseArrow.thinCircle+1 : 0;</span>
 		}
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {</span>
-<span class="fc" id="L105">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
-<span class="fc" id="L106">					.apply(getBackgroundColor().bg())</span>
-<span class="fc" id="L107">					.apply(new UTranslate(</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {</span>
+<span class="nc" id="L105">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
+<span class="nc" id="L106">					.apply(getBackgroundColor().bg())</span>
+<span class="nc" id="L107">					.apply(new UTranslate(</span>
 							x2 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 							textHeight + arrowHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
-<span class="fc" id="L110">					.draw(circle);</span>
-<span class="fc" id="L111">			x2 += ComponentRoseArrow.diamCircle / 2 + ComponentRoseArrow.thinCircle;</span>
+<span class="nc" id="L110">					.draw(circle);</span>
+<span class="nc" id="L111">			x2 += ComponentRoseArrow.diamCircle / 2 + ComponentRoseArrow.thinCircle;</span>
 		}
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (hasStartingCrossX)</span>
-<span class="fc" id="L115">			x1 += 2 * ComponentRoseArrow.spaceCrossX;</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (hasStartingCrossX)</span>
+<span class="nc" id="L115">			x1 += 2 * ComponentRoseArrow.spaceCrossX;</span>
 
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (hasFinalCrossX)</span>
-<span class="fc" id="L119">			x2 += 2 * ComponentRoseArrow.spaceCrossX;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (hasFinalCrossX)</span>
+<span class="nc" id="L119">			x2 += 2 * ComponentRoseArrow.spaceCrossX;</span>
 
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
-<span class="fc" id="L122">			x2 -= 1;</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
+<span class="nc" id="L122">			x2 -= 1;</span>
 
 <span class="fc" id="L124">		ug2.apply(new UTranslate(x1, textHeight)).draw(ULine.hline(xRight - x1));</span>
 <span class="fc" id="L125">		ug2.apply(new UTranslate(xRight, textHeight)).draw(ULine.vline(arrowHeight));</span>
 <span class="fc" id="L126">		ug2.apply(new UTranslate(x2, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2));</span>
 
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
-<span class="fc" id="L129">			x2 += 1;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
+<span class="nc" id="L129">			x2 += 1;</span>
 
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (hasStartingCrossX) {</span>
-<span class="fc" id="L132">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L133">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight - getArrowDeltaX() / 2.0))</span>
-<span class="fc" id="L134">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
-<span class="fc" id="L135">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L136">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight + getArrowDeltaX() / 2.0))</span>
-<span class="fc" id="L137">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (hasStartingCrossX) {</span>
+<span class="nc" id="L132">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L133">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight - getArrowDeltaX() / 2.0))</span>
+<span class="nc" id="L134">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
+<span class="nc" id="L135">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L136">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight + getArrowDeltaX() / 2.0))</span>
+<span class="nc" id="L137">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
 <span class="pc bpc" id="L138" title="1 of 2 branches missed.">		}  else if (getArrowConfiguration().isAsync1()) {</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
 <span class="nc" id="L140">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x1, textHeight))</span>
@@ -144,28 +144,28 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L144">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x1, textHeight))</span>
 <span class="nc" id="L145">						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));</span>
 			}
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {</span>
-<span class="fc" id="L148">			final UPolygon polygon = getPolygon().translate(0, textHeight);</span>
-<span class="fc" id="L149">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x1)).draw(polygon);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {</span>
+<span class="nc" id="L148">			final UPolygon polygon = getPolygon().translate(0, textHeight);</span>
+<span class="nc" id="L149">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x1)).draw(polygon);</span>
 		}
 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (hasFinalCrossX) {</span>
-<span class="fc" id="L153">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L154">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,</span>
-<span class="fc" id="L155">							textHeight - getArrowDeltaX() / 2.0 + arrowHeight))</span>
-<span class="fc" id="L156">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
-<span class="fc" id="L157">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L158">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,</span>
-<span class="fc" id="L159">							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))</span>
-<span class="fc" id="L160">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		} else if (getArrowConfiguration().isAsync2()) {</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
-<span class="fc" id="L163">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))</span>
-<span class="fc" id="L164">						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (hasFinalCrossX) {</span>
+<span class="nc" id="L153">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L154">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,</span>
+<span class="nc" id="L155">							textHeight - getArrowDeltaX() / 2.0 + arrowHeight))</span>
+<span class="nc" id="L156">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
+<span class="nc" id="L157">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L158">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,</span>
+<span class="nc" id="L159">							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))</span>
+<span class="nc" id="L160">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().isAsync2()) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
+<span class="nc" id="L163">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))</span>
+<span class="nc" id="L164">						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));</span>
 			}
-<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {</span>
-<span class="fc" id="L167">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))</span>
-<span class="fc" id="L168">						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {</span>
+<span class="nc" id="L167">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))</span>
+<span class="nc" id="L168">						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));</span>
 			}
 <span class="pc bpc" id="L170" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL) {</span>
 <span class="fc" id="L171">			final UPolygon polygon = getPolygon().translate(0, textHeight + arrowHeight);</span>
@@ -174,116 +174,116 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="fc" id="L174">	}</span>
 
 	private void drawLeftSide(UGraphic ug, UGraphic ug2, Area area, double arrowHeight, double textHeight, double prefTextWidth) {
-<span class="fc" id="L177">		double deltaSize = area.getLiveDeltaSize();</span>
-<span class="fc" id="L178">		double dx = area.getDeltaX1();</span>
-<span class="fc" id="L179">		int level = area.getLevel();</span>
+<span class="nc" id="L177">		double deltaSize = area.getLiveDeltaSize();</span>
+<span class="nc" id="L178">		double dx = area.getDeltaX1();</span>
+<span class="nc" id="L179">		int level = area.getLevel();</span>
 
-<span class="fc" id="L181">		double x1 = 0;</span>
-<span class="fc" id="L182">		double x2 = 1;</span>
-<span class="fc" id="L183">		double extraLiveDeltaIndent = level * deltaSize;</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (dx &lt; 0) {</span>
+<span class="nc" id="L181">		double x1 = 0;</span>
+<span class="nc" id="L182">		double x2 = 1;</span>
+<span class="nc" id="L183">		double extraLiveDeltaIndent = level * deltaSize;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (dx &lt; 0) {</span>
 <span class="nc" id="L185">			x1 += 0;</span>
 <span class="nc bnc" id="L186" title="All 2 branches missed.">			x2 +=  (level &gt; 0 ? -extraLiveDeltaIndent : deltaSize) ;</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		} else if (dx &gt; 0) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		} else if (dx &gt; 0) {</span>
 <span class="nc bnc" id="L188" title="All 2 branches missed.">			x1 += (level &gt; 1) ? deltaSize - extraLiveDeltaIndent : 0;</span>
 <span class="nc bnc" id="L189" title="All 2 branches missed.">			x2 += (level == 1 ? -deltaSize : 0);</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		} else if (level &gt; 1) {</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		} else if (level &gt; 1) {</span>
 <span class="nc" id="L191">			x1 -= extraLiveDeltaIndent - deltaSize;</span>
 <span class="nc" id="L192">			x2 -= extraLiveDeltaIndent - deltaSize;</span>
 		}
 
-<span class="fc" id="L195">		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
-<span class="fc" id="L197">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
-<span class="fc" id="L198">					.apply(getBackgroundColor().bg())</span>
-<span class="fc" id="L199">					.apply(new UTranslate(prefTextWidth - x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
+<span class="nc" id="L195">		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
+<span class="nc" id="L197">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
+<span class="nc" id="L198">					.apply(getBackgroundColor().bg())</span>
+<span class="nc" id="L199">					.apply(new UTranslate(prefTextWidth - x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
 							textHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
-<span class="fc" id="L201">					.draw(circle);</span>
-<span class="fc" id="L202">			x1 += ComponentRoseArrow.diamCircle / 2.0 - ComponentRoseArrow.thinCircle;</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			x1 += getArrowConfiguration().getDressing1().getHead() == ArrowHead.NONE ? ComponentRoseArrow.thinCircle : 0;</span>
+<span class="nc" id="L201">					.draw(circle);</span>
+<span class="nc" id="L202">			x1 += ComponentRoseArrow.diamCircle / 2.0 - ComponentRoseArrow.thinCircle;</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			x1 += getArrowConfiguration().getDressing1().getHead() == ArrowHead.NONE ? ComponentRoseArrow.thinCircle : 0;</span>
 		}
-<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {</span>
-<span class="fc" id="L206">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
-<span class="fc" id="L207">					.apply(getBackgroundColor().bg())</span>
-<span class="fc" id="L208">					.apply(new UTranslate(prefTextWidth - x2 + 2 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {</span>
+<span class="nc" id="L206">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
+<span class="nc" id="L207">					.apply(getBackgroundColor().bg())</span>
+<span class="nc" id="L208">					.apply(new UTranslate(prefTextWidth - x2 + 2 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
 							textHeight + arrowHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
-<span class="fc" id="L210">					.draw(circle);</span>
-<span class="fc" id="L211">			x2 += ComponentRoseArrow.diamCircle / 2.0 + ComponentRoseArrow.thinCircle;</span>
+<span class="nc" id="L210">					.draw(circle);</span>
+<span class="nc" id="L211">			x2 += ComponentRoseArrow.diamCircle / 2.0 + ComponentRoseArrow.thinCircle;</span>
 		}
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (hasStartingCrossX)</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">			x1 += ComponentRoseArrow.spaceCrossX + (level &gt; 0 ? extraLiveDeltaIndent : ComponentRoseArrow.spaceCrossX);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (hasStartingCrossX)</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			x1 += ComponentRoseArrow.spaceCrossX + (level &gt; 0 ? extraLiveDeltaIndent : ComponentRoseArrow.spaceCrossX);</span>
 
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (hasFinalCrossX)</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			x2 += ComponentRoseArrow.spaceCrossX + (level &gt; 0 ? extraLiveDeltaIndent : ComponentRoseArrow.spaceCrossX);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (hasFinalCrossX)</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			x2 += ComponentRoseArrow.spaceCrossX + (level &gt; 0 ? extraLiveDeltaIndent : ComponentRoseArrow.spaceCrossX);</span>
 
-<span class="fc" id="L221">		double extraline = 0;</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (getArrowConfiguration().getDressing2().getPart() == ArrowPart.FULL</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">				&amp;&amp; getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL)</span>
-<span class="fc" id="L224">			extraline = 1;</span>
+<span class="nc" id="L221">		double extraline = 0;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (getArrowConfiguration().getDressing2().getPart() == ArrowPart.FULL</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">				&amp;&amp; getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL)</span>
+<span class="nc" id="L224">			extraline = 1;</span>
 
-<span class="fc" id="L226">		x1 += 1;</span>
+<span class="nc" id="L226">		x1 += 1;</span>
 
-<span class="fc" id="L228">		ug2.apply(new UTranslate(prefTextWidth-xRight, textHeight)).draw(ULine.hline(xRight - x1));</span>
-<span class="fc" id="L229">		ug2.apply(new UTranslate(prefTextWidth-xRight, textHeight)).draw(ULine.vline(arrowHeight));</span>
-<span class="fc" id="L230">		ug2.apply(new UTranslate(prefTextWidth-xRight, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2 - extraline));</span>
+<span class="nc" id="L228">		ug2.apply(new UTranslate(prefTextWidth-xRight, textHeight)).draw(ULine.hline(xRight - x1));</span>
+<span class="nc" id="L229">		ug2.apply(new UTranslate(prefTextWidth-xRight, textHeight)).draw(ULine.vline(arrowHeight));</span>
+<span class="nc" id="L230">		ug2.apply(new UTranslate(prefTextWidth-xRight, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2 - extraline));</span>
 
-<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (getArrowConfiguration().getDressing2().getPart() == ArrowPart.FULL</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">				&amp;&amp; getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL)</span>
-<span class="fc" id="L234">			x2 += 1;</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
-<span class="fc" id="L236">			x2 += 1;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (getArrowConfiguration().getDressing2().getPart() == ArrowPart.FULL</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">				&amp;&amp; getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL)</span>
+<span class="nc" id="L234">			x2 += 1;</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
+<span class="nc" id="L236">			x2 += 1;</span>
 
-<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (hasStartingCrossX) {</span>
-<span class="fc" id="L239">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L240">					.apply(new UTranslate(prefTextWidth-x1-ComponentRoseArrow.spaceCrossX/2,</span>
-<span class="fc" id="L241">							textHeight - getArrowDeltaX() / 2.0))</span>
-<span class="fc" id="L242">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
-<span class="fc" id="L243">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L244">					.apply(new UTranslate(prefTextWidth-x1-ComponentRoseArrow.spaceCrossX/2, textHeight + getArrowDeltaX() / 2.0))</span>
-<span class="fc" id="L245">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (hasStartingCrossX) {</span>
+<span class="nc" id="L239">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L240">					.apply(new UTranslate(prefTextWidth-x1-ComponentRoseArrow.spaceCrossX/2,</span>
+<span class="nc" id="L241">							textHeight - getArrowDeltaX() / 2.0))</span>
+<span class="nc" id="L242">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
+<span class="nc" id="L243">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L244">					.apply(new UTranslate(prefTextWidth-x1-ComponentRoseArrow.spaceCrossX/2, textHeight + getArrowDeltaX() / 2.0))</span>
+<span class="nc" id="L245">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {</span>
 <span class="nc" id="L247">			final UPolygon polygon = getPolygon().translate(prefTextWidth - x1 , textHeight);</span>
 <span class="nc" id="L248">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x1)).draw(polygon);</span>
 		}
 
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (hasFinalCrossX) {</span>
-<span class="fc" id="L252">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L253">					.apply(new UTranslate(prefTextWidth-x2-ComponentRoseArrow.spaceCrossX/2,</span>
-<span class="fc" id="L254">							textHeight - getArrowDeltaX() / 2.0 + arrowHeight))</span>
-<span class="fc" id="L255">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
-<span class="fc" id="L256">			ug.apply(UStroke.withThickness(2))</span>
-<span class="fc" id="L257">					.apply(new UTranslate(prefTextWidth-x2-ComponentRoseArrow.spaceCrossX/2,</span>
-<span class="fc" id="L258">							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))</span>
-<span class="fc" id="L259">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		} else if (getArrowConfiguration().isAsync2()) {</span>
-<span class="fc bfc" id="L261" title="All 2 branches covered.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
-<span class="fc" id="L262">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(prefTextWidth - x2 , textHeight + arrowHeight))</span>
-<span class="fc" id="L263">						.draw(new ULine(-getArrowDeltaX(), -getArrowDeltaY()));</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (hasFinalCrossX) {</span>
+<span class="nc" id="L252">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L253">					.apply(new UTranslate(prefTextWidth-x2-ComponentRoseArrow.spaceCrossX/2,</span>
+<span class="nc" id="L254">							textHeight - getArrowDeltaX() / 2.0 + arrowHeight))</span>
+<span class="nc" id="L255">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
+<span class="nc" id="L256">			ug.apply(UStroke.withThickness(2))</span>
+<span class="nc" id="L257">					.apply(new UTranslate(prefTextWidth-x2-ComponentRoseArrow.spaceCrossX/2,</span>
+<span class="nc" id="L258">							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))</span>
+<span class="nc" id="L259">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		} else if (getArrowConfiguration().isAsync2()) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
+<span class="nc" id="L262">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(prefTextWidth - x2 , textHeight + arrowHeight))</span>
+<span class="nc" id="L263">						.draw(new ULine(-getArrowDeltaX(), -getArrowDeltaY()));</span>
 			}
-<span class="fc bfc" id="L265" title="All 2 branches covered.">			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {</span>
-<span class="fc" id="L266">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(prefTextWidth - x2 , textHeight + arrowHeight))</span>
-<span class="fc" id="L267">						.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()));</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {</span>
+<span class="nc" id="L266">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(prefTextWidth - x2 , textHeight + arrowHeight))</span>
+<span class="nc" id="L267">						.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()));</span>
 			}
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL) {</span>
-<span class="fc" id="L270">			final UPolygon polygon = getPolygon().translate(0, textHeight + arrowHeight);</span>
-<span class="fc" id="L271">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(prefTextWidth-x2)).draw(polygon);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">		} else if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL) {</span>
+<span class="nc" id="L270">			final UPolygon polygon = getPolygon().translate(0, textHeight + arrowHeight);</span>
+<span class="nc" id="L271">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(prefTextWidth-x2)).draw(polygon);</span>
 		}
-<span class="fc" id="L273">	}</span>
+<span class="nc" id="L273">	}</span>
 
 	private UPolygon getPolygon() {
 <span class="fc" id="L276">		final UPolygon polygon = new UPolygon();</span>
-<span class="fc bfc" id="L277" title="All 2 branches covered.">		final double direction = getArrowConfiguration().isReverseDefine() ? -1 : 1;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		final double direction = getArrowConfiguration().isReverseDefine() ? -1 : 1;</span>
 <span class="fc" id="L278">		final double x = direction * getArrowDeltaX();</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {</span>
-<span class="fc" id="L280">			polygon.addPoint(x-1, -getArrowDeltaY());</span>
-<span class="fc" id="L281">			polygon.addPoint(-1, 0);</span>
-<span class="fc" id="L282">			polygon.addPoint(x-1, 0);</span>
-<span class="fc bfc" id="L283" title="All 2 branches covered.">		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {</span>
-<span class="fc" id="L284">			polygon.addPoint(x-1, 0);</span>
-<span class="fc" id="L285">			polygon.addPoint(-1, 0);</span>
-<span class="fc" id="L286">			polygon.addPoint(x-1, getArrowDeltaY());</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {</span>
+<span class="nc" id="L280">			polygon.addPoint(x-1, -getArrowDeltaY());</span>
+<span class="nc" id="L281">			polygon.addPoint(-1, 0);</span>
+<span class="nc" id="L282">			polygon.addPoint(x-1, 0);</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {</span>
+<span class="nc" id="L284">			polygon.addPoint(x-1, 0);</span>
+<span class="nc" id="L285">			polygon.addPoint(-1, 0);</span>
+<span class="nc" id="L286">			polygon.addPoint(x-1, getArrowDeltaY());</span>
 		} else {
 <span class="fc" id="L288">			polygon.addPoint(x, -getArrowDeltaY());</span>
 <span class="fc" id="L289">			polygon.addPoint(0, 0);</span>
