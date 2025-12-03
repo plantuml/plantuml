@@ -300,7 +300,7 @@ public class Run {
 <span class="nc" id="L300">				lockFile = dir.file(&quot;javaumllock.tmp&quot;);</span>
 			}
 <span class="fc" id="L302">			processInParallel(file -&gt; {</span>
-<span class="fc bfc" id="L303" title="All 4 branches covered.">				if (errorStatus.hasError() &amp;&amp; option.isFailfastOrFailfast2())</span>
+<span class="pc bpc" id="L303" title="1 of 4 branches missed.">				if (errorStatus.hasError() &amp;&amp; option.isFailfastOrFailfast2())</span>
 <span class="fc" id="L304">					return;</span>
 
 <span class="fc" id="L306">				manageFileInternal(file);</span>
