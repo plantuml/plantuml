@@ -232,8 +232,8 @@ public class Stereotype implements CharSequence {
 				|| decoration.label.equalsIgnoreCase("<<Specification>>");
 	}
 
-	public boolean isFoo() {
-		return decoration.label.equalsIgnoreCase("<<foo>>");
+	public boolean isIcon() {
+		return decoration.label.equalsIgnoreCase("<<icon>>");
 	}
 
 }

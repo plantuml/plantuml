@@ -131,30 +131,52 @@ public class FtileBoxEmoji extends AbstractFtile {
 			final String part1 = s.substring(0, position);
 			final String part2 = s.substring(position);
 
-			this.emoji = Display.create(part1).create(fc, HorizontalAlignment.LEFT, skinParam);
+			this.emoji = Display.create(eventuallyHackSize(part1, "2")).create(fc, HorizontalAlignment.LEFT, skinParam);
 			this.name = Display.create(part2).create(fc, HorizontalAlignment.LEFT, skinParam);
 		}
 
 	}
 
-	public void drawU(UGraphic ug) {
-		emoji.drawU(ug);
+	private CharSequence eventuallyHackSize(String part1, String size) {
+		if (part1.contains("*"))
+			return part1;
+		return part1.replace(":>", ":*" + size + ">");
+	}
 
-		if (name != TextBlockUtils.EMPTY_TEXT_BLOCK) {
-			final double delta = emoji.calculateDimension(ug.getStringBounder()).getWidth() + MARGIN;
-			name.drawU(ug.apply(UTranslate.dx(delta)));
+	public void drawU(UGraphic ug) {
+
+		if (name == TextBlockUtils.EMPTY_TEXT_BLOCK) {
+			emoji.drawU(ug);
+		} else {
+			final XDimension2D dimEmoji = emoji.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimName = name.calculateDimension(ug.getStringBounder());
+
+			final double deltaX = dimEmoji.getWidth() + MARGIN;
+			final double deltaY = (dimEmoji.getHeight() - dimName.getHeight()) / 2;
+
+			if (deltaY > 0) {
+				emoji.drawU(ug);
+				name.drawU(ug.apply(new UTranslate(deltaX, deltaY)));
+			} else {
+				emoji.drawU(ug.apply(UTranslate.dy(-deltaY)));
+				name.drawU(ug.apply(UTranslate.dx(deltaX)));
+			}
 		}
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		XDimension2D dimEmoji = emoji.calculateDimension(stringBounder);
-		XDimension2D dimName = name.calculateDimension(stringBounder);
+		final XDimension2D dimEmoji = emoji.calculateDimension(stringBounder);
+		final XDimension2D dimName = name.calculateDimension(stringBounder);
 
 		final double width = dimEmoji.getWidth() + MARGIN + dimName.getWidth();
 		final double height = Math.max(dimEmoji.getHeight(), dimName.getHeight());
 
-		return new FtileGeometry(width, height, dimEmoji.getWidth() / 2, 0, dimEmoji.getHeight());
+		final double deltaY = (dimEmoji.getHeight() - dimName.getHeight()) / 2;
+		if (deltaY > 0)
+			return new FtileGeometry(width, height, dimEmoji.getWidth() / 2, 0, dimEmoji.getHeight());
+		else
+			return new FtileGeometry(width, height, dimEmoji.getWidth() / 2, -deltaY, dimEmoji.getHeight() - deltaY);
 	}
 
 	public Collection<Ftile> getMyChildren() {
