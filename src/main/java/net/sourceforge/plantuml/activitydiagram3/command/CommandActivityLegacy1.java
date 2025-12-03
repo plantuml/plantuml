@@ -61,14 +61,15 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[-*]"), //
 				RegexLeaf.spaceZeroOrOne(), //
-				StereotypePattern.optional("STEREO"), //
+				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf(1, "LABEL", "(.*)"), //
+				StereotypePattern.optional("STEREO2"), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final String stereo = arg.get("STEREO", 0);
+		final String stereo = arg.getLazzy("STEREO", 0);
 		Stereotype stereotype = null;
 		if (stereo != null) {
 			stereotype = Stereotype.build(stereo);
