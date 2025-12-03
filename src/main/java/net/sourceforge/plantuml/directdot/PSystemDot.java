@@ -37,11 +37,10 @@ package net.sourceforge.plantuml.directdot;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.StringUtils;
@@ -74,7 +73,11 @@ public class PSystemDot extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, filter(data),
+
+		if (fileFormat.getFileFormat() == FileFormat.SVG)
+			return ImageDataSimple.ok();
+
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,
 				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings
@@ -95,39 +98,4 @@ public class PSystemDot extends AbstractPSystem {
 		return ImageDataSimple.ok();
 	}
 
-	private String filter(String data) {
-		data = data.replaceAll("(?i)\\bjavascript:", "js:");
-
-		data = data.replaceAll("(?i)<\\s*/?\\s*script[^>]*>", "");
-
-		data = sanitizeDotAttribute(data, "fontname");
-		data = sanitizeDotAttribute(data, "label");
-		data = sanitizeDotAttribute(data, "xlabel");
-		data = sanitizeDotAttribute(data, "URL");
-		data = sanitizeDotAttribute(data, "href");
-		data = sanitizeDotAttribute(data, "tooltip");
-
-		return data;
-	}
-
-	private String sanitizeDotAttribute(String dot, String attrName) {
-		final Pattern p = Pattern.compile("(?i)(" + attrName + ")\\s*=\\s*\"([^\"]*)\"");
-		final Matcher m = p.matcher(dot);
-		final StringBuffer sb = new StringBuffer();
-		while (m.find()) {
-			final String originalValue = m.group(2);
-			final String safeValue = sanitizeAttributeValue(originalValue);
-			m.appendReplacement(sb, m.group(1) + "=\"" + safeValue + "\"");
-		}
-		m.appendTail(sb);
-		return sb.toString();
-	}
-
-	private String sanitizeAttributeValue(String value) {
-		value = value.replace("<", "").replace(">", "");
-		value = value.replace("\"", "").replace("'", "");
-		value = value.replaceAll("(?i)on[a-z]+\\s*=", "");
-
-		return value;
-	}
 }
