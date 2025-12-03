@@ -60,7 +60,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 				new RegexOptional(new RegexLeaf(1, "BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf(1, "SHAPE", "(_)?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "LABEL", "([^%s].*)"), RegexLeaf.end());
+				new RegexLeaf(1, "LABEL", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override
