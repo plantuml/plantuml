@@ -47,6 +47,11 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
@@ -59,14 +64,32 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[-*]"), //
 				RegexLeaf.spaceZeroOrOne(), //
+				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf(1, "LABEL", "(.*)"), //
+				StereotypePattern.optional("STEREO2"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN, null, Colors.empty(),
-				null);
+		final String stereo = arg.getLazzy("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereo != null) {
+			stereotype = Stereotype.build(stereo);
+		}
+		
+		final Url url;
+		if (arg.get("URL", 0) == null) {
+			url = null;
+		} else {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
+			url = urlBuilder.getUrl(arg.get("URL", 0));
+		}
+		
+		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN, url, Colors.empty(),
+				stereotype);
 	}
 
 }

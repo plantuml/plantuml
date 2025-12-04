@@ -113,7 +113,7 @@ public final class Quantify555 {
 	private static final int TOTAL_CUBE_SLOTS = CUBE_COUNT_RGB555 + 1;
 
 	private static final int MIN_CUBES_THRESHOLD = 32;
-	
+
 	/**
 	 * Attempts to quantize an image to <= 256 colors using the Cube555 structure.
 	 * 
@@ -125,43 +125,53 @@ public final class Quantify555 {
 
 		final int w = src.getWidth();
 		final int h = src.getHeight();
-		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
 
-		Log.info(() -> "Using Quantify555.");
+		try {
+			final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
 
-		int nbCubes = 0;
+			Log.info(() -> "Using Quantify555.");
 
-		// Step 1: Fill Cube555 structures with frequency counts
-		final Cube555[] cubes = new Cube555[TOTAL_CUBE_SLOTS];
-		for (int argb : pixels) {
-			final int cubeIndex = getCubeIndex(argb);
+			int nbCubes = 0;
 
-			Cube555 cube = cubes[cubeIndex];
-			if (cube == null) {
-				// Abort if too many distinct cubes are found
-				if (nbCubes++ > 255) {
-					Log.info(() -> "...abort, too many colors");
-					return null;
+			// Step 1: Fill Cube555 structures with frequency counts
+			final Cube555[] cubes = new Cube555[TOTAL_CUBE_SLOTS];
+			for (int argb : pixels) {
+				final int cubeIndex = getCubeIndex(argb);
+
+				Cube555 cube = cubes[cubeIndex];
+				if (cube == null) {
+					// Abort if too many distinct cubes are found
+					if (nbCubes++ > 255) {
+						Log.info(() -> "...abort, too many colors");
+						return null;
+					}
+					cube = new Cube555(cubeIndex);
+					cubes[cubeIndex] = cube;
 				}
-				cube = new Cube555(cubeIndex);
-				cubes[cubeIndex] = cube;
+
+				// for transparent pixels, we don't care about sub-color distribution;
+				// just increment bucket 0 (or any fixed slot).
+				final int sub = cubeIndex == TRANSPARENT_CUBE ? 0 : subColorIndex512(argb);
+				cube.increment(sub);
+
 			}
 
-			// for transparent pixels, we don't care about sub-color distribution;
-			// just increment bucket 0 (or any fixed slot).
-			final int sub = cubeIndex == TRANSPARENT_CUBE ? 0 : subColorIndex512(argb);
-			cube.increment(sub);
+			// Abort if there are not enough cubes, risk of over-quantization
+			if (nbCubes < MIN_CUBES_THRESHOLD) {
+				Log.info(() -> "...abort, not enough distinct colors");
+				return null;
+			}
 
-		}
+			// Step 2: Build the final indexed image
+			return buildIndexedImageFromCubes(src, cubes);
 
-		// Abort if there are not enough cubes, risk of over-quantization
-		if (nbCubes < MIN_CUBES_THRESHOLD) {
-			Log.info(() -> "...abort, not enough distinct colors");
+		} catch (Throwable t) {
+			// Swallowing all throwables is intentional here: any unexpected failure
+			// during pixel extraction or packing (including OutOfMemoryError or JVM-level
+			// errors) prevents safe recovery. Returning null signals that the packed
+			// representation could not be produced.
 			return null;
 		}
-
-		// Step 2: Build the final indexed image
-		return buildIndexedImageFromCubes(src, cubes);
 	}
 
 	public static boolean isTransparent(int argb) {

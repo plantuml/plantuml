@@ -49,18 +49,26 @@ public final class QuantifyPacked28 {
 		final int w = src.getWidth();
 		final int h = src.getHeight();
 
-		final BufferedImage dst = new BufferedImage(w, h, type);
+		try {
+			final BufferedImage dst = new BufferedImage(w, h, type);
 
-		final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
-		final int[] out = new int[pixels.length];
+			final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
+			final int[] out = new int[pixels.length];
 
-		for (int i = 0; i < pixels.length; i++) {
-			final int argb = pixels[i];
-			out[i] = QuantUtils.compressPackedARGB(argb);
+			for (int i = 0; i < pixels.length; i++) {
+				final int argb = pixels[i];
+				out[i] = QuantUtils.compressPackedARGB(argb);
+			}
+
+			dst.setRGB(0, 0, w, h, out, 0, w);
+			return dst;
+		} catch (Throwable t) {
+			// Swallowing all throwables is intentional here: any unexpected failure
+			// during pixel extraction or packing (including OutOfMemoryError or JVM-level
+			// errors) prevents safe recovery. Returning null signals that the packed
+			// representation could not be produced.
+			return null;
 		}
-
-		dst.setRGB(0, 0, w, h, out, 0, w);
-		return dst;
 	}
 
 }

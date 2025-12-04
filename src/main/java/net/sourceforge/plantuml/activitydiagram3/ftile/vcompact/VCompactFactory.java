@@ -136,7 +136,7 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors, Stereotype stereotype,
 			StyleBuilder styleBuilder) {
-		if (stereotype != null && stereotype.isFoo())
+		if (stereotype != null && stereotype.isIcon())
 			return FtileBoxEmoji.create(colors.mute(skinParam), label, swimlane, stereotype, styleBuilder);
 
 		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype, styleBuilder);

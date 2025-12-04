@@ -47,24 +47,45 @@ public class ComplementSeveralDays implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf(4, "COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week)s?" + //
-						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" //
+				new RegexLeaf(4, "COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week|month)s?" + //
+						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month)s?)?" //
 				)); //
 	}
 
+	@Override
 	public Failable<Load> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String nb1 = arg.get("COMPLEMENT" + suffix, 0);
-		final int factor1 = arg.get("COMPLEMENT" + suffix, 1).startsWith("w") ? system.daysInWeek() : 1;
-		final int days1 = Integer.parseInt(nb1) * factor1;
 
-		final String nb2 = arg.get("COMPLEMENT" + suffix, 2);
-		int days2 = 0;
-		if (nb2 != null) {
-			final int factor2 = arg.get("COMPLEMENT" + suffix, 3).startsWith("w") ? system.daysInWeek() : 1;
-			days2 = Integer.parseInt(nb2) * factor2;
+		final String prefix = "COMPLEMENT" + suffix;
+
+		final int firstValue = Integer.parseInt(arg.get(prefix, 0));
+		final String firstUnit = arg.get(prefix, 1);
+		final int firstDays = toDays(system, firstValue, firstUnit);
+
+		int secondDays = 0;
+		final String secondValue = arg.get(prefix, 2);
+		if (secondValue != null) {
+			final int value = Integer.parseInt(secondValue);
+			final String unit = arg.get(prefix, 3);
+			secondDays = toDays(system, value, unit);
 		}
 
-		return Failable.ok(Load.inWinks(days1 + days2));
+		final int totalDays = firstDays + secondDays;
+		return Failable.ok(Load.inWinks(totalDays));
 	}
 
+	private int toDays(GanttDiagram system, int value, String unit) {
+		switch (unit.charAt(0)) {
+		case 'D':
+		case 'd':
+			return value;
+		case 'W':
+		case 'w':
+			return value * system.daysInWeek();
+		case 'M':
+		case 'm':
+			return value * system.daysInMonth();
+		default:
+			throw new IllegalArgumentException("unknown time unit: " + unit);
+		}
+	}
 }
