@@ -208,31 +208,31 @@ public class LinkType {
 		return decor2;
 	}
 
-	private boolean isExtendsOrAggregationOrCompositionOrPlus() {
-		return isExtends() || isAggregationOrComposition() || isPlus() || isOf(LinkDecor.DEFINEDBY)
-				|| isOf(LinkDecor.REDEFINES);
-	}
-
-	private boolean isExtendsOrPlus() {
-		return isExtends() || isPlus() || isOf(LinkDecor.DEFINEDBY) || isOf(LinkDecor.REDEFINES);
-	}
-
-	private boolean isOf(LinkDecor ld) {
-		return decor1 == ld || decor2 == ld;
-	}
+//	private boolean isExtendsOrAggregationOrCompositionOrPlus() {
+//		return isExtends() || isAggregationOrComposition() || isPlus() || isOf(LinkDecor.DEFINEDBY)
+//				|| isOf(LinkDecor.REDEFINES);
+//	}
+//
+//	private boolean isExtendsOrPlus() {
+//		return isExtends() || isPlus() || isOf(LinkDecor.DEFINEDBY) || isOf(LinkDecor.REDEFINES);
+//	}
+//
+//	private boolean isOf(LinkDecor ld) {
+//		return decor1 == ld || decor2 == ld;
+//	}
 
 	public boolean isExtends() {
 		return decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS;
 	}
 
-	private boolean isPlus() {
-		return decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS;
-	}
-
-	private boolean isAggregationOrComposition() {
-		return decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION || decor1 == LinkDecor.COMPOSITION
-				|| decor2 == LinkDecor.COMPOSITION;
-	}
+//	private boolean isPlus() {
+//		return decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS;
+//	}
+//
+//	private boolean isAggregationOrComposition() {
+//		return decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION || decor1 == LinkDecor.COMPOSITION
+//				|| decor2 == LinkDecor.COMPOSITION;
+//	}
 
 	public LinkType getPart1() {
 		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);
@@ -268,38 +268,59 @@ public class LinkType {
 	}
 
 	/**
-	 * Returns the semantic link type name for SVG output.
-	 * This is used to populate the data-link-type attribute.
+	 * Returns the semantic link type name for SVG output. This is used to populate
+	 * the data-link-type attribute.
 	 *
 	 * @return the semantic type name, or null if no specific type can be determined
 	 */
 	public String getLinkTypeName() {
-		if (decor1 == LinkDecor.COMPOSITION || decor2 == LinkDecor.COMPOSITION)
+		if (has(LinkDecor.COMPOSITION))
 			return "composition";
-		if (decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION)
+		
+		if (has(LinkDecor.AGREGATION))
 			return "aggregation";
-		if (decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS)
+		
+		if (has(LinkDecor.EXTENDS))
 			return "extension";
-		if (decor1 == LinkDecor.REDEFINES || decor2 == LinkDecor.REDEFINES)
+		
+		if (has(LinkDecor.REDEFINES))
 			return "redefines";
-		if (decor1 == LinkDecor.DEFINEDBY || decor2 == LinkDecor.DEFINEDBY)
+		
+		if (has(LinkDecor.DEFINEDBY))
 			return "definedby";
-		if (decor1 == LinkDecor.ARROW || decor2 == LinkDecor.ARROW
-				|| decor1 == LinkDecor.ARROW_TRIANGLE || decor2 == LinkDecor.ARROW_TRIANGLE)
+		
+		if (hasAny(LinkDecor.ARROW, LinkDecor.ARROW_TRIANGLE))
 			return "dependency";
-		if (decor1 == LinkDecor.NOT_NAVIGABLE || decor2 == LinkDecor.NOT_NAVIGABLE)
+		
+		if (has(LinkDecor.NOT_NAVIGABLE))
 			return "not_navigable";
-		if (decor1 == LinkDecor.CROWFOOT || decor2 == LinkDecor.CROWFOOT
-				|| decor1 == LinkDecor.CIRCLE_CROWFOOT || decor2 == LinkDecor.CIRCLE_CROWFOOT
-				|| decor1 == LinkDecor.LINE_CROWFOOT || decor2 == LinkDecor.LINE_CROWFOOT)
+		
+		if (hasAny(LinkDecor.CROWFOOT, LinkDecor.CIRCLE_CROWFOOT, LinkDecor.LINE_CROWFOOT))
 			return "crowfoot";
-		if (decor1 == LinkDecor.CIRCLE_LINE || decor2 == LinkDecor.CIRCLE_LINE
-				|| decor1 == LinkDecor.DOUBLE_LINE || decor2 == LinkDecor.DOUBLE_LINE
-				|| (decor1 == LinkDecor.NONE && decor2 == LinkDecor.NONE))
+		
+		if (hasAny(LinkDecor.CIRCLE_LINE, LinkDecor.DOUBLE_LINE) || bothNone())
 			return "association";
-		if (decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS)
+		
+		if (has(LinkDecor.PLUS))
 			return "nested";
+		
 		return null;
+	}
+
+	private boolean has(LinkDecor decor) {
+		return decor1 == decor || decor2 == decor;
+	}
+
+	private boolean hasAny(LinkDecor... decors) {
+		for (LinkDecor d : decors)
+			if (has(d))
+				return true;
+
+		return false;
+	}
+
+	private boolean bothNone() {
+		return decor1 == LinkDecor.NONE && decor2 == LinkDecor.NONE;
 	}
 
 }
