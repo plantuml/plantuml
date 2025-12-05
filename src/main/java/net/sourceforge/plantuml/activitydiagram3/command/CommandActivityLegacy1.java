@@ -65,7 +65,7 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 				new RegexLeaf("[-*]"), //
 				RegexLeaf.spaceZeroOrOne(), //
 				StereotypePattern.optional("STEREO1"), //
-				new RegexLeaf(1, "LABEL", "(.*)"), //
+				new RegexLeaf(1, "LABEL", "(.*?)"), //
 				StereotypePattern.optional("STEREO2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
