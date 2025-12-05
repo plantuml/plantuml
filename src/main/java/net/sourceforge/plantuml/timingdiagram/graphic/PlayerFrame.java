@@ -38,8 +38,10 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -77,12 +79,21 @@ public class PlayerFrame {
 	}
 
 	public void drawFrameTitle(UGraphic ug) {
+		if (title == TextBlockUtils.EMPTY_TEXT_BLOCK)
+			return;
 		title.drawU(ug);
-		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(getLineColor()).apply(getUStroke());
+
+		final XDimension2D dimTitle = title.calculateDimension(stringBounder);
+
 		final double widthTmp = dimTitle.getWidth() + 1;
-		final double height = title.calculateDimension(ug.getStringBounder()).getHeight() + 1;
+		final double height = dimTitle.getHeight() + 1;
 		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);
+	}
+
+	public double getHeight(StringBounder stringBounder) {
+		return title.calculateDimension(stringBounder).getHeight() + 1;
 	}
 
 	private void drawLine(UGraphic ug, double... coord) {

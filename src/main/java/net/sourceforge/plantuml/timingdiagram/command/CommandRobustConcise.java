@@ -86,8 +86,8 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		String full = arg.get("FULL", 0);
@@ -103,8 +103,20 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
-		return diagram.createRobustConcise(code, full, type, compact != null, stereotype,
-				colors.getColor(ColorType.BACK));
+		switch (type) {
+		case ROBUST:
+			diagram.createPlayerRobust(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
+			break;
+		case CONCISE:
+			diagram.createPlayerConcise(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
+			break;
+		case RECTANGLE:
+			diagram.createPlayerRectangle(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
+			break;
+		default:
+			return CommandExecutionResult.error("Unknown timing style: " + type);
+		}
+		return CommandExecutionResult.ok();
 	}
 
 }

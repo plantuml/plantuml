@@ -42,56 +42,41 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingNote;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 import net.sourceforge.plantuml.utils.Position;
 
-public class Ribbon implements PDrawing {
+public class FooRibbon extends AbstractFooPanel implements PlayerPanels {
 
 	private final List<ChangeState> changes = new ArrayList<>();
-	private final List<TimeConstraint> constraints = new ArrayList<>();
 
-	private final ISkinParam skinParam;
-	private final TimingRuler ruler;
 	private String initialState;
 	private Colors initialColors;
-	private final List<TimingNote> notes;
-	private final boolean compact;
-	private final TextBlock title;
-	private final int suggestedHeight;
-	private final Style style;
 
-	public Ribbon(TimingRuler ruler, ISkinParam skinParam, List<TimingNote> notes, boolean compact, TextBlock title,
-			int suggestedHeight, Style style) {
-		this.style = style;
-		this.suggestedHeight = suggestedHeight == 0 ? 24 : suggestedHeight;
-		this.compact = compact;
-		this.ruler = ruler;
-		this.skinParam = skinParam;
-		this.notes = notes;
-		this.title = title;
+	public FooRibbon(TimingRuler ruler, ISkinParam skinParam, List<TimingNote> notes, int suggestedHeight, Style style,
+			List<TimeConstraint> constraints) {
+		super(ruler, skinParam, suggestedHeight == 0 ? 24 : suggestedHeight, style, notes, constraints);
+
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+		if (tick == null)
+			return null;
 		final double x = ruler.getPosInPixel(tick);
 		final double y = getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)
 				+ getHeightForTopComment(stringBounder) + getRibbonHeight() / 2;
@@ -111,51 +96,32 @@ public class Ribbon implements PDrawing {
 		return ruler.getPosInPixel(change.getWhen());
 	}
 
-	private FontConfiguration getFontConfiguration() {
-		return FontConfiguration.create(skinParam, style);
-
+	@Override
+	public void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
 	}
 
-	private TextBlock createTextBlock(String value) {
-		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);
-		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+	@Override
+	public double getLeftPanelWidth(StringBounder stringBounder) {
+		return getInitialWidth(stringBounder);
 	}
 
-	public TextBlock getPart1(double fullAvailableWidth) {
-		return new AbstractTextBlock() {
-			public void drawU(UGraphic ug) {
-				if (compact) {
-					final double titleHeight = title.calculateDimension(ug.getStringBounder()).getHeight();
-					final double dy = (getRibbonHeight() - titleHeight) / 2;
-					title.drawU(ug.apply(UTranslate.dy(dy)));
-				}
-			}
+	@Override
+	public void drawRightPanel(UGraphic ug) {
+		final StringBounder stringBounder = ug.getStringBounder();
 
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				double width = getInitialWidth(stringBounder);
-				if (compact)
-					width += title.calculateDimension(stringBounder).getWidth() + 10;
+		final UGraphic ugRibbon = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)
+				+ getHeightForTopComment(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)));
 
-				return new XDimension2D(width, getRibbonHeight());
-			}
-		};
-	}
+		drawBeforeZeroState(ugRibbon);
+		drawBeforeZeroStateLabel(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));
+		drawStates(ugRibbon);
+		drawStatesLabels(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));
 
-	public UDrawable getPart2() {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				drawPart2(ug);
-			}
-		};
-	}
+		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) / 2)));
 
-	private void drawNotes(UGraphic ug, final Position position) {
-		for (TimingNote note : notes)
-			if (note.getPosition() == position) {
-				final TimeTick when = note.getWhen();
-				final double x = when == null ? 0 : ruler.getPosInPixel(when);
-				note.drawU(ug.apply(UTranslate.dx(x)));
-			}
+		drawNotes(ug, Position.TOP);
+		drawNotes(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) + getRibbonHeight()
+				+ getHeightForNotes(stringBounder, Position.TOP))), Position.BOTTOM);
 	}
 
 	private double getInitialWidth(final StringBounder stringBounder) {
@@ -197,17 +163,9 @@ public class Ribbon implements PDrawing {
 		shape.drawU(ug);
 	}
 
-	private double getHeightForConstraints(StringBounder stringBounder) {
-		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);
-	}
-
-	private double getHeightForNotes(StringBounder stringBounder, Position position) {
-		double height = 0;
-		for (TimingNote note : notes)
-			if (note.getPosition() == position)
-				height = Math.max(height, note.getHeight(stringBounder));
-
-		return height;
+	@Override
+	protected double getHeightForConstraints(StringBounder stringBounder) {
+		return 10;
 	}
 
 	private double getMarginX() {
@@ -219,10 +177,7 @@ public class Ribbon implements PDrawing {
 		this.initialColors = initialColors;
 	}
 
-	public void addConstraint(TimeConstraint constraint) {
-		this.constraints.add(constraint);
-	}
-
+	@Override
 	public double getFullHeight(StringBounder stringBounder) {
 		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
 				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()
@@ -231,24 +186,6 @@ public class Ribbon implements PDrawing {
 
 	private double getBottomMargin() {
 		return 10;
-	}
-
-	private void drawPart2(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-
-		final UGraphic ugRibbon = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)
-				+ getHeightForTopComment(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)));
-
-		drawBeforeZeroState(ugRibbon);
-		drawBeforeZeroStateLabel(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));
-		drawStates(ugRibbon);
-		drawStatesLabels(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));
-
-		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) / 2)));
-
-		drawNotes(ug, Position.TOP);
-		drawNotes(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) + getRibbonHeight()
-				+ getHeightForNotes(stringBounder, Position.TOP))), Position.BOTTOM);
 	}
 
 	private void drawBeforeZeroState(UGraphic ug) {
@@ -355,15 +292,10 @@ public class Ribbon implements PDrawing {
 
 	private double getHeightForTopComment(StringBounder stringBounder) {
 		double result = 0;
-		for (ChangeState change : changes)
-			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());
+//		for (ChangeState change : changes)
+//			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());
 
 		return result;
-	}
-
-	private void drawConstraints(final UGraphic ug) {
-		for (TimeConstraint constraint : constraints)
-			constraint.drawU(ug, ruler);
 	}
 
 }

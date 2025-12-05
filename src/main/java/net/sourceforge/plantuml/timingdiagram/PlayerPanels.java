@@ -32,28 +32,19 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.timingdiagram.graphic;
+package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.timingdiagram.ChangeState;
-import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
-import net.sourceforge.plantuml.timingdiagram.TimeProjected;
 
-public interface PDrawing extends TimeProjected {
+public interface PlayerPanels extends TimeProjected {
 
-	public double getFullHeight(StringBounder stringBounder);
+	void drawLeftPanel(UGraphic ug, double fullAvailableWidth);
 
-	public void addChange(ChangeState change);
+	void drawRightPanel(UGraphic ug);
 
-	public TextBlock getPart1(double fullAvailableWidth);
+	double getFullHeight(StringBounder stringBounder);
 
-	public UDrawable getPart2();
-
-	public void setInitialState(String initialState, Colors initialColors);
-
-	public void addConstraint(TimeConstraint constraint);
+	double getLeftPanelWidth(StringBounder stringBounder);
 
 }
