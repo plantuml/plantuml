@@ -61,7 +61,7 @@ Expected result MUST be put between triple brackets
             <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">D</text>
         </g>
         <!--reverse link A to B-->
-        <g class="link" data-entity-1="A" data-entity-2="B" data-source-line="8" data-uid="lnk6" id="link_A_B">
+        <g class="link" data-entity-1="A" data-entity-2="B" data-link-type="composition" data-source-line="8" data-uid="lnk6" id="link_A_B">
             <path codeLine="8" fill="none" id="A-backto-B" style="stroke:#181818;stroke-width:1;"/>
             <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
             <polygon fill="#000000" style="stroke:#000000;stroke-width:1;"/>
@@ -71,7 +71,7 @@ Expected result MUST be put between triple brackets
 			<text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">key1</text>
         </g>
         <!--reverse link B to C-->
-        <g class="link" data-entity-1="B" data-entity-2="C" data-source-line="9" data-uid="lnk7" id="link_B_C">
+        <g class="link" data-entity-1="B" data-entity-2="C" data-link-type="aggregation" data-source-line="9" data-uid="lnk7" id="link_B_C">
             <path codeLine="9" fill="none" id="B-backto-C" style="stroke:#181818;stroke-width:1;"/>
             <polygon fill="none" style="stroke:#181818;stroke-width:1;"/>
             <polygon fill="#000000" style="stroke:#000000;stroke-width:1;"/>
@@ -82,7 +82,7 @@ Expected result MUST be put between triple brackets
       		<text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">key2b</text>
         </g>
         <!--link C to D-->
-        <g class="link" data-entity-1="C" data-entity-2="D" data-source-line="10" data-uid="lnk8" id="link_C_D">
+        <g class="link" data-entity-1="C" data-entity-2="D" data-link-type="association" data-source-line="10" data-uid="lnk8" id="link_C_D">
             <path codeLine="10" fill="none" id="C-D" style="stroke:#181818;stroke-width:1;"/>
             <polygon fill="#000000" style="stroke:#000000;stroke-width:1;"/>
             <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">holds</text>

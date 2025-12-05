@@ -56,7 +56,7 @@ Expected result MUST be put between triple brackets
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p2</text>
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
-    <g class="link" data-entity-1="p1" data-entity-2="p2" data-uid="lnk6" id="link_p1_p2">
+    <g class="link" data-entity-1="p1" data-entity-2="p2" data-link-type="dependency" data-uid="lnk6" id="link_p1_p2">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
       <path fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>

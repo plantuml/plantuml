@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  * Contribution :  Hisashi Miyashita
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.decoration;
@@ -265,6 +265,41 @@ public class LinkType {
 
 	public LinkType withLollipopInterfaceEye1() {
 		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);
+	}
+
+	/**
+	 * Returns the semantic link type name for SVG output.
+	 * This is used to populate the data-link-type attribute.
+	 *
+	 * @return the semantic type name, or null if no specific type can be determined
+	 */
+	public String getLinkTypeName() {
+		if (decor1 == LinkDecor.COMPOSITION || decor2 == LinkDecor.COMPOSITION)
+			return "composition";
+		if (decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION)
+			return "aggregation";
+		if (decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS)
+			return "extension";
+		if (decor1 == LinkDecor.REDEFINES || decor2 == LinkDecor.REDEFINES)
+			return "redefines";
+		if (decor1 == LinkDecor.DEFINEDBY || decor2 == LinkDecor.DEFINEDBY)
+			return "definedby";
+		if (decor1 == LinkDecor.ARROW || decor2 == LinkDecor.ARROW
+				|| decor1 == LinkDecor.ARROW_TRIANGLE || decor2 == LinkDecor.ARROW_TRIANGLE)
+			return "dependency";
+		if (decor1 == LinkDecor.NOT_NAVIGABLE || decor2 == LinkDecor.NOT_NAVIGABLE)
+			return "not_navigable";
+		if (decor1 == LinkDecor.CROWFOOT || decor2 == LinkDecor.CROWFOOT
+				|| decor1 == LinkDecor.CIRCLE_CROWFOOT || decor2 == LinkDecor.CIRCLE_CROWFOOT
+				|| decor1 == LinkDecor.LINE_CROWFOOT || decor2 == LinkDecor.LINE_CROWFOOT)
+			return "crowfoot";
+		if (decor1 == LinkDecor.CIRCLE_LINE || decor2 == LinkDecor.CIRCLE_LINE
+				|| decor1 == LinkDecor.DOUBLE_LINE || decor2 == LinkDecor.DOUBLE_LINE
+				|| (decor1 == LinkDecor.NONE && decor2 == LinkDecor.NONE))
+			return "association";
+		if (decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS)
+			return "nested";
+		return null;
 	}
 
 }

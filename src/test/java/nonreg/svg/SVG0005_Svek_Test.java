@@ -59,7 +59,7 @@ Expected result MUST be put between triple brackets
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
     <!--link p1 to p2-->
-    <g class="link" data-entity-1="p1" data-entity-2="p2" data-source-line="11" data-uid="lnk6" id="link_p1_p2">
+    <g class="link" data-entity-1="p1" data-entity-2="p2" data-link-type="dependency" data-source-line="11" data-uid="lnk6" id="link_p1_p2">
       <path fill="none" id="p1-to-p2" style="stroke:#181818;stroke-width:1;"/>
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
     </g>
