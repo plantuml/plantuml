@@ -39,7 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandActivity3;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandActivityLegacy1;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandActivityList;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandActivityLong3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandArrow3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandArrowLong3;
@@ -153,7 +153,7 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 		cmds.add(new CommandNoteLong3());
 
 		cmds.add(new CommandActivityLong3());
-		cmds.add(new CommandActivityLegacy1());
+		cmds.add(new CommandActivityList());
 
 		cmds.add(new CommandLabel());
 		cmds.add(new CommandGoto());
