@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  * Contribution :  Hisashi Miyashita
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.decoration;
@@ -265,6 +265,41 @@ public class LinkType {
 
 	public LinkType withLollipopInterfaceEye1() {
 <span class="nc" id="L267">		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);</span>
+	}
+
+	/**
+	 * Returns the semantic link type name for SVG output.
+	 * This is used to populate the data-link-type attribute.
+	 *
+	 * @return the semantic type name, or null if no specific type can be determined
+	 */
+	public String getLinkTypeName() {
+<span class="pc bpc" id="L277" title="1 of 4 branches missed.">		if (decor1 == LinkDecor.COMPOSITION || decor2 == LinkDecor.COMPOSITION)</span>
+<span class="fc" id="L278">			return &quot;composition&quot;;</span>
+<span class="pc bpc" id="L279" title="1 of 4 branches missed.">		if (decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION)</span>
+<span class="fc" id="L280">			return &quot;aggregation&quot;;</span>
+<span class="fc bfc" id="L281" title="All 4 branches covered.">		if (decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS)</span>
+<span class="fc" id="L282">			return &quot;extension&quot;;</span>
+<span class="pc bpc" id="L283" title="2 of 4 branches missed.">		if (decor1 == LinkDecor.REDEFINES || decor2 == LinkDecor.REDEFINES)</span>
+<span class="nc" id="L284">			return &quot;redefines&quot;;</span>
+<span class="pc bpc" id="L285" title="2 of 4 branches missed.">		if (decor1 == LinkDecor.DEFINEDBY || decor2 == LinkDecor.DEFINEDBY)</span>
+<span class="nc" id="L286">			return &quot;definedby&quot;;</span>
+<span class="pc bpc" id="L287" title="1 of 8 branches missed.">		if (decor1 == LinkDecor.ARROW || decor2 == LinkDecor.ARROW</span>
+				|| decor1 == LinkDecor.ARROW_TRIANGLE || decor2 == LinkDecor.ARROW_TRIANGLE)
+<span class="fc" id="L289">			return &quot;dependency&quot;;</span>
+<span class="pc bpc" id="L290" title="2 of 4 branches missed.">		if (decor1 == LinkDecor.NOT_NAVIGABLE || decor2 == LinkDecor.NOT_NAVIGABLE)</span>
+<span class="nc" id="L291">			return &quot;not_navigable&quot;;</span>
+<span class="pc bpc" id="L292" title="6 of 12 branches missed.">		if (decor1 == LinkDecor.CROWFOOT || decor2 == LinkDecor.CROWFOOT</span>
+				|| decor1 == LinkDecor.CIRCLE_CROWFOOT || decor2 == LinkDecor.CIRCLE_CROWFOOT
+				|| decor1 == LinkDecor.LINE_CROWFOOT || decor2 == LinkDecor.LINE_CROWFOOT)
+<span class="nc" id="L295">			return &quot;crowfoot&quot;;</span>
+<span class="pc bpc" id="L296" title="6 of 12 branches missed.">		if (decor1 == LinkDecor.CIRCLE_LINE || decor2 == LinkDecor.CIRCLE_LINE</span>
+				|| decor1 == LinkDecor.DOUBLE_LINE || decor2 == LinkDecor.DOUBLE_LINE
+				|| (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE))
+<span class="fc" id="L299">			return &quot;association&quot;;</span>
+<span class="nc bnc" id="L300" title="All 4 branches missed.">		if (decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS)</span>
+<span class="nc" id="L301">			return &quot;nested&quot;;</span>
+<span class="nc" id="L302">		return null;</span>
 	}
 
 }

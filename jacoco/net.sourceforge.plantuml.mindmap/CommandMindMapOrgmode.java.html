@@ -59,7 +59,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2&lt;MindMapDiagram&
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;([ \t]*[*#]+)&quot;), //
 				new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
 				new RegexLeaf(1, &quot;SHAPE&quot;, &quot;(_)?&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L63">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
