@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.ngm;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * Represents an abstract scheduled task in the New Gantt Model (NGM).
@@ -118,16 +119,16 @@ public abstract class NGMTask {
 	}
 
 	/** Returns the start instant of the task. */
-	public abstract Instant getStart();
+	public abstract LocalDateTime getStart();
 
 	/** Sets the start instant of the task. */
-	public abstract void setStart(Instant start);
+	public abstract void setStart(LocalDateTime start);
 
 	/** Returns the end instant of the task. */
-	public abstract Instant getEnd();
+	public abstract LocalDateTime getEnd();
 
 	/** Sets the end instant of the task. */
-	public abstract void setEnd(Instant end);
+	public abstract void setEnd(LocalDateTime end);
 
     /**
      * Returns the effective scheduled duration of the task.
@@ -188,7 +189,7 @@ public abstract class NGMTask {
      * @return a new fixed-duration task (when implemented)
      */
     public static NGMTask withFixedDuration(NGMWorkload workload, Duration duration) {
-        throw new UnsupportedOperationException("Work In Progress");
+        return new NGMTaskFixedDuration(workload, duration);
     }
 
     /**

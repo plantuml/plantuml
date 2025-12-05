@@ -24,10 +24,10 @@ class NGMTaskTest {
 
         // Start date set to 2025-11-30 at 00:00 (timezone-agnostic)
         LocalDateTime start = LocalDate.of(2025, 11, 30).atStartOfDay();
-        task.setStart(start); // <-- will not compile yet, expected in TDD
+        task.setStart(start);
 
         // Expected end: start + intrinsic duration
-        LocalDateTime expectedEnd = start.plus(duration);
+        LocalDateTime expectedEnd = LocalDate.of(2025, 12, 3).atStartOfDay();
         assertEquals(expectedEnd, task.getEnd(), "End must equal start + intrinsic duration");
 
         // Duration must remain equal to the intrinsic duration
