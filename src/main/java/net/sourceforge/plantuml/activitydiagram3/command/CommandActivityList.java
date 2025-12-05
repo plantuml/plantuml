@@ -54,14 +54,14 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
+public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 
-	public CommandActivityLegacy1() {
+	public CommandActivityList() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandActivityLegacy1.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandActivityList.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[-*]"), //
 				RegexLeaf.spaceZeroOrOne(), //
 				StereotypePattern.optional("STEREO1"), //
