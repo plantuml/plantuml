@@ -1,0 +1,162 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingNote;
+import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+import net.sourceforge.plantuml.utils.Position;
+
+public class FooBinary extends AbstractFooPanel implements PlayerPanels {
+
+	private static final String LOW_STRING = "0";
+	private static final String HIGH_STRING = "1";
+
+	private final SortedMap<TimeTick, ChangeState> values;
+	private final ChangeState initialState;
+
+	public FooBinary(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style,
+			SortedMap<TimeTick, ChangeState> values, List<TimeConstraint> constraints, ChangeState initialState,
+			List<TimingNote> notes, StyleSignature styleSignature) {
+		super(ruler, skinParam, suggestedHeight, style, notes, constraints);
+
+		this.values = values;
+		this.initialState = initialState;
+	}
+
+	@Override
+	public double getFullHeight(StringBounder stringBounder) {
+		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight
+				+ getHeightForNotes(stringBounder, Position.BOTTOM);
+	}
+
+	@Override
+	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+		if (tick == null)
+			return null;
+		final double x = ruler.getPosInPixel(tick);
+		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)),
+				new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)));
+	}
+
+	private final double ymargin = 8;
+
+	private double getYpos(StringBounder stringBounder, String state) {
+		if (state.equalsIgnoreCase(LOW_STRING))
+			return getYlow(stringBounder);
+		return getYhigh(stringBounder);
+	}
+
+	private double getYhigh(StringBounder stringBounder) {
+		return ymargin + getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP);
+	}
+
+	private double getYlow(StringBounder stringBounder) {
+		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight
+				- ymargin;
+	}
+
+	@Override
+	public void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
+	}
+
+	@Override
+	public final double getLeftPanelWidth(StringBounder stringBounder) {
+		return 5;
+	}
+
+	@Override
+	public void drawRightPanel(UGraphic ug) {
+		ug = getContext().apply(ug);
+		double lastx = 0;
+		List<String> lastValues = initialState == null ? Collections.singletonList(LOW_STRING)
+				: initialState.getStates();
+		final StringBounder stringBounder = ug.getStringBounder();
+		final double yhigh = getYhigh(stringBounder);
+		final double ylow = getYlow(stringBounder);
+		final ULine vline = ULine.vline(ylow - yhigh);
+		for (Map.Entry<TimeTick, ChangeState> ent : values.entrySet()) {
+			final ChangeState value = ent.getValue();
+
+			final double x = ruler.getPosInPixel(ent.getKey());
+
+			if (lastValues.size() == 1)
+				ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0)))).draw(ULine.hline(x - lastx));
+			else
+				for (double tmpx = lastx; tmpx < x; tmpx += 5)
+					ug.apply(new UTranslate(tmpx, yhigh)).draw(vline);
+
+			if (lastValues.equals(value.getStates()) == false)
+				ug.apply(new UTranslate(x, yhigh)).draw(vline);
+
+			if (value.getComment() != null) {
+				final TextBlock label = getTextBlock(value.getComment());
+				label.drawU(ug.apply(new UTranslate(x + 2, yhigh)));
+			}
+
+			lastx = x;
+			lastValues = value.getStates();
+		}
+		ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))
+				.draw(ULine.hline(ruler.getWidth() - lastx));
+
+		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
+
+		drawNotes(ug.apply(UTranslate.dy(ymargin)), Position.TOP);
+		drawNotes(
+				ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)
+						+ getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight - ymargin / 2)),
+				Position.BOTTOM);
+
+	}
+
+}

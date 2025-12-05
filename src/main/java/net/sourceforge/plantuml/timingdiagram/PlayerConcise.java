@@ -34,63 +34,42 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.timingdiagram.graphic.FooClock;
+import net.sourceforge.plantuml.timingdiagram.graphic.FooRibbon;
 
-public class PlayerClock extends Player {
+public final class PlayerConcise extends AbstractStatePlayer {
 
-	private final int period;
-	private final int pulse;
-	private final int offset;
-	private final double ymargin = 8;
+	public PlayerConcise(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
+			HColor generalBackgroundColor) {
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
+	}
 
-	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
-			boolean compact, Stereotype stereotype) {
-		super(title, skinParam, ruler, compact, stereotype, null);
-		this.period = period;
-		this.pulse = pulse;
-		this.offset = offset;
-		this.suggestedHeight = 30;
+	@Override
+	protected double getConstraintOffset() {
+		return 1;
+	}
+
+	@Override
+	protected StyleSignature getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise)
+				.withTOBECHANGED(stereotype);
 	}
 
 	@Override
 	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final FooRibbon result = new FooRibbon(ruler, skinParam, getNotes(), suggestedHeight, style, getConstraints());
+		result.setInitialState(getInitialState(), getInitialColors());
+		for (ChangeState change : getChanges())
+			result.addChange(change);
 
-		return new FooClock(ruler, skinParam, suggestedHeight, style, period, pulse, offset, null);
-
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock)
-				.withTOBECHANGED(stereotype);
-	}
-
-	@Override
-	public void defineState(String stateCode, String label) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setState(TimeTick now, String comment, Colors color, String... states) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-		throw new UnsupportedOperationException();
-	}
-
-	public final int getPeriod() {
-		return period;
+		return result;
 	}
 
 }

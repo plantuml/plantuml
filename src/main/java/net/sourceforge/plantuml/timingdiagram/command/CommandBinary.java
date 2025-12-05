@@ -72,7 +72,8 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		final String full = arg.get("FULL", 0);
@@ -83,7 +84,8 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 		else if (arg.get("STEREOTYPE2", 0) != null)
 			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
 
-		return diagram.createBinary(code, full, compact != null, stereotype);
+		diagram.createPlayerBinary(code, full, compact != null, stereotype);
+		return CommandExecutionResult.ok();
 	}
 
 }

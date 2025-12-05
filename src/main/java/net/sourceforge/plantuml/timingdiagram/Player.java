@@ -34,16 +34,21 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -52,9 +57,10 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
 
-public abstract class Player implements TimeProjected {
+public abstract class Player {
 
 	protected final ISkinParam skinParam;
 	protected final TimingRuler ruler;
@@ -63,6 +69,22 @@ public abstract class Player implements TimeProjected {
 	protected int suggestedHeight;
 	protected final Stereotype stereotype;
 	private final HColor generalBackgroundColor;
+	private PlayerPanels cached;
+
+	private final List<TimingNote> notes = new ArrayList<>();
+	private final PlayerFrame playerFrame;
+
+	public final List<TimingNote> getNotes() {
+		return Collections.unmodifiableList(notes);
+	}
+
+	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
+		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+				SName.note);
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
+	}
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
@@ -72,6 +94,7 @@ public abstract class Player implements TimeProjected {
 		this.compact = compact;
 		this.ruler = ruler;
 		this.title = Display.getWithNewlines(skinParam.getPragma(), title);
+		this.playerFrame = new PlayerFrame(getTitle(), skinParam);
 	}
 
 	public boolean isCompact() {
@@ -108,10 +131,10 @@ public abstract class Player implements TimeProjected {
 	}
 
 	final protected TextBlock getTitle() {
+		if (title.isWhite())
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
-
-	public abstract void addNote(TimeTick now, Display note, Position position, Stereotype stereotype);
 
 	public abstract void defineState(String stateCode, String label);
 
@@ -119,14 +142,26 @@ public abstract class Player implements TimeProjected {
 
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
-	public abstract TextBlock getPart1(double fullAvailableWidth, double specialVSpace);
+	public final void drawLeftPanel00(UGraphic ug) {
+		// if (isCompact() == false)
+		playerFrame.drawFrameTitle(ug);
+	}
 
-	public abstract UDrawable getPart2();
-
-	public abstract double getFullHeight(StringBounder stringBounder);
+	public double getFrameHeight(StringBounder stringBounder) {
+		return playerFrame.getHeight(stringBounder);
+	}
 
 	public final void setHeight(int height) {
 		this.suggestedHeight = height;
 	}
+
+	public PlayerPanels panels() {
+		if (cached == null)
+			cached = buildPlayerPanels();
+
+		return cached;
+	}
+
+	protected abstract PlayerPanels buildPlayerPanels();
 
 }

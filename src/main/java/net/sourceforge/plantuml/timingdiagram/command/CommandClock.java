@@ -107,7 +107,8 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		Stereotype stereotype = null;
 		if (stereotypeString != null)
 			stereotype = Stereotype.build(stereotypeString);
-		return diagram.createClock(code, full, period, pulse, offset, compact != null, stereotype);
+		diagram.createPlayerClock(code, full, period, pulse, offset, compact != null, stereotype);
+		return CommandExecutionResult.ok();
 	}
 
 	private int getInt(String value) {

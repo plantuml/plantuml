@@ -178,15 +178,4 @@ public class TimeConstraint {
 		return polygon;
 	}
 
-	public static double getHeightForConstraints(StringBounder stringBounder, List<TimeConstraint> constraints) {
-		if (constraints.size() == 0)
-			return 0;
-
-		double result = 0;
-		for (TimeConstraint constraint : constraints)
-			result = Math.max(result, constraint.getConstraintHeight(stringBounder));
-
-		return result;
-	}
-
 }

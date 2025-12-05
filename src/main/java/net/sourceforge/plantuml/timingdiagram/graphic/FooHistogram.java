@@ -40,61 +40,41 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.Fashion;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
-public class Histogram implements PDrawing {
+public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 
 	private final List<ChangeState> changes = new ArrayList<>();
-	private final List<TimeConstraint> constraints = new ArrayList<>();
 
 	private List<String> allStates;
 
-	private final ISkinParam skinParam;
-	private final TimingRuler ruler;
-	private final boolean compact;
 	private String initialState;
-	private final TextBlock title;
-	private final int suggestedHeight;
-	private final Style style;
-	private final Style style0;
 
-	public Histogram(TimingRuler ruler, ISkinParam skinParam, Collection<String> someStates, boolean compact,
-			TextBlock title, int suggestedHeight, Style style, Style style0) {
-		this.style = style;
-		this.style0 = style0;
-		this.suggestedHeight = suggestedHeight;
-		this.ruler = ruler;
-		this.skinParam = skinParam;
+	public FooHistogram(TimingRuler ruler, ISkinParam skinParam, Collection<String> someStates, int suggestedHeight,
+			Style style, Style style0, List<TimeConstraint> constraints) {
+		super(ruler, skinParam, suggestedHeight, style, null, constraints);
 		this.allStates = new ArrayList<>(someStates);
-		this.compact = compact;
-		this.title = title;
 		Collections.reverse(allStates);
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+		if (tick == null)
+			return null;
 		final double x = ruler.getPosInPixel(tick);
 		final List<String> states = getStatesAt(tick);
 		if (states.size() == 0)
@@ -187,66 +167,11 @@ public class Histogram implements PDrawing {
 		return yOfState(states.get(0));
 	}
 
-	private FontConfiguration getFontConfiguration() {
-		return FontConfiguration.create(skinParam, style);
-	}
-
-	private UStroke getStroke() {
-		return style.getStroke();
-	}
-
-	private Fashion getContext() {
-		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-
-		return new Fashion(backgroundColor, lineColor).withStroke(getStroke());
-	}
-
-	public TextBlock getPart1(final double fullAvailableWidth) {
-		return new AbstractTextBlock() {
-			public void drawU(UGraphic ug) {
-				drawPart1(ug, fullAvailableWidth);
-			}
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return calculateDimensionPart1(stringBounder);
-			}
-		};
-	}
-
-	public UDrawable getPart2() {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				drawPart2(ug);
-			}
-		};
-	}
-
-	private XDimension2D calculateDimensionPart1(StringBounder stringBounder) {
-		double width = 0;
-		for (String state : allStates) {
-			final TextBlock label = getTextBlock(state);
-			final XDimension2D dim = label.calculateDimension(stringBounder);
-			width = Math.max(width, dim.getWidth());
-		}
-		if (initialState != null)
-			width += getInitialWidth();
-
-		if (compact)
-			width += title.calculateDimension(stringBounder).getWidth() + 15;
-
-		return new XDimension2D(width, getFullHeight(stringBounder));
-	}
-
-	private void drawPart1(UGraphic ug, double fullAvailableWidth) {
+	@Override
+	public void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)));
 
-		if (compact) {
-			final double titleHeight = title.calculateDimension(stringBounder).getHeight();
-			final double dy = (getFullHeight(stringBounder) - titleHeight) / 2;
-			title.drawU(ug.apply(UTranslate.dy(dy)));
-		}
 		double width = getStatesWidth(stringBounder);
 		if (initialState != null)
 			width += getInitialWidth();
@@ -262,17 +187,22 @@ public class Histogram implements PDrawing {
 		}
 	}
 
-	private double getStatesWidth(StringBounder stringBounder) {
-		double result = 0;
+	@Override
+	public double getLeftPanelWidth(StringBounder stringBounder) {
+		double width = 0;
 		for (String state : allStates) {
 			final TextBlock label = getTextBlock(state);
 			final XDimension2D dim = label.calculateDimension(stringBounder);
-			result = Math.max(result, dim.getWidth());
+			width = Math.max(width, dim.getWidth());
 		}
-		return result;
+		if (initialState != null)
+			width += getInitialWidth();
+
+		return width;
 	}
 
-	private void drawPart2(UGraphic ug) {
+	@Override
+	public void drawRightPanel(UGraphic ug) {
 		if (changes.size() == 0)
 			return;
 
@@ -282,6 +212,16 @@ public class Histogram implements PDrawing {
 		drawVlines(ug);
 		drawLabels(ug);
 		drawConstraints(ug.apply(UTranslate.dy(-TimeConstraint.getTopMargin())));
+	}
+
+	private double getStatesWidth(StringBounder stringBounder) {
+		double result = 0;
+		for (String state : allStates) {
+			final TextBlock label = getTextBlock(state);
+			final XDimension2D dim = label.calculateDimension(stringBounder);
+			result = Math.max(result, dim.getWidth());
+		}
+		return result;
 	}
 
 	private void drawHlines(UGraphic ug) {
@@ -357,25 +297,26 @@ public class Histogram implements PDrawing {
 		}
 	}
 
-	private void drawConstraints(UGraphic ug) {
-		for (TimeConstraint constraint : constraints) {
-			double y = yOfState(constraint.getTick1());
-			for (ChangeState change : changes)
-				if (constraint.containsStrict(change.getWhen()))
-					y = Math.min(y, yOfState(change.getWhen()));
 
-			constraint.drawU(ug.apply(UTranslate.dy(y)), ruler);
-		}
+	@Override
+	protected double getConstraintDeltaY(TimeConstraint constraint) {
+		double y = yOfState(constraint.getTick1());
+		for (ChangeState change : changes)
+			if (constraint.containsStrict(change.getWhen()))
+				y = Math.min(y, yOfState(change.getWhen()));
+		return y;
 	}
 
 	private XPoint2D getInitialPoint() {
 		return new XPoint2D(-getInitialWidth(), yOfState(initialState));
 	}
 
-	private double getHeightForConstraints(StringBounder stringBounder) {
-		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);
+	@Override
+	protected double getHeightForConstraints(StringBounder stringBounder) {
+		return 10;
 	}
 
+	@Override
 	public double getFullHeight(StringBounder stringBounder) {
 		double height = getHeightForConstraints(stringBounder);
 
@@ -383,7 +324,7 @@ public class Histogram implements PDrawing {
 			height += stepHeight() * (allStates.size() - 1);
 
 		height += getBottomMargin();
-		return height;
+		return height + 6;
 	}
 
 	private double getBottomMargin() {
@@ -410,11 +351,6 @@ public class Histogram implements PDrawing {
 		return suggestedHeight / (allStates.size() - 1);
 	}
 
-	private TextBlock getTextBlock(String value) {
-		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);
-		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
-	}
-
 	public void setInitialState(String initialState, Colors initialColors) {
 		this.initialState = initialState;
 		if (initialState != null && allStates.contains(initialState) == false)
@@ -424,10 +360,6 @@ public class Histogram implements PDrawing {
 
 	private double getInitialWidth() {
 		return 40;
-	}
-
-	public void addConstraint(TimeConstraint constraint) {
-		this.constraints.add(constraint);
 	}
 
 }
