@@ -147,7 +147,8 @@ public class PSystemBuilder {
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), 0,
 							s.getLocation(), null);
-					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source, preprocessing);
+					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source,
+							preprocessing);
 				}
 			}
 
@@ -160,13 +161,22 @@ public class PSystemBuilder {
 				if (diagramType != systemFactory.getDiagramType())
 					continue;
 
-				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-				final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);
-				if (isOk(sys)) {
-					result = sys;
-					return sys;
+				try {
+					// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
+					final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);
+					if (isOk(sys)) {
+						result = sys;
+						return sys;
+					}
+					errors.add((PSystemError) sys);
+				} catch (Throwable t) {
+					final StringLocated s = source.get(0);
+					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, "Fatal crash error: " + t, 0,
+							s.getLocation(), null);
+					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source,
+							preprocessing));
+					t.printStackTrace();
 				}
-				errors.add((PSystemError) sys);
 			}
 			if (errors.size() == 0)
 				return new PSystemUnsupported(umlSource, preprocessing);

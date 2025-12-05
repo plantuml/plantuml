@@ -64,33 +64,32 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	CommandLinkStateCommon(IRegex pattern) {
 		super(pattern);
 	}
-	
+
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.TWO;
 	}
 
-
 	protected static RegexLeaf getStatePattern(String name) {
-		return new RegexLeaf(3,
-				name, "([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
+		return new RegexLeaf(3, name,
+				"([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 
 		final Entity cl1 = getEntityStart(location, diagram, ent1);
 		if (cl1 == null)
 			return CommandExecutionResult
-					.error("The state " + ent1 + " has been created in a concurrent state : it cannot be used here.");
+					.error("The state " + ent1 + " cannot be used here.");
 
 		final Entity cl2 = getEntityEnd(location, diagram, ent2);
 		if (cl2 == null)
 			return CommandExecutionResult
-					.error("The state " + ent2 + " has been created in a concurrent state : it cannot be used here.");
+					.error("The state " + ent2 + " cannot be used here.");
 
 		if (arg.get("ENT1", 1) != null)
 			cl1.setStereotype(Stereotype.build(arg.get("ENT1", 1)));
@@ -125,15 +124,17 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		// Check if we should use node style for this transition
 		final boolean useNodeStyle = shouldUseNodeStyle(diagram, arg);
 
-		// Check if we have a non-empty label that should become an intermediate transition node
+		// Check if we have a non-empty label that should become an intermediate
+		// transition node
 		if (useNodeStyle && label != null && !Display.isNull(label) && !label.toString().trim().isEmpty()) {
 			// Create intermediate transition node for the label
 			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, lenght, dir, arg);
 		} else {
-			// Original direct link behavior for unlabeled transitions or when node style is not requested
+			// Original direct link behavior for unlabeled transitions or when node style is
+			// not requested
 			final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-			Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
-					linkType, linkArg);
+			Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
+					linkArg);
 			if (dir == Direction.LEFT || dir == Direction.UP)
 				link = link.getInv();
 
@@ -188,7 +189,8 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(codeString1));
 			if (quark.getData() != null)
 				return quark.getData();
-			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR, null);
+			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR,
+					null);
 		}
 
 		if (diagram.getCurrentGroup().getName().equals(code))
@@ -200,7 +202,12 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 		if (quark.getData() != null)
 			return quark.getData();
-		return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.STATE, null);
+
+		if (quark.getParent().getData() == null)
+			return null;
+
+		return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()),
+				LeafType.STATE, null);
 	}
 
 	private String removeEquals(String code) {
@@ -216,15 +223,13 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	private boolean shouldUseNodeStyle(StateDiagram diagram, RegexResult arg) {
 		// First check if "node" keyword is in the arrow style (per-transition override)
 		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
-		if (arrowStyle != null && arrowStyle.toLowerCase().contains("node")) {
+		if (arrowStyle != null && arrowStyle.toLowerCase().contains("node"))
 			return true;
-		}
 
 		// Fall back to global skinparam setting
 		final String globalSetting = diagram.getSkinParam().getValue("statediagramedgelabelstyle");
-		if (globalSetting != null && globalSetting.equalsIgnoreCase("node")) {
+		if (globalSetting != null && globalSetting.equalsIgnoreCase("node"))
 			return true;
-		}
 
 		// Default to normal (original behavior)
 		return false;
@@ -235,29 +240,35 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			throws NoSuchColorException {
 
 		// Generate unique ID for the transition node
-		String transitionNodeId = generateTransitionNodeId(source, target, label);
+		final String transitionNodeId = generateTransitionNodeId(source, target, label);
 
 		// Create the intermediate transition node
 		final Quark<Entity> transitionQuark = diagram.quarkInContext(true, diagram.cleanId(transitionNodeId));
-		final Entity transitionNode = diagram.reallyCreateLeaf(location, transitionQuark, label, LeafType.STATE_TRANSITION_LABEL, null);
+		final Entity transitionNode = diagram.reallyCreateLeaf(location, transitionQuark, label,
+				LeafType.STATE_TRANSITION_LABEL, null);
 
 		// Set transition node stereotype to make it visually distinct
 		transitionNode.setStereotype(Stereotype.build("<<transition>>"));
 
-		// STEP 1: Create first link: source -> transition node (no arrow decoration on intermediate link)
+		// STEP 1: Create first link: source -> transition node (no arrow decoration on
+		// intermediate link)
 		// Use length=2 to get minlen=1, which places transition node at rank(source)+1
 		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source, transitionNode,
-				firstLinkType, firstLinkArg);
+		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2,
+				diagram.getSkinParam().classAttributeIconSize() > 0);
+		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source,
+				transitionNode, firstLinkType, firstLinkArg);
 		// High weight to control horizontal positioning - keeps this edge straight
 		firstLink.setWeight(10.0);
 
-		// STEP 2: Create second link: transition node -> target (with original arrow decoration)
-		// Use length=2 to get minlen=1, placing target at rank(transition)+1 = rank(source)+2
-		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode, target,
-				linkType, secondLinkArg);
+		// STEP 2: Create second link: transition node -> target (with original arrow
+		// decoration)
+		// Use length=2 to get minlen=1, placing target at rank(transition)+1 =
+		// rank(source)+2
+		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2,
+				diagram.getSkinParam().classAttributeIconSize() > 0);
+		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode,
+				target, linkType, secondLinkArg);
 		// High weight to control horizontal positioning - keeps this edge straight
 		secondLink.setWeight(10.0);
 
@@ -271,7 +282,8 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
 		if (arrowStyle != null) {
 			// Remove "node" from the style string since it's not a visual style
-			final String filteredStyle = arrowStyle.replaceAll("(?i),?node,?", "").replaceAll(",,", ",").replaceAll("^,|,$", "");
+			final String filteredStyle = arrowStyle.replaceAll("(?i),?node,?", "").replaceAll(",,", ",")
+					.replaceAll("^,|,$", "");
 			if (!filteredStyle.isEmpty()) {
 				firstLink.applyStyle(filteredStyle);
 				secondLink.applyStyle(filteredStyle);
@@ -286,10 +298,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	}
 
 	private String generateTransitionNodeId(Entity source, Entity target, Display label) {
-		// Generate a unique ID for the transition node based on source, target, and label
-		String sourceId = source.getName();
-		String targetId = target.getName();
-		String labelText = label.toString().replaceAll("[^a-zA-Z0-9_]", "_");
+		// Generate a unique ID for the transition node based on source, target, and
+		// label
+		final String sourceId = source.getName();
+		final String targetId = target.getName();
+		final String labelText = label.toString().replaceAll("[^a-zA-Z0-9_]", "_");
 		return "transition_" + sourceId + "_" + targetId + "_" + labelText + "_" + System.currentTimeMillis();
 	}
 
