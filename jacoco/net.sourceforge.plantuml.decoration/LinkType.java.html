@@ -208,31 +208,31 @@ public class LinkType {
 <span class="fc" id="L208">		return decor2;</span>
 	}
 
-	private boolean isExtendsOrAggregationOrCompositionOrPlus() {
-<span class="nc bnc" id="L212" title="All 8 branches missed.">		return isExtends() || isAggregationOrComposition() || isPlus() || isOf(LinkDecor.DEFINEDBY)</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">				|| isOf(LinkDecor.REDEFINES);</span>
-	}
-
-	private boolean isExtendsOrPlus() {
-<span class="nc bnc" id="L217" title="All 8 branches missed.">		return isExtends() || isPlus() || isOf(LinkDecor.DEFINEDBY) || isOf(LinkDecor.REDEFINES);</span>
-	}
-
-	private boolean isOf(LinkDecor ld) {
-<span class="nc bnc" id="L221" title="All 4 branches missed.">		return decor1 == ld || decor2 == ld;</span>
-	}
+//	private boolean isExtendsOrAggregationOrCompositionOrPlus() {
+//		return isExtends() || isAggregationOrComposition() || isPlus() || isOf(LinkDecor.DEFINEDBY)
+//				|| isOf(LinkDecor.REDEFINES);
+//	}
+//
+//	private boolean isExtendsOrPlus() {
+//		return isExtends() || isPlus() || isOf(LinkDecor.DEFINEDBY) || isOf(LinkDecor.REDEFINES);
+//	}
+//
+//	private boolean isOf(LinkDecor ld) {
+//		return decor1 == ld || decor2 == ld;
+//	}
 
 	public boolean isExtends() {
 <span class="nc bnc" id="L225" title="All 4 branches missed.">		return decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS;</span>
 	}
 
-	private boolean isPlus() {
-<span class="nc bnc" id="L229" title="All 4 branches missed.">		return decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS;</span>
-	}
-
-	private boolean isAggregationOrComposition() {
-<span class="nc bnc" id="L233" title="All 8 branches missed.">		return decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION || decor1 == LinkDecor.COMPOSITION</span>
-				|| decor2 == LinkDecor.COMPOSITION;
-	}
+//	private boolean isPlus() {
+//		return decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS;
+//	}
+//
+//	private boolean isAggregationOrComposition() {
+//		return decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION || decor1 == LinkDecor.COMPOSITION
+//				|| decor2 == LinkDecor.COMPOSITION;
+//	}
 
 	public LinkType getPart1() {
 <span class="nc" id="L238">		return new LinkType(decor1, LinkDecor.NONE, middleDecor, linkStyle);</span>
@@ -268,38 +268,59 @@ public class LinkType {
 	}
 
 	/**
-	 * Returns the semantic link type name for SVG output.
-	 * This is used to populate the data-link-type attribute.
+	 * Returns the semantic link type name for SVG output. This is used to populate
+	 * the data-link-type attribute.
 	 *
 	 * @return the semantic type name, or null if no specific type can be determined
 	 */
 	public String getLinkTypeName() {
-<span class="pc bpc" id="L277" title="1 of 4 branches missed.">		if (decor1 == LinkDecor.COMPOSITION || decor2 == LinkDecor.COMPOSITION)</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (has(LinkDecor.COMPOSITION))</span>
 <span class="fc" id="L278">			return &quot;composition&quot;;</span>
-<span class="pc bpc" id="L279" title="1 of 4 branches missed.">		if (decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION)</span>
-<span class="fc" id="L280">			return &quot;aggregation&quot;;</span>
-<span class="fc bfc" id="L281" title="All 4 branches covered.">		if (decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS)</span>
-<span class="fc" id="L282">			return &quot;extension&quot;;</span>
-<span class="pc bpc" id="L283" title="2 of 4 branches missed.">		if (decor1 == LinkDecor.REDEFINES || decor2 == LinkDecor.REDEFINES)</span>
-<span class="nc" id="L284">			return &quot;redefines&quot;;</span>
-<span class="pc bpc" id="L285" title="2 of 4 branches missed.">		if (decor1 == LinkDecor.DEFINEDBY || decor2 == LinkDecor.DEFINEDBY)</span>
-<span class="nc" id="L286">			return &quot;definedby&quot;;</span>
-<span class="pc bpc" id="L287" title="1 of 8 branches missed.">		if (decor1 == LinkDecor.ARROW || decor2 == LinkDecor.ARROW</span>
-				|| decor1 == LinkDecor.ARROW_TRIANGLE || decor2 == LinkDecor.ARROW_TRIANGLE)
-<span class="fc" id="L289">			return &quot;dependency&quot;;</span>
-<span class="pc bpc" id="L290" title="2 of 4 branches missed.">		if (decor1 == LinkDecor.NOT_NAVIGABLE || decor2 == LinkDecor.NOT_NAVIGABLE)</span>
-<span class="nc" id="L291">			return &quot;not_navigable&quot;;</span>
-<span class="pc bpc" id="L292" title="6 of 12 branches missed.">		if (decor1 == LinkDecor.CROWFOOT || decor2 == LinkDecor.CROWFOOT</span>
-				|| decor1 == LinkDecor.CIRCLE_CROWFOOT || decor2 == LinkDecor.CIRCLE_CROWFOOT
-				|| decor1 == LinkDecor.LINE_CROWFOOT || decor2 == LinkDecor.LINE_CROWFOOT)
-<span class="nc" id="L295">			return &quot;crowfoot&quot;;</span>
-<span class="pc bpc" id="L296" title="6 of 12 branches missed.">		if (decor1 == LinkDecor.CIRCLE_LINE || decor2 == LinkDecor.CIRCLE_LINE</span>
-				|| decor1 == LinkDecor.DOUBLE_LINE || decor2 == LinkDecor.DOUBLE_LINE
-				|| (decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE))
-<span class="fc" id="L299">			return &quot;association&quot;;</span>
-<span class="nc bnc" id="L300" title="All 4 branches missed.">		if (decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS)</span>
-<span class="nc" id="L301">			return &quot;nested&quot;;</span>
-<span class="nc" id="L302">		return null;</span>
+		
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (has(LinkDecor.AGREGATION))</span>
+<span class="fc" id="L281">			return &quot;aggregation&quot;;</span>
+		
+<span class="fc bfc" id="L283" title="All 2 branches covered.">		if (has(LinkDecor.EXTENDS))</span>
+<span class="fc" id="L284">			return &quot;extension&quot;;</span>
+		
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (has(LinkDecor.REDEFINES))</span>
+<span class="nc" id="L287">			return &quot;redefines&quot;;</span>
+		
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">		if (has(LinkDecor.DEFINEDBY))</span>
+<span class="nc" id="L290">			return &quot;definedby&quot;;</span>
+		
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (hasAny(LinkDecor.ARROW, LinkDecor.ARROW_TRIANGLE))</span>
+<span class="fc" id="L293">			return &quot;dependency&quot;;</span>
+		
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (has(LinkDecor.NOT_NAVIGABLE))</span>
+<span class="nc" id="L296">			return &quot;not_navigable&quot;;</span>
+		
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		if (hasAny(LinkDecor.CROWFOOT, LinkDecor.CIRCLE_CROWFOOT, LinkDecor.LINE_CROWFOOT))</span>
+<span class="nc" id="L299">			return &quot;crowfoot&quot;;</span>
+		
+<span class="pc bpc" id="L301" title="2 of 4 branches missed.">		if (hasAny(LinkDecor.CIRCLE_LINE, LinkDecor.DOUBLE_LINE) || bothNone())</span>
+<span class="fc" id="L302">			return &quot;association&quot;;</span>
+		
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (has(LinkDecor.PLUS))</span>
+<span class="nc" id="L305">			return &quot;nested&quot;;</span>
+		
+<span class="nc" id="L307">		return null;</span>
+	}
+
+	private boolean has(LinkDecor decor) {
+<span class="fc bfc" id="L311" title="All 4 branches covered.">		return decor1 == decor || decor2 == decor;</span>
+	}
+
+	private boolean hasAny(LinkDecor... decors) {
+<span class="fc bfc" id="L315" title="All 2 branches covered.">		for (LinkDecor d : decors)</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">			if (has(d))</span>
+<span class="fc" id="L317">				return true;</span>
+
+<span class="fc" id="L319">		return false;</span>
+	}
+
+	private boolean bothNone() {
+<span class="pc bpc" id="L323" title="2 of 4 branches missed.">		return decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE;</span>
 	}
 
 }
