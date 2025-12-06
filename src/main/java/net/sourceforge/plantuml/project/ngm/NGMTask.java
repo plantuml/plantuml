@@ -126,17 +126,80 @@ public abstract class NGMTask {
 		this.allocation = allocation;
 	}
 
-	/** Returns the start instant of the task. */
+	/**
+	 * Returns the current start instant of the task.
+	 *
+	 * <p>
+	 * The start and end instants are not independent values in the NGM model.
+	 * They form a coherent scheduled window derived from the task type
+	 * (fixed-duration vs fixed-total-effort), the allocation, and the
+	 * scheduling constraints.
+	 * </p>
+	 *
+	 * @return the scheduled start instant
+	 */
 	public abstract LocalDateTime getStart();
 
-	/** Sets the start instant of the task. */
+	/**
+	 * Sets (anchors) the start instant of the task.
+	 *
+	 * <p>
+	 * This method is a scheduling input. Calling it triggers a recomputation of
+	 * the task's scheduled window. As a consequence, after this call:
+	 * </p>
+	 *
+	 * <ul>
+	 *   <li>{@link #getStart()} will reflect the newly anchored start, and</li>
+	 *   <li>{@link #getEnd()} will be recalculated to maintain a consistent task model.</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * The exact recomputation rules depend on the concrete task type and may take into
+	 * account the intrinsic duration or total effort, the constant allocation, and
+	 * the scheduling calendar.
+	 * </p>
+	 *
+	 * @param start the start instant to anchor for scheduling
+	 */
 	public abstract void setStart(LocalDateTime start);
 
-	/** Returns the end instant of the task. */
+	/**
+	 * Returns the current end instant of the task.
+	 *
+	 * <p>
+	 * The start and end instants are not independent values in the NGM model.
+	 * They form a coherent scheduled window derived from the task type
+	 * (fixed-duration vs fixed-total-effort), the allocation, and the
+	 * scheduling constraints.
+	 * </p>
+	 *
+	 * @return the scheduled end instant
+	 */
 	public abstract LocalDateTime getEnd();
 
-	/** Sets the end instant of the task. */
+	/**
+	 * Sets (anchors) the end instant of the task.
+	 *
+	 * <p>
+	 * This method is a scheduling input. Calling it triggers a recomputation of
+	 * the task's scheduled window. As a consequence, after this call:
+	 * </p>
+	 *
+	 * <ul>
+	 *   <li>{@link #getEnd()} will reflect the newly anchored end, and</li>
+	 *   <li>{@link #getStart()} will be recalculated to maintain a consistent task model.</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * The exact recomputation rules depend on the concrete task type and may take into
+	 * account the intrinsic duration or total effort, the constant allocation, and
+	 * the scheduling calendar.
+	 * </p>
+	 *
+	 * @param end the end instant to anchor for scheduling
+	 */
 	public abstract void setEnd(LocalDateTime end);
+
 
 	/**
 	 * Returns the effective scheduled duration of the task.
