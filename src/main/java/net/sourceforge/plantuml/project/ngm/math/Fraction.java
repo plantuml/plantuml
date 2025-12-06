@@ -51,6 +51,10 @@ package net.sourceforge.plantuml.project.ngm.math;
  * multiplications. For safe arbitrary precision, BigInteger would be required.
  */
 public final class Fraction implements Comparable<Fraction> {
+	
+	/** Common constants for workload and general arithmetic. */
+	public static final Fraction ZERO = new Fraction(0, 1);
+	public static final Fraction ONE = new Fraction(1, 1);
 
 	private final long num; // numerator
 	private final long den; // denominator (always > 0)
