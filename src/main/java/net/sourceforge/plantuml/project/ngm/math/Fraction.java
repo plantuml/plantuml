@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.ngm;
+package net.sourceforge.plantuml.project.ngm.math;
 
 /**
  * Immutable rational number represented as a reduced numerator/denominator
