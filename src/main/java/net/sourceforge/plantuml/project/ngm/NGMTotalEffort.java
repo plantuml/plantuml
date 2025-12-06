@@ -53,7 +53,7 @@ package net.sourceforge.plantuml.project.ngm;
  * Higher-level concepts such as resource allocation (workload/fraction), 
  * effective duration, or calendar constraints are handled elsewhere.</p>
  */
-public class NGMLoad {
+public class NGMTotalEffort {
 
     /**
      * Workload expressed in seconds for a single person (1 FTE).

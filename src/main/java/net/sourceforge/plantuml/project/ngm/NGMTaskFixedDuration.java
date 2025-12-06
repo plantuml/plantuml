@@ -60,7 +60,7 @@ public class NGMTaskFixedDuration extends NGMTask {
 	 * @param workload the workload allocation for the task
 	 * @param duration the intrinsic duration of the task
 	 */
-	public NGMTaskFixedDuration(NGMWorkload workload, Duration duration) {
+	public NGMTaskFixedDuration(NGMAllocation workload, Duration duration) {
 		super(workload);
 		this.duration = duration;
 	}
@@ -91,7 +91,7 @@ public class NGMTaskFixedDuration extends NGMTask {
 	}
 
 	@Override
-	public NGMLoad getLoad() {
+	public NGMTotalEffort getTotalEffort() {
 		throw new UnsupportedOperationException("Work In Progress");
 	}
 
