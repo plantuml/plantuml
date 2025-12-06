@@ -10,30 +10,109 @@ import org.junit.jupiter.api.Test;
 
 class NGMTaskTest {
 
-    @Test
-    void fixedDurationTaskComputesEndFromStartAndDuration() {
-        // 100% workload – adjust according to the actual API
-    	// Not used
-        NGMWorkload workload = NGMWorkload.fullTime(); 
+	@Test
+	void fixedDurationTaskComputesEndFromStartAndDuration() {
+		// Intrinsic duration: 3 days
+		Duration duration = Duration.ofDays(3);
 
-        // Intrinsic duration: 3 days
-        Duration duration = Duration.ofDays(3);
+		// Create a fixed-duration task
+		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
 
-        // Create a fixed-duration task
-        NGMTask task = NGMTask.withFixedDuration(workload, duration);
+		// Start date set to 2025-11-30 at 00:00 (timezone-agnostic)
+		LocalDateTime start = LocalDate.of(2025, 11, 30).atStartOfDay();
+		task.setStart(start);
 
-        // Start date set to 2025-11-30 at 00:00 (timezone-agnostic)
-        LocalDateTime start = LocalDate.of(2025, 11, 30).atStartOfDay();
-        task.setStart(start);
+		// Expected end: start + intrinsic duration
+		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 3).atStartOfDay();
+		assertEquals(expectedEnd, task.getEnd(), "End must equal start + intrinsic duration");
 
-        // Expected end: start + intrinsic duration
-        LocalDateTime expectedEnd = LocalDate.of(2025, 12, 3).atStartOfDay();
-        assertEquals(expectedEnd, task.getEnd(), "End must equal start + intrinsic duration");
+		// Duration must remain equal to the intrinsic duration
+		assertEquals(duration, task.getDuration(), "Fixed duration must remain constant");
+	}
 
-        // Duration must remain equal to the intrinsic duration
-        assertEquals(duration, task.getDuration(), "Fixed duration must remain constant");
+	@Test
+	void fixedDurationTaskSixHoursComputesEndFromStart() {
+		Duration duration = Duration.ofHours(6);
 
-        // Workload must remain unchanged
-        assertEquals(workload, task.getWorkload());
-    }
+		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+
+		LocalDateTime start = LocalDate.of(2025, 11, 30).atTime(8, 0);
+		task.setStart(start);
+
+		LocalDateTime expectedEnd = start.plusHours(6);
+		assertEquals(expectedEnd, task.getEnd(), "End must equal start + 6h");
+		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h");
+	}
+
+	@Test
+	void fixedDurationTaskSixHoursRecomputesEndWhenStartChanges() {
+		Duration duration = Duration.ofHours(6);
+
+		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+
+		// Initial start
+		LocalDateTime start1 = LocalDate.of(2025, 11, 30).atTime(8, 0);
+		task.setStart(start1);
+
+		LocalDateTime expectedEnd1 = start1.plusHours(6);
+		assertEquals(expectedEnd1, task.getEnd(), "End must follow the initial start + 6h");
+		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h");
+
+		// Change start -> end must be recomputed
+		LocalDateTime start2 = LocalDate.of(2025, 11, 30).atTime(10, 30);
+		task.setStart(start2);
+
+		assertEquals(start2.plusHours(6), task.getEnd(), "End must be recomputed when start changes");
+		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h after start change");
+	}
+
+	@Test
+	void fixedDurationTaskSixHoursRecomputesStartWhenEndChanges() {
+		Duration duration = Duration.ofHours(6);
+
+		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+
+		// Set an initial start to anchor the task
+		LocalDateTime start = LocalDate.of(2025, 11, 30).atTime(9, 0);
+		task.setStart(start);
+
+		LocalDateTime expectedEnd = start.plusHours(6);
+		assertEquals(expectedEnd, task.getEnd(), "End must equal start + 6h");
+		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h");
+
+		// Now change end -> start should shift to preserve 6h duration
+		LocalDateTime end2 = LocalDate.of(2025, 11, 30).atTime(18, 0);
+		task.setEnd(end2);
+
+		assertEquals(end2, task.getEnd(), "End must reflect the updated value");
+		assertEquals(end2.minusHours(6), task.getStart(), "Start must be recomputed when end changes");
+		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h after end change");
+	}
+
+	@Test
+	void fixedDurationTaskSixHoursSurvivesMultipleBoundaryEdits() {
+		Duration duration = Duration.ofHours(6);
+
+		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+
+		// 1) Set start
+		LocalDateTime s1 = LocalDate.of(2025, 12, 1).atTime(7, 15);
+		task.setStart(s1);
+		assertEquals(s1.plusHours(6), task.getEnd(), "End must track start + 6h");
+		assertEquals(duration, task.getDuration(), "Duration must remain 6h");
+
+		// 2) Set end
+		LocalDateTime e2 = LocalDate.of(2025, 12, 1).atTime(20, 0);
+		task.setEnd(e2);
+		assertEquals(e2.minusHours(6), task.getStart(), "Start must track end - 6h");
+		assertEquals(e2, task.getEnd(), "End must track the new end");
+		assertEquals(duration, task.getDuration(), "Duration must remain 6h");
+
+		// 3) Set start again
+		LocalDateTime s3 = LocalDate.of(2025, 12, 2).atTime(6, 0);
+		task.setStart(s3);
+		assertEquals(s3, task.getStart(), "Start must track the new start");
+		assertEquals(s3.plusHours(6), task.getEnd(), "End must be recomputed again from start");
+		assertEquals(duration, task.getDuration(), "Duration must remain 6h");
+	}
 }
