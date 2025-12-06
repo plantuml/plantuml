@@ -16,7 +16,7 @@ class NGMTaskTest {
 		Duration duration = Duration.ofDays(3);
 
 		// Create a fixed-duration task
-		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+		NGMTask task = NGMTask.withFixedDuration(NGMAllocation.fullTime(), duration);
 
 		// Start date set to 2025-11-30 at 00:00 (timezone-agnostic)
 		LocalDateTime start = LocalDate.of(2025, 11, 30).atStartOfDay();
@@ -34,7 +34,7 @@ class NGMTaskTest {
 	void fixedDurationTaskSixHoursComputesEndFromStart() {
 		Duration duration = Duration.ofHours(6);
 
-		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+		NGMTask task = NGMTask.withFixedDuration(NGMAllocation.fullTime(), duration);
 
 		LocalDateTime start = LocalDate.of(2025, 11, 30).atTime(8, 0);
 		task.setStart(start);
@@ -48,7 +48,7 @@ class NGMTaskTest {
 	void fixedDurationTaskSixHoursRecomputesEndWhenStartChanges() {
 		Duration duration = Duration.ofHours(6);
 
-		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+		NGMTask task = NGMTask.withFixedDuration(NGMAllocation.fullTime(), duration);
 
 		// Initial start
 		LocalDateTime start1 = LocalDate.of(2025, 11, 30).atTime(8, 0);
@@ -70,7 +70,7 @@ class NGMTaskTest {
 	void fixedDurationTaskSixHoursRecomputesStartWhenEndChanges() {
 		Duration duration = Duration.ofHours(6);
 
-		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+		NGMTask task = NGMTask.withFixedDuration(NGMAllocation.fullTime(), duration);
 
 		// Set an initial start to anchor the task
 		LocalDateTime start = LocalDate.of(2025, 11, 30).atTime(9, 0);
@@ -93,7 +93,7 @@ class NGMTaskTest {
 	void fixedDurationTaskSixHoursSurvivesMultipleBoundaryEdits() {
 		Duration duration = Duration.ofHours(6);
 
-		NGMTask task = NGMTask.withFixedDuration(NGMWorkload.fullTime(), duration);
+		NGMTask task = NGMTask.withFixedDuration(NGMAllocation.fullTime(), duration);
 
 		// 1) Set start
 		LocalDateTime s1 = LocalDate.of(2025, 12, 1).atTime(7, 15);

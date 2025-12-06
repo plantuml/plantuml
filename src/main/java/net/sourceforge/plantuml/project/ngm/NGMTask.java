@@ -41,71 +41,80 @@ import java.time.LocalDateTime;
 /**
  * Represents an abstract scheduled task in the New Gantt Model (NGM).
  *
- * <p>This model is built around three independent notions:</p>
+ * <p>
+ * This model is built around three independent notions:
+ * </p>
  *
  * <ul>
- *   <li><b>Load</b> — an {@link NGMLoad} expressing the total amount of work
- *       (in seconds per person) associated with the task.</li>
+ *   <li><b>Total effort</b> — an {@link NGMTotalEffort} expressing the total amount of
+ *       work associated with the task, typically in person-time
+ *       (for example, person-seconds or person-hours).</li>
  *
- *   <li><b>Workload</b> — an {@link NGMWorkload} representing the effective
- *       full-time-equivalent (FTE) allocation applied to the task 
+ *   <li><b>Allocation</b> — an {@link NGMAllocation} representing the effective
+ *       full-time-equivalent (FTE) assigned to the task
  *       (e.g., 1 = 100%, 1/2 = 50%, 5/7 = weekdays only, 2 = two persons).</li>
  *
- *   <li><b>Duration</b> — a {@link Duration} representing the calendar span 
+ *   <li><b>Duration</b> — a {@link Duration} representing the calendar span
  *       between the start and end instants.</li>
  * </ul>
  *
- * <p>These three quantities must remain independent: confusing them leads to
- * incorrect scheduling behaviour. The goal of NGM is to redefine a clean,
- * unambiguous task model using {@code java.time} and explicit workload logic.</p>
+ * <p>
+ * These three quantities must remain conceptually independent. Confusing them leads to
+ * incorrect scheduling behaviour. The goal of NGM is to provide a clean and unambiguous
+ * task model using {@code java.time} and explicit resource-allocation logic.
+ * </p>
  *
  *
  * <h3>Task behaviour</h3>
  *
- * <p>At the scheduling level, a task can behave in one of two ways:</p>
+ * <p>
+ * At the scheduling level, a task can behave in one of two ways:
+ * </p>
  *
  * <ul>
- *   <li><b>Fixed-load task</b>:  
- *       The amount of work is intrinsic and does not change.  
- *       Duration is computed from the load and the workload.  
+ *   <li><b>Fixed-total-effort task</b>: The total effort is intrinsic and does not change.
+ *       The scheduled duration is computed from the total effort and the allocation.
  *       Example: “this task requires 80 hours of work”.</li>
  *
- *   <li><b>Fixed-duration task</b>:  
- *       The calendar span is intrinsic and does not change.  
- *       Load becomes a derived quantity and depends on the workload.  
+ *   <li><b>Fixed-duration task</b>: The calendar span is intrinsic and does not change.
+ *       The total effort becomes a derived quantity and depends on the allocation.
  *       Example: “crossing the Atlantic takes 7 days regardless of crew size”.</li>
  * </ul>
  *
- * <p>This distinction is crucial: without it, the scheduler cannot make
- * consistent decisions about resource allocation, overlapping tasks, or
- * month-based durations.</p>
+ * <p>
+ * This distinction is crucial: without it, the scheduler cannot make consistent
+ * decisions about resource allocation, overlapping tasks, or long-running schedules.
+ * </p>
  *
  *
- * <h3>Why workload is final</h3>
+ * <h3>Why allocation is final</h3>
  *
- * <p>The workload allocation represents the <em>structural capacity</em>
- * assigned to the task. It may influence start date, end date, duration,
- * or load (depending on the task type), but it is not modified by them.</p>
+ * <p>
+ * The allocation represents the <em>structural capacity</em> assigned to the task.
+ * It may influence start date, end date, duration, or total effort (depending on the
+ * task type), but it is not modified by them.
+ * </p>
  *
- * <p>By contrast, the temporal attributes (<code>start</code>, <code>end</code>,
- * <code>duration</code>) as well as the load (for fixed-duration tasks) may vary
- * depending on scheduling decisions, calendars, dependencies, or external
- * constraints.</p>
+ * <p>
+ * By contrast, the temporal attributes (<code>start</code>, <code>end</code>,
+ * <code>duration</code>) as well as the total effort (for fixed-duration tasks) may
+ * vary depending on scheduling decisions, calendars, dependencies, or external constraints.
+ * </p>
  *
  *
  * <h3>Factory methods</h3>
  *
- * <p>The static factory methods {@link #withFixedDuration(NGMWorkload, Duration)}
- * and {@link #withFixedLoad(NGMWorkload, NGMLoad)} will eventually create concrete
- * implementations representing these two behaviours.</p>
- *
- * <p>For now, they throw {@link UnsupportedOperationException} because the model
- * is still under construction.</p>
+ * <p>
+ * The static factory methods
+ * {@link #withFixedDuration(NGMAllocation, Duration)} and
+ * {@link #withFixedTotalEffort(NGMAllocation, NGMTotalEffort)}
+ * create concrete implementations representing these two behaviours.
+ * </p>
  */
-
 public abstract class NGMTask {
 
-	protected final NGMWorkload workload;
+
+	protected final NGMAllocation allocation;
 
 	/**
 	 * Creates a new task with a fixed workload allocation.
@@ -113,8 +122,8 @@ public abstract class NGMTask {
 	 * @param workload the constant full-time-equivalent allocation applied to this
 	 *                 task
 	 */
-	protected NGMTask(NGMWorkload workload) {
-		this.workload = workload;
+	protected NGMTask(NGMAllocation allocation) {
+		this.allocation = allocation;
 	}
 
 	/** Returns the start instant of the task. */
@@ -129,91 +138,169 @@ public abstract class NGMTask {
 	/** Sets the end instant of the task. */
 	public abstract void setEnd(LocalDateTime end);
 
-    /**
-     * Returns the effective scheduled duration of the task.
-     *
-     * <p>This value is not always equal to <code>end - start</code>.
-     * In practice, the duration depends on:</p>
-     *
-     * <ul>
-     *   <li>the start and end instants,</li>
-     *   <li>the working calendar (non-working days, holidays, weekends),</li>
-     *   <li>whether the task is fixed-load or fixed-duration.</li>
-     * </ul>
-     *
-     * <p>For a fixed-duration task, the duration is intrinsic and constant even
-     * if the start or end dates shift due to calendar constraints. For a
-     * fixed-load task, the duration must be computed from the intrinsic load,
-     * the assigned workload (FTE), and the working calendar.</p>
-     *
-     * <p>Because of these factors, the duration may represent the scheduled
-     * "active working time" rather than a simple chronological difference.</p>
-     *
-     * @return the computed scheduled duration of the task
-     */
-    public abstract Duration getDuration();
+	/**
+	 * Returns the effective scheduled duration of the task.
+	 *
+	 * <p>
+	 * This value is not always equal to <code>end - start</code>. In practice, the
+	 * duration depends on:
+	 * </p>
+	 *
+	 * <ul>
+	 * <li>the start and end instants,</li>
+	 * <li>the working calendar (non-working days, holidays, weekends),</li>
+	 * <li>whether the task is fixed-load or fixed-duration.</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * For a fixed-duration task, the duration is intrinsic and constant even if the
+	 * start or end dates shift due to calendar constraints. For a fixed-load task,
+	 * the duration must be computed from the intrinsic load, the assigned workload
+	 * (FTE), and the working calendar.
+	 * </p>
+	 *
+	 * <p>
+	 * Because of these factors, the duration may represent the scheduled "active
+	 * working time" rather than a simple chronological difference.
+	 * </p>
+	 *
+	 * @return the computed scheduled duration of the task
+	 */
+	public abstract Duration getDuration();
 
-	/** Returns the intrinsic or computed load of the task. */
-	public abstract NGMLoad getLoad();
+	/**
+	 * Returns the total effort associated with this task.
+	 *
+	 * <p>
+	 * The term <b>total effort</b> refers to the overall amount of work required to
+	 * complete the task, independent of the calendar span. It is typically
+	 * expressed in person-time (for example, person-seconds or person-hours).
+	 * </p>
+	 *
+	 * <p>
+	 * Depending on the concrete task type, this value may be:
+	 * </p>
+	 * <ul>
+	 * <li><b>intrinsic (fixed)</b> — the effort is defined directly by the user and
+	 * does not change when dates or allocation change (e.g., “this task requires 80
+	 * hours of work”).</li>
+	 * <li><b>computed (derived)</b> — the effort is calculated from other defining
+	 * properties such as the task’s duration, the effective allocation, and any
+	 * scheduling constraints.</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * In other words, this method provides a single, consistent access point to the
+	 * task’s “work quantity”, whether that quantity is a primary input or a
+	 * secondary result of the scheduling model.
+	 * </p>
+	 *
+	 * @return the intrinsic or computed total effort of the task
+	 */
+	public abstract NGMTotalEffort getTotalEffort();
 
-	/** Returns the constant FTE allocation applied to the task. */
-	public NGMWorkload getWorkload() {
-		return workload;
+	/**
+	 * Returns the constant allocation applied to the task.
+	 *
+	 * <p>
+	 * The <b>allocation</b> represents the effective full-time-equivalent (FTE)
+	 * assigned to the task. It describes the resource intensity available for
+	 * executing the work, and therefore influences derived scheduling properties.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples of typical meanings:
+	 * </p>
+	 * <ul>
+	 * <li><code>1</code> — one full-time equivalent (100%).</li>
+	 * <li><code>1/2</code> — half-time allocation (50%).</li>
+	 * <li><code>2</code> — two full-time equivalents (two people at 100%).</li>
+	 * <li><code>5/7</code> — an allocation constrained to weekdays only, if your
+	 * model uses such fractions to represent availability patterns.</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * This method returns the constant allocation associated with the task
+	 * instance. Task types that support variable or time-sliced allocations may
+	 * override or complement this behaviour with more advanced APIs as the model
+	 * evolves.
+	 * </p>
+	 *
+	 * @return the constant FTE allocation applied to the task
+	 */
+	public NGMAllocation getAllocation() {
+		return allocation;
 	}
 
-    /**
-     * Creates a task whose duration is intrinsic (fixed) and does not depend on
-     * the assigned workload.
-     *
-    /**
-     * <p>In this type of task, the duration is the defining property: it remains
-     * constant regardless of how many resources are allocated. The start and end
-     * instants may shift when the scheduling calendar is applied (for example,
-     * when certain days are closed or non-working), but the duration itself
-     * does not change.</p>
-     *
-     * <p>The total accumulated load is then derived from the workload applied
-     * over this fixed-duration window.</p>
-     *
-     * <p>Example: a ship crossing the Atlantic takes a fixed number of days;
-     * assigning more or fewer crew members does not shorten or extend the trip,
-     * it only changes the amount of work performed during that period.</p>
-     *
-     * <p>This method will eventually return a concrete {@code NGMTask}
-     * implementation representing this behaviour. For now, it throws
-     * {@link UnsupportedOperationException} because the model is still evolving.</p>
-     *
-     * @param workload the constant full-time-equivalent allocation applied to the task
-     * @param duration the fixed calendar duration of the task
-     * @return a new fixed-duration task (when implemented)
-     */
-    public static NGMTask withFixedDuration(NGMWorkload workload, Duration duration) {
-        return new NGMTaskFixedDuration(workload, duration);
-    }
+	/**
+	 * Creates a task whose duration is intrinsic (fixed) and does not depend on the
+	 * assigned allocation.
+	 *
+	 * <p>
+	 * In this type of task, the duration is the defining property: it remains
+	 * constant regardless of how many resources are allocated.
+	 * </p>
+	 *
+	 * <p>
+	 * When a scheduling calendar is applied, the <em>start</em> and/or <em>end</em>
+	 * instants may shift to satisfy availability constraints (for example,
+	 * when certain days are closed or non-working). However, the overall scheduled
+	 * duration represented by this task remains unchanged.
+	 * </p>
+	 *
+	 * <p>
+	 * The total effort is then derived from the allocation applied over this
+	 * fixed-duration window.
+	 * </p>
+	 *
+	 * <p>
+	 * Example: a ship crossing the Atlantic takes a fixed number of days; assigning
+	 * more or fewer crew members does not shorten or extend the trip, it only
+	 * changes the total effort performed during that period.
+	 * </p>
+	 *
+	 * @param allocation the constant full-time-equivalent allocation applied to the task
+	 * @param duration   the intrinsic fixed calendar duration of the task
+	 * @return a new fixed-duration task
+	 */
+	public static NGMTask withFixedDuration(NGMAllocation allocation, Duration duration) {
+		return new NGMTaskFixedDuration(allocation, duration);
+	}
 
-    /**
-     * Creates a task whose load is intrinsic (fixed) and does not depend on
-     * the assigned workload.
-     *
-     * <p>In this type of task, the total amount of work is the defining
-     * property: regardless of the calendar duration, the task requires a fixed
-     * number of seconds per person. The actual duration will be derived from
-     * the available workload (FTE allocation) and the scheduling constraints.</p>
-     *
-     * <p>Example: implementing a feature requires “80 hours of work”.
-     * Allocating additional resources reduces the duration, while reducing
-     * resources increases it. The intrinsic load itself does not change.</p>
-     *
-     * <p>This method will eventually return a concrete {@code NGMTask}
-     * implementation representing this behaviour. For now, it throws
-     * {@link UnsupportedOperationException} because the model is still under construction.</p>
-     *
-     * @param workload the constant full-time-equivalent allocation applied to the task
-     * @param load     the intrinsic amount of work required for this task
-     * @return a new fixed-load task (when implemented)
-     */
-    public static NGMTask withFixedLoad(NGMWorkload workload, NGMLoad load) {
-        throw new UnsupportedOperationException("Work In Progress");
-    }
+	/**
+	 * Creates a task whose total effort is intrinsic (fixed) and does not depend on the
+	 * assigned allocation.
+	 *
+	 * <p>
+	 * In this type of task, the total amount of work is the defining property:
+	 * regardless of the calendar duration, the task requires a fixed quantity of
+	 * person-time (for example, person-seconds or person-hours).
+	 * </p>
+	 *
+	 * <p>
+	 * The actual scheduled duration will be derived from the available allocation
+	 * (FTE) and the scheduling constraints.
+	 * </p>
+	 *
+	 * <p>
+	 * Example: implementing a feature requires “80 hours of work”. Allocating
+	 * additional resources reduces the duration, while reducing resources increases
+	 * it. The intrinsic total effort itself does not change.
+	 * </p>
+	 *
+	 * <p>
+	 * This method will eventually return a concrete {@code NGMTask} implementation
+	 * representing this behaviour. For now, it throws
+	 * {@link UnsupportedOperationException} because the model is still under
+	 * construction.
+	 * </p>
+	 *
+	 * @param allocation  the constant full-time-equivalent allocation applied to the task
+	 * @param totalEffort the intrinsic amount of work required for this task
+	 * @return a new fixed-total-effort task (when implemented)
+	 */
+	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, NGMTotalEffort totalEffort) {
+		throw new UnsupportedOperationException("Work In Progress");
+	}
 
 }

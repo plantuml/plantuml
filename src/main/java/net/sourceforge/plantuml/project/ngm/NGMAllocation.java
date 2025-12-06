@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.project.ngm.math.Fraction;
  * <p>The field remains public intentionally, as this class is temporary
  * and will likely evolve toward a more structured representation.
  */
-public class NGMWorkload {
+public class NGMAllocation {
 
     /**
      * Workload value expressed as a fraction.
@@ -65,8 +65,8 @@ public class NGMWorkload {
      */
     public Fraction value;
 
-	public static NGMWorkload fullTime() {
-		return new NGMWorkload();
+	public static NGMAllocation fullTime() {
+		return new NGMAllocation();
 	}
     
     // In the future this will become more complex. We will probably use
