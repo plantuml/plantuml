@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.ngm;
 
+import net.sourceforge.plantuml.project.ngm.math.Fraction;
+
 /**
  * Represents the effective workload applied to a task.
  *

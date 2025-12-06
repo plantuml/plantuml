@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project.ngm;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 /**
