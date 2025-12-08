@@ -97,57 +97,57 @@ public class LiveBoxesDrawer {
 	}
 
 	public void addStart(double y1, Fashion symbolContext, StyleBuilder styleBuilder) {
-<span class="nc" id="L100">		this.y1 = y1;</span>
-<span class="nc" id="L101">		this.symbolContext = symbolContext;</span>
-<span class="nc" id="L102">		this.styleBuilder = styleBuilder;</span>
-<span class="nc" id="L103">	}</span>
+<span class="fc" id="L100">		this.y1 = y1;</span>
+<span class="fc" id="L101">		this.symbolContext = symbolContext;</span>
+<span class="fc" id="L102">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L103">	}</span>
 
 	public void doDrawing(UGraphic ug, double yposition) {
-<span class="nc" id="L106">		final Segment full = new Segment(y1, yposition);</span>
-<span class="nc" id="L107">		final Collection&lt;Segment&gt; segments = full.cutSegmentIfNeed(delays);</span>
-<span class="nc" id="L108">		ComponentType type = ComponentType.ACTIVATION_BOX_CLOSE_CLOSE;</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (segments.size() &gt; 1)</span>
+<span class="fc" id="L106">		final Segment full = new Segment(y1, yposition);</span>
+<span class="fc" id="L107">		final Collection&lt;Segment&gt; segments = full.cutSegmentIfNeed(delays);</span>
+<span class="fc" id="L108">		ComponentType type = ComponentType.ACTIVATION_BOX_CLOSE_CLOSE;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (segments.size() &gt; 1)</span>
 <span class="nc" id="L110">			type = ComponentType.ACTIVATION_BOX_CLOSE_OPEN;</span>
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (Iterator&lt;Segment&gt; it = segments.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L113">			final Segment seg = it.next();</span>
-<span class="nc bnc" id="L114" title="All 4 branches missed.">			if (it.hasNext() == false &amp;&amp; type != ComponentType.ACTIVATION_BOX_CLOSE_CLOSE)</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (Iterator&lt;Segment&gt; it = segments.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L113">			final Segment seg = it.next();</span>
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">			if (it.hasNext() == false &amp;&amp; type != ComponentType.ACTIVATION_BOX_CLOSE_CLOSE)</span>
 <span class="nc" id="L115">				type = ComponentType.ACTIVATION_BOX_OPEN_CLOSE;</span>
 
-<span class="nc" id="L117">			drawInternal(ug, seg.getPos1(), seg.getPos2(), type);</span>
-<span class="nc" id="L118">			type = ComponentType.ACTIVATION_BOX_OPEN_OPEN;</span>
-<span class="nc" id="L119">		}</span>
-<span class="nc" id="L120">		y1 = Double.MAX_VALUE;</span>
-<span class="nc" id="L121">	}</span>
+<span class="fc" id="L117">			drawInternal(ug, seg.getPos1(), seg.getPos2(), type);</span>
+<span class="fc" id="L118">			type = ComponentType.ACTIVATION_BOX_OPEN_OPEN;</span>
+<span class="fc" id="L119">		}</span>
+<span class="fc" id="L120">		y1 = Double.MAX_VALUE;</span>
+<span class="fc" id="L121">	}</span>
 
 	public void drawDestroyIfNeeded(UGraphic ug, Step step) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (step.isDestroy()) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (step.isDestroy()) {</span>
 <span class="nc" id="L125">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
 <span class="nc" id="L126">			cross.drawU(ug.apply(new UTranslate(-dimCross.getWidth() / 2, step.getValue() - dimCross.getHeight() / 2)),</span>
 					null, context);
 		}
-<span class="nc" id="L129">	}</span>
+<span class="fc" id="L129">	}</span>
 
 	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
-<span class="nc" id="L132">		final double width = getWidth(ug.getStringBounder());</span>
-<span class="nc" id="L133">		final Area area = Area.create(width, yb - ya);</span>
-<span class="nc" id="L134">		SkinParamBackcolored skinParam2 = new SkinParamBackcolored(skinParam,</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">				symbolContext == null ? null : symbolContext.getBackColor());</span>
+<span class="fc" id="L132">		final double width = getWidth(ug.getStringBounder());</span>
+<span class="fc" id="L133">		final Area area = Area.create(width, yb - ya);</span>
+<span class="fc" id="L134">		SkinParamBackcolored skinParam2 = new SkinParamBackcolored(skinParam,</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">				symbolContext == null ? null : symbolContext.getBackColor());</span>
 
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		final StyleBuilder currentStyleBuilder = styleBuilder == null ? skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L138">				: styleBuilder;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		final StyleBuilder currentStyleBuilder = styleBuilder == null ? skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L138">				: styleBuilder;</span>
 
-<span class="nc" id="L140">		Style style = type.getStyleSignature().withTOBECHANGED(stereotype).getMergedStyle(currentStyleBuilder);</span>
+<span class="fc" id="L140">		Style style = type.getStyleSignature().withTOBECHANGED(stereotype).getMergedStyle(currentStyleBuilder);</span>
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (style == null) {</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (style == null) {</span>
 <span class="nc bnc" id="L143" title="All 2 branches missed.">			if (symbolContext != null)</span>
 <span class="nc" id="L144">				skinParam2.forceColor(ColorParam.sequenceLifeLineBorder, symbolContext.getForeColor());</span>
 		} else {
-<span class="nc" id="L146">			style = style.eventuallyOverride(symbolContext);</span>
+<span class="fc" id="L146">			style = style.eventuallyOverride(symbolContext);</span>
 		}
-<span class="nc" id="L148">		final Component comp = skin.createComponent(new Style[] { style }, type, null, skinParam2, null);</span>
-<span class="nc" id="L149">		comp.drawU(ug.apply(new UTranslate(-width / 2, ya)), area, context);</span>
-<span class="nc" id="L150">	}</span>
+<span class="fc" id="L148">		final Component comp = skin.createComponent(new Style[] { style }, type, null, skinParam2, null);</span>
+<span class="fc" id="L149">		comp.drawU(ug.apply(new UTranslate(-width / 2, ya)), area, context);</span>
+<span class="fc" id="L150">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
