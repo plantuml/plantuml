@@ -19,7 +19,7 @@ class PiecewiseConstantSpecificDaysTest {
 		assertEquals(Fraction.ONE, f.apply(LocalDateTime.of(2026, 1, 2, 10, 0)));
 
 		// Also check a different time within the same day to confirm it's "day-constant"
-		assertEquals(Fraction.ONE, f.apply(LocalDate.of(2026, 1, 2).atTime(23, 59)));
+		assertEquals(Fraction.ONE, f.apply(LocalDateTime.of(2026, 1, 2, 23, 59)));
 	}
 
 	@Test
@@ -35,7 +35,7 @@ class PiecewiseConstantSpecificDaysTest {
 		assertEquals(Fraction.ZERO, f.apply(LocalDateTime.of(2026, 1, 1, 23, 59)));
 
 		// And: surrounding days still return the default
-		assertEquals(Fraction.ONE, f.apply(LocalDate.of(2025, 12, 31).atTime(12, 0)));
-		assertEquals(Fraction.ONE, f.apply(LocalDate.of(2026, 1, 2).atTime(12, 0)));
+		assertEquals(Fraction.ONE, f.apply(LocalDateTime.of(2025, 12, 31, 12, 0)));
+		assertEquals(Fraction.ONE, f.apply(LocalDateTime.of(2026, 1, 2, 12, 0)));
 	}
 }
