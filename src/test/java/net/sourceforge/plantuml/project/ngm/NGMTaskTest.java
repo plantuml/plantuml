@@ -39,7 +39,7 @@ class NGMTaskTest {
 		LocalDateTime start = LocalDate.of(2025, 11, 30).atTime(8, 0);
 		task.setStart(start);
 
-		LocalDateTime expectedEnd = start.plusHours(6);
+		LocalDateTime expectedEnd = LocalDate.of(2025, 11, 30).atTime(14, 0);
 		assertEquals(expectedEnd, task.getEnd(), "End must equal start + 6h");
 		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h");
 	}
@@ -54,7 +54,7 @@ class NGMTaskTest {
 		LocalDateTime start1 = LocalDate.of(2025, 11, 30).atTime(8, 0);
 		task.setStart(start1);
 
-		LocalDateTime expectedEnd1 = start1.plusHours(6);
+		LocalDateTime expectedEnd1 = LocalDate.of(2025, 11, 30).atTime(14, 0);
 		assertEquals(expectedEnd1, task.getEnd(), "End must follow the initial start + 6h");
 		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h");
 
@@ -62,7 +62,7 @@ class NGMTaskTest {
 		LocalDateTime start2 = LocalDate.of(2025, 11, 30).atTime(10, 30);
 		task.setStart(start2);
 
-		assertEquals(start2.plusHours(6), task.getEnd(), "End must be recomputed when start changes");
+		assertEquals(LocalDate.of(2025, 11, 30).atTime(16, 30), task.getEnd(), "End must be recomputed when start changes");
 		assertEquals(duration, task.getDuration(), "Fixed duration must remain 6h after start change");
 	}
 
