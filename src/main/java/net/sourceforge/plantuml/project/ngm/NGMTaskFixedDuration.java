@@ -51,7 +51,7 @@ import java.time.LocalDateTime;
  */
 public class NGMTaskFixedDuration extends NGMTask {
 
-	private Duration duration;
+	private final Duration duration;
 	private LocalDateTime start;
 
 	/**
@@ -82,7 +82,7 @@ public class NGMTaskFixedDuration extends NGMTask {
 
 	@Override
 	public void setEnd(LocalDateTime end) {
-		throw new UnsupportedOperationException("Work In Progress");
+		start = end.minus(duration);
 	}
 
 	@Override
