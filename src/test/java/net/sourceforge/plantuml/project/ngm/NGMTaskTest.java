@@ -96,23 +96,23 @@ class NGMTaskTest {
 		NGMTask task = NGMTask.withFixedDuration(NGMAllocation.fullTime(), duration);
 
 		// 1) Set start
-		LocalDateTime s1 = LocalDate.of(2025, 12, 1).atTime(7, 15);
+		LocalDateTime s1 = LocalDateTime.of(2025, 12, 1, 7, 15);
 		task.setStart(s1);
-		assertEquals(s1.plusHours(6), task.getEnd(), "End must track start + 6h");
+		assertEquals(LocalDateTime.of(2025, 12, 1, 13, 15), task.getEnd(), "End must track start + 6h");
 		assertEquals(duration, task.getDuration(), "Duration must remain 6h");
 
 		// 2) Set end
-		LocalDateTime e2 = LocalDate.of(2025, 12, 1).atTime(20, 0);
+		LocalDateTime e2 = LocalDateTime.of(2025, 12, 1, 20, 0);
 		task.setEnd(e2);
-		assertEquals(e2.minusHours(6), task.getStart(), "Start must track end - 6h");
+		assertEquals(LocalDateTime.of(2025, 12, 1, 14, 0), task.getStart(), "Start must track end - 6h");
 		assertEquals(e2, task.getEnd(), "End must track the new end");
 		assertEquals(duration, task.getDuration(), "Duration must remain 6h");
 
 		// 3) Set start again
-		LocalDateTime s3 = LocalDate.of(2025, 12, 2).atTime(6, 0);
+		LocalDateTime s3 = LocalDateTime.of(2025, 12, 2, 6, 0);
 		task.setStart(s3);
 		assertEquals(s3, task.getStart(), "Start must track the new start");
-		assertEquals(s3.plusHours(6), task.getEnd(), "End must be recomputed again from start");
+		assertEquals(LocalDateTime.of(2025, 12, 2, 12, 0), task.getEnd(), "End must be recomputed again from start");
 		assertEquals(duration, task.getDuration(), "Duration must remain 6h");
 	}
 }
