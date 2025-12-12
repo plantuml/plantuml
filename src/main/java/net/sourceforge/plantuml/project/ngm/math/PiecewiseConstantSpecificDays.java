@@ -71,10 +71,22 @@ public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
 	 * 
 	 * @param value The default workload fraction.
 	 */
-	public PiecewiseConstantSpecificDays(Fraction value) {
-		defaultValue = value;
-		this.dayToFraction = Map.of();
+	private PiecewiseConstantSpecificDays(Fraction value) {
+		this(value, Map.of());
 	}
+	
+	/**
+	 * Constructs a PiecewiseConstantSpecificDays with the given default value
+	 * and specific day-to-fraction mapping.
+	 * 
+	 * @param value         The default workload fraction.
+	 * @param dayToFraction Mapping of specific dates to their workload fractions.
+	 */
+	private PiecewiseConstantSpecificDays(Fraction value, Map<LocalDate, Fraction> dayToFraction) {
+		defaultValue = value;
+		this.dayToFraction = dayToFraction;
+	}
+
 
 	/** (non-Javadoc)
 	 * @see net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant#apply(java.time.LocalDateTime)
@@ -103,12 +115,14 @@ public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
 	 * Returns a new PiecewiseConstantSpecificDays with the specified day
 	 * associated with the given fraction.
 	 * 
-	 * @param of   The specific date to associate.
-	 * @param zero The workload fraction for the specified date.
+	 * @param day   The specific date to associate.
+	 * @param value The workload fraction for the specified date.
 	 * @return A new PiecewiseConstantSpecificDays instance with the updated mapping.
 	 */
-	public PiecewiseConstantSpecificDays withDay(LocalDate of, Fraction zero) {
-		throw new UnsupportedOperationException("Work in progress (WIP)");
+	public PiecewiseConstantSpecificDays withDay(LocalDate day, Fraction value) {
+		Map<LocalDate, Fraction> newDayToFraction = new HashMap<>(dayToFraction);
+		newDayToFraction.put(day, value);
+		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);
 	}
 
 }
