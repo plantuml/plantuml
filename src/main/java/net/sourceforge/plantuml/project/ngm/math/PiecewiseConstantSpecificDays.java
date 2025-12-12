@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -29,7 +29,7 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Arnaud Roques, Mario Kušek
  * 
  *
  */
@@ -37,18 +37,76 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Immutable implementation of {@link PiecewiseConstant} that models a workload
+ * pattern defined by specific dates.
+ *
+ * <p>
+ * Each specific {@link LocalDate} value is associated with a constant
+ * {@link Fraction} representing the workload for that day (for example 3/10 for
+ * 30%). A zero value is meaningful and represents no allocation on that day.
+ * </p>
+ *
+ * <p>
+ * For any date not explicitly mapped, a default value is returned.
+ * </p>
+ */
 public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
+	
+	/**
+	 * Mapping of specific dates to their corresponding workload fractions.
+	 */
+	private final Map<LocalDate, Fraction> dayToFraction;
+	
+	/**
+	 * Default workload fraction for dates not explicitly mapped.
+	 */
+	private final Fraction defaultValue;
+	
+	/**
+	 * Constructs a PiecewiseConstantSpecificDays with the given default value.
+	 * 
+	 * @param value The default workload fraction.
+	 */
+	public PiecewiseConstantSpecificDays(Fraction value) {
+		defaultValue = value;
+		this.dayToFraction = Map.of();
+	}
 
+	/** (non-Javadoc)
+	 * @see net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant#apply(java.time.LocalDateTime)
+	 */
 	@Override
 	public Fraction apply(LocalDateTime instant) {
-		throw new UnsupportedOperationException("Work in progress (WIP)");
+		LocalDate localDate = instant.toLocalDate();
+		if(dayToFraction.containsKey(localDate)) {
+			return dayToFraction.get(localDate);
+		}
+		
+		return defaultValue;
 	}
 
+	/**
+	 * Creates a PiecewiseConstantSpecificDays with the given default value.
+	 * 
+	 * @param value The default workload fraction.
+	 * @return A new PiecewiseConstantSpecificDays instance.
+	 */
 	public static PiecewiseConstantSpecificDays of(Fraction value) {
-		throw new UnsupportedOperationException("Work in progress (WIP)");
+		return new PiecewiseConstantSpecificDays(value);
 	}
 
+	/**
+	 * Returns a new PiecewiseConstantSpecificDays with the specified day
+	 * associated with the given fraction.
+	 * 
+	 * @param of   The specific date to associate.
+	 * @param zero The workload fraction for the specified date.
+	 * @return A new PiecewiseConstantSpecificDays instance with the updated mapping.
+	 */
 	public PiecewiseConstantSpecificDays withDay(LocalDate of, Fraction zero) {
 		throw new UnsupportedOperationException("Work in progress (WIP)");
 	}
