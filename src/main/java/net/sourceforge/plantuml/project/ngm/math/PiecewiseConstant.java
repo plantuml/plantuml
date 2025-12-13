@@ -103,8 +103,8 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 *
 	 * <p>
 	 * <strong>Important:</strong> The first segment returned by this iterator is the segment
-	 * that contains {@code fromInclusive}, but this segment does <strong>not necessarily start</strong>
-	 * at {@code fromInclusive}. The segment may have started before {@code fromInclusive} and
+	 * that contains {@code instant}, but this segment does <strong>not necessarily start</strong>
+	 * at {@code instant}. The segment may have started before {@code instant} and
 	 * extends beyond it. Subsequent segments follow in chronological order.
 	 * </p>
 	 *
@@ -118,11 +118,11 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 * depending on the underlying workload rules.
 	 * </p>
 	 *
-	 * @param fromInclusive the instant from which to begin iteration; the first segment
+	 * @param instant the instant from which to begin iteration; the first segment
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
 	 */
-	default Iterator<Segment> segmentsStartingAt(LocalDateTime fromInclusive) {
+	default Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
 		throw new UnsupportedOperationException("Not implemented now");
 	}
 

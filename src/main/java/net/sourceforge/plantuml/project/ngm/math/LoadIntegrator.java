@@ -102,7 +102,7 @@ public class LoadIntegrator {
 		LocalDateTime currentTime = start;
 
 		
-		Iterator<Segment> iter = loadFunction.segmentsStartingAt(start);
+		Iterator<Segment> iter = loadFunction.iterateSegmentsFrom(start);
 		while (iter.hasNext()) {
 			Segment segment = iter.next();
 			

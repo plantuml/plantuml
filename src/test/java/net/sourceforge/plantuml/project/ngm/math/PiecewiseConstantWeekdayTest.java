@@ -56,7 +56,7 @@ class PiecewiseConstantWeekdayTest {
 		PiecewiseConstantWeekday wk = PiecewiseConstantWeekday.of(Fraction.ZERO).with(DayOfWeek.MONDAY, Fraction.ONE);
 
 		LocalDateTime from = LocalDate.of(2025, 12, 1).atStartOfDay(); // Monday
-		Iterator<PiecewiseConstant.Segment> it = wk.segmentsStartingAt(from);
+		Iterator<PiecewiseConstant.Segment> it = wk.iterateSegmentsFrom(from);
 
 		PiecewiseConstant.Segment s0 = it.next();
 		assertEquals(from, s0.getStartInclusive());
@@ -71,7 +71,7 @@ class PiecewiseConstantWeekdayTest {
 				.with(DayOfWeek.TUESDAY, new Fraction(1, 2));
 
 		LocalDateTime from = LocalDate.of(2025, 12, 1).atTime(12, 0); // Monday noon
-		Iterator<PiecewiseConstant.Segment> it = wk.segmentsStartingAt(from);
+		Iterator<PiecewiseConstant.Segment> it = wk.iterateSegmentsFrom(from);
 
 		// Should begin on Tuesday
 		PiecewiseConstant.Segment s0 = it.next();
@@ -89,7 +89,7 @@ class PiecewiseConstantWeekdayTest {
 				.with(DayOfWeek.THURSDAY, new Fraction(3, 5)); // 60%
 
 		LocalDateTime from = LocalDate.of(2025, 12, 3).atStartOfDay(); // Wednesday
-		Iterator<PiecewiseConstant.Segment> it = wk.segmentsStartingAt(from);
+		Iterator<PiecewiseConstant.Segment> it = wk.iterateSegmentsFrom(from);
 
 		PiecewiseConstant.Segment wed = it.next();
 		assertEquals(LocalDate.of(2025, 12, 3).atStartOfDay(), wed.getStartInclusive());
@@ -128,7 +128,7 @@ class PiecewiseConstantWeekdayTest {
 	private static void assertApplyMatchesFirstDailySegment(PiecewiseConstantWeekday wk, LocalDateTime instant) {
 		LocalDateTime dayStart = instant.toLocalDate().atStartOfDay();
 
-		Iterator<PiecewiseConstant.Segment> it = wk.segmentsStartingAt(dayStart);
+		Iterator<PiecewiseConstant.Segment> it = wk.iterateSegmentsFrom(dayStart);
 		assertTrue(it.hasNext(), "Iterator should provide at least one segment");
 
 		PiecewiseConstant.Segment seg = it.next();
