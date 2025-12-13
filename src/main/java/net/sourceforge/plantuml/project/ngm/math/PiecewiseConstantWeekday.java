@@ -131,18 +131,44 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	}
 
 	/**
-	 * Returns an iterator of daily segments whose start instant is greater than or
-	 * equal to {@code fromInclusive}, in ascending chronological order.
+	 * Returns an iterator of segments in ascending chronological order, starting from
+	 * the segment that contains the given instant.
 	 *
 	 * <p>
-	 * The first returned segment always starts at a day boundary. If
-	 * {@code fromInclusive} falls in the middle of a day, iteration begins at the
-	 * next day.
+	 * <strong>Implementation Detail:</strong> This particular implementation happens to return
+	 * segments that represent exactly one full day each. However, <strong>callers should not
+	 * rely on this detail</strong>. A conforming implementation could return segments of any
+	 * duration (for example, 1-hour segments) as long as they satisfy the interface contract.
+	 * Obviously, smaller segments would be less efficient for most use cases.
+	 * </p>
+	 *
+	 * <p>
+	 * <strong>Important:</strong> The first segment returned contains {@code fromInclusive},
+	 * but does <strong>not necessarily start</strong> at {@code fromInclusive}. In this
+	 * implementation, each segment represents a full day starting at midnight (00:00).
+	 * </p>
+	 *
+	 * <p>
+	 * For example, if {@code fromInclusive} is 2025-01-15 at 14:30, the first segment
+	 * returned will be [2025-01-15 00:00, 2025-01-16 00:00), which started before the
+	 * given instant but contains it.
+	 * </p>
+	 *
+	 * <p>
+	 * <strong>Optimization Note:</strong> An implementation may choose to merge consecutive
+	 * segments with identical load values into a single longer segment. For instance, if
+	 * 2025-01-16 and 2025-01-17 both have the same workload, they could be returned as
+	 * a single segment [2025-01-16 00:00, 2025-01-18 00:00). This current implementation
+	 * does not perform such optimization and always returns daily segments.
 	 * </p>
 	 *
 	 * <p>
 	 * This iterator is conceptually unbounded and generates segments lazily.
 	 * </p>
+	 *
+	 * @param fromInclusive the instant from which to begin iteration; the first segment
+	 *                      returned will be the one containing this instant
+	 * @return an iterator over segments containing and following the given instant
 	 */
 	@Override
 	public Iterator<Segment> segmentsStartingAt(LocalDateTime fromInclusive) {
@@ -175,19 +201,19 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	}
 
 	/**
-	 * Computes the first date whose daily segment start is >=
-	 * {@code fromInclusive}.
+	 * Computes the date of the segment that contains {@code fromInclusive}.
 	 *
 	 * <p>
-	 * If {@code fromInclusive} is exactly at the start of its day, the first
-	 * segment returned will be that same day. Otherwise, the current day's segment
-	 * started before the bound, so iteration begins on the next day.
+	 * Since each segment in this implementation represents a full day starting at midnight,
+	 * this method simply extracts the date component from {@code fromInclusive}. The segment
+	 * for that date will contain the given instant, regardless of the time of day.
 	 * </p>
+	 *
+	 * @param fromInclusive the instant to find the containing segment for
+	 * @return the date of the daily segment containing the given instant
 	 */
 	private static LocalDate firstSegmentDate(LocalDateTime fromInclusive) {
-		final LocalDate date = fromInclusive.toLocalDate();
-		final LocalDateTime startOfDay = date.atStartOfDay();
-		return startOfDay.isBefore(fromInclusive) ? date.plusDays(1) : date;
+		return fromInclusive.toLocalDate();
 	}
 
 }
