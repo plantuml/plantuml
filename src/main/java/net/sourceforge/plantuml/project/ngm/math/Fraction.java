@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.ngm.math;
 
+import java.util.function.IntPredicate;
+
 /**
  * Immutable rational number represented as a reduced numerator/denominator
  * pair.
@@ -97,6 +99,14 @@ public final class Fraction implements Comparable<Fraction> {
 		return den;
 	}
 
+	public Fraction reciprocal() {
+		return new Fraction(this.den, this.num);
+	}
+	
+	public Fraction negate() {
+		return new Fraction(-this.num, this.den);
+	}
+	
 	/** Adds another fraction to this one. */
 	public Fraction add(Fraction other) {
 		// a/b + c/d = (ad + bc) / bd
@@ -119,6 +129,10 @@ public final class Fraction implements Comparable<Fraction> {
 		long n = this.num * other.num;
 		long d = this.den * other.den;
 		return new Fraction(n, d);
+	}
+	
+	public Fraction divide(Fraction other) {
+		return this.multiply(other.reciprocal());
 	}
 
 	/** Returns a human-readable representation such as "3/4" or "5". */
@@ -169,4 +183,5 @@ public final class Fraction implements Comparable<Fraction> {
 		}
 		return a;
 	}
+
 }

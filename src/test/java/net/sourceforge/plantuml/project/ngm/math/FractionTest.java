@@ -1,7 +1,7 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +69,30 @@ class FractionTest {
 		
 		assertThat(result.getNumerator()).isEqualTo(-1);
 		assertThat(result.getDenominator()).isEqualTo(2);
+	}
+	
+	@Test
+	void reciprocalFraction() throws Exception {
+		Fraction f = new Fraction(-3, 5);
+		
+		assertThat(f.reciprocal()).isEqualTo(new Fraction(-5, 3));
+	}
+	
+	@Test
+	void divideFractions() throws Exception {
+		Fraction f1 = new Fraction(2, 3);  
+		Fraction f2 = new Fraction(4, 5);
+		
+		Fraction result = f1.divide(f2); // (2 / 3) / (4 / 5) = 10 / 12 = 5 / 6 
+		
+		assertThat(result).isEqualTo(new Fraction(5, 6));
+	}
+	
+	@Test
+	void negateFraction() throws Exception {
+		Fraction f = new Fraction(3, 7);
+		
+		assertThat(f.negate()).isEqualTo(new Fraction(-3, 7));
 	}
 	
 	@Test
