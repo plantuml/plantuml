@@ -12,67 +12,102 @@ public class LoadIntegratorSimpleTest {
 
 	@Test
 	public void integrates_constant_weekday_load_one_day() {
-		// Monday 2025-01-06 09:00, constant 100% every day
+		// Given: A constant 100% load applied every weekday
 		final PiecewiseConstant load = PiecewiseConstantWeekday.of(Fraction.ONE);
 
+		// Given: Starting on Monday 2025-01-06 at 09:00
 		final LocalDateTime start = LocalDateTime.of(2025, 1, 6, 9, 0);
+		
+		// Given: Total load to consume is 1 day worth of work (Fraction.ONE = 1 full day)
 		final Fraction total = Fraction.ONE;
 
-		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 1, 7, 9, 0);
+		// When: Computing the end date-time after integrating the load
+		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
 
-		assertEquals(expectedEnd, new LoadIntegrator(load, start, total).computeEnd());
+		// Then: With 100% constant load, 1 day of work should complete 24 hours later
+		// Expected: Tuesday 2025-01-07 at 09:00 (exactly 24 hours after start)
+		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 1, 7, 9, 0);
+		
+		assertEquals(expectedEnd, actualEnd);
 	}
 
 	@Test
 	public void integrates_weekday_load_skipping_weekend() {
-		// Friday noon, 100% on weekdays, 0% on weekend.
-		// Remaining half-day on Friday + half-day on Monday => Monday noon.
+		// Given: A 100% load on weekdays (Mon-Fri) but 0% load on weekends (Sat-Sun)
 		final PiecewiseConstant load = PiecewiseConstantWeekday.of(Fraction.ONE)
 				.with(DayOfWeek.SATURDAY, Fraction.ZERO)
 				.with(DayOfWeek.SUNDAY, Fraction.ZERO);
 
-		final LocalDateTime start = LocalDateTime.of(2025, 1, 3, 12, 0); // Friday
+		// Given: Starting on Friday 2025-01-03 at 12:00 (midday)
+		final LocalDateTime start = LocalDateTime.of(2025, 1, 3, 12, 0);
+		
+		// Given: Total load to consume is 1 day worth of work
 		final Fraction total = Fraction.ONE;
 
-		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 1, 6, 12, 0); // Monday
+		// When: Computing the end date-time after integrating the load
+		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
 
-		assertEquals(expectedEnd, new LoadIntegrator(load, start, total).computeEnd());
+		// Then: Starting Friday at 12:00, we work for 12 hours (until midnight)
+		// Then weekend (Saturday-Sunday) is skipped with 0% load
+		// Then on Monday, we work the remaining 12 hours (from 00:00 to 12:00)
+		// Expected: Monday 2025-01-06 at 12:00
+		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 1, 6, 12, 0);
+		
+		assertEquals(expectedEnd, actualEnd);
 	}
 
 	@Test
 	public void integrates_specific_days_with_mixed_daily_rates() {
-		// Only two days are working:
-		// 2025-02-10 => 100%
-		// 2025-02-11 => 50%
-		// Total = 1.5 "day-equivalent" => consumes day 10 (1.0) + full day 11 (0.5) => end at 2025-02-12 00:00
+		// Given: A load function with specific rates for specific days
+		// - 2025-02-10: 100% load (1 full day capacity)
+		// - 2025-02-11: 50% load (0.5 day capacity)
+		// - All other days: 0% load
 		final PiecewiseConstant load = PiecewiseConstantSpecificDays.of(Fraction.ZERO)
 				.withDay(LocalDate.of(2025, 2, 10), Fraction.ONE)
-				.withDay(LocalDate.of(2025, 2, 11), new Fraction((long) 1, (long) 2));
+				.withDay(LocalDate.of(2025, 2, 11), new Fraction(1, 2));
 
+		// Given: Starting on 2025-02-10 at 00:00 (beginning of the day)
 		final LocalDateTime start = LocalDateTime.of(2025, 2, 10, 0, 0);
-		final Fraction total = new Fraction((long) 3, (long) 2);
+		
+		// Given: Total load to consume is 1.5 days worth of work (3/2)
+		final Fraction total = new Fraction(3, 2);
 
+		// When: Computing the end date-time after integrating the load
+		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
+
+		// Then: On Feb 10 (100% load), we consume 1 full day of work
+		// Then: On Feb 11 (50% load), we consume 0.5 days of work (over 24 hours)
+		// Total consumed: 1 + 0.5 = 1.5 days
+		// Expected: 2025-02-12 at 00:00 (beginning of next day)
 		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 2, 12, 0, 0);
-
-		assertEquals(expectedEnd, new LoadIntegrator(load, start, total).computeEnd());
+		
+		assertEquals(expectedEnd, actualEnd);
 	}
 
 	@Test
 	public void integrates_specific_day_partial_consumption_inside_one_day() {
-		// One specific day has a low load rate: 25% for the whole day.
-		// Starting at 06:00, totalLoad = 1/8 day-equivalent.
-		// With rate 1/4 per day, duration needed = (1/8) / (1/4) = 1/2 day = 12h => end at 18:00 same day.
+		// Given: A specific day with 25% load rate (1/4 = 0.25)
 		final LocalDate day = LocalDate.of(2025, 3, 15);
 
 		final PiecewiseConstant load = PiecewiseConstantSpecificDays.of(Fraction.ZERO)
-				.withDay(day, new Fraction((long) 1, (long) 4));
+				.withDay(day, new Fraction(1, 4));
 
+		// Given: Starting on 2025-03-15 at 06:00 (morning)
 		final LocalDateTime start = LocalDateTime.of(2025, 3, 15, 6, 0);
-		final Fraction total = new Fraction((long) 1, (long) 8);
+		
+		// Given: Total load to consume is 1/8 of a day (0.125 days = 3 hours of work)
+		final Fraction total = new Fraction(1, 8);
 
+		// When: Computing the end date-time after integrating the load
+		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
+
+		// Then: With 25% load rate, to consume 1/8 day of work (3 hours):
+		// Time needed = (1/8) / (1/4) = (1/8) * 4 = 1/2 day = 12 hours
+		// Starting at 06:00 + 12 hours = 18:00
+		// Expected: 2025-03-15 at 18:00
 		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 3, 15, 18, 0);
-
-		assertEquals(expectedEnd, new LoadIntegrator(load, start, total).computeEnd());
+		
+		assertEquals(expectedEnd, actualEnd);
 	}
 
 }
