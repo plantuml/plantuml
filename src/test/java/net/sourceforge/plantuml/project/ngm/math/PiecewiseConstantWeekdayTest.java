@@ -73,13 +73,18 @@ class PiecewiseConstantWeekdayTest {
 		LocalDateTime from = LocalDate.of(2025, 12, 1).atTime(12, 0); // Monday noon
 		Iterator<PiecewiseConstant.Segment> it = wk.iterateSegmentsFrom(from);
 
-		// Should begin on Tuesday
-		PiecewiseConstant.Segment s0 = it.next();
-		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), s0.getStartInclusive());
-		assertEquals(LocalDate.of(2025, 12, 3).atStartOfDay(), s0.getEndExclusive());
-		assertEquals(new Fraction(1, 2), s0.getValue());
+		// Should begin on Monday
+		PiecewiseConstant.Segment monday = it.next();
+		assertEquals(LocalDate.of(2025, 12, 1).atStartOfDay(), monday.getStartInclusive());
+		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), monday.getEndExclusive());
+		assertEquals(Fraction.ONE, monday.getValue());
+		assertEquals("Segment{startInclusive=2025-12-01T00:00, endExclusive=2025-12-02T00:00, value=1}",
+				monday.toString());
+
+		PiecewiseConstant.Segment tuesday = it.next();
 		assertEquals("Segment{startInclusive=2025-12-02T00:00, endExclusive=2025-12-03T00:00, value=1/2}",
-				s0.toString());
+				tuesday.toString());
+
 	}
 
 	@Test
