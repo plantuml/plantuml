@@ -38,7 +38,10 @@ package net.sourceforge.plantuml.project.ngm.math;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Immutable implementation of {@link PiecewiseConstant} that models a workload
@@ -100,7 +103,7 @@ public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
 		
 		return defaultValue;
 	}
-
+	
 	/**
 	 * Creates a PiecewiseConstantSpecificDays with the given default value.
 	 * 
@@ -123,6 +126,93 @@ public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
 		Map<LocalDate, Fraction> newDayToFraction = new HashMap<>(dayToFraction);
 		newDayToFraction.put(day, value);
 		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);
+	}
+	
+	/**
+	 * Returns an iterator of segments in ascending chronological order, starting from
+	 * the segment that contains the given instant.
+	 *
+	 * <p>
+	 * <strong>Implementation Detail:</strong> This particular implementation happens to return
+	 * segments that represent exactly one full day each. However, <strong>callers should not
+	 * rely on this detail</strong>. A conforming implementation could return segments of any
+	 * duration (for example, 1-hour segments) as long as they satisfy the interface contract.
+	 * Obviously, smaller segments would be less efficient for most use cases.
+	 * </p>
+	 *
+	 * <p>
+	 * <strong>Important:</strong> The first segment returned contains {@code instant},
+	 * but does <strong>not necessarily start</strong> at {@code instant}. In this
+	 * implementation, each segment represents a full day starting at midnight (00:00).
+	 * </p>
+	 *
+	 * <p>
+	 * For example, if {@code instant} is 2025-01-15 at 14:30, the first segment
+	 * returned will be [2025-01-15 00:00, 2025-01-16 00:00), which started before the
+	 * given instant but contains it.
+	 * </p>
+	 *
+	 * <p>
+	 * <strong>Optimization Note:</strong> An implementation may choose to merge consecutive
+	 * segments with identical load values into a single longer segment. For instance, if
+	 * 2025-01-16 and 2025-01-17 both have the same workload, they could be returned as
+	 * a single segment [2025-01-16 00:00, 2025-01-18 00:00). This current implementation
+	 * does not perform such optimization and always returns daily segments.
+	 * </p>
+	 *
+	 * <p>
+	 * This iterator is conceptually unbounded and generates segments lazily.
+	 * </p>
+	 *
+	 * @param instant the instant from which to begin iteration; the first segment
+	 *                      returned will be the one containing this instant
+	 * @return an iterator over segments containing and following the given instant
+	 */
+	@Override
+	public Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
+		Objects.requireNonNull(instant, "instant");
+
+		return new Iterator<Segment>() {
+
+			private LocalDate cursorDate = firstSegmentDate(instant);
+
+			@Override
+			public boolean hasNext() {
+				// The rule can be applied indefinitely.
+				return true;
+			}
+
+			@Override
+			public Segment next() {
+				if (cursorDate == null) {
+					throw new NoSuchElementException();
+				}
+
+				final LocalDateTime start = cursorDate.atStartOfDay();
+				final LocalDateTime end = cursorDate.plusDays(1).atStartOfDay();
+				final Fraction value = apply(start);
+
+				cursorDate = cursorDate.plusDays(1);
+				return new Segment(start, end, value);
+			}
+		};
+	}
+
+	
+	/**
+	 * Computes the date of the segment that contains {@code instant}.
+	 *
+	 * <p>
+	 * Since each segment in this implementation represents a full day starting at midnight,
+	 * this method simply extracts the date component from {@code instant}. The segment
+	 * for that date will contain the given instant, regardless of the time of day.
+	 * </p>
+	 *
+	 * @param instant the instant to find the containing segment for
+	 * @return the date of the daily segment containing the given instant
+	 */
+	private static LocalDate firstSegmentDate(LocalDateTime instant) {
+		return instant.toLocalDate();
 	}
 
 }
