@@ -96,6 +96,13 @@ class FractionTest {
 	}
 	
 	@Test
+	void wholePart() throws Exception {
+		assertThat(Fraction.of(3).wholePart()).isEqualTo(3);
+		assertThat(new Fraction(7, 3).wholePart()).isEqualTo(2);
+		assertThat(new Fraction(-7, 3).wholePart()).isEqualTo(-2);
+	}
+	
+	@Test
 	void toStringRepresentation() throws Exception {
 		Fraction f = new Fraction(3, 4);
 		
