@@ -29,13 +29,17 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Arnaud Roques, Mario Kušek
  * 
  *
  */
 package net.sourceforge.plantuml.project.ngm.math;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Iterator;
+
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
 
 /**
  * Integrates a time-varying load function in order to determine the date and
@@ -62,6 +66,7 @@ import java.time.LocalDateTime;
  */
 public class LoadIntegrator {
 
+	private static final int ONE_DAY_IN_SECONDS = 86400;
 	private final PiecewiseConstant loadFunction;
 	private final LocalDateTime start;
 	private final Fraction totalLoad;
@@ -76,7 +81,9 @@ public class LoadIntegrator {
 	 * @param totalLoad    the total amount of load to be consumed
 	 */
 	public LoadIntegrator(PiecewiseConstant loadFunction, LocalDateTime start, Fraction totalLoad) {
-		throw new UnsupportedOperationException("Not implemented yet");
+		this.loadFunction = loadFunction;
+		this.start = start;
+		this.totalLoad = totalLoad;
 	}
 
 	/**
@@ -91,7 +98,43 @@ public class LoadIntegrator {
 	 *         integration
 	 */
 	public LocalDateTime computeEnd() {
-		throw new UnsupportedOperationException("Not implemented yet");
+		Fraction remainingLoad = totalLoad;
+		LocalDateTime currentTime = start;
+
+		
+		Iterator<Segment> iter = loadFunction.segmentsStartingAt(start);
+		while (iter.hasNext()) {
+			Segment segment = iter.next();
+			
+			if (remainingLoad.equals(Fraction.ZERO)) {
+				break;
+			}
+
+			Fraction loadRate = segment.getValue();
+			if (loadRate.equals(Fraction.ZERO)) {
+				currentTime = segment.getEndExclusive();
+				continue;
+			}
+
+			Duration segmentDurationRaw = Duration.between(currentTime, segment.getEndExclusive());
+			Fraction segmentDurationInDays = new Fraction(segmentDurationRaw.toSeconds(), ONE_DAY_IN_SECONDS); // duration in days
+
+			Fraction loadInSegment = loadRate.multiply(segmentDurationInDays);
+
+			if (loadInSegment.compareTo(remainingLoad) >= 0) {
+				// The remaining load can be consumed within this segment
+				Fraction timeNeeded = remainingLoad.divide(loadRate);
+				long secondsNeeded = timeNeeded.multiply(Fraction.of(86400)).wholePart();
+				currentTime = currentTime.plusSeconds(secondsNeeded);
+				remainingLoad = Fraction.ZERO;
+			} else {
+				// Consume the entire segment load and move to the next segment
+				remainingLoad = remainingLoad.subtract(loadInSegment);
+				currentTime = segment.getEndExclusive();
+			}
+		}
+
+		return currentTime;
 	}
 
 }
