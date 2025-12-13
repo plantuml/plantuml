@@ -134,6 +134,10 @@ public final class Fraction implements Comparable<Fraction> {
 	public Fraction divide(Fraction other) {
 		return this.multiply(other.reciprocal());
 	}
+	
+	public long wholePart() {
+		return this.num / this.den;
+	}
 
 	/** Returns a human-readable representation such as "3/4" or "5". */
 	@Override
