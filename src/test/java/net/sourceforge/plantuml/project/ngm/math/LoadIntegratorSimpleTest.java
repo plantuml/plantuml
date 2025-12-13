@@ -47,9 +47,12 @@ public class LoadIntegratorSimpleTest {
 		// When: Computing the end date-time after integrating the load
 		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
 
-		// Then: Starting Friday at 12:00, we work for 12 hours (until midnight)
-		// Then weekend (Saturday-Sunday) is skipped with 0% load
-		// Then on Monday, we work the remaining 12 hours (from 00:00 to 12:00)
+		// Then: The first segment returned is Friday [00:00, 00:00+1day) with 100% load
+		//       but integration starts from 12:00, consuming only the remaining 12 hours
+		//       This consumes 0.5 days of work (12 hours at 100% load)
+		// Then: Weekend segments (Saturday-Sunday) are skipped with 0% load
+		// Then: On Monday, we work the remaining 0.5 days (12 hours at 100% load)
+		//       which takes us from 00:00 to 12:00
 		// Expected: Monday 2025-01-06 at 12:00
 		final LocalDateTime expectedEnd = LocalDateTime.of(2025, 1, 6, 12, 0);
 		

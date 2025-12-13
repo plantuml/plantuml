@@ -98,11 +98,18 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	Fraction apply(LocalDateTime instant);
 
 	/**
-	 * Returns an iterator over segments whose start instant is greater than or equal to the
-	 * given instant, in ascending chronological order.
+	 * Returns an iterator over segments in ascending chronological order, starting from
+	 * the segment that contains the given instant.
 	 *
 	 * <p>
-	 * Intended for efficient forward traversal when computing or aggregating
+	 * <strong>Important:</strong> The first segment returned by this iterator is the segment
+	 * that contains {@code fromInclusive}, but this segment does <strong>not necessarily start</strong>
+	 * at {@code fromInclusive}. The segment may have started before {@code fromInclusive} and
+	 * extends beyond it. Subsequent segments follow in chronological order.
+	 * </p>
+	 *
+	 * <p>
+	 * This method is intended for efficient forward traversal when computing or aggregating
 	 * workload over time windows without materializing all segments.
 	 * </p>
 	 *
@@ -110,6 +117,10 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 * This iterator may represent a large or conceptually unbounded sequence,
 	 * depending on the underlying workload rules.
 	 * </p>
+	 *
+	 * @param fromInclusive the instant from which to begin iteration; the first segment
+	 *                      returned will be the one containing this instant
+	 * @return an iterator over segments containing and following the given instant
 	 */
 	default Iterator<Segment> segmentsStartingAt(LocalDateTime fromInclusive) {
 		throw new UnsupportedOperationException("Not implemented now");
