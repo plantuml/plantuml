@@ -47,7 +47,7 @@ class CombinerProductTest {
 		
 		// Start iterating from Monday Dec 23, 2024
 		LocalDateTime startDate = LocalDateTime.of(2024, 12, 23, 9, 0);
-		Iterator<Segment> segments = combined.segmentsStartingAt(startDate);
+		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
 		// Collect first 10 segments to verify the pattern
 		List<Segment> segmentList = collectSegments(segments, 10);
@@ -133,7 +133,7 @@ class CombinerProductTest {
 		PiecewiseConstant combined = Combiner.product(partTimeSchedule, vacationCalendar);
 		
 		LocalDateTime startDate = LocalDateTime.of(2024, 7, 14, 8, 0);
-		Iterator<Segment> segments = combined.segmentsStartingAt(startDate);
+		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
 		List<Segment> segmentList = collectSegments(segments, 5);
 		
@@ -186,7 +186,7 @@ class CombinerProductTest {
 		PiecewiseConstant combined = Combiner.product(weekendOnly, blackoutDates);
 		
 		LocalDateTime startDate = LocalDateTime.of(2024, 5, 24, 10, 0); // Friday
-		Iterator<Segment> segments = combined.segmentsStartingAt(startDate);
+		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
 		List<Segment> segmentList = collectSegments(segments, 7);
 		
@@ -251,7 +251,7 @@ class CombinerProductTest {
 		PiecewiseConstant combined = Combiner.product(tuesdayThursday, adjustedDays);
 		
 		LocalDateTime startDate = LocalDateTime.of(2024, 9, 9, 9, 0); // Monday
-		Iterator<Segment> segments = combined.segmentsStartingAt(startDate);
+		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
 		List<Segment> segmentList = collectSegments(segments, 6);
 		
@@ -309,7 +309,7 @@ class CombinerProductTest {
 		PiecewiseConstant combined = Combiner.product(everyday, leapDaySpecial);
 		
 		LocalDateTime startDate = LocalDateTime.of(2024, 2, 28, 8, 0);
-		Iterator<Segment> segments = combined.segmentsStartingAt(startDate);
+		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
 		List<Segment> segmentList = collectSegments(segments, 3);
 		

@@ -62,7 +62,7 @@ import java.util.Objects;
  * </p>
  *
  * <p>
- * Segments produced by {@link #segmentsStartingAt(LocalDateTime)} are daily
+ * Segments produced by {@link #iterateSegmentsFrom(LocalDateTime)} are daily
  * intervals of the form {@code [dayStart, nextDayStart)}.
  * </p>
  */
@@ -143,13 +143,13 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	 * </p>
 	 *
 	 * <p>
-	 * <strong>Important:</strong> The first segment returned contains {@code fromInclusive},
-	 * but does <strong>not necessarily start</strong> at {@code fromInclusive}. In this
+	 * <strong>Important:</strong> The first segment returned contains {@code instant},
+	 * but does <strong>not necessarily start</strong> at {@code instant}. In this
 	 * implementation, each segment represents a full day starting at midnight (00:00).
 	 * </p>
 	 *
 	 * <p>
-	 * For example, if {@code fromInclusive} is 2025-01-15 at 14:30, the first segment
+	 * For example, if {@code instant} is 2025-01-15 at 14:30, the first segment
 	 * returned will be [2025-01-15 00:00, 2025-01-16 00:00), which started before the
 	 * given instant but contains it.
 	 * </p>
@@ -166,17 +166,17 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	 * This iterator is conceptually unbounded and generates segments lazily.
 	 * </p>
 	 *
-	 * @param fromInclusive the instant from which to begin iteration; the first segment
+	 * @param instant the instant from which to begin iteration; the first segment
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
 	 */
 	@Override
-	public Iterator<Segment> segmentsStartingAt(LocalDateTime fromInclusive) {
-		Objects.requireNonNull(fromInclusive, "fromInclusive");
+	public Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
+		Objects.requireNonNull(instant, "instant");
 
 		return new Iterator<Segment>() {
 
-			private LocalDate cursorDate = firstSegmentDate(fromInclusive);
+			private LocalDate cursorDate = firstSegmentDate(instant);
 
 			@Override
 			public boolean hasNext() {
@@ -201,19 +201,19 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	}
 
 	/**
-	 * Computes the date of the segment that contains {@code fromInclusive}.
+	 * Computes the date of the segment that contains {@code instant}.
 	 *
 	 * <p>
 	 * Since each segment in this implementation represents a full day starting at midnight,
-	 * this method simply extracts the date component from {@code fromInclusive}. The segment
+	 * this method simply extracts the date component from {@code instant}. The segment
 	 * for that date will contain the given instant, regardless of the time of day.
 	 * </p>
 	 *
-	 * @param fromInclusive the instant to find the containing segment for
+	 * @param instant the instant to find the containing segment for
 	 * @return the date of the daily segment containing the given instant
 	 */
-	private static LocalDate firstSegmentDate(LocalDateTime fromInclusive) {
-		return fromInclusive.toLocalDate();
+	private static LocalDate firstSegmentDate(LocalDateTime instant) {
+		return instant.toLocalDate();
 	}
 
 }
