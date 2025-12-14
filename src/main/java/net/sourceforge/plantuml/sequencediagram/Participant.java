@@ -206,8 +206,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		group.put(UGroupType.DATA_QUALIFIED_NAME, code);
 		group.put(UGroupType.DATA_PARTICIPANT, code);
 		group.put(UGroupType.DATA_ENTITY_UID, uid);
-		if (pragma.isTrue(PragmaKey.SVGNEWDATA))
-			group.put(UGroupType.DATA_UID, uid + "-tail");
+		group.put(UGroupType.DATA_UID, uid + "-tail");
 
 		return group;
 	}
@@ -218,20 +217,17 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		group.put(UGroupType.DATA_QUALIFIED_NAME, code);
 		group.put(UGroupType.DATA_PARTICIPANT, code);
 		group.put(UGroupType.DATA_ENTITY_UID, uid);
-		if (pragma.isTrue(PragmaKey.SVGNEWDATA))
-			group.put(UGroupType.DATA_UID, uid + "-head");
+		group.put(UGroupType.DATA_UID, uid + "-head");
 		return group;
 	}
 
 	public UGroup groupTypeLifeline(Pragma pragma) {
 		final UGroup group = new UGroup();
-		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {
-			group.put(UGroupType.CLASS, "participant-lifeline");
-			group.put(UGroupType.DATA_UID, uid + "-lifeline");
-			group.put(UGroupType.DATA_QUALIFIED_NAME, code);
-			group.put(UGroupType.DATA_PARTICIPANT, code);
-			group.put(UGroupType.DATA_ENTITY_UID, uid);
-		}
+		group.put(UGroupType.CLASS, "participant-lifeline");
+		group.put(UGroupType.DATA_UID, uid + "-lifeline");
+		group.put(UGroupType.DATA_QUALIFIED_NAME, code);
+		group.put(UGroupType.DATA_PARTICIPANT, code);
+		group.put(UGroupType.DATA_ENTITY_UID, uid);
 		return group;
 	}
 

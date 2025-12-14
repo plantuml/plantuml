@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin;
 public enum PragmaKey {
 	
 	// Temporary pragma
-	SVGNEWDATA,
 	SEQUENCE_MESSAGE_SPAN,
 	
 	// For debug

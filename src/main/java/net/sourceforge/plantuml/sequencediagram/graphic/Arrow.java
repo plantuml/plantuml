@@ -94,15 +94,9 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	protected final void startGroup(UGraphic ug) {
 		final UGroup typeIdents = new UGroup();
 		typeIdents.put(UGroupType.CLASS, "message");
-		// Please also remove Pragma from constructor when this will be removed
-		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {
-			typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getUid());
-			typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getUid());
-			typeIdents.put(UGroupType.DATA_UID, uid);
-		} else {
-			typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getCode());
-			typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getCode());
-		}
+		typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getUid());
+		typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getUid());
+		typeIdents.put(UGroupType.DATA_UID, uid);
 		ug.startGroup(typeIdents);
 	}
 

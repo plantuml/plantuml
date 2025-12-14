@@ -555,7 +555,8 @@ public class SvgGraphics {
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
-		text(text, x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, textLength, attributes, textBackColor, 0);
+		text(text, x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, textLength, attributes,
+				textBackColor, 0);
 	}
 
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
@@ -1226,81 +1227,43 @@ public class SvgGraphics {
 
 		pendingElements.add(0, document.createElement("g"));
 
-		// Sorry for the code duplication: but this Pragma will be removed
-		// So we will simplify and refactor the code at that time.
-		if (option.pragma.isTrue(PragmaKey.SVGNEWDATA)) {
-
-			for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
-				if (typeIdent.getKey() == UGroupType.TITLE) {
-					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
-					title.setTextContent(typeIdent.getValue());
-					pendingElements.get(0).appendChild(title);
-				}
-
-				switch (typeIdent.getKey()) {
-				case ID:
-					// ignored
-					break;
-				case DATA_UID:
-					// DATA_UID *will* be rename to ID, but right now, we do some hack
-					pendingElements.get(0).setAttribute("id", typeIdent.getValue());
-					break;
-
-				// I also suggest that we rename "data-participant-1" to "data-entity-1" and
-				// "data-participant-2" to "data-entity-2"
-
-				case DATA_PARTICIPANT_1:
-				case DATA_ENTITY_1_UID:
-					pendingElements.get(0).setAttribute("data-entity-1", typeIdent.getValue());
-					break;
-				case DATA_PARTICIPANT_2:
-				case DATA_ENTITY_2_UID:
-					pendingElements.get(0).setAttribute("data-entity-2", typeIdent.getValue());
-					break;
-
-				case CLASS:
-				case DATA_SOURCE_LINE:
-				case DATA_QUALIFIED_NAME:
-				case DATA_ENTITY_UID:
-				case DATA_VISIBILITY_MODIFIER:
-				case DATA_LINK_TYPE:
-					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
-							typeIdent.getValue());
-
-				}
-			}
-		} else {
-			for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
-				if (typeIdent.getKey() == UGroupType.TITLE) {
-					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
-					title.setTextContent(typeIdent.getValue());
-					pendingElements.get(0).appendChild(title);
-				}
-
-				switch (typeIdent.getKey()) {
-				case DATA_UID:
-				case ID:
-				case DATA_SOURCE_LINE:
-				case DATA_VISIBILITY_MODIFIER:
-				case DATA_LINK_TYPE:
-					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
-							typeIdent.getValue());
-				}
-
-				// if (option.isInteractive())
-				switch (typeIdent.getKey()) {
-				case CLASS:
-				case DATA_ENTITY:
-				case DATA_ENTITY_1:
-				case DATA_ENTITY_2:
-				case DATA_PARTICIPANT:
-				case DATA_PARTICIPANT_1:
-				case DATA_PARTICIPANT_2:
-					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
-							typeIdent.getValue());
-				}
+		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
+			if (typeIdent.getKey() == UGroupType.TITLE) {
+				Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
+				title.setTextContent(typeIdent.getValue());
+				pendingElements.get(0).appendChild(title);
 			}
 
+			switch (typeIdent.getKey()) {
+			case ID:
+				// ignored
+				break;
+			case DATA_UID:
+				// DATA_UID *will* be rename to ID, but right now, we do some hack
+				pendingElements.get(0).setAttribute("id", typeIdent.getValue());
+				break;
+
+			// I also suggest that we rename "data-participant-1" to "data-entity-1" and
+			// "data-participant-2" to "data-entity-2"
+
+			case DATA_PARTICIPANT_1:
+			case DATA_ENTITY_1_UID:
+				pendingElements.get(0).setAttribute("data-entity-1", typeIdent.getValue());
+				break;
+			case DATA_PARTICIPANT_2:
+			case DATA_ENTITY_2_UID:
+				pendingElements.get(0).setAttribute("data-entity-2", typeIdent.getValue());
+				break;
+
+			case CLASS:
+			case DATA_SOURCE_LINE:
+			case DATA_QUALIFIED_NAME:
+			case DATA_ENTITY_UID:
+			case DATA_VISIBILITY_MODIFIER:
+			case DATA_LINK_TYPE:
+				pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(), typeIdent.getValue());
+
+			}
 		}
 
 		// Restore link state after group creation if needed

@@ -349,13 +349,11 @@ public class DrawableSet {
 
 			final Participant p = box.getParticipant();
 
-			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))
-				ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));
-			
+			ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));
+
 			box.drawLineU22(ug, start, endMax, showTail, myDelta);
-			
-			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))
-				ug.closeGroup();
+
+			ug.closeGroup();
 
 		}
 	}
