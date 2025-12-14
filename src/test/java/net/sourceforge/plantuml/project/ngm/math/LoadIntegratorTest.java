@@ -39,11 +39,11 @@ class LoadIntegratorTest {
 	void testChristmasHoliday_withVacationDays() {
 		// Scenario: Developer takes vacation from Dec 23-26, 2024
 		// Working 100% on other days, 0% during vacation
-		PiecewiseConstantSpecificDays loadFunction = PiecewiseConstantSpecificDays.of(Fraction.ONE)
-				.withDay(LocalDate.of(2024, 12, 23), Fraction.ZERO)
-				.withDay(LocalDate.of(2024, 12, 24), Fraction.ZERO)
-				.withDay(LocalDate.of(2024, 12, 25), Fraction.ZERO)
-				.withDay(LocalDate.of(2024, 12, 26), Fraction.ZERO);
+		PiecewiseConstant loadFunction = PiecewiseConstantSpecificDays.of(Fraction.ONE)
+				.withDay(LocalDate.of(2024, 12, 23), Fraction.ZERO) // Monday
+				.withDay(LocalDate.of(2024, 12, 24), Fraction.ZERO) // Tuesday
+				.withDay(LocalDate.of(2024, 12, 25), Fraction.ZERO) // Wednesday
+				.withDay(LocalDate.of(2024, 12, 26), Fraction.ZERO); // Friday
 
 		LocalDateTime start = LocalDateTime.of(2024, 12, 20, 9, 0); // Friday Dec 20
 		Fraction totalLoad = Fraction.of(5); // 5 days of work
@@ -51,8 +51,39 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Should skip the vacation days: Dec 20, 21, 22, 27, 30 (skipping weekends too)
-		LocalDateTime expected = LocalDateTime.of(2024, 12, 30, 9, 0);
+		// Should skip the vacation days: Dec 23, 24, 25, 26
+		LocalDateTime expected = LocalDateTime.of(2024, 12, 29, 9, 0);
+		assertEquals(expected, end, "Should complete after vacation period");
+	}
+
+	@Test
+	void testChristmasHoliday_withVacationDaysAndWeekends() {
+		// Scenario: Developer takes vacation from Dec 23-26, 2024
+		// Working 100% on other days, 0% during vacation
+		PiecewiseConstant vacation = PiecewiseConstantSpecificDays.of(Fraction.ONE)
+				.withDay(LocalDate.of(2024, 12, 23), Fraction.ZERO) // Monday
+				.withDay(LocalDate.of(2024, 12, 24), Fraction.ZERO) // Tuesday
+				.withDay(LocalDate.of(2024, 12, 25), Fraction.ZERO) // Wednesday
+				.withDay(LocalDate.of(2024, 12, 26), Fraction.ZERO); // Thursday
+		
+		PiecewiseConstant fiveDaysWeek = PiecewiseConstantWeekday.of(Fraction.ZERO)
+				.with(DayOfWeek.MONDAY, Fraction.ONE)
+				.with(DayOfWeek.TUESDAY, Fraction.ONE)
+				.with(DayOfWeek.WEDNESDAY, Fraction.ONE)
+				.with(DayOfWeek.THURSDAY, Fraction.ONE)
+				.with(DayOfWeek.FRIDAY, Fraction.ONE);
+		
+		PiecewiseConstant loadFunction = Combiner.product(vacation, fiveDaysWeek);
+
+
+		LocalDateTime start = LocalDateTime.of(2024, 12, 20, 9, 0); // Friday Dec 20
+		Fraction totalLoad = Fraction.of(5); // 5 days of work
+
+		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
+		LocalDateTime end = integrator.computeEnd();
+
+		// Should skip the vacation days: Dec 23, 24, 25, 26 and Weekend: Dec 21, 22, 28, 29
+		LocalDateTime expected = LocalDateTime.of(2025, 1, 2, 9, 0);
 		assertEquals(expected, end, "Should complete after vacation period");
 	}
 
