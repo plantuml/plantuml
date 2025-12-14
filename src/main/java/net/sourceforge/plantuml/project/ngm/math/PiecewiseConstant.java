@@ -125,6 +125,33 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	default Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
 		throw new UnsupportedOperationException("Not implemented now");
 	}
+	
+	/**
+	 * Returns the segment containing the given instant.
+	 *
+	 * <p>
+	 * This is a convenience method equivalent to calling {@code iterateSegmentsFrom(instant).next()}.
+	 * The returned segment has boundaries {@code [startInclusive, endExclusive)} that contain
+	 * the given instant, meaning:
+	 * </p>
+	 * <ul>
+	 *   <li>{@code startInclusive <= instant}</li>
+	 *   <li>{@code instant < endExclusive}</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * The segment's start time will typically be before or equal to the given instant,
+	 * not necessarily at the instant itself.
+	 * </p>
+	 *
+	 * @param instant the instant to query
+	 * @return the segment containing this instant
+	 * @throws java.util.NoSuchElementException if the iterator is empty (should not occur in normal usage)
+	 */
+	default Segment segmentAt(LocalDateTime instant) {
+		return iterateSegmentsFrom(instant).next();
+	}
+	
 
 	/**
 	 * A constant workload segment.
