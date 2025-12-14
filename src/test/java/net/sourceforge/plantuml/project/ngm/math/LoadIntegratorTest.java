@@ -167,8 +167,13 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Should complete on Friday Nov 22
-		LocalDateTime expected = LocalDateTime.of(2024, 11, 22, 9, 0);
+		// Even though it may seem counterintuitive that the end is Monday, November 25 for 5 days of work, it's actually
+		// logical. The end should be understood as the first instant when the work is finished.
+		// Intuitively, one might think that the end is Friday. But since there are 5 days, meaning 120 hours of work,
+		// given that we started the work on Monday the 18th at 9am, we indeed need to work
+		// on Monday the 25th from midnight to 9am to finish the work.
+		// Therefore the test is correct.
+		LocalDateTime expected = LocalDateTime.of(2024, 11, 25, 9, 0);
 		assertEquals(expected, end, "Should complete standard 5-day work week");
 	}
 
