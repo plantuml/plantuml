@@ -100,7 +100,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="fc" id="L100">	}</span>
 
 	public ParticipantBox getVeryfirst() {
-<span class="fc" id="L103">		return participants.values().iterator().next().getParticipantBox();</span>
+<span class="nc" id="L103">		return participants.values().iterator().next().getParticipantBox();</span>
 	}
 
 	public final Rose getSkin() {
@@ -349,156 +349,154 @@ import net.sourceforge.plantuml.url.Url;
 
 <span class="fc" id="L350">			final Participant p = box.getParticipant();</span>
 
-<span class="pc bpc" id="L352" title="1 of 2 branches missed.">			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))</span>
-<span class="nc" id="L353">				ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));</span>
-			
-<span class="fc" id="L355">			box.drawLineU22(ug, start, endMax, showTail, myDelta);</span>
-			
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))</span>
-<span class="nc" id="L358">				ug.closeGroup();</span>
+<span class="fc" id="L352">			ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));</span>
 
-<span class="fc" id="L360">		}</span>
-<span class="fc" id="L361">	}</span>
+<span class="fc" id="L354">			box.drawLineU22(ug, start, endMax, showTail, myDelta);</span>
+
+<span class="fc" id="L356">			ug.closeGroup();</span>
+
+<span class="fc" id="L358">		}</span>
+<span class="fc" id="L359">	}</span>
 
 	private void drawHeadTailU(UGraphic ug, Page page, double positionTail) {
-<span class="fc bfc" id="L364" title="All 2 branches covered.">		for (Map.Entry&lt;Participant, LivingParticipantBox&gt; ent : participants.entrySet()) {</span>
-<span class="fc" id="L365">			final Participant p = ent.getKey();</span>
-<span class="fc" id="L366">			final LivingParticipantBox box = ent.getValue();</span>
-<span class="fc" id="L367">			final double create = box.getCreate();</span>
-<span class="fc" id="L368">			boolean showHead = true;</span>
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">			if (create &gt; 0) {</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">				if (create &gt; page.getNewpage2())</span>
-<span class="nc" id="L371">					continue;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		for (Map.Entry&lt;Participant, LivingParticipantBox&gt; ent : participants.entrySet()) {</span>
+<span class="fc" id="L363">			final Participant p = ent.getKey();</span>
+<span class="fc" id="L364">			final LivingParticipantBox box = ent.getValue();</span>
+<span class="fc" id="L365">			final double create = box.getCreate();</span>
+<span class="fc" id="L366">			boolean showHead = true;</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">			if (create &gt; 0) {</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">				if (create &gt; page.getNewpage2())</span>
+<span class="nc" id="L369">					continue;</span>
 
-<span class="nc bnc" id="L373" title="All 4 branches missed.">				if (create &gt;= page.getNewpage1() &amp;&amp; create &lt; page.getNewpage2())</span>
-<span class="nc" id="L374">					showHead = false;</span>
+<span class="nc bnc" id="L371" title="All 4 branches missed.">				if (create &gt;= page.getNewpage1() &amp;&amp; create &lt; page.getNewpage2())</span>
+<span class="nc" id="L372">					showHead = false;</span>
 
 			}
-<span class="fc" id="L377">			final Url url = p.getUrl();</span>
-<span class="fc bfc" id="L378" title="All 2 branches covered.">			if (url != null)</span>
-<span class="fc" id="L379">				ug.startUrl(url);</span>
+<span class="fc" id="L375">			final Url url = p.getUrl();</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">			if (url != null)</span>
+<span class="fc" id="L377">				ug.startUrl(url);</span>
 
-<span class="fc" id="L381">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
-<span class="fc bfc" id="L382" title="All 2 branches covered.">			if (url != null)</span>
-<span class="fc" id="L383">				ug.closeUrl();</span>
+<span class="fc" id="L379">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">			if (url != null)</span>
+<span class="fc" id="L381">				ug.closeUrl();</span>
 
-<span class="fc" id="L385">		}</span>
-<span class="fc" id="L386">	}</span>
+<span class="fc" id="L383">		}</span>
+<span class="fc" id="L384">	}</span>
 
 	private double getMaxX() {
-<span class="fc" id="L389">		return dimension.getWidth();</span>
+<span class="fc" id="L387">		return dimension.getWidth();</span>
 	}
 
 	private double getMaxY() {
-<span class="fc" id="L393">		return dimension.getHeight();</span>
+<span class="fc" id="L391">		return dimension.getHeight();</span>
 	}
 
 	private void drawPlaygroundU(UGraphic ug, Context2D context) {
-<span class="fc bfc" id="L397" title="All 2 branches covered.">		for (Participant p : getAllParticipants())</span>
-<span class="fc" id="L398">			drawLifeLineU(ug, p);</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">		for (Participant p : getAllParticipants())</span>
+<span class="fc" id="L396">			drawLifeLineU(ug, p);</span>
 
-<span class="fc bfc" id="L400" title="All 2 branches covered.">		for (GraphicalElement element : getAllGraphicalElements())</span>
-<span class="fc" id="L401">			element.drawU(ug, getMaxX(), context);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">		for (GraphicalElement element : getAllGraphicalElements())</span>
+<span class="fc" id="L399">			element.drawU(ug, getMaxX(), context);</span>
 
-<span class="fc" id="L403">	}</span>
+<span class="fc" id="L401">	}</span>
 
 	private void drawDolls(UGraphic ug, double height, Context2D context) {
-<span class="pc bpc" id="L406" title="1 of 2 branches missed.">		for (Doll doll : getExistingParticipantEnglober(ug.getStringBounder())) {</span>
-<span class="nc" id="L407">			double x1 = getX1(doll);</span>
-<span class="nc" id="L408">			final double x2 = getX2(ug.getStringBounder(), doll);</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">		for (Doll doll : getExistingParticipantEnglober(ug.getStringBounder())) {</span>
+<span class="nc" id="L405">			double x1 = getX1(doll);</span>
+<span class="nc" id="L406">			final double x2 = getX2(ug.getStringBounder(), doll);</span>
 
-<span class="nc" id="L410">			final Component comp = getEngloberComponent(doll);</span>
+<span class="nc" id="L408">			final Component comp = getEngloberComponent(doll);</span>
 
-<span class="nc" id="L412">			final double width = x2 - x1;</span>
-<span class="nc" id="L413">			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(), doll);</span>
-<span class="nc bnc" id="L414" title="All 2 branches missed.">			if (preferedWidth &gt; width) {</span>
+<span class="nc" id="L410">			final double width = x2 - x1;</span>
+<span class="nc" id="L411">			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(), doll);</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">			if (preferedWidth &gt; width) {</span>
 				// if (englober.getFirst2() == englober.getLast2()) {
-<span class="nc" id="L416">				x1 -= (preferedWidth - width) / 2;</span>
+<span class="nc" id="L414">				x1 -= (preferedWidth - width) / 2;</span>
 				// }
-<span class="nc" id="L418">				final XDimension2D dim = new XDimension2D(preferedWidth, height);</span>
-<span class="nc" id="L419">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
-<span class="nc" id="L420">			} else {</span>
-<span class="nc" id="L421">				final XDimension2D dim = new XDimension2D(width, height);</span>
-<span class="nc" id="L422">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
+<span class="nc" id="L416">				final XDimension2D dim = new XDimension2D(preferedWidth, height);</span>
+<span class="nc" id="L417">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
+<span class="nc" id="L418">			} else {</span>
+<span class="nc" id="L419">				final XDimension2D dim = new XDimension2D(width, height);</span>
+<span class="nc" id="L420">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
 			}
-<span class="nc" id="L424">		}</span>
-<span class="fc" id="L425">	}</span>
+<span class="nc" id="L422">		}</span>
+<span class="fc" id="L423">	}</span>
 
 	public double getEngloberPreferedWidth(StringBounder stringBounder, Doll doll) {
-<span class="nc" id="L428">		return getEngloberComponent(doll).getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L426">		return getEngloberComponent(doll).getPreferredWidth(stringBounder);</span>
 	}
 
 	private Component getEngloberComponent(Doll doll) {
-<span class="nc" id="L432">		final ParticipantEnglober participantEnglober = doll.getParticipantEnglober();</span>
-<span class="nc bnc" id="L433" title="All 2 branches missed.">		final ISkinParam s = participantEnglober.getBoxColor() == null ? skinParam</span>
-<span class="nc" id="L434">				: new SkinParamBackcolored(skinParam, participantEnglober.getBoxColor());</span>
-<span class="nc" id="L435">		return skin.createComponent(doll.getUsedStyles(), ComponentType.ENGLOBER, null, s,</span>
-<span class="nc" id="L436">				participantEnglober.getTitle());</span>
+<span class="nc" id="L430">		final ParticipantEnglober participantEnglober = doll.getParticipantEnglober();</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">		final ISkinParam s = participantEnglober.getBoxColor() == null ? skinParam</span>
+<span class="nc" id="L432">				: new SkinParamBackcolored(skinParam, participantEnglober.getBoxColor());</span>
+<span class="nc" id="L433">		return skin.createComponent(doll.getUsedStyles(), ComponentType.ENGLOBER, null, s,</span>
+<span class="nc" id="L434">				participantEnglober.getTitle());</span>
 	}
 
 	public double getX1(Doll doll) {
-<span class="nc" id="L440">		final Participant first = doll.getFirst2TOBEPRIVATE();</span>
-<span class="nc" id="L441">		final ParticipantBox firstBox = participants.get(first).getParticipantBox();</span>
-<span class="nc" id="L442">		return firstBox.getStartingX() + 1;</span>
+<span class="nc" id="L438">		final Participant first = doll.getFirst2TOBEPRIVATE();</span>
+<span class="nc" id="L439">		final ParticipantBox firstBox = participants.get(first).getParticipantBox();</span>
+<span class="nc" id="L440">		return firstBox.getStartingX() + 1;</span>
 	}
 
 	public double getX2(StringBounder stringBounder, Doll doll) {
-<span class="nc" id="L446">		final Participant last = doll.getLast2TOBEPRIVATE();</span>
-<span class="nc" id="L447">		final ParticipantBox lastBox = participants.get(last).getParticipantBox();</span>
-<span class="nc" id="L448">		return lastBox.getMaxX(stringBounder) - 1;</span>
+<span class="nc" id="L444">		final Participant last = doll.getLast2TOBEPRIVATE();</span>
+<span class="nc" id="L445">		final ParticipantBox lastBox = participants.get(last).getParticipantBox();</span>
+<span class="nc" id="L446">		return lastBox.getMaxX(stringBounder) - 1;</span>
 	}
 
 	private void drawLifeLineU(UGraphic ug, Participant p) {
-<span class="fc" id="L452">		final LifeLine line = getLivingParticipantBox(p).getLifeLine();</span>
+<span class="fc" id="L450">		final LifeLine line = getLivingParticipantBox(p).getLifeLine();</span>
 
-<span class="fc" id="L454">		line.finish(getMaxY());</span>
-<span class="fc" id="L455">		line.drawU(ug, getSkin(), skinParam);</span>
-<span class="fc" id="L456">	}</span>
+<span class="fc" id="L452">		line.finish(getMaxY());</span>
+<span class="fc" id="L453">		line.drawU(ug, getSkin(), skinParam);</span>
+<span class="fc" id="L454">	}</span>
 
 	private Doll getParticipantEnglober(Participant p, StringBounder stringBounder) {
-<span class="pc bpc" id="L459" title="1 of 2 branches missed.">		for (Doll pe : getExistingParticipantEnglober(stringBounder))</span>
-<span class="nc bnc" id="L460" title="All 2 branches missed.">			if (pe.contains(p))</span>
-<span class="nc" id="L461">				return pe;</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		for (Doll pe : getExistingParticipantEnglober(stringBounder))</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">			if (pe.contains(p))</span>
+<span class="nc" id="L459">				return pe;</span>
 
-<span class="fc" id="L463">		return null;</span>
+<span class="fc" id="L461">		return null;</span>
 	}
 
 	public void setTopStartingY(double topStartingY) {
-<span class="fc" id="L467">		this.topStartingY = topStartingY;</span>
-<span class="fc" id="L468">	}</span>
+<span class="fc" id="L465">		this.topStartingY = topStartingY;</span>
+<span class="fc" id="L466">	}</span>
 
 	Participant getFirst(Collection&lt;Participant&gt; someParticipants) {
-<span class="nc" id="L471">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
-<span class="nc" id="L472">		int min = -1;</span>
-<span class="nc bnc" id="L473" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
-<span class="nc" id="L474">			final int n = list.indexOf(p);</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">			assert n != -1;</span>
-<span class="nc bnc" id="L476" title="All 4 branches missed.">			if (min == -1 || min &gt; n)</span>
-<span class="nc" id="L477">				min = n;</span>
+<span class="nc" id="L469">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
+<span class="nc" id="L470">		int min = -1;</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
+<span class="nc" id="L472">			final int n = list.indexOf(p);</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">			assert n != -1;</span>
+<span class="nc bnc" id="L474" title="All 4 branches missed.">			if (min == -1 || min &gt; n)</span>
+<span class="nc" id="L475">				min = n;</span>
 
-<span class="nc" id="L479">		}</span>
-<span class="nc" id="L480">		return list.get(min);</span>
+<span class="nc" id="L477">		}</span>
+<span class="nc" id="L478">		return list.get(min);</span>
 	}
 
 	Participant getLast(Collection&lt;Participant&gt; someParticipants) {
-<span class="nc" id="L484">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
-<span class="nc" id="L485">		int max = -1;</span>
-<span class="nc bnc" id="L486" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
-<span class="nc" id="L487">			final int n = list.indexOf(p);</span>
-<span class="nc bnc" id="L488" title="All 2 branches missed.">			assert n != -1;</span>
-<span class="nc bnc" id="L489" title="All 4 branches missed.">			if (max == -1 || max &lt; n)</span>
-<span class="nc" id="L490">				max = n;</span>
+<span class="nc" id="L482">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
+<span class="nc" id="L483">		int max = -1;</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
+<span class="nc" id="L485">			final int n = list.indexOf(p);</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">			assert n != -1;</span>
+<span class="nc bnc" id="L487" title="All 4 branches missed.">			if (max == -1 || max &lt; n)</span>
+<span class="nc" id="L488">				max = n;</span>
 
-<span class="nc" id="L492">		}</span>
-<span class="nc" id="L493">		return list.get(max);</span>
+<span class="nc" id="L490">		}</span>
+<span class="nc" id="L491">		return list.get(max);</span>
 	}
 
 	public double getArrowThickness() {
-<span class="fc" id="L497">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
-<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L499">			return 1;</span>
+<span class="fc" id="L495">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
+<span class="pc bpc" id="L496" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L497">			return 1;</span>
 
-<span class="nc" id="L501">		return result.getThickness();</span>
+<span class="nc" id="L499">		return result.getThickness();</span>
 	}
 
 }

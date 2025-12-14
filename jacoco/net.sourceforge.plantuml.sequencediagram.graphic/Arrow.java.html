@@ -94,46 +94,40 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	protected final void startGroup(UGraphic ug) {
 <span class="fc" id="L95">		final UGroup typeIdents = new UGroup();</span>
 <span class="fc" id="L96">		typeIdents.put(UGroupType.CLASS, &quot;message&quot;);</span>
-		// Please also remove Pragma from constructor when this will be removed
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {</span>
-<span class="nc" id="L99">			typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getUid());</span>
-<span class="nc" id="L100">			typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getUid());</span>
-<span class="nc" id="L101">			typeIdents.put(UGroupType.DATA_UID, uid);</span>
-		} else {
-<span class="fc" id="L103">			typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getCode());</span>
-<span class="fc" id="L104">			typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getCode());</span>
-		}
-<span class="fc" id="L106">		ug.startGroup(typeIdents);</span>
-<span class="fc" id="L107">	}</span>
+<span class="fc" id="L97">		typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getUid());</span>
+<span class="fc" id="L98">		typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getUid());</span>
+<span class="fc" id="L99">		typeIdents.put(UGroupType.DATA_UID, uid);</span>
+<span class="fc" id="L100">		ug.startGroup(typeIdents);</span>
+<span class="fc" id="L101">	}</span>
 
 	protected final void endGroup(UGraphic ug) {
-<span class="fc" id="L110">		ug.closeGroup();</span>
-<span class="fc" id="L111">	}</span>
+<span class="fc" id="L104">		ug.closeGroup();</span>
+<span class="fc" id="L105">	}</span>
 
 	protected final void startUrl(UGraphic ug) {
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L115">			ug.startUrl(url);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L109">			ug.startUrl(url);</span>
 
-<span class="fc" id="L117">	}</span>
+<span class="fc" id="L111">	}</span>
 
 	protected final void endUrl(UGraphic ug) {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L121">			ug.closeUrl();</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L115">			ug.closeUrl();</span>
 
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L117">	}</span>
 
 	public abstract int getDirection(StringBounder stringBounder);
 
 	protected Rose getSkin() {
-<span class="fc" id="L128">		return skin;</span>
+<span class="fc" id="L122">		return skin;</span>
 	}
 
 	protected final ArrowComponent getArrowComponent() {
-<span class="fc" id="L132">		return arrowComponent;</span>
+<span class="fc" id="L126">		return arrowComponent;</span>
 	}
 
 	public double getArrowOnlyWidth(StringBounder stringBounder) {
-<span class="fc" id="L136">		return getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L130">		return getPreferredWidth(stringBounder);</span>
 	}
 
 	public abstract double getArrowYStartLevel(StringBounder stringBounder);
@@ -147,15 +141,15 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	protected abstract Participant getParticipant2();
 
 	protected final double getPaddingArrowHead() {
-<span class="fc" id="L150">		return paddingArrowHead;</span>
+<span class="fc" id="L144">		return paddingArrowHead;</span>
 	}
 
 	protected final void setPaddingArrowHead(double paddingArrowHead) {
-<span class="nc" id="L154">		this.paddingArrowHead = paddingArrowHead;</span>
-<span class="nc" id="L155">	}</span>
+<span class="nc" id="L148">		this.paddingArrowHead = paddingArrowHead;</span>
+<span class="nc" id="L149">	}</span>
 
 	final public double getMargin() {
-<span class="nc" id="L158">		return 5;</span>
+<span class="nc" id="L152">		return 5;</span>
 	}
 
 }

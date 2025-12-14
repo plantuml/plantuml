@@ -206,37 +206,33 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 <span class="fc" id="L206">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
 <span class="fc" id="L207">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
 <span class="fc" id="L208">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA))</span>
-<span class="nc" id="L210">			group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
+<span class="fc" id="L209">		group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
 
-<span class="fc" id="L212">		return group;</span>
+<span class="fc" id="L211">		return group;</span>
 	}
 
 	public UGroup groupTypeHead(Pragma pragma) {
-<span class="fc" id="L216">		final UGroup group = new UGroup();</span>
-<span class="fc" id="L217">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
-<span class="fc" id="L218">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="fc" id="L219">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="fc" id="L220">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA))</span>
-<span class="nc" id="L222">			group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
-<span class="fc" id="L223">		return group;</span>
+<span class="fc" id="L215">		final UGroup group = new UGroup();</span>
+<span class="fc" id="L216">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
+<span class="fc" id="L217">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L218">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L219">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L220">		group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
+<span class="fc" id="L221">		return group;</span>
 	}
 
 	public UGroup groupTypeLifeline(Pragma pragma) {
-<span class="nc" id="L227">		final UGroup group = new UGroup();</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {</span>
-<span class="nc" id="L229">			group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
-<span class="nc" id="L230">			group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
-<span class="nc" id="L231">			group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="nc" id="L232">			group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="nc" id="L233">			group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-		}
-<span class="nc" id="L235">		return group;</span>
+<span class="fc" id="L225">		final UGroup group = new UGroup();</span>
+<span class="fc" id="L226">		group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
+<span class="fc" id="L227">		group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
+<span class="fc" id="L228">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L229">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L230">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L231">		return group;</span>
 	}
 
 	public String getUid() {
-<span class="nc" id="L239">		return uid;</span>
+<span class="fc" id="L235">		return uid;</span>
 	}
 
 }
