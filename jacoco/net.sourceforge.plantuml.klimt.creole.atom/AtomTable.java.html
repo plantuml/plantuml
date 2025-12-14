@@ -42,6 +42,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorScheme;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Position;
 import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
@@ -55,226 +56,237 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 public class AtomTable extends AbstractAtom implements Atom {
 
 	class Line {
-<span class="fc" id="L58">		private final List&lt;Atom&gt; cells = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L59">		private final List&lt;HColor&gt; cellsBackColor = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">		private final List&lt;Atom&gt; cells = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">		private final List&lt;HColor&gt; cellsBackColor = new ArrayList&lt;&gt;();</span>
 		private final HColor lineBackColor;
 
-<span class="fc" id="L62">		private Line(HColor lineBackColor) {</span>
-<span class="fc" id="L63">			this.lineBackColor = lineBackColor;</span>
-<span class="fc" id="L64">		}</span>
+<span class="fc" id="L63">		private Line(HColor lineBackColor) {</span>
+<span class="fc" id="L64">			this.lineBackColor = lineBackColor;</span>
+<span class="fc" id="L65">		}</span>
 
 		public void add(Atom cell, HColor cellBackColor) {
-<span class="fc" id="L67">			cells.add(cell);</span>
-<span class="fc" id="L68">			cellsBackColor.add(cellBackColor);</span>
-<span class="fc" id="L69">		}</span>
+<span class="fc" id="L68">			cells.add(cell);</span>
+<span class="fc" id="L69">			cellsBackColor.add(cellBackColor);</span>
+<span class="fc" id="L70">		}</span>
 
 		public int size() {
-<span class="fc" id="L72">			return cells.size();</span>
+<span class="fc" id="L73">			return cells.size();</span>
 		}
 
 		@Override
 		public String toString() {
-<span class="nc" id="L77">			return super.toString() + &quot; &quot; + cells.size();</span>
+<span class="nc" id="L78">			return super.toString() + &quot; &quot; + cells.size();</span>
 		}
 	}
 
-<span class="fc" id="L81">	private final List&lt;Line&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L82">	private final Map&lt;Atom, Position&gt; positions = new HashMap&lt;Atom, Position&gt;();</span>
+<span class="fc" id="L82">	private final List&lt;Line&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L83">	private final Map&lt;Atom, Position&gt; positions = new HashMap&lt;Atom, Position&gt;();</span>
 	private final HColor lineColor;
 	private Class&lt;? extends StringBounder&gt; lastCaller;
 
-<span class="fc" id="L86">	public AtomTable(HColor lineColor) {</span>
-<span class="fc" id="L87">		this.lineColor = lineColor;</span>
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L87">	public AtomTable(HColor lineColor) {</span>
+<span class="fc" id="L88">		this.lineColor = lineColor;</span>
+<span class="fc" id="L89">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L91">		initMap(stringBounder);</span>
-<span class="fc" id="L92">		final double width = getEndingX(getNbCols() - 1);</span>
-<span class="fc" id="L93">		final double height = getEndingY(getNbLines() - 1);</span>
-<span class="fc" id="L94">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L92">		initMap(stringBounder);</span>
+<span class="fc" id="L93">		final double width = getEndingX(getNbCols() - 1);</span>
+<span class="fc" id="L94">		final double height = getEndingY(getNbLines() - 1);</span>
+<span class="fc" id="L95">		return new XDimension2D(width, height);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L98">		return 0;</span>
+<span class="fc" id="L99">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L102">		initMap(ug.getStringBounder());</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
-<span class="fc" id="L104">			final Line line = lines.get(i);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (line.lineBackColor != null) {</span>
-<span class="fc" id="L106">				final double y1 = getStartingY(i);</span>
-<span class="fc" id="L107">				final double y2 = getStartingY(i + 1);</span>
-<span class="fc" id="L108">				final double x1 = getStartingX(0);</span>
-<span class="fc" id="L109">				final double x2 = getStartingX(getNbCols());</span>
-<span class="fc" id="L110">				ug.apply(HColors.none()).apply(line.lineBackColor.bg()).apply(new UTranslate(x1, y1))</span>
-<span class="fc" id="L111">						.draw(URectangle.build(x2 - x1, y2 - y1));</span>
+<span class="fc" id="L103">		initMap(ug.getStringBounder());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
+<span class="fc" id="L105">			final Line line = lines.get(i);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if (line.lineBackColor != null) {</span>
+<span class="fc" id="L107">				final double y1 = getStartingY(i);</span>
+<span class="fc" id="L108">				final double y2 = getStartingY(i + 1);</span>
+<span class="fc" id="L109">				final double x1 = getStartingX(0);</span>
+<span class="fc" id="L110">				final double x2 = getStartingX(getNbCols());</span>
+<span class="fc" id="L111">				ug.apply(HColors.none()).apply(line.lineBackColor.bg()).apply(new UTranslate(x1, y1))</span>
+<span class="fc" id="L112">						.draw(URectangle.build(x2 - x1, y2 - y1));</span>
 			}
-<span class="fc bfc" id="L113" title="All 2 branches covered.">			for (int j = 0; j &lt; getNbCols(); j++) {</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">				if (j &gt;= line.cells.size())</span>
-<span class="nc" id="L115">					continue;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			for (int j = 0; j &lt; getNbCols(); j++) {</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">				if (j &gt;= line.cells.size())</span>
+<span class="nc" id="L116">					continue;</span>
 
-<span class="fc" id="L117">				final Atom cell = line.cells.get(j);</span>
-<span class="fc" id="L118">				HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				if (cell instanceof SheetBlock1)</span>
-<span class="fc" id="L120">					align = ((SheetBlock1) cell).getCellAlignment();</span>
+<span class="fc" id="L118">				final Atom cell = line.cells.get(j);</span>
+<span class="fc" id="L119">				HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">				if (cell instanceof SheetBlock1)</span>
+<span class="fc" id="L121">					align = ((SheetBlock1) cell).getCellAlignment();</span>
 
-<span class="fc" id="L122">				final HColor cellBackColor = line.cellsBackColor.get(j);</span>
-<span class="fc" id="L123">				final double x1 = getStartingX(j);</span>
-<span class="fc" id="L124">				final double x2 = getStartingX(j + 1);</span>
-<span class="fc" id="L125">				final double cellWidth = x2 - x1;</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">				if (cellBackColor != null) {</span>
-<span class="fc" id="L127">					final double y1 = getStartingY(i);</span>
-<span class="fc" id="L128">					final double y2 = getStartingY(i + 1);</span>
-<span class="fc" id="L129">					ug.apply(HColors.none()).apply(cellBackColor.bg()).apply(new UTranslate(x1, y1))</span>
-<span class="fc" id="L130">							.draw(URectangle.build(x2 - x1, y2 - y1));</span>
+<span class="fc" id="L123">				final HColor cellBackColor = line.cellsBackColor.get(j);</span>
+<span class="fc" id="L124">				final double x1 = getStartingX(j);</span>
+<span class="fc" id="L125">				final double x2 = getStartingX(j + 1);</span>
+<span class="fc" id="L126">				final double cellWidth = x2 - x1;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">				if (cellBackColor != null) {</span>
+<span class="fc" id="L128">					final double y1 = getStartingY(i);</span>
+<span class="fc" id="L129">					final double y2 = getStartingY(i + 1);</span>
+<span class="fc" id="L130">					ug.apply(HColors.none()).apply(cellBackColor.bg()).apply(new UTranslate(x1, y1))</span>
+<span class="fc" id="L131">							.draw(URectangle.build(x2 - x1, y2 - y1));</span>
 				}
-<span class="fc" id="L132">				final Position pos = positions.get(cell);</span>
-<span class="fc" id="L133">				final XDimension2D dimCell = cell.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L133">				final Position pos = positions.get(cell);</span>
+<span class="fc" id="L134">				final XDimension2D dimCell = cell.calculateDimension(ug.getStringBounder());</span>
 				final double dx;
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">				if (align == HorizontalAlignment.RIGHT)</span>
-<span class="nc" id="L136">					dx = cellWidth - dimCell.getWidth();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">				if (align == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L137">					dx = cellWidth - dimCell.getWidth();</span>
 				else
-<span class="fc" id="L138">					dx = 0;</span>
+<span class="fc" id="L139">					dx = 0;</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">				if (cellBackColor == null)</span>
-<span class="fc" id="L141">					cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				if (cellBackColor == null)</span>
+<span class="fc" id="L142">					cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));</span>
 				else
-<span class="fc" id="L143">					cell.drawU(ug.apply(cellBackColor.bg()).apply(pos.getTranslate().compose(UTranslate.dx(dx))));</span>
+<span class="fc" id="L144">					cell.drawU(ug.apply(cellBackColor.bg()).apply(pos.getTranslate().compose(UTranslate.dx(dx))));</span>
 			}
 		}
-<span class="fc" id="L146">		ug = ug.apply(lineColor);</span>
-<span class="fc" id="L147">		final ULine hline = ULine.hline(getEndingX(getNbCols() - 1));</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (int i = 0; i &lt;= getNbLines(); i++)</span>
-<span class="fc" id="L149">			ug.apply(UTranslate.dy(getStartingY(i))).draw(hline);</span>
+<span class="fc" id="L147">		ug = ug.apply(getLineColor(ug));</span>
 
-<span class="fc" id="L151">		final ULine vline = ULine.vline(getEndingY(getNbLines() - 1));</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (int i = 0; i &lt;= getNbCols(); i++)</span>
-<span class="fc" id="L153">			ug.apply(UTranslate.dx(getStartingX(i))).draw(vline);</span>
+<span class="fc" id="L149">		final ULine hline = ULine.hline(getEndingX(getNbCols() - 1));</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		for (int i = 0; i &lt;= getNbLines(); i++)</span>
+<span class="fc" id="L151">			ug.apply(UTranslate.dy(getStartingY(i))).draw(hline);</span>
 
-<span class="fc" id="L155">	}</span>
+<span class="fc" id="L153">		final ULine vline = ULine.vline(getEndingY(getNbLines() - 1));</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (int i = 0; i &lt;= getNbCols(); i++)</span>
+<span class="fc" id="L155">			ug.apply(UTranslate.dx(getStartingX(i))).draw(vline);</span>
+
+<span class="fc" id="L157">	}</span>
+
+	private HColor getLineColor(UGraphic ug) {
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (lineColor instanceof HColorScheme) {</span>
+<span class="nc" id="L161">			HColor backcolor = ug.getParam().getBackcolor();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (backcolor.isTransparent())</span>
+<span class="nc" id="L163">				backcolor = ug.getDefaultBackground();</span>
+<span class="nc" id="L164">			return ((HColorScheme) lineColor).getAppropriateColor(backcolor);</span>
+		}
+<span class="fc" id="L166">		return lineColor;</span>
+	}
 
 	private void initMap(StringBounder stringBounder) {
-<span class="fc" id="L158">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (lastCaller != currentCaller)</span>
-<span class="fc" id="L160">			positions.clear();</span>
+<span class="fc" id="L170">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (lastCaller != currentCaller)</span>
+<span class="fc" id="L172">			positions.clear();</span>
 
-<span class="fc" id="L162">		this.lastCaller = currentCaller;</span>
+<span class="fc" id="L174">		this.lastCaller = currentCaller;</span>
 
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (positions.size() &gt; 0)</span>
-<span class="fc" id="L165">			return;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (positions.size() &gt; 0)</span>
+<span class="fc" id="L177">			return;</span>
 
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (Line line : lines) {</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">			for (Atom cell : line.cells) {</span>
-<span class="fc" id="L169">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
-<span class="fc" id="L170">				final Position pos = new Position(0, 0, dim);</span>
-<span class="fc" id="L171">				positions.put(cell, pos);</span>
-<span class="fc" id="L172">			}</span>
-<span class="fc" id="L173">		}</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">			for (int j = 0; j &lt; lines.get(i).size(); j++) {</span>
-<span class="fc" id="L176">				final Atom cell = lines.get(i).cells.get(j);</span>
-<span class="fc" id="L177">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
-<span class="fc" id="L178">				final double x = getStartingX(j);</span>
-<span class="fc" id="L179">				final double y = getStartingY(i);</span>
-<span class="fc" id="L180">				final Position pos = new Position(x, y, dim);</span>
-<span class="fc" id="L181">				positions.put(cell, pos);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		for (Line line : lines) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			for (Atom cell : line.cells) {</span>
+<span class="fc" id="L181">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="fc" id="L182">				final Position pos = new Position(0, 0, dim);</span>
+<span class="fc" id="L183">				positions.put(cell, pos);</span>
+<span class="fc" id="L184">			}</span>
+<span class="fc" id="L185">		}</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			for (int j = 0; j &lt; lines.get(i).size(); j++) {</span>
+<span class="fc" id="L188">				final Atom cell = lines.get(i).cells.get(j);</span>
+<span class="fc" id="L189">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="fc" id="L190">				final double x = getStartingX(j);</span>
+<span class="fc" id="L191">				final double y = getStartingY(i);</span>
+<span class="fc" id="L192">				final Position pos = new Position(x, y, dim);</span>
+<span class="fc" id="L193">				positions.put(cell, pos);</span>
 			}
 		}
-<span class="fc" id="L184">	}</span>
+<span class="fc" id="L196">	}</span>
 
 	private double getStartingX(int col) {
-<span class="fc" id="L187">		double result = 0;</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (int i = 0; i &lt; col; i++)</span>
-<span class="fc" id="L189">			result += getColWidth(i);</span>
+<span class="fc" id="L199">		double result = 0;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		for (int i = 0; i &lt; col; i++)</span>
+<span class="fc" id="L201">			result += getColWidth(i);</span>
 
-<span class="fc" id="L191">		return result;</span>
+<span class="fc" id="L203">		return result;</span>
 	}
 
 	private double getEndingX(int col) {
-<span class="fc" id="L195">		double result = 0;</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		for (int i = 0; i &lt;= col; i++)</span>
-<span class="fc" id="L197">			result += getColWidth(i);</span>
+<span class="fc" id="L207">		double result = 0;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (int i = 0; i &lt;= col; i++)</span>
+<span class="fc" id="L209">			result += getColWidth(i);</span>
 
-<span class="fc" id="L199">		return result;</span>
+<span class="fc" id="L211">		return result;</span>
 	}
 
 	private double getStartingY(int line) {
-<span class="fc" id="L203">		double result = 0;</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		for (int i = 0; i &lt; line; i++)</span>
-<span class="fc" id="L205">			result += getLineHeight(i);</span>
+<span class="fc" id="L215">		double result = 0;</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		for (int i = 0; i &lt; line; i++)</span>
+<span class="fc" id="L217">			result += getLineHeight(i);</span>
 
-<span class="fc" id="L207">		return result;</span>
+<span class="fc" id="L219">		return result;</span>
 	}
 
 	private double getEndingY(int line) {
-<span class="fc" id="L211">		double result = 0;</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (int i = 0; i &lt;= line; i++)</span>
-<span class="fc" id="L213">			result += getLineHeight(i);</span>
+<span class="fc" id="L223">		double result = 0;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		for (int i = 0; i &lt;= line; i++)</span>
+<span class="fc" id="L225">			result += getLineHeight(i);</span>
 
-<span class="fc" id="L215">		return result;</span>
+<span class="fc" id="L227">		return result;</span>
 	}
 
 	private double getColWidth(int col) {
-<span class="fc" id="L219">		double result = 0;</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
-<span class="fc" id="L221">			final Position position = getPosition(i, col);</span>
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">			if (position == null)</span>
-<span class="nc" id="L223">				continue;</span>
+<span class="fc" id="L231">		double result = 0;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
+<span class="fc" id="L233">			final Position position = getPosition(i, col);</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (position == null)</span>
+<span class="nc" id="L235">				continue;</span>
 
-<span class="fc" id="L225">			final double width = position.getWidth();</span>
-<span class="fc" id="L226">			result = Math.max(result, width);</span>
+<span class="fc" id="L237">			final double width = position.getWidth();</span>
+<span class="fc" id="L238">			result = Math.max(result, width);</span>
 		}
-<span class="fc" id="L228">		return result;</span>
+<span class="fc" id="L240">		return result;</span>
 	}
 
 	private double getLineHeight(int line) {
-<span class="fc" id="L232">		double result = 0;</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbCols(); i++) {</span>
-<span class="fc" id="L234">			final Position position = getPosition(line, i);</span>
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">			if (position == null)</span>
-<span class="nc" id="L236">				continue;</span>
+<span class="fc" id="L244">		double result = 0;</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbCols(); i++) {</span>
+<span class="fc" id="L246">			final Position position = getPosition(line, i);</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			if (position == null)</span>
+<span class="nc" id="L248">				continue;</span>
 
-<span class="fc" id="L238">			final double height = position.getHeight();</span>
-<span class="fc" id="L239">			result = Math.max(result, height);</span>
+<span class="fc" id="L250">			final double height = position.getHeight();</span>
+<span class="fc" id="L251">			result = Math.max(result, height);</span>
 		}
-<span class="fc" id="L241">		return result;</span>
+<span class="fc" id="L253">		return result;</span>
 	}
 
 	private Position getPosition(int line, int col) {
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (line &gt;= lines.size())</span>
-<span class="nc" id="L246">			return null;</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (line &gt;= lines.size())</span>
+<span class="nc" id="L258">			return null;</span>
 
-<span class="fc" id="L248">		final Line l = lines.get(line);</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (col &gt;= l.cells.size())</span>
-<span class="nc" id="L250">			return null;</span>
+<span class="fc" id="L260">		final Line l = lines.get(line);</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (col &gt;= l.cells.size())</span>
+<span class="nc" id="L262">			return null;</span>
 
-<span class="fc" id="L252">		final Atom atom = l.cells.get(col);</span>
-<span class="fc" id="L253">		return positions.get(atom);</span>
+<span class="fc" id="L264">		final Atom atom = l.cells.get(col);</span>
+<span class="fc" id="L265">		return positions.get(atom);</span>
 	}
 
 	private int getNbCols() {
-<span class="fc" id="L257">		int result = lines.get(0).size();</span>
-<span class="fc bfc" id="L258" title="All 2 branches covered.">		for (int i = 1; i &lt; lines.size(); i++)</span>
-<span class="fc" id="L259">			result = Math.max(result, lines.get(i).size());</span>
-<span class="fc" id="L260">		return result;</span>
+<span class="fc" id="L269">		int result = lines.get(0).size();</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">		for (int i = 1; i &lt; lines.size(); i++)</span>
+<span class="fc" id="L271">			result = Math.max(result, lines.get(i).size());</span>
+<span class="fc" id="L272">		return result;</span>
 	}
 
 	private int getNbLines() {
-<span class="fc" id="L264">		return lines.size();</span>
+<span class="fc" id="L276">		return lines.size();</span>
 	}
 
 	private Line lastLine() {
-<span class="fc" id="L268">		return lines.get(lines.size() - 1);</span>
+<span class="fc" id="L280">		return lines.get(lines.size() - 1);</span>
 	}
 
 	public void addCell(Atom cell, HColor cellBackColor) {
-<span class="fc" id="L272">		lastLine().add(cell, cellBackColor);</span>
-<span class="fc" id="L273">		positions.clear();</span>
-<span class="fc" id="L274">	}</span>
+<span class="fc" id="L284">		lastLine().add(cell, cellBackColor);</span>
+<span class="fc" id="L285">		positions.clear();</span>
+<span class="fc" id="L286">	}</span>
 
 	public void newLine(HColor lineBackColor) {
-<span class="fc" id="L277">		lines.add(new Line(lineBackColor));</span>
-<span class="fc" id="L278">	}</span>
+<span class="fc" id="L289">		lines.add(new Line(lineBackColor));</span>
+<span class="fc" id="L290">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
