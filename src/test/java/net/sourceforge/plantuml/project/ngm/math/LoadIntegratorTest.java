@@ -6,6 +6,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -16,6 +18,18 @@ import org.junit.jupiter.api.Test;
  * PiecewiseConstantSpecificDays and PiecewiseConstantWeekday implementations.
  */
 class LoadIntegratorTest {
+	
+	// Enable debug mode for all tests
+	@BeforeAll
+	static void setup() {
+		LoadIntegrator.DEBUG = true;
+	}
+	
+	// Disable debug mode after tests
+	@AfterAll
+	static void teardown() {
+		LoadIntegrator.DEBUG = false;
+	}
 
 	// ===========================================================================
 	// Tests with PiecewiseConstantSpecificDays
