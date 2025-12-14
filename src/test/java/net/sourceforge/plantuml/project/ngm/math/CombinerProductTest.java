@@ -188,7 +188,7 @@ class CombinerProductTest {
 		LocalDateTime startDate = LocalDateTime.of(2024, 5, 24, 10, 0); // Friday
 		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
-		List<Segment> segmentList = collectSegments(segments, 7);
+		List<Segment> segmentList = collectSegments(segments, 10);
 		
 		// May 24 (Fri): 0 (weekday)
 		assertSegment(segmentList.get(0),
@@ -215,13 +215,13 @@ class CombinerProductTest {
 				Fraction.ZERO, "May 27 - Monday, no work");
 		
 		// June 1 (Sat): 1 (weekend work day)
-		assertSegment(segmentList.get(5),
+		assertSegment(segmentList.get(8),
 				LocalDateTime.of(2024, 6, 1, 0, 0),
 				LocalDateTime.of(2024, 6, 2, 0, 0),
 				Fraction.ONE, "June 1 - Saturday work day");
 		
 		// June 2 (Sun): 1 (weekend work day, no blackout)
-		assertSegment(segmentList.get(6),
+		assertSegment(segmentList.get(9),
 				LocalDateTime.of(2024, 6, 2, 0, 0),
 				LocalDateTime.of(2024, 6, 3, 0, 0),
 				Fraction.ONE, "June 2 - Sunday work day");
@@ -253,7 +253,7 @@ class CombinerProductTest {
 		LocalDateTime startDate = LocalDateTime.of(2024, 9, 9, 9, 0); // Monday
 		Iterator<Segment> segments = combined.iterateSegmentsFrom(startDate);
 		
-		List<Segment> segmentList = collectSegments(segments, 6);
+		List<Segment> segmentList = collectSegments(segments, 9);
 		
 		// Sept 9 (Mon): 0 (not a work day)
 		assertSegment(segmentList.get(0),
@@ -287,7 +287,7 @@ class CombinerProductTest {
 				Fraction.ZERO, "Sept 13 - Friday, no work");
 		
 		// Sept 17 (Tue next week): 120% (back to normal)
-		assertSegment(segmentList.get(5),
+		assertSegment(segmentList.get(8),
 				LocalDateTime.of(2024, 9, 17, 0, 0),
 				LocalDateTime.of(2024, 9, 18, 0, 0),
 				highIntensity, "Sept 17 - Tuesday at normal 120%");
@@ -343,6 +343,8 @@ class CombinerProductTest {
 		List<Segment> result = new ArrayList<>();
 		for (int i = 0; i < count && iterator.hasNext(); i++) {
 			result.add(iterator.next());
+			// DEBUG segments
+			//System.out.println("segment[" + i + "] = " + result.get(i));
 		}
 		return result;
 	}
