@@ -29,11 +29,16 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Arnaud Roques, Mario Kušek
  * 
  *
  */
 package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.LocalDateTime;
+import java.util.Iterator;
+
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
 
 /**
  * Utilities to combine multiple {@link PiecewiseConstant} functions.
@@ -102,7 +107,43 @@ public class Combiner {
 	 * @return a new {@link PiecewiseConstant} representing the combined result
 	 */
 	public static PiecewiseConstant product(PiecewiseConstant... functions) {
-		throw new UnsupportedOperationException("Work in progress");
+		return new PiecewiseConstant() {
+
+			// combine all functions by multiplying their values
+			@Override
+			public Fraction apply(LocalDateTime instant) {
+				Fraction value = Fraction.ONE;
+				for (PiecewiseConstant pc : functions) {
+					value = value.multiply(pc.apply(instant));
+					if (value.equals(Fraction.ZERO)) {
+						return Fraction.ZERO;
+					}
+				}
+				
+				return value;
+			}
+
+			@Override
+			public Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
+				// use one iterator to drive the iteration
+				Iterator<Segment> subIterator = functions[0].iterateSegmentsFrom(instant);
+				return new Iterator<Segment>() {
+
+					@Override
+					public boolean hasNext() {
+						return subIterator.hasNext();
+					}
+
+					@Override
+					public Segment next() {
+						Segment subSegment = subIterator.next();
+						// create a new segment with the same time bounds but combined value
+						return new Segment(subSegment.getStartInclusive(), subSegment.getEndExclusive(), apply(subSegment.getStartInclusive()));
+					}
+					
+				};
+			}
+		};
 	}
 
 
