@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -80,7 +81,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 								RegexLeaf.spaceOneOrMore(), //
 								color("BACK2").getRegex())), //
 				StereotypePattern.optional("STEREO"), //
-				new RegexLeaf("\\{?"), //
+				new RegexLeaf(1, "BRACKET", "(\\{?)"), //
 				RegexLeaf.end());
 	}
 
@@ -108,17 +109,23 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-		final String partitionTitle = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
 
 		final String b1 = arg.get("BACK1", 0);
 		final Colors colors = color(b1 == null ? "BACK2" : "BACK1").getColor(arg,
 				diagram.getSkinParam().getIHtmlColorSet());
 
-		final USymbol symbol = getUSymbol(arg.get("TYPE", 0));
+		final String type = arg.get("TYPE", 0);
+		final USymbol symbol = getUSymbol(type);
 		final String stereo = arg.get("STEREO", 0);
 		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);
+
+		final boolean hasBracket = arg.get("BRACKET", 0).length() > 0;
+		if (hasBracket == false)
+			diagram.addWarning(
+					new Warning("You should use a bracket ({) when defining your container '" + type + "' " + name));
 
 		// Warning : titleColor unused in FTileGroupW
 
@@ -128,11 +135,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		if (backColor == null)
 			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 
-//		final HColor borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
-//		final HColor titleColor = HColors.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
-//		final double roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
-
-		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), partitionTitle), backColor, symbol, stylePartition);
+		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), name), backColor, symbol, stylePartition);
 
 		return CommandExecutionResult.ok();
 	}

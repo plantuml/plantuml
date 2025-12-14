@@ -45,14 +45,14 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandEndPartition3 extends SingleLineCommand2<ActivityDiagram3> {
+public class CommandCloseGroup3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public CommandEndPartition3() {
+	public CommandCloseGroup3() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandEndPartition3.class.getName(), //
+		return RegexConcat.build(CommandCloseGroup3.class.getName(), //
 				RegexLeaf.start(), //
 				new RegexLeaf("\\}"), //
 				RegexLeaf.end()); //
@@ -60,11 +60,7 @@ public class CommandEndPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		// final IEntity currentPackage = diagram.getCurrentGroup();
-		// if (currentPackage == null) {
-		// return CommandExecutionResult.error("No partition defined");
-		// }
-		return diagram.endGroup();
+		return diagram.closeGroup();
 	}
 
 }

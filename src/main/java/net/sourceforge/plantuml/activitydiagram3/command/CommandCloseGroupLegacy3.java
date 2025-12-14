@@ -44,23 +44,27 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
-public class CommandGroupEnd3 extends SingleLineCommand2<ActivityDiagram3> {
+public class CommandCloseGroupLegacy3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public CommandGroupEnd3() {
+	public CommandCloseGroupLegacy3() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandGroupEnd3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "(end ?group|group ?end)"), //
+		return RegexConcat.build(CommandCloseGroupLegacy3.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf(1, "CMD", "(end ?group|group ?end)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		return diagram.endGroup();
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		diagram.addWarning(new Warning("You should use a bracket (}) instead of '" + arg.get("CMD", 0) + "'"));
+
+		return diagram.closeGroup();
 	}
 
 }

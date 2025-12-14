@@ -438,7 +438,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		setCurrent(instructionGroup);
 	}
 
-	public CommandExecutionResult endGroup() {
+	public CommandExecutionResult closeGroup() {
 		if (current() instanceof InstructionGroup) {
 			setCurrent(((InstructionGroup) current()).getParent());
 			return CommandExecutionResult.ok();
