@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-class HColorScheme extends HColor {
+public class HColorScheme extends HColor {
 
 	private final HColor colorForLight;
 	private final HColor colorForDark;
