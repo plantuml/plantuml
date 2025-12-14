@@ -53,14 +53,14 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseLegacy1;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandEndPartition3;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandCloseGroup3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndSwitch;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndif3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandFork3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandForkAgain3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandForkEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandGoto;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandGroupEnd3;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandCloseGroupLegacy3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandIf2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandIf4;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandIfLegacy1;
@@ -104,9 +104,9 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 <span class="fc" id="L104">		cmds.add(new CommandSwimlane());</span>
 <span class="fc" id="L105">		cmds.add(new CommandSwimlane2());</span>
 <span class="fc" id="L106">		cmds.add(new CommandPartition3());</span>
-<span class="fc" id="L107">		cmds.add(new CommandEndPartition3());</span>
+<span class="fc" id="L107">		cmds.add(new CommandCloseGroup3());</span>
 		// cmds.add(new CommandGroup3());
-<span class="fc" id="L109">		cmds.add(new CommandGroupEnd3());</span>
+<span class="fc" id="L109">		cmds.add(new CommandCloseGroupLegacy3());</span>
 <span class="fc" id="L110">		cmds.add(new CommandArrow3());</span>
 <span class="fc" id="L111">		cmds.add(new CommandArrowLong3());</span>
 <span class="fc" id="L112">		cmds.add(new CommandRepeat3());</span>

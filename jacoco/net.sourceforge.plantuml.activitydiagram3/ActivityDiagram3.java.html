@@ -438,7 +438,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 <span class="nc" id="L438">		setCurrent(instructionGroup);</span>
 <span class="nc" id="L439">	}</span>
 
-	public CommandExecutionResult endGroup() {
+	public CommandExecutionResult closeGroup() {
 <span class="nc bnc" id="L442" title="All 2 branches missed.">		if (current() instanceof InstructionGroup) {</span>
 <span class="nc" id="L443">			setCurrent(((InstructionGroup) current()).getParent());</span>
 <span class="nc" id="L444">			return CommandExecutionResult.ok();</span>
