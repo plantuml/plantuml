@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.project.ngm.math;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
 
@@ -65,6 +67,7 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
  * process the load segments in chronological order.
  */
 public class LoadIntegrator {
+	public static boolean DEBUG = false;
 
 	private static final int ONE_DAY_IN_SECONDS = 86400;
 	private final PiecewiseConstant loadFunction;
@@ -98,6 +101,11 @@ public class LoadIntegrator {
 	 *         integration
 	 */
 	public LocalDateTime computeEnd() {
+		List<Segment> consumedSegments = null; // this is for debugging purposes only
+		if (DEBUG) {
+			consumedSegments = new LinkedList<>();
+		}
+		
 		Fraction remainingLoad = totalLoad;
 		LocalDateTime currentTime = start;
 
@@ -113,6 +121,9 @@ public class LoadIntegrator {
 			Fraction loadRate = segment.getValue();
 			if (loadRate.equals(Fraction.ZERO)) {
 				currentTime = segment.getEndExclusive();
+				if (DEBUG) {
+					consumedSegments.add(new Segment(segment.getStartInclusive(), segment.getEndExclusive(), loadRate));
+				}
 				continue;
 			}
 
@@ -125,13 +136,30 @@ public class LoadIntegrator {
 				// The remaining load can be consumed within this segment
 				Fraction timeNeeded = remainingLoad.divide(loadRate);
 				long secondsNeeded = timeNeeded.multiply(Fraction.of(86400)).wholePart();
+				if (DEBUG) {
+					consumedSegments.add(new Segment(currentTime, currentTime.plusSeconds(secondsNeeded), remainingLoad));
+				}
 				currentTime = currentTime.plusSeconds(secondsNeeded);
 				remainingLoad = Fraction.ZERO;
 			} else {
 				// Consume the entire segment load and move to the next segment
+				if (DEBUG) {
+					consumedSegments.add(new Segment(currentTime, segment.getEndExclusive(), loadInSegment));
+				}
 				remainingLoad = remainingLoad.subtract(loadInSegment);
 				currentTime = segment.getEndExclusive();
 			}
+		}
+		
+		if (DEBUG) {
+			System.out.println("Consumed segments:");
+			Fraction totalLoad = Fraction.ZERO;
+			for (Segment s : consumedSegments) {
+				System.out.println(String.format("%s - %s: load %s", s.getStartInclusive(), s.getEndExclusive(), s.getValue()));
+				totalLoad = totalLoad.add(s.getValue());
+			}
+			System.out.println("Final end time: " + currentTime);
+			System.out.println("Total load consumed: " + totalLoad);
 		}
 
 		return currentTime;
