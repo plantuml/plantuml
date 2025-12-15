@@ -191,6 +191,49 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 		public Fraction getValue() {
 			return value;
 		}
+		
+		/**
+		 * Splits this segment into two contiguous segments at the given instant.
+		 *
+		 * <p>
+		 * The split instant {@code time} must lie within the bounds of this segment,
+		 * that is:
+		 * </p>
+		 * <pre>
+		 * startInclusive &lt;= time &lt; endExclusive
+		 * </pre>
+		 *
+		 * <p>
+		 * The returned array always contains exactly two segments:
+		 * </p>
+		 * <ul>
+		 *   <li>the first segment spans from {@code startInclusive} (inclusive)
+		 *       to {@code time} (exclusive),</li>
+		 *   <li>the second segment spans from {@code time} (inclusive)
+		 *       to {@code endExclusive} (exclusive).</li>
+		 * </ul>
+		 *
+		 * <p>
+		 * Both resulting segments carry the same {@link #getValue() value} as this
+		 * segment. The two segments are guaranteed to be contiguous and non-overlapping.
+		 * </p>
+		 *
+		 * <p>
+		 * If {@code time} is equal to {@code startInclusive}, the first segment will
+		 * be empty and the second segment will be identical to this segment.
+		 * If {@code time} is equal to {@code endExclusive}, the second segment will
+		 * be empty and the first segment will be identical to this segment.
+		 * </p>
+		 *
+		 * @param time the instant at which to split this segment
+		 * @return an array of exactly two segments resulting from the split,
+		 *         in chronological order
+		 * @throws IllegalArgumentException if {@code time} is {@code null} or lies
+		 *         outside the bounds of this segment
+		 */
+		public Segment[] split(LocalDateTime time) {
+			throw new UnsupportedOperationException("wip");
+		}
 
 		@Override
 		public String toString() {
