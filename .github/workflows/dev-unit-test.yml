@@ -27,7 +27,7 @@ jobs:
       run: gradle test -i
 
     - name: Upload test reports
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         # Using github.run_number here to reduce confusion when downloading & comparing from several builds
         name: ${{ github.run_number }}-test-reports

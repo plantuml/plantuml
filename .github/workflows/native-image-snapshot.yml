@@ -47,7 +47,7 @@ jobs:
           zip -r plantuml-headless-linux-amd64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeHeadlessCompile/
 
       - name: Upload build artifacts (Linux)
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: linux-amd64
           path: |
@@ -87,7 +87,7 @@ jobs:
           Compress-Archive -Path "plantuml-gplv2/build/native/nativeHeadlessCompile/*" -DestinationPath "plantuml-headless-windows-amd64-SNAPSHOT.zip"
 
       - name: Upload build artifacts (Windows)
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: windows-amd64
           path: |
@@ -122,7 +122,7 @@ jobs:
           zip -r plantuml-headless-darwin-arm64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeHeadlessCompile/
 
       - name: Upload build artifacts (macOS)
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: darwin-arm64
           path: |

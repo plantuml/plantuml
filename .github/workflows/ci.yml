@@ -61,7 +61,7 @@ jobs:
         
       - name: Upload plantuml.jar
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: plantuml-jdk8-jar
           path: plantuml.jar
@@ -168,7 +168,7 @@ jobs:
         run: gradle test --no-daemon -i
 
       - name: Upload test reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: needs.workflow_config.outputs.do_test_linux == 'true'
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing from several builds
@@ -306,7 +306,7 @@ jobs:
           enableCrossOsArchive: true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds
           name: ${{ github.run_number }}-artifacts
