@@ -94,7 +94,7 @@ public abstract class Player {
 		this.compact = compact;
 		this.ruler = ruler;
 		this.title = Display.getWithNewlines(skinParam.getPragma(), title);
-		this.playerFrame = new PlayerFrame(getTitle(), skinParam);
+		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);
 	}
 
 	public boolean isCompact() {
@@ -143,7 +143,6 @@ public abstract class Player {
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
 	public final void drawFrameTitle(UGraphic ug) {
-		// if (isCompact() == false)
 		playerFrame.drawFrameTitle(ug);
 	}
 

@@ -54,10 +54,12 @@ public class PlayerFrame {
 
 	private final ISkinParam skinParam;
 	private final TextBlock title;
+	private final boolean compact;
 
-	public PlayerFrame(TextBlock title, ISkinParam skinParam) {
+	public PlayerFrame(TextBlock title, ISkinParam skinParam, boolean compact) {
 		this.title = title;
 		this.skinParam = skinParam;
+		this.compact = compact;
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
@@ -82,10 +84,12 @@ public class PlayerFrame {
 		if (title == TextBlockUtils.EMPTY_TEXT_BLOCK)
 			return;
 		title.drawU(ug);
-		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(getLineColor()).apply(getUStroke());
 
-		final XDimension2D dimTitle = title.calculateDimension(stringBounder);
+		if (compact)
+			return;
+
+		ug = ug.apply(getLineColor()).apply(getUStroke());
+		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 
 		final double widthTmp = dimTitle.getWidth() + 1;
 		final double height = dimTitle.getHeight() + 1;
@@ -93,7 +97,10 @@ public class PlayerFrame {
 	}
 
 	public double getHeight(StringBounder stringBounder) {
-		return title.calculateDimension(stringBounder).getHeight() + 1;
+		final double height = title.calculateDimension(stringBounder).getHeight();
+		if (compact)
+			return height - 1;
+		return height + 1;
 	}
 
 	private void drawLine(UGraphic ug, double... coord) {
