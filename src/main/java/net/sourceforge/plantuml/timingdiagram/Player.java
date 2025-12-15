@@ -142,7 +142,7 @@ public abstract class Player {
 
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
-	public final void drawLeftPanel00(UGraphic ug) {
+	public final void drawFrameTitle(UGraphic ug) {
 		// if (isCompact() == false)
 		playerFrame.drawFrameTitle(ug);
 	}

@@ -297,7 +297,6 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 		}
 	}
 
-
 	@Override
 	protected double getConstraintDeltaY(TimeConstraint constraint) {
 		double y = yOfState(constraint.getTick1());
@@ -313,7 +312,7 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 
 	@Override
 	protected double getHeightForConstraints(StringBounder stringBounder) {
-		return 10;
+		return Math.max(10, super.getHeightForConstraints(stringBounder));
 	}
 
 	@Override

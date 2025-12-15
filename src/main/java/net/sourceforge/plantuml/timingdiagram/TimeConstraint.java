@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.UStroke;

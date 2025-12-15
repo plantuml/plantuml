@@ -137,12 +137,13 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		final double part1MaxWidth = getPart1MaxWidth(stringBounder);
 
 		for (Player player : players.values()) {
-			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));
 			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();
 			if (generalBackgroundColor != null) {
-				final double fullHeightTOTO = player.panels().getFullHeight(stringBounder);
-				ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg())
-						.draw(URectangle.build(getWidthTotal(stringBounder), fullHeightTOTO));
+				UGraphic ugPlayer = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));
+				final double fullHeight = player.getFrameHeight(stringBounder)
+						+ player.panels().getFullHeight(stringBounder);
+				ugPlayer = ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg());
+				ugPlayer.draw(URectangle.build(getWidthTotal(stringBounder), fullHeight));
 			}
 		}
 
@@ -154,34 +155,20 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 		drawHighlightsBack(ug.apply(widthPart1));
 		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));
-		boolean first = true;
 
 		for (Player player : players.values()) {
 			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));
 			final UGraphic ugFrame = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));
-//			final double tmp = getHeightForHighlightCaptions(stringBounder);
-//
-//			final UGraphic toto = ugPlayer.apply(UTranslate.dy(tmp));
+			if (player.isCompact() == false)
+				drawHorizontalSeparator(ugFrame);
 
-			if (first) {
-				if (player.isCompact() == false)
-					drawHorizontalSeparator(ugFrame);
-
-				player.drawLeftPanel00(ugFrame);
-				player.panels().drawLeftPanel(ugPlayer, part1MaxWidth);
-				player.panels().drawRightPanel(ugPlayer.apply(widthPart1));
-
-			} else {
-				if (player.isCompact() == false)
-					drawHorizontalSeparator(ugFrame);
-
-				player.drawLeftPanel00(ugFrame);
-				player.panels().drawLeftPanel(ugPlayer, part1MaxWidth);
-				player.panels().drawRightPanel(ugPlayer.apply(widthPart1));
-
-			}
-			first = false;
+			player.drawFrameTitle(ugFrame);
+			final PlayerPanels panels = player.panels();
+			System.err.println("panels=" + panels);
+			panels.drawLeftPanel(ugPlayer, part1MaxWidth);
+			panels.drawRightPanel(ugPlayer.apply(widthPart1));
 		}
+
 		ug = ug.apply(widthPart1);
 		ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)), this.timeAxisStategy, codes);
 

@@ -100,7 +100,7 @@ public abstract class AbstractFooPanel implements PlayerPanels {
 
 		double result = 0;
 		for (TimeConstraint constraint : constraints)
-			result = Math.max(result, constraint.getConstraintHeight(stringBounder));
+			result = Math.max(result, constraint.getConstraintHeight(stringBounder) - getConstraintDeltaY(constraint));
 
 		return result;
 	}
