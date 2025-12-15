@@ -165,7 +165,7 @@ public class FooRibbon extends AbstractFooPanel implements PlayerPanels {
 
 	@Override
 	protected double getHeightForConstraints(StringBounder stringBounder) {
-		return 10;
+		return Math.max(5, super.getHeightForConstraints(stringBounder));
 	}
 
 	private double getMarginX() {
@@ -292,8 +292,8 @@ public class FooRibbon extends AbstractFooPanel implements PlayerPanels {
 
 	private double getHeightForTopComment(StringBounder stringBounder) {
 		double result = 0;
-//		for (ChangeState change : changes)
-//			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());
+		for (ChangeState change : changes)
+			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());
 
 		return result;
 	}
