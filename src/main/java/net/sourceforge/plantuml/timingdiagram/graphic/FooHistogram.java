@@ -52,12 +52,14 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
-import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
-public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
+public class FooHistogram extends AbstractFooPanel {
+
+	private static final double HISTOGRAM_BOTTOM_MARGIN = 12;
+	private static final double HISTOGRAM_INITIAL_WIDTH = 40;
 
 	private final List<ChangeState> changes = new ArrayList<>();
 
@@ -132,7 +134,6 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 		for (String state : states)
 			if (allStates.contains(state) == false)
 				allStates.add(state);
-
 	}
 
 	private XPoint2D[] getPoints(int n) {
@@ -174,7 +175,7 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 
 		double width = getStatesWidth(stringBounder);
 		if (initialState != null)
-			width += getInitialWidth();
+			width += HISTOGRAM_INITIAL_WIDTH;
 
 		if (fullAvailableWidth > width + 5)
 			ug = ug.apply(UTranslate.dx(fullAvailableWidth - width - 5));
@@ -196,7 +197,7 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 			width = Math.max(width, dim.getWidth());
 		}
 		if (initialState != null)
-			width += getInitialWidth();
+			width += HISTOGRAM_INITIAL_WIDTH;
 
 		return width;
 	}
@@ -227,7 +228,7 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 	private void drawHlines(UGraphic ug) {
 		if (initialState != null)
 			for (XPoint2D pt : getPoints(0))
-				drawHLine(ug, getInitialPoint(), getInitialWidth() + pt.getX());
+				drawHLine(ug, getInitialPoint(), HISTOGRAM_INITIAL_WIDTH + pt.getX());
 
 		for (int i = 0; i < changes.size(); i++) {
 			if (changes.get(i).isCompletelyHidden())
@@ -242,7 +243,6 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 			if (i < changes.size() - 1)
 				for (XPoint2D pt : points)
 					drawHLine(ug, pt, len);
-
 		}
 
 		if (changes.get(changes.size() - 1).isCompletelyHidden() == false) {
@@ -261,7 +261,6 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 		ug.draw(URectangle.build(len, maxY - minY));
 		for (double x = 0; x < len; x += 5)
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(maxY - minY));
-
 	}
 
 	private void drawHLine(UGraphic ug, final XPoint2D pt, final double len) {
@@ -307,7 +306,7 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 	}
 
 	private XPoint2D getInitialPoint() {
-		return new XPoint2D(-getInitialWidth(), yOfState(initialState));
+		return new XPoint2D(-HISTOGRAM_INITIAL_WIDTH, yOfState(initialState));
 	}
 
 	@Override
@@ -322,12 +321,8 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 		if (allStates.size() > 0)
 			height += stepHeight() * (allStates.size() - 1);
 
-		height += getBottomMargin();
+		height += HISTOGRAM_BOTTOM_MARGIN;
 		return height + 6;
-	}
-
-	private double getBottomMargin() {
-		return 12;
 	}
 
 	private double yOfState(String state) {
@@ -354,11 +349,6 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 		this.initialState = initialState;
 		if (initialState != null && allStates.contains(initialState) == false)
 			allStates.add(initialState);
-
-	}
-
-	private double getInitialWidth() {
-		return 40;
 	}
 
 }

@@ -49,14 +49,13 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
-import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingNote;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 import net.sourceforge.plantuml.utils.Position;
 
-public class FooBinary extends AbstractFooPanel implements PlayerPanels {
+public class FooBinary extends AbstractFooPanel {
 
 	private static final String LOW_STRING = "0";
 	private static final String HIGH_STRING = "1";
@@ -88,8 +87,6 @@ public class FooBinary extends AbstractFooPanel implements PlayerPanels {
 				new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)));
 	}
 
-	private final double ymargin = 8;
-
 	private double getYpos(StringBounder stringBounder, String state) {
 		if (state.equalsIgnoreCase(LOW_STRING))
 			return getYlow(stringBounder);
@@ -97,12 +94,12 @@ public class FooBinary extends AbstractFooPanel implements PlayerPanels {
 	}
 
 	private double getYhigh(StringBounder stringBounder) {
-		return ymargin + getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP);
+		return MARGIN_Y + getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP);
 	}
 
 	private double getYlow(StringBounder stringBounder) {
 		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight
-				- ymargin;
+				- MARGIN_Y;
 	}
 
 	@Override
@@ -111,7 +108,7 @@ public class FooBinary extends AbstractFooPanel implements PlayerPanels {
 
 	@Override
 	public final double getLeftPanelWidth(StringBounder stringBounder) {
-		return 5;
+		return LEFT_PANEL_MIN_WIDTH;
 	}
 
 	@Override
@@ -151,12 +148,11 @@ public class FooBinary extends AbstractFooPanel implements PlayerPanels {
 
 		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
 
-		drawNotes(ug.apply(UTranslate.dy(ymargin)), Position.TOP);
+		drawNotes(ug.apply(UTranslate.dy(MARGIN_Y)), Position.TOP);
 		drawNotes(
 				ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)
-						+ getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight - ymargin / 2)),
+						+ getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight - MARGIN_Y / 2)),
 				Position.BOTTOM);
-
 	}
 
 }

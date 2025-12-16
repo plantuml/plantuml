@@ -48,17 +48,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeSeries;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
-public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
+public class FooAnalog extends AbstractFooPanel {
 
 	private final TimeSeries timeSeries;
-
-	private final double ymargin = 8;
 	private final Double initialState;
 	private final Integer ticksEvery;
 
@@ -69,7 +66,6 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 		this.timeSeries = timeSeries;
 		this.initialState = initialState;
 		this.ticksEvery = ticksEvery;
-
 	}
 
 	@Override
@@ -88,9 +84,9 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 	}
 
 	private double getYpos(StringBounder stringBounder, double value) {
-		final double y = (value - timeSeries.getMin()) * (suggestedHeight - 2 * ymargin)
+		final double y = (value - timeSeries.getMin()) * (suggestedHeight - 2 * MARGIN_Y)
 				/ (timeSeries.getMax() - timeSeries.getMin());
-		return getHeightForConstraints(stringBounder) + suggestedHeight - ymargin - y;
+		return getHeightForConstraints(stringBounder) + suggestedHeight - MARGIN_Y - y;
 	}
 
 	@Override
@@ -104,14 +100,12 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 			for (int i = first; i <= last; i++)
 				if (i % ticksEvery == 0)
 					drawScaleLabel(ug, i, fullAvailableWidth);
-
 		}
 	}
 
 	@Override
 	public final double getLeftPanelWidth(StringBounder stringBounder) {
-		return 5 + getMaxWidthForTicks(stringBounder);
-
+		return LEFT_PANEL_MIN_WIDTH + getMaxWidthForTicks(stringBounder);
 	}
 
 	private double getMaxWidthForTicks(StringBounder stringBounder) {
@@ -156,7 +150,6 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 		for (int i = first; i <= last; i++)
 			if (i % ticksEvery == 0)
 				ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), i))).draw(hline);
-
 	}
 
 	@Override
@@ -179,7 +172,6 @@ public class FooAnalog extends AbstractFooPanel implements PlayerPanels {
 				.draw(ULine.hline(ruler.getWidth() - lastx));
 
 		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
-
 	}
 
 	public void setBounds(String min, String max) {

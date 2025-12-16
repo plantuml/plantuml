@@ -62,6 +62,8 @@ import net.sourceforge.plantuml.utils.Position;
 
 public abstract class AbstractFooRibbon extends AbstractFooPanel {
 
+	private static final int DEFAULT_RIBBON_HEIGHT = 24;
+
 	private final List<ChangeState> changes = new ArrayList<>();
 
 	private String initialState;
@@ -69,7 +71,8 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 
 	protected AbstractFooRibbon(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style,
 			List<TimingNote> notes, List<TimeConstraint> constraints) {
-		super(ruler, skinParam, suggestedHeight == 0 ? 24 : suggestedHeight, style, notes, constraints);
+		super(ruler, skinParam, suggestedHeight == 0 ? DEFAULT_RIBBON_HEIGHT : suggestedHeight, style, notes,
+				constraints);
 	}
 
 	public final IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
@@ -126,7 +129,7 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 		if (initialState == null)
 			return 0;
 
-		return createTextBlock(initialState).calculateDimension(stringBounder).getWidth() + 24;
+		return createTextBlock(initialState).calculateDimension(stringBounder).getWidth() + 2 * MARGIN_X;
 	}
 
 	protected abstract void drawHexa(UGraphic ug, double len, ChangeState change);
@@ -144,10 +147,6 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 		return suggestedHeight;
 	}
 
-	protected final double getMarginX() {
-		return 12;
-	}
-
 	public final void setInitialState(String initialState, Colors initialColors) {
 		this.initialState = initialState;
 		this.initialColors = initialColors;
@@ -163,10 +162,6 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 
 	protected final List<ChangeState> getChanges() {
 		return changes;
-	}
-
-	protected double getBottomMargin() {
-		return 10;
 	}
 
 	private void drawBeforeZeroState(UGraphic ug) {
@@ -192,7 +187,7 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 		if (initialState != null && ChangeState.isFlat(initialState) == false) {
 			final TextBlock initial = createTextBlock(initialState);
 			final XDimension2D dimInital = initial.calculateDimension(stringBounder);
-			initial.drawU(ug.apply(new UTranslate(-getMarginX() - dimInital.getWidth(), -dimInital.getHeight() / 2)));
+			initial.drawU(ug.apply(new UTranslate(-MARGIN_X - dimInital.getWidth(), -dimInital.getHeight() / 2)));
 		}
 	}
 
@@ -249,7 +244,7 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 				final XDimension2D dim = state.calculateDimension(stringBounder);
 				final double xtext;
 				if (i == changes.size() - 1) {
-					xtext = x + getMarginX();
+					xtext = x + MARGIN_X;
 				} else {
 					final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());
 					xtext = (x + x2) / 2 - dim.getWidth() / 2;
@@ -259,7 +254,7 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 			final TextBlock commentTopBlock = getCommentTopBlock(change);
 			final XDimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);
 			commentTopBlock
-					.drawU(ug.apply(new UTranslate(x + getMarginX(), -getRibbonHeight() / 2 - dimComment.getHeight())));
+					.drawU(ug.apply(new UTranslate(x + MARGIN_X, -getRibbonHeight() / 2 - dimComment.getHeight())));
 		}
 	}
 

@@ -80,7 +80,7 @@ public class FooRibbon extends AbstractFooRibbon {
 	public double getFullHeight(StringBounder stringBounder) {
 		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
 				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()
-				+ getHeightForNotes(stringBounder, Position.BOTTOM) + getBottomMargin();
+				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;
 	}
 
 }

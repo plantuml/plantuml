@@ -83,7 +83,7 @@ public class FooRibbonRectangle extends AbstractFooRibbon {
 	public double getFullHeight(StringBounder stringBounder) {
 		return 6 + getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
 				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()
-				+ getHeightForNotes(stringBounder, Position.BOTTOM) + getBottomMargin();
+				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;
 	}
 
 }

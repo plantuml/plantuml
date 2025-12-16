@@ -60,6 +60,12 @@ import net.sourceforge.plantuml.utils.Position;
 
 public abstract class AbstractFooPanel implements PlayerPanels {
 
+	// ========== Common layout constants ==========
+	protected static final double MARGIN_Y = 8;
+	protected static final double MARGIN_X = 12;
+	protected static final double BOTTOM_MARGIN = 10;
+	protected static final double LEFT_PANEL_MIN_WIDTH = 5;
+
 	protected final ISkinParam skinParam;
 	protected final TimingRuler ruler;
 	protected final int suggestedHeight;

@@ -43,18 +43,16 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.timingdiagram.PlayerPanels;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingFormat;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
-public class FooClock extends AbstractFooPanel implements PlayerPanels {
+public class FooClock extends AbstractFooPanel {
 
 	private final int period;
 	private final int pulse;
 	private final int offset;
-	private final double ymargin = 8;
 
 	public FooClock(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, int period, int pulse,
 			int offset, List<TimeConstraint> constraints) {
@@ -71,7 +69,7 @@ public class FooClock extends AbstractFooPanel implements PlayerPanels {
 	}
 
 	private double getLineHeight(StringBounder stringBounder) {
-		return suggestedHeight - 2 * ymargin;
+		return suggestedHeight - 2 * MARGIN_Y;
 	}
 
 	@Override
@@ -81,12 +79,11 @@ public class FooClock extends AbstractFooPanel implements PlayerPanels {
 
 	@Override
 	public void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
-
 	}
 
 	@Override
 	public final double getLeftPanelWidth(StringBounder stringBounder) {
-		return 5;
+		return LEFT_PANEL_MIN_WIDTH;
 	}
 
 	private void drawHline(UGraphic ug, double value1, double value2) {
@@ -98,7 +95,7 @@ public class FooClock extends AbstractFooPanel implements PlayerPanels {
 	}
 
 	private void drawVline(UGraphic ug, final ULine vline, double value) {
-		ug.apply(new UTranslate(getX(value), ymargin)).draw(vline);
+		ug.apply(new UTranslate(getX(value), MARGIN_Y)).draw(vline);
 	}
 
 	private double getX(double value) {
@@ -112,7 +109,7 @@ public class FooClock extends AbstractFooPanel implements PlayerPanels {
 		final ULine vline = ULine.vline(getLineHeight(ug.getStringBounder()));
 		double value = 0;
 		if (offset != 0) {
-			drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, offset);
+			drawHline(ug.apply(UTranslate.dy(MARGIN_Y + vline.getDY())), value, offset);
 			value += offset;
 		}
 		if (getX(value) > ruler.getWidth())
@@ -122,18 +119,17 @@ public class FooClock extends AbstractFooPanel implements PlayerPanels {
 		final double vpulse = pulse == 0 ? period / 2.0 : pulse;
 		final double remain = period - vpulse;
 		for (int i = 0; i < 1000; i++) {
-			drawHline(ug.apply(UTranslate.dy(ymargin)), value, value + vpulse);
+			drawHline(ug.apply(UTranslate.dy(MARGIN_Y)), value, value + vpulse);
 			value += vpulse;
 			if (getX(value) > ruler.getWidth())
 				return;
 			drawVline(ug, vline, value);
-			drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, value + remain);
+			drawHline(ug.apply(UTranslate.dy(MARGIN_Y + vline.getDY())), value, value + remain);
 			value += remain;
 			if (getX(value) > ruler.getWidth())
 				return;
 			drawVline(ug, vline, value);
 		}
-
 	}
 
 }
