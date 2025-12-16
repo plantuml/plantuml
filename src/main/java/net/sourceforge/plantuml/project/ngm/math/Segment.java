@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * A constant workload segment.
@@ -67,6 +68,9 @@ public final class Segment {
 	private final Fraction value;
 
 	public Segment(LocalDateTime startInclusive, LocalDateTime endExclusive, Fraction value) {
+		Objects.requireNonNull(startInclusive, "startInclusive must not be null");
+		Objects.requireNonNull(endExclusive, "endExclusive must not be null");
+		Objects.requireNonNull(value, "value must not be null");
 		if (startInclusive != null && endExclusive != null && !startInclusive.isBefore(endExclusive))
 			throw new IllegalArgumentException("startInclusive must be before endExclusive");
 
