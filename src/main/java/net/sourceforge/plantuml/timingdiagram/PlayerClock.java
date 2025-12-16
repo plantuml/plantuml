@@ -49,7 +49,6 @@ public class PlayerClock extends Player {
 	private final int period;
 	private final int pulse;
 	private final int offset;
-	private final double ymargin = 8;
 
 	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
 			boolean compact, Stereotype stereotype) {

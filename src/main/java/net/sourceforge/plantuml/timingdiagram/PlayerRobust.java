@@ -64,10 +64,8 @@ public final class PlayerRobust extends AbstractStatePlayer {
 	@Override
 	protected PlayerPanels buildPlayerPanels() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Style style0 = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FooHistogram result = new FooHistogram(ruler, skinParam, getStatesLabel().values(), suggestedHeight,
-				style, style0, getConstraints());
+				style, getConstraints());
 		result.setInitialState(getInitialState(), getInitialColors());
 		for (ChangeState change : getChanges())
 			result.addChange(change);

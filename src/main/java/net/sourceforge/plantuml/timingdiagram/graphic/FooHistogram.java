@@ -66,7 +66,7 @@ public class FooHistogram extends AbstractFooPanel implements PlayerPanels {
 	private String initialState;
 
 	public FooHistogram(TimingRuler ruler, ISkinParam skinParam, Collection<String> someStates, int suggestedHeight,
-			Style style, Style style0, List<TimeConstraint> constraints) {
+			Style style, List<TimeConstraint> constraints) {
 		super(ruler, skinParam, suggestedHeight, style, null, constraints);
 		this.allStates = new ArrayList<>(someStates);
 		Collections.reverse(allStates);
