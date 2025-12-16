@@ -111,9 +111,4 @@ public class PlayerBinary extends Player {
 		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, skinParam, config));
 	}
 
-	final protected FontConfiguration getCommentFontConfiguration() {
-		return FontConfiguration.create(skinParam,
-				getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
-	}
-
 }
