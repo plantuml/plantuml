@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.ngm.math;
 
+import java.util.function.BiFunction;
 import java.util.function.IntPredicate;
 
 /**
@@ -53,6 +54,8 @@ import java.util.function.IntPredicate;
  * multiplications. For safe arbitrary precision, BigInteger would be required.
  */
 public final class Fraction implements Comparable<Fraction> {
+	public static final BiFunction<Fraction, Fraction, Fraction> PRODUCT = Fraction::multiply;
+	public static final BiFunction<Fraction, Fraction, Fraction> SUM = Fraction::add;
 	
 	/** Common constants for workload and general arithmetic. */
 	public static final Fraction ZERO = new Fraction(0, 1);
