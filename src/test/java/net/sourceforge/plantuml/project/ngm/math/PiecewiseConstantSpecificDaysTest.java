@@ -53,11 +53,11 @@ class PiecewiseConstantSpecificDaysTest {
 		LocalDateTime from = LocalDate.of(2025, 12, 1).atStartOfDay();
 
 		// When: Requesting segments starting from midnight that day
-		Iterator<PiecewiseConstant.Segment> it = f.iterateSegmentsFrom(from);
+		Iterator<Segment> it = f.iterateSegmentsFrom(from);
 
 		// Then: The first segment should be the full day
 		// The segment contains the given instant (00:00) and starts exactly at 00:00
-		PiecewiseConstant.Segment s0 = it.next();
+		Segment s0 = it.next();
 		assertEquals(from, s0.getStartInclusive(), "First segment should start at midnight that day");
 		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), s0.getEndExclusive(), "Segment should end at midnight next day");
 		assertEquals(Fraction.ONE, s0.getValue(), "The day should have 100% workload");
@@ -78,13 +78,13 @@ class PiecewiseConstantSpecificDaysTest {
 		LocalDateTime from = LocalDate.of(2025, 12, 1).atTime(12, 0); // 2025-12-01 noon
 
 		// When: Requesting segments containing Monday noon
-		Iterator<PiecewiseConstant.Segment> it = pw.iterateSegmentsFrom(from);
+		Iterator<Segment> it = pw.iterateSegmentsFrom(from);
 
 		// Then: The first segment returned should be 2025-12-01 full day segment [00:00, 00:00+1day)
 		// IMPORTANT: Even though we request from 12:00, the segment starts at 00:00 (beginning of day)
 		// This demonstrates that segmentsStartingAt returns the segment CONTAINING the instant,
 		// not a segment starting exactly at that instant
-		PiecewiseConstant.Segment segment1 = it.next();
+		Segment segment1 = it.next();
 		assertEquals(LocalDate.of(2025, 12, 1).atStartOfDay(), segment1.getStartInclusive(), 
 				"Monday segment should start at midnight, not at noon");
 		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), segment1.getEndExclusive(), 
@@ -94,7 +94,7 @@ class PiecewiseConstantSpecificDaysTest {
 				segment1.toString());
 
 		// Then: The second segment should be 2025-12-02 full day
-		PiecewiseConstant.Segment tuesday = it.next();
+		Segment tuesday = it.next();
 		assertEquals("Segment{startInclusive=2025-12-02T00:00, endExclusive=2025-12-03T00:00, value=1/2}",
 				tuesday.toString());
 	}
@@ -113,10 +113,10 @@ class PiecewiseConstantSpecificDaysTest {
 		LocalDateTime from = LocalDate.of(2025, 12, 2).atStartOfDay();
 		
 		// When: Requesting segments from Wednesday onwards
-		Iterator<PiecewiseConstant.Segment> it = pw.iterateSegmentsFrom(from);
+		Iterator<Segment> it = pw.iterateSegmentsFrom(from);
 
 		// Then: First segment should be Wednesday with 40% workload
-		PiecewiseConstant.Segment segment1 = it.next();
+		Segment segment1 = it.next();
 		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), segment1.getStartInclusive());
 		assertEquals(LocalDate.of(2025, 12, 3).atStartOfDay(), segment1.getEndExclusive());
 		assertEquals(new Fraction(2, 5), segment1.getValue());
@@ -124,7 +124,7 @@ class PiecewiseConstantSpecificDaysTest {
 				segment1.toString());
 
 		// Then: Second segment should be 2025-12-03 with 60% workload
-		PiecewiseConstant.Segment segment2 = it.next();
+		Segment segment2 = it.next();
 		assertEquals(LocalDate.of(2025, 12, 3).atStartOfDay(), segment2.getStartInclusive());
 		assertEquals(LocalDate.of(2025, 12, 4).atStartOfDay(), segment2.getEndExclusive());
 		assertEquals(new Fraction(3, 5), segment2.getValue());
@@ -132,7 +132,7 @@ class PiecewiseConstantSpecificDaysTest {
 				segment2.toString());
 
 		// Then: Third segment should be 2025-12-04 with 0% workload (default)
-		PiecewiseConstant.Segment segment3 = it.next();
+		Segment segment3 = it.next();
 		assertEquals(LocalDate.of(2025, 12, 4).atStartOfDay(), segment3.getStartInclusive());
 		assertEquals(LocalDate.of(2025, 12, 5).atStartOfDay(), segment3.getEndExclusive());
 		assertEquals(Fraction.ZERO, segment3.getValue());
@@ -173,10 +173,10 @@ class PiecewiseConstantSpecificDaysTest {
 		LocalDateTime dayStart = instant.toLocalDate().atStartOfDay();
 
 		// Retrieve the segment containing this instant
-		Iterator<PiecewiseConstant.Segment> it = pw.iterateSegmentsFrom(dayStart);
+		Iterator<Segment> it = pw.iterateSegmentsFrom(dayStart);
 		assertTrue(it.hasNext(), "Iterator should provide at least one segment");
 
-		PiecewiseConstant.Segment seg = it.next();
+		Segment seg = it.next();
 
 		// Verify the segment structure matches expectations
 		assertEquals(dayStart, seg.getStartInclusive(), "Segment should start at day boundary");
