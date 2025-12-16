@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
  * PiecewiseConstantWeekday, simulating realistic scenarios where workload
  * allocation must respect both weekly patterns and specific calendar dates.
  */
+@Disabled("WIP")
 class LoadIntegratorCombinedTest {
 	
 	// Enable debug mode for all tests

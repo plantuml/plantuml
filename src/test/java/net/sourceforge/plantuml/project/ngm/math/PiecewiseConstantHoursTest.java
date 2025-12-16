@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Iterator;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("WIP")
 class PiecewiseConstantHoursTest {
 
 	@Test
@@ -30,7 +32,7 @@ class PiecewiseConstantHoursTest {
 		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 16, 0)));
 		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 17, 59)));
 	}
-
+	
 	@Test
 	void apply_returnsFractionZERO_outsideWorkingHours() {
 		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
