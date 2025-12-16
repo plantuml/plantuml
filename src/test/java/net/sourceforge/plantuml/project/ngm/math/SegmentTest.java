@@ -104,6 +104,17 @@ class SegmentTest {
 	}
 	
 	@Test
+	void checkingIfTimeIsNullWhenCallingInside() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 3, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 3, 1, 17, 0);
+		Fraction value = Fraction.of(1);	
+		Segment segment = new Segment(start, end, value);
+		
+		assertThatThrownBy(() -> segment.includes(null))
+			.isInstanceOf(NullPointerException.class);
+	}
+	
+	@Test
 	void checkingIfTimeIsInsideSegment() throws Exception {
 		LocalDateTime start = LocalDateTime.of(2024, 3, 1, 9, 0);
 		LocalDateTime end = LocalDateTime.of(2024, 3, 1, 17, 0);
@@ -129,6 +140,67 @@ class SegmentTest {
 		
 		assertThat(segment.includes(start)).isTrue();
 		assertThat(segment.includes(end)).isFalse();
+	}
+	
+	@Test
+	void splittingSegmentAtValidTime() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 5, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 5, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = new Segment(start, end, value);
+		
+		LocalDateTime splitTime = LocalDateTime.of(2024, 5, 1, 13, 0);
+		Segment[] splitSegments = segment.split(splitTime);
+		
+		assertThat(splitSegments).hasSize(2);
+		assertThat(splitSegments[0].getStartInclusive()).isEqualTo(start);
+		assertThat(splitSegments[0].getEndExclusive()).isEqualTo(splitTime);
+		assertThat(splitSegments[0].getValue()).isEqualTo(value);
+		
+		assertThat(splitSegments[1].getStartInclusive()).isEqualTo(splitTime);
+		assertThat(splitSegments[1].getEndExclusive()).isEqualTo(end);
+		assertThat(splitSegments[1].getValue()).isEqualTo(value);
+	}
+	
+	@Test
+	void splittingSegmentWithNullTimeThrowsException() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 5, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 5, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = new Segment(start, end, value);
+		
+		assertThatThrownBy(() -> segment.split(null))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	@Test
+	void splittingSegmentOutsideOfBoundaryThrowsException() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 5, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 5, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = new Segment(start, end, value);
+		
+		LocalDateTime beforeSplitTime = LocalDateTime.of(2024, 5, 1, 8, 0);
+		assertThatThrownBy(() -> segment.split(beforeSplitTime))
+			.isInstanceOf(IllegalArgumentException.class);
+		
+		LocalDateTime afterSplitTime = LocalDateTime.of(2024, 5, 1, 18, 0);
+		assertThatThrownBy(() -> segment.split(afterSplitTime))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	@Test
+	void splittingSegmentAtStartOrEndThrowsException() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 5, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 5, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = new Segment(start, end, value);
+		
+		assertThatThrownBy(() -> segment.split(start))
+			.isInstanceOf(IllegalArgumentException.class);
+		
+		assertThatThrownBy(() -> segment.split(end))
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 	
 }
