@@ -131,10 +131,34 @@ public final class Segment {
 	 *         outside the bounds of this segment
 	 */
 	public Segment[] split(LocalDateTime time) {
-		throw new UnsupportedOperationException("wip");
+		if(time == null)
+			throw new IllegalArgumentException("time must not be null");
+		
+		if (!includes(time)) {
+			throw new IllegalArgumentException("time must be within the segment bounds");
+		}
+		
+		Segment first = new Segment(startInclusive, time, value);
+		Segment second = new Segment(time, endExclusive, value);
+		return new Segment[] { first, second };
 	}
 	
+	/**
+	 * Checks whether the given instant lies within this segment.
+	 *
+	 * <p>
+	 * The check is inclusive of {@link #getStartInclusive() startInclusive}
+	 * and exclusive of {@link #getEndExclusive() endExclusive}.
+	 * </p>
+	 *
+	 * @param time the instant to check
+	 * @return {@code true} if {@code time} lies within this segment,
+	 *         {@code false} otherwise
+	 * @throws NullPointerException if {@code time} is {@code null}
+	 */
 	public boolean includes(LocalDateTime time) {
+		Objects.requireNonNull(time, "time must not be null");
+		
 		return (time.equals(startInclusive) || time.isAfter(startInclusive))
 				&& time.isBefore(endExclusive);
 	}
