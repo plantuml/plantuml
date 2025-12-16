@@ -133,6 +133,11 @@ public final class Segment {
 	public Segment[] split(LocalDateTime time) {
 		throw new UnsupportedOperationException("wip");
 	}
+	
+	public boolean includes(LocalDateTime time) {
+		return (time.equals(startInclusive) || time.isAfter(startInclusive))
+				&& time.isBefore(endExclusive);
+	}
 
 	@Override
 	public String toString() {

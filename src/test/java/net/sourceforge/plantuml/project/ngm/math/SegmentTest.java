@@ -102,4 +102,33 @@ class SegmentTest {
 		assertThatThrownBy(() -> new Segment(start, end, value))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
+	
+	@Test
+	void checkingIfTimeIsInsideSegment() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 3, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 3, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = new Segment(start, end, value);
+		
+		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
+		assertThat(segment.includes(insideTime)).isTrue();
+		
+		LocalDateTime beforeTime = LocalDateTime.of(2024, 3, 1, 8, 0);
+		assertThat(segment.includes(beforeTime)).isFalse();
+		
+		LocalDateTime afterTime = LocalDateTime.of(2024, 3, 1, 18, 0);
+		assertThat(segment.includes(afterTime)).isFalse();
+	}
+	
+	@Test
+	void checkingIfTimeAtBoundsIsIncluded() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 4, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 4, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = new Segment(start, end, value);
+		
+		assertThat(segment.includes(start)).isTrue();
+		assertThat(segment.includes(end)).isFalse();
+	}
+	
 }
