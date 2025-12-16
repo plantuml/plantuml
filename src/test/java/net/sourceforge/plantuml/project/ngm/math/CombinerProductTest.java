@@ -11,8 +11,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
-
 /**
  * Tests for the Combiner.product() method, focusing on combining
  * PiecewiseConstantSpecificDays with PiecewiseConstantWeekday.

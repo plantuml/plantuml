@@ -93,7 +93,7 @@ public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 
 	@Override
 	public final Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
-	    return new Iterator<PiecewiseConstant.Segment>() {
+	    return new Iterator<Segment>() {
 
 	        // Current iteration position.
 	        // This represents the start instant of the next segment to be returned.

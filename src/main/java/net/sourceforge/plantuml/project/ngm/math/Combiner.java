@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.project.ngm.math;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
-
 /**
  * Utilities to combine multiple {@link PiecewiseConstant} functions.
  *

@@ -41,8 +41,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant.Segment;
-
 /**
  * Integrates a time-varying load function in order to determine the date and
  * time at which a given total load is fully consumed.
