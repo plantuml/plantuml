@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
 
 public abstract class AbstractStatePlayer extends Player {
 
@@ -57,8 +58,8 @@ public abstract class AbstractStatePlayer extends Player {
 	private Colors initialColors;
 
 	public AbstractStatePlayer(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact,
-			Stereotype stereotype, HColor generalBackgroundColor) {
-		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
+			Stereotype stereotype, HColor generalBackgroundColor, SName sname) {
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, sname);
 		this.suggestedHeight = 0;
 	}
 

@@ -40,8 +40,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooClock;
 
 public class PlayerClock extends Player {
@@ -52,7 +50,7 @@ public class PlayerClock extends Player {
 
 	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
 			boolean compact, Stereotype stereotype) {
-		super(title, skinParam, ruler, compact, stereotype, null);
+		super(title, skinParam, ruler, compact, stereotype, null, SName.clock);
 		this.period = period;
 		this.pulse = pulse;
 		this.offset = offset;
@@ -65,12 +63,6 @@ public class PlayerClock extends Player {
 
 		return new FooClock(ruler, skinParam, suggestedHeight, style, period, pulse, offset, null);
 
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock)
-				.withTOBECHANGED(stereotype);
 	}
 
 	@Override

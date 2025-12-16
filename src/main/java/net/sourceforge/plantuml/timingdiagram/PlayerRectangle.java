@@ -39,26 +39,18 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooRibbonRectangle;
 
 public final class PlayerRectangle extends AbstractStatePlayer {
 
 	public PlayerRectangle(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
-		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.rectangle);
 	}
 
 	@Override
 	protected double getConstraintOffset() {
 		return 1;
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.rectangle)
-				.withTOBECHANGED(stereotype);
 	}
 
 	@Override

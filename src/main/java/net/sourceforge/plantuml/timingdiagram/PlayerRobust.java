@@ -39,26 +39,18 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooHistogram;
 
 public final class PlayerRobust extends AbstractStatePlayer {
 
 	public PlayerRobust(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
-		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.robust);
 	}
 
 	@Override
 	protected double getConstraintOffset() {
 		return 2.5;
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust)
-				.withTOBECHANGED(stereotype);
 	}
 
 	@Override

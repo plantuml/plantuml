@@ -39,26 +39,18 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooRibbon;
 
 public final class PlayerConcise extends AbstractStatePlayer {
 
 	public PlayerConcise(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
-		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.concise);
 	}
 
 	@Override
 	protected double getConstraintOffset() {
 		return 1;
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise)
-				.withTOBECHANGED(stereotype);
 	}
 
 	@Override

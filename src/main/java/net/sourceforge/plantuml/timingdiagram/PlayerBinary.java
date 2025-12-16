@@ -40,14 +40,11 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooBinary;
 
 public class PlayerBinary extends Player {
@@ -60,7 +57,7 @@ public class PlayerBinary extends Player {
 	private ChangeState initialState;
 
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype, null);
+		super(code, skinParam, ruler, compact, stereotype, null, SName.binary);
 		this.suggestedHeight = 30;
 	}
 
@@ -71,12 +68,6 @@ public class PlayerBinary extends Player {
 		return new FooBinary(ruler, skinParam, suggestedHeight, style, values, constraints, initialState, getNotes(),
 				getStyleSignature());
 
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.binary)
-				.withTOBECHANGED(stereotype);
 	}
 
 	@Override

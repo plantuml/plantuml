@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.FooAnalog;
 
 public class PlayerAnalog extends Player {
@@ -58,7 +56,7 @@ public class PlayerAnalog extends Player {
 	private Integer ticksEvery;
 
 	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype, null);
+		super(code, skinParam, ruler, compact, stereotype, null, SName.analog);
 		this.suggestedHeight = 100;
 	}
 
@@ -109,12 +107,6 @@ public class PlayerAnalog extends Player {
 
 	public void setTicks(int ticksEvery) {
 		this.ticksEvery = ticksEvery;
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.analog)
-				.withTOBECHANGED(stereotype);
 	}
 
 }

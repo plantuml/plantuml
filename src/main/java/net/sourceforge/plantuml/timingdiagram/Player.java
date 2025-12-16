@@ -70,6 +70,7 @@ public abstract class Player {
 
 	private final List<TimingNote> notes = new ArrayList<>();
 	private final PlayerFrame playerFrame;
+	private final SName sname;
 
 	public final List<TimingNote> getNotes() {
 		return Collections.unmodifiableList(notes);
@@ -84,14 +85,21 @@ public abstract class Player {
 	}
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
-			HColor generalBackgroundColor) {
+			HColor generalBackgroundColor, SName sname) {
 		this.generalBackgroundColor = generalBackgroundColor;
+		this.sname = sname;
 		this.stereotype = stereotype;
 		this.skinParam = skinParam;
 		this.compact = compact;
 		this.ruler = ruler;
 		this.title = Display.getWithNewlines(skinParam.getPragma(), title);
 		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);
+
+	}
+
+	final protected StyleSignature getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname)
+				.withTOBECHANGED(stereotype);
 	}
 
 	public boolean isCompact() {
@@ -101,8 +109,6 @@ public abstract class Player {
 	public HColor getGeneralBackgroundColor() {
 		return generalBackgroundColor;
 	}
-
-	protected abstract StyleSignature getStyleSignature();
 
 	final protected Style getStyle() {
 		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
