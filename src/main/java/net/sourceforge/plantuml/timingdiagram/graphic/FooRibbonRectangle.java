@@ -76,12 +76,12 @@ public class FooRibbonRectangle extends AbstractFooRibbon {
 
 	@Override
 	protected double getHeightForConstraints(StringBounder stringBounder) {
-		return 10;
+		return Math.max(5, super.getHeightForConstraints(stringBounder));
 	}
 
 	@Override
 	public double getFullHeight(StringBounder stringBounder) {
-		return 6 + getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
+		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
 				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()
 				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;
 	}
