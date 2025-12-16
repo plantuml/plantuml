@@ -38,8 +38,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.Fashion;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -52,7 +50,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -111,23 +108,9 @@ public abstract class Player {
 		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	final protected FontConfiguration getFontConfiguration() {
+	private FontConfiguration getFontConfiguration() {
 		return FontConfiguration.create(skinParam, StyleSignatureBasic
 				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));
-	}
-
-	final protected UStroke getStroke() {
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return style.getStroke();
-	}
-
-	final protected Fashion getContext() {
-
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-
-		return new Fashion(backgroundColor, lineColor).withStroke(getStroke());
 	}
 
 	final protected TextBlock getTitle() {
