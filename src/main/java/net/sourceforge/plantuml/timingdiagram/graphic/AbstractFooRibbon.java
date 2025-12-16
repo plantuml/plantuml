@@ -284,4 +284,16 @@ public abstract class AbstractFooRibbon extends AbstractFooPanel {
 		return context;
 	}
 
+	@Override
+	final protected double getHeightForConstraints(StringBounder stringBounder) {
+		return Math.max(5, super.getHeightForConstraints(stringBounder));
+	}
+
+	@Override
+	final public double getFullHeight(StringBounder stringBounder) {
+		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
+				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()
+				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;
+	}
+
 }

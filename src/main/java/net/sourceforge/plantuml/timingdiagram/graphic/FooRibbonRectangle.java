@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.timingdiagram.graphic;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
@@ -45,7 +44,6 @@ import net.sourceforge.plantuml.timingdiagram.ChangeState;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimingNote;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
-import net.sourceforge.plantuml.utils.Position;
 
 public class FooRibbonRectangle extends AbstractFooRibbon {
 
@@ -72,18 +70,6 @@ public class FooRibbonRectangle extends AbstractFooRibbon {
 		final PentaBShapeRectangle shape = PentaBShapeRectangle.create(len, getRibbonHeight(),
 				change.getContext(skinParam, style));
 		shape.drawU(ug);
-	}
-
-	@Override
-	protected double getHeightForConstraints(StringBounder stringBounder) {
-		return Math.max(5, super.getHeightForConstraints(stringBounder));
-	}
-
-	@Override
-	public double getFullHeight(StringBounder stringBounder) {
-		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)
-				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()
-				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;
 	}
 
 }
