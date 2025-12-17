@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -176,17 +175,6 @@ public class TimeConstraint {
 		polygon.addPoint(end);
 
 		return polygon;
-	}
-
-	public static double getHeightForConstraints(StringBounder stringBounder, List<TimeConstraint> constraints) {
-		if (constraints.size() == 0)
-			return 0;
-
-		double result = 0;
-		for (TimeConstraint constraint : constraints)
-			result = Math.max(result, constraint.getConstraintHeight(stringBounder));
-
-		return result;
 	}
 
 }

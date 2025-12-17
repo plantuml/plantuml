@@ -32,28 +32,31 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.timingdiagram.graphic;
+package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.timingdiagram.ChangeState;
-import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
-import net.sourceforge.plantuml.timingdiagram.TimeProjected;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsRectangle;
 
-public interface PDrawing extends TimeProjected {
+public final class PlayerRectangle extends AbstractStatePlayer {
 
-	public double getFullHeight(StringBounder stringBounder);
+	public PlayerRectangle(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
+			HColor generalBackgroundColor) {
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.rectangle, 1);
+	}
 
-	public void addChange(ChangeState change);
+	@Override
+	protected Panels buildPlayerPanels() {
+		final PanelsRectangle result = new PanelsRectangle(getRuler(), getSkinParam(), getNotes(), getSuggestedHeight(),
+				getStyle(), getConstraints());
+		result.setInitialState(getInitialState(), getInitialColors());
+		for (ChangeState change : getChanges())
+			result.addChange(change);
 
-	public TextBlock getPart1(double fullAvailableWidth);
-
-	public UDrawable getPart2();
-
-	public void setInitialState(String initialState, Colors initialColors);
-
-	public void addConstraint(TimeConstraint constraint);
+		return result;
+	}
 
 }

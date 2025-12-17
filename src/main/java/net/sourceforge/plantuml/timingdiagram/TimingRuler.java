@@ -71,7 +71,7 @@ public class TimingRuler {
 
 	private TimingFormat format = TimingFormat.DECIMAL;
 
-	static UGraphic applyForVLines(UGraphic ug, Style style, ISkinParam skinParam) {
+	static public UGraphic applyForVLines(UGraphic ug, Style style, ISkinParam skinParam) {
 		final UStroke stroke = new UStroke(3, 5, 0.5);
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 

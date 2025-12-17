@@ -34,84 +34,103 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.klimt.Fashion;
-import net.sourceforge.plantuml.klimt.UStroke;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
 
-public abstract class Player implements TimeProjected {
+public abstract class Player {
 
-	protected final ISkinParam skinParam;
-	protected final TimingRuler ruler;
+	private final ISkinParam skinParam;
+	private final TimingRuler ruler;
 	private final boolean compact;
 	private final Display title;
-	protected int suggestedHeight;
-	protected final Stereotype stereotype;
+	private int suggestedHeight;
+	private final Stereotype stereotype;
 	private final HColor generalBackgroundColor;
+	private Panels cached;
+
+	private final List<TimingNote> notes = new ArrayList<>();
+	private final PlayerFrame playerFrame;
+	private final SName sname;
+
+	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
+		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+				SName.note);
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
+	}
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
-			HColor generalBackgroundColor) {
+			HColor generalBackgroundColor, SName sname, int suggestedHeight) {
 		this.generalBackgroundColor = generalBackgroundColor;
+		this.sname = sname;
 		this.stereotype = stereotype;
 		this.skinParam = skinParam;
 		this.compact = compact;
 		this.ruler = ruler;
+		this.suggestedHeight = suggestedHeight;
 		this.title = Display.getWithNewlines(skinParam.getPragma(), title);
+		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);
+
 	}
 
-	public boolean isCompact() {
+	final protected Style getStyle() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
+	public final List<TimingNote> getNotes() {
+		return Collections.unmodifiableList(notes);
+	}
+
+	public final ISkinParam getSkinParam() {
+		return skinParam;
+	}
+
+	public final TimingRuler getRuler() {
+		return ruler;
+	}
+
+	public final int getSuggestedHeight() {
+		return suggestedHeight;
+	}
+
+	public final boolean isCompact() {
 		return compact;
 	}
 
-	public HColor getGeneralBackgroundColor() {
+	public final HColor getGeneralBackgroundColor() {
 		return generalBackgroundColor;
 	}
 
-	protected abstract StyleSignature getStyleSignature();
-
-	final protected Style getStyle() {
-		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-	}
-
-	final protected FontConfiguration getFontConfiguration() {
-		return FontConfiguration.create(skinParam, StyleSignatureBasic
+	private TextBlock getTitle() {
+		if (title.isWhite())
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignatureBasic
 				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));
+		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}
-
-	final protected UStroke getStroke() {
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return style.getStroke();
-	}
-
-	final protected Fashion getContext() {
-
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-
-		return new Fashion(backgroundColor, lineColor).withStroke(getStroke());
-	}
-
-	final protected TextBlock getTitle() {
-		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
-	}
-
-	public abstract void addNote(TimeTick now, Display note, Position position, Stereotype stereotype);
 
 	public abstract void defineState(String stateCode, String label);
 
@@ -119,14 +138,25 @@ public abstract class Player implements TimeProjected {
 
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
-	public abstract TextBlock getPart1(double fullAvailableWidth, double specialVSpace);
+	public final void drawFrameTitle(UGraphic ug) {
+		playerFrame.drawFrameTitle(ug);
+	}
 
-	public abstract UDrawable getPart2();
-
-	public abstract double getFullHeight(StringBounder stringBounder);
+	public final double getFrameHeight(StringBounder stringBounder) {
+		return playerFrame.getHeight(stringBounder);
+	}
 
 	public final void setHeight(int height) {
 		this.suggestedHeight = height;
 	}
+
+	public final Panels panels() {
+		if (cached == null)
+			cached = buildPlayerPanels();
+
+		return cached;
+	}
+
+	protected abstract Panels buildPlayerPanels();
 
 }
