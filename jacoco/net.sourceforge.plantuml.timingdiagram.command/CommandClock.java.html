@@ -107,13 +107,14 @@ public class CommandClock extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="nc" id="L107">		Stereotype stereotype = null;</span>
 <span class="nc bnc" id="L108" title="All 2 branches missed.">		if (stereotypeString != null)</span>
 <span class="nc" id="L109">			stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		return diagram.createClock(code, full, period, pulse, offset, compact != null, stereotype);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		diagram.createPlayerClock(code, full, period, pulse, offset, compact != null, stereotype);</span>
+<span class="nc" id="L111">		return CommandExecutionResult.ok();</span>
 	}
 
 	private int getInt(String value) {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (value == null)</span>
-<span class="nc" id="L115">			return 0;</span>
-<span class="nc" id="L116">		return Integer.parseInt(value);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L116">			return 0;</span>
+<span class="nc" id="L117">		return Integer.parseInt(value);</span>
 	}
 
 }

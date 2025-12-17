@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PanelsAnalog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.graphic</a> &gt; <span class="el_source">PanelsAnalog.java</span></div><h1>PanelsAnalog.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimeSeries;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+public class PanelsAnalog extends Panels {
+
+	private final TimeSeries timeSeries;
+	private final Double initialState;
+	private final Integer ticksEvery;
+
+	public PanelsAnalog(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, TimeSeries timeSeries,
+			List&lt;TimeConstraint&gt; constraints, Double initialState, Integer ticksEvery) {
+<span class="nc" id="L64">		super(ruler, skinParam, suggestedHeight, style, null, constraints);</span>
+
+<span class="nc" id="L66">		this.timeSeries = timeSeries;</span>
+<span class="nc" id="L67">		this.initialState = initialState;</span>
+<span class="nc" id="L68">		this.ticksEvery = ticksEvery;</span>
+<span class="nc" id="L69">	}</span>
+
+	@Override
+	public double getFullHeight(StringBounder stringBounder) {
+<span class="nc" id="L73">		return getHeightForConstraints(stringBounder) + suggestedHeight;</span>
+	}
+
+	@Override
+	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (tick == null)</span>
+<span class="nc" id="L79">			return null;</span>
+<span class="nc" id="L80">		final double x = ruler.getPosInPixel(tick);</span>
+<span class="nc" id="L81">		final double value = timeSeries.getValueAt(tick);</span>
+<span class="nc" id="L82">		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, value)),</span>
+<span class="nc" id="L83">				new XPoint2D(x, getYpos(stringBounder, value)));</span>
+	}
+
+	private double getYpos(StringBounder stringBounder, double value) {
+<span class="nc" id="L87">		final double y = (value - timeSeries.getMin()) * (suggestedHeight - 2 * MARGIN_Y)</span>
+<span class="nc" id="L88">				/ (timeSeries.getMax() - timeSeries.getMin());</span>
+<span class="nc" id="L89">		return getHeightForConstraints(stringBounder) + suggestedHeight - MARGIN_Y - y;</span>
+	}
+
+	@Override
+	public void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (ticksEvery == null) {</span>
+<span class="nc" id="L95">			drawScaleLabel(ug, timeSeries.getMin(), fullAvailableWidth);</span>
+<span class="nc" id="L96">			drawScaleLabel(ug, timeSeries.getMax(), fullAvailableWidth);</span>
+		} else {
+<span class="nc" id="L98">			final int first = (int) Math.ceil(timeSeries.getMin());</span>
+<span class="nc" id="L99">			final int last = (int) Math.floor(timeSeries.getMax());</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			for (int i = first; i &lt;= last; i++)</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				if (i % ticksEvery == 0)</span>
+<span class="nc" id="L102">					drawScaleLabel(ug, i, fullAvailableWidth);</span>
+		}
+<span class="nc" id="L104">	}</span>
+
+	@Override
+	public final double getLeftPanelWidth(StringBounder stringBounder) {
+<span class="nc" id="L108">		return LEFT_PANEL_MIN_WIDTH + getMaxWidthForTicks(stringBounder);</span>
+	}
+
+	private double getMaxWidthForTicks(StringBounder stringBounder) {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (ticksEvery == null)</span>
+<span class="nc" id="L113">			return Math.max(getWidthLabel(stringBounder, timeSeries.getMin()),</span>
+<span class="nc" id="L114">					getWidthLabel(stringBounder, timeSeries.getMax()));</span>
+
+<span class="nc" id="L116">		double result = 0;</span>
+<span class="nc" id="L117">		final int first = (int) Math.ceil(timeSeries.getMin());</span>
+<span class="nc" id="L118">		final int last = (int) Math.floor(timeSeries.getMax());</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (int i = first; i &lt;= last; i++)</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (i % ticksEvery == 0)</span>
+<span class="nc" id="L121">				result = Math.max(result, getWidthLabel(stringBounder, i));</span>
+
+<span class="nc" id="L123">		return result;</span>
+	}
+
+	private double getWidthLabel(StringBounder stringBounder, double value) {
+<span class="nc" id="L127">		final TextBlock label = getTextBlock(value);</span>
+<span class="nc" id="L128">		final XDimension2D dim = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L129">		return dim.getWidth();</span>
+	}
+
+	private void drawScaleLabel(UGraphic ug, double value, double fullAvailableWidth) {
+<span class="nc" id="L133">		final TextBlock label = getTextBlock(value);</span>
+<span class="nc" id="L134">		final XDimension2D dim = label.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L135">		ug = ug.apply(UTranslate.dx(fullAvailableWidth - dim.getWidth() - 2));</span>
+<span class="nc" id="L136">		label.drawU(ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), value) - dim.getHeight() / 2)));</span>
+<span class="nc" id="L137">	}</span>
+
+	private TextBlock getTextBlock(double value) {
+<span class="nc" id="L140">		final String formattedValue = timeSeries.getDisplayValue(value);</span>
+<span class="nc" id="L141">		final Display display = Display.getWithNewlines(skinParam.getPragma(), formattedValue);</span>
+<span class="nc" id="L142">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	private void drawTickHlines(UGraphic ug) {
+<span class="nc" id="L146">		ug = TimingRuler.applyForVLines(ug, style, skinParam);</span>
+<span class="nc" id="L147">		final int first = (int) Math.ceil(timeSeries.getMin());</span>
+<span class="nc" id="L148">		final int last = (int) Math.floor(timeSeries.getMax());</span>
+<span class="nc" id="L149">		final ULine hline = ULine.hline(ruler.getWidth());</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (int i = first; i &lt;= last; i++)</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (i % ticksEvery == 0)</span>
+<span class="nc" id="L152">				ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), i))).draw(hline);</span>
+<span class="nc" id="L153">	}</span>
+
+	@Override
+	public void drawRightPanel(UGraphic ug) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (ticksEvery != null)</span>
+<span class="nc" id="L158">			drawTickHlines(ug);</span>
+
+<span class="nc" id="L160">		ug = getContext().apply(ug);</span>
+<span class="nc" id="L161">		double lastx = 0;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		double lastValue = initialState == null ? 0 : initialState;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (Map.Entry&lt;TimeTick, Double&gt; ent : timeSeries.entrySet()) {</span>
+<span class="nc" id="L164">			final double y1 = getYpos(ug.getStringBounder(), lastValue);</span>
+<span class="nc" id="L165">			final double y2 = getYpos(ug.getStringBounder(), ent.getValue());</span>
+<span class="nc" id="L166">			final double x = ruler.getPosInPixel(ent.getKey());</span>
+<span class="nc" id="L167">			ug.apply(new UTranslate(lastx, y1)).draw(new ULine(x - lastx, y2 - y1));</span>
+<span class="nc" id="L168">			lastx = x;</span>
+<span class="nc" id="L169">			lastValue = ent.getValue();</span>
+<span class="nc" id="L170">		}</span>
+<span class="nc" id="L171">		ug.apply(new UTranslate(lastx, getYpos(ug.getStringBounder(), lastValue)))</span>
+<span class="nc" id="L172">				.draw(ULine.hline(ruler.getWidth() - lastx));</span>
+
+<span class="nc" id="L174">		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));</span>
+<span class="nc" id="L175">	}</span>
+
+	public void setBounds(String min, String max) {
+<span class="nc" id="L178">		timeSeries.setBounds(min, max);</span>
+<span class="nc" id="L179">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

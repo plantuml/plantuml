@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PanelsRobust.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.graphic</a> &gt; <span class="el_source">PanelsRobust.java</span></div><h1>PanelsRobust.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+<span class="nc" id="L59">public class PanelsRobust extends Panels {</span>
+
+	private static final double HISTOGRAM_BOTTOM_MARGIN = 12;
+	private static final double HISTOGRAM_INITIAL_WIDTH = 40;
+
+<span class="nc" id="L64">	private final List&lt;ChangeState&gt; changes = new ArrayList&lt;&gt;();</span>
+
+	private List&lt;String&gt; allStates;
+
+	private String initialState;
+
+	public PanelsRobust(TimingRuler ruler, ISkinParam skinParam, Collection&lt;String&gt; someStates, int suggestedHeight,
+			Style style, List&lt;TimeConstraint&gt; constraints) {
+<span class="nc" id="L72">		super(ruler, skinParam, suggestedHeight, style, null, constraints);</span>
+<span class="nc" id="L73">		this.allStates = new ArrayList&lt;&gt;(someStates);</span>
+<span class="nc" id="L74">		Collections.reverse(allStates);</span>
+<span class="nc" id="L75">	}</span>
+
+	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (tick == null)</span>
+<span class="nc" id="L79">			return null;</span>
+<span class="nc" id="L80">		final double x = ruler.getPosInPixel(tick);</span>
+<span class="nc" id="L81">		final List&lt;String&gt; states = getStatesAt(tick);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (states.size() == 0)</span>
+<span class="nc" id="L83">			return null;</span>
+
+<span class="nc" id="L85">		final double heightForConstraints = getHeightForConstraints(stringBounder);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (states.size() == 1) {</span>
+<span class="nc" id="L87">			final double y = yOfState(states.get(0)) + heightForConstraints;</span>
+<span class="nc" id="L88">			return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));</span>
+		}
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		assert states.size() == 2;</span>
+<span class="nc" id="L91">		final double y1 = yOfState(states.get(0)) + heightForConstraints;</span>
+<span class="nc" id="L92">		final double y2 = yOfState(states.get(1)) + heightForConstraints;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		assert y1 != y2;</span>
+<span class="nc" id="L94">		return new IntricatedPoint(new XPoint2D(x, y1), new XPoint2D(x, y2));</span>
+	}
+
+	private List&lt;String&gt; getStatesAt(TimeTick tick) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (changes.size() == 0)</span>
+<span class="nc" id="L99">			return Collections.emptyList();</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
+<span class="nc" id="L102">			final int comparaison = changes.get(i).getWhen().compareTo(tick);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (comparaison == 0) {</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">				if (i == 0 &amp;&amp; initialState == null)</span>
+<span class="nc" id="L105">					return Arrays.asList(changes.get(i).getState());</span>
+
+<span class="nc bnc" id="L107" title="All 4 branches missed.">				if (i == 0 &amp;&amp; initialState != null)</span>
+<span class="nc" id="L108">					return Arrays.asList(initialState, changes.get(i).getState());</span>
+
+<span class="nc" id="L110">				return Arrays.asList(changes.get(i - 1).getState(), changes.get(i).getState());</span>
+			}
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (comparaison &gt; 0) {</span>
+				final int changeIndex;
+<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (i == 0) {</span>
+					// if this time tick was not yet defined in any place, and is less then the
+					// first one,
+					// assume it's the leftmost
+<span class="nc" id="L118">					changeIndex = 0;</span>
+				} else {
+<span class="nc" id="L120">					changeIndex = i - 1;</span>
+				}
+<span class="nc" id="L122">				return Collections.singletonList(changes.get(changeIndex).getState());</span>
+			}
+		}
+<span class="nc" id="L125">		return Collections.singletonList(changes.get(changes.size() - 1).getState());</span>
+	}
+
+	public void addChange(ChangeState change) {
+<span class="nc" id="L129">		changes.add(change);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (change.isCompletelyHidden())</span>
+<span class="nc" id="L131">			return;</span>
+
+<span class="nc" id="L133">		final List&lt;String&gt; states = change.getStates();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (String state : states)</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (allStates.contains(state) == false)</span>
+<span class="nc" id="L136">				allStates.add(state);</span>
+<span class="nc" id="L137">	}</span>
+
+	private XPoint2D[] getPoints(int n) {
+<span class="nc" id="L140">		final ChangeState change = changes.get(n);</span>
+<span class="nc" id="L141">		final double x = ruler.getPosInPixel(change.getWhen());</span>
+<span class="nc" id="L142">		final List&lt;String&gt; states = change.getStates();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (states.size() == 2)</span>
+<span class="nc" id="L144">			return new XPoint2D[] { new XPoint2D(x, yOfState(states.get(0))),</span>
+<span class="nc" id="L145">					new XPoint2D(x, yOfState(states.get(1))) };</span>
+
+<span class="nc" id="L147">		return new XPoint2D[] { new XPoint2D(x, yOfState(states.get(0))) };</span>
+	}
+
+	private double getPointx(int n) {
+<span class="nc" id="L151">		final ChangeState change = changes.get(n);</span>
+<span class="nc" id="L152">		return ruler.getPosInPixel(change.getWhen());</span>
+	}
+
+	private double getPointMinY(int n) {
+<span class="nc" id="L156">		final List&lt;String&gt; states = changes.get(n).getStates();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (states.size() == 2)</span>
+<span class="nc" id="L158">			return Math.min(yOfState(states.get(0)), yOfState(states.get(1)));</span>
+
+<span class="nc" id="L160">		return yOfState(states.get(0));</span>
+	}
+
+	private double getPointMaxY(int n) {
+<span class="nc" id="L164">		final List&lt;String&gt; states = changes.get(n).getStates();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (states.size() == 2)</span>
+<span class="nc" id="L166">			return Math.max(yOfState(states.get(0)), yOfState(states.get(1)));</span>
+
+<span class="nc" id="L168">		return yOfState(states.get(0));</span>
+	}
+
+	@Override
+	public void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
+<span class="nc" id="L173">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L174">		ug = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)));</span>
+
+<span class="nc" id="L176">		double width = getStatesWidth(stringBounder);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (initialState != null)</span>
+<span class="nc" id="L178">			width += HISTOGRAM_INITIAL_WIDTH;</span>
+
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (fullAvailableWidth &gt; width + 5)</span>
+<span class="nc" id="L181">			ug = ug.apply(UTranslate.dx(fullAvailableWidth - width - 5));</span>
+		else
+<span class="nc" id="L183">			ug = ug.apply(UTranslate.dx(fullAvailableWidth - width));</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		for (String state : allStates) {</span>
+<span class="nc" id="L185">			final TextBlock label = getTextBlock(state);</span>
+<span class="nc" id="L186">			final XDimension2D dim = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L187">			label.drawU(ug.apply(UTranslate.dy(yOfState(state) - dim.getHeight() / 2 + 1)));</span>
+<span class="nc" id="L188">		}</span>
+<span class="nc" id="L189">	}</span>
+
+	@Override
+	public void drawRightPanel(UGraphic ug) {
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (changes.size() == 0)</span>
+<span class="nc" id="L194">			return;</span>
+
+<span class="nc" id="L196">		ug = getContext().apply(ug);</span>
+<span class="nc" id="L197">		ug = ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder())));</span>
+<span class="nc" id="L198">		drawHlines(ug);</span>
+<span class="nc" id="L199">		drawVlines(ug);</span>
+<span class="nc" id="L200">		drawLabels(ug);</span>
+<span class="nc" id="L201">		drawConstraints(ug.apply(UTranslate.dy(-TimeConstraint.getTopMargin())));</span>
+<span class="nc" id="L202">	}</span>
+
+	private double getStatesWidth(StringBounder stringBounder) {
+<span class="nc" id="L205">		double result = 0;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		for (String state : allStates) {</span>
+<span class="nc" id="L207">			final TextBlock label = getTextBlock(state);</span>
+<span class="nc" id="L208">			final XDimension2D dim = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L209">			result = Math.max(result, dim.getWidth());</span>
+<span class="nc" id="L210">		}</span>
+<span class="nc" id="L211">		return result;</span>
+	}
+
+	@Override
+	public double getLeftPanelWidth(StringBounder stringBounder) {
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (initialState == null)</span>
+<span class="nc" id="L217">			return getStatesWidth(stringBounder);</span>
+<span class="nc" id="L218">		return getStatesWidth(stringBounder) + HISTOGRAM_INITIAL_WIDTH;</span>
+	}
+
+	private void drawHlines(UGraphic ug) {
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (initialState != null)</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			for (XPoint2D pt : getPoints(0))</span>
+<span class="nc" id="L224">				drawHLineFromPoint(ug, getInitialPoint(), HISTOGRAM_INITIAL_WIDTH + pt.getX());</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (changes.get(i).isCompletelyHidden())</span>
+<span class="nc" id="L228">				continue;</span>
+
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			final double x2 = i &lt; changes.size() - 1 ? getPointx(i + 1) : ruler.getWidth();</span>
+<span class="nc" id="L231">			final double len = x2 - getPointx(i);</span>
+<span class="nc" id="L232">			final XPoint2D[] points = getPoints(i);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">			if (points.length == 2)</span>
+<span class="nc" id="L234">				drawHBlock(ug.apply(changes.get(i).getBackColor(skinParam, style).bg()), points[0], points[1], len);</span>
+
+<span class="nc bnc" id="L236" title="All 2 branches missed.">			if (i &lt; changes.size() - 1)</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">				for (XPoint2D pt : points)</span>
+<span class="nc" id="L238">					drawHLineFromPoint(ug, pt, len);</span>
+		}
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (changes.get(changes.size() - 1).isCompletelyHidden() == false) {</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">			for (XPoint2D pt : getPoints(changes.size() - 1)) {</span>
+<span class="nc" id="L243">				final double len = ruler.getWidth() - pt.getX();</span>
+<span class="nc" id="L244">				drawHLineFromPoint(ug, pt, len);</span>
+			}
+		}
+<span class="nc" id="L247">	}</span>
+
+	private void drawHBlock(UGraphic ug, XPoint2D pt1, XPoint2D pt2, double len) {
+<span class="nc" id="L250">		final double minY = Math.min(pt1.getY(), pt2.getY());</span>
+<span class="nc" id="L251">		final double maxY = Math.max(pt1.getY(), pt2.getY());</span>
+<span class="nc" id="L252">		final XPoint2D pt = new XPoint2D(pt1.getX(), minY);</span>
+<span class="nc" id="L253">		ug = ug.apply(UTranslate.point(pt));</span>
+<span class="nc" id="L254">		ug.draw(URectangle.build(len, maxY - minY));</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		for (double x = 0; x &lt; len; x += 5)</span>
+<span class="nc" id="L256">			ug.apply(UTranslate.dx(x)).draw(ULine.vline(maxY - minY));</span>
+<span class="nc" id="L257">	}</span>
+
+	private void drawVlines(UGraphic ug) {
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (initialState != null) {</span>
+<span class="nc" id="L261">			final XPoint2D before = getInitialPoint();</span>
+<span class="nc" id="L262">			final XPoint2D current = getPoints(0)[0];</span>
+<span class="nc" id="L263">			drawVline(ug, current.getX(), current.getY(), ULine.vline(before.getY() - current.getY()));</span>
+		}
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		for (int i = 1; i &lt; changes.size(); i++) {</span>
+<span class="nc bnc" id="L266" title="All 4 branches missed.">			if (changes.get(i - 1).isCompletelyHidden() || changes.get(i).isCompletelyHidden())</span>
+<span class="nc" id="L267">				continue;</span>
+
+<span class="nc" id="L269">			final double minY = Math.min(getPointMinY(i), getPointMinY(i - 1));</span>
+<span class="nc" id="L270">			final double maxY = Math.max(getPointMaxY(i), getPointMaxY(i - 1));</span>
+<span class="nc" id="L271">			drawVline(ug, getPointx(i), minY, ULine.vline(maxY - minY));</span>
+		}
+<span class="nc" id="L273">	}</span>
+
+	private void drawLabels(UGraphic ug) {
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
+<span class="nc" id="L277">			final XPoint2D ptLabel = getPoints(i)[0];</span>
+<span class="nc" id="L278">			final String comment = changes.get(i).getComment();</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">			if (comment == null)</span>
+<span class="nc" id="L280">				continue;</span>
+
+<span class="nc" id="L282">			final TextBlock label = getTextBlock(comment);</span>
+<span class="nc" id="L283">			final XDimension2D dim = label.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L284">			label.drawU(ug.apply(UTranslate.point(ptLabel).compose(new UTranslate(2, -dim.getHeight()))));</span>
+		}
+<span class="nc" id="L286">	}</span>
+
+	@Override
+	protected double getConstraintDeltaY(TimeConstraint constraint) {
+<span class="nc" id="L290">		double y = yOfState(constraint.getTick1());</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		for (ChangeState change : changes)</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">			if (constraint.containsStrict(change.getWhen()))</span>
+<span class="nc" id="L293">				y = Math.min(y, yOfState(change.getWhen()));</span>
+<span class="nc" id="L294">		return y;</span>
+	}
+
+	private XPoint2D getInitialPoint() {
+<span class="nc" id="L298">		return new XPoint2D(-HISTOGRAM_INITIAL_WIDTH, yOfState(initialState));</span>
+	}
+
+	@Override
+	protected double getHeightForConstraints(StringBounder stringBounder) {
+<span class="nc" id="L303">		return Math.max(10, super.getHeightForConstraints(stringBounder));</span>
+	}
+
+	@Override
+	public double getFullHeight(StringBounder stringBounder) {
+<span class="nc" id="L308">		double height = getHeightForConstraints(stringBounder);</span>
+
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (allStates.size() &gt; 0)</span>
+<span class="nc" id="L311">			height += stepHeight() * (allStates.size() - 1);</span>
+
+<span class="nc" id="L313">		height += HISTOGRAM_BOTTOM_MARGIN;</span>
+<span class="nc" id="L314">		return height + 6;</span>
+	}
+
+	private double yOfState(String state) {
+<span class="nc" id="L318">		final int nb = allStates.size() - 1 - allStates.indexOf(state);</span>
+<span class="nc" id="L319">		return stepHeight() * nb;</span>
+	}
+
+	private double yOfState(TimeTick when) {
+<span class="nc" id="L323">		return yOfState(last(getStatesAt(when)));</span>
+	}
+
+	private static String last(List&lt;String&gt; list) {
+<span class="nc" id="L327">		return list.get(list.size() - 1);</span>
+	}
+
+	private double stepHeight() {
+<span class="nc bnc" id="L331" title="All 4 branches missed.">		if (suggestedHeight == 0 || allStates.size() &lt;= 1)</span>
+<span class="nc" id="L332">			return 20;</span>
+
+<span class="nc" id="L334">		return suggestedHeight / (allStates.size() - 1);</span>
+	}
+
+	public void setInitialState(String initialState, Colors initialColors) {
+<span class="nc" id="L338">		this.initialState = initialState;</span>
+<span class="nc bnc" id="L339" title="All 4 branches missed.">		if (initialState != null &amp;&amp; allStates.contains(initialState) == false)</span>
+<span class="nc" id="L340">			allStates.add(initialState);</span>
+<span class="nc" id="L341">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

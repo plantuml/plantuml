@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Panels.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.graphic</a> &gt; <span class="el_source">Panels.java</span></div><h1>Panels.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimeProjected;
+import net.sourceforge.plantuml.timingdiagram.TimeTick;
+import net.sourceforge.plantuml.timingdiagram.TimingFormat;
+import net.sourceforge.plantuml.timingdiagram.TimingNote;
+import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+import net.sourceforge.plantuml.utils.Position;
+
+public abstract class Panels implements TimeProjected {
+
+	// ========== Common layout constants ==========
+	protected static final double MARGIN_Y = 8;
+	protected static final double MARGIN_X = 12;
+	protected static final double BOTTOM_MARGIN = 10;
+	protected static final double LEFT_PANEL_MIN_WIDTH = 5;
+
+	protected final ISkinParam skinParam;
+	protected final TimingRuler ruler;
+	protected final int suggestedHeight;
+	protected final Style style;
+
+	private final List&lt;TimeConstraint&gt; constraints;
+	private final List&lt;TimingNote&gt; notes;
+
+	public Panels(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, List&lt;TimingNote&gt; notes,
+<span class="nc" id="L82">			List&lt;TimeConstraint&gt; constraints) {</span>
+<span class="nc" id="L83">		this.ruler = ruler;</span>
+<span class="nc" id="L84">		this.skinParam = skinParam;</span>
+<span class="nc" id="L85">		this.suggestedHeight = suggestedHeight;</span>
+<span class="nc" id="L86">		this.style = style;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		this.notes = notes != null ? notes : new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		this.constraints = constraints != null ? constraints : new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L89">	}</span>
+
+	// ========== Constraints management ==========
+
+	public abstract void drawLeftPanel(UGraphic ug, double fullAvailableWidth);
+
+	public abstract void drawRightPanel(UGraphic ug);
+
+	public abstract double getFullHeight(StringBounder stringBounder);
+
+	public abstract double getLeftPanelWidth(StringBounder stringBounder);
+
+	protected final List&lt;TimeConstraint&gt; getConstraints() {
+<span class="nc" id="L102">		return Collections.unmodifiableList(constraints);</span>
+	}
+
+	protected double getConstraintDeltaY(TimeConstraint constraint) {
+<span class="nc" id="L106">		return 0;</span>
+	}
+
+	protected final void drawConstraints(UGraphic ug) {
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (TimeConstraint constraint : getConstraints())</span>
+<span class="nc" id="L111">			constraint.drawU(ug.apply(UTranslate.dy(getConstraintDeltaY(constraint))), ruler);</span>
+
+<span class="nc" id="L113">	}</span>
+
+	protected double getHeightForConstraints(StringBounder stringBounder) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (constraints.size() == 0)</span>
+<span class="nc" id="L117">			return 0;</span>
+
+<span class="nc" id="L119">		double result = 0;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (TimeConstraint constraint : constraints)</span>
+<span class="nc" id="L121">			result = Math.max(result, constraint.getConstraintHeight(stringBounder) - getConstraintDeltaY(constraint));</span>
+
+<span class="nc" id="L123">		return result;</span>
+	}
+
+	protected final List&lt;TimingNote&gt; getNotes() {
+<span class="nc" id="L127">		return Collections.unmodifiableList(notes);</span>
+	}
+
+	protected final void drawNotes(UGraphic ug, Position position) {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (TimingNote note : notes)</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">			if (note.getPosition() == position) {</span>
+<span class="nc" id="L133">				final TimeTick when = note.getWhen();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				final double x = when == null ? 0 : ruler.getPosInPixel(when);</span>
+<span class="nc" id="L135">				note.drawU(ug.apply(UTranslate.dx(x)));</span>
+			}
+<span class="nc" id="L137">	}</span>
+
+	protected final double getHeightForNotes(StringBounder stringBounder, Position position) {
+<span class="nc" id="L140">		double height = 0;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (TimingNote note : notes)</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (note.getPosition() == position)</span>
+<span class="nc" id="L143">				height = Math.max(height, note.getHeight(stringBounder));</span>
+
+<span class="nc" id="L145">		return height;</span>
+	}
+
+	protected final Fashion getContext() {
+<span class="nc" id="L149">		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L150">		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+
+<span class="nc" id="L152">		return new Fashion(backgroundColor, lineColor).withStroke(getStroke());</span>
+	}
+
+	protected final UStroke getStroke() {
+<span class="nc" id="L156">		return style.getStroke();</span>
+	}
+
+	protected final FontConfiguration getFontConfiguration() {
+<span class="nc" id="L160">		return FontConfiguration.create(skinParam, style);</span>
+	}
+
+	protected final TextBlock createTextBlock(String value) {
+<span class="nc" id="L164">		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);</span>
+<span class="nc" id="L165">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+	}
+
+	final protected TextBlock getTextBlock(String value) {
+<span class="nc" id="L169">		return createTextBlock(value);</span>
+	}
+
+	final protected void drawHLineFromPoint(UGraphic ug, final XPoint2D start, final double length) {
+<span class="nc" id="L173">		ug.apply(UTranslate.point(start)).draw(ULine.hline(length));</span>
+<span class="nc" id="L174">	}</span>
+
+	final protected void drawHorizontalBetweenTimes(UGraphic ug, double startTime, double endTime) {
+<span class="nc" id="L177">		final double x1 = xOfTime(startTime);</span>
+<span class="nc" id="L178">		final double x2 = Math.min(ruler.getWidth(), xOfTime(endTime));</span>
+
+<span class="nc" id="L180">		final ULine hline = ULine.hline(x2 - x1);</span>
+<span class="nc" id="L181">		ug.apply(UTranslate.dx(x1)).draw(hline);</span>
+<span class="nc" id="L182">	}</span>
+
+	final protected double xOfTime(double time) {
+<span class="nc" id="L185">		return ruler.getPosInPixel(new TimeTick(new BigDecimal(time), TimingFormat.DECIMAL));</span>
+	}
+
+	final protected void drawVline(UGraphic ug, double x, double y, final ULine vline) {
+<span class="nc" id="L189">		ug.apply(new UTranslate(x, y)).draw(vline);</span>
+<span class="nc" id="L190">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

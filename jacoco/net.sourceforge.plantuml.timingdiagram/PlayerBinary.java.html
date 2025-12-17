@@ -35,233 +35,70 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
-import net.sourceforge.plantuml.utils.Position;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsBinary;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 
 public class PlayerBinary extends Player {
 
 	private static final String LOW_STRING = &quot;0&quot;;
 	private static final String HIGH_STRING = &quot;1&quot;;
 
-<span class="nc" id="L72">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L73">	private final SortedMap&lt;TimeTick, ChangeState&gt; values = new TreeMap&lt;&gt;();</span>
+<span class="nc" id="L56">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L57">	private final SortedMap&lt;TimeTick, ChangeState&gt; values = new TreeMap&lt;&gt;();</span>
 	private ChangeState initialState;
 
-<span class="nc" id="L76">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
-
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-<span class="nc" id="L79">		super(code, skinParam, ruler, compact, stereotype, null);</span>
-<span class="nc" id="L80">		this.suggestedHeight = 30;</span>
-<span class="nc" id="L81">	}</span>
-
-	private double getHeightForConstraints(StringBounder stringBounder) {
-<span class="nc" id="L84">		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);</span>
-	}
+<span class="nc" id="L61">		super(code, skinParam, ruler, compact, stereotype, null, SName.binary, 30);</span>
+<span class="nc" id="L62">	}</span>
 
 	@Override
-	public double getFullHeight(StringBounder stringBounder) {
-<span class="nc" id="L89">		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight</span>
-<span class="nc" id="L90">				+ getHeightForNotes(stringBounder, Position.BOTTOM);</span>
+	protected Panels buildPlayerPanels() {
+<span class="nc" id="L66">		return new PanelsBinary(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), values, constraints,</span>
+<span class="nc" id="L67">				initialState, getNotes());</span>
+
 	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-<span class="nc" id="L95">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.binary)</span>
-<span class="nc" id="L96">				.withTOBECHANGED(stereotype);</span>
-	}
-
-	@Override
-	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-<span class="nc" id="L101">		final double x = ruler.getPosInPixel(tick);</span>
-<span class="nc" id="L102">		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)),</span>
-<span class="nc" id="L103">				new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)));</span>
-	}
-
-	@Override
-	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-<span class="nc" id="L108">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,</span>
-				SName.note);
-<span class="nc" id="L110">		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-
-<span class="nc" id="L112">		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));</span>
-<span class="nc" id="L113">	}</span>
 
 	@Override
 	public void defineState(String stateCode, String label) {
-<span class="nc" id="L117">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-<span class="nc" id="L122">		final ChangeState cs = new ChangeState(now, comment, color, convert(states));</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (now == null)</span>
-<span class="nc" id="L124">			this.initialState = cs;</span>
+<span class="nc" id="L78">		final ChangeState cs = new ChangeState(now, comment, color, convert(states));</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (now == null)</span>
+<span class="nc" id="L80">			this.initialState = cs;</span>
 		else
-<span class="nc" id="L126">			this.values.put(now, cs);</span>
+<span class="nc" id="L82">			this.values.put(now, cs);</span>
 
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L84">	}</span>
 
 	private String[] convert(String[] states) {
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (states.length == 1)</span>
-<span class="nc" id="L132">			return new String[] { convert(states[0]) };</span>
-<span class="nc" id="L133">		return new String[] { convert(states[0]), convert(states[1]) };</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (states.length == 1)</span>
+<span class="nc" id="L88">			return new String[] { convert(states[0]) };</span>
+<span class="nc" id="L89">		return new String[] { convert(states[0]), convert(states[1]) };</span>
 	}
 
 	private String convert(String value) {
-<span class="nc bnc" id="L137" title="All 4 branches missed.">		if (&quot;1&quot;.equals(value) || &quot;high&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L138">			return HIGH_STRING;</span>
-<span class="nc" id="L139">		return LOW_STRING;</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (&quot;1&quot;.equals(value) || &quot;high&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L94">			return HIGH_STRING;</span>
+<span class="nc" id="L95">		return LOW_STRING;</span>
 	}
 
 	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-<span class="nc" id="L144">		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, skinParam, config));</span>
-<span class="nc" id="L145">	}</span>
-
-<span class="nc" id="L147">	private final double ymargin = 8;</span>
-
-	private double getYpos(StringBounder stringBounder, String state) {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (state.equalsIgnoreCase(LOW_STRING))</span>
-<span class="nc" id="L151">			return getYlow(stringBounder);</span>
-<span class="nc" id="L152">		return getYhigh(stringBounder);</span>
-	}
-
-	private double getYhigh(StringBounder stringBounder) {
-<span class="nc" id="L156">		return ymargin + getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP);</span>
-	}
-
-	private double getYlow(StringBounder stringBounder) {
-<span class="nc" id="L160">		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight</span>
-				- ymargin;
-	}
-
-	@Override
-	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
-<span class="nc" id="L166">		return new AbstractTextBlock() {</span>
-
-			public void drawU(UGraphic ug) {
-<span class="nc" id="L169">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L170">				final TextBlock title = getTitle();</span>
-<span class="nc" id="L171">				final XDimension2D dim = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L172">				final double y = (getFullHeight(stringBounder) - dim.getHeight()) / 2;</span>
-<span class="nc" id="L173">				title.drawU(ug.apply(UTranslate.dy(y)));</span>
-<span class="nc" id="L174">			}</span>
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L177">				final XDimension2D dim = getTitle().calculateDimension(stringBounder);</span>
-<span class="nc" id="L178">				return dim.delta(5, 0);</span>
-			}
-		};
-	}
-
-	@Override
-	public UDrawable getPart2() {
-<span class="nc" id="L185">		return new UDrawable() {</span>
-			public void drawU(UGraphic ug) {
-<span class="nc" id="L187">				ug = getContext().apply(ug);</span>
-<span class="nc" id="L188">				double lastx = 0;</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">				List&lt;String&gt; lastValues = initialState == null ? Collections.singletonList(LOW_STRING)</span>
-<span class="nc" id="L190">						: initialState.getStates();</span>
-<span class="nc" id="L191">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L192">				final double yhigh = getYhigh(stringBounder);</span>
-<span class="nc" id="L193">				final double ylow = getYlow(stringBounder);</span>
-<span class="nc" id="L194">				final ULine vline = ULine.vline(ylow - yhigh);</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">				for (Map.Entry&lt;TimeTick, ChangeState&gt; ent : values.entrySet()) {</span>
-<span class="nc" id="L196">					final ChangeState value = ent.getValue();</span>
-
-<span class="nc" id="L198">					final double x = ruler.getPosInPixel(ent.getKey());</span>
-
-<span class="nc bnc" id="L200" title="All 2 branches missed.">					if (lastValues.size() == 1)</span>
-<span class="nc" id="L201">						ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))</span>
-<span class="nc" id="L202">								.draw(ULine.hline(x - lastx));</span>
-					else
-<span class="nc bnc" id="L204" title="All 2 branches missed.">						for (double tmpx = lastx; tmpx &lt; x; tmpx += 5)</span>
-<span class="nc" id="L205">							ug.apply(new UTranslate(tmpx, yhigh)).draw(vline);</span>
-
-<span class="nc bnc" id="L207" title="All 2 branches missed.">					if (lastValues.equals(value.getStates()) == false)</span>
-<span class="nc" id="L208">						ug.apply(new UTranslate(x, yhigh)).draw(vline);</span>
-
-<span class="nc bnc" id="L210" title="All 2 branches missed.">					if (value.getComment() != null) {</span>
-<span class="nc" id="L211">						final TextBlock label = getTextBlock(value.getComment());</span>
-<span class="nc" id="L212">						label.drawU(ug.apply(new UTranslate(x + 2, yhigh)));</span>
-					}
-
-<span class="nc" id="L215">					lastx = x;</span>
-<span class="nc" id="L216">					lastValues = value.getStates();</span>
-<span class="nc" id="L217">				}</span>
-<span class="nc" id="L218">				ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))</span>
-<span class="nc" id="L219">						.draw(ULine.hline(ruler.getWidth() - lastx));</span>
-
-<span class="nc" id="L221">				drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));</span>
-
-<span class="nc" id="L223">				drawNotes(ug.apply(UTranslate.dy(ymargin)), Position.TOP);</span>
-<span class="nc" id="L224">				drawNotes(</span>
-<span class="nc" id="L225">						ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)</span>
-<span class="nc" id="L226">								+ getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight - ymargin / 2)),</span>
-						Position.BOTTOM);
-
-<span class="nc" id="L229">			}</span>
-		};
-	}
-
-	final protected FontConfiguration getCommentFontConfiguration() {
-<span class="nc" id="L234">		return FontConfiguration.create(skinParam,</span>
-<span class="nc" id="L235">				getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
-	}
-
-	private TextBlock getTextBlock(String value) {
-<span class="nc" id="L239">		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);</span>
-<span class="nc" id="L240">		return display.create(getCommentFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
-	}
-
-	private void drawConstraints(final UGraphic ug) {
-<span class="nc bnc" id="L244" title="All 2 branches missed.">		for (TimeConstraint constraint : constraints)</span>
-<span class="nc" id="L245">			constraint.drawU(ug, ruler);</span>
-<span class="nc" id="L246">	}</span>
-
-	private void drawNotes(UGraphic ug, final Position position) {
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		for (TimingNote note : notes)</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">			if (note.getPosition() == position) {</span>
-<span class="nc" id="L251">				final TimeTick when = note.getWhen();</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">				final double x = when == null ? 0 : ruler.getPosInPixel(when);</span>
-<span class="nc" id="L253">				note.drawU(ug.apply(UTranslate.dx(x)));</span>
-			}
-<span class="nc" id="L255">	}</span>
-
-	private double getHeightForNotes(StringBounder stringBounder, Position position) {
-<span class="nc" id="L258">		double height = 0;</span>
-<span class="nc bnc" id="L259" title="All 2 branches missed.">		for (TimingNote note : notes)</span>
-<span class="nc bnc" id="L260" title="All 2 branches missed.">			if (note.getPosition() == position)</span>
-<span class="nc" id="L261">				height = Math.max(height, note.getHeight(stringBounder));</span>
-
-<span class="nc" id="L263">		return height;</span>
-	}
+<span class="nc" id="L100">		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, getSkinParam(), config));</span>
+<span class="nc" id="L101">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

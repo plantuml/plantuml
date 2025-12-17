@@ -96,7 +96,7 @@ public class CommandAnalog extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="nc bnc" id="L96" title="All 2 branches missed.">		else if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
 <span class="nc" id="L97">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		final PlayerAnalog player = diagram.createAnalog(code, full, compact != null, stereotype);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		final PlayerAnalog player = diagram.createPlayerAnalog(code, full, compact != null, stereotype);</span>
 <span class="nc" id="L100">		final String start = arg.get(&quot;START&quot;, 0);</span>
 <span class="nc" id="L101">		final String end = arg.get(&quot;END&quot;, 0);</span>
 <span class="nc bnc" id="L102" title="All 4 branches missed.">		if (start != null &amp;&amp; end != null)</span>

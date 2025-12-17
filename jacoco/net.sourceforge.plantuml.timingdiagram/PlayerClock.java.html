@@ -34,168 +34,52 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.math.BigDecimal;
-
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
-import net.sourceforge.plantuml.utils.Position;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsClock;
 
 public class PlayerClock extends Player {
 
 	private final int period;
 	private final int pulse;
 	private final int offset;
-<span class="nc" id="L65">	private final double ymargin = 8;</span>
-	private final boolean displayTitle;
 
 	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
 			boolean compact, Stereotype stereotype) {
-<span class="nc" id="L70">		super(title, skinParam, ruler, compact, stereotype, null);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		this.displayTitle = title.length() &gt; 0;</span>
-<span class="nc" id="L72">		this.period = period;</span>
-<span class="nc" id="L73">		this.pulse = pulse;</span>
-<span class="nc" id="L74">		this.offset = offset;</span>
-<span class="nc" id="L75">		this.suggestedHeight = 30;</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L53">		super(title, skinParam, ruler, compact, stereotype, null, SName.clock, 30);</span>
+<span class="nc" id="L54">		this.period = period;</span>
+<span class="nc" id="L55">		this.pulse = pulse;</span>
+<span class="nc" id="L56">		this.offset = offset;</span>
+<span class="nc" id="L57">	}</span>
 
 	@Override
-	public double getFullHeight(StringBounder stringBounder) {
-<span class="nc" id="L80">		return suggestedHeight + getTitleHeight(stringBounder);</span>
-	}
+	protected Panels buildPlayerPanels() {
+<span class="nc" id="L61">		return new PanelsClock(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), period, pulse, offset,</span>
+				null);
 
-	private double getLineHeight(StringBounder stringBounder) {
-<span class="nc" id="L84">		return suggestedHeight - 2 * ymargin;</span>
-	}
-
-	private double getTitleHeight(StringBounder stringBounder) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (displayTitle)</span>
-<span class="nc" id="L89">			return getTitle().calculateDimension(stringBounder).getHeight();</span>
-<span class="nc" id="L90">		return 0;</span>
-	}
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-<span class="nc" id="L95">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock)</span>
-<span class="nc" id="L96">				.withTOBECHANGED(stereotype);</span>
-	}
-
-	@Override
-	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-<span class="nc" id="L101">		throw new UnsupportedOperationException();</span>
-	}
-
-	@Override
-	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-<span class="nc" id="L106">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void defineState(String stateCode, String label) {
-<span class="nc" id="L111">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L68">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-<span class="nc" id="L116">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-<span class="nc" id="L121">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L78">		throw new UnsupportedOperationException();</span>
 	}
 
 	public final int getPeriod() {
-<span class="nc" id="L125">		return period;</span>
-	}
-
-	@Override
-	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (displayTitle)</span>
-<span class="nc" id="L131">			return new AbstractTextBlock() {</span>
-
-				public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L134" title="All 2 branches missed.">					if (isCompact()) {</span>
-<span class="nc" id="L135">						new PlayerFrame(getTitle(), skinParam).drawTitle(ug);</span>
-					} else {
-<span class="nc" id="L137">						new PlayerFrame(getTitle(), skinParam).drawFrameTitle(ug);</span>
-					}
-<span class="nc" id="L139">				}</span>
-
-				public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L142">					return getTitle().calculateDimension(stringBounder);</span>
-				}
-			};
-<span class="nc" id="L145">		return TextBlockUtils.empty(0, 0);</span>
-	}
-
-	@Override
-	public UDrawable getPart2() {
-<span class="nc" id="L150">		return new UDrawable() {</span>
-
-			private void drawHline(UGraphic ug, double value1, double value2) {
-<span class="nc" id="L153">				final double x1 = getX(value1);</span>
-<span class="nc" id="L154">				final double x2 = Math.min(ruler.getWidth(), getX(value2));</span>
-
-<span class="nc" id="L156">				final ULine hline = ULine.hline(x2 - x1);</span>
-<span class="nc" id="L157">				ug.apply(UTranslate.dx(x1)).draw(hline);</span>
-<span class="nc" id="L158">			}</span>
-
-			private void drawVline(UGraphic ug, final ULine vline, double value) {
-<span class="nc" id="L161">				ug.apply(new UTranslate(getX(value), ymargin)).draw(vline);</span>
-<span class="nc" id="L162">			}</span>
-
-			private double getX(double value) {
-<span class="nc" id="L165">				return ruler.getPosInPixel(new TimeTick(new BigDecimal(value), TimingFormat.DECIMAL));</span>
-			}
-
-			public void drawU(UGraphic ug) {
-<span class="nc" id="L169">				ug = getContext().apply(ug);</span>
-<span class="nc" id="L170">				ug = ug.apply(UTranslate.dy(getTitleHeight(ug.getStringBounder())));</span>
-<span class="nc" id="L171">				final ULine vline = ULine.vline(getLineHeight(ug.getStringBounder()));</span>
-<span class="nc" id="L172">				double value = 0;</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (offset != 0) {</span>
-<span class="nc" id="L174">					drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, offset);</span>
-<span class="nc" id="L175">					value += offset;</span>
-				}
-<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (getX(value) &gt; ruler.getWidth())</span>
-<span class="nc" id="L178">					return;</span>
-<span class="nc" id="L179">				drawVline(ug, vline, value);</span>
-
-<span class="nc bnc" id="L181" title="All 2 branches missed.">				final double vpulse = pulse == 0 ? period / 2.0 : pulse;</span>
-<span class="nc" id="L182">				final double remain = period - vpulse;</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">				for (int i = 0; i &lt; 1000; i++) {</span>
-<span class="nc" id="L184">					drawHline(ug.apply(UTranslate.dy(ymargin)), value, value + vpulse);</span>
-<span class="nc" id="L185">					value += vpulse;</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">					if (getX(value) &gt; ruler.getWidth())</span>
-<span class="nc" id="L187">						return;</span>
-<span class="nc" id="L188">					drawVline(ug, vline, value);</span>
-<span class="nc" id="L189">					drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, value + remain);</span>
-<span class="nc" id="L190">					value += remain;</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">					if (getX(value) &gt; ruler.getWidth())</span>
-<span class="nc" id="L192">						return;</span>
-<span class="nc" id="L193">					drawVline(ug, vline, value);</span>
-				}
-
-<span class="nc" id="L196">			}</span>
-
-		};
+<span class="nc" id="L82">		return period;</span>
 	}
 
 }

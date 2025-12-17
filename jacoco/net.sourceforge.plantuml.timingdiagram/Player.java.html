@@ -34,84 +34,103 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.klimt.Fashion;
-import net.sourceforge.plantuml.klimt.UStroke;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
 
-public abstract class Player implements TimeProjected {
+public abstract class Player {
 
-	protected final ISkinParam skinParam;
-	protected final TimingRuler ruler;
+	private final ISkinParam skinParam;
+	private final TimingRuler ruler;
 	private final boolean compact;
 	private final Display title;
-	protected int suggestedHeight;
-	protected final Stereotype stereotype;
+	private int suggestedHeight;
+	private final Stereotype stereotype;
 	private final HColor generalBackgroundColor;
+	private Panels cached;
+
+<span class="nc" id="L72">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
+	private final PlayerFrame playerFrame;
+	private final SName sname;
+
+	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
+<span class="nc" id="L77">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,</span>
+				SName.note);
+<span class="nc" id="L79">		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="nc" id="L81">		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));</span>
+<span class="nc" id="L82">	}</span>
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
-<span class="nc" id="L68">			HColor generalBackgroundColor) {</span>
-<span class="nc" id="L69">		this.generalBackgroundColor = generalBackgroundColor;</span>
-<span class="nc" id="L70">		this.stereotype = stereotype;</span>
-<span class="nc" id="L71">		this.skinParam = skinParam;</span>
-<span class="nc" id="L72">		this.compact = compact;</span>
-<span class="nc" id="L73">		this.ruler = ruler;</span>
-<span class="nc" id="L74">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L85">			HColor generalBackgroundColor, SName sname, int suggestedHeight) {</span>
+<span class="nc" id="L86">		this.generalBackgroundColor = generalBackgroundColor;</span>
+<span class="nc" id="L87">		this.sname = sname;</span>
+<span class="nc" id="L88">		this.stereotype = stereotype;</span>
+<span class="nc" id="L89">		this.skinParam = skinParam;</span>
+<span class="nc" id="L90">		this.compact = compact;</span>
+<span class="nc" id="L91">		this.ruler = ruler;</span>
+<span class="nc" id="L92">		this.suggestedHeight = suggestedHeight;</span>
+<span class="nc" id="L93">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
+<span class="nc" id="L94">		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);</span>
 
-	public boolean isCompact() {
-<span class="nc" id="L78">		return compact;</span>
-	}
-
-	public HColor getGeneralBackgroundColor() {
-<span class="nc" id="L82">		return generalBackgroundColor;</span>
-	}
-
-	protected abstract StyleSignature getStyleSignature();
+<span class="nc" id="L96">	}</span>
 
 	final protected Style getStyle() {
-<span class="nc" id="L88">		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L99">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)</span>
+<span class="nc" id="L100">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
-	final protected FontConfiguration getFontConfiguration() {
-<span class="nc" id="L92">		return FontConfiguration.create(skinParam, StyleSignatureBasic</span>
-<span class="nc" id="L93">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
+	public final List&lt;TimingNote&gt; getNotes() {
+<span class="nc" id="L104">		return Collections.unmodifiableList(notes);</span>
 	}
 
-	final protected UStroke getStroke() {
-<span class="nc" id="L97">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L98">		return style.getStroke();</span>
+	public final ISkinParam getSkinParam() {
+<span class="nc" id="L108">		return skinParam;</span>
 	}
 
-	final protected Fashion getContext() {
-
-<span class="nc" id="L103">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L104">		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L105">		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
-
-<span class="nc" id="L107">		return new Fashion(backgroundColor, lineColor).withStroke(getStroke());</span>
+	public final TimingRuler getRuler() {
+<span class="nc" id="L112">		return ruler;</span>
 	}
 
-	final protected TextBlock getTitle() {
-<span class="nc" id="L111">		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+	public final int getSuggestedHeight() {
+<span class="nc" id="L116">		return suggestedHeight;</span>
 	}
 
-	public abstract void addNote(TimeTick now, Display note, Position position, Stereotype stereotype);
+	public final boolean isCompact() {
+<span class="nc" id="L120">		return compact;</span>
+	}
+
+	public final HColor getGeneralBackgroundColor() {
+<span class="nc" id="L124">		return generalBackgroundColor;</span>
+	}
+
+	private TextBlock getTitle() {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (title.isWhite())</span>
+<span class="nc" id="L129">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L130">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignatureBasic</span>
+<span class="nc" id="L131">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
+<span class="nc" id="L132">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+	}
 
 	public abstract void defineState(String stateCode, String label);
 
@@ -119,15 +138,26 @@ public abstract class Player implements TimeProjected {
 
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
-	public abstract TextBlock getPart1(double fullAvailableWidth, double specialVSpace);
+	public final void drawFrameTitle(UGraphic ug) {
+<span class="nc" id="L142">		playerFrame.drawFrameTitle(ug);</span>
+<span class="nc" id="L143">	}</span>
 
-	public abstract UDrawable getPart2();
-
-	public abstract double getFullHeight(StringBounder stringBounder);
+	public final double getFrameHeight(StringBounder stringBounder) {
+<span class="nc" id="L146">		return playerFrame.getHeight(stringBounder);</span>
+	}
 
 	public final void setHeight(int height) {
-<span class="nc" id="L129">		this.suggestedHeight = height;</span>
-<span class="nc" id="L130">	}</span>
+<span class="nc" id="L150">		this.suggestedHeight = height;</span>
+<span class="nc" id="L151">	}</span>
+
+	public final Panels panels() {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (cached == null)</span>
+<span class="nc" id="L155">			cached = buildPlayerPanels();</span>
+
+<span class="nc" id="L157">		return cached;</span>
+	}
+
+	protected abstract Panels buildPlayerPanels();
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

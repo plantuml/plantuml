@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PanelsRectangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.graphic</a> &gt; <span class="el_source">PanelsRectangle.java</span></div><h1>PanelsRectangle.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.graphic;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimingNote;
+import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+public class PanelsRectangle extends PanelsState {
+
+	public PanelsRectangle(TimingRuler ruler, ISkinParam skinParam, List&lt;TimingNote&gt; notes, int suggestedHeight,
+			Style style, List&lt;TimeConstraint&gt; constraints) {
+<span class="nc" id="L52">		super(ruler, skinParam, suggestedHeight, style, notes, constraints);</span>
+<span class="nc" id="L53">	}</span>
+
+	@Override
+	protected void drawHexa(UGraphic ug, double len, ChangeState change) {
+<span class="nc" id="L57">		final URectangle shape = URectangle.build(len, getRibbonHeight());</span>
+<span class="nc" id="L58">		change.getContext(skinParam, style).apply(ug).draw(shape);</span>
+<span class="nc" id="L59">	}</span>
+
+	@Override
+	protected void drawPentaA(UGraphic ug, double len, ChangeState change) {
+<span class="nc" id="L63">		final PentaAShapeRectangle shape = PentaAShapeRectangle.create(len, getRibbonHeight(),</span>
+<span class="nc" id="L64">				getContextWithInitialColors(change));</span>
+<span class="nc" id="L65">		shape.drawU(ug);</span>
+<span class="nc" id="L66">	}</span>
+
+	@Override
+	protected void drawPentaB(UGraphic ug, double len, ChangeState change) {
+<span class="nc" id="L70">		final PentaBShapeRectangle shape = PentaBShapeRectangle.create(len, getRibbonHeight(),</span>
+<span class="nc" id="L71">				change.getContext(skinParam, style));</span>
+<span class="nc" id="L72">		shape.drawU(ug);</span>
+<span class="nc" id="L73">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

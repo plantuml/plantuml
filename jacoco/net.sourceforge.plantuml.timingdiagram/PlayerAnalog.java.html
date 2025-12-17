@@ -36,230 +36,75 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
-import net.sourceforge.plantuml.utils.Position;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalog;
 
 public class PlayerAnalog extends Player {
 
-<span class="nc" id="L65">	private final TimeSeries timeSeries = new TimeSeries();</span>
+<span class="nc" id="L51">	private final TimeSeries timeSeries = new TimeSeries();</span>
 
-<span class="nc" id="L67">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L53">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L69">	private final double ymargin = 8;</span>
 	private Double initialState;
 	private Integer ticksEvery;
 
 	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-<span class="nc" id="L74">		super(code, skinParam, ruler, compact, stereotype, null);</span>
-<span class="nc" id="L75">		this.suggestedHeight = 100;</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L59">		super(code, skinParam, ruler, compact, stereotype, null, SName.analog, 100);</span>
+<span class="nc" id="L60">	}</span>
 
 	@Override
-	public double getFullHeight(StringBounder stringBounder) {
-<span class="nc" id="L80">		return getHeightForConstraints(stringBounder) + suggestedHeight;</span>
-	}
+	protected Panels buildPlayerPanels() {
+<span class="nc" id="L64">		return new PanelsAnalog(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), timeSeries, constraints,</span>
+				initialState, ticksEvery);
 
-	@Override
-	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-<span class="nc" id="L85">		final double x = ruler.getPosInPixel(tick);</span>
-<span class="nc" id="L86">		final double value = timeSeries.getValueAt(tick);</span>
-<span class="nc" id="L87">		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, value)),</span>
-<span class="nc" id="L88">				new XPoint2D(x, getYpos(stringBounder, value)));</span>
-	}
-
-	@Override
-	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-<span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void defineState(String stateCode, String label) {
-<span class="nc" id="L98">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L71">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... valueString) {
-<span class="nc" id="L103">		final double value = getState(valueString[0]);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (now == null)</span>
-<span class="nc" id="L105">			this.initialState = value;</span>
+<span class="nc" id="L76">		final double value = getState(valueString[0]);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (now == null)</span>
+<span class="nc" id="L78">			this.initialState = value;</span>
 		else
-<span class="nc" id="L107">			this.timeSeries.put(now, value);</span>
+<span class="nc" id="L80">			this.timeSeries.put(now, value);</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (this.initialState == null)</span>
-<span class="nc" id="L110">			this.initialState = value;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (this.initialState == null)</span>
+<span class="nc" id="L83">			this.initialState = value;</span>
 
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L85">	}</span>
 
 	private double getState(String value) {
 		try {
-<span class="nc" id="L116">			return Double.parseDouble(value);</span>
-<span class="nc" id="L117">		} catch (Exception e) {</span>
-<span class="nc" id="L118">			Logme.error(e);</span>
-<span class="nc" id="L119">			return 0;</span>
+<span class="nc" id="L89">			return Double.parseDouble(value);</span>
+<span class="nc" id="L90">		} catch (Exception e) {</span>
+<span class="nc" id="L91">			Logme.error(e);</span>
+<span class="nc" id="L92">			return 0;</span>
 		}
 	}
 
 	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-<span class="nc" id="L125">		this.constraints.add(new TimeConstraint(1, tick1, tick2, message, skinParam, config));</span>
-<span class="nc" id="L126">	}</span>
-
-	private double getYpos(StringBounder stringBounder, double value) {
-<span class="nc" id="L129">		final double y = (value - timeSeries.getMin()) * (suggestedHeight - 2 * ymargin)</span>
-<span class="nc" id="L130">				/ (timeSeries.getMax() - timeSeries.getMin());</span>
-<span class="nc" id="L131">		return getHeightForConstraints(stringBounder) + suggestedHeight - ymargin - y;</span>
-	}
-
-	public TextBlock getPart1(final double fullAvailableWidth, final double specialVSpace) {
-<span class="nc" id="L135">		return new AbstractTextBlock() {</span>
-
-			public void drawU(UGraphic ug) {
-<span class="nc" id="L138">				drawPart1(ug, fullAvailableWidth, specialVSpace);</span>
-<span class="nc" id="L139">			}</span>
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L142">				final XDimension2D dim = getTitle().calculateDimension(stringBounder);</span>
-<span class="nc" id="L143">				return dim.delta(5 + getMaxWidthForTicks(stringBounder), 0);</span>
-			}
-		};
-	}
-
-	private double getMaxWidthForTicks(StringBounder stringBounder) {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (ticksEvery == null)</span>
-<span class="nc" id="L150">			return Math.max(getWidthLabel(stringBounder, timeSeries.getMin()),</span>
-<span class="nc" id="L151">					getWidthLabel(stringBounder, timeSeries.getMax()));</span>
-
-<span class="nc" id="L153">		double result = 0;</span>
-<span class="nc" id="L154">		final int first = (int) Math.ceil(timeSeries.getMin());</span>
-<span class="nc" id="L155">		final int last = (int) Math.floor(timeSeries.getMax());</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		for (int i = first; i &lt;= last; i++)</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (i % ticksEvery == 0)</span>
-<span class="nc" id="L158">				result = Math.max(result, getWidthLabel(stringBounder, i));</span>
-
-<span class="nc" id="L160">		return result;</span>
-	}
-
-	private void drawPart1(UGraphic ug, double fullAvailableWidth, double specialVSpace) {
-<span class="nc" id="L164">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L165">		final TextBlock title = getTitle();</span>
-<span class="nc" id="L166">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L167">		final double y = (getFullHeight(stringBounder) - dim.getHeight()) / 2;</span>
-<span class="nc" id="L168">		title.drawU(ug.apply(UTranslate.dy(y)));</span>
-
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (ticksEvery == null) {</span>
-<span class="nc" id="L171">			drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), timeSeries.getMin(), fullAvailableWidth);</span>
-<span class="nc" id="L172">			drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), timeSeries.getMax(), fullAvailableWidth);</span>
-		} else {
-<span class="nc" id="L174">			final int first = (int) Math.ceil(timeSeries.getMin());</span>
-<span class="nc" id="L175">			final int last = (int) Math.floor(timeSeries.getMax());</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">			for (int i = first; i &lt;= last; i++)</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (i % ticksEvery == 0)</span>
-<span class="nc" id="L178">					drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), i, fullAvailableWidth);</span>
-
-		}
-
-<span class="nc" id="L182">	}</span>
-
-	private double getWidthLabel(StringBounder stringBounder, double value) {
-<span class="nc" id="L185">		final TextBlock label = getTextBlock(value);</span>
-<span class="nc" id="L186">		final XDimension2D dim = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L187">		return dim.getWidth();</span>
-	}
-
-	private void drawScaleLabel(UGraphic ug, double value, double fullAvailableWidth) {
-<span class="nc" id="L191">		final TextBlock label = getTextBlock(value);</span>
-<span class="nc" id="L192">		final XDimension2D dim = label.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L193">		ug = ug.apply(UTranslate.dx(fullAvailableWidth - dim.getWidth() - 2));</span>
-<span class="nc" id="L194">		label.drawU(ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), value) - dim.getHeight() / 2)));</span>
-<span class="nc" id="L195">	}</span>
-
-	private TextBlock getTextBlock(double value) {
-<span class="nc" id="L198">		final String formattedValue = timeSeries.getDisplayValue(value);</span>
-<span class="nc" id="L199">		final Display display = Display.getWithNewlines(skinParam.getPragma(), formattedValue);</span>
-<span class="nc" id="L200">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
-	}
-
-	private void drawTickHlines(UGraphic ug) {
-<span class="nc" id="L204">		ug = TimingRuler.applyForVLines(ug, getStyle(), skinParam);</span>
-<span class="nc" id="L205">		final int first = (int) Math.ceil(timeSeries.getMin());</span>
-<span class="nc" id="L206">		final int last = (int) Math.floor(timeSeries.getMax());</span>
-<span class="nc" id="L207">		final ULine hline = ULine.hline(ruler.getWidth());</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (int i = first; i &lt;= last; i++)</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (i % ticksEvery == 0)</span>
-<span class="nc" id="L210">				ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), i))).draw(hline);</span>
-
-<span class="nc" id="L212">	}</span>
-
-	@Override
-	public UDrawable getPart2() {
-<span class="nc" id="L216">		return new UDrawable() {</span>
-			public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L218" title="All 2 branches missed.">				if (ticksEvery != null)</span>
-<span class="nc" id="L219">					drawTickHlines(ug);</span>
-
-<span class="nc" id="L221">				ug = getContext().apply(ug);</span>
-<span class="nc" id="L222">				double lastx = 0;</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">				double lastValue = initialState == null ? 0 : initialState;</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">				for (Map.Entry&lt;TimeTick, Double&gt; ent : timeSeries.entrySet()) {</span>
-<span class="nc" id="L225">					final double y1 = getYpos(ug.getStringBounder(), lastValue);</span>
-<span class="nc" id="L226">					final double y2 = getYpos(ug.getStringBounder(), ent.getValue());</span>
-<span class="nc" id="L227">					final double x = ruler.getPosInPixel(ent.getKey());</span>
-<span class="nc" id="L228">					ug.apply(new UTranslate(lastx, y1)).draw(new ULine(x - lastx, y2 - y1));</span>
-<span class="nc" id="L229">					lastx = x;</span>
-<span class="nc" id="L230">					lastValue = ent.getValue();</span>
-<span class="nc" id="L231">				}</span>
-<span class="nc" id="L232">				ug.apply(new UTranslate(lastx, getYpos(ug.getStringBounder(), lastValue)))</span>
-<span class="nc" id="L233">						.draw(ULine.hline(ruler.getWidth() - lastx));</span>
-
-<span class="nc" id="L235">				drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));</span>
-
-<span class="nc" id="L237">			}</span>
-		};
-	}
+<span class="nc" id="L98">		this.constraints.add(new TimeConstraint(1, tick1, tick2, message, getSkinParam(), config));</span>
+<span class="nc" id="L99">	}</span>
 
 	public void setBounds(String min, String max) {
-<span class="nc" id="L242">		timeSeries.setBounds(min, max);</span>
-<span class="nc" id="L243">	}</span>
+<span class="nc" id="L102">		timeSeries.setBounds(min, max);</span>
+<span class="nc" id="L103">	}</span>
 
 	public void setTicks(int ticksEvery) {
-<span class="nc" id="L246">		this.ticksEvery = ticksEvery;</span>
-<span class="nc" id="L247">	}</span>
-
-	@Override
-	protected StyleSignature getStyleSignature() {
-<span class="nc" id="L251">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.analog)</span>
-<span class="nc" id="L252">				.withTOBECHANGED(stereotype);</span>
-	}
-
-	private void drawConstraints(final UGraphic ug) {
-<span class="nc bnc" id="L256" title="All 2 branches missed.">		for (TimeConstraint constraint : constraints) </span>
-<span class="nc" id="L257">			constraint.drawU(ug, ruler);</span>
-<span class="nc" id="L258">	}</span>
-
-	private double getHeightForConstraints(StringBounder stringBounder) {
-<span class="nc" id="L261">		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);</span>
-	}
+<span class="nc" id="L106">		this.ticksEvery = ticksEvery;</span>
+<span class="nc" id="L107">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
