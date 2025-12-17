@@ -71,7 +71,7 @@ For a more detailed overview, visit [PlantUML Official Website](https://plantuml
 
 ## 🛡 Security
 
-See [Security Policy](SECURITY.md) and [Security overview](https://github.com/plantuml/plantuml/security).
+See [Security Policy](docs/SECURITY.md) and [Security overview](https://github.com/plantuml/plantuml/security).
 
 > [!IMPORTANT]
 > [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
@@ -82,7 +82,7 @@ Whether you're looking to use PlantUML as a standalone application or as a compo
 
 ## ⚙️ Building from Source
 
-To build PlantUML from source, you'll need to have certain prerequisites installed and follow a series of steps outlined in our build guide. Find detailed instructions in our [BUILDING.md](https://github.com/plantuml/plantuml/blob/master/BUILDING.md) file.
+To build PlantUML from source, you'll need to have certain prerequisites installed and follow a series of steps outlined in our build guide. Find detailed instructions in our [BUILDING.md](https://github.com/plantuml/plantuml/blob/master/docs/BUILDING.md) file.
 
 ## 🧱 Contributing
 

@@ -103,7 +103,7 @@ git clone https://github.com/{your-username}/plantuml
 cd plantuml
 ```
 
-#### Building the Project - [Full Guide](https://github.com/plantuml/plantuml/blob/master/BUILDING.md)
+#### Building the Project - [Full Guide](https://github.com/plantuml/plantuml/blob/master/docs/BUILDING.md)
 
 To build the project, run the following command from the project root directory:
 
@@ -195,7 +195,7 @@ git push
 -->
 
 ## Styleguides
-### Commit Messages - [Full Guide](https://github.com/plantuml/plantuml/blob/master/CONVENTIONAL_COMMIT.md)
+### Commit Messages - [Full Guide](https://github.com/plantuml/plantuml/blob/master/docs/CONVENTIONAL_COMMIT.md)
 
 #### Format
 ```plaintext
