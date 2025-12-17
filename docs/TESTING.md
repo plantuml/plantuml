@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-See the [Building page](../BUILDING.md) and especilay the paragraph [Building PlantUML with Gradle](../BUILDING.md#building-plantuml-with-gradle).
+See the [Building page](BUILDING.md) and especilay the paragraph [Building PlantUML with Gradle](BUILDING.md#building-plantuml-with-gradle).
 
 ## Running Tests
 

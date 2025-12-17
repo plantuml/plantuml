@@ -24,7 +24,7 @@
     To build using this file, navigate to the directory containing this
     build.xml and run "ant" in the command line. For more detailed build
     instructions and requirements, refer to:
-    https://github.com/plantuml/plantuml/blob/master/BUILDING.md
+    https://github.com/plantuml/plantuml/blob/master/docs/BUILDING.md
     ========================================================================
 -->
 <project name="PlantUML" default="dist" basedir=".">
