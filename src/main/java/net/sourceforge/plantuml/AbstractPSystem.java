@@ -119,18 +119,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 
 
 	private String getVersion() {
-		final StringBuilder toAppend = new StringBuilder();
-		toAppend.append("PlantUML version ");
-		toAppend.append(Version.versionString());
-		toAppend.append("(" + Version.compileTimeString() + ")\n");
-		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
-		// ::comment when __CORE__
-		for (String name : OptionPrint.interestingProperties()) {
-			toAppend.append(name);
-			toAppend.append(BackSlash.CHAR_NEWLINE);
-		}
-		// ::done
-		return toAppend.toString();
+		return Version.versionString();
 	}
 
 	final public String getMetadata() {

@@ -563,6 +563,8 @@ public class Run {
 		}
 	}
 
+	private static final String META_HEADER_NEW = "<?plantuml-src ";
+
 	private static void extractMetadata(File f) throws IOException {
 		System.out.println("------------------------");
 		System.out.println(f);
@@ -570,22 +572,39 @@ public class Run {
 		if (f.getName().endsWith(".svg")) {
 			final SFile file = SFile.fromFile(f);
 			final String svg = FileUtils.readFile(file);
-			final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);
-			if (idx > 0) {
-				String part = svg.substring(idx + SvgGraphics.META_HEADER.length());
-				final int idxEnd = part.indexOf("]");
-				if (idxEnd > 0) {
-					part = part.substring(0, idxEnd);
-					part = part.replace("- -", "--");
-					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);
-					System.out.println(decoded);
-				}
-			}
+			final String decoded = extractMetadataFromSvg(svg);
+			if (decoded != null)
+				System.out.println(decoded);
 		} else {
 			final String data = new MetadataTag(f, "plantuml").getData();
 			System.out.println(data);
 		}
 		System.out.println("------------------------");
+	}
+
+	private static String extractMetadataFromSvg(String svg) throws NoPlantumlCompressionException {
+		// New format: <?plantuml-src ...?>
+		final int idxNew = svg.lastIndexOf(META_HEADER_NEW);
+		if (idxNew > 0) {
+			String part = svg.substring(idxNew + META_HEADER_NEW.length());
+			final int idxEnd = part.indexOf("?>");
+			if (idxEnd > 0) {
+				part = part.substring(0, idxEnd);
+				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);
+			}
+		}
+		// Old format: <!--SRC=[...]-->
+		final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);
+		if (idxOld > 0) {
+			String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());
+			final int idxEnd = part.indexOf("]");
+			if (idxEnd > 0) {
+				part = part.substring(0, idxEnd);
+				part = part.replace("- -", "--");
+				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);
+			}
+		}
+		return null;
 	}
 
 }

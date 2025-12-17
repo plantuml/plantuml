@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
+import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
+
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -60,17 +62,18 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
 
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
@@ -80,12 +83,10 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.Version;
 import net.sourceforge.plantuml.xml.XmlFactories;
-
-import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
 
 public class SvgGraphics {
 	// ::remove file when __HAXE__
@@ -311,6 +312,9 @@ public class SvgGraphics {
 	// This method returns a reference to a root node that
 	// has already been appended to the document.
 	private Element getRootNode() {
+		// Add PlantUML version as processing instruction
+		document.appendChild(document.createProcessingInstruction("plantuml", Version.versionString()));
+
 		// Create the root node named svg and append it to
 		// the document.
 		final Element svg = document.createElement("svg");
@@ -1059,12 +1063,10 @@ public class SvgGraphics {
 	// ::done
 
 	public void addCommentMetadata(String metadata) {
-		// ::comment when __CORE__
-		final String signature = getMetadataHex(metadata).replace("--", "- -");
-		final String comment = "SRC=[" + signature + "]";
-		final Comment commentElement = document.createComment(comment);
-		getG().appendChild(commentElement);
-		// ::done
+		// https://github.com/plantuml/plantuml/issues/2306
+		final String signature = getMetadataHex(metadata);
+		final ProcessingInstruction processingInstruction = document.createProcessingInstruction("plantuml-src", signature);
+		getG().appendChild(processingInstruction);
 	}
 
 	public void addComment(String comment) {
