@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.emoji;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
@@ -50,8 +49,6 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.security.SImageIO;
 
 public class SpriteSvgNanoParser implements Sprite {
 

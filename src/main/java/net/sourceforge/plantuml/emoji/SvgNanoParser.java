@@ -274,10 +274,19 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 	}
 
 	private void drawText(UGraphicWithScale ugs, String s, Deque<String> stackG) {
-		final double x = Double.parseDouble(extract(DATA_X, s));
-		final double y = Double.parseDouble(extract(DATA_Y, s));
+		ugs = applyFillAndStroke(ugs, s, stackG);
+		ugs = applyTransform(ugs, s);
+
+		final double scalex = ugs.getAffineTransform().getScaleX();
+		final double scaley = ugs.getAffineTransform().getScaleY();
+
+		final double deltax = ugs.getAffineTransform().getTranslateX();
+		final double deltay = ugs.getAffineTransform().getTranslateY();
+
+		final double x = Double.parseDouble(extract(DATA_X, s)) * scalex + deltax;
+		final double y = Double.parseDouble(extract(DATA_Y, s)) * scaley + deltay;
 		final String fontColor = getFillString(s, stackG);
-		final int fontSize = getTextFontSize(s);
+		final int fontSize = (int) (getTextFontSize(s) * ugs.getInitialScale());
 
 		final Matcher m = P_TEXT.matcher(s);
 		if (m.find()) {
