@@ -54,10 +54,16 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.TVariableScope;
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
+
+	private static final Pattern COMPARE_PATTERN = Pattern.compile("^\\s*(.*?)\\s*(==|!=)\\s*(.*?)\\s*$");
+	private static final Pattern JSON_ACCESS_PATTERN = Pattern.compile("^(\\$[a-zA-Z0-9_]+)\\[(\\$?[a-zA-Z0-9_]+)\\]$");
 
 	private final Map<String, String> environment = new LinkedHashMap<String, String>();
 	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
@@ -159,7 +165,81 @@ public class Defines implements Truth {
 		// magic = null;
 	}
 
+	private String evaluateOperand(String operand) {
+		if (operand.startsWith("\"") && operand.endsWith("\"")) {
+			return operand.substring(1, operand.length() - 1);
+		}
+
+		if (operand.startsWith("$")) {
+			final Matcher m = JSON_ACCESS_PATTERN.matcher(operand);
+
+			if (m.matches()) {
+				final String varName = m.group(1);
+				final String key = m.group(2);
+				return getJsonValue(varName, key);
+			}
+
+			Define define = values.get(operand.substring(1));
+			if (define != null) {
+				return define.asTVariable().toString();
+			}
+		}
+
+		return operand;
+	}
+
+	private String getJsonValue(String varName, String keyName) {
+		final Define define = values.get(varName.substring(1));
+		if (define == null) {
+			return null;
+		}
+
+		final String jsonString = define.asTVariable().toString();
+		try {
+			final JsonValue jsonValue = Json.parse(jsonString);
+			if (jsonValue.isObject()) {
+				final JsonObject jsonObject = jsonValue.asObject();
+				String aKey = evaluateOperand(keyName);
+				final JsonValue result = jsonObject.get(aKey);
+				if (result != null && result.isString()) {
+					return result.asString();
+				}
+			}
+		} catch (Exception e) {
+			Log.info(() -> "Error parsing JSON " + e);
+			return null;
+		}
+		return null;
+	}
+
+	private Boolean evaluateComparison(String expression) {
+		final Matcher matcher = COMPARE_PATTERN.matcher(expression);
+		if (!matcher.matches()) {
+			return null;
+		}
+
+		final String left = matcher.group(1).trim();
+		final String operator = matcher.group(2).trim();
+		final String right = matcher.group(3).trim();
+
+		final String leftValue = evaluateOperand(left);
+		final String rightValue = evaluateOperand(right);
+
+		if ("==".equals(operator)) {
+			return Objects.equals(leftValue, rightValue);
+		}
+		if ("!=".equals(operator)) {
+			return !Objects.equals(leftValue, rightValue);
+		}
+
+		return null;
+	}
+
 	public boolean isDefine(String expression) {
+		final Boolean comparisonResult = evaluateComparison(expression);
+		if (comparisonResult != null) {
+			return comparisonResult;
+		}
 		try {
 			final EvalBoolean eval = new EvalBoolean(expression, this);
 			return eval.eval();
