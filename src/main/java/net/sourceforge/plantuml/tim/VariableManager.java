@@ -123,7 +123,7 @@ public class VariableManager {
 				}
 
 				if (jsonValue == null)
-					throw new EaterException("Data parsing error", location);
+					break;
 
 				i++;
 			} else {
