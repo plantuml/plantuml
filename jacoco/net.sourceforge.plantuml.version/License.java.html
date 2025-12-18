@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
-<span class="fc" id="L45">public class License {</span>
+<span class="nc" id="L45">public class License {</span>
 
 	public static void main(String[] args) {
 <span class="nc" id="L48">		List&lt;String&gt; lines = License.getCurrent().getTextFull();</span>
@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 	@Override
 	public String toString() {
 		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
-<span class="fc" id="L63">		return &quot;GPL&quot;;</span>
+<span class="nc" id="L63">		return &quot;GPL&quot;;</span>
 		// ::done
 		// ::uncomment when __CORE__ or __MIT__
 		// return &quot;MIT&quot;;
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 	}
 
 	public static License getCurrent() {
-<span class="fc" id="L86">		return new License();</span>
+<span class="nc" id="L86">		return new License();</span>
 	}
 
 	public List&lt;String&gt; getTextFull() {

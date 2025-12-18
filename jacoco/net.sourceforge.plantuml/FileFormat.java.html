@@ -395,31 +395,41 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="pc bpc" id="L395" title="1 of 4 branches missed.">		return this == PNG || this == SVG;</span>
 	}
 
+	private static final String META_HEADER_NEW = &quot;&lt;?plantuml-src &quot;;
+
 	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
-<span class="fc bfc" id="L400" title="All 2 branches covered.">			if (this == PNG) {</span>
-<span class="fc" id="L401">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
-<span class="fc" id="L402">				final String previousMetadata = tag.getData();</span>
-<span class="fc" id="L403">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
-<span class="fc" id="L404">				return sameMetadata;</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">			if (this == PNG) {</span>
+<span class="fc" id="L403">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
+<span class="fc" id="L404">				final String previousMetadata = tag.getData();</span>
+<span class="fc" id="L405">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
+<span class="fc" id="L406">				return sameMetadata;</span>
 			}
-<span class="pc bpc" id="L406" title="1 of 2 branches missed.">			if (this == SVG) {</span>
-<span class="fc" id="L407">				final String svg = FileUtils.readSvg(existingFile);</span>
-<span class="pc bpc" id="L408" title="1 of 2 branches missed.">				if (svg == null)</span>
-<span class="nc" id="L409">					return false;</span>
+<span class="pc bpc" id="L408" title="1 of 2 branches missed.">			if (this == SVG) {</span>
+<span class="fc" id="L409">				final String svg = FileUtils.readSvg(existingFile);</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">				if (svg == null)</span>
+<span class="nc" id="L411">					return false;</span>
 
-<span class="fc" id="L411">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
-<span class="fc" id="L412">				final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="pc bpc" id="L413" title="1 of 2 branches missed.">				if (idx != -1) {</span>
-<span class="fc" id="L414">					final String part = svg.substring(idx + SvgGraphics.META_HEADER.length());</span>
-<span class="fc" id="L415">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
+<span class="fc" id="L413">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
+
+				// New format: &lt;?plantuml-src ...?&gt;
+<span class="fc" id="L416">				final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">				if (idxNew != -1) {</span>
+<span class="fc" id="L418">					final String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
+<span class="fc" id="L419">					return part.startsWith(currentSignature + &quot;?&gt;&quot;);</span>
 				}
 
+				// Old format: &lt;!--SRC=[...]--&gt;
+<span class="nc" id="L423">				final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">				if (idxOld != -1) {</span>
+<span class="nc" id="L425">					final String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
+<span class="nc" id="L426">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
+				}
 			}
-<span class="nc" id="L419">		} catch (IOException e) {</span>
-<span class="nc" id="L420">			Logme.error(e);</span>
-<span class="nc" id="L421">		}</span>
-<span class="nc" id="L422">		return false;</span>
+<span class="nc" id="L429">		} catch (IOException e) {</span>
+<span class="nc" id="L430">			Logme.error(e);</span>
+<span class="nc" id="L431">		}</span>
+<span class="nc" id="L432">		return false;</span>
 	}
 	// ::done
 

@@ -95,7 +95,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L95">	}</span>
 
 	public static Collection&lt;String&gt; interestingProperties() {
-<span class="fc" id="L98">		final Properties p = System.getProperties();</span>
+<span class="nc" id="L98">		final Properties p = System.getProperties();</span>
 //		final List&lt;String&gt; list1 = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;,
 //				&quot;java.runtime.version&quot;, &quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;file.encoding&quot;,
 //				&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
@@ -104,19 +104,19 @@ import net.sourceforge.plantuml.version.Version;
 //				&quot;file.encoding&quot;, &quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
 //		final List&lt;String&gt; all = withIp() ? list1 : list2;
 		final List&lt;String&gt; all;
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
 <span class="nc" id="L108">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;java.runtime.version&quot;,</span>
 					&quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;os.version&quot;, &quot;OS Version&quot;, &quot;file.encoding&quot;,
 					&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
 		} else {
-<span class="fc" id="L112">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;file.encoding&quot;,</span>
+<span class="nc" id="L112">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;file.encoding&quot;,</span>
 					&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
 		}
-<span class="fc" id="L115">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i += 2) {</span>
-<span class="fc" id="L117">			result.add(all.get(i + 1) + &quot;: &quot; + p.getProperty(all.get(i)));</span>
+<span class="nc" id="L115">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size(); i += 2) {</span>
+<span class="nc" id="L117">			result.add(all.get(i + 1) + &quot;: &quot; + p.getProperty(all.get(i)));</span>
 		}
-<span class="fc" id="L119">		return result;</span>
+<span class="nc" id="L119">		return result;</span>
 	}
 
 	public static Collection&lt;String&gt; interestingValues() {

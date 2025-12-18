@@ -563,30 +563,49 @@ public class Run {
 <span class="fc" id="L563">		}</span>
 <span class="fc" id="L564">	}</span>
 
+	private static final String META_HEADER_NEW = &quot;&lt;?plantuml-src &quot;;
+
 	private static void extractMetadata(File f) throws IOException {
-<span class="fc" id="L567">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="fc" id="L568">		System.out.println(f);</span>
-<span class="fc" id="L569">		System.out.println();</span>
-<span class="fc bfc" id="L570" title="All 2 branches covered.">		if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
-<span class="fc" id="L571">			final SFile file = SFile.fromFile(f);</span>
-<span class="fc" id="L572">			final String svg = FileUtils.readFile(file);</span>
-<span class="fc" id="L573">			final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="fc bfc" id="L574" title="All 2 branches covered.">			if (idx &gt; 0) {</span>
-<span class="fc" id="L575">				String part = svg.substring(idx + SvgGraphics.META_HEADER.length());</span>
-<span class="fc" id="L576">				final int idxEnd = part.indexOf(&quot;]&quot;);</span>
-<span class="pc bpc" id="L577" title="1 of 2 branches missed.">				if (idxEnd &gt; 0) {</span>
-<span class="fc" id="L578">					part = part.substring(0, idxEnd);</span>
-<span class="fc" id="L579">					part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
-<span class="fc" id="L580">					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
-<span class="fc" id="L581">					System.out.println(decoded);</span>
-				}
-			}
-<span class="fc" id="L584">		} else {</span>
-<span class="fc" id="L585">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
-<span class="fc" id="L586">			System.out.println(data);</span>
+<span class="fc" id="L569">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="fc" id="L570">		System.out.println(f);</span>
+<span class="fc" id="L571">		System.out.println();</span>
+<span class="fc bfc" id="L572" title="All 2 branches covered.">		if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
+<span class="fc" id="L573">			final SFile file = SFile.fromFile(f);</span>
+<span class="fc" id="L574">			final String svg = FileUtils.readFile(file);</span>
+<span class="fc" id="L575">			final String decoded = extractMetadataFromSvg(svg);</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">			if (decoded != null)</span>
+<span class="fc" id="L577">				System.out.println(decoded);</span>
+<span class="fc" id="L578">		} else {</span>
+<span class="fc" id="L579">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
+<span class="fc" id="L580">			System.out.println(data);</span>
 		}
-<span class="fc" id="L588">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="fc" id="L589">	}</span>
+<span class="fc" id="L582">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="fc" id="L583">	}</span>
+
+	private static String extractMetadataFromSvg(String svg) throws NoPlantumlCompressionException {
+		// New format: &lt;?plantuml-src ...?&gt;
+<span class="fc" id="L587">		final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">		if (idxNew &gt; 0) {</span>
+<span class="fc" id="L589">			String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
+<span class="fc" id="L590">			final int idxEnd = part.indexOf(&quot;?&gt;&quot;);</span>
+<span class="pc bpc" id="L591" title="1 of 2 branches missed.">			if (idxEnd &gt; 0) {</span>
+<span class="fc" id="L592">				part = part.substring(0, idxEnd);</span>
+<span class="fc" id="L593">				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
+			}
+		}
+		// Old format: &lt;!--SRC=[...]--&gt;
+<span class="fc" id="L597">		final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="pc bpc" id="L598" title="1 of 2 branches missed.">		if (idxOld &gt; 0) {</span>
+<span class="nc" id="L599">			String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
+<span class="nc" id="L600">			final int idxEnd = part.indexOf(&quot;]&quot;);</span>
+<span class="nc bnc" id="L601" title="All 2 branches missed.">			if (idxEnd &gt; 0) {</span>
+<span class="nc" id="L602">				part = part.substring(0, idxEnd);</span>
+<span class="nc" id="L603">				part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
+<span class="nc" id="L604">				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
+			}
+		}
+<span class="fc" id="L607">		return null;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
