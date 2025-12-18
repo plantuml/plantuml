@@ -17,7 +17,9 @@ class SourceStringReaderTest {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ssr.outputImage(baos, 0, new FileFormatOption(FileFormat.SVG));
 		final String result = new String(baos.toByteArray());
-		assertTrue(result.startsWith("<svg "));
+		assertTrue(result.matches(
+				"(?s)^<\\?plantuml \\d+\\.\\d+(\\.\\d+)?(beta\\d+)?\\s*\\?>\\s*<svg [^>]*xmlns=\"http://www.w3.org/2000/svg\".*"),
+				"Should start with <?plantuml VERSION?> followed by <svg>");
 	}
 
 }

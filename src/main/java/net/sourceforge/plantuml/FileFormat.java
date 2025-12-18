@@ -395,6 +395,8 @@ public enum FileFormat {
 		return this == PNG || this == SVG;
 	}
 
+	private static final String META_HEADER_NEW = "<?plantuml-src ";
+
 	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
 			if (this == PNG) {
@@ -409,12 +411,20 @@ public enum FileFormat {
 					return false;
 
 				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);
-				final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);
-				if (idx != -1) {
-					final String part = svg.substring(idx + SvgGraphics.META_HEADER.length());
-					return part.startsWith(currentSignature + "]");
+
+				// New format: <?plantuml-src ...?>
+				final int idxNew = svg.lastIndexOf(META_HEADER_NEW);
+				if (idxNew != -1) {
+					final String part = svg.substring(idxNew + META_HEADER_NEW.length());
+					return part.startsWith(currentSignature + "?>");
 				}
 
+				// Old format: <!--SRC=[...]-->
+				final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);
+				if (idxOld != -1) {
+					final String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());
+					return part.startsWith(currentSignature + "]");
+				}
 			}
 		} catch (IOException e) {
 			Logme.error(e);

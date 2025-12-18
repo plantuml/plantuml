@@ -111,7 +111,7 @@ class PicowebTest {
 		assertHeader(resp.headers(), "access-control-allow-origin");
 		assertHeader(resp.headers(), "server");
 		assertNoHeader(resp.headers(), "X-PlantUML-Diagram-Error");
-		assertTrue(body(resp).startsWith("<svg "));
+		assertIsSvgResponse(resp);
 	}
 
 	@Test
@@ -123,7 +123,7 @@ class PicowebTest {
 		assertHeader(resp.headers(), "access-control-allow-origin");
 		assertHeader(resp.headers(), "server");
 		assertNoHeader(resp.headers(), "X-PlantUML-Diagram-Error");
-		assertTrue(body(resp).startsWith("<svg "));
+		assertIsSvgResponse(resp);
 	}
 
 	@Test
@@ -197,7 +197,7 @@ class PicowebTest {
 		assertHeader(resp.headers(), "access-control-allow-origin");
 		assertHeader(resp.headers(), "server");
 		assertNoHeader(resp.headers(), "X-PlantUML-Diagram-Error");
-		assertTrue(body(resp).startsWith("<svg "));
+		assertIsSvgResponse(resp);
 	}
 
 	@Test
@@ -235,7 +235,7 @@ class PicowebTest {
 		assertHeader(resp.headers(), "access-control-allow-origin");
 		assertHeader(resp.headers(), "server");
 		assertNoHeader(resp.headers(), "X-PlantUML-Diagram-Error");
-		assertTrue(body(resp).startsWith("<svg "));		
+		assertIsSvgResponse(resp);
 		// assertTrue(err.capturedString().contains("this_exe_do_not_exist"));
 	}
 
@@ -296,6 +296,12 @@ class PicowebTest {
 
 	private void assertHeader(HttpHeaders headers, String key) {
 		assertTrue(headers.map().containsKey(key));
+	}
+
+	private void assertIsSvgResponse(HttpResponse<byte[]> resp) {
+		final String body = body(resp);
+		assertTrue(body.matches("(?s)^<\\?plantuml \\d+\\.\\d+(\\.\\d+)?(beta\\d+)?\\s*\\?>\\s*<svg .*"),
+				"Response should start with <?plantuml VERSION?> followed by <svg>");
 	}
 
 }

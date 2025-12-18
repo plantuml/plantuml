@@ -65,6 +65,7 @@ public class SvgTest {
 
 	private String stripExtraneousAndUnpredictableNodes(String svgXML) {
 		Document document = parseXML(svgXML);
+		removeProcessingInstructions(document);
 		removeElementsByXPath(document,
 				"/svg:svg/@style",
 				"//svg:script/text()",
@@ -87,6 +88,18 @@ public class SvgTest {
 				"//@viewBox"
 		);
 		return convertDocumentToString(document);
+	}
+
+	private void removeProcessingInstructions(Document document) {
+		NodeList children = document.getChildNodes();
+		List<Node> toRemove = new ArrayList<>();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			if (child.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE)
+				toRemove.add(child);
+		}
+		for (Node node : toRemove)
+			document.removeChild(node);
 	}
 
 	private Document parseXML(String xml) {

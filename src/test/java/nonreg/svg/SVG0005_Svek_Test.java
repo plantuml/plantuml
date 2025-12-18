@@ -35,7 +35,7 @@ Expected result MUST be put between triple brackets
   </defs>
   <g>
     <!--cluster c1-->
-    <g class="cluster" data-entity="c1" data-source-line="3" data-uid="ent0002" id="cluster_c1">
+    <g class="cluster" data-qualified-name="c1" data-source-line="3" id="ent0002">
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
@@ -43,23 +43,23 @@ Expected result MUST be put between triple brackets
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">c1</text>
     </g>
     <!--cluster c2-->
-    <g class="cluster" data-entity="c2" data-source-line="7" data-uid="ent0004" id="cluster_c2">
+    <g class="cluster" data-qualified-name="c2" data-source-line="7" id="ent0004">
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">c2</text>
     </g>
-    <g class="entity" data-entity="p1" data-source-line="4" data-uid="ent0003" id="entity_p1">
+    <g class="entity" data-qualified-name="c1.p1" data-source-line="4" id="ent0003">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p1</text>
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
-    <g class="entity" data-entity="p2" data-source-line="8" data-uid="ent0005" id="entity_p2">
+    <g class="entity" data-qualified-name="c2.p2" data-source-line="8" id="ent0005">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p2</text>
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
     <!--link p1 to p2-->
-    <g class="link" data-entity-1="p1" data-entity-2="p2" data-link-type="dependency" data-source-line="11" data-uid="lnk6" id="link_p1_p2">
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" data-source-line="11" id="lnk6">
       <path fill="none" id="p1-to-p2" style="stroke:#181818;stroke-width:1;"/>
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
     </g>
