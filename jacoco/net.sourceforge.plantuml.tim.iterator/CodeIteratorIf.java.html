@@ -63,100 +63,123 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	public StringLocated peek() throws EaterException {
 		while (true) {
 <span class="fc" id="L65">			final StringLocated result = source.peek();</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">			if (result == null) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">			if (result == null)</span>
 <span class="fc" id="L67">				return null;</span>
-			}
-<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (result.getType() == TLineType.IF) {</span>
-<span class="fc" id="L70">				logs.add(result);</span>
-<span class="fc" id="L71">				executeIf(context, memory, result.getTrimmed());</span>
-<span class="fc" id="L72">				next();</span>
-<span class="fc" id="L73">				continue;</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			} else if (result.getType() == TLineType.IFDEF) {</span>
-<span class="nc" id="L75">				logs.add(result);</span>
-<span class="nc" id="L76">				executeIfdef(context, memory, result.getTrimmed());</span>
-<span class="nc" id="L77">				next();</span>
-<span class="nc" id="L78">				continue;</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">			} else if (result.getType() == TLineType.IFNDEF) {</span>
-<span class="fc" id="L80">				logs.add(result);</span>
-<span class="fc" id="L81">				executeIfndef(context, memory, result.getTrimmed());</span>
-<span class="fc" id="L82">				next();</span>
-<span class="fc" id="L83">				continue;</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ELSE) {</span>
-<span class="fc" id="L85">				logs.add(result);</span>
-<span class="fc" id="L86">				executeElse(context, memory, result.getTrimmed());</span>
-<span class="fc" id="L87">				next();</span>
-<span class="fc" id="L88">				continue;</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ELSEIF) {</span>
-<span class="fc" id="L90">				logs.add(result);</span>
-<span class="fc" id="L91">				executeElseIf(context, memory, result.getTrimmed());</span>
-<span class="fc" id="L92">				next();</span>
-<span class="fc" id="L93">				continue;</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ENDIF) {</span>
-<span class="fc" id="L95">				logs.add(result);</span>
-<span class="fc" id="L96">				executeEndif(context, memory, result.getTrimmed());</span>
-<span class="fc" id="L97">				next();</span>
-<span class="fc" id="L98">				continue;</span>
-<span class="fc bfc" id="L99" title="All 4 branches covered.">			} else if (memory.peekIf() != null &amp;&amp; (memory.areAllIfOk(context, memory) == false)) {</span>
-<span class="fc" id="L100">				logs.add(result);</span>
-<span class="fc" id="L101">				next();</span>
-<span class="fc" id="L102">				continue;</span>
+
+<span class="fc" id="L69">			final TLineType type = result.getType();</span>
+
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (isConditionalDirective(type)) {</span>
+<span class="fc" id="L72">				logs.add(result);</span>
+<span class="fc" id="L73">				processConditionalDirective(result, type);</span>
+<span class="fc" id="L74">				next();</span>
+<span class="fc" id="L75">				continue;</span>
 			}
 
-<span class="fc" id="L105">			return result;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			if (shouldSkipLine()) {</span>
+<span class="fc" id="L79">				logs.add(result);</span>
+<span class="fc" id="L80">				next();</span>
+<span class="fc" id="L81">				continue;</span>
+			}
+
+<span class="fc" id="L84">			return result;</span>
 		}
 	}
 
-	private void executeIf(TContext context, TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L110">		final EaterIf condition = new EaterIf(s);</span>
-<span class="fc" id="L111">		condition.analyze(context, memory);</span>
-<span class="fc" id="L112">		final boolean isTrue = condition.isTrue();</span>
-<span class="fc" id="L113">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
+	private boolean isConditionalDirective(TLineType type) {
+<span class="pc bpc" id="L89" title="1 of 12 branches missed.">		return type == TLineType.IF || type == TLineType.IFDEF || type == TLineType.IFNDEF || type == TLineType.ELSE</span>
+				|| type == TLineType.ELSEIF || type == TLineType.ENDIF;
+	}
+
+	private void processConditionalDirective(StringLocated line, TLineType type) throws EaterException {
+<span class="pc bpc" id="L94" title="2 of 7 branches missed.">		switch (type) {</span>
+		case IF:
+<span class="fc" id="L96">			executeIf(line);</span>
+<span class="fc" id="L97">			break;</span>
+		case IFDEF:
+<span class="nc" id="L99">			executeIfdef(line);</span>
+<span class="nc" id="L100">			break;</span>
+		case IFNDEF:
+<span class="fc" id="L102">			executeIfndef(line);</span>
+<span class="fc" id="L103">			break;</span>
+		case ELSE:
+<span class="fc" id="L105">			executeElse(line);</span>
+<span class="fc" id="L106">			break;</span>
+		case ELSEIF:
+<span class="fc" id="L108">			executeElseIf(line);</span>
+<span class="fc" id="L109">			break;</span>
+		case ENDIF:
+<span class="fc" id="L111">			executeEndif(line);</span>
+			break;
+		}
 <span class="fc" id="L114">	}</span>
 
-	private void executeElseIf(TContext context, TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L117">		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (poll == null)</span>
-<span class="nc" id="L119">			throw new EaterException(&quot;No if related to this else&quot;, s);</span>
+	private boolean shouldSkipLine() throws EaterException {
+<span class="fc bfc" id="L117" title="All 4 branches covered.">		return memory.peekIf() != null &amp;&amp; areAllIfOk() == false;</span>
+	}
 
-<span class="fc" id="L121">		poll.enteringElseIf();</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (poll.hasBeenBurn() == false) {</span>
-<span class="fc" id="L123">			final EaterElseIf condition = new EaterElseIf(s);</span>
-<span class="fc" id="L124">			condition.analyze(context, memory);</span>
-<span class="fc" id="L125">			final boolean isTrue = condition.isTrue();</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (isTrue)</span>
-<span class="fc" id="L127">				poll.nowInSomeElseIf();</span>
+	private boolean areAllIfOk() throws EaterException {
+<span class="fc" id="L121">		return memory.areAllIfOk(context, memory);</span>
+	}
 
+	// --- Execution methods ---
+
+	private void executeIf(StringLocated s) throws EaterException {
+		final boolean isTrue;
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (areAllIfOk()) {</span>
+<span class="fc" id="L129">			final EaterIf condition = new EaterIf(s);</span>
+<span class="fc" id="L130">			condition.analyze(context, memory);</span>
+<span class="fc" id="L131">			isTrue = condition.isTrue();</span>
+<span class="fc" id="L132">		} else</span>
+<span class="fc" id="L133">			isTrue = false;</span>
+
+<span class="fc" id="L135">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
+<span class="fc" id="L136">	}</span>
+
+	private void executeIfdef(StringLocated s) throws EaterException {
+<span class="nc" id="L139">		final EaterIfdef condition = new EaterIfdef(s);</span>
+<span class="nc" id="L140">		condition.analyze(context, memory);</span>
+<span class="nc" id="L141">		final boolean isTrue = condition.isTrue(context, memory);</span>
+<span class="nc" id="L142">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
+<span class="nc" id="L143">	}</span>
+
+	private void executeIfndef(StringLocated s) throws EaterException {
+<span class="fc" id="L146">		final EaterIfndef condition = new EaterIfndef(s);</span>
+<span class="fc" id="L147">		condition.analyze(context, memory);</span>
+<span class="fc" id="L148">		final boolean isTrue = condition.isTrue(context, memory);</span>
+<span class="fc" id="L149">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
+<span class="fc" id="L150">	}</span>
+
+	private void executeElseIf(StringLocated s) throws EaterException {
+<span class="fc" id="L153">		final ExecutionContextIf poll = getRequiredIfContext(s, &quot;elseif&quot;);</span>
+<span class="fc" id="L154">		poll.enteringElseIf();</span>
+
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (poll.hasBeenBurn() == false) {</span>
+<span class="fc" id="L157">			final EaterElseIf condition = new EaterElseIf(s);</span>
+<span class="fc" id="L158">			condition.analyze(context, memory);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (condition.isTrue())</span>
+<span class="fc" id="L160">				poll.nowInSomeElseIf();</span>
 		}
-<span class="fc" id="L130">	}</span>
+<span class="fc" id="L162">	}</span>
 
-	private void executeIfdef(TContext context, TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L133">		final EaterIfdef condition = new EaterIfdef(s);</span>
-<span class="nc" id="L134">		condition.analyze(context, memory);</span>
-<span class="nc" id="L135">		final boolean isTrue = condition.isTrue(context, memory);</span>
-<span class="nc" id="L136">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
-<span class="nc" id="L137">	}</span>
+	private void executeElse(StringLocated s) throws EaterException {
+<span class="fc" id="L165">		final ExecutionContextIf poll = getRequiredIfContext(s, &quot;else&quot;);</span>
+<span class="fc" id="L166">		poll.nowInElse();</span>
+<span class="fc" id="L167">	}</span>
 
-	private void executeIfndef(TContext context, TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L140">		final EaterIfndef condition = new EaterIfndef(s);</span>
-<span class="fc" id="L141">		condition.analyze(context, memory);</span>
-<span class="fc" id="L142">		final boolean isTrue = condition.isTrue(context, memory);</span>
-<span class="fc" id="L143">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
-<span class="fc" id="L144">	}</span>
+	private void executeEndif(StringLocated s) throws EaterException {
+<span class="fc" id="L170">		final ExecutionContextIf poll = (ExecutionContextIf) memory.pollIf();</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (poll == null)</span>
+<span class="nc" id="L172">			throw new EaterException(&quot;No if related to this endif&quot;, s);</span>
+<span class="fc" id="L173">	}</span>
 
-	private void executeElse(TContext context, TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L147">		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (poll == null)</span>
-<span class="nc" id="L149">			throw new EaterException(&quot;No if related to this else&quot;, s);</span>
+	// --- Helper methods ---
 
-<span class="fc" id="L151">		poll.nowInElse();</span>
-<span class="fc" id="L152">	}</span>
-
-	private void executeEndif(TContext context, TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L155">		final ExecutionContextIf poll = (ExecutionContextIf) memory.pollIf();</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (poll == null)</span>
-<span class="nc" id="L157">			throw new EaterException(&quot;No if related to this endif&quot;, s);</span>
-
-<span class="fc" id="L159">	}</span>
+	private ExecutionContextIf getRequiredIfContext(StringLocated s, String directive) throws EaterException {
+<span class="fc" id="L178">		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (poll == null)</span>
+<span class="nc" id="L180">			throw new EaterException(&quot;No if related to this &quot; + directive, s);</span>
+<span class="fc" id="L181">		return poll;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

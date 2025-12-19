@@ -103,16 +103,16 @@ import net.sourceforge.plantuml.style.ISkinParam;
 						currentY);
 <span class="fc" id="L104">				reverse = ((CommunicationTile) result).isReverse(stringBounder);</span>
 			}
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
-<span class="nc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
-<span class="nc bnc" id="L108" title="All 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
+<span class="fc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
+<span class="pc bpc" id="L108" title="3 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
 <span class="nc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
-<span class="nc bnc" id="L111" title="All 2 branches missed.">				else if (notePosition == NotePosition.LEFT)</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.LEFT)</span>
 <span class="nc" id="L112">					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);</span>
-<span class="nc bnc" id="L114" title="All 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
-<span class="nc" id="L115">					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,</span>
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
+<span class="fc" id="L115">					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
 <span class="nc bnc" id="L117" title="All 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
 <span class="nc" id="L118">					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,</span>
@@ -122,7 +122,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="nc bnc" id="L122" title="All 2 branches missed.">				else if (notePosition == NotePosition.TOP)</span>
 <span class="nc" id="L123">					result = new CommunicationTileNoteTop(result, msg, skin, skinParam, noteOnMessage, currentY);</span>
 
-<span class="nc" id="L125">			}</span>
+<span class="fc" id="L125">			}</span>
 <span class="fc" id="L126">			tiles.add(result);</span>
 <span class="fc bfc" id="L127" title="All 2 branches covered.">		} else if (ev instanceof MessageExo) {</span>
 <span class="fc" id="L128">			final MessageExo exo = (MessageExo) ev;</span>
@@ -155,23 +155,23 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">		} else if (ev instanceof Divider) {</span>
 <span class="nc" id="L156">			final Divider divider = (Divider) ev;</span>
 <span class="nc" id="L157">			tiles.add(new DividerTile(divider, tileArguments, currentY));</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		} else if (ev instanceof GroupingStart) {</span>
-<span class="nc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
+<span class="pc bfc" id="L158" title="All 2 branches covered.">		} else if (ev instanceof GroupingStart) {</span>
+<span class="fc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
 			final AbstractTile groupingTile;
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (start.getType() == GroupingType.START_PARTITION)</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (start.getType() == GroupingType.START_PARTITION)</span>
 <span class="nc" id="L162">				groupingTile = new PartitionTile(it, start,</span>
 <span class="nc" id="L163">						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
 						tileArguments, currentY);
 			else
-<span class="nc" id="L166">				groupingTile = new GroupingTile(it, start,</span>
-<span class="nc" id="L167">						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
+<span class="fc" id="L166">				groupingTile = new GroupingTile(it, start,</span>
+<span class="fc" id="L167">						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
 						tileArguments, currentY);
 
 			if (YGauge.USE_ME == false)
-<span class="nc" id="L171">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
-<span class="nc" id="L172">			tiles.add(groupingTile);</span>
+<span class="fc" id="L171">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L172">			tiles.add(groupingTile);</span>
 			if (YGauge.USE_ME == false)
-<span class="nc" id="L174">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
+<span class="fc" id="L174">				tiles.add(new EmptyTile(4, groupingTile, currentY));</span>
 
 <span class="pc bpc" id="L176" title="3 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
 <span class="nc" id="L177">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>
