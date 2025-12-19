@@ -27,14 +27,14 @@ jobs:
       run: gradle test --tests IntermediateTest_0000
 
     - name: Upload test reports
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         # Using github.run_number here to reduce confusion when downloading & comparing from several builds
         name: ${{ github.run_number }}-test-reports
         path: build/reports/tests/
 
     - name: Upload outputdev
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ github.run_number }}-outputdev
         path: outputdev
