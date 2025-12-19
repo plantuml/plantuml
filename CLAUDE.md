@@ -23,6 +23,7 @@ gradle test
 - **Braces**: Opening braces on the same line as the statement.
 - **Imports**: Explicit imports, no wildcard imports.
 - **Final variables**: Prefer `final` for local variables when possible.
+- **Boolean negation**: Prefer positive conditions (`foo == false`) over negation operators (`!foo`).
 
 ## Architecture Notes
 

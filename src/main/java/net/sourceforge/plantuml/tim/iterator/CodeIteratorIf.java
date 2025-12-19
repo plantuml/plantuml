@@ -63,40 +63,19 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	public StringLocated peek() throws EaterException {
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null) {
+			if (result == null)
 				return null;
+
+			final TLineType type = result.getType();
+
+			if (isConditionalDirective(type)) {
+				logs.add(result);
+				processConditionalDirective(result, type);
+				next();
+				continue;
 			}
-			if (result.getType() == TLineType.IF) {
-				logs.add(result);
-				executeIf(context, memory, result.getTrimmed());
-				next();
-				continue;
-			} else if (result.getType() == TLineType.IFDEF) {
-				logs.add(result);
-				executeIfdef(context, memory, result.getTrimmed());
-				next();
-				continue;
-			} else if (result.getType() == TLineType.IFNDEF) {
-				logs.add(result);
-				executeIfndef(context, memory, result.getTrimmed());
-				next();
-				continue;
-			} else if (result.getType() == TLineType.ELSE) {
-				logs.add(result);
-				executeElse(context, memory, result.getTrimmed());
-				next();
-				continue;
-			} else if (result.getType() == TLineType.ELSEIF) {
-				logs.add(result);
-				executeElseIf(context, memory, result.getTrimmed());
-				next();
-				continue;
-			} else if (result.getType() == TLineType.ENDIF) {
-				logs.add(result);
-				executeEndif(context, memory, result.getTrimmed());
-				next();
-				continue;
-			} else if (memory.peekIf() != null && (memory.areAllIfOk(context, memory) == false)) {
+
+			if (shouldSkipLine()) {
 				logs.add(result);
 				next();
 				continue;
@@ -106,56 +85,100 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeIf(TContext context, TMemory memory, StringLocated s) throws EaterException {
-		final EaterIf condition = new EaterIf(s);
-		condition.analyze(context, memory);
-		final boolean isTrue = condition.isTrue();
-		memory.addIf(ExecutionContextIf.fromValue(isTrue));
+	private boolean isConditionalDirective(TLineType type) {
+		return type == TLineType.IF || type == TLineType.IFDEF || type == TLineType.IFNDEF || type == TLineType.ELSE
+				|| type == TLineType.ELSEIF || type == TLineType.ENDIF;
 	}
 
-	private void executeElseIf(TContext context, TMemory memory, StringLocated s) throws EaterException {
-		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
-		if (poll == null)
-			throw new EaterException("No if related to this else", s);
-
-		poll.enteringElseIf();
-		if (poll.hasBeenBurn() == false) {
-			final EaterElseIf condition = new EaterElseIf(s);
-			condition.analyze(context, memory);
-			final boolean isTrue = condition.isTrue();
-			if (isTrue)
-				poll.nowInSomeElseIf();
-
+	private void processConditionalDirective(StringLocated line, TLineType type) throws EaterException {
+		switch (type) {
+		case IF:
+			executeIf(line);
+			break;
+		case IFDEF:
+			executeIfdef(line);
+			break;
+		case IFNDEF:
+			executeIfndef(line);
+			break;
+		case ELSE:
+			executeElse(line);
+			break;
+		case ELSEIF:
+			executeElseIf(line);
+			break;
+		case ENDIF:
+			executeEndif(line);
+			break;
 		}
 	}
 
-	private void executeIfdef(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private boolean shouldSkipLine() throws EaterException {
+		return memory.peekIf() != null && areAllIfOk() == false;
+	}
+
+	private boolean areAllIfOk() throws EaterException {
+		return memory.areAllIfOk(context, memory);
+	}
+
+	// --- Execution methods ---
+
+	private void executeIf(StringLocated s) throws EaterException {
+		final boolean isTrue;
+		if (areAllIfOk()) {
+			final EaterIf condition = new EaterIf(s);
+			condition.analyze(context, memory);
+			isTrue = condition.isTrue();
+		} else
+			isTrue = false;
+
+		memory.addIf(ExecutionContextIf.fromValue(isTrue));
+	}
+
+	private void executeIfdef(StringLocated s) throws EaterException {
 		final EaterIfdef condition = new EaterIfdef(s);
 		condition.analyze(context, memory);
 		final boolean isTrue = condition.isTrue(context, memory);
 		memory.addIf(ExecutionContextIf.fromValue(isTrue));
 	}
 
-	private void executeIfndef(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private void executeIfndef(StringLocated s) throws EaterException {
 		final EaterIfndef condition = new EaterIfndef(s);
 		condition.analyze(context, memory);
 		final boolean isTrue = condition.isTrue(context, memory);
 		memory.addIf(ExecutionContextIf.fromValue(isTrue));
 	}
 
-	private void executeElse(TContext context, TMemory memory, StringLocated s) throws EaterException {
-		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
-		if (poll == null)
-			throw new EaterException("No if related to this else", s);
+	private void executeElseIf(StringLocated s) throws EaterException {
+		final ExecutionContextIf poll = getRequiredIfContext(s, "elseif");
+		poll.enteringElseIf();
 
+		if (poll.hasBeenBurn() == false) {
+			final EaterElseIf condition = new EaterElseIf(s);
+			condition.analyze(context, memory);
+			if (condition.isTrue())
+				poll.nowInSomeElseIf();
+		}
+	}
+
+	private void executeElse(StringLocated s) throws EaterException {
+		final ExecutionContextIf poll = getRequiredIfContext(s, "else");
 		poll.nowInElse();
 	}
 
-	private void executeEndif(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private void executeEndif(StringLocated s) throws EaterException {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.pollIf();
 		if (poll == null)
 			throw new EaterException("No if related to this endif", s);
+	}
 
+	// --- Helper methods ---
+
+	private ExecutionContextIf getRequiredIfContext(StringLocated s, String directive) throws EaterException {
+		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
+		if (poll == null)
+			throw new EaterException("No if related to this " + directive, s);
+		return poll;
 	}
 
 }
