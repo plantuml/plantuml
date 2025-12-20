@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.ngm.math;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.IntPredicate;
 
@@ -112,6 +113,8 @@ public final class Fraction implements Comparable<Fraction> {
 	
 	/** Adds another fraction to this one. */
 	public Fraction add(Fraction other) {
+		Objects.requireNonNull(other, "other fraction must not be null");
+		
 		// a/b + c/d = (ad + bc) / bd
 		long n = this.num * other.den + other.num * this.den;
 		long d = this.den * other.den;
@@ -120,6 +123,8 @@ public final class Fraction implements Comparable<Fraction> {
 
 	/** Subtracts another fraction from this one. */
 	public Fraction subtract(Fraction other) {
+		Objects.requireNonNull(other, "other fraction must not be null");
+		
 		// a/b - c/d = (ad - bc) / bd
 		long n = this.num * other.den - other.num * this.den;
 		long d = this.den * other.den;
@@ -128,6 +133,8 @@ public final class Fraction implements Comparable<Fraction> {
 
 	/** Multiplies this fraction by another fraction. */
 	public Fraction multiply(Fraction other) {
+		Objects.requireNonNull(other, "other fraction must not be null");
+		
 		// (a/b) * (c/d) = (ac) / (bd)
 		long n = this.num * other.num;
 		long d = this.den * other.den;
@@ -135,6 +142,8 @@ public final class Fraction implements Comparable<Fraction> {
 	}
 	
 	public Fraction divide(Fraction other) {
+		Objects.requireNonNull(other, "other fraction must not be null");
+		
 		return this.multiply(other.reciprocal());
 	}
 	
@@ -154,6 +163,8 @@ public final class Fraction implements Comparable<Fraction> {
 	/** Compares two fractions using long cross-multiplication. */
 	@Override
 	public int compareTo(Fraction other) {
+		Objects.requireNonNull(other, "other fraction must not be null");
+		
 		// Compare a/b and c/d by cross-products: ad ? bc
 		long lhs = this.num * other.den;
 		long rhs = other.num * this.den;
