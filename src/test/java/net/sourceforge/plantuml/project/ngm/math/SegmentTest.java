@@ -37,9 +37,12 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import org.assertj.core.api.AbstractAssert;
 import org.junit.jupiter.api.Test;
 
 class SegmentTest {
@@ -203,4 +206,85 @@ class SegmentTest {
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 	
+	///// Testing intersection of segments
+	@Test
+	void intersectionOfNoSegments() throws Exception {
+		assertThrows(IllegalArgumentException.class, 
+				() -> Segment.intersection(List.of()));
+	}
+	
+	@Test
+	void intersectionOfOneSegment() throws Exception {
+		Segment segment = new Segment(
+				LocalDateTime.of(2024, 6, 1, 9, 0),
+				LocalDateTime.of(2024, 6, 1, 17, 0),
+				Fraction.of(1));
+		
+		Segment result = Segment.intersection(List.of(segment));
+		
+		assertThat(result).isSameAs(segment);
+	}
+	
+	@Test
+	void intersectionOfDisjointSegments() throws Exception {
+		Segment segment1 = new Segment(
+				LocalDateTime.of(2025, 7, 1, 9, 0),
+				LocalDateTime.of(2025, 7, 1, 12, 0),
+				Fraction.of(1));
+		
+		Segment segment2 = new Segment(
+				LocalDateTime.of(2025, 7, 1, 13, 0),
+				LocalDateTime.of(2025, 7, 1, 17, 0),
+				Fraction.of(1));
+		
+		assertThrows(IllegalArgumentException.class, 
+				() -> Segment.intersection(List.of(segment1, segment2)));
+		
+	}
+	
+	@Test
+	void intersectionOfTwoSegments() throws Exception {
+		Segment segment1 = new Segment(
+				LocalDateTime.of(2025, 7, 1, 9, 0),
+				LocalDateTime.of(2025, 7, 1, 13, 0),
+				Fraction.of(1));
+		
+		Segment segment2 = new Segment(
+				LocalDateTime.of(2025, 7, 1, 12, 0),
+				LocalDateTime.of(2025, 7, 1, 17, 0),
+				new Fraction(1, 2));
+		
+		Segment result = Segment.intersection(List.of(segment1, segment2));	
+		
+		assertThat(result.getStartInclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 12, 0));
+		assertThat(result.getEndExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 13, 0));
+		assertThat(result.getValue()).isEqualTo(new Fraction(1, 2));
+	}
+	
+	
+	@Test
+	void intersectionOfMultipleSegmentsWithSumFunction() throws Exception {
+		List<Segment> segments = List.of(
+				new Segment(
+						LocalDateTime.of(2025, 7, 1, 8, 0),
+						LocalDateTime.of(2025, 7, 1, 16, 0),
+						Fraction.of(1)),
+				new Segment(
+						LocalDateTime.of(2025, 7, 1, 9, 0),
+						LocalDateTime.of(2025, 7, 1, 17, 0),
+						new Fraction(2, 3)),
+				new Segment(
+						LocalDateTime.of(2025, 7, 1, 10, 0),
+						LocalDateTime.of(2025, 7, 1, 18, 0),
+						new Fraction(3, 4))
+		);
+		
+		Segment result = Segment.intersection(segments, Fraction.SUM);	
+		
+		assertThat(result.getStartInclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 10, 0));
+		assertThat(result.getEndExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 16, 0));
+		// 1 + 2/3 + 3/4 = 12/12 + 8/12 + 9/12 = 29/12
+		assertThat(result.getValue()).isEqualTo(new Fraction(29, 12));
+	}
+
 }

@@ -36,7 +36,10 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 /**
  * A constant workload segment.
@@ -167,5 +170,108 @@ public final class Segment {
 	public String toString() {
 		return "Segment{" + "startInclusive=" + startInclusive + ", endExclusive=" + endExclusive + ", value="
 				+ value + '}';
+	}
+	
+	/**
+	 * Computes the intersection of multiple segments using multiplication
+	 * to combine their values.
+	 *
+	 * <p>
+	 * The intersection is defined as the overlapping time range shared by all
+	 * provided segments. If no such overlapping range exists, an exception
+	 * is thrown.
+	 * </p>
+	 *
+	 * <p>
+	 * The value of the resulting segment is computed by multiplying the values
+	 * of all intersecting segments.
+	 * </p>
+	 *
+	 * @param segments the list of segments to intersect
+	 * @return a new {@link Segment} representing the intersection of the input
+	 *         segments with the combined value
+	 * @throws IllegalArgumentException if {@code segments} is empty or if no
+	 *         overlapping range exists among the segments
+	 * @throws NullPointerException if {@code segments} is {@code null}
+	 */
+	public static Segment intersection(List<Segment> segments) {
+		return intersection(segments, Fraction.PRODUCT);
+	}
+	
+	/**
+	 * Computes the intersection of multiple segments.
+	 *
+	 * <p>
+	 * The intersection is defined as the overlapping time range shared by all
+	 * provided segments. If no such overlapping range exists, an exception
+	 * is thrown.
+	 * </p>
+	 *
+	 * <p>
+	 * The value of the resulting segment is computed by applying the provided
+	 * {@code valueFunction} to the values of all intersecting segments.
+	 * </p>
+	 *
+	 * @param segments the list of segments to intersect
+	 * @param valueFunction a function that combines two {@link Fraction} values
+	 *                      into one; this function is applied iteratively to
+	 *                      combine the values of all intersecting segments
+	 * @return a new {@link Segment} representing the intersection of the input
+	 *         segments with the combined value
+	 * @throws IllegalArgumentException if {@code segments} is empty or if no
+	 *         overlapping range exists among the segments
+	 * @throws NullPointerException if {@code segments} or {@code valueFunction}
+	 *         is {@code null}
+	 */
+	public static Segment intersection(List<Segment> segments, BiFunction<Fraction, Fraction, Fraction> valueFunction) {
+		Objects.requireNonNull(segments, "segments must not be null");
+		
+		if(segments.isEmpty()) {
+			throw new IllegalArgumentException("No segments to intersect");
+		} else if(segments.size() == 1) {
+			return segments.get(0);
+		}
+		
+		LocalDateTime maxStart = null;
+		LocalDateTime minEnd = null;
+		Fraction combinedValue = null;
+		for(Segment segment : segments) {
+			if(maxStart == null || segment.getStartInclusive().isAfter(maxStart)) {
+				maxStart = segment.getStartInclusive();
+			}
+			
+			if(minEnd == null || segment.getEndExclusive().isBefore(minEnd)) {
+				minEnd = segment.getEndExclusive();
+			}
+			
+			// Combine values using the provided function
+			if(combinedValue == null) {
+				combinedValue = segment.getValue();
+			} else {
+				combinedValue = valueFunction.apply(combinedValue, segment.getValue());
+			}
+		}
+		
+		if(maxStart.isBefore(minEnd)) {
+			// Overlapping segments exist between maxStart (inclusive) and minEnd (exclusive)
+			return new Segment(maxStart, minEnd, combinedValue);
+		} else {
+			// No overlapping segments
+			throw new IllegalArgumentException("Segments do not overlap");
+		}
+	}
+
+	/** Convenience overloads for array inputs.
+	 * Ii calls method with List argument {@link #intersection(List)}.  
+	 */
+	public static Segment intersection(Segment[] segments) {
+		return intersection(Arrays.asList(segments));
+	}
+	
+	/** Convenience overloads for array inputs.
+	 * It calls method with List argument {@link #intersection(List, BiFunction)}.  
+	 */
+	public static Segment intersection(Segment[] segments, BiFunction<Fraction, Fraction, Fraction> valueFunction) {
+		return intersection(Arrays.asList(segments), valueFunction);
 	}
 }
