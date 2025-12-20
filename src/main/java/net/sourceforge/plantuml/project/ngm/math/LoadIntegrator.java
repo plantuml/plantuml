@@ -37,9 +37,11 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Integrates a time-varying load function in order to determine the date and
@@ -153,7 +155,10 @@ public class LoadIntegrator {
 			System.out.println("Consumed segments:");
 			Fraction totalLoad = Fraction.ZERO;
 			for (Segment s : consumedSegments) {
-				System.out.println(String.format("%s - %s: load %s", s.getStartInclusive(), s.getEndExclusive(), s.getValue()));
+				System.out.println(String.format("%s(%s) - %s(%s): load %s", 
+						s.getStartInclusive(), s.getStartInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
+						s.getEndExclusive(), s.getEndExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
+						s.getValue()));
 				totalLoad = totalLoad.add(s.getValue());
 			}
 			System.out.println("Final end time: " + currentTime);

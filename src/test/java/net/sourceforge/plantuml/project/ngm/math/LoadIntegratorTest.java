@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -88,7 +87,6 @@ class LoadIntegratorTest {
 		assertEquals(expected, end, "Should complete after vacation period");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testNewYearTransition_spanningYears() {
 		// Scenario: Project spans New Year with holiday on Jan 1
@@ -101,12 +99,15 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Dec 30, 31, Jan 2 (skipping Jan 1)
-		LocalDateTime expected = LocalDateTime.of(2025, 1, 2, 14, 30);
+		// Dec 30 (19/48) - 14:30-24:00
+		// Dec 31 (1) 
+		// Jan 1 (0) - skipping holiday
+		// Jan 2 (1)
+		// Jan 3 (29/48) - 00:00-14:30
+		LocalDateTime expected = LocalDateTime.of(2025, 1, 3, 14, 30);
 		assertEquals(expected, end, "Should skip New Year's Day");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testSummerInternship_reducedLoad() {
 		// Scenario: Intern works 50% during summer program
@@ -122,12 +123,14 @@ class LoadIntegratorTest {
 		LocalDateTime end = integrator.computeEnd();
 
 		// At 50% load: needs 6 calendar days, skipping July 4
-		// July 1, 2, 3, 5, 6, 7 (6 days at 50% = 3 full days)
-		LocalDateTime expected = LocalDateTime.of(2024, 7, 7, 8, 0);
+		// July 1 (1/3) - 8:00-24:00
+		// July 2, 3, 5, 6, 7 (1/2 each)
+		// July 4 (0) - skipping holiday
+		// July 8 (1/6) - 00:00-8:00
+		LocalDateTime expected = LocalDateTime.of(2024, 7, 8, 8, 0);
 		assertEquals(expected, end, "Should account for reduced load and holiday");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testConferenceWeek_partialDays() {
 		// Scenario: Developer at conference, working 30% on specific days
@@ -145,9 +148,11 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Sept 13 (1 day) + Sept 16-20 at 30% (1.5 days) = 2.5 days
-		// Need 1.5 more days: Sept 23 (1 day) + Sept 24 (0.5 day)
-		LocalDateTime expected = LocalDateTime.of(2024, 9, 24, 10, 0);
+		// Sept 13 (7/13) - 10:00-24:00 = 0.5384615385 days
+		// Sept 14, 15 (1) = 2 days
+		// Sept 16-19 (3/10 each) = 1.2 days
+		// Sept 20 (13/60) - 00:00-17:20 = 0.2166666667 days
+		LocalDateTime expected = LocalDateTime.of(2024, 9, 20, 17, 20);
 		assertEquals(expected, end, "Should handle mixed load during conference week");
 	}
 
@@ -181,7 +186,6 @@ class LoadIntegratorTest {
 		assertEquals(expected, end, "Should complete standard 5-day work week");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testPartTimeSchedule_threeDaysPerWeek() {
 		// Scenario: Part-time worker on Mon/Wed/Fri only
@@ -196,13 +200,13 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Week 1: Mon Oct 7, Wed 9, Fri 11
-		// Week 2: Mon Oct 14, Wed 16, Fri 18
-		LocalDateTime expected = LocalDateTime.of(2024, 10, 18, 13, 30);
+		// Week 1: Mon Oct 7 (7/16), Wed 9 (1), Fri 11 (1)
+		// Week 2: Mon Oct 14 (1), Wed 16 (1), Fri 18 (1)
+		// Week 3: Mon Oct 21 (9/16)
+		LocalDateTime expected = LocalDateTime.of(2024, 10, 21, 13, 30);
 		assertEquals(expected, end, "Should span 2 weeks for part-time schedule");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testCompressedWorkWeek_fourTenHourDays() {
 		// Scenario: 4x10 schedule (Mon-Thu at 125%, Fri-Sun off)
@@ -219,13 +223,15 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Week 1: Mon-Thu = 5 days equivalent
-		// Week 2: Mon-Thu = 5 days equivalent, completes on Thursday
-		LocalDateTime expected = LocalDateTime.of(2024, 8, 15, 7, 0); // Second Thursday
+		// Week 1: 
+		// 	Mon = (24-7)/24*1.25 = 85/96 = 0.8854 days equivalent
+		//  Tue-Thu = 3*1.25 = 3.75 days equivalent
+		// Week 2: Mon-Thu = 5 days equivalent
+		// Week 3: Mon = 7/24*1.25 = 35/96 = 0.3646 days equivalent
+		LocalDateTime expected = LocalDateTime.of(2024, 8, 19, 7, 0); // Second Thursday
 		assertEquals(expected, end, "Should complete in 2 four-day weeks at 125% load");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testRetailSchedule_weekendHeavy() {
 		// Scenario: Retail worker, busier on weekends
@@ -240,13 +246,17 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Week 1: Mon-Fri at 50% (2.5) + Sat-Sun at 100% (2) = 4.5 days
-		// Need 2.5 more: Mon-Fri next week = 2.5 days, ends Thursday
-		LocalDateTime expected = LocalDateTime.of(2024, 5, 23, 10, 0); // Second Thursday
+		// Week 1: 
+		//   Mon (14/24)*1/2 = 7/24 = 0.2917 days
+		//   Tue-Fri at 50% (1/2)*4 = 2 days
+		//   Sat-Sun at 100% (1)*2 = 2 days
+		// Week 2:
+		//   Mon-Fri at 50% (1/2)*5 = 2.5 days
+		//   Sat at 100% (1) = 5/24 = 0.2083 day
+		LocalDateTime expected = LocalDateTime.of(2024, 5, 25, 5, 0); // Second Saturday
 		assertEquals(expected, end, "Should account for weekend-heavy schedule");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testShiftWorker_alternatingIntensity() {
 		// Scenario: Shift pattern with varying intensity
@@ -268,9 +278,16 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Week 1: Mon(0.33) + Tue(1) + Wed(1.5) + Thu(1.5) + Fri(1) = 5.33 days
-		// Need 0.67 more: next Monday(0.33) + Tuesday(0.34)
-		LocalDateTime expected = LocalDateTime.of(2024, 6, 11, 6, 0); // Second Tuesday
+		// Week 1: 5.25 days equivalent
+		//  Mon 6:00-24:00 (18/24)*(1/3)=1/4 = 0.25 days 
+		//  Tue (1) = 1 day 
+		//  Wed (1.5) = 1.5 days
+		//  Thu (1.5) = 1.5 days
+		//  Fri(1) = 1 day
+		// Week 2: 0.75 days equivalent
+		//  Mon (1/3) = 0.3333 days
+		//  Tue 0:00-10:00 (10/24)*(1) = 0.4167 days
+		LocalDateTime expected = LocalDateTime.of(2024, 6, 11, 10, 0); // Second Tuesday
 		assertEquals(expected, end, "Should handle alternating intensity pattern");
 	}
 
@@ -294,7 +311,6 @@ class LoadIntegratorTest {
 	}
 
 
-	@Disabled("WIP")
 	@Test
 	void testSmallFractionalLoad_highPrecision() {
 		// Scenario: Very small daily load requires high precision
@@ -308,11 +324,10 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		LocalDateTime expected = LocalDateTime.of(2024, 5, 10, 8, 0); // ~100 days later
+		LocalDateTime expected = LocalDateTime.of(2024, 5, 11, 8, 0); // ~100 days later
 		assertEquals(expected, end, "Should handle very small fractional loads");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testLeapYear_february29() {
 		// Scenario: Work through leap year February
@@ -324,12 +339,11 @@ class LoadIntegratorTest {
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 
-		// Feb 27, 28, 29, Mar 1, 2
-		LocalDateTime expected = LocalDateTime.of(2024, 3, 2, 9, 0);
+		// Feb 27 (5/8), 28, 29, Mar 1, 2, 3 (3/8)
+		LocalDateTime expected = LocalDateTime.of(2024, 3, 3, 9, 0);
 		assertEquals(expected, end, "Should correctly handle leap year day");
 	}
 
-	@Disabled("WIP")
 	@Test
 	void testMultipleVacationPeriods_complexSchedule() {
 		// Scenario: Developer with multiple vacation blocks
@@ -351,7 +365,28 @@ class LoadIntegratorTest {
 		LocalDateTime end = integrator.computeEnd();
 
 		// Should navigate through all vacation periods
-		LocalDateTime expected = LocalDateTime.of(2024, 4, 24, 9, 0);
+		// 2024-04-01T09:00(Mon) - 2024-04-02T00:00(Tue): load 5/8
+		// 2024-04-02T00:00(Tue) - 2024-04-03T00:00(Wed): load 1
+		// 2024-04-03T00:00(Wed) - 2024-04-04T00:00(Thu): load 1
+		// 2024-04-04T00:00(Thu) - 2024-04-05T00:00(Fri): load 1
+		// 2024-04-05T00:00(Fri) - 2024-04-06T00:00(Sat): load 1
+		// 2024-04-06T00:00(Sat) - 2024-04-07T00:00(Sun): load 1
+		// 2024-04-07T00:00(Sun) - 2024-04-08T00:00(Mon): load 1
+		// 2024-04-08T00:00(Mon) - 2024-04-09T00:00(Tue): load 0 - vacation
+		// 2024-04-09T00:00(Tue) - 2024-04-10T00:00(Wed): load 0 - vacation
+		// 2024-04-10T00:00(Wed) - 2024-04-11T00:00(Thu): load 0 - vacation
+		// 2024-04-11T00:00(Thu) - 2024-04-12T00:00(Fri): load 1
+		// 2024-04-12T00:00(Fri) - 2024-04-13T00:00(Sat): load 1
+		// 2024-04-13T00:00(Sat) - 2024-04-14T00:00(Sun): load 1
+		// 2024-04-14T00:00(Sun) - 2024-04-15T00:00(Mon): load 1
+		// 2024-04-15T00:00(Mon) - 2024-04-16T00:00(Tue): load 1/2 - half day
+		// 2024-04-16T00:00(Tue) - 2024-04-17T00:00(Wed): load 1
+		// 2024-04-17T00:00(Wed) - 2024-04-18T00:00(Thu): load 1
+		// 2024-04-18T00:00(Thu) - 2024-04-19T00:00(Fri): load 1
+		// 2024-04-19T00:00(Fri) - 2024-04-20T00:00(Sat): load 0 - vacation
+		// 2024-04-20T00:00(Sat) - 2024-04-20T21:00(Sat): load 7/8
+
+		LocalDateTime expected = LocalDateTime.of(2024, 4, 20, 21, 0);
 		assertEquals(expected, end, "Should handle multiple vacation periods correctly");
 	}
 }
