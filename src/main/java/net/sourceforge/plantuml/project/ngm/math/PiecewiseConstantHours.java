@@ -29,7 +29,7 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Arnaud Roques, Mario Kušek
  * 
  *
  */
@@ -37,9 +37,42 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public final class PiecewiseConstantHours implements PiecewiseConstant {
+public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 
+	/**
+	 * Default workload fraction for dates not explicitly mapped.
+	 */
+	private final Fraction defaultValue;
+	
+	/**
+	 * List of time segments with their associated workload fractions.
+	 */
+	private List<LocalTimeSegment> segments;
+
+	/**
+	 * Constructs a PiecewiseConstantSpecificDays with the given default workload.
+	 * 
+	 * @param defaultValue the default workload fraction
+	 */
+	private PiecewiseConstantHours(Fraction defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+	
+	/**
+	 * Constructs a PiecewiseConstantSpecificDays with the given default workload
+	 * and specific time mappings.
+	 * 
+	 * @param defaultValue the default workload fraction
+	 * @param segments the list of time segments with their associated workload fractions
+	 */
+	private PiecewiseConstantHours(Fraction defaultValue, List<LocalTimeSegment> segments) {
+		this.defaultValue = defaultValue;
+		this.segments = segments;
+	}
+	
 	/**
 	 * Returns the workload fraction at the given instant.
 	 * The workload is determined by the time of day, ignoring the date.
@@ -49,7 +82,13 @@ public final class PiecewiseConstantHours implements PiecewiseConstant {
 	 */
 	@Override
 	public Fraction apply(LocalDateTime instant) {
-		throw new UnsupportedOperationException("wip");
+		for(LocalTimeSegment segment : segments) {
+			if(segment.includes(instant.toLocalTime())) {
+				return segment.getWorkload();
+			}
+		}
+		
+		return defaultValue;
 	}
 
 	/**
@@ -59,7 +98,7 @@ public final class PiecewiseConstantHours implements PiecewiseConstant {
 	 * @return a new PiecewiseConstantHours instance
 	 */
 	public static PiecewiseConstantHours of(Fraction sameWorkload) {
-		throw new UnsupportedOperationException("wip");
+		return new PiecewiseConstantHours(sameWorkload, List.of());
 	}
 
 	/**
@@ -72,7 +111,9 @@ public final class PiecewiseConstantHours implements PiecewiseConstant {
 	 * @return a new PiecewiseConstantHours instance with the updated time range
 	 */
 	public PiecewiseConstantHours with(LocalTime start, LocalTime end, Fraction newWorkload) {
-		throw new UnsupportedOperationException("wip");
+		List<LocalTimeSegment> newSegments = new ArrayList<>(this.segments);
+		newSegments.add(new LocalTimeSegment(start, end, newWorkload));
+		return new PiecewiseConstantHours(this.defaultValue, newSegments);
 	}
 
 	/** (non-Javadoc)
@@ -81,6 +122,27 @@ public final class PiecewiseConstantHours implements PiecewiseConstant {
 	@Override
 	public Segment segmentAt(LocalDateTime instant) {
 		throw new UnsupportedOperationException("Work In Progress");
+	}
+	
+	private static class LocalTimeSegment {
+		
+		private final LocalTime start;
+		private final LocalTime end;
+		private final Fraction workload;
+		
+		public LocalTimeSegment(LocalTime start, LocalTime end, Fraction workload) {
+			this.start = start;
+			this.end = end;
+			this.workload = workload;
+		}
+		
+		public boolean includes(LocalTime time) {
+			return !time.isBefore(start) && time.isBefore(end);
+		}
+		
+		public Fraction getWorkload() {
+			return workload;
+		}
 		
 	}
 
