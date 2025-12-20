@@ -20,7 +20,10 @@ gradle test
 
 - **Java Version**: Java 8 compatibility is required. Do not use `var`, lambda features beyond Java 8, or other post-Java 8 syntax.
 - **Indentation**: Use tabs for indentation, not spaces.
-- **Braces**: Opening braces on the same line as the statement.
+- **Braces**:
+  - Opening braces on the same line as the statement.
+  - For `if`/`for`/`while` with a single statement: no braces, statement on the next line with indentation.
+  - For blocks with multiple statements: braces required, opening brace on the same line.
 - **Imports**: Explicit imports, no wildcard imports.
 - **Final variables**: Prefer `final` for local variables when possible.
 - **Boolean negation**: Prefer positive conditions (`foo == false`) over negation operators (`!foo`).
@@ -29,4 +32,15 @@ gradle test
 
 - Main source code is in `src/main/java/net/sourceforge/plantuml/`
 - The project uses a custom preprocessor and parser for PlantUML syntax
+
+## Packages to avoid modifying
+
+**Generated code** (do not modify):
+- `gen` - generated code
+- `h` - generated code
+
+**External/third-party packages** (do not modify):
+- `jcckit` - external charting library
+- `zext` - external library
+- `org.stathissideris` - external library (ditaa)
 
