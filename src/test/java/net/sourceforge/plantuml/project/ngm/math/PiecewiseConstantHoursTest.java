@@ -12,7 +12,6 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("WIP")
 class PiecewiseConstantHoursTest {
 
 	@Test
