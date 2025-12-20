@@ -148,7 +148,5 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 * @return the segment containing this instant
 	 * @throws java.util.NoSuchElementException if the iterator is empty (should not occur in normal usage)
 	 */
-	default Segment segmentAt(LocalDateTime instant) {
-		return iterateSegmentsFrom(instant).next();
-	}
+	Segment segmentAt(LocalDateTime instant);
 }
