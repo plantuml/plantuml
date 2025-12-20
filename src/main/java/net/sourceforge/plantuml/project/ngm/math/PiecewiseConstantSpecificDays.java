@@ -167,6 +167,7 @@ public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
 	 * @param instant the instant from which to begin iteration; the first segment
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
+	 * @throws NullPointerException if {@code instant} is null
 	 */
 	@Override
 	public Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {

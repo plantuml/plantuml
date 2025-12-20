@@ -70,6 +70,16 @@ public final class Segment {
 	 */
 	private final Fraction value;
 
+	/**
+	 * Constructs a new {@code Segment} with the specified bounds and value.
+	 *
+	 * @param startInclusive the start of the segment (inclusive); must not be {@code null}
+	 * @param endExclusive the end of the segment (exclusive); must not be {@code null}
+	 *                     and must be after {@code startInclusive}
+	 * @param value the constant workload value for this segment; must not be {@code null}
+	 * @throws NullPointerException if any argument is {@code null}
+	 * @throws IllegalArgumentException if {@code startInclusive} is not before {@code endExclusive}
+	 */
 	public Segment(LocalDateTime startInclusive, LocalDateTime endExclusive, Fraction value) {
 		Objects.requireNonNull(startInclusive, "startInclusive must not be null");
 		Objects.requireNonNull(endExclusive, "endExclusive must not be null");
@@ -261,8 +271,12 @@ public final class Segment {
 		}
 	}
 
-	/** Convenience overloads for array inputs.
-	 * Ii calls method with List argument {@link #intersection(List)}.  
+	/** 
+	 * Convenience overloads for array inputs.
+	 * 
+	 * It calls method with List argument {@link #intersection(List)}.
+	 * 
+	 * @throws NullPointerException if {@code segments} is {@code null}
 	 */
 	public static Segment intersection(Segment[] segments) {
 		Objects.requireNonNull(segments, "segments must not be null");
@@ -270,8 +284,12 @@ public final class Segment {
 		return intersection(Arrays.asList(segments));
 	}
 	
-	/** Convenience overloads for array inputs.
-	 * It calls method with List argument {@link #intersection(List, BiFunction)}.  
+	/** 
+	 * Convenience overloads for array inputs.
+	 * 
+	 * It calls method with List argument {@link #intersection(List, BiFunction)}.
+	 * 
+	 * @throws NullPointerException if {@code segments} is {@code null}
 	 */
 	public static Segment intersection(Segment[] segments, BiFunction<Fraction, Fraction, Fraction> valueFunction) {
 		Objects.requireNonNull(segments, "segments must not be null");

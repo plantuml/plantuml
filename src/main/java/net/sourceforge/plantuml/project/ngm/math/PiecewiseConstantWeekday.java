@@ -110,6 +110,7 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	 * @param day         day of week to update
 	 * @param newWorkload new workload fraction for that day
 	 * @return a new immutable instance
+	 * @throws NullPointerException if any argument is null
 	 */
 	public PiecewiseConstantWeekday with(DayOfWeek day, Fraction newWorkload) {
 		Objects.requireNonNull(day, "day");
@@ -123,6 +124,10 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	/**
 	 * Returns the workload fraction assigned to the day of week of the given
 	 * instant.
+	 * 
+	 * @param instant the time instant to query
+	 * @return the workload fraction at this instant
+	 * @throws NullPointerException if instant is null
 	 */
 	@Override
 	public Fraction apply(LocalDateTime instant) {
@@ -169,6 +174,7 @@ public final class PiecewiseConstantWeekday implements PiecewiseConstant {
 	 * @param instant the instant from which to begin iteration; the first segment
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
+	 * @throws NullPointerException if {@code instant} is null
 	 */
 	@Override
 	public Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
