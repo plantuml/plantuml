@@ -215,4 +215,13 @@ public final class PiecewiseConstantSpecificDays implements PiecewiseConstant {
 		return instant.toLocalDate();
 	}
 
+	/** (non-Javadoc)
+	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
+	 */
+	@Override
+	public Segment segmentAt(LocalDateTime instant) {
+		throw new UnsupportedOperationException("Work In Progress");
+		
+	}
+
 }

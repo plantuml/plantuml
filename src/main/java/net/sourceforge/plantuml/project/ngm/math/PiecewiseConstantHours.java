@@ -75,4 +75,13 @@ public final class PiecewiseConstantHours implements PiecewiseConstant {
 		throw new UnsupportedOperationException("wip");
 	}
 
+	/** (non-Javadoc)
+	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
+	 */
+	@Override
+	public Segment segmentAt(LocalDateTime instant) {
+		throw new UnsupportedOperationException("Work In Progress");
+		
+	}
+
 }
