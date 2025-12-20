@@ -121,10 +121,19 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 	 * @param end the end time of the range (exclusive)
 	 * @param newWorkload the workload fraction to apply to this time range
 	 * @return a new PiecewiseConstantHours instance with the updated time range
+	 * @throws IllegalArgumentException if the new time range overlaps with existing segments
 	 */
 	public PiecewiseConstantHours with(LocalTime start, LocalTime end, Fraction newWorkload) {
+		LocalTimeSegment newSegment = new LocalTimeSegment(start, end, newWorkload);
+		
+		for(LocalTimeSegment segment : segments) {
+			if(segment.includes(start) || newSegment.includes(segment.start)) {
+				throw new IllegalArgumentException("Overlapping time segments are not allowed.");
+			}
+		}
+		
 		List<LocalTimeSegment> newSegments = new ArrayList<>(this.segments);
-		newSegments.add(new LocalTimeSegment(start, end, newWorkload));
+		newSegments.add(newSegment);
 		return new PiecewiseConstantHours(this.defaultValue, newSegments);
 	}
 	

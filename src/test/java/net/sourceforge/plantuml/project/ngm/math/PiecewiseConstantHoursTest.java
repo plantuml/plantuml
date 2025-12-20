@@ -1,8 +1,6 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,6 +10,29 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 class PiecewiseConstantHoursTest {
+	
+	@Test
+	void creatingOverlappingSegments_throwsException() throws Exception {
+		assertThrows(IllegalArgumentException.class, () -> {
+			PiecewiseConstantHours.of(Fraction.ZERO)
+					.with(LocalTime.of(8, 0), LocalTime.of(12, 0), new Fraction(3, 4))
+					.with(LocalTime.of(10, 0), LocalTime.of(14, 0), new Fraction(1, 2)); // Overlaps with previous
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			PiecewiseConstantHours.of(Fraction.ZERO)
+			.with(LocalTime.of(8, 0), LocalTime.of(14, 0), new Fraction(3, 4))
+			.with(LocalTime.of(10, 0), LocalTime.of(12, 0), new Fraction(1, 2)); // Overlaps with previous
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			PiecewiseConstantHours.of(Fraction.ZERO)
+			.with(LocalTime.of(10, 0), LocalTime.of(12, 0), new Fraction(3, 4))
+			.with(LocalTime.of(8, 0), LocalTime.of(14, 0), new Fraction(1, 2)); // Overlaps with previous
+		});
+		
+		
+	}
 
 	@Test
 	void apply_returnsFractionONE_duringWorkingHours() {
