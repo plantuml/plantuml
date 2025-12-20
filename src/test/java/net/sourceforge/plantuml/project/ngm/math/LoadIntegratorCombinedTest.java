@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
  * PiecewiseConstantWeekday, simulating realistic scenarios where workload
  * allocation must respect both weekly patterns and specific calendar dates.
  */
-@Disabled("WIP")
 class LoadIntegratorCombinedTest {
 	
 	// Enable debug mode for all tests
@@ -62,11 +61,18 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Expected: Mon 25, Tue 26, Wed 27 (3 days)
-		//           Thu 28, Fri 29 (holidays, skip)
-		//           Mon Dec 2, Tue Dec 3 (2 more days) = 5 total
-		LocalDateTime expected = LocalDateTime.of(2024, 12, 3, 9, 0);
-		assertEquals(expected, end, "Should skip Thanksgiving holidays and complete on Dec 3");
+		// 2024-11-25T09:00(Mon) - 2024-11-26T00:00(Tue): load 5/8
+		// 2024-11-26T00:00(Tue) - 2024-11-27T00:00(Wed): load 1
+		// 2024-11-27T00:00(Wed) - 2024-11-28T00:00(Thu): load 1
+		// 2024-11-28T00:00(Thu) - 2024-11-29T00:00(Fri): load 0 - holiday
+		// 2024-11-29T00:00(Fri) - 2024-11-30T00:00(Sat): load 0 - holiday
+		// 2024-11-30T00:00(Sat) - 2024-12-01T00:00(Sun): load 0 - weekend
+		// 2024-12-01T00:00(Sun) - 2024-12-02T00:00(Mon): load 0 - weekend
+		// 2024-12-02T00:00(Mon) - 2024-12-03T00:00(Tue): load 1
+		// 2024-12-03T00:00(Tue) - 2024-12-04T00:00(Wed): load 1
+		// 2024-12-04T00:00(Wed) - 2024-12-04T09:00(Wed): load 3/8
+		LocalDateTime expected = LocalDateTime.of(2024, 12, 4, 9, 0);
+		assertEquals(expected, end, "Should skip Thanksgiving holidays and weekend");
 	}
 
 	@Test
@@ -101,11 +107,29 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// At 60%: need 10 working days for 6 full days
-		// Week of Aug 5-9: 5 days * 60% = 3 days
-		// Week of Aug 12-16: vacation (0 days)
-		// Week of Aug 19-23: 5 days * 60% = 3 days, completes on Friday Aug 23
-		LocalDateTime expected = LocalDateTime.of(2024, 8, 23, 10, 0);
+		// 2024-08-05T10:00(Mon) - 2024-08-06T00:00(Tue): load 14/24 * 3/5 = (14*3)/120 = 42/120 = 7/20
+		// 2024-08-06T00:00(Tue) - 2024-08-07T00:00(Wed): load 3/5
+		// 2024-08-07T00:00(Wed) - 2024-08-08T00:00(Thu): load 3/5
+		// 2024-08-08T00:00(Thu) - 2024-08-09T00:00(Fri): load 3/5
+		// 2024-08-09T00:00(Fri) - 2024-08-10T00:00(Sat): load 3/5
+		// 2024-08-10T00:00(Sat) - 2024-08-11T00:00(Sun): load 0 - weekend
+		// 2024-08-11T00:00(Sun) - 2024-08-12T00:00(Mon): load 0 - weekend
+		// 2024-08-12T00:00(Mon) - 2024-08-13T00:00(Tue): load 0 - vacation
+		// 2024-08-13T00:00(Tue) - 2024-08-14T00:00(Wed): load 0 - vacation
+		// 2024-08-14T00:00(Wed) - 2024-08-15T00:00(Thu): load 0 - vacation
+		// 2024-08-15T00:00(Thu) - 2024-08-16T00:00(Fri): load 0 - vacation
+		// 2024-08-16T00:00(Fri) - 2024-08-17T00:00(Sat): load 0 - vacation
+		// 2024-08-17T00:00(Sat) - 2024-08-18T00:00(Sun): load 0 - weekend
+		// 2024-08-18T00:00(Sun) - 2024-08-19T00:00(Mon): load 0 - weekend
+		// 2024-08-19T00:00(Mon) - 2024-08-20T00:00(Tue): load 3/5
+		// 2024-08-20T00:00(Tue) - 2024-08-21T00:00(Wed): load 3/5
+		// 2024-08-21T00:00(Wed) - 2024-08-22T00:00(Thu): load 3/5
+		// 2024-08-22T00:00(Thu) - 2024-08-23T00:00(Fri): load 3/5
+		// 2024-08-23T00:00(Fri) - 2024-08-24T00:00(Sat): load 3/5
+		// 2024-08-24T00:00(Sat) - 2024-08-25T00:00(Sun): load 0 - weekend
+		// 2024-08-25T00:00(Sun) - 2024-08-26T00:00(Mon): load 0 - weekend
+		// 2024-08-26T00:00(Mon) - 2024-08-26T10:00(Mon): load 10/24 * 3/5 = (10*3)/120 = 30/120 = 1/4
+		LocalDateTime expected = LocalDateTime.of(2024, 8, 26, 10, 0);
 		assertEquals(expected, end, "Should skip vacation week with part-time allocation");
 	}
 
@@ -136,10 +160,16 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Week 1: Mon Jul 1 (1.25), Tue Jul 2 (1.25), Wed Jul 3 (1.25), Thu Jul 4 (0 - holiday)
-		//         Total: 3.75 days, need 1.25 more
-		// Week 2: Mon Jul 8 (1.25) - completes here
-		LocalDateTime expected = LocalDateTime.of(2024, 7, 8, 8, 0);
+		// 2024-07-01T08:00(Mon) - 2024-07-02T00:00(Tue): load (24-8)/24 * 5/4 = 16/24 * 5/4 = 80/96 = 5/6
+		// 2024-07-02T00:00(Tue) - 2024-07-03T00:00(Wed): load 5/4
+		// 2024-07-03T00:00(Wed) - 2024-07-04T00:00(Thu): load 5/4
+		// 2024-07-04T00:00(Thu) - 2024-07-05T00:00(Fri): load 0 - holiday
+		// 2024-07-05T00:00(Fri) - 2024-07-06T00:00(Sat): load 0 - not a workday
+		// 2024-07-06T00:00(Sat) - 2024-07-07T00:00(Sun): load 0 - weekend
+		// 2024-07-07T00:00(Sun) - 2024-07-08T00:00(Mon): load 0 - weekend
+		// 2024-07-08T00:00(Mon) - 2024-07-09T00:00(Tue): load 5/4
+		// 2024-07-09T00:00(Tue) - 2024-07-09T08:00(Tue): load 8/24 * 5/4 = 5/12
+		LocalDateTime expected = LocalDateTime.of(2024, 7, 9, 8, 0);
 		assertEquals(expected, end, "Should account for holiday in compressed schedule");
 	}
 
@@ -168,10 +198,24 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Weekend Nov 23-24: 2 days
-		// Weekend Nov 30-Dec 1: closed (skip)
-		// Weekend Dec 7-8: 2 more days, completes Sunday Dec 8
-		LocalDateTime expected = LocalDateTime.of(2024, 12, 8, 18, 0);
+		// 2024-11-22T00:00(Fri) - 2024-11-23T00:00(Sat): load 0
+		// 2024-11-23T00:00(Sat) - 2024-11-24T00:00(Sun): load 1 - weekend work
+		// 2024-11-24T00:00(Sun) - 2024-11-25T00:00(Mon): load 1 - weekend work
+		// 2024-11-25T00:00(Mon) - 2024-11-26T00:00(Tue): load 0
+		// 2024-11-26T00:00(Tue) - 2024-11-27T00:00(Wed): load 0
+		// 2024-11-27T00:00(Wed) - 2024-11-28T00:00(Thu): load 0
+		// 2024-11-28T00:00(Thu) - 2024-11-29T00:00(Fri): load 0
+		// 2024-11-29T00:00(Fri) - 2024-11-30T00:00(Sat): load 0
+		// 2024-11-30T00:00(Sat) - 2024-12-01T00:00(Sun): load 0 - venue closed
+		// 2024-12-01T00:00(Sun) - 2024-12-02T00:00(Mon): load 0 - venue closed
+		// 2024-12-02T00:00(Mon) - 2024-12-03T00:00(Tue): load 0
+		// 2024-12-03T00:00(Tue) - 2024-12-04T00:00(Wed): load 0
+		// 2024-12-04T00:00(Wed) - 2024-12-05T00:00(Thu): load 0
+		// 2024-12-05T00:00(Thu) - 2024-12-06T00:00(Fri): load 0
+		// 2024-12-06T00:00(Fri) - 2024-12-07T00:00(Sat): load 0
+		// 2024-12-07T00:00(Sat) - 2024-12-08T00:00(Sun): load 1 - weekend work
+		// 2024-12-08T00:00(Sun) - 2024-12-09T00:00(Mon): load 1 - weekend work
+		LocalDateTime expected = LocalDateTime.of(2024, 12, 9, 0, 0);
 		assertEquals(expected, end, "Should skip blackout weekend and continue next available");
 	}
 
@@ -209,14 +253,17 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Week Sept 30 - Oct 4: Mon(0.5) + Tue(1.5) + Wed(0.5) + Thu(1.5) + Fri(0.5) = 4.5 days
-		// Week Oct 7-11 (conference at 30%):
-		//   Mon Oct 7: 50% * 30% = 15% = 0.15
-		//   Tue Oct 8: 150% * 30% = 45% = 0.45
-		//   Need 0.5 more, so continues into Wed Oct 9 (50% * 30% = 15%)
-		//   Actually need to continue further...
-		// This is complex, let's estimate completion around Oct 14-15
-		LocalDateTime expected = LocalDateTime.of(2024, 10, 15, 9, 0);
+		// 2024-09-30T09:00(Mon) - 2024-10-01T00:00(Tue): load 15/24 * 1/2 = 5/16 -- low
+		// 2024-10-01T00:00(Tue) - 2024-10-02T00:00(Wed): load 3/2 -- high
+		// 2024-10-02T00:00(Wed) - 2024-10-03T00:00(Thu): load 1/2 -- low
+		// 2024-10-03T00:00(Thu) - 2024-10-04T00:00(Fri): load 3/2 -- high
+		// 2024-10-04T00:00(Fri) - 2024-10-05T00:00(Sat): load 1/2 -- low
+		// 2024-10-05T00:00(Sat) - 2024-10-06T00:00(Sun): load 0 -- weekend
+		// 2024-10-06T00:00(Sun) - 2024-10-07T00:00(Mon): load 0 -- weekend
+		// 2024-10-07T00:00(Mon) - 2024-10-08T00:00(Tue): load 1/2 * 3/10 = 3/20 -- low * conference
+		// 2024-10-08T00:00(Tue) - 2024-10-09T00:00(Wed): load 3/2 * 3/10 = 9/20 -- high * conference
+		// 2024-10-09T00:00(Wed) - 2024-10-09T14:00(Wed): load 14/24 * 1/2 * 3/10 =  42/480 = 7/80 -- low * conference
+		LocalDateTime expected = LocalDateTime.of(2024, 10, 9, 14, 0);
 		assertEquals(expected, end, "Should handle complex interaction of alternating and conference schedules");
 	}
 
@@ -247,12 +294,13 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Jan 29 (Mon): 1 day
+		// Jan 29 (Mon): 9:30-24:00 - 29/48 day
 		// Jan 30 (Tue): 1 day
 		// Jan 31 (Wed): blocked
 		// Feb 1 (Thu): 1 day
 		// Feb 2 (Fri): 1 day
-		LocalDateTime expected = LocalDateTime.of(2024, 2, 2, 9, 30);
+		// Feb 5 (Mon): 0:00-9:30 - 19/48 day  
+		LocalDateTime expected = LocalDateTime.of(2024, 2, 5, 9, 30);
 		assertEquals(expected, end, "Should skip fiscal close day at month end");
 	}
 
@@ -284,14 +332,15 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Jun 28 (Fri): 1 day
+		// Jun 28 (Fri): 10:00-24:00 - 7/12 day
 		// Jul 1 (Mon): holiday
 		// Jul 2 (Tue): 1 day
 		// Jul 3 (Wed): 1 day
 		// Jul 4 (Thu): holiday
 		// Jul 5 (Fri): 1 day
 		// Jul 8 (Mon): 1 day
-		LocalDateTime expected = LocalDateTime.of(2024, 7, 8, 10, 0);
+		// Jul 9 (Tue): 0:00-10:00 - 5/12 day
+		LocalDateTime expected = LocalDateTime.of(2024, 7, 9, 10, 0);
 		assertEquals(expected, end, "Should respect both Canadian and US holidays");
 	}
 
@@ -327,9 +376,11 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Week Mar 4-8: 5 days at 100% = 5 days
+		// Week Mar 4: 8:00-24:00 - 16/24 = 2/3 days 
+		//  Mar 5-8: 4 days at 100% = 4 days
 		// Week Mar 11-15: 5 days at 40% = 2 days (total: 7 days)
-		// Week Mar 18-19: 1 more day needed, completes Tuesday Mar 19
+		// Week Mar 18: 1 day
+		//  Mar 19: 0:00-8:00 - 8/24 = 1/3 day
 		LocalDateTime expected = LocalDateTime.of(2024, 3, 19, 8, 0);
 		assertEquals(expected, end, "Should account for reduced capacity during training");
 	}
@@ -361,10 +412,22 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// May 6 (Mon): 1, May 8 (Wed): 1, May 10 (Fri): 1 = 3 days
-		// May 13 (Mon): 0.5, May 15 (Wed): 1, May 17 (Fri): 1 = 2.5 days (total 5.5)
-		// May 20 (Mon): 0.5 = completes (total 6)
-		LocalDateTime expected = LocalDateTime.of(2024, 5, 20, 9, 0);
+		// 2024-05-06T09:00(Mon) - 2024-05-07T00:00(Tue): load 9:00-24:00 - 15/24 = 5/8
+		// 2024-05-07T00:00(Tue) - 2024-05-08T00:00(Wed): load 0 - not a workday
+		// 2024-05-08T00:00(Wed) - 2024-05-09T00:00(Thu): load 1
+		// 2024-05-09T00:00(Thu) - 2024-05-10T00:00(Fri): load 0 - not a workday
+		// 2024-05-10T00:00(Fri) - 2024-05-11T00:00(Sat): load 1
+		// 2024-05-11T00:00(Sat) - 2024-05-12T00:00(Sun): load 0 - weekend
+		// 2024-05-12T00:00(Sun) - 2024-05-13T00:00(Mon): load 0 - weekend
+		// 2024-05-13T00:00(Mon) - 2024-05-14T00:00(Tue): load 1/2 - appointment
+		// 2024-05-14T00:00(Tue) - 2024-05-15T00:00(Wed): load 0 - not a workday
+		// 2024-05-15T00:00(Wed) - 2024-05-16T00:00(Thu): load 1
+		// 2024-05-16T00:00(Thu) - 2024-05-17T00:00(Fri): load 0 - not a workday
+		// 2024-05-17T00:00(Fri) - 2024-05-18T00:00(Sat): load 1
+		// 2024-05-18T00:00(Sat) - 2024-05-19T00:00(Sun): load 0 - weekend
+		// 2024-05-19T00:00(Sun) - 2024-05-20T00:00(Mon): load 0 - weekend
+		// 2024-05-20T00:00(Mon) - 2024-05-20T21:00(Mon): load 21/24 = 7/8
+		LocalDateTime expected = LocalDateTime.of(2024, 5, 20, 21, 0);
 		assertEquals(expected, end, "Should handle half-day appointments in flexible schedule");
 	}
 
@@ -400,13 +463,30 @@ class LoadIntegratorCombinedTest {
 		LoadIntegrator integrator = new LoadIntegrator(combined, start, totalLoad);
 		LocalDateTime end = integrator.computeEnd();
 		
-		// Week Dec 16-20: 5 days
-		// Week Dec 23-27: shutdown (0 days)
-		// Week Dec 30: Mon-Tue (2 days, total 7)
-		// Jan 1: shutdown
-		// Week Jan 2-3: Thu-Fri (2 days, total 9)
-		// Week Jan 6: Monday (1 day, total 10)
-		LocalDateTime expected = LocalDateTime.of(2025, 1, 6, 9, 0);
+		// 2024-12-16T09:00(Mon) - 2024-12-17T00:00(Tue): load 9:00-24:00 - 15/24 = 5/8
+		// 2024-12-17T00:00(Tue) - 2024-12-18T00:00(Wed): load 1
+		// 2024-12-18T00:00(Wed) - 2024-12-19T00:00(Thu): load 1
+		// 2024-12-19T00:00(Thu) - 2024-12-20T00:00(Fri): load 1
+		// 2024-12-20T00:00(Fri) - 2024-12-21T00:00(Sat): load 1
+		// 2024-12-21T00:00(Sat) - 2024-12-22T00:00(Sun): load 0 - weekend
+		// 2024-12-22T00:00(Sun) - 2024-12-23T00:00(Mon): load 0 - weekend
+		// 2024-12-23T00:00(Mon) - 2024-12-24T00:00(Tue): load 0 - shutdown
+		// 2024-12-24T00:00(Tue) - 2024-12-25T00:00(Wed): load 0 - shutdown
+		// 2024-12-25T00:00(Wed) - 2024-12-26T00:00(Thu): load 0 - shutdown
+		// 2024-12-26T00:00(Thu) - 2024-12-27T00:00(Fri): load 0 - shutdown
+		// 2024-12-27T00:00(Fri) - 2024-12-28T00:00(Sat): load 0 - shutdown
+		// 2024-12-28T00:00(Sat) - 2024-12-29T00:00(Sun): load 0 - weekend
+		// 2024-12-29T00:00(Sun) - 2024-12-30T00:00(Mon): load 0 - weekend
+		// 2024-12-30T00:00(Mon) - 2024-12-31T00:00(Tue): load 1
+		// 2024-12-31T00:00(Tue) - 2025-01-01T00:00(Wed): load 1
+		// 2025-01-01T00:00(Wed) - 2025-01-02T00:00(Thu): load 0 - shutdown
+		// 2025-01-02T00:00(Thu) - 2025-01-03T00:00(Fri): load 1
+		// 2025-01-03T00:00(Fri) - 2025-01-04T00:00(Sat): load 1
+		// 2025-01-04T00:00(Sat) - 2025-01-05T00:00(Sun): load 0 - weekend
+		// 2025-01-05T00:00(Sun) - 2025-01-06T00:00(Mon): load 0 - weekend
+		// 2025-01-06T00:00(Mon) - 2025-01-07T00:00(Tue): load 1
+		// 2025-01-07T00:00(Tue) - 2025-01-07T09:00(Tue): load 0:00-9:00 9/24 = 3/8
+		LocalDateTime expected = LocalDateTime.of(2025, 1, 7, 9, 0);
 		assertEquals(expected, end, "Should navigate complex year-end shutdown period");
 	}
 }
