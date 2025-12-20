@@ -39,6 +39,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 
@@ -51,6 +53,8 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 	 * List of time segments with their associated workload fractions.
 	 */
 	private List<LocalTimeSegment> segments;
+
+	private Set<LocalTime> timeBoundaries;
 
 	/**
 	 * Constructs a PiecewiseConstantSpecificDays with the given default workload.
@@ -71,6 +75,13 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 	private PiecewiseConstantHours(Fraction defaultValue, List<LocalTimeSegment> segments) {
 		this.defaultValue = defaultValue;
 		this.segments = segments;
+		
+		// Collect all unique time boundaries from the segments
+		timeBoundaries = new TreeSet<>();
+		for(LocalTimeSegment segment : segments) {
+			timeBoundaries.add(segment.start);
+			timeBoundaries.add(segment.end);
+		}
 	}
 	
 	/**
@@ -82,8 +93,9 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 	 */
 	@Override
 	public Fraction apply(LocalDateTime instant) {
+		LocalTime localTime = instant.toLocalTime();
 		for(LocalTimeSegment segment : segments) {
-			if(segment.includes(instant.toLocalTime())) {
+			if(segment.includes(localTime)) {
 				return segment.getWorkload();
 			}
 		}
@@ -115,15 +127,39 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 		newSegments.add(new LocalTimeSegment(start, end, newWorkload));
 		return new PiecewiseConstantHours(this.defaultValue, newSegments);
 	}
-
+	
 	/** (non-Javadoc)
 	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
 	 */
 	@Override
 	public Segment segmentAt(LocalDateTime instant) {
-		throw new UnsupportedOperationException("Work In Progress");
+		LocalTime time = instant.toLocalTime();
+		Fraction segmentWorkload = apply(instant);
+		
+		// Determine the start and end times of the segment
+		LocalTime segmentStart = LocalTime.MIDNIGHT;
+		LocalTime segmentEnd = LocalTime.MIDNIGHT;
+		for(LocalTime boundary : timeBoundaries) {
+			if(boundary.isAfter(time)) {
+				segmentEnd = boundary;
+				break;
+			}
+			segmentStart = boundary;
+		}
+
+		// Construct the Segment object
+		LocalDateTime startDateTime = instant.toLocalDate().atTime(segmentStart);
+		LocalDateTime endDateTime;
+		if(segmentEnd.equals(LocalTime.MIDNIGHT)) {
+			// Handle the case where the segment ends at midnight (next day)
+			endDateTime = instant.toLocalDate().plusDays(1).atStartOfDay();
+		} else {
+			// Normal case
+			endDateTime = instant.toLocalDate().atTime(segmentEnd);
+		}
+		return new Segment(startDateTime, endDateTime, segmentWorkload);
 	}
-	
+
 	private static class LocalTimeSegment {
 		
 		private final LocalTime start;
