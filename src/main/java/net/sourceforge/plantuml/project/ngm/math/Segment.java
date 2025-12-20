@@ -134,9 +134,7 @@ public final class Segment {
 	 *         outside the bounds of this segment
 	 */
 	public Segment[] split(LocalDateTime time) {
-		if(time == null)
-			throw new IllegalArgumentException("time must not be null");
-		
+		Objects.requireNonNull(time, "time must not be null");
 		if (!includes(time)) {
 			throw new IllegalArgumentException("time must be within the segment bounds");
 		}
@@ -225,6 +223,7 @@ public final class Segment {
 	 */
 	public static Segment intersection(List<Segment> segments, BiFunction<Fraction, Fraction, Fraction> valueFunction) {
 		Objects.requireNonNull(segments, "segments must not be null");
+		Objects.requireNonNull(valueFunction, "valueFunction must not be null");
 		
 		if(segments.isEmpty()) {
 			throw new IllegalArgumentException("No segments to intersect");
@@ -265,6 +264,8 @@ public final class Segment {
 	 * Ii calls method with List argument {@link #intersection(List)}.  
 	 */
 	public static Segment intersection(Segment[] segments) {
+		Objects.requireNonNull(segments, "segments must not be null");
+		
 		return intersection(Arrays.asList(segments));
 	}
 	
@@ -272,6 +273,8 @@ public final class Segment {
 	 * It calls method with List argument {@link #intersection(List, BiFunction)}.  
 	 */
 	public static Segment intersection(Segment[] segments, BiFunction<Fraction, Fraction, Fraction> valueFunction) {
+		Objects.requireNonNull(segments, "segments must not be null");
+		
 		return intersection(Arrays.asList(segments), valueFunction);
 	}
 }

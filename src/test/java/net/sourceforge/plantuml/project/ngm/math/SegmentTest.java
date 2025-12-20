@@ -173,7 +173,7 @@ class SegmentTest {
 		Segment segment = new Segment(start, end, value);
 		
 		assertThatThrownBy(() -> segment.split(null))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(NullPointerException.class);
 	}
 	
 	@Test
