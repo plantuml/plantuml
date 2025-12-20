@@ -130,7 +130,8 @@ public final class Segment {
 	 * @param time the instant at which to split this segment
 	 * @return an array of exactly two segments resulting from the split,
 	 *         in chronological order
-	 * @throws IllegalArgumentException if {@code time} is {@code null} or lies
+	 * @throws NullPointerException if {@code time} is {@code null}
+	 * @throws IllegalArgumentException if {@code time} is lies
 	 *         outside the bounds of this segment
 	 */
 	public Segment[] split(LocalDateTime time) {
@@ -160,7 +161,7 @@ public final class Segment {
 	public boolean includes(LocalDateTime time) {
 		Objects.requireNonNull(time, "time must not be null");
 		
-		return (time.equals(startInclusive) || time.isAfter(startInclusive))
+		return (time.isEqual(startInclusive) || time.isAfter(startInclusive))
 				&& time.isBefore(endExclusive);
 	}
 
