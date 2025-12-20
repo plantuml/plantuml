@@ -147,8 +147,8 @@ public class BlockUml {
 			this.data = new ArrayList<>(this.rawSource);
 			this.preprocessingArtifact = new PreprocessingArtifact();
 		} else {
-			final TimLoader timLoader = new TimLoader(pathSystem, /*definitions.getImportedFiles(),*/ defines, charset,
-					definitions, this.rawSource.get(0));
+			final TimLoader timLoader = new TimLoader(pathSystem, /* definitions.getImportedFiles(), */ defines,
+					charset, definitions, this.rawSource.get(0));
 			this.included.addAll(timLoader.load(this.rawSource));
 			List<StringLocated> tmp = timLoader.getResultList();
 			tmp = Jaws.expands0(tmp);
@@ -247,6 +247,11 @@ public class BlockUml {
 
 	public Defines getLocalDefines() {
 		return localDefines;
+	}
+
+	public void explain() {
+		new PSystemBuilder().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);
+
 	}
 
 }

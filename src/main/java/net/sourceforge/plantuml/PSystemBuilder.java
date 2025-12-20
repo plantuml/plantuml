@@ -140,7 +140,7 @@ public class PSystemBuilder {
 			final DiagramType type = DiagramType.getTypeFromArobaseStart(source.get(0).getString());
 			final UmlSource umlSource = UmlSource.createWithRaw(source, type == DiagramType.UML, rawSource);
 
-			for (StringLocated s : source) {
+			for (StringLocated s : source)
 				if (s.getPreprocessorError() != null) {
 					// Dead code : should not append
 					assert false;
@@ -150,7 +150,6 @@ public class PSystemBuilder {
 					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source,
 							preprocessing);
 				}
-			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
 			if (diagramType == DiagramType.UNKNOWN)
@@ -298,6 +297,30 @@ public class PSystemBuilder {
 			return false;
 
 		return true;
+	}
+
+	public void explain(PathSystem pathSystem, List<StringLocated> source, List<StringLocated> rawSource,
+			Previous previous, PreprocessingArtifact preprocessing) {
+
+		final DiagramType type = DiagramType.getTypeFromArobaseStart(source.get(0).getString());
+		final UmlSource umlSource = UmlSource.createWithRaw(source, type == DiagramType.UML, rawSource);
+
+		for (StringLocated s : source)
+			if (s.getPreprocessorError() != null)
+				assert false;
+
+		final DiagramType diagramType = umlSource.getDiagramType();
+		if (diagramType == DiagramType.UNKNOWN)
+			return;
+
+		for (PSystemFactory systemFactory : factories) {
+			if (diagramType != systemFactory.getDiagramType())
+				continue;
+
+			systemFactory.explain(pathSystem, umlSource, previous, preprocessing);
+
+		}
+
 	}
 
 }

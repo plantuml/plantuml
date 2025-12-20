@@ -341,6 +341,14 @@ public class Run {
 		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return;
 
+		if (option.isTrue(CliFlag.EXPLAIN)) {
+			for (BlockUml blockUml : sourceFileReader.getBlocks()) {
+				blockUml.explain();
+				return;
+			}
+			return;
+		}
+
 		if (option.getFileFormatOption().getFileFormat() == FileFormat.PREPROC
 				|| option.getFileFormatOption().getFileFormat() == FileFormat.OBFUSCATE) {
 			extractPreprocessingSource(sourceFileReader);

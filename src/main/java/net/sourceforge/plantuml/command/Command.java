@@ -45,6 +45,11 @@ public interface Command<D extends Diagram> {
 
 	CommandControl isValid(BlocLines lines);
 
-	boolean isEligibleFor(ParserPass pass);	
+	boolean isEligibleFor(ParserPass pass);
+
+	default boolean explain(BlocLines blocLines) {
+		System.err.println("Explaining " + getClass() + " " + blocLines);
+		return false;
+	}
 
 }

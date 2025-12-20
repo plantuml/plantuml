@@ -63,7 +63,8 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	protected abstract void initCommandsList(List<Command> cmds);
 
-	public abstract AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
+	public abstract AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing);
 
 	protected PSystemCommandFactory() {
 		this(DiagramType.UML);
@@ -74,7 +75,27 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public void explain(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+		System.err.println("explain2 " + getClass());
+		IteratorCounter2 it = source.iterator2();
+		final StringLocated startLine = it.next();
+
+		while (it.hasNext()) {
+			if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
+				it = source.iterator2();
+				it.next();
+				// For next pass
+				break;
+			}
+			explainFewLines(source, it, preprocessing);
+		}
+
+	}
+
+	@Override
+	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)
@@ -108,7 +129,8 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	}
 
-	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it, PreprocessingArtifact preprocessing) {
+	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it,
+			PreprocessingArtifact preprocessing) {
 		if (sys == null)
 			return null;
 
@@ -128,11 +150,22 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		return sys;
 	}
 
+	private boolean explainFewLines(UmlSource source, final IteratorCounter2 it, PreprocessingArtifact preprocessing) {
+		final Step step = getCandidate(it);
+		if (step == null) {
+			return false;
+		}
+
+		return step.command.explain(step.blocLines);
+
+	}
+
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
 		final Step step = getCandidate(it);
 		if (step == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation(), getUmlDiagramType());
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation(),
+					getUmlDiagramType());
 			it.next();
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 		}

@@ -78,6 +78,19 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 	}
 
+	@Override
+	public boolean explain(BlocLines blocLines) {
+		final CommandControl control = isValid(blocLines);
+
+		if (control == CommandControl.OK) {
+			System.err.println("OK, I understand " + getClass() + " " + blocLines);
+			return true;
+		} else {
+			System.err.println("No, I don't understand " + getClass() + " " + blocLines);
+			return false;
+		}
+	}
+
 	final public CommandControl isValid(BlocLines lines) {
 		if (lines.size() == 2 && syntaxWithFinalBracket())
 			return isValidBracket(lines);
@@ -153,8 +166,8 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return false;
 	}
 
-	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException;
+	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException;
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {

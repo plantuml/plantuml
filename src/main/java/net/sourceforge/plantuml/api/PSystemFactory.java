@@ -45,10 +45,13 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public interface PSystemFactory {
 
-	Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
+	Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing);
 
 	DiagramType getDiagramType();
 
 	UmlDiagramType getUmlDiagramType();
+
+	void explain(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing);
 
 }
