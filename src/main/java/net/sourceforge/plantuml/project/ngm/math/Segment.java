@@ -130,19 +130,15 @@ public final class Segment {
 	 * segment. The two segments are guaranteed to be contiguous and non-overlapping.
 	 * </p>
 	 *
-	 * <p>
-	 * If {@code time} is equal to {@code startInclusive}, the first segment will
-	 * be empty and the second segment will be identical to this segment.
-	 * If {@code time} is equal to {@code endExclusive}, the second segment will
-	 * be empty and the first segment will be identical to this segment.
-	 * </p>
 	 *
 	 * @param time the instant at which to split this segment
 	 * @return an array of exactly two segments resulting from the split,
 	 *         in chronological order
 	 * @throws NullPointerException if {@code time} is {@code null}
 	 * @throws IllegalArgumentException if {@code time} is lies
-	 *         outside the bounds of this segment
+	 *         outside the bounds of this segment or {@code startInclusive} is
+	 *         equal to {@code time}
+	 *         
 	 */
 	public Segment[] split(LocalDateTime time) {
 		Objects.requireNonNull(time, "time must not be null");
