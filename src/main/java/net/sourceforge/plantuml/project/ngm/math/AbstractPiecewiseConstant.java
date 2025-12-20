@@ -104,13 +104,15 @@ public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 	            // Retrieve the (possibly larger) segment that contains the original instant.
 	            // Implementations of segmentAt(...) are expected to return a segment
 	            // that fully covers the given instant.
-	            Segment segment = segmentAt(instant);
+	            Segment segment = segmentAt(current);
 
 	            // Split the segment at the current position and keep the second part,
 	            // which starts exactly at 'current'.
 	            // This ensures the first returned segment begins at the requested instant,
 	            // even if the underlying segment started earlier.
-	            segment = segment.split(current)[1];
+	            if(segment.getStartInclusive().isAfter(current)) {
+	            	segment = segment.split(current)[0];
+	            }
 
 	            // Advance the iterator to the end of the returned segment.
 	            // The next call to next() will start from this instant.
