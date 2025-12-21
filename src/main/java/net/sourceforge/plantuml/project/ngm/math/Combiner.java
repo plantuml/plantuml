@@ -36,7 +36,9 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Utilities to combine multiple {@link PiecewiseConstant} functions.
@@ -105,53 +107,23 @@ public class Combiner {
 	 * @return a new {@link PiecewiseConstant} representing the combined result
 	 */
 	public static PiecewiseConstant product(PiecewiseConstant... functions) {
-		return new PiecewiseConstant() {
-
-			// combine all functions by multiplying their values
+		return new AbstractPiecewiseConstant() {
+			
 			@Override
 			public Fraction apply(LocalDateTime instant) {
-				Fraction value = Fraction.ONE;
-				for (PiecewiseConstant pc : functions) {
-					value = value.multiply(pc.apply(instant));
-					if (value.equals(Fraction.ZERO)) {
-						return Fraction.ZERO;
-					}
-				}
-				
-				return value;
+				return segmentAt(instant).getValue();
 			}
-
-			@Override
-			public Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
-				// use one iterator to drive the iteration
-				Iterator<Segment> subIterator = functions[0].iterateSegmentsFrom(instant);
-				return new Iterator<Segment>() {
-
-					@Override
-					public boolean hasNext() {
-						return subIterator.hasNext();
-					}
-
-					@Override
-					public Segment next() {
-						Segment subSegment = subIterator.next();
-						// create a new segment with the same time bounds but combined value
-						return new Segment(subSegment.getStartInclusive(), subSegment.getEndExclusive(), apply(subSegment.getStartInclusive()));
-					}
-					
-				};
-			}
-
-			/** (non-Javadoc)
-			 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
-			 */
+			
 			@Override
 			public Segment segmentAt(LocalDateTime instant) {
-				throw new UnsupportedOperationException("Work In Progress");
+				List<Segment> segments = Arrays.stream(functions)
+						.map(f -> f.segmentAt(instant))
+						.toList();
+				
+				return Segment.intersection(segments, Fraction.PRODUCT);
 			}
+			
 		};
 	}
-
-
 }
 
