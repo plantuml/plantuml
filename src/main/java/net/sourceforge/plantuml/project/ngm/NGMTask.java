@@ -363,7 +363,7 @@ public abstract class NGMTask {
 	 * @return a new fixed-total-effort task (when implemented)
 	 */
 	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, NGMTotalEffort totalEffort) {
-		throw new UnsupportedOperationException("Work In Progress");
+		return new NGMTaskFixedTotalEffort(allocation, totalEffort);
 	}
 
 }
