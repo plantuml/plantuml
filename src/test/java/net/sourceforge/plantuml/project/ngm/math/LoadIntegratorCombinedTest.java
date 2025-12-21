@@ -1,14 +1,15 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,6 +32,32 @@ class LoadIntegratorCombinedTest {
 	@AfterAll
 	static void teardown() {
 		LoadIntegrator.DEBUG = false;
+	}
+	
+	@Test
+	void atLeastTwoFunctionsAreNeededForCombining() throws Exception {
+
+		// Zero functions
+		assertThrows(IllegalStateException.class, () -> {
+			Combiner.CombinedPiecewiseConstant ps = Combiner.CombinedPiecewiseConstant.of(Fraction.PRODUCT);
+			
+			ps.apply(LocalDateTime.now());
+		});
+		
+		// One function
+		assertThrows(IllegalStateException.class, () -> {
+			Combiner.CombinedPiecewiseConstant ps = Combiner.CombinedPiecewiseConstant.of(Fraction.PRODUCT);
+			ps = ps.with(PiecewiseConstantSpecificDays.of(Fraction.ONE));
+			
+			ps.apply(LocalDateTime.now());
+		});
+		
+		
+		// Two functions
+		Combiner.CombinedPiecewiseConstant ps = Combiner.CombinedPiecewiseConstant.of(Fraction.PRODUCT);
+		ps = ps.with(PiecewiseConstantSpecificDays.of(Fraction.ONE), PiecewiseConstantWeekday.of(Fraction.ONE));
+			
+		ps.apply(LocalDateTime.now());
 	}
 
 	@Test

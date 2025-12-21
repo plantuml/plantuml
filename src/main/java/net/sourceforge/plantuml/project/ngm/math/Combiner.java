@@ -36,9 +36,12 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.BiFunction;
 
 /**
  * Utilities to combine multiple {@link PiecewiseConstant} functions.
@@ -49,7 +52,6 @@ import java.util.List;
  * </p>
  */
 public class Combiner {
-
 	/**
 	 * Combines several workload functions by summing their values.
 	 *
@@ -107,23 +109,116 @@ public class Combiner {
 	 * @return a new {@link PiecewiseConstant} representing the combined result
 	 */
 	public static PiecewiseConstant product(PiecewiseConstant... functions) {
-		return new AbstractPiecewiseConstant() {
+		return CombinedPiecewiseConstant.of(Fraction.PRODUCT)
+				.with(functions);
+	}
+	
+	
+	/**
+	 * A {@link PiecewiseConstant} that combines multiple functions using a specified
+	 * operation.
+	 *
+	 * <p>
+	 * This class allows flexible combination of workload functions by applying
+	 * a user-defined operation (e.g., sum, product) to their values at each instant.
+	 * </p>
+	 */
+	public static class CombinedPiecewiseConstant extends AbstractPiecewiseConstant {
+		
+		/** The functions to combine. */
+		private final List<PiecewiseConstant> functions;
+		
+		/** The operation used to combine function values. */
+		private final BiFunction<Fraction, Fraction, Fraction> valueCombiner;
+		
+		/** 
+		 * Constructs a CombinedPiecewiseConstant with the specified functions and combiner.
+		 * 
+		 * @param functions the functions to combine
+		 * @param valueCombiner the operation to combine function values
+		 */
+		private CombinedPiecewiseConstant(List<PiecewiseConstant> functions, BiFunction<Fraction, Fraction, Fraction> valueCombiner) {
+			Objects.requireNonNull(functions, "functions must not be null");
+			Objects.requireNonNull(valueCombiner, "valueCombiner must not be null");
 			
-			@Override
-			public Fraction apply(LocalDateTime instant) {
-				return segmentAt(instant).getValue();
+			this.functions = functions;
+			this.valueCombiner = valueCombiner;
+		}
+		
+		/** 
+		 * Constructs an empty CombinedPiecewiseConstant with the specified combiner.
+		 * 
+		 * @param valueCombiner the operation to combine function values
+		 */
+		private CombinedPiecewiseConstant(BiFunction<Fraction, Fraction, Fraction> valueCombiner) {
+			this.valueCombiner = valueCombiner;
+			this.functions = List.of();
+		}
+
+		
+		/**
+		 * Applies the combined function to the given instant.
+		 * 
+		 * @param instant the time instant to query
+		 * @return the combined workload fraction at this instant
+		 */
+		@Override
+		public Fraction apply(LocalDateTime instant) {
+			return segmentAt(instant).getValue();
+		}
+		
+		/**
+		 * Retrieves the segment at the specified instant by combining segments
+		 * from all constituent functions.
+		 * 
+		 * @param instant the time instant to query
+		 * @return the combined segment at this instant
+		 * @throws IllegalStateException if less than two functions are present
+		 */
+		@Override
+		public Segment segmentAt(LocalDateTime instant) {
+			if(functions.size() < 2) {
+				throw new IllegalStateException("At least two functions are required for combination");
 			}
 			
-			@Override
-			public Segment segmentAt(LocalDateTime instant) {
-				List<Segment> segments = Arrays.stream(functions)
-						.map(f -> f.segmentAt(instant))
-						.toList();
-				
-				return Segment.intersection(segments, Fraction.PRODUCT);
-			}
+			List<Segment> segments = functions.stream()
+					.map(f -> f.segmentAt(instant))
+					.toList();
 			
-		};
+			return Segment.intersection(segments, valueCombiner);
+		}
+		
+		/**
+		 * Creates a new CombinedPiecewiseConstant with the specified value combiner but without any functions.
+		 * 
+		 * @param valueCombiner the operation to combine function values
+		 * @return a new CombinedPiecewiseConstant instance
+		 */
+		public static CombinedPiecewiseConstant of(BiFunction<Fraction, Fraction, Fraction> valueCombiner) {
+			return new CombinedPiecewiseConstant(valueCombiner);
+		}
+		
+		/**
+		 * Returns a new CombinedPiecewiseConstant that includes the specified functions.
+		 * 
+		 * @param functions the functions to add
+		 * @return a new CombinedPiecewiseConstant with the added functions
+		 */
+		public CombinedPiecewiseConstant with(List<PiecewiseConstant> functions) {
+			List<PiecewiseConstant> newFunctions = new ArrayList<>(this.functions);
+			newFunctions.addAll(functions);
+			return new CombinedPiecewiseConstant(newFunctions, valueCombiner);
+		}
+		
+		/**
+		 * Returns a new CombinedPiecewiseConstant that includes the specified functions.
+		 * 
+		 * @param functions the functions to add
+		 * @return a new CombinedPiecewiseConstant with the added functions
+		 */
+		public CombinedPiecewiseConstant with(PiecewiseConstant... functions) {
+			return with(Arrays.asList(functions));
+		}
 	}
 }
 
