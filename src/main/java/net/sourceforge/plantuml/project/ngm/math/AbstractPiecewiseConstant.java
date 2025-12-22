@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
 /**
@@ -106,17 +107,40 @@ public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 	            // that fully covers the given instant.
 	            Segment segment = segmentAt(current);
 
-	            // Split the segment at the current position and keep the second part,
-	            // which starts exactly at 'current'.
-	            // This ensures the first returned segment begins at the requested instant,
-	            // even if the underlying segment started earlier.
-	            if(segment.getStartInclusive().isAfter(current)) {
-	            	segment = segment.split(current)[0];
-	            }
-
 	            // Advance the iterator to the end of the returned segment.
 	            // The next call to next() will start from this instant.
 	            current = segment.getEndExclusive();
+
+	            return segment;
+	        }
+
+	        @Override
+	        public boolean hasNext() {
+	            // Piecewise-constant functions are considered unbounded in time.
+	            // Iteration therefore never terminates.
+	            return true;
+	        }
+	    };
+	}
+
+	@Override
+	public Iterator<Segment> iterateSegmentsBackwardFrom(LocalDateTime instant) {
+	    return new Iterator<Segment>() {
+
+	        // Current iteration position.
+	        // This represents the start instant of the next segment to be returned.
+	        private LocalDateTime current = instant;
+
+	        @Override
+	        public Segment next() {
+	            // Retrieve the (possibly larger) segment that contains the original instant.
+	            // Implementations of segmentAt(...) are expected to return a segment
+	            // that fully covers the given instant.
+	            Segment segment = segmentAt(current);
+
+	            // Advance the iterator to before the start of the returned segment.
+	            // The next call to next() will start from this instant.
+	            current = segment.getStartInclusive().minus(1, ChronoUnit.SECONDS);
 
 	            return segment;
 	        }

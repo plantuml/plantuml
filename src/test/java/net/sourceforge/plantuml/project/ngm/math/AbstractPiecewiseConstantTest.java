@@ -28,6 +28,25 @@ class AbstractPiecewiseConstantTest {
 		assertThat(s3.getEndExclusive()).isEqualTo(LocalDateTime.of(2024, 6, 4, 0, 0));
 	}
 	
+	@Test
+	void backwordIterationPerDay() throws Exception {
+		PiecewiseConstant pc = new DailyPiecewiseConstant();
+		
+		Iterator<Segment> iterator = pc.iterateSegmentsBackwardFrom(LocalDateTime.of(2024, 6, 14, 10, 30));
+		
+		Segment s1 = iterator.next();
+		assertThat(s1.getStartInclusive()).isEqualTo(LocalDateTime.of(2024, 6, 14, 0, 0));
+		assertThat(s1.getEndExclusive()).isEqualTo(LocalDateTime.of(2024, 6, 15, 0, 0));
+		
+		Segment s2 = iterator.next();
+		assertThat(s2.getStartInclusive()).isEqualTo(LocalDateTime.of(2024, 6, 13, 0, 0));
+		assertThat(s2.getEndExclusive()).isEqualTo(LocalDateTime.of(2024, 6, 14, 0, 0));
+		
+		Segment s3 = iterator.next();
+		assertThat(s3.getStartInclusive()).isEqualTo(LocalDateTime.of(2024, 6, 12, 0, 0));
+		assertThat(s3.getEndExclusive()).isEqualTo(LocalDateTime.of(2024, 6, 13, 0, 0));
+	}
+	
 	private static class DailyPiecewiseConstant extends AbstractPiecewiseConstant {
 
 		@Override
