@@ -135,7 +135,7 @@ public class LoadIntegrator {
 			if (loadInSegment.compareTo(remainingLoad) >= 0) {
 				// The remaining load can be consumed within this segment
 				Fraction timeNeeded = remainingLoad.divide(loadRate);
-				long secondsNeeded = timeNeeded.multiply(Fraction.of(86400)).wholePart();
+				long secondsNeeded = timeNeeded.multiply(Fraction.of(ONE_DAY_IN_SECONDS)).wholePart();
 				if (DEBUG) {
 					consumedSegments.add(new Segment(currentTime, currentTime.plusSeconds(secondsNeeded), remainingLoad));
 				}
@@ -148,6 +148,86 @@ public class LoadIntegrator {
 				}
 				remainingLoad = remainingLoad.subtract(loadInSegment);
 				currentTime = segment.getEndExclusive();
+			}
+		}
+		
+		if (DEBUG) {
+			System.out.println("Consumed segments:");
+			Fraction totalLoad = Fraction.ZERO;
+			for (Segment s : consumedSegments) {
+				System.out.println(String.format("%s(%s) - %s(%s): load %s", 
+						s.getStartInclusive(), s.getStartInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
+						s.getEndExclusive(), s.getEndExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
+						s.getValue()));
+				totalLoad = totalLoad.add(s.getValue());
+			}
+			System.out.println("Final end time: " + currentTime);
+			System.out.println("Total load consumed: " + totalLoad);
+		}
+
+		return currentTime;
+	}
+
+	/**
+	 * Computes the start date-time at which the total load has been completely
+	 * consumed.
+	 * <p>
+	 * The computation is expected to traverse the successive
+	 * {@link PiecewiseConstant} segments starting at the integration start
+	 * date-time, accumulating consumed load in past until the target total load is reached.
+	 *
+	 * @return the {@link LocalDateTime} corresponding to the start of the load
+	 *         integration
+	 */
+
+	public LocalDateTime computeStart() {
+		List<Segment> consumedSegments = null; // this is for debugging purposes only
+		if (DEBUG) {
+			consumedSegments = new LinkedList<>();
+		}
+		
+		Fraction remainingLoad = totalLoad;
+		LocalDateTime currentTime = start;
+
+		
+		Iterator<Segment> iter = loadFunction.iterateSegmentsBackwardFrom(start);
+		while (iter.hasNext()) {
+			Segment segment = iter.next();
+			
+			if (remainingLoad.equals(Fraction.ZERO)) {
+				break;
+			}
+
+			Fraction loadRate = segment.getValue();
+			if (loadRate.equals(Fraction.ZERO)) {
+				currentTime = segment.getStartInclusive();
+				if (DEBUG) {
+					consumedSegments.add(new Segment(segment.getStartInclusive(), segment.getEndExclusive(), loadRate));
+				}
+				continue;
+			}
+
+			Duration segmentDurationRaw = Duration.between(segment.getStartInclusive(), currentTime);
+			Fraction segmentDurationInDays = new Fraction(segmentDurationRaw.toSeconds(), ONE_DAY_IN_SECONDS); // duration in days
+
+			Fraction loadInSegment = loadRate.multiply(segmentDurationInDays);
+
+			if (loadInSegment.compareTo(remainingLoad) >= 0) {
+				// The remaining load can be consumed within this segment
+				Fraction timeNeeded = remainingLoad.divide(loadRate);
+				long secondsNeeded = timeNeeded.multiply(Fraction.of(ONE_DAY_IN_SECONDS)).wholePart();
+				if (DEBUG) {
+					consumedSegments.add(new Segment(currentTime.minusSeconds(secondsNeeded), currentTime, remainingLoad));
+				}
+				currentTime = currentTime.minusSeconds(secondsNeeded);
+				remainingLoad = Fraction.ZERO;
+			} else {
+				// Consume the entire segment load and move to the next segment
+				if (DEBUG) {
+					consumedSegments.add(new Segment(segment.getStartInclusive(), currentTime, loadInSegment));
+				}
+				remainingLoad = remainingLoad.subtract(loadInSegment);
+				currentTime = segment.getStartInclusive();
 			}
 		}
 		
