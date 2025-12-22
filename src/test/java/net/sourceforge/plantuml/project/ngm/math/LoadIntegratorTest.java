@@ -389,4 +389,41 @@ class LoadIntegratorTest {
 		LocalDateTime expected = LocalDateTime.of(2024, 4, 20, 21, 0);
 		assertEquals(expected, end, "Should handle multiple vacation periods correctly");
 	}
+	
+	// ===========================================================================
+	// Tests with PiecewiseConstantSpecificDays - backwards
+	// ===========================================================================
+
+	@Test
+	void testChristmasHoliday_withVacationDays_backwards() {
+		// Scenario: Developer takes vacation from Dec 23-26, 2024
+		// Working 100% on other days, 0% during vacation
+		PiecewiseConstant loadFunction = PiecewiseConstantSpecificDays.of(Fraction.ONE)
+				.withDay(LocalDate.of(2024, 12, 23), Fraction.ZERO) // Monday
+				.withDay(LocalDate.of(2024, 12, 24), Fraction.ZERO) // Tuesday
+				.withDay(LocalDate.of(2024, 12, 25), Fraction.ZERO) // Wednesday
+				.withDay(LocalDate.of(2024, 12, 26), Fraction.ZERO); // Friday
+
+		LocalDateTime end = LocalDateTime.of(2024, 12, 29, 9, 0); // work finishes Friday Dec 29
+		Fraction totalLoad = Fraction.of(5); // 5 days of work
+
+		LoadIntegrator integrator = new LoadIntegrator(loadFunction, end, totalLoad);
+		LocalDateTime start = integrator.computeStart();
+
+		// Should skip the vacation days: Dec 23, 24, 25, 26
+		// 2024-12-29T00:00(Sun) - 2024-12-29T09:00(Sun): load 9/24 = 3/8
+		// 2024-12-28T00:00(Sat) - 2024-12-29T00:00(Sun): load 1
+		// 2024-12-27T00:00(Fri) - 2024-12-28T00:00(Sat): load 1
+		// 2024-12-26T00:00(Thu) - 2024-12-27T00:00(Fri): load 0
+		// 2024-12-25T00:00(Wed) - 2024-12-26T00:00(Thu): load 0
+		// 2024-12-24T00:00(Tue) - 2024-12-25T00:00(Wed): load 0
+		// 2024-12-23T00:00(Mon) - 2024-12-24T00:00(Tue): load 0
+		// 2024-12-22T00:00(Sun) - 2024-12-23T00:00(Mon): load 1
+		// 2024-12-21T00:00(Sat) - 2024-12-22T00:00(Sun): load 1
+		// 2024-12-20T09:00(Fri) - 2024-12-21T00:00(Sat): load (24-9)/24 = 15/24 = 5/8
+
+		LocalDateTime expected = LocalDateTime.of(2024, 12, 20, 9, 0);
+		assertEquals(expected, start, "Should start before vacation period");
+	}
+
 }
