@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.project.ngm.math.Fraction;
+import net.sourceforge.plantuml.project.ngm.math.LoadIntegrator;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantHours;
@@ -36,6 +39,18 @@ import net.sourceforge.plantuml.project.ngm.math.Combiner;
  * until the total effort is consumed.
  */
 class NGMTaskFixedTotalEffortTest {
+
+	// Enable debug mode for all tests
+	@BeforeAll
+	static void setup() {
+		LoadIntegrator.DEBUG = true;
+	}
+	
+	// Disable debug mode after tests
+	@AfterAll
+	static void teardown() {
+		LoadIntegrator.DEBUG = false;
+	}
 
 	// ========================================================================
 	// ALLOCATION BUILDERS
@@ -487,7 +502,6 @@ class NGMTaskFixedTotalEffortTest {
 	 *   - This requires reverse integration (going backwards in time)
 	 *   - LoadIntegrator may need a computeStart() method
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void computeStartFromEnd() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(16);
@@ -514,7 +528,6 @@ class NGMTaskFixedTotalEffortTest {
 	 * 
 	 * Expected start: Tuesday 08:00 (skipping Wednesday holiday going backwards).
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void computeStartFromEndWithHoliday() {
 		// Wednesday Dec 3rd is a holiday
@@ -545,7 +558,6 @@ class NGMTaskFixedTotalEffortTest {
 	/**
 	 * Zero effort task - should start and end at the same instant.
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void zeroEffortTask() {
 		NGMTotalEffort effort = NGMTotalEffort.zero();
@@ -561,7 +573,6 @@ class NGMTaskFixedTotalEffortTest {
 	/**
 	 * Very small effort (30 minutes) with office hours.
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void thirtyMinuteTask() {
 		NGMTotalEffort effort = NGMTotalEffort.ofMinutes(30);
@@ -578,7 +589,6 @@ class NGMTaskFixedTotalEffortTest {
 	/**
 	 * Task with hours and minutes: 2h30min.
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void twoHoursAndThirtyMinutesTask() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHoursAndMinutes(2, 30);
@@ -601,7 +611,6 @@ class NGMTaskFixedTotalEffortTest {
 	 *     work begins at the next working segment.
 	 *   - LoadIntegrator should skip zero-allocation segments.
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void taskStartingDuringLunchBreak() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(2);
@@ -620,7 +629,6 @@ class NGMTaskFixedTotalEffortTest {
 	/**
 	 * Task starting on Saturday - should resume Monday.
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void taskStartingOnWeekend() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(8);
@@ -644,7 +652,6 @@ class NGMTaskFixedTotalEffortTest {
 	 * 6-month project (approximately 1000 working hours).
 	 * Tests that the implementation handles large durations correctly.
 	 */
-	@Disabled("TDD tests - implementation pending")
 	@Test
 	void sixMonthProject() {
 		// 1000 hours = 125 working days (at 8h/day)

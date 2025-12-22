@@ -36,6 +36,7 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	@Override
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
+		this.start = new LoadIntegrator(allocation.getLoadFunction(), end, new Fraction(totalEffort.toSeconds(), 86_400)).computeStart();
 		// TODO implement reverse calculation to set start based on end and totalEffort
 	}
 
