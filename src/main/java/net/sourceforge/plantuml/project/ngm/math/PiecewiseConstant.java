@@ -127,6 +127,35 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	}
 	
 	/**
+	 * Returns an iterator over segments in descending chronological order, starting from
+	 * the segment that contains the given instant.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> The first segment returned by this iterator is the segment
+	 * that contains {@code instant}, but this segment does <strong>not necessarily start</strong>
+	 * at {@code instant}. The segment may have started before {@code instant} and
+	 * extends beyond it. Subsequent segments follow in chronological order in past.
+	 * </p>
+	 *
+	 * <p>
+	 * This method is intended for efficient backward traversal when computing or aggregating
+	 * workload over time windows without materializing all segments.
+	 * </p>
+	 *
+	 * <p>
+	 * This iterator may represent a large or conceptually unbounded sequence,
+	 * depending on the underlying workload rules.
+	 * </p>
+	 *
+	 * @param instant the instant from which to begin iteration; the first segment
+	 *                      returned will be the one containing this instant
+	 * @return an iterator over segments containing and preceding the given instant
+	 */
+	default Iterator<Segment> iterateSegmentsBackwardFrom(LocalDateTime instant) {
+		throw new UnsupportedOperationException("Not implemented now");
+	}
+	
+	/**
 	 * Returns the segment containing the given instant.
 	 *
 	 * <p>
@@ -149,4 +178,5 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 * @throws java.util.NoSuchElementException if the iterator is empty (should not occur in normal usage)
 	 */
 	Segment segmentAt(LocalDateTime instant);
+
 }
