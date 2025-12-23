@@ -137,32 +137,32 @@ class PiecewiseConstantHoursTest {
 
 		// Then: First segment is non-working hours from 00:00 to 08:00
 		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 0, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s0.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 0, 0), s0.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s0.bExclusive());
 		assertEquals(Fraction.ZERO, s0.getValue());
 
 		// Then: Second segment is morning work from 08:00 to 12:00
 		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s1.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s1.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s1.bExclusive());
 		assertEquals(Fraction.ONE, s1.getValue());
 
 		// Then: Third segment is lunch break from 12:00 to 14:00
 		Segment s2 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s2.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s2.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s2.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s2.bExclusive());
 		assertEquals(Fraction.ZERO, s2.getValue());
 
 		// Then: Fourth segment is afternoon work from 14:00 to 18:00
 		Segment s3 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s3.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s3.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s3.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s3.bExclusive());
 		assertEquals(Fraction.ONE, s3.getValue());
 
 		// Then: Fifth segment is evening non-working hours from 18:00 to 00:00 next day
 		Segment s4 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s4.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), s4.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s4.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), s4.bExclusive());
 		assertEquals(Fraction.ZERO, s4.getValue());
 	}
 
@@ -181,16 +181,16 @@ class PiecewiseConstantHoursTest {
 
 		// Then: First segment should be the morning work segment containing 10:00
 		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s0.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s0.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s0.bExclusive());
 		assertEquals(Fraction.ONE, s0.getValue());
-		assertTrue(from.isAfter(s0.getStartInclusive()) || from.equals(s0.getStartInclusive()));
-		assertTrue(from.isBefore(s0.getEndExclusive()));
+		assertTrue(from.isAfter(s0.aInclusive()) || from.equals(s0.aInclusive()));
+		assertTrue(from.isBefore(s0.bExclusive()));
 
 		// Then: Second segment should be lunch break
 		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s1.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s1.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s1.bExclusive());
 		assertEquals(Fraction.ZERO, s1.getValue());
 	}
 
@@ -209,16 +209,16 @@ class PiecewiseConstantHoursTest {
 
 		// Then: First segment should be the lunch break containing 13:00
 		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s0.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s0.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s0.bExclusive());
 		assertEquals(Fraction.ZERO, s0.getValue());
-		assertTrue(from.isAfter(s0.getStartInclusive()) || from.equals(s0.getStartInclusive()));
-		assertTrue(from.isBefore(s0.getEndExclusive()));
+		assertTrue(from.isAfter(s0.aInclusive()) || from.equals(s0.aInclusive()));
+		assertTrue(from.isBefore(s0.bExclusive()));
 
 		// Then: Second segment should be afternoon work
 		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s1.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s1.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s1.bExclusive());
 		assertEquals(Fraction.ONE, s1.getValue());
 	}
 
@@ -237,16 +237,16 @@ class PiecewiseConstantHoursTest {
 
 		// Then: First segment should be the afternoon work segment containing 16:00
 		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s0.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s0.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s0.bExclusive());
 		assertEquals(Fraction.ONE, s0.getValue());
-		assertTrue(from.isAfter(s0.getStartInclusive()) || from.equals(s0.getStartInclusive()));
-		assertTrue(from.isBefore(s0.getEndExclusive()));
+		assertTrue(from.isAfter(s0.aInclusive()) || from.equals(s0.aInclusive()));
+		assertTrue(from.isBefore(s0.bExclusive()));
 
 		// Then: Second segment should be evening non-work
 		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), s1.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s1.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), s1.bExclusive());
 		assertEquals(Fraction.ZERO, s1.getValue());
 	}
 
@@ -270,13 +270,13 @@ class PiecewiseConstantHoursTest {
 
 		// Then: Second day should start with the same pattern
 		Segment day2s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), day2s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 8, 0), day2s0.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), day2s0.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 16, 8, 0), day2s0.bExclusive());
 		assertEquals(Fraction.ZERO, day2s0.getValue());
 
 		Segment day2s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 16, 8, 0), day2s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 12, 0), day2s1.getEndExclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 16, 8, 0), day2s1.aInclusive());
+		assertEquals(LocalDateTime.of(2025, 12, 16, 12, 0), day2s1.bExclusive());
 		assertEquals(Fraction.ONE, day2s1.getValue());
 	}
 
@@ -317,8 +317,8 @@ class PiecewiseConstantHoursTest {
 		Segment seg = it.next();
 
 		// Verify that the instant is actually within the segment bounds
-		assertFalse(instant.isBefore(seg.getStartInclusive()), "Instant should not be before segment start");
-		assertTrue(instant.isBefore(seg.getEndExclusive()), "Instant should be before segment end");
+		assertFalse(instant.isBefore(seg.aInclusive()), "Instant should not be before segment start");
+		assertTrue(instant.isBefore(seg.bExclusive()), "Instant should be before segment end");
 
 		// Core consistency assertion: apply() and segment value must match
 		assertEquals(hours.apply(instant), seg.getValue(),

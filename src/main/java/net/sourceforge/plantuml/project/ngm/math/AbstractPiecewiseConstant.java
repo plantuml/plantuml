@@ -109,7 +109,7 @@ public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 
 	            // Advance the iterator to the end of the returned segment.
 	            // The next call to next() will start from this instant.
-	            current = segment.getEndExclusive();
+	            current = segment.bExclusive();
 
 	            return segment;
 	        }
@@ -140,7 +140,7 @@ public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 
 	            // Advance the iterator to before the start of the returned segment.
 	            // The next call to next() will start from this instant.
-	            current = segment.getStartInclusive().minus(1, ChronoUnit.SECONDS);
+	            current = segment.aInclusive().minus(1, ChronoUnit.SECONDS);
 
 	            return segment;
 	        }

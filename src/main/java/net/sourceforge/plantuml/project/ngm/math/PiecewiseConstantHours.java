@@ -166,7 +166,7 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 			// Normal case
 			endDateTime = instant.toLocalDate().atTime(segmentEnd);
 		}
-		return new Segment(startDateTime, endDateTime, segmentWorkload);
+		return Segment.forward(startDateTime, endDateTime, segmentWorkload);
 	}
 
 	private static class LocalTimeSegment {

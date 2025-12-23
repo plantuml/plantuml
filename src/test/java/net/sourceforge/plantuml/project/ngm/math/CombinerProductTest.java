@@ -353,9 +353,9 @@ class CombinerProductTest {
 	private void assertSegment(Segment actual, LocalDateTime expectedStart, 
 			LocalDateTime expectedEnd, Fraction expectedValue, String message) {
 		assertNotNull(actual, message + " - segment should not be null");
-		assertEquals(expectedStart, actual.getStartInclusive(), 
+		assertEquals(expectedStart, actual.aInclusive(), 
 				message + " - start time mismatch");
-		assertEquals(expectedEnd, actual.getEndExclusive(), 
+		assertEquals(expectedEnd, actual.bExclusive(), 
 				message + " - end time mismatch");
 		assertEquals(expectedValue, actual.getValue(), 
 				message + " - value mismatch");

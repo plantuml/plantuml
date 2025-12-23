@@ -22,7 +22,25 @@ You can use this file to put a test you are working on.
 Here is a simple example:
 
 @startuml
-alice->bob: this is a test
+compact robust "Web Browser" as WB
+concise "Web User" as WU
+
+@0
+WU is Waiting
+WB is Idle
+
+@200
+WB is Proc.
+
+@300
+WB is Waiting
+
+@500
+WU is ok
+
+@700
+WB is Idle
+
 @enduml
 
 So you can edit this file, but please do not push any modification in the "main" branch.

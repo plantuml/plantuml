@@ -81,10 +81,10 @@ class PiecewiseConstantWeekdayTest {
 		// Then: The first segment should be the full Monday day
 		// The segment contains the given instant (00:00) and starts exactly at 00:00
 		Segment s0 = it.next();
-		assertEquals(from, s0.getStartInclusive(), "First segment should start at midnight Monday");
-		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), s0.getEndExclusive(), "Segment should end at midnight Tuesday");
+		assertEquals(from, s0.aInclusive(), "First segment should start at midnight Monday");
+		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), s0.bExclusive(), "Segment should end at midnight Tuesday");
 		assertEquals(Fraction.ONE, s0.getValue(), "Monday should have 100% workload");
-		assertEquals("Segment{startInclusive=2025-12-01T00:00, endExclusive=2025-12-02T00:00, value=1}", s0.toString());
+		assertEquals("FORWARD [2025-12-01T00:00, 2025-12-02T00:00) value=1", s0.toString());
 	}
 
 	@Test
@@ -108,17 +108,17 @@ class PiecewiseConstantWeekdayTest {
 		// This demonstrates that segmentsStartingAt returns the segment CONTAINING the instant,
 		// not a segment starting exactly at that instant
 		Segment monday = it.next();
-		assertEquals(LocalDate.of(2025, 12, 1).atStartOfDay(), monday.getStartInclusive(), 
+		assertEquals(LocalDate.of(2025, 12, 1).atStartOfDay(), monday.aInclusive(), 
 				"Monday segment should start at midnight, not at noon");
-		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), monday.getEndExclusive(), 
+		assertEquals(LocalDate.of(2025, 12, 2).atStartOfDay(), monday.bExclusive(), 
 				"Monday segment should end at midnight Tuesday");
 		assertEquals(Fraction.ONE, monday.getValue(), "Monday should have 100% workload");
-		assertEquals("Segment{startInclusive=2025-12-01T00:00, endExclusive=2025-12-02T00:00, value=1}",
+		assertEquals("FORWARD [2025-12-01T00:00, 2025-12-02T00:00) value=1",
 				monday.toString());
 
 		// Then: The second segment should be Tuesday's full day
 		Segment tuesday = it.next();
-		assertEquals("Segment{startInclusive=2025-12-02T00:00, endExclusive=2025-12-03T00:00, value=1/2}",
+		assertEquals("FORWARD [2025-12-02T00:00, 2025-12-03T00:00) value=1/2",
 				tuesday.toString());
 	}
 
@@ -140,26 +140,26 @@ class PiecewiseConstantWeekdayTest {
 
 		// Then: First segment should be Wednesday with 40% workload
 		Segment wed = it.next();
-		assertEquals(LocalDate.of(2025, 12, 3).atStartOfDay(), wed.getStartInclusive());
-		assertEquals(LocalDate.of(2025, 12, 4).atStartOfDay(), wed.getEndExclusive());
+		assertEquals(LocalDate.of(2025, 12, 3).atStartOfDay(), wed.aInclusive());
+		assertEquals(LocalDate.of(2025, 12, 4).atStartOfDay(), wed.bExclusive());
 		assertEquals(new Fraction(2, 5), wed.getValue());
-		assertEquals("Segment{startInclusive=2025-12-03T00:00, endExclusive=2025-12-04T00:00, value=2/5}",
+		assertEquals("FORWARD [2025-12-03T00:00, 2025-12-04T00:00) value=2/5",
 				wed.toString());
 
 		// Then: Second segment should be Thursday with 60% workload
 		Segment thu = it.next();
-		assertEquals(LocalDate.of(2025, 12, 4).atStartOfDay(), thu.getStartInclusive());
-		assertEquals(LocalDate.of(2025, 12, 5).atStartOfDay(), thu.getEndExclusive());
+		assertEquals(LocalDate.of(2025, 12, 4).atStartOfDay(), thu.aInclusive());
+		assertEquals(LocalDate.of(2025, 12, 5).atStartOfDay(), thu.bExclusive());
 		assertEquals(new Fraction(3, 5), thu.getValue());
-		assertEquals("Segment{startInclusive=2025-12-04T00:00, endExclusive=2025-12-05T00:00, value=3/5}",
+		assertEquals("FORWARD [2025-12-04T00:00, 2025-12-05T00:00) value=3/5",
 				thu.toString());
 
 		// Then: Third segment should be Friday with 0% workload (default)
 		Segment fri = it.next();
-		assertEquals(LocalDate.of(2025, 12, 5).atStartOfDay(), fri.getStartInclusive());
-		assertEquals(LocalDate.of(2025, 12, 6).atStartOfDay(), fri.getEndExclusive());
+		assertEquals(LocalDate.of(2025, 12, 5).atStartOfDay(), fri.aInclusive());
+		assertEquals(LocalDate.of(2025, 12, 6).atStartOfDay(), fri.bExclusive());
 		assertEquals(Fraction.ZERO, fri.getValue());
-		assertEquals("Segment{startInclusive=2025-12-05T00:00, endExclusive=2025-12-06T00:00, value=0}",
+		assertEquals("FORWARD [2025-12-05T00:00, 2025-12-06T00:00) value=0",
 				fri.toString());
 	}
 
@@ -202,12 +202,12 @@ class PiecewiseConstantWeekdayTest {
 		Segment seg = it.next();
 
 		// Verify the segment structure matches expectations
-		assertEquals(dayStart, seg.getStartInclusive(), "Segment should start at day boundary");
-		assertEquals(dayStart.plusDays(1), seg.getEndExclusive(), "Segment should span exactly one day");
+		assertEquals(dayStart, seg.aInclusive(), "Segment should start at day boundary");
+		assertEquals(dayStart.plusDays(1), seg.bExclusive(), "Segment should span exactly one day");
 
 		// Verify that the instant is actually within the segment bounds
-		assertFalse(instant.isBefore(seg.getStartInclusive()), "Instant should not be before the segment start");
-		assertTrue(instant.isBefore(seg.getEndExclusive()), "Instant should be before the segment end");
+		assertFalse(instant.isBefore(seg.aInclusive()), "Instant should not be before the segment start");
+		assertTrue(instant.isBefore(seg.bExclusive()), "Instant should be before the segment end");
 
 		// Core consistency assertion: apply() and segment value must match
 		assertEquals(wk.apply(instant), seg.getValue(),

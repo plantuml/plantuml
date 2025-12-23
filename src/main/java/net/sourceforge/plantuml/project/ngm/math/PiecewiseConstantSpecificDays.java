@@ -137,7 +137,7 @@ public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConsta
 		final LocalDateTime end = start.plusDays(1);
 		final Fraction value = apply(start);
 
-		return new Segment(start, end, value);
+		return Segment.forward(start, end, value);
 
 	}
 

@@ -144,7 +144,7 @@ public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 		final LocalDateTime end = start.plusDays(1);
 		final Fraction value = workloadByDay.get(start.getDayOfWeek());
 
-		return new Segment(start, end, value);
+		return Segment.forward(start, end, value);
 	}
 
 }

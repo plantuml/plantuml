@@ -45,7 +45,7 @@ import java.util.function.BiFunction;
  * A constant workload segment.
  *
  * <p>
- * Within {@code [startInclusive, endExclusive)}, the workload is assumed to be constant.
+ * Within {@code [aInclusive, bExclusive)}, the workload is assumed to be constant.
  * This mirrors how resource planning is often defined: a stable allocation over a
  * time range with changes occurring only at explicit boundaries.
  * </p>
@@ -55,15 +55,10 @@ import java.util.function.BiFunction;
  * </p>
  */
 public final class Segment {
-	/**
-	 * The start of the segment, inclusive. Can not be null.
-	 */
-	private final LocalDateTime startInclusive;
+
+	private final LocalDateTime aInclusive;
 	
-	/**
-	 * The end of the segment, exclusive. Can not be null. Can not be before {@link #startInclusive}.
-	 */
-	private final LocalDateTime endExclusive;
+	private final LocalDateTime bExclusive;
 	
 	/**
 	 * The constant workload value over this segment.
@@ -73,31 +68,39 @@ public final class Segment {
 	/**
 	 * Constructs a new {@code Segment} with the specified bounds and value.
 	 *
-	 * @param startInclusive the start of the segment (inclusive); must not be {@code null}
-	 * @param endExclusive the end of the segment (exclusive); must not be {@code null}
-	 *                     and must be after {@code startInclusive}
+	 * @param aInclusive the start of the segment (inclusive); must not be {@code null}
+	 * @param bExclusive the end of the segment (exclusive); must not be {@code null}
+	 *                     and must be after {@code aInclusive}
 	 * @param value the constant workload value for this segment; must not be {@code null}
 	 * @throws NullPointerException if any argument is {@code null}
-	 * @throws IllegalArgumentException if {@code startInclusive} is not before {@code endExclusive}
+	 * @throws IllegalArgumentException if {@code aInclusive} is not before {@code bExclusive}
 	 */
-	public Segment(LocalDateTime startInclusive, LocalDateTime endExclusive, Fraction value) {
-		Objects.requireNonNull(startInclusive, "startInclusive must not be null");
-		Objects.requireNonNull(endExclusive, "endExclusive must not be null");
-		Objects.requireNonNull(value, "value must not be null");
-		if (startInclusive != null && endExclusive != null && !startInclusive.isBefore(endExclusive))
+	private Segment(LocalDateTime aInclusive, LocalDateTime bExclusive, Fraction value) {
+		Objects.requireNonNull(aInclusive);
+		Objects.requireNonNull(bExclusive);
+		Objects.requireNonNull(value);
+		if (aInclusive != null && bExclusive != null && !aInclusive.isBefore(bExclusive))
 			throw new IllegalArgumentException("startInclusive must be before endExclusive");
 
-		this.startInclusive = startInclusive;
-		this.endExclusive = endExclusive;
+		this.aInclusive = aInclusive;
+		this.bExclusive = bExclusive;
 		this.value = value;
 	}
-
-	public LocalDateTime getStartInclusive() {
-		return startInclusive;
+	
+	public static Segment forward(LocalDateTime aInclusive, LocalDateTime bExclusive, Fraction value) {
+		return new Segment(aInclusive, bExclusive, value);
 	}
 
-	public LocalDateTime getEndExclusive() {
-		return endExclusive;
+	public TimeDirection getTimeDirection() {
+		return TimeDirection.FORWARD;
+	}
+
+	public LocalDateTime aInclusive() {
+		return aInclusive;
+	}
+
+	public LocalDateTime bExclusive() {
+		return bExclusive;
 	}
 
 	public Fraction getValue() {
@@ -112,17 +115,17 @@ public final class Segment {
 	 * that is:
 	 * </p>
 	 * <pre>
-	 * startInclusive &lt;= time &lt; endExclusive
+	 * aInclusive &lt;= time &lt; bExclusive
 	 * </pre>
 	 *
 	 * <p>
 	 * The returned array always contains exactly two segments:
 	 * </p>
 	 * <ul>
-	 *   <li>the first segment spans from {@code startInclusive} (inclusive)
+	 *   <li>the first segment spans from {@code aInclusive} (inclusive)
 	 *       to {@code time} (exclusive),</li>
 	 *   <li>the second segment spans from {@code time} (inclusive)
-	 *       to {@code endExclusive} (exclusive).</li>
+	 *       to {@code bExclusive} (exclusive).</li>
 	 * </ul>
 	 *
 	 * <p>
@@ -130,15 +133,13 @@ public final class Segment {
 	 * segment. The two segments are guaranteed to be contiguous and non-overlapping.
 	 * </p>
 	 *
-	 *
 	 * @param time the instant at which to split this segment
 	 * @return an array of exactly two segments resulting from the split,
 	 *         in chronological order
 	 * @throws NullPointerException if {@code time} is {@code null}
-	 * @throws IllegalArgumentException if {@code time} is lies
-	 *         outside the bounds of this segment or {@code startInclusive} is
+	 * @throws IllegalArgumentException if {@code time} lies
+	 *         outside the bounds of this segment or {@code aInclusive} is
 	 *         equal to {@code time}
-	 *         
 	 */
 	public Segment[] split(LocalDateTime time) {
 		Objects.requireNonNull(time, "time must not be null");
@@ -146,8 +147,8 @@ public final class Segment {
 			throw new IllegalArgumentException("time must be within the segment bounds");
 		}
 		
-		Segment first = new Segment(startInclusive, time, value);
-		Segment second = new Segment(time, endExclusive, value);
+		Segment first = Segment.forward(aInclusive, time, value);
+		Segment second = Segment.forward(time, bExclusive, value);
 		return new Segment[] { first, second };
 	}
 	
@@ -155,8 +156,8 @@ public final class Segment {
 	 * Checks whether the given instant lies within this segment.
 	 *
 	 * <p>
-	 * The check is inclusive of {@link #getStartInclusive() startInclusive}
-	 * and exclusive of {@link #getEndExclusive() endExclusive}.
+	 * The check is inclusive of {@link #aInclusive() aInclusive}
+	 * and exclusive of {@link #bExclusive() bExclusive}.
 	 * </p>
 	 *
 	 * @param time the instant to check
@@ -167,14 +168,13 @@ public final class Segment {
 	public boolean includes(LocalDateTime time) {
 		Objects.requireNonNull(time, "time must not be null");
 		
-		return (time.isEqual(startInclusive) || time.isAfter(startInclusive))
-				&& time.isBefore(endExclusive);
+		return (time.isEqual(aInclusive) || time.isAfter(aInclusive))
+				&& time.isBefore(bExclusive);
 	}
 
 	@Override
 	public String toString() {
-		return "Segment{" + "startInclusive=" + startInclusive + ", endExclusive=" + endExclusive + ", value="
-				+ value + '}';
+		return getTimeDirection() + " [" + aInclusive + ", " + bExclusive + ") value=" + value;
 	}
 	
 	/**
@@ -242,12 +242,12 @@ public final class Segment {
 		LocalDateTime minEnd = null;
 		Fraction combinedValue = null;
 		for(Segment segment : segments) {
-			if(maxStart == null || segment.getStartInclusive().isAfter(maxStart)) {
-				maxStart = segment.getStartInclusive();
+			if(maxStart == null || segment.aInclusive().isAfter(maxStart)) {
+				maxStart = segment.aInclusive();
 			}
 			
-			if(minEnd == null || segment.getEndExclusive().isBefore(minEnd)) {
-				minEnd = segment.getEndExclusive();
+			if(minEnd == null || segment.bExclusive().isBefore(minEnd)) {
+				minEnd = segment.bExclusive();
 			}
 			
 			// Combine values using the provided function
@@ -260,7 +260,7 @@ public final class Segment {
 		
 		if(maxStart.isBefore(minEnd)) {
 			// Overlapping segments exist between maxStart (inclusive) and minEnd (exclusive)
-			return new Segment(maxStart, minEnd, combinedValue);
+			return Segment.forward(maxStart, minEnd, combinedValue);
 		} else {
 			// No overlapping segments
 			throw new IllegalArgumentException("Segments do not overlap");
@@ -292,4 +292,5 @@ public final class Segment {
 		
 		return intersection(Arrays.asList(segments), valueFunction);
 	}
+
 }

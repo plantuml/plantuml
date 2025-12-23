@@ -120,14 +120,14 @@ public class LoadIntegrator {
 
 			Fraction loadRate = segment.getValue();
 			if (loadRate.equals(Fraction.ZERO)) {
-				currentTime = segment.getEndExclusive();
+				currentTime = segment.bExclusive();
 				if (DEBUG) {
-					consumedSegments.add(new Segment(segment.getStartInclusive(), segment.getEndExclusive(), loadRate));
+					consumedSegments.add(Segment.forward(segment.aInclusive(), segment.bExclusive(), loadRate));
 				}
 				continue;
 			}
 
-			Duration segmentDurationRaw = Duration.between(currentTime, segment.getEndExclusive());
+			Duration segmentDurationRaw = Duration.between(currentTime, segment.bExclusive());
 			Fraction segmentDurationInDays = new Fraction(segmentDurationRaw.toSeconds(), ONE_DAY_IN_SECONDS); // duration in days
 
 			Fraction loadInSegment = loadRate.multiply(segmentDurationInDays);
@@ -137,17 +137,17 @@ public class LoadIntegrator {
 				Fraction timeNeeded = remainingLoad.divide(loadRate);
 				long secondsNeeded = timeNeeded.multiply(Fraction.of(ONE_DAY_IN_SECONDS)).wholePart();
 				if (DEBUG) {
-					consumedSegments.add(new Segment(currentTime, currentTime.plusSeconds(secondsNeeded), remainingLoad));
+					consumedSegments.add(Segment.forward(currentTime, currentTime.plusSeconds(secondsNeeded), remainingLoad));
 				}
 				currentTime = currentTime.plusSeconds(secondsNeeded);
 				remainingLoad = Fraction.ZERO;
 			} else {
 				// Consume the entire segment load and move to the next segment
 				if (DEBUG) {
-					consumedSegments.add(new Segment(currentTime, segment.getEndExclusive(), loadInSegment));
+					consumedSegments.add(Segment.forward(currentTime, segment.bExclusive(), loadInSegment));
 				}
 				remainingLoad = remainingLoad.subtract(loadInSegment);
-				currentTime = segment.getEndExclusive();
+				currentTime = segment.bExclusive();
 			}
 		}
 		
@@ -156,8 +156,8 @@ public class LoadIntegrator {
 			Fraction totalLoad = Fraction.ZERO;
 			for (Segment s : consumedSegments) {
 				System.out.println(String.format("%s(%s) - %s(%s): load %s", 
-						s.getStartInclusive(), s.getStartInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
-						s.getEndExclusive(), s.getEndExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
+						s.aInclusive(), s.aInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
+						s.bExclusive(), s.bExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
 						s.getValue()));
 				totalLoad = totalLoad.add(s.getValue());
 			}
@@ -200,14 +200,14 @@ public class LoadIntegrator {
 
 			Fraction loadRate = segment.getValue();
 			if (loadRate.equals(Fraction.ZERO)) {
-				currentTime = segment.getStartInclusive();
+				currentTime = segment.aInclusive();
 				if (DEBUG) {
-					consumedSegments.add(new Segment(segment.getStartInclusive(), segment.getEndExclusive(), loadRate));
+					consumedSegments.add(Segment.forward(segment.aInclusive(), segment.bExclusive(), loadRate));
 				}
 				continue;
 			}
 
-			Duration segmentDurationRaw = Duration.between(segment.getStartInclusive(), currentTime);
+			Duration segmentDurationRaw = Duration.between(segment.aInclusive(), currentTime);
 			Fraction segmentDurationInDays = new Fraction(segmentDurationRaw.toSeconds(), ONE_DAY_IN_SECONDS); // duration in days
 
 			Fraction loadInSegment = loadRate.multiply(segmentDurationInDays);
@@ -217,17 +217,17 @@ public class LoadIntegrator {
 				Fraction timeNeeded = remainingLoad.divide(loadRate);
 				long secondsNeeded = timeNeeded.multiply(Fraction.of(ONE_DAY_IN_SECONDS)).wholePart();
 				if (DEBUG) {
-					consumedSegments.add(new Segment(currentTime.minusSeconds(secondsNeeded), currentTime, remainingLoad));
+					consumedSegments.add(Segment.forward(currentTime.minusSeconds(secondsNeeded), currentTime, remainingLoad));
 				}
 				currentTime = currentTime.minusSeconds(secondsNeeded);
 				remainingLoad = Fraction.ZERO;
 			} else {
 				// Consume the entire segment load and move to the next segment
 				if (DEBUG) {
-					consumedSegments.add(new Segment(segment.getStartInclusive(), currentTime, loadInSegment));
+					consumedSegments.add(Segment.forward(segment.aInclusive(), currentTime, loadInSegment));
 				}
 				remainingLoad = remainingLoad.subtract(loadInSegment);
-				currentTime = segment.getStartInclusive();
+				currentTime = segment.aInclusive();
 			}
 		}
 		
@@ -236,8 +236,8 @@ public class LoadIntegrator {
 			Fraction totalLoad = Fraction.ZERO;
 			for (Segment s : consumedSegments) {
 				System.out.println(String.format("%s(%s) - %s(%s): load %s", 
-						s.getStartInclusive(), s.getStartInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
-						s.getEndExclusive(), s.getEndExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
+						s.aInclusive(), s.aInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
+						s.bExclusive(), s.bExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
 						s.getValue()));
 				totalLoad = totalLoad.add(s.getValue());
 			}
