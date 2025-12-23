@@ -3,7 +3,6 @@ package net.sourceforge.plantuml.project.ngm;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import net.sourceforge.plantuml.project.ngm.math.Fraction;
 import net.sourceforge.plantuml.project.ngm.math.LoadIntegrator;
 
 public class NGMTaskFixedTotalEffort extends NGMTask {
@@ -25,7 +24,7 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	@Override
 	public void setStart(LocalDateTime start) {
 		this.start = start;
-		this.end = new LoadIntegrator(allocation.getLoadFunction(), start, new Fraction(totalEffort.toSeconds(), 86_400)).computeEnd();
+		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	@Override
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
-		this.start = new LoadIntegrator(allocation.getLoadFunction(), end, new Fraction(totalEffort.toSeconds(), 86_400)).computeStart();
+		this.start = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeStart(end);
 		// TODO implement reverse calculation to set start based on end and totalEffort
 	}
 

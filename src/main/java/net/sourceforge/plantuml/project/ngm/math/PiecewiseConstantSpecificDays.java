@@ -37,11 +37,10 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
 
 /**
  * Immutable implementation of {@link PiecewiseConstant} that models a workload
@@ -58,29 +57,29 @@ import java.util.Objects;
  * </p>
  */
 public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConstant {
-	
+
 	/**
 	 * Mapping of specific dates to their corresponding workload fractions.
 	 */
 	private final Map<LocalDate, Fraction> dayToFraction;
-	
+
 	/**
 	 * Default workload fraction for dates not explicitly mapped.
 	 */
 	private final Fraction defaultValue;
-	
+
 	/**
 	 * Constructs a PiecewiseConstantSpecificDays with the given default value.
 	 * 
 	 * @param value The default workload fraction.
 	 */
 	private PiecewiseConstantSpecificDays(Fraction value) {
-		this(value, Map.of());
+		this(value, Collections.emptyMap());
 	}
-	
+
 	/**
-	 * Constructs a PiecewiseConstantSpecificDays with the given default value
-	 * and specific day-to-fraction mapping.
+	 * Constructs a PiecewiseConstantSpecificDays with the given default value and
+	 * specific day-to-fraction mapping.
 	 * 
 	 * @param value         The default workload fraction.
 	 * @param dayToFraction Mapping of specific dates to their workload fractions.
@@ -90,20 +89,13 @@ public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConsta
 		this.dayToFraction = dayToFraction;
 	}
 
-
-	/** (non-Javadoc)
-	 * @see net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant#apply(java.time.LocalDateTime)
-	 */
-	@Override
-	public Fraction apply(LocalDateTime instant) {
-		LocalDate localDate = instant.toLocalDate();
-		if(dayToFraction.containsKey(localDate)) {
+	private Fraction getValue(LocalDate localDate) {
+		if (dayToFraction.containsKey(localDate))
 			return dayToFraction.get(localDate);
-		}
-		
+
 		return defaultValue;
 	}
-	
+
 	/**
 	 * Creates a PiecewiseConstantSpecificDays with the given default value.
 	 * 
@@ -115,29 +107,45 @@ public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConsta
 	}
 
 	/**
-	 * Returns a new PiecewiseConstantSpecificDays with the specified day
-	 * associated with the given fraction.
+	 * Returns a new PiecewiseConstantSpecificDays with the specified day associated
+	 * with the given fraction.
 	 * 
 	 * @param day   The specific date to associate.
 	 * @param value The workload fraction for the specified date.
-	 * @return A new PiecewiseConstantSpecificDays instance with the updated mapping.
+	 * @return A new PiecewiseConstantSpecificDays instance with the updated
+	 *         mapping.
 	 */
 	public PiecewiseConstantSpecificDays withDay(LocalDate day, Fraction value) {
-		Map<LocalDate, Fraction> newDayToFraction = new HashMap<>(dayToFraction);
+		final Map<LocalDate, Fraction> newDayToFraction = new HashMap<>(dayToFraction);
 		newDayToFraction.put(day, value);
 		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);
 	}
-	
-	/** (non-Javadoc)
+
+	/**
+	 * (non-Javadoc)
+	 * 
 	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
 	 */
 	@Override
-	public Segment segmentAt(LocalDateTime instant) {
-		final LocalDateTime start = instant.toLocalDate().atStartOfDay();
-		final LocalDateTime end = start.plusDays(1);
-		final Fraction value = apply(start);
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+		if (direction == TimeDirection.FORWARD) {
+			final LocalDate day = instant.toLocalDate();
+			final LocalDateTime start = day.atStartOfDay();
+			final Fraction value = getValue(day);
+			return Segment.forward(start, start.plusDays(1), value);
+		}
 
-		return new Segment(start, end, value);
+		// BACKWARD: determine which day contains the instant
+		final LocalDate day;
+		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))
+			day = instant.toLocalDate().minusDays(1);
+		else
+			day = instant.toLocalDate();
+
+		final LocalDateTime end = day.atStartOfDay();
+		final Fraction value = getValue(day);
+
+		return Segment.backward(end.plusDays(1), end, value);
 
 	}
 

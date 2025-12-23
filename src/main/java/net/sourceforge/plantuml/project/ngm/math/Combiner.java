@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.project.ngm.math;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -157,17 +156,6 @@ public class Combiner {
 
 		
 		/**
-		 * Applies the combined function to the given instant.
-		 * 
-		 * @param instant the time instant to query
-		 * @return the combined workload fraction at this instant
-		 */
-		@Override
-		public Fraction apply(LocalDateTime instant) {
-			return segmentAt(instant).getValue();
-		}
-		
-		/**
 		 * Retrieves the segment at the specified instant by combining segments
 		 * from all constituent functions.
 		 * 
@@ -176,13 +164,13 @@ public class Combiner {
 		 * @throws IllegalStateException if less than two functions are present
 		 */
 		@Override
-		public Segment segmentAt(LocalDateTime instant) {
+		public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
 			if(functions.size() < 2) {
 				throw new IllegalStateException("At least two functions are required for combination");
 			}
 			
 			List<Segment> segments = functions.stream()
-					.map(f -> f.segmentAt(instant))
+					.map(f -> f.segmentAt(instant, direction))
 					.toList();
 			
 			return Segment.intersection(segments, valueCombiner);

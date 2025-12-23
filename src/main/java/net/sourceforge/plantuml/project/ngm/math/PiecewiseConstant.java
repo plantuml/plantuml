@@ -49,53 +49,10 @@ import java.util.function.Function;
  * and may change only at discrete boundaries.
  * </p>
  *
- * <p>
- * The function returns a {@link Fraction} rather than an integer because
- * real-world allocations are often partial. For example, a person may be
- * assigned at 30% to a task, which can be represented as a fraction.
- * </p>
- *
- * <p>
- * A zero value is meaningful and represents no allocation during a segment.
- * </p>
- *
- * <p>
- * Implementations will likely not store an explicit list of segments.
- * Instead, segments may be computed dynamically, which is why this API
- * exposes an {@link Iterator} rather than a materialized collection.
- * </p>
- *
- * <p>
- * For example, if a resource works on weekdays from 08:00 to 12:00 and from
- * 14:00 to 18:00, and this rule applies across the whole time scale supported
- * by Java, an explicit representation would lead to an almost unbounded number
- * of segments. A lazy, on-demand traversal is therefore more appropriate.
- * </p>
- *
- * <p>
- * Segments do not overlap and are sorted by their start instant.
- * </p>
  */
-public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
+public interface PiecewiseConstant {
 
-	/**
-	 * Returns the workload value at the given instant.
-	 *
-	 * <p>
-	 * Typical semantics in this model:
-	 * </p>
-	 * <ul>
-	 *   <li>A positive fraction represents an active allocation (e.g., 3/10 for 30%).</li>
-	 *   <li>Zero represents no allocation for that instant.</li>
-	 * </ul>
-	 *
-	 * <p>
-	 * Implementations decide whether to return {@code null} or throw an exception
-	 * when the function is undefined at that instant.
-	 * </p>
-	 */
-	@Override
-	Fraction apply(LocalDateTime instant);
+	Segment segmentAt(LocalDateTime instant, TimeDirection direction);
 
 	/**
 	 * Returns an iterator over segments in ascending chronological order, starting from
@@ -122,61 +79,8 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
 	 */
-	default Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
-		throw new UnsupportedOperationException("Not implemented now");
-	}
+	Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant, TimeDirection direction);
 	
-	/**
-	 * Returns an iterator over segments in descending chronological order, starting from
-	 * the segment that contains the given instant.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> The first segment returned by this iterator is the segment
-	 * that contains {@code instant}, but this segment does <strong>not necessarily start</strong>
-	 * at {@code instant}. The segment may have started before {@code instant} and
-	 * extends beyond it. Subsequent segments follow in chronological order in past.
-	 * </p>
-	 *
-	 * <p>
-	 * This method is intended for efficient backward traversal when computing or aggregating
-	 * workload over time windows without materializing all segments.
-	 * </p>
-	 *
-	 * <p>
-	 * This iterator may represent a large or conceptually unbounded sequence,
-	 * depending on the underlying workload rules.
-	 * </p>
-	 *
-	 * @param instant the instant from which to begin iteration; the first segment
-	 *                      returned will be the one containing this instant
-	 * @return an iterator over segments containing and preceding the given instant
-	 */
-	default Iterator<Segment> iterateSegmentsBackwardFrom(LocalDateTime instant) {
-		throw new UnsupportedOperationException("Not implemented now");
-	}
 	
-	/**
-	 * Returns the segment containing the given instant.
-	 *
-	 * <p>
-	 * This is a convenience method equivalent to calling {@code iterateSegmentsFrom(instant).next()}.
-	 * The returned segment has boundaries {@code [startInclusive, endExclusive)} that contain
-	 * the given instant, meaning:
-	 * </p>
-	 * <ul>
-	 *   <li>{@code startInclusive <= instant}</li>
-	 *   <li>{@code instant < endExclusive}</li>
-	 * </ul>
-	 *
-	 * <p>
-	 * The segment's start time will typically be before or equal to the given instant,
-	 * not necessarily at the instant itself.
-	 * </p>
-	 *
-	 * @param instant the instant to query
-	 * @return the segment containing this instant
-	 * @throws java.util.NoSuchElementException if the iterator is empty (should not occur in normal usage)
-	 */
-	Segment segmentAt(LocalDateTime instant);
 
 }

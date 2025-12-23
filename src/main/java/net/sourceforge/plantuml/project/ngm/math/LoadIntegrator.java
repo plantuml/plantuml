@@ -37,132 +37,66 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.TextStyle;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
 
-/**
- * Integrates a time-varying load function in order to determine the date and
- * time at which a given total load is fully consumed.
- * <p>
- * The load is described by a {@link PiecewiseConstant} function, expressing a
- * constant load rate over successive time intervals. Starting from a given
- * {@link LocalDateTime}, this class conceptually integrates the load over time
- * until the specified {@link Fraction} of total load has been reached.
- * <p>
- * This class does not represent a duration or a fixed end date by itself; it
- * resolves an end date by consuming load according to the provided load
- * function.
- * <p>
- * Typical use cases include task scheduling where the workload varies over time
- * (for example, working hours, calendar constraints, or changing resource
- * allocations).
- * <p>
- * The implementation of the integration is expected to iterate over successive
- * load segments starting from the given start date-time. In particular, the
- * {@code computeEnd()} method will typically rely on an iterator obtained via
- * {@code PiecewiseConstant#segmentsStartingAt(LocalDateTime)} in order to
- * process the load segments in chronological order.
- */
+import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
+
 public class LoadIntegrator {
-	public static boolean DEBUG = false;
 
-	private static final int ONE_DAY_IN_SECONDS = 86400;
 	private final PiecewiseConstant loadFunction;
-	private final LocalDateTime start;
-	private final Fraction totalLoad;
+	private final NGMTotalEffort totalLoad;
 
 	/**
 	 * Creates a new {@code LoadIntegrator}.
 	 *
 	 * @param loadFunction the piecewise constant load function to integrate; it
 	 *                     defines the load rate at any given time
-	 * @param start        the start date-time from which the load integration
-	 *                     begins
 	 * @param totalLoad    the total amount of load to be consumed
 	 */
-	public LoadIntegrator(PiecewiseConstant loadFunction, LocalDateTime start, Fraction totalLoad) {
+	public LoadIntegrator(PiecewiseConstant loadFunction, NGMTotalEffort totalLoad) {
 		this.loadFunction = loadFunction;
-		this.start = start;
 		this.totalLoad = totalLoad;
 	}
 
-	/**
-	 * Computes the end date-time at which the total load has been completely
-	 * consumed.
-	 * <p>
-	 * The computation is expected to traverse the successive
-	 * {@link PiecewiseConstant} segments starting at the integration start
-	 * date-time, accumulating consumed load until the target total load is reached.
-	 *
-	 * @return the {@link LocalDateTime} corresponding to the completion of the load
-	 *         integration
-	 */
-	public LocalDateTime computeEnd() {
-		List<Segment> consumedSegments = null; // this is for debugging purposes only
-		if (DEBUG) {
-			consumedSegments = new LinkedList<>();
-		}
-		
-		Fraction remainingLoad = totalLoad;
+	public LocalDateTime computeEnd(LocalDateTime start) {
+
+		Fraction remainingLoad = totalLoad.toSeconds();
 		LocalDateTime currentTime = start;
 
-		
-		Iterator<Segment> iter = loadFunction.iterateSegmentsFrom(start);
+		final Iterator<Segment> iter = loadFunction.iterateSegmentsFrom(start, TimeDirection.FORWARD);
 		while (iter.hasNext()) {
 			Segment segment = iter.next();
-			
-			if (remainingLoad.equals(Fraction.ZERO)) {
+
+			if (remainingLoad.equals(Fraction.ZERO))
 				break;
-			}
 
 			Fraction loadRate = segment.getValue();
 			if (loadRate.equals(Fraction.ZERO)) {
-				currentTime = segment.getEndExclusive();
-				if (DEBUG) {
-					consumedSegments.add(new Segment(segment.getStartInclusive(), segment.getEndExclusive(), loadRate));
-				}
+				currentTime = segment.endExclusive();
 				continue;
 			}
 
-			Duration segmentDurationRaw = Duration.between(currentTime, segment.getEndExclusive());
-			Fraction segmentDurationInDays = new Fraction(segmentDurationRaw.toSeconds(), ONE_DAY_IN_SECONDS); // duration in days
+			// Calculate the effective start within the segment
+			final LocalDateTime effectiveStart = currentTime.isAfter(segment.startExclusive()) ? currentTime
+					: segment.startExclusive();
 
-			Fraction loadInSegment = loadRate.multiply(segmentDurationInDays);
+			// Calculate segment duration in seconds
+			final long segmentSeconds = Duration.between(effectiveStart, segment.endExclusive()).toSeconds();
+			final Fraction segmentDuration = new Fraction(segmentSeconds, 1);
 
-			if (loadInSegment.compareTo(remainingLoad) >= 0) {
-				// The remaining load can be consumed within this segment
-				Fraction timeNeeded = remainingLoad.divide(loadRate);
-				long secondsNeeded = timeNeeded.multiply(Fraction.of(ONE_DAY_IN_SECONDS)).wholePart();
-				if (DEBUG) {
-					consumedSegments.add(new Segment(currentTime, currentTime.plusSeconds(secondsNeeded), remainingLoad));
-				}
-				currentTime = currentTime.plusSeconds(secondsNeeded);
-				remainingLoad = Fraction.ZERO;
-			} else {
-				// Consume the entire segment load and move to the next segment
-				if (DEBUG) {
-					consumedSegments.add(new Segment(currentTime, segment.getEndExclusive(), loadInSegment));
-				}
-				remainingLoad = remainingLoad.subtract(loadInSegment);
-				currentTime = segment.getEndExclusive();
+			// Load consumed in this segment = loadRate * duration (in seconds)
+			final Fraction segmentLoad = loadRate.multiply(segmentDuration);
+
+			if (segmentLoad.compareTo(remainingLoad) >= 0) {
+				// This segment completes the work
+				// Time needed = remainingLoad / loadRate (in seconds)
+				final Fraction secondsNeeded = remainingLoad.divide(loadRate);
+				return effectiveStart.plusSeconds(secondsNeeded.wholePart());
 			}
-		}
-		
-		if (DEBUG) {
-			System.out.println("Consumed segments:");
-			Fraction totalLoad = Fraction.ZERO;
-			for (Segment s : consumedSegments) {
-				System.out.println(String.format("%s(%s) - %s(%s): load %s", 
-						s.getStartInclusive(), s.getStartInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
-						s.getEndExclusive(), s.getEndExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
-						s.getValue()));
-				totalLoad = totalLoad.add(s.getValue());
-			}
-			System.out.println("Final end time: " + currentTime);
-			System.out.println("Total load consumed: " + totalLoad);
+
+			// Consume the entire segment
+			remainingLoad = remainingLoad.subtract(segmentLoad);
+			currentTime = segment.endExclusive();
 		}
 
 		return currentTime;
@@ -174,75 +108,54 @@ public class LoadIntegrator {
 	 * <p>
 	 * The computation is expected to traverse the successive
 	 * {@link PiecewiseConstant} segments starting at the integration start
-	 * date-time, accumulating consumed load in past until the target total load is reached.
+	 * date-time, accumulating consumed load in past until the target total load is
+	 * reached.
 	 *
 	 * @return the {@link LocalDateTime} corresponding to the start of the load
 	 *         integration
 	 */
 
-	public LocalDateTime computeStart() {
-		List<Segment> consumedSegments = null; // this is for debugging purposes only
-		if (DEBUG) {
-			consumedSegments = new LinkedList<>();
-		}
-		
-		Fraction remainingLoad = totalLoad;
-		LocalDateTime currentTime = start;
+	public LocalDateTime computeStart(LocalDateTime end) {
 
-		
-		Iterator<Segment> iter = loadFunction.iterateSegmentsBackwardFrom(start);
+		Fraction remainingLoad = totalLoad.toSeconds();
+		LocalDateTime currentTime = end;
+
+		final Iterator<Segment> iter = loadFunction.iterateSegmentsFrom(end, TimeDirection.BACKWARD);
 		while (iter.hasNext()) {
 			Segment segment = iter.next();
-			
-			if (remainingLoad.equals(Fraction.ZERO)) {
+
+			if (remainingLoad.equals(Fraction.ZERO))
 				break;
-			}
 
 			Fraction loadRate = segment.getValue();
 			if (loadRate.equals(Fraction.ZERO)) {
-				currentTime = segment.getStartInclusive();
-				if (DEBUG) {
-					consumedSegments.add(new Segment(segment.getStartInclusive(), segment.getEndExclusive(), loadRate));
-				}
+				currentTime = segment.endExclusive();
 				continue;
 			}
 
-			Duration segmentDurationRaw = Duration.between(segment.getStartInclusive(), currentTime);
-			Fraction segmentDurationInDays = new Fraction(segmentDurationRaw.toSeconds(), ONE_DAY_IN_SECONDS); // duration in days
+			// Calculate the effective start within the segment
+			// For BACKWARD: currentTime is the "later" bound we're working from
+			final LocalDateTime effectiveStart = currentTime.isBefore(segment.startExclusive()) ? currentTime
+					: segment.startExclusive();
 
-			Fraction loadInSegment = loadRate.multiply(segmentDurationInDays);
+			// Calculate segment duration in seconds
+			// For BACKWARD: duration is from endExclusive to effectiveStart (going backward)
+			final long segmentSeconds = Duration.between(segment.endExclusive(), effectiveStart).toSeconds();
+			final Fraction segmentDuration = new Fraction(segmentSeconds, 1);
 
-			if (loadInSegment.compareTo(remainingLoad) >= 0) {
-				// The remaining load can be consumed within this segment
-				Fraction timeNeeded = remainingLoad.divide(loadRate);
-				long secondsNeeded = timeNeeded.multiply(Fraction.of(ONE_DAY_IN_SECONDS)).wholePart();
-				if (DEBUG) {
-					consumedSegments.add(new Segment(currentTime.minusSeconds(secondsNeeded), currentTime, remainingLoad));
-				}
-				currentTime = currentTime.minusSeconds(secondsNeeded);
-				remainingLoad = Fraction.ZERO;
-			} else {
-				// Consume the entire segment load and move to the next segment
-				if (DEBUG) {
-					consumedSegments.add(new Segment(segment.getStartInclusive(), currentTime, loadInSegment));
-				}
-				remainingLoad = remainingLoad.subtract(loadInSegment);
-				currentTime = segment.getStartInclusive();
+			// Load consumed in this segment = loadRate * duration (in seconds)
+			final Fraction segmentLoad = loadRate.multiply(segmentDuration);
+
+			if (segmentLoad.compareTo(remainingLoad) >= 0) {
+				// This segment completes the work
+				// Time needed = remainingLoad / loadRate (in seconds)
+				final Fraction secondsNeeded = remainingLoad.divide(loadRate);
+				return effectiveStart.minusSeconds(secondsNeeded.wholePart());
 			}
-		}
-		
-		if (DEBUG) {
-			System.out.println("Consumed segments:");
-			Fraction totalLoad = Fraction.ZERO;
-			for (Segment s : consumedSegments) {
-				System.out.println(String.format("%s(%s) - %s(%s): load %s", 
-						s.getStartInclusive(), s.getStartInclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH), 
-						s.getEndExclusive(), s.getEndExclusive().getDayOfWeek().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH),
-						s.getValue()));
-				totalLoad = totalLoad.add(s.getValue());
-			}
-			System.out.println("Final end time: " + currentTime);
-			System.out.println("Total load consumed: " + totalLoad);
+
+			// Consume the entire segment
+			remainingLoad = remainingLoad.subtract(segmentLoad);
+			currentTime = segment.endExclusive();
 		}
 
 		return currentTime;

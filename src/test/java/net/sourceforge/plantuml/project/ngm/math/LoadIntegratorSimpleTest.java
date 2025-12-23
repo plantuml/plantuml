@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
+
 public class LoadIntegratorSimpleTest {
 
 	@Test
@@ -19,10 +21,10 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 1, 6, 9, 0);
 		
 		// Given: Total load to consume is 1 day worth of work (Fraction.ONE = 1 full day)
-		final Fraction total = Fraction.ONE;
+		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(1);
 
 		// When: Computing the end date-time after integrating the load
-		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
+		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
 
 		// Then: With 100% constant load, 1 day of work should complete 24 hours later
 		// Expected: Tuesday 2025-01-07 at 09:00 (exactly 24 hours after start)
@@ -42,10 +44,10 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 1, 3, 12, 0);
 		
 		// Given: Total load to consume is 1 day worth of work
-		final Fraction total = Fraction.ONE;
+		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(1);
 
 		// When: Computing the end date-time after integrating the load
-		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
+		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
 
 		// Then: The first segment returned is Friday [00:00, 00:00+1day) with 100% load
 		//       but integration starts from 12:00, consuming only the remaining 12 hours
@@ -73,10 +75,10 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 2, 10, 0, 0);
 		
 		// Given: Total load to consume is 1.5 days worth of work (3/2)
-		final Fraction total = new Fraction(3, 2);
+		NGMTotalEffort totalLoad = NGMTotalEffort.ofHours(36);
 
 		// When: Computing the end date-time after integrating the load
-		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
+		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
 
 		// Then: On Feb 10 (100% load), we consume 1 full day of work
 		// Then: On Feb 11 (50% load), we consume 0.5 days of work (over 24 hours)
@@ -99,10 +101,10 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 3, 15, 6, 0);
 		
 		// Given: Total load to consume is 1/8 of a day (0.125 days = 3 hours of work)
-		final Fraction total = new Fraction(1, 8);
+		NGMTotalEffort totalLoad = NGMTotalEffort.ofHours(3);
 
 		// When: Computing the end date-time after integrating the load
-		final LocalDateTime actualEnd = new LoadIntegrator(load, start, total).computeEnd();
+		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
 
 		// Then: With 25% load rate, to consume 1/8 day of work (3 hours):
 		// Time needed = (1/8) / (1/4) = (1/8) * 4 = 1/2 day = 12 hours

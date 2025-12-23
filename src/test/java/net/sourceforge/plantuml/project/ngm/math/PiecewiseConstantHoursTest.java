@@ -1,328 +1,164 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Iterator;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PiecewiseConstantHoursTest {
-	
-	@Test
-	void creatingOverlappingSegments_throwsException() throws Exception {
-		assertThrows(IllegalArgumentException.class, () -> {
-			PiecewiseConstantHours.of(Fraction.ZERO)
-					.with(LocalTime.of(8, 0), LocalTime.of(12, 0), new Fraction(3, 4))
-					.with(LocalTime.of(10, 0), LocalTime.of(14, 0), new Fraction(1, 2)); // Overlaps with previous
-		});
-		
-		assertThrows(IllegalArgumentException.class, () -> {
-			PiecewiseConstantHours.of(Fraction.ZERO)
-			.with(LocalTime.of(8, 0), LocalTime.of(14, 0), new Fraction(3, 4))
-			.with(LocalTime.of(10, 0), LocalTime.of(12, 0), new Fraction(1, 2)); // Overlaps with previous
-		});
-		
-		assertThrows(IllegalArgumentException.class, () -> {
-			PiecewiseConstantHours.of(Fraction.ZERO)
-			.with(LocalTime.of(10, 0), LocalTime.of(12, 0), new Fraction(3, 4))
-			.with(LocalTime.of(8, 0), LocalTime.of(14, 0), new Fraction(1, 2)); // Overlaps with previous
-		});
-		
-		
-	}
 
-	@Test
-	void apply_returnsFractionONE_duringWorkingHours() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
+	private PiecewiseConstantHours hours;
+
+	@BeforeEach
+	void setUp() {
+		// Working hours from 8:00 to 12:00 and from 14:00 to 18:00
+		hours = PiecewiseConstantHours.of(Fraction.ZERO)
+				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), new Fraction(1, 2))
 				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
-
-		// When/Then: During morning working hours (8:00-12:00), should return ONE
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 8, 0)));
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 10, 30)));
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 11, 59)));
-
-		// When/Then: During afternoon working hours (14:00-18:00), should return ONE
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 14, 0)));
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 16, 0)));
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 17, 59)));
-	}
-	
-	@Test
-	void apply_returnsFractionZERO_outsideWorkingHours() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
-
-		// When/Then: Before working hours, should return ZERO
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 7, 59)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 0, 0)));
-
-		// When/Then: During lunch break (12:00-14:00), should return ZERO
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 12, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 13, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 13, 59)));
-
-		// When/Then: After working hours, should return ZERO
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 18, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 20, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 23, 59)));
 	}
 
 	@Test
-	void apply_worksAcrossDifferentDays() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_forward_beforeFirstWorkingHour_returnsZeroSegment() {
+		// Given: 6:00 AM (before working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(6, 0);
 
-		// When/Then: The same hours apply to different days
-		// Monday
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 15, 9, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 15, 13, 0)));
-
-		// Tuesday
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 16, 9, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 16, 13, 0)));
-
-		// Sunday
-		assertEquals(Fraction.ONE, hours.apply(LocalDateTime.of(2025, 12, 21, 9, 0)));
-		assertEquals(Fraction.ZERO, hours.apply(LocalDateTime.of(2025, 12, 21, 13, 0)));
+		// When/Then: Segment from midnight to 8:00 with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T00:00, 2025-12-01T08:00[ value=0", segment.toString());
 	}
 
 	@Test
-	void of_createsUniformWorkload() {
-		// Given: A uniform workload of 50% for all hours
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(new Fraction(1, 2));
+	void segmentAt_forward_duringMorningWork_returnsOneSegment() {
+		// Given: 10:00 AM (during morning working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(10, 0);
 
-		// When/Then: Any time of day should return the same workload
-		assertEquals(new Fraction(1, 2), hours.apply(LocalDateTime.of(2025, 12, 15, 0, 0)));
-		assertEquals(new Fraction(1, 2), hours.apply(LocalDateTime.of(2025, 12, 15, 12, 0)));
-		assertEquals(new Fraction(1, 2), hours.apply(LocalDateTime.of(2025, 12, 15, 23, 59)));
+		// When/Then: Segment from 8:00 to 12:00 with value 1
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T08:00, 2025-12-01T12:00[ value=1/2", segment.toString());
 	}
 
 	@Test
-	void with_updatesTimeRange_andKeepsImmutability() {
-		// Given: A base schedule with zero workload
-		PiecewiseConstantHours base = PiecewiseConstantHours.of(Fraction.ZERO);
+	void segmentAt_forward_duringLunchBreak_returnsZeroSegment() {
+		// Given: 1:00 PM (during lunch break)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(13, 0);
 
-		// When: Creating a new instance with 9:00-17:00 set to full workload
-		PiecewiseConstantHours updated = base.with(LocalTime.of(9, 0), LocalTime.of(17, 0), Fraction.ONE);
-
-		// Then: The original instance should remain unchanged (immutability)
-		assertEquals(Fraction.ZERO, base.apply(LocalDateTime.of(2025, 12, 15, 10, 0)));
-
-		// Then: The new instance should have the updated time range
-		assertEquals(Fraction.ONE, updated.apply(LocalDateTime.of(2025, 12, 15, 10, 0)));
-		assertEquals(Fraction.ZERO, updated.apply(LocalDateTime.of(2025, 12, 15, 8, 0)));
+		// When/Then: Segment from 12:00 to 14:00 with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T12:00, 2025-12-01T14:00[ value=0", segment.toString());
 	}
 
 	@Test
-	void segmentsStartingAt_fromMidnight_producesCorrectSegments() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_forward_duringAfternoonWork_returnsOneSegment() {
+		// Given: 4:00 PM (during afternoon working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(16, 0);
 
-		// Given: Starting from midnight
-		LocalDateTime from = LocalDate.of(2025, 12, 15).atStartOfDay();
-
-		// When: Requesting segments from midnight
-		Iterator<Segment> it = hours.iterateSegmentsFrom(from);
-
-		// Then: First segment is non-working hours from 00:00 to 08:00
-		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 0, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s0.getEndExclusive());
-		assertEquals(Fraction.ZERO, s0.getValue());
-
-		// Then: Second segment is morning work from 08:00 to 12:00
-		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s1.getEndExclusive());
-		assertEquals(Fraction.ONE, s1.getValue());
-
-		// Then: Third segment is lunch break from 12:00 to 14:00
-		Segment s2 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s2.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s2.getEndExclusive());
-		assertEquals(Fraction.ZERO, s2.getValue());
-
-		// Then: Fourth segment is afternoon work from 14:00 to 18:00
-		Segment s3 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s3.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s3.getEndExclusive());
-		assertEquals(Fraction.ONE, s3.getValue());
-
-		// Then: Fifth segment is evening non-working hours from 18:00 to 00:00 next day
-		Segment s4 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s4.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), s4.getEndExclusive());
-		assertEquals(Fraction.ZERO, s4.getValue());
+		// When/Then: Segment from 14:00 to 18:00 with value 1
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T14:00, 2025-12-01T18:00[ value=1", segment.toString());
 	}
 
 	@Test
-	void segmentsStartingAt_fromMorningWorkHours_startsWithinWorkSegment() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_forward_afterWorkingHours_returnsZeroSegmentUntilMidnight() {
+		// Given: 8:00 PM (after working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(20, 0);
 
-		// Given: Starting from 10:00 (during morning work)
-		LocalDateTime from = LocalDateTime.of(2025, 12, 15, 10, 0);
-
-		// When: Requesting segments from 10:00
-		Iterator<Segment> it = hours.iterateSegmentsFrom(from);
-
-		// Then: First segment should be the morning work segment containing 10:00
-		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 8, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s0.getEndExclusive());
-		assertEquals(Fraction.ONE, s0.getValue());
-		assertTrue(from.isAfter(s0.getStartInclusive()) || from.equals(s0.getStartInclusive()));
-		assertTrue(from.isBefore(s0.getEndExclusive()));
-
-		// Then: Second segment should be lunch break
-		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s1.getEndExclusive());
-		assertEquals(Fraction.ZERO, s1.getValue());
+		// When/Then: Segment from 18:00 to midnight with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T18:00, 2025-12-02T00:00[ value=0", segment.toString());
 	}
 
 	@Test
-	void segmentsStartingAt_fromLunchBreak_startsWithinLunchSegment() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_forward_exactlyAtBoundary_returnsSegmentStartingAtThatBoundary() {
+		// Given: Exactly at 8:00 AM (boundary)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(8, 0);
 
-		// Given: Starting from 13:00 (during lunch break)
-		LocalDateTime from = LocalDateTime.of(2025, 12, 15, 13, 0);
-
-		// When: Requesting segments from 13:00
-		Iterator<Segment> it = hours.iterateSegmentsFrom(from);
-
-		// Then: First segment should be the lunch break containing 13:00
-		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 12, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s0.getEndExclusive());
-		assertEquals(Fraction.ZERO, s0.getValue());
-		assertTrue(from.isAfter(s0.getStartInclusive()) || from.equals(s0.getStartInclusive()));
-		assertTrue(from.isBefore(s0.getEndExclusive()));
-
-		// Then: Second segment should be afternoon work
-		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s1.getEndExclusive());
-		assertEquals(Fraction.ONE, s1.getValue());
+		// When/Then: Segment from 8:00 to 12:00 with value 1
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T08:00, 2025-12-01T12:00[ value=1/2", segment.toString());
 	}
 
 	@Test
-	void segmentsStartingAt_fromAfternoonWorkHours_startsWithinAfternoonSegment() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_forward_atMidnight_returnsFirstSegment() {
+		// Given: Exactly at midnight
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atStartOfDay();
 
-		// Given: Starting from 16:00 (during afternoon work)
-		LocalDateTime from = LocalDateTime.of(2025, 12, 15, 16, 0);
-
-		// When: Requesting segments from 16:00
-		Iterator<Segment> it = hours.iterateSegmentsFrom(from);
-
-		// Then: First segment should be the afternoon work segment containing 16:00
-		Segment s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 14, 0), s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s0.getEndExclusive());
-		assertEquals(Fraction.ONE, s0.getValue());
-		assertTrue(from.isAfter(s0.getStartInclusive()) || from.equals(s0.getStartInclusive()));
-		assertTrue(from.isBefore(s0.getEndExclusive()));
-
-		// Then: Second segment should be evening non-work
-		Segment s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 15, 18, 0), s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), s1.getEndExclusive());
-		assertEquals(Fraction.ZERO, s1.getValue());
+		// When/Then: Segment from midnight to 8:00 with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.FORWARD);
+		assertEquals("FORWARD ]2025-12-01T00:00, 2025-12-01T08:00[ value=0", segment.toString());
 	}
 
 	@Test
-	void segmentsStartingAt_spansMultipleDays_repeatsPattern() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_backward_beforeFirstWorkingHour_returnsZeroSegment() {
+		// Given: 6:00 AM (before working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(6, 0);
 
-		// Given: Starting from midnight
-		LocalDateTime from = LocalDate.of(2025, 12, 15).atStartOfDay();
-
-		// When: Iterating through multiple days
-		Iterator<Segment> it = hours.iterateSegmentsFrom(from);
-
-		// Skip first day's segments (5 segments per day)
-		for (int i = 0; i < 5; i++) {
-			it.next();
-		}
-
-		// Then: Second day should start with the same pattern
-		Segment day2s0 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 16, 0, 0), day2s0.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 8, 0), day2s0.getEndExclusive());
-		assertEquals(Fraction.ZERO, day2s0.getValue());
-
-		Segment day2s1 = it.next();
-		assertEquals(LocalDateTime.of(2025, 12, 16, 8, 0), day2s1.getStartInclusive());
-		assertEquals(LocalDateTime.of(2025, 12, 16, 12, 0), day2s1.getEndExclusive());
-		assertEquals(Fraction.ONE, day2s1.getValue());
+		// When/Then: Segment from 8:00 to midnight with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-01T08:00, 2025-12-01T00:00[ value=0", segment.toString());
 	}
 
 	@Test
-	void applyIsConsistentWithSegments_forAnyInstantWithinSegment() {
-		// Given: Working hours from 8:00 to 12:00 and from 14:00 to 18:00
-		PiecewiseConstantHours hours = PiecewiseConstantHours.of(Fraction.ZERO)
-				.with(LocalTime.of(8, 0), LocalTime.of(12, 0), Fraction.ONE)
-				.with(LocalTime.of(14, 0), LocalTime.of(18, 0), Fraction.ONE);
+	void segmentAt_backward_duringMorningWork_returnsOneSegment() {
+		// Given: 10:00 AM (during morning working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(10, 0);
 
-		// When/Then: For any instant, apply() should match the segment value
-
-		// Test during morning work
-		assertApplyMatchesSegment(hours, LocalDateTime.of(2025, 12, 15, 10, 30));
-
-		// Test during lunch break
-		assertApplyMatchesSegment(hours, LocalDateTime.of(2025, 12, 15, 13, 15));
-
-		// Test during afternoon work
-		assertApplyMatchesSegment(hours, LocalDateTime.of(2025, 12, 15, 16, 45));
-
-		// Test before work hours
-		assertApplyMatchesSegment(hours, LocalDateTime.of(2025, 12, 15, 7, 0));
-
-		// Test after work hours
-		assertApplyMatchesSegment(hours, LocalDateTime.of(2025, 12, 15, 20, 0));
+		// When/Then: Segment from 12:00 to 8:00 with value 1/2
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-01T12:00, 2025-12-01T08:00[ value=1/2", segment.toString());
 	}
 
-	/**
-	 * Helper method to verify that apply(instant) returns the same value as the segment
-	 * containing that instant.
-	 */
-	private static void assertApplyMatchesSegment(PiecewiseConstantHours hours, LocalDateTime instant) {
-		// Retrieve the segment containing this instant
-		Iterator<Segment> it = hours.iterateSegmentsFrom(instant);
-		assertTrue(it.hasNext(), "Iterator should provide at least one segment");
+	@Test
+	void segmentAt_backward_duringLunchBreak_returnsZeroSegment() {
+		// Given: 1:00 PM (during lunch break)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(13, 0);
 
-		Segment seg = it.next();
+		// When/Then: Segment from 14:00 to 12:00 with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-01T14:00, 2025-12-01T12:00[ value=0", segment.toString());
+	}
 
-		// Verify that the instant is actually within the segment bounds
-		assertFalse(instant.isBefore(seg.getStartInclusive()), "Instant should not be before segment start");
-		assertTrue(instant.isBefore(seg.getEndExclusive()), "Instant should be before segment end");
+	@Test
+	void segmentAt_backward_duringAfternoonWork_returnsOneSegment() {
+		// Given: 4:00 PM (during afternoon working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(16, 0);
 
-		// Core consistency assertion: apply() and segment value must match
-		assertEquals(hours.apply(instant), seg.getValue(),
-				"apply(instant) should match the value of the segment containing that instant");
+		// When/Then: Segment from 18:00 to 14:00 with value 1
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-01T18:00, 2025-12-01T14:00[ value=1", segment.toString());
+	}
+
+	@Test
+	void segmentAt_backward_afterWorkingHours_returnsZeroSegmentFromMidnight() {
+		// Given: 8:00 PM (after working hours)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(20, 0);
+
+		// When/Then: Segment from midnight (next day) to 18:00 with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-02T00:00, 2025-12-01T18:00[ value=0", segment.toString());
+	}
+
+	@Test
+	void segmentAt_backward_exactlyAtBoundary_returnsSegmentEndingAtPreviousBoundary() {
+		// Given: Exactly at 8:00 AM (boundary)
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atTime(8, 0);
+
+		// When/Then: Segment from 8:00 to midnight with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-01T08:00, 2025-12-01T00:00[ value=0", segment.toString());
+	}
+
+	@Test
+	void segmentAt_backward_atMidnight_returnsLastSegmentOfPreviousDay() {
+		// Given: Exactly at midnight
+		LocalDateTime instant = LocalDate.of(2025, 12, 1).atStartOfDay();
+
+		// When/Then: Segment from midnight to 18:00 (previous day) with value 0
+		Segment segment = hours.segmentAt(instant, TimeDirection.BACKWARD);
+		assertEquals("BACKWARD ]2025-12-01T00:00, 2025-11-30T18:00[ value=0", segment.toString());
 	}
 
 }

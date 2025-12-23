@@ -35,160 +35,88 @@
  */
 package net.sourceforge.plantuml.project.ngm.math;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 
-	/**
-	 * Default workload fraction for dates not explicitly mapped.
-	 */
 	private final Fraction defaultValue;
-	
-	/**
-	 * List of time segments with their associated workload fractions.
-	 */
-	private List<LocalTimeSegment> segments;
 
-	private Set<LocalTime> timeBoundaries;
+	private final NavigableMap<LocalTime, Fraction> timeBoundaries = new TreeMap<>();
 
-	/**
-	 * Constructs a PiecewiseConstantSpecificDays with the given default workload.
-	 * 
-	 * @param defaultValue the default workload fraction
-	 */
 	private PiecewiseConstantHours(Fraction defaultValue) {
 		this.defaultValue = defaultValue;
 	}
-	
-	/**
-	 * Constructs a PiecewiseConstantSpecificDays with the given default workload
-	 * and specific time mappings.
-	 * 
-	 * @param defaultValue the default workload fraction
-	 * @param segments the list of time segments with their associated workload fractions
-	 */
-	private PiecewiseConstantHours(Fraction defaultValue, List<LocalTimeSegment> segments) {
-		this.defaultValue = defaultValue;
-		this.segments = segments;
-		
-		// Collect all unique time boundaries from the segments
-		timeBoundaries = new TreeSet<>();
-		for(LocalTimeSegment segment : segments) {
-			timeBoundaries.add(segment.start);
-			timeBoundaries.add(segment.end);
-		}
+
+	public static PiecewiseConstantHours of(Fraction defaultValue) {
+		return new PiecewiseConstantHours(defaultValue);
 	}
-	
-	/**
-	 * Returns the workload fraction at the given instant.
-	 * The workload is determined by the time of day, ignoring the date.
-	 * 
-	 * @param instant the time instant to query
-	 * @return the workload fraction at this instant
-	 */
+
 	@Override
-	public Fraction apply(LocalDateTime instant) {
-		LocalTime localTime = instant.toLocalTime();
-		for(LocalTimeSegment segment : segments) {
-			if(segment.includes(localTime)) {
-				return segment.getWorkload();
-			}
-		}
-		
-		return defaultValue;
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+		return direction == TimeDirection.FORWARD ? segmentForwardAt(instant) : segmentBackwardAt(instant);
 	}
 
-	/**
-	 * Creates a new PiecewiseConstantHours with the same workload for all hours of the day.
-	 * 
-	 * @param sameWorkload the constant workload fraction to apply to all hours
-	 * @return a new PiecewiseConstantHours instance
-	 */
-	public static PiecewiseConstantHours of(Fraction sameWorkload) {
-		return new PiecewiseConstantHours(sameWorkload, List.of());
+	private Segment segmentForwardAt(LocalDateTime instant) {
+		final LocalDate day = instant.toLocalDate();
+		final LocalDateTime dayStart = day.atStartOfDay();
+		final LocalTime t = instant.toLocalTime();
+		final Entry<LocalTime, Fraction> ent = timeBoundaries.floorEntry(t);
+
+		final LocalTime startKey = ent != null ? ent.getKey() : LocalTime.MIDNIGHT;
+		final Fraction v = timeBoundaries.get(startKey);
+		final Fraction value = v != null ? v : defaultValue;
+
+		final LocalTime endKey = timeBoundaries.higherKey(startKey); // next boundary after start
+		final LocalDateTime start = dayStart.with(startKey);
+		final LocalDateTime end = (endKey == null) ? dayStart.plusDays(1) : dayStart.with(endKey);
+
+		return Segment.forward(start, end, value);
 	}
 
-	/**
-	 * Returns a new PiecewiseConstantHours with the specified workload for the given time range.
-	 * This method is immutable and returns a new instance.
-	 * 
-	 * @param start the start time of the range (inclusive)
-	 * @param end the end time of the range (exclusive)
-	 * @param newWorkload the workload fraction to apply to this time range
-	 * @return a new PiecewiseConstantHours instance with the updated time range
-	 * @throws IllegalArgumentException if the new time range overlaps with existing segments
-	 */
-	public PiecewiseConstantHours with(LocalTime start, LocalTime end, Fraction newWorkload) {
-		LocalTimeSegment newSegment = new LocalTimeSegment(start, end, newWorkload);
-		
-		for(LocalTimeSegment segment : segments) {
-			if(segment.includes(start) || newSegment.includes(segment.start)) {
-				throw new IllegalArgumentException("Overlapping time segments are not allowed.");
-			}
-		}
-		
-		List<LocalTimeSegment> newSegments = new ArrayList<>(this.segments);
-		newSegments.add(newSegment);
-		return new PiecewiseConstantHours(this.defaultValue, newSegments);
-	}
-	
-	/** (non-Javadoc)
-	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
-	 */
-	@Override
-	public Segment segmentAt(LocalDateTime instant) {
-		LocalTime time = instant.toLocalTime();
-		Fraction segmentWorkload = apply(instant);
-		
-		// Determine the start and end times of the segment
-		LocalTime segmentStart = LocalTime.MIDNIGHT;
-		LocalTime segmentEnd = LocalTime.MIDNIGHT;
-		for(LocalTime boundary : timeBoundaries) {
-			if(boundary.isAfter(time)) {
-				segmentEnd = boundary;
-				break;
-			}
-			segmentStart = boundary;
+	private Segment segmentBackwardAt(LocalDateTime instant) {
+		final LocalTime t = instant.toLocalTime();
+
+		// At midnight, backward segment is the last one of the previous day
+		if (t.equals(LocalTime.MIDNIGHT)) {
+			final LocalDateTime dayStart = instant.toLocalDate().minusDays(1).atStartOfDay();
+
+			final Entry<LocalTime, Fraction> last = timeBoundaries.lastEntry(); // may be null
+			final LocalTime startKey = (last == null) ? LocalTime.MIDNIGHT : last.getKey();
+			final Fraction value = (last == null) ? defaultValue : last.getValue();
+
+			final LocalDateTime start = dayStart.plusDays(1); // 00:00 of next day
+			final LocalDateTime end = dayStart.with(startKey); // start of last segment
+			return Segment.backward(start, end, value);
 		}
 
-		// Construct the Segment object
-		LocalDateTime startDateTime = instant.toLocalDate().atTime(segmentStart);
-		LocalDateTime endDateTime;
-		if(segmentEnd.equals(LocalTime.MIDNIGHT)) {
-			// Handle the case where the segment ends at midnight (next day)
-			endDateTime = instant.toLocalDate().plusDays(1).atStartOfDay();
-		} else {
-			// Normal case
-			endDateTime = instant.toLocalDate().atTime(segmentEnd);
-		}
-		return new Segment(startDateTime, endDateTime, segmentWorkload);
+		final LocalDateTime dayStart = instant.toLocalDate().atStartOfDay();
+
+		final Entry<LocalTime, Fraction> ent = timeBoundaries.lowerEntry(t);
+		final LocalTime startKey = (ent == null) ? LocalTime.MIDNIGHT : ent.getKey();
+		final Fraction value = (ent == null) ? defaultValue : ent.getValue();
+
+		final LocalTime endKey = timeBoundaries.higherKey(startKey); // end of that segment
+		final LocalDateTime start = (endKey == null) ? dayStart.plusDays(1) : dayStart.with(endKey);
+		final LocalDateTime end = dayStart.with(startKey);
+
+		return Segment.backward(start, end, value);
 	}
 
-	private static class LocalTimeSegment {
-		
-		private final LocalTime start;
-		private final LocalTime end;
-		private final Fraction workload;
-		
-		public LocalTimeSegment(LocalTime start, LocalTime end, Fraction workload) {
-			this.start = start;
-			this.end = end;
-			this.workload = workload;
-		}
-		
-		public boolean includes(LocalTime time) {
-			return !time.isBefore(start) && time.isBefore(end);
-		}
-		
-		public Fraction getWorkload() {
-			return workload;
-		}
-		
-	}
+	public PiecewiseConstantHours with(LocalTime start, LocalTime end, Fraction fraction) {
 
+		if (end.equals(LocalTime.MIDNIGHT) == false && start.compareTo(end) >= 0)
+			throw new IllegalArgumentException("start must be strictly before end");
+
+		final PiecewiseConstantHours result = new PiecewiseConstantHours(defaultValue);
+		result.timeBoundaries.putAll(this.timeBoundaries);
+		result.timeBoundaries.put(start, fraction);
+		if (end.equals(LocalTime.MIDNIGHT) == false)
+			result.timeBoundaries.put(end, defaultValue);
+		return result;
+	}
 }

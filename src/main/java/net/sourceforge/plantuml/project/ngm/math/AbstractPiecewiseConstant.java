@@ -36,31 +36,30 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
 /**
- * Base class for {@link PiecewiseConstant} implementations whose value
- * is constant over contiguous time segments.
+ * Base class for {@link PiecewiseConstant} implementations whose value is
+ * constant over contiguous time segments.
  *
  * <p>
  * This class provides a implementation of
  * {@link #iterateSegmentsFrom(LocalDateTime)} that lazily iterates over
- * successive {@link Segment segments}, starting from the segment that
- * contains a given instant.
+ * successive {@link Segment segments}, starting from the segment that contains
+ * a given instant.
  * </p>
  *
  * <p>
  * The iterator returned by this method has the following properties:
  * </p>
  * <ul>
- *   <li>The first segment returned is the segment that contains the given
- *       {@code instant}, but it is trimmed so that it starts exactly at
- *       {@code instant}.</li>
- *   <li>Each subsequent segment starts exactly where the previous one ends
- *       (end-exclusive), ensuring a continuous, gap-free iteration.</li>
- *   <li>The iterator is conceptually unbounded: {@link Iterator#hasNext()}
- *       always returns {@code true}.</li>
+ * <li>The first segment returned is the segment that contains the given
+ * {@code instant}, but it is trimmed so that it starts exactly at
+ * {@code instant}.</li>
+ * <li>Each subsequent segment starts exactly where the previous one ends
+ * (end-exclusive), ensuring a continuous, gap-free iteration.</li>
+ * <li>The iterator is conceptually unbounded: {@link Iterator#hasNext()} always
+ * returns {@code true}.</li>
  * </ul>
  *
  * <p>
@@ -71,89 +70,56 @@ import java.util.Iterator;
  * </p>
  *
  * <p>
- * <strong>Important:</strong> Implementations of {@link #segmentAt(LocalDateTime)}
- * must guarantee that the returned segment:
+ * <strong>Important:</strong> Implementations of
+ * {@link #segmentAt(LocalDateTime)} must guarantee that the returned segment:
  * </p>
  * <ul>
- *   <li>contains the provided instant,</li>
- *   <li>has a strictly increasing {@code endExclusive} instant,</li>
- *   <li>is consistent with adjacent segments so that repeated calls with
- *       successive instants form a coherent timeline.</li>
+ * <li>contains the provided instant,</li>
+ * <li>has a strictly increasing {@code endExclusive} instant,</li>
+ * <li>is consistent with adjacent segments so that repeated calls with
+ * successive instants form a coherent timeline.</li>
  * </ul>
  *
  * <p>
- * Violating these assumptions may result in infinite loops or incorrect
- * segment boundaries during iteration.
+ * Violating these assumptions may result in infinite loops or incorrect segment
+ * boundaries during iteration.
  * </p>
  *
- * @param instant the instant from which to start iterating; the first
- *                segment returned will begin exactly at this instant
+ * @param instant the instant from which to start iterating; the first segment
+ *                returned will begin exactly at this instant
  * @return an iterator over successive segments starting at {@code instant}
  */
 public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 
 	@Override
-	public final Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
-	    return new Iterator<Segment>() {
+	public final Iterator<Segment> iterateSegmentsFrom(final LocalDateTime instant, final TimeDirection direction) {
+		return new Iterator<Segment>() {
 
-	        // Current iteration position.
-	        // This represents the start instant of the next segment to be returned.
-	        private LocalDateTime current = instant;
+			// Current iteration position.
+			// This represents the start instant of the next segment to be returned.
+			private LocalDateTime current = instant;
 
-	        @Override
-	        public Segment next() {
-	            // Retrieve the (possibly larger) segment that contains the original instant.
-	            // Implementations of segmentAt(...) are expected to return a segment
-	            // that fully covers the given instant.
-	            Segment segment = segmentAt(current);
+			@Override
+			public Segment next() {
+				// Retrieve the (possibly larger) segment that contains the original instant.
+				// Implementations of segmentAt(...) are expected to return a segment
+				// that fully covers the given instant.
+				final Segment segment = segmentAt(current, direction);
 
-	            // Advance the iterator to the end of the returned segment.
-	            // The next call to next() will start from this instant.
-	            current = segment.getEndExclusive();
+				// Advance the iterator to the end of the returned segment.
+				// The next call to next() will start from this instant.
+				current = segment.endExclusive();
 
-	            return segment;
-	        }
+				return segment;
+			}
 
-	        @Override
-	        public boolean hasNext() {
-	            // Piecewise-constant functions are considered unbounded in time.
-	            // Iteration therefore never terminates.
-	            return true;
-	        }
-	    };
+			@Override
+			public boolean hasNext() {
+				// Piecewise-constant functions are considered unbounded in time.
+				// Iteration therefore never terminates.
+				return true;
+			}
+		};
 	}
-
-	@Override
-	public Iterator<Segment> iterateSegmentsBackwardFrom(LocalDateTime instant) {
-	    return new Iterator<Segment>() {
-
-	        // Current iteration position.
-	        // This represents the start instant of the next segment to be returned.
-	        private LocalDateTime current = instant;
-
-	        @Override
-	        public Segment next() {
-	            // Retrieve the (possibly larger) segment that contains the original instant.
-	            // Implementations of segmentAt(...) are expected to return a segment
-	            // that fully covers the given instant.
-	            Segment segment = segmentAt(current);
-
-	            // Advance the iterator to before the start of the returned segment.
-	            // The next call to next() will start from this instant.
-	            current = segment.getStartInclusive().minus(1, ChronoUnit.SECONDS);
-
-	            return segment;
-	        }
-
-	        @Override
-	        public boolean hasNext() {
-	            // Piecewise-constant functions are considered unbounded in time.
-	            // Iteration therefore never terminates.
-	            return true;
-	        }
-	    };
-	}
-
 
 }
-

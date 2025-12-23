@@ -36,12 +36,10 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.EnumMap;
 import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -121,30 +119,23 @@ public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 		return new PiecewiseConstantWeekday(copy);
 	}
 
-	/**
-	 * Returns the workload fraction assigned to the day of week of the given
-	 * instant.
-	 * 
-	 * @param instant the time instant to query
-	 * @return the workload fraction at this instant
-	 * @throws NullPointerException if instant is null
-	 */
-	@Override
-	public Fraction apply(LocalDateTime instant) {
-		Objects.requireNonNull(instant, "instant");
-		return workloadByDay.get(instant.getDayOfWeek());
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+		final LocalDateTime midnight = instant.toLocalDate().atStartOfDay();
+
+		if (direction == TimeDirection.FORWARD) {
+			final Fraction value = workloadByDay.get(midnight.getDayOfWeek());
+			return Segment.forward(midnight, midnight.plusDays(1), value);
+		}
+
+		// BACKWARD: determine which day contains the instant
+		final LocalDateTime end;
+		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))
+			// Midnight belongs to the previous day in backward iteration
+			end = midnight.minusDays(1);
+		else
+			end = midnight;
+
+		final Fraction value = workloadByDay.get(end.getDayOfWeek());
+		return Segment.backward(end.plusDays(1), end, value);
 	}
-
-	/** (non-Javadoc)
-	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
-	 */
-	@Override
-	public Segment segmentAt(LocalDateTime instant) {
-		final LocalDateTime start = instant.toLocalDate().atStartOfDay();
-		final LocalDateTime end = start.plusDays(1);
-		final Fraction value = workloadByDay.get(start.getDayOfWeek());
-
-		return new Segment(start, end, value);
-	}
-
 }
