@@ -287,4 +287,256 @@ class SegmentTest {
 		assertThat(result.getValue()).isEqualTo(new Fraction(29, 12));
 	}
 
+	///// Testing backward segments
+	
+	@Test
+	void correctCreationOfBackwardSegment() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 1, 1, 17, 0); // a is later
+		LocalDateTime b = LocalDateTime.of(2024, 1, 1, 9, 0);  // b is earlier
+		Fraction value = Fraction.of(1);
+
+		Segment segment = Segment.backward(a, b, value);
+
+		assertThat(segment.aInclusive()).isEqualTo(a);
+		assertThat(segment.bExclusive()).isEqualTo(b);
+		assertThat(segment.getValue()).isEqualTo(value);
+		assertThat(segment.getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+	}
+	
+	@Test
+	void backwardSegmentMustHaveAAfterB() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 1, 1, 9, 0);  // a is earlier (invalid)
+		LocalDateTime b = LocalDateTime.of(2024, 1, 1, 17, 0); // b is later (invalid)
+		Fraction value = Fraction.of(1);
+		
+		assertThatThrownBy(() -> Segment.backward(a, b, value))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	@Test
+	void backwardSegmentIncludesTimeInside() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 3, 1, 17, 0); // a is later (included)
+		LocalDateTime b = LocalDateTime.of(2024, 3, 1, 9, 0);  // b is earlier (excluded)
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
+		assertThat(segment.includes(insideTime)).isTrue();
+		
+		LocalDateTime beforeB = LocalDateTime.of(2024, 3, 1, 8, 0);
+		assertThat(segment.includes(beforeB)).isFalse();
+		
+		LocalDateTime afterA = LocalDateTime.of(2024, 3, 1, 18, 0);
+		assertThat(segment.includes(afterA)).isFalse();
+	}
+	
+	@Test
+	void backwardSegmentIncludesAButExcludesB() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 4, 1, 17, 0); // a is later (included)
+		LocalDateTime b = LocalDateTime.of(2024, 4, 1, 9, 0);  // b is earlier (excluded)
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		assertThat(segment.includes(a)).isTrue();
+		assertThat(segment.includes(b)).isFalse();
+	}
+	
+	///// Testing strictIncludes for forward segments
+	
+	@Test
+	void forwardSegmentStrictIncludesTimeInside() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 3, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 3, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.forward(start, end, value);
+		
+		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
+		assertThat(segment.strictIncludes(insideTime)).isTrue();
+		
+		LocalDateTime beforeTime = LocalDateTime.of(2024, 3, 1, 8, 0);
+		assertThat(segment.strictIncludes(beforeTime)).isFalse();
+		
+		LocalDateTime afterTime = LocalDateTime.of(2024, 3, 1, 18, 0);
+		assertThat(segment.strictIncludes(afterTime)).isFalse();
+	}
+	
+	@Test
+	void forwardSegmentStrictIncludesExcludesBothBounds() throws Exception {
+		LocalDateTime start = LocalDateTime.of(2024, 4, 1, 9, 0);
+		LocalDateTime end = LocalDateTime.of(2024, 4, 1, 17, 0);
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.forward(start, end, value);
+		
+		assertThat(segment.strictIncludes(start)).isFalse();
+		assertThat(segment.strictIncludes(end)).isFalse();
+	}
+	
+	///// Testing strictIncludes for backward segments
+	
+	@Test
+	void backwardSegmentStrictIncludesTimeInside() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 3, 1, 17, 0); // a is later
+		LocalDateTime b = LocalDateTime.of(2024, 3, 1, 9, 0);  // b is earlier
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
+		assertThat(segment.strictIncludes(insideTime)).isTrue();
+		
+		LocalDateTime beforeB = LocalDateTime.of(2024, 3, 1, 8, 0);
+		assertThat(segment.strictIncludes(beforeB)).isFalse();
+		
+		LocalDateTime afterA = LocalDateTime.of(2024, 3, 1, 18, 0);
+		assertThat(segment.strictIncludes(afterA)).isFalse();
+	}
+	
+	@Test
+	void backwardSegmentStrictIncludesExcludesBothBounds() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 4, 1, 17, 0); // a is later
+		LocalDateTime b = LocalDateTime.of(2024, 4, 1, 9, 0);  // b is earlier
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		assertThat(segment.strictIncludes(a)).isFalse();
+		assertThat(segment.strictIncludes(b)).isFalse();
+	}
+	
+	///// Testing split for backward segments
+	
+	@Test
+	void splittingBackwardSegmentAtValidTime() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 5, 1, 17, 0); // a is later
+		LocalDateTime b = LocalDateTime.of(2024, 5, 1, 9, 0);  // b is earlier
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		LocalDateTime splitTime = LocalDateTime.of(2024, 5, 1, 13, 0);
+		Segment[] splitSegments = segment.split(splitTime);
+		
+		assertThat(splitSegments).hasSize(2);
+		
+		// First segment: [a, splitTime) in backward direction
+		assertThat(splitSegments[0].aInclusive()).isEqualTo(a);
+		assertThat(splitSegments[0].bExclusive()).isEqualTo(splitTime);
+		assertThat(splitSegments[0].getValue()).isEqualTo(value);
+		assertThat(splitSegments[0].getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+		
+		// Second segment: [splitTime, b) in backward direction
+		assertThat(splitSegments[1].aInclusive()).isEqualTo(splitTime);
+		assertThat(splitSegments[1].bExclusive()).isEqualTo(b);
+		assertThat(splitSegments[1].getValue()).isEqualTo(value);
+		assertThat(splitSegments[1].getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+	}
+	
+	@Test
+	void splittingBackwardSegmentOutsideOfBoundaryThrowsException() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 5, 1, 17, 0); // a is later
+		LocalDateTime b = LocalDateTime.of(2024, 5, 1, 9, 0);  // b is earlier
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		LocalDateTime beforeB = LocalDateTime.of(2024, 5, 1, 8, 0);
+		assertThatThrownBy(() -> segment.split(beforeB))
+			.isInstanceOf(IllegalArgumentException.class);
+		
+		LocalDateTime afterA = LocalDateTime.of(2024, 5, 1, 18, 0);
+		assertThatThrownBy(() -> segment.split(afterA))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	@Test
+	void splittingBackwardSegmentAtBoundsThrowsException() throws Exception {
+		LocalDateTime a = LocalDateTime.of(2024, 5, 1, 17, 0); // a is later
+		LocalDateTime b = LocalDateTime.of(2024, 5, 1, 9, 0);  // b is earlier
+		Fraction value = Fraction.of(1);
+		Segment segment = Segment.backward(a, b, value);
+		
+		assertThatThrownBy(() -> segment.split(a))
+			.isInstanceOf(IllegalArgumentException.class);
+		
+		assertThatThrownBy(() -> segment.split(b))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	///// Testing intersection for backward segments
+	
+	@Test
+	void intersectionOfTwoBackwardSegments() throws Exception {
+		Segment segment1 = Segment.backward(
+				LocalDateTime.of(2025, 7, 1, 17, 0),
+				LocalDateTime.of(2025, 7, 1, 9, 0),
+				Fraction.of(1));
+		
+		Segment segment2 = Segment.backward(
+				LocalDateTime.of(2025, 7, 1, 15, 0),
+				LocalDateTime.of(2025, 7, 1, 10, 0),
+				new Fraction(1, 2));
+		
+		Segment result = Segment.intersection(List.of(segment1, segment2));
+		
+		assertThat(result.aInclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 15, 0));
+		assertThat(result.bExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 10, 0));
+		assertThat(result.getValue()).isEqualTo(new Fraction(1, 2));
+		assertThat(result.getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+	}
+	
+	@Test
+	void intersectionOfMultipleBackwardSegmentsWithSumFunction() throws Exception {
+		List<Segment> segments = List.of(
+				Segment.backward(
+						LocalDateTime.of(2025, 7, 1, 18, 0),
+						LocalDateTime.of(2025, 7, 1, 8, 0),
+						Fraction.of(1)),
+				Segment.backward(
+						LocalDateTime.of(2025, 7, 1, 17, 0),
+						LocalDateTime.of(2025, 7, 1, 9, 0),
+						new Fraction(2, 3)),
+				Segment.backward(
+						LocalDateTime.of(2025, 7, 1, 16, 0),
+						LocalDateTime.of(2025, 7, 1, 10, 0),
+						new Fraction(3, 4))
+		);
+		
+		Segment result = Segment.intersection(segments, Fraction.SUM);
+		
+		assertThat(result.aInclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 16, 0));
+		assertThat(result.bExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 10, 0));
+		// 1 + 2/3 + 3/4 = 12/12 + 8/12 + 9/12 = 29/12
+		assertThat(result.getValue()).isEqualTo(new Fraction(29, 12));
+		assertThat(result.getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+	}
+	
+	@Test
+	void intersectionOfDisjointBackwardSegments() throws Exception {
+		Segment segment1 = Segment.backward(
+				LocalDateTime.of(2025, 7, 1, 17, 0),
+				LocalDateTime.of(2025, 7, 1, 14, 0),
+				Fraction.of(1));
+		
+		Segment segment2 = Segment.backward(
+				LocalDateTime.of(2025, 7, 1, 12, 0),
+				LocalDateTime.of(2025, 7, 1, 9, 0),
+				Fraction.of(1));
+		
+		assertThatThrownBy(() -> Segment.intersection(List.of(segment1, segment2)))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	@Test
+	void intersectionOfMixedDirectionsThrowsException() throws Exception {
+		Segment forwardSegment = Segment.forward(
+				LocalDateTime.of(2025, 7, 1, 9, 0),
+				LocalDateTime.of(2025, 7, 1, 17, 0),
+				Fraction.of(1));
+		
+		Segment backwardSegment = Segment.backward(
+				LocalDateTime.of(2025, 7, 1, 17, 0),
+				LocalDateTime.of(2025, 7, 1, 9, 0),
+				Fraction.of(1));
+		
+		assertThatThrownBy(() -> Segment.intersection(List.of(forwardSegment, backwardSegment)))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("same direction");
+	}
+
 }

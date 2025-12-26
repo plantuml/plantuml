@@ -122,9 +122,7 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
 	 */
-	default Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant) {
-		throw new UnsupportedOperationException("Not implemented now");
-	}
+	Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant);
 	
 	/**
 	 * Returns an iterator over segments in descending chronological order, starting from
@@ -151,9 +149,7 @@ public interface PiecewiseConstant extends Function<LocalDateTime, Fraction> {
 	 *                      returned will be the one containing this instant
 	 * @return an iterator over segments containing and preceding the given instant
 	 */
-	default Iterator<Segment> iterateSegmentsBackwardFrom(LocalDateTime instant) {
-		throw new UnsupportedOperationException("Not implemented now");
-	}
+	Iterator<Segment> iterateSegmentsBackwardFrom(LocalDateTime instant);
 	
 	/**
 	 * Returns the segment containing the given instant.
