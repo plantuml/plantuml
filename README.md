@@ -21,6 +21,7 @@ Generate UML diagrams from textual descriptions.
 [![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 [![snapshot javadoc](https://img.shields.io/badge/javadoc-snapshot-chocolate.svg?logo=github)](https://plantuml.github.io/plantuml/javadoc)
 [![snapshot jacoco](https://img.shields.io/badge/code_coverage%3A_jacoco-snapshot-chocolate?logo=github)](https://plantuml.github.io/plantuml/jacoco)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/plantuml/plantuml)
 
 ## ℹ️ About
 
