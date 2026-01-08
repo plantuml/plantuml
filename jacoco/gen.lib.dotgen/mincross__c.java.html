@@ -1187,7 +1187,7 @@ try {
 <span class="fc" id="L1187">	    v = GD_rank(g).get__(r).v.get_(i);</span>
 <span class="fc" id="L1188">	    ND_mark(v, 0); ND_onstack(v, 0);</span>
 <span class="fc" id="L1189">	    flatindex(v, i);</span>
-<span class="fc bfc" id="L1190" title="All 4 branches covered.">	    if ((ND_flat_out(v).size &gt; 0) &amp;&amp; (flat == 0)) {</span>
+<span class="pc bpc" id="L1190" title="1 of 4 branches missed.">	    if ((ND_flat_out(v).size &gt; 0) &amp;&amp; (flat == 0)) {</span>
 <span class="fc" id="L1191">		GD_rank(g).get__(r).flat =</span>
 <span class="fc" id="L1192">		    new_matrix(GD_rank(g).get__(r).n, GD_rank(g).get__(r).n);</span>
 <span class="fc" id="L1193">		flat = 1;</span>
@@ -1460,7 +1460,7 @@ try {
 <span class="fc bfc" id="L1460" title="All 2 branches covered.">    if (GD_has_flat_edges(g) == 0)</span>
 <span class="fc" id="L1461">	return;</span>
 <span class="fc bfc" id="L1462" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L1463" title="All 2 branches covered.">	if (GD_rank(g).get__(r).n == 0) continue;</span>
+<span class="pc bpc" id="L1463" title="1 of 2 branches missed.">	if (GD_rank(g).get__(r).n == 0) continue;</span>
 <span class="fc" id="L1464">	base_order = ND_order(GD_rank(g).get__(r).v.get_(0));</span>
 <span class="fc bfc" id="L1465" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++)</span>
 <span class="fc" id="L1466">	    ND_mark(GD_rank(g).get__(r).v.get_(i), 0);</span>
