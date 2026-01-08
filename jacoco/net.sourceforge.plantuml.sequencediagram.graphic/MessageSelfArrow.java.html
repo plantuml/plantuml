@@ -109,9 +109,9 @@ class MessageSelfArrow extends Arrow {
 		// }
 <span class="fc" id="L110">		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
 <span class="fc" id="L111">				.getPos2();</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (isReverse) {</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (isReverse) {</span>
 
-<span class="fc" id="L114">			return pos2 - getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L114">			return pos2 - getPreferredWidth(stringBounder);</span>
 		} else
 <span class="fc" id="L116">			return pos2 + deltaX;</span>
 	}
@@ -144,11 +144,11 @@ class MessageSelfArrow extends Arrow {
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L147">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L147">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
 	}
 
 	public double getMinX(StringBounder stringBounder) {
-<span class="fc" id="L151">		return getStartingX(stringBounder);</span>
+<span class="nc" id="L151">		return getStartingX(stringBounder);</span>
 	}
 
 	public String toString(StringBounder stringBounder) {
@@ -157,7 +157,7 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
-<span class="fc" id="L160">		return p1;</span>
+<span class="nc" id="L160">		return p1;</span>
 	}
 
 	@Override
@@ -176,7 +176,7 @@ class MessageSelfArrow extends Arrow {
 	}
 
 	public boolean isReverse() {
-<span class="fc" id="L179">		return isReverse;</span>
+<span class="nc" id="L179">		return isReverse;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
