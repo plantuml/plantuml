@@ -10,23 +10,31 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPacketDiagEnd extends SingleLineCommand2<PacketDiagram> {
+import java.util.Optional;
 
-	public CommandPacketDiagEnd() {
+public class CommandScaleDirection extends SingleLineCommand2<PacketDiagram> {
+
+	public CommandScaleDirection() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPacketDiagEnd.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //
+						new RegexLeaf("scale_direction"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\}"), //
+						new RegexLeaf("="), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf(1, "DIR", "(ltr|rtl);?"), //
 						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
-
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		system.build();
+		PacketDiagram.ScaleDirection dir = Optional.ofNullable(arg.get("DIR", 0))
+						.map(String::toUpperCase)
+						.map(PacketDiagram.ScaleDirection::valueOf)
+						.orElse(PacketDiagram.ScaleDirection.LTR);
+		system.setScaleDirection(dir);
 		return CommandExecutionResult.ok();
 	}
 }

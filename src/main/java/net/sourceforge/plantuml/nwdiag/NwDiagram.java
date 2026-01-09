@@ -314,8 +314,8 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	private static final Pattern p = Pattern.compile("\\s*(\\w+)\\s*=\\s*(\"([^\"]*)\"|[^\\s,]+)");
-	
-	private Map<String, String> toSet(String definition) {
+
+	public static Map<String, String> toSet(String definition) {
 		final Map<String, String> result = new HashMap<String, String>();
 		if (definition == null)
 			return result;

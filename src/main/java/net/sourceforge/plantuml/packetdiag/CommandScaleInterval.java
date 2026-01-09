@@ -10,23 +10,29 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPacketDiagEnd extends SingleLineCommand2<PacketDiagram> {
+public class CommandScaleInterval extends SingleLineCommand2<PacketDiagram> {
 
-	public CommandPacketDiagEnd() {
+	public CommandScaleInterval() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPacketDiagEnd.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandScaleInterval.class.getName(), RegexLeaf.start(), //
+						new RegexLeaf("scale_interval"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\}"), //
+						new RegexLeaf("="), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf(1, "INTERVAL", "(\\d+);?"), //
 						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
-
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		system.build();
+		try {
+			system.updateScaleInterval(Integer.parseInt(arg.get("INTERVAL", 0)));
+		} catch (NumberFormatException e) {
+			return CommandExecutionResult.error("Scale interval invalid", e);
+		}
 		return CommandExecutionResult.ok();
 	}
 }

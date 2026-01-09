@@ -21,8 +21,12 @@ public class PacketDiagramFactory extends PSystemCommandFactory {
 	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandPacketDiagStart());
+		cmds.add(new CommandColWidth());
+		cmds.add(new CommandNodeHeight());
+		cmds.add(new CommandScaleDirection());
+		cmds.add(new CommandScaleInterval());
+		cmds.add(new CommandNumRange());
 		cmds.add(new CommandPacketDiagEnd());
-		// TODO Add package commands
 	}
 
 	@Override
