@@ -10,24 +10,28 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPacketDiagEnd extends SingleLineCommand2<PacketDiagram> {
+public class CommandColWidth extends SingleLineCommand2<PacketDiagram> {
 
-	public CommandPacketDiagEnd() {
+	public CommandColWidth() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPacketDiagEnd.class.getName(), RegexLeaf.start(), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\}"), //
-						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+		return RegexConcat.build(CommandColWidth.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("colwidth"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("="), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(1, "WIDTH", "(\\d{1,3});?"), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
-
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		if (system.isUseDefaultScaleInterval()) {
-			system.updateScaleInterval(system.getColWidth() / 2);
+		try {
+			system.updateColWidth(Integer.parseInt(arg.get("WIDTH", 0)));
+		} catch (NumberFormatException e) {
+			return CommandExecutionResult.error("Width must be an integer", e);
 		}
 		return CommandExecutionResult.ok();
 	}
