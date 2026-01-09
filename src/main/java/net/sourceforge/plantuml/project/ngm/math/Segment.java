@@ -45,10 +45,11 @@ import java.util.function.BiFunction;
  * A constant workload segment over a time interval.
  *
  * <p>
- * A segment represents a time interval where the workload value remains constant.
- * The boundary convention is: <strong>both bounds are exclusive</strong>,
- * denoted as {@code ]start, end[} (or equivalently {@code (start, end)} in some
- * notations). This symmetric design simplifies bidirectional iteration.
+ * A segment represents a time interval where the workload value remains
+ * constant. The boundary convention is: <strong>both bounds are
+ * exclusive</strong>, denoted as {@code ]start, end[} (or equivalently
+ * {@code (start, end)} in some notations). This symmetric design simplifies
+ * bidirectional iteration.
  * </p>
  *
  * <p>
@@ -56,16 +57,16 @@ import java.util.function.BiFunction;
  * {@link TimeDirection#BACKWARD}:
  * </p>
  * <ul>
- * <li><strong>FORWARD</strong>: {@code start} is chronologically before {@code end}
- * (used for forward iteration through time)</li>
- * <li><strong>BACKWARD</strong>: {@code start} is chronologically after {@code end}
- * (used for backward iteration through time)</li>
+ * <li><strong>FORWARD</strong>: {@code start} is chronologically before
+ * {@code end} (used for forward iteration through time)</li>
+ * <li><strong>BACKWARD</strong>: {@code start} is chronologically after
+ * {@code end} (used for backward iteration through time)</li>
  * </ul>
  *
  * <p>
- * In both cases, both {@code start} and {@code end} are exclusive bounds.
- * This symmetric convention ensures that boundary instants are never "inside"
- * a segment, which simplifies reasoning about segment adjacency and splitting.
+ * In both cases, both {@code start} and {@code end} are exclusive bounds. This
+ * symmetric convention ensures that boundary instants are never "inside" a
+ * segment, which simplifies reasoning about segment adjacency and splitting.
  * </p>
  *
  * <p>
@@ -153,8 +154,8 @@ public final class Segment {
 	 * @param value the constant workload value for this segment
 	 * @return a new backward segment
 	 * @throws NullPointerException     if any argument is {@code null}
-	 * @throws IllegalArgumentException if {@code end} is not chronologically
-	 *                                  before {@code start}
+	 * @throws IllegalArgumentException if {@code end} is not chronologically before
+	 *                                  {@code start}
 	 */
 	public static Segment backward(LocalDateTime start, LocalDateTime end, Fraction value) {
 		if (end.isBefore(start) == false)
@@ -183,8 +184,8 @@ public final class Segment {
 	 * </p>
 	 *
 	 * <p>
-	 * This bound is exclusive: the returned instant is not considered part of
-	 * the segment.
+	 * This bound is exclusive: the returned instant is not considered part of the
+	 * segment.
 	 * </p>
 	 *
 	 * @return the exclusive start bound
@@ -197,14 +198,14 @@ public final class Segment {
 	 * Returns the exclusive end bound of this segment.
 	 *
 	 * <p>
-	 * For {@link TimeDirection#FORWARD} segments, this is the chronologically
-	 * later instant. For {@link TimeDirection#BACKWARD} segments, this is the
+	 * For {@link TimeDirection#FORWARD} segments, this is the chronologically later
+	 * instant. For {@link TimeDirection#BACKWARD} segments, this is the
 	 * chronologically earlier instant.
 	 * </p>
 	 *
 	 * <p>
-	 * This bound is exclusive: the returned instant is not considered part of
-	 * the segment.
+	 * This bound is exclusive: the returned instant is not considered part of the
+	 * segment.
 	 * </p>
 	 *
 	 * @return the exclusive end bound
@@ -251,8 +252,8 @@ public final class Segment {
 	 * @return an array of exactly two segments resulting from the split
 	 * @throws NullPointerException     if {@code time} is {@code null}
 	 * @throws IllegalArgumentException if {@code time} lies outside the bounds of
-	 *                                  this segment or is equal to {@code start}
-	 *                                  or {@code end}
+	 *                                  this segment or is equal to {@code start} or
+	 *                                  {@code end}
 	 */
 	public Segment[] split(LocalDateTime time) {
 		Objects.requireNonNull(time, "time must not be null");
@@ -461,6 +462,13 @@ public final class Segment {
 		Objects.requireNonNull(segments, "segments must not be null");
 
 		return intersection(Arrays.asList(segments), valueFunction);
+	}
+
+	public LocalDateTime computeClampedStart(LocalDateTime current) {
+		if (direction == TimeDirection.FORWARD)
+			return current.isAfter(startExclusive()) ? current : startExclusive();
+		else
+			return current.isBefore(startExclusive()) ? current : startExclusive();
 	}
 
 }

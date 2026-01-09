@@ -104,20 +104,17 @@ public class LoadIntegrator {
 			}
 
 			// Calculate the effective start within the segment
-			final LocalDateTime effectiveStart = computeEffectiveStart(currentTime, segment, direction);
+			final LocalDateTime effectiveStart = segment.computeClampedStart(currentTime);
 
-			// Calculate segment duration in seconds
-			final long segmentSeconds = computeSegmentDuration(effectiveStart, segment, direction);
-			final Fraction segmentDuration = new Fraction(segmentSeconds, 1);
-
+			final long segmentSeconds = Math.abs(Duration.between(effectiveStart, segment.endExclusive()).getSeconds());
 			// Load consumed in this segment = loadRate * duration (in seconds)
-			final Fraction segmentLoad = loadRate.multiply(segmentDuration);
+			final Fraction segmentLoad = loadRate.multiply(new Fraction(segmentSeconds, 1));
 
 			if (segmentLoad.compareTo(remainingLoad) >= 0) {
 				// This segment completes the work
 				// Time needed = remainingLoad / loadRate (in seconds)
 				final Fraction secondsNeeded = remainingLoad.divide(loadRate);
-				return applyTimeOffset(effectiveStart, secondsNeeded.wholePart(), direction);
+				return direction.adjustBySeconds(effectiveStart, secondsNeeded.wholePart());
 			}
 
 			// Consume the entire segment
@@ -126,52 +123,6 @@ public class LoadIntegrator {
 		}
 
 		return currentTime;
-	}
-
-	/**
-	 * Computes the effective start time within a segment based on the current
-	 * position and direction.
-	 *
-	 * @param currentTime the current time position
-	 * @param segment     the segment being processed
-	 * @param direction   the time direction
-	 * @return the effective start time for this segment
-	 */
-	private LocalDateTime computeEffectiveStart(LocalDateTime currentTime, Segment segment, TimeDirection direction) {
-		if (direction == TimeDirection.FORWARD)
-			return currentTime.isAfter(segment.startExclusive()) ? currentTime : segment.startExclusive();
-		else
-			return currentTime.isBefore(segment.startExclusive()) ? currentTime : segment.startExclusive();
-	}
-
-	/**
-	 * Computes the duration of work in a segment in seconds.
-	 *
-	 * @param effectiveStart the effective start time within the segment
-	 * @param segment        the segment being processed
-	 * @param direction      the time direction
-	 * @return the duration in seconds
-	 */
-	private long computeSegmentDuration(LocalDateTime effectiveStart, Segment segment, TimeDirection direction) {
-		if (direction == TimeDirection.FORWARD)
-			return Duration.between(effectiveStart, segment.endExclusive()).toSeconds();
-		else
-			return Duration.between(segment.endExclusive(), effectiveStart).toSeconds();
-	}
-
-	/**
-	 * Applies a time offset in the appropriate direction.
-	 *
-	 * @param time      the base time
-	 * @param seconds   the number of seconds to offset
-	 * @param direction the time direction
-	 * @return the time after applying the offset
-	 */
-	private LocalDateTime applyTimeOffset(LocalDateTime time, long seconds, TimeDirection direction) {
-		if (direction == TimeDirection.FORWARD)
-			return time.plusSeconds(seconds);
-		else
-			return time.minusSeconds(seconds);
 	}
 
 }

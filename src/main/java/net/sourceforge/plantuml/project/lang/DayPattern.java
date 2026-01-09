@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.Month;
+import net.sourceforge.plantuml.project.time.MonthUtils;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -89,7 +89,7 @@ public class DayPattern {
 		return new RegexConcat( //
 				new RegexLeaf(1, dayKeyA, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(1, monthKeyA, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, monthKeyA, "(" + MonthUtils.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
 				new RegexLeaf(1, yearKeyA, "([\\d]{1,4})"));
 	}
@@ -119,7 +119,7 @@ public class DayPattern {
 
 	private IRegex toRegexC_MONTH_DD_YYYY() {
 		return new RegexConcat( //
-				new RegexLeaf(1, monthKeyC, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, monthKeyC, "(" + MonthUtils.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
 				new RegexLeaf(1, dayKeyC, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //

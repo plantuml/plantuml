@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import java.time.DayOfWeek;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,7 +54,6 @@ import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.solver.Solver;
 import net.sourceforge.plantuml.project.solver.SolverImpl;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -84,7 +84,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.defaultPlan = plan;
 		this.solver = new SolverImpl(this);
 		if (startingDay == null)
-			setStart(Day.create(0));
+			setStart(Day.epoch());
 		else
 			setStart(startingDay);
 

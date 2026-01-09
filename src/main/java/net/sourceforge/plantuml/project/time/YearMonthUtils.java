@@ -33,23 +33,27 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.ngm.math;
+package net.sourceforge.plantuml.project.time;
 
-import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.Locale;
 
-public enum TimeDirection {
-	FORWARD, BACKWARD;
-	
-    public LocalDateTime adjustBySeconds(LocalDateTime time, long seconds) {
-        switch (this) {
-            case FORWARD:
-                return time.plusSeconds(seconds);
-            case BACKWARD:
-                return time.minusSeconds(seconds);
-            default:
-                throw new IllegalStateException();
-        }
-    }
-	
-	
+public abstract class YearMonthUtils {
+
+	public static String shortName(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.shortName(yearMonth.getMonth(), locale);
+	}
+
+	public static String shortNameYYYY(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.shortName(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
+	}
+
+	public static String longName(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.longName(yearMonth.getMonth(), locale);
+	}
+
+	public static String longNameYYYY(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.longName(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
+	}
+
 }

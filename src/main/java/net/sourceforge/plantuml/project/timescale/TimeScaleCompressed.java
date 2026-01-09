@@ -35,8 +35,9 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 
 public class TimeScaleCompressed implements TimeScale {
 

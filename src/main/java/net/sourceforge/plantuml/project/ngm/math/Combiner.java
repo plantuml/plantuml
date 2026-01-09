@@ -38,9 +38,11 @@ package net.sourceforge.plantuml.project.ngm.math;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 /**
  * Utilities to combine multiple {@link PiecewiseConstant} functions.
@@ -151,7 +153,7 @@ public class Combiner {
 		 */
 		private CombinedPiecewiseConstant(BiFunction<Fraction, Fraction, Fraction> valueCombiner) {
 			this.valueCombiner = valueCombiner;
-			this.functions = List.of();
+			this.functions = Collections.emptyList();
 		}
 
 		
@@ -171,7 +173,7 @@ public class Combiner {
 			
 			List<Segment> segments = functions.stream()
 					.map(f -> f.segmentAt(instant, direction))
-					.toList();
+					 .collect(Collectors.toList());
 			
 			return Segment.intersection(segments, valueCombiner);
 		}
