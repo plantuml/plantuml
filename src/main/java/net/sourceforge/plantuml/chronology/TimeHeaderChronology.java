@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -89,14 +89,14 @@ public class TimeHeaderChronology extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (Day i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
+		for (TimePoint i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
 			final double x1 = timeScale.getStartingPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug, TimeScale timeScale) {
-		for (Day i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
+		for (TimePoint i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
 			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
 			final TextBlock num = Display.getWithNewlines(getPragma(), i.toStringShort(thParam.getLocale()))
@@ -164,7 +164,7 @@ public class TimeHeaderChronology extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = thParam.getColor(wink);

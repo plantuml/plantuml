@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.IntPredicate;
 
 /**
  * Immutable rational number represented as a reduced numerator/denominator

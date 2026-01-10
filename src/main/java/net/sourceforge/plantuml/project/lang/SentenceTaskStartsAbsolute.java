@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceTaskStartsAbsolute extends SentenceSimple<GanttDiagram> {
 
@@ -49,8 +49,8 @@ public class SentenceTaskStartsAbsolute extends SentenceSimple<GanttDiagram> {
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		final Day start = (Day) complement;
-		final Day startingDate = project.getStartingDate();
+		final TimePoint start = (TimePoint) complement;
+		final TimePoint startingDate = project.getStartingDate();
 		if (startingDate.getAbsoluteDayNum() == 0)
 			return CommandExecutionResult.error("No starting date for the project");
 
