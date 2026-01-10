@@ -104,7 +104,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
@@ -129,10 +129,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private final OpenClose openClose = new OpenClose();
 
 	private final Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
-	private final Map<Day, HColor> colorDaysToday = new HashMap<Day, HColor>();
-	private final Map<Day, HColor> colorDaysInternal = new HashMap<Day, HColor>();
+	private final Map<TimePoint, HColor> colorDaysToday = new HashMap<TimePoint, HColor>();
+	private final Map<TimePoint, HColor> colorDaysInternal = new HashMap<TimePoint, HColor>();
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek = new HashMap<DayOfWeek, HColor>();
-	private final Map<Day, String> nameDays = new HashMap<Day, String>();
+	private final Map<TimePoint, String> nameDays = new HashMap<TimePoint, String>();
 	private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
 
 	// Let's follow ISO-8601 rules
@@ -142,13 +142,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private double factorScale = 1.0;
 	private Locale locale = Locale.ENGLISH;
 
-	private Day today;
+	private TimePoint today;
 	private double totalHeightWithoutFooter;
-	private Day min = Day.epoch();
-	private Day max;
+	private TimePoint min = TimePoint.epoch();
+	private TimePoint max;
 
-	private Day printStart;
-	private Day printEnd;
+	private TimePoint printStart;
+	private TimePoint printEnd;
 
 	private final RealOrigin origin = RealUtils.createOrigin();
 
@@ -336,7 +336,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				colorDaysOfWeek, verticalSeparatorBefore, this, hideClosed);
 	}
 
-	private Map<Day, HColor> colorDays() {
+	private Map<TimePoint, HColor> colorDays() {
 		colorDaysInternal.putAll(colorDaysToday);
 		return Collections.unmodifiableMap(colorDaysInternal);
 	}
@@ -415,7 +415,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			getOpenCloseForTask(task).open(day);
 	}
 
-	public void closeDayAsDate(Day day, String task) {
+	public void closeDayAsDate(TimePoint day, String task) {
 		if (task.length() == 0)
 			openClose.close(day);
 		else
@@ -423,7 +423,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	}
 
-	public void openDayAsDate(Day day, String task) {
+	public void openDayAsDate(TimePoint day, String task) {
 		if (task.length() == 0)
 			openClose.open(day);
 		else
@@ -489,8 +489,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.totalHeightWithoutFooter = yy;
 	}
 
-	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
-			Day max) {
+	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min,
+			TimePoint max) {
 //		if (printScale == PrintScale.DAILY || printScale == PrintScale.MONTHLY || printScale == PrintScale.QUARTERLY
 //				|| printScale == PrintScale.YEARLY)
 //			return new ResourceDrawHistogram(gantt, res, timeScale, y, min, max);
@@ -540,18 +540,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		}
 	}
 
-	private Day getStart(final Task tmp) {
+	private TimePoint getStart(final Task tmp) {
 		if (printStart == null)
 			return tmp.getStart();
 
-		return Day.max(min, tmp.getStart());
+		return TimePoint.max(min, tmp.getStart());
 	}
 
-	private Day getEnd(final Task tmp) {
+	private TimePoint getEnd(final Task tmp) {
 		if (printStart == null)
 			return tmp.getEnd();
 
-		return Day.min(max, tmp.getEnd());
+		return TimePoint.min(max, tmp.getEnd());
 	}
 
 	private void initMinMax() {
@@ -563,8 +563,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				if (task instanceof TaskSeparator || task instanceof TaskGroup)
 					continue;
 
-				final Day start = task.getStart();
-				final Day end = task.getEnd();
+				final TimePoint start = task.getStart();
+				final TimePoint end = task.getEnd();
 				// if (min.compareTo(start) > 0) {
 				// min = start;
 				// }
@@ -574,24 +574,24 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			}
 		}
 		if (openClose.getStartingDay() != null) {
-			for (Day d : colorDays().keySet())
+			for (TimePoint d : colorDays().keySet())
 				if (d.compareTo(max) > 0)
 					max = d;
 
-			for (Day d : nameDays.keySet())
+			for (TimePoint d : nameDays.keySet())
 				if (d.compareTo(max) > 0)
 					max = d;
 
 		}
 	}
 
-	public Day getThenDate() {
-		Day result = getStartingDate();
-		for (Day d : colorDays().keySet())
+	public TimePoint getThenDate() {
+		TimePoint result = getStartingDate();
+		for (TimePoint d : colorDays().keySet())
 			if (d.compareTo(result) > 0)
 				result = d;
 
-		for (Day d : nameDays.keySet())
+		for (TimePoint d : nameDays.keySet())
 			if (d.compareTo(result) > 0)
 				result = d;
 
@@ -679,19 +679,19 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return colorSet;
 	}
 
-	public void setProjectStartingDate(Day start) {
+	public void setProjectStartingDate(TimePoint start) {
 		openClose.setStartingDay(start);
 		this.min = start;
 	}
 
-	public Day getStartingDate() {
+	public TimePoint getStartingDate() {
 		if (openClose.getStartingDay() == null)
 			return min;
 
 		return openClose.getStartingDay();
 	}
 
-	public Day getEndingDate() {
+	public TimePoint getEndingDate() {
 		initMinMax();
 		return max;
 	}
@@ -704,7 +704,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return 30;
 	}
 
-	public boolean isOpen(Day day) {
+	public boolean isOpen(TimePoint day) {
 		return openClose.getLoadAt(day) > 0;
 	}
 
@@ -736,7 +736,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return resource;
 	}
 
-	public int getLoadForResource(Resource res, Day i) {
+	public int getLoadForResource(Resource res, TimePoint i) {
 		int result = 0;
 		for (Task task : tasks.values()) {
 			if (task instanceof TaskSeparator)
@@ -751,9 +751,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	public Moment getExistingMoment(String id) {
 		Moment result = getExistingTask(id);
 		if (result == null) {
-			Day start = null;
-			Day end = null;
-			for (Map.Entry<Day, String> ent : nameDays.entrySet()) {
+			TimePoint start = null;
+			TimePoint end = null;
+			for (Map.Entry<TimePoint, String> ent : nameDays.entrySet()) {
 				if (ent.getValue().equalsIgnoreCase(id) == false)
 					continue;
 
@@ -767,7 +767,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return result;
 	}
 
-	private Day min(Day d1, Day d2) {
+	private TimePoint min(TimePoint d1, TimePoint d2) {
 		if (d1 == null)
 			return d2;
 
@@ -777,7 +777,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return d1;
 	}
 
-	private Day max(Day d1, Day d2) {
+	private TimePoint max(TimePoint d1, TimePoint d2) {
 		if (d1 == null)
 			return d2;
 
@@ -787,7 +787,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return d1;
 	}
 
-	public void colorDay(Day day, HColor color) {
+	public void colorDay(TimePoint day, HColor color) {
 		colorDaysInternal.put(day, color);
 	}
 
@@ -795,25 +795,25 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		colorDaysOfWeek.put(day, color);
 	}
 
-	public void nameDay(Day day, String name) {
+	public void nameDay(TimePoint day, String name) {
 		nameDays.put(day, name);
 	}
 
-	public Day getToday() {
+	public TimePoint getToday() {
 		if (today == null)
-			this.today = Day.today();
+			this.today = TimePoint.nowUtc();
 
 		return today;
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {
 		if (today == null)
-			this.today = Day.today();
+			this.today = TimePoint.nowUtc();
 
 		colorDaysToday.put(today, colors.getCenter());
 	}
 
-	public CommandExecutionResult setToday(Day date) {
+	public CommandExecutionResult setToday(TimePoint date) {
 		this.today = date;
 		return CommandExecutionResult.ok();
 	}
@@ -823,7 +823,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return CommandExecutionResult.ok();
 	}
 
-	public void setPrintInterval(Day start, Day end) {
+	public void setPrintInterval(TimePoint start, TimePoint end) {
 		this.printStart = start;
 		this.printEnd = end;
 	}
@@ -884,9 +884,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return CommandExecutionResult.ok();
 	}
 
-	private final Set<Day> verticalSeparatorBefore = new HashSet<>();
+	private final Set<TimePoint> verticalSeparatorBefore = new HashSet<>();
 
-	public void addVerticalSeparatorBefore(Day day) {
+	public void addVerticalSeparatorBefore(TimePoint day) {
 		verticalSeparatorBefore.add(day);
 	}
 

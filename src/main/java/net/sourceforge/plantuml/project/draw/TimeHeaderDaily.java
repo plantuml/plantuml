@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDailyHideClosed;
@@ -96,10 +96,10 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
-	private final Map<Day, String> nameDays;
+	private final Map<TimePoint, String> nameDays;
 
-	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<Day, String> nameDays,
-			Day printStart) {
+	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
+			TimePoint printStart) {
 		super(thParam,
 				thParam.isHideClosed()
 						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
@@ -127,7 +127,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
 		final UGraphic ugVerticalSeparator = thParam.forVerticalSeparator(ug);
 		final UGraphic ugLineColor = ug.apply(getLineColor());
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink) || getTimeScale().getWidth(wink.decrement()) == 0)
 				drawVline(ugVerticalSeparator, getTimeScale().getStartingPosition(wink),
 						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
@@ -148,7 +148,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextsDayOfWeek(UGraphic ug) {
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
@@ -161,7 +161,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextDayOfMonth(UGraphic ug) {
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
@@ -171,13 +171,13 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		}
 	}
 
-	private boolean isHidden(Day wink) {
+	private boolean isHidden(TimePoint wink) {
 		if (thParam.isHideClosed() && thParam.getOpenClose().isClosed(wink))
 			return true;
 		return false;
 	}
 
-	private HColor getTextBackColor(Day wink) {
+	private HColor getTextBackColor(TimePoint wink) {
 		if (getLoadAt(wink) <= 0)
 			return closedFontColor();
 
@@ -187,7 +187,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void drawMonths(final UGraphic ug) {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
@@ -217,7 +217,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (Day wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
+			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);

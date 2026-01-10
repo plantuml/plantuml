@@ -40,7 +40,7 @@ import java.util.Locale;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
@@ -53,7 +53,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		return thParam.getLocale();
 	}
 
-	protected final int getLoadAt(Day instant) {
+	protected final int getLoadAt(TimePoint instant) {
 		return thParam.getLoadPlanable().getLoadAt(instant);
 	}
 	
@@ -79,7 +79,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = thParam.getColor(wink);

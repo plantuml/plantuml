@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class ResourceDrawNumbers implements ResourceDraw {
@@ -57,11 +57,11 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	private final Resource res;
 	private final TimeScale timeScale;
 	private final double y;
-	private final Day min;
-	private final Day max;
+	private final TimePoint min;
+	private final TimePoint max;
 	private final GanttDiagram gantt;
 
-	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
+	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min, TimePoint max) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
@@ -81,7 +81,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 		double startingPosition = -1;
 		int totalLoad = 0;
 		boolean isRed = false;
-		for (Day i = min; i.compareTo(max) <= 0; i = i.increment()) {
+		for (TimePoint i = min; i.compareTo(max) <= 0; i = i.increment()) {
 			final boolean isBreaking = timeScale.isBreaking(i);
 			final int load = gantt.getLoadForResource(res, i);
 			if (load > 100)

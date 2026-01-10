@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -85,7 +85,7 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	private int delta = 0;
 
-	private Day increment(Day day) {
+	private TimePoint increment(TimePoint day) {
 		if (delta == 0)
 			initDelta(day);
 
@@ -95,7 +95,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		return day;
 	}
 
-	private void initDelta(Day day) {
+	private void initDelta(TimePoint day) {
 		if (printScale == PrintScale.DAILY) {
 			final double x1 = getTimeScale().getStartingPosition(day);
 			do {
@@ -112,14 +112,14 @@ public class TimeHeaderSimple extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = increment(i)) {
+		for (TimePoint i = getMin(); i.compareTo(getMax().increment()) <= 0; i = increment(i)) {
 			final double x1 = getTimeScale().getStartingPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug) {
-		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = increment(i)) {
+		for (TimePoint i = getMin(); i.compareTo(getMax().increment()) <= 0; i = increment(i)) {
 			final int value;
 			if (printScale == PrintScale.WEEKLY)
 				value = i.getAbsoluteDayNum() / 7 + 1;
@@ -183,7 +183,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = thParam.getColor(wink);

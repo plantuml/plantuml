@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -56,7 +56,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	private SubjectDayAsDate() {
 	}
 
-	public Failable<Day> getMe(GanttDiagram project, RegexResult arg) {
+	public Failable<TimePoint> getMe(GanttDiagram project, RegexResult arg) {
 		if (arg.get("BDAY", 0) != null)
 			return Failable.ok(resultB(arg));
 
@@ -67,14 +67,14 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 	}
 
-	private Day resultB(RegexResult arg) {
+	private TimePoint resultB(RegexResult arg) {
 		final int day = Integer.parseInt(arg.get("BDAY", 0));
 		final int month = Integer.parseInt(arg.get("BMONTH", 0));
 		final int year = Integer.parseInt(arg.get("BYEAR", 0));
-		return Day.create(year, month, day);
+		return TimePoint.of(year, month, day);
 	}
 
-	private Day resultE(GanttDiagram system, RegexResult arg) {
+	private TimePoint resultE(GanttDiagram system, RegexResult arg) {
 		final String type = arg.get("ETYPE", 0).toUpperCase();
 		final String operation = arg.get("EOPERATION", 0);
 		int day = Integer.parseInt(arg.get("ECOUNT", 0));
@@ -101,7 +101,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			project.closeDayAsDate((Day) subject, (String) complement);
+			project.closeDayAsDate((TimePoint) subject, (String) complement);
 			return CommandExecutionResult.ok();
 		}
 	}
@@ -113,7 +113,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			project.openDayAsDate((Day) subject, (String) complement);
+			project.openDayAsDate((TimePoint) subject, (String) complement);
 			return CommandExecutionResult.ok();
 		}
 	}
@@ -127,7 +127,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final HColor color = ((CenterBorderColor) complement).getCenter();
-			project.colorDay((Day) subject, color);
+			project.colorDay((TimePoint) subject, color);
 			return CommandExecutionResult.ok();
 		}
 
