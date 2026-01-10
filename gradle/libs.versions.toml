@@ -7,7 +7,7 @@
 ant                 = "1.10.15"
 assertj             = "3.27.6"
 batik               = "1.19"
-elk                 = "0.10.0"
+elk                 = "0.11.0"
 fop                 = "2.11"
 glytching-junit-ext = "2.6.0"
 graalvm-native      = "0.11.3"
