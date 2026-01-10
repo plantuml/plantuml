@@ -35,11 +35,13 @@
  */
 package net.sourceforge.plantuml.project.command;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -49,31 +51,31 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandWeekNumberStrategy extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
 	public CommandWeekNumberStrategy() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandWeekNumberStrategy.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandWeekNumberStrategy.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;weeks?&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;starts?&quot;), //
 				new RegexLeaf(&quot;[^0-9]*?&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(1, &quot;WEEKDAY&quot;, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;), //</span>
 <span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				new RegexLeaf(1, &quot;WEEKDAY&quot;, &quot;(&quot; + DayOfWeekUtils.getRegexString() + &quot;)&quot;), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;[^0-9]*?&quot;), //
 				new RegexLeaf(1, &quot;NUM&quot;, &quot;([0-9]+)&quot;), //
 				new RegexLeaf(&quot;[^0-9]*?&quot;), //
-<span class="fc" id="L67">				RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
-<span class="nc" id="L73">		final DayOfWeek weekDay = DayOfWeek.fromString(arg.get(&quot;WEEKDAY&quot;, 0));</span>
-<span class="nc" id="L74">		final String num = arg.get(&quot;NUM&quot;, 0);</span>
-<span class="nc" id="L75">		diagram.setWeekNumberStrategy(weekDay, Integer.parseInt(num));</span>
-<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		final DayOfWeek weekDay = DayOfWeekUtils.fromString(arg.get(&quot;WEEKDAY&quot;, 0));</span>
+<span class="nc" id="L76">		final String num = arg.get(&quot;NUM&quot;, 0);</span>
+<span class="nc" id="L77">		diagram.setWeekNumberStrategy(weekDay, Integer.parseInt(num));</span>
+<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PiecewiseConstantHours.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ngm.math</a> &gt; <span class="el_source">PiecewiseConstantHours.java</span></div><h1>PiecewiseConstantHours.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques, Mario Kušek
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.TreeMap;
+
+public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
+
+	private final Fraction defaultValue;
+
+<span class="fc" id="L49">	private final NavigableMap&lt;LocalTime, Fraction&gt; timeBoundaries = new TreeMap&lt;&gt;();</span>
+
+<span class="fc" id="L51">	private PiecewiseConstantHours(Fraction defaultValue) {</span>
+<span class="fc" id="L52">		this.defaultValue = defaultValue;</span>
+<span class="fc" id="L53">	}</span>
+
+	public static PiecewiseConstantHours of(Fraction defaultValue) {
+<span class="fc" id="L56">		return new PiecewiseConstantHours(defaultValue);</span>
+	}
+
+	@Override
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		return direction == TimeDirection.FORWARD ? segmentForwardAt(instant) : segmentBackwardAt(instant);</span>
+	}
+
+	private Segment segmentForwardAt(LocalDateTime instant) {
+<span class="fc" id="L65">		final LocalDate day = instant.toLocalDate();</span>
+<span class="fc" id="L66">		final LocalDateTime dayStart = day.atStartOfDay();</span>
+<span class="fc" id="L67">		final LocalTime t = instant.toLocalTime();</span>
+<span class="fc" id="L68">		final Entry&lt;LocalTime, Fraction&gt; ent = timeBoundaries.floorEntry(t);</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		final LocalTime startKey = ent != null ? ent.getKey() : LocalTime.MIDNIGHT;</span>
+<span class="fc" id="L71">		final Fraction v = timeBoundaries.get(startKey);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		final Fraction value = v != null ? v : defaultValue;</span>
+
+<span class="fc" id="L74">		final LocalTime endKey = timeBoundaries.higherKey(startKey); // next boundary after start</span>
+<span class="fc" id="L75">		final LocalDateTime start = dayStart.with(startKey);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		final LocalDateTime end = (endKey == null) ? dayStart.plusDays(1) : dayStart.with(endKey);</span>
+
+<span class="fc" id="L78">		return Segment.forward(start, end, value);</span>
+	}
+
+	private Segment segmentBackwardAt(LocalDateTime instant) {
+<span class="fc" id="L82">		final LocalTime t = instant.toLocalTime();</span>
+
+		// At midnight, backward segment is the last one of the previous day
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (t.equals(LocalTime.MIDNIGHT)) {</span>
+<span class="fc" id="L86">			final LocalDateTime dayStart = instant.toLocalDate().minusDays(1).atStartOfDay();</span>
+
+<span class="fc" id="L88">			final Entry&lt;LocalTime, Fraction&gt; last = timeBoundaries.lastEntry(); // may be null</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			final LocalTime startKey = (last == null) ? LocalTime.MIDNIGHT : last.getKey();</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			final Fraction value = (last == null) ? defaultValue : last.getValue();</span>
+
+<span class="fc" id="L92">			final LocalDateTime start = dayStart.plusDays(1); // 00:00 of next day</span>
+<span class="fc" id="L93">			final LocalDateTime end = dayStart.with(startKey); // start of last segment</span>
+<span class="fc" id="L94">			return Segment.backward(start, end, value);</span>
+		}
+
+<span class="fc" id="L97">		final LocalDateTime dayStart = instant.toLocalDate().atStartOfDay();</span>
+
+<span class="fc" id="L99">		final Entry&lt;LocalTime, Fraction&gt; ent = timeBoundaries.lowerEntry(t);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		final LocalTime startKey = (ent == null) ? LocalTime.MIDNIGHT : ent.getKey();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		final Fraction value = (ent == null) ? defaultValue : ent.getValue();</span>
+
+<span class="fc" id="L103">		final LocalTime endKey = timeBoundaries.higherKey(startKey); // end of that segment</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		final LocalDateTime start = (endKey == null) ? dayStart.plusDays(1) : dayStart.with(endKey);</span>
+<span class="fc" id="L105">		final LocalDateTime end = dayStart.with(startKey);</span>
+
+<span class="fc" id="L107">		return Segment.backward(start, end, value);</span>
+	}
+
+	public PiecewiseConstantHours with(LocalTime start, LocalTime end, Fraction fraction) {
+
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">		if (end.equals(LocalTime.MIDNIGHT) == false &amp;&amp; start.compareTo(end) &gt;= 0)</span>
+<span class="nc" id="L113">			throw new IllegalArgumentException(&quot;start must be strictly before end&quot;);</span>
+
+<span class="fc" id="L115">		final PiecewiseConstantHours result = new PiecewiseConstantHours(defaultValue);</span>
+<span class="fc" id="L116">		result.timeBoundaries.putAll(this.timeBoundaries);</span>
+<span class="fc" id="L117">		result.timeBoundaries.put(start, fraction);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (end.equals(LocalTime.MIDNIGHT) == false)</span>
+<span class="fc" id="L119">			result.timeBoundaries.put(end, defaultValue);</span>
+<span class="fc" id="L120">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

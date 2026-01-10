@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PiecewiseConstantSpecificDays.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ngm.math</a> &gt; <span class="el_source">PiecewiseConstantSpecificDays.java</span></div><h1>PiecewiseConstantSpecificDays.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques, Mario Kušek
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Immutable implementation of {@link PiecewiseConstant} that models a workload
+ * pattern defined by specific dates.
+ *
+ * &lt;p&gt;
+ * Each specific {@link LocalDate} value is associated with a constant
+ * {@link Fraction} representing the workload for that day (for example 3/10 for
+ * 30%). A zero value is meaningful and represents no allocation on that day.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * For any date not explicitly mapped, a default value is returned.
+ * &lt;/p&gt;
+ */
+public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConstant {
+
+	/**
+	 * Mapping of specific dates to their corresponding workload fractions.
+	 */
+	private final Map&lt;LocalDate, Fraction&gt; dayToFraction;
+
+	/**
+	 * Default workload fraction for dates not explicitly mapped.
+	 */
+	private final Fraction defaultValue;
+
+	/**
+	 * Constructs a PiecewiseConstantSpecificDays with the given default value.
+	 * 
+	 * @param value The default workload fraction.
+	 */
+	private PiecewiseConstantSpecificDays(Fraction value) {
+<span class="fc" id="L77">		this(value, Collections.emptyMap());</span>
+<span class="fc" id="L78">	}</span>
+
+	/**
+	 * Constructs a PiecewiseConstantSpecificDays with the given default value and
+	 * specific day-to-fraction mapping.
+	 * 
+	 * @param value         The default workload fraction.
+	 * @param dayToFraction Mapping of specific dates to their workload fractions.
+	 */
+<span class="fc" id="L87">	private PiecewiseConstantSpecificDays(Fraction value, Map&lt;LocalDate, Fraction&gt; dayToFraction) {</span>
+<span class="fc" id="L88">		defaultValue = value;</span>
+<span class="fc" id="L89">		this.dayToFraction = dayToFraction;</span>
+<span class="fc" id="L90">	}</span>
+
+	private Fraction getValue(LocalDate localDate) {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (dayToFraction.containsKey(localDate))</span>
+<span class="fc" id="L94">			return dayToFraction.get(localDate);</span>
+
+<span class="fc" id="L96">		return defaultValue;</span>
+	}
+
+	/**
+	 * Creates a PiecewiseConstantSpecificDays with the given default value.
+	 * 
+	 * @param value The default workload fraction.
+	 * @return A new PiecewiseConstantSpecificDays instance.
+	 */
+	public static PiecewiseConstantSpecificDays of(Fraction value) {
+<span class="fc" id="L106">		return new PiecewiseConstantSpecificDays(value);</span>
+	}
+
+	/**
+	 * Returns a new PiecewiseConstantSpecificDays with the specified day associated
+	 * with the given fraction.
+	 * 
+	 * @param day   The specific date to associate.
+	 * @param value The workload fraction for the specified date.
+	 * @return A new PiecewiseConstantSpecificDays instance with the updated
+	 *         mapping.
+	 */
+	public PiecewiseConstantSpecificDays withDay(LocalDate day, Fraction value) {
+<span class="fc" id="L119">		final Map&lt;LocalDate, Fraction&gt; newDayToFraction = new HashMap&lt;&gt;(dayToFraction);</span>
+<span class="fc" id="L120">		newDayToFraction.put(day, value);</span>
+<span class="fc" id="L121">		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);</span>
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
+	 */
+	@Override
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc" id="L132">			final LocalDate day = instant.toLocalDate();</span>
+<span class="fc" id="L133">			final LocalDateTime start = day.atStartOfDay();</span>
+<span class="fc" id="L134">			final Fraction value = getValue(day);</span>
+<span class="fc" id="L135">			return Segment.forward(start, start.plusDays(1), value);</span>
+		}
+
+		// BACKWARD: determine which day contains the instant
+		final LocalDate day;
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))</span>
+<span class="fc" id="L141">			day = instant.toLocalDate().minusDays(1);</span>
+		else
+<span class="fc" id="L143">			day = instant.toLocalDate();</span>
+
+<span class="fc" id="L145">		final LocalDateTime end = day.atStartOfDay();</span>
+<span class="fc" id="L146">		final Fraction value = getValue(day);</span>
+
+<span class="fc" id="L148">		return Segment.backward(end.plusDays(1), end, value);</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

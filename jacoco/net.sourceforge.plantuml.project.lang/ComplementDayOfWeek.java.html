@@ -35,24 +35,26 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L46">public class ComplementDayOfWeek implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L48">public class ComplementDayOfWeek implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L49">		return new RegexConcat( //</span>
-<span class="fc" id="L50">				new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + DayOfWeek.getRegexString() + &quot;)&quot;)); //</span>
+<span class="fc" id="L51">		return new RegexConcat( //</span>
+<span class="fc" id="L52">				new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + DayOfWeekUtils.getRegexString() + &quot;)&quot;)); //</span>
 	}
 
 	public Failable&lt;DayOfWeek&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L54">		final String s = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="nc" id="L55">		return Failable.ok(DayOfWeek.fromString(s));</span>
+<span class="nc" id="L56">		final String s = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L57">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 }

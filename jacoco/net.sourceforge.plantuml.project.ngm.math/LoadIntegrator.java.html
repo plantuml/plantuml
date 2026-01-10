@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoadIntegrator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ngm.math</a> &gt; <span class="el_source">LoadIntegrator.java</span></div><h1>LoadIntegrator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques, Mario Kušek
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+
+import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
+
+public class LoadIntegrator {
+
+	private final PiecewiseConstant loadFunction;
+	private final NGMTotalEffort totalLoad;
+
+	/**
+	 * Creates a new {@code LoadIntegrator}.
+	 *
+	 * @param loadFunction the piecewise constant load function to integrate; it
+	 *                     defines the load rate at any given time
+	 * @param totalLoad    the total amount of load to be consumed
+	 */
+<span class="fc" id="L56">	public LoadIntegrator(PiecewiseConstant loadFunction, NGMTotalEffort totalLoad) {</span>
+<span class="fc" id="L57">		this.loadFunction = loadFunction;</span>
+<span class="fc" id="L58">		this.totalLoad = totalLoad;</span>
+<span class="fc" id="L59">	}</span>
+
+	public LocalDateTime computeEnd(LocalDateTime start) {
+<span class="fc" id="L62">		return integrate(start, TimeDirection.FORWARD);</span>
+	}
+
+	/**
+	 * Computes the start date-time at which the total load has been completely
+	 * consumed.
+	 * &lt;p&gt;
+	 * The computation is expected to traverse the successive
+	 * {@link PiecewiseConstant} segments starting at the integration start
+	 * date-time, accumulating consumed load in past until the target total load is
+	 * reached.
+	 *
+	 * @return the {@link LocalDateTime} corresponding to the start of the load
+	 *         integration
+	 */
+
+	public LocalDateTime computeStart(LocalDateTime end) {
+<span class="fc" id="L79">		return integrate(end, TimeDirection.BACKWARD);</span>
+	}
+
+	/**
+	 * Generic integration method that works in both time directions.
+	 *
+	 * @param startTime the starting time for integration
+	 * @param direction the direction of time travel (FORWARD or BACKWARD)
+	 * @return the computed end time after consuming the total load
+	 */
+	private LocalDateTime integrate(LocalDateTime startTime, TimeDirection direction) {
+<span class="fc" id="L90">		Fraction remainingLoad = totalLoad.toSeconds();</span>
+<span class="fc" id="L91">		LocalDateTime currentTime = startTime;</span>
+
+<span class="fc" id="L93">		final Iterator&lt;Segment&gt; iter = loadFunction.iterateSegmentsFrom(startTime, direction);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		while (iter.hasNext()) {</span>
+<span class="fc" id="L95">			Segment segment = iter.next();</span>
+
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (remainingLoad.equals(Fraction.ZERO))</span>
+<span class="fc" id="L98">				break;</span>
+
+<span class="fc" id="L100">			Fraction loadRate = segment.getValue();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (loadRate.equals(Fraction.ZERO)) {</span>
+<span class="fc" id="L102">				currentTime = segment.endExclusive();</span>
+<span class="fc" id="L103">				continue;</span>
+			}
+
+			// Calculate the effective start within the segment
+<span class="fc" id="L107">			final LocalDateTime effectiveStart = segment.computeClampedStart(currentTime);</span>
+
+<span class="fc" id="L109">			final long segmentSeconds = Math.abs(Duration.between(effectiveStart, segment.endExclusive()).getSeconds());</span>
+			// Load consumed in this segment = loadRate * duration (in seconds)
+<span class="fc" id="L111">			final Fraction segmentLoad = loadRate.multiply(new Fraction(segmentSeconds, 1));</span>
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (segmentLoad.compareTo(remainingLoad) &gt;= 0) {</span>
+				// This segment completes the work
+				// Time needed = remainingLoad / loadRate (in seconds)
+<span class="fc" id="L116">				final Fraction secondsNeeded = remainingLoad.divide(loadRate);</span>
+<span class="fc" id="L117">				return direction.adjustBySeconds(effectiveStart, secondsNeeded.wholePart());</span>
+			}
+
+			// Consume the entire segment
+<span class="fc" id="L121">			remainingLoad = remainingLoad.subtract(segmentLoad);</span>
+<span class="fc" id="L122">			currentTime = segment.endExclusive();</span>
+<span class="fc" id="L123">		}</span>
+
+<span class="fc" id="L125">		return currentTime;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

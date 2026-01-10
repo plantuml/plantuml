@@ -35,76 +35,77 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 
 public class Resource {
 
 	private final String name;
 	private ResourceDraw draw;
 
-<span class="nc" id="L48">	private final OpenClose openClose = new OpenClose();</span>
+<span class="nc" id="L49">	private final OpenClose openClose = new OpenClose();</span>
 
-<span class="nc" id="L50">	public Resource(String name) {</span>
-<span class="nc" id="L51">		this.name = name;</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L51">	public Resource(String name) {</span>
+<span class="nc" id="L52">		this.name = name;</span>
+<span class="nc" id="L53">	}</span>
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L56">		return name.hashCode();</span>
+<span class="nc" id="L57">		return name.hashCode();</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L61">		final Resource other = (Resource) obj;</span>
-<span class="nc" id="L62">		return this.name.equals(other.name);</span>
+<span class="nc" id="L62">		final Resource other = (Resource) obj;</span>
+<span class="nc" id="L63">		return this.name.equals(other.name);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L67">		return name;</span>
+<span class="nc" id="L68">		return name;</span>
 	}
 
 	public String getName() {
-<span class="nc" id="L71">		return name;</span>
+<span class="nc" id="L72">		return name;</span>
 	}
 
 	public ResourceDraw getResourceDraw() {
-<span class="nc" id="L75">		return draw;</span>
+<span class="nc" id="L76">		return draw;</span>
 	}
 
 	public void setTaskDraw(ResourceDraw draw) {
-<span class="nc" id="L79">		this.draw = draw;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L80">		this.draw = draw;</span>
+<span class="nc" id="L81">	}</span>
 
 	public boolean isClosedAt(Day day) {
-<span class="nc" id="L83">		return openClose.isClosed(day);</span>
+<span class="nc" id="L84">		return openClose.isClosed(day);</span>
 	}
 
 	public void addCloseDay(Day day) {
-<span class="nc" id="L87">		openClose.close(day);</span>
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L88">		openClose.close(day);</span>
+<span class="nc" id="L89">	}</span>
 
 	public void addForceOnDay(Day day) {
-<span class="nc" id="L91">		openClose.open(day);</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L92">		openClose.open(day);</span>
+<span class="nc" id="L93">	}</span>
 
 	public void addCloseDay(DayOfWeek day) {
-<span class="nc" id="L95">		openClose.close(day);</span>
-<span class="nc" id="L96">	}</span>
+<span class="nc" id="L96">		openClose.close(day);</span>
+<span class="nc" id="L97">	}</span>
 
 	public void setOffBeforeDate(Day day) {
-<span class="nc" id="L99">		openClose.setOffBeforeDate(day);</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L100">		openClose.setOffBeforeDate(day);</span>
+<span class="nc" id="L101">	}</span>
 
 	public void setOffAfterDate(Day day) {
-<span class="nc" id="L103">		openClose.setOffAfterDate(day);</span>
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L104">		openClose.setOffAfterDate(day);</span>
+<span class="nc" id="L105">	}</span>
 
 	public Day getLastDayIfAny() {
-<span class="nc" id="L107">		return openClose.getLastDayIfAny();</span>
+<span class="nc" id="L108">		return openClose.getLastDayIfAny();</span>
 	}
 
 }

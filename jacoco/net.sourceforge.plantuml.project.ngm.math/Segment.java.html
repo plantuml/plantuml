@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Segment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ngm.math</a> &gt; <span class="el_source">Segment.java</span></div><h1>Segment.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques, Mario Kušek
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.BiFunction;
+
+/**
+ * A constant workload segment over a time interval.
+ *
+ * &lt;p&gt;
+ * A segment represents a time interval where the workload value remains
+ * constant. The boundary convention is: &lt;strong&gt;both bounds are
+ * exclusive&lt;/strong&gt;, denoted as {@code ]start, end[} (or equivalently
+ * {@code (start, end)} in some notations). This symmetric design simplifies
+ * bidirectional iteration.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * Segments can be either {@link TimeDirection#FORWARD} or
+ * {@link TimeDirection#BACKWARD}:
+ * &lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;strong&gt;FORWARD&lt;/strong&gt;: {@code start} is chronologically before
+ * {@code end} (used for forward iteration through time)&lt;/li&gt;
+ * &lt;li&gt;&lt;strong&gt;BACKWARD&lt;/strong&gt;: {@code start} is chronologically after
+ * {@code end} (used for backward iteration through time)&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;
+ * In both cases, both {@code start} and {@code end} are exclusive bounds. This
+ * symmetric convention ensures that boundary instants are never &quot;inside&quot; a
+ * segment, which simplifies reasoning about segment adjacency and splitting.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * Think of it as a time traveler: they travel from {@code start} toward
+ * {@code end}, but never actually stand on either boundary instant. The segment
+ * contains all instants strictly between the two bounds. For FORWARD segments,
+ * travel is into the future. For BACKWARD segments, travel is into the past.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * The value may be zero to explicitly model periods with no assigned workload.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * Instances are created via the factory methods
+ * {@link #forward(LocalDateTime, LocalDateTime, Fraction)} and
+ * {@link #backward(LocalDateTime, LocalDateTime, Fraction)}.
+ * &lt;/p&gt;
+ *
+ * @see TimeDirection
+ * @see Fraction
+ */
+public final class Segment {
+
+	private final LocalDateTime start;
+
+	private final LocalDateTime end;
+
+	/**
+	 * The constant workload value over this segment.
+	 */
+	private final Fraction value;
+
+	private final TimeDirection direction;
+
+	/**
+	 * Private constructor. Use {@link #forward} or {@link #backward} factory
+	 * methods.
+	 */
+<span class="fc" id="L109">	private Segment(TimeDirection direction, LocalDateTime start, LocalDateTime end, Fraction value) {</span>
+<span class="fc" id="L110">		Objects.requireNonNull(value);</span>
+
+<span class="fc" id="L112">		this.direction = direction;</span>
+<span class="fc" id="L113">		this.start = start;</span>
+<span class="fc" id="L114">		this.end = end;</span>
+<span class="fc" id="L115">		this.value = value;</span>
+<span class="fc" id="L116">	}</span>
+
+	/**
+	 * Creates a forward segment where {@code start} is chronologically before
+	 * {@code end}.
+	 *
+	 * &lt;p&gt;
+	 * The segment represents the time interval {@code ]start, end[} for forward
+	 * iteration. Both bounds are exclusive.
+	 * &lt;/p&gt;
+	 *
+	 * @param start the exclusive start bound (chronologically earlier)
+	 * @param end   the exclusive end bound (chronologically later)
+	 * @param value the constant workload value for this segment
+	 * @return a new forward segment
+	 * @throws NullPointerException     if any argument is {@code null}
+	 * @throws IllegalArgumentException if {@code start} is not chronologically
+	 *                                  before {@code end}
+	 */
+	public static Segment forward(LocalDateTime start, LocalDateTime end, Fraction value) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (start.isBefore(end) == false)</span>
+<span class="fc" id="L137">			throw new IllegalArgumentException(&quot;end must be after start&quot;);</span>
+<span class="fc" id="L138">		return new Segment(TimeDirection.FORWARD, start, end, value);</span>
+	}
+
+	/**
+	 * Creates a backward segment where {@code start} is chronologically after
+	 * {@code end}.
+	 *
+	 * &lt;p&gt;
+	 * The segment represents the time interval {@code ]start, end[} for backward
+	 * iteration, where {@code start} is the later instant and {@code end} is the
+	 * earlier instant. Both bounds are exclusive.
+	 * &lt;/p&gt;
+	 *
+	 *
+	 * @param start the exclusive start bound (chronologically later)
+	 * @param end   the exclusive end bound (chronologically earlier)
+	 * @param value the constant workload value for this segment
+	 * @return a new backward segment
+	 * @throws NullPointerException     if any argument is {@code null}
+	 * @throws IllegalArgumentException if {@code end} is not chronologically before
+	 *                                  {@code start}
+	 */
+	public static Segment backward(LocalDateTime start, LocalDateTime end, Fraction value) {
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (end.isBefore(start) == false)</span>
+<span class="fc" id="L162">			throw new IllegalArgumentException(&quot;end must be before start&quot;);</span>
+<span class="fc" id="L163">		return new Segment(TimeDirection.BACKWARD, start, end, value);</span>
+	}
+
+	/**
+	 * Returns the direction of this segment.
+	 *
+	 * @return {@link TimeDirection#FORWARD} if {@code start} is chronologically
+	 *         before {@code end}, {@link TimeDirection#BACKWARD} if {@code start}
+	 *         is chronologically after {@code end}
+	 */
+	public TimeDirection getTimeDirection() {
+<span class="fc" id="L174">		return direction;</span>
+	}
+
+	/**
+	 * Returns the exclusive start bound of this segment.
+	 *
+	 * &lt;p&gt;
+	 * For {@link TimeDirection#FORWARD} segments, this is the chronologically
+	 * earlier instant. For {@link TimeDirection#BACKWARD} segments, this is the
+	 * chronologically later instant.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * This bound is exclusive: the returned instant is not considered part of the
+	 * segment.
+	 * &lt;/p&gt;
+	 *
+	 * @return the exclusive start bound
+	 */
+	public LocalDateTime startExclusive() {
+<span class="fc" id="L194">		return start;</span>
+	}
+
+	/**
+	 * Returns the exclusive end bound of this segment.
+	 *
+	 * &lt;p&gt;
+	 * For {@link TimeDirection#FORWARD} segments, this is the chronologically later
+	 * instant. For {@link TimeDirection#BACKWARD} segments, this is the
+	 * chronologically earlier instant.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * This bound is exclusive: the returned instant is not considered part of the
+	 * segment.
+	 * &lt;/p&gt;
+	 *
+	 * @return the exclusive end bound
+	 */
+	public LocalDateTime endExclusive() {
+<span class="fc" id="L214">		return end;</span>
+	}
+
+	/**
+	 * Returns the constant workload value of this segment.
+	 *
+	 * @return the workload value, never {@code null}
+	 */
+	public Fraction getValue() {
+<span class="fc" id="L223">		return value;</span>
+	}
+
+	/**
+	 * Splits this segment into two contiguous segments at the given instant.
+	 *
+	 * &lt;p&gt;
+	 * The split instant {@code time} must lie strictly within the bounds of this
+	 * segment (exclusive of both {@code start} and {@code end}).
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * The returned array always contains exactly two segments with the same
+	 * {@link #getTimeDirection() direction} as this segment:
+	 * &lt;/p&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;the first segment spans from {@code start} (exclusive) to {@code time}
+	 * (exclusive),&lt;/li&gt;
+	 * &lt;li&gt;the second segment spans from {@code time} (exclusive) to {@code end}
+	 * (exclusive).&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 *
+	 * &lt;p&gt;
+	 * Both resulting segments carry the same {@link #getValue() value} as this
+	 * segment. The two segments are guaranteed to be contiguous and
+	 * non-overlapping.
+	 * &lt;/p&gt;
+	 *
+	 * @param time the instant at which to split this segment
+	 * @return an array of exactly two segments resulting from the split
+	 * @throws NullPointerException     if {@code time} is {@code null}
+	 * @throws IllegalArgumentException if {@code time} lies outside the bounds of
+	 *                                  this segment or is equal to {@code start} or
+	 *                                  {@code end}
+	 */
+	public Segment[] split(LocalDateTime time) {
+<span class="fc" id="L259">		Objects.requireNonNull(time, &quot;time must not be null&quot;);</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (includes(time) == false)</span>
+<span class="fc" id="L261">			throw new IllegalArgumentException(&quot;time must be within the segment bounds&quot;);</span>
+
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc" id="L264">			final Segment first = Segment.forward(start, time, value);</span>
+<span class="fc" id="L265">			final Segment second = Segment.forward(time, end, value);</span>
+<span class="fc" id="L266">			return new Segment[] { first, second };</span>
+		} else {
+<span class="fc" id="L268">			final Segment first = Segment.backward(start, time, value);</span>
+<span class="fc" id="L269">			final Segment second = Segment.backward(time, end, value);</span>
+<span class="fc" id="L270">			return new Segment[] { first, second };</span>
+		}
+	}
+
+	/**
+	 * Checks whether the given instant lies strictly within this segment.
+	 *
+	 * &lt;p&gt;
+	 * This method excludes both boundaries. The check is {@code (start, end)} —
+	 * exclusive on both ends.
+	 * &lt;/p&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;{@link TimeDirection#FORWARD}: {@code start &lt; time &lt; end}&lt;/li&gt;
+	 * &lt;li&gt;{@link TimeDirection#BACKWARD}: {@code end &lt; time &lt; start}&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 *
+	 * @param time the instant to check
+	 * @return {@code true} if {@code time} lies strictly between {@code start} and
+	 *         {@code end} (exclusive on both ends), {@code false} otherwise
+	 * @throws NullPointerException if {@code time} is {@code null}
+	 */
+	public boolean includes(LocalDateTime time) {
+<span class="fc" id="L292">		Objects.requireNonNull(time, &quot;time must not be null&quot;);</span>
+
+<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L295" title="All 4 branches covered.">			return time.isAfter(start) &amp;&amp; time.isBefore(end);</span>
+		else
+<span class="fc bfc" id="L297" title="All 4 branches covered.">			return time.isBefore(start) &amp;&amp; time.isAfter(end);</span>
+
+	}
+
+	/**
+	 * Returns a string representation of this segment.
+	 *
+	 * &lt;p&gt;
+	 * The format is: {@code DIRECTION ]start, end[ value=V} where DIRECTION is
+	 * either FORWARD or BACKWARD.
+	 * &lt;/p&gt;
+	 *
+	 * @return a string representation of this segment
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L313">		return getTimeDirection() + &quot; ]&quot; + start + &quot;, &quot; + end + &quot;[ value=&quot; + value;</span>
+	}
+
+	/**
+	 * Computes the intersection of multiple segments using multiplication to
+	 * combine their values.
+	 *
+	 * &lt;p&gt;
+	 * The intersection is defined as the overlapping time range shared by all
+	 * provided segments. If no such overlapping range exists, an exception is
+	 * thrown.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * The value of the resulting segment is computed by multiplying the values of
+	 * all intersecting segments.
+	 * &lt;/p&gt;
+	 *
+	 * @param segments the list of segments to intersect
+	 * @return a new {@link Segment} representing the intersection of the input
+	 *         segments with the combined value
+	 * @throws IllegalArgumentException if {@code segments} is empty or if no
+	 *                                  overlapping range exists among the segments
+	 * @throws NullPointerException     if {@code segments} is {@code null}
+	 */
+	public static Segment intersection(List&lt;Segment&gt; segments) {
+<span class="fc" id="L339">		return intersection(segments, Fraction.PRODUCT);</span>
+	}
+
+	/**
+	 * Computes the intersection of multiple segments.
+	 *
+	 * &lt;p&gt;
+	 * The intersection is defined as the overlapping time range shared by all
+	 * provided segments. If no such overlapping range exists, an exception is
+	 * thrown.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * All segments must have the same {@link TimeDirection}. The resulting segment
+	 * will have the same direction as the input segments.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * The value of the resulting segment is computed by applying the provided
+	 * {@code valueFunction} to the values of all intersecting segments.
+	 * &lt;/p&gt;
+	 *
+	 * @param segments      the list of segments to intersect
+	 * @param valueFunction a function that combines two {@link Fraction} values
+	 *                      into one; this function is applied iteratively to
+	 *                      combine the values of all intersecting segments
+	 * @return a new {@link Segment} representing the intersection of the input
+	 *         segments with the combined value
+	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
+	 *                                  have different directions, or if no
+	 *                                  overlapping range exists among the segments
+	 * @throws NullPointerException     if {@code segments} or {@code valueFunction}
+	 *                                  is {@code null}
+	 */
+	public static Segment intersection(List&lt;Segment&gt; segments, BiFunction&lt;Fraction, Fraction, Fraction&gt; valueFunction) {
+<span class="fc" id="L374">		Objects.requireNonNull(valueFunction, &quot;valueFunction must not be null&quot;);</span>
+
+<span class="fc bfc" id="L376" title="All 2 branches covered.">		if (segments.isEmpty())</span>
+<span class="fc" id="L377">			throw new IllegalArgumentException(&quot;No segments to intersect&quot;);</span>
+
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (segments.size() == 1)</span>
+<span class="fc" id="L380">			return segments.get(0);</span>
+
+<span class="fc" id="L382">		final TimeDirection direction = segments.get(0).getTimeDirection();</span>
+
+<span class="fc" id="L384">		LocalDateTime start = segments.get(0).startExclusive();</span>
+<span class="fc" id="L385">		LocalDateTime end = segments.get(0).endExclusive();</span>
+<span class="fc" id="L386">		Fraction combinedValue = segments.get(0).getValue();</span>
+
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		for (int i = 1; i &lt; segments.size(); i++) {</span>
+<span class="fc" id="L389">			final Segment segment = segments.get(i);</span>
+
+<span class="fc bfc" id="L391" title="All 2 branches covered.">			if (segment.getTimeDirection() != direction)</span>
+<span class="fc" id="L392">				throw new IllegalArgumentException(&quot;All segments must have the same direction&quot;);</span>
+
+<span class="fc bfc" id="L394" title="All 2 branches covered.">			if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">				if (segment.startExclusive().isAfter(start))</span>
+<span class="fc" id="L396">					start = segment.startExclusive();</span>
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">				if (segment.endExclusive().isBefore(end))</span>
+<span class="nc" id="L398">					end = segment.endExclusive();</span>
+			} else {
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">				if (segment.startExclusive().isBefore(start))</span>
+<span class="fc" id="L401">					start = segment.startExclusive();</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">				if (segment.endExclusive().isAfter(end))</span>
+<span class="fc" id="L403">					end = segment.endExclusive();</span>
+			}
+
+<span class="fc" id="L406">			combinedValue = valueFunction.apply(combinedValue, segment.getValue());</span>
+		}
+
+<span class="fc bfc" id="L409" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">			if (start.isBefore(end) == false)</span>
+<span class="fc" id="L411">				throw new IllegalArgumentException(&quot;Segments do not overlap&quot;);</span>
+<span class="fc" id="L412">			return Segment.forward(start, end, combinedValue);</span>
+		} else {
+<span class="fc bfc" id="L414" title="All 2 branches covered.">			if (end.isBefore(start) == false)</span>
+<span class="fc" id="L415">				throw new IllegalArgumentException(&quot;Segments do not overlap&quot;);</span>
+<span class="fc" id="L416">			return Segment.backward(start, end, combinedValue);</span>
+		}
+	}
+
+	/**
+	 * Computes the intersection of multiple segments using multiplication to
+	 * combine their values.
+	 *
+	 * &lt;p&gt;
+	 * Convenience overload for array inputs. Delegates to
+	 * {@link #intersection(List)}.
+	 * &lt;/p&gt;
+	 *
+	 * @param segments the array of segments to intersect
+	 * @return a new {@link Segment} representing the intersection
+	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
+	 *                                  have different directions, or if no
+	 *                                  overlapping range exists
+	 * @throws NullPointerException     if {@code segments} is {@code null}
+	 * @see #intersection(List)
+	 */
+	public static Segment intersection(Segment[] segments) {
+<span class="nc" id="L438">		Objects.requireNonNull(segments, &quot;segments must not be null&quot;);</span>
+
+<span class="nc" id="L440">		return intersection(Arrays.asList(segments));</span>
+	}
+
+	/**
+	 * Computes the intersection of multiple segments with a custom value function.
+	 *
+	 * &lt;p&gt;
+	 * Convenience overload for array inputs. Delegates to
+	 * {@link #intersection(List, BiFunction)}.
+	 * &lt;/p&gt;
+	 *
+	 * @param segments      the array of segments to intersect
+	 * @param valueFunction a function that combines two {@link Fraction} values
+	 * @return a new {@link Segment} representing the intersection
+	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
+	 *                                  have different directions, or if no
+	 *                                  overlapping range exists
+	 * @throws NullPointerException     if {@code segments} or {@code valueFunction}
+	 *                                  is {@code null}
+	 * @see #intersection(List, BiFunction)
+	 */
+	public static Segment intersection(Segment[] segments, BiFunction&lt;Fraction, Fraction, Fraction&gt; valueFunction) {
+<span class="nc" id="L462">		Objects.requireNonNull(segments, &quot;segments must not be null&quot;);</span>
+
+<span class="nc" id="L464">		return intersection(Arrays.asList(segments), valueFunction);</span>
+	}
+
+	public LocalDateTime computeClampedStart(LocalDateTime current) {
+<span class="fc bfc" id="L468" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
+		else
+<span class="fc bfc" id="L471" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

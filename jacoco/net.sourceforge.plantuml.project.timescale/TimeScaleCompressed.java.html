@@ -35,35 +35,36 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 
 public class TimeScaleCompressed implements TimeScale {
 
 	private final TimeScale daily;
 
-<span class="fc" id="L45">	public TimeScaleCompressed(double size, Day calendar, double scale, Day zeroDay) {</span>
-<span class="fc" id="L46">		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);</span>
-<span class="fc" id="L47">	}</span>
+<span class="fc" id="L46">	public TimeScaleCompressed(double size, Day calendar, double scale, Day zeroDay) {</span>
+<span class="fc" id="L47">		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);</span>
+<span class="fc" id="L48">	}</span>
 
 	@Override
 	public double getStartingPosition(Day instant) {
-<span class="fc" id="L51">		return daily.getStartingPosition(instant);</span>
+<span class="fc" id="L52">		return daily.getStartingPosition(instant);</span>
 	}
 
 	@Override
 	public double getEndingPosition(Day instant) {
-<span class="fc" id="L56">		return daily.getEndingPosition(instant);</span>
+<span class="fc" id="L57">		return daily.getEndingPosition(instant);</span>
 	}
 
 	@Override
 	public double getWidth(Day instant) {
-<span class="nc" id="L61">		return daily.getWidth(instant);</span>
+<span class="nc" id="L62">		return daily.getWidth(instant);</span>
 	}
 
 	@Override
 	public boolean isBreaking(Day instant) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;</span>
 	}
 
 }

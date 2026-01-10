@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PiecewiseConstantWeekday.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ngm.math</a> &gt; <span class="el_source">PiecewiseConstantWeekday.java</span></div><h1>PiecewiseConstantWeekday.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.Objects;
+
+/**
+ * Immutable implementation of {@link PiecewiseConstant} that models a weekly
+ * workload pattern.
+ *
+ * &lt;p&gt;
+ * Each of the 7 {@link DayOfWeek} values is associated with a constant
+ * {@link Fraction} representing the workload for that day (for example 3/10 for
+ * 30%). A zero value is meaningful and represents no allocation on that day.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * This implementation intentionally avoids storing a precomputed list of time
+ * segments. Instead, it generates one-day {@link Segment} instances lazily as
+ * the caller iterates forward in time. This design scales well for rules that
+ * conceptually apply across the whole {@link LocalDateTime} timeline.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * Segments produced by {@link #iterateSegmentsFrom(LocalDateTime)} are daily
+ * intervals of the form {@code [dayStart, nextDayStart)}.
+ * &lt;/p&gt;
+ */
+public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
+
+<span class="fc" id="L69">	private static final EnumSet&lt;DayOfWeek&gt; ALL_DAYS = EnumSet.allOf(DayOfWeek.class);</span>
+
+	/**
+	 * Immutable day-to-workload mapping.
+	 */
+	private final EnumMap&lt;DayOfWeek, Fraction&gt; workloadByDay;
+
+	/**
+	 * Private constructor expecting a fully validated, complete mapping containing
+	 * all 7 days.
+	 */
+<span class="fc" id="L80">	private PiecewiseConstantWeekday(EnumMap&lt;DayOfWeek, Fraction&gt; workloadByDay) {</span>
+<span class="fc" id="L81">		this.workloadByDay = workloadByDay;</span>
+<span class="fc" id="L82">	}</span>
+
+	/**
+	 * Creates a weekly pattern where all days share the same workload fraction.
+	 *
+	 * @param sameWorkload workload applied to every day of the week
+	 * @return an immutable weekly pattern
+	 */
+	public static PiecewiseConstantWeekday of(Fraction sameWorkload) {
+<span class="fc" id="L91">		Objects.requireNonNull(sameWorkload, &quot;sameWorkload&quot;);</span>
+
+<span class="fc" id="L93">		final EnumMap&lt;DayOfWeek, Fraction&gt; map = new EnumMap&lt;&gt;(DayOfWeek.class);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (DayOfWeek day : ALL_DAYS)</span>
+<span class="fc" id="L95">			map.put(day, sameWorkload);</span>
+
+<span class="fc" id="L97">		return new PiecewiseConstantWeekday(map);</span>
+	}
+
+	/**
+	 * Returns a new instance with the workload of one day replaced.
+	 *
+	 * &lt;p&gt;
+	 * This method supports a persistent/functional style of updates: the current
+	 * instance is never modified.
+	 * &lt;/p&gt;
+	 *
+	 * @param day         day of week to update
+	 * @param newWorkload new workload fraction for that day
+	 * @return a new immutable instance
+	 * @throws NullPointerException if any argument is null
+	 */
+	public PiecewiseConstantWeekday with(DayOfWeek day, Fraction newWorkload) {
+<span class="fc" id="L114">		Objects.requireNonNull(day, &quot;day&quot;);</span>
+<span class="fc" id="L115">		Objects.requireNonNull(newWorkload, &quot;newWorkload&quot;);</span>
+
+<span class="fc" id="L117">		final EnumMap&lt;DayOfWeek, Fraction&gt; copy = new EnumMap&lt;&gt;(this.workloadByDay);</span>
+<span class="fc" id="L118">		copy.put(day, newWorkload);</span>
+<span class="fc" id="L119">		return new PiecewiseConstantWeekday(copy);</span>
+	}
+
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+<span class="fc" id="L123">		final LocalDateTime midnight = instant.toLocalDate().atStartOfDay();</span>
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc" id="L126">			final Fraction value = workloadByDay.get(midnight.getDayOfWeek());</span>
+<span class="fc" id="L127">			return Segment.forward(midnight, midnight.plusDays(1), value);</span>
+		}
+
+		// BACKWARD: determine which day contains the instant
+		final LocalDateTime end;
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))</span>
+			// Midnight belongs to the previous day in backward iteration
+<span class="fc" id="L134">			end = midnight.minusDays(1);</span>
+		else
+<span class="fc" id="L136">			end = midnight;</span>
+
+<span class="fc" id="L138">		final Fraction value = workloadByDay.get(end.getDayOfWeek());</span>
+<span class="fc" id="L139">		return Segment.backward(end.plusDays(1), end, value);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

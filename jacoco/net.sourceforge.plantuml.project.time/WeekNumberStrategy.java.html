@@ -35,27 +35,30 @@
  */
 package net.sourceforge.plantuml.project.time;
 
+import java.time.DayOfWeek;
+
 public class WeekNumberStrategy {
 
 	private final DayOfWeek firstDayOfWeek;
 	private final int minimalDaysInFirstWeek;
 
-<span class="fc" id="L43">	public WeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {</span>
-<span class="fc" id="L44">		this.firstDayOfWeek = firstDayOfWeek;</span>
-<span class="fc" id="L45">		this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;</span>
+<span class="fc" id="L45">	public WeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {</span>
+<span class="fc" id="L46">		this.firstDayOfWeek = firstDayOfWeek;</span>
+<span class="fc" id="L47">		this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;</span>
 
-<span class="fc" id="L47">	}</span>
+<span class="fc" id="L49">	}</span>
 
-	public final int getFirstDayOfWeekAsLegacyInt() {
-<span class="fc" id="L50">		return firstDayOfWeek.getLegacyJavaValue();</span>
-	}
+//	public final int getFirstDayOfWeekAsLegacyInt() {
+//	    int dow = firstDayOfWeek.getValue();
+//	    return (dow == 7) ? 1 : dow + 1;
+//	}
 
 	public final int getMinimalDaysInFirstWeek() {
-<span class="fc" id="L54">		return minimalDaysInFirstWeek;</span>
+<span class="fc" id="L57">		return minimalDaysInFirstWeek;</span>
 	}
 
 	public final DayOfWeek getFirstDayOfWeek() {
-<span class="fc" id="L58">		return firstDayOfWeek;</span>
+<span class="fc" id="L61">		return firstDayOfWeek;</span>
 	}
 
 }

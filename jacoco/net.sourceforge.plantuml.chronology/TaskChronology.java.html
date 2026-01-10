@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.chronology;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.AbstractTask;
@@ -43,7 +45,6 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -59,77 +60,77 @@ public class TaskChronology extends AbstractTask implements Task {
 	private Day end;
 
 	public void setUrl(Url url) {
-<span class="nc" id="L62">		this.url = url;</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L63">		this.url = url;</span>
+<span class="nc" id="L64">	}</span>
 
 	public TaskChronology(StyleBuilder styleBuilder, TaskCode code) {
-<span class="nc" id="L66">		super(styleBuilder, code);</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L67">		super(styleBuilder, code);</span>
+<span class="nc" id="L68">	}</span>
 
 	@Override
 	public void setStart(Day start) {
-<span class="nc" id="L71">		this.start = start;</span>
+<span class="nc" id="L72">		this.start = start;</span>
 
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L74">	}</span>
 
 	@Override
 	public Day getStart() {
-<span class="nc" id="L77">		return this.start;</span>
+<span class="nc" id="L78">		return this.start;</span>
 	}
 
 	@Override
 	public void setEnd(Day end) {
-<span class="nc" id="L82">		this.end = end;</span>
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L83">		this.end = end;</span>
+<span class="nc" id="L84">	}</span>
 
 	@Override
 	public Day getEnd() {
-<span class="nc" id="L87">		return this.end;</span>
+<span class="nc" id="L88">		return this.end;</span>
 	}
 
 	@Override
 	public Load getLoad() {
-<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setLoad(Load load) {
-<span class="nc" id="L97">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L98">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void addResource(Resource resource, int percentage) {
-<span class="nc" id="L102">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L103">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setDiamond(boolean diamond) {
-<span class="nc" id="L107">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L108">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean isDiamond() {
-<span class="nc" id="L112">		return false;</span>
+<span class="nc" id="L113">		return false;</span>
 	}
 
 	@Override
 	public void setCompletion(int completion) {
-<span class="nc" id="L117">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L118">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void addPause(Day pause) {
-<span class="nc" id="L122">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void addPause(DayOfWeek pause) {
-<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L128">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean isAssignedTo(Resource res) {
-<span class="nc" id="L132">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L133">		throw new UnsupportedOperationException();</span>
 	}
 
 //	@Override
@@ -294,8 +295,8 @@ public class TaskChronology extends AbstractTask implements Task {
 
 	@Override
 	public void setColors(CenterBorderColor... colors) {
-<span class="nc" id="L297">		this.colors = colors;</span>
-<span class="nc" id="L298">	}</span>
+<span class="nc" id="L298">		this.colors = colors;</span>
+<span class="nc" id="L299">	}</span>
 
 //	@Override
 //	public void addResource(Resource resource, int percentage) {
@@ -354,11 +355,11 @@ public class TaskChronology extends AbstractTask implements Task {
 
 	@Override
 	public void setNote(Display note, Stereotype stereotype) {
-<span class="nc" id="L357">		this.note = note;</span>
-<span class="nc" id="L358">	}</span>
+<span class="nc" id="L358">		this.note = note;</span>
+<span class="nc" id="L359">	}</span>
 
 	public Display getNote() {
-<span class="nc" id="L361">		return note;</span>
+<span class="nc" id="L362">		return note;</span>
 	}
 
 //	public LoadPlanable getDefaultPlan() {

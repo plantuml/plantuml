@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -104,7 +105,6 @@ import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
@@ -144,7 +144,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private Day today;
 	private double totalHeightWithoutFooter;
-<span class="fc" id="L147">	private Day min = Day.create(0);</span>
+<span class="fc" id="L147">	private Day min = Day.epoch();</span>
 	private Day max;
 
 	private Day printStart;
