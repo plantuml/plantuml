@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.YearMonth;
 import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -44,7 +45,8 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.MonthYear;
+import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
+import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDailyHideClosed;
 import net.sourceforge.plantuml.style.PName;
@@ -152,8 +154,9 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final HColor textColor = getTextBackColor(wink);
-			printCentered(ug, getTextBlock(SName.day, wink.getDayOfWeek().shortName(locale()), false, textColor), x1,
-					x2);
+			printCentered(ug,
+					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.getDayOfWeek(), locale()), false, textColor),
+					x1, x2);
 		}
 	}
 
@@ -182,10 +185,10 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawMonths(final UGraphic ug) {
-		MonthYear last = null;
+		YearMonth last = null;
 		double lastChangeMonth = -1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
-			if (isHidden(wink)) 
+			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
@@ -202,10 +205,12 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	}
 
-	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock tiny = getTextBlock(SName.month, monthYear.shortName(locale()), true, openFontColor());
-		final TextBlock small = getTextBlock(SName.month, monthYear.longName(locale()), true, openFontColor());
-		final TextBlock big = getTextBlock(SName.month, monthYear.longNameYYYY(locale()), true, openFontColor());
+	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end) {
+		final TextBlock tiny = getTextBlock(SName.month, YearMonthUtils.shortName(monthYear, locale()), true,
+				openFontColor());
+		final TextBlock small = getTextBlock(SName.month, YearMonthUtils.longName(monthYear, locale()), true, openFontColor());
+		final TextBlock big = getTextBlock(SName.month, YearMonthUtils.longNameYYYY(monthYear, locale()), true,
+				openFontColor());
 		printCentered(ug, false, start, end, tiny, small, big);
 	}
 

@@ -33,38 +33,27 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.timescale;
+package net.sourceforge.plantuml.project.time;
 
-import java.time.DayOfWeek;
+import java.time.YearMonth;
+import java.util.Locale;
 
-import net.sourceforge.plantuml.project.time.Day;
+public abstract class YearMonthUtils {
 
-public class TimeScaleCompressed implements TimeScale {
-
-	private final TimeScale daily;
-
-	public TimeScaleCompressed(double size, Day calendar, double scale, Day zeroDay) {
-		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);
+	public static String shortName(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.shortName(yearMonth.getMonth(), locale);
 	}
 
-	@Override
-	public double getStartingPosition(Day instant) {
-		return daily.getStartingPosition(instant);
+	public static String shortNameYYYY(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.shortName(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
 	}
 
-	@Override
-	public double getEndingPosition(Day instant) {
-		return daily.getEndingPosition(instant);
+	public static String longName(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.longName(yearMonth.getMonth(), locale);
 	}
 
-	@Override
-	public double getWidth(Day instant) {
-		return daily.getWidth(instant);
-	}
-
-	@Override
-	public boolean isBreaking(Day instant) {
-		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
+	public static String longNameYYYY(YearMonth yearMonth, Locale locale) {
+		return MonthUtils.longName(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
 	}
 
 }

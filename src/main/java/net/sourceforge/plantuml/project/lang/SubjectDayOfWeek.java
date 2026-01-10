@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -42,7 +43,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -55,12 +56,12 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf(1, "SUBJECT", "(" + DayOfWeek.getRegexString() + ")");
+		return new RegexLeaf(1, "SUBJECT", "(" + DayOfWeekUtils.getRegexString() + ")");
 	}
 
 	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
-		return Failable.ok(DayOfWeek.fromString(s));
+		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 
 	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {

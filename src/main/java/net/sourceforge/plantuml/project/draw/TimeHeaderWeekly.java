@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.YearMonth;
 import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -43,8 +44,8 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
+import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -107,10 +108,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawCalendar(ug, totalHeightWithoutFooter);
-		
+
 		printNamedDays(ug);
 
-		
 		drawHline(ug, 0);
 		drawHline(ug, getH1(ug.getStringBounder()));
 		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
@@ -130,7 +130,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printMonths(final UGraphic ug) {
-		MonthYear last = null;
+		YearMonth last = null;
 		double lastChangeMonth = -1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
@@ -150,7 +150,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 			printMonth(ug, last, lastChangeMonth, x1);
 
 	}
-	
+
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
@@ -171,7 +171,6 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 			}
 		}
 	}
-
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
@@ -203,9 +202,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		}
 	}
 
-	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(SName.month, monthYear.shortName(locale()), true, openFontColor());
-		final TextBlock big = getTextBlock(SName.month, monthYear.shortNameYYYY(locale()), true, openFontColor());
+	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end) {
+		final TextBlock small = getTextBlock(SName.month, YearMonthUtils.shortName(monthYear, locale()), true,
+				openFontColor());
+		final TextBlock big = getTextBlock(SName.month, YearMonthUtils.shortNameYYYY(monthYear, locale()), true,
+				openFontColor());
 		printCentered(ug, false, start, end, small, big);
 	}
 

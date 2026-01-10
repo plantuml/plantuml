@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 
 public class Resource {
 

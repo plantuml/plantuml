@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -45,7 +46,6 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;

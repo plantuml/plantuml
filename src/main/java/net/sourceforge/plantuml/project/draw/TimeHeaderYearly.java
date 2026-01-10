@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.YearMonth;
+
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -89,11 +90,11 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	private void drawYears(final UGraphic ug) {
 		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
 
-		MonthYear last = null;
+		YearMonth last = null;
 		double lastChange = -1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
-			if (last == null || wink.monthYear().year() != last.year()) {
+			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
 				if (last != null)
 					printYear(ug, last, lastChange, x1);
@@ -109,8 +110,8 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h1 + 2);
 	}
 
-	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(SName.year, "" + monthYear.year(), true, openFontColor());
+	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
+		final TextBlock small = getTextBlock(SName.year, "" + monthYear.getYear(), true, openFontColor());
 		printCentered(ug, true, start, end, small);
 	}
 

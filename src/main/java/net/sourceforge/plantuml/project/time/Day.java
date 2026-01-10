@@ -35,9 +35,14 @@
  */
 package net.sourceforge.plantuml.project.time;
 
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.ZoneOffset;
+import java.time.temporal.WeekFields;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import net.sourceforge.plantuml.project.Value;
 import net.sourceforge.plantuml.project.core.PrintScale;
@@ -45,64 +50,40 @@ import net.sourceforge.plantuml.project.core.PrintScale;
 public class Day implements Comparable<Day>, Value {
 
 	static final public long MILLISECONDS_PER_DAY = 1000L * 3600L * 24;
-	static final private Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
-	private final int dayOfMonth;
-	private final MonthYear monthYear;
-	private final long milliseconds;
+	private final LocalDateTime utcDateTime;
+
+	public static Day epoch() {
+		return new Day(LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC));
+	}
 
 	public static Day create(int year, String month, int dayOfMonth) {
-		return new Day(year, Month.fromString(month), dayOfMonth);
+		return new Day(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));
 	}
 
 	public static Day create(int year, int month, int dayOfMonth) {
-		return new Day(year, Month.values()[month - 1], dayOfMonth);
+		return new Day(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
 
 	public static Day create(long ms) {
-		return new Day(ms);
+		return new Day(LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), ZoneOffset.UTC));
 	}
 
 	public static Day today() {
-		return create(System.currentTimeMillis());
+		return new Day(LocalDateTime.now(ZoneOffset.UTC));
+	}
+
+	private Day(LocalDateTime utcDateTime) {
+		this.utcDateTime = utcDateTime;
 	}
 
 	public String toStringShort(Locale locale) {
-		return monthYear.shortName(locale) + " " + dayOfMonth;
+		return YearMonthUtils.shortName(monthYear(), locale) + " " + getDayOfMonth();
 	}
 
 	public int getWeekOfYear(WeekNumberStrategy strategy) {
-		synchronized (gmt) {
-			gmt.clear();
-			gmt.setTimeInMillis(milliseconds);
-			gmt.setFirstDayOfWeek(strategy.getFirstDayOfWeekAsLegacyInt());
-			gmt.setMinimalDaysInFirstWeek(strategy.getMinimalDaysInFirstWeek());
-			return gmt.get(Calendar.WEEK_OF_YEAR);
-		}
-	}
-
-	private Day(int year, Month month, int dayOfMonth) {
-		this.dayOfMonth = dayOfMonth;
-		this.monthYear = MonthYear.create(year, month);
-		synchronized (gmt) {
-			gmt.clear();
-			gmt.set(year, month.ordinal(), dayOfMonth);
-			this.milliseconds = gmt.getTimeInMillis();
-		}
-	}
-
-	private Day(long ms) {
-		this.milliseconds = ms;
-		synchronized (gmt) {
-			gmt.clear();
-			gmt.setTimeInMillis(ms);
-			final int year = gmt.get(Calendar.YEAR);
-			final int month = gmt.get(Calendar.MONTH);
-			final int dayOfMonth = gmt.get(Calendar.DAY_OF_MONTH);
-			this.dayOfMonth = dayOfMonth;
-			this.monthYear = MonthYear.create(year, Month.values()[month]);
-		}
-
+		final WeekFields wf = WeekFields.of(strategy.getFirstDayOfWeek(), strategy.getMinimalDaysInFirstWeek());
+		return utcDateTime.toLocalDate().get(wf.weekOfYear());
 	}
 
 	public Day increment() {
@@ -114,84 +95,69 @@ public class Day implements Comparable<Day>, Value {
 	}
 
 	public Day addDays(int nday) {
-		return create(MILLISECONDS_PER_DAY * (getAbsoluteDayNum() + nday));
+		return new Day(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());
 	}
 
 	public final int getAbsoluteDayNum() {
-		return (int) (milliseconds / MILLISECONDS_PER_DAY);
+		return (int) Math.floorDiv(getMillis(), MILLISECONDS_PER_DAY);
 	}
 
 	public final long getMillis() {
-		return milliseconds;
+		return utcDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
 	}
 
 	public int year() {
-		return monthYear.year();
-	}
-
-	private int internalNumber() {
-		return year() * 100 * 100 + month().ordinal() * 100 + dayOfMonth;
+		return monthYear().getYear();
 	}
 
 	@Override
 	public String toString() {
-		return monthYear.toString() + "/" + dayOfMonth;
+		return monthYear().toString() + "/" + getDayOfMonth();
 	}
 
 	@Override
 	public int hashCode() {
-		return monthYear.hashCode() + dayOfMonth * 17;
+		return utcDateTime.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || obj.getClass() != Day.class)
+			return false;
+
 		final Day other = (Day) obj;
-		return other.internalNumber() == this.internalNumber();
+		return this.utcDateTime.equals(other.utcDateTime);
+	}
+
+	@Override
+	public int compareTo(Day other) {
+		return this.utcDateTime.compareTo(other.utcDateTime);
 	}
 
 	public final int getDayOfMonth() {
-		return dayOfMonth;
-	}
-
-	private int daysPerMonth() {
-		return month().getDaysPerMonth(year());
+		return utcDateTime.getDayOfMonth();
 	}
 
 	public Month month() {
-		return monthYear.month();
+		return utcDateTime.getMonth();
 	}
 
-	public MonthYear monthYear() {
-		return monthYear;
+	public YearMonth monthYear() {
+		return YearMonth.from(utcDateTime);
 	}
 
-	// https://en.wikipedia.org/wiki/Zeller%27s_congruence
 	public DayOfWeek getDayOfWeek() {
-		final int q = dayOfMonth;
-		final int m = month().m();
-		final int y = m >= 13 ? year() - 1 : year();
-		final int k = y % 100;
-		final int j = y / 100;
-		final int h = ((q + 13 * (m + 1) / 5) + k + k / 4 + j / 4 + 5 * j) % 7;
-		return DayOfWeek.fromH(h);
+		return utcDateTime.getDayOfWeek();
 	}
 
-	public int compareTo(Day other) {
-		return this.internalNumber() - other.internalNumber();
+	public static Day min(Day d1, Day d2) {
+		return d1.compareTo(d2) <= 0 ? d1 : d2;
 	}
 
-	public static Day min(Day wink1, Day wink2) {
-		if (wink2.internalNumber() < wink1.internalNumber())
-			return wink2;
-
-		return wink1;
-	}
-
-	public static Day max(Day wink1, Day wink2) {
-		if (wink2.internalNumber() > wink1.internalNumber())
-			return wink2;
-
-		return wink1;
+	public static Day max(Day d1, Day d2) {
+		return d1.compareTo(d2) >= 0 ? d1 : d2;
 	}
 
 	public Day increment(PrintScale printScale) {
@@ -201,11 +167,17 @@ public class Day implements Comparable<Day>, Value {
 	}
 
 	public Day roundDayDown() {
-		return new Day((milliseconds / MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY);
+		// Same as legacy: floor(ms / day) * day
+		final long ms = getMillis();
+		final long floored = Math.floorDiv(ms, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;
+		return Day.create(floored);
 	}
 
 	public Day roundDayUp() {
-		return new Day(((milliseconds + MILLISECONDS_PER_DAY - 1) / MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY);
+		// Same as legacy: ceil(ms / day) * day
+		final long ms = getMillis();
+		final long ceiled = Math.floorDiv(ms + MILLISECONDS_PER_DAY - 1, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;
+		return Day.create(ceiled);
 	}
 
 }

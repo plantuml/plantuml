@@ -33,38 +33,23 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.timescale;
+package net.sourceforge.plantuml.project.ngm.math;
 
-import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
-import net.sourceforge.plantuml.project.time.Day;
-
-public class TimeScaleCompressed implements TimeScale {
-
-	private final TimeScale daily;
-
-	public TimeScaleCompressed(double size, Day calendar, double scale, Day zeroDay) {
-		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);
-	}
-
-	@Override
-	public double getStartingPosition(Day instant) {
-		return daily.getStartingPosition(instant);
-	}
-
-	@Override
-	public double getEndingPosition(Day instant) {
-		return daily.getEndingPosition(instant);
-	}
-
-	@Override
-	public double getWidth(Day instant) {
-		return daily.getWidth(instant);
-	}
-
-	@Override
-	public boolean isBreaking(Day instant) {
-		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
-	}
-
+public enum TimeDirection {
+	FORWARD, BACKWARD;
+	
+    public LocalDateTime adjustBySeconds(LocalDateTime time, long seconds) {
+        switch (this) {
+            case FORWARD:
+                return time.plusSeconds(seconds);
+            case BACKWARD:
+                return time.minusSeconds(seconds);
+            default:
+                throw new IllegalStateException();
+        }
+    }
+	
+	
 }
