@@ -58,17 +58,17 @@ public class MutingLine {
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	// private final boolean useContinueLineBecauseOfDelay;
-<span class="fc" id="L61">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
+<span class="nc" id="L61">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
 	private final StyleBuilder styleBuilder;
 	private final Participant participant;
 
-<span class="fc" id="L65">	public MutingLine(Rose skin, ISkinParam skinParam, List&lt;Event&gt; events, Participant participant) {</span>
-<span class="fc" id="L66">		this.participant = participant;</span>
-<span class="fc" id="L67">		this.skin = skin;</span>
-<span class="fc" id="L68">		this.skinParam = skinParam;</span>
+<span class="nc" id="L65">	public MutingLine(Rose skin, ISkinParam skinParam, List&lt;Event&gt; events, Participant participant) {</span>
+<span class="nc" id="L66">		this.participant = participant;</span>
+<span class="nc" id="L67">		this.skin = skin;</span>
+<span class="nc" id="L68">		this.skinParam = skinParam;</span>
 		// this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
-<span class="fc" id="L70">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="fc" id="L71">	}</span>
+<span class="nc" id="L70">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="nc" id="L71">	}</span>
 
 	public void drawLine(UGraphic ug, Context2D context, double createY, double endY) {
 <span class="nc" id="L74">		final ComponentType defaultLineType = /* useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE : */</span>

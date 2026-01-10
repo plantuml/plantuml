@@ -54,14 +54,14 @@ public class TileArguments implements Bordered {
 	private final ISkinParam skinParam;
 
 	public TileArguments(StringBounder stringBounder, LivingSpaces livingSpaces, Rose skin, ISkinParam skinParam,
-<span class="fc" id="L57">			Real xorigin, Real yorigin) {</span>
-<span class="fc" id="L58">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L59">		this.xorigin = xorigin;</span>
-<span class="fc" id="L60">		this.yorigin = yorigin;</span>
-<span class="fc" id="L61">		this.livingSpaces = livingSpaces;</span>
-<span class="fc" id="L62">		this.skin = skin;</span>
-<span class="fc" id="L63">		this.skinParam = skinParam;</span>
-<span class="fc" id="L64">	}</span>
+<span class="nc" id="L57">			Real xorigin, Real yorigin) {</span>
+<span class="nc" id="L58">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L59">		this.xorigin = xorigin;</span>
+<span class="nc" id="L60">		this.yorigin = yorigin;</span>
+<span class="nc" id="L61">		this.livingSpaces = livingSpaces;</span>
+<span class="nc" id="L62">		this.skin = skin;</span>
+<span class="nc" id="L63">		this.skinParam = skinParam;</span>
+<span class="nc" id="L64">	}</span>
 
 	public TileArguments withBackColorGeneral(HColor backColorElement, HColor backColorGeneral) {
 <span class="nc" id="L67">		return new TileArguments(stringBounder, livingSpaces, skin,</span>
@@ -75,27 +75,27 @@ public class TileArguments implements Bordered {
 	}
 
 	public final StringBounder getStringBounder() {
-<span class="fc" id="L78">		return stringBounder;</span>
+<span class="nc" id="L78">		return stringBounder;</span>
 	}
 
 	public final Real getXOrigin() {
-<span class="fc" id="L82">		return xorigin;</span>
+<span class="nc" id="L82">		return xorigin;</span>
 	}
 
 	public final Real getYOrigin() {
-<span class="fc" id="L86">		return yorigin;</span>
+<span class="nc" id="L86">		return yorigin;</span>
 	}
 
 	public final LivingSpaces getLivingSpaces() {
-<span class="fc" id="L90">		return livingSpaces;</span>
+<span class="nc" id="L90">		return livingSpaces;</span>
 	}
 
 	public final Rose getSkin() {
-<span class="fc" id="L94">		return skin;</span>
+<span class="nc" id="L94">		return skin;</span>
 	}
 
 	public final ISkinParam getSkinParam() {
-<span class="fc" id="L98">		return skinParam;</span>
+<span class="nc" id="L98">		return skinParam;</span>
 	}
 
 	public LivingSpace getLivingSpace(Participant p) {

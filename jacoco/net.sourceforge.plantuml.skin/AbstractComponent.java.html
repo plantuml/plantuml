@@ -161,9 +161,9 @@ public abstract class AbstractComponent implements Component {
 	public abstract double getPreferredHeight(StringBounder stringBounder);
 
 	public final XDimension2D getPreferredDimension(StringBounder stringBounder) {
-<span class="fc" id="L164">		final double w = getPreferredWidth(stringBounder);</span>
-<span class="fc" id="L165">		final double h = getPreferredHeight(stringBounder);</span>
-<span class="fc" id="L166">		return new XDimension2D(w, h);</span>
+<span class="nc" id="L164">		final double w = getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L165">		final double h = getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L166">		return new XDimension2D(w, h);</span>
 	}
 
 }
