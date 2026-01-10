@@ -88,7 +88,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		else
 			setStart(startingDay);
 
-		setLoad(Load.inWinks(1));
+		setLoad(Load.ofDays(1));
 	}
 
 	@Override

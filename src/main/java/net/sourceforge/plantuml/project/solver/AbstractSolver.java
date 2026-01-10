@@ -80,7 +80,7 @@ public abstract class AbstractSolver implements Solver {
 			if (attribute == TaskAttribute.START)
 				return computeStart();
 
-			return Load.inWinks(1);
+			return Load.ofDays(1);
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
 		return result;

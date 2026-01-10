@@ -52,7 +52,7 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	@Override
 	protected TimePoint computeEnd() {
 		TimePoint current = (TimePoint) values.get(TaskAttribute.START);
-		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
+		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoadInDays();
 		int cpt = 0;
 		final TimePoint lastDayIfAny = loadPlanable.getLastDayIfAny();
 		while (fullLoad > 0) {
@@ -73,7 +73,7 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	@Override
 	protected TimePoint computeStart() {
 		TimePoint current = (TimePoint) values.get(TaskAttribute.END);
-		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
+		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoadInDays();
 		int cpt = 0;
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);
