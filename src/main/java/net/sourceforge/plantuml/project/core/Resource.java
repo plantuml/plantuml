@@ -39,6 +39,7 @@ import java.time.DayOfWeek;
 
 import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class Resource {
@@ -106,6 +107,10 @@ public class Resource {
 
 	public TimePoint getLastDayIfAny() {
 		return openClose.getLastDayIfAny();
+	}
+
+	public PiecewiseConstant asPiecewiseConstant() {
+		return openClose.asPiecewiseConstant();
 	}
 
 }

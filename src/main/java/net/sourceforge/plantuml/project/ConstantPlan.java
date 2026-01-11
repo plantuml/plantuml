@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.project;
 
+import net.sourceforge.plantuml.project.ngm.math.Fraction;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class ConstantPlan implements LoadPlanable {
@@ -53,14 +56,19 @@ public class ConstantPlan implements LoadPlanable {
 		return new ConstantPlan(load);
 	}
 
-	@Override
-	public int getLoadAt(TimePoint instant) {
-		return loadPerInstant;
+//	@Override
+//	public int getLoadAtDUMMY(TimePoint instant) {
+//		return loadPerInstant;
+//
+//	}
 
-	}
+//	@Override
+//	public TimePoint getLastDayIfAnyDUMMY() {
+//		return null;
+//	}
 
 	@Override
-	public TimePoint getLastDayIfAny() {
-		return null;
+	public PiecewiseConstant asPiecewiseConstant() {
+		return PiecewiseConstantSpecificDays.of(new Fraction(loadPerInstant, 100));
 	}
 }

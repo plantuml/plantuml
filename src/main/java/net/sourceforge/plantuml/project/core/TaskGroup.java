@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +135,7 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(LocalDate pause) {
 		throw new UnsupportedOperationException();
 	}
 

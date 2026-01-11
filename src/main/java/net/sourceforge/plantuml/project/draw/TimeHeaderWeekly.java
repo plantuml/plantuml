@@ -175,7 +175,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
-			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
+			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
 				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),
 						getH1(ug.getStringBounder()), totalHeightWithoutFooter);
 
@@ -187,7 +187,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printDaysOfMonth(final UGraphic ug) {
 		int counter = weekStartingNumber;
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
-			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
+			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
 				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)
 					num = "" + (counter++);

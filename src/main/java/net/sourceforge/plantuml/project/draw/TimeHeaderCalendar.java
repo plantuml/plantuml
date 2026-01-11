@@ -40,6 +40,7 @@ import java.util.Locale;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
@@ -54,9 +55,12 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 	}
 
 	protected final int getLoadAt(TimePoint instant) {
-		return thParam.getLoadPlanable().getLoadAt(instant);
+		if (PiecewiseConstantUtils.isZeroOnDay(thParam.getLoadPlanable().asPiecewiseConstant(), instant.toDay()))
+			return 0;
+		// return thParam.getLoadPlanable().getLoadAtDUMMY(instant);
+		return 100;
 	}
-	
+
 	// Duplicate in TimeHeaderSimple
 	class Pending {
 		final double x1;
@@ -84,7 +88,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = thParam.getColor(wink);
 			// Day of week should be stronger than period of time (back color).
-			final HColor backDoW = thParam.getColor(wink.getDayOfWeek());
+			final HColor backDoW = thParam.getColor(wink.toDayOfWeek());
 			if (backDoW != null)
 				back = backDoW;
 

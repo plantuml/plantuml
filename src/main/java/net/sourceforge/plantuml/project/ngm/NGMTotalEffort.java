@@ -103,6 +103,10 @@ public final class NGMTotalEffort {
 		return new NGMTotalEffort(days * SECONDS_PER_DAY);
 	}
 
+	public static NGMTotalEffort ofDaysAndHours(long days, long hours) {
+		return new NGMTotalEffort(days * SECONDS_PER_DAY + hours * SECONDS_PER_HOUR);
+	}
+
 	/**
 	 * Creates a zero effort (no work required).
 	 *

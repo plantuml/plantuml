@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
@@ -118,7 +119,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(LocalDate pause) {
 		throw new UnsupportedOperationException();
 	}
 

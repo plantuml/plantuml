@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.project.GanttConstraintMode;
 import net.sourceforge.plantuml.project.LoadPlanable;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class TaskInstant {
@@ -72,7 +74,8 @@ public class TaskInstant {
 			for (int i = 0; i < delta; i++) {
 				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {
 					int tmp = 0;
-					while (calendar.getLoadAt(value) == 0 && tmp++ < 1000)
+					final PiecewiseConstant cal = calendar.asPiecewiseConstant();
+					while (PiecewiseConstantUtils.isZeroOnDay(cal, value.toDay()) && tmp++ < 1000)
 						value = value.increment();
 				}
 

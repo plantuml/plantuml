@@ -56,7 +56,9 @@ import java.util.function.BiFunction;
 public final class Fraction implements Comparable<Fraction> {
 	public static final BiFunction<Fraction, Fraction, Fraction> PRODUCT = Fraction::multiply;
 	public static final BiFunction<Fraction, Fraction, Fraction> SUM = Fraction::add;
-	
+	public static final BiFunction<Fraction, Fraction, Fraction> MIN = (a, b) -> a.compareTo(b) <= 0 ? a : b;
+	public static final BiFunction<Fraction, Fraction, Fraction> MAX = (a, b) -> a.compareTo(b) >= 0 ? a : b;
+
 	/** Common constants for workload and general arithmetic. */
 	public static final Fraction ZERO = new Fraction(0, 1);
 	public static final Fraction ONE = new Fraction(1, 1);
@@ -107,7 +109,7 @@ public final class Fraction implements Comparable<Fraction> {
 		return num;
 	}
 
-	/** 
+	/**
 	 * Returns the denominator.
 	 * 
 	 * @return the denominator
@@ -117,14 +119,14 @@ public final class Fraction implements Comparable<Fraction> {
 	}
 
 	/**
-	 * Calculate reciprocal fraction. 
+	 * Calculate reciprocal fraction.
 	 * 
 	 * @return the reciprocal fraction
 	 */
 	public Fraction reciprocal() {
 		return new Fraction(this.den, this.num);
 	}
-	
+
 	/**
 	 * Negates this fraction.
 	 * 
@@ -133,8 +135,8 @@ public final class Fraction implements Comparable<Fraction> {
 	public Fraction negate() {
 		return new Fraction(-this.num, this.den);
 	}
-	
-	/** 
+
+	/**
 	 * Adds another fraction to this one.
 	 * 
 	 * @param other the other fraction to add
@@ -142,15 +144,13 @@ public final class Fraction implements Comparable<Fraction> {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction add(Fraction other) {
-		Objects.requireNonNull(other, "other fraction must not be null");
-		
 		// a/b + c/d = (ad + bc) / bd
-		long n = this.num * other.den + other.num * this.den;
-		long d = this.den * other.den;
+		final long n = this.num * other.den + other.num * this.den;
+		final long d = this.den * other.den;
 		return new Fraction(n, d);
 	}
 
-	/** 
+	/**
 	 * Subtracts another fraction from this one.
 	 * 
 	 * @param other the other fraction to subtract
@@ -158,15 +158,13 @@ public final class Fraction implements Comparable<Fraction> {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction subtract(Fraction other) {
-		Objects.requireNonNull(other, "other fraction must not be null");
-		
 		// a/b - c/d = (ad - bc) / bd
-		long n = this.num * other.den - other.num * this.den;
-		long d = this.den * other.den;
+		final long n = this.num * other.den - other.num * this.den;
+		final long d = this.den * other.den;
 		return new Fraction(n, d);
 	}
 
-	/** 
+	/**
 	 * Multiplies this fraction by another fraction.
 	 * 
 	 * @param other the other fraction to multiply with
@@ -174,15 +172,14 @@ public final class Fraction implements Comparable<Fraction> {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction multiply(Fraction other) {
-		Objects.requireNonNull(other, "other fraction must not be null");
-		
+
 		// (a/b) * (c/d) = (ac) / (bd)
-		long n = this.num * other.num;
-		long d = this.den * other.den;
+		final long n = this.num * other.num;
+		final long d = this.den * other.den;
 		return new Fraction(n, d);
 	}
-	
-	/** 
+
+	/**
 	 * Divides this fraction by another fraction.
 	 * 
 	 * @param other the other fraction to divide by
@@ -190,45 +187,44 @@ public final class Fraction implements Comparable<Fraction> {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction divide(Fraction other) {
-		Objects.requireNonNull(other, "other fraction must not be null");
-		
 		return this.multiply(other.reciprocal());
 	}
-	
+
 	/**
 	 * Returns the whole part of the fraction (integer division).
+	 * 
 	 * @return the whole part
 	 */
 	public long wholePart() {
 		return this.num / this.den;
 	}
 
-	/** 
+	/**
 	 * Returns a human-readable representation such as "3/4" or "5".
-	 *  
+	 * 
 	 * @return string representation of the fraction
 	 */
 	@Override
 	public String toString() {
-		if (den == 1) {
+		if (den == 1)
 			return Long.toString(num);
-		}
+
 		return num + "/" + den;
 	}
 
 	/**
-	 * Compares two fractions using long cross-multiplication. 
+	 * Compares two fractions using long cross-multiplication.
 	 * 
 	 * @param other the other fraction to compare with
 	 * 
-	 * @return a negative integer, zero, or a positive integer as this fraction
-	 * 	   is less than, equal to, or greater than the specified fraction
+	 * @return a negative integer, zero, or a positive integer as this fraction is
+	 *         less than, equal to, or greater than the specified fraction
 	 * @throws NullPointerException if other is null
 	 */
 	@Override
 	public int compareTo(Fraction other) {
 		Objects.requireNonNull(other, "other fraction must not be null");
-		
+
 		// Compare a/b and c/d by cross-products: ad ? bc
 		long lhs = this.num * other.den;
 		long rhs = other.num * this.den;
@@ -236,7 +232,7 @@ public final class Fraction implements Comparable<Fraction> {
 	}
 
 	/**
-	 * Standard equality: same numerator and denominator after reduction. 
+	 * Standard equality: same numerator and denominator after reduction.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -266,6 +262,10 @@ public final class Fraction implements Comparable<Fraction> {
 			a = t;
 		}
 		return a;
+	}
+
+	public boolean isZero() {
+		return num == 0;
 	}
 
 }

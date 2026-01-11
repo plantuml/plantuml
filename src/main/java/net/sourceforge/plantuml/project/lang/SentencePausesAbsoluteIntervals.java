@@ -53,7 +53,7 @@ public class SentencePausesAbsoluteIntervals extends SentenceSimple<GanttDiagram
 		final Task task = (Task) subject;
 		final DaysAsDates pauses = (DaysAsDates) complement;
 		for (TimePoint day : pauses)
-			task.addPause(day);
+			task.addPause(day.toDay());
 
 		return CommandExecutionResult.ok();
 	}

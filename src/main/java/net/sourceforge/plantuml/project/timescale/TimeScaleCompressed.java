@@ -64,7 +64,7 @@ public class TimeScaleCompressed implements TimeScale {
 
 	@Override
 	public boolean isBreaking(TimePoint instant) {
-		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
+		return instant.toDayOfWeek() == DayOfWeek.SUNDAY;
 	}
 
 }

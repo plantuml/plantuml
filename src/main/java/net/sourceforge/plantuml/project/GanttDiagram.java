@@ -615,10 +615,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			if (linkedToPrevious)
 				previous = getLastCreatedTask();
 
-			final OpenClose except = this.openCloseForTask.get(code.getId());
-
-			result = new TaskImpl(getSkinParam().getCurrentStyleBuilder(), code, openClose.mutateMe(except), min,
-					defaultCompletion);
+			result = new TaskImpl(this, getSkinParam().getCurrentStyleBuilder(), code, min, defaultCompletion);
 			if (currentGroup != null)
 				currentGroup.addTask(result);
 
@@ -629,6 +626,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 		}
 		return result;
+	}
+
+	public LoadPlanable getLoadPlanableForTask(String taskId) {
+		return openClose.mutateMe(this.openCloseForTask.get(taskId));
 	}
 
 	private Task getLastCreatedTask() {
@@ -678,7 +679,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	public CommandExecutionResult updateStartingPoint(TimePoint start) {
 		if (tasks.size() > 0)
 			return CommandExecutionResult.error("Starting point must be set before task definition");
-		
+
 		this.min = start;
 		return CommandExecutionResult.ok();
 	}
@@ -701,7 +702,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public boolean isOpen(TimePoint day) {
-		return openClose.getLoadAt(day) > 0;
+		return openClose.getLoadAtDUMMY(day) > 0;
 	}
 
 	private static final Pattern p = Pattern.compile("([^:]+)(:(\\d+))?");

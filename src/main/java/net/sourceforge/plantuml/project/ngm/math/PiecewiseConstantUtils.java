@@ -33,48 +33,31 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project.ngm.math;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 
-public class PlanUtils {
+public class PiecewiseConstantUtils {
 
-	private PlanUtils() {
+	public static boolean isZeroOnDay(PiecewiseConstant value, LocalDate day) {
+		final LocalDateTime startOfDay = day.atStartOfDay();
+		final LocalDateTime startOfNextDay = day.plusDays(1).atStartOfDay();
 
+		final Iterator<Segment> iterator = value.iterateSegmentsFrom(startOfDay, TimeDirection.FORWARD);
+
+		while (iterator.hasNext()) {
+			final Segment segment = iterator.next();
+
+			if (segment.startExclusive().isBefore(startOfNextDay) == false)
+				break;
+
+			if (segment.getValue().isZero() == false)
+				return false;
+
+		}
+
+		return true;
 	}
-
-	public static LoadPlanable minOf(final LoadPlanable p1, final LoadPlanable p2) {
-		return new LoadPlanable() {
-			public int getLoadAt(TimePoint instant) {
-				return Math.min(p1.getLoadAt(instant), p2.getLoadAt(instant));
-			}
-
-			public TimePoint getLastDayIfAny() {
-				return lastOf(p1.getLastDayIfAny(), p2.getLastDayIfAny());
-			}
-		};
-	}
-
-	public static LoadPlanable multiply(final LoadPlanable p1, final LoadPlanable p2) {
-		return new LoadPlanable() {
-			public int getLoadAt(TimePoint instant) {
-				return p1.getLoadAt(instant) * p2.getLoadAt(instant) / 100;
-			}
-
-			public TimePoint getLastDayIfAny() {
-				return lastOf(p1.getLastDayIfAny(), p2.getLastDayIfAny());
-			}
-		};
-	}
-
-	private static TimePoint lastOf(TimePoint day1, TimePoint day2) {
-		if (day1 == null)
-			return day2;
-		if (day2 == null)
-			return day1;
-		if (day1.compareTo(day2) > 0)
-			return day1;
-		return day2;
-	}
-
 }

@@ -155,7 +155,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug,
-					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.getDayOfWeek(), locale()), false, textColor),
+					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.toDayOfWeek(), locale()), false, textColor),
 					x1, x2);
 		}
 	}

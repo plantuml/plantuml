@@ -62,6 +62,15 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));
 	}
 
+	public static TimePoint of(LocalDateTime time) {
+		return new TimePoint(time);
+	}
+
+	public static TimePoint of(LocalDate day) {
+		return new TimePoint(day.atStartOfDay());
+	}
+
+
 	public static TimePoint of(int year, int month, int dayOfMonth) {
 		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
@@ -73,14 +82,17 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 	public static TimePoint nowUtc1() {
 		return new TimePoint(LocalDateTime.now(ZoneOffset.UTC));
 	}
-	
-	public static TimePoint todayUtcAtMidnight() {
-	    return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());
-	}
 
+	public static TimePoint todayUtcAtMidnight() {
+		return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());
+	}
 
 	private TimePoint(LocalDateTime utcDateTime) {
 		this.utcDateTime = utcDateTime;
+	}
+
+	public LocalDateTime toLocalDateTime() {
+		return utcDateTime;
 	}
 
 	public String toStringShort(Locale locale) {
@@ -154,8 +166,12 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return YearMonth.from(utcDateTime);
 	}
 
-	public DayOfWeek getDayOfWeek() {
+	public DayOfWeek toDayOfWeek() {
 		return utcDateTime.getDayOfWeek();
+	}
+
+	public LocalDate toDay() {
+		return utcDateTime.toLocalDate();
 	}
 
 	public static TimePoint min(TimePoint d1, TimePoint d2) {
