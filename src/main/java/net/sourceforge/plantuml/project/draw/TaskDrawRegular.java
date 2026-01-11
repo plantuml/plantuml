@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
@@ -56,6 +57,8 @@ import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
@@ -74,11 +77,11 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final TimePoint end;
 	private final boolean oddStart;
 	private final boolean oddEnd;
-	private final Collection<TimePoint> paused;
+	private final Collection<LocalDate> paused;
 	private final Collection<GanttConstraint> constraints;
 
-	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, boolean oddStart,
-			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
+	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end,
+			boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
 		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 		this.constraints = constraints;
@@ -86,12 +89,11 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		this.oddStart = oddStart;
 		this.oddEnd = oddEnd;
 		this.paused = new TreeSet<>(((TaskImpl) task).getAllPaused());
-		for (TimePoint tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment()) {
-			final int load = ((TaskImpl) task).getDefaultPlan().getLoadAt(tmp);
-			if (load == 0)
-				this.paused.add(tmp);
+		final PiecewiseConstant defaultPlan = ((TaskImpl) task).getDefaultPlan();
+		for (TimePoint tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment())
+			if (PiecewiseConstantUtils.isZeroOnDay(defaultPlan, tmp.toDay()))
+				this.paused.add(tmp.toDay());
 
-		}
 	}
 
 	@Override
@@ -124,8 +126,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			return;
 		}
 
-		final double pos1 = timeScale.getStartingPosition(start) + 6;
-		final double pos2 = timeScale.getEndingPosition(end) - 6;
+		final double pos1 = timeScale.getPosition(start) + 6;
+		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;
 		final double pos;
 		if (pos2 - pos1 > dim.getWidth())
 			pos = pos1;
@@ -162,7 +164,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	public void drawU(UGraphic ug) {
-		final double startPos = timeScale.getStartingPosition(start);
+		final double startPos = timeScale.getPosition(start);
 		drawNote(ug.apply((new UTranslate(startPos, getYNotePosition(ug.getStringBounder())))));
 
 		drawShape(ug);
@@ -184,8 +186,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
-		final double startPos = timeScale.getStartingPosition(start);
-		final double endPos = timeScale.getEndingPosition(end);
+		final double startPos = timeScale.getPosition(start);
+		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end);
 		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);
 	}
 
@@ -194,7 +196,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			return null;
 
 		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);
-		final double startPos = timeScale.getStartingPosition(start);
+		final double startPos = timeScale.getPosition(start);
 		// final double endPos = timeScale.getEndingPosition(end);
 		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),
 				dim.getWidth(), dim.getHeight());
@@ -212,17 +214,17 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		double x;
 		if (side == GSide.LEFT)
-			x = timeScale.getStartingPosition(start);
+			x = timeScale.getPosition(start);
 		else if (side == GSide.RIGHT)
-			x = timeScale.getEndingPosition(end);
+			x = timeScale.getPosition(end) + timeScale.getWidth(end);
 		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT) {
-			x = timeScale.getStartingPosition(start) + 8;
-			if (x > timeScale.getStartingPosition(end))
-				x = (timeScale.getStartingPosition(start) + timeScale.getEndingPosition(start)) / 2;
+			x = timeScale.getPosition(start) + 8;
+			if (x > timeScale.getPosition(end))
+				x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;
 		} else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT) {
-			x = timeScale.getEndingPosition(end) - 8;
-			if (x < timeScale.getEndingPosition(start))
-				x = (timeScale.getStartingPosition(end) + timeScale.getEndingPosition(end)) / 2;
+			x = timeScale.getPosition(end) + timeScale.getWidth(end) - 8;
+			if (x < timeScale.getPosition(start) + timeScale.getWidth(start))
+				x = (timeScale.getPosition(end) + timeScale.getPosition(end) + timeScale.getWidth(end)) / 2;
 		} else
 			throw new IllegalArgumentException();
 
@@ -243,8 +245,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
-		final double startPos = timeScale.getStartingPosition(start) + margin.getLeft();
-		final double endPos = timeScale.getEndingPosition(end) - margin.getRight();
+		final double startPos = timeScale.getPosition(start) + margin.getLeft();
+		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end) - margin.getRight();
 
 		if (url != null)
 			ug.startUrl(url);
@@ -256,9 +258,10 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double round = style.value(PName.RoundCorner).asDouble();
 
 		final Collection<Segment> off = new ArrayList<>();
-		for (TimePoint pause : paused) {
-			final double x1 = timeScale.getStartingPosition(pause);
-			final double x2 = timeScale.getEndingPosition(pause);
+		for (LocalDate day : paused) {
+			final TimePoint pause = TimePoint.ofStartOfDay(day);
+			final double x1 = timeScale.getPosition(pause);
+			final double x2 = timeScale.getPosition(pause) + timeScale.getWidth(pause);
 			off.add(new Segment(x1, x2));
 		}
 

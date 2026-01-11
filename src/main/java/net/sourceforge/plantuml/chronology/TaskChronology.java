@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.chronology;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
@@ -84,8 +85,13 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getEnd() {
+	public TimePoint getEndMinusOneDay() {
 		return this.end;
+	}
+	
+	@Override
+	public TimePoint getEnd() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -119,7 +125,7 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(LocalDate pause) {
 		throw new UnsupportedOperationException();
 	}
 

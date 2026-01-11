@@ -36,36 +36,44 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.PlanUtils;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.ngm.NGMAllocation;
+import net.sourceforge.plantuml.project.ngm.math.Combiner;
+import net.sourceforge.plantuml.project.ngm.math.Fraction;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.solver.Solver;
-import net.sourceforge.plantuml.project.solver.SolverImpl;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
-public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
+public class TaskImpl extends AbstractTask implements Task {
 
-	private final SortedSet<TimePoint> pausedDay = new TreeSet<>();
-	private final Set<DayOfWeek> pausedDayOfWeek = new HashSet<>();
+	private final SortedSet<LocalDate> pausedDay = new TreeSet<>();
+	private final EnumSet<DayOfWeek> pausedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
+
 	private final Solver solver;
 	private final Map<Resource, Integer> resources = new LinkedHashMap<Resource, Integer>();
-	private final LoadPlanable defaultPlan;
 	private boolean diamond;
+	private final GanttDiagram gantt;
 
 	private int completion;
 	private Display note;
@@ -78,33 +86,61 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.url = url;
 	}
 
-	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, LoadPlanable plan, TimePoint startingDay, int completion) {
+	public TaskImpl(GanttDiagram gantt, StyleBuilder styleBuilder, TaskCode code, TimePoint startingDay,
+			int completion) {
 		super(styleBuilder, code);
+		this.gantt = gantt;
 		this.completion = completion;
-		this.defaultPlan = plan;
-		this.solver = new SolverImpl(this);
-		if (startingDay == null)
-			setStart(TimePoint.epoch());
-		else
-			setStart(startingDay);
 
+		this.solver = new Solver();
+		setStart(startingDay);
 		setLoad(Load.ofDays(1));
 	}
 
-	@Override
-	public int getLoadAt(TimePoint instant) {
-		if (isPaused(instant))
-			return 0;
+	public PiecewiseConstant getDefaultPlan() {
+		return gantt.getLoadPlanableForTask(getCode().getId());
+	}
 
-		LoadPlanable result = defaultPlan;
+	private PiecewiseConstant localPause() {
+		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);
+
+		for (DayOfWeek day : pausedDayOfWeek)
+			weekPattern = weekPattern.with(day, Fraction.ZERO);
+
+		PiecewiseConstant result = weekPattern;
+
+		if (pausedDay.isEmpty() == false) {
+			PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE);
+
+			for (LocalDate date : pausedDay)
+				specificDaysClosed = specificDaysClosed.withDay(date, Fraction.ZERO);
+
+			result = Combiner.product(weekPattern, specificDaysClosed);
+		}
+
+		return result;
+	}
+
+//	@Override
+//	public int getLoadAtDUMMY(TimePoint instant) {
+//		if (isPaused(instant))
+//			return 0;
+//
+//		LoadPlanable result = defaultPlan;
+//		if (resources.size() > 0)
+//			result = PlanUtils.multiply(defaultPlan, getResourcePlan());
+//
+//		return result.getLoadAtDUMMY(instant);
+//	}
+
+	public PiecewiseConstant asPiecewiseConstant() {
 		if (resources.size() > 0)
-			result = PlanUtils.multiply(defaultPlan, getResourcePlan());
-
-		return result.getLoadAt(instant);
+			return Combiner.product(getDefaultPlan(), allRessources());
+		return Combiner.product(getDefaultPlan(), localPause());
 	}
 
 	private boolean isPaused(TimePoint instant) {
-		if (pausedDay.contains(instant))
+		if (pausedDay.contains(instant.toDay()))
 			return true;
 
 		if (pausedDayOfWeek(instant))
@@ -115,7 +151,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	private boolean pausedDayOfWeek(TimePoint instant) {
 		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
-			if (instant.getDayOfWeek() == dayOfWeek)
+			if (instant.toDayOfWeek() == dayOfWeek)
 				return true;
 
 		return false;
@@ -123,7 +159,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public int loadForResource(Resource res, TimePoint instant) {
 		if (resources.keySet().contains(res) && instant.compareTo(getStart()) >= 0
-				&& instant.compareTo(getEnd()) <= 0) {
+				&& instant.compareTo(getEndMinusOneDay()) <= 0) {
 			if (isPaused(instant))
 				return 0;
 
@@ -136,7 +172,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(LocalDate pause) {
 		this.pausedDay.add(pause);
 	}
 
@@ -145,44 +181,24 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.pausedDayOfWeek.add(pause);
 	}
 
-	private LoadPlanable getResourcePlan() {
-		if (resources.size() == 0)
-			throw new IllegalStateException();
+	public PiecewiseConstant allRessources() {
 
-		return new LoadPlanable() {
-			public int getLoadAt(TimePoint instant) {
-				int result = 0;
-				for (Map.Entry<Resource, Integer> ent : resources.entrySet()) {
-					final Resource res = ent.getKey();
-					if (res.isClosedAt(instant))
-						continue;
+		final List<PiecewiseConstant> contributions = new ArrayList<>();
 
-					final int percentage = ent.getValue();
-					result += percentage;
-				}
-				return result;
-			}
+		for (Map.Entry<Resource, Integer> ent : resources.entrySet()) {
+			final Resource res = ent.getKey();
+			final PiecewiseConstant availability = res.asPiecewiseConstant();
 
-			@Override
-			public TimePoint getLastDayIfAny() {
-				return TaskImpl.this.getLastDayIfAny();
-			}
-		};
-	}
+			final PiecewiseConstant percentageFraction = PiecewiseConstantSpecificDays
+					.of(new Fraction(ent.getValue(), 100));
 
-	@Override
-	public TimePoint getLastDayIfAny() {
-		TimePoint result = null;
+			// Multiply availability by percentage to get the contribution
+			final PiecewiseConstant contribution = Combiner.product(availability, percentageFraction);
 
-		for (Resource res : resources.keySet()) {
-			if (res.getLastDayIfAny() == null)
-				return null;
-
-			if (result == null || result.compareTo(res.getLastDayIfAny()) < 0)
-				result = res.getLastDayIfAny();
+			contributions.add(contribution);
 		}
 
-		return result;
+		return Combiner.product(localPause(), Combiner.sum(contributions.toArray(new PiecewiseConstant[0])));
 	}
 
 	public String getPrettyDisplay() {
@@ -213,27 +229,39 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	public String debug() {
-		return "" + getStart() + " ---> " + getEnd() + "   [" + getLoad() + "]";
+		return "" + getStart() + " ---> " + getEndMinusOneDay() + "   [" + getLoad() + "]";
 	}
 
 	@Override
 	public TimePoint getStart() {
-		TimePoint result = (TimePoint) solver.getData(TaskAttribute.START);
-		if (diamond == false)
-			while (getLoadAt(result) == 0)
+		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
+		TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.START);
+		if (diamond == false) {
+			final PiecewiseConstant cal = asPiecewiseConstant();
+			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))
 				result = result.increment();
-
+		}
 		return result;
 	}
 
 	@Override
+	public TimePoint getEndMinusOneDay() {
+		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
+		final TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);
+		return result.decrement();
+	}
+
+	@Override
 	public TimePoint getEnd() {
-		return (TimePoint) solver.getData(TaskAttribute.END);
+		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
+		final TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);
+		return result;
 	}
 
 	@Override
 	public Load getLoad() {
-		return (Load) solver.getData(TaskAttribute.LOAD);
+		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
+		return (Load) solver.getData(allocation, TaskAttribute.LOAD);
 	}
 
 	@Override
@@ -248,7 +276,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	@Override
 	public void setEnd(TimePoint end) {
-		solver.setData(TaskAttribute.END, end);
+		solver.setData(TaskAttribute.END, end.increment());
 	}
 
 	@Override
@@ -294,20 +322,20 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return completion;
 	}
 
-	public final Collection<TimePoint> getAllPaused() {
-		final SortedSet<TimePoint> result = new TreeSet<>(pausedDay);
+	public final Collection<LocalDate> getAllPaused() {
+		final SortedSet<LocalDate> result = new TreeSet<>(pausedDay);
 		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
 			addAll(result, dayOfWeek);
 
 		return Collections.unmodifiableCollection(result);
 	}
 
-	private void addAll(SortedSet<TimePoint> result, DayOfWeek dayOfWeek) {
+	private void addAll(SortedSet<LocalDate> result, DayOfWeek dayOfWeek) {
 		final TimePoint start = getStart();
-		final TimePoint end = getEnd();
+		final TimePoint end = getEndMinusOneDay();
 		for (TimePoint current = start; current.compareTo(end) <= 0; current = current.increment())
-			if (current.getDayOfWeek() == dayOfWeek)
-				result.add(current);
+			if (current.toDayOfWeek() == dayOfWeek)
+				result.add(current.toDay());
 
 	}
 
@@ -323,10 +351,6 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public Stereotype getNoteStereotype() {
 		return noteStereotype;
-	}
-
-	public LoadPlanable getDefaultPlan() {
-		return defaultPlan;
 	}
 
 	@Override

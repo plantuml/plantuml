@@ -79,8 +79,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		// return padding.getTop() +
 		// getTitle().calculateDimension(stringBounder).getHeight() +
 		// padding.getBottom() + 8;
-		final double pos1 = timeScale.getStartingPosition(start) + 6;
-		final double pos2 = timeScale.getEndingPosition(end) - 6;
+		final double pos1 = timeScale.getPosition(start) + 6;
+		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;
 		final TextBlock title = getTitle();
 		final XDimension2D dim = title.calculateDimension(stringBounder);
 		if (pos2 - pos1 > dim.getWidth())
@@ -99,8 +99,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
-		final double pos1 = timeScale.getStartingPosition(start) + 6;
-		final double pos2 = timeScale.getEndingPosition(end) - 6;
+		final double pos1 = timeScale.getPosition(start) + 6;
+		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;
 		final double pos;
 		final double y;
 		if (pos2 - pos1 > dim.getWidth()) {
@@ -138,8 +138,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
-		final double startPos = timeScale.getStartingPosition(start);
-		final double endPos = timeScale.getEndingPosition(end);
+		final double startPos = timeScale.getPosition(start);
+		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end);
 		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);
 	}
 
@@ -163,13 +163,13 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final double x;
 
 		if (side == GSide.LEFT)
-			x = timeScale.getStartingPosition(start);
+			x = timeScale.getPosition(start);
 		else if (side == GSide.RIGHT)
-			x = timeScale.getEndingPosition(end);
+			x = timeScale.getPosition(end) + timeScale.getWidth(end);
 		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT)
-			x = (timeScale.getStartingPosition(start) + timeScale.getEndingPosition(start)) / 2;
+			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;
 		else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT)
-			x = (timeScale.getStartingPosition(end) + timeScale.getEndingPosition(end)) / 2;
+			x = (timeScale.getPosition(end) + timeScale.getPosition(end) + timeScale.getWidth(end)) / 2;
 		else
 			throw new IllegalArgumentException();
 
@@ -180,8 +180,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
-		final double startPos = timeScale.getStartingPosition(start) + margin.getLeft();
-		final double endPos = timeScale.getEndingPosition(end) - margin.getRight();
+		final double startPos = timeScale.getPosition(start) + margin.getLeft();
+		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end) - margin.getRight();
 
 		if (url != null)
 			ug.startUrl(url);

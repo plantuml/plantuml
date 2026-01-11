@@ -36,20 +36,40 @@
 package net.sourceforge.plantuml.project;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.project.core3.Histogram;
-import net.sourceforge.plantuml.project.core3.TimeLine;
+import net.sourceforge.plantuml.project.ngm.math.Combiner;
+import net.sourceforge.plantuml.project.ngm.math.Fraction;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
-public class OpenClose implements Histogram, LoadPlanable {
+public class OpenClose {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
 	private final Map<TimePoint, DayStatus> dayStatus = new HashMap<>();
 	private TimePoint offBefore;
 	private TimePoint offAfter;
+
+	public OpenClose mutateMe(final OpenClose except) {
+		final OpenClose result = new OpenClose();
+		result.weekdayStatus.putAll(this.weekdayStatus);
+		result.dayStatus.putAll(this.dayStatus);
+		result.offBefore = this.offBefore;
+		result.offAfter = this.offAfter;
+		if (except != null) {
+			result.weekdayStatus.putAll(except.weekdayStatus);
+			result.dayStatus.putAll(except.dayStatus);
+		}
+		return result;
+
+	}
 
 	public int daysInWeek() {
 		int result = 7;
@@ -99,7 +119,7 @@ public class OpenClose implements Histogram, LoadPlanable {
 		if (status1 != null)
 			return status1;
 
-		final DayOfWeek dayOfWeek = day.getDayOfWeek();
+		final DayOfWeek dayOfWeek = day.toDayOfWeek();
 		final DayStatus status2 = weekdayStatus.get(dayOfWeek);
 		if (status2 != null)
 			return status2;
@@ -123,49 +143,8 @@ public class OpenClose implements Histogram, LoadPlanable {
 		dayStatus.put(day, DayStatus.OPEN);
 	}
 
-	public long getNext(long moment) {
-		TimePoint day = TimePoint.create(moment);
-		if (isThereSomeChangeAfter(day) == false)
-			return TimeLine.MAX_TIME;
 
-		final long current = getLoatAtInternal(day);
-		System.err.println("getNext:day=" + day + " current=" + current);
-		while (true) {
-			day = day.increment();
-			final int tmp = getLoatAtInternal(day);
-			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current)
-				return day.getMillis();
-
-		}
-	}
-
-	public long getPrevious(long moment) {
-		TimePoint day = TimePoint.create(moment);
-		if (isThereSomeChangeBefore(day) == false)
-			return -TimeLine.MAX_TIME;
-
-		final long current = getLoatAtInternal(day);
-		System.err.println("getPrevious=" + day + " current=" + current);
-		while (true) {
-			day = day.decrement();
-			final int tmp = getLoatAtInternal(day);
-			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current)
-				return day.getMillis();
-
-		}
-	}
-
-	public long getValueAt(long moment) {
-		final TimePoint day = TimePoint.create(moment);
-		if (isClosed(day))
-			return 0;
-
-		return 100;
-	}
-
-	public int getLoadAt(TimePoint day) {
+	public int getLoadAtDUMMY(TimePoint day) {
 		return getLoatAtInternal(day);
 	}
 
@@ -184,30 +163,54 @@ public class OpenClose implements Histogram, LoadPlanable {
 		return 100;
 	}
 
-	public LoadPlanable mutateMe(final OpenClose except) {
-		if (except != null)
-			return new LoadPlanable() {
-				@Override
-				public int getLoadAt(TimePoint instant) {
-					final DayStatus exceptStatus = except.getLocalStatus(instant);
-					if (exceptStatus == DayStatus.CLOSE)
-						return 0;
-					else if (exceptStatus == DayStatus.OPEN)
-						return 100;
-					return OpenClose.this.getLoadAt(instant);
-				}
+//	@Override
+//	public TimePoint getLastDayIfAnyDUMMY() {
+//		return offAfter;
+//	}
 
-				@Override
-				public TimePoint getLastDayIfAny() {
-					return offAfter;
-				}
-			};
-		return this;
-	}
-
-	@Override
 	public TimePoint getLastDayIfAny() {
 		return offAfter;
+	}
+
+	public PiecewiseConstant asPiecewiseConstant() {
+		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);
+
+		for (DayOfWeek day : weekdayStatus.keySet())
+			if (weekdayStatus.get(day) == DayStatus.CLOSE)
+				weekPattern = weekPattern.with(day, Fraction.ZERO);
+
+		PiecewiseConstant result = weekPattern;
+
+		if (dayStatus.isEmpty() == false) {
+			PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE);
+			PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO);
+
+			for (Map.Entry<TimePoint, DayStatus> entry : dayStatus.entrySet()) {
+				final LocalDate date = entry.getKey().toLocalDateTime().toLocalDate();
+
+				if (entry.getValue() == DayStatus.CLOSE)
+					specificDaysClosed = specificDaysClosed.withDay(date, Fraction.ZERO);
+				else
+					specificDaysOpen = specificDaysOpen.withDay(date, Fraction.ONE);
+			}
+
+			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));
+		}
+
+		if (offBefore == null && offAfter == null)
+			return result;
+
+		if (offBefore == null)
+			return Combiner.product(result,
+					new PiecewiseConstantTimeWindow(LocalDateTime.MIN, offAfter.toLocalDateTime()));
+
+		if (offAfter == null)
+			return Combiner.product(result,
+					new PiecewiseConstantTimeWindow(offBefore.toLocalDateTime(), LocalDateTime.MAX));
+
+		return Combiner.product(result,
+				new PiecewiseConstantTimeWindow(offBefore.toLocalDateTime(), offAfter.toLocalDateTime()));
+
 	}
 
 }

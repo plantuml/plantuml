@@ -48,7 +48,7 @@ public class TimeScaleChronology implements TimeScale {
 		this.fullWidth = fullWidth;
 	}
 
-	public double getStartingPosition(TimePoint instant) {
+	public double getPosition(TimePoint instant) {
 		final long wink = instant.getMillis();
 		if (wink < min)
 			throw new IllegalArgumentException();
@@ -56,10 +56,6 @@ public class TimeScaleChronology implements TimeScale {
 			throw new IllegalArgumentException();
 
 		return fullWidth * (wink - min) / (max - min);
-	}
-
-	public double getEndingPosition(TimePoint instant) {
-		return getStartingPosition(instant);
 	}
 
 	public double getWidth(TimePoint instant) {

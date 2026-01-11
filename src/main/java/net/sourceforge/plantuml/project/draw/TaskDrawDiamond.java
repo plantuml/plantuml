@@ -131,8 +131,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		} else if (labelStrategy.titleInLastColumn()) {
 			x = colBars + margin.getLeft();
 		} else {
-			final double x1 = timeScale.getStartingPosition(start);
-			final double x2 = timeScale.getEndingPosition(start);
+			final double x1 = timeScale.getPosition(start);
+			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);
 			final double width = getDiamondHeight();
 			final double delta = x2 - x1 - width;
 			x = x2 - delta / 2 + padding.getLeft();
@@ -149,7 +149,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	@Override
 	public void drawU(UGraphic ug) {
 
-		final double x1 = timeScale.getStartingPosition(start);
+		final double x1 = timeScale.getPosition(start);
 		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));
 
 		if (url != null)
@@ -164,7 +164,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		ug = ug.apply(UTranslate.dx(x1));
 
 		if (displayString == null) {
-			final double x2 = timeScale.getEndingPosition(start);
+			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);
 			final double width = getDiamondHeight();
 			final double delta = x2 - x1 - width;
 			ug = ug.apply(UTranslate.dx(delta / 2));
@@ -199,7 +199,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
-		final double startPos = timeScale.getStartingPosition(start);
+		final double startPos = timeScale.getPosition(start);
 		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,
 				getY(stringBounder).getCurrentValue() + h);
 	}
@@ -218,11 +218,11 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		double x;
 		if (side == GSide.LEFT)
-			x = timeScale.getStartingPosition(start);
+			x = timeScale.getPosition(start);
 		else if (side == GSide.RIGHT)
-			x = timeScale.getEndingPosition(start);
+			x = timeScale.getPosition(start) + timeScale.getWidth(start);
 		else
-			x = (timeScale.getStartingPosition(start) + timeScale.getEndingPosition(start)) / 2;
+			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;
 
 		if (arrowType == GArrowType.OUTGOING) {
 			final double width = getDiamondHeight();

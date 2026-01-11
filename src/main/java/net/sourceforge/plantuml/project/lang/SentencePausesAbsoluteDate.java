@@ -51,7 +51,7 @@ public class SentencePausesAbsoluteDate extends SentenceSimple<GanttDiagram> {
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final TimePoint pause = (TimePoint) complement;
-		task.addPause(pause);
+		task.addPause(pause.toDay());
 		return CommandExecutionResult.ok();
 	}
 

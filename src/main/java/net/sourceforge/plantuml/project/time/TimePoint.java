@@ -58,11 +58,19 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC));
 	}
 
-	public static TimePoint of(int year, String month, int dayOfMonth) {
+	public static TimePoint ofStartOfDay(int year, String month, int dayOfMonth) {
 		return new TimePoint(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));
 	}
 
-	public static TimePoint of(int year, int month, int dayOfMonth) {
+	public static TimePoint of(LocalDateTime time) {
+		return new TimePoint(time);
+	}
+
+	public static TimePoint ofStartOfDay(LocalDate day) {
+		return new TimePoint(day.atStartOfDay());
+	}
+
+	public static TimePoint ofStartOfDay(int year, int month, int dayOfMonth) {
 		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
 
@@ -73,14 +81,17 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 	public static TimePoint nowUtc1() {
 		return new TimePoint(LocalDateTime.now(ZoneOffset.UTC));
 	}
-	
-	public static TimePoint todayUtcAtMidnight() {
-	    return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());
-	}
 
+	public static TimePoint todayUtcAtMidnight() {
+		return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());
+	}
 
 	private TimePoint(LocalDateTime utcDateTime) {
 		this.utcDateTime = utcDateTime;
+	}
+
+	public LocalDateTime toLocalDateTime() {
+		return utcDateTime;
 	}
 
 	public String toStringShort(Locale locale) {
@@ -118,7 +129,7 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 
 	@Override
 	public String toString() {
-		return monthYear().toString() + "/" + getDayOfMonth();
+		return utcDateTime.toString();
 	}
 
 	@Override
@@ -154,8 +165,12 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return YearMonth.from(utcDateTime);
 	}
 
-	public DayOfWeek getDayOfWeek() {
+	public DayOfWeek toDayOfWeek() {
 		return utcDateTime.getDayOfWeek();
+	}
+
+	public LocalDate toDay() {
+		return utcDateTime.toLocalDate();
 	}
 
 	public static TimePoint min(TimePoint d1, TimePoint d2) {
@@ -184,6 +199,14 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		final long ms = getMillis();
 		final long ceiled = Math.floorDiv(ms + MILLISECONDS_PER_DAY - 1, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;
 		return TimePoint.create(ceiled);
+	}
+
+	public TimePoint minusOneSecond() {
+		return new TimePoint(this.utcDateTime.minusSeconds(1));
+	}
+
+	public TimePoint floorToDay() {
+		return new TimePoint(utcDateTime.toLocalDate().atStartOfDay());
 	}
 
 }

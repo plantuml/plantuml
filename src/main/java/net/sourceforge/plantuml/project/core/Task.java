@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
@@ -73,7 +74,7 @@ public interface Task extends Moment {
 
 	public Task getRow();
 
-	public void addPause(TimePoint pause);
+	public void addPause(LocalDate pause);
 
 	public void addPause(DayOfWeek pause);
 

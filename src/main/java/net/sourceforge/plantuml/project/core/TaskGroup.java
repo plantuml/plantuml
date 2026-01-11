@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,19 @@ public class TaskGroup extends AbstractTask implements Task {
 
 		if (min != null)
 			return min;
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public TimePoint getEndMinusOneDay() {
+		TimePoint max = null;
+		for (Task child : children)
+			if (max == null || max.compareTo(child.getEndMinusOneDay()) < 0)
+				max = child.getEndMinusOneDay();
+
+		if (max != null)
+			return max;
 
 		throw new UnsupportedOperationException();
 	}
@@ -134,7 +148,7 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(LocalDate pause) {
 		throw new UnsupportedOperationException();
 	}
 

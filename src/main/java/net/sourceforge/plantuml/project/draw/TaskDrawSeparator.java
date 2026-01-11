@@ -134,9 +134,9 @@ public class TaskDrawSeparator implements TaskDraw {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();
-		final double start = timeScale.getStartingPosition(min);
+		final double start = timeScale.getPosition(min);
 		// final double start2 = start1 + widthTitle;
-		final double end = timeScale.getEndingPosition(max);
+		final double end = timeScale.getPosition(max) + timeScale.getWidth(max);
 
 		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
 		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
@@ -174,7 +174,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
-		final double end = timeScale.getEndingPosition(max);
+		final double end = timeScale.getPosition(max) + timeScale.getWidth(max);
 		return new FingerPrint(0, getY(stringBounder).getCurrentValue(), end,
 				getY(stringBounder).getCurrentValue() + h);
 	}

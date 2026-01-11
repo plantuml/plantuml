@@ -44,4 +44,6 @@ public interface Moment {
 
 	public TimePoint getEnd();
 
+	public TimePoint getEndMinusOneDay();
+
 }

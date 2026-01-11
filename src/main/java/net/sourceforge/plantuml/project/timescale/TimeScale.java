@@ -39,9 +39,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 
 public interface TimeScale {
 
-	public double getStartingPosition(TimePoint instant);
-
-	public double getEndingPosition(TimePoint instant);
+	public double getPosition(TimePoint instant);
 
 	public double getWidth(TimePoint instant);
 

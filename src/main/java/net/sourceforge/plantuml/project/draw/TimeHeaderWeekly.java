@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
 			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<TimePoint, String> nameDays,
-			TimePoint printStart, int weekStartingNumber) {
+			LocalDate printStart, int weekStartingNumber) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
 				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
@@ -133,7 +134,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x1 = getTimeScale().getPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
 				if (last != null)
@@ -143,9 +144,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0,
-				getH1(ug.getStringBounder()));
-		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		final double end = getTimeScale().getPosition(getMax()) + getTimeScale().getWidth(getMax());
+		drawVline(ug.apply(getLineColor()), end, (double) 0, getH1(ug.getStringBounder()));
+		final double x1 = getTimeScale().getPosition(getMax().increment());
 		if (last != null && x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
 
@@ -157,8 +158,8 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
-					final double x1 = getTimeScale().getStartingPosition(wink);
-					final double x2 = getTimeScale().getEndingPosition(wink);
+					final double x1 = getTimeScale().getPosition(wink);
+					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
 					double y1 = getTimeHeaderHeight(ug.getStringBounder());
@@ -175,19 +176,19 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
-			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
-				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),
+			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
+				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink),
 						getH1(ug.getStringBounder()), totalHeightWithoutFooter);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), getH1(ug.getStringBounder()),
-				totalHeightWithoutFooter);
+		final double end = getTimeScale().getPosition(getMax()) + getTimeScale().getWidth(getMax());
+		drawVline(ug.apply(getLineColor()), end, getH1(ug.getStringBounder()), totalHeightWithoutFooter);
 		super.printVerticalSeparators(ug, totalHeightWithoutFooter);
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
 		int counter = weekStartingNumber;
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
-			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
+			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
 				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)
 					num = "" + (counter++);
@@ -197,7 +198,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 					num = "" + wink.getWeekOfYear(weekNumberStrategy);
 				final TextBlock textBlock = getTextBlock(SName.day, num, false, openFontColor());
 				printLeft(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))), textBlock,
-						getTimeScale().getStartingPosition(wink) + 5);
+						getTimeScale().getPosition(wink) + 5);
 			}
 		}
 	}

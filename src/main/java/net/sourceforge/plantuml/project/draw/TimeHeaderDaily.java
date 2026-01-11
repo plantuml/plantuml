@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Map;
 
@@ -99,7 +100,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private final Map<TimePoint, String> nameDays;
 
 	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
-			TimePoint printStart) {
+			LocalDate printStart) {
 		super(thParam,
 				thParam.isHideClosed()
 						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getMin(),
@@ -129,14 +130,14 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		final UGraphic ugLineColor = ug.apply(getLineColor());
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink) || getTimeScale().getWidth(wink.decrement()) == 0)
-				drawVline(ugVerticalSeparator, getTimeScale().getStartingPosition(wink),
+				drawVline(ugVerticalSeparator, getTimeScale().getPosition(wink),
 						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 			else
-				drawVline(ugLineColor, getTimeScale().getStartingPosition(wink),
+				drawVline(ugLineColor, getTimeScale().getPosition(wink),
 						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 
-		drawVline(ugLineColor, getTimeScale().getEndingPosition(getMax()), getFullHeaderHeight(ug.getStringBounder()),
-				totalHeightWithoutFooter);
+		final double end = getTimeScale().getPosition(getMax()) + getTimeScale().getWidth(getMax());
+		drawVline(ugLineColor, end, getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 	}
 
 	@Override
@@ -151,11 +152,11 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
+			final double x1 = getTimeScale().getPosition(wink);
+			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug,
-					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.getDayOfWeek(), locale()), false, textColor),
+					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.toDayOfWeek(), locale()), false, textColor),
 					x1, x2);
 		}
 	}
@@ -164,8 +165,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
+			final double x1 = getTimeScale().getPosition(wink);
+			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug, getTextBlock(SName.day, "" + wink.getDayOfMonth(), false, textColor), x1, x2);
 		}
@@ -190,7 +191,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
-			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x1 = getTimeScale().getPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				if (last != null)
 					printMonth(ug, last, lastChangeMonth, x1);
@@ -199,7 +200,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		final double x1 = getTimeScale().getPosition(getMax().increment());
 		if (x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
 
@@ -221,8 +222,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
-					final double x1 = getTimeScale().getStartingPosition(wink);
-					final double x2 = getTimeScale().getEndingPosition(wink);
+					final double x1 = getTimeScale().getPosition(wink);
+					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
 					double y1 = getTimeHeaderHeight(ug.getStringBounder());

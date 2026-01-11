@@ -43,12 +43,12 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementSeveralDays implements Something<GanttDiagram> {
+public class ComplementDuration implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf(4, "COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week|month)s?" + //
-						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month)s?)?" //
+				new RegexLeaf(4, "COMPLEMENT" + suffix, "(\\d+)[%s]+(hour|day|week|month)s?" + //
+						"(?:[%s]+and[%s]+(\\d+)[%s]+(hour|day|week|month)s?)?" //
 				)); //
 	}
 
@@ -59,31 +59,36 @@ public class ComplementSeveralDays implements Something<GanttDiagram> {
 
 		final int firstValue = Integer.parseInt(arg.get(prefix, 0));
 		final String firstUnit = arg.get(prefix, 1);
-		final int firstDays = toDays(system, firstValue, firstUnit);
+		final int[] firstDaysAndHours = toDaysAndHours(system, firstValue, firstUnit);
 
-		int secondDays = 0;
+		int[] secondDaysAndHours = {0, 0};
 		final String secondValue = arg.get(prefix, 2);
 		if (secondValue != null) {
 			final int value = Integer.parseInt(secondValue);
 			final String unit = arg.get(prefix, 3);
-			secondDays = toDays(system, value, unit);
+			secondDaysAndHours = toDaysAndHours(system, value, unit);
 		}
 
-		final int totalDays = firstDays + secondDays;
-		return Failable.ok(Load.ofDays(totalDays));
+		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];
+		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];
+
+		return Failable.ok(Load.ofDaysAndHours(totalDays, totalHours));
 	}
 
-	private int toDays(GanttDiagram system, int value, String unit) {
+	private int[] toDaysAndHours(GanttDiagram system, int value, String unit) {
 		switch (unit.charAt(0)) {
+		case 'H':
+		case 'h':
+			return new int[] {0, value};
 		case 'D':
 		case 'd':
-			return value;
+			return new int[] {value, 0};
 		case 'W':
 		case 'w':
-			return value * system.daysInWeek();
+			return new int[] {value * system.daysInWeek(), 0};
 		case 'M':
 		case 'm':
-			return value * system.daysInMonth();
+			return new int[] {value * system.daysInMonth(), 0};
 		default:
 			throw new IllegalArgumentException("unknown time unit: " + unit);
 		}

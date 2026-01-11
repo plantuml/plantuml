@@ -71,7 +71,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		final int day = Integer.parseInt(arg.get("BDAY", 0));
 		final int month = Integer.parseInt(arg.get("BMONTH", 0));
 		final int year = Integer.parseInt(arg.get("BYEAR", 0));
-		return TimePoint.of(year, month, day);
+		return TimePoint.ofStartOfDay(year, month, day);
 	}
 
 	private TimePoint resultE(GanttDiagram system, RegexResult arg) {
@@ -81,11 +81,11 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		if ("-".equals(operation))
 			day = -day;
 		if ("D".equals(type))
-			return system.getStartingDate().addDays(day);
+			return system.getMinTimePoint().addDays(day);
 		if ("T".equals(type))
 			return system.getToday().addDays(day);
 		if ("E".equals(type))
-			return system.getEndingDate().addDays(day);
+			return system.getMaxTimePoint().addDays(day);
 		throw new IllegalStateException();
 	}
 

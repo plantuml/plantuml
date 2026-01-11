@@ -38,13 +38,14 @@ package net.sourceforge.plantuml.project;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 
 public interface ToTaskDraw {
     // ::remove folder when __HAXE__
 
 	public TaskDraw getTaskDraw(Task task);
 
-	public LoadPlanable getDefaultPlan();
+	public PiecewiseConstant getDefaultPlan();
 
 	public HColorSet getIHtmlColorSet();
 

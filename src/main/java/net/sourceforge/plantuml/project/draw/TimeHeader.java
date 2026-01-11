@@ -110,8 +110,9 @@ public abstract class TimeHeader {
 	}
 
 	protected final void drawHline(UGraphic ug, double y) {
-		final double xmin = getTimeScale().getStartingPosition(thParam.getMin());
-		final double xmax = getTimeScale().getEndingPosition(thParam.getMax());
+		final double xmin = getTimeScale().getPosition(thParam.getMin());
+		final double xmax = getTimeScale().getPosition(thParam.getMax())
+				+ getTimeScale().getWidth(thParam.getMax());
 		final ULine hline = ULine.hline(xmax - xmin);
 		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);
 	}
@@ -170,7 +171,7 @@ public abstract class TimeHeader {
 		ug = thParam.forVerticalSeparator(ug);
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink))
-				drawVline(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
+				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
 						totalHeightWithoutFooter);
 	}
 

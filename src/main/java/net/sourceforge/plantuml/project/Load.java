@@ -45,17 +45,25 @@ public class Load implements Value {
 		this.effort = effort;
 	}
 
+	public static Load of(NGMTotalEffort totalEffort) {
+		return new Load(totalEffort);
+	}
+
 	public static Load ofDays(int days) {
 		return new Load(NGMTotalEffort.ofDays(days));
 	}
 
-	public int getFullLoadInDays() {
-		return (int) (effort.toSeconds().wholePart() * 100 / NGMTotalEffort.SECONDS_PER_DAY);
+	public static Load ofDaysAndHours(int days, int hours) {
+		return new Load(NGMTotalEffort.ofDaysAndHours(days, hours));
 	}
 
 	@Override
 	public String toString() {
 		return "(" + effort + ")";
+	}
+
+	public final NGMTotalEffort getEffort() {
+		return effort;
 	}
 
 }

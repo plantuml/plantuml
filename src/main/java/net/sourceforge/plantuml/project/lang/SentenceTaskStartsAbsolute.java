@@ -50,7 +50,7 @@ public class SentenceTaskStartsAbsolute extends SentenceSimple<GanttDiagram> {
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final TimePoint start = (TimePoint) complement;
-		final TimePoint startingDate = project.getStartingDate();
+		final TimePoint startingDate = project.getMinTimePoint();
 		if (startingDate.getAbsoluteDayNum() == 0)
 			return CommandExecutionResult.error("No starting date for the project");
 
