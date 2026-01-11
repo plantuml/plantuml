@@ -179,7 +179,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L179">		final StringBuilder result = new StringBuilder();</span>
 		while (true) {
 <span class="fc" id="L181">			final char ch = peekChar();</span>
-<span class="fc bfc" id="L182" title="All 4 branches covered.">			if (ch == 0 || TLineType.isSpaceChar(ch) == false)</span>
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">			if (ch == 0 || TLineType.isSpaceChar(ch) == false)</span>
 <span class="fc" id="L183">				return result.toString();</span>
 
 <span class="fc" id="L185">			result.append(eatOneChar());</span>
