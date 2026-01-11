@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.PName;
@@ -67,15 +67,15 @@ public abstract class TimeHeader {
 <span class="fc" id="L67">		this.timeScale = timeScale;</span>
 <span class="fc" id="L68">	}</span>
 
-	protected final boolean isBold2(Day wink) {
+	protected final boolean isBold2(TimePoint wink) {
 <span class="fc" id="L71">		return thParam.getVerticalSeparatorBefore().contains(wink);</span>
 	}
 
-	protected final Day getMin() {
+	protected final TimePoint getMin() {
 <span class="fc" id="L75">		return thParam.getMin();</span>
 	}
 
-	protected final Day getMax() {
+	protected final TimePoint getMax() {
 <span class="fc" id="L79">		return thParam.getMax();</span>
 	}
 
@@ -168,7 +168,7 @@ public abstract class TimeHeader {
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
 <span class="fc" id="L170">		ug = thParam.forVerticalSeparator(ug);</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
 <span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (isBold2(wink))</span>
 <span class="nc" id="L173">				drawVline(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(ug.getStringBounder()),</span>
 						totalHeightWithoutFooter);

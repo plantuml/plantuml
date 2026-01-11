@@ -70,7 +70,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 		}
 
 <span class="fc" id="L72">		final int totalDays = firstDays + secondDays;</span>
-<span class="fc" id="L73">		return Failable.ok(Load.inWinks(totalDays));</span>
+<span class="fc" id="L73">		return Failable.ok(Load.ofDays(totalDays));</span>
 	}
 
 	private int toDays(GanttDiagram system, int value, String unit) {

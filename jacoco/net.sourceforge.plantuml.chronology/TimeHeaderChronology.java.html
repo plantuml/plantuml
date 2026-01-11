@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -89,14 +89,14 @@ public class TimeHeaderChronology extends TimeHeader {
 <span class="nc" id="L89">		ug = ug.apply(getLineColor());</span>
 <span class="nc" id="L90">		ug = ug.apply(UTranslate.dy(6));</span>
 <span class="nc" id="L91">		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (Day i = getMin(); i.compareTo(getMax().increment()) &lt; 0; i = i.increment(printScale)) {</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (TimePoint i = getMin(); i.compareTo(getMax().increment()) &lt; 0; i = i.increment(printScale)) {</span>
 <span class="nc" id="L93">			final double x1 = timeScale.getStartingPosition(i);</span>
 <span class="nc" id="L94">			ug.apply(UTranslate.dx(x1)).draw(vbar);</span>
 		}
 <span class="nc" id="L96">	}</span>
 
 	private void drawSimpleDayCounter(UGraphic ug, TimeScale timeScale) {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (Day i = getMin(); i.compareTo(getMax().increment()) &lt; 0; i = i.increment(printScale)) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (TimePoint i = getMin(); i.compareTo(getMax().increment()) &lt; 0; i = i.increment(printScale)) {</span>
 <span class="nc" id="L100">			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();</span>
 <span class="nc" id="L101">			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());</span>
 <span class="nc" id="L102">			final TextBlock num = Display.getWithNewlines(getPragma(), i.toStringShort(thParam.getLocale()))</span>
@@ -164,7 +164,7 @@ public class TimeHeaderChronology extends TimeHeader {
 <span class="nc" id="L164">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
 <span class="nc" id="L165">		Pending pending = null;</span>
 
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
 <span class="nc" id="L168">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
 <span class="nc" id="L169">			final double x2 = getTimeScale().getEndingPosition(wink);</span>
 <span class="nc" id="L170">			HColor back = thParam.getColor(wink);</span>

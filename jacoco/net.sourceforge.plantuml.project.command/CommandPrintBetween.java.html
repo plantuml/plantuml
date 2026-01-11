@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.lang.ComplementDate;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -72,8 +72,8 @@ public class CommandPrintBetween extends SingleLineCommand2&lt;GanttDiagram&gt; 
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L75">		final Day start = (Day) pattern.getMe(diagram, arg, &quot;START&quot;).get();</span>
-<span class="nc" id="L76">		final Day end = (Day) pattern.getMe(diagram, arg, &quot;END&quot;).get();</span>
+<span class="nc" id="L75">		final TimePoint start = (TimePoint) pattern.getMe(diagram, arg, &quot;START&quot;).get();</span>
+<span class="nc" id="L76">		final TimePoint end = (TimePoint) pattern.getMe(diagram, arg, &quot;END&quot;).get();</span>
 <span class="nc" id="L77">		diagram.setPrintInterval(start, end);</span>
 <span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
 	}

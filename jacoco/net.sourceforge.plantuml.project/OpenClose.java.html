@@ -42,184 +42,172 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.project.core3.Histogram;
 import net.sourceforge.plantuml.project.core3.TimeLine;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 <span class="fc" id="L47">public class OpenClose implements Histogram, LoadPlanable {</span>
 
 <span class="fc" id="L49">	private final Map&lt;DayOfWeek, DayStatus&gt; weekdayStatus = new EnumMap&lt;&gt;(DayOfWeek.class);</span>
-<span class="fc" id="L50">	private final Map&lt;Day, DayStatus&gt; dayStatus = new HashMap&lt;&gt;();</span>
-	private Day startingDay;
-	private Day offBefore;
-	private Day offAfter;
+<span class="fc" id="L50">	private final Map&lt;TimePoint, DayStatus&gt; dayStatus = new HashMap&lt;&gt;();</span>
+	private TimePoint offBefore;
+	private TimePoint offAfter;
 
 	public int daysInWeek() {
-<span class="nc" id="L56">		int result = 7;</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (DayStatus status : weekdayStatus.values())</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">			if (status == DayStatus.CLOSE)</span>
-<span class="nc" id="L59">				result--;</span>
-<span class="nc" id="L60">		return result;</span>
+<span class="nc" id="L55">		int result = 7;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (DayStatus status : weekdayStatus.values())</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">			if (status == DayStatus.CLOSE)</span>
+<span class="nc" id="L58">				result--;</span>
+<span class="nc" id="L59">		return result;</span>
 	}
 
-	private boolean isThereSomeChangeAfter(Day day) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
-<span class="nc" id="L65">			return true;</span>
+	private boolean isThereSomeChangeAfter(TimePoint day) {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
+<span class="nc" id="L64">			return true;</span>
 
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (Day tmp : dayStatus.keySet())</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (tmp.compareTo(day) &gt;= 0)</span>
-<span class="nc" id="L69">				return true;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (TimePoint tmp : dayStatus.keySet())</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (tmp.compareTo(day) &gt;= 0)</span>
+<span class="nc" id="L68">				return true;</span>
 
-<span class="nc" id="L71">		return false;</span>
+<span class="nc" id="L70">		return false;</span>
 	}
 
-	private boolean isThereSomeChangeBefore(Day day) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
-<span class="nc" id="L76">			return true;</span>
+	private boolean isThereSomeChangeBefore(TimePoint day) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
+<span class="nc" id="L75">			return true;</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Day tmp : dayStatus.keySet())</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (tmp.compareTo(day) &lt;= 0)</span>
-<span class="nc" id="L80">				return true;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (TimePoint tmp : dayStatus.keySet())</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (tmp.compareTo(day) &lt;= 0)</span>
+<span class="nc" id="L79">				return true;</span>
 
-<span class="nc" id="L82">		return false;</span>
+<span class="nc" id="L81">		return false;</span>
 	}
 
-	public boolean isClosed(Day day) {
-<span class="fc" id="L86">		final DayStatus status = getLocalStatus(day);</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (status != null)</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			return status == DayStatus.CLOSE;</span>
+	public boolean isClosed(TimePoint day) {
+<span class="fc" id="L85">		final DayStatus status = getLocalStatus(day);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (status != null)</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">			return status == DayStatus.CLOSE;</span>
 
-<span class="fc" id="L90">		return false;</span>
+<span class="fc" id="L89">		return false;</span>
 	}
 
-	private DayStatus getLocalStatus(Day day) {
-<span class="pc bpc" id="L94" title="3 of 4 branches missed.">		if (offBefore != null &amp;&amp; day.compareTo(offBefore) &lt; 0)</span>
-<span class="nc" id="L95">			return DayStatus.CLOSE;</span>
-<span class="pc bpc" id="L96" title="3 of 4 branches missed.">		if (offAfter != null &amp;&amp; day.compareTo(offAfter) &gt; 0)</span>
-<span class="nc" id="L97">			return DayStatus.CLOSE;</span>
+	private DayStatus getLocalStatus(TimePoint day) {
+<span class="pc bpc" id="L93" title="3 of 4 branches missed.">		if (offBefore != null &amp;&amp; day.compareTo(offBefore) &lt; 0)</span>
+<span class="nc" id="L94">			return DayStatus.CLOSE;</span>
+<span class="pc bpc" id="L95" title="3 of 4 branches missed.">		if (offAfter != null &amp;&amp; day.compareTo(offAfter) &gt; 0)</span>
+<span class="nc" id="L96">			return DayStatus.CLOSE;</span>
 
-<span class="fc" id="L99">		final DayStatus status1 = dayStatus.get(day);</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (status1 != null)</span>
-<span class="nc" id="L101">			return status1;</span>
+<span class="fc" id="L98">		final DayStatus status1 = dayStatus.get(day);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (status1 != null)</span>
+<span class="nc" id="L100">			return status1;</span>
 
-<span class="fc" id="L103">		final DayOfWeek dayOfWeek = day.getDayOfWeek();</span>
-<span class="fc" id="L104">		final DayStatus status2 = weekdayStatus.get(dayOfWeek);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (status2 != null)</span>
-<span class="fc" id="L106">			return status2;</span>
+<span class="fc" id="L102">		final DayOfWeek dayOfWeek = day.getDayOfWeek();</span>
+<span class="fc" id="L103">		final DayStatus status2 = weekdayStatus.get(dayOfWeek);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (status2 != null)</span>
+<span class="fc" id="L105">			return status2;</span>
 
-<span class="fc" id="L108">		return null;</span>
+<span class="fc" id="L107">		return null;</span>
 	}
 
 	public void close(DayOfWeek day) {
-<span class="fc" id="L112">		weekdayStatus.put(day, DayStatus.CLOSE);</span>
-<span class="fc" id="L113">	}</span>
+<span class="fc" id="L111">		weekdayStatus.put(day, DayStatus.CLOSE);</span>
+<span class="fc" id="L112">	}</span>
 
 	public void open(DayOfWeek day) {
-<span class="nc" id="L116">		weekdayStatus.put(day, DayStatus.OPEN);</span>
-<span class="nc" id="L117">	}</span>
+<span class="nc" id="L115">		weekdayStatus.put(day, DayStatus.OPEN);</span>
+<span class="nc" id="L116">	}</span>
 
-	public void close(Day day) {
-<span class="nc" id="L120">		dayStatus.put(day, DayStatus.CLOSE);</span>
-<span class="nc" id="L121">	}</span>
+	public void close(TimePoint day) {
+<span class="nc" id="L119">		dayStatus.put(day, DayStatus.CLOSE);</span>
+<span class="nc" id="L120">	}</span>
 
-	public void open(Day day) {
-<span class="nc" id="L124">		dayStatus.put(day, DayStatus.OPEN);</span>
-<span class="nc" id="L125">	}</span>
-
-	public final Day getStartingDay() {
-<span class="fc" id="L128">		return startingDay;</span>
-	}
-
-	public final void setStartingDay(Day startingDay) {
-<span class="fc" id="L132">		this.startingDay = startingDay;</span>
-<span class="fc" id="L133">	}</span>
+	public void open(TimePoint day) {
+<span class="nc" id="L123">		dayStatus.put(day, DayStatus.OPEN);</span>
+<span class="nc" id="L124">	}</span>
 
 	public long getNext(long moment) {
-<span class="nc" id="L136">		Day day = Day.create(moment);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (isThereSomeChangeAfter(day) == false)</span>
-<span class="nc" id="L138">			return TimeLine.MAX_TIME;</span>
+<span class="nc" id="L127">		TimePoint day = TimePoint.create(moment);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (isThereSomeChangeAfter(day) == false)</span>
+<span class="nc" id="L129">			return TimeLine.MAX_TIME;</span>
 
-<span class="nc" id="L140">		final long current = getLoatAtInternal(day);</span>
-<span class="nc" id="L141">		System.err.println(&quot;getNext:day=&quot; + day + &quot; current=&quot; + current);</span>
+<span class="nc" id="L131">		final long current = getLoatAtInternal(day);</span>
+<span class="nc" id="L132">		System.err.println(&quot;getNext:day=&quot; + day + &quot; current=&quot; + current);</span>
 		while (true) {
-<span class="nc" id="L143">			day = day.increment();</span>
-<span class="nc" id="L144">			final int tmp = getLoatAtInternal(day);</span>
-<span class="nc" id="L145">			System.err.println(&quot;..day=&quot; + day + &quot; &quot; + tmp);</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (tmp != current)</span>
-<span class="nc" id="L147">				return day.getMillis();</span>
+<span class="nc" id="L134">			day = day.increment();</span>
+<span class="nc" id="L135">			final int tmp = getLoatAtInternal(day);</span>
+<span class="nc" id="L136">			System.err.println(&quot;..day=&quot; + day + &quot; &quot; + tmp);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (tmp != current)</span>
+<span class="nc" id="L138">				return day.getMillis();</span>
 
-<span class="nc" id="L149">		}</span>
+<span class="nc" id="L140">		}</span>
 	}
 
 	public long getPrevious(long moment) {
-<span class="nc" id="L153">		Day day = Day.create(moment);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (isThereSomeChangeBefore(day) == false)</span>
-<span class="nc" id="L155">			return -TimeLine.MAX_TIME;</span>
+<span class="nc" id="L144">		TimePoint day = TimePoint.create(moment);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (isThereSomeChangeBefore(day) == false)</span>
+<span class="nc" id="L146">			return -TimeLine.MAX_TIME;</span>
 
-<span class="nc" id="L157">		final long current = getLoatAtInternal(day);</span>
-<span class="nc" id="L158">		System.err.println(&quot;getPrevious=&quot; + day + &quot; current=&quot; + current);</span>
+<span class="nc" id="L148">		final long current = getLoatAtInternal(day);</span>
+<span class="nc" id="L149">		System.err.println(&quot;getPrevious=&quot; + day + &quot; current=&quot; + current);</span>
 		while (true) {
-<span class="nc" id="L160">			day = day.decrement();</span>
-<span class="nc" id="L161">			final int tmp = getLoatAtInternal(day);</span>
-<span class="nc" id="L162">			System.err.println(&quot;..day=&quot; + day + &quot; &quot; + tmp);</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (tmp != current)</span>
-<span class="nc" id="L164">				return day.getMillis();</span>
+<span class="nc" id="L151">			day = day.decrement();</span>
+<span class="nc" id="L152">			final int tmp = getLoatAtInternal(day);</span>
+<span class="nc" id="L153">			System.err.println(&quot;..day=&quot; + day + &quot; &quot; + tmp);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (tmp != current)</span>
+<span class="nc" id="L155">				return day.getMillis();</span>
 
-<span class="nc" id="L166">		}</span>
+<span class="nc" id="L157">		}</span>
 	}
 
 	public long getValueAt(long moment) {
-<span class="nc" id="L170">		final Day day = Day.create(moment);</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (isClosed(day))</span>
-<span class="nc" id="L172">			return 0;</span>
+<span class="nc" id="L161">		final TimePoint day = TimePoint.create(moment);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (isClosed(day))</span>
+<span class="nc" id="L163">			return 0;</span>
 
-<span class="nc" id="L174">		return 100;</span>
+<span class="nc" id="L165">		return 100;</span>
 	}
 
-	public int getLoadAt(Day day) {
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (getStartingDay() == null)</span>
-<span class="fc" id="L179">			return 100;</span>
-
-<span class="fc" id="L181">		return getLoatAtInternal(day);</span>
+	public int getLoadAt(TimePoint day) {
+<span class="fc" id="L169">		return getLoatAtInternal(day);</span>
 	}
 
-	public void setOffBeforeDate(Day day) {
-<span class="nc" id="L185">		this.offBefore = day;</span>
-<span class="nc" id="L186">	}</span>
+	public void setOffBeforeDate(TimePoint day) {
+<span class="nc" id="L173">		this.offBefore = day;</span>
+<span class="nc" id="L174">	}</span>
 
-	public void setOffAfterDate(Day day) {
-<span class="nc" id="L189">		this.offAfter = day;</span>
-<span class="nc" id="L190">	}</span>
+	public void setOffAfterDate(TimePoint day) {
+<span class="nc" id="L177">		this.offAfter = day;</span>
+<span class="nc" id="L178">	}</span>
 
-	private int getLoatAtInternal(Day day) {
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (isClosed(day))</span>
-<span class="fc" id="L194">			return 0;</span>
+	private int getLoatAtInternal(TimePoint day) {
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (isClosed(day))</span>
+<span class="fc" id="L182">			return 0;</span>
 
-<span class="fc" id="L196">		return 100;</span>
+<span class="fc" id="L184">		return 100;</span>
 	}
 
 	public LoadPlanable mutateMe(final OpenClose except) {
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (except != null)</span>
-<span class="nc" id="L201">			return new LoadPlanable() {</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (except != null)</span>
+<span class="nc" id="L189">			return new LoadPlanable() {</span>
 				@Override
-				public int getLoadAt(Day instant) {
-<span class="nc" id="L204">					final DayStatus exceptStatus = except.getLocalStatus(instant);</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">					if (exceptStatus == DayStatus.CLOSE)</span>
-<span class="nc" id="L206">						return 0;</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">					else if (exceptStatus == DayStatus.OPEN)</span>
-<span class="nc" id="L208">						return 100;</span>
-<span class="nc" id="L209">					return OpenClose.this.getLoadAt(instant);</span>
+				public int getLoadAt(TimePoint instant) {
+<span class="nc" id="L192">					final DayStatus exceptStatus = except.getLocalStatus(instant);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">					if (exceptStatus == DayStatus.CLOSE)</span>
+<span class="nc" id="L194">						return 0;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">					else if (exceptStatus == DayStatus.OPEN)</span>
+<span class="nc" id="L196">						return 100;</span>
+<span class="nc" id="L197">					return OpenClose.this.getLoadAt(instant);</span>
 				}
 
 				@Override
-				public Day getLastDayIfAny() {
-<span class="nc" id="L214">					return offAfter;</span>
+				public TimePoint getLastDayIfAny() {
+<span class="nc" id="L202">					return offAfter;</span>
 				}
 			};
-<span class="fc" id="L217">		return this;</span>
+<span class="fc" id="L205">		return this;</span>
 	}
 
 	@Override
-	public Day getLastDayIfAny() {
-<span class="nc" id="L222">		return offAfter;</span>
+	public TimePoint getLastDayIfAny() {
+<span class="nc" id="L210">		return offAfter;</span>
 	}
 
 }

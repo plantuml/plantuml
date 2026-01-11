@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -56,8 +56,8 @@ public class TaskChronology extends AbstractTask implements Task {
 	private Url url;
 	private CenterBorderColor[] colors;
 
-	private Day start;
-	private Day end;
+	private TimePoint start;
+	private TimePoint end;
 
 	public void setUrl(Url url) {
 <span class="nc" id="L63">		this.url = url;</span>
@@ -68,23 +68,23 @@ public class TaskChronology extends AbstractTask implements Task {
 <span class="nc" id="L68">	}</span>
 
 	@Override
-	public void setStart(Day start) {
+	public void setStart(TimePoint start) {
 <span class="nc" id="L72">		this.start = start;</span>
 
 <span class="nc" id="L74">	}</span>
 
 	@Override
-	public Day getStart() {
+	public TimePoint getStart() {
 <span class="nc" id="L78">		return this.start;</span>
 	}
 
 	@Override
-	public void setEnd(Day end) {
+	public void setEnd(TimePoint end) {
 <span class="nc" id="L83">		this.end = end;</span>
 <span class="nc" id="L84">	}</span>
 
 	@Override
-	public Day getEnd() {
+	public TimePoint getEnd() {
 <span class="nc" id="L88">		return this.end;</span>
 	}
 
@@ -119,7 +119,7 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(Day pause) {
+	public void addPause(TimePoint pause) {
 <span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
 	}
 

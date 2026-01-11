@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class ResourceDrawHistogram implements ResourceDraw {
@@ -58,11 +58,11 @@ public class ResourceDrawHistogram implements ResourceDraw {
 	private final Resource res;
 	private final TimeScale timeScale;
 	private final double y;
-	private final Day min;
-	private final Day max;
+	private final TimePoint min;
+	private final TimePoint max;
 	private final GanttDiagram gantt;
 
-<span class="nc" id="L65">	public ResourceDrawHistogram(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {</span>
+<span class="nc" id="L65">	public ResourceDrawHistogram(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min, TimePoint max) {</span>
 <span class="nc" id="L66">		this.res = res;</span>
 <span class="nc" id="L67">		this.timeScale = timeScale;</span>
 <span class="nc" id="L68">		this.y = y;</span>
@@ -78,7 +78,7 @@ public class ResourceDrawHistogram implements ResourceDraw {
 	public void drawU(UGraphic ug) {
 <span class="nc" id="L79">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (Day i = min; i.compareTo(max) &lt;= 0; i = i.increment()) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (TimePoint i = min; i.compareTo(max) &lt;= 0; i = i.increment()) {</span>
 <span class="nc" id="L82">			final int load = gantt.getLoadForResource(res, i);</span>
 <span class="nc" id="L83">			final double startingPosition = timeScale.getStartingPosition(i);</span>
 <span class="nc" id="L84">			final double width = timeScale.getStartingPosition(i.increment()) - startingPosition;</span>

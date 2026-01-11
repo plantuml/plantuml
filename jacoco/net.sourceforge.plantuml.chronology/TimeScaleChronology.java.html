@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.chronology;
 
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class TimeScaleChronology implements TimeScale {
@@ -48,7 +48,7 @@ public class TimeScaleChronology implements TimeScale {
 <span class="nc" id="L48">		this.fullWidth = fullWidth;</span>
 <span class="nc" id="L49">	}</span>
 
-	public double getStartingPosition(Day instant) {
+	public double getStartingPosition(TimePoint instant) {
 <span class="nc" id="L52">		final long wink = instant.getMillis();</span>
 <span class="nc bnc" id="L53" title="All 2 branches missed.">		if (wink &lt; min)</span>
 <span class="nc" id="L54">			throw new IllegalArgumentException();</span>
@@ -58,15 +58,15 @@ public class TimeScaleChronology implements TimeScale {
 <span class="nc" id="L58">		return fullWidth * (wink - min) / (max - min);</span>
 	}
 
-	public double getEndingPosition(Day instant) {
+	public double getEndingPosition(TimePoint instant) {
 <span class="nc" id="L62">		return getStartingPosition(instant);</span>
 	}
 
-	public double getWidth(Day instant) {
+	public double getWidth(TimePoint instant) {
 <span class="nc" id="L66">		throw new UnsupportedOperationException();</span>
 	}
 
-	public boolean isBreaking(Day instant) {
+	public boolean isBreaking(TimePoint instant) {
 <span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
 	}
 

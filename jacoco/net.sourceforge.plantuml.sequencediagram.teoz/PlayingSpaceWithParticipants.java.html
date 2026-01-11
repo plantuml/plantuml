@@ -59,22 +59,22 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 	private double ymin;
 	private double ymax;
 
-<span class="nc" id="L62">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
-<span class="nc" id="L63">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L62">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
+<span class="fc" id="L63">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
+<span class="fc" id="L64">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (cacheDimension == null) {</span>
-<span class="nc" id="L68">			final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
-<span class="nc" id="L69">					- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (cacheDimension == null) {</span>
+<span class="fc" id="L68">			final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
+<span class="fc" id="L69">					- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">			final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
-<span class="nc" id="L72">			final double height = playingSpace.getPreferredHeight(stringBounder)</span>
-<span class="nc" id="L73">					+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
+<span class="fc" id="L72">			final double height = playingSpace.getPreferredHeight(stringBounder)</span>
+<span class="fc" id="L73">					+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
 
-<span class="nc" id="L75">			cacheDimension = new XDimension2D(width, height);</span>
+<span class="fc" id="L75">			cacheDimension = new XDimension2D(width, height);</span>
 		}
-<span class="nc" id="L77">		return cacheDimension;</span>
+<span class="fc" id="L77">		return cacheDimension;</span>
 	}
 
 	public void drawU(UGraphic ug) {
@@ -111,7 +111,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 <span class="nc" id="L111">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="nc" id="L114">		return playingSpace.getMinX(stringBounder);</span>
+<span class="fc" id="L114">		return playingSpace.getMinX(stringBounder);</span>
 	}
 
 	public int getNbPages() {

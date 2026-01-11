@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
@@ -71,13 +71,13 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
-	private final Day end;
+	private final TimePoint end;
 	private final boolean oddStart;
 	private final boolean oddEnd;
-	private final Collection&lt;Day&gt; paused;
+	private final Collection&lt;TimePoint&gt; paused;
 	private final Collection&lt;GanttConstraint&gt; constraints;
 
-	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, boolean oddStart,
+	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, boolean oddStart,
 			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
 			Collection&lt;GanttConstraint&gt; constraints, StyleBuilder styleBuilder) {
 <span class="fc" id="L83">		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
@@ -86,7 +86,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 <span class="fc" id="L86">		this.oddStart = oddStart;</span>
 <span class="fc" id="L87">		this.oddEnd = oddEnd;</span>
 <span class="fc" id="L88">		this.paused = new TreeSet&lt;&gt;(((TaskImpl) task).getAllPaused());</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Day tmp = start; tmp.compareTo(end) &lt;= 0; tmp = tmp.increment()) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (TimePoint tmp = start; tmp.compareTo(end) &lt;= 0; tmp = tmp.increment()) {</span>
 <span class="fc" id="L90">			final int load = ((TaskImpl) task).getDefaultPlan().getLoadAt(tmp);</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">			if (load == 0)</span>
 <span class="fc" id="L92">				this.paused.add(tmp);</span>
@@ -256,7 +256,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 <span class="fc" id="L256">		final double round = style.value(PName.RoundCorner).asDouble();</span>
 
 <span class="fc" id="L258">		final Collection&lt;Segment&gt; off = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		for (Day pause : paused) {</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">		for (TimePoint pause : paused) {</span>
 <span class="fc" id="L260">			final double x1 = timeScale.getStartingPosition(pause);</span>
 <span class="fc" id="L261">			final double x2 = timeScale.getEndingPosition(pause);</span>
 <span class="fc" id="L262">			off.add(new Segment(x1, x2));</span>

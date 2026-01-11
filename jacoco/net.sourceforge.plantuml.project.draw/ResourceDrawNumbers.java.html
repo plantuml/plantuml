@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class ResourceDrawNumbers implements ResourceDraw {
@@ -57,11 +57,11 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	private final Resource res;
 	private final TimeScale timeScale;
 	private final double y;
-	private final Day min;
-	private final Day max;
+	private final TimePoint min;
+	private final TimePoint max;
 	private final GanttDiagram gantt;
 
-<span class="nc" id="L64">	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {</span>
+<span class="nc" id="L64">	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min, TimePoint max) {</span>
 <span class="nc" id="L65">		this.res = res;</span>
 <span class="nc" id="L66">		this.timeScale = timeScale;</span>
 <span class="nc" id="L67">		this.y = y;</span>
@@ -81,7 +81,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 <span class="nc" id="L81">		double startingPosition = -1;</span>
 <span class="nc" id="L82">		int totalLoad = 0;</span>
 <span class="nc" id="L83">		boolean isRed = false;</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (Day i = min; i.compareTo(max) &lt;= 0; i = i.increment()) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (TimePoint i = min; i.compareTo(max) &lt;= 0; i = i.increment()) {</span>
 <span class="nc" id="L85">			final boolean isBreaking = timeScale.isBreaking(i);</span>
 <span class="nc" id="L86">			final int load = gantt.getLoadForResource(res, i);</span>
 <span class="nc bnc" id="L87" title="All 2 branches missed.">			if (load &gt; 100)</span>

@@ -41,7 +41,7 @@ import java.util.Collection;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -74,10 +74,9 @@ public class SubjectProject implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L77">			final Day start = (Day) complement;</span>
+<span class="fc" id="L77">			final TimePoint start = (TimePoint) complement;</span>
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">			assert project == subject;</span>
-<span class="fc" id="L79">			project.setProjectStartingDate(start);</span>
-<span class="fc" id="L80">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L79">			return project.updateStartingPoint(start);</span>
 		}
 
 	}

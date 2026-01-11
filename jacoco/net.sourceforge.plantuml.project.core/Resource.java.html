@@ -39,7 +39,7 @@ import java.time.DayOfWeek;
 
 import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class Resource {
 
@@ -80,15 +80,15 @@ public class Resource {
 <span class="nc" id="L80">		this.draw = draw;</span>
 <span class="nc" id="L81">	}</span>
 
-	public boolean isClosedAt(Day day) {
+	public boolean isClosedAt(TimePoint day) {
 <span class="nc" id="L84">		return openClose.isClosed(day);</span>
 	}
 
-	public void addCloseDay(Day day) {
+	public void addCloseDay(TimePoint day) {
 <span class="nc" id="L88">		openClose.close(day);</span>
 <span class="nc" id="L89">	}</span>
 
-	public void addForceOnDay(Day day) {
+	public void addForceOnDay(TimePoint day) {
 <span class="nc" id="L92">		openClose.open(day);</span>
 <span class="nc" id="L93">	}</span>
 
@@ -96,15 +96,15 @@ public class Resource {
 <span class="nc" id="L96">		openClose.close(day);</span>
 <span class="nc" id="L97">	}</span>
 
-	public void setOffBeforeDate(Day day) {
+	public void setOffBeforeDate(TimePoint day) {
 <span class="nc" id="L100">		openClose.setOffBeforeDate(day);</span>
 <span class="nc" id="L101">	}</span>
 
-	public void setOffAfterDate(Day day) {
+	public void setOffAfterDate(TimePoint day) {
 <span class="nc" id="L104">		openClose.setOffAfterDate(day);</span>
 <span class="nc" id="L105">	}</span>
 
-	public Day getLastDayIfAny() {
+	public TimePoint getLastDayIfAny() {
 <span class="nc" id="L108">		return openClose.getLastDayIfAny();</span>
 	}
 

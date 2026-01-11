@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -107,27 +107,27 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram project, RegexResult arg) {
 <span class="fc" id="L108">		final String countAnd = arg.get(&quot;COUNT_AND&quot;, 0);</span>
 <span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (countAnd != null) {</span>
-<span class="nc" id="L110">			final Day date3 = getDate(project, arg, &quot;3&quot;);</span>
+<span class="nc" id="L110">			final TimePoint date3 = getDate(project, arg, &quot;3&quot;);</span>
 <span class="nc" id="L111">			final int nb = Integer.parseInt(countAnd);</span>
 <span class="nc" id="L112">			return Failable.ok(new DaysAsDates(project, date3, nb));</span>
 		}
 <span class="fc" id="L114">		final String countThen = arg.get(&quot;COUNT_THEN&quot;, 0);</span>
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (countThen != null) {</span>
-<span class="nc" id="L116">			final Day date3 = project.getThenDate();</span>
+<span class="nc" id="L116">			final TimePoint date3 = project.getThenDate();</span>
 <span class="nc" id="L117">			final int nb = Integer.parseInt(countThen);</span>
 <span class="nc" id="L118">			return Failable.ok(new DaysAsDates(project, date3, nb));</span>
 		}
-<span class="fc" id="L120">		final Day date1 = getDate(project, arg, &quot;1&quot;);</span>
-<span class="fc" id="L121">		final Day date2 = getDate(project, arg, &quot;2&quot;);</span>
+<span class="fc" id="L120">		final TimePoint date1 = getDate(project, arg, &quot;1&quot;);</span>
+<span class="fc" id="L121">		final TimePoint date2 = getDate(project, arg, &quot;2&quot;);</span>
 <span class="fc" id="L122">		return Failable.ok(new DaysAsDates(date1, date2));</span>
 	}
 
-	private Day getDate(GanttDiagram project, RegexResult arg, String suffix) {
+	private TimePoint getDate(GanttDiagram project, RegexResult arg, String suffix) {
 <span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (arg.get(&quot;BDAY&quot; + suffix, 0) != null) {</span>
 <span class="fc" id="L127">			final int day = Integer.parseInt(arg.get(&quot;BDAY&quot; + suffix, 0));</span>
 <span class="fc" id="L128">			final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot; + suffix, 0));</span>
 <span class="fc" id="L129">			final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot; + suffix, 0));</span>
-<span class="fc" id="L130">			return Day.create(year, month, day);</span>
+<span class="fc" id="L130">			return TimePoint.of(year, month, day);</span>
 		}
 <span class="nc bnc" id="L132" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot; + suffix, 0) != null) {</span>
 <span class="nc" id="L133">			final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot; + suffix, 0));</span>
@@ -148,7 +148,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">			for (Day d : (DaysAsDates) subject)</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			for (TimePoint d : (DaysAsDates) subject)</span>
 <span class="nc" id="L152">				project.closeDayAsDate(d, (String) complement);</span>
 
 <span class="nc" id="L154">			return CommandExecutionResult.ok();</span>
@@ -164,7 +164,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">			for (Day d : (DaysAsDates) subject)</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			for (TimePoint d : (DaysAsDates) subject)</span>
 <span class="nc" id="L168">				project.openDayAsDate(d, (String) complement);</span>
 
 <span class="nc" id="L170">			return CommandExecutionResult.ok();</span>
@@ -182,7 +182,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="fc" id="L184">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">			for (Day d : (DaysAsDates) subject)</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			for (TimePoint d : (DaysAsDates) subject)</span>
 <span class="fc" id="L186">				project.colorDay(d, color);</span>
 
 <span class="fc" id="L188">			return CommandExecutionResult.ok();</span>
@@ -201,7 +201,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L202">			final String name = (String) complement;</span>
 <span class="nc" id="L203">			final DaysAsDates days = (DaysAsDates) subject;</span>
-<span class="nc bnc" id="L204" title="All 2 branches missed.">			for (Day d : days) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			for (TimePoint d : days) {</span>
 <span class="nc" id="L205">				project.nameDay(d, name);</span>
 <span class="nc" id="L206">			}</span>
 <span class="nc" id="L207">			return CommandExecutionResult.ok();</span>

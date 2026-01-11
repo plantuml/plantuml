@@ -43,7 +43,7 @@ import java.util.Map.Entry;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.Value;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 <span class="fc" id="L48">public abstract class AbstractSolver implements Solver {</span>
 
@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.project.time.Day;
 	final public void setData(TaskAttribute attribute, Value value) {
 <span class="fc" id="L53">		final Value previous = values.remove(attribute);</span>
 <span class="fc bfc" id="L54" title="All 4 branches covered.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
-<span class="fc" id="L55">			final Day previousInstant = (Day) previous;</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (previousInstant.compareTo((Day) value) &gt; 0)</span>
+<span class="fc" id="L55">			final TimePoint previousInstant = (TimePoint) previous;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (previousInstant.compareTo((TimePoint) value) &gt; 0)</span>
 <span class="nc" id="L57">				value = previous;</span>
 
 		}
@@ -80,7 +80,7 @@ import net.sourceforge.plantuml.project.time.Day;
 <span class="nc bnc" id="L80" title="All 2 branches missed.">			if (attribute == TaskAttribute.START)</span>
 <span class="nc" id="L81">				return computeStart();</span>
 
-<span class="nc" id="L83">			return Load.inWinks(1);</span>
+<span class="nc" id="L83">			return Load.ofDays(1);</span>
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
 <span class="fc" id="L86">		return result;</span>

@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentencePausesAbsoluteIntervals extends SentenceSimple&lt;GanttDiagram&gt; {
 
@@ -52,7 +52,7 @@ public class SentencePausesAbsoluteIntervals extends SentenceSimple&lt;GanttDiag
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L53">		final Task task = (Task) subject;</span>
 <span class="nc" id="L54">		final DaysAsDates pauses = (DaysAsDates) complement;</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Day day : pauses)</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (TimePoint day : pauses)</span>
 <span class="nc" id="L56">			task.addPause(day);</span>
 
 <span class="nc" id="L58">		return CommandExecutionResult.ok();</span>

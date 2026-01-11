@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.project.core.TaskGroup;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealOrigin;
@@ -107,8 +107,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	private Day today;
 //	private double totalHeightWithoutFooter;
-	private Day min;
-	private Day max;
+	private TimePoint min;
+	private TimePoint max;
 	private TimeScaleChronology timeScale;
 //
 //	private Day printStart;
