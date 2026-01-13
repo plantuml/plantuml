@@ -295,7 +295,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 		// ::done
 
 <span class="fc bfc" id="L297" title="All 2 branches covered.">		if (modeTeoz())</span>
-<span class="nc" id="L298">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
+<span class="fc" id="L298">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
 
 <span class="fc" id="L300">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
 	}
@@ -341,7 +341,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L341">	private LifeEvent pendingCreate = null;</span>
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor) {
-<span class="nc" id="L344">		return activate(p, lifeEventType, backcolor, null);</span>
+<span class="fc" id="L344">		return activate(p, lifeEventType, backcolor, null);</span>
 	}
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor, HColor linecolor) {
@@ -355,10 +355,10 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="nc" id="L355">			pendingCreate = lifeEvent;</span>
 <span class="nc" id="L356">			return null;</span>
 		}
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">		if (lastEventWithDeactivate == null) {</span>
-<span class="nc bnc" id="L359" title="All 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
-<span class="nc" id="L360">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
-<span class="nc" id="L361">				return null;</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">		if (lastEventWithDeactivate == null) {</span>
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
+<span class="fc" id="L360">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
+<span class="fc" id="L361">				return null;</span>
 			}
 <span class="nc bnc" id="L363" title="All 2 branches missed.">			if (p.getInitialLife() == 0)</span>
 <span class="nc" id="L364">				return &quot;You cannot deactivate here&quot;;</span>
@@ -367,8 +367,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 		}
 <span class="pc bpc" id="L368" title="1 of 4 branches missed.">		if (lifeEventType == LifeEventType.ACTIVATE &amp;&amp; lastEventWithDeactivate instanceof AbstractMessage)</span>
 <span class="fc" id="L369">			activationState.push((AbstractMessage) lastEventWithDeactivate);</span>
-<span class="pc bpc" id="L370" title="3 of 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
-<span class="nc" id="L371">			activationState.pop();</span>
+<span class="pc bpc" id="L370" title="1 of 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
+<span class="fc" id="L371">			activationState.pop();</span>
 
 <span class="fc" id="L373">		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);</span>
 <span class="pc bpc" id="L374" title="1 of 2 branches missed.">		if (lastEventWithDeactivate instanceof AbstractMessage) {</span>
@@ -385,38 +385,38 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	public boolean grouping(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, boolean parallel) {
-<span class="nc bnc" id="L388" title="All 4 branches missed.">		if (type.isStart() == false &amp;&amp; openGroupings.size() == 0)</span>
+<span class="pc bpc" id="L388" title="1 of 4 branches missed.">		if (type.isStart() == false &amp;&amp; openGroupings.size() == 0)</span>
 <span class="nc" id="L389">			return false;</span>
 
-<span class="nc bnc" id="L391" title="All 2 branches missed.">		if (backColorGeneral == null)</span>
-<span class="nc" id="L392">			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">		if (backColorGeneral == null)</span>
+<span class="fc" id="L392">			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);</span>
 
-<span class="nc bnc" id="L394" title="All 2 branches missed.">		final GroupingStart top = openGroupings.size() &gt; 0 ? openGroupings.get(0) : null;</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		final GroupingStart top = openGroupings.size() &gt; 0 ? openGroupings.get(0) : null;</span>
 
 		final Grouping g;
-<span class="nc bnc" id="L397" title="All 2 branches missed.">		switch (type) {</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		switch (type) {</span>
 		case START_PARTITION:
 		case START:
-<span class="nc" id="L400">			g = new GroupingStart(type, title, comment, backColorGeneral, backColorElement, top,</span>
-<span class="nc" id="L401">					getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L402">			break;</span>
+<span class="fc" id="L400">			g = new GroupingStart(type, title, comment, backColorGeneral, backColorElement, top,</span>
+<span class="fc" id="L401">					getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L402">			break;</span>
 		default:
-<span class="nc" id="L404">			g = new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,</span>
-<span class="nc" id="L405">					getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L404">			g = new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,</span>
+<span class="fc" id="L405">					getSkinParam().getCurrentStyleBuilder());</span>
 		}
-<span class="nc" id="L407">		events.add(g);</span>
+<span class="fc" id="L407">		events.add(g);</span>
 
-<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (type.isStart()) {</span>
-<span class="nc bnc" id="L410" title="All 2 branches missed.">			if (parallel)</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">		if (type.isStart()) {</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">			if (parallel)</span>
 <span class="nc" id="L411">				((GroupingStart) g).goParallel();</span>
 
-<span class="nc" id="L413">			openGroupings.add(0, (GroupingStart) g);</span>
-<span class="nc bnc" id="L414" title="All 2 branches missed.">		} else if (type == GroupingType.END) {</span>
-<span class="nc" id="L415">			openGroupings.remove(0);</span>
-<span class="nc" id="L416">			lastEventWithDeactivate = (GroupingLeaf) g;</span>
+<span class="fc" id="L413">			openGroupings.add(0, (GroupingStart) g);</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">		} else if (type == GroupingType.END) {</span>
+<span class="fc" id="L415">			openGroupings.remove(0);</span>
+<span class="fc" id="L416">			lastEventWithDeactivate = (GroupingLeaf) g;</span>
 		}
 
-<span class="nc" id="L419">		return true;</span>
+<span class="fc" id="L419">		return true;</span>
 	}
 
 	public DiagramDescription getDescription() {
@@ -613,8 +613,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="pc bpc" id="L616" title="1 of 2 branches missed.">		return modeTeoz() // this is for backward compatibility</span>
-<span class="nc" id="L617">				? ClockwiseTopRightBottomLeft.same(5)</span>
+<span class="fc bfc" id="L616" title="All 2 branches covered.">		return modeTeoz() // this is for backward compatibility</span>
+<span class="fc" id="L617">				? ClockwiseTopRightBottomLeft.same(5)</span>
 <span class="fc" id="L618">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
 	}
 }

@@ -98,29 +98,29 @@ public class PlayingSpace implements Bordered {
 <span class="fc" id="L98">	}</span>
 
 	public void drawBackground(UGraphic ug) {
-<span class="nc" id="L101">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
-<span class="nc" id="L102">		drawUInternal(interceptor, false);</span>
-<span class="nc" id="L103">	}</span>
+<span class="fc" id="L101">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
+<span class="fc" id="L102">		drawUInternal(interceptor, false);</span>
+<span class="fc" id="L103">	}</span>
 
 	public void drawForeground(UGraphic ug) {
-<span class="nc" id="L106">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
-<span class="nc" id="L107">		drawUInternal(interceptor, false);</span>
-<span class="nc" id="L108">	}</span>
+<span class="fc" id="L106">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
+<span class="fc" id="L107">		drawUInternal(interceptor, false);</span>
+<span class="fc" id="L108">	}</span>
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
-<span class="nc" id="L111">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L112">		final List&lt;CommonTile&gt; local = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L113">		final List&lt;CommonTile&gt; full = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L114">		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (CommonTile tile : local) {</span>
+<span class="fc" id="L111">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L112">		final List&lt;CommonTile&gt; local = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L113">		final List&lt;CommonTile&gt; full = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L114">		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (CommonTile tile : local) {</span>
 			if (YGauge.USE_ME) {
 				((CommonTile) tile).drawU(ug);
 			} else {
-<span class="nc" id="L119">				final double posy = ((CommonTile) tile).getTimeHook().getValue();</span>
-<span class="nc" id="L120">				((CommonTile) tile).drawU(ug.apply(UTranslate.dy(posy)));</span>
+<span class="fc" id="L119">				final double posy = ((CommonTile) tile).getTimeHook().getValue();</span>
+<span class="fc" id="L120">				((CommonTile) tile).drawU(ug.apply(UTranslate.dy(posy)));</span>
 			}
-<span class="nc" id="L122">		}</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (LinkAnchor linkAnchor : linkAnchors) {</span>
+<span class="fc" id="L122">		}</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		for (LinkAnchor linkAnchor : linkAnchors) {</span>
 <span class="nc" id="L124">			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());</span>
 <span class="nc" id="L125">			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());</span>
 <span class="nc bnc" id="L126" title="All 4 branches missed.">			if (ytile1 != null &amp;&amp; ytile2 != null)</span>
@@ -128,7 +128,7 @@ public class PlayingSpace implements Bordered {
 
 <span class="nc" id="L129">		}</span>
 		// System.err.println(&quot;MainTile::drawUInternal finalY=&quot; + y);
-<span class="nc" id="L131">		return y.getValue();</span>
+<span class="fc" id="L131">		return y.getValue();</span>
 	}
 
 	private CommonTile getFromAnchor(List&lt;CommonTile&gt; positionedTiles, String anchor) {
@@ -140,58 +140,58 @@ public class PlayingSpace implements Bordered {
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L143">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
-<span class="nc" id="L144">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);</span>
-<span class="nc" id="L145">		final double finalY = drawUInternal(interceptor, false);</span>
-<span class="nc" id="L146">		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;</span>
+<span class="fc" id="L143">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
+<span class="fc" id="L144">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);</span>
+<span class="fc" id="L145">		final double finalY = drawUInternal(interceptor, false);</span>
+<span class="fc" id="L146">		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;</span>
 		// System.err.println(&quot;MainTile::getPreferredHeight=&quot; + result);
-<span class="nc" id="L148">		return result;</span>
+<span class="fc" id="L148">		return result;</span>
 	}
 
 	public void addConstraints() {
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		for (Tile tile : tiles)</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
 <span class="fc" id="L153">			tile.addConstraints();</span>
 
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L155">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="nc" id="L158">		return min;</span>
+<span class="fc" id="L158">		return min;</span>
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-<span class="nc" id="L162">		return max;</span>
+<span class="fc" id="L162">		return max;</span>
 	}
 
 	public boolean isShowFootbox() {
-<span class="nc" id="L166">		return isShowFootbox;</span>
+<span class="fc" id="L166">		return isShowFootbox;</span>
 	}
 
 	public LivingSpaces getLivingSpaces() {
-<span class="nc" id="L170">		return livingSpaces;</span>
+<span class="fc" id="L170">		return livingSpaces;</span>
 	}
 
 	public double getBorder1() {
-<span class="nc" id="L174">		return min.getCurrentValue();</span>
+<span class="fc" id="L174">		return min.getCurrentValue();</span>
 	}
 
 	public double getBorder2() {
-<span class="nc" id="L178">		return max.getCurrentValue();</span>
+<span class="fc" id="L178">		return max.getCurrentValue();</span>
 	}
 
 	public List&lt;Double&gt; yNewPages() {
-<span class="nc" id="L182">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L183">		yNewPages.add((double) 0);</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		for (Tile tile : tiles) {</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (tile instanceof GroupingTile)</span>
-<span class="nc" id="L186">				((GroupingTile) tile).addYNewPages(yNewPages);</span>
+<span class="fc" id="L182">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L183">		yNewPages.add((double) 0);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L186">				((GroupingTile) tile).addYNewPages(yNewPages);</span>
 
-<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (tile instanceof NewpageTile) {</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (tile instanceof NewpageTile) {</span>
 <span class="nc" id="L189">				final double y = ((NewpageTile) tile).getTimeHook().getValue();</span>
 <span class="nc" id="L190">				yNewPages.add(y);</span>
 			}
-<span class="nc" id="L192">		}</span>
-<span class="nc" id="L193">		yNewPages.add(Double.MAX_VALUE);</span>
-<span class="nc" id="L194">		return yNewPages;</span>
+<span class="fc" id="L192">		}</span>
+<span class="fc" id="L193">		yNewPages.add(Double.MAX_VALUE);</span>
+<span class="fc" id="L194">		return yNewPages;</span>
 	}
 
 	public int getNbPages() {
