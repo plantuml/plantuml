@@ -35,9 +35,13 @@
  */
 package net.sourceforge.plantuml.theme;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,8 +49,14 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.sprite.ResourcesUtils;
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
 
 // ::uncomment when __CORE__
@@ -64,62 +74,93 @@ public class ThemeUtils {
 
 	private static final String THEME_PATH = "themes";
 
-	// ::uncomment when __CORE__
-//	public static ReadLine getReaderTheme(String filename) throws FileNotFoundException {
-//	Log.info("Loading theme " + filename);
-//	final String fullpath = cheerpjPath + THEME_PATH + "/" + THEME_FILE_PREFIX + filename
-//			+ THEME_FILE_SUFFIX;
-//
-//	final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
-//	final String description = "<" + res + ">";
-//	final InputStream is = new FileInputStream(fullpath);
-//	return ReadLineReader.create(new InputStreamReader(is), description);
-//}
-	// ::done
-
 	// ::comment when __CORE__
-	public static Theme getReaderTheme(String realName, String from) {
-		final String description = realName + " from " + from;
-		from = from.substring(1, from.length() - 1);
-		final String res = from + "/" + THEME_FILE_PREFIX + realName + THEME_FILE_SUFFIX;
-		final byte[] is = Stdlib.getPumlResource(res);
-		if (is == null)
-			return null;
 
-		return new Theme(ReadLineReader.create(is, description));
+	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
+			throws IOException, EaterException {
+		if (from == null)
+			return loadBundledOrLocalTheme(pathSystem, name);
+
+		if (from.startsWith("<") && from.endsWith(">"))
+			return loadStdlibTheme(name, from);
+
+		if (from.startsWith("http://") || from.startsWith("https://"))
+			return loadHttpTheme(name, from, location);
+
+		return loadFileTheme(pathSystem, name, from);
 	}
 
-	public static Theme getReaderTheme(String filename) {
-		Log.info(() -> "Loading theme " + filename);
-		final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
-		final String description = "<" + res + ">";
+	private static Theme loadBundledOrLocalTheme(PathSystem pathSystem, String name) throws IOException {
+		// First, try bundled themes
+		Log.info(() -> "Loading theme " + name);
+		final String res = "/" + THEME_PATH + "/" + getFilename(name);
 		final InputStream is = Stdlib.class.getResourceAsStream(res);
+		if (is != null) {
+			final String description = "<" + res + ">";
+			return new Theme(ReadLineReader.create(new InputStreamReader(is), description));
+		}
+
+		// Then try local file
+		final InputFile localFile = pathSystem.getInputFile(getFilename(name));
+		if (localFile != null) {
+			final Reader br = localFile.getReader(UTF_8);
+			if (br != null)
+				return new Theme(ReadLineReader.create(br, "theme " + name));
+
+		}
+
+		return null;
+	}
+
+	private static Theme loadStdlibTheme(String name, String from) {
+		final String realFrom = from.substring(1, from.length() - 1);
+		final String res = realFrom + "/" + getFilename(name);
+		final byte[] content = Stdlib.getPumlResource(res);
+		if (content == null)
+			return null;
+
+		final String description = name + " from " + from;
+		return new Theme(ReadLineReader.create(content, description));
+	}
+
+	private static Theme loadHttpTheme(String name, String from, StringLocated location)
+			throws UnsupportedEncodingException, EaterException {
+		final SURL url = SURL.create(getFullPath(from, name));
+		if (url == null)
+			throw new EaterException("Cannot open URL", location);
+
+		return new Theme(PreprocessorUtils.getReaderInclude(url, location, UTF_8));
+	}
+
+	private static String getFullPath(String from, String filename) {
+		final StringBuilder sb = new StringBuilder(from);
+		if (from.endsWith("/") == false)
+			sb.append("/");
+
+		return sb + getFilename(filename);
+	}
+
+	private static Theme loadFileTheme(PathSystem pathSystem, String name, String from) throws IOException {
+		final InputFile file = pathSystem.getInputFile(from + getFilename(name));
+		final InputStream is = file.newInputStream();
 		if (is == null)
 			return null;
 
+		final String description = name + " from " + from;
 		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));
 	}
 
 	public static List<String> getAllThemeNames() throws IOException {
 		final Collection<String> filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));
 		final List<String> result = new ArrayList<>();
-		for (String f : filenames) {
-			if (f.startsWith(THEME_FILE_PREFIX) && f.endsWith(THEME_FILE_SUFFIX)) {
+		for (String f : filenames)
+			if (f.startsWith(THEME_FILE_PREFIX) && f.endsWith(THEME_FILE_SUFFIX))
 				result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));
-			}
-		}
+
 		Collections.sort(result);
 		return result;
 	}
 	// ::done
-
-	public static String getFullPath(String from, String filename) {
-		final StringBuilder sb = new StringBuilder(from);
-		if (from.endsWith("/") == false) {
-			sb.append("/");
-		}
-		return sb + getFilename(filename);
-	}
 
 	public static String getFilename(String filename) {
 		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
