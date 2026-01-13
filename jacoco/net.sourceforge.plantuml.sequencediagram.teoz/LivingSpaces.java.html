@@ -119,12 +119,12 @@ import net.sourceforge.plantuml.skin.Context2D;
 <span class="nc" id="L119">	}</span>
 
 	public double getHeadHeight(StringBounder stringBounder) {
-<span class="fc" id="L122">		double headHeight = 0;</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
-<span class="fc" id="L124">			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);</span>
-<span class="fc" id="L125">			headHeight = Math.max(headHeight, headDim.getHeight());</span>
-<span class="fc" id="L126">		}</span>
-<span class="fc" id="L127">		return headHeight;</span>
+<span class="nc" id="L122">		double headHeight = 0;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (LivingSpace livingSpace : values()) {</span>
+<span class="nc" id="L124">			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);</span>
+<span class="nc" id="L125">			headHeight = Math.max(headHeight, headDim.getHeight());</span>
+<span class="nc" id="L126">		}</span>
+<span class="nc" id="L127">		return headHeight;</span>
 	}
 
 	public void drawLifeLines(final UGraphic ug, double height, Context2D context) {

@@ -206,49 +206,52 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 <span class="fc" id="L206">	}</span>
 
 	private String getImageSvg() throws IOException, InterruptedException {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (svg == null)</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (svg == null) {</span>
 <span class="nc" id="L210">			svg = getImageSvgSlow();</span>
-<span class="nc" id="L211">		return svg;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (svg != null)</span>
+<span class="nc" id="L212">				svg = svg.replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
+		}
+<span class="nc" id="L214">		return svg;</span>
 
 	}
 
 	private String getImageSvgSlow() throws IOException, InterruptedException {
-<span class="nc" id="L216">		final Diagram system = getSystem();</span>
-<span class="nc" id="L217">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="nc" id="L218">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
-<span class="nc" id="L219">		os.close();</span>
-<span class="nc" id="L220">		return new String(os.toByteArray());</span>
+<span class="nc" id="L219">		final Diagram system = getSystem();</span>
+<span class="nc" id="L220">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="nc" id="L221">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L222">		os.close();</span>
+<span class="nc" id="L223">		return new String(os.toByteArray());</span>
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
-<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (image == null)</span>
-<span class="fc" id="L225">			image = getImageSlow();</span>
-<span class="fc" id="L226">		return image;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (image == null)</span>
+<span class="fc" id="L228">			image = getImageSlow();</span>
+<span class="fc" id="L229">		return image;</span>
 	}
 
 	private BufferedImage getImageSlow() throws IOException, InterruptedException {
-<span class="fc" id="L230">		final Diagram system = getSystem();</span>
-<span class="fc" id="L231">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L232">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
-<span class="fc" id="L233">		os.close();</span>
-<span class="fc" id="L234">		return SImageIO.read(os.toByteArray());</span>
+<span class="fc" id="L233">		final Diagram system = getSystem();</span>
+<span class="fc" id="L234">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L235">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc" id="L236">		os.close();</span>
+<span class="fc" id="L237">		return SImageIO.read(os.toByteArray());</span>
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="nc" id="L238">		return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L241">		return HorizontalAlignment.LEFT;</span>
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty()</span>
-<span class="fc" id="L243">				: Previous.createFrom(skinParam.values());</span>
-<span class="fc" id="L244">		final BlockUml blockUml = new BlockUml(PathSystem.fetch(), list, Defines.createEmpty(), previous, null, null);</span>
-<span class="fc" id="L245">		return blockUml.getDiagram();</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty()</span>
+<span class="fc" id="L246">				: Previous.createFrom(skinParam.values());</span>
+<span class="fc" id="L247">		final BlockUml blockUml = new BlockUml(PathSystem.fetch(), list, Defines.createEmpty(), previous, null, null);</span>
+<span class="fc" id="L248">		return blockUml.getDiagram();</span>
 
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L251">		return Arrays.asList(Neutron.create(this));</span>
+<span class="nc" id="L254">		return Arrays.asList(Neutron.create(this));</span>
 	}
 
 }
