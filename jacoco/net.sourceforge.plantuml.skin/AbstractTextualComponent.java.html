@@ -61,9 +61,9 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
 			int marginY, ISkinParam skinParam, CharSequence label) {
-<span class="fc" id="L64">		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam,</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">				Display.getWithNewlines(skinParam.getPragma(), label == null ? &quot;&quot; : label.toString()), false);</span>
-<span class="fc" id="L66">	}</span>
+<span class="nc" id="L64">		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam,</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">				Display.getWithNewlines(skinParam.getPragma(), label == null ? &quot;&quot; : label.toString()), false);</span>
+<span class="nc" id="L66">	}</span>
 
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
 			int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
