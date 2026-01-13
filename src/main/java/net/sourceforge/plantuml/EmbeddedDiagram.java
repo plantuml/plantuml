@@ -206,8 +206,11 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private String getImageSvg() throws IOException, InterruptedException {
-		if (svg == null)
+		if (svg == null) {
 			svg = getImageSvgSlow();
+			if (svg != null)
+				svg = svg.replaceAll("<\\?plantuml.+?\\?>", "");
+		}
 		return svg;
 
 	}
