@@ -78,55 +78,42 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		if (s.startsWith(EMBEDDED_START) == false)
 			return null;
 
-		if (s.equals(EMBEDDED_START))
-			return "uml";
-
-		if (s.equals(EMBEDDED_START + "ditaa"))
-			return "ditaa";
-
-		if (s.equals(EMBEDDED_START + "uml"))
-			return "uml";
-
-		if (s.equals(EMBEDDED_START + "wbs"))
-			return "wbs";
-
-		if (s.equals(EMBEDDED_START + "mindmap"))
-			return "mindmap";
-
-		if (s.equals(EMBEDDED_START + "gantt"))
-			return "gantt";
-
-		if (s.equals(EMBEDDED_START + "json"))
-			return "json";
-
-		if (s.equals(EMBEDDED_START + "yaml"))
-			return "yaml";
-
-		if (s.equals(EMBEDDED_START + "wire"))
-			return "wire";
-
-		if (s.equals(EMBEDDED_START + "creole"))
-			return "creole";
-
-		if (s.equals(EMBEDDED_START + "board"))
-			return "board";
-
-		if (s.equals(EMBEDDED_START + "ebnf"))
-			return "ebnf";
-
-		if (s.equals(EMBEDDED_START + "regex"))
-			return "regex";
-
-		if (s.equals(EMBEDDED_START + "files"))
-			return "files";
-
-		if (s.equals(EMBEDDED_START + "chronology"))
-			return "chronology";
-
-		if (s.equals(EMBEDDED_START + "chen"))
-			return "chen";
-
-		return null;
+		switch (s) {
+			case EMBEDDED_START:
+				return "uml";
+			case EMBEDDED_START + "ditaa":
+				return "ditaa";
+			case EMBEDDED_START + "uml":
+				return "uml";
+			case EMBEDDED_START + "wbs":
+				return "wbs";
+			case EMBEDDED_START + "mindmap":
+				return "mindmap";
+			case EMBEDDED_START + "gantt":
+				return "gantt";
+			case EMBEDDED_START + "json":
+				return "json";
+			case EMBEDDED_START + "yaml":
+				return "yaml";
+			case EMBEDDED_START + "wire":
+				return "wire";
+			case EMBEDDED_START + "creole":
+				return "creole";
+			case EMBEDDED_START + "board":
+				return "board";
+			case EMBEDDED_START + "ebnf":
+				return "ebnf";
+			case EMBEDDED_START + "regex":
+				return "regex";
+			case EMBEDDED_START + "files":
+				return "files";
+			case EMBEDDED_START + "chronology":
+				return "chronology";
+			case EMBEDDED_START + "chen":
+				return "chen";
+			default:
+				return null;
+		}
 	}
 
 	public static EmbeddedDiagram createAndSkip(String type, Iterator<CharSequence> it, ISkinSimple skinParam) {
@@ -206,11 +193,9 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private String getImageSvg() throws IOException, InterruptedException {
-		if (svg == null) {
-			svg = getImageSvgSlow();
-			if (svg != null)
-				svg = svg.replaceAll("<\\?plantuml.+?\\?>", "");
-		}
+		if (svg == null)
+			svg = getImageSvgSlow().replaceAll("<\\?plantuml.+?\\?>", "");
+
 		return svg;
 
 	}
@@ -242,8 +227,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final Previous previous = skinParam == null ? Previous.createEmpty()
-				: Previous.createFrom(skinParam.values());
+		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());
 		final BlockUml blockUml = new BlockUml(PathSystem.fetch(), list, Defines.createEmpty(), previous, null, null);
 		return blockUml.getDiagram();
 
