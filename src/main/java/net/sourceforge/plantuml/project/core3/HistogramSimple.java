@@ -71,16 +71,4 @@ public class HistogramSimple implements Histogram {
 	public String toString() {
 		return events.toString();
 	}
-
-	public long getValueAt(long moment) {
-		long last = 0;
-		for (Entry<Long, Long> ent : events.entrySet()) {
-			if (ent.getKey() > moment) {
-				return last;
-			}
-			last = ent.getValue();
-		}
-		return last;
-	}
-
 }

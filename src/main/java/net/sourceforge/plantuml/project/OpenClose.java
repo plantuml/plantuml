@@ -179,14 +179,6 @@ public class OpenClose implements Histogram {
 		}
 	}
 
-	public long getValueAt(long moment) {
-		final TimePoint day = TimePoint.create(moment);
-		if (isClosed(day))
-			return 0;
-
-		return 100;
-	}
-
 	public int getLoadAtDUMMY(TimePoint day) {
 		return getLoatAtInternal(day);
 	}
