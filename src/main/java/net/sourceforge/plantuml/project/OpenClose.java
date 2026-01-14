@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
-public class OpenClose implements Histogram, LoadPlanable {
+public class OpenClose implements Histogram {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
 	private final Map<TimePoint, DayStatus> dayStatus = new HashMap<>();
@@ -215,7 +215,6 @@ public class OpenClose implements Histogram, LoadPlanable {
 		return offAfter;
 	}
 
-	@Override
 	public PiecewiseConstant asPiecewiseConstant() {
 		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);
 

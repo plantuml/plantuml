@@ -51,7 +51,6 @@ import java.util.TreeSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.ngm.NGMAllocation;
 import net.sourceforge.plantuml.project.ngm.math.Combiner;
@@ -66,7 +65,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
-public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
+public class TaskImpl extends AbstractTask implements Task {
 
 	private final SortedSet<LocalDate> pausedDay = new TreeSet<>();
 	private final EnumSet<DayOfWeek> pausedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
@@ -134,7 +133,6 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 //		return result.getLoadAtDUMMY(instant);
 //	}
 
-	@Override
 	public PiecewiseConstant asPiecewiseConstant() {
 		if (resources.size() > 0)
 			return Combiner.product(getDefaultPlan(), allRessources());
