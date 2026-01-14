@@ -99,7 +99,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	public PiecewiseConstant getDefaultPlan() {
-		return gantt.getLoadPlanableForTask(getCode().getId()).asPiecewiseConstant();
+		return gantt.getLoadPlanableForTask(getCode().getId());
 	}
 
 	private PiecewiseConstant localPause() {

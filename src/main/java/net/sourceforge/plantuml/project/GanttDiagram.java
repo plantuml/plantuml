@@ -629,8 +629,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return result;
 	}
 
-	public LoadPlanable getLoadPlanableForTask(String taskId) {
-		return openClose.mutateMe(this.openCloseForTask.get(taskId));
+	public PiecewiseConstant getLoadPlanableForTask(String taskId) {
+		return openClose.mutateMe(this.openCloseForTask.get(taskId)).asPiecewiseConstant();
 	}
 
 	private Task getLastCreatedTask() {
