@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project;
 
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public interface LoadPlanable {
 

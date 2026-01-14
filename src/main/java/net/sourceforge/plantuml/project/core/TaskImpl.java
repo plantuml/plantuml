@@ -98,8 +98,8 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		setLoad(Load.ofDays(1));
 	}
 
-	public LoadPlanable getDefaultPlan() {
-		return gantt.getLoadPlanableForTask(getCode().getId());
+	public PiecewiseConstant getDefaultPlan() {
+		return gantt.getLoadPlanableForTask(getCode().getId()).asPiecewiseConstant();
 	}
 
 	private PiecewiseConstant localPause() {
@@ -137,8 +137,8 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	@Override
 	public PiecewiseConstant asPiecewiseConstant() {
 		if (resources.size() > 0)
-			return Combiner.product(getDefaultPlan().asPiecewiseConstant(), getResourcesPlan().asPiecewiseConstant());
-		return Combiner.product(getDefaultPlan().asPiecewiseConstant(), localPause());
+			return Combiner.product(getDefaultPlan(), allRessources());
+		return Combiner.product(getDefaultPlan(), localPause());
 	}
 
 	private boolean isPaused(TimePoint instant) {
@@ -202,51 +202,6 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 		return Combiner.product(localPause(), Combiner.sum(contributions.toArray(new PiecewiseConstant[0])));
 	}
-
-	private LoadPlanable getResourcesPlan() {
-		if (resources.size() == 0)
-			throw new IllegalStateException();
-
-		return new LoadPlanable() {
-//			public int getLoadAtDUMMY(TimePoint instant) {
-//				int result = 0;
-//				for (Map.Entry<Resource, Integer> ent : resources.entrySet()) {
-//					final Resource res = ent.getKey();
-//					if (res.isClosedAt(instant))
-//						continue;
-//
-//					final int percentage = ent.getValue();
-//					result += percentage;
-//				}
-//				return result;
-//			}
-
-			@Override
-			public PiecewiseConstant asPiecewiseConstant() {
-				return allRessources();
-			}
-
-//			@Override
-//			public TimePoint getLastDayIfAnyDUMMY() {
-//				return TaskImpl.this.getLastDayIfAnyDUMMY();
-//			}
-		};
-	}
-
-//	@Override
-//	public TimePoint getLastDayIfAnyDUMMY() {
-//		TimePoint result = null;
-//
-//		for (Resource res : resources.keySet()) {
-//			if (res.getLastDayIfAny() == null)
-//				return null;
-//
-//			if (result == null || result.compareTo(res.getLastDayIfAny()) < 0)
-//				result = res.getLastDayIfAny();
-//		}
-//
-//		return result;
-//	}
 
 	public String getPrettyDisplay() {
 		if (resources.size() > 0) {

@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -89,9 +89,9 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		this.oddStart = oddStart;
 		this.oddEnd = oddEnd;
 		this.paused = new TreeSet<>(((TaskImpl) task).getAllPaused());
-		final LoadPlanable defaultPlan = ((TaskImpl) task).getDefaultPlan();
+		final PiecewiseConstant defaultPlan = ((TaskImpl) task).getDefaultPlan();
 		for (TimePoint tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment())
-			if (PiecewiseConstantUtils.isZeroOnDay(defaultPlan.asPiecewiseConstant(), tmp.toDay()))
+			if (PiecewiseConstantUtils.isZeroOnDay(defaultPlan, tmp.toDay()))
 				this.paused.add(tmp.toDay());
 
 	}
