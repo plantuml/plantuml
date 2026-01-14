@@ -42,7 +42,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.project.core3.TimeLine;
 import net.sourceforge.plantuml.project.ngm.math.Combiner;
 import net.sourceforge.plantuml.project.ngm.math.Fraction;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
@@ -51,7 +50,7 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
-public class OpenClose implements TimeLine {
+public class OpenClose {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
 	private final Map<TimePoint, DayStatus> dayStatus = new HashMap<>();
@@ -144,39 +143,6 @@ public class OpenClose implements TimeLine {
 		dayStatus.put(day, DayStatus.OPEN);
 	}
 
-	public long getNext(long moment) {
-		TimePoint day = TimePoint.create(moment);
-		if (isThereSomeChangeAfter(day) == false)
-			return TimeLine.MAX_TIME;
-
-		final long current = getLoatAtInternal(day);
-		System.err.println("getNext:day=" + day + " current=" + current);
-		while (true) {
-			day = day.increment();
-			final int tmp = getLoatAtInternal(day);
-			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current)
-				return day.getMillis();
-
-		}
-	}
-
-	public long getPrevious(long moment) {
-		TimePoint day = TimePoint.create(moment);
-		if (isThereSomeChangeBefore(day) == false)
-			return -TimeLine.MAX_TIME;
-
-		final long current = getLoatAtInternal(day);
-		System.err.println("getPrevious=" + day + " current=" + current);
-		while (true) {
-			day = day.decrement();
-			final int tmp = getLoatAtInternal(day);
-			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current)
-				return day.getMillis();
-
-		}
-	}
 
 	public int getLoadAtDUMMY(TimePoint day) {
 		return getLoatAtInternal(day);

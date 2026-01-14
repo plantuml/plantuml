@@ -41,6 +41,4 @@ public interface TaskLoad {
 
 	public long getEnd();
 
-	public TimeLine getLoad();
-
 }

@@ -39,11 +39,6 @@ public class TaskLoadImpl implements TaskLoad {
 
 	private long start;
 	private long end;
-	private final TimeLine load;
-
-	public TaskLoadImpl(TimeLine load) {
-		this.load = load;
-	}
 
 	public final long getStart() {
 		return start;
@@ -59,11 +54,6 @@ public class TaskLoadImpl implements TaskLoad {
 
 	public final void setEnd(long end) {
 		this.end = end;
-	}
-
-	@Override
-	public final TimeLine getLoad() {
-		return load;
 	}
 
 }
