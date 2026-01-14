@@ -55,7 +55,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 	}
 
 	protected final int getLoadAt(TimePoint instant) {
-		if (PiecewiseConstantUtils.isZeroOnDay(thParam.getLoadPlanable().asPiecewiseConstant(), instant.toDay()))
+		if (PiecewiseConstantUtils.isZeroOnDay(thParam.getLoadPlanable(), instant.toDay()))
 			return 0;
 		// return thParam.getLoadPlanable().getLoadAtDUMMY(instant);
 		return 100;

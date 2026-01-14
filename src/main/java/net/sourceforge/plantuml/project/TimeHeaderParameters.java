@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -117,8 +118,8 @@ public class TimeHeaderParameters implements GanttStyle {
 		return locale;
 	}
 
-	public final LoadPlanable getLoadPlanable() {
-		return openClose;
+	public final PiecewiseConstant getLoadPlanable() {
+		return openClose.asPiecewiseConstant();
 	}
 
 	public final Set<TimePoint> getVerticalSeparatorBefore() {
