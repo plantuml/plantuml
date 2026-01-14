@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.project.GanttConstraintMode;
-import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
@@ -47,14 +46,14 @@ public class TaskInstant {
 	private final TaskAttribute attribute;
 	private final int delta;
 	private final GanttConstraintMode mode;
-	private final LoadPlanable calendar;
+	private final PiecewiseConstant calendar;
 
 	public TaskInstant(Moment task, TaskAttribute attribute) {
 		this(task, attribute, 0, GanttConstraintMode.IGNORE_CALENDAR, null);
 	}
 
 	private TaskInstant(Moment task, TaskAttribute attribute, int delta, GanttConstraintMode mode,
-			LoadPlanable calendar) {
+			PiecewiseConstant calendar) {
 		this.task = task;
 		this.attribute = attribute;
 		this.delta = delta;
@@ -65,7 +64,7 @@ public class TaskInstant {
 
 	}
 
-	public TaskInstant withDelta(int newDelta, GanttConstraintMode mode, LoadPlanable calendar) {
+	public TaskInstant withDelta(int newDelta, GanttConstraintMode mode, PiecewiseConstant calendar) {
 		return new TaskInstant(task, attribute, newDelta, mode, calendar);
 	}
 
@@ -74,8 +73,7 @@ public class TaskInstant {
 			for (int i = 0; i < delta; i++) {
 				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {
 					int tmp = 0;
-					final PiecewiseConstant cal = calendar.asPiecewiseConstant();
-					while (PiecewiseConstantUtils.isZeroOnDay(cal, value.toDay()) && tmp++ < 1000)
+					while (PiecewiseConstantUtils.isZeroOnDay(calendar, value.toDay()) && tmp++ < 1000)
 						value = value.increment();
 				}
 

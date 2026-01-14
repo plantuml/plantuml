@@ -102,6 +102,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
@@ -840,8 +841,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return CommandExecutionResult.ok();
 	}
 
-	public LoadPlanable getDefaultPlan() {
-		return openClose;
+	@Override
+	public PiecewiseConstant getDefaultPlan() {
+		return openClose.asPiecewiseConstant();
 	}
 
 	private boolean showFootbox = true;
