@@ -39,9 +39,9 @@ public class TaskLoadImpl implements TaskLoad {
 
 	private long start;
 	private long end;
-	private final Histogram load;
+	private final TimeLine load;
 
-	public TaskLoadImpl(Histogram load) {
+	public TaskLoadImpl(TimeLine load) {
 		this.load = load;
 	}
 
@@ -61,7 +61,8 @@ public class TaskLoadImpl implements TaskLoad {
 		this.end = end;
 	}
 
-	public final Histogram getLoad() {
+	@Override
+	public final TimeLine getLoad() {
 		return load;
 	}
 

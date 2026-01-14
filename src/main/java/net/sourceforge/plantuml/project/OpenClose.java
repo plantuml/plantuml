@@ -42,7 +42,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.project.core3.Histogram;
 import net.sourceforge.plantuml.project.core3.TimeLine;
 import net.sourceforge.plantuml.project.ngm.math.Combiner;
 import net.sourceforge.plantuml.project.ngm.math.Fraction;
@@ -52,7 +51,7 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
-public class OpenClose implements Histogram {
+public class OpenClose implements TimeLine {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
 	private final Map<TimePoint, DayStatus> dayStatus = new HashMap<>();

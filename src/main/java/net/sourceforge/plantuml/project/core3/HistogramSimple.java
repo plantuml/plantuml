@@ -36,10 +36,9 @@
 package net.sourceforge.plantuml.project.core3;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class HistogramSimple implements Histogram {
+public class HistogramSimple implements TimeLine {
 
 	private final Map<Long, Long> events = new TreeMap<Long, Long>();
 

@@ -41,6 +41,6 @@ public interface TaskLoad {
 
 	public long getEnd();
 
-	public Histogram getLoad();
+	public TimeLine getLoad();
 
 }
