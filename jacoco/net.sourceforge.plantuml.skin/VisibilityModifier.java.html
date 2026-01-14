@@ -131,7 +131,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 <span class="fc" id="L132">		ug = ug.apply(foregroundColor);</span>
 <span class="fc" id="L133">		size = ensureEven(size);</span>
-<span class="pc bpc" id="L134" title="8 of 10 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L134" title="9 of 10 branches missed.">		switch (this) {</span>
 			case PACKAGE_PRIVATE_FIELD:
 <span class="nc" id="L136">				drawTriangle(ug, false, size, x, y);</span>
 <span class="nc" id="L137">				break;</span>
@@ -149,8 +149,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="nc" id="L149">				break;</span>
 
 			case PACKAGE_PRIVATE_METHOD:
-<span class="fc" id="L152">				drawTriangle(ug, true, size, x, y);</span>
-<span class="fc" id="L153">				break;</span>
+<span class="nc" id="L152">				drawTriangle(ug, true, size, x, y);</span>
+<span class="nc" id="L153">				break;</span>
 
 			case PRIVATE_METHOD:
 <span class="nc" id="L156">				drawSquare(ug, true, size, x, y);</span>
@@ -198,13 +198,13 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="nc" id="L198">	}</span>
 
 	private void drawTriangle(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="fc" id="L201">		final UPolygon poly = new UPolygon();</span>
-<span class="fc" id="L202">		size -= 2;</span>
-<span class="fc" id="L203">		poly.addPoint(size / 2.0, 1);</span>
-<span class="fc" id="L204">		poly.addPoint(0, size - 1);</span>
-<span class="fc" id="L205">		poly.addPoint(size, size - 1);</span>
-<span class="fc" id="L206">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
-<span class="fc" id="L207">	}</span>
+<span class="nc" id="L201">		final UPolygon poly = new UPolygon();</span>
+<span class="nc" id="L202">		size -= 2;</span>
+<span class="nc" id="L203">		poly.addPoint(size / 2.0, 1);</span>
+<span class="nc" id="L204">		poly.addPoint(0, size - 1);</span>
+<span class="nc" id="L205">		poly.addPoint(size, size - 1);</span>
+<span class="nc" id="L206">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
+<span class="nc" id="L207">	}</span>
 
 	public static boolean isVisibilityCharacter(CharSequence s) {
 <span class="fc bfc" id="L210" title="All 2 branches covered.">		if (s.length() &lt;= 2)</span>
@@ -214,17 +214,17 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc bfc" id="L214" title="All 2 branches covered.">		if (s.charAt(1) == c)</span>
 <span class="fc" id="L215">			return false;</span>
 
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (c == '-')</span>
-<span class="fc" id="L218">			return true;</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (c == '-')</span>
+<span class="nc" id="L218">			return true;</span>
 
-<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (c == '#')</span>
-<span class="fc" id="L221">			return true;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (c == '#')</span>
+<span class="nc" id="L221">			return true;</span>
 
 <span class="fc bfc" id="L223" title="All 2 branches covered.">		if (c == '+')</span>
 <span class="fc" id="L224">			return true;</span>
 
-<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (c == '~')</span>
-<span class="fc" id="L227">			return true;</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (c == '~')</span>
+<span class="nc" id="L227">			return true;</span>
 
 <span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (c == '*')</span>
 <span class="nc" id="L230">			return true;</span>
@@ -256,21 +256,21 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (s.charAt(1) == c)</span>
 <span class="nc" id="L257">			return null;</span>
 
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (isField)</span>
-<span class="fc" id="L260">			return getVisibilityModifierForField(c);</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">		if (isField)</span>
+<span class="nc" id="L260">			return getVisibilityModifierForField(c);</span>
 
 <span class="fc" id="L262">		return getVisibilityModifierForMethod(c);</span>
 	}
 
 	private static VisibilityModifier getVisibilityModifierForField(char c) {
-<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (c == '-')</span>
-<span class="fc" id="L267">			return VisibilityModifier.PRIVATE_FIELD;</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (c == '-')</span>
+<span class="nc" id="L267">			return VisibilityModifier.PRIVATE_FIELD;</span>
 
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (c == '#')</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (c == '#')</span>
 <span class="nc" id="L270">			return VisibilityModifier.PROTECTED_FIELD;</span>
 
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (c == '+')</span>
-<span class="fc" id="L273">			return VisibilityModifier.PUBLIC_FIELD;</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (c == '+')</span>
+<span class="nc" id="L273">			return VisibilityModifier.PUBLIC_FIELD;</span>
 
 <span class="nc bnc" id="L275" title="All 2 branches missed.">		if (c == '~')</span>
 <span class="nc" id="L276">			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;</span>
@@ -285,14 +285,14 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L285" title="1 of 2 branches missed.">		if (c == '-')</span>
 <span class="nc" id="L286">			return VisibilityModifier.PRIVATE_METHOD;</span>
 
-<span class="fc bfc" id="L288" title="All 2 branches covered.">		if (c == '#')</span>
-<span class="fc" id="L289">			return VisibilityModifier.PROTECTED_METHOD;</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">		if (c == '#')</span>
+<span class="nc" id="L289">			return VisibilityModifier.PROTECTED_METHOD;</span>
 
-<span class="fc bfc" id="L291" title="All 2 branches covered.">		if (c == '+')</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if (c == '+')</span>
 <span class="fc" id="L292">			return VisibilityModifier.PUBLIC_METHOD;</span>
 
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		if (c == '~')</span>
-<span class="fc" id="L295">			return VisibilityModifier.PACKAGE_PRIVATE_METHOD;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">		if (c == '~')</span>
+<span class="nc" id="L295">			return VisibilityModifier.PACKAGE_PRIVATE_METHOD;</span>
 
 <span class="nc bnc" id="L297" title="All 2 branches missed.">		if (c == '*')</span>
 <span class="nc" id="L298">			return VisibilityModifier.IE_MANDATORY;</span>
@@ -335,17 +335,17 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L335" title="1 of 2 branches missed.">		if (this == IE_MANDATORY)</span>
 <span class="nc" id="L336">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);</span>
 
-<span class="pc bpc" id="L338" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
+<span class="pc bpc" id="L338" title="2 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
 <span class="fc" id="L339">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);</span>
 
-<span class="pc bpc" id="L341" title="2 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
+<span class="nc bnc" id="L341" title="All 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
 <span class="nc" id="L342">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.private_);</span>
 
-<span class="pc bpc" id="L344" title="2 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
+<span class="nc bnc" id="L344" title="All 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
 <span class="nc" id="L345">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.protected_);</span>
 
-<span class="pc bpc" id="L347" title="2 of 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
-<span class="fc" id="L348">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);</span>
+<span class="nc bnc" id="L347" title="All 4 branches missed.">		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)</span>
+<span class="nc" id="L348">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);</span>
 
 <span class="nc" id="L350">		throw new IllegalStateException();</span>
 	}
