@@ -132,7 +132,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 			x = colBars + margin.getLeft();
 		} else {
 			final double x1 = timeScale.getStartingPosition(start);
-			final double x2 = timeScale.getStartingPositionPlusOneDayWidth(start);
+			final double x2 = timeScale.getStartingPosition(start) + timeScale.getWidth(start);
 			final double width = getDiamondHeight();
 			final double delta = x2 - x1 - width;
 			x = x2 - delta / 2 + padding.getLeft();
@@ -164,7 +164,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		ug = ug.apply(UTranslate.dx(x1));
 
 		if (displayString == null) {
-			final double x2 = timeScale.getStartingPositionPlusOneDayWidth(start);
+			final double x2 = timeScale.getStartingPosition(start) + timeScale.getWidth(start);
 			final double width = getDiamondHeight();
 			final double delta = x2 - x1 - width;
 			ug = ug.apply(UTranslate.dx(delta / 2));
@@ -220,9 +220,9 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		if (side == GSide.LEFT)
 			x = timeScale.getStartingPosition(start);
 		else if (side == GSide.RIGHT)
-			x = timeScale.getStartingPositionPlusOneDayWidth(start);
+			x = timeScale.getStartingPosition(start) + timeScale.getWidth(start);
 		else
-			x = (timeScale.getStartingPosition(start) + timeScale.getStartingPositionPlusOneDayWidth(start)) / 2;
+			x = (timeScale.getStartingPosition(start) + timeScale.getStartingPosition(start) + timeScale.getWidth(start)) / 2;
 
 		if (arrowType == GArrowType.OUTGOING) {
 			final double width = getDiamondHeight();

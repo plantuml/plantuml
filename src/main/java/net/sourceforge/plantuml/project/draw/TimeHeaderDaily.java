@@ -153,7 +153,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getStartingPositionPlusOneDayWidth(wink);
+			final double x2 = getTimeScale().getStartingPosition(wink) + getTimeScale().getWidth(wink);
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug,
 					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.toDayOfWeek(), locale()), false, textColor),
@@ -166,7 +166,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getStartingPositionPlusOneDayWidth(wink);
+			final double x2 = getTimeScale().getStartingPosition(wink) + getTimeScale().getWidth(wink);
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug, getTextBlock(SName.day, "" + wink.getDayOfMonth(), false, textColor), x1, x2);
 		}
@@ -223,7 +223,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);
-					final double x2 = getTimeScale().getStartingPositionPlusOneDayWidth(wink);
+					final double x2 = getTimeScale().getStartingPosition(wink) + getTimeScale().getWidth(wink);
 					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
 					double y1 = getTimeHeaderHeight(ug.getStringBounder());
