@@ -81,11 +81,11 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		if ("-".equals(operation))
 			day = -day;
 		if ("D".equals(type))
-			return system.getStartingDate().addDays(day);
+			return system.getMinTimePoint().addDays(day);
 		if ("T".equals(type))
 			return system.getToday().addDays(day);
 		if ("E".equals(type))
-			return system.getEndingDate().addDays(day);
+			return system.getMaxTimePoint().addDays(day);
 		throw new IllegalStateException();
 	}
 

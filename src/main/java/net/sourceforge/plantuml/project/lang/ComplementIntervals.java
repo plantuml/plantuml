@@ -91,10 +91,10 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 
 	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
 		final int day1 = Integer.parseInt(arg.get("ECOUNT1" + suffix, 0));
-		final TimePoint date1 = project.getStartingDate().addDays(day1);
+		final TimePoint date1 = project.getMinTimePoint().addDays(day1);
 
 		final int day2 = Integer.parseInt(arg.get("ECOUNT2" + suffix, 0));
-		final TimePoint date2 = project.getStartingDate().addDays(day2);
+		final TimePoint date2 = project.getMinTimePoint().addDays(day2);
 
 		return new DaysAsDates(date1, date2);
 	}

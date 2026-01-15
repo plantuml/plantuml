@@ -131,7 +131,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		}
 		if (arg.get("ECOUNT" + suffix, 0) != null) {
 			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
-			return project.getStartingDate().addDays(day);
+			return project.getMinTimePoint().addDays(day);
 		}
 		throw new IllegalStateException();
 	}

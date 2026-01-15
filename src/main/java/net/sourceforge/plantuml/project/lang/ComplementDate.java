@@ -116,12 +116,12 @@ public class ComplementDate implements Something<GanttDiagram> {
 
 	private TimePoint resultD(GanttDiagram system, RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
-		return system.getStartingDate().addDays(day);
+		return system.getMinTimePoint().addDays(day);
 	}
 
 	private TimePoint resultE(GanttDiagram system, RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
-		return system.getStartingDate().addDays(day);
+		return system.getMinTimePoint().addDays(day);
 	}
 
 }
