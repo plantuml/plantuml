@@ -205,4 +205,8 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(this.utcDateTime.minusSeconds(1));
 	}
 
+	public TimePoint floorToDay() {
+		return new TimePoint(utcDateTime.toLocalDate().atStartOfDay());
+	}
+
 }
