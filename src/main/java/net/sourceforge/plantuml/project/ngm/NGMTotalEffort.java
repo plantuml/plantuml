@@ -135,8 +135,32 @@ public final class NGMTotalEffort {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		if (seconds == 0)
+			return "0s";
 
+		long remaining = seconds;
+
+		final long days = remaining / SECONDS_PER_DAY;
+		remaining %= SECONDS_PER_DAY;
+
+		final long hours = remaining / SECONDS_PER_HOUR;
+		remaining %= SECONDS_PER_HOUR;
+
+		final long minutes = remaining / SECONDS_PER_MINUTE;
+		final long secs = remaining % SECONDS_PER_MINUTE;
+
+		final StringBuilder sb = new StringBuilder();
+
+		if (days > 0)
+			sb.append(days).append("d");
+		if (hours > 0)
+			sb.append(sb.length() == 0 ? "" : " ").append(hours).append("h");
+		if (minutes > 0)
+			sb.append(sb.length() == 0 ? "" : " ").append(minutes).append("m");
+		if (secs > 0)
+			sb.append(sb.length() == 0 ? "" : " ").append(secs).append("s");
+
+		return sb.toString();
 	}
 
 }

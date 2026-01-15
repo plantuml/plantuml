@@ -58,7 +58,7 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC));
 	}
 
-	public static TimePoint of(int year, String month, int dayOfMonth) {
+	public static TimePoint ofStartOfDay(int year, String month, int dayOfMonth) {
 		return new TimePoint(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));
 	}
 
@@ -66,12 +66,12 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(time);
 	}
 
-	public static TimePoint of(LocalDate day) {
+	public static TimePoint ofStartOfDay(LocalDate day) {
 		return new TimePoint(day.atStartOfDay());
 	}
 
 
-	public static TimePoint of(int year, int month, int dayOfMonth) {
+	public static TimePoint ofStartOfDay(int year, int month, int dayOfMonth) {
 		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
 
@@ -130,7 +130,7 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 
 	@Override
 	public String toString() {
-		return monthYear().toString() + "/" + getDayOfMonth();
+		return utcDateTime.toString();
 	}
 
 	@Override

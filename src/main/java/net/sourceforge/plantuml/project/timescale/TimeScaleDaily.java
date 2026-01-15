@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.TimePoint;
 
@@ -44,12 +46,12 @@ public final class TimeScaleDaily implements TimeScale {
 	private final TimeScaleWink basic;
 	private final double delta;
 
-	public TimeScaleDaily(double size, TimePoint startingDay, double scale, TimePoint zeroDay) {
+	public TimeScaleDaily(double size, TimePoint startingDay, double scale, LocalDate zeroDay) {
 		this.basic = new TimeScaleWink(size, scale, PrintScale.DAILY);
 		if (zeroDay == null)
 			this.delta = basic.getStartingPosition(startingDay);
 		else
-			this.delta = basic.getStartingPosition(zeroDay);
+			this.delta = basic.getStartingPosition(TimePoint.ofStartOfDay(zeroDay));
 
 	}
 

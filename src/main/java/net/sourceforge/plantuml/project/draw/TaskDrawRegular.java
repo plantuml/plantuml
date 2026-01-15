@@ -259,7 +259,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 		final Collection<Segment> off = new ArrayList<>();
 		for (LocalDate day : paused) {
-			final TimePoint pause = TimePoint.of(day);
+			final TimePoint pause = TimePoint.ofStartOfDay(day);
 			final double x1 = timeScale.getStartingPosition(pause);
 			final double x2 = timeScale.getEndingPosition(pause);
 			off.add(new Segment(x1, x2));

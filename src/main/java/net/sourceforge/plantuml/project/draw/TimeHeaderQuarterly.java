@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -68,7 +69,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder);
 	}
 
-	public TimeHeaderQuarterly(StringBounder stringBounder, TimeHeaderParameters thParam, TimePoint printStart) {
+	public TimeHeaderQuarterly(StringBounder stringBounder, TimeHeaderParameters thParam, LocalDate printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
 				thParam.getScale(), printStart));
 	}

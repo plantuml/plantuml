@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Map;
 
@@ -99,7 +100,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private final Map<TimePoint, String> nameDays;
 
 	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
-			TimePoint printStart) {
+			LocalDate printStart) {
 		super(thParam,
 				thParam.isHideClosed()
 						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getMin(),

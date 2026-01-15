@@ -71,7 +71,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		final int day = Integer.parseInt(arg.get("BDAY", 0));
 		final int month = Integer.parseInt(arg.get("BMONTH", 0));
 		final int year = Integer.parseInt(arg.get("BYEAR", 0));
-		return TimePoint.of(year, month, day);
+		return TimePoint.ofStartOfDay(year, month, day);
 	}
 
 	private TimePoint resultE(GanttDiagram system, RegexResult arg) {

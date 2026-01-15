@@ -98,7 +98,7 @@ public class DayPattern {
 		final int day = Integer.parseInt(arg.get(dayKeyA, 0));
 		final String month = arg.get(monthKeyA, 0);
 		final int year = Integer.parseInt(arg.get(yearKeyA, 0));
-		return TimePoint.of(year, month, day);
+		return TimePoint.ofStartOfDay(year, month, day);
 	}
 
 	private IRegex toRegexB_YYYY_MM_DD() {
@@ -114,7 +114,7 @@ public class DayPattern {
 		final int day = Integer.parseInt(arg.get(dayKeyB, 0));
 		final int month = Integer.parseInt(arg.get(monthKeyB, 0));
 		final int year = Integer.parseInt(arg.get(yearKeyB, 0));
-		return TimePoint.of(year, month, day);
+		return TimePoint.ofStartOfDay(year, month, day);
 	}
 
 	private IRegex toRegexC_MONTH_DD_YYYY() {
@@ -130,7 +130,7 @@ public class DayPattern {
 		final int day = Integer.parseInt(arg.get(dayKeyC, 0));
 		final String month = arg.get(monthKeyC, 0);
 		final int year = Integer.parseInt(arg.get(yearKeyC, 0));
-		return TimePoint.of(year, month, day);
+		return TimePoint.ofStartOfDay(year, month, day);
 	}
 
 }

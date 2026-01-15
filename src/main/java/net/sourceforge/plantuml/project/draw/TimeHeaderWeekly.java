@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
 			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<TimePoint, String> nameDays,
-			TimePoint printStart, int weekStartingNumber) {
+			LocalDate printStart, int weekStartingNumber) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
 				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;

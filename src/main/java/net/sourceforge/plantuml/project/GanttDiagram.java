@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -147,8 +148,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private TimePoint min = TimePoint.todayUtcAtMidnight();
 	private TimePoint max;
 
-	private TimePoint printStart;
-	private TimePoint printEnd;
+	private LocalDate printStart;
+	private LocalDate printEnd;
 
 	private final RealOrigin origin = RealUtils.createOrigin();
 
@@ -225,8 +226,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null) {
 			initMinMax();
 		} else {
-			this.min = printStart;
-			this.max = printEnd;
+			this.min = TimePoint.ofStartOfDay(printStart);
+			this.max = TimePoint.ofStartOfDay(printEnd);
 		}
 		final TimeHeader timeHeader = getTimeHeader(stringBounder);
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
@@ -821,7 +822,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return CommandExecutionResult.ok();
 	}
 
-	public void setPrintInterval(TimePoint start, TimePoint end) {
+	public void setPrintInterval(LocalDate start, LocalDate end) {
 		this.printStart = start;
 		this.printEnd = end;
 	}

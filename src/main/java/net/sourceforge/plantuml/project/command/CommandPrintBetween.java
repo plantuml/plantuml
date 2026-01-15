@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.command;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,9 +73,10 @@ public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final TimePoint start = (TimePoint) pattern.getMe(diagram, arg, "START").get();
-		final TimePoint end = (TimePoint) pattern.getMe(diagram, arg, "END").get();
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		final LocalDate start = ((TimePoint) pattern.getMe(diagram, arg, "START").get()).toDay();
+		final LocalDate end = ((TimePoint) pattern.getMe(diagram, arg, "END").get()).toDay();
 		diagram.setPrintInterval(start, end);
 		return CommandExecutionResult.ok();
 	}

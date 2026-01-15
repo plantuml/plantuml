@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.timescale;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.project.time.TimePoint;
 
@@ -43,7 +44,7 @@ public class TimeScaleCompressed implements TimeScale {
 
 	private final TimeScale daily;
 
-	public TimeScaleCompressed(double size, TimePoint calendar, double scale, TimePoint zeroDay) {
+	public TimeScaleCompressed(double size, TimePoint calendar, double scale, LocalDate zeroDay) {
 		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);
 	}
 
