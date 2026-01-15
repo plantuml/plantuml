@@ -72,11 +72,11 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getEnd() {
+	public TimePoint getEndMinusOneDay() {
 		TimePoint max = null;
 		for (Task child : children)
-			if (max == null || max.compareTo(child.getEnd()) < 0)
-				max = child.getEnd();
+			if (max == null || max.compareTo(child.getEndMinusOneDay()) < 0)
+				max = child.getEndMinusOneDay();
 
 		if (max != null)
 			return max;

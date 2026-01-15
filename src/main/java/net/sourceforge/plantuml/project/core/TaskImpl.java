@@ -159,7 +159,7 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	public int loadForResource(Resource res, TimePoint instant) {
 		if (resources.keySet().contains(res) && instant.compareTo(getStart()) >= 0
-				&& instant.compareTo(getEnd()) <= 0) {
+				&& instant.compareTo(getEndMinusOneDay()) <= 0) {
 			if (isPaused(instant))
 				return 0;
 
@@ -229,7 +229,7 @@ public class TaskImpl extends AbstractTask implements Task {
 	}
 
 	public String debug() {
-		return "" + getStart() + " ---> " + getEnd() + "   [" + getLoad() + "]";
+		return "" + getStart() + " ---> " + getEndMinusOneDay() + "   [" + getLoad() + "]";
 	}
 
 	@Override
@@ -245,7 +245,7 @@ public class TaskImpl extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getEnd() {
+	public TimePoint getEndMinusOneDay() {
 		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
 		final TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);
 		return result.decrement();
@@ -325,7 +325,7 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	private void addAll(SortedSet<LocalDate> result, DayOfWeek dayOfWeek) {
 		final TimePoint start = getStart();
-		final TimePoint end = getEnd();
+		final TimePoint end = getEndMinusOneDay();
 		for (TimePoint current = start; current.compareTo(end) <= 0; current = current.increment())
 			if (current.toDayOfWeek() == dayOfWeek)
 				result.add(current.toDay());

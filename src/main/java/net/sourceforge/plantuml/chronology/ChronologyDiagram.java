@@ -486,14 +486,14 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		for (Task task : tasks.values()) {
 			if (this.min == null || this.max == null) {
 				this.min = task.getStart();
-				this.max = task.getEnd();
+				this.max = task.getEndMinusOneDay();
 				continue;
 
 			}
 			if (this.min.compareTo(task.getStart()) > 0)
 				this.min = task.getStart();
-			if (this.max.compareTo(task.getEnd()) < 0)
-				this.max = task.getEnd();
+			if (this.max.compareTo(task.getEndMinusOneDay()) < 0)
+				this.max = task.getEndMinusOneDay();
 		}
 
 		this.min = this.min.roundDayDown();

@@ -70,7 +70,6 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(day.atStartOfDay());
 	}
 
-
 	public static TimePoint ofStartOfDay(int year, int month, int dayOfMonth) {
 		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
@@ -200,6 +199,10 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		final long ms = getMillis();
 		final long ceiled = Math.floorDiv(ms + MILLISECONDS_PER_DAY - 1, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;
 		return TimePoint.create(ceiled);
+	}
+
+	public TimePoint minusOneSecond() {
+		return new TimePoint(this.utcDateTime.minusSeconds(1));
 	}
 
 }

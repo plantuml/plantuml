@@ -92,7 +92,7 @@ public class TaskInstant {
 			return manageDelta(task.getStart());
 
 		if (attribute == TaskAttribute.END)
-			return manageDelta(task.getEnd().increment());
+			return manageDelta(task.getEndMinusOneDay().increment());
 
 		throw new IllegalStateException();
 	}
@@ -102,7 +102,7 @@ public class TaskInstant {
 			return manageDelta(task.getStart());
 
 		if (attribute == TaskAttribute.END)
-			return manageDelta(task.getEnd());
+			return manageDelta(task.getEndMinusOneDay());
 
 		throw new IllegalStateException();
 	}

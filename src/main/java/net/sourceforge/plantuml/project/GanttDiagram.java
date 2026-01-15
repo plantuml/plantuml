@@ -201,7 +201,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null || task instanceof TaskSeparator)
 			return false;
 
-		if (task.getEnd().compareTo(min) < 0)
+		if (task.getEndMinusOneDay().compareTo(min) < 0)
 			return true;
 
 		if (task.getStart().compareTo(max) > 0)
@@ -451,18 +451,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 						getSkinParam());
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
-				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(), getStart(taskGroup),
-						getEnd(taskGroup), task, this, task.getStyleBuilder(), getSkinParam());
+				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(), getStartForDrawing(taskGroup),
+						getEndForDrawing(taskGroup), task, this, task.getStyleBuilder(), getSkinParam());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
 				final String disp = hideResourceName ? tmp.getCode().getDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder(),
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStartForDrawing(tmp), task, this, task.getStyleBuilder(),
 							getSkinParam());
 				} else {
-					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
-					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
-					draw = new TaskDrawRegular(timeScale, y, disp, getStart(tmp), getEnd(tmp), oddStart, oddEnd,
+					final boolean oddStart = printStart != null && min.compareTo(getStartForDrawing(tmp)) == 0;
+					final boolean oddEnd = printStart != null && max.compareTo(getEndForDrawing(tmp)) == 0;
+					draw = new TaskDrawRegular(timeScale, y, disp, getStartForDrawing(tmp), getEndForDrawing(tmp), oddStart, oddEnd,
 							getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
 				}
 				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote(),
@@ -539,18 +539,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		}
 	}
 
-	private TimePoint getStart(final Task tmp) {
+	private TimePoint getStartForDrawing(final Task tmp) {
 		if (printStart == null)
 			return tmp.getStart();
 
 		return TimePoint.max(min, tmp.getStart());
 	}
 
-	private TimePoint getEnd(final Task tmp) {
+	private TimePoint getEndForDrawing(final Task tmp) {
 		if (printStart == null)
-			return tmp.getEnd();
+			return tmp.getEndMinusOneDay();
 
-		return TimePoint.min(max, tmp.getEnd());
+		return TimePoint.min(max, tmp.getEndMinusOneDay());
 	}
 
 	private void initMinMax() {
@@ -563,7 +563,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					continue;
 
 				final TimePoint start = task.getStart();
-				final TimePoint end = task.getEnd();
+				final TimePoint end = task.getEndMinusOneDay();
 				// if (min.compareTo(start) > 0) {
 				// min = start;
 				// }
