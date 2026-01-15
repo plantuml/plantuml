@@ -306,7 +306,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 			private double getBarsColumnWidth(final TimeHeader timeHeader) {
 				final double xmin = timeHeader.getTimeScale().getStartingPosition(min);
-				final double xmax = timeHeader.getTimeScale().getStartingPositionPlusOneDayWidth(max);
+				final double xmax = timeHeader.getTimeScale().getStartingPosition(max)
+						+ timeHeader.getTimeScale().getWidth(max);
 				return xmax - xmin;
 			}
 
@@ -457,13 +458,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				final TaskImpl tmp = (TaskImpl) task;
 				final String disp = hideResourceName ? tmp.getCode().getDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStartForDrawing(tmp), task, this, task.getStyleBuilder(),
-							getSkinParam());
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStartForDrawing(tmp), task, this,
+							task.getStyleBuilder(), getSkinParam());
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStartForDrawing(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEndForDrawing(tmp)) == 0;
-					draw = new TaskDrawRegular(timeScale, y, disp, getStartForDrawing(tmp), getEndForDrawing(tmp), oddStart, oddEnd,
-							getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
+					draw = new TaskDrawRegular(timeScale, y, disp, getStartForDrawing(tmp), getEndForDrawing(tmp),
+							oddStart, oddEnd, getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
 				}
 				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote(),
 						tmp.getNoteStereotype());
