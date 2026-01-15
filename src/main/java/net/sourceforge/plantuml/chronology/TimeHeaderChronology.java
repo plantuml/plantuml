@@ -120,7 +120,7 @@ public class TimeHeaderChronology extends TimeHeader {
 		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter +
 		// 6);
 		final double xmin = getTimeScale().getStartingPosition(getMin());
-		final double xmax = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
+		final double xmax = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
 		// printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
@@ -134,7 +134,7 @@ public class TimeHeaderChronology extends TimeHeader {
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
 		final double xmin = getTimeScale().getStartingPosition(getMin());
-		final double xmax = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
+		final double xmax = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
 		ug = ug.apply(UTranslate.dy(3));
 		// drawSmallVlinesDay(ug, getTimeScale(),
 		// getTimeFooterHeight(ug.getStringBounder()) - 3);

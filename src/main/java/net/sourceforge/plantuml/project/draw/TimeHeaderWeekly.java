@@ -144,8 +144,8 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPositionPlusOneDayWidth(getMax()), (double) 0,
-				getH1(ug.getStringBounder()));
+		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
+		drawVline(ug.apply(getLineColor()), end, (double) 0, getH1(ug.getStringBounder()));
 		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
 		if (last != null && x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
@@ -180,8 +180,8 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),
 						getH1(ug.getStringBounder()), totalHeightWithoutFooter);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPositionPlusOneDayWidth(getMax()), getH1(ug.getStringBounder()),
-				totalHeightWithoutFooter);
+		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
+		drawVline(ug.apply(getLineColor()), end, getH1(ug.getStringBounder()), totalHeightWithoutFooter);
 		super.printVerticalSeparators(ug, totalHeightWithoutFooter);
 	}
 

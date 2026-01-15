@@ -136,7 +136,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 				drawVline(ugLineColor, getTimeScale().getStartingPosition(wink),
 						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 
-		final double end = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
+		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
 		drawVline(ugLineColor, end, getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 	}
 

@@ -137,7 +137,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
+		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
 		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
@@ -160,7 +160,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printMonth(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
+		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
 		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);
 	}
 

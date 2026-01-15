@@ -111,7 +111,8 @@ public abstract class TimeHeader {
 
 	protected final void drawHline(UGraphic ug, double y) {
 		final double xmin = getTimeScale().getStartingPosition(thParam.getMin());
-		final double xmax = getTimeScale().getStartingPositionPlusOneDayWidth(thParam.getMax());
+		final double xmax = getTimeScale().getStartingPosition(thParam.getMax())
+				+ getTimeScale().getWidth(thParam.getMax());
 		final ULine hline = ULine.hline(xmax - xmin);
 		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);
 	}
