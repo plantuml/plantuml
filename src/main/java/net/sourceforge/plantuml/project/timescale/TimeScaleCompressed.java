@@ -49,13 +49,8 @@ public class TimeScaleCompressed implements TimeScale {
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
-		return daily.getStartingPosition(instant);
-	}
-
-	@Override
-	public double getStartingPositionPlusOneDayWidth(TimePoint instant) {
-		return daily.getStartingPositionPlusOneDayWidth(instant);
+	public double getPosition(TimePoint instant) {
+		return daily.getPosition(instant);
 	}
 
 	@Override

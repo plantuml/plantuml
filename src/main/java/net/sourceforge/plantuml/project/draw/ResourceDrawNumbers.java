@@ -76,7 +76,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(
-				timeScale.getStartingPosition(max) + timeScale.getWidth(max) - timeScale.getStartingPosition(min));
+				timeScale.getPosition(max) + timeScale.getWidth(max) - timeScale.getPosition(min));
 		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
 				.draw(line);
 
@@ -93,8 +93,8 @@ public class ResourceDrawNumbers implements ResourceDraw {
 				if (totalLoad > 0) {
 					final TextBlock value = getTextBlock(totalLoad, isRed);
 					if (startingPosition == -1)
-						startingPosition = timeScale.getStartingPosition(i);
-					final double endingPosition = timeScale.getStartingPosition(i) + timeScale.getWidth(i);
+						startingPosition = timeScale.getPosition(i);
+					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);
 					final double start = (startingPosition + endingPosition) / 2
 							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;
 					value.drawU(ug.apply(new UTranslate(start, 16)));
@@ -104,7 +104,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 				isRed = false;
 			} else {
 				if (startingPosition == -1)
-					startingPosition = timeScale.getStartingPosition(i);
+					startingPosition = timeScale.getPosition(i);
 			}
 		}
 

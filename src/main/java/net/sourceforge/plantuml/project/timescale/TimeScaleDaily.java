@@ -49,20 +49,15 @@ public final class TimeScaleDaily implements TimeScale {
 	public TimeScaleDaily(double size, TimePoint startingDay, double scale, LocalDate zeroDay) {
 		this.basic = new TimeScaleWink(size, scale, PrintScale.DAILY);
 		if (zeroDay == null)
-			this.delta = basic.getStartingPosition(startingDay);
+			this.delta = basic.getPosition(startingDay);
 		else
-			this.delta = basic.getStartingPosition(TimePoint.ofStartOfDay(zeroDay));
+			this.delta = basic.getPosition(TimePoint.ofStartOfDay(zeroDay));
 
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
-		return basic.getStartingPosition(instant) - delta;
-	}
-
-	@Override
-	public double getStartingPositionPlusOneDayWidth(TimePoint instant) {
-		return basic.getStartingPositionPlusOneDayWidth(instant) - delta;
+	public double getPosition(TimePoint instant) {
+		return basic.getPosition(instant) - delta;
 	}
 
 	@Override

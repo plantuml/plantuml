@@ -59,7 +59,7 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getPosition(TimePoint instant) {
 		if (instant.compareTo(this.startingDay) < 0)
 			throw new IllegalArgumentException();
 
@@ -80,11 +80,6 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 			i = i.increment();
 			startingInt.put(i, current);
 		} while (i.compareTo(dest) < 0);
-	}
-
-	@Override
-	public double getStartingPositionPlusOneDayWidth(TimePoint instant) {
-		return getStartingPosition(instant) + getWidth(instant);
 	}
 
 	@Override

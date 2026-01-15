@@ -84,8 +84,8 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		Pending pending = null;
 
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getStartingPosition(wink) + getTimeScale().getWidth(wink);
+			final double x1 = getTimeScale().getPosition(wink);
+			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			HColor back = thParam.getColor(wink);
 			// Day of week should be stronger than period of time (back color).
 			final HColor backDoW = thParam.getColor(wink.toDayOfWeek());

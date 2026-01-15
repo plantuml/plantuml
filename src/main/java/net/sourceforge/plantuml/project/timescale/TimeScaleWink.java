@@ -49,14 +49,9 @@ public class TimeScaleWink implements TimeScale {
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getPosition(TimePoint instant) {
 		final long wink = instant.getMillis();
 		return wink * cellWidth / TimePoint.MILLISECONDS_PER_DAY;
-	}
-
-	@Override
-	public double getStartingPositionPlusOneDayWidth(TimePoint instant) {
-		return getStartingPosition(instant) + getWidth(instant);
 	}
 
 	@Override

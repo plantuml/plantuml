@@ -106,7 +106,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		YearMonth last = null;
 		double lastChange = -1;
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
 				if (last != null)
@@ -116,11 +116,11 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		final double x1 = getTimeScale().getPosition(getMax().increment());
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
+		final double end = getTimeScale().getPosition(getMax()) + getTimeScale().getWidth(getMax());
 		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
@@ -129,7 +129,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		String last = null;
 		double lastChange = -1;
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x1 = getTimeScale().getPosition(wink);
 			if (quarter(wink).equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);
 				if (last != null)
@@ -139,11 +139,11 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 				last = quarter(wink);
 			}
 		}
-		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		final double x1 = getTimeScale().getPosition(getMax().increment());
 		if (x1 > lastChange)
 			printQuarter(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getStartingPosition(getMax()) + getTimeScale().getWidth(getMax());
+		final double end = getTimeScale().getPosition(getMax()) + getTimeScale().getWidth(getMax());
 		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);
 	}
 
