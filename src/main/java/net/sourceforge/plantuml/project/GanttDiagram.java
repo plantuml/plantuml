@@ -99,6 +99,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeader;
 import net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
 import net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly;
+import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
@@ -145,7 +146,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TimePoint today;
 	private double totalHeightWithoutFooter;
-	private TimePoint minTimePoint = TimePoint.todayUtcAtMidnight();
+	private TimePoint minTimePoint = TimePoint.epoch();
 	private TimePoint maxTimePoint1;
 	private TimePoint maxTimePointPrinted;
 
@@ -317,6 +318,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimeHeader getTimeHeader(StringBounder stringBounder) {
+		if (minTimePoint.equals(TimePoint.epoch()))
+			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
 		if (printScale == PrintScale.DAILY)
 			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.WEEKLY)
