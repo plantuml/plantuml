@@ -252,6 +252,13 @@ public class TaskImpl extends AbstractTask implements Task {
 	}
 
 	@Override
+	public TimePoint getEnd() {
+		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
+		final TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);
+		return result;
+	}
+
+	@Override
 	public Load getLoad() {
 		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
 		return (Load) solver.getData(allocation, TaskAttribute.LOAD);

@@ -50,6 +50,11 @@ public class MomentImpl implements Moment {
 	public TimePoint getStart() {
 		return start;
 	}
+	
+	@Override
+	public TimePoint getEnd() {
+		return end;
+	}
 
 	public TimePoint getEndMinusOneDay() {
 		return end;

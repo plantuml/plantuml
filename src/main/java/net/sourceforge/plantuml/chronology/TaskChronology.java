@@ -88,6 +88,11 @@ public class TaskChronology extends AbstractTask implements Task {
 	public TimePoint getEndMinusOneDay() {
 		return this.end;
 	}
+	
+	@Override
+	public TimePoint getEnd() {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public Load getLoad() {

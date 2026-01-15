@@ -85,6 +85,19 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
+	public TimePoint getEnd() {
+		TimePoint max = null;
+		for (Task child : children)
+			if (max == null || max.compareTo(child.getEnd()) < 0)
+				max = child.getEnd();
+
+		if (max != null)
+			return max;
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setStart(TimePoint start) {
 		throw new UnsupportedOperationException();
 	}
