@@ -81,7 +81,7 @@ public class ResourceDrawVersion2 implements ResourceDraw {
 		final double tmpHeight = getHeight(stringBounder) - ypos;
 		for (TimePoint wink = gantt.getStartingDate(); wink.compareTo(gantt.getEndingDate()) <= 0; wink = wink.increment()) {
 			final double start = timeScale.getStartingPosition(wink);
-			final double end = timeScale.getEndingPosition(wink);
+			final double end = timeScale.getStartingPositionPlusOneDayWidth(wink);
 			final UShape rect = URectangle.build(end - start, tmpHeight);
 			if (res.isClosedAt(wink))
 				ug.apply(HColors.LIGHT_GRAY.bg()).apply(new UTranslate(start, ypos)).draw(rect);
@@ -91,7 +91,7 @@ public class ResourceDrawVersion2 implements ResourceDraw {
 		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName()).create(getFontConfiguration(13),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
-		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
+		final ULine line = ULine.hline(timeScale.getStartingPositionPlusOneDayWidth(max) - timeScale.getStartingPosition(min));
 		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
 				.draw(line);
 

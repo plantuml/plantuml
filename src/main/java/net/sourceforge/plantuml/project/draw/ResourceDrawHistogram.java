@@ -94,7 +94,7 @@ public class ResourceDrawHistogram implements ResourceDraw {
 		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName())
 				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
-		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
+		final ULine line = ULine.hline(timeScale.getStartingPositionPlusOneDayWidth(max) - timeScale.getStartingPosition(min));
 		ug.apply(HColors.BLACK).draw(line);
 		ug.apply(HColors.GRAY).apply(UTranslate.dy(16)).draw(line);
 		ug.apply(HColors.BLACK).apply(UTranslate.dy(getHeight(stringBounder))).draw(line);

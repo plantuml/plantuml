@@ -120,7 +120,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h1 + 2);
+		drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPositionPlusOneDayWidth(getMax()), 0, h1 + 2);
 	}
 
 	private void drawQuarters(UGraphic ug) {
@@ -142,7 +142,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printQuarter(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h2 + 2);
+		drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPositionPlusOneDayWidth(getMax()), 0, h2 + 2);
 	}
 
 	private String quarter(TimePoint day) {

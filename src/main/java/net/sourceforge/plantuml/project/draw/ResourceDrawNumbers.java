@@ -74,7 +74,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName())
 				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
-		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
+		final ULine line = ULine.hline(timeScale.getStartingPositionPlusOneDayWidth(max) - timeScale.getStartingPosition(min));
 		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
 				.draw(line);
 
@@ -92,7 +92,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 					final TextBlock value = getTextBlock(totalLoad, isRed);
 					if (startingPosition == -1)
 						startingPosition = timeScale.getStartingPosition(i);
-					final double endingPosition = timeScale.getEndingPosition(i);
+					final double endingPosition = timeScale.getStartingPositionPlusOneDayWidth(i);
 					final double start = (startingPosition + endingPosition) / 2
 							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;
 					value.drawU(ug.apply(new UTranslate(start, 16)));

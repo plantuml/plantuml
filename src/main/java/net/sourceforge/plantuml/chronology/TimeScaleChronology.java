@@ -58,7 +58,7 @@ public class TimeScaleChronology implements TimeScale {
 		return fullWidth * (wink - min) / (max - min);
 	}
 
-	public double getEndingPosition(TimePoint instant) {
+	public double getStartingPositionPlusOneDayWidth(TimePoint instant) {
 		return getStartingPosition(instant);
 	}
 

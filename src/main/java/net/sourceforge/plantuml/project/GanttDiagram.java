@@ -306,7 +306,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 			private double getBarsColumnWidth(final TimeHeader timeHeader) {
 				final double xmin = timeHeader.getTimeScale().getStartingPosition(min);
-				final double xmax = timeHeader.getTimeScale().getEndingPosition(max);
+				final double xmax = timeHeader.getTimeScale().getStartingPositionPlusOneDayWidth(max);
 				return xmax - xmin;
 			}
 

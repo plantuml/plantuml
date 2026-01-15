@@ -104,9 +104,9 @@ public class TimeHeaderChronology extends TimeHeader {
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2;
 			if (printScale == PrintScale.WEEKLY)
-				x2 = timeScale.getEndingPosition(i.addDays(6));
+				x2 = timeScale.getStartingPositionPlusOneDayWidth(i.addDays(6));
 			else
-				x2 = timeScale.getEndingPosition(i);
+				x2 = timeScale.getStartingPositionPlusOneDayWidth(i);
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
 			if (i.compareTo(getMax().increment()) < 0)
@@ -120,7 +120,7 @@ public class TimeHeaderChronology extends TimeHeader {
 		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter +
 		// 6);
 		final double xmin = getTimeScale().getStartingPosition(getMin());
-		final double xmax = getTimeScale().getEndingPosition(getMax());
+		final double xmax = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
 		// printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
@@ -134,7 +134,7 @@ public class TimeHeaderChronology extends TimeHeader {
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
 		final double xmin = getTimeScale().getStartingPosition(getMin());
-		final double xmax = getTimeScale().getEndingPosition(getMax());
+		final double xmax = getTimeScale().getStartingPositionPlusOneDayWidth(getMax());
 		ug = ug.apply(UTranslate.dy(3));
 		// drawSmallVlinesDay(ug, getTimeScale(),
 		// getTimeFooterHeight(ug.getStringBounder()) - 3);
@@ -166,7 +166,7 @@ public class TimeHeaderChronology extends TimeHeader {
 
 		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
+			final double x2 = getTimeScale().getStartingPositionPlusOneDayWidth(wink);
 			HColor back = thParam.getColor(wink);
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());

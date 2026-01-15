@@ -127,7 +127,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		}
 
 		final double pos1 = timeScale.getStartingPosition(start) + 6;
-		final double pos2 = timeScale.getEndingPosition(end) - 6;
+		final double pos2 = timeScale.getStartingPositionPlusOneDayWidth(end) - 6;
 		final double pos;
 		if (pos2 - pos1 > dim.getWidth())
 			pos = pos1;
@@ -187,7 +187,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
 		final double startPos = timeScale.getStartingPosition(start);
-		final double endPos = timeScale.getEndingPosition(end);
+		final double endPos = timeScale.getStartingPositionPlusOneDayWidth(end);
 		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);
 	}
 
@@ -216,15 +216,15 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		if (side == GSide.LEFT)
 			x = timeScale.getStartingPosition(start);
 		else if (side == GSide.RIGHT)
-			x = timeScale.getEndingPosition(end);
+			x = timeScale.getStartingPositionPlusOneDayWidth(end);
 		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT) {
 			x = timeScale.getStartingPosition(start) + 8;
 			if (x > timeScale.getStartingPosition(end))
-				x = (timeScale.getStartingPosition(start) + timeScale.getEndingPosition(start)) / 2;
+				x = (timeScale.getStartingPosition(start) + timeScale.getStartingPositionPlusOneDayWidth(start)) / 2;
 		} else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT) {
-			x = timeScale.getEndingPosition(end) - 8;
-			if (x < timeScale.getEndingPosition(start))
-				x = (timeScale.getStartingPosition(end) + timeScale.getEndingPosition(end)) / 2;
+			x = timeScale.getStartingPositionPlusOneDayWidth(end) - 8;
+			if (x < timeScale.getStartingPositionPlusOneDayWidth(start))
+				x = (timeScale.getStartingPosition(end) + timeScale.getStartingPositionPlusOneDayWidth(end)) / 2;
 		} else
 			throw new IllegalArgumentException();
 
@@ -246,7 +246,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
 		final double startPos = timeScale.getStartingPosition(start) + margin.getLeft();
-		final double endPos = timeScale.getEndingPosition(end) - margin.getRight();
+		final double endPos = timeScale.getStartingPositionPlusOneDayWidth(end) - margin.getRight();
 
 		if (url != null)
 			ug.startUrl(url);
@@ -261,7 +261,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		for (LocalDate day : paused) {
 			final TimePoint pause = TimePoint.ofStartOfDay(day);
 			final double x1 = timeScale.getStartingPosition(pause);
-			final double x2 = timeScale.getEndingPosition(pause);
+			final double x2 = timeScale.getStartingPositionPlusOneDayWidth(pause);
 			off.add(new Segment(x1, x2));
 		}
 

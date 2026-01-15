@@ -41,7 +41,7 @@ public interface TimeScale {
 
 	public double getStartingPosition(TimePoint instant);
 
-	public double getEndingPosition(TimePoint instant);
+	public double getStartingPositionPlusOneDayWidth(TimePoint instant);
 
 	public double getWidth(TimePoint instant);
 

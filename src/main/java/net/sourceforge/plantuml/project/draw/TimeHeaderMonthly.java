@@ -137,7 +137,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h1 + 2);
+		drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPositionPlusOneDayWidth(getMax()), 0, h1 + 2);
 	}
 
 	private void drawMonths(UGraphic ug) {
@@ -159,7 +159,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printMonth(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h2 + 2);
+		drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPositionPlusOneDayWidth(getMax()), 0, h2 + 2);
 	}
 
 	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
@@ -195,7 +195,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);
-					final double x2 = getTimeScale().getEndingPosition(wink);
+					final double x2 = getTimeScale().getStartingPositionPlusOneDayWidth(wink);
 					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
 					double y1 = getTimeHeaderHeight(ug.getStringBounder());
