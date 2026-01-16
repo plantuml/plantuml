@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.project;
 
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
-public class DaysAsDates implements Iterable&lt;TimePoint&gt; {
+public class DaysAsDates implements Iterable&lt;Day&gt; {
 
-	private final TimePoint date1;
-	private final TimePoint date2;
+	private final Day date1;
+	private final Day date2;
 
-<span class="fc" id="L47">	public DaysAsDates(TimePoint date1, TimePoint date2) {</span>
+<span class="fc" id="L47">	public DaysAsDates(Day date1, Day date2) {</span>
 <span class="fc" id="L48">		this.date1 = date1;</span>
 <span class="fc" id="L49">		this.date2 = date2;</span>
 <span class="fc" id="L50">	}</span>
@@ -54,9 +54,9 @@ public class DaysAsDates implements Iterable&lt;TimePoint&gt; {
 <span class="nc" id="L54">		return &quot;{ &quot; + date1 + &quot; , &quot; + date2 + &quot; }&quot;;</span>
 	}
 
-<span class="nc" id="L57">	public DaysAsDates(GanttDiagram gantt, TimePoint date1, int count) {</span>
+<span class="nc" id="L57">	public DaysAsDates(GanttDiagram gantt, Day date1, int count) {</span>
 <span class="nc" id="L58">		this.date1 = date1;</span>
-<span class="nc" id="L59">		TimePoint tmp = date1;</span>
+<span class="nc" id="L59">		Day tmp = date1;</span>
 <span class="nc bnc" id="L60" title="All 2 branches missed.">		while (count &gt; 0) {</span>
 <span class="nc bnc" id="L61" title="All 2 branches missed.">			if (gantt.isOpen(tmp)) {</span>
 <span class="nc" id="L62">				count--;</span>
@@ -66,11 +66,11 @@ public class DaysAsDates implements Iterable&lt;TimePoint&gt; {
 <span class="nc" id="L66">		this.date2 = tmp;</span>
 <span class="nc" id="L67">	}</span>
 
-	class MyIterator implements Iterator&lt;TimePoint&gt; {
+	class MyIterator implements Iterator&lt;Day&gt; {
 
-		private TimePoint current;
+		private Day current;
 
-<span class="fc" id="L73">		public MyIterator(TimePoint current) {</span>
+<span class="fc" id="L73">		public MyIterator(Day current) {</span>
 <span class="fc" id="L74">			this.current = current;</span>
 <span class="fc" id="L75">		}</span>
 
@@ -78,8 +78,8 @@ public class DaysAsDates implements Iterable&lt;TimePoint&gt; {
 <span class="fc bfc" id="L78" title="All 2 branches covered.">			return current.compareTo(date2) &lt;= 0;</span>
 		}
 
-		public TimePoint next() {
-<span class="fc" id="L82">			final TimePoint result = current;</span>
+		public Day next() {
+<span class="fc" id="L82">			final Day result = current;</span>
 <span class="fc" id="L83">			current = current.increment();</span>
 <span class="fc" id="L84">			return result;</span>
 		}
@@ -90,7 +90,7 @@ public class DaysAsDates implements Iterable&lt;TimePoint&gt; {
 
 	}
 
-	public Iterator&lt;TimePoint&gt; iterator() {
+	public Iterator&lt;Day&gt; iterator() {
 <span class="fc" id="L94">		return new MyIterator(date1);</span>
 	}
 

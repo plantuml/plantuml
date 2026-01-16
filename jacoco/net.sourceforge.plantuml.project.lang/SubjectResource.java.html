@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -109,7 +109,7 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 <span class="nc" id="L111">			final Resource resource = (Resource) subject;</span>
-<span class="nc" id="L112">			final TimePoint when = (TimePoint) complement;</span>
+<span class="nc" id="L112">			final Day when = (Day) complement;</span>
 <span class="nc" id="L113">			resource.setOffBeforeDate(when);</span>
 <span class="nc" id="L114">			return CommandExecutionResult.ok();</span>
 		}
@@ -126,7 +126,7 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 <span class="nc" id="L128">			final Resource resource = (Resource) subject;</span>
-<span class="nc" id="L129">			final TimePoint when = (TimePoint) complement;</span>
+<span class="nc" id="L129">			final Day when = (Day) complement;</span>
 <span class="nc" id="L130">			resource.setOffAfterDate(when);</span>
 <span class="nc" id="L131">			return CommandExecutionResult.ok();</span>
 		}
@@ -143,7 +143,7 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 <span class="nc" id="L145">			final Resource resource = (Resource) subject;</span>
-<span class="nc" id="L146">			final TimePoint when = (TimePoint) complement;</span>
+<span class="nc" id="L146">			final Day when = (Day) complement;</span>
 <span class="nc" id="L147">			resource.addCloseDay(when);</span>
 <span class="nc" id="L148">			return CommandExecutionResult.ok();</span>
 		}
@@ -160,7 +160,7 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 <span class="nc" id="L162">			final Resource resource = (Resource) subject;</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			for (TimePoint when : (DaysAsDates) complement) {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			for (Day when : (DaysAsDates) complement) {</span>
 <span class="nc" id="L164">				resource.addCloseDay(when);</span>
 <span class="nc" id="L165">			}</span>
 <span class="nc" id="L166">			return CommandExecutionResult.ok();</span>
@@ -194,7 +194,7 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 <span class="nc" id="L196">			final Resource resource = (Resource) subject;</span>
-<span class="nc" id="L197">			final TimePoint when = (TimePoint) complement;</span>
+<span class="nc" id="L197">			final Day when = (Day) complement;</span>
 <span class="nc" id="L198">			resource.addForceOnDay(when);</span>
 <span class="nc" id="L199">			return CommandExecutionResult.ok();</span>
 		}
@@ -211,7 +211,7 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 <span class="nc" id="L213">			final Resource resource = (Resource) subject;</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">			for (TimePoint when : (DaysAsDates) complement) {</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			for (Day when : (DaysAsDates) complement) {</span>
 <span class="nc" id="L215">				resource.addForceOnDay(when);</span>
 <span class="nc" id="L216">			}</span>
 <span class="nc" id="L217">			return CommandExecutionResult.ok();</span>

@@ -39,18 +39,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.project.OpenClose;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public final class TimeScaleDailyHideClosed implements TimeScale {
 	// ::remove folder when __HAXE__
 
 	private final double cellWidth;
-	private final TimePoint startingDay;
-	private TimePoint biggest;
+	private final Day startingDay;
+	private Day biggest;
 	private final OpenClose openClose;
-<span class="nc" id="L51">	private final Map&lt;TimePoint, Integer&gt; startingInt = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L51">	private final Map&lt;Day, Integer&gt; startingInt = new HashMap&lt;&gt;();</span>
 
-<span class="nc" id="L53">	public TimeScaleDailyHideClosed(double size, TimePoint startingDay, double scale, OpenClose openClose) {</span>
+<span class="nc" id="L53">	public TimeScaleDailyHideClosed(double size, Day startingDay, double scale, OpenClose openClose) {</span>
 <span class="nc" id="L54">		this.cellWidth = size * scale;</span>
 <span class="nc" id="L55">		this.startingDay = startingDay;</span>
 <span class="nc" id="L56">		this.biggest = startingDay;</span>
@@ -59,7 +59,7 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 <span class="nc" id="L59">	}</span>
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getStartingPosition(Day instant) {
 <span class="nc bnc" id="L63" title="All 2 branches missed.">		if (instant.compareTo(this.startingDay) &lt; 0)</span>
 <span class="nc" id="L64">			throw new IllegalArgumentException();</span>
 
@@ -68,11 +68,11 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 <span class="nc" id="L68">		return startingInt.get(instant) * cellWidth;</span>
 	}
 
-	private void computeUpTo(TimePoint dest) {
+	private void computeUpTo(Day dest) {
 <span class="nc bnc" id="L72" title="All 2 branches missed.">		if (dest.compareTo(biggest) &lt;= 0)</span>
 <span class="nc" id="L73">			return;</span>
 
-<span class="nc" id="L75">		TimePoint i = biggest;</span>
+<span class="nc" id="L75">		Day i = biggest;</span>
 <span class="nc" id="L76">		int current = startingInt.get(i);</span>
 		do {
 <span class="nc bnc" id="L78" title="All 2 branches missed.">			if (getWidth(i) &gt; 0)</span>
@@ -83,19 +83,19 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 <span class="nc" id="L83">	}</span>
 
 	@Override
-	public double getEndingPosition(TimePoint instant) {
+	public double getEndingPosition(Day instant) {
 <span class="nc" id="L87">		return getStartingPosition(instant) + getWidth(instant);</span>
 	}
 
 	@Override
-	public double getWidth(TimePoint instant) {
+	public double getWidth(Day instant) {
 <span class="nc bnc" id="L92" title="All 2 branches missed.">		if (openClose.isClosed(instant))</span>
 <span class="nc" id="L93">			return 0;</span>
 <span class="nc" id="L94">		return cellWidth;</span>
 	}
 
 	@Override
-	public boolean isBreaking(TimePoint instant) {
+	public boolean isBreaking(Day instant) {
 <span class="nc" id="L99">		return true;</span>
 	}
 

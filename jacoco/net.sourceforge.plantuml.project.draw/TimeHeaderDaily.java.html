@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
-import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDailyHideClosed;
@@ -96,16 +96,16 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 <span class="nc" id="L96">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
 	}
 
-	private final Map&lt;TimePoint, String&gt; nameDays;
+	private final Map&lt;Day, String&gt; nameDays;
 
-	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map&lt;TimePoint, String&gt; nameDays,
-			TimePoint printStart) {
+	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map&lt;Day, String&gt; nameDays,
+			Day printStart) {
 <span class="nc" id="L103">		super(thParam,</span>
 <span class="nc bnc" id="L104" title="All 2 branches missed.">				thParam.isHideClosed()</span>
-<span class="nc" id="L105">						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getMin(),</span>
+<span class="nc" id="L105">						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
 <span class="nc" id="L106">								thParam.getScale(), thParam.getOpenClose())</span>
-<span class="nc" id="L107">						: new TimeScaleDaily(thParam.getCellWidth(stringBounder), thParam.getMin(), thParam.getScale(),</span>
-								printStart));
+<span class="nc" id="L107">						: new TimeScaleDaily(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
+<span class="nc" id="L108">								thParam.getScale(), printStart));</span>
 <span class="nc" id="L109">		this.nameDays = nameDays;</span>
 <span class="nc" id="L110">	}</span>
 
@@ -127,7 +127,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
 <span class="nc" id="L128">		final UGraphic ugVerticalSeparator = thParam.forVerticalSeparator(ug);</span>
 <span class="nc" id="L129">		final UGraphic ugLineColor = ug.apply(getLineColor());</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
 <span class="nc bnc" id="L131" title="All 4 branches missed.">			if (isBold2(wink) || getTimeScale().getWidth(wink.decrement()) == 0)</span>
 <span class="nc" id="L132">				drawVline(ugVerticalSeparator, getTimeScale().getStartingPosition(wink),</span>
 <span class="nc" id="L133">						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);</span>
@@ -148,7 +148,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 <span class="nc" id="L148">	}</span>
 
 	private void drawTextsDayOfWeek(UGraphic ug) {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
 <span class="nc bnc" id="L152" title="All 2 branches missed.">			if (isHidden(wink))</span>
 <span class="nc" id="L153">				continue;</span>
 <span class="nc" id="L154">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
@@ -161,7 +161,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 <span class="nc" id="L161">	}</span>
 
 	private void drawTextDayOfMonth(UGraphic ug) {
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
 <span class="nc bnc" id="L165" title="All 2 branches missed.">			if (isHidden(wink))</span>
 <span class="nc" id="L166">				continue;</span>
 <span class="nc" id="L167">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
@@ -171,13 +171,13 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		}
 <span class="nc" id="L172">	}</span>
 
-	private boolean isHidden(TimePoint wink) {
+	private boolean isHidden(Day wink) {
 <span class="nc bnc" id="L175" title="All 4 branches missed.">		if (thParam.isHideClosed() &amp;&amp; thParam.getOpenClose().isClosed(wink))</span>
 <span class="nc" id="L176">			return true;</span>
 <span class="nc" id="L177">		return false;</span>
 	}
 
-	private HColor getTextBackColor(TimePoint wink) {
+	private HColor getTextBackColor(Day wink) {
 <span class="nc bnc" id="L181" title="All 2 branches missed.">		if (getLoadAt(wink) &lt;= 0)</span>
 <span class="nc" id="L182">			return closedFontColor();</span>
 
@@ -187,7 +187,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void drawMonths(final UGraphic ug) {
 <span class="nc" id="L188">		YearMonth last = null;</span>
 <span class="nc" id="L189">		double lastChangeMonth = -1;</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
 <span class="nc bnc" id="L191" title="All 2 branches missed.">			if (isHidden(wink))</span>
 <span class="nc" id="L192">				continue;</span>
 <span class="nc" id="L193">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
@@ -208,33 +208,32 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end) {
 <span class="nc" id="L209">		final TextBlock tiny = getTextBlock(SName.month, YearMonthUtils.shortName(monthYear, locale()), true,</span>
 <span class="nc" id="L210">				openFontColor());</span>
-<span class="nc" id="L211">		final TextBlock small = getTextBlock(SName.month, YearMonthUtils.longName(monthYear, locale()), true,</span>
-<span class="nc" id="L212">				openFontColor());</span>
-<span class="nc" id="L213">		final TextBlock big = getTextBlock(SName.month, YearMonthUtils.longNameYYYY(monthYear, locale()), true,</span>
-<span class="nc" id="L214">				openFontColor());</span>
-<span class="nc" id="L215">		printCentered(ug, false, start, end, tiny, small, big);</span>
-<span class="nc" id="L216">	}</span>
+<span class="nc" id="L211">		final TextBlock small = getTextBlock(SName.month, YearMonthUtils.longName(monthYear, locale()), true, openFontColor());</span>
+<span class="nc" id="L212">		final TextBlock big = getTextBlock(SName.month, YearMonthUtils.longNameYYYY(monthYear, locale()), true,</span>
+<span class="nc" id="L213">				openFontColor());</span>
+<span class="nc" id="L214">		printCentered(ug, false, start, end, tiny, small, big);</span>
+<span class="nc" id="L215">	}</span>
 
 	private void printNamedDays(final UGraphic ug) {
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
-<span class="nc" id="L220">			String last = null;</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) &lt;= 0; wink = wink.increment()) {</span>
-<span class="nc" id="L222">				final String name = nameDays.get(wink);</span>
-<span class="nc bnc" id="L223" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
-<span class="nc" id="L224">					final double x1 = getTimeScale().getStartingPosition(wink);</span>
-<span class="nc" id="L225">					final double x2 = getTimeScale().getEndingPosition(wink);</span>
-<span class="nc" id="L226">					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());</span>
-<span class="nc" id="L227">					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="nc" id="L228">					double y1 = getTimeHeaderHeight(ug.getStringBounder());</span>
-<span class="nc" id="L229">					double y2 = getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
+<span class="nc" id="L219">			String last = null;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			for (Day wink = getMin(); wink.compareTo(getMax().increment()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc" id="L221">				final String name = nameDays.get(wink);</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
+<span class="nc" id="L223">					final double x1 = getTimeScale().getStartingPosition(wink);</span>
+<span class="nc" id="L224">					final double x2 = getTimeScale().getEndingPosition(wink);</span>
+<span class="nc" id="L225">					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());</span>
+<span class="nc" id="L226">					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L227">					double y1 = getTimeHeaderHeight(ug.getStringBounder());</span>
+<span class="nc" id="L228">					double y2 = getFullHeaderHeight(ug.getStringBounder());</span>
 
-<span class="nc" id="L231">					final double position = getH3(ug.getStringBounder());</span>
-<span class="nc" id="L232">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
+<span class="nc" id="L230">					final double position = getH3(ug.getStringBounder());</span>
+<span class="nc" id="L231">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
 				}
-<span class="nc" id="L234">				last = name;</span>
+<span class="nc" id="L233">				last = name;</span>
 			}
 		}
-<span class="nc" id="L237">	}</span>
+<span class="nc" id="L236">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

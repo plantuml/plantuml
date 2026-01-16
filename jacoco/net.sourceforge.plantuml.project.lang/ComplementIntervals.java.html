@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -76,9 +76,9 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L79">		final TimePoint d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
+<span class="nc" id="L79">		final Day d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
 <span class="nc bnc" id="L80" title="All 2 branches missed.">		if (d1 != null) {</span>
-<span class="nc" id="L81">			final TimePoint d2 = new DayPattern(&quot;2&quot;).getDay(arg);</span>
+<span class="nc" id="L81">			final Day d2 = new DayPattern(&quot;2&quot;).getDay(arg);</span>
 <span class="nc" id="L82">			return Failable.ok(new DaysAsDates(d1, d2));</span>
 		}
 
@@ -91,10 +91,10 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
 <span class="nc" id="L93">		final int day1 = Integer.parseInt(arg.get(&quot;ECOUNT1&quot; + suffix, 0));</span>
-<span class="nc" id="L94">		final TimePoint date1 = project.getStartingDate().addDays(day1);</span>
+<span class="nc" id="L94">		final Day date1 = project.getStartingDate().addDays(day1);</span>
 
 <span class="nc" id="L96">		final int day2 = Integer.parseInt(arg.get(&quot;ECOUNT2&quot; + suffix, 0));</span>
-<span class="nc" id="L97">		final TimePoint date2 = project.getStartingDate().addDays(day2);</span>
+<span class="nc" id="L97">		final Day date2 = project.getStartingDate().addDays(day2);</span>
 
 <span class="nc" id="L99">		return new DaysAsDates(date1, date2);</span>
 	}

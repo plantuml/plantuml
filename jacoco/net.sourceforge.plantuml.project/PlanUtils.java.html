@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class PlanUtils {
 
@@ -45,11 +45,11 @@ public class PlanUtils {
 
 	public static LoadPlanable minOf(final LoadPlanable p1, final LoadPlanable p2) {
 <span class="nc" id="L47">		return new LoadPlanable() {</span>
-			public int getLoadAt(TimePoint instant) {
+			public int getLoadAt(Day instant) {
 <span class="nc" id="L49">				return Math.min(p1.getLoadAt(instant), p2.getLoadAt(instant));</span>
 			}
 
-			public TimePoint getLastDayIfAny() {
+			public Day getLastDayIfAny() {
 <span class="nc" id="L53">				return lastOf(p1.getLastDayIfAny(), p2.getLastDayIfAny());</span>
 			}
 		};
@@ -57,17 +57,17 @@ public class PlanUtils {
 
 	public static LoadPlanable multiply(final LoadPlanable p1, final LoadPlanable p2) {
 <span class="nc" id="L59">		return new LoadPlanable() {</span>
-			public int getLoadAt(TimePoint instant) {
+			public int getLoadAt(Day instant) {
 <span class="nc" id="L61">				return p1.getLoadAt(instant) * p2.getLoadAt(instant) / 100;</span>
 			}
 
-			public TimePoint getLastDayIfAny() {
+			public Day getLastDayIfAny() {
 <span class="nc" id="L65">				return lastOf(p1.getLastDayIfAny(), p2.getLastDayIfAny());</span>
 			}
 		};
 	}
 
-	private static TimePoint lastOf(TimePoint day1, TimePoint day2) {
+	private static Day lastOf(Day day1, Day day2) {
 <span class="nc bnc" id="L71" title="All 2 branches missed.">		if (day1 == null)</span>
 <span class="nc" id="L72">			return day2;</span>
 <span class="nc bnc" id="L73" title="All 2 branches missed.">		if (day2 == null)</span>

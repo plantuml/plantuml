@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
@@ -91,12 +91,12 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 <span class="fc" id="L91">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
 	}
 
-	private final Map&lt;TimePoint, String&gt; nameDays;
+	private final Map&lt;Day, String&gt; nameDays;
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
-			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map&lt;TimePoint, String&gt; nameDays,
-			TimePoint printStart, int weekStartingNumber) {
-<span class="fc" id="L99">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),</span>
+			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map&lt;Day, String&gt; nameDays,
+			Day printStart, int weekStartingNumber) {
+<span class="fc" id="L99">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
 <span class="fc" id="L100">				thParam.getScale(), printStart));</span>
 <span class="fc" id="L101">		this.weekNumberStrategy = weekNumberStrategy;</span>
 <span class="fc" id="L102">		this.headerStrategy = headerStrategy;</span>
@@ -132,7 +132,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonths(final UGraphic ug) {
 <span class="fc" id="L133">		YearMonth last = null;</span>
 <span class="fc" id="L134">		double lastChangeMonth = -1;</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
 <span class="fc" id="L136">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
 <span class="fc bfc" id="L137" title="All 2 branches covered.">			if (wink.monthYear().equals(last) == false) {</span>
 <span class="fc" id="L138">				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));</span>
@@ -154,7 +154,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (nameDays.size() &gt; 0) {</span>
 <span class="nc" id="L156">			String last = null;</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			for (Day wink = getMin(); wink.compareTo(getMax().increment()) &lt;= 0; wink = wink.increment()) {</span>
 <span class="nc" id="L158">				final String name = nameDays.get(wink);</span>
 <span class="nc bnc" id="L159" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
 <span class="nc" id="L160">					final double x1 = getTimeScale().getStartingPosition(wink);</span>
@@ -174,7 +174,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment())</span>
 <span class="fc bfc" id="L178" title="All 2 branches covered.">			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())</span>
 <span class="fc" id="L179">				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),</span>
 <span class="fc" id="L180">						getH1(ug.getStringBounder()), totalHeightWithoutFooter);</span>
@@ -186,7 +186,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private void printDaysOfMonth(final UGraphic ug) {
 <span class="fc" id="L188">		int counter = weekStartingNumber;</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
 <span class="fc bfc" id="L190" title="All 2 branches covered.">			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {</span>
 				final String num;
 <span class="pc bpc" id="L192" title="1 of 2 branches missed.">				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)</span>

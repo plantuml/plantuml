@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.project.GanttConstraintMode;
 import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class TaskInstant {
 
@@ -67,7 +67,7 @@ public class TaskInstant {
 <span class="nc" id="L67">		return new TaskInstant(task, attribute, newDelta, mode, calendar);</span>
 	}
 
-	private TimePoint manageDelta(TimePoint value) {
+	private Day manageDelta(Day value) {
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
 <span class="nc bnc" id="L72" title="All 2 branches missed.">			for (int i = 0; i &lt; delta; i++) {</span>
 <span class="nc bnc" id="L73" title="All 2 branches missed.">				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {</span>
@@ -86,7 +86,7 @@ public class TaskInstant {
 <span class="fc" id="L86">		return value;</span>
 	}
 
-	public TimePoint getInstantPrecise() {
+	public Day getInstantPrecise() {
 <span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
 <span class="nc" id="L91">			return manageDelta(task.getStart());</span>
 
@@ -96,7 +96,7 @@ public class TaskInstant {
 <span class="nc" id="L96">		throw new IllegalStateException();</span>
 	}
 
-	public TimePoint getInstantTheorical() {
+	public Day getInstantTheorical() {
 <span class="nc bnc" id="L100" title="All 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
 <span class="nc" id="L101">			return manageDelta(task.getStart());</span>
 

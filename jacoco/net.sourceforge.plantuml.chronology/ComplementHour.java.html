@@ -42,7 +42,7 @@ import java.util.TimeZone;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.lang.Something;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -69,12 +69,12 @@ import net.sourceforge.plantuml.regex.RegexResult;
 		); //
 	}
 
-	public Failable&lt;TimePoint&gt; getMe(ChronologyDiagram system, RegexResult arg, String suffix) {
+	public Failable&lt;Day&gt; getMe(ChronologyDiagram system, RegexResult arg, String suffix) {
 <span class="nc" id="L73">		final String value = arg.get(&quot;TIME&quot;, 0);</span>
 <span class="nc" id="L74">		System.err.println(&quot;value=&quot; + value);</span>
 		try {
 <span class="nc" id="L76">			final Date date = inputFormat.parse(value);</span>
-<span class="nc" id="L77">			return Failable.ok(TimePoint.create(date.getTime()));</span>
+<span class="nc" id="L77">			return Failable.ok(Day.create(date.getTime()));</span>
 <span class="nc" id="L78">		} catch (ParseException e) {</span>
 <span class="nc" id="L79">			e.printStackTrace();</span>
 		}

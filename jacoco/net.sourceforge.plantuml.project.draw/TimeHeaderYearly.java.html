@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -65,8 +65,8 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 <span class="nc" id="L65">		return getTimeHeaderHeight(stringBounder);</span>
 	}
 
-	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, TimePoint printStart) {
-<span class="nc" id="L69">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),</span>
+	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
+<span class="nc" id="L69">		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),</span>
 <span class="nc" id="L70">				thParam.getScale(), printStart));</span>
 <span class="nc" id="L71">	}</span>
 
@@ -92,7 +92,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 
 <span class="nc" id="L93">		YearMonth last = null;</span>
 <span class="nc" id="L94">		double lastChange = -1;</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt; 0; wink = wink.increment()) {</span>
 <span class="nc" id="L96">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
 <span class="nc bnc" id="L97" title="All 4 branches missed.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
 <span class="nc" id="L98">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>

@@ -64,7 +64,7 @@ public final class NGMTotalEffort {
 
 	private static final long SECONDS_PER_MINUTE = 60;
 	private static final long SECONDS_PER_HOUR = 3600;
-	public static final long SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
+	private static final long SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
 
 	/**
 	 * Workload expressed in seconds for a single person (1 FTE).

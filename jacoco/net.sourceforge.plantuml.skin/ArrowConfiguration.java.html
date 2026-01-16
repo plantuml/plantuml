@@ -113,7 +113,7 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration self() {
-<span class="nc" id="L116">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true, thickness,</span>
+<span class="fc" id="L116">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true, thickness,</span>
 				reverseDefine, inclination);
 	}
 
@@ -215,7 +215,7 @@ public class ArrowConfiguration {
 	}
 
 	public boolean isAsync2() {
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
 	}
 
 	public final ArrowPart getPart() {
@@ -260,7 +260,7 @@ public class ArrowConfiguration {
 	}
 
 	public UGraphic applyThicknessOnly(UGraphic ug) {
-<span class="nc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
+<span class="fc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
 	}
 
 	public ArrowConfiguration withThickness(double thickness) {

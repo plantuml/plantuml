@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -74,7 +74,7 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L77">			final TimePoint day = (TimePoint) complement;</span>
+<span class="nc" id="L77">			final Day day = (Day) complement;</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">			assert project == subject;</span>
 <span class="nc" id="L79">			project.addVerticalSeparatorBefore(day);</span>
 <span class="nc" id="L80">			return CommandExecutionResult.ok();</span>
@@ -90,7 +90,7 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L93">			final TimePoint day = (TimePoint) complement;</span>
+<span class="nc" id="L93">			final Day day = (Day) complement;</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">			assert project == subject;</span>
 <span class="nc" id="L95">			project.addVerticalSeparatorBefore(day.increment());</span>
 <span class="nc" id="L96">			return CommandExecutionResult.ok();</span>

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SentenceTaskStartsOnlyRelative extends SentenceSimple&lt;GanttDiagram&gt; {
 
@@ -50,7 +50,7 @@ public class SentenceTaskStartsOnlyRelative extends SentenceSimple&lt;GanttDiagr
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L52">		final Task task = (Task) subject;</span>
-<span class="nc" id="L53">		final TimePoint start = (TimePoint) complement;</span>
+<span class="nc" id="L53">		final Day start = (Day) complement;</span>
 
 <span class="nc" id="L55">		task.setStart(start);</span>
 <span class="nc" id="L56">		return CommandExecutionResult.ok();</span>

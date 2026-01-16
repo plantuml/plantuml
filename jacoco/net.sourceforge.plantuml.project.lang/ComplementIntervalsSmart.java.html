@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -79,7 +79,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L82">		final TimePoint d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
+<span class="nc" id="L82">		final Day d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
 
 <span class="nc" id="L84">		final Failable&lt;TaskInstant&gt; i2 = getComplementTaskInstant(system, arg, suffix);</span>
 

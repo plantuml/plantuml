@@ -40,7 +40,7 @@ import java.util.Locale;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
@@ -53,7 +53,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 <span class="fc" id="L53">		return thParam.getLocale();</span>
 	}
 
-	protected final int getLoadAt(TimePoint instant) {
+	protected final int getLoadAt(Day instant) {
 <span class="fc" id="L57">		return thParam.getLoadPlanable().getLoadAt(instant);</span>
 	}
 	
@@ -79,7 +79,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 <span class="fc" id="L79">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
 <span class="fc" id="L80">		Pending pending = null;</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (TimePoint wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (Day wink = getMin(); wink.compareTo(getMax()) &lt;= 0; wink = wink.increment()) {</span>
 <span class="fc" id="L83">			final double x1 = getTimeScale().getStartingPosition(wink);</span>
 <span class="fc" id="L84">			final double x2 = getTimeScale().getEndingPosition(wink);</span>
 <span class="fc" id="L85">			HColor back = thParam.getColor(wink);</span>

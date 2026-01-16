@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class ConstantPlan implements LoadPlanable {
 
@@ -54,13 +54,13 @@ public class ConstantPlan implements LoadPlanable {
 	}
 
 	@Override
-	public int getLoadAt(TimePoint instant) {
+	public int getLoadAt(Day instant) {
 <span class="nc" id="L58">		return loadPerInstant;</span>
 
 	}
 
 	@Override
-	public TimePoint getLastDayIfAny() {
+	public Day getLastDayIfAny() {
 <span class="nc" id="L64">		return null;</span>
 	}
 }

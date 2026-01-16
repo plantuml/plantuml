@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SentenceTaskEndsAbsolute extends SentenceSimple&lt;GanttDiagram&gt; {
 
@@ -50,8 +50,8 @@ public class SentenceTaskEndsAbsolute extends SentenceSimple&lt;GanttDiagram&gt;
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L52">		final Task task = (Task) subject;</span>
-<span class="nc" id="L53">		final TimePoint end = (TimePoint) complement;</span>
-<span class="nc" id="L54">		final TimePoint startingDate = project.getStartingDate();</span>
+<span class="nc" id="L53">		final Day end = (Day) complement;</span>
+<span class="nc" id="L54">		final Day startingDate = project.getStartingDate();</span>
 <span class="nc bnc" id="L55" title="All 2 branches missed.">		if (startingDate.getAbsoluteDayNum() == 0)</span>
 <span class="nc" id="L56">			return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
 <span class="nc" id="L57">		task.setEnd(end);</span>

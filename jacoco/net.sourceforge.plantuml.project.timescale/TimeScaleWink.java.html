@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project.timescale;
 
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class TimeScaleWink implements TimeScale {
 
@@ -49,25 +49,25 @@ public class TimeScaleWink implements TimeScale {
 <span class="fc" id="L49">	}</span>
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getStartingPosition(Day instant) {
 <span class="fc" id="L53">		final long wink = instant.getMillis();</span>
-<span class="fc" id="L54">		return wink * cellWidth / TimePoint.MILLISECONDS_PER_DAY;</span>
+<span class="fc" id="L54">		return wink * cellWidth / Day.MILLISECONDS_PER_DAY;</span>
 	}
 
 	@Override
-	public double getEndingPosition(TimePoint instant) {
+	public double getEndingPosition(Day instant) {
 <span class="fc" id="L59">		return getStartingPosition(instant) + getWidth(instant);</span>
 	}
 
 	@Override
-	public double getWidth(TimePoint instant) {
+	public double getWidth(Day instant) {
 <span class="fc" id="L64">		return cellWidth;</span>
 	}
 
 	@Override
-	public boolean isBreaking(TimePoint instant) {
+	public boolean isBreaking(Day instant) {
 <span class="nc bnc" id="L69" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY) {</span>
-<span class="nc" id="L70">			final long num = instant.getMillis() / TimePoint.MILLISECONDS_PER_DAY;</span>
+<span class="nc" id="L70">			final long num = instant.getMillis() / Day.MILLISECONDS_PER_DAY;</span>
 <span class="nc bnc" id="L71" title="All 2 branches missed.">			return num % 7 == 6;</span>
 		}
 <span class="nc" id="L73">		return true;</span>

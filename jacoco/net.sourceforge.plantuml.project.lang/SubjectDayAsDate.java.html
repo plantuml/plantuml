@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -56,7 +56,7 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 	private SubjectDayAsDate() {
 	}
 
-	public Failable&lt;TimePoint&gt; getMe(GanttDiagram project, RegexResult arg) {
+	public Failable&lt;Day&gt; getMe(GanttDiagram project, RegexResult arg) {
 <span class="nc bnc" id="L60" title="All 2 branches missed.">		if (arg.get(&quot;BDAY&quot;, 0) != null)</span>
 <span class="nc" id="L61">			return Failable.ok(resultB(arg));</span>
 
@@ -67,14 +67,14 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 
 	}
 
-	private TimePoint resultB(RegexResult arg) {
+	private Day resultB(RegexResult arg) {
 <span class="nc" id="L71">		final int day = Integer.parseInt(arg.get(&quot;BDAY&quot;, 0));</span>
 <span class="nc" id="L72">		final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot;, 0));</span>
 <span class="nc" id="L73">		final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot;, 0));</span>
-<span class="nc" id="L74">		return TimePoint.of(year, month, day);</span>
+<span class="nc" id="L74">		return Day.create(year, month, day);</span>
 	}
 
-	private TimePoint resultE(GanttDiagram system, RegexResult arg) {
+	private Day resultE(GanttDiagram system, RegexResult arg) {
 <span class="nc" id="L78">		final String type = arg.get(&quot;ETYPE&quot;, 0).toUpperCase();</span>
 <span class="nc" id="L79">		final String operation = arg.get(&quot;EOPERATION&quot;, 0);</span>
 <span class="nc" id="L80">		int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot;, 0));</span>
@@ -101,7 +101,7 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L104">			project.closeDayAsDate((TimePoint) subject, (String) complement);</span>
+<span class="nc" id="L104">			project.closeDayAsDate((Day) subject, (String) complement);</span>
 <span class="nc" id="L105">			return CommandExecutionResult.ok();</span>
 		}
 	}
@@ -113,7 +113,7 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L116">			project.openDayAsDate((TimePoint) subject, (String) complement);</span>
+<span class="nc" id="L116">			project.openDayAsDate((Day) subject, (String) complement);</span>
 <span class="nc" id="L117">			return CommandExecutionResult.ok();</span>
 		}
 	}
@@ -127,7 +127,7 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L129">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="nc" id="L130">			project.colorDay((TimePoint) subject, color);</span>
+<span class="nc" id="L130">			project.colorDay((Day) subject, color);</span>
 <span class="nc" id="L131">			return CommandExecutionResult.ok();</span>
 		}
 

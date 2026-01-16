@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -64,9 +64,9 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawGroup extends AbstractTaskDraw {
 
-	private final TimePoint end;
+	private final Day end;
 
-	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, Task task,
+	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, Task task,
 			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
 <span class="nc" id="L71">		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
 <span class="nc" id="L72">		this.end = end;</span>

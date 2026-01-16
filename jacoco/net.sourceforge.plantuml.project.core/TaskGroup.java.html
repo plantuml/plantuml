@@ -42,7 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -58,8 +58,8 @@ public class TaskGroup extends AbstractTask implements Task {
 <span class="nc" id="L58">	}</span>
 
 	@Override
-	public TimePoint getStart() {
-<span class="nc" id="L62">		TimePoint min = null;</span>
+	public Day getStart() {
+<span class="nc" id="L62">		Day min = null;</span>
 <span class="nc bnc" id="L63" title="All 2 branches missed.">		for (Task child : children)</span>
 <span class="nc bnc" id="L64" title="All 4 branches missed.">			if (min == null || min.compareTo(child.getStart()) &gt; 0)</span>
 <span class="nc" id="L65">				min = child.getStart();</span>
@@ -71,8 +71,8 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getEnd() {
-<span class="nc" id="L75">		TimePoint max = null;</span>
+	public Day getEnd() {
+<span class="nc" id="L75">		Day max = null;</span>
 <span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Task child : children)</span>
 <span class="nc bnc" id="L77" title="All 4 branches missed.">			if (max == null || max.compareTo(child.getEnd()) &lt; 0)</span>
 <span class="nc" id="L78">				max = child.getEnd();</span>
@@ -84,12 +84,12 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setStart(TimePoint start) {
+	public void setStart(Day start) {
 <span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public void setEnd(TimePoint end) {
+	public void setEnd(Day end) {
 <span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
 	}
 
@@ -134,7 +134,7 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(Day pause) {
 <span class="nc" id="L138">		throw new UnsupportedOperationException();</span>
 	}
 

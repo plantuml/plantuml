@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.IntPredicate;
 
 /**
  * Immutable rational number represented as a reduced numerator/denominator
@@ -54,12 +55,12 @@ import java.util.function.BiFunction;
  * multiplications. For safe arbitrary precision, BigInteger would be required.
  */
 public final class Fraction implements Comparable&lt;Fraction&gt; {
-<span class="fc" id="L57">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; PRODUCT = Fraction::multiply;</span>
-<span class="fc" id="L58">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; SUM = Fraction::add;</span>
+<span class="fc" id="L58">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; PRODUCT = Fraction::multiply;</span>
+<span class="fc" id="L59">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; SUM = Fraction::add;</span>
 	
 	/** Common constants for workload and general arithmetic. */
-<span class="fc" id="L61">	public static final Fraction ZERO = new Fraction(0, 1);</span>
-<span class="fc" id="L62">	public static final Fraction ONE = new Fraction(1, 1);</span>
+<span class="fc" id="L62">	public static final Fraction ZERO = new Fraction(0, 1);</span>
+<span class="fc" id="L63">	public static final Fraction ONE = new Fraction(1, 1);</span>
 
 	private final long num; // numerator
 	private final long den; // denominator (always &gt; 0)
@@ -72,22 +73,22 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @param denominator the denominator (must not be zero)
 	 * @throws IllegalArgumentException if denominator is zero
 	 */
-<span class="fc" id="L75">	public Fraction(long numerator, long denominator) {</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (denominator == 0) {</span>
-<span class="fc" id="L77">			throw new IllegalArgumentException(&quot;Denominator cannot be zero.&quot;);</span>
+<span class="fc" id="L76">	public Fraction(long numerator, long denominator) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (denominator == 0) {</span>
+<span class="fc" id="L78">			throw new IllegalArgumentException(&quot;Denominator cannot be zero.&quot;);</span>
 		}
 
 		// Normalize sign: denominator positive
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (denominator &lt; 0) {</span>
-<span class="fc" id="L82">			numerator = -numerator;</span>
-<span class="fc" id="L83">			denominator = -denominator;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (denominator &lt; 0) {</span>
+<span class="fc" id="L83">			numerator = -numerator;</span>
+<span class="fc" id="L84">			denominator = -denominator;</span>
 		}
 
 		// Reduce to simplest form
-<span class="fc" id="L87">		long g = gcd(Math.abs(numerator), denominator);</span>
-<span class="fc" id="L88">		this.num = numerator / g;</span>
-<span class="fc" id="L89">		this.den = denominator / g;</span>
-<span class="fc" id="L90">	}</span>
+<span class="fc" id="L88">		long g = gcd(Math.abs(numerator), denominator);</span>
+<span class="fc" id="L89">		this.num = numerator / g;</span>
+<span class="fc" id="L90">		this.den = denominator / g;</span>
+<span class="fc" id="L91">	}</span>
 
 	/**
 	 * Creates a fraction representing an integer.
@@ -95,7 +96,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @param value the integer value
 	 */
 	public static Fraction of(long value) {
-<span class="fc" id="L98">		return new Fraction(value, 1);</span>
+<span class="fc" id="L99">		return new Fraction(value, 1);</span>
 	}
 
 	/**
@@ -104,7 +105,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @return the numerator
 	 */
 	public long getNumerator() {
-<span class="fc" id="L107">		return num;</span>
+<span class="fc" id="L108">		return num;</span>
 	}
 
 	/** 
@@ -113,7 +114,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @return the denominator
 	 */
 	public long getDenominator() {
-<span class="fc" id="L116">		return den;</span>
+<span class="fc" id="L117">		return den;</span>
 	}
 
 	/**
@@ -122,7 +123,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @return the reciprocal fraction
 	 */
 	public Fraction reciprocal() {
-<span class="fc" id="L125">		return new Fraction(this.den, this.num);</span>
+<span class="fc" id="L126">		return new Fraction(this.den, this.num);</span>
 	}
 	
 	/**
@@ -131,7 +132,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @return the negated fraction
 	 */
 	public Fraction negate() {
-<span class="fc" id="L134">		return new Fraction(-this.num, this.den);</span>
+<span class="fc" id="L135">		return new Fraction(-this.num, this.den);</span>
 	}
 	
 	/** 
@@ -142,12 +143,12 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction add(Fraction other) {
-<span class="fc" id="L145">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
+<span class="fc" id="L146">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
 		
 		// a/b + c/d = (ad + bc) / bd
-<span class="fc" id="L148">		long n = this.num * other.den + other.num * this.den;</span>
-<span class="fc" id="L149">		long d = this.den * other.den;</span>
-<span class="fc" id="L150">		return new Fraction(n, d);</span>
+<span class="fc" id="L149">		long n = this.num * other.den + other.num * this.den;</span>
+<span class="fc" id="L150">		long d = this.den * other.den;</span>
+<span class="fc" id="L151">		return new Fraction(n, d);</span>
 	}
 
 	/** 
@@ -158,12 +159,12 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction subtract(Fraction other) {
-<span class="fc" id="L161">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
+<span class="fc" id="L162">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
 		
 		// a/b - c/d = (ad - bc) / bd
-<span class="fc" id="L164">		long n = this.num * other.den - other.num * this.den;</span>
-<span class="fc" id="L165">		long d = this.den * other.den;</span>
-<span class="fc" id="L166">		return new Fraction(n, d);</span>
+<span class="fc" id="L165">		long n = this.num * other.den - other.num * this.den;</span>
+<span class="fc" id="L166">		long d = this.den * other.den;</span>
+<span class="fc" id="L167">		return new Fraction(n, d);</span>
 	}
 
 	/** 
@@ -174,12 +175,12 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction multiply(Fraction other) {
-<span class="fc" id="L177">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
+<span class="fc" id="L178">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
 		
 		// (a/b) * (c/d) = (ac) / (bd)
-<span class="fc" id="L180">		long n = this.num * other.num;</span>
-<span class="fc" id="L181">		long d = this.den * other.den;</span>
-<span class="fc" id="L182">		return new Fraction(n, d);</span>
+<span class="fc" id="L181">		long n = this.num * other.num;</span>
+<span class="fc" id="L182">		long d = this.den * other.den;</span>
+<span class="fc" id="L183">		return new Fraction(n, d);</span>
 	}
 	
 	/** 
@@ -190,9 +191,9 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction divide(Fraction other) {
-<span class="fc" id="L193">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
+<span class="fc" id="L194">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
 		
-<span class="fc" id="L195">		return this.multiply(other.reciprocal());</span>
+<span class="fc" id="L196">		return this.multiply(other.reciprocal());</span>
 	}
 	
 	/**
@@ -200,7 +201,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @return the whole part
 	 */
 	public long wholePart() {
-<span class="fc" id="L203">		return this.num / this.den;</span>
+<span class="fc" id="L204">		return this.num / this.den;</span>
 	}
 
 	/** 
@@ -210,10 +211,10 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 */
 	@Override
 	public String toString() {
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		if (den == 1) {</span>
-<span class="fc" id="L214">			return Long.toString(num);</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (den == 1) {</span>
+<span class="fc" id="L215">			return Long.toString(num);</span>
 		}
-<span class="fc" id="L216">		return num + &quot;/&quot; + den;</span>
+<span class="fc" id="L217">		return num + &quot;/&quot; + den;</span>
 	}
 
 	/**
@@ -227,12 +228,12 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 */
 	@Override
 	public int compareTo(Fraction other) {
-<span class="fc" id="L230">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
+<span class="fc" id="L231">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
 		
 		// Compare a/b and c/d by cross-products: ad ? bc
-<span class="fc" id="L233">		long lhs = this.num * other.den;</span>
-<span class="fc" id="L234">		long rhs = other.num * this.den;</span>
-<span class="fc" id="L235">		return Long.compare(lhs, rhs);</span>
+<span class="fc" id="L234">		long lhs = this.num * other.den;</span>
+<span class="fc" id="L235">		long rhs = other.num * this.den;</span>
+<span class="fc" id="L236">		return Long.compare(lhs, rhs);</span>
 	}
 
 	/**
@@ -240,32 +241,32 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (this == obj)</span>
-<span class="fc" id="L244">			return true;</span>
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (!(obj instanceof Fraction))</span>
-<span class="nc" id="L246">			return false;</span>
-<span class="fc" id="L247">		Fraction other = (Fraction) obj;</span>
-<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		return this.num == other.num &amp;&amp; this.den == other.den;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L245">			return true;</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (!(obj instanceof Fraction))</span>
+<span class="nc" id="L247">			return false;</span>
+<span class="fc" id="L248">		Fraction other = (Fraction) obj;</span>
+<span class="pc bpc" id="L249" title="1 of 4 branches missed.">		return this.num == other.num &amp;&amp; this.den == other.den;</span>
 	}
 
 	@Override
 	public int hashCode() {
 		// Simple and stable hash since the class is immutable
-<span class="fc" id="L254">		int result = Long.hashCode(num);</span>
-<span class="fc" id="L255">		result = 31 * result + Long.hashCode(den);</span>
-<span class="fc" id="L256">		return result;</span>
+<span class="fc" id="L255">		int result = Long.hashCode(num);</span>
+<span class="fc" id="L256">		result = 31 * result + Long.hashCode(den);</span>
+<span class="fc" id="L257">		return result;</span>
 	}
 
 	/**
 	 * Computes the greatest common divisor using the Euclidean algorithm.
 	 */
 	private static long gcd(long a, long b) {
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		while (b != 0) {</span>
-<span class="fc" id="L264">			long t = b;</span>
-<span class="fc" id="L265">			b = a % b;</span>
-<span class="fc" id="L266">			a = t;</span>
-<span class="fc" id="L267">		}</span>
-<span class="fc" id="L268">		return a;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		while (b != 0) {</span>
+<span class="fc" id="L265">			long t = b;</span>
+<span class="fc" id="L266">			b = a % b;</span>
+<span class="fc" id="L267">			a = t;</span>
+<span class="fc" id="L268">		}</span>
+<span class="fc" id="L269">		return a;</span>
 	}
 
 }

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.solver;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SolverImpl extends AbstractSolver implements Solver {
 	// ::remove folder when __HAXE__
@@ -50,11 +50,11 @@ public class SolverImpl extends AbstractSolver implements Solver {
 <span class="fc" id="L50">	}</span>
 
 	@Override
-	protected TimePoint computeEnd() {
-<span class="fc" id="L54">		TimePoint current = (TimePoint) values.get(TaskAttribute.START);</span>
-<span class="fc" id="L55">		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoadInDays();</span>
+	protected Day computeEnd() {
+<span class="fc" id="L54">		Day current = (Day) values.get(TaskAttribute.START);</span>
+<span class="fc" id="L55">		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();</span>
 <span class="fc" id="L56">		int cpt = 0;</span>
-<span class="fc" id="L57">		final TimePoint lastDayIfAny = loadPlanable.getLastDayIfAny();</span>
+<span class="fc" id="L57">		final Day lastDayIfAny = loadPlanable.getLastDayIfAny();</span>
 <span class="fc bfc" id="L58" title="All 2 branches covered.">		while (fullLoad &gt; 0) {</span>
 <span class="fc" id="L59">			fullLoad -= loadPlanable.getLoadAt(current);</span>
 <span class="fc" id="L60">			current = current.increment();</span>
@@ -71,9 +71,9 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	}
 
 	@Override
-	protected TimePoint computeStart() {
-<span class="nc" id="L75">		TimePoint current = (TimePoint) values.get(TaskAttribute.END);</span>
-<span class="nc" id="L76">		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoadInDays();</span>
+	protected Day computeStart() {
+<span class="nc" id="L75">		Day current = (Day) values.get(TaskAttribute.END);</span>
+<span class="nc" id="L76">		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();</span>
 <span class="nc" id="L77">		int cpt = 0;</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">		while (fullLoad &gt; 0) {</span>
 <span class="nc" id="L79">			fullLoad -= loadPlanable.getLoadAt(current);</span>
