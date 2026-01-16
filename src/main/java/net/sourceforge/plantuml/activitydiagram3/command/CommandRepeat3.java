@@ -82,8 +82,8 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-		final String s = arg.get("COLOR", 0);
-		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		// final String s = arg.get("COLOR", 0);
+		// final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		final BoxStyle boxStyle;
 		final String styleString = arg.get("STYLE", 0);
@@ -104,7 +104,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
 
-		diagram.startRepeat(color, label, boxStyle, colors, stereotype);
+		diagram.startRepeat(label, boxStyle, colors, stereotype);
 
 		return CommandExecutionResult.ok();
 	}

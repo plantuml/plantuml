@@ -142,7 +142,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	@Override
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder) {
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype,
+			StyleBuilder styleBuilder) {
 		return factory.activity(label, swimlane, style, colors, stereotype, styleBuilder);
 	}
 
@@ -173,11 +174,12 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	@Override
-	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
-			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
-		return factory.repeat(boxStyleIn, stereotype, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors, backward,
-				noOut, incoming1, incoming2, currentStyleBuilder);
+	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
+			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2) {
+		return factory.repeat(boxStyleIn, stereotype, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors,
+				backward, noOut, incoming1, incoming2, currentStyleBuilder, colors2, stereotype2);
 	}
 
 	@Override

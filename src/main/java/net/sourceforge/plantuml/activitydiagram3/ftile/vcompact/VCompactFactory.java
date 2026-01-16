@@ -161,7 +161,8 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
 			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
-			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2) {
 		return repeat;
 	}
 

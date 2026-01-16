@@ -116,8 +116,8 @@ class FtileRepeat extends AbstractFtile {
 	}
 
 	public static Ftile create(Swimlane swimlane, Swimlane swimlaneOut, Ftile entry, Ftile repeat, Display test,
-			Display yes, Display out, HColor borderColor, HColor diamondColor, Rainbow arrowColor,
-			Rainbow endRepeatLinkColor, ConditionStyle conditionStyle, ISkinSimple spriteContainer,
+			Display yes, Display out, HColor borderColor, HColor diamondColor1, HColor diamondColor2,
+			Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle, ISkinSimple spriteContainer,
 			FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward, boolean noOut,
 			LinkRendering incoming1, LinkRendering incoming2) {
 
@@ -133,7 +133,7 @@ class FtileRepeat extends AbstractFtile {
 		final Ftile diamond1;
 		// assert swimlane == repeat.getSwimlaneIn();
 		if (entry == null)
-			diamond1 = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane);
+			diamond1 = new FtileDiamond(repeat.skinParam(), diamondColor1, borderColor, swimlane);
 		else
 			diamond1 = entry;
 
@@ -143,16 +143,16 @@ class FtileRepeat extends AbstractFtile {
 			if (noOut && Display.isNull(test))
 				diamond2 = new FtileEmpty(repeat.skinParam());
 			else
-				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor, borderColor, swimlaneOut)
+				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)
 						.withEast(yesTb).withSouth(outTb);
 
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
 		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {
-			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane)
+			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane)
 					.withEast(tbTest);
 			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);
 		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {
-			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor, borderColor,
+			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor2, borderColor,
 					swimlane).withEast(yesTb).withSouth(outTb);
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
 		} else {

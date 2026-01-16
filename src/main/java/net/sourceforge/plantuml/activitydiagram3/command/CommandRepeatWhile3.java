@@ -41,6 +41,9 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -49,6 +52,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -58,8 +64,8 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandRepeatWhile3.class.getName(), //
-				RegexLeaf.start(), //
+		return RegexConcat.build(CommandRepeatWhile3.class.getName(), RegexLeaf.start(), //
+				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("while"), //
@@ -91,14 +97,20 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexOptional(new RegexConcat( //
 						new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf(1, "COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
+								new RegexLeaf(1, "XCOLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexOr(//
 								new RegexLeaf(1, "LABEL", "(.*)"), //
 								new RegexLeaf("")) //
 				)), //
 				new RegexLeaf(";?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.end());
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -108,17 +120,48 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 		final Display yes = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("WHEN", 0));
 		final Display out = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("OUT", 0));
 
-		final String colorString = arg.get("COLOR", 0);
+		final String colorString = arg.get("XCOLOR", 0);
 		final Rainbow rainbow;
-		if (colorString == null) {
+		if (colorString == null)
 			rainbow = Rainbow.none();
-		} else {
+		else
 			rainbow = Rainbow.build(diagram.getSkinParam(), colorString,
 					diagram.getSkinParam().colorArrowSeparationSpace());
-		}
+
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
+		final Stereotype stereotype;
+		final String stereo = arg.get("STEREO", 0);
+		if (stereo != null)
+			stereotype = Stereotype.build(stereo);
+		else
+			stereotype = null;
 
 		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow);
+		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, colors, stereotype);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

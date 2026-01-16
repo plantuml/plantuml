@@ -69,7 +69,8 @@ public interface FtileFactory {
 
 	public Ftile spot(Swimlane swimlane, String spot, HColor color);
 
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype,
+			StyleBuilder styleBuilder);
 
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
 			VerticalAlignment verticalAlignment);
@@ -82,9 +83,10 @@ public interface FtileFactory {
 
 	public Ftile assembly(Ftile tile1, Ftile tile2);
 
-	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
-			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder);
+	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
+			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2);
 
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
 			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2,

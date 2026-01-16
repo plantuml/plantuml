@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 
 public class Colors {
 	// ::remove file when __HAXE__
@@ -203,6 +205,17 @@ public class Colors {
 			return stroke;
 
 		return lineStyle.muteStroke(stroke);
+	}
+
+	public HColor getColor(Style style, PName name, HColorSet colorSet) {
+		if (name == PName.BackGroundColor) {
+			final HColor color = map.get(ColorType.BACK);
+			if (color != null)
+				return color;
+
+		}
+		return style.value(name).asColor(colorSet);
+
 	}
 
 }
