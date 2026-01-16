@@ -50,9 +50,8 @@ public class FtileFactoryDelegatorAddUrl extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile addUrl(Ftile ftile, Url url) {
-		if (ftile instanceof FtileBox) {
+		if (ftile instanceof FtileBox || ftile instanceof FtileBoxEmoji)
 			return new FtileWithUrl(ftile, url);
-		}
 		return ftile;
 	}
 }
