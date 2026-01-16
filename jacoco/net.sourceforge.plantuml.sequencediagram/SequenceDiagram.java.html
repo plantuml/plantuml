@@ -294,7 +294,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L294">			return new SequenceDiagramXmiMaker(this, fileFormat);</span>
 		// ::done
 
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (modeTeoz())</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (modeTeoz())</span>
 <span class="nc" id="L298">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
 
 <span class="fc" id="L300">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
@@ -589,8 +589,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L589">	private final Set&lt;EntityPortion&gt; hiddenPortions = EnumSet.&lt;EntityPortion&gt;noneOf(EntityPortion.class);</span>
 
 	public void hideOrShow(Set&lt;EntityPortion&gt; portions, boolean show) {
-<span class="pc bpc" id="L592" title="1 of 2 branches missed.">		if (show)</span>
-<span class="nc" id="L593">			hiddenPortions.removeAll(portions);</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">		if (show)</span>
+<span class="fc" id="L593">			hiddenPortions.removeAll(portions);</span>
 		else
 <span class="fc" id="L595">			hiddenPortions.addAll(portions);</span>
 
@@ -608,7 +608,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public List&lt;LinkAnchor&gt; getLinkAnchors() {
-<span class="nc" id="L611">		return Collections.unmodifiableList(linkAnchors);</span>
+<span class="fc" id="L611">		return Collections.unmodifiableList(linkAnchors);</span>
 	}
 
 	@Override

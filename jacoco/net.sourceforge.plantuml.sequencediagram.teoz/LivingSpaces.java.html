@@ -50,9 +50,9 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
 
-<span class="nc" id="L53">public class LivingSpaces {</span>
+<span class="fc" id="L53">public class LivingSpaces {</span>
 
-<span class="nc" id="L55">	private final Map&lt;Participant, LivingSpace&gt; all = new LinkedHashMap&lt;Participant, LivingSpace&gt;();</span>
+<span class="fc" id="L55">	private final Map&lt;Participant, LivingSpace&gt; all = new LinkedHashMap&lt;Participant, LivingSpace&gt;();</span>
 
 	public Collection&lt;LivingSpace&gt; values() {
 <span class="nc" id="L58">		return all.values();</span>
@@ -93,15 +93,15 @@ import net.sourceforge.plantuml.skin.Context2D;
 	}
 
 	public Collection&lt;Participant&gt; participants() {
-<span class="nc" id="L96">		return all.keySet();</span>
+<span class="fc" id="L96">		return all.keySet();</span>
 	}
 
 	public void put(Participant participant, LivingSpace livingSpace) {
-<span class="nc" id="L100">		all.put(participant, livingSpace);</span>
-<span class="nc" id="L101">	}</span>
+<span class="fc" id="L100">		all.put(participant, livingSpace);</span>
+<span class="fc" id="L101">	}</span>
 
 	public LivingSpace get(Participant participant) {
-<span class="nc" id="L104">		return all.get(participant);</span>
+<span class="fc" id="L104">		return all.get(participant);</span>
 	}
 
 	public void drawHeads(final UGraphic ug, Context2D context, VerticalAlignment verticalAlignment) {

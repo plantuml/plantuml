@@ -320,16 +320,16 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 	private void eventuallyBuildPhantomGroups(LineLocation location) {
 <span class="fc bfc" id="L322" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : this.quarks()) {</span>
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">			if (quark.getData() != null)</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">			if (quark.getData() != null)</span>
 <span class="fc" id="L324">				continue;</span>
-<span class="nc" id="L325">			int countChildren = quark.countChildren();</span>
-<span class="nc bnc" id="L326" title="All 2 branches missed.">			if (countChildren &gt; 0) {</span>
+<span class="fc" id="L325">			int countChildren = quark.countChildren();</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">			if (countChildren &gt; 0) {</span>
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
 <span class="nc" id="L328">				final Display display = Display.getWithNewlines(getPragma(), quark.getName());</span>
 <span class="nc" id="L329">				final Entity result = this.createGroup(location, quark, GroupType.PACKAGE);</span>
 <span class="nc" id="L330">				result.setDisplay(display);</span>
 			}
-<span class="nc" id="L332">		}</span>
+<span class="fc" id="L332">		}</span>
 <span class="fc" id="L333">	}</span>
 
 	final public CommandExecutionResult gotoTogether() {
@@ -569,8 +569,8 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 <span class="fc" id="L570">		boolean result = true;</span>
 <span class="fc bfc" id="L571" title="All 2 branches covered.">		for (EntityHideOrShow cmd : hideOrShows)</span>
-<span class="pc bpc" id="L572" title="3 of 4 branches missed.">			if (cmd.portion == portion &amp;&amp; cmd.gender.contains(entity))</span>
-<span class="nc" id="L573">				result = cmd.show;</span>
+<span class="fc bfc" id="L572" title="All 4 branches covered.">			if (cmd.portion == portion &amp;&amp; cmd.gender.contains(entity))</span>
+<span class="fc" id="L573">				result = cmd.show;</span>
 
 <span class="fc" id="L575">		return result;</span>
 	}

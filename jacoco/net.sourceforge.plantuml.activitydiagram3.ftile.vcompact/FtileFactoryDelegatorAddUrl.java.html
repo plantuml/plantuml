@@ -40,19 +40,19 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileWithUrl;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxEmoji;
 import net.sourceforge.plantuml.url.Url;
 
 public class FtileFactoryDelegatorAddUrl extends FtileFactoryDelegator {
 
 	public FtileFactoryDelegatorAddUrl(FtileFactory factory) {
-<span class="fc" id="L48">		super(factory);</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L49">		super(factory);</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	public Ftile addUrl(Ftile ftile, Url url) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (ftile instanceof FtileBox) {</span>
-<span class="nc" id="L54">			return new FtileWithUrl(ftile, url);</span>
-		}
+<span class="nc bnc" id="L54" title="All 4 branches missed.">		if (ftile instanceof FtileBox || ftile instanceof FtileBoxEmoji)</span>
+<span class="nc" id="L55">			return new FtileWithUrl(ftile, url);</span>
 <span class="nc" id="L56">		return ftile;</span>
 	}
 }

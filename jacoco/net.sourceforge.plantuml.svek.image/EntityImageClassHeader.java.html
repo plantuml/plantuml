@@ -78,7 +78,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L78">		super(entity);</span>
 
 <span class="pc bpc" id="L80" title="1 of 2 branches missed.">		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">				|| entity.getLeafType() == LeafType.INTERFACE;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">				|| entity.getLeafType() == LeafType.INTERFACE;</span>
 
 <span class="fc" id="L83">		final Stereotype stereotype = entity.getStereotype();</span>
 <span class="fc" id="L84">		final boolean displayGenericWithOldFashion = getSkinParam().displayGenericWithOldFashion();</span>
@@ -91,8 +91,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L91">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 
 <span class="fc" id="L93">		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader, entity.getColors());</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (italic)</span>
-<span class="nc" id="L95">			fontConfigurationName = fontConfigurationName.italic();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (italic)</span>
+<span class="fc" id="L95">			fontConfigurationName = fontConfigurationName.italic();</span>
 
 <span class="fc" id="L97">		Display display = entity.getDisplay();</span>
 <span class="pc bpc" id="L98" title="3 of 4 branches missed.">		if (displayGenericWithOldFashion &amp;&amp; entity.getGeneric() != null)</span>
@@ -124,25 +124,25 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L124">					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);</span>
 
 		TextBlock genericBlock;
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (generic == null) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (generic == null) {</span>
 <span class="fc" id="L128">			genericBlock = null;</span>
 		} else {
-<span class="nc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
-<span class="nc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
-<span class="nc" id="L132">					.withTOBECHANGED(stereotype) //</span>
-<span class="nc" id="L133">					.with(entity.getStereostyles()) //</span>
-<span class="nc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
+<span class="fc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
+<span class="fc" id="L132">					.withTOBECHANGED(stereotype) //</span>
+<span class="fc" id="L133">					.with(entity.getStereostyles()) //</span>
+<span class="fc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 
-<span class="nc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
-<span class="nc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="nc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="fc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
+<span class="fc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="fc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="fc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 
-<span class="nc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L144">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
-<span class="nc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="fc" id="L144">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
+<span class="fc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 		}
 
 		final TextBlock circledCharacter;
@@ -186,7 +186,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	private StyleSignatureBasic spotStyleSignature(LeafType leafType) {
-<span class="pc bpc" id="L189" title="13 of 14 branches missed.">		switch (leafType) {</span>
+<span class="pc bpc" id="L189" title="12 of 14 branches missed.">		switch (leafType) {</span>
 		case ANNOTATION:
 <span class="nc" id="L191">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);</span>
 		case ABSTRACT_CLASS:
@@ -194,7 +194,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 		case CLASS:
 <span class="fc" id="L195">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotClass);</span>
 		case INTERFACE:
-<span class="nc" id="L197">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotInterface);</span>
+<span class="fc" id="L197">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotInterface);</span>
 		case ENUM:
 <span class="nc" id="L199">			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEnum);</span>
 		case ENTITY:
@@ -218,7 +218,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	private char getCircledChar(LeafType leafType) {
-<span class="pc bpc" id="L221" title="13 of 14 branches missed.">		switch (leafType) {</span>
+<span class="pc bpc" id="L221" title="12 of 14 branches missed.">		switch (leafType) {</span>
 		case ANNOTATION:
 <span class="nc" id="L223">			return '@';</span>
 		case ABSTRACT_CLASS:
@@ -226,7 +226,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 		case CLASS:
 <span class="fc" id="L227">			return 'C';</span>
 		case INTERFACE:
-<span class="nc" id="L229">			return 'I';</span>
+<span class="fc" id="L229">			return 'I';</span>
 		case ENUM:
 <span class="nc" id="L231">			return 'E';</span>
 		case ENTITY:
