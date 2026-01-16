@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentencePausesAbsoluteDate extends SentenceSimple<GanttDiagram> {
 
@@ -50,7 +50,7 @@ public class SentencePausesAbsoluteDate extends SentenceSimple<GanttDiagram> {
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		final Day pause = (Day) complement;
+		final TimePoint pause = (TimePoint) complement;
 		task.addPause(pause);
 		return CommandExecutionResult.ok();
 	}

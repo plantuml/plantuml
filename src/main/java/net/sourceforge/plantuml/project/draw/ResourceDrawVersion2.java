@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.core.Resource;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class ResourceDrawVersion2 implements ResourceDraw {
@@ -61,11 +61,11 @@ public class ResourceDrawVersion2 implements ResourceDraw {
 	private final Resource res;
 	private final TimeScale timeScale;
 	private final double y;
-	private final Day min;
-	private final Day max;
+	private final TimePoint min;
+	private final TimePoint max;
 	private final GanttDiagram gantt;
 
-	public ResourceDrawVersion2(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
+	public ResourceDrawVersion2(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min, TimePoint max) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
@@ -79,7 +79,7 @@ public class ResourceDrawVersion2 implements ResourceDraw {
 
 		double ypos = 16;
 		final double tmpHeight = getHeight(stringBounder) - ypos;
-		for (Day wink = gantt.getStartingDate(); wink.compareTo(gantt.getEndingDate()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = gantt.getStartingDate(); wink.compareTo(gantt.getEndingDate()) <= 0; wink = wink.increment()) {
 			final double start = timeScale.getStartingPosition(wink);
 			final double end = timeScale.getEndingPosition(wink);
 			final UShape rect = URectangle.build(end - start, tmpHeight);

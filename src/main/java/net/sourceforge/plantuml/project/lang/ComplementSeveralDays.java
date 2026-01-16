@@ -70,7 +70,7 @@ public class ComplementSeveralDays implements Something<GanttDiagram> {
 		}
 
 		final int totalDays = firstDays + secondDays;
-		return Failable.ok(Load.inWinks(totalDays));
+		return Failable.ok(Load.ofDays(totalDays));
 	}
 
 	private int toDays(GanttDiagram system, int value, String unit) {

@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
@@ -91,12 +91,12 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
-	private final Map<Day, String> nameDays;
+	private final Map<TimePoint, String> nameDays;
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
-			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<Day, String> nameDays,
-			Day printStart, int weekStartingNumber) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
+			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<TimePoint, String> nameDays,
+			TimePoint printStart, int weekStartingNumber) {
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
 				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
 		this.headerStrategy = headerStrategy;
@@ -132,7 +132,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonths(final UGraphic ug) {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
-		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
@@ -154,7 +154,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (Day wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
+			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);
@@ -174,7 +174,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
 				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink),
 						getH1(ug.getStringBounder()), totalHeightWithoutFooter);
@@ -186,7 +186,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private void printDaysOfMonth(final UGraphic ug) {
 		int counter = weekStartingNumber;
-		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
 				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)

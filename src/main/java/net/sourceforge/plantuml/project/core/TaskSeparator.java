@@ -40,7 +40,7 @@ import java.time.DayOfWeek;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -55,22 +55,22 @@ public class TaskSeparator extends AbstractTask implements Task {
 	}
 
 	@Override
-	public Day getStart() {
+	public TimePoint getStart() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Day getEnd() {
+	public TimePoint getEnd() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setStart(Day start) {
+	public void setStart(TimePoint start) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setEnd(Day end) {
+	public void setEnd(TimePoint end) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -118,7 +118,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(Day pause) {
+	public void addPause(TimePoint pause) {
 		throw new UnsupportedOperationException();
 	}
 

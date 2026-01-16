@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -70,14 +70,14 @@ public class TaskDrawSeparator implements TaskDraw {
 
 	private final TimeScale timeScale;
 	private Real y;
-	private final Day min;
-	private final Day max;
+	private final TimePoint min;
+	private final TimePoint max;
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
 	private final ISkinParam skinParam;
 
-	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, Day min, Day max, StyleBuilder styleBuilder,
+	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, TimePoint min, TimePoint max, StyleBuilder styleBuilder,
 			ISkinParam skinParam) {
 		this.styleBuilder = styleBuilder;
 		this.skinParam = skinParam;

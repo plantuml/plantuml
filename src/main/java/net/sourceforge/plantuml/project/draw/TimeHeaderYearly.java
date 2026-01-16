@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -65,8 +65,8 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder);
 	}
 
-	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
+	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, TimePoint printStart) {
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
 				thParam.getScale(), printStart));
 	}
 
@@ -92,7 +92,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 
 		YearMonth last = null;
 		double lastChange = -1;
-		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);

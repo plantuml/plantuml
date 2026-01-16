@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.project.GanttConstraintMode;
 import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class TaskInstant {
 
@@ -67,7 +67,7 @@ public class TaskInstant {
 		return new TaskInstant(task, attribute, newDelta, mode, calendar);
 	}
 
-	private Day manageDelta(Day value) {
+	private TimePoint manageDelta(TimePoint value) {
 		if (delta > 0)
 			for (int i = 0; i < delta; i++) {
 				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {
@@ -86,7 +86,7 @@ public class TaskInstant {
 		return value;
 	}
 
-	public Day getInstantPrecise() {
+	public TimePoint getInstantPrecise() {
 		if (attribute == TaskAttribute.START)
 			return manageDelta(task.getStart());
 
@@ -96,7 +96,7 @@ public class TaskInstant {
 		throw new IllegalStateException();
 	}
 
-	public Day getInstantTheorical() {
+	public TimePoint getInstantTheorical() {
 		if (attribute == TaskAttribute.START)
 			return manageDelta(task.getStart());
 

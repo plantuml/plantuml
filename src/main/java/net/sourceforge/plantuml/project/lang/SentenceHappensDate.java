@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceHappensDate extends SentenceSimple<GanttDiagram> {
 
@@ -50,8 +50,8 @@ public class SentenceHappensDate extends SentenceSimple<GanttDiagram> {
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		task.setLoad(Load.inWinks(1));
-		final Day start = (Day) complement;
+		task.setLoad(Load.ofDays(1));
+		final TimePoint start = (TimePoint) complement;
 //		final Day startingDate = project.getStartingDate2();
 //		if (startingDate == null) {
 //			return CommandExecutionResult.error("No starting date for the project");

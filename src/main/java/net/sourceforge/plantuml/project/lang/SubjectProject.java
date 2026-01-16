@@ -41,7 +41,7 @@ import java.util.Collection;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -74,10 +74,9 @@ public class SubjectProject implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final Day start = (Day) complement;
+			final TimePoint start = (TimePoint) complement;
 			assert project == subject;
-			project.setProjectStartingDate(start);
-			return CommandExecutionResult.ok();
+			return project.updateStartingPoint(start);
 		}
 
 	}
