@@ -161,53 +161,54 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
 			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
-			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
-<span class="nc" id="L165">		return repeat;</span>
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2) {
+<span class="nc" id="L166">		return repeat;</span>
 	}
 
 	@Override
 	public Ftile createWhile(LinkRendering afterEndwhile, Swimlane swimlane, Ftile whileBlock, Display test,
 			Display yes, HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1,
 			LinkRendering incoming2, StyleBuilder styleBuilder) {
-<span class="nc" id="L172">		return whileBlock;</span>
+<span class="nc" id="L173">		return whileBlock;</span>
 	}
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List&lt;Branch&gt; thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url, Collection&lt;PositionedNote&gt; notes, Stereotype stereotype,
 			StyleBuilder currentStyleBuilder) {
-<span class="nc" id="L179">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (Branch branch : thens)</span>
-<span class="nc" id="L181">			ftiles.add(branch.getFtile());</span>
+<span class="nc" id="L180">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		for (Branch branch : thens)</span>
+<span class="nc" id="L182">			ftiles.add(branch.getFtile());</span>
 
-<span class="nc" id="L183">		ftiles.add(elseBranch.getFtile());</span>
-<span class="nc" id="L184">		return new FtileForkInner(ftiles);</span>
+<span class="nc" id="L184">		ftiles.add(elseBranch.getFtile());</span>
+<span class="nc" id="L185">		return new FtileForkInner(ftiles);</span>
 	}
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest) {
-<span class="nc" id="L190">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (Branch branch : branches)</span>
-<span class="nc" id="L192">			ftiles.add(branch.getFtile());</span>
+<span class="nc" id="L191">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (Branch branch : branches)</span>
+<span class="nc" id="L193">			ftiles.add(branch.getFtile());</span>
 
-<span class="nc" id="L194">		return new FtileForkInner(ftiles);</span>
+<span class="nc" id="L195">		return new FtileForkInner(ftiles);</span>
 	}
 
 	@Override
 	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out) {
-<span class="nc" id="L199">		return new FtileForkInner(all);</span>
+<span class="nc" id="L200">		return new FtileForkInner(all);</span>
 	}
 
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style) {
-<span class="nc" id="L205">		return list;</span>
+<span class="nc" id="L206">		return list;</span>
 	}
 
 	@Override
 	public Ftile decorateIn(final Ftile ftile, final LinkRendering linkRendering) {
-<span class="nc" id="L210">		return new FtileDecorateIn(ftile, linkRendering);</span>
+<span class="nc" id="L211">		return new FtileDecorateIn(ftile, linkRendering);</span>
 	}
 
 	@Override
@@ -218,12 +219,12 @@ public class VCompactFactory implements FtileFactory {
 		// }
 		// return ftile;
 		// }
-<span class="fc" id="L221">		return new FtileDecorateOut(ftile, linkRendering);</span>
+<span class="fc" id="L222">		return new FtileDecorateOut(ftile, linkRendering);</span>
 	}
 
 	@Override
 	public ISkinParam skinParam() {
-<span class="fc" id="L226">		return skinParam;</span>
+<span class="fc" id="L227">		return skinParam;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

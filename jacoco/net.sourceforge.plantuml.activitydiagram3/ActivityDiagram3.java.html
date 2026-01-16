@@ -361,10 +361,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 <span class="nc" id="L361">		return CommandExecutionResult.error(&quot;Cannot find if&quot;);</span>
 	}
 
-	public void startRepeat(HColor color, Display label, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
+	public void startRepeat(Display label, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
 <span class="fc" id="L365">		manageSwimlaneStrategy();</span>
 <span class="fc" id="L366">		final InstructionRepeat instructionRepeat = new InstructionRepeat(swimlanes, current(), nextLinkRenderer(),</span>
-				color, label, boxStyleIn, colors, stereotype);
+				label, boxStyleIn, colors, stereotype);
 <span class="fc" id="L368">		current().add(instructionRepeat);</span>
 <span class="fc" id="L369">		setCurrent(instructionRepeat);</span>
 <span class="fc" id="L370">		setNextLinkRendererInternal(LinkRendering.none());</span>
@@ -372,12 +372,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 <span class="fc" id="L372">	}</span>
 
 	public CommandExecutionResult repeatWhile(Display label, Display yes, Display out, Display linkLabel,
-			Rainbow linkColor) {
+			Rainbow linkColor, Colors color, Stereotype stereotype) {
 <span class="fc" id="L376">		manageSwimlaneStrategy();</span>
 <span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (current() instanceof InstructionRepeat) {</span>
 <span class="fc" id="L378">			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();</span>
 <span class="fc" id="L379">			final LinkRendering back = LinkRendering.create(linkColor).withDisplay(linkLabel);</span>
-<span class="fc" id="L380">			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swimlanes.getCurrentSwimlane());</span>
+<span class="fc" id="L380">			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swimlanes.getCurrentSwimlane(), color, stereotype);</span>
 <span class="fc" id="L381">			setCurrent(instructionRepeat.getParent());</span>
 <span class="fc" id="L382">			this.setNextLinkRendererInternal(LinkRendering.none());</span>
 <span class="fc" id="L383">			return CommandExecutionResult.ok();</span>

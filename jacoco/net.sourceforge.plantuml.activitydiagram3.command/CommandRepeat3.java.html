@@ -82,8 +82,8 @@ public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L85">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+		// final String s = arg.get(&quot;COLOR&quot;, 0);
+		// final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 <span class="fc" id="L87">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 		final BoxStyle boxStyle;
 <span class="fc" id="L89">		final String styleString = arg.get(&quot;STYLE&quot;, 0);</span>
@@ -104,7 +104,7 @@ public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="nc" id="L104">			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);</span>
 		}
 
-<span class="fc" id="L107">		diagram.startRepeat(color, label, boxStyle, colors, stereotype);</span>
+<span class="fc" id="L107">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
 
 <span class="fc" id="L109">		return CommandExecutionResult.ok();</span>
 	}

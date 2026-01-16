@@ -147,8 +147,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 <span class="fc" id="L147">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L150">			drawInternal(ug, index);</span>
-<span class="nc" id="L151">		}</span>
+<span class="fc" id="L150">			drawInternal(ug, index);</span>
+<span class="fc" id="L151">		}</span>
 
 	}
 
@@ -274,18 +274,18 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 <span class="fc" id="L274">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
 <span class="pc bpc" id="L275" title="1 of 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
 				bodyFramed);
-<span class="nc" id="L277">		ug = goDown(ug, bodyFramed);</span>
-<span class="nc" id="L278">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="fc" id="L277">		ug = goDown(ug, bodyFramed);</span>
+<span class="fc" id="L278">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
 
-<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {</span>
-<span class="nc" id="L281">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
-<span class="nc" id="L282">			ug = goDown(ug, legend);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {</span>
+<span class="fc" id="L281">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
+<span class="fc" id="L282">			ug = goDown(ug, legend);</span>
 		}
-<span class="nc" id="L284">		printAligned(ug, HorizontalAlignment.CENTER, caption);</span>
-<span class="nc" id="L285">		ug = goDown(ug, caption);</span>
+<span class="fc" id="L284">		printAligned(ug, HorizontalAlignment.CENTER, caption);</span>
+<span class="fc" id="L285">		ug = goDown(ug, caption);</span>
 
-<span class="nc" id="L287">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);</span>
-<span class="nc" id="L288">	}</span>
+<span class="fc" id="L287">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);</span>
+<span class="fc" id="L288">	}</span>
 
 	@Override
 	public void createOneGraphic(UGraphic ug) {

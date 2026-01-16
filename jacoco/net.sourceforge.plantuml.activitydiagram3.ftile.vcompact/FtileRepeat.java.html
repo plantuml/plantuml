@@ -116,8 +116,8 @@ class FtileRepeat extends AbstractFtile {
 	}
 
 	public static Ftile create(Swimlane swimlane, Swimlane swimlaneOut, Ftile entry, Ftile repeat, Display test,
-			Display yes, Display out, HColor borderColor, HColor diamondColor, Rainbow arrowColor,
-			Rainbow endRepeatLinkColor, ConditionStyle conditionStyle, ISkinSimple spriteContainer,
+			Display yes, Display out, HColor borderColor, HColor diamondColor1, HColor diamondColor2,
+			Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle, ISkinSimple spriteContainer,
 			FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward, boolean noOut,
 			LinkRendering incoming1, LinkRendering incoming2) {
 
@@ -133,7 +133,7 @@ class FtileRepeat extends AbstractFtile {
 		final Ftile diamond1;
 		// assert swimlane == repeat.getSwimlaneIn();
 <span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (entry == null)</span>
-<span class="fc" id="L136">			diamond1 = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane);</span>
+<span class="fc" id="L136">			diamond1 = new FtileDiamond(repeat.skinParam(), diamondColor1, borderColor, swimlane);</span>
 		else
 <span class="nc" id="L138">			diamond1 = entry;</span>
 
@@ -143,16 +143,16 @@ class FtileRepeat extends AbstractFtile {
 <span class="pc bpc" id="L143" title="3 of 4 branches missed.">			if (noOut &amp;&amp; Display.isNull(test))</span>
 <span class="nc" id="L144">				diamond2 = new FtileEmpty(repeat.skinParam());</span>
 			else
-<span class="fc" id="L146">				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor, borderColor, swimlaneOut)</span>
+<span class="fc" id="L146">				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)</span>
 <span class="fc" id="L147">						.withEast(yesTb).withSouth(outTb);</span>
 
 <span class="fc" id="L149">			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);</span>
 <span class="pc bnc" id="L150" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {</span>
-<span class="nc" id="L151">			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane)</span>
+<span class="nc" id="L151">			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane)</span>
 <span class="nc" id="L152">					.withEast(tbTest);</span>
 <span class="nc" id="L153">			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);</span>
 <span class="nc bnc" id="L154" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {</span>
-<span class="nc" id="L155">			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor, borderColor,</span>
+<span class="nc" id="L155">			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor2, borderColor,</span>
 <span class="nc" id="L156">					swimlane).withEast(yesTb).withSouth(outTb);</span>
 <span class="nc" id="L157">			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);</span>
 <span class="nc" id="L158">		} else {</span>

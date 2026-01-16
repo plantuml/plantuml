@@ -48,161 +48,174 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 
 public class Colors {
 	// ::remove file when __HAXE__
 
-<span class="fc" id="L55">	private final Map&lt;ColorType, HColor&gt; map = new EnumMap&lt;ColorType, HColor&gt;(ColorType.class);</span>
-<span class="fc" id="L56">	private LinkStyle lineStyle = null;</span>
-<span class="fc" id="L57">	private Boolean shadowing = null;</span>
+<span class="fc" id="L57">	private final Map&lt;ColorType, HColor&gt; map = new EnumMap&lt;ColorType, HColor&gt;(ColorType.class);</span>
+<span class="fc" id="L58">	private LinkStyle lineStyle = null;</span>
+<span class="fc" id="L59">	private Boolean shadowing = null;</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L61">		return map.toString() + &quot; &quot; + lineStyle;</span>
+<span class="nc" id="L63">		return map.toString() + &quot; &quot; + lineStyle;</span>
 	}
 
 	public static Colors empty() {
-<span class="fc" id="L65">		return new Colors();</span>
+<span class="fc" id="L67">		return new Colors();</span>
 	}
 
 	public boolean isEmpty() {
-<span class="nc" id="L69">		return map.isEmpty();</span>
+<span class="nc" id="L71">		return map.isEmpty();</span>
 	}
 
 	private Colors copy() {
-<span class="nc" id="L73">		final Colors result = new Colors();</span>
-<span class="nc" id="L74">		result.map.putAll(this.map);</span>
-<span class="nc" id="L75">		result.lineStyle = this.lineStyle;</span>
-<span class="nc" id="L76">		return result;</span>
+<span class="nc" id="L75">		final Colors result = new Colors();</span>
+<span class="nc" id="L76">		result.map.putAll(this.map);</span>
+<span class="nc" id="L77">		result.lineStyle = this.lineStyle;</span>
+<span class="nc" id="L78">		return result;</span>
 	}
 
-<span class="fc" id="L79">	private Colors() {</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L81">	private Colors() {</span>
+<span class="fc" id="L82">	}</span>
 
-<span class="fc" id="L82">	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {</span>
-<span class="fc" id="L83">		data = StringUtils.goLowerCase(data).replaceAll(&quot;#&quot;, &quot;&quot;);</span>
+<span class="fc" id="L84">	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {</span>
+<span class="fc" id="L85">		data = StringUtils.goLowerCase(data).replaceAll(&quot;#&quot;, &quot;&quot;);</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(data, &quot;;&quot;); st.hasMoreTokens();) {</span>
-<span class="fc" id="L86">			final String s = st.nextToken();</span>
-<span class="fc" id="L87">			final int x = s.indexOf(':');</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">			if (x == -1) {</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
-<span class="fc" id="L90">					map.put(mainType, set.getColor(s));</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(data, &quot;;&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L88">			final String s = st.nextToken();</span>
+<span class="fc" id="L89">			final int x = s.indexOf(':');</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (x == -1) {</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
+<span class="fc" id="L92">					map.put(mainType, set.getColor(s));</span>
 
 			} else {
-<span class="fc" id="L93">				final String name = s.substring(0, x);</span>
-<span class="fc" id="L94">				final String value = s.substring(x + 1);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;shadowing&quot;)) {</span>
-<span class="nc" id="L96">					this.shadowing = value.equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="fc" id="L95">				final String name = s.substring(0, x);</span>
+<span class="fc" id="L96">				final String value = s.substring(x + 1);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;shadowing&quot;)) {</span>
+<span class="nc" id="L98">					this.shadowing = value.equalsIgnoreCase(&quot;true&quot;);</span>
 				} else {
-<span class="fc" id="L98">					final ColorType key = ColorType.getType(name);</span>
-<span class="fc" id="L99">					final HColor color = set.getColor(value);</span>
-<span class="fc" id="L100">					map.put(key, color);</span>
+<span class="fc" id="L100">					final ColorType key = ColorType.getType(name);</span>
+<span class="fc" id="L101">					final HColor color = set.getColor(value);</span>
+<span class="fc" id="L102">					map.put(key, color);</span>
 				}
 			}
-<span class="fc" id="L103">		}</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (data.contains(&quot;line.dashed&quot;))</span>
-<span class="nc" id="L105">			lineStyle = LinkStyle.DASHED();</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.dotted&quot;))</span>
-<span class="nc" id="L107">			lineStyle = LinkStyle.DOTTED();</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.bold&quot;))</span>
-<span class="nc" id="L109">			lineStyle = LinkStyle.BOLD();</span>
+<span class="fc" id="L105">		}</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (data.contains(&quot;line.dashed&quot;))</span>
+<span class="nc" id="L107">			lineStyle = LinkStyle.DASHED();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.dotted&quot;))</span>
+<span class="nc" id="L109">			lineStyle = LinkStyle.DOTTED();</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.bold&quot;))</span>
+<span class="nc" id="L111">			lineStyle = LinkStyle.BOLD();</span>
 
-<span class="fc" id="L111">	}</span>
+<span class="fc" id="L113">	}</span>
 
 	public HColor getColor(ColorType key) {
-<span class="fc" id="L114">		return map.get(Objects.requireNonNull(key));</span>
+<span class="fc" id="L116">		return map.get(Objects.requireNonNull(key));</span>
 	}
 
 	public HColor getColor(ColorType key1, ColorType key2) {
-<span class="fc" id="L118">		final HColor result = getColor(key1);</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L120">			return result;</span>
+<span class="fc" id="L120">		final HColor result = getColor(key1);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L122">			return result;</span>
 
-<span class="fc" id="L122">		return getColor(key2);</span>
+<span class="fc" id="L124">		return getColor(key2);</span>
 	}
 
 	public UStroke getSpecificLineStroke() {
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (lineStyle == null)</span>
-<span class="fc" id="L127">			return null;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (lineStyle == null)</span>
+<span class="fc" id="L129">			return null;</span>
 
-<span class="nc" id="L129">		return lineStyle.getStroke3();</span>
+<span class="nc" id="L131">		return lineStyle.getStroke3();</span>
 	}
 
 	public Colors add(ColorType type, HColor color) {
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L134">			return this;</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc" id="L136">			return this;</span>
 
-<span class="nc" id="L136">		final Colors result = copy();</span>
-<span class="nc" id="L137">		result.map.put(type, color);</span>
-<span class="nc" id="L138">		return result;</span>
+<span class="nc" id="L138">		final Colors result = copy();</span>
+<span class="nc" id="L139">		result.map.put(type, color);</span>
+<span class="nc" id="L140">		return result;</span>
 	}
 
 	private Colors add(ColorType colorType, Colors other) {
-<span class="nc" id="L142">		final Colors result = copy();</span>
-<span class="nc" id="L143">		result.map.putAll(other.map);</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (other.lineStyle != null)</span>
-<span class="nc" id="L145">			result.lineStyle = other.lineStyle;</span>
+<span class="nc" id="L144">		final Colors result = copy();</span>
+<span class="nc" id="L145">		result.map.putAll(other.map);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (other.lineStyle != null)</span>
+<span class="nc" id="L147">			result.lineStyle = other.lineStyle;</span>
 
-<span class="nc" id="L147">		return result;</span>
+<span class="nc" id="L149">		return result;</span>
 	}
 
 	public final LinkStyle getLineStyle() {
-<span class="nc" id="L151">		return lineStyle;</span>
+<span class="nc" id="L153">		return lineStyle;</span>
 	}
 
 	public ISkinParam mute(ISkinParam skinParam) {
-<span class="fc" id="L155">		return new SkinParamColors(skinParam, this);</span>
+<span class="fc" id="L157">		return new SkinParamColors(skinParam, this);</span>
 	}
 
 	public Colors addLegacyStroke(String s) {
-<span class="nc" id="L159">		final Colors result = copy();</span>
-<span class="nc" id="L160">		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(Objects.requireNonNull(s)));</span>
-<span class="nc" id="L161">		return result;</span>
+<span class="nc" id="L161">		final Colors result = copy();</span>
+<span class="nc" id="L162">		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(Objects.requireNonNull(s)));</span>
+<span class="nc" id="L163">		return result;</span>
 
 	}
 
 	public static UGraphic applyStroke(UGraphic ug, Colors colors) {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (colors == null)</span>
-<span class="nc" id="L167">			return ug;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (colors == null)</span>
+<span class="nc" id="L169">			return ug;</span>
 
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (colors.lineStyle == null)</span>
-<span class="fc" id="L170">			return ug;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (colors.lineStyle == null)</span>
+<span class="fc" id="L172">			return ug;</span>
 
-<span class="nc" id="L172">		return ug.apply(colors.lineStyle.getStroke3());</span>
+<span class="nc" id="L174">		return ug.apply(colors.lineStyle.getStroke3());</span>
 	}
 
 	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param)
 			throws NoSuchColorException {
-<span class="nc" id="L177">		Objects.requireNonNull(stereotype);</span>
-<span class="nc" id="L178">		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (getColor(colorType) != null)</span>
-<span class="nc" id="L180">			return this;</span>
+<span class="nc" id="L179">		Objects.requireNonNull(stereotype);</span>
+<span class="nc" id="L180">		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (getColor(colorType) != null)</span>
+<span class="nc" id="L182">			return this;</span>
 
-<span class="nc" id="L182">		final Colors colors = skinParam.getColors(param, stereotype);</span>
-<span class="nc" id="L183">		return add(colorType, colors);</span>
+<span class="nc" id="L184">		final Colors colors = skinParam.getColors(param, stereotype);</span>
+<span class="nc" id="L185">		return add(colorType, colors);</span>
 	}
 
 	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, ColorParam... params)
 			throws NoSuchColorException {
-<span class="nc" id="L188">		Objects.requireNonNull(stereotype);</span>
-<span class="nc" id="L189">		Colors result = this;</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (ColorParam param : Objects.requireNonNull(params))</span>
-<span class="nc" id="L191">			result = result.applyStereotype(stereotype, skinParam, param);</span>
+<span class="nc" id="L190">		Objects.requireNonNull(stereotype);</span>
+<span class="nc" id="L191">		Colors result = this;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (ColorParam param : Objects.requireNonNull(params))</span>
+<span class="nc" id="L193">			result = result.applyStereotype(stereotype, skinParam, param);</span>
 
-<span class="nc" id="L193">		result.shadowing = skinParam.shadowingForNote(stereotype);</span>
-<span class="nc" id="L194">		return result;</span>
+<span class="nc" id="L195">		result.shadowing = skinParam.shadowingForNote(stereotype);</span>
+<span class="nc" id="L196">		return result;</span>
 	}
 
 	public Boolean getShadowing() {
-<span class="nc" id="L198">		return shadowing;</span>
+<span class="nc" id="L200">		return shadowing;</span>
 	}
 
 	public UStroke muteStroke(UStroke stroke) {
-<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (lineStyle == null)</span>
-<span class="nc" id="L203">			return stroke;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (lineStyle == null)</span>
+<span class="nc" id="L205">			return stroke;</span>
 
-<span class="nc" id="L205">		return lineStyle.muteStroke(stroke);</span>
+<span class="nc" id="L207">		return lineStyle.muteStroke(stroke);</span>
+	}
+
+	public HColor getColor(Style style, PName name, HColorSet colorSet) {
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (name == PName.BackGroundColor) {</span>
+<span class="fc" id="L212">			final HColor color = map.get(ColorType.BACK);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">			if (color != null)</span>
+<span class="nc" id="L214">				return color;</span>
+
+		}
+<span class="fc" id="L217">		return style.value(name).asColor(colorSet);</span>
+
 	}
 
 }
