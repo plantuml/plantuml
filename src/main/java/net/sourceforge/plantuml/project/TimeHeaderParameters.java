@@ -46,28 +46,28 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 
 public class TimeHeaderParameters implements GanttStyle {
 
-	private final Map<TimePoint, HColor> colorDays;
+	private final Map<Day, HColor> colorDays;
 	private final double scale;
-	private final TimePoint min;
-	private final TimePoint max;
+	private final Day min;
+	private final Day max;
 	private final HColorSet colorSet;
 	private final GanttStyle ganttStyle;
 	private final Locale locale;
 	private final OpenClose openClose;
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
-	private final Set<TimePoint> verticalSeparatorBefore;
+	private final Set<Day> verticalSeparatorBefore;
 	private final boolean hideClosed;
 
-	public TimeHeaderParameters(Map<TimePoint, HColor> colorDays, double scale, TimePoint min, TimePoint max,
-			HColorSet colorSet, Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
-			Set<TimePoint> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {
+	public TimeHeaderParameters(Map<Day, HColor> colorDays, double scale, Day min, Day max, HColorSet colorSet,
+			Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			Set<Day> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {
 		this.colorDays = colorDays;
 		this.scale = scale;
 		this.min = min;
@@ -81,7 +81,7 @@ public class TimeHeaderParameters implements GanttStyle {
 		this.hideClosed = hideClosed;
 	}
 
-	public HColor getColor(TimePoint wink) {
+	public HColor getColor(Day wink) {
 		return colorDays.get(wink);
 	}
 
@@ -93,11 +93,11 @@ public class TimeHeaderParameters implements GanttStyle {
 		return scale;
 	}
 
-	public final TimePoint getMin() {
+	public final Day getMin() {
 		return min;
 	}
 
-	public final TimePoint getMax() {
+	public final Day getMax() {
 		return max;
 	}
 
@@ -121,7 +121,11 @@ public class TimeHeaderParameters implements GanttStyle {
 		return openClose;
 	}
 
-	public final Set<TimePoint> getVerticalSeparatorBefore() {
+	public Day getStartingDay() {
+		return openClose.getStartingDay();
+	}
+
+	public final Set<Day> getVerticalSeparatorBefore() {
 		return verticalSeparatorBefore;
 	}
 
@@ -146,7 +150,7 @@ public class TimeHeaderParameters implements GanttStyle {
 		final double w = getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
 		return w * 1.6;
 	}
-
+	
 	public boolean isHideClosed() {
 		return hideClosed;
 	}
@@ -154,5 +158,7 @@ public class TimeHeaderParameters implements GanttStyle {
 	public OpenClose getOpenClose() {
 		return openClose;
 	}
+
+
 
 }

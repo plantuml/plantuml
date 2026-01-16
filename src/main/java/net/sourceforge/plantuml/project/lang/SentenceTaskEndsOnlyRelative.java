@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SentenceTaskEndsOnlyRelative extends SentenceSimple<GanttDiagram> {
 
@@ -50,7 +50,7 @@ public class SentenceTaskEndsOnlyRelative extends SentenceSimple<GanttDiagram> {
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		final TimePoint end = (TimePoint) complement;
+		final Day end = (Day) complement;
 
 		task.setEnd(end);
 		return CommandExecutionResult.ok();

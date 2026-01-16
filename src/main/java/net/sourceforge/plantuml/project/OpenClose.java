@@ -42,14 +42,15 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.project.core3.Histogram;
 import net.sourceforge.plantuml.project.core3.TimeLine;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class OpenClose implements Histogram, LoadPlanable {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
-	private final Map<TimePoint, DayStatus> dayStatus = new HashMap<>();
-	private TimePoint offBefore;
-	private TimePoint offAfter;
+	private final Map<Day, DayStatus> dayStatus = new HashMap<>();
+	private Day startingDay;
+	private Day offBefore;
+	private Day offAfter;
 
 	public int daysInWeek() {
 		int result = 7;
@@ -59,29 +60,29 @@ public class OpenClose implements Histogram, LoadPlanable {
 		return result;
 	}
 
-	private boolean isThereSomeChangeAfter(TimePoint day) {
+	private boolean isThereSomeChangeAfter(Day day) {
 		if (weekdayStatus.size() > 0)
 			return true;
 
-		for (TimePoint tmp : dayStatus.keySet())
+		for (Day tmp : dayStatus.keySet())
 			if (tmp.compareTo(day) >= 0)
 				return true;
 
 		return false;
 	}
 
-	private boolean isThereSomeChangeBefore(TimePoint day) {
+	private boolean isThereSomeChangeBefore(Day day) {
 		if (weekdayStatus.size() > 0)
 			return true;
 
-		for (TimePoint tmp : dayStatus.keySet())
+		for (Day tmp : dayStatus.keySet())
 			if (tmp.compareTo(day) <= 0)
 				return true;
 
 		return false;
 	}
 
-	public boolean isClosed(TimePoint day) {
+	public boolean isClosed(Day day) {
 		final DayStatus status = getLocalStatus(day);
 		if (status != null)
 			return status == DayStatus.CLOSE;
@@ -89,7 +90,7 @@ public class OpenClose implements Histogram, LoadPlanable {
 		return false;
 	}
 
-	private DayStatus getLocalStatus(TimePoint day) {
+	private DayStatus getLocalStatus(Day day) {
 		if (offBefore != null && day.compareTo(offBefore) < 0)
 			return DayStatus.CLOSE;
 		if (offAfter != null && day.compareTo(offAfter) > 0)
@@ -115,16 +116,24 @@ public class OpenClose implements Histogram, LoadPlanable {
 		weekdayStatus.put(day, DayStatus.OPEN);
 	}
 
-	public void close(TimePoint day) {
+	public void close(Day day) {
 		dayStatus.put(day, DayStatus.CLOSE);
 	}
 
-	public void open(TimePoint day) {
+	public void open(Day day) {
 		dayStatus.put(day, DayStatus.OPEN);
 	}
 
+	public final Day getStartingDay() {
+		return startingDay;
+	}
+
+	public final void setStartingDay(Day startingDay) {
+		this.startingDay = startingDay;
+	}
+
 	public long getNext(long moment) {
-		TimePoint day = TimePoint.create(moment);
+		Day day = Day.create(moment);
 		if (isThereSomeChangeAfter(day) == false)
 			return TimeLine.MAX_TIME;
 
@@ -141,7 +150,7 @@ public class OpenClose implements Histogram, LoadPlanable {
 	}
 
 	public long getPrevious(long moment) {
-		TimePoint day = TimePoint.create(moment);
+		Day day = Day.create(moment);
 		if (isThereSomeChangeBefore(day) == false)
 			return -TimeLine.MAX_TIME;
 
@@ -158,26 +167,29 @@ public class OpenClose implements Histogram, LoadPlanable {
 	}
 
 	public long getValueAt(long moment) {
-		final TimePoint day = TimePoint.create(moment);
+		final Day day = Day.create(moment);
 		if (isClosed(day))
 			return 0;
 
 		return 100;
 	}
 
-	public int getLoadAt(TimePoint day) {
+	public int getLoadAt(Day day) {
+		if (getStartingDay() == null)
+			return 100;
+
 		return getLoatAtInternal(day);
 	}
 
-	public void setOffBeforeDate(TimePoint day) {
+	public void setOffBeforeDate(Day day) {
 		this.offBefore = day;
 	}
 
-	public void setOffAfterDate(TimePoint day) {
+	public void setOffAfterDate(Day day) {
 		this.offAfter = day;
 	}
 
-	private int getLoatAtInternal(TimePoint day) {
+	private int getLoatAtInternal(Day day) {
 		if (isClosed(day))
 			return 0;
 
@@ -188,7 +200,7 @@ public class OpenClose implements Histogram, LoadPlanable {
 		if (except != null)
 			return new LoadPlanable() {
 				@Override
-				public int getLoadAt(TimePoint instant) {
+				public int getLoadAt(Day instant) {
 					final DayStatus exceptStatus = except.getLocalStatus(instant);
 					if (exceptStatus == DayStatus.CLOSE)
 						return 0;
@@ -198,7 +210,7 @@ public class OpenClose implements Histogram, LoadPlanable {
 				}
 
 				@Override
-				public TimePoint getLastDayIfAny() {
+				public Day getLastDayIfAny() {
 					return offAfter;
 				}
 			};
@@ -206,7 +218,7 @@ public class OpenClose implements Histogram, LoadPlanable {
 	}
 
 	@Override
-	public TimePoint getLastDayIfAny() {
+	public Day getLastDayIfAny() {
 		return offAfter;
 	}
 

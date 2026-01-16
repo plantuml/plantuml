@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -76,9 +76,9 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final TimePoint d1 = new DayPattern("1").getDay(arg);
+		final Day d1 = new DayPattern("1").getDay(arg);
 		if (d1 != null) {
-			final TimePoint d2 = new DayPattern("2").getDay(arg);
+			final Day d2 = new DayPattern("2").getDay(arg);
 			return Failable.ok(new DaysAsDates(d1, d2));
 		}
 
@@ -91,10 +91,10 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 
 	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
 		final int day1 = Integer.parseInt(arg.get("ECOUNT1" + suffix, 0));
-		final TimePoint date1 = project.getStartingDate().addDays(day1);
+		final Day date1 = project.getStartingDate().addDays(day1);
 
 		final int day2 = Integer.parseInt(arg.get("ECOUNT2" + suffix, 0));
-		final TimePoint date2 = project.getStartingDate().addDays(day2);
+		final Day date2 = project.getStartingDate().addDays(day2);
 
 		return new DaysAsDates(date1, date2);
 	}

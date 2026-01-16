@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -56,8 +56,8 @@ public class TaskChronology extends AbstractTask implements Task {
 	private Url url;
 	private CenterBorderColor[] colors;
 
-	private TimePoint start;
-	private TimePoint end;
+	private Day start;
+	private Day end;
 
 	public void setUrl(Url url) {
 		this.url = url;
@@ -68,23 +68,23 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setStart(TimePoint start) {
+	public void setStart(Day start) {
 		this.start = start;
 
 	}
 
 	@Override
-	public TimePoint getStart() {
+	public Day getStart() {
 		return this.start;
 	}
 
 	@Override
-	public void setEnd(TimePoint end) {
+	public void setEnd(Day end) {
 		this.end = end;
 	}
 
 	@Override
-	public TimePoint getEnd() {
+	public Day getEnd() {
 		return this.end;
 	}
 
@@ -119,7 +119,7 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(Day pause) {
 		throw new UnsupportedOperationException();
 	}
 

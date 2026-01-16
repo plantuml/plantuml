@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project.timescale;
 
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public final class TimeScaleDaily implements TimeScale {
 	// ::remove folder when __HAXE__
@@ -44,7 +44,7 @@ public final class TimeScaleDaily implements TimeScale {
 	private final TimeScaleWink basic;
 	private final double delta;
 
-	public TimeScaleDaily(double size, TimePoint startingDay, double scale, TimePoint zeroDay) {
+	public TimeScaleDaily(double size, Day startingDay, double scale, Day zeroDay) {
 		this.basic = new TimeScaleWink(size, scale, PrintScale.DAILY);
 		if (zeroDay == null)
 			this.delta = basic.getStartingPosition(startingDay);
@@ -54,22 +54,22 @@ public final class TimeScaleDaily implements TimeScale {
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getStartingPosition(Day instant) {
 		return basic.getStartingPosition(instant) - delta;
 	}
 
 	@Override
-	public double getEndingPosition(TimePoint instant) {
+	public double getEndingPosition(Day instant) {
 		return basic.getEndingPosition(instant) - delta;
 	}
 
 	@Override
-	public double getWidth(TimePoint instant) {
+	public double getWidth(Day instant) {
 		return basic.getWidth(instant);
 	}
 
 	@Override
-	public boolean isBreaking(TimePoint instant) {
+	public boolean isBreaking(Day instant) {
 		return true;
 	}
 

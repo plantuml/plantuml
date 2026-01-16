@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.project;
 
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
-public class DaysAsDates implements Iterable<TimePoint> {
+public class DaysAsDates implements Iterable<Day> {
 
-	private final TimePoint date1;
-	private final TimePoint date2;
+	private final Day date1;
+	private final Day date2;
 
-	public DaysAsDates(TimePoint date1, TimePoint date2) {
+	public DaysAsDates(Day date1, Day date2) {
 		this.date1 = date1;
 		this.date2 = date2;
 	}
@@ -54,9 +54,9 @@ public class DaysAsDates implements Iterable<TimePoint> {
 		return "{ " + date1 + " , " + date2 + " }";
 	}
 
-	public DaysAsDates(GanttDiagram gantt, TimePoint date1, int count) {
+	public DaysAsDates(GanttDiagram gantt, Day date1, int count) {
 		this.date1 = date1;
-		TimePoint tmp = date1;
+		Day tmp = date1;
 		while (count > 0) {
 			if (gantt.isOpen(tmp)) {
 				count--;
@@ -66,11 +66,11 @@ public class DaysAsDates implements Iterable<TimePoint> {
 		this.date2 = tmp;
 	}
 
-	class MyIterator implements Iterator<TimePoint> {
+	class MyIterator implements Iterator<Day> {
 
-		private TimePoint current;
+		private Day current;
 
-		public MyIterator(TimePoint current) {
+		public MyIterator(Day current) {
 			this.current = current;
 		}
 
@@ -78,8 +78,8 @@ public class DaysAsDates implements Iterable<TimePoint> {
 			return current.compareTo(date2) <= 0;
 		}
 
-		public TimePoint next() {
-			final TimePoint result = current;
+		public Day next() {
+			final Day result = current;
 			current = current.increment();
 			return result;
 		}
@@ -90,7 +90,7 @@ public class DaysAsDates implements Iterable<TimePoint> {
 
 	}
 
-	public Iterator<TimePoint> iterator() {
+	public Iterator<Day> iterator() {
 		return new MyIterator(date1);
 	}
 

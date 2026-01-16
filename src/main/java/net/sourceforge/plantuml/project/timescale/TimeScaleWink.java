@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project.timescale;
 
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class TimeScaleWink implements TimeScale {
 
@@ -49,25 +49,25 @@ public class TimeScaleWink implements TimeScale {
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getStartingPosition(Day instant) {
 		final long wink = instant.getMillis();
-		return wink * cellWidth / TimePoint.MILLISECONDS_PER_DAY;
+		return wink * cellWidth / Day.MILLISECONDS_PER_DAY;
 	}
 
 	@Override
-	public double getEndingPosition(TimePoint instant) {
+	public double getEndingPosition(Day instant) {
 		return getStartingPosition(instant) + getWidth(instant);
 	}
 
 	@Override
-	public double getWidth(TimePoint instant) {
+	public double getWidth(Day instant) {
 		return cellWidth;
 	}
 
 	@Override
-	public boolean isBreaking(TimePoint instant) {
+	public boolean isBreaking(Day instant) {
 		if (printScale == PrintScale.WEEKLY) {
-			final long num = instant.getMillis() / TimePoint.MILLISECONDS_PER_DAY;
+			final long num = instant.getMillis() / Day.MILLISECONDS_PER_DAY;
 			return num % 7 == 6;
 		}
 		return true;

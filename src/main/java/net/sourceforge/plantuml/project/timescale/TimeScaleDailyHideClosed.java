@@ -39,18 +39,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.project.OpenClose;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public final class TimeScaleDailyHideClosed implements TimeScale {
 	// ::remove folder when __HAXE__
 
 	private final double cellWidth;
-	private final TimePoint startingDay;
-	private TimePoint biggest;
+	private final Day startingDay;
+	private Day biggest;
 	private final OpenClose openClose;
-	private final Map<TimePoint, Integer> startingInt = new HashMap<>();
+	private final Map<Day, Integer> startingInt = new HashMap<>();
 
-	public TimeScaleDailyHideClosed(double size, TimePoint startingDay, double scale, OpenClose openClose) {
+	public TimeScaleDailyHideClosed(double size, Day startingDay, double scale, OpenClose openClose) {
 		this.cellWidth = size * scale;
 		this.startingDay = startingDay;
 		this.biggest = startingDay;
@@ -59,7 +59,7 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getStartingPosition(Day instant) {
 		if (instant.compareTo(this.startingDay) < 0)
 			throw new IllegalArgumentException();
 
@@ -68,11 +68,11 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 		return startingInt.get(instant) * cellWidth;
 	}
 
-	private void computeUpTo(TimePoint dest) {
+	private void computeUpTo(Day dest) {
 		if (dest.compareTo(biggest) <= 0)
 			return;
 
-		TimePoint i = biggest;
+		Day i = biggest;
 		int current = startingInt.get(i);
 		do {
 			if (getWidth(i) > 0)
@@ -83,19 +83,19 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 	}
 
 	@Override
-	public double getEndingPosition(TimePoint instant) {
+	public double getEndingPosition(Day instant) {
 		return getStartingPosition(instant) + getWidth(instant);
 	}
 
 	@Override
-	public double getWidth(TimePoint instant) {
+	public double getWidth(Day instant) {
 		if (openClose.isClosed(instant))
 			return 0;
 		return cellWidth;
 	}
 
 	@Override
-	public boolean isBreaking(TimePoint instant) {
+	public boolean isBreaking(Day instant) {
 		return true;
 	}
 

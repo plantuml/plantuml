@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -104,7 +104,7 @@ public class GanttConstraint extends WithLinkType {
 		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);
 	}
 
-	public boolean isHidden(TimePoint min, TimePoint max) {
+	public boolean isHidden(Day min, Day max) {
 		if (isHidden(source.getInstantPrecise(), min, max))
 			return true;
 
@@ -114,7 +114,7 @@ public class GanttConstraint extends WithLinkType {
 		return false;
 	}
 
-	private boolean isHidden(TimePoint now, TimePoint min, TimePoint max) {
+	private boolean isHidden(Day now, Day min, Day max) {
 		if (now.compareTo(min) < 0)
 			return true;
 

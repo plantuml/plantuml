@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -107,27 +107,27 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg) {
 		final String countAnd = arg.get("COUNT_AND", 0);
 		if (countAnd != null) {
-			final TimePoint date3 = getDate(project, arg, "3");
+			final Day date3 = getDate(project, arg, "3");
 			final int nb = Integer.parseInt(countAnd);
 			return Failable.ok(new DaysAsDates(project, date3, nb));
 		}
 		final String countThen = arg.get("COUNT_THEN", 0);
 		if (countThen != null) {
-			final TimePoint date3 = project.getThenDate();
+			final Day date3 = project.getThenDate();
 			final int nb = Integer.parseInt(countThen);
 			return Failable.ok(new DaysAsDates(project, date3, nb));
 		}
-		final TimePoint date1 = getDate(project, arg, "1");
-		final TimePoint date2 = getDate(project, arg, "2");
+		final Day date1 = getDate(project, arg, "1");
+		final Day date2 = getDate(project, arg, "2");
 		return Failable.ok(new DaysAsDates(date1, date2));
 	}
 
-	private TimePoint getDate(GanttDiagram project, RegexResult arg, String suffix) {
+	private Day getDate(GanttDiagram project, RegexResult arg, String suffix) {
 		if (arg.get("BDAY" + suffix, 0) != null) {
 			final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
 			final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
 			final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
-			return TimePoint.of(year, month, day);
+			return Day.create(year, month, day);
 		}
 		if (arg.get("ECOUNT" + suffix, 0) != null) {
 			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
@@ -148,7 +148,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			for (TimePoint d : (DaysAsDates) subject)
+			for (Day d : (DaysAsDates) subject)
 				project.closeDayAsDate(d, (String) complement);
 
 			return CommandExecutionResult.ok();
@@ -164,7 +164,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			for (TimePoint d : (DaysAsDates) subject)
+			for (Day d : (DaysAsDates) subject)
 				project.openDayAsDate(d, (String) complement);
 
 			return CommandExecutionResult.ok();
@@ -182,7 +182,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final HColor color = ((CenterBorderColor) complement).getCenter();
-			for (TimePoint d : (DaysAsDates) subject)
+			for (Day d : (DaysAsDates) subject)
 				project.colorDay(d, color);
 
 			return CommandExecutionResult.ok();
@@ -201,7 +201,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final String name = (String) complement;
 			final DaysAsDates days = (DaysAsDates) subject;
-			for (TimePoint d : days) {
+			for (Day d : days) {
 				project.nameDay(d, name);
 			}
 			return CommandExecutionResult.ok();

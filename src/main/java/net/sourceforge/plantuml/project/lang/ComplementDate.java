@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -98,9 +98,9 @@ public class ComplementDate implements Something<GanttDiagram> {
 		);
 	}
 
-	public Failable<TimePoint> getMe(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<Day> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		final DayPattern dayPattern = new DayPattern(suffix);
-		final TimePoint result = dayPattern.getDay(arg);
+		final Day result = dayPattern.getDay(arg);
 
 		if (result != null)
 			return Failable.ok(result);
@@ -114,12 +114,12 @@ public class ComplementDate implements Something<GanttDiagram> {
 		throw new IllegalStateException();
 	}
 
-	private TimePoint resultD(GanttDiagram system, RegexResult arg, String suffix) {
+	private Day resultD(GanttDiagram system, RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
 		return system.getStartingDate().addDays(day);
 	}
 
-	private TimePoint resultE(GanttDiagram system, RegexResult arg, String suffix) {
+	private Day resultE(GanttDiagram system, RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
 		return system.getStartingDate().addDays(day);
 	}

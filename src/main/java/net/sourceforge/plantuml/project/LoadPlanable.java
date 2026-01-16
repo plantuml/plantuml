@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public interface LoadPlanable {
 
-	public int getLoadAt(TimePoint instant);
+	public int getLoadAt(Day instant);
 
-	public TimePoint getLastDayIfAny();
+	public Day getLastDayIfAny();
 }

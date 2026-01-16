@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
@@ -78,11 +78,11 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
-	private final Map<TimePoint, String> nameDays;
+	private final Map<Day, String> nameDays;
 
-	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
-			TimePoint printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
+	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Map<Day, String> nameDays,
+			Day printStart) {
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 				thParam.getScale(), printStart));
 		this.nameDays = nameDays;
 	}
@@ -121,7 +121,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
@@ -143,7 +143,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);
@@ -190,7 +190,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (TimePoint wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
+			for (Day wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);

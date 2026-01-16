@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -79,7 +79,7 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final TimePoint d1 = new DayPattern("1").getDay(arg);
+		final Day d1 = new DayPattern("1").getDay(arg);
 
 		final Failable<TaskInstant> i2 = getComplementTaskInstant(system, arg, suffix);
 

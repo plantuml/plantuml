@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.solver;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SolverImpl extends AbstractSolver implements Solver {
 	// ::remove folder when __HAXE__
@@ -50,11 +50,11 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	}
 
 	@Override
-	protected TimePoint computeEnd() {
-		TimePoint current = (TimePoint) values.get(TaskAttribute.START);
-		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoadInDays();
+	protected Day computeEnd() {
+		Day current = (Day) values.get(TaskAttribute.START);
+		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
 		int cpt = 0;
-		final TimePoint lastDayIfAny = loadPlanable.getLastDayIfAny();
+		final Day lastDayIfAny = loadPlanable.getLastDayIfAny();
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);
 			current = current.increment();
@@ -71,9 +71,9 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	}
 
 	@Override
-	protected TimePoint computeStart() {
-		TimePoint current = (TimePoint) values.get(TaskAttribute.END);
-		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoadInDays();
+	protected Day computeStart() {
+		Day current = (Day) values.get(TaskAttribute.END);
+		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
 		int cpt = 0;
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);

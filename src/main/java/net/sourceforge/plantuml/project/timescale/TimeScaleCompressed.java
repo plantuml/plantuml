@@ -37,33 +37,33 @@ package net.sourceforge.plantuml.project.timescale;
 
 import java.time.DayOfWeek;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class TimeScaleCompressed implements TimeScale {
 
 	private final TimeScale daily;
 
-	public TimeScaleCompressed(double size, TimePoint calendar, double scale, TimePoint zeroDay) {
+	public TimeScaleCompressed(double size, Day calendar, double scale, Day zeroDay) {
 		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);
 	}
 
 	@Override
-	public double getStartingPosition(TimePoint instant) {
+	public double getStartingPosition(Day instant) {
 		return daily.getStartingPosition(instant);
 	}
 
 	@Override
-	public double getEndingPosition(TimePoint instant) {
+	public double getEndingPosition(Day instant) {
 		return daily.getEndingPosition(instant);
 	}
 
 	@Override
-	public double getWidth(TimePoint instant) {
+	public double getWidth(Day instant) {
 		return daily.getWidth(instant);
 	}
 
 	@Override
-	public boolean isBreaking(TimePoint instant) {
+	public boolean isBreaking(Day instant) {
 		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
 	}
 

@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SentencePausesAbsoluteIntervalsSmart extends SentenceSimple<GanttDiagram> {
 
@@ -52,7 +52,7 @@ public class SentencePausesAbsoluteIntervalsSmart extends SentenceSimple<GanttDi
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final DaysAsDates pauses = (DaysAsDates) complement;
-		for (TimePoint day : pauses)
+		for (Day day : pauses)
 			task.addPause(day);
 		return CommandExecutionResult.ok();
 

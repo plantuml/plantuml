@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class PlanUtils {
 
@@ -45,11 +45,11 @@ public class PlanUtils {
 
 	public static LoadPlanable minOf(final LoadPlanable p1, final LoadPlanable p2) {
 		return new LoadPlanable() {
-			public int getLoadAt(TimePoint instant) {
+			public int getLoadAt(Day instant) {
 				return Math.min(p1.getLoadAt(instant), p2.getLoadAt(instant));
 			}
 
-			public TimePoint getLastDayIfAny() {
+			public Day getLastDayIfAny() {
 				return lastOf(p1.getLastDayIfAny(), p2.getLastDayIfAny());
 			}
 		};
@@ -57,17 +57,17 @@ public class PlanUtils {
 
 	public static LoadPlanable multiply(final LoadPlanable p1, final LoadPlanable p2) {
 		return new LoadPlanable() {
-			public int getLoadAt(TimePoint instant) {
+			public int getLoadAt(Day instant) {
 				return p1.getLoadAt(instant) * p2.getLoadAt(instant) / 100;
 			}
 
-			public TimePoint getLastDayIfAny() {
+			public Day getLastDayIfAny() {
 				return lastOf(p1.getLastDayIfAny(), p2.getLastDayIfAny());
 			}
 		};
 	}
 
-	private static TimePoint lastOf(TimePoint day1, TimePoint day2) {
+	private static Day lastOf(Day day1, Day day2) {
 		if (day1 == null)
 			return day2;
 		if (day2 == null)

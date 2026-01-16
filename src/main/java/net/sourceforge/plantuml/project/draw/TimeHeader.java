@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.PName;
@@ -67,15 +67,15 @@ public abstract class TimeHeader {
 		this.timeScale = timeScale;
 	}
 
-	protected final boolean isBold2(TimePoint wink) {
+	protected final boolean isBold2(Day wink) {
 		return thParam.getVerticalSeparatorBefore().contains(wink);
 	}
 
-	protected final TimePoint getMin() {
+	protected final Day getMin() {
 		return thParam.getMin();
 	}
 
-	protected final TimePoint getMax() {
+	protected final Day getMax() {
 		return thParam.getMax();
 	}
 
@@ -168,7 +168,7 @@ public abstract class TimeHeader {
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
 		ug = thParam.forVerticalSeparator(ug);
-		for (TimePoint wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink))
 				drawVline(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
 						totalHeightWithoutFooter);

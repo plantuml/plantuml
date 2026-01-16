@@ -42,7 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -58,8 +58,8 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getStart() {
-		TimePoint min = null;
+	public Day getStart() {
+		Day min = null;
 		for (Task child : children)
 			if (min == null || min.compareTo(child.getStart()) > 0)
 				min = child.getStart();
@@ -71,8 +71,8 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getEnd() {
-		TimePoint max = null;
+	public Day getEnd() {
+		Day max = null;
 		for (Task child : children)
 			if (max == null || max.compareTo(child.getEnd()) < 0)
 				max = child.getEnd();
@@ -84,12 +84,12 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setStart(TimePoint start) {
+	public void setStart(Day start) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setEnd(TimePoint end) {
+	public void setEnd(Day end) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -134,7 +134,7 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(TimePoint pause) {
+	public void addPause(Day pause) {
 		throw new UnsupportedOperationException();
 	}
 

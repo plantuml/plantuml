@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * A piecewise constant function defined on a {@link LocalDateTime} axis.

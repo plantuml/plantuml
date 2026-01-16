@@ -51,7 +51,7 @@ public class SentenceHappens extends SentenceSimple<GanttDiagram> {
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		task.setLoad(Load.ofDays(1));
+		task.setLoad(Load.inWinks(1));
 		final TaskInstant when = (TaskInstant) complement;
 		task.setStart(when.getInstantTheorical());
 		task.setDiamond(true);

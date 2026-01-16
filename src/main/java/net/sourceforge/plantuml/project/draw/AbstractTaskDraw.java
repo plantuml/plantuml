@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -79,7 +79,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected final TimeScale timeScale;
 	private Real y;
 	protected final String prettyDisplay;
-	protected final TimePoint start;
+	protected final Day start;
 	private final StyleBuilder styleBuilder;
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
@@ -100,7 +100,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.noteStereotype = noteStereotype;
 	}
 
-	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, Task task,
+	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
 			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
 		this.y = y;
 		this.skinParam = skinParam;

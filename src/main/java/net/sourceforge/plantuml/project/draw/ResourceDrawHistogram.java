@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class ResourceDrawHistogram implements ResourceDraw {
@@ -58,11 +58,11 @@ public class ResourceDrawHistogram implements ResourceDraw {
 	private final Resource res;
 	private final TimeScale timeScale;
 	private final double y;
-	private final TimePoint min;
-	private final TimePoint max;
+	private final Day min;
+	private final Day max;
 	private final GanttDiagram gantt;
 
-	public ResourceDrawHistogram(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min, TimePoint max) {
+	public ResourceDrawHistogram(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
@@ -78,7 +78,7 @@ public class ResourceDrawHistogram implements ResourceDraw {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		for (TimePoint i = min; i.compareTo(max) <= 0; i = i.increment()) {
+		for (Day i = min; i.compareTo(max) <= 0; i = i.increment()) {
 			final int load = gantt.getLoadForResource(res, i);
 			final double startingPosition = timeScale.getStartingPosition(i);
 			final double width = timeScale.getStartingPosition(i.increment()) - startingPosition;

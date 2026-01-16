@@ -43,7 +43,7 @@ import java.util.Map.Entry;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.Value;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public abstract class AbstractSolver implements Solver {
 
@@ -52,8 +52,8 @@ public abstract class AbstractSolver implements Solver {
 	final public void setData(TaskAttribute attribute, Value value) {
 		final Value previous = values.remove(attribute);
 		if (previous != null && attribute == TaskAttribute.START) {
-			final TimePoint previousInstant = (TimePoint) previous;
-			if (previousInstant.compareTo((TimePoint) value) > 0)
+			final Day previousInstant = (Day) previous;
+			if (previousInstant.compareTo((Day) value) > 0)
 				value = previous;
 
 		}
@@ -80,7 +80,7 @@ public abstract class AbstractSolver implements Solver {
 			if (attribute == TaskAttribute.START)
 				return computeStart();
 
-			return Load.ofDays(1);
+			return Load.inWinks(1);
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
 		return result;

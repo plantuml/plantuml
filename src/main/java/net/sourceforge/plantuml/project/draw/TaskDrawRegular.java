@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
@@ -71,13 +71,13 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
-	private final TimePoint end;
+	private final Day end;
 	private final boolean oddStart;
 	private final boolean oddEnd;
-	private final Collection<TimePoint> paused;
+	private final Collection<Day> paused;
 	private final Collection<GanttConstraint> constraints;
 
-	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, boolean oddStart,
+	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, boolean oddStart,
 			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
 		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
@@ -86,7 +86,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		this.oddStart = oddStart;
 		this.oddEnd = oddEnd;
 		this.paused = new TreeSet<>(((TaskImpl) task).getAllPaused());
-		for (TimePoint tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment()) {
+		for (Day tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment()) {
 			final int load = ((TaskImpl) task).getDefaultPlan().getLoadAt(tmp);
 			if (load == 0)
 				this.paused.add(tmp);
@@ -256,7 +256,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double round = style.value(PName.RoundCorner).asDouble();
 
 		final Collection<Segment> off = new ArrayList<>();
-		for (TimePoint pause : paused) {
+		for (Day pause : paused) {
 			final double x1 = timeScale.getStartingPosition(pause);
 			final double x2 = timeScale.getEndingPosition(pause);
 			off.add(new Segment(x1, x2));

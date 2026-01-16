@@ -39,7 +39,7 @@ import java.time.DayOfWeek;
 
 import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
-import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class Resource {
 
@@ -80,15 +80,15 @@ public class Resource {
 		this.draw = draw;
 	}
 
-	public boolean isClosedAt(TimePoint day) {
+	public boolean isClosedAt(Day day) {
 		return openClose.isClosed(day);
 	}
 
-	public void addCloseDay(TimePoint day) {
+	public void addCloseDay(Day day) {
 		openClose.close(day);
 	}
 
-	public void addForceOnDay(TimePoint day) {
+	public void addForceOnDay(Day day) {
 		openClose.open(day);
 	}
 
@@ -96,15 +96,15 @@ public class Resource {
 		openClose.close(day);
 	}
 
-	public void setOffBeforeDate(TimePoint day) {
+	public void setOffBeforeDate(Day day) {
 		openClose.setOffBeforeDate(day);
 	}
 
-	public void setOffAfterDate(TimePoint day) {
+	public void setOffAfterDate(Day day) {
 		openClose.setOffAfterDate(day);
 	}
 
-	public TimePoint getLastDayIfAny() {
+	public Day getLastDayIfAny() {
 		return openClose.getLastDayIfAny();
 	}
 
