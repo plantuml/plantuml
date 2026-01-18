@@ -65,7 +65,6 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeatWhile3.class.getName(), RegexLeaf.start(), //
-				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("while"), //
@@ -109,10 +108,6 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.end());
 	}
 
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
-	}
-
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
@@ -128,8 +123,6 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 			rainbow = Rainbow.build(diagram.getSkinParam(), colorString,
 					diagram.getSkinParam().colorArrowSeparationSpace());
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-
 		final Stereotype stereotype;
 		final String stereo = arg.get("STEREO", 0);
 		if (stereo != null)
@@ -138,7 +131,7 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 			stereotype = null;
 
 		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, colors, stereotype);
+		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, null, stereotype);
 	}
 	
 	

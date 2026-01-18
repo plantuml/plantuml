@@ -70,7 +70,6 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeatWhile3Multilines.class.getName(), RegexLeaf.start(), //
-				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("while"), //
@@ -78,10 +77,6 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 				new RegexLeaf("\\("), //
 				new RegexLeaf(1, "TEST1", "(.*)"), //
 				RegexLeaf.end());
-	}
-
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	private static final Pattern2 IS_OR_EQUALS = Pattern2.cmpile("\\)[%s]*(is|equals?)[%s]*\\(");
@@ -112,9 +107,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 			yes = splitted.get(1);
 		}
 
-		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
-
-		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, colors, null);
+		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, null, null);
 	}
 
 }
