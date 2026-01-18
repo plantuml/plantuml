@@ -1,3 +1,11 @@
+## V1.2026.1 (Jan 18, 2026)
+ - [📦️ update C4-PlantUML to v2.13.0](https://github.com/plantuml/plantuml/commit/a74ea877c0543f22529c01a1f4850087b29f2bd5)
+ - [🐾 remove from sub-diagram SVG processing instructions (#2478)](https://github.com/plantuml/plantuml/commit/67d745f352ffb22ced6b0aa6850c0c4af8e915b8)
+ - [🐛 loading local themes](https://github.com/plantuml/plantuml/commit/9af8796da4eeb8e52d8dc1dfe60e8f54bb3dbc99)
+ - [🐛 remove unmodifiable collection](https://github.com/plantuml/plantuml/commit/f89069f9e6d506ac73a7936aabfa9e8650439b2a)
+ - [🐛 manage link for emoji in activity diagrams](https://github.com/plantuml/plantuml/commit/d81e118de718be3eef0ef5c9b0d7b97be4cd18cb)
+ - [✨ improvement on color for diamonds in activity diagrams](https://github.com/plantuml/plantuml/commit/7893ba6d5058bf46a0bca399fdc1bf76bceceb0f)
+
 ## V1.2026.0 (Jan 9, 2026)
  - [🐛 fix issue during negative comparison](https://github.com/plantuml/plantuml/commit/bac6697add77d514afcefe8c6992932fbd29151c)
  - [🐛 fix dot issue](https://github.com/plantuml/plantuml/commit/b8809ac19ed48f9443d2d75c6f43940aa55de894)
