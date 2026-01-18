@@ -65,80 +65,73 @@ public class CommandRepeatWhile3 extends SingleLineCommand2&lt;ActivityDiagram3&
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L67">		return RegexConcat.build(CommandRepeatWhile3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L68">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;repeat&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;while&quot;), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(//
 						new RegexConcat(new RegexLeaf(1, &quot;TEST3&quot;, &quot;\\((.*?)\\)&quot;), //
-<span class="fc" id="L75">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;(is|equals?)&quot;), //
-<span class="fc" id="L77">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;WHEN3&quot;, &quot;\\((.+?)\\)&quot;), //
-<span class="fc" id="L79">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;(not)&quot;), //
-<span class="fc" id="L81">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;OUT3&quot;, &quot;\\((.+?)\\)&quot;)), //
 						new RegexConcat(new RegexLeaf(1, &quot;TEST4&quot;, &quot;\\((.*?)\\)&quot;), //
-<span class="fc" id="L84">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;(not)&quot;), //
-<span class="fc" id="L86">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L85">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;OUT4&quot;, &quot;\\((.+?)\\)&quot;)), //
 						new RegexConcat(new RegexLeaf(1, &quot;TEST2&quot;, &quot;\\((.*?)\\)&quot;), //
-<span class="fc" id="L89">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L88">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;(is|equals?)&quot;), //
-<span class="fc" id="L91">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L90">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;WHEN2&quot;, &quot;\\((.+?)\\)&quot;) //
 						), //
 						new RegexOptional(new RegexLeaf(1, &quot;TEST1&quot;, &quot;\\((.*)\\)&quot;)) //
 				), //
-<span class="fc" id="L96">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L95">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexOr(//
 								new RegexLeaf(&quot;-&gt;&quot;), //
 								new RegexLeaf(1, &quot;XCOLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
-<span class="fc" id="L101">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L100">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexOr(//
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), //
 								new RegexLeaf(&quot;&quot;)) //
 				)), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L107">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L108">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L109">				RegexLeaf.end());</span>
-	}
-
-	private static ColorParser color() {
-<span class="fc" id="L113">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L107">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L108">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L119">		final Display test = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;TEST&quot;, 0));</span>
-<span class="fc" id="L120">		final Display yes = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;WHEN&quot;, 0));</span>
-<span class="fc" id="L121">		final Display out = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;OUT&quot;, 0));</span>
+<span class="fc" id="L114">		final Display test = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;TEST&quot;, 0));</span>
+<span class="fc" id="L115">		final Display yes = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;WHEN&quot;, 0));</span>
+<span class="fc" id="L116">		final Display out = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;OUT&quot;, 0));</span>
 
-<span class="fc" id="L123">		final String colorString = arg.get(&quot;XCOLOR&quot;, 0);</span>
+<span class="fc" id="L118">		final String colorString = arg.get(&quot;XCOLOR&quot;, 0);</span>
 		final Rainbow rainbow;
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (colorString == null)</span>
-<span class="fc" id="L126">			rainbow = Rainbow.none();</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (colorString == null)</span>
+<span class="fc" id="L121">			rainbow = Rainbow.none();</span>
 		else
-<span class="nc" id="L128">			rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
-<span class="nc" id="L129">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
-
-<span class="fc" id="L131">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L123">			rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
+<span class="nc" id="L124">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
 
 		final Stereotype stereotype;
-<span class="fc" id="L134">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L136">			stereotype = Stereotype.build(stereo);</span>
+<span class="fc" id="L127">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L129">			stereotype = Stereotype.build(stereo);</span>
 		else
-<span class="fc" id="L138">			stereotype = null;</span>
+<span class="fc" id="L131">			stereotype = null;</span>
 
-<span class="fc" id="L140">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L141">		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, colors, stereotype);</span>
+<span class="fc" id="L133">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L134">		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, null, stereotype);</span>
 	}
 	
 	
