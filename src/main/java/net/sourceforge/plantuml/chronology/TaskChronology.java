@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.chronology;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
@@ -44,7 +45,7 @@ import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -56,8 +57,8 @@ public class TaskChronology extends AbstractTask implements Task {
 	private Url url;
 	private CenterBorderColor[] colors;
 
-	private Day start;
-	private Day end;
+	private TimePoint start;
+	private TimePoint end;
 
 	public void setUrl(Url url) {
 		this.url = url;
@@ -68,24 +69,29 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setStart(Day start) {
+	public void setStart(TimePoint start) {
 		this.start = start;
 
 	}
 
 	@Override
-	public Day getStart() {
+	public TimePoint getStart() {
 		return this.start;
 	}
 
 	@Override
-	public void setEnd(Day end) {
+	public void setEnd(TimePoint end) {
 		this.end = end;
 	}
 
 	@Override
-	public Day getEnd() {
+	public TimePoint getEndMinusOneDay() {
 		return this.end;
+	}
+	
+	@Override
+	public TimePoint getEnd() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -119,7 +125,7 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(Day pause) {
+	public void addPause(LocalDate pause) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -417,53 +417,6 @@ public final class Segment {
 		}
 	}
 
-	/**
-	 * Computes the intersection of multiple segments using multiplication to
-	 * combine their values.
-	 *
-	 * <p>
-	 * Convenience overload for array inputs. Delegates to
-	 * {@link #intersection(List)}.
-	 * </p>
-	 *
-	 * @param segments the array of segments to intersect
-	 * @return a new {@link Segment} representing the intersection
-	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
-	 *                                  have different directions, or if no
-	 *                                  overlapping range exists
-	 * @throws NullPointerException     if {@code segments} is {@code null}
-	 * @see #intersection(List)
-	 */
-	public static Segment intersection(Segment[] segments) {
-		Objects.requireNonNull(segments, "segments must not be null");
-
-		return intersection(Arrays.asList(segments));
-	}
-
-	/**
-	 * Computes the intersection of multiple segments with a custom value function.
-	 *
-	 * <p>
-	 * Convenience overload for array inputs. Delegates to
-	 * {@link #intersection(List, BiFunction)}.
-	 * </p>
-	 *
-	 * @param segments      the array of segments to intersect
-	 * @param valueFunction a function that combines two {@link Fraction} values
-	 * @return a new {@link Segment} representing the intersection
-	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
-	 *                                  have different directions, or if no
-	 *                                  overlapping range exists
-	 * @throws NullPointerException     if {@code segments} or {@code valueFunction}
-	 *                                  is {@code null}
-	 * @see #intersection(List, BiFunction)
-	 */
-	public static Segment intersection(Segment[] segments, BiFunction<Fraction, Fraction, Fraction> valueFunction) {
-		Objects.requireNonNull(segments, "segments must not be null");
-
-		return intersection(Arrays.asList(segments), valueFunction);
-	}
-
 	public LocalDateTime computeClampedStart(LocalDateTime current) {
 		if (direction == TimeDirection.FORWARD)
 			return current.isAfter(startExclusive()) ? current : startExclusive();

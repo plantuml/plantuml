@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.project.core.GSide;
-import net.sourceforge.plantuml.utils.Direction;
 
 public class GArrows implements UDrawable {
 

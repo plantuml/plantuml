@@ -180,11 +180,10 @@ class NGMTaskFixedTotalEffortTest {
 	void simpleEffort24HoursFullTime() {
 		// Create a task requiring 24 hours of work
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(24);
-		NGMTask task = NGMTask.withFixedTotalEffort(fullTime24x7(), effort);
 
 		// Start on Monday 2025-12-01 at midnight
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atStartOfDay();
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(fullTime24x7(), start, effort);
 
 		// With full-time allocation and no calendar, 24h effort = 24h duration
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 2).atStartOfDay();
@@ -207,10 +206,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void simpleEffort24HoursHalfTime() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(24);
-		NGMTask task = NGMTask.withFixedTotalEffort(halfTime24x7(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atStartOfDay();
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(halfTime24x7(), start, effort);
 
 		// Half-time means it takes twice as long
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 3).atStartOfDay();
@@ -228,10 +225,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void effortWithTwoFullTimeResources() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(80);
-		NGMTask task = NGMTask.withFixedTotalEffort(twoPersons24x7(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atStartOfDay();
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(twoPersons24x7(), start, effort);
 
 		// Two people at 100% = 2x speed
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 2).atTime(16, 0);
@@ -255,11 +250,9 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void effort8HoursWithOfficeHours() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(8);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), effort);
-
 		// Start Monday 2025-12-01 at 08:00
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), start, effort);
 
 		// 8 hours of work fits in one day: 08:00-12:00 (4h) + 14:00-18:00 (4h)
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 1).atTime(18, 0);
@@ -278,10 +271,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void effort12HoursSpanningTwoDays() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(12);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), start, effort);
 
 		// Day 1: 8h consumed, Day 2: 4h consumed (morning only)
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 2).atTime(12, 0);
@@ -297,11 +288,9 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void effortStartingMidDay() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(6);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), effort);
-
 		// Start at 10:00 (2 hours into morning slot)
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(10, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), start, effort);
 
 		// 10:00-12:00 (2h) + 14:00-18:00 (4h) = 6h total
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 1).atTime(18, 0);
@@ -325,13 +314,11 @@ class NGMTaskFixedTotalEffortTest {
 	void effortSpanningWeekend() {
 		// 40 hours with 24h/day availability on weekdays
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(40);
-		NGMTask task = NGMTask.withFixedTotalEffort(weekdaysOnly(), effort);
-
 		// Start Friday 2025-12-05 at 00:00
 		// Friday = Dec 5, Saturday = Dec 6 (closed), Sunday = Dec 7 (closed)
 		// Monday = Dec 8
 		LocalDateTime start = LocalDate.of(2025, 12, 5).atStartOfDay();
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(weekdaysOnly(), start, effort);
 
 		// With weekday calendar (24h/day on weekdays):
 		// Fri 00:00 to Sat 00:00 = 24h consumed (16h remaining)
@@ -350,11 +337,9 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void fortyHoursOverWorkingWeek() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(40);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), effort);
-
 		// Monday 2025-12-01 at 08:00
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), start, effort);
 
 		// 40h / 8h per day = 5 days
 		// Mon-Fri, ending Friday at 18:00
@@ -378,11 +363,9 @@ class NGMTaskFixedTotalEffortTest {
 		NGMAllocation allocation = officeHoursWithHolidays(LocalDate.of(2025, 12, 2));
 
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(16);
-		NGMTask task = NGMTask.withFixedTotalEffort(allocation, effort);
-
 		// Monday Dec 1st at 08:00
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(allocation, start, effort);
 
 		// Mon: 8h, Tue: holiday (0h), Wed: 8h -> total 16h
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 3).atTime(18, 0);
@@ -399,11 +382,9 @@ class NGMTaskFixedTotalEffortTest {
 		NGMAllocation allocation = officeHoursWithHolidays(LocalDate.of(2024, 12, 25), LocalDate.of(2024, 12, 26));
 
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(24); // 3 working days
-		NGMTask task = NGMTask.withFixedTotalEffort(allocation, effort);
-
 		// Monday Dec 23, 2024 at 08:00
 		LocalDateTime start = LocalDate.of(2024, 12, 23).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(allocation, start, effort);
 
 		// Mon Dec 23: 8h
 		// Tue Dec 24: 8h
@@ -429,10 +410,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void halfTimeAllocationWithOfficeHours() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(16);
-		NGMTask task = NGMTask.withFixedTotalEffort(halfTimeOfficeHours(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(halfTimeOfficeHours(), start, effort);
 
 		// 16h effort at 50% during 8h office hours = 4h effective per day
 		// 16h / 4h = 4 working days
@@ -450,10 +429,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void morningOnlyWorker() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(20);
-		NGMTask task = NGMTask.withFixedTotalEffort(morningsOnlyWeekdays(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(8, 0); // Monday
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(morningsOnlyWeekdays(), start, effort);
 
 		// 20h / 4h per day = 5 days
 		// Mon-Fri mornings, ending Friday at 12:00
@@ -475,7 +452,7 @@ class NGMTaskFixedTotalEffortTest {
 	// @Test
 	void computeStartFromEnd() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(16);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), effort);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), LocalDateTime.now(), effort);
 
 		// Task must end Friday Dec 5th at 18:00
 		LocalDateTime end = LocalDate.of(2025, 12, 5).atTime(18, 0);
@@ -503,7 +480,7 @@ class NGMTaskFixedTotalEffortTest {
 		NGMAllocation allocation = officeHoursWithHolidays(LocalDate.of(2025, 12, 3));
 
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(24); // 3 working days
-		NGMTask task = NGMTask.withFixedTotalEffort(allocation, effort);
+		NGMTask task = NGMTask.withFixedTotalEffort(allocation, LocalDateTime.now(), effort);
 
 		// Must end Friday Dec 5th at 18:00
 		LocalDateTime end = LocalDate.of(2025, 12, 5).atTime(18, 0);
@@ -529,10 +506,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void zeroEffortTask() {
 		NGMTotalEffort effort = NGMTotalEffort.zero();
-		NGMTask task = NGMTask.withFixedTotalEffort(fullTime24x7(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(10, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(fullTime24x7(), start, effort);
 
 		assertEquals(start, task.getEnd(), "Zero effort task should end at its start time");
 	}
@@ -543,10 +518,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void thirtyMinuteTask() {
 		NGMTotalEffort effort = NGMTotalEffort.ofMinutes(30);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(9, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), start, effort);
 
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 1).atTime(9, 30);
 		assertEquals(expectedEnd, task.getEnd(), "30 minute task should end 30 minutes after start");
@@ -558,10 +531,8 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void twoHoursAndThirtyMinutesTask() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHoursAndMinutes(2, 30);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), effort);
-
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(9, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), start, effort);
 
 		// 9:00 + 2h30 = 11:30
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 1).atTime(11, 30);
@@ -578,11 +549,9 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void taskStartingDuringLunchBreak() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(2);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), effort);
-
 		// Start during lunch break (12:30)
 		LocalDateTime start = LocalDate.of(2025, 12, 1).atTime(12, 30);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHours(), start, effort);
 
 		// Work can only begin at 14:00, then 2h of work ends at 16:00
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 1).atTime(16, 0);
@@ -595,11 +564,9 @@ class NGMTaskFixedTotalEffortTest {
 	@Test
 	void taskStartingOnWeekend() {
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(8);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), effort);
-
 		// Start Saturday Dec 6th 2025
 		LocalDateTime start = LocalDate.of(2025, 12, 6).atTime(10, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), start, effort);
 
 		// No work on Sat/Sun, work starts Monday 08:00, ends Monday 18:00
 		LocalDateTime expectedEnd = LocalDate.of(2025, 12, 8).atTime(18, 0);
@@ -619,11 +586,9 @@ class NGMTaskFixedTotalEffortTest {
 		// 1000 hours = 125 working days (at 8h/day)
 		// 125 days / 5 days per week = 25 weeks = ~6 months
 		NGMTotalEffort effort = NGMTotalEffort.ofHours(1000);
-		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), effort);
-
 		// Start Monday Jan 6, 2025
 		LocalDateTime start = LocalDate.of(2025, 1, 6).atTime(8, 0);
-		task.setStart(start);
+		NGMTask task = NGMTask.withFixedTotalEffort(officeHoursWeekdays(), start, effort);
 
 		// 125 working days from Jan 6, 2025
 		// This is approximately late June 2025

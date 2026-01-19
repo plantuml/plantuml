@@ -98,9 +98,16 @@ public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 			// Current iteration position.
 			// This represents the start instant of the next segment to be returned.
 			private LocalDateTime current = instant;
+			
+			private int counter = 9999;
 
 			@Override
 			public Segment next() {
+				// Check counter to detect infinite loops.
+				if (counter <= 0)
+					throw new IllegalStateException("Infinite loop detected in PiecewiseConstant iteration");
+				counter--;
+				
 				// Retrieve the (possibly larger) segment that contains the original instant.
 				// Implementations of segmentAt(...) are expected to return a segment
 				// that fully covers the given instant.

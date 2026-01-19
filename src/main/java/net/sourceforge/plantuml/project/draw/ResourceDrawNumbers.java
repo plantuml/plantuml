@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class ResourceDrawNumbers implements ResourceDraw {
@@ -57,16 +57,17 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	private final Resource res;
 	private final TimeScale timeScale;
 	private final double y;
-	private final Day min;
-	private final Day max;
+	private final TimePoint min;
+	private final TimePoint maxTimePointPrintedEndOfDay;
 	private final GanttDiagram gantt;
 
-	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
+	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min,
+			TimePoint maxTimePointPrintedEndOfDay) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
 		this.min = min;
-		this.max = max;
+		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;
 		this.gantt = gantt;
 	}
 
@@ -74,14 +75,14 @@ public class ResourceDrawNumbers implements ResourceDraw {
 		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName())
 				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
-		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
+		final ULine line = ULine.hline(timeScale.getPosition(maxTimePointPrintedEndOfDay) - timeScale.getPosition(min));
 		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
 				.draw(line);
 
 		double startingPosition = -1;
 		int totalLoad = 0;
 		boolean isRed = false;
-		for (Day i = min; i.compareTo(max) <= 0; i = i.increment()) {
+		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) <= 0; i = i.increment()) {
 			final boolean isBreaking = timeScale.isBreaking(i);
 			final int load = gantt.getLoadForResource(res, i);
 			if (load > 100)
@@ -91,8 +92,8 @@ public class ResourceDrawNumbers implements ResourceDraw {
 				if (totalLoad > 0) {
 					final TextBlock value = getTextBlock(totalLoad, isRed);
 					if (startingPosition == -1)
-						startingPosition = timeScale.getStartingPosition(i);
-					final double endingPosition = timeScale.getEndingPosition(i);
+						startingPosition = timeScale.getPosition(i);
+					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);
 					final double start = (startingPosition + endingPosition) / 2
 							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;
 					value.drawU(ug.apply(new UTranslate(start, 16)));
@@ -102,7 +103,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 				isRed = false;
 			} else {
 				if (startingPosition == -1)
-					startingPosition = timeScale.getStartingPosition(i);
+					startingPosition = timeScale.getPosition(i);
 			}
 		}
 

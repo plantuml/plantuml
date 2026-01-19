@@ -36,11 +36,12 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -53,9 +54,9 @@ public interface Task extends Moment {
 
 	public void setLoad(Load load);
 
-	public void setStart(Day start);
+	public void setStart(TimePoint start);
 
-	public void setEnd(Day end);
+	public void setEnd(TimePoint end);
 
 	public void setColors(CenterBorderColor... colors);
 
@@ -73,7 +74,7 @@ public interface Task extends Moment {
 
 	public Task getRow();
 
-	public void addPause(Day pause);
+	public void addPause(LocalDate pause);
 
 	public void addPause(DayOfWeek pause);
 

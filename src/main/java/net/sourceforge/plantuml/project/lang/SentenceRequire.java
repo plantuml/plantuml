@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceRequire extends SentenceSimple<GanttDiagram> {
 
 	public SentenceRequire() {
-		super(SubjectTask.ME, Verbs.requires, new ComplementSeveralDays());
+		super(SubjectTask.ME, Verbs.requires, new ComplementDuration());
 	}
 
 	@Override

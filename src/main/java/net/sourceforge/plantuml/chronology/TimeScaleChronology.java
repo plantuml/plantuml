@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.chronology;
 
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class TimeScaleChronology implements TimeScale {
@@ -48,7 +48,7 @@ public class TimeScaleChronology implements TimeScale {
 		this.fullWidth = fullWidth;
 	}
 
-	public double getStartingPosition(Day instant) {
+	public double getPosition(TimePoint instant) {
 		final long wink = instant.getMillis();
 		if (wink < min)
 			throw new IllegalArgumentException();
@@ -58,15 +58,11 @@ public class TimeScaleChronology implements TimeScale {
 		return fullWidth * (wink - min) / (max - min);
 	}
 
-	public double getEndingPosition(Day instant) {
-		return getStartingPosition(instant);
-	}
-
-	public double getWidth(Day instant) {
+	public double getWidth(TimePoint instant) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isBreaking(Day instant) {
+	public boolean isBreaking(TimePoint instant) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -35,25 +35,35 @@
  */
 package net.sourceforge.plantuml.project;
 
+import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
+
 public class Load implements Value {
 
-	private final int winks;
+	private final NGMTotalEffort effort;
 
-	private Load(int winks) {
-		this.winks = winks;
+	private Load(NGMTotalEffort effort) {
+		this.effort = effort;
 	}
 
-	public static Load inWinks(int winks) {
-		return new Load(winks);
+	public static Load of(NGMTotalEffort totalEffort) {
+		return new Load(totalEffort);
 	}
 
-	public int getFullLoad() {
-		return winks * 100;
+	public static Load ofDays(int days) {
+		return new Load(NGMTotalEffort.ofDays(days));
+	}
+
+	public static Load ofDaysAndHours(int days, int hours) {
+		return new Load(NGMTotalEffort.ofDaysAndHours(days, hours));
 	}
 
 	@Override
 	public String toString() {
-		return "(" + winks + ")";
+		return "(" + effort + ")";
+	}
+
+	public final NGMTotalEffort getEffort() {
+		return effort;
 	}
 
 }

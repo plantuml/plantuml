@@ -11,9 +11,11 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	private LocalDateTime start;
 	private LocalDateTime end;
 
-	public NGMTaskFixedTotalEffort(NGMAllocation allocation, NGMTotalEffort totalEffort) {
+	public NGMTaskFixedTotalEffort(NGMAllocation allocation, LocalDateTime start, NGMTotalEffort totalEffort) {
 		super(allocation);
 		this.totalEffort = totalEffort;
+		this.start = start;
+		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);
 	}
 
 	@Override
@@ -29,13 +31,19 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 
 	@Override
 	public LocalDateTime getEnd() {
-		return end;		
+		return end;
 	}
 
 	@Override
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
 		this.start = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeStart(end);
+	}
+
+	@Override
+	public void setEffort(NGMTotalEffort effort) {
+		this.totalEffort = effort;
+		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);
 	}
 
 	@Override
