@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -85,7 +85,7 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	private int delta = 0;
 
-	private Day increment(Day day) {
+	private TimePoint increment(TimePoint day) {
 		if (delta == 0)
 			initDelta(day);
 
@@ -95,13 +95,13 @@ public class TimeHeaderSimple extends TimeHeader {
 		return day;
 	}
 
-	private void initDelta(Day day) {
+	private void initDelta(TimePoint day) {
 		if (printScale == PrintScale.DAILY) {
-			final double x1 = getTimeScale().getStartingPosition(day);
+			final double x1 = getTimeScale().getPosition(day);
 			do {
 				delta++;
 				day = day.increment();
-			} while (getTimeScale().getStartingPosition(day) < x1 + 16);
+			} while (getTimeScale().getPosition(day) < x1 + 16);
 		} else {
 			delta = 1;
 		}
@@ -112,14 +112,14 @@ public class TimeHeaderSimple extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = increment(i)) {
-			final double x1 = getTimeScale().getStartingPosition(i);
+		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; i = increment(i)) {
+			final double x1 = getTimeScale().getPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug) {
-		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = increment(i)) {
+		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; i = increment(i)) {
 			final int value;
 			if (printScale == PrintScale.WEEKLY)
 				value = i.getAbsoluteDayNum() / 7 + 1;
@@ -129,15 +129,15 @@ public class TimeHeaderSimple extends TimeHeader {
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
 			final TextBlock num = Display.getWithNewlines(getPragma(), "" + value).create(fontConfiguration,
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-			final double x1 = getTimeScale().getStartingPosition(i);
+			final double x1 = getTimeScale().getPosition(i);
 			final double x2;
 			if (printScale == PrintScale.WEEKLY)
-				x2 = getTimeScale().getEndingPosition(i.addDays(6));
+				x2 = getTimeScale().getPosition(i.addDays(6)) + getTimeScale().getWidth(i.addDays(6));
 			else
-				x2 = getTimeScale().getStartingPosition(increment(i));
+				x2 = getTimeScale().getPosition(increment(i));
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (i.compareTo(getMax().increment()) < 0)
+			if (i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
 
 		}
@@ -183,9 +183,9 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
+		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+			final double x1 = getTimeScale().getPosition(wink);
+			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			HColor back = thParam.getColor(wink);
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());

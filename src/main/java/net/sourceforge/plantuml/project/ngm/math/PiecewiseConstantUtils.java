@@ -33,34 +33,31 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project.ngm.math;
 
-import net.sourceforge.plantuml.project.time.Day;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 
-public class ConstantPlan implements LoadPlanable {
+public class PiecewiseConstantUtils {
 
-	private final int loadPerInstant;
+	public static boolean isZeroOnDay(PiecewiseConstant value, LocalDate day) {
+		final LocalDateTime startOfDay = day.atStartOfDay();
+		final LocalDateTime startOfNextDay = day.plusDays(1).atStartOfDay();
 
-	private ConstantPlan(int loadPerInstant) {
-		this.loadPerInstant = loadPerInstant;
-	}
+		final Iterator<Segment> iterator = value.iterateSegmentsFrom(startOfDay, TimeDirection.FORWARD);
 
-	public static LoadPlanable normal() {
-		return new ConstantPlan(100);
-	}
+		while (iterator.hasNext()) {
+			final Segment segment = iterator.next();
 
-	public static LoadPlanable partial(int load) {
-		return new ConstantPlan(load);
-	}
+			if (segment.startExclusive().isBefore(startOfNextDay) == false)
+				break;
 
-	@Override
-	public int getLoadAt(Day instant) {
-		return loadPerInstant;
+			if (segment.getValue().isZero() == false)
+				return false;
 
-	}
+		}
 
-	@Override
-	public Day getLastDayIfAny() {
-		return null;
+		return true;
 	}
 }

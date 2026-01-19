@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.PrintScale;
@@ -71,7 +70,8 @@ import net.sourceforge.plantuml.project.core.TaskGroup;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealOrigin;
@@ -86,7 +86,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
 
-	//	private final List<GanttConstraint> constraints = new ArrayList<>();
+	// private final List<GanttConstraint> constraints = new ArrayList<>();
 	private final HColorSet colorSet = HColorSet.instance();
 //
 //	private final OpenClose openClose = new OpenClose();
@@ -107,8 +107,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	private Day today;
 //	private double totalHeightWithoutFooter;
-	private Day min;
-	private Day max;
+	private TimePoint min;
+	private TimePoint max;
 	private TimeScaleChronology timeScale;
 //
 //	private Day printStart;
@@ -256,7 +256,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
+		return new TimeHeaderParameters(null, 1, min, max, max.ofEndOfDay(), getIHtmlColorSet(), locale, null, null, null, this,
+				false);
 	}
 
 //	private Map<Day, HColor> colorDays() {
@@ -371,7 +372,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			final String disp = task.getCode().getDisplay();
-			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(), getSkinParam());
+			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(),
+					getSkinParam());
 			final double height = draw.getFullHeightTask(stringBounder);
 			y = y.addAtLeast(height);
 //			if (task instanceof TaskSeparator) {
@@ -485,14 +487,14 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		for (Task task : tasks.values()) {
 			if (this.min == null || this.max == null) {
 				this.min = task.getStart();
-				this.max = task.getEnd();
+				this.max = task.getEndMinusOneDay();
 				continue;
 
 			}
 			if (this.min.compareTo(task.getStart()) > 0)
 				this.min = task.getStart();
-			if (this.max.compareTo(task.getEnd()) < 0)
-				this.max = task.getEnd();
+			if (this.max.compareTo(task.getEndMinusOneDay()) < 0)
+				this.max = task.getEndMinusOneDay();
 		}
 
 		this.min = this.min.roundDayDown();
@@ -751,7 +753,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //		return CommandExecutionResult.ok();
 //	}
 
-	public LoadPlanable getDefaultPlan() {
+	@Override
+	public PiecewiseConstant getDefaultPlan() {
 		throw new UnsupportedOperationException();
 	}
 
