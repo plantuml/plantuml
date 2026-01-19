@@ -112,14 +112,15 @@ public class TimeHeaderSimple extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; i = increment(i)) {
+		for (TimePoint i = getMin(); i
+				.compareTo(getMaxTimePointPrintedEndOfDay().plusOneSecond()) <= 0; i = increment(i)) {
 			final double x1 = getTimeScale().getPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug) {
-		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; i = increment(i)) {
+		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedEndOfDay().increment()) <= 0; i = increment(i)) {
 			final int value;
 			if (printScale == PrintScale.WEEKLY)
 				value = i.getAbsoluteDayNum() / 7 + 1;
@@ -137,7 +138,7 @@ public class TimeHeaderSimple extends TimeHeader {
 				x2 = getTimeScale().getPosition(increment(i));
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) < 0)
+			if (i.compareTo(getMaxTimePointPrintedEndOfDay().increment()) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
 
 		}
@@ -183,7 +184,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink
+				.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			HColor back = thParam.getColor(wink);
