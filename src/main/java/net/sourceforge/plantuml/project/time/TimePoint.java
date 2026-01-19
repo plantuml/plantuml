@@ -74,9 +74,9 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
 
-//	public static TimePoint ofEndOfDay(LocalDate day) {
-//		return ofStartOfDay(day.plusDays(1)).minusOneSecond();
-//	}
+	public static TimePoint ofEndOfDay(LocalDate day) {
+		return ofStartOfDay(day.plusDays(1)).minusOneSecond();
+	}
 
 	public TimePoint ofEndOfDay() {
 		return new TimePoint(utcDateTime.toLocalDate().plusDays(1).atStartOfDay().minusSeconds(1));
