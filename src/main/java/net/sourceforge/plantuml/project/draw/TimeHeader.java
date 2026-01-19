@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -71,8 +73,16 @@ public abstract class TimeHeader {
 		return thParam.getVerticalSeparatorBefore().contains(wink);
 	}
 
-	protected final TimePoint getMin() {
+	protected final TimePoint getMinTOBEDELETED() {
 		return thParam.getMin();
+	}
+
+	protected final LocalDate getMinDay() {
+		return thParam.getMin().toDay();
+	}
+
+	protected final LocalDate getMaxDay() {
+		return thParam.getMaxTimePointPrintedEndOfDay().toDay();
 	}
 
 	protected final TimePoint getMaxTimePointPrintedStartOfDayTOBEDELETED() {
@@ -172,7 +182,7 @@ public abstract class TimeHeader {
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
 		ug = thParam.forVerticalSeparator(ug);
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
 				.increment())
 			if (isBold2(wink))
 				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),

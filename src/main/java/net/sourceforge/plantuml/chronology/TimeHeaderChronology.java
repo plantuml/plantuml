@@ -89,14 +89,14 @@ public class TimeHeaderChronology extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) < 0; i = i.increment(printScale)) {
+		for (TimePoint i = getMinTOBEDELETED(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) < 0; i = i.increment(printScale)) {
 			final double x1 = timeScale.getPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug, TimeScale timeScale) {
-		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) < 0; i = i.increment(printScale)) {
+		for (TimePoint i = getMinTOBEDELETED(); i.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) < 0; i = i.increment(printScale)) {
 			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
 			final TextBlock num = Display.getWithNewlines(getPragma(), i.toStringShort(thParam.getLocale()))
@@ -119,7 +119,7 @@ public class TimeHeaderChronology extends TimeHeader {
 	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
 		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter +
 		// 6);
-		final double xmin = getTimeScale().getPosition(getMin());
+		final double xmin = getTimeScale().getPosition(getMinTOBEDELETED());
 		final double xmax = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED()) + getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
 		// printVerticalSeparators(ug, totalHeightWithoutFooter);
@@ -133,7 +133,7 @@ public class TimeHeaderChronology extends TimeHeader {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double xmin = getTimeScale().getPosition(getMin());
+		final double xmin = getTimeScale().getPosition(getMinTOBEDELETED());
 		final double xmax = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED()) + getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
 		ug = ug.apply(UTranslate.dy(3));
 		// drawSmallVlinesDay(ug, getTimeScale(),
@@ -164,7 +164,7 @@ public class TimeHeaderChronology extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink);
 			HColor back = thParam.getColor(wink);
