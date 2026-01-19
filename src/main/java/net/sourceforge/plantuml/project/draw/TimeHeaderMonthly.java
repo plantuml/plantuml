@@ -122,7 +122,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
@@ -145,7 +145,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);
@@ -193,7 +193,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; wink = wink.increment()) {
+			for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);

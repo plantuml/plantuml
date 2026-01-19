@@ -93,7 +93,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);

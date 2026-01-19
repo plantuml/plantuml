@@ -128,15 +128,18 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
 		final UGraphic ugVerticalSeparator = thParam.forVerticalSeparator(ug);
 		final UGraphic ugLineColor = ug.apply(getLineColor());
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment())
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (isBold2(wink) || getTimeScale().getWidth(wink.decrement()) == 0)
 				drawVline(ugVerticalSeparator, getTimeScale().getPosition(wink),
 						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 			else
-				drawVline(ugLineColor, getTimeScale().getPosition(wink),
-						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
+				drawVline(ugLineColor, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
+						totalHeightWithoutFooter);
+		}
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED()) + getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
+		final double end = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED())
+				+ getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
 		drawVline(ugLineColor, end, getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 	}
 
@@ -149,7 +152,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextsDayOfWeek(UGraphic ug) {
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink
+				.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getPosition(wink);
@@ -162,7 +166,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextDayOfMonth(UGraphic ug) {
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink
+				.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getPosition(wink);
@@ -188,7 +193,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void drawMonths(final UGraphic ug) {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink
+				.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getPosition(wink);
@@ -219,7 +225,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; wink = wink.increment()) {
+			for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(
+					getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);

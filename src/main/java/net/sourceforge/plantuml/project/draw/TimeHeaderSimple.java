@@ -112,7 +112,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (TimePoint i = getMin(); i
+		for (TimePoint i = getMinTOBEDELETED(); i
 				.compareTo(getMaxTimePointPrintedEndOfDay().plusOneSecond()) <= 0; i = increment(i)) {
 			final double x1 = getTimeScale().getPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
@@ -120,7 +120,7 @@ public class TimeHeaderSimple extends TimeHeader {
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug) {
-		for (TimePoint i = getMin(); i.compareTo(getMaxTimePointPrintedEndOfDay().increment()) <= 0; i = increment(i)) {
+		for (TimePoint i = getMinTOBEDELETED(); i.compareTo(getMaxTimePointPrintedEndOfDay().increment()) <= 0; i = increment(i)) {
 			final int value;
 			if (printScale == PrintScale.WEEKLY)
 				value = i.getAbsoluteDayNum() / 7 + 1;
@@ -184,7 +184,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
 				.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);

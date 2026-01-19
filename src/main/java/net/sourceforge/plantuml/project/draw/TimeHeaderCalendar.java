@@ -83,7 +83,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			HColor back = thParam.getColor(wink);

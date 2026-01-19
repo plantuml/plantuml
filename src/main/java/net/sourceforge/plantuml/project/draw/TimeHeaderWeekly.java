@@ -133,7 +133,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonths(final UGraphic ug) {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
@@ -155,7 +155,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
+			for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
 					.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
@@ -176,7 +176,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink.increment())
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink.increment())
 			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
 				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(ug.getStringBounder()),
 						totalHeightWithoutFooter);
@@ -188,7 +188,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private void printDaysOfMonth(final UGraphic ug) {
 		int counter = weekStartingNumber;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay().decrement()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay().decrement()) < 0; wink = wink.increment()) {
 			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
 				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)
