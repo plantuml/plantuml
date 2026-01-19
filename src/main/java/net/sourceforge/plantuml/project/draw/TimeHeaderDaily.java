@@ -138,8 +138,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 						totalHeightWithoutFooter);
 		}
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED())
-				+ getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
+		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
+
 		drawVline(ugLineColor, end, getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 	}
 
@@ -152,12 +152,13 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextsDayOfWeek(UGraphic ug) {
-		for (TimePoint wink = getMinTOBEDELETED(); wink
-				.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getPosition(wink);
-			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
+			final double x2 = getTimeScale().getPosition(wink.increment());
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug,
 					getTextBlock(SName.day, DayOfWeekUtils.shortName(wink.toDayOfWeek(), locale()), false, textColor),
@@ -166,12 +167,13 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextDayOfMonth(UGraphic ug) {
-		for (TimePoint wink = getMinTOBEDELETED(); wink
-				.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getPosition(wink);
-			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
+			final double x2 = getTimeScale().getPosition(wink.increment());
 			final HColor textColor = getTextBackColor(wink);
 			printCentered(ug, getTextBlock(SName.day, "" + wink.getDayOfMonth(), false, textColor), x1, x2);
 		}
@@ -193,8 +195,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void drawMonths(final UGraphic ug) {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
-		for (TimePoint wink = getMinTOBEDELETED(); wink
-				.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (isHidden(wink))
 				continue;
 			final double x1 = getTimeScale().getPosition(wink);
@@ -206,7 +208,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED().increment());
+		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
 		if (x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
 
@@ -225,17 +227,12 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(
-					getMaxTimePointPrintedStartOfDayTOBEDELETED().increment()) <= 0; wink = wink.increment()) {
+			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+				final TimePoint wink = TimePoint.ofStartOfDay(day);
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);
-					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
-					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
-					double y1 = getTimeHeaderHeight(ug.getStringBounder());
-					double y2 = getFullHeaderHeight(ug.getStringBounder());
-
 					final double position = getH3(ug.getStringBounder());
 					label.drawU(ug.apply(new UTranslate(x1, position)));
 				}
