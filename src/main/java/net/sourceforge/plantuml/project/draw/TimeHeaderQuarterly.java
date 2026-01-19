@@ -105,7 +105,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink
+				.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
@@ -120,7 +121,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED()) + getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
+		final double end = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED())
+				+ getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
 		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
@@ -128,7 +130,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
 		String last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink.increment()) {
+		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) < 0; wink = wink
+				.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			if (quarter(wink).equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);
@@ -143,7 +146,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printQuarter(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedStartOfDayTOBEDELETED()) + getTimeScale().getWidth(getMaxTimePointPrintedStartOfDayTOBEDELETED());
+		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay().plusOneSecond());
 		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);
 	}
 
