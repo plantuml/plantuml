@@ -184,7 +184,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedStartOfDayTOBEDELETED()) <= 0; wink = wink
+		for (TimePoint wink = getMin(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
 				.increment()) {
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
