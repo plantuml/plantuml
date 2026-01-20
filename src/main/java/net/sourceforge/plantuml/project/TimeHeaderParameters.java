@@ -101,10 +101,6 @@ public class TimeHeaderParameters implements GanttStyle {
 		return min;
 	}
 
-	public final TimePoint getMaxTimePointPrintedStartOfDay() {
-		return maxTimePointPrintedStartOfDay;
-	}
-
 	public final TimePoint getMaxTimePointPrintedEndOfDay() {
 		return maxTimePointPrintedEndOfDay;
 	}

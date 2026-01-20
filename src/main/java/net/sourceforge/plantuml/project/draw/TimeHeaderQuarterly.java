@@ -117,11 +117,11 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDayTOBEDELETED());
+		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDayTOBEDELETED());
+		final double end = x1;
 		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
