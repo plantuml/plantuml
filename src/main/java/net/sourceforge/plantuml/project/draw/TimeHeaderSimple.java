@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -95,6 +97,35 @@ public class TimeHeaderSimple extends TimeHeader {
 		return day;
 	}
 
+	private LocalDate increment(LocalDate day) {
+		if (delta == 0)
+			initDelta(day);
+
+		for (int i = 0; i < delta; i++)
+			day = increment(day, printScale);
+
+		return day;
+	}
+
+	private LocalDate increment(LocalDate day, PrintScale printScale) {
+		if (printScale == PrintScale.WEEKLY)
+			return day.plusDays(7);
+		return day.plusDays(1);
+	}
+
+	private void initDelta(LocalDate day) {
+		if (printScale == PrintScale.DAILY) {
+			final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(day));
+			do {
+				delta++;
+				day = day.plusDays(1);
+			} while (getTimeScale().getPosition(TimePoint.ofStartOfDay(day)) < x1 + 16);
+		} else {
+			delta = 1;
+		}
+
+	}
+
 	private void initDelta(TimePoint day) {
 		if (printScale == PrintScale.DAILY) {
 			final double x1 = getTimeScale().getPosition(day);
@@ -112,33 +143,34 @@ public class TimeHeaderSimple extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (TimePoint i = getMinTOBEDELETED(); i
-				.compareTo(getMaxTimePointPrintedEndOfDay().plusOneSecond()) <= 0; i = increment(i)) {
-			final double x1 = getTimeScale().getPosition(i);
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = increment(day)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+			final double x1 = getTimeScale().getPosition(wink);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug) {
-		for (TimePoint i = getMinTOBEDELETED(); i.compareTo(getMaxTimePointPrintedEndOfDay().increment()) <= 0; i = increment(i)) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = increment(day)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final int value;
 			if (printScale == PrintScale.WEEKLY)
-				value = i.getAbsoluteDayNum() / 7 + 1;
+				value = wink.getAbsoluteDayNum() / 7 + 1;
 			else
-				value = i.getAbsoluteDayNum() + 1;
+				value = wink.getAbsoluteDayNum() + 1;
 			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
 			final TextBlock num = Display.getWithNewlines(getPragma(), "" + value).create(fontConfiguration,
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-			final double x1 = getTimeScale().getPosition(i);
+			final double x1 = getTimeScale().getPosition(wink);
 			final double x2;
 			if (printScale == PrintScale.WEEKLY)
-				x2 = getTimeScale().getPosition(i.addDays(6)) + getTimeScale().getWidth(i.addDays(6));
+				x2 = getTimeScale().getPosition(wink.addDays(6)) + getTimeScale().getWidth(wink.addDays(6));
 			else
-				x2 = getTimeScale().getPosition(increment(i));
+				x2 = getTimeScale().getPosition(increment(wink));
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (i.compareTo(getMaxTimePointPrintedEndOfDay().increment()) < 0)
+			if (wink.compareTo(getMaxTimePointPrintedEndOfDayTOBEDELETED().increment()) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
 
 		}
@@ -184,8 +216,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
-				.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			HColor back = thParam.getColor(wink);

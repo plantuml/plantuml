@@ -73,10 +73,6 @@ public abstract class TimeHeader {
 		return thParam.getVerticalSeparatorBefore().contains(wink);
 	}
 
-	protected final TimePoint getMinTOBEDELETED() {
-		return thParam.getMin();
-	}
-
 	protected final LocalDate getMinDay() {
 		return thParam.getMin().toDay();
 	}
@@ -85,11 +81,7 @@ public abstract class TimeHeader {
 		return thParam.getMaxTimePointPrintedEndOfDay().toDay();
 	}
 
-	protected final TimePoint getMaxTimePointPrintedStartOfDayTOBEDELETED() {
-		return thParam.getMaxTimePointPrintedStartOfDay();
-	}
-
-	protected final TimePoint getMaxTimePointPrintedEndOfDay() {
+	protected final TimePoint getMaxTimePointPrintedEndOfDayTOBEDELETED() {
 		return thParam.getMaxTimePointPrintedEndOfDay();
 	}
 
@@ -182,11 +174,12 @@ public abstract class TimeHeader {
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
 		ug = thParam.forVerticalSeparator(ug);
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
-				.increment())
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (isBold2(wink))
 				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
 						totalHeightWithoutFooter);
+		}
 	}
 
 	protected Pragma getPragma() {
