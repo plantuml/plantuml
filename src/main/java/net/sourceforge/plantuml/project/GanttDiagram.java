@@ -147,8 +147,6 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private TimePoint today;
 	private double totalHeightWithoutFooter;
 	private TimePoint minTimePoint = TimePoint.epoch();
-//	private TimePoint maxTimePoint1;
-//	private TimePoint maxTimePointPrintedEndOfDay;
 	private LocalDate maxDay;
 
 	private LocalDate printStart;
@@ -336,8 +334,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(colorDays(), getFactorScale(), minTimePoint, TimePoint.ofEndOfDay(maxDay),
-				getIHtmlColorSet(), locale, openClose, colorDaysOfWeek, verticalSeparatorBefore, this, hideClosed);
+		return new TimeHeaderParameters(colorDays(), getFactorScale(), minTimePoint, maxDay, getIHtmlColorSet(), locale,
+				openClose, colorDaysOfWeek, verticalSeparatorBefore, this, hideClosed);
 	}
 
 	private Map<TimePoint, HColor> colorDays() {

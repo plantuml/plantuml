@@ -256,8 +256,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(null, 1, min, max.ofEndOfDay(), getIHtmlColorSet(), locale, null, null, null,
-				this, false);
+		return new TimeHeaderParameters(null, 1, min, max.toDay(), getIHtmlColorSet(), locale, null, null, null, this,
+				false);
 	}
 
 //	private Map<Day, HColor> colorDays() {

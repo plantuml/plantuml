@@ -78,7 +78,7 @@ public abstract class TimeHeader {
 	}
 
 	protected final LocalDate getMaxDay() {
-		return thParam.getMaxTimePointPrintedEndOfDay().toDay();
+		return thParam.getMaxDay();
 	}
 
 	protected final HColor closedBackgroundColor() {
@@ -113,7 +113,7 @@ public abstract class TimeHeader {
 
 	protected final void drawHline(UGraphic ug, double y) {
 		final double xmin = getTimeScale().getPosition(thParam.getMin());
-		final double xmax = getTimeScale().getPosition(thParam.getMaxTimePointPrintedEndOfDay());
+		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDay(thParam.getMaxDay()));
 		final ULine hline = ULine.hline(xmax - xmin);
 		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);
 	}

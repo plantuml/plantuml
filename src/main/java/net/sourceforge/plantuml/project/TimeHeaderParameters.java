@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -57,7 +58,7 @@ public class TimeHeaderParameters implements GanttStyle {
 	private final Map<TimePoint, HColor> colorDays;
 	private final double scale;
 	private final TimePoint min;
-	private final TimePoint maxTimePointPrintedEndOfDay;
+	private final LocalDate maxDay;
 	private final HColorSet colorSet;
 	private final GanttStyle ganttStyle;
 	private final Locale locale;
@@ -66,14 +67,13 @@ public class TimeHeaderParameters implements GanttStyle {
 	private final Set<TimePoint> verticalSeparatorBefore;
 	private final boolean hideClosed;
 
-	public TimeHeaderParameters(Map<TimePoint, HColor> colorDays, double scale, TimePoint min,
-			TimePoint maxTimePointPrintedEndOfDay, HColorSet colorSet, Locale locale, OpenClose openClose,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, Set<TimePoint> verticalSeparatorBefore, GanttStyle ganttStyle,
-			boolean hideClosed) {
+	public TimeHeaderParameters(Map<TimePoint, HColor> colorDays, double scale, TimePoint min, LocalDate maxDay,
+			HColorSet colorSet, Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			Set<TimePoint> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {
 		this.colorDays = colorDays;
 		this.scale = scale;
 		this.min = min;
-		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;
+		this.maxDay = maxDay;
 		this.colorSet = Objects.requireNonNull(colorSet);
 		this.ganttStyle = ganttStyle;
 		this.locale = locale;
@@ -99,8 +99,8 @@ public class TimeHeaderParameters implements GanttStyle {
 		return min;
 	}
 
-	public final TimePoint getMaxTimePointPrintedEndOfDay() {
-		return maxTimePointPrintedEndOfDay;
+	public final LocalDate getMaxDay() {
+		return maxDay;
 	}
 
 	public final HColorSet getColorSet() {
