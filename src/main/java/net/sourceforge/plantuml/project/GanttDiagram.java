@@ -146,7 +146,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TimePoint today;
 	private double totalHeightWithoutFooter;
-	private TimePoint minTimePoint = TimePoint.epoch();
+	private LocalDate minDay = TimePoint.epoch();
 	private LocalDate maxDay;
 
 	private LocalDate printStart;
@@ -202,7 +202,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null || task instanceof TaskSeparator)
 			return false;
 
-		if (task.getEndMinusOneDay().compareTo(minTimePoint) < 0)
+		if (task.getEndMinusOneDay().compareTo(TimePoint.ofStartOfDay(minDay)) < 0)
 			return true;
 
 		if (task.getStart().compareTo(TimePoint.ofEndOfDay(maxDay)) > 0)
@@ -227,7 +227,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null) {
 			initMinMax();
 		} else {
-			this.minTimePoint = TimePoint.ofStartOfDay(printStart);
+			this.minDay = printStart;
 			this.maxDay = printEnd;
 		}
 		final TimeHeader timeHeader = getTimeHeader(stringBounder);
@@ -306,7 +306,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			}
 
 			private double getBarsColumnWidth(final TimeHeader timeHeader) {
-				final double xmin = timeHeader.getTimeScale().getPosition(minTimePoint);
+				final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(minDay));
 				final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDay(maxDay));
 				return xmax - xmin;
 			}
@@ -315,7 +315,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimeHeader getTimeHeader(StringBounder stringBounder) {
-		if (minTimePoint.equals(TimePoint.epoch()))
+		if (minDay.equals(TimePoint.epoch()))
 			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
 		if (printScale == PrintScale.DAILY)
 			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
@@ -334,7 +334,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(colorDays(), getFactorScale(), minTimePoint, maxDay, getIHtmlColorSet(), locale,
+		return new TimeHeaderParameters(colorDays(), getFactorScale(), minDay, maxDay, getIHtmlColorSet(), locale,
 				openClose, colorDaysOfWeek, verticalSeparatorBefore, this, hideClosed);
 	}
 
@@ -375,7 +375,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
 		for (GanttConstraint constraint : constraints) {
-			if (printStart != null && constraint.isHidden(minTimePoint, TimePoint.ofEndOfDay(maxDay)))
+			if (printStart != null && constraint.isHidden(TimePoint.ofStartOfDay(minDay), TimePoint.ofEndOfDay(maxDay)))
 				continue;
 
 			constraint.getUDrawable(timeScale, this).drawU(ug);
@@ -450,7 +450,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			final TaskDraw draw;
 			if (task instanceof TaskSeparator) {
 				final TaskSeparator taskSeparator = (TaskSeparator) task;
-				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, minTimePoint, maxDay,
+				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, minDay, maxDay,
 						task.getStyleBuilder(), getSkinParam());
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
@@ -463,7 +463,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					draw = new TaskDrawDiamond(timeScale, y, disp, getStartForDrawing(tmp), task, this,
 							task.getStyleBuilder(), getSkinParam());
 				} else {
-					final boolean oddStart = printStart != null && minTimePoint.compareTo(getStartForDrawing(tmp)) == 0;
+					final boolean oddStart = printStart != null
+							&& TimePoint.ofStartOfDay(minDay).compareTo(getStartForDrawing(tmp)) == 0;
 					final boolean oddEnd = printStart != null
 							&& TimePoint.ofEndOfDay(maxDay).compareTo(getEndForDrawing(tmp)) == 0;
 					draw = new TaskDrawRegular(timeScale, y, disp, getStartForDrawing(tmp), getEndForDrawing(tmp),
@@ -493,7 +494,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y) {
-		return new ResourceDrawNumbers(gantt, res, timeScale, y, minTimePoint, TimePoint.ofEndOfDay(maxDay));
+		return new ResourceDrawNumbers(gantt, res, timeScale, y, TimePoint.ofStartOfDay(minDay),
+				TimePoint.ofEndOfDay(maxDay));
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
@@ -541,7 +543,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null)
 			return tmp.getStart();
 
-		return TimePoint.max(minTimePoint, tmp.getStart());
+		return TimePoint.max(TimePoint.ofStartOfDay(minDay), tmp.getStart());
 	}
 
 	private TimePoint getEndForDrawing(final Task tmp) {
@@ -553,7 +555,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private void initMinMax() {
 		if (tasks.size() == 0) {
-			maxDay = minTimePoint.toDay();
+			maxDay = minDay;
 		} else {
 			maxDay = null;
 			for (Task task : tasks.values()) {
@@ -579,7 +581,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public TimePoint getThenDate() {
-		TimePoint result = getMinTimePoint();
+		TimePoint result = TimePoint.ofStartOfDay(minDay);
 		for (TimePoint d : colorDays().keySet())
 			if (d.compareTo(result) > 0)
 				result = d;
@@ -612,7 +614,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			if (linkedToPrevious)
 				previous = getLastCreatedTask();
 
-			result = new TaskImpl(this, getSkinParam().getCurrentStyleBuilder(), code, minTimePoint, defaultCompletion);
+			result = new TaskImpl(this, getSkinParam().getCurrentStyleBuilder(), code, TimePoint.ofStartOfDay(minDay),
+					defaultCompletion);
 			if (currentGroup != null)
 				currentGroup.addTask(result);
 
@@ -677,16 +680,20 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (tasks.size() > 0)
 			return CommandExecutionResult.error("Starting point must be set before task definition");
 
-		this.minTimePoint = start;
+		this.minDay = start.toDay();
 		return CommandExecutionResult.ok();
 	}
 
-	public TimePoint getMinTimePoint() {
-		return minTimePoint;
-	}
+//	public TimePoint getMinTimePoint() {
+//		return minTimePoint;
+//	}
 
 	public LocalDate getMinDay() {
-		return minTimePoint.toDay();
+		return minDay;
+	}
+
+	public TimePoint getMinTimePoint() {
+		return TimePoint.ofStartOfDay(minDay);
 	}
 
 	public TimePoint getMaxTimePoint() {

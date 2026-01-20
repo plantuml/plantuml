@@ -74,7 +74,7 @@ public abstract class TimeHeader {
 	}
 
 	protected final LocalDate getMinDay() {
-		return thParam.getMin().toDay();
+		return thParam.getMinDay();
 	}
 
 	protected final LocalDate getMaxDay() {
@@ -112,7 +112,7 @@ public abstract class TimeHeader {
 	}
 
 	protected final void drawHline(UGraphic ug, double y) {
-		final double xmin = getTimeScale().getPosition(thParam.getMin());
+		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(thParam.getMinDay()));
 		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDay(thParam.getMaxDay()));
 		final ULine hline = ULine.hline(xmax - xmin);
 		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);

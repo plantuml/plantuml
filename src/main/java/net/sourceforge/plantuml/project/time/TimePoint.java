@@ -54,8 +54,8 @@ public class TimePoint implements Comparable<TimePoint>, Value {
 
 	private final LocalDateTime utcDateTime;
 
-	public static TimePoint epoch() {
-		return new TimePoint(LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC));
+	public static LocalDate epoch() {
+		return Instant.EPOCH.atZone(ZoneOffset.UTC).toLocalDate();
 	}
 
 	public static TimePoint ofStartOfDay(int year, String month, int dayOfMonth) {

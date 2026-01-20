@@ -83,8 +83,8 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
 			LocalDate printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
-				thParam.getScale(), printStart));
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
+				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 		this.nameDays = nameDays;
 	}
 

@@ -103,10 +103,10 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			LocalDate printStart) {
 		super(thParam,
 				thParam.isHideClosed()
-						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getMin(),
-								thParam.getScale(), thParam.getOpenClose())
-						: new TimeScaleDaily(thParam.getCellWidth(stringBounder), thParam.getMin(), thParam.getScale(),
-								printStart));
+						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder),
+								TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), thParam.getOpenClose())
+						: new TimeScaleDaily(thParam.getCellWidth(stringBounder),
+								TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 		this.nameDays = nameDays;
 	}
 
