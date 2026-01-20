@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
+import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
@@ -790,36 +791,38 @@ public class TContext {
 				final String stdlibPath = what.substring(1, what.length() - 1);
 //				final String libname = stdlibPath.substring(0, stdlibPath.indexOf('/'));
 				saveImportedFiles = this.pathSystem;
-				InputFile toto =  this.pathSystem.getInputFile(what);
-				this.pathSystem = this.pathSystem.changeCurrentDirectory(toto.getParentFolder());
-				// this.importedFiles = this.importedFiles.withCurrentDir(new AParentFolderStdlib(s, libname));
+				InputFile tmp = this.pathSystem.getInputFile(what);
+				this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
+				// this.importedFiles = this.importedFiles.withCurrentDir(new
+				// AParentFolderStdlib(s, libname));
 				reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
 				// ::comment when __CORE__
 			} else if (what.startsWith("[") && what.endsWith("]")) {
 				throw new IOException("To be finished");
-				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1, what.length() - 1));
+				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
+				// what.length() - 1));
 				// ::done
 //			} else if (importedFiles.getCurrentDir() instanceof AParentFolderStdlib) {
 //				final AParentFolderStdlib folderStdlib = (AParentFolderStdlib) importedFiles.getCurrentDir();
 //				reader = folderStdlib.getReader(what);
 			} else {
 				final InputFile f2 = this.pathSystem.getInputFile(what);
-				if (f2!=null) {
+				if (f2 != null) {
 					if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(f2))
 						return;
 
 					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
 						throw new EaterException("This file has already been included", s);
 
-//					if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
-//						reader = StartDiagramExtractReader.build(f2, s, charset);
-//					} else {
+					if (StartDiagramExtractReader.containsStartDiagram(f2, "desc2")) {
+						reader = StartDiagramExtractReader.build(f2, "desc2");
+					} else {
 						final Reader tmp = f2.getReader(charset);
 						if (tmp == null)
 							throw new EaterException("Cannot include file", s);
 
 						reader = ReadLineReader.create(tmp, what, s.getLocation());
-//					}
+					}
 					saveImportedFiles = this.pathSystem;
 					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
 					assert reader != null;

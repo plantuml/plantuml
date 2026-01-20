@@ -42,6 +42,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.preproc2.ReadFilterMergeLines;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -63,6 +64,10 @@ public class StartDiagramExtractReader implements ReadLine {
 
 	public static ReadLine build(InputStream is, String desc) {
 		return new StartDiagramExtractReader(getReadLine(is, desc), null);
+	}
+
+	public static ReadLine build(InputFile f2, String desc) throws IOException {
+		return build(f2.newInputStream(), desc);
 	}
 
 	private StartDiagramExtractReader(ReadLine raw, String suf) {
@@ -144,6 +149,10 @@ public class StartDiagramExtractReader implements ReadLine {
 	static public boolean containsStartDiagram(InputStream is, String description) throws IOException {
 		final ReadLine r = getReadLine(is, description);
 		return containsStartDiagram(r);
+	}
+
+	public static boolean containsStartDiagram(InputFile f2, String description) throws IOException {
+		return containsStartDiagram(f2.newInputStream(), description);
 	}
 
 	private static boolean containsStartDiagram(final ReadLine r) throws IOException {
