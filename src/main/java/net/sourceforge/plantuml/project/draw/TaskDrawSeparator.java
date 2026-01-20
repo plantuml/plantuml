@@ -72,14 +72,14 @@ public class TaskDrawSeparator implements TaskDraw {
 
 	private final TimeScale timeScale;
 	private Real y;
-	private final TimePoint min;
+	private final LocalDate minDay;
 	private final LocalDate maxDay;
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
 	private final ISkinParam skinParam;
 
-	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, TimePoint min, LocalDate maxDay,
+	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, LocalDate minDay, LocalDate maxDay,
 			StyleBuilder styleBuilder, ISkinParam skinParam) {
 		this.styleBuilder = styleBuilder;
 		this.skinParam = skinParam;
@@ -87,7 +87,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		this.name = name;
 		this.y = y;
 		this.timeScale = timeScale;
-		this.min = min;
+		this.minDay = minDay;
 		this.maxDay = maxDay;
 	}
 
@@ -136,7 +136,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();
-		final double start = timeScale.getPosition(min);
+		final double start = timeScale.getPosition(TimePoint.ofStartOfDay(minDay));
 		// final double start2 = start1 + widthTitle;
 		final double end = timeScale.getPosition(TimePoint.ofStartOfDay(maxDay.plusDays(1)));
 

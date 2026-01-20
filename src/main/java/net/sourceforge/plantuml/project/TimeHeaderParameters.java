@@ -57,7 +57,7 @@ public class TimeHeaderParameters implements GanttStyle {
 
 	private final Map<TimePoint, HColor> colorDays;
 	private final double scale;
-	private final TimePoint min;
+	private final LocalDate minDay;
 	private final LocalDate maxDay;
 	private final HColorSet colorSet;
 	private final GanttStyle ganttStyle;
@@ -67,12 +67,12 @@ public class TimeHeaderParameters implements GanttStyle {
 	private final Set<TimePoint> verticalSeparatorBefore;
 	private final boolean hideClosed;
 
-	public TimeHeaderParameters(Map<TimePoint, HColor> colorDays, double scale, TimePoint min, LocalDate maxDay,
+	public TimeHeaderParameters(Map<TimePoint, HColor> colorDays, double scale, LocalDate minDay, LocalDate maxDay,
 			HColorSet colorSet, Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
 			Set<TimePoint> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {
 		this.colorDays = colorDays;
 		this.scale = scale;
-		this.min = min;
+		this.minDay = minDay;
 		this.maxDay = maxDay;
 		this.colorSet = Objects.requireNonNull(colorSet);
 		this.ganttStyle = ganttStyle;
@@ -95,8 +95,8 @@ public class TimeHeaderParameters implements GanttStyle {
 		return scale;
 	}
 
-	public final TimePoint getMin() {
-		return min;
+	public final LocalDate getMinDay() {
+		return minDay;
 	}
 
 	public final LocalDate getMaxDay() {

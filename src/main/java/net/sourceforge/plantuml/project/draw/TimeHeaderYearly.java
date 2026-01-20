@@ -67,8 +67,8 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	}
 
 	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, LocalDate printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getMin(),
-				thParam.getScale(), printStart));
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
+				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 	}
 
 	@Override
