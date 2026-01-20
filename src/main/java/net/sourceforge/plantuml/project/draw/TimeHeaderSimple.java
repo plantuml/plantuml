@@ -170,7 +170,8 @@ public class TimeHeaderSimple extends TimeHeader {
 				x2 = getTimeScale().getPosition(increment(wink));
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (wink.compareTo(getMaxTimePointPrintedEndOfDayTOBEDELETED().increment()) < 0)
+
+			if (wink.compareTo(TimePoint.ofStartOfDay(getMaxDay().plusDays(1))) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
 
 		}

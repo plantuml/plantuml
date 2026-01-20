@@ -81,10 +81,6 @@ public abstract class TimeHeader {
 		return thParam.getMaxTimePointPrintedEndOfDay().toDay();
 	}
 
-	protected final TimePoint getMaxTimePointPrintedEndOfDayTOBEDELETED() {
-		return thParam.getMaxTimePointPrintedEndOfDay();
-	}
-
 	protected final HColor closedBackgroundColor() {
 		return thParam.getClosedStyle().value(PName.BackGroundColor).asColor(thParam.getColorSet());
 	}
