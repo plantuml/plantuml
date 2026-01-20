@@ -105,7 +105,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
@@ -116,11 +117,11 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay());
+		final double x1 = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDayTOBEDELETED());
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay());
+		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDayTOBEDELETED());
 		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
@@ -128,7 +129,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
 		String last = null;
 		double lastChange = -1;
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			if (quarter(wink).equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);
@@ -139,11 +141,11 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 				last = quarter(wink);
 			}
 		}
-		final double x1 = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay().plusOneSecond());
+		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
 		if (x1 > lastChange)
 			printQuarter(ug, last, lastChange, x1);
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay().plusOneSecond());
+		final double end = x1;
 		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);
 	}
 

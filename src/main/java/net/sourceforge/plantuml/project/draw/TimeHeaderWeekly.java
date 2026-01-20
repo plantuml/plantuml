@@ -133,7 +133,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonths(final UGraphic ug) {
 		YearMonth last = null;
 		double lastChangeMonth = -1;
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) < 0; wink = wink.increment()) {
+
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
@@ -144,9 +146,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay().plusOneSecond());
-		drawVline(ug.apply(getLineColor()), end, (double) 0, getH1(ug.getStringBounder()));
-		final double x1 = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay().plusOneSecond());
+		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
+		drawVline(ug.apply(getLineColor()), end, 0, getH1(ug.getStringBounder()));
+		final double x1 = end;
 		if (last != null && x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
 
@@ -155,8 +157,8 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink
-					.increment()) {
+			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+				final TimePoint wink = TimePoint.ofStartOfDay(day);
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);
@@ -176,19 +178,22 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink.increment())
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
 				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(ug.getStringBounder()),
 						totalHeightWithoutFooter);
+		}
 
-		final double end = getTimeScale().getPosition(getMaxTimePointPrintedEndOfDay());
+		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
 		drawVline(ug.apply(getLineColor()), end, getH1(ug.getStringBounder()), totalHeightWithoutFooter);
 		super.printVerticalSeparators(ug, totalHeightWithoutFooter);
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
 		int counter = weekStartingNumber;
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay().decrement()) < 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(-1)) < 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (wink.toDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
 				if (headerStrategy == WeeklyHeaderStrategy.FROM_N)

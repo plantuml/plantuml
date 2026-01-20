@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -83,7 +84,8 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (TimePoint wink = getMinTOBEDELETED(); wink.compareTo(getMaxTimePointPrintedEndOfDay()) <= 0; wink = wink.increment()) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
 			HColor back = thParam.getColor(wink);
