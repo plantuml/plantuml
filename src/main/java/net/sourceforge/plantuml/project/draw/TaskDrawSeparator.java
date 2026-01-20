@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -71,14 +73,14 @@ public class TaskDrawSeparator implements TaskDraw {
 	private final TimeScale timeScale;
 	private Real y;
 	private final TimePoint min;
-	private final TimePoint maxTimePointPrintedEndOfDay;
+	private final LocalDate maxDay;
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
 	private final ISkinParam skinParam;
 
-	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, TimePoint min,
-			TimePoint maxTimePointPrintedEndOfDay, StyleBuilder styleBuilder, ISkinParam skinParam) {
+	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, TimePoint min, LocalDate maxDay,
+			StyleBuilder styleBuilder, ISkinParam skinParam) {
 		this.styleBuilder = styleBuilder;
 		this.skinParam = skinParam;
 		this.colorSet = skinParam.getIHtmlColorSet();
@@ -86,7 +88,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		this.y = y;
 		this.timeScale = timeScale;
 		this.min = min;
-		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;
+		this.maxDay = maxDay;
 	}
 
 	@Override
@@ -136,7 +138,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();
 		final double start = timeScale.getPosition(min);
 		// final double start2 = start1 + widthTitle;
-		final double end = timeScale.getPosition(maxTimePointPrintedEndOfDay);
+		final double end = timeScale.getPosition(TimePoint.ofStartOfDay(maxDay.plusDays(1)));
 
 		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
 		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
@@ -174,7 +176,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
-		final double end = timeScale.getPosition(maxTimePointPrintedEndOfDay);
+		final double end = timeScale.getPosition(TimePoint.ofStartOfDay(maxDay.plusDays(1)));
 		return new FingerPrint(0, getY(stringBounder).getCurrentValue(), end,
 				getY(stringBounder).getCurrentValue() + h);
 	}
