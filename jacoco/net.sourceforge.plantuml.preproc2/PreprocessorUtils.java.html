@@ -36,7 +36,6 @@
  */
 package net.sourceforge.plantuml.preproc2;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,76 +46,77 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.DiagramDetector;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineSimple;
-import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L60">public class PreprocessorUtils {</span>
+<span class="nc" id="L59">public class PreprocessorUtils {</span>
 
-<span class="fc" id="L62">	private static final Pattern p = Pattern.compile(&quot;%(\\w+)%&quot;);</span>
+<span class="fc" id="L61">	private static final Pattern p = Pattern.compile(&quot;%(\\w+)%&quot;);</span>
 
 	public static String withEnvironmentVariable(String s) {
 
-<span class="nc" id="L66">		final Matcher m = p.matcher(s);</span>
-<span class="nc" id="L67">		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		while (m.find()) {</span>
-<span class="nc" id="L69">			final String var = m.group(1);</span>
-<span class="nc" id="L70">			final String value = getenv(var);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (value != null)</span>
-<span class="nc" id="L72">				m.appendReplacement(sb, Matcher.quoteReplacement(value));</span>
+<span class="nc" id="L65">		final Matcher m = p.matcher(s);</span>
+<span class="nc" id="L66">		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		while (m.find()) {</span>
+<span class="nc" id="L68">			final String var = m.group(1);</span>
+<span class="nc" id="L69">			final String value = getenv(var);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (value != null)</span>
+<span class="nc" id="L71">				m.appendReplacement(sb, Matcher.quoteReplacement(value));</span>
 
-<span class="nc" id="L74">		}</span>
-<span class="nc" id="L75">		m.appendTail(sb);</span>
-<span class="nc" id="L76">		s = sb.toString();</span>
-<span class="nc" id="L77">		return s;</span>
+<span class="nc" id="L73">		}</span>
+<span class="nc" id="L74">		m.appendTail(sb);</span>
+<span class="nc" id="L75">		s = sb.toString();</span>
+<span class="nc" id="L76">		return s;</span>
 	}
 
 	public static String getenv(String var) {
-<span class="nc" id="L81">		final String env = System.getProperty(var);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(env))</span>
-<span class="nc" id="L83">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);</span>
+<span class="nc" id="L80">		final String env = System.getProperty(var);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(env))</span>
+<span class="nc" id="L82">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);</span>
 
-<span class="nc" id="L85">		final String getenv = System.getenv(var);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(getenv))</span>
-<span class="nc" id="L87">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getenv);</span>
+<span class="nc" id="L84">		final String getenv = System.getenv(var);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(getenv))</span>
+<span class="nc" id="L86">			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getenv);</span>
 
-<span class="nc" id="L89">		return null;</span>
+<span class="nc" id="L88">		return null;</span>
 	}
 
 	// ::comment when __CORE__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (filename.endsWith(&quot;.puml&quot;) == false)</span>
-<span class="nc" id="L95">			filename = filename + &quot;.puml&quot;;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (filename.endsWith(&quot;.puml&quot;) == false)</span>
+<span class="nc" id="L94">			filename = filename + &quot;.puml&quot;;</span>
 
-<span class="nc" id="L97">		final String filename2 = filename;</span>
-<span class="nc" id="L98">		Log.info(() -&gt; &quot;Loading non standard &quot; + filename2);</span>
-<span class="nc" id="L99">		final String res = &quot;/stdlib/&quot; + filename;</span>
-<span class="nc" id="L100">		InputStream is = Stdlib.class.getResourceAsStream(res);</span>
+<span class="nc" id="L96">		final String filename2 = filename;</span>
+<span class="nc" id="L97">		Log.info(() -&gt; &quot;Loading non standard &quot; + filename2);</span>
+<span class="nc" id="L98">		final String res = &quot;/stdlib/&quot; + filename;</span>
+<span class="nc" id="L99">		InputStream is = Stdlib.class.getResourceAsStream(res);</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L103">			return null;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L102">			return null;</span>
 
-<span class="nc" id="L105">		final String description = &quot;[&quot; + filename + &quot;]&quot;;</span>
-<span class="nc" id="L106">		return ReadLineReader.create(new InputStreamReader(is), description);</span>
+<span class="nc" id="L104">		final String description = &quot;[&quot; + filename + &quot;]&quot;;</span>
+<span class="nc" id="L105">		return ReadLineReader.create(new InputStreamReader(is), description);</span>
 	}
 	// ::done
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
-<span class="pc" id="L111">		Log.info(() -&gt; &quot;Loading sdlib &quot; + filename);</span>
-<span class="fc" id="L112">		final byte[] puml = Stdlib.getPumlResource(filename);</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (puml == null)</span>
-<span class="nc" id="L114">			return null;</span>
+<span class="pc" id="L110">		Log.info(() -&gt; &quot;Loading sdlib &quot; + filename);</span>
+<span class="fc" id="L111">		final byte[] puml = Stdlib.getPumlResource(filename);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (puml == null)</span>
+<span class="nc" id="L113">			return null;</span>
 
-<span class="fc" id="L116">		final String description = &quot;&lt;&quot; + filename + &quot;&gt;&quot;;</span>
+<span class="fc" id="L115">		final String description = &quot;&lt;&quot; + filename + &quot;&gt;&quot;;</span>
 		try {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (StartDiagramExtractReader.containsStartDiagram(new ByteArrayInputStream(puml), description))</span>
-<span class="nc" id="L119">				return StartDiagramExtractReader.build(new ByteArrayInputStream(puml), description);</span>
+<span class="fc" id="L117">			final ReadLine tmp = DiagramDetector.extractFromBytes(puml, description);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (tmp != null)</span>
+<span class="nc" id="L119">				return tmp;</span>
 
 <span class="fc" id="L121">			return ReadLineReader.create(puml, description);</span>
 <span class="nc" id="L122">		} catch (IOException e) {</span>
@@ -141,24 +141,25 @@ import net.sourceforge.plantuml.utils.Log;
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
 			throws EaterException {
 		try {
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset))</span>
-<span class="nc" id="L145">				return StartDiagramExtractReader.build(url, s, suf, charset);</span>
+<span class="nc" id="L144">			final ReadLine tmp = DiagramDetector.extractFromUrl(url, s, suf, charset);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (tmp != null)</span>
+<span class="nc" id="L146">				return null;</span>
 
-<span class="nc" id="L147">			return getReaderInclude(url, s, charset);</span>
-<span class="nc" id="L148">		} catch (IOException e) {</span>
-<span class="nc" id="L149">			Logme.error(e);</span>
-<span class="nc" id="L150">			throw new EaterException(&quot;Cannot open URL &quot; + e.getMessage(), s);</span>
+<span class="nc" id="L148">			return getReaderInclude(url, s, charset);</span>
+<span class="nc" id="L149">		} catch (IOException e) {</span>
+<span class="nc" id="L150">			Logme.error(e);</span>
+<span class="nc" id="L151">			throw new EaterException(&quot;Cannot open URL &quot; + e.getMessage(), s);</span>
 		}
 
 	}
 
 	public static ReadLine getReaderInclude(SURL url, StringLocated s, Charset charset)
 			throws EaterException, UnsupportedEncodingException {
-<span class="nc" id="L157">		final InputStream is = url.openStream();</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L159">			throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
+<span class="nc" id="L158">		final InputStream is = url.openStream();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L160">			throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
 
-<span class="nc" id="L161">		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());</span>
+<span class="nc" id="L162">		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());</span>
 	}
 
 }

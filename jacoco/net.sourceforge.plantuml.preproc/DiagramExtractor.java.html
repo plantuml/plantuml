@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiagramExtractor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">DiagramExtractor.java</span></div><h1>DiagramExtractor.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StartUtils;
+
+public class DiagramExtractor implements ReadLine {
+
+	private final ReadLine raw;
+<span class="fc" id="L52">	private boolean finished = false;</span>
+
+<span class="fc" id="L54">	public DiagramExtractor(ReadLine raw, String suf) {</span>
+<span class="fc" id="L55">		int bloc = 0;</span>
+<span class="fc" id="L56">		String uid = null;</span>
+<span class="pc bpc" id="L57" title="3 of 4 branches missed.">		if (suf != null &amp;&amp; suf.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L58">			bloc = Integer.parseInt(suf);</span>
+		else
+<span class="fc" id="L60">			uid = suf;</span>
+
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (bloc &lt; 0)</span>
+<span class="nc" id="L63">			bloc = 0;</span>
+
+<span class="fc" id="L65">		this.raw = raw;</span>
+<span class="fc" id="L66">		StringLocated s = null;</span>
+		try {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">					if (bloc == 0)</span>
+<span class="fc" id="L71">						return;</span>
+<span class="nc" id="L72">					bloc--;</span>
+				}
+			}
+<span class="nc" id="L75">		} catch (IOException e) {</span>
+<span class="nc" id="L76">			Logme.error(e);</span>
+<span class="nc" id="L77">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L78">		}</span>
+<span class="nc" id="L79">		finished = true;</span>
+<span class="nc" id="L80">	}</span>
+
+	private boolean checkUid(String uid, StringLocated s) {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (uid == null)</span>
+<span class="fc" id="L84">			return true;</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
+<span class="nc" id="L87">			return true;</span>
+
+<span class="nc" id="L89">		return false;</span>
+	}
+
+	public StringLocated readLine() throws IOException {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L94">			return null;</span>
+
+<span class="fc" id="L96">		final StringLocated result = raw.readLine();</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isArobaseEndDiagram(result.getString())) {</span>
+<span class="fc" id="L98">			finished = true;</span>
+<span class="fc" id="L99">			return null;</span>
+		}
+<span class="fc" id="L101">		return result;</span>
+	}
+
+	public void close() throws IOException {
+<span class="fc" id="L105">		raw.close();</span>
+<span class="fc" id="L106">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

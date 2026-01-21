@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiagramDetector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.preproc</a> &gt; <span class="el_source">DiagramDetector.java</span></div><h1>DiagramDetector.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.preproc;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.preproc2.ReadFilterMergeLines;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.StartUtils;
+
+<span class="nc" id="L51">public class DiagramDetector {</span>
+
+	static public ReadLine extractFromUrl(SURL url, StringLocated s, String uid, Charset charset) throws IOException {
+<span class="nc" id="L54">		final ReadLine raw = newReadLineFromUrl(url, s, charset);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (containsStartDiagram(raw)) {</span>
+<span class="nc" id="L56">			final ReadLine raw1 = newReadLineFromUrl(url, s, charset);</span>
+<span class="nc" id="L57">			return new DiagramExtractor(raw1, uid);</span>
+		}
+<span class="nc" id="L59">		return null;</span>
+	}
+
+	static public ReadLine extractFromBytes(byte[] puml, String description) throws IOException {
+<span class="fc" id="L63">		final ReadLine raw = newReadLineFromInputStream(new ByteArrayInputStream(puml), description);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (containsStartDiagram(raw)) {</span>
+<span class="nc" id="L65">			final ReadLine raw1 = newReadLineFromInputStream(new ByteArrayInputStream(puml), description);</span>
+<span class="nc" id="L66">			return new DiagramExtractor(raw1, null);</span>
+		}
+<span class="fc" id="L68">		return null;</span>
+	}
+
+	public static ReadLine extractFromFile(InputFile f2, String description) throws IOException {
+<span class="fc" id="L72">		final ReadLine raw = newReadLineFromInputStream(f2.newInputStream(), description);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (containsStartDiagram(raw)) {</span>
+<span class="fc" id="L74">			final ReadLine raw1 = newReadLineFromInputStream(f2.newInputStream(), description);</span>
+<span class="fc" id="L75">			return new DiagramExtractor(raw1, null);</span>
+		}
+<span class="fc" id="L77">		return null;</span>
+	}
+
+	private static ReadLine newReadLineFromInputStream(InputStream is, String description) {
+<span class="fc" id="L81">		final InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);</span>
+<span class="fc" id="L82">		final ReadLine raw = ReadLineReader.create(isr, description);</span>
+<span class="fc" id="L83">		return uncommentAndMerge(raw);</span>
+	}
+
+	private static ReadLine newReadLineFromUrl(SURL url, StringLocated s, Charset charset) {
+<span class="nc" id="L87">		final InputStream tmp = url.openStream();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L89">			return new ReadLineSimple(s, &quot;Cannot connect&quot;);</span>
+
+<span class="nc" id="L91">		final InputStreamReader isr = new InputStreamReader(tmp, charset);</span>
+<span class="nc" id="L92">		final ReadLine raw = ReadLineReader.create(isr, url.toString());</span>
+<span class="nc" id="L93">		return uncommentAndMerge(raw);</span>
+	}
+
+	private static ReadLine uncommentAndMerge(ReadLine reader) {
+<span class="fc" id="L97">		final ReadLine raw = new ReadFilterMergeLines().applyFilter(reader);</span>
+<span class="fc" id="L98">		return new UncommentReadLine(raw);</span>
+	}
+
+	private static boolean containsStartDiagram(final ReadLine r) throws IOException {
+		try {
+<span class="fc" id="L103">			StringLocated s = null;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			while ((s = r.readLine()) != null)</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">				if (StartUtils.isArobaseStartDiagram(s.getString()))</span>
+<span class="fc" id="L106">					return true;</span>
+
+		} finally {
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if (r != null)</span>
+<span class="fc" id="L110">				r.close();</span>
+
+		}
+<span class="fc" id="L113">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
