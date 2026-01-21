@@ -44,7 +44,7 @@ public class MomentImpl implements Moment {
 
 	public MomentImpl(TimePoint start, TimePoint end) {
 		this.start = start;
-		this.end = end.increment();
+		this.end = end;
 	}
 
 	public TimePoint getStart() {

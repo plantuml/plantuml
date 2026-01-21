@@ -775,7 +775,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				end = max(end, ent.getKey());
 			}
 			if (start != null)
-				result = new MomentImpl(start, end);
+				result = new MomentImpl(start, end.increment());
 
 		}
 		return result;
