@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.lang;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -109,7 +110,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 			final Resource resource = (Resource) subject;
-			final TimePoint when = (TimePoint) complement;
+			final LocalDate when = (LocalDate) complement;
 			resource.setOffBeforeDate(when);
 			return CommandExecutionResult.ok();
 		}
@@ -126,7 +127,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 			final Resource resource = (Resource) subject;
-			final TimePoint when = (TimePoint) complement;
+			final LocalDate when = (LocalDate) complement;
 			resource.setOffAfterDate(when);
 			return CommandExecutionResult.ok();
 		}
@@ -143,7 +144,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 			final Resource resource = (Resource) subject;
-			final TimePoint when = (TimePoint) complement;
+			final LocalDate when = (LocalDate) complement;
 			resource.addCloseDay(when);
 			return CommandExecutionResult.ok();
 		}
@@ -160,9 +161,9 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 			final Resource resource = (Resource) subject;
-			for (TimePoint when : (DaysAsDates) complement) {
+			for (LocalDate when : (DaysAsDates) complement)
 				resource.addCloseDay(when);
-			}
+
 			return CommandExecutionResult.ok();
 		}
 
@@ -194,7 +195,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 			final Resource resource = (Resource) subject;
-			final TimePoint when = (TimePoint) complement;
+			final LocalDate when = (LocalDate) complement;
 			resource.addForceOnDay(when);
 			return CommandExecutionResult.ok();
 		}
@@ -211,9 +212,9 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 			final Resource resource = (Resource) subject;
-			for (TimePoint when : (DaysAsDates) complement) {
+			for (LocalDate when : (DaysAsDates) complement)
 				resource.addForceOnDay(when);
-			}
+
 			return CommandExecutionResult.ok();
 		}
 

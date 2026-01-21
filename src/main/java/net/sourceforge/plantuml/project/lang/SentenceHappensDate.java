@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
@@ -51,12 +53,12 @@ public class SentenceHappensDate extends SentenceSimple<GanttDiagram> {
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		task.setLoad(Load.ofDays(1));
-		final TimePoint start = (TimePoint) complement;
+		final LocalDate start = (LocalDate) complement;
 //		final Day startingDate = project.getStartingDate2();
 //		if (startingDate == null) {
 //			return CommandExecutionResult.error("No starting date for the project");
 //		}
-		task.setStart(start);
+		task.setStart(TimePoint.ofStartOfDay(start));
 		task.setDiamond(true);
 		return CommandExecutionResult.ok();
 	}

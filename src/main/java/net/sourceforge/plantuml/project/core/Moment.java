@@ -44,6 +44,8 @@ public interface Moment {
 
 	public TimePoint getEnd();
 
-	public TimePoint getEndMinusOneDay();
+	public default TimePoint getEndMinusOneDayTOBEREMOVED() {
+		return getEnd().decrement();
+	}
 
 }

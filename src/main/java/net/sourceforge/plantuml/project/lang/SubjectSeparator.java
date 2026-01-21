@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -42,7 +43,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -74,7 +74,7 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final TimePoint day = (TimePoint) complement;
+			final LocalDate day = (LocalDate) complement;
 			assert project == subject;
 			project.addVerticalSeparatorBefore(day);
 			return CommandExecutionResult.ok();
@@ -90,9 +90,9 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final TimePoint day = (TimePoint) complement;
+			final LocalDate day = (LocalDate) complement;
 			assert project == subject;
-			project.addVerticalSeparatorBefore(day.increment());
+			project.addVerticalSeparatorBefore(day.plusDays(1));
 			return CommandExecutionResult.ok();
 		}
 
@@ -109,7 +109,7 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 			final TaskInstant when = (TaskInstant) complement;
 
 			assert project == subject;
-			project.addVerticalSeparatorBefore(when.getInstantPrecise());
+			project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
 			return CommandExecutionResult.ok();
 		}
 

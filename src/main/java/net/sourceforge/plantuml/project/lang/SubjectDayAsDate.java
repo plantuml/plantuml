@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -56,7 +57,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	private SubjectDayAsDate() {
 	}
 
-	public Failable<TimePoint> getMe(GanttDiagram project, RegexResult arg) {
+	public Failable<LocalDate> getMe(GanttDiagram project, RegexResult arg) {
 		if (arg.get("BDAY", 0) != null)
 			return Failable.ok(resultB(arg));
 
@@ -67,25 +68,25 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 	}
 
-	private TimePoint resultB(RegexResult arg) {
+	private LocalDate resultB(RegexResult arg) {
 		final int day = Integer.parseInt(arg.get("BDAY", 0));
 		final int month = Integer.parseInt(arg.get("BMONTH", 0));
 		final int year = Integer.parseInt(arg.get("BYEAR", 0));
-		return TimePoint.ofStartOfDay(year, month, day);
+		return LocalDate.of(year, month, day);
 	}
 
-	private TimePoint resultE(GanttDiagram system, RegexResult arg) {
+	private LocalDate resultE(GanttDiagram system, RegexResult arg) {
 		final String type = arg.get("ETYPE", 0).toUpperCase();
 		final String operation = arg.get("EOPERATION", 0);
 		int day = Integer.parseInt(arg.get("ECOUNT", 0));
 		if ("-".equals(operation))
 			day = -day;
 		if ("D".equals(type))
-			return system.getMinTimePoint().addDays(day);
+			return system.getMinDay().plusDays(day);
 		if ("T".equals(type))
-			return system.getToday().addDays(day);
+			return system.getToday().plusDays(day);
 		if ("E".equals(type))
-			return system.getMaxTimePoint().addDays(day);
+			return system.getMaxDay().plusDays(day);
 		throw new IllegalStateException();
 	}
 
@@ -101,7 +102,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			project.closeDayAsDate((TimePoint) subject, (String) complement);
+			project.closeDayAsDate((LocalDate) subject, (String) complement);
 			return CommandExecutionResult.ok();
 		}
 	}
@@ -113,7 +114,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			project.openDayAsDate((TimePoint) subject, (String) complement);
+			project.openDayAsDate((LocalDate) subject, (String) complement);
 			return CommandExecutionResult.ok();
 		}
 	}
@@ -127,7 +128,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final HColor color = ((CenterBorderColor) complement).getCenter();
-			project.colorDay((TimePoint) subject, color);
+			project.colorDay((LocalDate) subject, color);
 			return CommandExecutionResult.ok();
 		}
 

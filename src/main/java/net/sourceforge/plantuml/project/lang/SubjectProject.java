@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -74,7 +75,7 @@ public class SubjectProject implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final TimePoint start = (TimePoint) complement;
+			final LocalDate start = (LocalDate) complement;
 			assert project == subject;
 			return project.updateStartingPoint(start);
 		}

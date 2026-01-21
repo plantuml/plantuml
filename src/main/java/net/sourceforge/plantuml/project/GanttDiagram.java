@@ -202,10 +202,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null || task instanceof TaskSeparator)
 			return false;
 
-		if (task.getEndMinusOneDay().compareTo(TimePoint.ofStartOfDay(minDay)) < 0)
+		if (task.getEndMinusOneDayTOBEREMOVED().compareTo(TimePoint.ofStartOfDay(minDay)) < 0)
 			return true;
 
-		if (task.getStart().compareTo(TimePoint.ofEndOfDay(maxDay)) > 0)
+		if (task.getStart().compareTo(TimePoint.ofEndOfDayMinusOneSecond(maxDay)) > 0)
 			return true;
 
 		return false;
@@ -307,7 +307,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 			private double getBarsColumnWidth(final TimeHeader timeHeader) {
 				final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(minDay));
-				final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDay(maxDay));
+				final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(maxDay));
 				return xmax - xmin;
 			}
 
@@ -375,7 +375,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
 		for (GanttConstraint constraint : constraints) {
-			if (printStart != null && constraint.isHidden(TimePoint.ofStartOfDay(minDay), TimePoint.ofEndOfDay(maxDay)))
+			if (printStart != null && constraint.isHidden(TimePoint.ofStartOfDay(minDay), TimePoint.ofEndOfDayMinusOneSecond(maxDay)))
 				continue;
 
 			constraint.getUDrawable(timeScale, this).drawU(ug);
@@ -417,7 +417,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			getOpenCloseForTask(task).open(day);
 	}
 
-	public void closeDayAsDate(TimePoint day, String task) {
+	public void closeDayAsDate(LocalDate day, String task) {
 		if (task.length() == 0)
 			openClose.close(day);
 		else
@@ -425,7 +425,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	}
 
-	public void openDayAsDate(TimePoint day, String task) {
+	public void openDayAsDate(LocalDate day, String task) {
 		if (task.length() == 0)
 			openClose.open(day);
 		else
@@ -466,7 +466,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					final boolean oddStart = printStart != null
 							&& TimePoint.ofStartOfDay(minDay).compareTo(getStartForDrawing(tmp)) == 0;
 					final boolean oddEnd = printStart != null
-							&& TimePoint.ofEndOfDay(maxDay).compareTo(getEndForDrawing(tmp)) == 0;
+							&& TimePoint.ofEndOfDayMinusOneSecond(maxDay).compareTo(getEndForDrawing(tmp)) == 0;
 					draw = new TaskDrawRegular(timeScale, y, disp, getStartForDrawing(tmp), getEndForDrawing(tmp),
 							oddStart, oddEnd, getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
 				}
@@ -495,7 +495,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y) {
 		return new ResourceDrawNumbers(gantt, res, timeScale, y, TimePoint.ofStartOfDay(minDay),
-				TimePoint.ofEndOfDay(maxDay));
+				TimePoint.ofEndOfDayMinusOneSecond(maxDay));
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
@@ -550,7 +550,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null)
 			return tmp.getEnd();
 
-		return TimePoint.min(TimePoint.ofEndOfDay(maxDay), tmp.getEnd());
+		return TimePoint.min(TimePoint.ofEndOfDayMinusOneSecond(maxDay), tmp.getEnd());
 	}
 
 	private void initMinMax() {
@@ -676,11 +676,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return colorSet;
 	}
 
-	public CommandExecutionResult updateStartingPoint(TimePoint start) {
+	public CommandExecutionResult updateStartingPoint(LocalDate start) {
 		if (tasks.size() > 0)
 			return CommandExecutionResult.error("Starting point must be set before task definition");
 
-		this.minDay = start.toDay();
+		this.minDay = start;
 		return CommandExecutionResult.ok();
 	}
 
@@ -690,6 +690,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	public LocalDate getMinDay() {
 		return minDay;
+	}
+
+	public LocalDate getMaxDay() {
+		initMinMax();
+		return maxDay;
 	}
 
 	public TimePoint getMinTimePoint() {
@@ -710,6 +715,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public boolean isOpen(TimePoint day) {
+		return openClose.getLoadAtDUMMY(day.toDay()) > 0;
+	}
+
+	public boolean isOpen(LocalDate day) {
 		return openClose.getLoadAtDUMMY(day) > 0;
 	}
 
@@ -792,23 +801,23 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return d1;
 	}
 
-	public void colorDay(TimePoint day, HColor color) {
-		colorDaysInternal.put(day, color);
+	public void colorDay(LocalDate day, HColor color) {
+		colorDaysInternal.put(TimePoint.ofStartOfDay(day), color);
 	}
 
 	public void colorDay(DayOfWeek day, HColor color) {
 		colorDaysOfWeek.put(day, color);
 	}
 
-	public void nameDay(TimePoint day, String name) {
-		nameDays.put(day, name);
+	public void nameDay(LocalDate day, String name) {
+		nameDays.put(TimePoint.ofStartOfDay(day), name);
 	}
 
-	public TimePoint getToday() {
+	public LocalDate getToday() {
 		if (today == null)
 			this.today = TimePoint.todayUtcAtMidnight();
 
-		return today;
+		return today.toDay();
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {
@@ -818,8 +827,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		colorDaysToday.put(today, colors.getCenter());
 	}
 
-	public CommandExecutionResult setToday(TimePoint date) {
-		this.today = date;
+	public CommandExecutionResult setToday(LocalDate date) {
+		this.today = TimePoint.ofStartOfDay(date);
 		return CommandExecutionResult.ok();
 	}
 
@@ -892,8 +901,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private final Set<TimePoint> verticalSeparatorBefore = new HashSet<>();
 
-	public void addVerticalSeparatorBefore(TimePoint day) {
-		verticalSeparatorBefore.add(day);
+	public void addVerticalSeparatorBefore(LocalDate day) {
+		verticalSeparatorBefore.add(TimePoint.ofStartOfDay(day));
 	}
 
 	public void setTaskDefaultCompletion(int defaultCompletion) {

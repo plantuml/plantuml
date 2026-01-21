@@ -180,7 +180,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private boolean isHidden(TimePoint wink) {
-		if (thParam.isHideClosed() && thParam.getOpenClose().isClosed(wink))
+		if (thParam.isHideClosed() && thParam.getOpenClose().isClosed(wink.toDay()))
 			return true;
 		return false;
 	}

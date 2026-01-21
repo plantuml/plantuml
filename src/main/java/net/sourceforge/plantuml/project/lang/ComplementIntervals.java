@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -76,9 +78,9 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final TimePoint d1 = new DayPattern("1").getDay(arg);
+		final LocalDate d1 = new DayPattern("1").getDay(arg);
 		if (d1 != null) {
-			final TimePoint d2 = new DayPattern("2").getDay(arg);
+			final LocalDate d2 = new DayPattern("2").getDay(arg);
 			return Failable.ok(new DaysAsDates(d1, d2));
 		}
 
@@ -96,7 +98,7 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 		final int day2 = Integer.parseInt(arg.get("ECOUNT2" + suffix, 0));
 		final TimePoint date2 = project.getMinTimePoint().addDays(day2);
 
-		return new DaysAsDates(date1, date2);
+		return new DaysAsDates(date1.toDay(), date2.toDay());
 	}
 
 }

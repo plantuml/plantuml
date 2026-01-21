@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -109,17 +110,17 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		if (countAnd != null) {
 			final TimePoint date3 = getDate(project, arg, "3");
 			final int nb = Integer.parseInt(countAnd);
-			return Failable.ok(new DaysAsDates(project, date3, nb));
+			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
 		}
 		final String countThen = arg.get("COUNT_THEN", 0);
 		if (countThen != null) {
 			final TimePoint date3 = project.getThenDate();
 			final int nb = Integer.parseInt(countThen);
-			return Failable.ok(new DaysAsDates(project, date3, nb));
+			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
 		}
 		final TimePoint date1 = getDate(project, arg, "1");
 		final TimePoint date2 = getDate(project, arg, "2");
-		return Failable.ok(new DaysAsDates(date1, date2));
+		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));
 	}
 
 	private TimePoint getDate(GanttDiagram project, RegexResult arg, String suffix) {
@@ -148,7 +149,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			for (TimePoint d : (DaysAsDates) subject)
+			for (LocalDate d : (DaysAsDates) subject)
 				project.closeDayAsDate(d, (String) complement);
 
 			return CommandExecutionResult.ok();
@@ -164,7 +165,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			for (TimePoint d : (DaysAsDates) subject)
+			for (LocalDate d : (DaysAsDates) subject)
 				project.openDayAsDate(d, (String) complement);
 
 			return CommandExecutionResult.ok();
@@ -182,7 +183,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final HColor color = ((CenterBorderColor) complement).getCenter();
-			for (TimePoint d : (DaysAsDates) subject)
+			for (LocalDate d : (DaysAsDates) subject)
 				project.colorDay(d, color);
 
 			return CommandExecutionResult.ok();
@@ -201,7 +202,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final String name = (String) complement;
 			final DaysAsDates days = (DaysAsDates) subject;
-			for (TimePoint d : days) {
+			for (LocalDate d : days) {
 				project.nameDay(d, name);
 			}
 			return CommandExecutionResult.ok();
