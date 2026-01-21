@@ -61,12 +61,13 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DiagramDetector;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
-import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
+import net.sourceforge.plantuml.preproc.DiagramExtractor;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
@@ -814,9 +815,9 @@ public class TContext {
 					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
 						throw new EaterException("This file has already been included", s);
 
-					if (StartDiagramExtractReader.containsStartDiagram(f2, "desc2")) {
-						reader = StartDiagramExtractReader.build(f2, "desc2");
-					} else {
+					reader = DiagramDetector.extractFromFile(f2, "desc2");
+
+					if (reader == null) {
 						final Reader tmp = f2.getReader(charset);
 						if (tmp == null)
 							throw new EaterException("Cannot include file", s);
