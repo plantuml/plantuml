@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chronology;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -107,8 +108,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	private Day today;
 //	private double totalHeightWithoutFooter;
-	private TimePoint min;
-	private TimePoint max;
+	private LocalDate min;
+	private LocalDate max;
 	private TimeScaleChronology timeScale;
 //
 //	private Day printStart;
@@ -256,8 +257,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(null, 1, min.toDay(), max.toDay(), getIHtmlColorSet(), locale, null, null, null,
-				this, false);
+		return new TimeHeaderParameters(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
 	}
 
 //	private Map<Day, HColor> colorDays() {
@@ -486,23 +486,20 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		}
 		for (Task task : tasks.values()) {
 			if (this.min == null || this.max == null) {
-				this.min = task.getStart();
-				this.max = task.getEndMinusOneDay();
+				this.min = task.getStart().toDay();
+				this.max = task.getEnd().toDay();
 				continue;
 
 			}
-			if (this.min.compareTo(task.getStart()) > 0)
-				this.min = task.getStart();
-			if (this.max.compareTo(task.getEndMinusOneDay()) < 0)
-				this.max = task.getEndMinusOneDay();
+			if (this.min.compareTo(task.getStart().toDay()) > 0)
+				this.min = task.getStart().toDay();
+			if (this.max.compareTo(task.getEnd().toDay()) < 0)
+				this.max = task.getEnd().toDay();
 		}
 
-		this.min = this.min.roundDayDown();
-		this.max = this.max.roundDayUp();
-
 		this.timeScale = new TimeScaleChronology(1000);
-		this.timeScale.setMin(this.min.getMillis());
-		this.timeScale.setMax(this.max.getMillis());
+		this.timeScale.setMin(this.min.toEpochDay());
+		this.timeScale.setMax(this.max.toEpochDay());
 	}
 
 //	public Day getThenDate() {

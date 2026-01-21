@@ -61,11 +61,6 @@ public class TaskSeparator extends AbstractTask implements Task {
 	}
 
 	@Override
-	public TimePoint getEndMinusOneDay() {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
 	public TimePoint getEnd() {
 		throw new UnsupportedOperationException();
 	}

@@ -84,7 +84,7 @@ public final class TimeScaleDailyHideClosed implements TimeScale {
 
 	@Override
 	public double getWidth(TimePoint instant) {
-		if (openClose.isClosed(instant))
+		if (openClose.isClosed(instant.toDay()))
 			return 0;
 		return cellWidth;
 	}

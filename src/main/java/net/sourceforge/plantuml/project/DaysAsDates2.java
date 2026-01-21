@@ -40,12 +40,12 @@ import java.util.Iterator;
 
 import net.sourceforge.plantuml.project.time.TimePoint;
 
-public class DaysAsDates implements Iterable<LocalDate> {
+public class DaysAsDates2 implements Iterable<LocalDate> {
 
 	private final LocalDate date1;
 	private final LocalDate date2;
 
-	public DaysAsDates(LocalDate date1, LocalDate date2) {
+	public DaysAsDates2(LocalDate date1, LocalDate date2) {
 		this.date1 = date1;
 		this.date2 = date2;
 	}
@@ -55,7 +55,7 @@ public class DaysAsDates implements Iterable<LocalDate> {
 		return "{ " + date1 + " , " + date2 + " }";
 	}
 
-	public DaysAsDates(GanttDiagram gantt, LocalDate date1, int count) {
+	public DaysAsDates2(GanttDiagram gantt, LocalDate date1, int count) {
 		this.date1 = date1;
 		LocalDate tmp = date1;
 		while (count > 0) {

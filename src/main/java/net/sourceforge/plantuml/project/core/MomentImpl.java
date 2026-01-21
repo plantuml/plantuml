@@ -44,7 +44,7 @@ public class MomentImpl implements Moment {
 
 	public MomentImpl(TimePoint start, TimePoint end) {
 		this.start = start;
-		this.end = end;
+		this.end = end.increment();
 	}
 
 	public TimePoint getStart() {
@@ -53,10 +53,6 @@ public class MomentImpl implements Moment {
 	
 	@Override
 	public TimePoint getEnd() {
-		return end;
-	}
-
-	public TimePoint getEndMinusOneDay() {
 		return end;
 	}
 

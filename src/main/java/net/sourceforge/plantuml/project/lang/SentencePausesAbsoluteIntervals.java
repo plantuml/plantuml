@@ -35,11 +35,12 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentencePausesAbsoluteIntervals extends SentenceSimple<GanttDiagram> {
 
@@ -52,8 +53,8 @@ public class SentencePausesAbsoluteIntervals extends SentenceSimple<GanttDiagram
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final DaysAsDates pauses = (DaysAsDates) complement;
-		for (TimePoint day : pauses)
-			task.addPause(day.toDay());
+		for (LocalDate day : pauses)
+			task.addPause(day);
 
 		return CommandExecutionResult.ok();
 	}

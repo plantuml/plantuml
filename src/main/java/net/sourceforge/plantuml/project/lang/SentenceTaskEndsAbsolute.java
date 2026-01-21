@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
@@ -43,18 +45,16 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 public class SentenceTaskEndsAbsolute extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskEndsAbsolute() {
-		 super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());
+		super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());
 	}
-
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		final TimePoint end = (TimePoint) complement;
-		final TimePoint startingDate = project.getMinTimePoint();
-		if (startingDate.getAbsoluteDayNum() == 0)
+		final LocalDate end = (LocalDate) complement;
+		if (project.getMinDay().equals(TimePoint.epoch()))
 			return CommandExecutionResult.error("No starting date for the project");
-		task.setEnd(end);
+		task.setEnd(TimePoint.ofEndOfDayMinusOneSecond(end));
 
 		return CommandExecutionResult.ok();
 	}

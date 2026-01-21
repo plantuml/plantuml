@@ -53,9 +53,9 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 public class OpenClose {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
-	private final Map<TimePoint, DayStatus> dayStatus = new HashMap<>();
-	private TimePoint offBefore;
-	private TimePoint offAfter;
+	private final Map<LocalDate, DayStatus> dayStatus = new HashMap<>();
+	private LocalDate offBefore;
+	private LocalDate offAfter;
 
 	public OpenClose mutateMe(final OpenClose except) {
 		final OpenClose result = new OpenClose();
@@ -79,29 +79,29 @@ public class OpenClose {
 		return result;
 	}
 
-	private boolean isThereSomeChangeAfter(TimePoint day) {
+	private boolean isThereSomeChangeAfter(LocalDate day) {
 		if (weekdayStatus.size() > 0)
 			return true;
 
-		for (TimePoint tmp : dayStatus.keySet())
+		for (LocalDate tmp : dayStatus.keySet())
 			if (tmp.compareTo(day) >= 0)
 				return true;
 
 		return false;
 	}
 
-	private boolean isThereSomeChangeBefore(TimePoint day) {
+	private boolean isThereSomeChangeBefore(LocalDate day) {
 		if (weekdayStatus.size() > 0)
 			return true;
 
-		for (TimePoint tmp : dayStatus.keySet())
+		for (LocalDate tmp : dayStatus.keySet())
 			if (tmp.compareTo(day) <= 0)
 				return true;
 
 		return false;
 	}
 
-	public boolean isClosed(TimePoint day) {
+	public boolean isClosed(LocalDate day) {
 		final DayStatus status = getLocalStatus(day);
 		if (status != null)
 			return status == DayStatus.CLOSE;
@@ -109,7 +109,7 @@ public class OpenClose {
 		return false;
 	}
 
-	private DayStatus getLocalStatus(TimePoint day) {
+	private DayStatus getLocalStatus(LocalDate day) {
 		if (offBefore != null && day.compareTo(offBefore) < 0)
 			return DayStatus.CLOSE;
 		if (offAfter != null && day.compareTo(offAfter) > 0)
@@ -119,7 +119,7 @@ public class OpenClose {
 		if (status1 != null)
 			return status1;
 
-		final DayOfWeek dayOfWeek = day.toDayOfWeek();
+		final DayOfWeek dayOfWeek = day.getDayOfWeek();
 		final DayStatus status2 = weekdayStatus.get(dayOfWeek);
 		if (status2 != null)
 			return status2;
@@ -135,28 +135,27 @@ public class OpenClose {
 		weekdayStatus.put(day, DayStatus.OPEN);
 	}
 
-	public void close(TimePoint day) {
+	public void close(LocalDate day) {
 		dayStatus.put(day, DayStatus.CLOSE);
 	}
 
-	public void open(TimePoint day) {
+	public void open(LocalDate day) {
 		dayStatus.put(day, DayStatus.OPEN);
 	}
 
-
-	public int getLoadAtDUMMY(TimePoint day) {
+	public int getLoadAtDUMMY(LocalDate day) {
 		return getLoatAtInternal(day);
 	}
 
-	public void setOffBeforeDate(TimePoint day) {
+	public void setOffBeforeDate(LocalDate day) {
 		this.offBefore = day;
 	}
 
-	public void setOffAfterDate(TimePoint day) {
+	public void setOffAfterDate(LocalDate day) {
 		this.offAfter = day;
 	}
 
-	private int getLoatAtInternal(TimePoint day) {
+	private int getLoatAtInternal(LocalDate day) {
 		if (isClosed(day))
 			return 0;
 
@@ -168,7 +167,7 @@ public class OpenClose {
 //		return offAfter;
 //	}
 
-	public TimePoint getLastDayIfAny() {
+	public LocalDate getLastDayIfAny() {
 		return offAfter;
 	}
 
@@ -185,8 +184,8 @@ public class OpenClose {
 			PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE);
 			PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO);
 
-			for (Map.Entry<TimePoint, DayStatus> entry : dayStatus.entrySet()) {
-				final LocalDate date = entry.getKey().toLocalDateTime().toLocalDate();
+			for (Map.Entry<LocalDate, DayStatus> entry : dayStatus.entrySet()) {
+				final LocalDate date = entry.getKey();
 
 				if (entry.getValue() == DayStatus.CLOSE)
 					specificDaysClosed = specificDaysClosed.withDay(date, Fraction.ZERO);
@@ -202,14 +201,14 @@ public class OpenClose {
 
 		if (offBefore == null)
 			return Combiner.product(result,
-					new PiecewiseConstantTimeWindow(LocalDateTime.MIN, offAfter.toLocalDateTime()));
+					new PiecewiseConstantTimeWindow(LocalDateTime.MIN, offAfter.plusDays(1).atStartOfDay()));
 
 		if (offAfter == null)
 			return Combiner.product(result,
-					new PiecewiseConstantTimeWindow(offBefore.toLocalDateTime(), LocalDateTime.MAX));
+					new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), LocalDateTime.MAX));
 
 		return Combiner.product(result,
-				new PiecewiseConstantTimeWindow(offBefore.toLocalDateTime(), offAfter.toLocalDateTime()));
+				new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), offAfter.plusDays(1).atStartOfDay()));
 
 	}
 
