@@ -175,6 +175,31 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 			final Diagram system;
 			try {
 				system = blockUml.getDiagram();
+
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
+						&& system instanceof PSystemError)
+					continue;
+
+				// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
+				final List<FileImageData> exportDiagrams;
+				if (noErrorImage && system instanceof PSystemError) {
+					exportDiagrams = new ArrayList<FileImageData>();
+					exportDiagrams.add(
+							new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
+				} else
+					exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
+
+				if (exportDiagrams.size() > 1)
+					cpt += exportDiagrams.size() - 1;
+
+				for (FileImageData fdata : exportDiagrams) {
+					final String desc = "[" + file.getName() + "] " + system.getDescription();
+					final SFile f = fdata.getFile();
+					exportWarnOrErrIfWord(f, system);
+					final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());
+					result.add(generatedImage);
+				}
+
 			} catch (Throwable t) {
 				Logme.error(t);
 				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
@@ -182,30 +207,6 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 					continue;
 
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
-			}
-
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
-					&& system instanceof PSystemError)
-				continue;
-
-			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
-			final List<FileImageData> exportDiagrams;
-			if (noErrorImage && system instanceof PSystemError) {
-				exportDiagrams = new ArrayList<FileImageData>();
-				exportDiagrams
-						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
-			} else
-				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
-
-			if (exportDiagrams.size() > 1)
-				cpt += exportDiagrams.size() - 1;
-
-			for (FileImageData fdata : exportDiagrams) {
-				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final SFile f = fdata.getFile();
-				exportWarnOrErrIfWord(f, system);
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());
-				result.add(generatedImage);
 			}
 
 		}
