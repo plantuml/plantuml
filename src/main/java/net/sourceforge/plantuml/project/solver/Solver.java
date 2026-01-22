@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.solver;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -58,6 +59,10 @@ public class Solver {
 //	}
 
 	public final void setData(TaskAttribute attribute, Value value) {
+		if (value instanceof TimePoint) {
+			if (value.toString().endsWith("T00:00") == false)
+				throw new IllegalArgumentException(value.toString());
+		}
 		final Value previous = values.remove(attribute);
 		if (previous != null && attribute == TaskAttribute.START) {
 			final TimePoint previousInstant = (TimePoint) previous;
@@ -96,17 +101,27 @@ public class Solver {
 
 	private TimePoint computeEnd(NGMAllocation allocation) {
 		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);
+		System.err.println("Solver::computeEnd:start=" + start);
 		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();
 		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);
-		return TimePoint.of(task.getEnd());
+		final LocalDateTime result = task.getEnd();
+		System.err.println("Solver;:computeEnd:result=" + result);
+		if (result.toString().endsWith("T00:00") == false && result.toString().endsWith("T12:00") == false)
+			throw new IllegalArgumentException(result.toString());
+		return TimePoint.of(result);
 	}
 
 	private TimePoint computeStart(NGMAllocation allocation) {
 		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);
+		System.err.println("Solver::computeStart:result:end=" + end);
 		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();
 		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);
 		task.setEnd(end.toLocalDateTime());
-		return TimePoint.of(task.getStart());
+		final LocalDateTime result = task.getStart();
+		System.err.println("Solver::computeStart:result=" + result);
+		if (result.toString().endsWith("T00:00") == false)
+			throw new IllegalArgumentException(result.toString());
+		return TimePoint.of(result);
 	}
 
 }

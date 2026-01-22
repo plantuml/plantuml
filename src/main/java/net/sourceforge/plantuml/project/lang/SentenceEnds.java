@@ -52,7 +52,7 @@ public class SentenceEnds extends SentenceSimple<GanttDiagram> {
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final TaskInstant when = (TaskInstant) complement;
-		task.setEnd(when.getInstantPrecise().decrement());
+		task.setEndTOTO(when.getInstantPrecise());
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(), when,
 				new TaskInstant(task, TaskAttribute.END)));
 		return CommandExecutionResult.ok();

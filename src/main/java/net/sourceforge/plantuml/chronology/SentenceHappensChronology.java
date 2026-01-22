@@ -53,7 +53,7 @@ public class SentenceHappensChronology extends SentenceSimple<ChronologyDiagram>
 		final Task task = (Task) subject;
 		final TimePoint start = (TimePoint) complement;
 		task.setStart(start);
-		task.setEnd(start);
+		task.setEndTOTO(start.increment());
 		return CommandExecutionResult.ok();
 	}
 

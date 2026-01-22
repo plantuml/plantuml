@@ -54,7 +54,7 @@ public class SentenceTaskEndsAbsolute extends SentenceSimple<GanttDiagram> {
 		final LocalDate end = (LocalDate) complement;
 		if (project.getMinDay().equals(TimePoint.epoch()))
 			return CommandExecutionResult.error("No starting date for the project");
-		task.setEnd(TimePoint.ofEndOfDayMinusOneSecond(end));
+		task.setEndTOTO(TimePoint.ofStartOfDay(end).increment());
 
 		return CommandExecutionResult.ok();
 	}

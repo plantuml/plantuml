@@ -241,14 +241,17 @@ public class TaskImpl extends AbstractTask implements Task {
 			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))
 				result = result.increment();
 		}
+		if (result.toString().endsWith("T00:00") == false)
+			throw new IllegalArgumentException(result.toString());
 		return result;
 	}
-
 
 	@Override
 	public TimePoint getEnd() {
 		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
 		final TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);
+		if (result.toString().endsWith("T00:00") == false && result.toString().endsWith("T12:00") == false)
+			throw new IllegalArgumentException(result.toString());
 		return result;
 	}
 
@@ -265,12 +268,16 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	@Override
 	public void setStart(TimePoint start) {
+		if (start.toString().endsWith("T00:00") == false)
+			throw new IllegalArgumentException(start.toString());
 		solver.setData(TaskAttribute.START, start);
 	}
 
 	@Override
-	public void setEnd(TimePoint end) {
-		solver.setData(TaskAttribute.END, end.increment());
+	public void setEndTOTO(TimePoint end) {
+		if (end.toString().endsWith("T00:00") == false)
+			throw new IllegalArgumentException(end.toString());
+		solver.setData(TaskAttribute.END, end);
 	}
 
 	@Override
