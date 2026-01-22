@@ -44,10 +44,10 @@ public final class YGauge {
 	private final Real min;
 	private final Real max;
 
-<span class="fc" id="L47">	public YGauge(Real min, Real max) {</span>
-<span class="fc" id="L48">		this.min = min;</span>
-<span class="fc" id="L49">		this.max = max;</span>
-<span class="fc" id="L50">	}</span>
+<span class="nc" id="L47">	public YGauge(Real min, Real max) {</span>
+<span class="nc" id="L48">		this.min = min;</span>
+<span class="nc" id="L49">		this.max = max;</span>
+<span class="nc" id="L50">	}</span>
 
 	@Override
 	public String toString() {
@@ -55,9 +55,9 @@ public final class YGauge {
 	}
 
 	public static YGauge create(Real min, double height) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (height &lt; 0)</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (height &lt; 0)</span>
 <span class="nc" id="L59">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L60">		return new YGauge(min, min.addFixed(height));</span>
+<span class="nc" id="L60">		return new YGauge(min, min.addFixed(height));</span>
 	}
 
 	public final Real getMin() {
@@ -65,8 +65,8 @@ public final class YGauge {
 	}
 
 	public final Real getMax() {
-<span class="fc" id="L68">		return max;</span>
+<span class="nc" id="L68">		return max;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

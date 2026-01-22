@@ -92,8 +92,8 @@ public class ArrowConfiguration {
 	}
 
 	public static ArrowConfiguration withDirectionBoth() {
-<span class="fc" id="L95">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),</span>
-<span class="fc" id="L96">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+<span class="nc" id="L95">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),</span>
+<span class="nc" id="L96">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
 				false, 1, false, 0);
 	}
 
@@ -113,7 +113,7 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration self() {
-<span class="fc" id="L116">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true, thickness,</span>
+<span class="nc" id="L116">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true, thickness,</span>
 				reverseDefine, inclination);
 	}
 
@@ -123,17 +123,17 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration withHead(ArrowHead head) {
-<span class="fc" id="L126">		final ArrowDressing newDressing1 = addHead(dressing1, head);</span>
-<span class="fc" id="L127">		final ArrowDressing newDressing2 = addHead(dressing2, head);</span>
-<span class="fc" id="L128">		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf,</span>
+<span class="nc" id="L126">		final ArrowDressing newDressing1 = addHead(dressing1, head);</span>
+<span class="nc" id="L127">		final ArrowDressing newDressing2 = addHead(dressing2, head);</span>
+<span class="nc" id="L128">		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf,</span>
 				thickness, reverseDefine, inclination);
 	}
 
 	private static ArrowDressing addHead(ArrowDressing dressing, ArrowHead head) {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (dressing.getHead() == ArrowHead.NONE)</span>
-<span class="fc" id="L134">			return dressing;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (dressing.getHead() == ArrowHead.NONE)</span>
+<span class="nc" id="L134">			return dressing;</span>
 
-<span class="fc" id="L136">		return dressing.withHead(head);</span>
+<span class="nc" id="L136">		return dressing.withHead(head);</span>
 	}
 
 	public ArrowConfiguration withHead1(ArrowHead head) {
@@ -185,10 +185,10 @@ public class ArrowConfiguration {
 <span class="pc bpc" id="L185" title="1 of 4 branches missed.">		if (this.dressing1.getHead() == ArrowHead.NONE &amp;&amp; this.dressing2.getHead() != ArrowHead.NONE)</span>
 <span class="fc" id="L186">			return ArrowDirection.LEFT_TO_RIGHT_NORMAL;</span>
 
-<span class="pc bpc" id="L188" title="1 of 4 branches missed.">		if (this.dressing1.getHead() != ArrowHead.NONE &amp;&amp; this.dressing2.getHead() == ArrowHead.NONE)</span>
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">		if (this.dressing1.getHead() != ArrowHead.NONE &amp;&amp; this.dressing2.getHead() == ArrowHead.NONE)</span>
 <span class="fc" id="L189">			return ArrowDirection.RIGHT_TO_LEFT_REVERSE;</span>
 
-<span class="fc" id="L191">		return ArrowDirection.BOTH_DIRECTION;</span>
+<span class="nc" id="L191">		return ArrowDirection.BOTH_DIRECTION;</span>
 	}
 
 	public boolean isSelfArrow() {
@@ -215,7 +215,7 @@ public class ArrowConfiguration {
 	}
 
 	public boolean isAsync2() {
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
 	}
 
 	public final ArrowPart getPart() {
@@ -260,7 +260,7 @@ public class ArrowConfiguration {
 	}
 
 	public UGraphic applyThicknessOnly(UGraphic ug) {
-<span class="fc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
+<span class="nc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
 	}
 
 	public ArrowConfiguration withThickness(double thickness) {
@@ -269,7 +269,7 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration reverseDefine() {
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
 				!reverseDefine, inclination);
 	}
 
@@ -283,18 +283,18 @@ public class ArrowConfiguration {
 	}
 
 	public final int getInclination1() {
-<span class="fc bfc" id="L286" title="All 4 branches covered.">		if (dressing2.getHead() == ArrowHead.NONE || dressing2.getHead() == ArrowHead.CROSSX)</span>
+<span class="pc bpc" id="L286" title="1 of 4 branches missed.">		if (dressing2.getHead() == ArrowHead.NONE || dressing2.getHead() == ArrowHead.CROSSX)</span>
 <span class="fc" id="L287">			return inclination;</span>
 <span class="fc" id="L288">		return 0;</span>
 	}
 
 	public final int getInclination2() {
-<span class="fc bfc" id="L292" title="All 4 branches covered.">		if (dressing1.getHead() == ArrowHead.NONE || dressing1.getHead() == ArrowHead.CROSSX)</span>
+<span class="pc bpc" id="L292" title="1 of 4 branches missed.">		if (dressing1.getHead() == ArrowHead.NONE || dressing1.getHead() == ArrowHead.CROSSX)</span>
 <span class="fc" id="L293">			return inclination;</span>
-<span class="pc bpc" id="L294" title="1 of 4 branches missed.">		if (dressing1.getHead() == ArrowHead.NORMAL || dressing1.getHead() == ArrowHead.NORMAL)</span>
+<span class="pc bpc" id="L294" title="3 of 4 branches missed.">		if (dressing1.getHead() == ArrowHead.NORMAL || dressing1.getHead() == ArrowHead.NORMAL)</span>
 <span class="fc" id="L295">			return inclination;</span>
-<span class="fc" id="L296">		return 0;</span>
+<span class="nc" id="L296">		return 0;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

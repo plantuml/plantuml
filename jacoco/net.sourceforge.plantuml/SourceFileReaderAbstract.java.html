@@ -175,56 +175,57 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 			final Diagram system;
 			try {
 <span class="fc" id="L177">				system = blockUml.getDiagram();</span>
-<span class="nc" id="L178">			} catch (Throwable t) {</span>
-<span class="nc" id="L179">				Logme.error(t);</span>
-<span class="nc bnc" id="L180" title="All 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)</span>
+
+<span class="pc bpc" id="L179" title="3 of 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)</span>
+						&amp;&amp; system instanceof PSystemError)
+<span class="nc" id="L181">					continue;</span>
+
+				// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
+				final List&lt;FileImageData&gt; exportDiagrams;
+<span class="fc bfc" id="L185" title="All 4 branches covered.">				if (noErrorImage &amp;&amp; system instanceof PSystemError) {</span>
+<span class="fc" id="L186">					exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
+<span class="fc" id="L187">					exportDiagrams.add(</span>
+							new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
+				} else
+<span class="fc" id="L190">					exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);</span>
+
+<span class="fc bfc" id="L192" title="All 2 branches covered.">				if (exportDiagrams.size() &gt; 1)</span>
+<span class="fc" id="L193">					cpt += exportDiagrams.size() - 1;</span>
+
+<span class="fc bfc" id="L195" title="All 2 branches covered.">				for (FileImageData fdata : exportDiagrams) {</span>
+<span class="fc" id="L196">					final String desc = &quot;[&quot; + file.getName() + &quot;] &quot; + system.getDescription();</span>
+<span class="fc" id="L197">					final SFile f = fdata.getFile();</span>
+<span class="fc" id="L198">					exportWarnOrErrIfWord(f, system);</span>
+<span class="fc" id="L199">					final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());</span>
+<span class="fc" id="L200">					result.add(generatedImage);</span>
+<span class="fc" id="L201">				}</span>
+
+<span class="nc" id="L203">			} catch (Throwable t) {</span>
+<span class="nc" id="L204">				Logme.error(t);</span>
+<span class="nc bnc" id="L205" title="All 4 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)</span>
 						|| noErrorImage)
-<span class="nc" id="L182">					continue;</span>
+<span class="nc" id="L207">					continue;</span>
 
-<span class="nc" id="L184">				return getCrashedImage(blockUml, t, suggested.getFile(0));</span>
-<span class="fc" id="L185">			}</span>
+<span class="nc" id="L209">				return getCrashedImage(blockUml, t, suggested.getFile(0));</span>
+<span class="fc" id="L210">			}</span>
 
-<span class="pc bpc" id="L187" title="3 of 4 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)</span>
-					&amp;&amp; system instanceof PSystemError)
-<span class="nc" id="L189">				continue;</span>
+<span class="fc" id="L212">		}</span>
 
-			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
-			final List&lt;FileImageData&gt; exportDiagrams;
-<span class="fc bfc" id="L193" title="All 4 branches covered.">			if (noErrorImage &amp;&amp; system instanceof PSystemError) {</span>
-<span class="fc" id="L194">				exportDiagrams = new ArrayList&lt;FileImageData&gt;();</span>
-<span class="fc" id="L195">				exportDiagrams</span>
-<span class="fc" id="L196">						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));</span>
-			} else
-<span class="fc" id="L198">				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);</span>
+<span class="fc" id="L214">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
 
-<span class="fc bfc" id="L200" title="All 2 branches covered.">			if (exportDiagrams.size() &gt; 1)</span>
-<span class="fc" id="L201">				cpt += exportDiagrams.size() - 1;</span>
-
-<span class="fc bfc" id="L203" title="All 2 branches covered.">			for (FileImageData fdata : exportDiagrams) {</span>
-<span class="fc" id="L204">				final String desc = &quot;[&quot; + file.getName() + &quot;] &quot; + system.getDescription();</span>
-<span class="fc" id="L205">				final SFile f = fdata.getFile();</span>
-<span class="fc" id="L206">				exportWarnOrErrIfWord(f, system);</span>
-<span class="fc" id="L207">				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());</span>
-<span class="fc" id="L208">				result.add(generatedImage);</span>
-<span class="fc" id="L209">			}</span>
-
-<span class="fc" id="L211">		}</span>
-
-<span class="fc" id="L213">		Log.info(() -&gt; &quot;Number of image(s): &quot; + result.size());</span>
-
-<span class="fc" id="L215">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L216">		return Collections.unmodifiableList(result);</span>
 	}
 
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
 
 	protected final void setNoErrorImage(boolean noErrorImage) {
-<span class="fc" id="L221">		this.noErrorImage = noErrorImage;</span>
+<span class="fc" id="L222">		this.noErrorImage = noErrorImage;</span>
 
-<span class="fc" id="L223">	}</span>
+<span class="fc" id="L224">	}</span>
 
 	final protected String getFileName() {
-<span class="fc" id="L226">		return file.getName();</span>
+<span class="fc" id="L227">		return file.getName();</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

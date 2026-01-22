@@ -83,8 +83,8 @@ import net.sourceforge.plantuml.style.Styleable;
 				|| this == ACTIVATION_BOX_OPEN_OPEN)
 <span class="fc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);</span>
 
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (this == DESTROY)</span>
-<span class="fc" id="L87">			return LifeEventType.DESTROY.getStyleSignature();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (this == DESTROY)</span>
+<span class="nc" id="L87">			return LifeEventType.DESTROY.getStyleSignature();</span>
 
 <span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (this == DIVIDER)</span>
 <span class="nc" id="L90">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);</span>
@@ -111,4 +111,4 @@ import net.sourceforge.plantuml.style.Styleable;
 <span class="nc" id="L111">		throw new UnsupportedOperationException(toString());</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

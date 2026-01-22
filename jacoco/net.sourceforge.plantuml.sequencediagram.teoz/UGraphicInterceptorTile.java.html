@@ -47,27 +47,27 @@ public class UGraphicInterceptorTile extends UGraphicDelegator implements Contex
 	private final boolean isBackground;
 
 	public UGraphicInterceptorTile(UGraphic ug, boolean isBackground) {
-<span class="fc" id="L50">		super(ug);</span>
-<span class="fc" id="L51">		this.isBackground = isBackground;</span>
-<span class="fc" id="L52">	}</span>
+<span class="nc" id="L50">		super(ug);</span>
+<span class="nc" id="L51">		this.isBackground = isBackground;</span>
+<span class="nc" id="L52">	}</span>
 
 	public void draw(UShape shape) {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (shape instanceof Tile) {</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (shape instanceof Tile) {</span>
 <span class="nc" id="L56">			final UDrawable drawable = (UDrawable) shape;</span>
 <span class="nc" id="L57">			drawable.drawU(this);</span>
 <span class="nc" id="L58">		} else {</span>
-<span class="fc" id="L59">			getUg().draw(shape);</span>
+<span class="nc" id="L59">			getUg().draw(shape);</span>
 		}
 
-<span class="fc" id="L62">	}</span>
+<span class="nc" id="L62">	}</span>
 
 	public UGraphic apply(UChange change) {
-<span class="fc" id="L65">		return new UGraphicInterceptorTile(getUg().apply(change), isBackground);</span>
+<span class="nc" id="L65">		return new UGraphicInterceptorTile(getUg().apply(change), isBackground);</span>
 	}
 
 	public boolean isBackground() {
-<span class="fc" id="L69">		return isBackground;</span>
+<span class="nc" id="L69">		return isBackground;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -112,10 +112,10 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public boolean isParallelWith(AbstractMessage message) {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
-<span class="pc bpc" id="L116" title="5 of 8 branches missed.">		return (this == message)</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
+<span class="nc bnc" id="L116" title="All 8 branches missed.">		return (this == message)</span>
 				|| (hasParallelBrother &amp;&amp; parallelBrother == message)
-<span class="pc bnc" id="L118" title="All 2 branches missed.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
 	}
 
 	final public Url getUrl() {
@@ -277,11 +277,11 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public String getPart1Anchor() {
-<span class="fc" id="L280">		return this.anchor1;</span>
+<span class="nc" id="L280">		return this.anchor1;</span>
 	}
 
 	public String getPart2Anchor() {
-<span class="fc" id="L284">		return this.anchor2;</span>
+<span class="nc" id="L284">		return this.anchor2;</span>
 	}
 
 	public abstract Participant getParticipant1();
@@ -295,4 +295,4 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -71,93 +71,93 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 	@Override
 	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L74">		final String body = arg.getLazzy(&quot;ARROW_BODYA&quot;, 0) + arg.getLazzy(&quot;ARROW_BODYB&quot;, 0);</span>
-<span class="fc" id="L75">		final String dressing = arg.getLazzy(&quot;ARROW_DRESSING&quot;, 0);</span>
-<span class="fc" id="L76">		final Participant p = diagram.getOrCreateParticipant(location,</span>
-<span class="fc" id="L77">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;PARTICIPANT&quot;, 0)));</span>
+<span class="nc" id="L74">		final String body = arg.getLazzy(&quot;ARROW_BODYA&quot;, 0) + arg.getLazzy(&quot;ARROW_BODYB&quot;, 0);</span>
+<span class="nc" id="L75">		final String dressing = arg.getLazzy(&quot;ARROW_DRESSING&quot;, 0);</span>
+<span class="nc" id="L76">		final Participant p = diagram.getOrCreateParticipant(location,</span>
+<span class="nc" id="L77">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;PARTICIPANT&quot;, 0)));</span>
 
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		final boolean sync = dressing.length() == 2;</span>
-<span class="fc" id="L80">		final boolean dotted = body.contains(&quot;--&quot;);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		final boolean sync = dressing.length() == 2;</span>
+<span class="nc" id="L80">		final boolean dotted = body.contains(&quot;--&quot;);</span>
 
 		final Display labels;
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (arg.get(&quot;LABEL&quot;, 0) == null)</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (arg.get(&quot;LABEL&quot;, 0) == null)</span>
 <span class="nc" id="L84">			labels = Display.create(&quot;&quot;);</span>
 		else
-<span class="fc" id="L86">			labels = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L86">			labels = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		final boolean bothDirection = arg.get(&quot;ARROW_BOTHDRESSING&quot;, 0) != null;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		final boolean bothDirection = arg.get(&quot;ARROW_BOTHDRESSING&quot;, 0) != null;</span>
 
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		ArrowConfiguration config = bothDirection ? ArrowConfiguration.withDirectionBoth()</span>
-<span class="fc" id="L91">				: ArrowConfiguration.withDirectionNormal();</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (dotted)</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		ArrowConfiguration config = bothDirection ? ArrowConfiguration.withDirectionBoth()</span>
+<span class="nc" id="L91">				: ArrowConfiguration.withDirectionNormal();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (dotted)</span>
 <span class="nc" id="L93">			config = config.withBody(ArrowBody.DOTTED);</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (sync)</span>
-<span class="fc" id="L96">			config = config.withHead(ArrowHead.ASYNC);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (sync)</span>
+<span class="nc" id="L96">			config = config.withHead(ArrowHead.ASYNC);</span>
 
-<span class="fc" id="L98">		final MessageExoType messageExoType = getMessageExoType(arg);</span>
+<span class="nc" id="L98">		final MessageExoType messageExoType = getMessageExoType(arg);</span>
 
-<span class="fc" id="L100">		config = config.withPart(getArrowPart(dressing, messageExoType));</span>
-<span class="fc" id="L101">		config = CommandArrow.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0), config);</span>
+<span class="nc" id="L100">		config = config.withPart(getArrowPart(dressing, messageExoType));</span>
+<span class="nc" id="L101">		config = CommandArrow.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0), config);</span>
 
-<span class="fc" id="L103">		final String activationSpec = arg.get(&quot;ACTIVATION&quot;, 0);</span>
+<span class="nc" id="L103">		final String activationSpec = arg.get(&quot;ACTIVATION&quot;, 0);</span>
 
-<span class="pc bpc" id="L105" title="3 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
 <span class="nc" id="L106">			diagram.activate(p, LifeEventType.CREATE, null);</span>
 
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">		if (messageExoType == MessageExoType.TO_RIGHT || messageExoType == MessageExoType.TO_LEFT) {</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;o&quot;))</span>
-<span class="fc" id="L110">				config = config.withDecoration1(ArrowDecoration.CIRCLE);</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (messageExoType == MessageExoType.TO_RIGHT || messageExoType == MessageExoType.TO_LEFT) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;o&quot;))</span>
+<span class="nc" id="L110">				config = config.withDecoration1(ArrowDecoration.CIRCLE);</span>
 
-<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;x&quot;))</span>
-<span class="fc" id="L113">				config = config.withHead1(ArrowHead.CROSSX);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;x&quot;))</span>
+<span class="nc" id="L113">				config = config.withHead1(ArrowHead.CROSSX);</span>
 
-<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;o&quot;))</span>
-<span class="fc" id="L116">				config = config.withDecoration2(ArrowDecoration.CIRCLE);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;o&quot;))</span>
+<span class="nc" id="L116">				config = config.withDecoration2(ArrowDecoration.CIRCLE);</span>
 
-<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;x&quot;))</span>
-<span class="fc" id="L119">				config = config.withHead2(ArrowHead.CROSSX);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;x&quot;))</span>
+<span class="nc" id="L119">				config = config.withHead2(ArrowHead.CROSSX);</span>
 
 		} else {
-<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;o&quot;))</span>
-<span class="fc" id="L123">				config = config.withDecoration1(ArrowDecoration.CIRCLE);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;o&quot;))</span>
+<span class="nc" id="L123">				config = config.withDecoration1(ArrowDecoration.CIRCLE);</span>
 
-<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;x&quot;))</span>
-<span class="fc" id="L126">				config = config.withHead1(ArrowHead.CROSSX);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE2, arg, &quot;x&quot;))</span>
+<span class="nc" id="L126">				config = config.withHead1(ArrowHead.CROSSX);</span>
 
-<span class="fc bfc" id="L128" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;o&quot;))</span>
-<span class="fc" id="L129">				config = config.withDecoration2(ArrowDecoration.CIRCLE);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;o&quot;))</span>
+<span class="nc" id="L129">				config = config.withDecoration2(ArrowDecoration.CIRCLE);</span>
 
-<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;x&quot;))</span>
-<span class="fc" id="L132">				config = config.withHead2(ArrowHead.CROSSX);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (containsSymbol(ARROW_SUPPCIRCLE1, arg, &quot;x&quot;))</span>
+<span class="nc" id="L132">				config = config.withHead2(ArrowHead.CROSSX);</span>
 
 		}
 
-<span class="fc" id="L136">		final MessageExo msg = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), p, messageExoType,</span>
-<span class="fc" id="L137">				labels, config, diagram.getNextMessageNumber(), isShortArrow(arg));</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (arg.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc" id="L136">		final MessageExo msg = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), p, messageExoType,</span>
+<span class="nc" id="L137">				labels, config, diagram.getNextMessageNumber(), isShortArrow(arg));</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (arg.get(&quot;URL&quot;, 0) != null) {</span>
 <span class="nc" id="L139">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L140">			final Url urlLink = urlBuilder.getUrl(arg.get(&quot;URL&quot;, 0));</span>
 <span class="nc" id="L141">			msg.setUrl(urlLink);</span>
 		}
 
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (parallel)</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (parallel)</span>
 <span class="nc" id="L146">			msg.goParallel();</span>
 
-<span class="fc" id="L148">		msg.setAnchor(arg.get(&quot;ANCHOR&quot;, 1));</span>
-<span class="fc" id="L149">		msg.setPart1Anchor(arg.get(&quot;PART1ANCHOR&quot;, 1));</span>
-<span class="fc" id="L150">		msg.setPart2Anchor(arg.get(&quot;PART2ANCHOR&quot;, 1));</span>
+<span class="nc" id="L148">		msg.setAnchor(arg.get(&quot;ANCHOR&quot;, 1));</span>
+<span class="nc" id="L149">		msg.setPart1Anchor(arg.get(&quot;PART1ANCHOR&quot;, 1));</span>
+<span class="nc" id="L150">		msg.setPart2Anchor(arg.get(&quot;PART2ANCHOR&quot;, 1));</span>
 
-<span class="fc" id="L152">		final CommandExecutionResult status = diagram.addMessage(msg);</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L152">		final CommandExecutionResult status = diagram.addMessage(msg);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (status.isOk() == false)</span>
 <span class="nc" id="L154">			return status;</span>
 
-<span class="fc" id="L156">		final String s = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
+<span class="nc" id="L156">		final String s = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
 
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
 
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (activationSpec != null) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (activationSpec != null) {</span>
 <span class="nc bnc" id="L161" title="All 4 branches missed.">			switch (activationSpec.charAt(0)) {</span>
 			case '+':
 <span class="nc" id="L163">				diagram.activate(p, LifeEventType.ACTIVATE, activationColor);</span>
@@ -171,7 +171,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 			default:
 <span class="nc" id="L172">				break;</span>
 			}
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		} else if (diagram.isAutoactivate()</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		} else if (diagram.isAutoactivate()</span>
 <span class="nc bnc" id="L175" title="All 4 branches missed.">				&amp;&amp; (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC)) {</span>
 <span class="nc bnc" id="L176" title="All 2 branches missed.">			if (config.isDotted())</span>
 <span class="nc" id="L177">				diagram.activate(p, LifeEventType.DEACTIVATE, null);</span>
@@ -180,42 +180,42 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 
 		}
 
-<span class="fc" id="L183">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L183">		return CommandExecutionResult.ok();</span>
 	}
 
 	private ArrowPart getArrowPart(String dressing, MessageExoType messageExoType) {
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (dressing.contains(&quot;/&quot;)) {</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (messageExoType.getDirection() == 1)</span>
-<span class="fc" id="L189">				return ArrowPart.BOTTOM_PART;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (dressing.contains(&quot;/&quot;)) {</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (messageExoType.getDirection() == 1)</span>
+<span class="nc" id="L189">				return ArrowPart.BOTTOM_PART;</span>
 
 <span class="nc" id="L191">			return ArrowPart.TOP_PART;</span>
 		}
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (dressing.contains(&quot;\\&quot;)) {</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">			if (messageExoType.getDirection() == 1)</span>
-<span class="fc" id="L195">				return ArrowPart.TOP_PART;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (dressing.contains(&quot;\\&quot;)) {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			if (messageExoType.getDirection() == 1)</span>
+<span class="nc" id="L195">				return ArrowPart.TOP_PART;</span>
 
 <span class="nc" id="L197">			return ArrowPart.BOTTOM_PART;</span>
 		}
-<span class="fc" id="L199">		return ArrowPart.FULL;</span>
+<span class="nc" id="L199">		return ArrowPart.FULL;</span>
 	}
 
 	abstract MessageExoType getMessageExoType(RegexResult arg2);
 
 	private boolean isShortArrow(RegexResult arg2) {
-<span class="fc" id="L205">		final String s = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
-<span class="pc bpc" id="L206" title="2 of 4 branches missed.">		if (s != null &amp;&amp; s.contains(&quot;?&quot;))</span>
+<span class="nc" id="L205">		final String s = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
+<span class="nc bnc" id="L206" title="All 4 branches missed.">		if (s != null &amp;&amp; s.contains(&quot;?&quot;))</span>
 <span class="nc" id="L207">			return true;</span>
 
-<span class="fc" id="L209">		return false;</span>
+<span class="nc" id="L209">		return false;</span>
 	}
 
 	private boolean containsSymbol(String suppCircle, RegexResult arg2, String symbol) {
-<span class="fc" id="L213">		final String s = arg2.get(suppCircle, 0);</span>
-<span class="fc bfc" id="L214" title="All 4 branches covered.">		if (s != null &amp;&amp; s.contains(symbol))</span>
-<span class="fc" id="L215">			return true;</span>
+<span class="nc" id="L213">		final String s = arg2.get(suppCircle, 0);</span>
+<span class="nc bnc" id="L214" title="All 4 branches missed.">		if (s != null &amp;&amp; s.contains(symbol))</span>
+<span class="nc" id="L215">			return true;</span>
 
-<span class="fc" id="L217">		return false;</span>
+<span class="nc" id="L217">		return false;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

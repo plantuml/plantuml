@@ -47,14 +47,14 @@ public class MessageExo extends AbstractMessage {
 
 	public MessageExo(StyleBuilder styleBuilder, Participant p, MessageExoType type, Display label,
 			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow) {
-<span class="fc" id="L50">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
-<span class="fc" id="L51">		this.participant = p;</span>
-<span class="fc" id="L52">		this.type = type;</span>
-<span class="fc" id="L53">		this.shortArrow = shortArrow;</span>
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L50">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
+<span class="nc" id="L51">		this.participant = p;</span>
+<span class="nc" id="L52">		this.type = type;</span>
+<span class="nc" id="L53">		this.shortArrow = shortArrow;</span>
+<span class="nc" id="L54">	}</span>
 
 	public boolean isShortArrow() {
-<span class="fc" id="L57">		return shortArrow;</span>
+<span class="nc" id="L57">		return shortArrow;</span>
 	}
 
 	@Override
@@ -79,15 +79,15 @@ public class MessageExo extends AbstractMessage {
 	}
 
 	public Participant getParticipant() {
-<span class="fc" id="L82">		return participant;</span>
+<span class="nc" id="L82">		return participant;</span>
 	}
 
 	public final MessageExoType getType() {
-<span class="fc" id="L86">		return type;</span>
+<span class="nc" id="L86">		return type;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		return participant == someone;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		return participant == someone;</span>
 	}
 
 	@Override
@@ -100,4 +100,4 @@ public class MessageExo extends AbstractMessage {
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

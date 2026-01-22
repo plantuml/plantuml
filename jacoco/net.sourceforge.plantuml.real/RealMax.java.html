@@ -43,48 +43,48 @@ import net.sourceforge.plantuml.log.Logme;
 
 class RealMax extends AbstractReal implements Real {
 
-<span class="fc" id="L46">	private final List&lt;Real&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L46">	private final List&lt;Real&gt; all = new ArrayList&lt;&gt;();</span>
 	private final Throwable creationPoint;
 
 	RealMax(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L50">		super(line(reals));</span>
-<span class="fc" id="L51">		this.all.addAll(reals);</span>
-<span class="fc" id="L52">		this.creationPoint = new Throwable();</span>
-<span class="fc" id="L53">		this.creationPoint.fillInStackTrace();</span>
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L50">		super(line(reals));</span>
+<span class="nc" id="L51">		this.all.addAll(reals);</span>
+<span class="nc" id="L52">		this.creationPoint = new Throwable();</span>
+<span class="nc" id="L53">		this.creationPoint.fillInStackTrace();</span>
+<span class="nc" id="L54">	}</span>
 
 	static RealLine line(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L57">		return ((AbstractReal) reals.iterator().next()).getLine();</span>
+<span class="nc" id="L57">		return ((AbstractReal) reals.iterator().next()).getLine();</span>
 	}
 
 	public String getName() {
 <span class="nc" id="L61">		return &quot;max &quot; + all.size();</span>
 	}
 
-<span class="fc" id="L64">	private double cache = Double.MAX_VALUE;</span>
+<span class="nc" id="L64">	private double cache = Double.MAX_VALUE;</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
-<span class="fc" id="L69">			return cache;</span>
-<span class="fc" id="L70">		double result = all.get(0).getCurrentValue();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
-<span class="fc" id="L72">			Throwable t = new Throwable();</span>
-<span class="fc" id="L73">			t.fillInStackTrace();</span>
-<span class="fc" id="L74">			final int stackLength = t.getStackTrace().length;</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (stackLength &gt; 1000) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (cache != Double.MAX_VALUE)</span>
+<span class="nc" id="L69">			return cache;</span>
+<span class="nc" id="L70">		double result = all.get(0).getCurrentValue();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int i = 1; i &lt; all.size(); i++) {</span>
+<span class="nc" id="L72">			Throwable t = new Throwable();</span>
+<span class="nc" id="L73">			t.fillInStackTrace();</span>
+<span class="nc" id="L74">			final int stackLength = t.getStackTrace().length;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (stackLength &gt; 1000) {</span>
 <span class="nc" id="L76">				System.err.println(&quot;The faulty RealMax &quot; + getName());</span>
 <span class="nc" id="L77">				System.err.println(&quot;has been created here:&quot;);</span>
 <span class="nc" id="L78">				printCreationStackTrace();</span>
 <span class="nc" id="L79">				throw new IllegalStateException(&quot;Infinite recursion?&quot;);</span>
 			}
-<span class="fc" id="L81">			final double v = all.get(i).getCurrentValue();</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (v &gt; result)</span>
-<span class="fc" id="L83">				result = v;</span>
+<span class="nc" id="L81">			final double v = all.get(i).getCurrentValue();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (v &gt; result)</span>
+<span class="nc" id="L83">				result = v;</span>
 
 		}
-<span class="fc" id="L86">		cache = result;</span>
-<span class="fc" id="L87">		return result;</span>
+<span class="nc" id="L86">		cache = result;</span>
+<span class="nc" id="L87">		return result;</span>
 	}
 
 	public Real addFixed(double delta) {
@@ -104,4 +104,4 @@ class RealMax extends AbstractReal implements Real {
 <span class="nc" id="L104">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
