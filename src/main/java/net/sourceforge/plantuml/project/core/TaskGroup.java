@@ -91,7 +91,7 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setEnd(TimePoint end) {
+	public void setEndTOTO(TimePoint end) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceOccurs extends SentenceSimple<GanttDiagram> {
 
@@ -62,8 +63,12 @@ public class SentenceOccurs extends SentenceSimple<GanttDiagram> {
 		if (to == null) {
 			return CommandExecutionResult.error("No such " + name2 + " task");
 		}
-		task.setStart(from.getEndMinusOneDayTOBEREMOVED());
-		task.setEnd(to.getEndMinusOneDayTOBEREMOVED());
+		final TimePoint start = from.getStart();
+		final TimePoint endToto = to.getEnd();
+		System.err.println("start=" + start);
+		System.err.println("endToto=" + endToto);
+		task.setStart(start);
+		task.setEndTOTO(endToto);
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
 				new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),

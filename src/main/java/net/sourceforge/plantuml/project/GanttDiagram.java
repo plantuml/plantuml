@@ -375,7 +375,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
 		for (GanttConstraint constraint : constraints) {
-			if (printStart != null && constraint.isHidden(TimePoint.ofStartOfDay(minDay), TimePoint.ofEndOfDayMinusOneSecond(maxDay)))
+			if (printStart != null
+					&& constraint.isHidden(TimePoint.ofStartOfDay(minDay), TimePoint.ofEndOfDayMinusOneSecond(maxDay)))
 				continue;
 
 			constraint.getUDrawable(timeScale, this).drawU(ug);
@@ -540,17 +541,31 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimePoint getStartForDrawing(final Task tmp) {
+		TimePoint result;
 		if (printStart == null)
-			return tmp.getStart();
+			result = tmp.getStart();
+		else
+			result = TimePoint.max(TimePoint.ofStartOfDay(minDay.plusDays(1)), tmp.getStart());
 
-		return TimePoint.max(TimePoint.ofStartOfDay(minDay), tmp.getStart());
+		if (result.toString().endsWith("T00:00") == false)
+			throw new IllegalArgumentException(result.toString());
+
+		return result;
 	}
 
 	private TimePoint getEndForDrawing(final Task tmp) {
+		TimePoint result;
 		if (printStart == null)
-			return tmp.getEnd();
+			result = tmp.getEnd();
+		else
+			result = TimePoint.min(TimePoint.ofStartOfDay(maxDay.plusDays(1)), tmp.getEnd());
+		
+		result = result.minusOneSecond();
 
-		return TimePoint.min(TimePoint.ofEndOfDayMinusOneSecond(maxDay), tmp.getEnd());
+		if (result.toString().endsWith("T23:59:59") == false && result.toString().endsWith("T11:59:59") == false)
+			throw new IllegalArgumentException(result.toString());
+
+		return result;
 	}
 
 	private void initMinMax() {
