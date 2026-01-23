@@ -56,19 +56,15 @@ public class SentenceOccurs extends SentenceSimple<GanttDiagram> {
 		final String name1 = bothNames.getName1();
 		final String name2 = bothNames.getName2();
 		final Task from = project.getExistingTask(name1);
-		if (from == null) {
+		if (from == null) 
 			return CommandExecutionResult.error("No such " + name1 + " task");
-		}
+		
 		final Task to = project.getExistingTask(name2);
-		if (to == null) {
+		if (to == null) 
 			return CommandExecutionResult.error("No such " + name2 + " task");
-		}
-		final TimePoint start = from.getStart();
-		final TimePoint endToto = to.getEnd();
-		System.err.println("start=" + start);
-		System.err.println("endToto=" + endToto);
-		task.setStart(start);
-		task.setEndTOTO(endToto);
+		
+		task.setStart(from.getStart());
+		task.setEndTOTO(to.getEnd());
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
 				new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
