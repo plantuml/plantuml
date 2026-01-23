@@ -54,7 +54,7 @@ public class SentenceTaskEndsOnlyRelative extends SentenceSimple<GanttDiagram> {
 		final Task task = (Task) subject;
 		final LocalDate end = (LocalDate) complement;
 
-		task.setEndTOTO(TimePoint.ofEndOfDayMinusOneSecond(end).increment());
+		task.setEnd(TimePoint.ofEndOfDayMinusOneSecond(end).increment());
 		return CommandExecutionResult.ok();
 	}
 

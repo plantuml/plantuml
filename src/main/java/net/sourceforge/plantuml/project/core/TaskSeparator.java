@@ -71,7 +71,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setEndTOTO(TimePoint end) {
+	public void setEnd(TimePoint end) {
 		throw new UnsupportedOperationException();
 	}
 

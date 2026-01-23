@@ -496,7 +496,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		final TimePoint endForDrawing = getEndForDrawing(task);
 		if (printStart != null) {
 			oddStart = TimePoint.ofStartOfDay(minDay).compareTo(startForDrawing) == 0;
-			oddEnd = TimePoint.ofEndOfDayMinusOneSecond(maxDay).compareTo(endForDrawing) == 0;
+			oddEnd = TimePoint.ofStartOfDay(maxDay.plusDays(1)).compareTo(endForDrawing) == 0;
 		} else {
 			oddStart = false;
 			oddEnd = false;
