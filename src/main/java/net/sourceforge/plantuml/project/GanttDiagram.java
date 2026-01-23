@@ -458,21 +458,16 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(), getStartForDrawing(taskGroup),
 						getEndForDrawing(taskGroup), task, this, task.getStyleBuilder(), getSkinParam());
 			} else {
-				final TaskImpl tmp = (TaskImpl) task;
-				final String disp = hideResourceName ? tmp.getCode().getDisplay() : tmp.getPrettyDisplay();
-				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStartForDrawing(tmp), task, this,
+				final TaskImpl taskImpl = (TaskImpl) task;
+				final String display = hideResourceName ? taskImpl.getCode().getDisplay() : taskImpl.getPrettyDisplay();
+				if (taskImpl.isDiamond())
+					draw = new TaskDrawDiamond(timeScale, y, display, getStartForDrawing(taskImpl), taskImpl, this,
 							task.getStyleBuilder(), getSkinParam());
-				} else {
-					final boolean oddStart = printStart != null
-							&& TimePoint.ofStartOfDay(minDay).compareTo(getStartForDrawing(tmp)) == 0;
-					final boolean oddEnd = printStart != null
-							&& TimePoint.ofEndOfDayMinusOneSecond(maxDay).compareTo(getEndForDrawing(tmp)) == 0;
-					draw = new TaskDrawRegular(timeScale, y, disp, getStartForDrawing(tmp), getEndForDrawing(tmp),
-							oddStart, oddEnd, getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
-				}
-				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote(),
-						tmp.getNoteStereotype());
+				else
+					draw = createTaskDrawRegular(timeScale, y, taskImpl, display);
+
+				draw.setColorsAndCompletion(taskImpl.getColors(), taskImpl.getCompletion(), taskImpl.getUrl(),
+						taskImpl.getNote(), taskImpl.getNoteStereotype());
 			}
 			if (task.getRow() == null)
 				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
@@ -492,6 +487,22 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			}
 
 		this.totalHeightWithoutFooter = yy;
+	}
+
+	private TaskDraw createTaskDrawRegular(TimeScale timeScale, Real y, final Task task, final String display) {
+		final boolean oddEnd;
+		final boolean oddStart;
+		final TimePoint startForDrawing = getStartForDrawing(task);
+		final TimePoint endForDrawing = getEndForDrawing(task);
+		if (printStart != null) {
+			oddStart = TimePoint.ofStartOfDay(minDay).compareTo(startForDrawing) == 0;
+			oddEnd = TimePoint.ofEndOfDayMinusOneSecond(maxDay).compareTo(endForDrawing) == 0;
+		} else {
+			oddStart = false;
+			oddEnd = false;
+		}
+		return new TaskDrawRegular(timeScale, y, display, startForDrawing, endForDrawing, oddStart, oddEnd,
+				getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
 	}
 
 	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y) {
@@ -545,7 +556,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (printStart == null)
 			result = tmp.getStart();
 		else
-			result = TimePoint.max(TimePoint.ofStartOfDay(minDay.plusDays(1)), tmp.getStart());
+			result = TimePoint.max(TimePoint.ofStartOfDay(minDay), tmp.getStart());
 
 		if (result.toString().endsWith("T00:00") == false)
 			throw new IllegalArgumentException(result.toString());
@@ -559,10 +570,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			result = tmp.getEnd();
 		else
 			result = TimePoint.min(TimePoint.ofStartOfDay(maxDay.plusDays(1)), tmp.getEnd());
-		
-		result = result.minusOneSecond();
 
-		if (result.toString().endsWith("T23:59:59") == false && result.toString().endsWith("T11:59:59") == false)
+		// result = result.minusOneSecond();
+
+		if (result.toString().endsWith("T00:00") == false && result.toString().endsWith("T12:00") == false)
 			throw new IllegalArgumentException(result.toString());
 
 		return result;

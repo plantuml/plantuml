@@ -90,14 +90,11 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 			return Failable.error(i2.getError());
 
 		final TaskInstant end = i2.get();
-		System.err.println("end=" + end);
 		TimePoint precise = end.getInstantPrecise();
 		if (end.getAttribute() == TaskAttribute.END)
 			precise = precise.decrement();
 
-		System.err.println("precise=" + precise);
 		final DaysAsDates days = new DaysAsDates(d1, precise.toDay());
-		System.err.println("days=" + days);
 		return Failable.ok(days);
 
 	}

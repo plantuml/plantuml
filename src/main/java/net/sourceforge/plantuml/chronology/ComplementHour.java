@@ -71,7 +71,6 @@ public class ComplementHour implements Something<ChronologyDiagram> {
 
 	public Failable<TimePoint> getMe(ChronologyDiagram system, RegexResult arg, String suffix) {
 		final String value = arg.get("TIME", 0);
-		System.err.println("value=" + value);
 		try {
 			final Date date = inputFormat.parse(value);
 			return Failable.ok(TimePoint.create(date.getTime()));
