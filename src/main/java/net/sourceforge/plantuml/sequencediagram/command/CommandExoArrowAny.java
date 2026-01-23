@@ -135,9 +135,9 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
 		final MessageExo msg = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), p, messageExoType,
 				labels, config, diagram.getNextMessageNumber(), isShortArrow(arg));
-		if (arg.get("URL", 0) != null) {
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
+			final Url urlLink = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));
 			msg.setUrl(urlLink);
 		}
 

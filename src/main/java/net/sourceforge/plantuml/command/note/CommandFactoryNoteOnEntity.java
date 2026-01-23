@@ -204,10 +204,10 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				final Display display = lines.toDisplay();
 
 				Url url = null;
-				if (line0.get("URL", 0) != null) {
+				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {
 					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
 							UrlMode.STRICT);
-					url = urlBuilder.getUrl(line0.get("URL", 0));
+					url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));
 				}
 
 				return executeInternal(lines.getLocation(), line0, system, url, display);

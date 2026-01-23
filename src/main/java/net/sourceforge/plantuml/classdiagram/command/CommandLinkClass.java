@@ -215,9 +215,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
 				linkArg);
-		if (arg.get("URL", 0) != null) {
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			final Url url = urlBuilder.getUrl(arg.get("URL", 0));
+			final Url url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));
 			link.setUrl(url);
 		}
 		link.setPortMembers(port1, port2);

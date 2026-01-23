@@ -150,7 +150,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			if (stereotype != null)
 				ent.setStereotype(Stereotype.build(stereotype));
 
-			final String urlString = arg.get("URL", 0);
+			final String urlString = arg.get(UrlBuilder.URL_KEY, 0);
 			if (urlString != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 				final Url url = urlBuilder.getUrl(urlString);

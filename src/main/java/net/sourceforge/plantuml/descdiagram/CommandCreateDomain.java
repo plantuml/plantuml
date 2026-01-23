@@ -120,7 +120,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 			return CommandExecutionResult.error("Object already exists : " + codeString);
 
 		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
-		final String urlString = arg.get("URL", 0);
+		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);
 		final String group = arg.get("GROUP", 0);
 		Entity entity;
 		if (group != null) {

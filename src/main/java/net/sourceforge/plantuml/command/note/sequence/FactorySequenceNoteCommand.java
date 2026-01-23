@@ -168,9 +168,9 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			}
 			note.setColors(colors);
 			note.setNoteStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
-			if (arg.get("URL", 0) != null) {
+			if (arg.get(UrlBuilder.URL_KEY, 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-				final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
+				final Url urlLink = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));
 				note.setUrl(urlLink);
 			}
 			if (parallel) {

@@ -73,7 +73,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(4, "PARTS", "(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(1, "URL", "(\\[\\[.*?\\]\\])")), //
+				new RegexOptional(new RegexLeaf(1, UrlBuilder.URL_KEY, "(\\[\\[.*?\\]\\])")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -89,7 +89,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		// HtmlColorSetSimple.instance().getColorIfValid(arg.get("REF").get(1));
 
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
-		final String url = arg.get("URL", 0);
+		final String url = arg.get(UrlBuilder.URL_KEY, 0);
 		final String text = StringUtils.trin(arg.get("TEXT", 0));
 
 		final List<Participant> p = new ArrayList<>();

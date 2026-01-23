@@ -60,7 +60,7 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandUrl.class.getName(), //
 				RegexLeaf.start(), //
-				new RegexLeaf("url"), //
+				new RegexLeaf(UrlBuilder.URL_KEY), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("of|for")), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -81,7 +81,7 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 		if (entity == null)
 			return CommandExecutionResult.error(quark.getName() + " does not exist");
 
-		final String urlString = arg.get("URL", 0);
+		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);
 
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);
