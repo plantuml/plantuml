@@ -147,10 +147,10 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="nc" id="L147">				final Display display = lines.toDisplay();</span>
 
 <span class="nc" id="L149">				Url url = null;</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (line0.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L151">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
 							UrlMode.STRICT);
-<span class="nc" id="L153">					url = urlBuilder.getUrl(line0.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L153">					url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 				}
 
 <span class="nc" id="L156">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>

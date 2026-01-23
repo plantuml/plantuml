@@ -204,10 +204,10 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 <span class="fc" id="L204">				final Display display = lines.toDisplay();</span>
 
 <span class="fc" id="L206">				Url url = null;</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">				if (line0.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L208">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
 							UrlMode.STRICT);
-<span class="nc" id="L210">					url = urlBuilder.getUrl(line0.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L210">					url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 				}
 
 <span class="fc" id="L213">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>

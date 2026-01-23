@@ -239,7 +239,7 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 
 <span class="fc" id="L240">		CommandCreateClassMultilines.addTags(entity, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
 
-<span class="fc" id="L242">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="fc" id="L242">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L244">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L245">			final Url url = urlBuilder.getUrl(urlString);</span>

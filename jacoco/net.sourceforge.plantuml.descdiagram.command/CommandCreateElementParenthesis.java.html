@@ -172,7 +172,7 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2&lt;Class
 <span class="nc" id="L172">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
 <span class="nc" id="L173">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L175">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L175">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc bnc" id="L176" title="All 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L177">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L178">			final Url url = urlBuilder.getUrl(urlString);</span>

@@ -70,7 +70,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines&lt;
 <span class="fc" id="L70">			RegexLeaf.spaceOneOrMore(), //</span>
 			new RegexLeaf(1, &quot;PARTS&quot;, &quot;((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)&quot;), //
 <span class="fc" id="L72">			RegexLeaf.spaceZeroOrMore(), //</span>
-			new RegexOptional(new RegexLeaf(1, &quot;URL&quot;, &quot;(\\[\\[.*?\\]\\])&quot;)), //
+			new RegexOptional(new RegexLeaf(1, UrlBuilder.URL_KEY, &quot;(\\[\\[.*?\\]\\])&quot;)), //
 <span class="fc" id="L74">			RegexLeaf.spaceZeroOrMore(), //</span>
 			new RegexLeaf(1, &quot;UNUSED&quot;, &quot;(#\\w+)?&quot;), //
 <span class="fc" id="L76">			RegexLeaf.end());</span>
@@ -102,7 +102,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines&lt;
 <span class="nc" id="L102">		lines = lines.removeEmptyColumns();</span>
 <span class="nc" id="L103">		final Display strings = lines.toDisplay();</span>
 
-<span class="nc" id="L105">		final String url = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L105">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc" id="L106">		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L107">		Url u = null;</span>
 <span class="nc bnc" id="L108" title="All 2 branches missed.">		if (url != null)</span>

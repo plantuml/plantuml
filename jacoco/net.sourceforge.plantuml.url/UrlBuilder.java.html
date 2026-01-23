@@ -44,8 +44,10 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 public class UrlBuilder {
     // ::remove file when __HAXE__
 
-<span class="fc" id="L47">	public static final IRegex MANDATORY = new RegexLeaf(12, &quot;URL&quot;, &quot;(&quot; + UrlBuilder.getRegexp() + &quot;)&quot;);</span>
-<span class="fc" id="L48">	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);</span>
+	public static final String URL_KEY = &quot;URL&quot;;
+	
+<span class="fc" id="L49">	public static final IRegex MANDATORY = new RegexLeaf(12, URL_KEY, &quot;(&quot; + UrlBuilder.getRegexp() + &quot;)&quot;);</span>
+<span class="fc" id="L50">	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);</span>
 
 	private static final String START_PART = &quot;\\[\\[[%s]*&quot;;
 	private static final String END_PART = &quot;[%s]*\\]\\]&quot;;
@@ -79,69 +81,69 @@ public class UrlBuilder {
 			END_PART;
 
 	public static String getRegexp() {
-<span class="fc" id="L82">		return S_QUOTED + &quot;|&quot; + //</span>
+<span class="fc" id="L84">		return S_QUOTED + &quot;|&quot; + //</span>
 				S_ONLY_TOOLTIP + &quot;|&quot; + //
 				S_ONLY_TOOLTIP_AND_LABEL + &quot;|&quot; + //
 				S_LINK_TOOLTIP_NOLABEL + &quot;|&quot; + //
 				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL;
 	}
 
-<span class="fc" id="L89">	private static final Pattern2 QUOTED = Pattern2.cmpile(S_QUOTED);</span>
-<span class="fc" id="L90">	private static final Pattern2 ONLY_TOOLTIP = Pattern2.cmpile(S_ONLY_TOOLTIP);</span>
-<span class="fc" id="L91">	private static final Pattern2 ONLY_TOOLTIP_AND_LABEL = Pattern2.cmpile(S_ONLY_TOOLTIP_AND_LABEL);</span>
-<span class="fc" id="L92">	private static final Pattern2 LINK_TOOLTIP_NOLABEL = Pattern2.cmpile(S_LINK_TOOLTIP_NOLABEL);</span>
-<span class="fc" id="L93">	private static final Pattern2 LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = Pattern2.cmpile(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);</span>
+<span class="fc" id="L91">	private static final Pattern2 QUOTED = Pattern2.cmpile(S_QUOTED);</span>
+<span class="fc" id="L92">	private static final Pattern2 ONLY_TOOLTIP = Pattern2.cmpile(S_ONLY_TOOLTIP);</span>
+<span class="fc" id="L93">	private static final Pattern2 ONLY_TOOLTIP_AND_LABEL = Pattern2.cmpile(S_ONLY_TOOLTIP_AND_LABEL);</span>
+<span class="fc" id="L94">	private static final Pattern2 LINK_TOOLTIP_NOLABEL = Pattern2.cmpile(S_LINK_TOOLTIP_NOLABEL);</span>
+<span class="fc" id="L95">	private static final Pattern2 LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = Pattern2.cmpile(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);</span>
 
 	private final String topurl;
 	private UrlMode mode;
 
-<span class="fc" id="L98">	public UrlBuilder(String topurl, UrlMode mode) {</span>
-<span class="fc" id="L99">		this.topurl = topurl;</span>
-<span class="fc" id="L100">		this.mode = mode;</span>
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L100">	public UrlBuilder(String topurl, UrlMode mode) {</span>
+<span class="fc" id="L101">		this.topurl = topurl;</span>
+<span class="fc" id="L102">		this.mode = mode;</span>
+<span class="fc" id="L103">	}</span>
 
 	public Url getUrl(String s) {
 		Matcher2 m;
-<span class="fc" id="L105">		m = QUOTED.matcher(s);</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
-<span class="fc" id="L107">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
+<span class="fc" id="L107">		m = QUOTED.matcher(s);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L109">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
 
-<span class="fc" id="L109">		m = ONLY_TOOLTIP.matcher(s);</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
-<span class="fc" id="L111">			return new Url(&quot;&quot;, m.group(1), null);</span>
+<span class="fc" id="L111">		m = ONLY_TOOLTIP.matcher(s);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L113">			return new Url(&quot;&quot;, m.group(1), null);</span>
 
-<span class="fc" id="L113">		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
-<span class="fc" id="L115">			return new Url(&quot;&quot;, m.group(1), m.group(2));</span>
+<span class="fc" id="L115">		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L117">			return new Url(&quot;&quot;, m.group(1), m.group(2));</span>
 
-<span class="fc" id="L117">		m = LINK_TOOLTIP_NOLABEL.matcher(s);</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
-<span class="fc" id="L119">			return new Url(withTopUrl(m.group(1)), m.group(2), null);</span>
+<span class="fc" id="L119">		m = LINK_TOOLTIP_NOLABEL.matcher(s);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L121">			return new Url(withTopUrl(m.group(1)), m.group(2), null);</span>
 
-<span class="fc" id="L121">		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
-<span class="fc" id="L123">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
+<span class="fc" id="L123">		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L125">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
 
-<span class="fc" id="L125">		return null;</span>
+<span class="fc" id="L127">		return null;</span>
 
 	}
 
 	private boolean matchesOrFind(Matcher2 m) {
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
-<span class="fc" id="L131">			return m.matches();</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		else if (mode == UrlMode.ANYWHERE)</span>
-<span class="fc" id="L133">			return m.find();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
+<span class="fc" id="L133">			return m.matches();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		else if (mode == UrlMode.ANYWHERE)</span>
+<span class="fc" id="L135">			return m.find();</span>
 		else
-<span class="nc" id="L135">			throw new IllegalStateException();</span>
+<span class="nc" id="L137">			throw new IllegalStateException();</span>
 
 	}
 
 	private String withTopUrl(String url) {
-<span class="pc bpc" id="L140" title="2 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
+<span class="pc bpc" id="L142" title="2 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
 				&amp;&amp; topurl != null)
-<span class="nc" id="L142">			return topurl + url;</span>
+<span class="nc" id="L144">			return topurl + url;</span>
 
-<span class="fc" id="L144">		return url;</span>
+<span class="fc" id="L146">		return url;</span>
 	}
 
 }

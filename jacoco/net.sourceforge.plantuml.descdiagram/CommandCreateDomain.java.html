@@ -120,7 +120,7 @@ public class CommandCreateDomain extends SingleLineCommand2&lt;DescriptionDiagra
 <span class="nc" id="L120">			return CommandExecutionResult.error(&quot;Object already exists : &quot; + codeString);</span>
 
 <span class="nc" id="L122">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="nc" id="L123">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L123">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc" id="L124">		final String group = arg.get(&quot;GROUP&quot;, 0);</span>
 		Entity entity;
 <span class="nc bnc" id="L126" title="All 2 branches missed.">		if (group != null) {</span>

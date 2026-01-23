@@ -73,7 +73,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2&lt;SequenceD
 <span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(4, &quot;PARTS&quot;, &quot;(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)&quot;), //
 <span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(1, &quot;URL&quot;, &quot;(\\[\\[.*?\\]\\])&quot;)), //
+				new RegexOptional(new RegexLeaf(1, UrlBuilder.URL_KEY, &quot;(\\[\\[.*?\\]\\])&quot;)), //
 <span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 <span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -89,7 +89,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2&lt;SequenceD
 		// HtmlColorSetSimple.instance().getColorIfValid(arg.get(&quot;REF&quot;).get(1));
 
 <span class="nc" id="L91">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
-<span class="nc" id="L92">		final String url = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L92">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc" id="L93">		final String text = StringUtils.trin(arg.get(&quot;TEXT&quot;, 0));</span>
 
 <span class="nc" id="L95">		final List&lt;Participant&gt; p = new ArrayList&lt;&gt;();</span>

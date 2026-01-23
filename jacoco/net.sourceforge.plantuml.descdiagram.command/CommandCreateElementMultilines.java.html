@@ -174,7 +174,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2&lt;Abstra
 <span class="nc" id="L174">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
 <span class="nc" id="L175">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="fc" id="L177">		final String urlString = line0.get(&quot;URL&quot;, 0);</span>
+<span class="fc" id="L177">		final String urlString = line0.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L179">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L180">			final Url url = urlBuilder.getUrl(urlString);</span>

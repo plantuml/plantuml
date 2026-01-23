@@ -99,7 +99,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2&lt;AbstractCla
 <span class="nc" id="L99">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
 <span class="nc" id="L100">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L102">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L102">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc bnc" id="L103" title="All 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L104">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L105">			final Url url = urlBuilder.getUrl(urlString);</span>

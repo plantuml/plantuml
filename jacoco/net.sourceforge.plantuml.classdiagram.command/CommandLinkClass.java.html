@@ -215,9 +215,9 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 
 <span class="fc" id="L216">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,</span>
 				linkArg);
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (arg.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L219">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L220">			final Url url = urlBuilder.getUrl(arg.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L220">			final Url url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 <span class="nc" id="L221">			link.setUrl(url);</span>
 		}
 <span class="fc" id="L223">		link.setPortMembers(port1, port2);</span>

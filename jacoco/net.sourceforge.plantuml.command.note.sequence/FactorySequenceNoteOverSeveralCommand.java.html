@@ -174,9 +174,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
 			}
 <span class="nc" id="L175">			note.setColors(colors);</span>
 <span class="nc" id="L176">			note.setNoteStyle(NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0)));</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (line0.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L178">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L179">				final Url urlLink = urlBuilder.getUrl(line0.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L179">				final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 <span class="nc" id="L180">				note.setUrl(urlLink);</span>
 			}
 <span class="nc bnc" id="L182" title="All 2 branches missed.">			if (parallel)</span>

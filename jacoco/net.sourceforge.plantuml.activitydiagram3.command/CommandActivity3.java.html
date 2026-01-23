@@ -122,11 +122,11 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 			ParserPass currentPass) throws NoSuchColorException {
 
 		final Url url;
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (arg.get(&quot;URL&quot;, 0) == null) {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
 <span class="fc" id="L126">			url = null;</span>
 		} else {
 <span class="nc" id="L128">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L129">			url = urlBuilder.getUrl(arg.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L129">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 		}
 
 <span class="fc" id="L132">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>

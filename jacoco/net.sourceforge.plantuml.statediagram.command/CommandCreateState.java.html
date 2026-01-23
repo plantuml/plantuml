@@ -150,7 +150,7 @@ public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 <span class="fc bfc" id="L150" title="All 2 branches covered.">			if (stereotype != null)</span>
 <span class="fc" id="L151">				ent.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="fc" id="L153">			final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="fc" id="L153">			final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (urlString != null) {</span>
 <span class="nc" id="L155">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L156">				final Url url = urlBuilder.getUrl(urlString);</span>

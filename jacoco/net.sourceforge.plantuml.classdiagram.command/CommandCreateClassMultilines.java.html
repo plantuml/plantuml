@@ -189,7 +189,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="nc" id="L189">			entity.setStereostyle(stereotype);</span>
 		}
 
-<span class="fc" id="L192">		final String urlString = line0.get(&quot;URL&quot;, 0);</span>
+<span class="fc" id="L192">		final String urlString = line0.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L194">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L195">			final Url url = urlBuilder.getUrl(urlString);</span>
@@ -337,7 +337,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="nc" id="L337">			entity.setStereostyle(stereotype);</span>
 		}
 
-<span class="nc" id="L340">		final String urlString = line0.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L340">		final String urlString = line0.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc bnc" id="L341" title="All 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L342">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L343">			final Url url = urlBuilder.getUrl(urlString);</span>

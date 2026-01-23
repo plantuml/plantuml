@@ -221,9 +221,9 @@ public class CommandLinkLongActivity extends CommandMultilines2&lt;ActivityDiagr
 <span class="nc bnc" id="L221" title="All 4 branches missed.">		if (direction == Direction.LEFT || direction == Direction.UP)</span>
 <span class="nc" id="L222">			link = link.getInv();</span>
 
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (line0.get(&quot;URL&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L225">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L226">			final Url urlLink = urlBuilder.getUrl(line0.get(&quot;URL&quot;, 0));</span>
+<span class="nc" id="L226">			final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 <span class="nc" id="L227">			link.setUrl(urlLink);</span>
 		}
 

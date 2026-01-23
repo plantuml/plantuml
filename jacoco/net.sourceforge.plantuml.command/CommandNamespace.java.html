@@ -96,7 +96,7 @@ public class CommandNamespace extends SingleLineCommand2&lt;ClassDiagram&gt; {
 <span class="nc bnc" id="L96" title="All 4 branches missed.">		if (stereotype != null &amp;&amp; usymbol == null)</span>
 <span class="nc" id="L97">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="nc" id="L99">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="nc" id="L99">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="nc bnc" id="L100" title="All 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L101">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L102">			final Url url = urlBuilder.getUrl(urlString);</span>

@@ -136,7 +136,7 @@ public class CommandCreatePackageState extends SingleLineCommand2&lt;StateDiagra
 <span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (stereotype != null)</span>
 <span class="nc" id="L137">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="fc" id="L139">		final String urlString = arg.get(&quot;URL&quot;, 0);</span>
+<span class="fc" id="L139">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L141">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L142">			final Url url = urlBuilder.getUrl(urlString);</span>
