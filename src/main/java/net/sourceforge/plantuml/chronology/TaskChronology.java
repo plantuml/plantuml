@@ -80,7 +80,7 @@ public class TaskChronology extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setEndTOTO(TimePoint end) {
+	public void setEnd(TimePoint end) {
 		this.end = end;
 	}
 

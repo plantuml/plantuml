@@ -56,7 +56,7 @@ public interface Task extends Moment {
 
 	public void setStart(TimePoint start);
 
-	public void setEndTOTO(TimePoint end);
+	public void setEnd(TimePoint end);
 
 	public void setColors(CenterBorderColor... colors);
 

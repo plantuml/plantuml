@@ -64,7 +64,7 @@ public class SentenceOccurs extends SentenceSimple<GanttDiagram> {
 			return CommandExecutionResult.error("No such " + name2 + " task");
 		
 		task.setStart(from.getStart());
-		task.setEndTOTO(to.getEnd());
+		task.setEnd(to.getEnd());
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
 				new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
 		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
