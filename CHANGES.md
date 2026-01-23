@@ -1,4 +1,5 @@
 ## V1.2026.1 (Jan 18, 2026)
+ - [🐛 fix GUI - GUI flag generates error for release 1.2026.0](https://github.com/plantuml/plantuml/issues/2481)
  - [📦️ update C4-PlantUML to v2.13.0](https://github.com/plantuml/plantuml/commit/a74ea877c0543f22529c01a1f4850087b29f2bd5)
  - [🐾 remove from sub-diagram SVG processing instructions (#2478)](https://github.com/plantuml/plantuml/commit/67d745f352ffb22ced6b0aa6850c0c4af8e915b8)
  - [🐛 loading local themes](https://github.com/plantuml/plantuml/commit/9af8796da4eeb8e52d8dc1dfe60e8f54bb3dbc99)
@@ -2217,6 +2218,7 @@ have been renamed to generateImage
 ## V7994
 
 - [New options in table for Salt](salt#table)
+
 
 
 
