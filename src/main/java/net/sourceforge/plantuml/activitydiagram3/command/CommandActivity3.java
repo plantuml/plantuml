@@ -64,32 +64,6 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 	public static final String endingGroup() {
 		return "(" //
 				+ ";[%s]*(\\<\\<[%pLN_-]+\\>\\>(?:[%s]*\\<\\<[%pLN_-]+\\>\\>)*)?" //
-				+ "|" //
-				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
-				+ "|" //
-				+ "(?<![/|<}\\]])[/<}]" // About /<}
-				+ "|" //
-				+ "(?<![/|}\\]])\\]" // About ]
-				+ "|" //
-				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
-				+ "|" //
-				+ "(?<!\\|.{1,999})\\|" // About |
-				+ ")";
-	}
-
-	private static final String endingGroupShort() {
-		return "(" //
-				+ ";[%s]*(\\<\\<[%pLN_-]+\\>\\>(?:[%s]*\\<\\<[%pLN_-]+\\>\\>)*)?" //
-				+ "|" //
-				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
-				+ "|" //
-				+ "(?<![/|<}\\]])[/<}]" // About /<}
-				+ "|" //
-				+ "(?<![/|}\\]])\\]" // About ]
-				+ "|" //
-				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
-				+ "|" //
-				+ "\\|" // About |
 				+ ")";
 	}
 
@@ -109,7 +83,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
-				new RegexLeaf(2, "STYLE", endingGroupShort()), //
+				new RegexLeaf(2, "STYLE", endingGroup()), //
 				RegexLeaf.end());
 	}
 
@@ -139,8 +113,6 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
-
-		BoxStyle.checkDeprecatedWarning(diagram, arg.get("STYLE", 0));
 
 		BoxStyle style = BoxStyle.fromString(arg.get("STEREO", 0));
 		if (style == BoxStyle.PLAIN)

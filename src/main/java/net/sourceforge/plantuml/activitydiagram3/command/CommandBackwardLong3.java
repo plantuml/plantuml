@@ -85,8 +85,6 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 			stereotype = Stereotype.build(stereo);
 
 		final BoxStyle style = BoxStyle.fromString(end);
-		BoxStyle.checkDeprecatedWarning(diagram, end);
-
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
 
 		final LinkRendering in = LinkRendering.none();
