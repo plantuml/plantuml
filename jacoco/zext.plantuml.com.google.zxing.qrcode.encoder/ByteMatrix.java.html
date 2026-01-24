@@ -31,26 +31,26 @@ public final class ByteMatrix {
   private final int width;
   private final int height;
 
-<span class="nc" id="L34">  public ByteMatrix(int width, int height) {</span>
-<span class="nc" id="L35">    bytes = new byte[height][width];</span>
-<span class="nc" id="L36">    this.width = width;</span>
-<span class="nc" id="L37">    this.height = height;</span>
-<span class="nc" id="L38">  }</span>
+<span class="fc" id="L34">  public ByteMatrix(int width, int height) {</span>
+<span class="fc" id="L35">    bytes = new byte[height][width];</span>
+<span class="fc" id="L36">    this.width = width;</span>
+<span class="fc" id="L37">    this.height = height;</span>
+<span class="fc" id="L38">  }</span>
 
   public int getHeight() {
-<span class="nc" id="L41">    return height;</span>
+<span class="fc" id="L41">    return height;</span>
   }
 
   public int getWidth() {
-<span class="nc" id="L45">    return width;</span>
+<span class="fc" id="L45">    return width;</span>
   }
 
   public byte get(int x, int y) {
-<span class="nc" id="L49">    return bytes[y][x];</span>
+<span class="fc" id="L49">    return bytes[y][x];</span>
   }
 
   public byte[][] getArray() {
-<span class="nc" id="L53">    return bytes;</span>
+<span class="fc" id="L53">    return bytes;</span>
   }
 
   public void set(int x, int y, byte value) {
@@ -58,20 +58,20 @@ public final class ByteMatrix {
 <span class="nc" id="L58">  }</span>
 
   public void set(int x, int y, int value) {
-<span class="nc" id="L61">    bytes[y][x] = (byte) value;</span>
-<span class="nc" id="L62">  }</span>
+<span class="fc" id="L61">    bytes[y][x] = (byte) value;</span>
+<span class="fc" id="L62">  }</span>
 
   public void set(int x, int y, boolean value) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">    bytes[y][x] = (byte) (value ? 1 : 0);</span>
-<span class="nc" id="L66">  }</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    bytes[y][x] = (byte) (value ? 1 : 0);</span>
+<span class="fc" id="L66">  }</span>
 
   public void clear(byte value) {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">    for (int y = 0; y &lt; height; ++y) {</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">      for (int x = 0; x &lt; width; ++x) {</span>
-<span class="nc" id="L71">        bytes[y][x] = value;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">    for (int y = 0; y &lt; height; ++y) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">      for (int x = 0; x &lt; width; ++x) {</span>
+<span class="fc" id="L71">        bytes[y][x] = value;</span>
       }
     }
-<span class="nc" id="L74">  }</span>
+<span class="fc" id="L74">  }</span>
 
   public String toString() {
 <span class="nc" id="L77">    StringBuilder result = new StringBuilder(2 * width * height + 2);</span>

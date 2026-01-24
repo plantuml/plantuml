@@ -44,15 +44,15 @@ public final class BitMatrix {
 <span class="nc" id="L44">    this(dimension, dimension);</span>
 <span class="nc" id="L45">  }</span>
 
-<span class="nc" id="L47">  public BitMatrix(int width, int height) {</span>
-<span class="nc bnc" id="L48" title="All 4 branches missed.">    if (width &lt; 1 || height &lt; 1) {</span>
+<span class="fc" id="L47">  public BitMatrix(int width, int height) {</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">    if (width &lt; 1 || height &lt; 1) {</span>
 <span class="nc" id="L49">      throw new IllegalArgumentException(&quot;Both dimensions must be greater than 0&quot;);</span>
     }
-<span class="nc" id="L51">    this.width = width;</span>
-<span class="nc" id="L52">    this.height = height;</span>
-<span class="nc" id="L53">    this.rowSize = (width + 31) &gt;&gt; 5;</span>
-<span class="nc" id="L54">    bits = new int[rowSize * height];</span>
-<span class="nc" id="L55">  }</span>
+<span class="fc" id="L51">    this.width = width;</span>
+<span class="fc" id="L52">    this.height = height;</span>
+<span class="fc" id="L53">    this.rowSize = (width + 31) &gt;&gt; 5;</span>
+<span class="fc" id="L54">    bits = new int[rowSize * height];</span>
+<span class="fc" id="L55">  }</span>
 
   /**
    * &lt;p&gt;Gets the requested bit, where true means black.&lt;/p&gt;
@@ -62,8 +62,8 @@ public final class BitMatrix {
    * @return value of given bit in matrix
    */
   public boolean get(int x, int y) {
-<span class="nc" id="L65">    int offset = y * rowSize + (x &gt;&gt; 5);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">    return ((bits[offset] &gt;&gt;&gt; (x &amp; 0x1f)) &amp; 1) != 0;</span>
+<span class="fc" id="L65">    int offset = y * rowSize + (x &gt;&gt; 5);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    return ((bits[offset] &gt;&gt;&gt; (x &amp; 0x1f)) &amp; 1) != 0;</span>
   }
 
   /**
@@ -107,24 +107,24 @@ public final class BitMatrix {
    * @param height The height of the region
    */
   public void setRegion(int left, int top, int width, int height) {
-<span class="nc bnc" id="L110" title="All 4 branches missed.">    if (top &lt; 0 || left &lt; 0) {</span>
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">    if (top &lt; 0 || left &lt; 0) {</span>
 <span class="nc" id="L111">      throw new IllegalArgumentException(&quot;Left and top must be nonnegative&quot;);</span>
     }
-<span class="nc bnc" id="L113" title="All 4 branches missed.">    if (height &lt; 1 || width &lt; 1) {</span>
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">    if (height &lt; 1 || width &lt; 1) {</span>
 <span class="nc" id="L114">      throw new IllegalArgumentException(&quot;Height and width must be at least 1&quot;);</span>
     }
-<span class="nc" id="L116">    int right = left + width;</span>
-<span class="nc" id="L117">    int bottom = top + height;</span>
-<span class="nc bnc" id="L118" title="All 4 branches missed.">    if (bottom &gt; this.height || right &gt; this.width) {</span>
+<span class="fc" id="L116">    int right = left + width;</span>
+<span class="fc" id="L117">    int bottom = top + height;</span>
+<span class="pc bpc" id="L118" title="2 of 4 branches missed.">    if (bottom &gt; this.height || right &gt; this.width) {</span>
 <span class="nc" id="L119">      throw new IllegalArgumentException(&quot;The region must fit inside the matrix&quot;);</span>
     }
-<span class="nc bnc" id="L121" title="All 2 branches missed.">    for (int y = top; y &lt; bottom; y++) {</span>
-<span class="nc" id="L122">      int offset = y * rowSize;</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">      for (int x = left; x &lt; right; x++) {</span>
-<span class="nc" id="L124">        bits[offset + (x &gt;&gt; 5)] |= 1 &lt;&lt; (x &amp; 0x1f);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">    for (int y = top; y &lt; bottom; y++) {</span>
+<span class="fc" id="L122">      int offset = y * rowSize;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">      for (int x = left; x &lt; right; x++) {</span>
+<span class="fc" id="L124">        bits[offset + (x &gt;&gt; 5)] |= 1 &lt;&lt; (x &amp; 0x1f);</span>
       }
     }
-<span class="nc" id="L127">  }</span>
+<span class="fc" id="L127">  }</span>
 
   /**
    * A fast method to retrieve one row of data from the matrix as a BitArray.
@@ -174,14 +174,14 @@ public final class BitMatrix {
    * @return The width of the matrix
    */
   public int getWidth() {
-<span class="nc" id="L177">    return width;</span>
+<span class="fc" id="L177">    return width;</span>
   }
 
   /**
    * @return The height of the matrix
    */
   public int getHeight() {
-<span class="nc" id="L184">    return height;</span>
+<span class="fc" id="L184">    return height;</span>
   }
 
   public boolean equals(Object o) {
