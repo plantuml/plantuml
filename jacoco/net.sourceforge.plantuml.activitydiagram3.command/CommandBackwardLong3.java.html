@@ -85,14 +85,12 @@ public class CommandBackwardLong3 extends CommandMultilines3&lt;ActivityDiagram3
 <span class="nc" id="L85">			stereotype = Stereotype.build(stereo);</span>
 
 <span class="nc" id="L87">		final BoxStyle style = BoxStyle.fromString(end);</span>
-<span class="nc" id="L88">		BoxStyle.checkDeprecatedWarning(diagram, end);</span>
+<span class="nc" id="L88">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), end.length());</span>
 
-<span class="nc" id="L90">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), end.length());</span>
+<span class="nc" id="L90">		final LinkRendering in = LinkRendering.none();</span>
+<span class="nc" id="L91">		final LinkRendering out = LinkRendering.none();</span>
 
-<span class="nc" id="L92">		final LinkRendering in = LinkRendering.none();</span>
-<span class="nc" id="L93">		final LinkRendering out = LinkRendering.none();</span>
-
-<span class="nc" id="L95">		return diagram.backward(lines.toDisplay(), style, in, out, stereotype);</span>
+<span class="nc" id="L93">		return diagram.backward(lines.toDisplay(), style, in, out, stereotype);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

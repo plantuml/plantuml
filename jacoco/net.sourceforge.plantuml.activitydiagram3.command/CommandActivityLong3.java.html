@@ -91,10 +91,8 @@ public class CommandActivityLong3 extends CommandMultilines3&lt;ActivityDiagram3
 <span class="nc" id="L91">			stereotype = Stereotype.build(stereo);</span>
 
 <span class="fc" id="L93">		final BoxStyle style = BoxStyle.fromString(end);</span>
-<span class="fc" id="L94">		BoxStyle.checkDeprecatedWarning(diagram, end);</span>
-
-<span class="fc" id="L96">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), end.length());</span>
-<span class="fc" id="L97">		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);</span>
+<span class="fc" id="L94">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), end.length());</span>
+<span class="fc" id="L95">		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

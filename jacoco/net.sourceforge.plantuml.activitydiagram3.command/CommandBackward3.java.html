@@ -98,41 +98,39 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 		else
 <span class="nc" id="L99">			boxStyle = BoxStyle.fromString(styleString);</span>
 
-<span class="nc" id="L101">		BoxStyle.checkDeprecatedWarning(diagram, styleString);</span>
+<span class="nc" id="L101">		final String stereo = arg.get(&quot;STYLE&quot;, 1);</span>
 
-<span class="nc" id="L103">		final String stereo = arg.get(&quot;STYLE&quot;, 1);</span>
+<span class="nc" id="L103">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L105">			stereotype = Stereotype.build(stereo);</span>
 
-<span class="nc" id="L105">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L107">			stereotype = Stereotype.build(stereo);</span>
+<span class="nc" id="L107">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
-<span class="nc" id="L109">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L109">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
+<span class="nc" id="L110">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
 
-<span class="nc" id="L111">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
-<span class="nc" id="L112">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
-
-<span class="nc" id="L114">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
+<span class="nc" id="L112">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
 	}
 
 	static public LinkRendering getBackRendering(ActivityDiagram3 diagram, RegexResult arg, String name)
 			throws NoSuchColorException {
 		final LinkRendering in;
-<span class="nc" id="L120">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (incomingColor == null)</span>
-<span class="nc" id="L122">			in = LinkRendering.none();</span>
+<span class="nc" id="L118">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (incomingColor == null)</span>
+<span class="nc" id="L120">			in = LinkRendering.none();</span>
 		else
-<span class="nc" id="L124">			in = LinkRendering.create(incomingColor);</span>
-<span class="nc" id="L125">		final String label = arg.get(name, 0);</span>
-<span class="nc" id="L126">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
+<span class="nc" id="L122">			in = LinkRendering.create(incomingColor);</span>
+<span class="nc" id="L123">		final String label = arg.get(name, 0);</span>
+<span class="nc" id="L124">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
 	}
 
 	static private Rainbow getRainbow(String key, ActivityDiagram3 diagram, RegexResult arg)
 			throws NoSuchColorException {
-<span class="nc" id="L131">		final String colorString = arg.get(key, 0);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (colorString == null) {</span>
-<span class="nc" id="L133">			return null;</span>
+<span class="nc" id="L129">		final String colorString = arg.get(key, 0);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (colorString == null) {</span>
+<span class="nc" id="L131">			return null;</span>
 		}
-<span class="nc" id="L135">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
+<span class="nc" id="L133">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
 	}
 
 }

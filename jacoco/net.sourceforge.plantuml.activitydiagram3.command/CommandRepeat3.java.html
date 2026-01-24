@@ -92,21 +92,20 @@ public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="fc" id="L92">			boxStyle = BoxStyle.PLAIN;</span>
 		else
 <span class="nc" id="L94">			boxStyle = BoxStyle.fromString(styleString);</span>
-<span class="fc" id="L95">		BoxStyle.checkDeprecatedWarning(diagram, styleString);</span>
 
-<span class="fc" id="L97">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L98">		String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (stereo == null)</span>
-<span class="fc" id="L100">			stereo = arg.get(&quot;STYLE&quot;, 1);</span>
-<span class="fc" id="L101">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L103">			stereotype = Stereotype.build(stereo);</span>
-<span class="nc" id="L104">			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);</span>
+<span class="fc" id="L96">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L97">		String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (stereo == null)</span>
+<span class="fc" id="L99">			stereo = arg.get(&quot;STYLE&quot;, 1);</span>
+<span class="fc" id="L100">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L102">			stereotype = Stereotype.build(stereo);</span>
+<span class="nc" id="L103">			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);</span>
 		}
 
-<span class="fc" id="L107">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
+<span class="fc" id="L106">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
 
-<span class="fc" id="L109">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L108">		return CommandExecutionResult.ok();</span>
 	}
 
 }
