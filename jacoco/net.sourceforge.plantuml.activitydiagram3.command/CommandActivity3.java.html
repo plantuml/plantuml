@@ -61,29 +61,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
-	public static final String endingGroup() {
-<span class="fc" id="L65">		return &quot;(&quot; //</span>
-				+ &quot;;[%s]*(\\&lt;\\&lt;[%pLN_-]+\\&gt;\\&gt;(?:[%s]*\\&lt;\\&lt;[%pLN_-]+\\&gt;\\&gt;)*)?&quot; //
+	public static final String ACTIVITY_STEREOTYPES = &quot;ACTIVITY_STEREOTYPES&quot;;
+
+	public static RegexLeaf activityStereotypes() {
+<span class="fc" id="L67">		final String endingGroup = &quot;(&quot; //</span>
+				+ &quot;(\\&lt;\\&lt;[%pLN_-]+\\&gt;\\&gt;(?:[%s]*\\&lt;\\&lt;[%pLN_-]+\\&gt;\\&gt;)*)?&quot; //
 				+ &quot;)&quot;;
+<span class="fc" id="L70">		return new RegexLeaf(2, ACTIVITY_STEREOTYPES, endingGroup);</span>
 	}
 
-	public static void main(String[] args) {
-<span class="nc" id="L71">		System.err.println(Matcher.quoteReplacement(&quot;\\\\&quot;));</span>
-<span class="nc" id="L72">		System.err.println(Matcher.quoteReplacement(&quot;\\\\&quot;).equals(&quot;\\\\\\\\&quot;));</span>
-<span class="nc" id="L73">	}</span>
-
 	public CommandActivity3() {
-<span class="fc" id="L76">		super(getRegexConcat());</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L74">		super(getRegexConcat());</span>
+<span class="fc" id="L75">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L80">		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L78">		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L82">				color().getRegex(), //</span>
-<span class="fc" id="L83">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L80">				color().getRegex(), //</span>
+<span class="fc" id="L81">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
-<span class="fc" id="L86">				new RegexLeaf(2, &quot;STYLE&quot;, endingGroup()), //</span>
+				new RegexLeaf(&quot;;&quot;), //
+<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L86">				activityStereotypes(), //</span>
 <span class="fc" id="L87">				RegexLeaf.end());</span>
 	}
 
@@ -106,7 +106,7 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 <span class="fc" id="L106">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L107">		String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
 <span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (stereo == null)</span>
-<span class="fc" id="L109">			stereo = arg.get(&quot;STYLE&quot;, 1);</span>
+<span class="fc" id="L109">			stereo = arg.get(ACTIVITY_STEREOTYPES, 1);</span>
 
 <span class="fc" id="L111">		Stereotype stereotype = null;</span>
 <span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (stereo != null) {</span>
@@ -116,7 +116,7 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 
 <span class="fc" id="L117">		BoxStyle style = BoxStyle.fromString(arg.get(&quot;STEREO&quot;, 0));</span>
 <span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (style == BoxStyle.PLAIN)</span>
-<span class="fc" id="L119">			style = BoxStyle.fromString(arg.get(&quot;STYLE&quot;, 0));</span>
+<span class="fc" id="L119">			style = BoxStyle.fromString(arg.get(ACTIVITY_STEREOTYPES, 0));</span>
 
 <span class="fc" id="L121">		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 <span class="fc" id="L122">		return diagram.addActivity(display, style, url, colors, stereotype);</span>

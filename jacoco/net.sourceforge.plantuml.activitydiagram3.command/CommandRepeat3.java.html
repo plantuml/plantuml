@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -59,53 +58,59 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandRepeat3() {
-<span class="fc" id="L62">		super(getRegexConcat());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L67">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
-<span class="fc" id="L68">				ColorParser.exp4(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+<span class="fc" id="L67">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;repeat&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(1, &quot;LABEL&quot;, &quot;:(.*?)&quot;)), //
-<span class="fc" id="L72">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L73">				new RegexOptional(new RegexLeaf(2, &quot;STYLE&quot;, CommandActivity3.endingGroup())), //</span>
-				// new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L75">				RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(&quot;:&quot;), //
+						new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
+<span class="fc" id="L73">						StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+						new RegexLeaf(&quot;;&quot;), //
+<span class="fc" id="L75">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">						CommandActivity3.activityStereotypes() //</span>
+						)), //
+<span class="fc" id="L78">				StereotypePattern.optional(&quot;STEREO3&quot;), //</span>
+<span class="fc" id="L79">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L79">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L83">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		// final String s = arg.get(&quot;COLOR&quot;, 0);
-		// final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-<span class="fc" id="L87">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+		// final HColor color = s == null ? null :
+		// diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+<span class="fc" id="L92">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 		final BoxStyle boxStyle;
-<span class="fc" id="L89">		final String styleString = arg.get(&quot;STYLE&quot;, 0);</span>
+<span class="fc" id="L94">		final String styleString = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);</span>
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (styleString == null)</span>
-<span class="fc" id="L92">			boxStyle = BoxStyle.PLAIN;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (styleString == null)</span>
+<span class="fc" id="L97">			boxStyle = BoxStyle.PLAIN;</span>
 		else
-<span class="nc" id="L94">			boxStyle = BoxStyle.fromString(styleString);</span>
+<span class="nc" id="L99">			boxStyle = BoxStyle.fromString(styleString);</span>
 
-<span class="fc" id="L96">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L97">		String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (stereo == null)</span>
-<span class="fc" id="L99">			stereo = arg.get(&quot;STYLE&quot;, 1);</span>
-<span class="fc" id="L100">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L102">			stereotype = Stereotype.build(stereo);</span>
-<span class="nc" id="L103">			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);</span>
+<span class="fc" id="L101">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L102">		String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (stereo == null)</span>
+<span class="fc" id="L104">			stereo = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);</span>
+<span class="fc" id="L105">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L107">			stereotype = Stereotype.build(stereo);</span>
+<span class="nc" id="L108">			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);</span>
 		}
 
-<span class="fc" id="L106">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
+<span class="fc" id="L111">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
 
-<span class="fc" id="L108">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L113">		return CommandExecutionResult.ok();</span>
 	}
 
 }
