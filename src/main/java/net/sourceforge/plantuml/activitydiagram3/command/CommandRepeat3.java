@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -68,10 +67,15 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(1, "LABEL", ":(.*?)")), //
-				StereotypePattern.optional("STEREO2"), //
-				new RegexOptional(new RegexLeaf(2, "STYLE", CommandActivity3.endingGroup())), //
-				// new RegexLeaf(";?"), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(":"), //
+						new RegexLeaf(1, "LABEL", "(.*?)"), //
+						StereotypePattern.optional("STEREO2"), //
+						new RegexLeaf(";"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						CommandActivity3.activityStereotypes() //
+						)), //
+				StereotypePattern.optional("STEREO3"), //
 				RegexLeaf.end());
 	}
 
@@ -80,13 +84,14 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		// final String s = arg.get("COLOR", 0);
-		// final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		// final HColor color = s == null ? null :
+		// diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		final BoxStyle boxStyle;
-		final String styleString = arg.get("STYLE", 0);
+		final String styleString = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
 
 		if (styleString == null)
 			boxStyle = BoxStyle.PLAIN;
@@ -96,7 +101,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		String stereo = arg.getLazzy("STEREO", 0);
 		if (stereo == null)
-			stereo = arg.get("STYLE", 1);
+			stereo = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
 		Stereotype stereotype = null;
 		if (stereo != null) {
 			stereotype = Stereotype.build(stereo);

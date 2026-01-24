@@ -54,7 +54,9 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 	private final static IRegex END = new RegexConcat(//
 			new RegexLeaf(1, "TEXT", "(.*)"), //
-			new RegexLeaf(2, "END", CommandActivity3.endingGroup()), //
+			new RegexLeaf(";"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			CommandActivity3.activityStereotypes(), //
 			RegexLeaf.end());
 
 	public CommandBackwardLong3() {
@@ -77,15 +79,16 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
-		final String end = lineLast.get("END", 0);
-		final String stereo = lineLast.get("END", 1);
+		final String end = lineLast.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
+		final String stereo = lineLast.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
 
 		Stereotype stereotype = null;
 		if (stereo != null)
 			stereotype = Stereotype.build(stereo);
 
 		final BoxStyle style = BoxStyle.fromString(end);
-		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
+		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);
+		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
 
 		final LinkRendering in = LinkRendering.none();
 		final LinkRendering out = LinkRendering.none();

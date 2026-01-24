@@ -56,7 +56,9 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 	private final static IRegex END = new RegexConcat(//
 			new RegexLeaf(1, "TEXT", "(.*)"), //
-			new RegexLeaf(2, "END", CommandActivity3.endingGroup()), //
+			new RegexLeaf(";"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			CommandActivity3.activityStereotypes(), //
 			RegexLeaf.end());
 
 	public CommandActivityLong3() {
@@ -83,15 +85,16 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 
-		final String end = lineLast.get("END", 0);
+		final String end = lineLast.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
 
 		Stereotype stereotype = null;
-		String stereo = lineLast.get("END", 1);
+		String stereo = lineLast.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
 		if (stereo != null)
 			stereotype = Stereotype.build(stereo);
 
 		final BoxStyle style = BoxStyle.fromString(end);
-		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
+		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);
+		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
 		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);
 	}
 }

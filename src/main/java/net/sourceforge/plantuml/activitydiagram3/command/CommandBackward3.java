@@ -74,7 +74,9 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
-				new RegexLeaf(2, "STYLE", CommandActivity3.endingGroup()), //
+				new RegexLeaf(";"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				CommandActivity3.activityStereotypes(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf("\\("), //
@@ -91,14 +93,14 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final BoxStyle boxStyle;
-		final String styleString = arg.get("STYLE", 0);
+		final String styleString = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
 
 		if (styleString == null)
 			boxStyle = BoxStyle.PLAIN;
 		else
 			boxStyle = BoxStyle.fromString(styleString);
 
-		final String stereo = arg.get("STYLE", 1);
+		final String stereo = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
 
 		Stereotype stereotype = null;
 		if (stereo != null)

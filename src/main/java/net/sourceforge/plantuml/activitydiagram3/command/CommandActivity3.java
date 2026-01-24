@@ -61,15 +61,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public static final String endingGroup() {
-		return "(" //
-				+ ";[%s]*(\\<\\<[%pLN_-]+\\>\\>(?:[%s]*\\<\\<[%pLN_-]+\\>\\>)*)?" //
-				+ ")";
-	}
+	public static final String ACTIVITY_STEREOTYPES = "ACTIVITY_STEREOTYPES";
 
-	public static void main(String[] args) {
-		System.err.println(Matcher.quoteReplacement("\\\\"));
-		System.err.println(Matcher.quoteReplacement("\\\\").equals("\\\\\\\\"));
+	public static RegexLeaf activityStereotypes() {
+		final String endingGroup = "(" //
+				+ "(\\<\\<[%pLN_-]+\\>\\>(?:[%s]*\\<\\<[%pLN_-]+\\>\\>)*)?" //
+				+ ")";
+		return new RegexLeaf(2, ACTIVITY_STEREOTYPES, endingGroup);
 	}
 
 	public CommandActivity3() {
@@ -83,7 +81,9 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
-				new RegexLeaf(2, "STYLE", endingGroup()), //
+				new RegexLeaf(";"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				activityStereotypes(), //
 				RegexLeaf.end());
 	}
 
@@ -106,7 +106,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		String stereo = arg.get("STEREO", 0);
 		if (stereo == null)
-			stereo = arg.get("STYLE", 1);
+			stereo = arg.get(ACTIVITY_STEREOTYPES, 1);
 
 		Stereotype stereotype = null;
 		if (stereo != null) {
@@ -116,7 +116,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		BoxStyle style = BoxStyle.fromString(arg.get("STEREO", 0));
 		if (style == BoxStyle.PLAIN)
-			style = BoxStyle.fromString(arg.get("STYLE", 0));
+			style = BoxStyle.fromString(arg.get(ACTIVITY_STEREOTYPES, 0));
 
 		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);
