@@ -36,37 +36,38 @@
 package net.sourceforge.plantuml.stereo;
 
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
 
-public class StereotypePattern {
+public class Stereogroup {
 
-	public static IRegex optional(String param) {
-		return new RegexConcat( //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(mandatory(param)), //
-				RegexLeaf.spaceZeroOrMore() //
-		);
+	private static final String KEY = "STEREOGROUP";
+
+	private String full;
+
+	public static IRegex optionalStereogroup() {
+		final String regex = "(\\<\\<.+?\\>\\>(?:[%s]*\\<\\<.+?\\>\\>)*)";
+		return new RegexOptional(new RegexLeaf(1, KEY, regex));
 	}
 
-	public static IRegex mandatory(String param) {
-		return new RegexLeaf(1, param, "(\\<\\<.+?\\>\\>)");
+	public static Stereogroup buildStereogroup(RegexResult arg) {
+		final String full = arg.get(Stereogroup.KEY, 0);
+		return new Stereogroup(full);
 	}
 
-	public static IRegex optionalArchimate(String param) {
-		return new RegexConcat( //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(//
-						new RegexLeaf(1, param, "(\\<\\<[-\\w]+?\\>\\>)")), //
-				RegexLeaf.spaceZeroOrMore() //
-		);
+	private Stereogroup(String full) {
+		this.full = full;
 	}
 
-	public static String removeChevronBrackets(String stereo) {
-		if (stereo != null && stereo.startsWith("<<") && stereo.endsWith(">>"))
-			return stereo.substring(2, stereo.length() - 2);
-		return stereo;
+	public String getFull() {
+		return full;
+	}
+
+	public Stereotype buildStereotype() {
+		if (full == null)
+			return null;
+		return Stereotype.build(full);
 	}
 
 }

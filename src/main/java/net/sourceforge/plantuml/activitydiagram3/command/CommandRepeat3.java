@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -63,19 +64,16 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //
-				StereotypePattern.optional("STEREO1"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(":"), //
 						new RegexLeaf(1, "LABEL", "(.*?)"), //
-						StereotypePattern.optional("STEREO2"), //
 						new RegexLeaf(";"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						CommandActivity3.activityStereotypes() //
-						)), //
-				StereotypePattern.optional("STEREO3"), //
+						RegexLeaf.spaceZeroOrMore() //
+				)), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 
@@ -86,27 +84,21 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-		// final String s = arg.get("COLOR", 0);
-		// final HColor color = s == null ? null :
-		// diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		final BoxStyle boxStyle;
-		final String styleString = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
-
-		if (styleString == null)
-			boxStyle = BoxStyle.PLAIN;
-		else
-			boxStyle = BoxStyle.fromString(styleString);
+		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);
+		final BoxStyle boxStyle = BoxStyle.fromString(stereogroup.getFull());
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		String stereo = arg.getLazzy("STEREO", 0);
-		if (stereo == null)
-			stereo = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
-		Stereotype stereotype = null;
-		if (stereo != null) {
-			stereotype = Stereotype.build(stereo);
-			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
-		}
+		final Stereotype stereotype = stereogroup.buildStereotype();
+//		String stereo = arg.getLazzy("STEREO", 0);
+//		if (stereo == null)
+//			stereo = stereogroup.getFull();
+//
+//		Stereotype stereotype = null;
+//		if (stereo != null) {
+//			stereotype = Stereotype.build(stereo);
+//			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
+//		}
 
 		diagram.startRepeat(label, boxStyle, colors, stereotype);
 

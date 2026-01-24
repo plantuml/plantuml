@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import java.util.regex.Matcher;
-
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -52,23 +50,16 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
-
-	public static final String ACTIVITY_STEREOTYPES = "ACTIVITY_STEREOTYPES";
-
-	public static RegexLeaf activityStereotypes() {
-		final String endingGroup = "(" //
-				+ "(\\<\\<[%pLN_-]+\\>\\>(?:[%s]*\\<\\<[%pLN_-]+\\>\\>)*)?" //
-				+ ")";
-		return new RegexLeaf(2, ACTIVITY_STEREOTYPES, endingGroup);
-	}
 
 	public CommandActivity3() {
 		super(getRegexConcat());
@@ -78,12 +69,12 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //
 				UrlBuilder.OPTIONAL, //
 				color().getRegex(), //
-				StereotypePattern.optional("STEREO"), //
+				StereotypePattern.optional("IGNORED"), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
 				new RegexLeaf(";"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				activityStereotypes(), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 
@@ -104,19 +95,18 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		String stereo = arg.get("STEREO", 0);
-		if (stereo == null)
-			stereo = arg.get(ACTIVITY_STEREOTYPES, 1);
+		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);
 
-		Stereotype stereotype = null;
-		if (stereo != null) {
-			stereotype = Stereotype.build(stereo);
-			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
-		}
+		if (arg.get("IGNORED", 0) != null)
+			diagram.addWarning(new Warning("You must use stereotype at the end of the line after the ';'"));
 
-		BoxStyle style = BoxStyle.fromString(arg.get("STEREO", 0));
-		if (style == BoxStyle.PLAIN)
-			style = BoxStyle.fromString(arg.get(ACTIVITY_STEREOTYPES, 0));
+		final Stereotype stereotype = stereogroup.buildStereotype();
+//		if (stereo != null) {
+//			stereotype = Stereotype.build(stereo);
+//			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
+//		}
+
+		final BoxStyle style = BoxStyle.fromString(stereogroup.getFull());
 
 		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -58,7 +59,7 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 			new RegexLeaf(1, "TEXT", "(.*)"), //
 			new RegexLeaf(";"), //
 			RegexLeaf.spaceZeroOrMore(), //
-			CommandActivity3.activityStereotypes(), //
+			Stereogroup.optionalStereogroup(), //
 			RegexLeaf.end());
 
 	public CommandActivityLong3() {
@@ -85,14 +86,10 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 
-		final String end = lineLast.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
+		final Stereogroup stereogroup = Stereogroup.buildStereogroup(lineLast);
+		final Stereotype stereotype = stereogroup.buildStereotype();
 
-		Stereotype stereotype = null;
-		String stereo = lineLast.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
-		if (stereo != null)
-			stereotype = Stereotype.build(stereo);
-
-		final BoxStyle style = BoxStyle.fromString(end);
+		final BoxStyle style = BoxStyle.fromString(stereogroup.getFull());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);
 		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
 		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -76,7 +77,7 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
 				new RegexLeaf(";"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				CommandActivity3.activityStereotypes(), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf("\\("), //
@@ -90,21 +91,11 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-		final BoxStyle boxStyle;
-		final String styleString = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);
-
-		if (styleString == null)
-			boxStyle = BoxStyle.PLAIN;
-		else
-			boxStyle = BoxStyle.fromString(styleString);
-
-		final String stereo = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);
-
-		Stereotype stereotype = null;
-		if (stereo != null)
-			stereotype = Stereotype.build(stereo);
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);
+		final BoxStyle boxStyle = BoxStyle.fromString(stereogroup.getFull());
+		final Stereotype stereotype = stereogroup.buildStereotype();
 
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 
