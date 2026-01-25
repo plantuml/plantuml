@@ -126,11 +126,11 @@ public abstract class BoxStyle {
 	}
 
 	public static BoxStyle fromString(String style) {
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (style != null)</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">			for (String s : style.split(&quot;\\s&quot;)) {</span>
-<span class="fc" id="L131">				s = s.replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">				for (BoxStyle bs : values)</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">					if (s.equalsIgnoreCase(bs.stereotype))</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (style != null)</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (String s : style.split(&quot;\\s&quot;)) {</span>
+<span class="nc" id="L131">				s = s.replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				for (BoxStyle bs : values)</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">					if (s.equalsIgnoreCase(bs.stereotype))</span>
 <span class="nc" id="L134">						return bs;</span>
 			}
 

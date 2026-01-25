@@ -48,9 +48,9 @@ public class ComponentAdapter extends AbstractTextBlock implements TextBlock {
 
 	private final Component component;
 
-<span class="nc" id="L51">	public ComponentAdapter(Component component) {</span>
-<span class="nc" id="L52">		this.component = component;</span>
-<span class="nc" id="L53">	}</span>
+<span class="fc" id="L51">	public ComponentAdapter(Component component) {</span>
+<span class="fc" id="L52">		this.component = component;</span>
+<span class="fc" id="L53">	}</span>
 
 	public void drawU(UGraphic ug) {
 <span class="nc bnc" id="L56" title="All 2 branches missed.">		if (component == null) {</span>
@@ -61,8 +61,8 @@ public class ComponentAdapter extends AbstractTextBlock implements TextBlock {
 <span class="nc" id="L61">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (component == null) {</span>
-<span class="nc" id="L65">			return new XDimension2D(0, 0);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (component == null) {</span>
+<span class="fc" id="L65">			return new XDimension2D(0, 0);</span>
 		}
 <span class="nc" id="L67">		final double width = component.getPreferredWidth(stringBounder);</span>
 <span class="nc" id="L68">		final double height = component.getPreferredHeight(stringBounder);</span>

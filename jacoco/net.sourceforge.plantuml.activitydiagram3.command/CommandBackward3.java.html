@@ -51,17 +51,18 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandBackward3() {
-<span class="fc" id="L60">		super(getRegexConcat());</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L64">		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -69,15 +70,15 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 								new RegexLeaf(1, &quot;INCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;INCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;backward&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;;&quot;), //
-<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L79">				CommandActivity3.activityStereotypes(), //</span>
-<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -85,54 +86,44 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 								new RegexLeaf(1, &quot;OUTCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;OUTCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L89">				RegexLeaf.end());</span>
+<span class="fc" id="L89">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L90">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-		final BoxStyle boxStyle;
-<span class="nc" id="L96">		final String styleString = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 0);</span>
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+<span class="nc" id="L96">		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);</span>
+<span class="nc" id="L97">		final BoxStyle boxStyle = BoxStyle.fromString(stereogroup.getFull());</span>
+<span class="nc" id="L98">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (styleString == null)</span>
-<span class="nc" id="L99">			boxStyle = BoxStyle.PLAIN;</span>
-		else
-<span class="nc" id="L101">			boxStyle = BoxStyle.fromString(styleString);</span>
+<span class="nc" id="L100">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
-<span class="nc" id="L103">		final String stereo = arg.get(CommandActivity3.ACTIVITY_STEREOTYPES, 1);</span>
+<span class="nc" id="L102">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
+<span class="nc" id="L103">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
 
-<span class="nc" id="L105">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L107">			stereotype = Stereotype.build(stereo);</span>
-
-<span class="nc" id="L109">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-
-<span class="nc" id="L111">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
-<span class="nc" id="L112">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
-
-<span class="nc" id="L114">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
+<span class="nc" id="L105">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
 	}
 
 	static public LinkRendering getBackRendering(ActivityDiagram3 diagram, RegexResult arg, String name)
 			throws NoSuchColorException {
 		final LinkRendering in;
-<span class="nc" id="L120">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (incomingColor == null)</span>
-<span class="nc" id="L122">			in = LinkRendering.none();</span>
+<span class="nc" id="L111">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (incomingColor == null)</span>
+<span class="nc" id="L113">			in = LinkRendering.none();</span>
 		else
-<span class="nc" id="L124">			in = LinkRendering.create(incomingColor);</span>
-<span class="nc" id="L125">		final String label = arg.get(name, 0);</span>
-<span class="nc" id="L126">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
+<span class="nc" id="L115">			in = LinkRendering.create(incomingColor);</span>
+<span class="nc" id="L116">		final String label = arg.get(name, 0);</span>
+<span class="nc" id="L117">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
 	}
 
 	static private Rainbow getRainbow(String key, ActivityDiagram3 diagram, RegexResult arg)
 			throws NoSuchColorException {
-<span class="nc" id="L131">		final String colorString = arg.get(key, 0);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (colorString == null) {</span>
-<span class="nc" id="L133">			return null;</span>
+<span class="nc" id="L122">		final String colorString = arg.get(key, 0);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (colorString == null) {</span>
+<span class="nc" id="L124">			return null;</span>
 		}
-<span class="nc" id="L135">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
+<span class="nc" id="L126">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
 	}
 
 }
