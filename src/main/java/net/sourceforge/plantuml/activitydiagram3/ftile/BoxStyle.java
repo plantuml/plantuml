@@ -126,13 +126,10 @@ public abstract class BoxStyle {
 	}
 
 	public static BoxStyle fromString(String style) {
-		if (style != null)
-			for (String s : style.split("\\s")) {
-				s = s.replaceAll("\\W", "");
-				for (BoxStyle bs : values)
-					if (s.equalsIgnoreCase(bs.stereotype))
-						return bs;
-			}
+		style = style.replaceAll("-", "");
+		for (BoxStyle bs : values)
+			if (style.equalsIgnoreCase(bs.stereotype))
+				return bs;
 
 		return PLAIN;
 	}

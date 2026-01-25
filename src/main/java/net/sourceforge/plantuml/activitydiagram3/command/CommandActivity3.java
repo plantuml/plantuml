@@ -94,11 +94,16 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));
 		}
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);
+		// Colors colors = color().getColor(arg,
+		// diagram.getSkinParam().getIHtmlColorSet());
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		if (arg.get("IGNORED", 0) != null)
 			diagram.addWarning(new Warning("You must use stereotype at the end of the line after the ';'"));
+
+		if (arg.get("COLOR", 0) != null)
+			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + arg.get("COLOR", 0) + ">> at the end of the line, after the ';'"));
 
 		final Stereotype stereotype = stereogroup.buildStereotype();
 //		if (stereo != null) {
@@ -106,7 +111,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 //			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 //		}
 
-		final BoxStyle style = BoxStyle.fromString(stereogroup.getFull());
+		final BoxStyle style = stereogroup.getBoxStyle();
 
 		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);

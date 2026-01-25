@@ -78,6 +78,18 @@ public class Colors {
 		return result;
 	}
 
+	public Colors mergeWith(Colors other) {
+		if (other == null)
+			return this;
+
+		final Colors result = copy();
+		result.map.putAll(other.map);
+		if (other.lineStyle != null)
+			result.lineStyle = other.lineStyle;
+
+		return result;
+	}
+
 	private Colors() {
 	}
 

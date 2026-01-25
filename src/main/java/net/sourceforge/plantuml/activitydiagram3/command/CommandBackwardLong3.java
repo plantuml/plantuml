@@ -80,10 +80,10 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
-		final Stereogroup stereogroup = Stereogroup.buildStereogroup(lineLast);
+		final Stereogroup stereogroup = Stereogroup.build(lineLast);
 		final Stereotype stereotype = stereogroup.buildStereotype();
 
-		final BoxStyle style = BoxStyle.fromString(stereogroup.getFull());
+		final BoxStyle style = stereogroup.getBoxStyle();
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);
 		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
 
