@@ -77,7 +77,9 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(currentStyleBuilder);
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
-		final HColor backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
+		final HColor backColor = color == null
+				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())
+				: color;
 		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
 		final FontConfiguration fontArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
 		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());

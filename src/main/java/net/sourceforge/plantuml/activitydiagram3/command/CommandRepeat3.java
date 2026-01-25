@@ -50,11 +50,10 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -85,21 +84,16 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);
-		final BoxStyle boxStyle = BoxStyle.fromString(stereogroup.getFull());
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final BoxStyle boxStyle = stereogroup.getBoxStyle();
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final Stereotype stereotype = stereogroup.buildStereotype();
-//		String stereo = arg.getLazzy("STEREO", 0);
-//		if (stereo == null)
-//			stereo = stereogroup.getFull();
-//
-//		Stereotype stereotype = null;
-//		if (stereo != null) {
-//			stereotype = Stereotype.build(stereo);
-//			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
-//		}
 
+		if (arg.get("COLOR", 0) != null)
+			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + arg.get("COLOR", 0)
+					+ ">> at the end of the line, after the ';'"));
+
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
 		diagram.startRepeat(label, boxStyle, colors, stereotype);
 
 		return CommandExecutionResult.ok();

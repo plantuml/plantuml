@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
-import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -52,9 +50,8 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -104,7 +101,7 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				)), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				StereotypePattern.optional("STEREO"), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 
@@ -123,38 +120,12 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 			rainbow = Rainbow.build(diagram.getSkinParam(), colorString,
 					diagram.getSkinParam().colorArrowSeparationSpace());
 
-		final Stereotype stereotype;
-		final String stereo = arg.get("STEREO", 0);
-		if (stereo != null)
-			stereotype = Stereotype.build(stereo);
-		else
-			stereotype = null;
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Stereotype stereotype = stereogroup.buildStereotype();
 
 		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, null, stereotype);
+		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow, colors, stereotype);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

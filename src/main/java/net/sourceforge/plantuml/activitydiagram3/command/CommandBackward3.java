@@ -93,8 +93,8 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);
-		final BoxStyle boxStyle = BoxStyle.fromString(stereogroup.getFull());
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final BoxStyle boxStyle = stereogroup.getBoxStyle();
 		final Stereotype stereotype = stereogroup.buildStereotype();
 
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));

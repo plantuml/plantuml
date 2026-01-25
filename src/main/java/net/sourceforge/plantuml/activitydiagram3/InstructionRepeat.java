@@ -168,7 +168,8 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
 		tmp = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, tmp, test, yes, out, colors,
-				back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder, colors2, stereotype2);
+				back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder, colors.mergeWith(colors2),
+				stereotype2);
 		tmp = FtileUtils.withSwimlaneIn(tmp, swimlane);
 		if (killed)
 			return new FtileKilled(tmp);

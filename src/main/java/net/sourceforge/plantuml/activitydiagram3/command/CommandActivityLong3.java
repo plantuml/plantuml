@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
@@ -82,14 +83,17 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
-
 		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 
-		final Stereogroup stereogroup = Stereogroup.buildStereogroup(lineLast);
-		final Stereotype stereotype = stereogroup.buildStereotype();
+		if (line0.get("COLOR", 0) != null)
+			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + line0.get("COLOR", 0)
+					+ ">> at the end of the line, after the ';'"));
 
-		final BoxStyle style = BoxStyle.fromString(stereogroup.getFull());
+		final Stereogroup stereogroup = Stereogroup.build(lineLast);
+		final Stereotype stereotype = stereogroup.buildStereotype();
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+
+		final BoxStyle style = stereogroup.getBoxStyle();
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);
 		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
 		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);

@@ -87,7 +87,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor diamondColor1 = colors.getColor(styleDiamond, PName.BackGroundColor,
 				skinParam().getIHtmlColorSet());
-		final HColor diamondColor2 = colors2 == null ? diamondColor1
+		final HColor diamondColor2 = colors2.isEmpty() ? diamondColor1
 				: colors2.getColor(styleDiamond2, PName.BackGroundColor, skinParam().getIHtmlColorSet());
 
 		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());

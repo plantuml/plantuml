@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -48,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -70,15 +73,23 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf(1, "YES", "\\((.+?)\\)"))), //
 				new RegexLeaf(";?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-		final String s = arg.get("COLOR", 0);
-		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		diagram.doWhile(Display.getWithNewlines(diagram.getPragma(), arg.get("TEST", 0)), Display.getWithNewlines(diagram.getPragma(), arg.get("YES", 0)), color);
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+//		final String s = arg.get("COLOR", 0);
+//		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final HColor color = colors.getColor(ColorType.BACK);
+
+		diagram.doWhile(Display.getWithNewlines(diagram.getPragma(), arg.get("TEST", 0)),
+				Display.getWithNewlines(diagram.getPragma(), arg.get("YES", 0)), color);
 
 		return CommandExecutionResult.ok();
 	}
