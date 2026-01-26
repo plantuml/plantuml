@@ -168,80 +168,81 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 <span class="pc bpc" id="L168" title="3 of 4 branches missed.">		if (this.testCalled == false &amp;&amp; incoming1.isNone())</span>
 <span class="nc" id="L169">			incoming1 = swimlanes.nextLinkRenderer();</span>
 <span class="fc" id="L170">		tmp = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, tmp, test, yes, out, colors,</span>
-<span class="fc" id="L171">				back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder, colors2, stereotype2);</span>
-<span class="fc" id="L172">		tmp = FtileUtils.withSwimlaneIn(tmp, swimlane);</span>
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (killed)</span>
-<span class="nc" id="L174">			return new FtileKilled(tmp);</span>
+<span class="fc" id="L171">				back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder, colors.mergeWith(colors2),</span>
+				stereotype2);
+<span class="fc" id="L173">		tmp = FtileUtils.withSwimlaneIn(tmp, swimlane);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (killed)</span>
+<span class="nc" id="L175">			return new FtileKilled(tmp);</span>
 
-<span class="fc" id="L176">		return tmp;</span>
+<span class="fc" id="L177">		return tmp;</span>
 	}
 
 	private Ftile getFtileBackward(FtileFactory factory) {
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (Display.isNull(backward))</span>
-<span class="fc" id="L181">			return null;</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (Display.isNull(backward))</span>
+<span class="fc" id="L182">			return null;</span>
 
-<span class="nc" id="L183">		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotypeBack, null);</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (backwardNotes.size() &gt; 0)</span>
-<span class="nc" id="L185">			result = factory.addNote(result, swimlaneBackward, backwardNotes, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L184">		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotypeBack, null);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (backwardNotes.size() &gt; 0)</span>
+<span class="nc" id="L186">			result = factory.addNote(result, swimlaneBackward, backwardNotes, VerticalAlignment.CENTER);</span>
 
-<span class="nc" id="L187">		return result;</span>
+<span class="nc" id="L188">		return result;</span>
 	}
 
 	public Instruction getParent() {
-<span class="fc" id="L191">		return parent;</span>
+<span class="fc" id="L192">		return parent;</span>
 	}
 
 	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
 			LinkRendering back, Swimlane swimlaneOut, Colors colors2, Stereotype stereotype2) {
-<span class="fc" id="L196">		this.colors2 = colors2;</span>
-<span class="fc" id="L197">		this.stereotype2 = stereotype2;</span>
-<span class="fc" id="L198">		this.swimlaneOut = swimlaneOut;</span>
-<span class="fc" id="L199">		this.test = Objects.requireNonNull(test);</span>
-<span class="fc" id="L200">		this.yes = Objects.requireNonNull(yes);</span>
-<span class="fc" id="L201">		this.out = Objects.requireNonNull(out);</span>
-<span class="fc" id="L202">		this.endRepeatLinkRendering = endRepeatLinkRendering;</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (back.isNone() == false)</span>
-<span class="nc" id="L204">			this.incoming1 = back;</span>
-<span class="fc" id="L205">		this.testCalled = true;</span>
-<span class="fc" id="L206">	}</span>
+<span class="fc" id="L197">		this.colors2 = colors2;</span>
+<span class="fc" id="L198">		this.stereotype2 = stereotype2;</span>
+<span class="fc" id="L199">		this.swimlaneOut = swimlaneOut;</span>
+<span class="fc" id="L200">		this.test = Objects.requireNonNull(test);</span>
+<span class="fc" id="L201">		this.yes = Objects.requireNonNull(yes);</span>
+<span class="fc" id="L202">		this.out = Objects.requireNonNull(out);</span>
+<span class="fc" id="L203">		this.endRepeatLinkRendering = endRepeatLinkRendering;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (back.isNone() == false)</span>
+<span class="nc" id="L205">			this.incoming1 = back;</span>
+<span class="fc" id="L206">		this.testCalled = true;</span>
+<span class="fc" id="L207">	}</span>
 
 	final public boolean kill() {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (testCalled) {</span>
-<span class="nc" id="L210">			this.killed = true;</span>
-<span class="nc" id="L211">			return true;</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (testCalled) {</span>
+<span class="nc" id="L211">			this.killed = true;</span>
+<span class="nc" id="L212">			return true;</span>
 		}
-<span class="nc" id="L213">		return repeatList.kill();</span>
+<span class="nc" id="L214">		return repeatList.kill();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="fc" id="L218">		return nextLinkRenderer;</span>
+<span class="fc" id="L219">		return nextLinkRenderer;</span>
 	}
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
 			Stereotype stereotype) {
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (Display.isNull(backward))</span>
-<span class="nc" id="L225">			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (Display.isNull(backward))</span>
+<span class="nc" id="L226">			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="nc" id="L227">		this.backwardNotes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));</span>
-<span class="nc" id="L228">		return true;</span>
+<span class="nc" id="L228">		this.backwardNotes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));</span>
+<span class="nc" id="L229">		return true;</span>
 
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L234">		return repeatList.getSwimlanes();</span>
+<span class="nc" id="L235">		return repeatList.getSwimlanes();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L239">		return parent.getSwimlaneOut();</span>
+<span class="nc" id="L240">		return parent.getSwimlaneOut();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L244">		return parent.getSwimlaneOut();</span>
+<span class="nc" id="L245">		return parent.getSwimlaneOut();</span>
 	}
 
 }

@@ -126,76 +126,73 @@ public abstract class BoxStyle {
 	}
 
 	public static BoxStyle fromString(String style) {
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (style != null)</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (String s : style.split(&quot;\\s&quot;)) {</span>
-<span class="nc" id="L131">				s = s.replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">				for (BoxStyle bs : values)</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">					if (s.equalsIgnoreCase(bs.stereotype))</span>
-<span class="nc" id="L134">						return bs;</span>
-			}
+<span class="nc" id="L129">		style = style.replaceAll(&quot;-&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (BoxStyle bs : values)</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (style.equalsIgnoreCase(bs.stereotype))</span>
+<span class="nc" id="L132">				return bs;</span>
 
-<span class="fc" id="L137">		return PLAIN;</span>
+<span class="nc" id="L134">		return PLAIN;</span>
 	}
 
 	public Stereotype getStereotype() {
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (stereotype == null)</span>
-<span class="fc" id="L142">			return null;</span>
-<span class="nc" id="L143">		return Stereotype.build(&quot;&lt;&lt;&quot; + stereotype + &quot;&gt;&gt;&quot;);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (stereotype == null)</span>
+<span class="fc" id="L139">			return null;</span>
+<span class="nc" id="L140">		return Stereotype.build(&quot;&lt;&lt;&quot; + stereotype + &quot;&gt;&gt;&quot;);</span>
 	}
 
 	public void drawMeDebug(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L147">		final Shadowable s = URectangle.build(width, height);</span>
-<span class="nc" id="L148">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L149">		ug.draw(s);</span>
-<span class="nc" id="L150">	}</span>
+<span class="nc" id="L144">		final Shadowable s = URectangle.build(width, height);</span>
+<span class="nc" id="L145">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L146">		ug.draw(s);</span>
+<span class="nc" id="L147">	}</span>
 
 }
 
 class BoxStylePlain extends BoxStyle {
 
 	public BoxStylePlain(String stereotype, double shield) {
-<span class="fc" id="L157">		super(stereotype, shield);</span>
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L154">		super(stereotype, shield);</span>
+<span class="fc" id="L155">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="fc" id="L162">		width -= getShield();</span>
-<span class="fc" id="L163">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="fc" id="L164">		s.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L165">		ug.draw(s);</span>
-<span class="fc" id="L166">	}</span>
+<span class="fc" id="L159">		width -= getShield();</span>
+<span class="fc" id="L160">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="fc" id="L161">		s.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L162">		ug.draw(s);</span>
+<span class="fc" id="L163">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="fc" id="L169">		return URectangle.build(width, height).rounded(roundCorner);</span>
+<span class="fc" id="L166">		return URectangle.build(width, height).rounded(roundCorner);</span>
 	}
 }
 
 class BoxStyleInput extends BoxStyle {
 
 	public BoxStyleInput(String stereotype, double shield) {
-<span class="fc" id="L176">		super(stereotype, shield);</span>
-<span class="fc" id="L177">	}</span>
+<span class="fc" id="L173">		super(stereotype, shield);</span>
+<span class="fc" id="L174">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L181">		width -= getShield();</span>
-<span class="nc" id="L182">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L183">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L184">		ug.draw(s);</span>
-<span class="nc" id="L185">	}</span>
+<span class="nc" id="L178">		width -= getShield();</span>
+<span class="nc" id="L179">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L180">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L181">		ug.draw(s);</span>
+<span class="nc" id="L182">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L188">		return getShapeInput(width, height);</span>
+<span class="nc" id="L185">		return getShapeInput(width, height);</span>
 	}
 
 	private static Shadowable getShapeInput(double width, double height) {
-<span class="nc" id="L192">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L193">		result.addPoint(0, 0);</span>
-<span class="nc" id="L194">		result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
-<span class="nc" id="L195">		result.addPoint(width, height / 2);</span>
-<span class="nc" id="L196">		result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L197">		result.addPoint(0, height);</span>
-<span class="nc" id="L198">		return result;</span>
+<span class="nc" id="L189">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L190">		result.addPoint(0, 0);</span>
+<span class="nc" id="L191">		result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
+<span class="nc" id="L192">		result.addPoint(width, height / 2);</span>
+<span class="nc" id="L193">		result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L194">		result.addPoint(0, height);</span>
+<span class="nc" id="L195">		return result;</span>
 	}
 
 }
@@ -203,29 +200,29 @@ class BoxStyleInput extends BoxStyle {
 class BoxStyleOutput extends BoxStyle {
 
 	public BoxStyleOutput(String stereotype, double shield) {
-<span class="fc" id="L206">		super(stereotype, shield);</span>
-<span class="fc" id="L207">	}</span>
+<span class="fc" id="L203">		super(stereotype, shield);</span>
+<span class="fc" id="L204">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L211">		width -= getShield();</span>
-<span class="nc" id="L212">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L213">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L214">		ug.draw(s);</span>
-<span class="nc" id="L215">	}</span>
+<span class="nc" id="L208">		width -= getShield();</span>
+<span class="nc" id="L209">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L210">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L211">		ug.draw(s);</span>
+<span class="nc" id="L212">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L218">		return getShapeOutput(width, height);</span>
+<span class="nc" id="L215">		return getShapeOutput(width, height);</span>
 	}
 
 	private static Shadowable getShapeOutput(double width, double height) {
-<span class="nc" id="L222">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L223">		result.addPoint(0.0, 0.0);</span>
-<span class="nc" id="L224">		result.addPoint(width, 0.0);</span>
-<span class="nc" id="L225">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
-<span class="nc" id="L226">		result.addPoint(width, height);</span>
-<span class="nc" id="L227">		result.addPoint(0.0, height);</span>
-<span class="nc" id="L228">		return result;</span>
+<span class="nc" id="L219">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L220">		result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L221">		result.addPoint(width, 0.0);</span>
+<span class="nc" id="L222">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
+<span class="nc" id="L223">		result.addPoint(width, height);</span>
+<span class="nc" id="L224">		result.addPoint(0.0, height);</span>
+<span class="nc" id="L225">		return result;</span>
 	}
 
 }
@@ -233,194 +230,194 @@ class BoxStyleOutput extends BoxStyle {
 class BoxStyleProcedure extends BoxStyle {
 
 	public BoxStyleProcedure(String stereotype, double shield) {
-<span class="fc" id="L236">		super(stereotype, shield);</span>
-<span class="fc" id="L237">	}</span>
+<span class="fc" id="L233">		super(stereotype, shield);</span>
+<span class="fc" id="L234">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L241">		width -= getShield();</span>
-<span class="nc" id="L242">		final URectangle rect = URectangle.build(width, height);</span>
-<span class="nc" id="L243">		rect.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L244">		ug.draw(rect);</span>
-<span class="nc" id="L245">		final ULine vline = ULine.vline(height);</span>
-<span class="nc" id="L246">		ug.apply(UTranslate.dx(PADDING)).draw(vline);</span>
-<span class="nc" id="L247">		ug.apply(UTranslate.dx(width - PADDING)).draw(vline);</span>
-<span class="nc" id="L248">	}</span>
+<span class="nc" id="L238">		width -= getShield();</span>
+<span class="nc" id="L239">		final URectangle rect = URectangle.build(width, height);</span>
+<span class="nc" id="L240">		rect.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L241">		ug.draw(rect);</span>
+<span class="nc" id="L242">		final ULine vline = ULine.vline(height);</span>
+<span class="nc" id="L243">		ug.apply(UTranslate.dx(PADDING)).draw(vline);</span>
+<span class="nc" id="L244">		ug.apply(UTranslate.dx(width - PADDING)).draw(vline);</span>
+<span class="nc" id="L245">	}</span>
 }
 
 class BoxStyleLoad extends BoxStyle {
 
 	public BoxStyleLoad(String stereotype, double shield) {
-<span class="fc" id="L254">		super(stereotype, shield);</span>
-<span class="fc" id="L255">	}</span>
+<span class="fc" id="L251">		super(stereotype, shield);</span>
+<span class="fc" id="L252">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L259">		width -= getShield();</span>
-<span class="nc" id="L260">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L261">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L262">		ug.draw(s);</span>
-<span class="nc" id="L263">	}</span>
+<span class="nc" id="L256">		width -= getShield();</span>
+<span class="nc" id="L257">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L258">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L259">		ug.draw(s);</span>
+<span class="nc" id="L260">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L266">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L267">		result.addPoint(0.0, 0.0);</span>
-<span class="nc" id="L268">		result.addPoint(width - DELTA_INPUT_OUTPUT, 0.0);</span>
-<span class="nc" id="L269">		result.addPoint(width, height);</span>
-<span class="nc" id="L270">		result.addPoint(DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L271">		return result;</span>
+<span class="nc" id="L263">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L264">		result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L265">		result.addPoint(width - DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L266">		result.addPoint(width, height);</span>
+<span class="nc" id="L267">		result.addPoint(DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L268">		return result;</span>
 	}
 }
 
 class BoxStyleSave extends BoxStyle {
 
 	public BoxStyleSave(String stereotype, double shield) {
-<span class="fc" id="L278">		super(stereotype, shield);</span>
-<span class="fc" id="L279">	}</span>
+<span class="fc" id="L275">		super(stereotype, shield);</span>
+<span class="fc" id="L276">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L283">		width -= getShield();</span>
-<span class="nc" id="L284">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L285">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L286">		ug.draw(s);</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L280">		width -= getShield();</span>
+<span class="nc" id="L281">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L282">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L283">		ug.draw(s);</span>
+<span class="nc" id="L284">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L290">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L291">		result.addPoint(DELTA_INPUT_OUTPUT, 0.0);</span>
-<span class="nc" id="L292">		result.addPoint(width, 0.0);</span>
-<span class="nc" id="L293">		result.addPoint(width - DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L294">		result.addPoint(0, height);</span>
-<span class="nc" id="L295">		return result;</span>
+<span class="nc" id="L287">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L288">		result.addPoint(DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L289">		result.addPoint(width, 0.0);</span>
+<span class="nc" id="L290">		result.addPoint(width - DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L291">		result.addPoint(0, height);</span>
+<span class="nc" id="L292">		return result;</span>
 	}
 }
 
 class BoxStyleContinuous extends BoxStyle {
 
 	public BoxStyleContinuous(String stereotype, double shield) {
-<span class="fc" id="L302">		super(stereotype, shield);</span>
-<span class="fc" id="L303">	}</span>
+<span class="fc" id="L299">		super(stereotype, shield);</span>
+<span class="fc" id="L300">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L307">		width -= getShield();</span>
-<span class="nc" id="L308">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L309">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L310">		ug.draw(s);</span>
-<span class="nc" id="L311">	}</span>
+<span class="nc" id="L304">		width -= getShield();</span>
+<span class="nc" id="L305">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L306">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L307">		ug.draw(s);</span>
+<span class="nc" id="L308">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L314">		final UPath result = UPath.none();</span>
-<span class="nc" id="L315">		final double c1[] = { DELTA_CONTINUOUS, 0 };</span>
-<span class="nc" id="L316">		final double c2[] = { 0, height / 2 };</span>
-<span class="nc" id="L317">		final double c3[] = { DELTA_CONTINUOUS, height };</span>
+<span class="nc" id="L311">		final UPath result = UPath.none();</span>
+<span class="nc" id="L312">		final double c1[] = { DELTA_CONTINUOUS, 0 };</span>
+<span class="nc" id="L313">		final double c2[] = { 0, height / 2 };</span>
+<span class="nc" id="L314">		final double c3[] = { DELTA_CONTINUOUS, height };</span>
 
-<span class="nc" id="L319">		result.add(c1, USegmentType.SEG_MOVETO);</span>
-<span class="nc" id="L320">		result.add(c2, USegmentType.SEG_LINETO);</span>
-<span class="nc" id="L321">		result.add(c3, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L316">		result.add(c1, USegmentType.SEG_MOVETO);</span>
+<span class="nc" id="L317">		result.add(c2, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L318">		result.add(c3, USegmentType.SEG_LINETO);</span>
 
-<span class="nc" id="L323">		final double c4[] = { width - DELTA_CONTINUOUS, 0 };</span>
-<span class="nc" id="L324">		final double c5[] = { width, height / 2 };</span>
-<span class="nc" id="L325">		final double c6[] = { width - DELTA_CONTINUOUS, height };</span>
+<span class="nc" id="L320">		final double c4[] = { width - DELTA_CONTINUOUS, 0 };</span>
+<span class="nc" id="L321">		final double c5[] = { width, height / 2 };</span>
+<span class="nc" id="L322">		final double c6[] = { width - DELTA_CONTINUOUS, height };</span>
 
-<span class="nc" id="L327">		result.add(c4, USegmentType.SEG_MOVETO);</span>
-<span class="nc" id="L328">		result.add(c5, USegmentType.SEG_LINETO);</span>
-<span class="nc" id="L329">		result.add(c6, USegmentType.SEG_LINETO);</span>
-<span class="nc" id="L330">		return result;</span>
+<span class="nc" id="L324">		result.add(c4, USegmentType.SEG_MOVETO);</span>
+<span class="nc" id="L325">		result.add(c5, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L326">		result.add(c6, USegmentType.SEG_LINETO);</span>
+<span class="nc" id="L327">		return result;</span>
 	}
 }
 
 class BoxStyleTask extends BoxStyle {
 
 	public BoxStyleTask(String stereotype, double shield) {
-<span class="fc" id="L337">		super(stereotype, shield);</span>
-<span class="fc" id="L338">	}</span>
+<span class="fc" id="L334">		super(stereotype, shield);</span>
+<span class="fc" id="L335">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L342">		width -= getShield();</span>
-<span class="nc" id="L343">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L344">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L345">		ug.draw(s);</span>
-<span class="nc" id="L346">	}</span>
+<span class="nc" id="L339">		width -= getShield();</span>
+<span class="nc" id="L340">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L341">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L342">		ug.draw(s);</span>
+<span class="nc" id="L343">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L349">		return URectangle.build(width, height);</span>
+<span class="nc" id="L346">		return URectangle.build(width, height);</span>
 	}
 }
 
 class BoxStyleObject extends BoxStyle {
 
 	public BoxStyleObject(String stereotype, double shield) {
-<span class="fc" id="L356">		super(stereotype, shield);</span>
-<span class="fc" id="L357">	}</span>
+<span class="fc" id="L353">		super(stereotype, shield);</span>
+<span class="fc" id="L354">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L361">		width -= getShield();</span>
-<span class="nc" id="L362">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L363">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L364">		ug.draw(s);</span>
-<span class="nc" id="L365">	}</span>
+<span class="nc" id="L358">		width -= getShield();</span>
+<span class="nc" id="L359">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L360">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L361">		ug.draw(s);</span>
+<span class="nc" id="L362">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L368">		return URectangle.build(width, height);</span>
+<span class="nc" id="L365">		return URectangle.build(width, height);</span>
 	}
 }
 
 class BoxStyleObjectSignal extends BoxStyle {
 
 	public BoxStyleObjectSignal(String stereotype, double shield) {
-<span class="fc" id="L375">		super(stereotype, shield);</span>
-<span class="fc" id="L376">	}</span>
+<span class="fc" id="L372">		super(stereotype, shield);</span>
+<span class="fc" id="L373">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L380">		width -= getShield();</span>
-<span class="nc" id="L381">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L382">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L383">		ug.draw(s);</span>
-<span class="nc" id="L384">	}</span>
+<span class="nc" id="L377">		width -= getShield();</span>
+<span class="nc" id="L378">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L379">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L380">		ug.draw(s);</span>
+<span class="nc" id="L381">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L387">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L388">		result.addPoint(-DELTA_INPUT_OUTPUT, 0.0);</span>
-<span class="nc" id="L389">		result.addPoint(width, 0.0);</span>
-<span class="nc" id="L390">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
-<span class="nc" id="L391">		result.addPoint(width, height);</span>
-<span class="nc" id="L392">		result.addPoint(-DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L393">		result.addPoint(0, height / 2);</span>
-<span class="nc" id="L394">		return result;</span>
+<span class="nc" id="L384">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L385">		result.addPoint(-DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L386">		result.addPoint(width, 0.0);</span>
+<span class="nc" id="L387">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
+<span class="nc" id="L388">		result.addPoint(width, height);</span>
+<span class="nc" id="L389">		result.addPoint(-DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L390">		result.addPoint(0, height / 2);</span>
+<span class="nc" id="L391">		return result;</span>
 	}
 }
 
 class BoxStyleTrigger extends BoxStyle {
 
 	public BoxStyleTrigger(String stereotype, double shield) {
-<span class="fc" id="L401">		super(stereotype, shield);</span>
-<span class="fc" id="L402">	}</span>
+<span class="fc" id="L398">		super(stereotype, shield);</span>
+<span class="fc" id="L399">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L406">		width -= getShield();</span>
-<span class="nc" id="L407">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L408">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L409">		ug.draw(s);</span>
-<span class="nc" id="L410">	}</span>
+<span class="nc" id="L403">		width -= getShield();</span>
+<span class="nc" id="L404">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L405">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L406">		ug.draw(s);</span>
+<span class="nc" id="L407">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L413">		return getShapeInput(width, height);</span>
+<span class="nc" id="L410">		return getShapeInput(width, height);</span>
 	}
 
 	private static Shadowable getShapeInput(double width, double height) {
-<span class="nc" id="L417">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L418">		result.addPoint(0, 0);</span>
-<span class="nc" id="L419">		result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
-<span class="nc" id="L420">		result.addPoint(width, height / 2);</span>
-<span class="nc" id="L421">		result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L422">		result.addPoint(0, height);</span>
-<span class="nc" id="L423">		return result;</span>
+<span class="nc" id="L414">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L415">		result.addPoint(0, 0);</span>
+<span class="nc" id="L416">		result.addPoint(width + DELTA_INPUT_OUTPUT, 0);</span>
+<span class="nc" id="L417">		result.addPoint(width, height / 2);</span>
+<span class="nc" id="L418">		result.addPoint(width + DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L419">		result.addPoint(0, height);</span>
+<span class="nc" id="L420">		return result;</span>
 	}
 
 }
@@ -428,25 +425,25 @@ class BoxStyleTrigger extends BoxStyle {
 class BoxStyleSendSignal extends BoxStyle {
 
 	public BoxStyleSendSignal(String stereotype, double shield) {
-<span class="fc" id="L431">		super(stereotype, shield);</span>
-<span class="fc" id="L432">	}</span>
+<span class="fc" id="L428">		super(stereotype, shield);</span>
+<span class="fc" id="L429">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L436">		width -= getShield();</span>
-<span class="nc" id="L437">		final Shadowable s = getShapeOutput(width, height);</span>
-<span class="nc" id="L438">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L439">		ug.draw(s);</span>
-<span class="nc" id="L440">	}</span>
+<span class="nc" id="L433">		width -= getShield();</span>
+<span class="nc" id="L434">		final Shadowable s = getShapeOutput(width, height);</span>
+<span class="nc" id="L435">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L436">		ug.draw(s);</span>
+<span class="nc" id="L437">	}</span>
 
 	private static Shadowable getShapeOutput(double width, double height) {
-<span class="nc" id="L443">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L444">		result.addPoint(0.0, 0.0);</span>
-<span class="nc" id="L445">		result.addPoint(width, 0.0);</span>
-<span class="nc" id="L446">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
-<span class="nc" id="L447">		result.addPoint(width, height);</span>
-<span class="nc" id="L448">		result.addPoint(0.0, height);</span>
-<span class="nc" id="L449">		return result;</span>
+<span class="nc" id="L440">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L441">		result.addPoint(0.0, 0.0);</span>
+<span class="nc" id="L442">		result.addPoint(width, 0.0);</span>
+<span class="nc" id="L443">		result.addPoint(width + DELTA_INPUT_OUTPUT, height / 2);</span>
+<span class="nc" id="L444">		result.addPoint(width, height);</span>
+<span class="nc" id="L445">		result.addPoint(0.0, height);</span>
+<span class="nc" id="L446">		return result;</span>
 	}
 
 }
@@ -454,25 +451,25 @@ class BoxStyleSendSignal extends BoxStyle {
 class BoxStyleAcceptEvent extends BoxStyle {
 
 	public BoxStyleAcceptEvent(String stereotype, double shield) {
-<span class="fc" id="L457">		super(stereotype, shield);</span>
-<span class="fc" id="L458">	}</span>
+<span class="fc" id="L454">		super(stereotype, shield);</span>
+<span class="fc" id="L455">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L462">		width -= getShield();</span>
-<span class="nc" id="L463">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L464">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L465">		ug.draw(s);</span>
-<span class="nc" id="L466">	}</span>
+<span class="nc" id="L459">		width -= getShield();</span>
+<span class="nc" id="L460">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L461">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L462">		ug.draw(s);</span>
+<span class="nc" id="L463">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L469">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L470">		result.addPoint(-DELTA_INPUT_OUTPUT, 0.0);</span>
-<span class="nc" id="L471">		result.addPoint(width, 0.0);</span>
-<span class="nc" id="L472">		result.addPoint(width, height);</span>
-<span class="nc" id="L473">		result.addPoint(-DELTA_INPUT_OUTPUT, height);</span>
-<span class="nc" id="L474">		result.addPoint(0, height / 2);</span>
-<span class="nc" id="L475">		return result;</span>
+<span class="nc" id="L466">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L467">		result.addPoint(-DELTA_INPUT_OUTPUT, 0.0);</span>
+<span class="nc" id="L468">		result.addPoint(width, 0.0);</span>
+<span class="nc" id="L469">		result.addPoint(width, height);</span>
+<span class="nc" id="L470">		result.addPoint(-DELTA_INPUT_OUTPUT, height);</span>
+<span class="nc" id="L471">		result.addPoint(0, height / 2);</span>
+<span class="nc" id="L472">		return result;</span>
 	}
 
 }
@@ -480,26 +477,26 @@ class BoxStyleAcceptEvent extends BoxStyle {
 class BoxStyleTimeEvent extends BoxStyle {
 
 	public BoxStyleTimeEvent(String stereotype, double shield) {
-<span class="fc" id="L483">		super(stereotype, shield);</span>
-<span class="fc" id="L484">	}</span>
+<span class="fc" id="L480">		super(stereotype, shield);</span>
+<span class="fc" id="L481">	}</span>
 
 	@Override
 	public void drawMe(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-<span class="nc" id="L488">		width -= getShield();</span>
-<span class="nc" id="L489">		final Shadowable s = getShape(width, height, roundCorner);</span>
-<span class="nc" id="L490">		s.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L491">		ug.draw(s);</span>
-<span class="nc" id="L492">	}</span>
+<span class="nc" id="L485">		width -= getShield();</span>
+<span class="nc" id="L486">		final Shadowable s = getShape(width, height, roundCorner);</span>
+<span class="nc" id="L487">		s.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L488">		ug.draw(s);</span>
+<span class="nc" id="L489">	}</span>
 
 	protected Shadowable getShape(double width, double height, double roundCorner) {
-<span class="nc" id="L495">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L496">		final double halfWidth = width / 2;</span>
-<span class="nc" id="L497">		final double thirdHeight = height / 3;</span>
-<span class="nc" id="L498">		result.addPoint(halfWidth - thirdHeight, thirdHeight);</span>
-<span class="nc" id="L499">		result.addPoint(halfWidth + thirdHeight, thirdHeight);</span>
-<span class="nc" id="L500">		result.addPoint(halfWidth - thirdHeight, height);</span>
-<span class="nc" id="L501">		result.addPoint(halfWidth + thirdHeight, height);</span>
-<span class="nc" id="L502">		return result;</span>
+<span class="nc" id="L492">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L493">		final double halfWidth = width / 2;</span>
+<span class="nc" id="L494">		final double thirdHeight = height / 3;</span>
+<span class="nc" id="L495">		result.addPoint(halfWidth - thirdHeight, thirdHeight);</span>
+<span class="nc" id="L496">		result.addPoint(halfWidth + thirdHeight, thirdHeight);</span>
+<span class="nc" id="L497">		result.addPoint(halfWidth - thirdHeight, height);</span>
+<span class="nc" id="L498">		result.addPoint(halfWidth + thirdHeight, height);</span>
+<span class="nc" id="L499">		return result;</span>
 	}
 
 }

@@ -58,21 +58,21 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
-<span class="nc" id="L61">public class LiveBoxes {</span>
+<span class="fc" id="L61">public class LiveBoxes {</span>
 
 	private final Rose skin;
 	private final ISkinParam skinParam;
-<span class="nc" id="L65">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
+<span class="fc" id="L65">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
 	private final Participant p;
 	private final List&lt;Event&gt; events;
-<span class="nc" id="L68">	private final Map&lt;Event, Double&gt; eventsStep = new HashMap&lt;Event, Double&gt;();</span>
+<span class="fc" id="L68">	private final Map&lt;Event, Double&gt; eventsStep = new HashMap&lt;Event, Double&gt;();</span>
 
-<span class="nc" id="L70">	public LiveBoxes(Participant p, List&lt;Event&gt; events, Rose skin, ISkinParam skinParam) {</span>
-<span class="nc" id="L71">		this.p = p;</span>
-<span class="nc" id="L72">		this.events = events;</span>
-<span class="nc" id="L73">		this.skin = skin;</span>
-<span class="nc" id="L74">		this.skinParam = skinParam;</span>
-<span class="nc" id="L75">	}</span>
+<span class="fc" id="L70">	public LiveBoxes(Participant p, List&lt;Event&gt; events, Rose skin, ISkinParam skinParam) {</span>
+<span class="fc" id="L71">		this.p = p;</span>
+<span class="fc" id="L72">		this.events = events;</span>
+<span class="fc" id="L73">		this.skin = skin;</span>
+<span class="fc" id="L74">		this.skinParam = skinParam;</span>
+<span class="fc" id="L75">	}</span>
 
 	public void addStep(Event event, double y) {
 <span class="nc bnc" id="L78" title="All 2 branches missed.">		if (event.dealWith(p)) {</span>

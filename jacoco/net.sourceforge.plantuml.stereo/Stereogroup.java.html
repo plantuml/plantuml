@@ -35,6 +35,17 @@
  */
 package net.sourceforge.plantuml.stereo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -44,30 +55,62 @@ public class Stereogroup {
 
 	private static final String KEY = &quot;STEREOGROUP&quot;;
 
-	private String full;
+	private String definition;
+
+<span class="fc" id="L60">	private static final Pattern pattern = Pattern.compile(&quot;&lt;&lt;([^&lt;&gt;]+)&gt;&gt;&quot;);</span>
 
 	public static IRegex optionalStereogroup() {
-<span class="fc" id="L50">		final String regex = &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;(?:[%s]*\\&lt;\\&lt;.+?\\&gt;\\&gt;)*)&quot;;</span>
-<span class="fc" id="L51">		return new RegexOptional(new RegexLeaf(1, KEY, regex));</span>
+<span class="fc" id="L63">		final String regex = &quot;(&lt;&lt;[^&lt;&gt;]+&gt;&gt;(?:[%s]*&lt;&lt;[^&lt;&gt;]+&gt;&gt;)*)&quot;;</span>
+<span class="fc" id="L64">		return new RegexOptional(new RegexLeaf(1, KEY, regex));</span>
 	}
 
-	public static Stereogroup buildStereogroup(RegexResult arg) {
-<span class="fc" id="L55">		final String full = arg.get(Stereogroup.KEY, 0);</span>
-<span class="fc" id="L56">		return new Stereogroup(full);</span>
+	public static Stereogroup build(RegexResult arg) {
+<span class="fc" id="L68">		final String full = arg.get(Stereogroup.KEY, 0);</span>
+<span class="fc" id="L69">		return new Stereogroup(full);</span>
 	}
 
-<span class="fc" id="L59">	private Stereogroup(String full) {</span>
-<span class="fc" id="L60">		this.full = full;</span>
-<span class="fc" id="L61">	}</span>
-
-	public String getFull() {
-<span class="fc" id="L64">		return full;</span>
+	public static Stereogroup build(String full) {
+<span class="fc" id="L73">		return new Stereogroup(full);</span>
 	}
+
+<span class="fc" id="L76">	private Stereogroup(String definition) {</span>
+<span class="fc" id="L77">		this.definition = definition;</span>
+<span class="fc" id="L78">	}</span>
 
 	public Stereotype buildStereotype() {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (full == null)</span>
-<span class="fc" id="L69">			return null;</span>
-<span class="nc" id="L70">		return Stereotype.build(full);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (definition == null)</span>
+<span class="fc" id="L82">			return null;</span>
+<span class="nc" id="L83">		return Stereotype.build(definition);</span>
+	}
+
+	public BoxStyle getBoxStyle() {
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		for (String label : getLabels()) {</span>
+<span class="nc" id="L88">			final BoxStyle tmp = BoxStyle.fromString(label);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (tmp != BoxStyle.PLAIN)</span>
+<span class="nc" id="L90">				return tmp;</span>
+
+<span class="nc" id="L92">		}</span>
+<span class="fc" id="L93">		return BoxStyle.PLAIN;</span>
+	}
+
+	public List&lt;String&gt; getLabels() {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (definition == null)</span>
+<span class="fc" id="L98">			return Collections.emptyList();</span>
+
+<span class="fc" id="L100">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L101">		final Matcher matcher = pattern.matcher(definition);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		while (matcher.find())</span>
+<span class="fc" id="L103">			result.add(matcher.group(1).trim());</span>
+
+<span class="fc" id="L105">		return Collections.unmodifiableList(result);</span>
+	}
+
+	public Colors getColors(HColorSet colorSet) throws NoSuchColorException {
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		for (String label : getLabels())</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (label.startsWith(&quot;#&quot;))</span>
+<span class="nc" id="L111">				return new Colors(label, colorSet, ColorType.BACK);</span>
+
+<span class="fc" id="L113">		return Colors.empty();</span>
 	}
 
 }

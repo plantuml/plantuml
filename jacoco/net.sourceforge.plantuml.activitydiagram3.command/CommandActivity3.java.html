@@ -94,22 +94,27 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 <span class="nc" id="L94">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 		}
 
-<span class="fc" id="L97">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L98">		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);</span>
+		// Colors colors = color().getColor(arg,
+		// diagram.getSkinParam().getIHtmlColorSet());
+<span class="fc" id="L99">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L100">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
-<span class="nc" id="L101">			diagram.addWarning(new Warning(&quot;You must use stereotype at the end of the line after the ';'&quot;));</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
+<span class="nc" id="L103">			diagram.addWarning(new Warning(&quot;You must use stereotype at the end of the line after the ';'&quot;));</span>
 
-<span class="fc" id="L103">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L106">			diagram.addWarning(new Warning(&quot;This syntax is deprecated, you must add &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;&gt;&gt; at the end of the line, after the ';'&quot;));</span>
+
+<span class="fc" id="L108">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 //		if (stereo != null) {
 //			stereotype = Stereotype.build(stereo);
 //			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 //		}
 
-<span class="fc" id="L109">		final BoxStyle style = BoxStyle.fromString(stereogroup.getFull());</span>
+<span class="fc" id="L114">		final BoxStyle style = stereogroup.getBoxStyle();</span>
 
-<span class="fc" id="L111">		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L112">		return diagram.addActivity(display, style, url, colors, stereotype);</span>
+<span class="fc" id="L116">		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L117">		return diagram.addActivity(display, style, url, colors, stereotype);</span>
 	}
 
 }

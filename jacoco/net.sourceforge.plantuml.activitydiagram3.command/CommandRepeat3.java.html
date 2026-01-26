@@ -50,59 +50,53 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandRepeat3() {
-<span class="fc" id="L62">		super(getRegexConcat());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L67">				ColorParser.exp4(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;repeat&quot;), //
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;:&quot;), //
 						new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;;&quot;), //
-<span class="fc" id="L74">						RegexLeaf.spaceZeroOrMore() //</span>
+<span class="fc" id="L73">						RegexLeaf.spaceZeroOrMore() //</span>
 				)), //
-<span class="fc" id="L76">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L77">				RegexLeaf.end());</span>
+<span class="fc" id="L75">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L76">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L81">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="nc" id="L80">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L87">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L88">		final Stereogroup stereogroup = Stereogroup.buildStereogroup(arg);</span>
-<span class="fc" id="L89">		final BoxStyle boxStyle = BoxStyle.fromString(stereogroup.getFull());</span>
+<span class="fc" id="L86">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L87">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L88">		final BoxStyle boxStyle = stereogroup.getBoxStyle();</span>
 
-<span class="fc" id="L91">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L92">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
-//		String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);
-//		if (stereo == null)
-//			stereo = stereogroup.getFull();
-//
-//		Stereotype stereotype = null;
-//		if (stereo != null) {
-//			stereotype = Stereotype.build(stereo);
-//			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
-//		}
+<span class="fc" id="L90">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 
-<span class="fc" id="L103">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L93">			diagram.addWarning(new Warning(&quot;This syntax is deprecated, you must add &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0)</span>
+					+ &quot;&gt;&gt; at the end of the line, after the ';'&quot;));
 
-<span class="fc" id="L105">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L96">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L97">		diagram.startRepeat(label, boxStyle, colors, stereotype);</span>
+
+<span class="fc" id="L99">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -48,39 +50,48 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWhile3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandWhile3() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandWhile3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L61">				ColorParser.exp4(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandWhile3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;while&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
 				new RegexOptional(new RegexConcat(//
-<span class="fc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;(is|equals?)&quot;), //
-<span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;YES&quot;, &quot;\\((.+?)\\)&quot;))), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L73">				RegexLeaf.end());</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L78">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-<span class="nc" id="L79">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="nc" id="L81">		diagram.doWhile(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;TEST&quot;, 0)), Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;YES&quot;, 0)), color);</span>
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+//		final String s = arg.get(&quot;COLOR&quot;, 0);
+//		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
-<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L87">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L88">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L89">		final HColor color = colors.getColor(ColorType.BACK);</span>
+
+<span class="nc" id="L91">		diagram.doWhile(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;TEST&quot;, 0)),</span>
+<span class="nc" id="L92">				Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;YES&quot;, 0)), color);</span>
+
+<span class="nc" id="L94">		return CommandExecutionResult.ok();</span>
 	}
 
 }
