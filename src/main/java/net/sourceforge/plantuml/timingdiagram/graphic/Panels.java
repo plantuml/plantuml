@@ -107,6 +107,27 @@ public abstract class Panels implements TimeProjected {
 	}
 
 	protected final void drawConstraints(UGraphic ug) {
+
+		final Tetris tetris = new Tetris();
+
+		for (TimeConstraint constraint : getConstraints()) {
+			final double defaultY = getConstraintDeltaY(constraint);
+			final BigDecimal start = constraint.getTick1().getTime();
+			final BigDecimal end = constraint.getTick2().getTime();
+			final double thickness = 15.0; // hardcoded for now
+			tetris.dropPiece(defaultY, start, end, thickness);
+		}
+
+		for (int i = 0; i < getConstraints().size(); i++) {
+			final TimeConstraint constraint = getConstraints().get(i);
+			final double y = tetris.getY(i);
+			constraint.drawU(ug.apply(UTranslate.dy(y)), ruler);
+
+		}
+
+	}
+
+	protected final void drawConstraintsOld(UGraphic ug) {
 		final List<TimeConstraint> allConstraints = getConstraints();
 		for (int i = 0; i < allConstraints.size(); i++) {
 			TimeConstraint constraint = allConstraints.get(i);
@@ -114,16 +135,15 @@ public abstract class Panels implements TimeProjected {
 			int delta = 0;
 			for (int j = 0; j < i; j++) {
 				if (constraint.getTick1().compareTo(allConstraints.get(j).getTick2()) < 0
-				&& constraint.getTick2().compareTo(allConstraints.get(j).getTick1()) > 0) {
+						&& constraint.getTick2().compareTo(allConstraints.get(j).getTick1()) > 0) {
 					overlap = true;
 					delta = delta - 25; // à voir pour harmoniser avec getConstraintDeltaY
 				}
 			}
 			if (overlap) {
 				constraint.drawU(ug.apply(UTranslate.dy(delta)), ruler);
-			}
-			else {
-				constraint.drawU(ug.apply(UTranslate.dy(getConstraintDeltaY(constraint))), ruler);	
+			} else {
+				constraint.drawU(ug.apply(UTranslate.dy(getConstraintDeltaY(constraint))), ruler);
 			}
 		}
 	}
