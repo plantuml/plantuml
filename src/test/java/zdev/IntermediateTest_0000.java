@@ -22,7 +22,39 @@ You can use this file to put a test you are working on.
 Here is a simple example:
 
 @startuml
-alice->bob: this is a test
+analog "A" as A
+robust R
+analog "B" as B
+robust S
+@0
+A is 0
+R is 0
+B is 0
+S is 0
+@1
+R is 1
+S is 1
+@2
+R is 0
+S is 0
+@3
+R is 1
+S is 1
+@4
+A is 5
+B is 5
+R is 0
+S is 0
+
+R@0 <-> @3 : R1️⃣
+R@1 <-> @2 : R2️⃣
+R@2 <-> @3 : R3️
+R@2 <-> @5 : R4️⃣
+
+S@2 <-> @3 : S1️⃣
+S@1 <-> @2 : S2️⃣
+S@0 <-> @3 : S3️⃣
+S@2 <-> @5 : S4️⃣
 @enduml
 
 So you can edit this file, but please do not push any modification in the "main" branch.
