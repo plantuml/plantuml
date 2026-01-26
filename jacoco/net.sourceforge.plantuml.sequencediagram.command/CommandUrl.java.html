@@ -58,7 +58,7 @@ public class CommandUrl extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L60">		return RegexConcat.build(CommandUrl.class.getName(), RegexLeaf.start(), //</span>
-				new RegexLeaf(UrlBuilder.URL_KEY), //
+				new RegexLeaf(&quot;url&quot;), //
 <span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(&quot;of|for&quot;)), //
 <span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
