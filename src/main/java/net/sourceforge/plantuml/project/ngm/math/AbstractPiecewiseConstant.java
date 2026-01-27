@@ -87,7 +87,7 @@ import java.util.Iterator;
  *
  * @param instant the instant from which to start iterating; the first segment
  *                returned will begin exactly at this instant
- * @return an iterator over successive segments starting at {@code instant}
+ * @return an iterator over successive segments
  */
 public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 
