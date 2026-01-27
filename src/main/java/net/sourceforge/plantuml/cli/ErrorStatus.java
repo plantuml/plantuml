@@ -37,6 +37,13 @@ package net.sourceforge.plantuml.cli;
 
 public class ErrorStatus {
 
+	public static final int ERROR_NO_FILE_FOUND = 50;
+	
+	private static final int ERROR_NO_DIAGRAM_FOUND = 100;
+	
+	private static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
+
+	
 	private int nbErrors;
 	private int nbOk;
 
@@ -65,10 +72,10 @@ public class ErrorStatus {
 
 	public synchronized int getExitCode() {
 		if (isEmpty())
-			return 100;
+			return ERROR_NO_DIAGRAM_FOUND;
 
 		if (hasError())
-			return 200;
+			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;
 
 		return 0;
 	}

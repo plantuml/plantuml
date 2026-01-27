@@ -211,6 +211,12 @@ public class Run {
 				Splash.createSplash();
 
 			final Run runner = new Run(option, errorStatus, charset);
+
+			if (runner.size() == 0) {
+				Log.error("No file found");
+				Exit.exit(ErrorStatus.ERROR_NO_FILE_FOUND);
+			}
+
 			incTotal(runner.size());
 
 			if (option.isTrue(CliFlag.COMPUTE_URL))
@@ -520,11 +526,11 @@ public class Run {
 		if (outputDir != null && outputDir.getPath().endsWith("$")) {
 			final String path = outputDir.getPath();
 			outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
-			sourceFileReader = new SourceFileReaderCopyCat(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), option.getDefaultDefines(f), f, outputDir,
-					option.getConfig(), charset, fileFormatOption);
+			sourceFileReader = new SourceFileReaderCopyCat(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME),
+					option.getDefaultDefines(f), f, outputDir, option.getConfig(), charset, fileFormatOption);
 		} else {
-			sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), option.getDefaultDefines(f), f, outputDir, option.getConfig(),
-					charset, fileFormatOption);
+			sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME),
+					option.getDefaultDefines(f), f, outputDir, option.getConfig(), charset, fileFormatOption);
 		}
 
 		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));
