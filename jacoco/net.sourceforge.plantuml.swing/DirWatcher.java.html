@@ -84,7 +84,7 @@ public class DirWatcher {
 <span class="nc" id="L84">				final FileWatcher watcher = modifieds.get(f);</span>
 
 <span class="nc bnc" id="L86" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
-<span class="nc" id="L87">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L87">					final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,</span>
 <span class="nc" id="L88">							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
 <span class="nc" id="L89">							option.getFileFormatOption());</span>
 <span class="nc" id="L90">					final Set&lt;File&gt; files = sourceFileReader.getIncludedFiles();</span>
@@ -114,7 +114,7 @@ public class DirWatcher {
 <span class="nc" id="L114">				final FileWatcher watcher = modifieds.get(f);</span>
 
 <span class="nc bnc" id="L116" title="All 4 branches missed.">				if (watcher == null || watcher.hasChanged()) {</span>
-<span class="nc" id="L117">					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L117">					final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,</span>
 <span class="nc" id="L118">							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
 <span class="nc" id="L119">							option.getFileFormatOption());</span>
 <span class="nc bnc" id="L120" title="All 2 branches missed.">					if (sourceFileReader.hasError())</span>

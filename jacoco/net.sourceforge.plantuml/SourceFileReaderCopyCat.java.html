@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
 	// ::remove file when __CORE__
@@ -48,23 +49,26 @@ public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements
 
 	private final File outputDirectory;
 
-	public SourceFileReaderCopyCat(Defines defines, final File file, File outputDirectory, List&lt;String&gt; config,
-			String charset, FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L53">		super(file, fileFormatOption, defines, config, charset);</span>
-<span class="nc" id="L54">		final String path = file.getParentFile().getPath();</span>
-<span class="nc" id="L55">		this.outputDirectory = new File(outputDirectory, path).getAbsoluteFile();</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (outputDirectory.exists() == false)</span>
-<span class="nc" id="L57">			outputDirectory.mkdirs();</span>
-<span class="nc" id="L58">	}</span>
+	public SourceFileReaderCopyCat(boolean ignoreSuggestedName, Defines defines, final File file, File outputDirectory,
+			List&lt;String&gt; config, String charset, FileFormatOption fileFormatOption) throws IOException {
+<span class="nc" id="L54">		super(ignoreSuggestedName, file, fileFormatOption, defines, config, charset);</span>
+<span class="nc" id="L55">		final String path = file.getParentFile().getPath();</span>
+<span class="nc" id="L56">		this.outputDirectory = new File(outputDirectory, path).getAbsoluteFile();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (outputDirectory.exists() == false)</span>
+<span class="nc" id="L58">			outputDirectory.mkdirs();</span>
+<span class="nc" id="L59">	}</span>
 
 	@Override
 	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
-<span class="nc" id="L62">		String newName = blockUml.getFileOrDirname();</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (newName == null)</span>
-<span class="nc" id="L64">			newName = getFileName();</span>
-<span class="nc" id="L65">		final SuggestedFile suggested = getSuggestedFile(outputDirectory, newName);</span>
-<span class="nc" id="L66">		suggested.getParentFile().mkdirs();</span>
-<span class="nc" id="L67">		return suggested;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		String newName = ignoreSuggestedName ? null : blockUml.getFileOrDirname();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (newName == null)</span>
+<span class="nc" id="L65">			newName = getFileName();</span>
+<span class="nc" id="L66">		final SuggestedFile suggested = getSuggestedFile(outputDirectory, newName);</span>
+		
+<span class="nc" id="L68">		Log.info(() -&gt; &quot;We are going to put data in &quot; + suggested);</span>
+		
+<span class="nc" id="L70">		suggested.getParentFile().mkdirs();</span>
+<span class="nc" id="L71">		return suggested;</span>
 	}
 
 }

@@ -167,25 +167,25 @@ public class BlockUml {
 
 <span class="fc" id="L168">		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));</span>
 <span class="fc" id="L169">		final boolean ok = m.find();</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (ok == false)</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (ok == false)</span>
 <span class="fc" id="L171">			return null;</span>
 
-<span class="nc" id="L173">		String result = m.group(1);</span>
-<span class="nc" id="L174">		final int x = result.indexOf(',');</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (x != -1)</span>
+<span class="fc" id="L173">		String result = m.group(1);</span>
+<span class="fc" id="L174">		final int x = result.indexOf(',');</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (x != -1)</span>
 <span class="nc" id="L176">			result = result.substring(0, x);</span>
 
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (int i = 0; i &lt; result.length(); i++) {</span>
-<span class="nc" id="L179">			final char c = result.charAt(i);</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (&quot;&lt;&gt;|&quot;.indexOf(c) != -1)</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (int i = 0; i &lt; result.length(); i++) {</span>
+<span class="fc" id="L179">			final char c = result.charAt(i);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			if (&quot;&lt;&gt;|&quot;.indexOf(c) != -1)</span>
 <span class="nc" id="L181">				return null;</span>
 
 		}
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (result.startsWith(&quot;file://&quot;))</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (result.startsWith(&quot;file://&quot;))</span>
 <span class="nc" id="L185">			result = result.substring(&quot;file://&quot;.length());</span>
 
-<span class="nc" id="L187">		result = result.replaceAll(&quot;\\.\\w\\w\\w$&quot;, &quot;&quot;);</span>
-<span class="nc" id="L188">		return result;</span>
+<span class="fc" id="L187">		result = result.replaceAll(&quot;\\.\\w\\w\\w$&quot;, &quot;&quot;);</span>
+<span class="fc" id="L188">		return result;</span>
 	}
 	// ::done
 

@@ -195,7 +195,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 <span class="nc bnc" id="L195" title="All 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
 <span class="nc" id="L196">			this.log(&quot;Processing &quot; + f.getAbsolutePath());</span>
 		}
-<span class="nc" id="L198">		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,</span>
+<span class="nc" id="L198">		final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,</span>
 <span class="nc" id="L199">				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),</span>
 <span class="nc" id="L200">				option.getFileFormatOption());</span>
 

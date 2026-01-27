@@ -37,6 +37,13 @@ package net.sourceforge.plantuml.cli;
 
 public class ErrorStatus {
 
+	public static final int ERROR_NO_FILE_FOUND = 50;
+	
+	private static final int ERROR_NO_DIAGRAM_FOUND = 100;
+	
+	private static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
+
+	
 	private int nbErrors;
 	private int nbOk;
 
@@ -44,38 +51,38 @@ public class ErrorStatus {
 	}
 
 	public static ErrorStatus init() {
-<span class="fc" id="L47">		return new ErrorStatus();</span>
+<span class="fc" id="L54">		return new ErrorStatus();</span>
 	}
 
 	public synchronized void incError() {
-<span class="fc" id="L51">		nbErrors++;</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L58">		nbErrors++;</span>
+<span class="fc" id="L59">	}</span>
 
 	public synchronized void incOk() {
-<span class="fc" id="L55">		nbOk++;</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L62">		nbOk++;</span>
+<span class="fc" id="L63">	}</span>
 
 	public synchronized boolean hasError() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		return nbErrors &gt; 0;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		return nbErrors &gt; 0;</span>
 	}
 
 	public synchronized boolean isEmpty() {
-<span class="fc bfc" id="L63" title="All 4 branches covered.">		return nbErrors == 0 &amp;&amp; nbOk == 0;</span>
+<span class="fc bfc" id="L70" title="All 4 branches covered.">		return nbErrors == 0 &amp;&amp; nbOk == 0;</span>
 	}
 
 	public synchronized int getExitCode() {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (isEmpty())</span>
-<span class="nc" id="L68">			return 100;</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (isEmpty())</span>
+<span class="nc" id="L75">			return ERROR_NO_DIAGRAM_FOUND;</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (hasError())</span>
-<span class="fc" id="L71">			return 200;</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (hasError())</span>
+<span class="fc" id="L78">			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;</span>
 
-<span class="nc" id="L73">		return 0;</span>
+<span class="nc" id="L80">		return 0;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L78">		return &quot;nbErrors=&quot; + nbErrors + &quot; nbOk=&quot; + nbOk;</span>
+<span class="nc" id="L85">		return &quot;nbErrors=&quot; + nbErrors + &quot; nbOk=&quot; + nbOk;</span>
 	}
 
 }
