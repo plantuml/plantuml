@@ -180,7 +180,7 @@ public class PlayingSpace implements Bordered {
 
 	public List<Double> yNewPages() {
 		final List<Double> yNewPages = new ArrayList<>();
-		yNewPages.add((double) 0);
+		yNewPages.add(0.0);
 		for (Tile tile : tiles) {
 			if (tile instanceof GroupingTile)
 				((GroupingTile) tile).addYNewPages(yNewPages);

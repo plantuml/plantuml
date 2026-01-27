@@ -64,7 +64,7 @@ public final class NGMTotalEffort {
 
 	private static final long SECONDS_PER_MINUTE = 60;
 	private static final long SECONDS_PER_HOUR = 3600;
-	private static final long SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
+	public static final long SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
 
 	/**
 	 * Workload expressed in seconds for a single person (1 FTE).
@@ -103,6 +103,10 @@ public final class NGMTotalEffort {
 		return new NGMTotalEffort(days * SECONDS_PER_DAY);
 	}
 
+	public static NGMTotalEffort ofDaysAndHours(long days, long hours) {
+		return new NGMTotalEffort(days * SECONDS_PER_DAY + hours * SECONDS_PER_HOUR);
+	}
+
 	/**
 	 * Creates a zero effort (no work required).
 	 *
@@ -131,8 +135,32 @@ public final class NGMTotalEffort {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		if (seconds == 0)
+			return "0s";
 
+		long remaining = seconds;
+
+		final long days = remaining / SECONDS_PER_DAY;
+		remaining %= SECONDS_PER_DAY;
+
+		final long hours = remaining / SECONDS_PER_HOUR;
+		remaining %= SECONDS_PER_HOUR;
+
+		final long minutes = remaining / SECONDS_PER_MINUTE;
+		final long secs = remaining % SECONDS_PER_MINUTE;
+
+		final StringBuilder sb = new StringBuilder();
+
+		if (days > 0)
+			sb.append(days).append("d");
+		if (hours > 0)
+			sb.append(sb.length() == 0 ? "" : " ").append(hours).append("h");
+		if (minutes > 0)
+			sb.append(sb.length() == 0 ? "" : " ").append(minutes).append("m");
+		if (secs > 0)
+			sb.append(sb.length() == 0 ? "" : " ").append(secs).append("s");
+
+		return sb.toString();
 	}
 
 }

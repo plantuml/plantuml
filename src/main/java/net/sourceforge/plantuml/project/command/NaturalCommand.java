@@ -53,7 +53,9 @@ public class NaturalCommand<D extends Diagram> extends SingleLineCommand2<D> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(D system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(D system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		// System.err.println("sentence=" + sentence.getClass());
 		return sentence.execute(system, arg);
 	}
 

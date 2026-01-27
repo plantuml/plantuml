@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -42,7 +43,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Today;
-import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -95,7 +95,7 @@ public class SubjectToday implements Subject<GanttDiagram> {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final Day date = (Day) complement;
+			final LocalDate date = (LocalDate) complement;
 			return project.setToday(date);
 		}
 

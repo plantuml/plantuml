@@ -36,13 +36,14 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -58,8 +59,8 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public Day getStart() {
-		Day min = null;
+	public TimePoint getStart() {
+		TimePoint min = null;
 		for (Task child : children)
 			if (min == null || min.compareTo(child.getStart()) > 0)
 				min = child.getStart();
@@ -70,9 +71,10 @@ public class TaskGroup extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
+
 	@Override
-	public Day getEnd() {
-		Day max = null;
+	public TimePoint getEnd() {
+		TimePoint max = null;
 		for (Task child : children)
 			if (max == null || max.compareTo(child.getEnd()) < 0)
 				max = child.getEnd();
@@ -84,12 +86,12 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void setStart(Day start) {
+	public void setStart(TimePoint start) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setEnd(Day end) {
+	public void setEnd(TimePoint end) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -134,7 +136,7 @@ public class TaskGroup extends AbstractTask implements Task {
 	}
 
 	@Override
-	public void addPause(Day pause) {
+	public void addPause(LocalDate pause) {
 		throw new UnsupportedOperationException();
 	}
 

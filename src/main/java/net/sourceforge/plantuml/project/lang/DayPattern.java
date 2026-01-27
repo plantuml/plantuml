@@ -35,8 +35,11 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.project.time.Day;
+import java.time.LocalDate;
+import java.time.Month;
+
 import net.sourceforge.plantuml.project.time.MonthUtils;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -73,7 +76,7 @@ public class DayPattern {
 		return new RegexOr(toRegexA_DD_MONTH_YYYY(), toRegexB_YYYY_MM_DD(), toRegexC_MONTH_DD_YYYY());
 	}
 
-	public Day getDay(RegexResult arg) {
+	public LocalDate getDay(RegexResult arg) {
 		if (arg.get(dayKeyA, 0) != null)
 			return resultA(arg);
 
@@ -94,11 +97,11 @@ public class DayPattern {
 				new RegexLeaf(1, yearKeyA, "([\\d]{1,4})"));
 	}
 
-	private Day resultA(RegexResult arg) {
+	private LocalDate resultA(RegexResult arg) {
 		final int day = Integer.parseInt(arg.get(dayKeyA, 0));
-		final String month = arg.get(monthKeyA, 0);
+		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));
 		final int year = Integer.parseInt(arg.get(yearKeyA, 0));
-		return Day.create(year, month, day);
+		return LocalDate.of(year, month, day);
 	}
 
 	private IRegex toRegexB_YYYY_MM_DD() {
@@ -110,11 +113,11 @@ public class DayPattern {
 				new RegexLeaf(1, dayKeyB, "([\\d]{1,2})"));
 	}
 
-	private Day resultB(RegexResult arg) {
+	private LocalDate resultB(RegexResult arg) {
 		final int day = Integer.parseInt(arg.get(dayKeyB, 0));
 		final int month = Integer.parseInt(arg.get(monthKeyB, 0));
 		final int year = Integer.parseInt(arg.get(yearKeyB, 0));
-		return Day.create(year, month, day);
+		return LocalDate.of(year, month, day);
 	}
 
 	private IRegex toRegexC_MONTH_DD_YYYY() {
@@ -126,11 +129,11 @@ public class DayPattern {
 				new RegexLeaf(1, yearKeyC, "([\\d]{1,4})"));
 	}
 
-	private Day resultC(RegexResult arg) {
+	private LocalDate resultC(RegexResult arg) {
 		final int day = Integer.parseInt(arg.get(dayKeyC, 0));
-		final String month = arg.get(monthKeyC, 0);
+		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));
 		final int year = Integer.parseInt(arg.get(yearKeyC, 0));
-		return Day.create(year, month, day);
+		return LocalDate.of(year, month, day);
 	}
 
 }

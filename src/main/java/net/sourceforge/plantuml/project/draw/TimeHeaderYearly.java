@@ -35,13 +35,14 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -65,9 +66,9 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder);
 	}
 
-	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
-				thParam.getScale(), printStart));
+	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, LocalDate printStart) {
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
+				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 	}
 
 	@Override
@@ -92,8 +93,9 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 
 		YearMonth last = null;
 		double lastChange = -1;
-		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().getYear() != last.getYear()) {
 				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
 				if (last != null)
@@ -103,11 +105,12 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h1 + 2);
+		final double end = x1;
+		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
 	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {

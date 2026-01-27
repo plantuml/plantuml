@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -49,7 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.PName;
@@ -67,16 +69,16 @@ public abstract class TimeHeader {
 		this.timeScale = timeScale;
 	}
 
-	protected final boolean isBold2(Day wink) {
+	protected final boolean isBold2(TimePoint wink) {
 		return thParam.getVerticalSeparatorBefore().contains(wink);
 	}
 
-	protected final Day getMin() {
-		return thParam.getMin();
+	protected final LocalDate getMinDay() {
+		return thParam.getMinDay();
 	}
 
-	protected final Day getMax() {
-		return thParam.getMax();
+	protected final LocalDate getMaxDay() {
+		return thParam.getMaxDay();
 	}
 
 	protected final HColor closedBackgroundColor() {
@@ -110,8 +112,8 @@ public abstract class TimeHeader {
 	}
 
 	protected final void drawHline(UGraphic ug, double y) {
-		final double xmin = getTimeScale().getStartingPosition(thParam.getMin());
-		final double xmax = getTimeScale().getEndingPosition(thParam.getMax());
+		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(thParam.getMinDay()));
+		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(thParam.getMaxDay()));
 		final ULine hline = ULine.hline(xmax - xmin);
 		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);
 	}
@@ -168,10 +170,12 @@ public abstract class TimeHeader {
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
 		ug = thParam.forVerticalSeparator(ug);
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (isBold2(wink))
-				drawVline(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
+				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
 						totalHeightWithoutFooter);
+		}
 	}
 
 	protected Pragma getPragma() {

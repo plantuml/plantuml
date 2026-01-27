@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.time;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.YearMonth;
@@ -47,34 +48,59 @@ import java.util.Locale;
 import net.sourceforge.plantuml.project.Value;
 import net.sourceforge.plantuml.project.core.PrintScale;
 
-public class Day implements Comparable<Day>, Value {
+public class TimePoint implements Comparable<TimePoint>, Value {
 
 	static final public long MILLISECONDS_PER_DAY = 1000L * 3600L * 24;
 
 	private final LocalDateTime utcDateTime;
 
-	public static Day epoch() {
-		return new Day(LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC));
+	public static LocalDate epoch() {
+		return Instant.EPOCH.atZone(ZoneOffset.UTC).toLocalDate();
 	}
 
-	public static Day create(int year, String month, int dayOfMonth) {
-		return new Day(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));
+	public static TimePoint ofStartOfDay(int year, String month, int dayOfMonth) {
+		return new TimePoint(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));
 	}
 
-	public static Day create(int year, int month, int dayOfMonth) {
-		return new Day(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
+	public static TimePoint of(LocalDateTime time) {
+		return new TimePoint(time);
 	}
 
-	public static Day create(long ms) {
-		return new Day(LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), ZoneOffset.UTC));
+	public static TimePoint ofStartOfDay(LocalDate day) {
+		return new TimePoint(day.atStartOfDay());
 	}
 
-	public static Day today() {
-		return new Day(LocalDateTime.now(ZoneOffset.UTC));
+	public static TimePoint ofStartOfDay(int year, int month, int dayOfMonth) {
+		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));
 	}
 
-	private Day(LocalDateTime utcDateTime) {
+	public static TimePoint ofEndOfDayMinusOneSecond(LocalDate day) {
+		return ofStartOfDay(day.plusDays(1)).minusOneSecond();
+	}
+
+	public TimePoint ofEndOfDay() {
+		return new TimePoint(utcDateTime.toLocalDate().plusDays(1).atStartOfDay().minusSeconds(1));
+
+	}
+
+	public static TimePoint create(long ms) {
+		return new TimePoint(LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), ZoneOffset.UTC));
+	}
+
+	public static TimePoint nowUtc1() {
+		return new TimePoint(LocalDateTime.now(ZoneOffset.UTC));
+	}
+
+	public static TimePoint todayUtcAtMidnight() {
+		return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());
+	}
+
+	private TimePoint(LocalDateTime utcDateTime) {
 		this.utcDateTime = utcDateTime;
+	}
+
+	public LocalDateTime toLocalDateTime() {
+		return utcDateTime;
 	}
 
 	public String toStringShort(Locale locale) {
@@ -86,16 +112,16 @@ public class Day implements Comparable<Day>, Value {
 		return utcDateTime.toLocalDate().get(wf.weekOfYear());
 	}
 
-	public Day increment() {
+	public TimePoint increment() {
 		return addDays(1);
 	}
 
-	public Day decrement() {
+	public TimePoint decrement() {
 		return addDays(-1);
 	}
 
-	public Day addDays(int nday) {
-		return new Day(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());
+	public TimePoint addDays(int nday) {
+		return new TimePoint(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());
 	}
 
 	public final int getAbsoluteDayNum() {
@@ -112,7 +138,7 @@ public class Day implements Comparable<Day>, Value {
 
 	@Override
 	public String toString() {
-		return monthYear().toString() + "/" + getDayOfMonth();
+		return utcDateTime.toString();
 	}
 
 	@Override
@@ -124,15 +150,15 @@ public class Day implements Comparable<Day>, Value {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null || obj.getClass() != Day.class)
+		if (obj == null || obj.getClass() != TimePoint.class)
 			return false;
 
-		final Day other = (Day) obj;
+		final TimePoint other = (TimePoint) obj;
 		return this.utcDateTime.equals(other.utcDateTime);
 	}
 
 	@Override
-	public int compareTo(Day other) {
+	public int compareTo(TimePoint other) {
 		return this.utcDateTime.compareTo(other.utcDateTime);
 	}
 
@@ -148,36 +174,52 @@ public class Day implements Comparable<Day>, Value {
 		return YearMonth.from(utcDateTime);
 	}
 
-	public DayOfWeek getDayOfWeek() {
+	public DayOfWeek toDayOfWeek() {
 		return utcDateTime.getDayOfWeek();
 	}
 
-	public static Day min(Day d1, Day d2) {
+	public LocalDate toDay() {
+		return utcDateTime.toLocalDate();
+	}
+
+	public static TimePoint min(TimePoint d1, TimePoint d2) {
 		return d1.compareTo(d2) <= 0 ? d1 : d2;
 	}
 
-	public static Day max(Day d1, Day d2) {
+	public static TimePoint max(TimePoint d1, TimePoint d2) {
 		return d1.compareTo(d2) >= 0 ? d1 : d2;
 	}
 
-	public Day increment(PrintScale printScale) {
+	public TimePoint increment(PrintScale printScale) {
 		if (printScale == PrintScale.WEEKLY)
 			return this.addDays(7);
 		return increment();
 	}
 
-	public Day roundDayDown() {
+	public TimePoint roundDayDown() {
 		// Same as legacy: floor(ms / day) * day
 		final long ms = getMillis();
 		final long floored = Math.floorDiv(ms, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;
-		return Day.create(floored);
+		return TimePoint.create(floored);
 	}
 
-	public Day roundDayUp() {
+	public TimePoint roundDayUp() {
 		// Same as legacy: ceil(ms / day) * day
 		final long ms = getMillis();
 		final long ceiled = Math.floorDiv(ms + MILLISECONDS_PER_DAY - 1, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;
-		return Day.create(ceiled);
+		return TimePoint.create(ceiled);
+	}
+
+	public TimePoint minusOneSecond() {
+		return new TimePoint(this.utcDateTime.minusSeconds(1));
+	}
+
+	public TimePoint plusOneSecond() {
+		return new TimePoint(this.utcDateTime.plusSeconds(1));
+	}
+
+	public TimePoint floorToDay() {
+		return new TimePoint(utcDateTime.toLocalDate().atStartOfDay());
 	}
 
 }
