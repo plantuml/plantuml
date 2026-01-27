@@ -82,17 +82,20 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	private final BlockUmlBuilder builder;
 	private int cpt;
 
+	protected final boolean ignoreSuggestedName;
+
 	protected final SuggestedFile getSuggestedFile(File outputDirectory, String newName) {
 		final File outFile = new File(outputDirectory, newName);
 		return SuggestedFile.fromOutputFile(outFile, getFileFormatOption().getFileFormat(), cpt++);
 	}
 
-	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List<String> config,
-			String charsetName) throws IOException {
+	public SourceFileReaderAbstract(boolean ignoreSuggestedName, File file, FileFormatOption fileFormatOption,
+			Defines defines, List<String> config, String charsetName) throws IOException {
 
 		if (file.exists() == false)
 			throw new IllegalArgumentException();
 
+		this.ignoreSuggestedName = ignoreSuggestedName;
 		this.file = file;
 		this.charset = charsetOrDefault(charsetName);
 		this.fileFormatOption = fileFormatOption;

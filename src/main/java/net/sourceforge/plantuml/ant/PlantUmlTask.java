@@ -195,7 +195,7 @@ public class PlantUmlTask extends Task {
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 			this.log("Processing " + f.getAbsolutePath());
 		}
-		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+		final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,
 				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 				option.getFileFormatOption());
 

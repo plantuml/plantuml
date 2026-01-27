@@ -149,6 +149,9 @@ public enum CliFlag {
 	@CliFlagDoc(value = "Set Graphviz processing timeout (in seconds)", usage = "--graphviz-timeout <seconds>", level = 1)
 	TIMEOUT("--graphviz-timeout", aliases(DEPRECATED("-timeout")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
+	@CliFlagDoc(value = "Ignore '@startuml <name>' and always derive output filenames from input files", level = 1)
+	IGNORE_STARTUML_FILENAME("--ignore-startuml-filename", Arity.UNARY_BOOLEAN),
+
 	@CliFlagDoc(value = "Use <n> threads for processing  (auto = available processors)", usage = "--threads <n|auto>", level = 1)
 	NB_THREAD("--threads", aliases(DEPRECATED("-nbthread")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 

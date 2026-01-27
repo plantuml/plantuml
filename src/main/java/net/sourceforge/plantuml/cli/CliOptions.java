@@ -118,37 +118,6 @@ public class CliOptions {
 		for (Entry<String, String> ent : flags.getMap(CliFlag.SKINPARAM, CliFlag.SKINPARAM_LONG).entrySet())
 			config.add("skinparamlocked " + ent.getKey() + " " + ent.getValue());
 
-//		for (int i = 0; i < arg.length; i++) {
-//			String s = arg[i];
-//			if (s.equalsIgnoreCase("-headless")) {
-//				// Useless because done in Run.java
-//				if (i != 0)
-//					Log.error("Warning: -headless flag must be the first one in the command line");
-//
-//				System.setProperty("java.awt.headless", "true");
-//
-//			} else if (s.equalsIgnoreCase("-vdx") || s.equalsIgnoreCase("-tvdx")) {
-//				setFileFormatOption(new FileFormatOption(FileFormat.VDX));
-//
-//			} else if (s.equalsIgnoreCase("-latex") || s.equalsIgnoreCase("-tlatex")) {
-//				setFileFormatOption(new FileFormatOption(FileFormat.LATEX));
-//
-//			} else if (s.equalsIgnoreCase("-latex:nopreamble") || s.equalsIgnoreCase("-tlatex:nopreamble")) {
-//				setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
-//
-//			} else if (s.equalsIgnoreCase("-base64") || s.equalsIgnoreCase("-tbase64")) {
-//				setFileFormatOption(new FileFormatOption(FileFormat.BASE64));
-//
-//			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
-//				setFileFormatOption(new FileFormatOption(FileFormat.PDF));
-//
-
-//			} else if (s.equalsIgnoreCase("-help") || s.equalsIgnoreCase("-h") || s.equalsIgnoreCase("-?")) {
-//				OptionPrint.printHelp();
-//
-//			} else if (s.equalsIgnoreCase("-splash")) {
-//				splash = true;
-//
 	}
 
 	public Stdrpt getStdrpt() {

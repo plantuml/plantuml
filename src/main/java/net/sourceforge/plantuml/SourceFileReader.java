@@ -52,29 +52,30 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 
 	private File outputDirectory;
 
-	public SourceFileReader(File file) throws IOException {
-		this(file, file.getAbsoluteFile().getParentFile());
+	public SourceFileReader(boolean ignoreSuggestedName, File file) throws IOException {
+		this(ignoreSuggestedName, file, file.getAbsoluteFile().getParentFile());
 	}
 
-	public SourceFileReader(File file, File outputDirectory, String charset) throws IOException {
-		this(Defines.createWithFileName(file), file, outputDirectory, Collections.<String>emptyList(), charset,
-				new FileFormatOption(FileFormat.PNG));
-	}
-
-	public SourceFileReader(final File file, File outputDirectory) throws IOException {
-		this(Defines.createWithFileName(file), file, outputDirectory, Collections.<String>emptyList(), null,
-				new FileFormatOption(FileFormat.PNG));
-	}
-
-	public SourceFileReader(final File file, File outputDirectory, FileFormatOption fileFormatOption)
+	public SourceFileReader(boolean ignoreSuggestedName, File file, File outputDirectory, String charset)
 			throws IOException {
-		this(Defines.createWithFileName(file), file, outputDirectory, Collections.<String>emptyList(), null,
-				fileFormatOption);
+		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,
+				Collections.<String>emptyList(), charset, new FileFormatOption(FileFormat.PNG));
 	}
 
-	public SourceFileReader(Defines defines, final File file, File outputDirectory, List<String> config, String charset,
+	public SourceFileReader(boolean ignoreSuggestedName, final File file, File outputDirectory) throws IOException {
+		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,
+				Collections.<String>emptyList(), null, new FileFormatOption(FileFormat.PNG));
+	}
+
+	public SourceFileReader(boolean ignoreSuggestedName, final File file, File outputDirectory,
 			FileFormatOption fileFormatOption) throws IOException {
-		super(file, fileFormatOption, defines, config, charset);
+		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,
+				Collections.<String>emptyList(), null, fileFormatOption);
+	}
+
+	public SourceFileReader(boolean ignoreSuggestedName, Defines defines, final File file, File outputDirectory,
+			List<String> config, String charset, FileFormatOption fileFormatOption) throws IOException {
+		super(ignoreSuggestedName, file, fileFormatOption, defines, config, charset);
 		FileSystem.getInstance().setCurrentDir(SFile.fromFile(file.getAbsoluteFile().getParentFile()));
 		if (outputDirectory == null)
 			outputDirectory = file.getAbsoluteFile().getParentFile();
@@ -142,9 +143,13 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 
 	@Override
 	protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException {
-		final String newName = blockUml.getFileOrDirname();
-		SuggestedFile suggested = null;
-		if (newName != null) {
+		final String newName = ignoreSuggestedName ? null : blockUml.getFileOrDirname();
+
+		final SuggestedFile suggested;
+
+		if (newName == null) {
+			suggested = getSuggestedFile(outputDirectory, getFileName());
+		} else {
 			Log.info(() -> "name from block=" + newName);
 			final File dir = getDirIfDirectory(newName);
 			if (dir == null) {
@@ -156,11 +161,8 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 				suggested = SuggestedFile.fromOutputFile(new File(dir, getFileName()),
 						getFileFormatOption().getFileFormat(), 0);
 			}
-			final SuggestedFile suggested2 = suggested;
-			Log.info(() -> "We are going to put data in " + suggested2);
 		}
-		if (suggested == null)
-			suggested = getSuggestedFile(outputDirectory, getFileName());
+		Log.info(() -> "We are going to put data in " + suggested);
 
 		suggested.getParentFile().mkdirs();
 		return suggested;

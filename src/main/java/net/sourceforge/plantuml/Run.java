@@ -520,10 +520,10 @@ public class Run {
 		if (outputDir != null && outputDir.getPath().endsWith("$")) {
 			final String path = outputDir.getPath();
 			outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
-			sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,
+			sourceFileReader = new SourceFileReaderCopyCat(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), option.getDefaultDefines(f), f, outputDir,
 					option.getConfig(), charset, fileFormatOption);
 		} else {
-			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
+			sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), option.getDefaultDefines(f), f, outputDir, option.getConfig(),
 					charset, fileFormatOption);
 		}
 
