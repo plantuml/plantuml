@@ -49,7 +49,7 @@ class RealMin extends AbstractReal implements Real {
 <span class="fc" id="L49">	}</span>
 
 	public String getName() {
-<span class="fc" id="L52">		return &quot;min &quot; + all.size();</span>
+<span class="nc" id="L52">		return &quot;min &quot; + all.size();</span>
 	}
 
 <span class="fc" id="L55">	private double cache = Double.MAX_VALUE;</span>
@@ -62,8 +62,8 @@ class RealMin extends AbstractReal implements Real {
 <span class="fc" id="L62">		double result = all.get(0).getCurrentValue();</span>
 <span class="fc bfc" id="L63" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
 <span class="fc" id="L64">			final double v = all.get(i).getCurrentValue();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (v &lt; result)</span>
-<span class="fc" id="L66">				result = v;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (v &lt; result)</span>
+<span class="nc" id="L66">				result = v;</span>
 
 		}
 <span class="fc" id="L69">		cache = result;</span>
@@ -71,7 +71,7 @@ class RealMin extends AbstractReal implements Real {
 	}
 
 	public Real addFixed(double delta) {
-<span class="fc" id="L74">		return new RealDelta(this, delta);</span>
+<span class="nc" id="L74">		return new RealDelta(this, delta);</span>
 	}
 
 	public Real addAtLeast(double delta) {

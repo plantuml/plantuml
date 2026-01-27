@@ -62,13 +62,13 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final boolean teoz;
 
 	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinParam skinParam) {
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : &quot;[&quot; + comment + &quot;]&quot;);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : &quot;[&quot; + comment + &quot;]&quot;);</span>
 
-<span class="fc" id="L67">		this.teoz = teoz;</span>
-<span class="fc" id="L68">		this.roundCorner = getRoundCorner();</span>
-<span class="fc" id="L69">		this.groupBorder = getColorLine();</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		this.backgroundColor = teoz ? HColors.transparent() : getColorBackGround();</span>
-<span class="fc" id="L71">	}</span>
+<span class="nc" id="L67">		this.teoz = teoz;</span>
+<span class="nc" id="L68">		this.roundCorner = getRoundCorner();</span>
+<span class="nc" id="L69">		this.groupBorder = getColorLine();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		this.backgroundColor = teoz ? HColors.transparent() : getColorBackGround();</span>
+<span class="nc" id="L71">	}</span>
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
@@ -101,27 +101,27 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L104">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L105">		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);</span>
-<span class="fc" id="L106">		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));</span>
-<span class="fc" id="L107">		ug = ug.apply(UStroke.simple());</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (teoz)</span>
-<span class="fc" id="L109">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));</span>
+<span class="nc" id="L104">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L105">		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);</span>
+<span class="nc" id="L106">		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));</span>
+<span class="nc" id="L107">		ug = ug.apply(UStroke.simple());</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (teoz)</span>
+<span class="nc" id="L109">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));</span>
 		else
 <span class="nc" id="L111">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));</span>
-<span class="fc" id="L112">	}</span>
+<span class="nc" id="L112">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (teoz)</span>
-<span class="fc" id="L117">			return getTextHeight(stringBounder) + 16;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (teoz)</span>
+<span class="nc" id="L117">			return getTextHeight(stringBounder) + 16;</span>
 		else
 <span class="nc" id="L119">			return getTextHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L124">		return getTextWidth(stringBounder);</span>
+<span class="nc" id="L124">		return getTextWidth(stringBounder);</span>
 	}
 
 }

@@ -60,8 +60,8 @@ import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
-<span class="fc" id="L63">	private final int cornersize = 10;</span>
-<span class="fc" id="L64">	private final int commentMargin = 0; // 8;</span>
+<span class="nc" id="L63">	private final int cornersize = 10;</span>
+<span class="nc" id="L64">	private final int commentMargin = 0; // 8;</span>
 
 	private final TextBlock commentTextBlock;
 
@@ -72,101 +72,101 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	public ComponentRoseGroupingHeader(boolean teoz, Style style, Style styleHeader, Display strings,
 			ISkinParam skinParam) {
-<span class="fc" id="L75">		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, skinParam, strings.get(0));</span>
+<span class="nc" id="L75">		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, skinParam, strings.get(0));</span>
 
-<span class="fc" id="L77">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L79">		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());</span>
-<span class="fc" id="L80">		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());</span>
+<span class="nc" id="L77">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L79">		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());</span>
+<span class="nc" id="L80">		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());</span>
 
-<span class="fc" id="L82">		final FontConfiguration smallFont2 = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="nc" id="L82">		final FontConfiguration smallFont2 = style.getFontConfiguration(getIHtmlColorSet());</span>
 
-<span class="pc bpc" id="L84" title="1 of 4 branches missed.">		if (strings.size() == 1 || strings.get(1) == null) {</span>
-<span class="fc" id="L85">			this.commentTextBlock = null;</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (strings.size() == 1 || strings.get(1) == null) {</span>
+<span class="nc" id="L85">			this.commentTextBlock = null;</span>
 		} else {
-<span class="fc" id="L87">			final Display display = Display.getWithNewlines(skinParam.getPragma(), &quot;[&quot; + strings.get(1) + &quot;]&quot;);</span>
-<span class="fc" id="L88">			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L87">			final Display display = Display.getWithNewlines(skinParam.getPragma(), &quot;[&quot; + strings.get(1) + &quot;]&quot;);</span>
+<span class="nc" id="L88">			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, skinParam);</span>
 		}
-<span class="fc" id="L90">		Objects.requireNonNull(this.background);</span>
-<span class="fc" id="L91">	}</span>
+<span class="nc" id="L90">		Objects.requireNonNull(this.background);</span>
+<span class="nc" id="L91">	}</span>
 
 	private double getSuppHeightForComment(StringBounder stringBounder) {
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (commentTextBlock == null)</span>
-<span class="fc" id="L95">			return 0;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (commentTextBlock == null)</span>
+<span class="nc" id="L95">			return 0;</span>
 
-<span class="fc" id="L97">		final double height = commentTextBlock.calculateDimension(stringBounder).getHeight();</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (height &gt; 15)</span>
+<span class="nc" id="L97">		final double height = commentTextBlock.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (height &gt; 15)</span>
 <span class="nc" id="L99">			return height - 15;</span>
 
-<span class="fc" id="L101">		return 0;</span>
+<span class="nc" id="L101">		return 0;</span>
 
 	}
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
 		final double sup;
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (commentTextBlock == null) {</span>
-<span class="fc" id="L109">			sup = commentMargin * 2;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (commentTextBlock == null) {</span>
+<span class="nc" id="L109">			sup = commentMargin * 2;</span>
 		} else {
-<span class="fc" id="L111">			final XDimension2D size = commentTextBlock.calculateDimension(stringBounder);</span>
-<span class="fc" id="L112">			sup = getMarginX1() + commentMargin + size.getWidth();</span>
+<span class="nc" id="L111">			final XDimension2D size = commentTextBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L112">			sup = getMarginX1() + commentMargin + size.getWidth();</span>
 
 		}
-<span class="fc" id="L115">		return getTextWidth(stringBounder) + sup;</span>
+<span class="nc" id="L115">		return getTextWidth(stringBounder) + sup;</span>
 	}
 
 	@Override
 	final public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L120">		return getTextHeight(stringBounder) + 2 * getPaddingY() + getSuppHeightForComment(stringBounder);</span>
+<span class="nc" id="L120">		return getTextHeight(stringBounder) + 2 * getPaddingY() + getSuppHeightForComment(stringBounder);</span>
 	}
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L125">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L126">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
-<span class="fc" id="L127">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
-<span class="fc" id="L128">				.rounded(roundCorner);</span>
-<span class="fc" id="L129">		rect.setDeltaShadow(symbolContext.getDeltaShadow());</span>
-<span class="fc" id="L130">		ug.apply(background.bg()).draw(rect);</span>
-<span class="fc" id="L131">	}</span>
+<span class="nc" id="L125">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L126">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
+<span class="nc" id="L127">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
+<span class="nc" id="L128">				.rounded(roundCorner);</span>
+<span class="nc" id="L129">		rect.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L130">		ug.apply(background.bg()).draw(rect);</span>
+<span class="nc" id="L131">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L135">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L136">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L137">		final double textWidth = getTextWidth(stringBounder);</span>
-<span class="fc" id="L138">		final double textHeight = getTextHeight(stringBounder);</span>
+<span class="nc" id="L135">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L136">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L137">		final double textWidth = getTextWidth(stringBounder);</span>
+<span class="nc" id="L138">		final double textHeight = getTextHeight(stringBounder);</span>
 
-<span class="fc" id="L140">		symbolContextCorner.apply(ug).draw(getCorner(textWidth, textHeight));</span>
+<span class="nc" id="L140">		symbolContextCorner.apply(ug).draw(getCorner(textWidth, textHeight));</span>
 
-<span class="fc" id="L142">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
-<span class="fc" id="L143">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
-<span class="fc" id="L144">				.rounded(roundCorner);</span>
-<span class="fc" id="L145">		ug.draw(rect);</span>
+<span class="nc" id="L142">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
+<span class="nc" id="L143">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
+<span class="nc" id="L144">				.rounded(roundCorner);</span>
+<span class="nc" id="L145">		ug.draw(rect);</span>
 
-<span class="fc" id="L147">		ug = ug.apply(UStroke.simple());</span>
+<span class="nc" id="L147">		ug = ug.apply(UStroke.simple());</span>
 
-<span class="fc" id="L149">		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));</span>
+<span class="nc" id="L149">		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));</span>
 
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (commentTextBlock != null) {</span>
-<span class="fc" id="L152">			final double x1 = getMarginX1() + textWidth;</span>
-<span class="fc" id="L153">			final double y2 = getMarginY() + 1;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (commentTextBlock != null) {</span>
+<span class="nc" id="L152">			final double x1 = getMarginX1() + textWidth;</span>
+<span class="nc" id="L153">			final double y2 = getMarginY() + 1;</span>
 
-<span class="fc" id="L155">			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));</span>
+<span class="nc" id="L155">			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));</span>
 		}
-<span class="fc" id="L157">	}</span>
+<span class="nc" id="L157">	}</span>
 
 	private UPath getCorner(final double width, final double height) {
-<span class="fc" id="L160">		final UPath polygon = UPath.none();</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (roundCorner == 0) {</span>
-<span class="fc" id="L162">			polygon.moveTo(0, 0);</span>
-<span class="fc" id="L163">			polygon.lineTo(width, 0);</span>
+<span class="nc" id="L160">		final UPath polygon = UPath.none();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="nc" id="L162">			polygon.moveTo(0, 0);</span>
+<span class="nc" id="L163">			polygon.lineTo(width, 0);</span>
 
-<span class="fc" id="L165">			polygon.lineTo(width, height - cornersize);</span>
-<span class="fc" id="L166">			polygon.lineTo(width - cornersize, height);</span>
+<span class="nc" id="L165">			polygon.lineTo(width, height - cornersize);</span>
+<span class="nc" id="L166">			polygon.lineTo(width - cornersize, height);</span>
 
-<span class="fc" id="L168">			polygon.lineTo(0, height);</span>
-<span class="fc" id="L169">			polygon.lineTo(0, 0);</span>
+<span class="nc" id="L168">			polygon.lineTo(0, height);</span>
+<span class="nc" id="L169">			polygon.lineTo(0, 0);</span>
 		} else {
 <span class="nc" id="L171">			polygon.moveTo(roundCorner / 2, 0);</span>
 <span class="nc" id="L172">			polygon.lineTo(width, 0);</span>
@@ -180,7 +180,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 <span class="nc" id="L180">			polygon.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, roundCorner / 2, 0);</span>
 
 		}
-<span class="fc" id="L183">		return polygon;</span>
+<span class="nc" id="L183">		return polygon;</span>
 	}
 
 }

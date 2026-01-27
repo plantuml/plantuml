@@ -238,7 +238,7 @@ public class ArrowConfiguration {
 	}
 
 	public static UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
-<span class="fc" id="L241">		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));</span>
+<span class="nc" id="L241">		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));</span>
 	}
 
 	public UGraphic applyStroke(UGraphic ug, Style style) {
@@ -253,8 +253,8 @@ public class ArrowConfiguration {
 
 	@Deprecated
 	public UGraphic applyStroke(UGraphic ug) {
-<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (isDotted())</span>
-<span class="fc" id="L257">			return ug.apply(new UStroke(2, 2, thickness));</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (isDotted())</span>
+<span class="nc" id="L257">			return ug.apply(new UStroke(2, 2, thickness));</span>
 
 <span class="fc" id="L259">		return ug.apply(UStroke.withThickness(thickness));</span>
 	}
