@@ -131,7 +131,7 @@ public class Member implements CharSequence {
 <span class="nc" id="L131">				displayClean = &quot; &quot;;</span>
 
 <span class="fc bfc" id="L133" title="All 2 branches covered.">			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);</span>
 <span class="fc" id="L135">				this.display = StringUtils.trin(Guillemet.GUILLEMET.manageGuillemet(displayClean.substring(1)));</span>
 			} else {
 <span class="fc" id="L137">				this.display = Guillemet.GUILLEMET.manageGuillemet(displayClean);</span>

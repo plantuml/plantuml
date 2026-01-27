@@ -215,10 +215,10 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc" id="L215">		final boolean hasDressing2butx = contains(dressing2, &quot;&gt;&quot;, &quot;\\&quot;, &quot;/&quot;);</span>
 <span class="fc" id="L216">		final boolean xInDressing2 = dressing2.contains(&quot;x&quot;);</span>
 		final boolean reverseDefine;
-<span class="pc bpc" id="L218" title="5 of 6 branches missed.">		if (hasDressing2butx || (xInDressing1 &amp;&amp; xInDressing2))</span>
+<span class="pc bpc" id="L218" title="1 of 6 branches missed.">		if (hasDressing2butx || (xInDressing1 &amp;&amp; xInDressing2))</span>
 <span class="fc" id="L219">			reverseDefine = false;</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">		else if (hasDressing1butx)</span>
-<span class="nc" id="L221">			reverseDefine = true;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		else if (hasDressing1butx)</span>
+<span class="fc" id="L221">			reverseDefine = true;</span>
 <span class="nc bnc" id="L222" title="All 4 branches missed.">		else if (xInDressing1 || xInDressing2)</span>
 <span class="nc" id="L223">			reverseDefine = false;</span>
 		else
@@ -230,15 +230,15 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 		final boolean circleAtEnd;
 		final boolean sync1;
 		final boolean sync2;
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (reverseDefine) {</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (reverseDefine) {</span>
 			// Keep the order
 			// See https://github.com/plantuml/plantuml/issues/1819#issuecomment-2158524871
-<span class="nc" id="L236">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
-<span class="nc" id="L237">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
-<span class="nc" id="L238">			circleAtStart = dressing2.contains(&quot;o&quot;);</span>
-<span class="nc" id="L239">			circleAtEnd = dressing1.contains(&quot;o&quot;);</span>
-<span class="nc" id="L240">			sync2 = contains(dressing1, &quot;&lt;&lt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
-<span class="nc" id="L241">			sync1 = contains(dressing2, &quot;&gt;&gt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
+<span class="fc" id="L236">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
+<span class="fc" id="L237">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
+<span class="fc" id="L238">			circleAtStart = dressing2.contains(&quot;o&quot;);</span>
+<span class="fc" id="L239">			circleAtEnd = dressing1.contains(&quot;o&quot;);</span>
+<span class="fc" id="L240">			sync2 = contains(dressing1, &quot;&lt;&lt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
+<span class="fc" id="L241">			sync1 = contains(dressing2, &quot;&gt;&gt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
 		} else {
 <span class="fc" id="L243">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
 <span class="fc" id="L244">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
@@ -260,45 +260,45 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc" id="L260">			labels = Display.getWithNewlines(diagram.getPragma(), message);</span>
 		}
 
-<span class="pc bpc" id="L263" title="3 of 4 branches missed.">		ArrowConfiguration config = hasDressing1butx &amp;&amp; hasDressing2butx ? ArrowConfiguration.withDirectionBoth()</span>
+<span class="fc bfc" id="L263" title="All 4 branches covered.">		ArrowConfiguration config = hasDressing1butx &amp;&amp; hasDressing2butx ? ArrowConfiguration.withDirectionBoth()</span>
 <span class="fc" id="L264">				: ArrowConfiguration.withDirectionNormal();</span>
 <span class="fc bfc" id="L265" title="All 2 branches covered.">		if (dotted)</span>
 <span class="fc" id="L266">			config = config.withBody(ArrowBody.DOTTED);</span>
 
 <span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (sync1)</span>
 <span class="nc" id="L269">			config = config.withHead1(ArrowHead.ASYNC);</span>
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (sync2)</span>
-<span class="nc" id="L271">			config = config.withHead2(ArrowHead.ASYNC);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">		if (sync2)</span>
+<span class="fc" id="L271">			config = config.withHead2(ArrowHead.ASYNC);</span>
 
-<span class="pc bpc" id="L273" title="2 of 4 branches missed.">		if (dressing2.contains(&quot;\\&quot;) || dressing1.contains(&quot;/&quot;))</span>
-<span class="nc" id="L274">			config = config.withPart(ArrowPart.TOP_PART);</span>
+<span class="fc bfc" id="L273" title="All 4 branches covered.">		if (dressing2.contains(&quot;\\&quot;) || dressing1.contains(&quot;/&quot;))</span>
+<span class="fc" id="L274">			config = config.withPart(ArrowPart.TOP_PART);</span>
 
-<span class="pc bpc" id="L276" title="2 of 4 branches missed.">		if (dressing2.contains(&quot;/&quot;) || dressing1.contains(&quot;\\&quot;))</span>
-<span class="nc" id="L277">			config = config.withPart(ArrowPart.BOTTOM_PART);</span>
+<span class="fc bfc" id="L276" title="All 4 branches covered.">		if (dressing2.contains(&quot;/&quot;) || dressing1.contains(&quot;\\&quot;))</span>
+<span class="fc" id="L277">			config = config.withPart(ArrowPart.BOTTOM_PART);</span>
 
-<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (circleAtEnd)</span>
-<span class="nc" id="L280">			config = config.withDecoration2(ArrowDecoration.CIRCLE);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (circleAtEnd)</span>
+<span class="fc" id="L280">			config = config.withDecoration2(ArrowDecoration.CIRCLE);</span>
 
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (circleAtStart)</span>
-<span class="nc" id="L283">			config = config.withDecoration1(ArrowDecoration.CIRCLE);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		if (circleAtStart)</span>
+<span class="fc" id="L283">			config = config.withDecoration1(ArrowDecoration.CIRCLE);</span>
 
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">		if (reverseDefine) {</span>
-<span class="nc bnc" id="L286" title="All 2 branches missed.">			if (xInDressing1)</span>
-<span class="nc" id="L287">				config = config.withHead2(ArrowHead.CROSSX);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (reverseDefine) {</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">			if (xInDressing1)</span>
+<span class="fc" id="L287">				config = config.withHead2(ArrowHead.CROSSX);</span>
 
-<span class="nc bnc" id="L289" title="All 2 branches missed.">			if (xInDressing2)</span>
-<span class="nc" id="L290">				config = config.withHead1(ArrowHead.CROSSX);</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">			if (xInDressing2)</span>
+<span class="fc" id="L290">				config = config.withHead1(ArrowHead.CROSSX);</span>
 
 		} else {
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">			if (xInDressing1)</span>
-<span class="nc" id="L294">				config = config.withHead1(ArrowHead.CROSSX);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			if (xInDressing1)</span>
+<span class="fc" id="L294">				config = config.withHead1(ArrowHead.CROSSX);</span>
 
-<span class="pc bpc" id="L296" title="1 of 2 branches missed.">			if (xInDressing2)</span>
-<span class="nc" id="L297">				config = config.withHead2(ArrowHead.CROSSX);</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">			if (xInDressing2)</span>
+<span class="fc" id="L297">				config = config.withHead2(ArrowHead.CROSSX);</span>
 
 		}
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		if (reverseDefine)</span>
-<span class="nc" id="L301">			config = config.reverseDefine();</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		if (reverseDefine)</span>
+<span class="fc" id="L301">			config = config.reverseDefine();</span>
 
 <span class="fc" id="L303">		config = applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0), config);</span>
 
@@ -306,7 +306,7 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 <span class="fc" id="L307">		final String activationSpec = arg.get(&quot;ACTIVATION&quot;, 0);</span>
 
-<span class="pc bpc" id="L309" title="3 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
+<span class="pc bpc" id="L309" title="1 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
 <span class="nc" id="L310">			diagram.activate(p2, LifeEventType.CREATE, null);</span>
 
 <span class="fc" id="L312">		final String messageNumber = diagram.getNextMessageNumber();</span>
@@ -325,9 +325,9 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="nc" id="L325">			msg.getStereotype(stereotype);</span>
 		}
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (parallel)</span>
-<span class="nc" id="L330">			msg.goParallel();</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (parallel)</span>
+<span class="fc" id="L330">			msg.goParallel();</span>
 
 <span class="fc" id="L332">		msg.setAnchor(arg.get(&quot;ANCHOR&quot;, 1));</span>
 <span class="fc" id="L333">		msg.setPart1Anchor(arg.get(&quot;PART1ANCHOR&quot;, 1));</span>
@@ -339,10 +339,10 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 <span class="fc" id="L340">		final String s = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
 
-<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
 
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (activationSpec != null)</span>
-<span class="nc" id="L345">			return manageActivations(activationSpec, diagram, p1, p2, activationColor);</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">		if (activationSpec != null)</span>
+<span class="fc" id="L345">			return manageActivations(activationSpec, diagram, p1, p2, activationColor);</span>
 
 <span class="pc bpc" id="L347" title="5 of 6 branches missed.">		if (diagram.isAutoactivate() &amp;&amp; (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC))</span>
 <span class="nc bnc" id="L348" title="All 2 branches missed.">			if (config.isDotted())</span>
@@ -355,18 +355,18 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	private CommandExecutionResult manageActivations(String spec, SequenceDiagram diagram, Participant p1,
 			Participant p2, HColor activationColor) {
-<span class="nc bnc" id="L358" title="All 4 branches missed.">		switch (spec.charAt(0)) {</span>
+<span class="pc bpc" id="L358" title="2 of 4 branches missed.">		switch (spec.charAt(0)) {</span>
 		case '+':
-<span class="nc" id="L360">			diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
-<span class="nc" id="L361">			break;</span>
+<span class="fc" id="L360">			diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
+<span class="fc" id="L361">			break;</span>
 		case '-':
-<span class="nc" id="L363">			diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
-<span class="nc" id="L364">			break;</span>
+<span class="fc" id="L363">			diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
+<span class="fc" id="L364">			break;</span>
 		case '!':
 <span class="nc" id="L366">			diagram.activate(p2, LifeEventType.DESTROY, null);</span>
 			break;
 		}
-<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (spec.length() == 4) {</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (spec.length() == 4) {</span>
 <span class="nc bnc" id="L370" title="All 3 branches missed.">			switch (spec.charAt(2)) {</span>
 			case '+':
 <span class="nc" id="L372">				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
@@ -376,7 +376,7 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 				break;
 			}
 		}
-<span class="nc" id="L379">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L379">		return CommandExecutionResult.ok();</span>
 	}
 
 	private int getLength(RegexResult arg2) {

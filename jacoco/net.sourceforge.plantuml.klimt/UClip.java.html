@@ -90,9 +90,9 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 	}
 
 	public boolean isInside(double xp, double yp) {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (xp &lt; x) {</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			assert getClippedX(xp) != xp;</span>
-<span class="nc" id="L95">			return false;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (xp &lt; x) {</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			assert getClippedX(xp) != xp;</span>
+<span class="fc" id="L95">			return false;</span>
 		}
 <span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (xp &gt; x + width) {</span>
 <span class="nc bnc" id="L98" title="All 2 branches missed.">			assert getClippedX(xp) != xp;</span>
@@ -153,8 +153,8 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 	// ::done
 
 	private double getClippedX(double xp) {
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (xp &lt; x)</span>
-<span class="nc" id="L157">			return x;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (xp &lt; x)</span>
+<span class="fc" id="L157">			return x;</span>
 
 <span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (xp &gt; x + width)</span>
 <span class="nc" id="L160">			return x + width;</span>

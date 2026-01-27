@@ -39,13 +39,13 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 
-<span class="nc" id="L42">public abstract class AbstractTile extends CommonTile implements Tile {</span>
+<span class="fc" id="L42">public abstract class AbstractTile extends CommonTile implements Tile {</span>
 
 	public AbstractTile(StringBounder stringBounder, YGauge currentY) {
-<span class="nc" id="L45">		super(stringBounder);</span>
+<span class="fc" id="L45">		super(stringBounder);</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;CREATING &quot; + getClass());
-<span class="nc" id="L48">	}</span>
+<span class="fc" id="L48">	}</span>
 
 	public AbstractTile(StringBounder stringBounder) {
 <span class="nc" id="L51">		super(stringBounder);</span>
@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 	}
 
 	final public double getZZZ() {
-<span class="nc" id="L64">		final double result = getPreferredHeight() - getContactPointRelative();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		assert result &gt;= 0;</span>
-<span class="nc" id="L66">		return result;</span>
+<span class="fc" id="L64">		final double result = getPreferredHeight() - getContactPointRelative();</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		assert result &gt;= 0;</span>
+<span class="fc" id="L66">		return result;</span>
 	}
 
 	public boolean matchAnchor(String anchor) {

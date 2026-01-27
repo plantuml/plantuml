@@ -74,28 +74,36 @@ public class PSystemDot extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG)</span>
-<span class="nc" id="L78">			return ImageDataSimple.ok();</span>
-
-<span class="nc" id="L80">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,</span>
-<span class="nc" id="L81">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
-<span class="nc" id="L83">			final TextBlock result = GraphicStrings</span>
-<span class="nc" id="L84">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
-<span class="nc" id="L85">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG) {</span>
+<span class="nc" id="L78">			final String svg = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span>
+					+ &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&gt;\n&quot;
+					+ &quot;&lt;a xlink:href=\&quot;https://github.com/plantuml/plantuml/issues/2495\&quot;&gt;\n&quot;
+					+ &quot;&lt;text x=\&quot;10\&quot; y=\&quot;30\&quot; font-family=\&quot;sans-serif\&quot; font-size=\&quot;14\&quot; fill=\&quot;blue\&quot; text-decoration=\&quot;underline\&quot;&gt;This feature has been suppressed&lt;/text&gt;\n&quot;
+					+ &quot;&lt;/a&gt;\n&quot;
+					+ &quot;&lt;/svg&gt;&quot;;
+<span class="nc" id="L84">			os.write(svg.getBytes(&quot;UTF-8&quot;));</span>
+<span class="nc" id="L85">			return ImageDataSimple.ok();</span>
 		}
 
-<span class="nc" id="L88">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
-<span class="nc" id="L89">		final ProcessState state = graphviz.createFile3(counter);</span>
+<span class="nc" id="L88">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,</span>
+<span class="nc" id="L89">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
+<span class="nc" id="L91">			final TextBlock result = GraphicStrings</span>
+<span class="nc" id="L92">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
+<span class="nc" id="L93">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+		}
+
+<span class="nc" id="L96">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
+<span class="nc" id="L97">		final ProcessState state = graphviz.createFile3(counter);</span>
 		// if (state.differs(ProcessState.TERMINATED_OK())) {
 		// throw new IllegalStateException(&quot;Timeout1 &quot; + state);
 		// }
-<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
-<span class="nc" id="L94">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
-<span class="nc" id="L95">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
+<span class="nc" id="L102">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
+<span class="nc" id="L103">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
 		}
 
-<span class="nc" id="L98">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L106">		return ImageDataSimple.ok();</span>
 	}
 
 }
