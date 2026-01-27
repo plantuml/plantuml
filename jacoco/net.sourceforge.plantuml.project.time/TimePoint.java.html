@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimePoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.time</a> &gt; <span class="el_source">TimePoint.java</span></div><h1>TimePoint.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.time;
+
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.ZoneOffset;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
+
+import net.sourceforge.plantuml.project.Value;
+import net.sourceforge.plantuml.project.core.PrintScale;
+
+public class TimePoint implements Comparable&lt;TimePoint&gt;, Value {
+
+	static final public long MILLISECONDS_PER_DAY = 1000L * 3600L * 24;
+
+	private final LocalDateTime utcDateTime;
+
+	public static LocalDate epoch() {
+<span class="fc" id="L58">		return Instant.EPOCH.atZone(ZoneOffset.UTC).toLocalDate();</span>
+	}
+
+	public static TimePoint ofStartOfDay(int year, String month, int dayOfMonth) {
+<span class="nc" id="L62">		return new TimePoint(LocalDateTime.of(year, MonthUtils.fromString(month), dayOfMonth, 0, 0));</span>
+	}
+
+	public static TimePoint of(LocalDateTime time) {
+<span class="fc" id="L66">		return new TimePoint(time);</span>
+	}
+
+	public static TimePoint ofStartOfDay(LocalDate day) {
+<span class="fc" id="L70">		return new TimePoint(day.atStartOfDay());</span>
+	}
+
+	public static TimePoint ofStartOfDay(int year, int month, int dayOfMonth) {
+<span class="fc" id="L74">		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));</span>
+	}
+
+	public static TimePoint ofEndOfDayMinusOneSecond(LocalDate day) {
+<span class="fc" id="L78">		return ofStartOfDay(day.plusDays(1)).minusOneSecond();</span>
+	}
+
+	public TimePoint ofEndOfDay() {
+<span class="nc" id="L82">		return new TimePoint(utcDateTime.toLocalDate().plusDays(1).atStartOfDay().minusSeconds(1));</span>
+
+	}
+
+	public static TimePoint create(long ms) {
+<span class="nc" id="L87">		return new TimePoint(LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), ZoneOffset.UTC));</span>
+	}
+
+	public static TimePoint nowUtc1() {
+<span class="nc" id="L91">		return new TimePoint(LocalDateTime.now(ZoneOffset.UTC));</span>
+	}
+
+	public static TimePoint todayUtcAtMidnight() {
+<span class="nc" id="L95">		return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());</span>
+	}
+
+<span class="fc" id="L98">	private TimePoint(LocalDateTime utcDateTime) {</span>
+<span class="fc" id="L99">		this.utcDateTime = utcDateTime;</span>
+<span class="fc" id="L100">	}</span>
+
+	public LocalDateTime toLocalDateTime() {
+<span class="fc" id="L103">		return utcDateTime;</span>
+	}
+
+	public String toStringShort(Locale locale) {
+<span class="nc" id="L107">		return YearMonthUtils.shortName(monthYear(), locale) + &quot; &quot; + getDayOfMonth();</span>
+	}
+
+	public int getWeekOfYear(WeekNumberStrategy strategy) {
+<span class="fc" id="L111">		final WeekFields wf = WeekFields.of(strategy.getFirstDayOfWeek(), strategy.getMinimalDaysInFirstWeek());</span>
+<span class="fc" id="L112">		return utcDateTime.toLocalDate().get(wf.weekOfYear());</span>
+	}
+
+	public TimePoint increment() {
+<span class="fc" id="L116">		return addDays(1);</span>
+	}
+
+	public TimePoint decrement() {
+<span class="nc" id="L120">		return addDays(-1);</span>
+	}
+
+	public TimePoint addDays(int nday) {
+<span class="fc" id="L124">		return new TimePoint(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());</span>
+	}
+
+	public final int getAbsoluteDayNum() {
+<span class="nc" id="L128">		return (int) Math.floorDiv(getMillis(), MILLISECONDS_PER_DAY);</span>
+	}
+
+	public final long getMillis() {
+<span class="fc" id="L132">		return utcDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();</span>
+	}
+
+	public int year() {
+<span class="nc" id="L136">		return monthYear().getYear();</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L141">		return utcDateTime.toString();</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L146">		return utcDateTime.hashCode();</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L152">			return true;</span>
+<span class="pc bpc" id="L153" title="2 of 4 branches missed.">		if (obj == null || obj.getClass() != TimePoint.class)</span>
+<span class="nc" id="L154">			return false;</span>
+
+<span class="fc" id="L156">		final TimePoint other = (TimePoint) obj;</span>
+<span class="fc" id="L157">		return this.utcDateTime.equals(other.utcDateTime);</span>
+	}
+
+	@Override
+	public int compareTo(TimePoint other) {
+<span class="fc" id="L162">		return this.utcDateTime.compareTo(other.utcDateTime);</span>
+	}
+
+	public final int getDayOfMonth() {
+<span class="nc" id="L166">		return utcDateTime.getDayOfMonth();</span>
+	}
+
+	public Month month() {
+<span class="nc" id="L170">		return utcDateTime.getMonth();</span>
+	}
+
+	public YearMonth monthYear() {
+<span class="fc" id="L174">		return YearMonth.from(utcDateTime);</span>
+	}
+
+	public DayOfWeek toDayOfWeek() {
+<span class="fc" id="L178">		return utcDateTime.getDayOfWeek();</span>
+	}
+
+	public LocalDate toDay() {
+<span class="fc" id="L182">		return utcDateTime.toLocalDate();</span>
+	}
+
+	public static TimePoint min(TimePoint d1, TimePoint d2) {
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		return d1.compareTo(d2) &lt;= 0 ? d1 : d2;</span>
+	}
+
+	public static TimePoint max(TimePoint d1, TimePoint d2) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		return d1.compareTo(d2) &gt;= 0 ? d1 : d2;</span>
+	}
+
+	public TimePoint increment(PrintScale printScale) {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY)</span>
+<span class="nc" id="L195">			return this.addDays(7);</span>
+<span class="nc" id="L196">		return increment();</span>
+	}
+
+	public TimePoint roundDayDown() {
+		// Same as legacy: floor(ms / day) * day
+<span class="nc" id="L201">		final long ms = getMillis();</span>
+<span class="nc" id="L202">		final long floored = Math.floorDiv(ms, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;</span>
+<span class="nc" id="L203">		return TimePoint.create(floored);</span>
+	}
+
+	public TimePoint roundDayUp() {
+		// Same as legacy: ceil(ms / day) * day
+<span class="nc" id="L208">		final long ms = getMillis();</span>
+<span class="nc" id="L209">		final long ceiled = Math.floorDiv(ms + MILLISECONDS_PER_DAY - 1, MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY;</span>
+<span class="nc" id="L210">		return TimePoint.create(ceiled);</span>
+	}
+
+	public TimePoint minusOneSecond() {
+<span class="fc" id="L214">		return new TimePoint(this.utcDateTime.minusSeconds(1));</span>
+	}
+
+	public TimePoint plusOneSecond() {
+<span class="nc" id="L218">		return new TimePoint(this.utcDateTime.plusSeconds(1));</span>
+	}
+
+	public TimePoint floorToDay() {
+<span class="nc" id="L222">		return new TimePoint(utcDateTime.toLocalDate().atStartOfDay());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,27 +35,28 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceTaskStartsAbsolute extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceTaskStartsAbsolute() {
-<span class="fc" id="L46">		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());</span>
-<span class="fc" id="L47">	}</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());</span>
+<span class="fc" id="L49">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L51">		final Task task = (Task) subject;</span>
-<span class="nc" id="L52">		final Day start = (Day) complement;</span>
-<span class="nc" id="L53">		final Day startingDate = project.getStartingDate();</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (startingDate.getAbsoluteDayNum() == 0)</span>
-<span class="nc" id="L55">			return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
+<span class="nc" id="L53">		final Task task = (Task) subject;</span>
+<span class="nc" id="L54">		final LocalDate start = (LocalDate) complement;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (project.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="nc" id="L56">			return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
 
-<span class="nc" id="L57">		task.setStart(start);</span>
-<span class="nc" id="L58">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L58">		task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="nc" id="L59">		return CommandExecutionResult.ok();</span>
 	}
 
 }

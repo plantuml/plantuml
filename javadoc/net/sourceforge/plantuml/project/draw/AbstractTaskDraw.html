@@ -109,7 +109,7 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <div class="col-first even-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#prettyDisplay" class="member-name-link">prettyDisplay</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="../time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#start" class="member-name-link">start</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected final <a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
@@ -129,10 +129,10 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
- <a href="../time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start,
+ <a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
  <a href="../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
  <a href="../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
  <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
@@ -276,7 +276,7 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <li>
 <section class="detail" id="start">
 <h3>start</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></span>&nbsp;<span class="element-name">start</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span>&nbsp;<span class="element-name">start</span></div>
 </section>
 </li>
 </ul>
@@ -288,12 +288,12 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)">
 <h3>AbstractTaskDraw</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractTaskDraw</span><wbr><span class="parameters">(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
- <a href="../time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start,
+ <a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
  <a href="../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
  <a href="../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
  <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,

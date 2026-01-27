@@ -156,13 +156,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the total effort associated with this task.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnd(java.time.LocalDateTime)" class="member-name-link">setEnd</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;end)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">setEffort</a><wbr>(<a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnd(java.time.LocalDateTime)" class="member-name-link">setEnd</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;end)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets (anchors) the end instant of the task.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStart(java.time.LocalDateTime)" class="member-name-link">setStart</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStart(java.time.LocalDateTime)" class="member-name-link">setStart</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets (anchors) the start instant of the task.</div>
 </div>
 </div>
@@ -170,7 +173,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.project.ngm.NGMTask">Methods inherited from class&nbsp;net.sourceforge.plantuml.project.ngm.<a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></h3>
-<code><a href="NGMTask.html#getAllocation()">getAllocation</a>, <a href="NGMTask.html#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)">withFixedDuration</a>, <a href="NGMTask.html#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">withFixedTotalEffort</a></code></div>
+<code><a href="NGMTask.html#getAllocation()">getAllocation</a>, <a href="NGMTask.html#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)">withFixedDuration</a>, <a href="NGMTask.html#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">withFixedTotalEffort</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -214,10 +217,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the current start instant of the task.
 
  <p>
- The start and end instants are not independent values in the NGM model.
- They form a coherent scheduled window derived from the task type
- (fixed-duration vs fixed-total-effort), the allocation, and the
- scheduling constraints.
+ The start and end instants are not independent values in the NGM model. They
+ form a coherent scheduled window derived from the task type (fixed-duration
+ vs fixed-total-effort), the allocation, and the scheduling constraints.
  </p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -235,19 +237,20 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets (anchors) the start instant of the task.
 
  <p>
- This method is a scheduling input. Calling it triggers a recomputation of
- the task's scheduled window. As a consequence, after this call:
+ This method is a scheduling input. Calling it triggers a recomputation of the
+ task's scheduled window. As a consequence, after this call:
  </p>
 
  <ul>
-   <li><a href="NGMTask.html#getStart()"><code>NGMTask.getStart()</code></a> will reflect the newly anchored start, and</li>
-   <li><a href="NGMTask.html#getEnd()"><code>NGMTask.getEnd()</code></a> will be recalculated to maintain a consistent task model.</li>
+ <li><a href="NGMTask.html#getStart()"><code>NGMTask.getStart()</code></a> will reflect the newly anchored start, and</li>
+ <li><a href="NGMTask.html#getEnd()"><code>NGMTask.getEnd()</code></a> will be recalculated to maintain a consistent task
+ model.</li>
  </ul>
 
  <p>
- The exact recomputation rules depend on the concrete task type and may take into
- account the intrinsic duration or total effort, the constant allocation, and
- the scheduling calendar.
+ The exact recomputation rules depend on the concrete task type and may take
+ into account the intrinsic duration or total effort, the constant allocation,
+ and the scheduling calendar.
  </p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -265,10 +268,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the current end instant of the task.
 
  <p>
- The start and end instants are not independent values in the NGM model.
- They form a coherent scheduled window derived from the task type
- (fixed-duration vs fixed-total-effort), the allocation, and the
- scheduling constraints.
+ The start and end instants are not independent values in the NGM model. They
+ form a coherent scheduled window derived from the task type (fixed-duration
+ vs fixed-total-effort), the allocation, and the scheduling constraints.
  </p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -286,19 +288,20 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets (anchors) the end instant of the task.
 
  <p>
- This method is a scheduling input. Calling it triggers a recomputation of
- the task's scheduled window. As a consequence, after this call:
+ This method is a scheduling input. Calling it triggers a recomputation of the
+ task's scheduled window. As a consequence, after this call:
  </p>
 
  <ul>
-   <li><a href="NGMTask.html#getEnd()"><code>NGMTask.getEnd()</code></a> will reflect the newly anchored end, and</li>
-   <li><a href="NGMTask.html#getStart()"><code>NGMTask.getStart()</code></a> will be recalculated to maintain a consistent task model.</li>
+ <li><a href="NGMTask.html#getEnd()"><code>NGMTask.getEnd()</code></a> will reflect the newly anchored end, and</li>
+ <li><a href="NGMTask.html#getStart()"><code>NGMTask.getStart()</code></a> will be recalculated to maintain a consistent task
+ model.</li>
  </ul>
 
  <p>
- The exact recomputation rules depend on the concrete task type and may take into
- account the intrinsic duration or total effort, the constant allocation, and
- the scheduling calendar.
+ The exact recomputation rules depend on the concrete task type and may take
+ into account the intrinsic duration or total effort, the constant allocation,
+ and the scheduling calendar.
  </p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -380,6 +383,16 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="NGMTask.html#getTotalEffort()">getTotalEffort</a></code>&nbsp;in class&nbsp;<code><a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></dd>
 <dt>Returns:</dt>
 <dd>the intrinsic or computed total effort of the task</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">
+<h3>setEffort</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEffort</span><wbr><span class="parameters">(<a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="NGMTask.html#setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">setEffort</a></code>&nbsp;in class&nbsp;<code><a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></dd>
 </dl>
 </section>
 </li>

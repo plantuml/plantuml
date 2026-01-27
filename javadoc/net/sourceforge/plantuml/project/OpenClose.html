@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -76,26 +76,12 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">net.sourceforge.plantuml.project.OpenClose</div>
 </div>
 <section class="class-description" id="class-description">
-<dl class="notes">
-<dt>All Implemented Interfaces:</dt>
-<dd><code><a href="core3/Histogram.html" title="interface in net.sourceforge.plantuml.project.core3">Histogram</a></code>, <code><a href="core3/TimeLine.html" title="interface in net.sourceforge.plantuml.project.core3">TimeLine</a></code>, <code><a href="LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a></code></dd>
-</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">OpenClose</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="core3/Histogram.html" title="interface in net.sourceforge.plantuml.project.core3">Histogram</a>, <a href="LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
-<!-- =========== FIELD SUMMARY =========== -->
-<li>
-<section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
-<div class="inherited-list">
-<h3 id="fields-inherited-from-class-net.sourceforge.plantuml.project.core3.TimeLine">Fields inherited from interface&nbsp;net.sourceforge.plantuml.project.core3.<a href="core3/TimeLine.html" title="interface in net.sourceforge.plantuml.project.core3">TimeLine</a></h3>
-<code><a href="core3/TimeLine.html#MAX_TIME">MAX_TIME</a></code></div>
-</section>
-</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -120,53 +106,41 @@ implements <a href="core3/Histogram.html" title="interface in net.sourceforge.pl
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close(java.time.DayOfWeek)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/DayOfWeek.html" title="class or interface in java.time" class="external-link">DayOfWeek</a>&nbsp;day)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ngm/math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.project.ngm.math">PiecewiseConstant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asPiecewiseConstant()" class="member-name-link">asPiecewiseConstant</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">close</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#daysInWeek()" class="member-name-link">daysInWeek</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastDayIfAny()" class="member-name-link">getLastDayIfAny</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadAt(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">getLoadAt</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNext(long)" class="member-name-link">getNext</a><wbr>(long&nbsp;moment)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrevious(long)" class="member-name-link">getPrevious</a><wbr>(long&nbsp;moment)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartingDay()" class="member-name-link">getStartingDay</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValueAt(long)" class="member-name-link">getValueAt</a><wbr>(long&nbsp;moment)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClosed(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">isClosed</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mutateMe(net.sourceforge.plantuml.project.OpenClose)" class="member-name-link">mutateMe</a><wbr>(<a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a>&nbsp;except)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(java.time.DayOfWeek)" class="member-name-link">open</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/DayOfWeek.html" title="class or interface in java.time" class="external-link">DayOfWeek</a>&nbsp;day)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close(java.time.DayOfWeek)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/DayOfWeek.html" title="class or interface in java.time" class="external-link">DayOfWeek</a>&nbsp;day)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">open</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close(java.time.LocalDate)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffAfterDate(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setOffAfterDate</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#daysInWeek()" class="member-name-link">daysInWeek</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastDayIfAny()" class="member-name-link">getLastDayIfAny</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadAtDUMMY(java.time.LocalDate)" class="member-name-link">getLoadAtDUMMY</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClosed(java.time.LocalDate)" class="member-name-link">isClosed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mutateMe(net.sourceforge.plantuml.project.OpenClose)" class="member-name-link">mutateMe</a><wbr>(<a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a>&nbsp;except)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffBeforeDate(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setOffBeforeDate</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(java.time.DayOfWeek)" class="member-name-link">open</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/DayOfWeek.html" title="class or interface in java.time" class="external-link">DayOfWeek</a>&nbsp;day)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStartingDay(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setStartingDay</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;startingDay)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(java.time.LocalDate)" class="member-name-link">open</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffAfterDate(java.time.LocalDate)" class="member-name-link">setOffAfterDate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffBeforeDate(java.time.LocalDate)" class="member-name-link">setOffBeforeDate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -200,15 +174,21 @@ implements <a href="core3/Histogram.html" title="interface in net.sourceforge.pl
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="mutateMe(net.sourceforge.plantuml.project.OpenClose)">
+<h3>mutateMe</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a></span>&nbsp;<span class="element-name">mutateMe</span><wbr><span class="parameters">(<a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a>&nbsp;except)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="daysInWeek()">
 <h3>daysInWeek</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">daysInWeek</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="isClosed(net.sourceforge.plantuml.project.time.Day)">
+<section class="detail" id="isClosed(java.time.LocalDate)">
 <h3>isClosed</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isClosed</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isClosed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</span></div>
 </section>
 </li>
 <li>
@@ -224,95 +204,45 @@ implements <a href="core3/Histogram.html" title="interface in net.sourceforge.pl
 </section>
 </li>
 <li>
-<section class="detail" id="close(net.sourceforge.plantuml.project.time.Day)">
+<section class="detail" id="close(java.time.LocalDate)">
 <h3>close</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="open(net.sourceforge.plantuml.project.time.Day)">
+<section class="detail" id="open(java.time.LocalDate)">
 <h3>open</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="getStartingDay()">
-<h3>getStartingDay</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></span>&nbsp;<span class="element-name">getStartingDay</span>()</div>
+<section class="detail" id="getLoadAtDUMMY(java.time.LocalDate)">
+<h3>getLoadAtDUMMY</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getLoadAtDUMMY</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="setStartingDay(net.sourceforge.plantuml.project.time.Day)">
-<h3>setStartingDay</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStartingDay</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;startingDay)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="getNext(long)">
-<h3>getNext</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getNext</span><wbr><span class="parameters">(long&nbsp;moment)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="core3/TimeLine.html#getNext(long)">getNext</a></code>&nbsp;in interface&nbsp;<code><a href="core3/TimeLine.html" title="interface in net.sourceforge.plantuml.project.core3">TimeLine</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getPrevious(long)">
-<h3>getPrevious</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getPrevious</span><wbr><span class="parameters">(long&nbsp;moment)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="core3/TimeLine.html#getPrevious(long)">getPrevious</a></code>&nbsp;in interface&nbsp;<code><a href="core3/TimeLine.html" title="interface in net.sourceforge.plantuml.project.core3">TimeLine</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getValueAt(long)">
-<h3>getValueAt</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getValueAt</span><wbr><span class="parameters">(long&nbsp;moment)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="core3/Histogram.html#getValueAt(long)">getValueAt</a></code>&nbsp;in interface&nbsp;<code><a href="core3/Histogram.html" title="interface in net.sourceforge.plantuml.project.core3">Histogram</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getLoadAt(net.sourceforge.plantuml.project.time.Day)">
-<h3>getLoadAt</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getLoadAt</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="LoadPlanable.html#getLoadAt(net.sourceforge.plantuml.project.time.Day)">getLoadAt</a></code>&nbsp;in interface&nbsp;<code><a href="LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setOffBeforeDate(net.sourceforge.plantuml.project.time.Day)">
+<section class="detail" id="setOffBeforeDate(java.time.LocalDate)">
 <h3>setOffBeforeDate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOffBeforeDate</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOffBeforeDate</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="setOffAfterDate(net.sourceforge.plantuml.project.time.Day)">
+<section class="detail" id="setOffAfterDate(java.time.LocalDate)">
 <h3>setOffAfterDate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOffAfterDate</span><wbr><span class="parameters">(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;day)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="mutateMe(net.sourceforge.plantuml.project.OpenClose)">
-<h3>mutateMe</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a></span>&nbsp;<span class="element-name">mutateMe</span><wbr><span class="parameters">(<a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a>&nbsp;except)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOffAfterDate</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLastDayIfAny()">
 <h3>getLastDayIfAny</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></span>&nbsp;<span class="element-name">getLastDayIfAny</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="LoadPlanable.html#getLastDayIfAny()">getLastDayIfAny</a></code>&nbsp;in interface&nbsp;<code><a href="LoadPlanable.html" title="interface in net.sourceforge.plantuml.project">LoadPlanable</a></code></dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></span>&nbsp;<span class="element-name">getLastDayIfAny</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="asPiecewiseConstant()">
+<h3>asPiecewiseConstant</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ngm/math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.project.ngm.math">PiecewiseConstant</a></span>&nbsp;<span class="element-name">asPiecewiseConstant</span>()</div>
 </section>
 </li>
 </ul>

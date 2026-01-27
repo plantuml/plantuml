@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -64,9 +64,9 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawGroup extends AbstractTaskDraw {
 
-	private final Day end;
+	private final TimePoint end;
 
-	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, Task task,
+	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, Task task,
 			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
 <span class="nc" id="L71">		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
 <span class="nc" id="L72">		this.end = end;</span>
@@ -79,8 +79,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		// return padding.getTop() +
 		// getTitle().calculateDimension(stringBounder).getHeight() +
 		// padding.getBottom() + 8;
-<span class="nc" id="L82">		final double pos1 = timeScale.getStartingPosition(start) + 6;</span>
-<span class="nc" id="L83">		final double pos2 = timeScale.getEndingPosition(end) - 6;</span>
+<span class="nc" id="L82">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="nc" id="L83">		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;</span>
 <span class="nc" id="L84">		final TextBlock title = getTitle();</span>
 <span class="nc" id="L85">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth())</span>
@@ -99,8 +99,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 <span class="nc" id="L99">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 <span class="nc" id="L100">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
 
-<span class="nc" id="L102">		final double pos1 = timeScale.getStartingPosition(start) + 6;</span>
-<span class="nc" id="L103">		final double pos2 = timeScale.getEndingPosition(end) - 6;</span>
+<span class="nc" id="L102">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="nc" id="L103">		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;</span>
 		final double pos;
 		final double y;
 <span class="nc bnc" id="L106" title="All 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth()) {</span>
@@ -138,8 +138,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 <span class="nc" id="L140">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="nc" id="L141">		final double startPos = timeScale.getStartingPosition(start);</span>
-<span class="nc" id="L142">		final double endPos = timeScale.getEndingPosition(end);</span>
+<span class="nc" id="L141">		final double startPos = timeScale.getPosition(start);</span>
+<span class="nc" id="L142">		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end);</span>
 <span class="nc" id="L143">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);</span>
 	}
 
@@ -163,13 +163,13 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final double x;
 
 <span class="nc bnc" id="L165" title="All 2 branches missed.">		if (side == GSide.LEFT)</span>
-<span class="nc" id="L166">			x = timeScale.getStartingPosition(start);</span>
+<span class="nc" id="L166">			x = timeScale.getPosition(start);</span>
 <span class="nc bnc" id="L167" title="All 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L168">			x = timeScale.getEndingPosition(end);</span>
+<span class="nc" id="L168">			x = timeScale.getPosition(end) + timeScale.getWidth(end);</span>
 <span class="nc bnc" id="L169" title="All 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT)</span>
-<span class="nc" id="L170">			x = (timeScale.getStartingPosition(start) + timeScale.getEndingPosition(start)) / 2;</span>
+<span class="nc" id="L170">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
 <span class="nc bnc" id="L171" title="All 4 branches missed.">		else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT)</span>
-<span class="nc" id="L172">			x = (timeScale.getStartingPosition(end) + timeScale.getEndingPosition(end)) / 2;</span>
+<span class="nc" id="L172">			x = (timeScale.getPosition(end) + timeScale.getPosition(end) + timeScale.getWidth(end)) / 2;</span>
 		else
 <span class="nc" id="L174">			throw new IllegalArgumentException();</span>
 
@@ -180,8 +180,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 <span class="nc" id="L180">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
 <span class="nc" id="L181">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="nc" id="L183">		final double startPos = timeScale.getStartingPosition(start) + margin.getLeft();</span>
-<span class="nc" id="L184">		final double endPos = timeScale.getEndingPosition(end) - margin.getRight();</span>
+<span class="nc" id="L183">		final double startPos = timeScale.getPosition(start) + margin.getLeft();</span>
+<span class="nc" id="L184">		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end) - margin.getRight();</span>
 
 <span class="nc bnc" id="L186" title="All 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L187">			ug.startUrl(url);</span>

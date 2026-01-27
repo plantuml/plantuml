@@ -90,22 +90,23 @@ loadScripts(document, 'script');</script>
  </p>
 
  <ul>
-   <li><b>Total effort</b> — an <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm"><code>NGMTotalEffort</code></a> expressing the total amount of
-       work associated with the task, typically in person-time
-       (for example, person-seconds or person-hours).</li>
+ <li><b>Total effort</b> — an <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm"><code>NGMTotalEffort</code></a> expressing the total
+ amount of work associated with the task, typically in person-time (for
+ example, person-seconds or person-hours).</li>
 
-   <li><b>Allocation</b> — an <a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm"><code>NGMAllocation</code></a> representing the effective
-       full-time-equivalent (FTE) assigned to the task
-       (e.g., 1 = 100%, 1/2 = 50%, 5/7 = weekdays only, 2 = two persons).</li>
+ <li><b>Allocation</b> — an <a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm"><code>NGMAllocation</code></a> representing the effective
+ full-time-equivalent (FTE) assigned to the task (e.g., 1 = 100%, 1/2 = 50%,
+ 5/7 = weekdays only, 2 = two persons).</li>
 
-   <li><b>Duration</b> — a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link"><code>Duration</code></a> representing the calendar span
-       between the start and end instants.</li>
+ <li><b>Duration</b> — a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link"><code>Duration</code></a> representing the calendar span
+ between the start and end instants.</li>
  </ul>
 
  <p>
- These three quantities must remain conceptually independent. Confusing them leads to
- incorrect scheduling behaviour. The goal of NGM is to provide a clean and unambiguous
- task model using <code>java.time</code> and explicit resource-allocation logic.
+ These three quantities must remain conceptually independent. Confusing them
+ leads to incorrect scheduling behaviour. The goal of NGM is to provide a
+ clean and unambiguous task model using <code>java.time</code> and explicit
+ resource-allocation logic.
  </p>
 
 
@@ -116,33 +117,36 @@ loadScripts(document, 'script');</script>
  </p>
 
  <ul>
-   <li><b>Fixed-total-effort task</b>: The total effort is intrinsic and does not change.
-       The scheduled duration is computed from the total effort and the allocation.
-       Example: “this task requires 80 hours of work”.</li>
+ <li><b>Fixed-total-effort task</b>: The total effort is intrinsic and does
+ not change. The scheduled duration is computed from the total effort and the
+ allocation. Example: “this task requires 80 hours of work”.</li>
 
-   <li><b>Fixed-duration task</b>: The calendar span is intrinsic and does not change.
-       The total effort becomes a derived quantity and depends on the allocation.
-       Example: “crossing the Atlantic takes 7 days regardless of crew size”.</li>
+ <li><b>Fixed-duration task</b>: The calendar span is intrinsic and does not
+ change. The total effort becomes a derived quantity and depends on the
+ allocation. Example: “crossing the Atlantic takes 7 days regardless of crew
+ size”.</li>
  </ul>
 
  <p>
  This distinction is crucial: without it, the scheduler cannot make consistent
- decisions about resource allocation, overlapping tasks, or long-running schedules.
+ decisions about resource allocation, overlapping tasks, or long-running
+ schedules.
  </p>
 
 
  <h3>Why allocation is final</h3>
 
  <p>
- The allocation represents the <em>structural capacity</em> assigned to the task.
- It may influence start date, end date, duration, or total effort (depending on the
- task type), but it is not modified by them.
+ The allocation represents the <em>structural capacity</em> assigned to the
+ task. It may influence start date, end date, duration, or total effort
+ (depending on the task type), but it is not modified by them.
  </p>
 
  <p>
  By contrast, the temporal attributes (<code>start</code>, <code>end</code>,
- <code>duration</code>) as well as the total effort (for fixed-duration tasks) may
- vary depending on scheduling decisions, calendars, dependencies, or external constraints.
+ <code>duration</code>) as well as the total effort (for fixed-duration tasks)
+ may vary depending on scheduling decisions, calendars, dependencies, or
+ external constraints.
  </p>
 
 
@@ -151,8 +155,8 @@ loadScripts(document, 'script');</script>
  <p>
  The static factory methods
  <a href="#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)"><code>withFixedDuration(NGMAllocation, Duration)</code></a> and
- <a href="#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)"><code>withFixedTotalEffort(NGMAllocation, NGMTotalEffort)</code></a>
- create concrete implementations representing these two behaviours.
+ <code>#withFixedTotalEffort(NGMAllocation, NGMTotalEffort)</code> create concrete
+ implementations representing these two behaviours.
  </p></div>
 </section>
 <section class="summary">
@@ -226,28 +230,32 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the total effort associated with this task.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEnd(java.time.LocalDateTime)" class="member-name-link">setEnd</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;end)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">setEffort</a><wbr>(<a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEnd(java.time.LocalDateTime)" class="member-name-link">setEnd</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;end)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets (anchors) the end instant of the task.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStart(java.time.LocalDateTime)" class="member-name-link">setStart</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStart(java.time.LocalDateTime)" class="member-name-link">setStart</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets (anchors) the start instant of the task.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)" class="member-name-link">withFixedDuration</a><wbr>(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)" class="member-name-link">withFixedDuration</a><wbr>(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;duration)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a task whose duration is intrinsic (fixed) and does not depend on the
  assigned allocation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
  <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on the
- assigned allocation.</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on
+ the assigned allocation.</div>
 </div>
 </div>
 </div>
@@ -307,10 +315,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the current start instant of the task.
 
  <p>
- The start and end instants are not independent values in the NGM model.
- They form a coherent scheduled window derived from the task type
- (fixed-duration vs fixed-total-effort), the allocation, and the
- scheduling constraints.
+ The start and end instants are not independent values in the NGM model. They
+ form a coherent scheduled window derived from the task type (fixed-duration
+ vs fixed-total-effort), the allocation, and the scheduling constraints.
  </p></div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -325,19 +332,20 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets (anchors) the start instant of the task.
 
  <p>
- This method is a scheduling input. Calling it triggers a recomputation of
- the task's scheduled window. As a consequence, after this call:
+ This method is a scheduling input. Calling it triggers a recomputation of the
+ task's scheduled window. As a consequence, after this call:
  </p>
 
  <ul>
-   <li><a href="#getStart()"><code>getStart()</code></a> will reflect the newly anchored start, and</li>
-   <li><a href="#getEnd()"><code>getEnd()</code></a> will be recalculated to maintain a consistent task model.</li>
+ <li><a href="#getStart()"><code>getStart()</code></a> will reflect the newly anchored start, and</li>
+ <li><a href="#getEnd()"><code>getEnd()</code></a> will be recalculated to maintain a consistent task
+ model.</li>
  </ul>
 
  <p>
- The exact recomputation rules depend on the concrete task type and may take into
- account the intrinsic duration or total effort, the constant allocation, and
- the scheduling calendar.
+ The exact recomputation rules depend on the concrete task type and may take
+ into account the intrinsic duration or total effort, the constant allocation,
+ and the scheduling calendar.
  </p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -352,10 +360,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the current end instant of the task.
 
  <p>
- The start and end instants are not independent values in the NGM model.
- They form a coherent scheduled window derived from the task type
- (fixed-duration vs fixed-total-effort), the allocation, and the
- scheduling constraints.
+ The start and end instants are not independent values in the NGM model. They
+ form a coherent scheduled window derived from the task type (fixed-duration
+ vs fixed-total-effort), the allocation, and the scheduling constraints.
  </p></div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -370,19 +377,20 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets (anchors) the end instant of the task.
 
  <p>
- This method is a scheduling input. Calling it triggers a recomputation of
- the task's scheduled window. As a consequence, after this call:
+ This method is a scheduling input. Calling it triggers a recomputation of the
+ task's scheduled window. As a consequence, after this call:
  </p>
 
  <ul>
-   <li><a href="#getEnd()"><code>getEnd()</code></a> will reflect the newly anchored end, and</li>
-   <li><a href="#getStart()"><code>getStart()</code></a> will be recalculated to maintain a consistent task model.</li>
+ <li><a href="#getEnd()"><code>getEnd()</code></a> will reflect the newly anchored end, and</li>
+ <li><a href="#getStart()"><code>getStart()</code></a> will be recalculated to maintain a consistent task
+ model.</li>
  </ul>
 
  <p>
- The exact recomputation rules depend on the concrete task type and may take into
- account the intrinsic duration or total effort, the constant allocation, and
- the scheduling calendar.
+ The exact recomputation rules depend on the concrete task type and may take
+ into account the intrinsic duration or total effort, the constant allocation,
+ and the scheduling calendar.
  </p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -422,6 +430,12 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>the computed scheduled duration of the task</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">
+<h3>setEffort</h3>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEffort</span><wbr><span class="parameters">(<a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</span></div>
 </section>
 </li>
 <li>
@@ -509,8 +523,8 @@ loadScripts(document, 'script');</script>
 
  <p>
  When a scheduling calendar is applied, the <em>start</em> and/or <em>end</em>
- instants may shift to satisfy availability constraints (for example,
- when certain days are closed or non-working). However, the overall scheduled
+ instants may shift to satisfy availability constraints (for example, when
+ certain days are closed or non-working). However, the overall scheduled
  duration represented by this task remains unchanged.
  </p>
 
@@ -526,7 +540,8 @@ loadScripts(document, 'script');</script>
  </p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>allocation</code> - the constant full-time-equivalent allocation applied to the task</dd>
+<dd><code>allocation</code> - the constant full-time-equivalent allocation applied to the
+                   task</dd>
 <dd><code>duration</code> - the intrinsic fixed calendar duration of the task</dd>
 <dt>Returns:</dt>
 <dd>a new fixed-duration task</dd>
@@ -534,12 +549,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">
+<section class="detail" id="withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">
 <h3>withFixedTotalEffort</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></span>&nbsp;<span class="element-name">withFixedTotalEffort</span><wbr><span class="parameters">(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
  <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</span></div>
-<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on the
- assigned allocation.
+<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on
+ the assigned allocation.
 
  <p>
  In this type of task, the total amount of work is the defining property:
@@ -566,7 +582,8 @@ loadScripts(document, 'script');</script>
  </p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>allocation</code> - the constant full-time-equivalent allocation applied to the task</dd>
+<dd><code>allocation</code> - the constant full-time-equivalent allocation applied to
+                    the task</dd>
 <dd><code>totalEffort</code> - the intrinsic amount of work required for this task</dd>
 <dt>Returns:</dt>
 <dd>a new fixed-total-effort task (when implemented)</dd>

@@ -35,27 +35,28 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
 
 public class SentencePausesAbsoluteIntervals extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentencePausesAbsoluteIntervals() {
-<span class="fc" id="L47">		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
 				new ComplementIntervals());
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L53">		final Task task = (Task) subject;</span>
-<span class="nc" id="L54">		final DaysAsDates pauses = (DaysAsDates) complement;</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Day day : pauses)</span>
-<span class="nc" id="L56">			task.addPause(day);</span>
+<span class="nc" id="L54">		final Task task = (Task) subject;</span>
+<span class="nc" id="L55">		final DaysAsDates pauses = (DaysAsDates) complement;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (LocalDate day : pauses)</span>
+<span class="nc" id="L57">			task.addPause(day);</span>
 
-<span class="nc" id="L58">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L59">		return CommandExecutionResult.ok();</span>
 	}
 
 }

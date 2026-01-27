@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PiecewiseConstantTimeWindow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ngm.math</a> &gt; <span class="el_source">PiecewiseConstantTimeWindow.java</span></div><h1>PiecewiseConstantTimeWindow.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ngm.math;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.project.time.TimePoint;
+
+/**
+ * Immutable implementation of {@link PiecewiseConstant} that models a time
+ * window where work is enabled (value = 1) only within a specific period, and
+ * disabled (value = 0) before and after that period.
+ *
+ * &lt;p&gt;
+ * This represents a function that:
+ * &lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;Returns {@link Fraction#ZERO} for all times before {@code offBefore}&lt;/li&gt;
+ * &lt;li&gt;Returns {@link Fraction#ONE} for all times between {@code offBefore} and
+ * {@code offAfter}&lt;/li&gt;
+ * &lt;li&gt;Returns {@link Fraction#ZERO} for all times after {@code offAfter}&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;
+ * This is useful for modeling tasks or resources that are only available during
+ * a specific time window.
+ * &lt;/p&gt;
+ */
+public final class PiecewiseConstantTimeWindow extends AbstractPiecewiseConstant {
+
+	/**
+	 * The instant before which work is disabled (exclusive). Before this instant,
+	 * the function value is 0.
+	 */
+	private final LocalDateTime offBefore;
+
+	/**
+	 * The instant after which work is disabled (exclusive). After this instant, the
+	 * function value is 0.
+	 */
+	private final LocalDateTime offAfter;
+
+	/**
+	 * Constructs a PiecewiseConstantOffBeforeOffAfter with the given time window.
+	 *
+	 * @param offBefore The time point before which work is disabled.
+	 * @param offAfter  The time point after which work is disabled.
+	 * @throws NullPointerException     if either parameter is null
+	 * @throws IllegalArgumentException if offAfter is not after offBefore
+	 */
+<span class="nc" id="L85">	public PiecewiseConstantTimeWindow(LocalDateTime offBefore, LocalDateTime offAfter) {</span>
+
+<span class="nc" id="L87">		this.offBefore = offBefore;</span>
+<span class="nc" id="L88">		this.offAfter = offAfter;</span>
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (this.offBefore.isBefore(this.offAfter) == false)</span>
+<span class="nc" id="L91">			throw new IllegalArgumentException(&quot;offAfter must be after offBefore&quot;);</span>
+<span class="nc" id="L92">	}</span>
+
+	/**
+	 * Returns the segment containing the given instant.
+	 *
+	 * &lt;p&gt;
+	 * This method implements the core logic of the piecewise constant function by
+	 * determining which of the three regions (before, during, or after the active
+	 * window) contains the given instant, and returns an appropriate segment.
+	 * &lt;/p&gt;
+	 *
+	 * @param instant   The instant for which to find the containing segment.
+	 * @param direction The direction of iteration (FORWARD or BACKWARD).
+	 * @return A segment containing the instant with the appropriate value (0 or 1).
+	 */
+	@Override
+	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="nc" id="L110">			return segmentAtForward(instant);</span>
+		else
+<span class="nc" id="L112">			return segmentAtBackward(instant);</span>
+	}
+
+	/**
+	 * Returns the segment containing the given instant for forward iteration.
+	 *
+	 * @param instant The instant for which to find the containing segment.
+	 * @return A forward segment containing the instant.
+	 */
+	private Segment segmentAtForward(LocalDateTime instant) {
+		// Before the active window: return a segment from instant to offBefore with
+		// value 0
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (instant.isBefore(offBefore))</span>
+<span class="nc" id="L125">			return Segment.forward(instant, offBefore, Fraction.ZERO);</span>
+
+		// After the active window: return an unbounded segment from instant onwards
+		// with value 0
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (instant.isBefore(offAfter) == false)</span>
+<span class="nc" id="L130">			return Segment.forward(instant, LocalDateTime.MAX, Fraction.ZERO);</span>
+
+		// Within the active window: return a segment from instant to offAfter with
+		// value 1
+<span class="nc" id="L134">		return Segment.forward(instant, offAfter, Fraction.ONE);</span>
+	}
+
+	/**
+	 * Returns the segment containing the given instant for backward iteration.
+	 *
+	 * @param instant The instant for which to find the containing segment.
+	 * @return A backward segment containing the instant.
+	 */
+	private Segment segmentAtBackward(LocalDateTime instant) {
+		// After the active window: return a segment from instant back to offAfter with
+		// value 0
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (instant.isAfter(offAfter))</span>
+<span class="nc" id="L147">			return Segment.backward(instant, offAfter, Fraction.ZERO);</span>
+
+		// Before the active window: return an unbounded segment from instant backwards
+		// with value 0
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (instant.isAfter(offBefore) == false)</span>
+<span class="nc" id="L152">			return Segment.backward(instant, LocalDateTime.MIN, Fraction.ZERO);</span>
+
+		// Within the active window: return a segment from instant back to offBefore
+		// with value 1
+<span class="nc" id="L156">		return Segment.backward(instant, offBefore, Fraction.ONE);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

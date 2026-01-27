@@ -35,49 +35,49 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class SubjectProject implements Subject&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L51">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectProject();</span>
+<span class="fc" id="L52">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectProject();</span>
 
 	private SubjectProject() {
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L57">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;project&quot;);</span>
+<span class="fc" id="L58">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;project&quot;);</span>
 	}
 
 	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L61">		return Failable.ok(project);</span>
+<span class="fc" id="L62">		return Failable.ok(project);</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L65">		return Arrays.asList(new Starts());</span>
+<span class="fc" id="L66">		return Arrays.asList(new Starts());</span>
 	}
 
-<span class="fc" id="L68">	class Starts extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L69">	class Starts extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L70">		public Starts() {</span>
-<span class="fc" id="L71">			super(SubjectProject.this, Verbs.starts, Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),</span>
-<span class="fc" id="L72">					ComplementDate.onlyAbsolute());</span>
-<span class="fc" id="L73">		}</span>
+<span class="fc" id="L71">		public Starts() {</span>
+<span class="fc" id="L72">			super(SubjectProject.this, Verbs.starts, Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),</span>
+<span class="fc" id="L73">					ComplementDate.onlyAbsolute());</span>
+<span class="fc" id="L74">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L77">			final Day start = (Day) complement;</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			assert project == subject;</span>
-<span class="fc" id="L79">			project.setProjectStartingDate(start);</span>
-<span class="fc" id="L80">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L78">			final LocalDate start = (LocalDate) complement;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			assert project == subject;</span>
+<span class="fc" id="L80">			return project.updateStartingPoint(start);</span>
 		}
 
 	}

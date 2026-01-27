@@ -417,58 +417,11 @@ public final class Segment {
 		}
 	}
 
-	/**
-	 * Computes the intersection of multiple segments using multiplication to
-	 * combine their values.
-	 *
-	 * &lt;p&gt;
-	 * Convenience overload for array inputs. Delegates to
-	 * {@link #intersection(List)}.
-	 * &lt;/p&gt;
-	 *
-	 * @param segments the array of segments to intersect
-	 * @return a new {@link Segment} representing the intersection
-	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
-	 *                                  have different directions, or if no
-	 *                                  overlapping range exists
-	 * @throws NullPointerException     if {@code segments} is {@code null}
-	 * @see #intersection(List)
-	 */
-	public static Segment intersection(Segment[] segments) {
-<span class="nc" id="L438">		Objects.requireNonNull(segments, &quot;segments must not be null&quot;);</span>
-
-<span class="nc" id="L440">		return intersection(Arrays.asList(segments));</span>
-	}
-
-	/**
-	 * Computes the intersection of multiple segments with a custom value function.
-	 *
-	 * &lt;p&gt;
-	 * Convenience overload for array inputs. Delegates to
-	 * {@link #intersection(List, BiFunction)}.
-	 * &lt;/p&gt;
-	 *
-	 * @param segments      the array of segments to intersect
-	 * @param valueFunction a function that combines two {@link Fraction} values
-	 * @return a new {@link Segment} representing the intersection
-	 * @throws IllegalArgumentException if {@code segments} is empty, if segments
-	 *                                  have different directions, or if no
-	 *                                  overlapping range exists
-	 * @throws NullPointerException     if {@code segments} or {@code valueFunction}
-	 *                                  is {@code null}
-	 * @see #intersection(List, BiFunction)
-	 */
-	public static Segment intersection(Segment[] segments, BiFunction&lt;Fraction, Fraction, Fraction&gt; valueFunction) {
-<span class="nc" id="L462">		Objects.requireNonNull(segments, &quot;segments must not be null&quot;);</span>
-
-<span class="nc" id="L464">		return intersection(Arrays.asList(segments), valueFunction);</span>
-	}
-
 	public LocalDateTime computeClampedStart(LocalDateTime current) {
-<span class="fc bfc" id="L468" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
-<span class="fc bfc" id="L469" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
 		else
-<span class="fc bfc" id="L471" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
 	}
 
 }

@@ -196,18 +196,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Computes the intersection of multiple segments.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#intersection(net.sourceforge.plantuml.project.ngm.math.Segment%5B%5D)" class="member-name-link">intersection</a><wbr>(<a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Computes the intersection of multiple segments using multiplication to
- combine their values.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#intersection(net.sourceforge.plantuml.project.ngm.math.Segment%5B%5D,java.util.function.BiFunction)" class="member-name-link">intersection</a><wbr>(<a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>&gt;&nbsp;valueFunction)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Computes the intersection of multiple segments with a custom value function.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#split(java.time.LocalDateTime)" class="member-name-link">split</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;time)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -513,68 +501,6 @@ loadScripts(document, 'script');</script>
                                   overlapping range exists among the segments</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>segments</code> or <code>valueFunction</code>
                                   is <code>null</code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="intersection(net.sourceforge.plantuml.project.ngm.math.Segment[])">
-<h3>intersection</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></span>&nbsp;<span class="element-name">intersection</span><wbr><span class="parameters">(<a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments)</span></div>
-<div class="block">Computes the intersection of multiple segments using multiplication to
- combine their values.
-
- <p>
- Convenience overload for array inputs. Delegates to
- <a href="#intersection(java.util.List)"><code>intersection(List)</code></a>.
- </p></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>segments</code> - the array of segments to intersect</dd>
-<dt>Returns:</dt>
-<dd>a new <a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>Segment</code></a> representing the intersection</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>segments</code> is empty, if segments
-                                  have different directions, or if no
-                                  overlapping range exists</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>segments</code> is <code>null</code></dd>
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="#intersection(java.util.List)"><code>intersection(List)</code></a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="intersection(net.sourceforge.plantuml.project.ngm.math.Segment[],java.util.function.BiFunction)">
-<h3>intersection</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></span>&nbsp;<span class="element-name">intersection</span><wbr><span class="parameters">(<a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>&gt;&nbsp;valueFunction)</span></div>
-<div class="block">Computes the intersection of multiple segments with a custom value function.
-
- <p>
- Convenience overload for array inputs. Delegates to
- <a href="#intersection(java.util.List,java.util.function.BiFunction)"><code>intersection(List, BiFunction)</code></a>.
- </p></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>segments</code> - the array of segments to intersect</dd>
-<dd><code>valueFunction</code> - a function that combines two <a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>Fraction</code></a> values</dd>
-<dt>Returns:</dt>
-<dd>a new <a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>Segment</code></a> representing the intersection</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>segments</code> is empty, if segments
-                                  have different directions, or if no
-                                  overlapping range exists</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>segments</code> or <code>valueFunction</code>
-                                  is <code>null</code></dd>
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list-long">
-<li><a href="#intersection(java.util.List,java.util.function.BiFunction)"><code>intersection(List, BiFunction)</code></a></li>
-</ul>
-</dd>
 </dl>
 </section>
 </li>

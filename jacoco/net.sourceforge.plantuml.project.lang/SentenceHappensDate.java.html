@@ -35,30 +35,32 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceHappensDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceHappensDate() {
-<span class="fc" id="L47">		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L49">		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L52">		final Task task = (Task) subject;</span>
-<span class="nc" id="L53">		task.setLoad(Load.inWinks(1));</span>
-<span class="nc" id="L54">		final Day start = (Day) complement;</span>
+<span class="nc" id="L54">		final Task task = (Task) subject;</span>
+<span class="nc" id="L55">		task.setLoad(Load.ofDays(1));</span>
+<span class="nc" id="L56">		final LocalDate start = (LocalDate) complement;</span>
 //		final Day startingDate = project.getStartingDate2();
 //		if (startingDate == null) {
 //			return CommandExecutionResult.error(&quot;No starting date for the project&quot;);
 //		}
-<span class="nc" id="L59">		task.setStart(start);</span>
-<span class="nc" id="L60">		task.setDiamond(true);</span>
-<span class="nc" id="L61">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L61">		task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="nc" id="L62">		task.setDiamond(true);</span>
+<span class="nc" id="L63">		return CommandExecutionResult.ok();</span>
 	}
 
 }

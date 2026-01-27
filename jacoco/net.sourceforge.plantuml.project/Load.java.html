@@ -35,25 +35,35 @@
  */
 package net.sourceforge.plantuml.project;
 
+import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
+
 public class Load implements Value {
 
-	private final int winks;
+	private final NGMTotalEffort effort;
 
-<span class="fc" id="L42">	private Load(int winks) {</span>
-<span class="fc" id="L43">		this.winks = winks;</span>
-<span class="fc" id="L44">	}</span>
+<span class="fc" id="L44">	private Load(NGMTotalEffort effort) {</span>
+<span class="fc" id="L45">		this.effort = effort;</span>
+<span class="fc" id="L46">	}</span>
 
-	public static Load inWinks(int winks) {
-<span class="fc" id="L47">		return new Load(winks);</span>
+	public static Load of(NGMTotalEffort totalEffort) {
+<span class="nc" id="L49">		return new Load(totalEffort);</span>
 	}
 
-	public int getFullLoad() {
-<span class="fc" id="L51">		return winks * 100;</span>
+	public static Load ofDays(int days) {
+<span class="fc" id="L53">		return new Load(NGMTotalEffort.ofDays(days));</span>
+	}
+
+	public static Load ofDaysAndHours(int days, int hours) {
+<span class="fc" id="L57">		return new Load(NGMTotalEffort.ofDaysAndHours(days, hours));</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L56">		return &quot;(&quot; + winks + &quot;)&quot;;</span>
+<span class="nc" id="L62">		return &quot;(&quot; + effort + &quot;)&quot;;</span>
+	}
+
+	public final NGMTotalEffort getEffort() {
+<span class="fc" id="L66">		return effort;</span>
 	}
 
 }

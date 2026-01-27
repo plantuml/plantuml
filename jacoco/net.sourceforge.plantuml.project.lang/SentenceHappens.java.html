@@ -39,23 +39,27 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
 public class SentenceHappens extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceHappens() {
-<span class="fc" id="L47">		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
 				new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L53">		final Task task = (Task) subject;</span>
-<span class="nc" id="L54">		task.setLoad(Load.inWinks(1));</span>
-<span class="nc" id="L55">		final TaskInstant when = (TaskInstant) complement;</span>
-<span class="nc" id="L56">		task.setStart(when.getInstantTheorical());</span>
-<span class="nc" id="L57">		task.setDiamond(true);</span>
-<span class="nc" id="L58">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L54">		final Task task = (Task) subject;</span>
+<span class="nc" id="L55">		task.setLoad(Load.ofDays(1));</span>
+<span class="nc" id="L56">		task.setDiamond(true);</span>
+<span class="nc" id="L57">		final TaskInstant when = (TaskInstant) complement;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (when.getAttribute() == TaskAttribute.END)</span>
+<span class="nc" id="L59">			task.setStart(when.getInstantPrecise().decrement());</span>
+		else
+<span class="nc" id="L61">			task.setStart(when.getInstantPrecise());</span>
+<span class="nc" id="L62">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.SentenceSimple;
 import net.sourceforge.plantuml.project.lang.Verbs;
 import net.sourceforge.plantuml.project.lang.Words;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceHappensChronology extends SentenceSimple&lt;ChronologyDiagram&gt; {
 
@@ -51,9 +51,9 @@ public class SentenceHappensChronology extends SentenceSimple&lt;ChronologyDiagr
 	@Override
 	public CommandExecutionResult execute(ChronologyDiagram project, Object subject, Object complement) {
 <span class="nc" id="L53">		final Task task = (Task) subject;</span>
-<span class="nc" id="L54">		final Day start = (Day) complement;</span>
+<span class="nc" id="L54">		final TimePoint start = (TimePoint) complement;</span>
 <span class="nc" id="L55">		task.setStart(start);</span>
-<span class="nc" id="L56">		task.setEnd(start);</span>
+<span class="nc" id="L56">		task.setEnd(start.increment());</span>
 <span class="nc" id="L57">		return CommandExecutionResult.ok();</span>
 	}
 

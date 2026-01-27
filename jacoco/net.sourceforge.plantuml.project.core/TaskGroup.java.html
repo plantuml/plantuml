@@ -36,13 +36,14 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -50,114 +51,115 @@ import net.sourceforge.plantuml.url.Url;
 public class TaskGroup extends AbstractTask implements Task {
 
 	private final TaskGroup parent;
-<span class="nc" id="L53">	private final List&lt;Task&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L54">	private final List&lt;Task&gt; children = new ArrayList&lt;&gt;();</span>
 
 	public TaskGroup(TaskGroup parent, StyleBuilder styleBuilder, TaskCode code) {
-<span class="nc" id="L56">		super(styleBuilder, code);</span>
-<span class="nc" id="L57">		this.parent = parent;</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L57">		super(styleBuilder, code);</span>
+<span class="nc" id="L58">		this.parent = parent;</span>
+<span class="nc" id="L59">	}</span>
 
 	@Override
-	public Day getStart() {
-<span class="nc" id="L62">		Day min = null;</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (Task child : children)</span>
-<span class="nc bnc" id="L64" title="All 4 branches missed.">			if (min == null || min.compareTo(child.getStart()) &gt; 0)</span>
-<span class="nc" id="L65">				min = child.getStart();</span>
+	public TimePoint getStart() {
+<span class="nc" id="L63">		TimePoint min = null;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (Task child : children)</span>
+<span class="nc bnc" id="L65" title="All 4 branches missed.">			if (min == null || min.compareTo(child.getStart()) &gt; 0)</span>
+<span class="nc" id="L66">				min = child.getStart();</span>
 
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (min != null)</span>
-<span class="nc" id="L68">			return min;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L69">			return min;</span>
 
-<span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L71">		throw new UnsupportedOperationException();</span>
+	}
+
+
+	@Override
+	public TimePoint getEnd() {
+<span class="nc" id="L77">		TimePoint max = null;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Task child : children)</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">			if (max == null || max.compareTo(child.getEnd()) &lt; 0)</span>
+<span class="nc" id="L80">				max = child.getEnd();</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L83">			return max;</span>
+
+<span class="nc" id="L85">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public Day getEnd() {
-<span class="nc" id="L75">		Day max = null;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Task child : children)</span>
-<span class="nc bnc" id="L77" title="All 4 branches missed.">			if (max == null || max.compareTo(child.getEnd()) &lt; 0)</span>
-<span class="nc" id="L78">				max = child.getEnd();</span>
-
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (max != null)</span>
-<span class="nc" id="L81">			return max;</span>
-
-<span class="nc" id="L83">		throw new UnsupportedOperationException();</span>
+	public void setStart(TimePoint start) {
+<span class="nc" id="L90">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public void setStart(Day start) {
-<span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
-	}
-
-	@Override
-	public void setEnd(Day end) {
-<span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
+	public void setEnd(TimePoint end) {
+<span class="nc" id="L95">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setColors(CenterBorderColor... colors) {
-<span class="nc" id="L98">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L100">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void addResource(Resource resource, int percentage) {
-<span class="nc" id="L103">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L105">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Load getLoad() {
-<span class="nc" id="L108">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L110">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setLoad(Load load) {
-<span class="nc" id="L113">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L115">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setDiamond(boolean diamond) {
-<span class="nc" id="L118">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L120">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean isDiamond() {
-<span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L125">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setCompletion(int completion) {
-<span class="nc" id="L128">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L130">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setUrl(Url url) {
-<span class="nc" id="L133">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L135">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public void addPause(Day pause) {
-<span class="nc" id="L138">		throw new UnsupportedOperationException();</span>
+	public void addPause(LocalDate pause) {
+<span class="nc" id="L140">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void addPause(DayOfWeek pause) {
-<span class="nc" id="L143">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L145">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setNote(Display note, Stereotype stereotype) {
-<span class="nc" id="L148">	}</span>
+<span class="nc" id="L150">	}</span>
 
 	public void addTask(Task child) {
-<span class="nc" id="L151">		children.add(child);</span>
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L153">		children.add(child);</span>
+<span class="nc" id="L154">	}</span>
 
 	public final TaskGroup getParent() {
-<span class="nc" id="L155">		return parent;</span>
+<span class="nc" id="L157">		return parent;</span>
 	}
 
 	@Override
 	public boolean isAssignedTo(Resource res) {
-<span class="nc" id="L160">		return false;</span>
+<span class="nc" id="L162">		return false;</span>
 	}
 
 }

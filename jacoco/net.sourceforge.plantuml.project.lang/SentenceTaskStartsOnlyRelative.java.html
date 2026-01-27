@@ -35,25 +35,27 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceTaskStartsOnlyRelative extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceTaskStartsOnlyRelative() {
-<span class="fc" id="L46">		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="fc" id="L47">				ComplementDate.onlyRelative());</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L49">				ComplementDate.onlyRelative());</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L52">		final Task task = (Task) subject;</span>
-<span class="nc" id="L53">		final Day start = (Day) complement;</span>
+<span class="nc" id="L54">		final Task task = (Task) subject;</span>
+<span class="nc" id="L55">		final LocalDate start = (LocalDate) complement;</span>
 
-<span class="nc" id="L55">		task.setStart(start);</span>
-<span class="nc" id="L56">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L57">		task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="nc" id="L58">		return CommandExecutionResult.ok();</span>
 	}
 
 }

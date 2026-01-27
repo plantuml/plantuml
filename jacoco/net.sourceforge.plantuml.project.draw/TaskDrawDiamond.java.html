@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
-	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
+	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, Task task,
 			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
 <span class="nc" id="L69">		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
 <span class="nc" id="L70">	}</span>
@@ -131,8 +131,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 <span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (labelStrategy.titleInLastColumn()) {</span>
 <span class="nc" id="L132">			x = colBars + margin.getLeft();</span>
 		} else {
-<span class="nc" id="L134">			final double x1 = timeScale.getStartingPosition(start);</span>
-<span class="nc" id="L135">			final double x2 = timeScale.getEndingPosition(start);</span>
+<span class="nc" id="L134">			final double x1 = timeScale.getPosition(start);</span>
+<span class="nc" id="L135">			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
 <span class="nc" id="L136">			final double width = getDiamondHeight();</span>
 <span class="nc" id="L137">			final double delta = x2 - x1 - width;</span>
 <span class="nc" id="L138">			x = x2 - delta / 2 + padding.getLeft();</span>
@@ -149,7 +149,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	@Override
 	public void drawU(UGraphic ug) {
 
-<span class="nc" id="L152">		final double x1 = timeScale.getStartingPosition(start);</span>
+<span class="nc" id="L152">		final double x1 = timeScale.getPosition(start);</span>
 <span class="nc" id="L153">		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));</span>
 
 <span class="nc bnc" id="L155" title="All 2 branches missed.">		if (url != null)</span>
@@ -164,7 +164,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 <span class="nc" id="L164">		ug = ug.apply(UTranslate.dx(x1));</span>
 
 <span class="nc bnc" id="L166" title="All 2 branches missed.">		if (displayString == null) {</span>
-<span class="nc" id="L167">			final double x2 = timeScale.getEndingPosition(start);</span>
+<span class="nc" id="L167">			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
 <span class="nc" id="L168">			final double width = getDiamondHeight();</span>
 <span class="nc" id="L169">			final double delta = x2 - x1 - width;</span>
 <span class="nc" id="L170">			ug = ug.apply(UTranslate.dx(delta / 2));</span>
@@ -199,7 +199,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 <span class="nc" id="L201">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="nc" id="L202">		final double startPos = timeScale.getStartingPosition(start);</span>
+<span class="nc" id="L202">		final double startPos = timeScale.getPosition(start);</span>
 <span class="nc" id="L203">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,</span>
 <span class="nc" id="L204">				getY(stringBounder).getCurrentValue() + h);</span>
 	}
@@ -218,11 +218,11 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		double x;
 <span class="nc bnc" id="L220" title="All 2 branches missed.">		if (side == GSide.LEFT)</span>
-<span class="nc" id="L221">			x = timeScale.getStartingPosition(start);</span>
+<span class="nc" id="L221">			x = timeScale.getPosition(start);</span>
 <span class="nc bnc" id="L222" title="All 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L223">			x = timeScale.getEndingPosition(start);</span>
+<span class="nc" id="L223">			x = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
 		else
-<span class="nc" id="L225">			x = (timeScale.getStartingPosition(start) + timeScale.getEndingPosition(start)) / 2;</span>
+<span class="nc" id="L225">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
 
 <span class="nc bnc" id="L227" title="All 2 branches missed.">		if (arrowType == GArrowType.OUTGOING) {</span>
 <span class="nc" id="L228">			final double width = getDiamondHeight();</span>

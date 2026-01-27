@@ -96,25 +96,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Computes the intersection of multiple segments.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Segment.</span><code><a href="../Segment.html#intersection(net.sourceforge.plantuml.project.ngm.math.Segment%5B%5D)" class="member-name-link">intersection</a><wbr>(<a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Computes the intersection of multiple segments using multiplication to
- combine their values.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Segment.</span><code><a href="../Segment.html#intersection(net.sourceforge.plantuml.project.ngm.math.Segment%5B%5D,java.util.function.BiFunction)" class="member-name-link">intersection</a><wbr>(<a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="../Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="../Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>&gt;&nbsp;valueFunction)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Computes the intersection of multiple segments with a custom value function.</div>
-</div>
 <div class="col-first even-row-color"><code><a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Combiner.CombinedPiecewiseConstant.</span><code><a href="../Combiner.CombinedPiecewiseConstant.html#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
+<div class="col-second even-row-color"><span class="type-name-label">Combiner.</span><code><a href="../Combiner.html#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
  <a href="../TimeDirection.html" title="enum class in net.sourceforge.plantuml.project.ngm.math">TimeDirection</a>&nbsp;direction)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Retrieves the segment at the specified instant by combining segments
- from all constituent functions.</div>
-</div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">PiecewiseConstant.</span><code><a href="../PiecewiseConstant.html#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
  <a href="../TimeDirection.html" title="enum class in net.sourceforge.plantuml.project.ngm.math">TimeDirection</a>&nbsp;direction)</code></div>
@@ -130,12 +115,18 @@ loadScripts(document, 'script');</script>
 <div class="block">(non-Javadoc)</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PiecewiseConstantWeekday.</span><code><a href="../PiecewiseConstantWeekday.html#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
+<div class="col-second even-row-color"><span class="type-name-label">PiecewiseConstantTimeWindow.</span><code><a href="../PiecewiseConstantTimeWindow.html#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
  <a href="../TimeDirection.html" title="enum class in net.sourceforge.plantuml.project.ngm.math">TimeDirection</a>&nbsp;direction)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Segment.</span><code><a href="../Segment.html#split(java.time.LocalDateTime)" class="member-name-link">split</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;time)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
+<div class="block">Returns the segment containing the given instant.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PiecewiseConstantWeekday.</span><code><a href="../PiecewiseConstantWeekday.html#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
+ <a href="../TimeDirection.html" title="enum class in net.sourceforge.plantuml.project.ngm.math">TimeDirection</a>&nbsp;direction)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Segment.</span><code><a href="../Segment.html#split(java.time.LocalDateTime)" class="member-name-link">split</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;time)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Splits this segment into two contiguous segments at the given instant.</div>
 </div>
 </div>
@@ -154,24 +145,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Returns an iterator over segments in ascending chronological order, starting from
  the segment that contains the given instant.</div>
-</div>
-</div>
-<div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.project.ngm.math</a> with parameters of type <a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Segment.</span><code><a href="../Segment.html#intersection(net.sourceforge.plantuml.project.ngm.math.Segment%5B%5D)" class="member-name-link">intersection</a><wbr>(<a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Computes the intersection of multiple segments using multiplication to
- combine their values.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Segment.</span><code><a href="../Segment.html#intersection(net.sourceforge.plantuml.project.ngm.math.Segment%5B%5D,java.util.function.BiFunction)" class="member-name-link">intersection</a><wbr>(<a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a>[]&nbsp;segments,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="../Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="../Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>,<wbr><a href="../Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>&gt;&nbsp;valueFunction)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Computes the intersection of multiple segments with a custom value function.</div>
 </div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">net.sourceforge.plantuml.project.ngm.math</a> with type arguments of type <a href="../Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math">Segment</a></span></div>

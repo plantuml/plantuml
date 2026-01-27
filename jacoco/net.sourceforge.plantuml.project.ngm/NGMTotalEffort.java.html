@@ -64,7 +64,7 @@ public final class NGMTotalEffort {
 
 	private static final long SECONDS_PER_MINUTE = 60;
 	private static final long SECONDS_PER_HOUR = 3600;
-	private static final long SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
+	public static final long SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
 
 	/**
 	 * Workload expressed in seconds for a single person (1 FTE).
@@ -103,6 +103,10 @@ public final class NGMTotalEffort {
 <span class="fc" id="L103">		return new NGMTotalEffort(days * SECONDS_PER_DAY);</span>
 	}
 
+	public static NGMTotalEffort ofDaysAndHours(long days, long hours) {
+<span class="fc" id="L107">		return new NGMTotalEffort(days * SECONDS_PER_DAY + hours * SECONDS_PER_HOUR);</span>
+	}
+
 	/**
 	 * Creates a zero effort (no work required).
 	 *
@@ -112,27 +116,51 @@ public final class NGMTotalEffort {
 	 * @return a new NGMTotalEffort instance representing zero effort
 	 */
 	public static NGMTotalEffort zero() {
-<span class="fc" id="L115">		return new NGMTotalEffort(0);</span>
+<span class="fc" id="L119">		return new NGMTotalEffort(0);</span>
 	}
 
 	public Fraction toSeconds() {
-<span class="fc" id="L119">		return new Fraction(seconds, 1);</span>
+<span class="fc" id="L123">		return new Fraction(seconds, 1);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L125">			return true;</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (!(obj instanceof NGMTotalEffort))</span>
-<span class="nc" id="L127">			return false;</span>
-<span class="fc" id="L128">		NGMTotalEffort other = (NGMTotalEffort) obj;</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		return this.seconds == other.seconds;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L129">			return true;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (!(obj instanceof NGMTotalEffort))</span>
+<span class="nc" id="L131">			return false;</span>
+<span class="fc" id="L132">		NGMTotalEffort other = (NGMTotalEffort) obj;</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		return this.seconds == other.seconds;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L134">		return super.toString();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (seconds == 0)</span>
+<span class="nc" id="L139">			return &quot;0s&quot;;</span>
 
+<span class="nc" id="L141">		long remaining = seconds;</span>
+
+<span class="nc" id="L143">		final long days = remaining / SECONDS_PER_DAY;</span>
+<span class="nc" id="L144">		remaining %= SECONDS_PER_DAY;</span>
+
+<span class="nc" id="L146">		final long hours = remaining / SECONDS_PER_HOUR;</span>
+<span class="nc" id="L147">		remaining %= SECONDS_PER_HOUR;</span>
+
+<span class="nc" id="L149">		final long minutes = remaining / SECONDS_PER_MINUTE;</span>
+<span class="nc" id="L150">		final long secs = remaining % SECONDS_PER_MINUTE;</span>
+
+<span class="nc" id="L152">		final StringBuilder sb = new StringBuilder();</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (days &gt; 0)</span>
+<span class="nc" id="L155">			sb.append(days).append(&quot;d&quot;);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (hours &gt; 0)</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			sb.append(sb.length() == 0 ? &quot;&quot; : &quot; &quot;).append(hours).append(&quot;h&quot;);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (minutes &gt; 0)</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			sb.append(sb.length() == 0 ? &quot;&quot; : &quot; &quot;).append(minutes).append(&quot;m&quot;);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (secs &gt; 0)</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			sb.append(sb.length() == 0 ? &quot;&quot; : &quot; &quot;).append(secs).append(&quot;s&quot;);</span>
+
+<span class="nc" id="L163">		return sb.toString();</span>
 	}
 
 }

@@ -36,36 +36,44 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.PlanUtils;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.ngm.NGMAllocation;
+import net.sourceforge.plantuml.project.ngm.math.Combiner;
+import net.sourceforge.plantuml.project.ngm.math.Fraction;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 import net.sourceforge.plantuml.project.solver.Solver;
-import net.sourceforge.plantuml.project.solver.SolverImpl;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
-public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
+public class TaskImpl extends AbstractTask implements Task {
 
-<span class="fc" id="L63">	private final SortedSet&lt;Day&gt; pausedDay = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L64">	private final Set&lt;DayOfWeek&gt; pausedDayOfWeek = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L70">	private final SortedSet&lt;LocalDate&gt; pausedDay = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L71">	private final EnumSet&lt;DayOfWeek&gt; pausedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);</span>
+
 	private final Solver solver;
-<span class="fc" id="L66">	private final Map&lt;Resource, Integer&gt; resources = new LinkedHashMap&lt;Resource, Integer&gt;();</span>
-	private final LoadPlanable defaultPlan;
+<span class="fc" id="L74">	private final Map&lt;Resource, Integer&gt; resources = new LinkedHashMap&lt;Resource, Integer&gt;();</span>
 	private boolean diamond;
+	private final GanttDiagram gantt;
 
 	private int completion;
 	private Display note;
@@ -75,263 +83,265 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	private CenterBorderColor[] colors;
 
 	public void setUrl(Url url) {
-<span class="nc" id="L78">		this.url = url;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L86">		this.url = url;</span>
+<span class="nc" id="L87">	}</span>
 
-	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, LoadPlanable plan, Day startingDay, int completion) {
-<span class="fc" id="L82">		super(styleBuilder, code);</span>
-<span class="fc" id="L83">		this.completion = completion;</span>
-<span class="fc" id="L84">		this.defaultPlan = plan;</span>
-<span class="fc" id="L85">		this.solver = new SolverImpl(this);</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (startingDay == null)</span>
-<span class="fc" id="L87">			setStart(Day.epoch());</span>
-		else
-<span class="fc" id="L89">			setStart(startingDay);</span>
+	public TaskImpl(GanttDiagram gantt, StyleBuilder styleBuilder, TaskCode code, TimePoint startingDay,
+			int completion) {
+<span class="fc" id="L91">		super(styleBuilder, code);</span>
+<span class="fc" id="L92">		this.gantt = gantt;</span>
+<span class="fc" id="L93">		this.completion = completion;</span>
 
-<span class="fc" id="L91">		setLoad(Load.inWinks(1));</span>
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L95">		this.solver = new Solver();</span>
+<span class="fc" id="L96">		setStart(startingDay);</span>
+<span class="fc" id="L97">		setLoad(Load.ofDays(1));</span>
+<span class="fc" id="L98">	}</span>
 
-	@Override
-	public int getLoadAt(Day instant) {
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (isPaused(instant))</span>
-<span class="nc" id="L97">			return 0;</span>
-
-<span class="fc" id="L99">		LoadPlanable result = defaultPlan;</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (resources.size() &gt; 0)</span>
-<span class="nc" id="L101">			result = PlanUtils.multiply(defaultPlan, getResourcePlan());</span>
-
-<span class="fc" id="L103">		return result.getLoadAt(instant);</span>
+	public PiecewiseConstant getDefaultPlan() {
+<span class="fc" id="L101">		return gantt.getLoadPlanableForTask(getCode().getId());</span>
 	}
 
-	private boolean isPaused(Day instant) {
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (pausedDay.contains(instant))</span>
-<span class="nc" id="L108">			return true;</span>
+	private PiecewiseConstant localPause() {
+<span class="fc" id="L105">		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);</span>
 
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (pausedDayOfWeek(instant))</span>
-<span class="nc" id="L111">			return true;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		for (DayOfWeek day : pausedDayOfWeek)</span>
+<span class="nc" id="L108">			weekPattern = weekPattern.with(day, Fraction.ZERO);</span>
 
-<span class="fc" id="L113">		return false;</span>
-	}
+<span class="fc" id="L110">		PiecewiseConstant result = weekPattern;</span>
 
-	private boolean pausedDayOfWeek(Day instant) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (instant.getDayOfWeek() == dayOfWeek)</span>
-<span class="nc" id="L119">				return true;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (pausedDay.isEmpty() == false) {</span>
+<span class="nc" id="L113">			PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE);</span>
 
-<span class="fc" id="L121">		return false;</span>
-	}
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			for (LocalDate date : pausedDay)</span>
+<span class="nc" id="L116">				specificDaysClosed = specificDaysClosed.withDay(date, Fraction.ZERO);</span>
 
-	public int loadForResource(Resource res, Day instant) {
-<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (resources.keySet().contains(res) &amp;&amp; instant.compareTo(getStart()) &gt;= 0</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">				&amp;&amp; instant.compareTo(getEnd()) &lt;= 0) {</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (isPaused(instant))</span>
-<span class="nc" id="L128">				return 0;</span>
-
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (res.isClosedAt(instant))</span>
-<span class="nc" id="L131">				return 0;</span>
-
-<span class="nc" id="L133">			return resources.get(res);</span>
+<span class="nc" id="L118">			result = Combiner.product(weekPattern, specificDaysClosed);</span>
 		}
-<span class="nc" id="L135">		return 0;</span>
+
+<span class="fc" id="L121">		return result;</span>
+	}
+
+
+	public PiecewiseConstant asPiecewiseConstant() {
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (resources.size() &gt; 0)</span>
+<span class="nc" id="L127">			return Combiner.product(getDefaultPlan(), allRessources());</span>
+<span class="fc" id="L128">		return Combiner.product(getDefaultPlan(), localPause());</span>
+	}
+
+	private boolean isPaused(TimePoint instant) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (pausedDay.contains(instant.toDay()))</span>
+<span class="nc" id="L133">			return true;</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (pausedDayOfWeek(instant))</span>
+<span class="nc" id="L136">			return true;</span>
+
+<span class="nc" id="L138">		return false;</span>
+	}
+
+	private boolean pausedDayOfWeek(TimePoint instant) {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (instant.toDayOfWeek() == dayOfWeek)</span>
+<span class="nc" id="L144">				return true;</span>
+
+<span class="nc" id="L146">		return false;</span>
+	}
+
+	public int loadForResource(Resource res, TimePoint instant) {
+<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (resources.keySet().contains(res) &amp;&amp; instant.compareTo(getStart()) &gt;= 0</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				&amp;&amp; instant.compareTo(getEndMinusOneDayTOBEREMOVED()) &lt;= 0) {</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (isPaused(instant))</span>
+<span class="nc" id="L153">				return 0;</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (res.isClosedAt(instant.toDay()))</span>
+<span class="nc" id="L156">				return 0;</span>
+
+<span class="nc" id="L158">			return resources.get(res);</span>
+		}
+<span class="nc" id="L160">		return 0;</span>
 	}
 
 	@Override
-	public void addPause(Day pause) {
-<span class="nc" id="L140">		this.pausedDay.add(pause);</span>
-<span class="nc" id="L141">	}</span>
+	public void addPause(LocalDate pause) {
+<span class="nc" id="L165">		this.pausedDay.add(pause);</span>
+<span class="nc" id="L166">	}</span>
 
 	@Override
 	public void addPause(DayOfWeek pause) {
-<span class="nc" id="L145">		this.pausedDayOfWeek.add(pause);</span>
-<span class="nc" id="L146">	}</span>
+<span class="nc" id="L170">		this.pausedDayOfWeek.add(pause);</span>
+<span class="nc" id="L171">	}</span>
 
-	private LoadPlanable getResourcePlan() {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (resources.size() == 0)</span>
-<span class="nc" id="L150">			throw new IllegalStateException();</span>
+	public PiecewiseConstant allRessources() {
 
-<span class="nc" id="L152">		return new LoadPlanable() {</span>
-			public int getLoadAt(Day instant) {
-<span class="nc" id="L154">				int result = 0;</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">				for (Map.Entry&lt;Resource, Integer&gt; ent : resources.entrySet()) {</span>
-<span class="nc" id="L156">					final Resource res = ent.getKey();</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">					if (res.isClosedAt(instant))</span>
-<span class="nc" id="L158">						continue;</span>
+<span class="nc" id="L175">		final List&lt;PiecewiseConstant&gt; contributions = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L160">					final int percentage = ent.getValue();</span>
-<span class="nc" id="L161">					result += percentage;</span>
-<span class="nc" id="L162">				}</span>
-<span class="nc" id="L163">				return result;</span>
-			}
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		for (Map.Entry&lt;Resource, Integer&gt; ent : resources.entrySet()) {</span>
+<span class="nc" id="L178">			final Resource res = ent.getKey();</span>
+<span class="nc" id="L179">			final PiecewiseConstant availability = res.asPiecewiseConstant();</span>
 
-			@Override
-			public Day getLastDayIfAny() {
-<span class="nc" id="L168">				return TaskImpl.this.getLastDayIfAny();</span>
-			}
-		};
-	}
+<span class="nc" id="L181">			final PiecewiseConstant percentageFraction = PiecewiseConstantSpecificDays</span>
+<span class="nc" id="L182">					.of(new Fraction(ent.getValue(), 100));</span>
 
-	@Override
-	public Day getLastDayIfAny() {
-<span class="fc" id="L175">		Day result = null;</span>
+			// Multiply availability by percentage to get the contribution
+<span class="nc" id="L185">			final PiecewiseConstant contribution = Combiner.product(availability, percentageFraction);</span>
 
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		for (Resource res : resources.keySet()) {</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (res.getLastDayIfAny() == null)</span>
-<span class="nc" id="L179">				return null;</span>
+<span class="nc" id="L187">			contributions.add(contribution);</span>
+<span class="nc" id="L188">		}</span>
 
-<span class="nc bnc" id="L181" title="All 4 branches missed.">			if (result == null || result.compareTo(res.getLastDayIfAny()) &lt; 0)</span>
-<span class="nc" id="L182">				result = res.getLastDayIfAny();</span>
-<span class="nc" id="L183">		}</span>
-
-<span class="fc" id="L185">		return result;</span>
+<span class="nc" id="L190">		return Combiner.product(localPause(), Combiner.sum(contributions.toArray(new PiecewiseConstant[0])));</span>
 	}
 
 	public String getPrettyDisplay() {
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (resources.size() &gt; 0) {</span>
-<span class="nc" id="L190">			final StringBuilder result = new StringBuilder(getCode().getDisplay());</span>
-<span class="nc" id="L191">			result.append(&quot; &quot;);</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">			for (Iterator&lt;Map.Entry&lt;Resource, Integer&gt;&gt; it = resources.entrySet().iterator(); it.hasNext();) {</span>
-<span class="nc" id="L193">				final Map.Entry&lt;Resource, Integer&gt; ent = it.next();</span>
-<span class="nc" id="L194">				result.append(&quot;{&quot;);</span>
-<span class="nc" id="L195">				result.append(ent.getKey().getName());</span>
-<span class="nc" id="L196">				final int percentage = ent.getValue();</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">				if (percentage != 100)</span>
-<span class="nc" id="L198">					result.append(&quot;:&quot; + percentage + &quot;%&quot;);</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (resources.size() &gt; 0) {</span>
+<span class="nc" id="L195">			final StringBuilder result = new StringBuilder(getCode().getDisplay());</span>
+<span class="nc" id="L196">			result.append(&quot; &quot;);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			for (Iterator&lt;Map.Entry&lt;Resource, Integer&gt;&gt; it = resources.entrySet().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L198">				final Map.Entry&lt;Resource, Integer&gt; ent = it.next();</span>
+<span class="nc" id="L199">				result.append(&quot;{&quot;);</span>
+<span class="nc" id="L200">				result.append(ent.getKey().getName());</span>
+<span class="nc" id="L201">				final int percentage = ent.getValue();</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">				if (percentage != 100)</span>
+<span class="nc" id="L203">					result.append(&quot;:&quot; + percentage + &quot;%&quot;);</span>
 
-<span class="nc" id="L200">				result.append(&quot;}&quot;);</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">				if (it.hasNext())</span>
-<span class="nc" id="L202">					result.append(&quot; &quot;);</span>
+<span class="nc" id="L205">				result.append(&quot;}&quot;);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">				if (it.hasNext())</span>
+<span class="nc" id="L207">					result.append(&quot; &quot;);</span>
 
-<span class="nc" id="L204">			}</span>
-<span class="nc" id="L205">			return result.toString();</span>
+<span class="nc" id="L209">			}</span>
+<span class="nc" id="L210">			return result.toString();</span>
 		}
-<span class="fc" id="L207">		return getCode().getDisplay();</span>
+<span class="fc" id="L212">		return getCode().getDisplay();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L212">		return getCode().toString();</span>
+<span class="nc" id="L217">		return getCode().toString();</span>
 	}
 
 	public String debug() {
-<span class="nc" id="L216">		return &quot;&quot; + getStart() + &quot; ---&gt; &quot; + getEnd() + &quot;   [&quot; + getLoad() + &quot;]&quot;;</span>
+<span class="nc" id="L221">		return &quot;&quot; + getStart() + &quot; ---&gt; &quot; + getEnd() + &quot;   [&quot; + getLoad() + &quot;]&quot;;</span>
 	}
 
 	@Override
-	public Day getStart() {
-<span class="fc" id="L221">		Day result = (Day) solver.getData(TaskAttribute.START);</span>
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (diamond == false)</span>
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			while (getLoadAt(result) == 0)</span>
-<span class="nc" id="L224">				result = result.increment();</span>
-
-<span class="fc" id="L226">		return result;</span>
+	public TimePoint getStart() {
+<span class="fc" id="L226">		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());</span>
+<span class="fc" id="L227">		TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.START);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (diamond == false) {</span>
+<span class="fc" id="L229">			final PiecewiseConstant cal = asPiecewiseConstant();</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))</span>
+<span class="nc" id="L231">				result = result.increment();</span>
+		}
+<span class="fc" id="L233">		return result;</span>
 	}
 
 	@Override
-	public Day getEnd() {
-<span class="fc" id="L231">		return (Day) solver.getData(TaskAttribute.END);</span>
+	public TimePoint getEnd() {
+<span class="fc" id="L238">		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());</span>
+<span class="fc" id="L239">		final TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);</span>
+<span class="fc" id="L240">		return result;</span>
 	}
 
 	@Override
 	public Load getLoad() {
-<span class="nc" id="L236">		return (Load) solver.getData(TaskAttribute.LOAD);</span>
+<span class="nc" id="L245">		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());</span>
+<span class="nc" id="L246">		return (Load) solver.getData(allocation, TaskAttribute.LOAD);</span>
 	}
 
 	@Override
 	public void setLoad(Load load) {
-<span class="fc" id="L241">		solver.setData(TaskAttribute.LOAD, load);</span>
-<span class="fc" id="L242">	}</span>
+<span class="fc" id="L251">		solver.setData(TaskAttribute.LOAD, load);</span>
+<span class="fc" id="L252">	}</span>
 
 	@Override
-	public void setStart(Day start) {
-<span class="fc" id="L246">		solver.setData(TaskAttribute.START, start);</span>
-<span class="fc" id="L247">	}</span>
+	public void setStart(TimePoint start) {
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (start.toString().endsWith(&quot;T00:00&quot;) == false)</span>
+<span class="nc" id="L257">			throw new IllegalArgumentException(start.toString());</span>
+<span class="fc" id="L258">		solver.setData(TaskAttribute.START, start);</span>
+<span class="fc" id="L259">	}</span>
 
 	@Override
-	public void setEnd(Day end) {
-<span class="nc" id="L251">		solver.setData(TaskAttribute.END, end);</span>
-<span class="nc" id="L252">	}</span>
+	public void setEnd(TimePoint end) {
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (end.toString().endsWith(&quot;T00:00&quot;) == false)</span>
+<span class="nc" id="L264">			throw new IllegalArgumentException(end.toString());</span>
+<span class="nc" id="L265">		solver.setData(TaskAttribute.END, end);</span>
+<span class="nc" id="L266">	}</span>
 
 	@Override
 	public void setColors(CenterBorderColor... colors) {
-<span class="fc" id="L256">		this.colors = colors;</span>
-<span class="fc" id="L257">	}</span>
+<span class="fc" id="L270">		this.colors = colors;</span>
+<span class="fc" id="L271">	}</span>
 
 	@Override
 	public void addResource(Resource resource, int percentage) {
-<span class="nc" id="L261">		this.resources.put(resource, percentage);</span>
-<span class="nc" id="L262">	}</span>
+<span class="nc" id="L275">		this.resources.put(resource, percentage);</span>
+<span class="nc" id="L276">	}</span>
 
 	@Override
 	public void setDiamond(boolean diamond) {
-<span class="nc" id="L266">		this.diamond = diamond;</span>
-<span class="nc" id="L267">	}</span>
+<span class="nc" id="L280">		this.diamond = diamond;</span>
+<span class="nc" id="L281">	}</span>
 
 	@Override
 	public boolean isDiamond() {
-<span class="fc" id="L271">		return this.diamond;</span>
+<span class="fc" id="L285">		return this.diamond;</span>
 	}
 
 	@Override
 	public void setCompletion(int completion) {
-<span class="nc" id="L276">		this.completion = completion;</span>
-<span class="nc" id="L277">	}</span>
+<span class="nc" id="L290">		this.completion = completion;</span>
+<span class="nc" id="L291">	}</span>
 
 	public final Url getUrl() {
-<span class="fc" id="L280">		return url;</span>
+<span class="fc" id="L294">		return url;</span>
 	}
 
 	public final CenterBorderColor getColors() {
-<span class="fc bfc" id="L284" title="All 2 branches covered.">		if (colors == null)</span>
-<span class="fc" id="L285">			return null;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (colors == null)</span>
+<span class="fc" id="L299">			return null;</span>
 
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (colors.length == 1)</span>
-<span class="fc" id="L288">			return colors[0];</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">		if (colors.length == 1)</span>
+<span class="fc" id="L302">			return colors[0];</span>
 
-<span class="nc" id="L290">		return colors[0].unlinearTo(colors[1], completion);</span>
+<span class="nc" id="L304">		return colors[0].unlinearTo(colors[1], completion);</span>
 	}
 
 	public final int getCompletion() {
-<span class="fc" id="L294">		return completion;</span>
+<span class="fc" id="L308">		return completion;</span>
 	}
 
-	public final Collection&lt;Day&gt; getAllPaused() {
-<span class="fc" id="L298">		final SortedSet&lt;Day&gt; result = new TreeSet&lt;&gt;(pausedDay);</span>
-<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
-<span class="nc" id="L300">			addAll(result, dayOfWeek);</span>
+	public final Collection&lt;LocalDate&gt; getAllPaused() {
+<span class="fc" id="L312">		final SortedSet&lt;LocalDate&gt; result = new TreeSet&lt;&gt;(pausedDay);</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
+<span class="nc" id="L314">			addAll(result, dayOfWeek);</span>
 
-<span class="fc" id="L302">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L316">		return Collections.unmodifiableCollection(result);</span>
 	}
 
-	private void addAll(SortedSet&lt;Day&gt; result, DayOfWeek dayOfWeek) {
-<span class="nc" id="L306">		final Day start = getStart();</span>
-<span class="nc" id="L307">		final Day end = getEnd();</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">		for (Day current = start; current.compareTo(end) &lt;= 0; current = current.increment())</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">			if (current.getDayOfWeek() == dayOfWeek)</span>
-<span class="nc" id="L310">				result.add(current);</span>
+	private void addAll(SortedSet&lt;LocalDate&gt; result, DayOfWeek dayOfWeek) {
+<span class="nc" id="L320">		final TimePoint start = getStart();</span>
+<span class="nc" id="L321">		final TimePoint end = getEndMinusOneDayTOBEREMOVED();</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		for (TimePoint current = start; current.compareTo(end) &lt;= 0; current = current.increment())</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">			if (current.toDayOfWeek() == dayOfWeek)</span>
+<span class="nc" id="L324">				result.add(current.toDay());</span>
 
-<span class="nc" id="L312">	}</span>
+<span class="nc" id="L326">	}</span>
 
 	@Override
 	public void setNote(Display note, Stereotype stereotype) {
-<span class="nc" id="L316">		this.note = note;</span>
-<span class="nc" id="L317">		this.noteStereotype = stereotype;</span>
-<span class="nc" id="L318">	}</span>
+<span class="nc" id="L330">		this.note = note;</span>
+<span class="nc" id="L331">		this.noteStereotype = stereotype;</span>
+<span class="nc" id="L332">	}</span>
 
 	public Display getNote() {
-<span class="fc" id="L321">		return note;</span>
+<span class="fc" id="L335">		return note;</span>
 	}
 
 	public Stereotype getNoteStereotype() {
-<span class="fc" id="L325">		return noteStereotype;</span>
-	}
-
-	public LoadPlanable getDefaultPlan() {
-<span class="fc" id="L329">		return defaultPlan;</span>
+<span class="fc" id="L339">		return noteStereotype;</span>
 	}
 
 	@Override
 	public boolean isAssignedTo(Resource res) {
-<span class="nc" id="L334">		return resources.containsKey(res);</span>
+<span class="nc" id="L344">		return resources.containsKey(res);</span>
 	}
 
 }

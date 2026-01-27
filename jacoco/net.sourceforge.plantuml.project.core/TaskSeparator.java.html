@@ -36,11 +36,12 @@
 package net.sourceforge.plantuml.project.core;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
@@ -50,90 +51,90 @@ public class TaskSeparator extends AbstractTask implements Task {
 	private final String comment;
 
 	public TaskSeparator(StyleBuilder styleBuilder, String comment, int id) {
-<span class="nc" id="L53">		super(styleBuilder, TaskCode.fromId(&quot;##&quot; + id));</span>
-<span class="nc" id="L54">		this.comment = comment;</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L54">		super(styleBuilder, TaskCode.fromId(&quot;##&quot; + id));</span>
+<span class="nc" id="L55">		this.comment = comment;</span>
+<span class="nc" id="L56">	}</span>
 
 	@Override
-	public Day getStart() {
-<span class="nc" id="L59">		throw new UnsupportedOperationException();</span>
+	public TimePoint getStart() {
+<span class="nc" id="L60">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public Day getEnd() {
-<span class="nc" id="L64">		throw new UnsupportedOperationException();</span>
+	public TimePoint getEnd() {
+<span class="nc" id="L65">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public void setStart(Day start) {
-<span class="nc" id="L69">		throw new UnsupportedOperationException();</span>
+	public void setStart(TimePoint start) {
+<span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public void setEnd(Day end) {
-<span class="nc" id="L74">		throw new UnsupportedOperationException();</span>
+	public void setEnd(TimePoint end) {
+<span class="nc" id="L75">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setColors(CenterBorderColor... colors) {
-<span class="nc" id="L79">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L80">		throw new UnsupportedOperationException();</span>
 	}
 
 	public String getName() {
-<span class="nc" id="L83">		return comment;</span>
+<span class="nc" id="L84">		return comment;</span>
 	}
 
 	@Override
 	public void addResource(Resource resource, int percentage) {
-<span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L89">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Load getLoad() {
-<span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L94">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void setLoad(Load load) {
-<span class="nc" id="L97">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L98">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setDiamond(boolean diamond) {
-<span class="nc" id="L102">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L103">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean isDiamond() {
-<span class="nc" id="L107">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L108">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setCompletion(int completion) {
-<span class="nc" id="L112">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L113">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setUrl(Url url) {
-<span class="nc" id="L117">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L118">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
-	public void addPause(Day pause) {
-<span class="nc" id="L122">		throw new UnsupportedOperationException();</span>
+	public void addPause(LocalDate pause) {
+<span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void addPause(DayOfWeek pause) {
-<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L128">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setNote(Display note, Stereotype stereotype) {
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L133">	}</span>
 
 	@Override
 	public boolean isAssignedTo(Resource res) {
-<span class="nc" id="L136">		return false;</span>
+<span class="nc" id="L137">		return false;</span>
 	}
 
 }

@@ -46,22 +46,23 @@ import java.time.LocalDateTime;
  * &lt;/p&gt;
  *
  * &lt;ul&gt;
- *   &lt;li&gt;&lt;b&gt;Total effort&lt;/b&gt; — an {@link NGMTotalEffort} expressing the total amount of
- *       work associated with the task, typically in person-time
- *       (for example, person-seconds or person-hours).&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Total effort&lt;/b&gt; — an {@link NGMTotalEffort} expressing the total
+ * amount of work associated with the task, typically in person-time (for
+ * example, person-seconds or person-hours).&lt;/li&gt;
  *
- *   &lt;li&gt;&lt;b&gt;Allocation&lt;/b&gt; — an {@link NGMAllocation} representing the effective
- *       full-time-equivalent (FTE) assigned to the task
- *       (e.g., 1 = 100%, 1/2 = 50%, 5/7 = weekdays only, 2 = two persons).&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Allocation&lt;/b&gt; — an {@link NGMAllocation} representing the effective
+ * full-time-equivalent (FTE) assigned to the task (e.g., 1 = 100%, 1/2 = 50%,
+ * 5/7 = weekdays only, 2 = two persons).&lt;/li&gt;
  *
- *   &lt;li&gt;&lt;b&gt;Duration&lt;/b&gt; — a {@link Duration} representing the calendar span
- *       between the start and end instants.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Duration&lt;/b&gt; — a {@link Duration} representing the calendar span
+ * between the start and end instants.&lt;/li&gt;
  * &lt;/ul&gt;
  *
  * &lt;p&gt;
- * These three quantities must remain conceptually independent. Confusing them leads to
- * incorrect scheduling behaviour. The goal of NGM is to provide a clean and unambiguous
- * task model using {@code java.time} and explicit resource-allocation logic.
+ * These three quantities must remain conceptually independent. Confusing them
+ * leads to incorrect scheduling behaviour. The goal of NGM is to provide a
+ * clean and unambiguous task model using {@code java.time} and explicit
+ * resource-allocation logic.
  * &lt;/p&gt;
  *
  *
@@ -72,33 +73,36 @@ import java.time.LocalDateTime;
  * &lt;/p&gt;
  *
  * &lt;ul&gt;
- *   &lt;li&gt;&lt;b&gt;Fixed-total-effort task&lt;/b&gt;: The total effort is intrinsic and does not change.
- *       The scheduled duration is computed from the total effort and the allocation.
- *       Example: “this task requires 80 hours of work”.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Fixed-total-effort task&lt;/b&gt;: The total effort is intrinsic and does
+ * not change. The scheduled duration is computed from the total effort and the
+ * allocation. Example: “this task requires 80 hours of work”.&lt;/li&gt;
  *
- *   &lt;li&gt;&lt;b&gt;Fixed-duration task&lt;/b&gt;: The calendar span is intrinsic and does not change.
- *       The total effort becomes a derived quantity and depends on the allocation.
- *       Example: “crossing the Atlantic takes 7 days regardless of crew size”.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Fixed-duration task&lt;/b&gt;: The calendar span is intrinsic and does not
+ * change. The total effort becomes a derived quantity and depends on the
+ * allocation. Example: “crossing the Atlantic takes 7 days regardless of crew
+ * size”.&lt;/li&gt;
  * &lt;/ul&gt;
  *
  * &lt;p&gt;
  * This distinction is crucial: without it, the scheduler cannot make consistent
- * decisions about resource allocation, overlapping tasks, or long-running schedules.
+ * decisions about resource allocation, overlapping tasks, or long-running
+ * schedules.
  * &lt;/p&gt;
  *
  *
  * &lt;h3&gt;Why allocation is final&lt;/h3&gt;
  *
  * &lt;p&gt;
- * The allocation represents the &lt;em&gt;structural capacity&lt;/em&gt; assigned to the task.
- * It may influence start date, end date, duration, or total effort (depending on the
- * task type), but it is not modified by them.
+ * The allocation represents the &lt;em&gt;structural capacity&lt;/em&gt; assigned to the
+ * task. It may influence start date, end date, duration, or total effort
+ * (depending on the task type), but it is not modified by them.
  * &lt;/p&gt;
  *
  * &lt;p&gt;
  * By contrast, the temporal attributes (&lt;code&gt;start&lt;/code&gt;, &lt;code&gt;end&lt;/code&gt;,
- * &lt;code&gt;duration&lt;/code&gt;) as well as the total effort (for fixed-duration tasks) may
- * vary depending on scheduling decisions, calendars, dependencies, or external constraints.
+ * &lt;code&gt;duration&lt;/code&gt;) as well as the total effort (for fixed-duration tasks)
+ * may vary depending on scheduling decisions, calendars, dependencies, or
+ * external constraints.
  * &lt;/p&gt;
  *
  *
@@ -107,12 +111,11 @@ import java.time.LocalDateTime;
  * &lt;p&gt;
  * The static factory methods
  * {@link #withFixedDuration(NGMAllocation, Duration)} and
- * {@link #withFixedTotalEffort(NGMAllocation, NGMTotalEffort)}
- * create concrete implementations representing these two behaviours.
+ * {@link #withFixedTotalEffort(NGMAllocation, NGMTotalEffort)} create concrete
+ * implementations representing these two behaviours.
  * &lt;/p&gt;
  */
 public abstract class NGMTask {
-
 
 	protected final NGMAllocation allocation;
 
@@ -122,18 +125,17 @@ public abstract class NGMTask {
 	 * @param workload the constant full-time-equivalent allocation applied to this
 	 *                 task
 	 */
-<span class="fc" id="L125">	protected NGMTask(NGMAllocation allocation) {</span>
-<span class="fc" id="L126">		this.allocation = allocation;</span>
-<span class="fc" id="L127">	}</span>
+<span class="fc" id="L128">	protected NGMTask(NGMAllocation allocation) {</span>
+<span class="fc" id="L129">		this.allocation = allocation;</span>
+<span class="fc" id="L130">	}</span>
 
 	/**
 	 * Returns the current start instant of the task.
 	 *
 	 * &lt;p&gt;
-	 * The start and end instants are not independent values in the NGM model.
-	 * They form a coherent scheduled window derived from the task type
-	 * (fixed-duration vs fixed-total-effort), the allocation, and the
-	 * scheduling constraints.
+	 * The start and end instants are not independent values in the NGM model. They
+	 * form a coherent scheduled window derived from the task type (fixed-duration
+	 * vs fixed-total-effort), the allocation, and the scheduling constraints.
 	 * &lt;/p&gt;
 	 *
 	 * @return the scheduled start instant
@@ -144,19 +146,20 @@ public abstract class NGMTask {
 	 * Sets (anchors) the start instant of the task.
 	 *
 	 * &lt;p&gt;
-	 * This method is a scheduling input. Calling it triggers a recomputation of
-	 * the task's scheduled window. As a consequence, after this call:
+	 * This method is a scheduling input. Calling it triggers a recomputation of the
+	 * task's scheduled window. As a consequence, after this call:
 	 * &lt;/p&gt;
 	 *
 	 * &lt;ul&gt;
-	 *   &lt;li&gt;{@link #getStart()} will reflect the newly anchored start, and&lt;/li&gt;
-	 *   &lt;li&gt;{@link #getEnd()} will be recalculated to maintain a consistent task model.&lt;/li&gt;
+	 * &lt;li&gt;{@link #getStart()} will reflect the newly anchored start, and&lt;/li&gt;
+	 * &lt;li&gt;{@link #getEnd()} will be recalculated to maintain a consistent task
+	 * model.&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 *
 	 * &lt;p&gt;
-	 * The exact recomputation rules depend on the concrete task type and may take into
-	 * account the intrinsic duration or total effort, the constant allocation, and
-	 * the scheduling calendar.
+	 * The exact recomputation rules depend on the concrete task type and may take
+	 * into account the intrinsic duration or total effort, the constant allocation,
+	 * and the scheduling calendar.
 	 * &lt;/p&gt;
 	 *
 	 * @param start the start instant to anchor for scheduling
@@ -167,10 +170,9 @@ public abstract class NGMTask {
 	 * Returns the current end instant of the task.
 	 *
 	 * &lt;p&gt;
-	 * The start and end instants are not independent values in the NGM model.
-	 * They form a coherent scheduled window derived from the task type
-	 * (fixed-duration vs fixed-total-effort), the allocation, and the
-	 * scheduling constraints.
+	 * The start and end instants are not independent values in the NGM model. They
+	 * form a coherent scheduled window derived from the task type (fixed-duration
+	 * vs fixed-total-effort), the allocation, and the scheduling constraints.
 	 * &lt;/p&gt;
 	 *
 	 * @return the scheduled end instant
@@ -181,25 +183,25 @@ public abstract class NGMTask {
 	 * Sets (anchors) the end instant of the task.
 	 *
 	 * &lt;p&gt;
-	 * This method is a scheduling input. Calling it triggers a recomputation of
-	 * the task's scheduled window. As a consequence, after this call:
+	 * This method is a scheduling input. Calling it triggers a recomputation of the
+	 * task's scheduled window. As a consequence, after this call:
 	 * &lt;/p&gt;
 	 *
 	 * &lt;ul&gt;
-	 *   &lt;li&gt;{@link #getEnd()} will reflect the newly anchored end, and&lt;/li&gt;
-	 *   &lt;li&gt;{@link #getStart()} will be recalculated to maintain a consistent task model.&lt;/li&gt;
+	 * &lt;li&gt;{@link #getEnd()} will reflect the newly anchored end, and&lt;/li&gt;
+	 * &lt;li&gt;{@link #getStart()} will be recalculated to maintain a consistent task
+	 * model.&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 *
 	 * &lt;p&gt;
-	 * The exact recomputation rules depend on the concrete task type and may take into
-	 * account the intrinsic duration or total effort, the constant allocation, and
-	 * the scheduling calendar.
+	 * The exact recomputation rules depend on the concrete task type and may take
+	 * into account the intrinsic duration or total effort, the constant allocation,
+	 * and the scheduling calendar.
 	 * &lt;/p&gt;
 	 *
 	 * @param end the end instant to anchor for scheduling
 	 */
 	public abstract void setEnd(LocalDateTime end);
-
 
 	/**
 	 * Returns the effective scheduled duration of the task.
@@ -230,6 +232,8 @@ public abstract class NGMTask {
 	 * @return the computed scheduled duration of the task
 	 */
 	public abstract Duration getDuration();
+
+	public abstract void setEffort(NGMTotalEffort effort);
 
 	/**
 	 * Returns the total effort associated with this task.
@@ -292,7 +296,7 @@ public abstract class NGMTask {
 	 * @return the constant FTE allocation applied to the task
 	 */
 	public NGMAllocation getAllocation() {
-<span class="nc" id="L295">		return allocation;</span>
+<span class="nc" id="L299">		return allocation;</span>
 	}
 
 	/**
@@ -306,8 +310,8 @@ public abstract class NGMTask {
 	 *
 	 * &lt;p&gt;
 	 * When a scheduling calendar is applied, the &lt;em&gt;start&lt;/em&gt; and/or &lt;em&gt;end&lt;/em&gt;
-	 * instants may shift to satisfy availability constraints (for example,
-	 * when certain days are closed or non-working). However, the overall scheduled
+	 * instants may shift to satisfy availability constraints (for example, when
+	 * certain days are closed or non-working). However, the overall scheduled
 	 * duration represented by this task remains unchanged.
 	 * &lt;/p&gt;
 	 *
@@ -322,17 +326,18 @@ public abstract class NGMTask {
 	 * changes the total effort performed during that period.
 	 * &lt;/p&gt;
 	 *
-	 * @param allocation the constant full-time-equivalent allocation applied to the task
+	 * @param allocation the constant full-time-equivalent allocation applied to the
+	 *                   task
 	 * @param duration   the intrinsic fixed calendar duration of the task
 	 * @return a new fixed-duration task
 	 */
 	public static NGMTask withFixedDuration(NGMAllocation allocation, Duration duration) {
-<span class="fc" id="L330">		return new NGMTaskFixedDuration(allocation, duration);</span>
+<span class="fc" id="L335">		return new NGMTaskFixedDuration(allocation, duration);</span>
 	}
 
 	/**
-	 * Creates a task whose total effort is intrinsic (fixed) and does not depend on the
-	 * assigned allocation.
+	 * Creates a task whose total effort is intrinsic (fixed) and does not depend on
+	 * the assigned allocation.
 	 *
 	 * &lt;p&gt;
 	 * In this type of task, the total amount of work is the defining property:
@@ -358,12 +363,14 @@ public abstract class NGMTask {
 	 * construction.
 	 * &lt;/p&gt;
 	 *
-	 * @param allocation  the constant full-time-equivalent allocation applied to the task
+	 * @param allocation  the constant full-time-equivalent allocation applied to
+	 *                    the task
 	 * @param totalEffort the intrinsic amount of work required for this task
 	 * @return a new fixed-total-effort task (when implemented)
 	 */
-	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, NGMTotalEffort totalEffort) {
-<span class="fc" id="L366">		return new NGMTaskFixedTotalEffort(allocation, totalEffort);</span>
+	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, LocalDateTime start,
+			NGMTotalEffort totalEffort) {
+<span class="fc" id="L373">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
 	}
 
 }

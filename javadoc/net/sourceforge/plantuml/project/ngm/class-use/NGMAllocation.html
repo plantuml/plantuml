@@ -59,6 +59,8 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Provides the core domain model for the New Gantt Model (NGM).</div>
 </div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.solver">net.sourceforge.plantuml.project.solver</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -108,11 +110,12 @@ loadScripts(document, 'script');</script>
  assigned allocation.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">NGMTask.</span><code><a href="../NGMTask.html#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-second odd-row-color"><span class="type-name-label">NGMTask.</span><code><a href="../NGMTask.html#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
  <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on the
- assigned allocation.</div>
+<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on
+ the assigned allocation.</div>
 </div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.project.ngm</a> with parameters of type <a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a></span></div>
@@ -132,8 +135,24 @@ loadScripts(document, 'script');</script>
 <div class="block">Constructs a fixed-duration task with the specified workload and duration.</div>
 </div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../NGMTaskFixedTotalEffort.html#%3Cinit%3E(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">NGMTaskFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-second even-row-color"><code><a href="../NGMTaskFixedTotalEffort.html#%3Cinit%3E(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">NGMTaskFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
  <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.project.solver">
+<h2>Uses of <a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a> in <a href="../../solver/package-summary.html">net.sourceforge.plantuml.project.solver</a></h2>
+<div class="caption"><span>Methods in <a href="../../solver/package-summary.html">net.sourceforge.plantuml.project.solver</a> with parameters of type <a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final <a href="../../Value.html" title="interface in net.sourceforge.plantuml.project">Value</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Solver.</span><code><a href="../../solver/Solver.html#getData(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.core.TaskAttribute)" class="member-name-link">getData</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="../../core/TaskAttribute.html" title="enum class in net.sourceforge.plantuml.project.core">TaskAttribute</a>&nbsp;attribute)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

@@ -55,15 +55,44 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.ngm">net.sourceforge.plantuml.project.ngm</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project">net.sourceforge.plantuml.project</a></div>
 <div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/gantt-diagram" target="_top">
+ Gantt Diagram</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.ngm">net.sourceforge.plantuml.project.ngm</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides the core domain model for the New Gantt Model (NGM).</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.ngm.math">net.sourceforge.plantuml.project.ngm.math</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.ngm.math">net.sourceforge.plantuml.project.ngm.math</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="net.sourceforge.plantuml.project">
+<h2>Uses of <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a> in <a href="../../package-summary.html">net.sourceforge.plantuml.project</a></h2>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">net.sourceforge.plantuml.project</a> that return <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Load.</span><code><a href="../../Load.html#getEffort()" class="member-name-link">getEffort</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">net.sourceforge.plantuml.project</a> with parameters of type <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../Load.html" title="class in net.sourceforge.plantuml.project">Load</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Load.</span><code><a href="../../Load.html#of(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">of</a><wbr>(<a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.project.ngm">
 <h2>Uses of <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a> in <a href="../package-summary.html">net.sourceforge.plantuml.project.ngm</a></h2>
@@ -87,21 +116,25 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofDays(long)" class="member-name-link">ofDays</a><wbr>(long&nbsp;days)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofHours(long)" class="member-name-link">ofHours</a><wbr>(long&nbsp;hours)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofDaysAndHours(long,long)" class="member-name-link">ofDaysAndHours</a><wbr>(long&nbsp;days,
+ long&nbsp;hours)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofHoursAndMinutes(long,long)" class="member-name-link">ofHoursAndMinutes</a><wbr>(long&nbsp;hours,
+<div class="col-second odd-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofHours(long)" class="member-name-link">ofHours</a><wbr>(long&nbsp;hours)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofHoursAndMinutes(long,long)" class="member-name-link">ofHoursAndMinutes</a><wbr>(long&nbsp;hours,
  long&nbsp;minutes)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofMinutes(long)" class="member-name-link">ofMinutes</a><wbr>(long&nbsp;minutes)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofSeconds(long)" class="member-name-link">ofSeconds</a><wbr>(long&nbsp;seconds)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofMinutes(long)" class="member-name-link">ofMinutes</a><wbr>(long&nbsp;minutes)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#zero()" class="member-name-link">zero</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#ofSeconds(long)" class="member-name-link">ofSeconds</a><wbr>(long&nbsp;seconds)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NGMTotalEffort.</span><code><a href="../NGMTotalEffort.html#zero()" class="member-name-link">zero</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates a zero effort (no work required).</div>
 </div>
 </div>
@@ -110,12 +143,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">NGMTask.</span><code><a href="../NGMTask.html#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-first even-row-color"><code>abstract void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NGMTask.</span><code><a href="../NGMTask.html#setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">setEffort</a><wbr>(<a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NGMTaskFixedDuration.</span><code><a href="../NGMTaskFixedDuration.html#setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">setEffort</a><wbr>(<a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NGMTaskFixedTotalEffort.</span><code><a href="../NGMTaskFixedTotalEffort.html#setEffort(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">setEffort</a><wbr>(<a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;effort)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../NGMTask.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTask</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NGMTask.</span><code><a href="../NGMTask.html#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
  <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on the
- assigned allocation.</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on
+ the assigned allocation.</div>
 </div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.project.ngm</a> with parameters of type <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></span></div>
@@ -124,7 +167,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../NGMTaskFixedTotalEffort.html#%3Cinit%3E(net.sourceforge.plantuml.project.ngm.NGMAllocation,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">NGMTaskFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-second even-row-color"><code><a href="../NGMTaskFixedTotalEffort.html#%3Cinit%3E(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">NGMTaskFixedTotalEffort</a><wbr>(<a href="../NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
  <a href="../NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>

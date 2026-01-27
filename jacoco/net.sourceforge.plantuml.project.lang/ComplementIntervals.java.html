@@ -35,68 +35,70 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L48">public class ComplementIntervals implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L50">public class ComplementIntervals implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L51">		return new RegexOr(toRegexB(suffix), toRegexE(suffix));</span>
+<span class="fc" id="L53">		return new RegexOr(toRegexB(suffix), toRegexE(suffix));</span>
 	}
 
 	private IRegex toRegexB(String suffix) {
-<span class="fc" id="L55">		final DayPattern dayPattern1 = new DayPattern(&quot;1&quot;);</span>
-<span class="fc" id="L56">		final DayPattern dayPattern2 = new DayPattern(&quot;2&quot;);</span>
-<span class="fc" id="L57">		return new RegexConcat( //</span>
-<span class="fc" id="L58">				dayPattern1.toRegex(), //</span>
-<span class="fc" id="L59">				Words.exactly(Words.TO), //</span>
-<span class="fc" id="L60">				Words.zeroOrMore(Words.THE), //</span>
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				dayPattern2.toRegex() //</span>
+<span class="fc" id="L57">		final DayPattern dayPattern1 = new DayPattern(&quot;1&quot;);</span>
+<span class="fc" id="L58">		final DayPattern dayPattern2 = new DayPattern(&quot;2&quot;);</span>
+<span class="fc" id="L59">		return new RegexConcat( //</span>
+<span class="fc" id="L60">				dayPattern1.toRegex(), //</span>
+<span class="fc" id="L61">				Words.exactly(Words.TO), //</span>
+<span class="fc" id="L62">				Words.zeroOrMore(Words.THE), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				dayPattern2.toRegex() //</span>
 		);
 	}
 
 	private IRegex toRegexE(String suffix) {
-<span class="fc" id="L67">		return new RegexConcat( //</span>
+<span class="fc" id="L69">		return new RegexConcat( //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
 				new RegexLeaf(1, &quot;ECOUNT1&quot; + suffix, &quot;([\\d]+)&quot;), //
-<span class="fc" id="L70">				Words.exactly(Words.TO), //</span>
-<span class="fc" id="L71">				Words.zeroOrMore(Words.THE), //</span>
-<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L72">				Words.exactly(Words.TO), //</span>
+<span class="fc" id="L73">				Words.zeroOrMore(Words.THE), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
 				new RegexLeaf(1, &quot;ECOUNT2&quot; + suffix, &quot;([\\d]+)&quot;) //
 		);
 	}
 
 	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L79">		final Day d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (d1 != null) {</span>
-<span class="nc" id="L81">			final Day d2 = new DayPattern(&quot;2&quot;).getDay(arg);</span>
-<span class="nc" id="L82">			return Failable.ok(new DaysAsDates(d1, d2));</span>
+<span class="nc" id="L81">		final LocalDate d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (d1 != null) {</span>
+<span class="nc" id="L83">			final LocalDate d2 = new DayPattern(&quot;2&quot;).getDay(arg);</span>
+<span class="nc" id="L84">			return Failable.ok(new DaysAsDates(d1, d2));</span>
 		}
 
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT1&quot; + suffix, 0) != null)</span>
-<span class="nc" id="L86">			return Failable.ok(resultE(project, arg, suffix));</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT1&quot; + suffix, 0) != null)</span>
+<span class="nc" id="L88">			return Failable.ok(resultE(project, arg, suffix));</span>
 
-<span class="nc" id="L88">		throw new IllegalStateException();</span>
+<span class="nc" id="L90">		throw new IllegalStateException();</span>
 
 	}
 
 	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L93">		final int day1 = Integer.parseInt(arg.get(&quot;ECOUNT1&quot; + suffix, 0));</span>
-<span class="nc" id="L94">		final Day date1 = project.getStartingDate().addDays(day1);</span>
+<span class="nc" id="L95">		final int day1 = Integer.parseInt(arg.get(&quot;ECOUNT1&quot; + suffix, 0));</span>
+<span class="nc" id="L96">		final TimePoint date1 = project.getMinTimePoint().addDays(day1);</span>
 
-<span class="nc" id="L96">		final int day2 = Integer.parseInt(arg.get(&quot;ECOUNT2&quot; + suffix, 0));</span>
-<span class="nc" id="L97">		final Day date2 = project.getStartingDate().addDays(day2);</span>
+<span class="nc" id="L98">		final int day2 = Integer.parseInt(arg.get(&quot;ECOUNT2&quot; + suffix, 0));</span>
+<span class="nc" id="L99">		final TimePoint date2 = project.getMinTimePoint().addDays(day2);</span>
 
-<span class="nc" id="L99">		return new DaysAsDates(date1, date2);</span>
+<span class="nc" id="L101">		return new DaysAsDates(date1.toDay(), date2.toDay());</span>
 	}
 
 }

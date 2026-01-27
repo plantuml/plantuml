@@ -155,7 +155,6 @@ net.sourceforge.plantuml.preproc2
 net.sourceforge.plantuml.project
 net.sourceforge.plantuml.project.command
 net.sourceforge.plantuml.project.core
-net.sourceforge.plantuml.project.core3
 net.sourceforge.plantuml.project.draw
 net.sourceforge.plantuml.project.lang
 net.sourceforge.plantuml.project.ngm

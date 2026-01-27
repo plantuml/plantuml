@@ -35,12 +35,14 @@
  */
 package net.sourceforge.plantuml.project.command;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.lang.ComplementDate;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -49,33 +51,34 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrintBetween extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L52">	private static final ComplementDate pattern = ComplementDate.any();</span>
+<span class="fc" id="L54">	private static final ComplementDate pattern = ComplementDate.any();</span>
 
 	public CommandPrintBetween() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandPrintBetween.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandPrintBetween.class.getName(), RegexLeaf.start(), //</span>
 				// Print between 2020/02/14 and 2020/03/04
 				new RegexLeaf(&quot;print&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;between&quot;), //
 <span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L65">				pattern.toRegex(&quot;START&quot;), //</span>
+				new RegexLeaf(&quot;between&quot;), //
 <span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(&quot;and&quot;), //
+<span class="fc" id="L67">				pattern.toRegex(&quot;START&quot;), //</span>
 <span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L69">				pattern.toRegex(&quot;END&quot;), //</span>
-<span class="fc" id="L70">				RegexLeaf.end());</span>
+				new RegexLeaf(&quot;and&quot;), //
+<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L71">				pattern.toRegex(&quot;END&quot;), //</span>
+<span class="fc" id="L72">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L75">		final Day start = (Day) pattern.getMe(diagram, arg, &quot;START&quot;).get();</span>
-<span class="nc" id="L76">		final Day end = (Day) pattern.getMe(diagram, arg, &quot;END&quot;).get();</span>
-<span class="nc" id="L77">		diagram.setPrintInterval(start, end);</span>
-<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L78">		final LocalDate start = pattern.getMe(diagram, arg, &quot;START&quot;).get();</span>
+<span class="nc" id="L79">		final LocalDate end = pattern.getMe(diagram, arg, &quot;END&quot;).get();</span>
+<span class="nc" id="L80">		diagram.setPrintInterval(start, end);</span>
+<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
 	}
 
 }

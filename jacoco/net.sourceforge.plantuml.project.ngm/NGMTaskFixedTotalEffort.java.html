@@ -11,41 +11,49 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	private LocalDateTime start;
 	private LocalDateTime end;
 
-	public NGMTaskFixedTotalEffort(NGMAllocation allocation, NGMTotalEffort totalEffort) {
+	public NGMTaskFixedTotalEffort(NGMAllocation allocation, LocalDateTime start, NGMTotalEffort totalEffort) {
 <span class="fc" id="L15">		super(allocation);</span>
 <span class="fc" id="L16">		this.totalEffort = totalEffort;</span>
-<span class="fc" id="L17">	}</span>
+<span class="fc" id="L17">		this.start = start;</span>
+<span class="fc" id="L18">		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);</span>
+<span class="fc" id="L19">	}</span>
 
 	@Override
 	public LocalDateTime getStart() {
-<span class="nc" id="L21">		return start;</span>
+<span class="nc" id="L23">		return start;</span>
 	}
 
 	@Override
 	public void setStart(LocalDateTime start) {
-<span class="fc" id="L26">		this.start = start;</span>
-<span class="fc" id="L27">		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);</span>
-<span class="fc" id="L28">	}</span>
+<span class="nc" id="L28">		this.start = start;</span>
+<span class="nc" id="L29">		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);</span>
+<span class="nc" id="L30">	}</span>
 
 	@Override
 	public LocalDateTime getEnd() {
-<span class="fc" id="L32">		return end;		</span>
+<span class="fc" id="L34">		return end;</span>
 	}
 
 	@Override
 	public void setEnd(LocalDateTime end) {
-<span class="nc" id="L37">		this.end = end;</span>
-<span class="nc" id="L38">		this.start = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeStart(end);</span>
-<span class="nc" id="L39">	}</span>
+<span class="nc" id="L39">		this.end = end;</span>
+<span class="nc" id="L40">		this.start = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeStart(end);</span>
+<span class="nc" id="L41">	}</span>
+
+	@Override
+	public void setEffort(NGMTotalEffort effort) {
+<span class="nc" id="L45">		this.totalEffort = effort;</span>
+<span class="nc" id="L46">		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);</span>
+<span class="nc" id="L47">	}</span>
 
 	@Override
 	public Duration getDuration() {
-<span class="nc" id="L43">		return Duration.between(start, end);</span>
+<span class="nc" id="L51">		return Duration.between(start, end);</span>
 	}
 
 	@Override
 	public NGMTotalEffort getTotalEffort() {
-<span class="fc" id="L48">		return totalEffort;</span>
+<span class="fc" id="L56">		return totalEffort;</span>
 	}
 
 }

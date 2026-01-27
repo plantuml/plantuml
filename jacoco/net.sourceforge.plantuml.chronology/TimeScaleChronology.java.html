@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.chronology;
 
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class TimeScaleChronology implements TimeScale {
@@ -48,7 +48,7 @@ public class TimeScaleChronology implements TimeScale {
 <span class="nc" id="L48">		this.fullWidth = fullWidth;</span>
 <span class="nc" id="L49">	}</span>
 
-	public double getStartingPosition(Day instant) {
+	public double getPosition(TimePoint instant) {
 <span class="nc" id="L52">		final long wink = instant.getMillis();</span>
 <span class="nc bnc" id="L53" title="All 2 branches missed.">		if (wink &lt; min)</span>
 <span class="nc" id="L54">			throw new IllegalArgumentException();</span>
@@ -58,25 +58,21 @@ public class TimeScaleChronology implements TimeScale {
 <span class="nc" id="L58">		return fullWidth * (wink - min) / (max - min);</span>
 	}
 
-	public double getEndingPosition(Day instant) {
-<span class="nc" id="L62">		return getStartingPosition(instant);</span>
+	public double getWidth(TimePoint instant) {
+<span class="nc" id="L62">		throw new UnsupportedOperationException();</span>
 	}
 
-	public double getWidth(Day instant) {
+	public boolean isBreaking(TimePoint instant) {
 <span class="nc" id="L66">		throw new UnsupportedOperationException();</span>
 	}
 
-	public boolean isBreaking(Day instant) {
-<span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
-	}
-
 	public final void setMin(long min) {
-<span class="nc" id="L74">		this.min = min;</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L70">		this.min = min;</span>
+<span class="nc" id="L71">	}</span>
 
 	public final void setMax(long max) {
-<span class="nc" id="L78">		this.max = max;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L74">		this.max = max;</span>
+<span class="nc" id="L75">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

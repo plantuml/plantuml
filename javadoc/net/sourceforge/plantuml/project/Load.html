@@ -98,11 +98,18 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.pro
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullLoad()" class="member-name-link">getFullLoad</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="ngm/NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEffort()" class="member-name-link">getEffort</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#inWinks(int)" class="member-name-link">inWinks</a><wbr>(int&nbsp;winks)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)" class="member-name-link">of</a><wbr>(<a href="ngm/NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#ofDays(int)" class="member-name-link">ofDays</a><wbr>(int&nbsp;days)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#ofDaysAndHours(int,int)" class="member-name-link">ofDaysAndHours</a><wbr>(int&nbsp;days,
+ int&nbsp;hours)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -125,15 +132,22 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.pro
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="inWinks(int)">
-<h3>inWinks</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></span>&nbsp;<span class="element-name">inWinks</span><wbr><span class="parameters">(int&nbsp;winks)</span></div>
+<section class="detail" id="of(net.sourceforge.plantuml.project.ngm.NGMTotalEffort)">
+<h3>of</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="ngm/NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="getFullLoad()">
-<h3>getFullLoad</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getFullLoad</span>()</div>
+<section class="detail" id="ofDays(int)">
+<h3>ofDays</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></span>&nbsp;<span class="element-name">ofDays</span><wbr><span class="parameters">(int&nbsp;days)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="ofDaysAndHours(int,int)">
+<h3>ofDaysAndHours</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Load.html" title="class in net.sourceforge.plantuml.project">Load</a></span>&nbsp;<span class="element-name">ofDaysAndHours</span><wbr><span class="parameters">(int&nbsp;days,
+ int&nbsp;hours)</span></div>
 </section>
 </li>
 <li>
@@ -144,6 +158,12 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.pro
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getEffort()">
+<h3>getEffort</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="ngm/NGMTotalEffort.html" title="class in net.sourceforge.plantuml.project.ngm">NGMTotalEffort</a></span>&nbsp;<span class="element-name">getEffort</span>()</div>
 </section>
 </li>
 </ul>

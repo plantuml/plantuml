@@ -36,8 +36,9 @@
 package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.project.GanttConstraintMode;
-import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class TaskInstant {
 
@@ -45,93 +46,83 @@ public class TaskInstant {
 	private final TaskAttribute attribute;
 	private final int delta;
 	private final GanttConstraintMode mode;
-	private final LoadPlanable calendar;
+	private final PiecewiseConstant calendar;
 
 	public TaskInstant(Moment task, TaskAttribute attribute) {
-<span class="fc" id="L51">		this(task, attribute, 0, GanttConstraintMode.IGNORE_CALENDAR, null);</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		this(task, attribute, 0, GanttConstraintMode.IGNORE_CALENDAR, null);</span>
+<span class="fc" id="L53">	}</span>
 
 	private TaskInstant(Moment task, TaskAttribute attribute, int delta, GanttConstraintMode mode,
-<span class="fc" id="L55">			LoadPlanable calendar) {</span>
-<span class="fc" id="L56">		this.task = task;</span>
-<span class="fc" id="L57">		this.attribute = attribute;</span>
-<span class="fc" id="L58">		this.delta = delta;</span>
-<span class="fc" id="L59">		this.mode = mode;</span>
-<span class="fc" id="L60">		this.calendar = calendar;</span>
-<span class="pc bpc" id="L61" title="1 of 4 branches missed.">		if (attribute != TaskAttribute.START &amp;&amp; attribute != TaskAttribute.END)</span>
-<span class="nc" id="L62">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L56">			PiecewiseConstant calendar) {</span>
+<span class="fc" id="L57">		this.task = task;</span>
+<span class="fc" id="L58">		this.attribute = attribute;</span>
+<span class="fc" id="L59">		this.delta = delta;</span>
+<span class="fc" id="L60">		this.mode = mode;</span>
+<span class="fc" id="L61">		this.calendar = calendar;</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">		if (attribute != TaskAttribute.START &amp;&amp; attribute != TaskAttribute.END)</span>
+<span class="nc" id="L63">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L65">	}</span>
 
-	public TaskInstant withDelta(int newDelta, GanttConstraintMode mode, LoadPlanable calendar) {
-<span class="nc" id="L67">		return new TaskInstant(task, attribute, newDelta, mode, calendar);</span>
+	public TaskInstant withDelta(int newDelta, GanttConstraintMode mode, PiecewiseConstant calendar) {
+<span class="nc" id="L68">		return new TaskInstant(task, attribute, newDelta, mode, calendar);</span>
 	}
 
-	private Day manageDelta(Day value) {
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">			for (int i = 0; i &lt; delta; i++) {</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {</span>
-<span class="nc" id="L74">					int tmp = 0;</span>
-<span class="nc bnc" id="L75" title="All 4 branches missed.">					while (calendar.getLoadAt(value) == 0 &amp;&amp; tmp++ &lt; 1000)</span>
-<span class="nc" id="L76">						value = value.increment();</span>
+	private TimePoint manageDelta(TimePoint value) {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">			for (int i = 0; i &lt; delta; i++) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {</span>
+<span class="nc" id="L75">					int tmp = 0;</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">					while (PiecewiseConstantUtils.isZeroOnDay(calendar, value.toDay()) &amp;&amp; tmp++ &lt; 1000)</span>
+<span class="nc" id="L77">						value = value.increment();</span>
 				}
 
-<span class="nc" id="L79">				value = value.increment();</span>
+<span class="nc" id="L80">				value = value.increment();</span>
 			}
 
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			for (int i = 0; i &lt; -delta; i++)</span>
-<span class="nc" id="L84">				value = value.decrement();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			for (int i = 0; i &lt; -delta; i++)</span>
+<span class="nc" id="L85">				value = value.decrement();</span>
 
-<span class="fc" id="L86">		return value;</span>
+<span class="fc" id="L87">		return value;</span>
 	}
 
-	public Day getInstantPrecise() {
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
-<span class="nc" id="L91">			return manageDelta(task.getStart());</span>
+	public TimePoint getInstantPrecise() {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
+<span class="nc" id="L92">			return manageDelta(task.getStart());</span>
 
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.END)</span>
-<span class="fc" id="L94">			return manageDelta(task.getEnd().increment());</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.END)</span>
+<span class="fc" id="L95">			return manageDelta(task.getEnd());</span>
 
-<span class="nc" id="L96">		throw new IllegalStateException();</span>
-	}
-
-	public Day getInstantTheorical() {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
-<span class="nc" id="L101">			return manageDelta(task.getStart());</span>
-
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (attribute == TaskAttribute.END)</span>
-<span class="nc" id="L104">			return manageDelta(task.getEnd());</span>
-
-<span class="nc" id="L106">		throw new IllegalStateException();</span>
+<span class="nc" id="L97">		throw new IllegalStateException();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L111">		return attribute.toString() + &quot; of &quot; + task;</span>
+<span class="nc" id="L102">		return attribute.toString() + &quot; of &quot; + task;</span>
 	}
 
 	public final Moment getMoment() {
-<span class="fc" id="L115">		return task;</span>
+<span class="fc" id="L106">		return task;</span>
 	}
 
 	public final boolean isTask() {
-<span class="fc" id="L119">		return task instanceof AbstractTask;</span>
+<span class="fc" id="L110">		return task instanceof AbstractTask;</span>
 	}
 
 	public final TaskAttribute getAttribute() {
-<span class="fc" id="L123">		return attribute;</span>
+<span class="fc" id="L114">		return attribute;</span>
 	}
 
 	public boolean sameRowAs(TaskInstant dest) {
-<span class="pc bpc" id="L127" title="2 of 4 branches missed.">		if (this.isTask() &amp;&amp; dest.isTask()) {</span>
-<span class="fc" id="L128">			final AbstractTask t1 = (AbstractTask) this.getMoment();</span>
-<span class="fc" id="L129">			final AbstractTask t2 = (AbstractTask) dest.getMoment();</span>
-<span class="pc bpc" id="L130" title="2 of 4 branches missed.">			if (t1 == t2.getRow() || t2 == t1.getRow())</span>
-<span class="nc" id="L131">				return true;</span>
+<span class="pc bpc" id="L118" title="2 of 4 branches missed.">		if (this.isTask() &amp;&amp; dest.isTask()) {</span>
+<span class="fc" id="L119">			final AbstractTask t1 = (AbstractTask) this.getMoment();</span>
+<span class="fc" id="L120">			final AbstractTask t2 = (AbstractTask) dest.getMoment();</span>
+<span class="pc bpc" id="L121" title="2 of 4 branches missed.">			if (t1 == t2.getRow() || t2 == t1.getRow())</span>
+<span class="nc" id="L122">				return true;</span>
 
 		}
-<span class="fc" id="L134">		return false;</span>
+<span class="fc" id="L125">		return false;</span>
 	}
 
 }
