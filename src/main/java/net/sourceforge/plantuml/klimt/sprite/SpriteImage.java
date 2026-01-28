@@ -41,7 +41,7 @@ import java.util.Objects;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.emoji.SvgNanoParser;
+import net.sourceforge.plantuml.emoji.SvgDomParser;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -92,7 +92,7 @@ public class SpriteImage implements Sprite {
 		try {
 			InputStream is = getInternalSprite(name + ".svg");
 			if (is != null)
-				return new SvgNanoParser(FileUtils.readAllBytes(is));
+				return new SvgDomParser(FileUtils.readAllBytes(is));
 			is = getInternalSprite(name + ".png");
 			if (is != null)
 				return new SpriteImage(SImageIO.read(is));

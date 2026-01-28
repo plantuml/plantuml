@@ -1,0 +1,10 @@
+@startuml
+sprite textDecoration <svg viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="20" font-size="16" text-decoration="none" fill="#000000">Normal Text</text>
+  <text x="10" y="45" font-size="16" text-decoration="underline" fill="#0000FF">Underlined</text>
+  <text x="10" y="70" font-size="16" text-decoration="line-through" fill="#FF0000">Strikethrough</text>
+  <text x="10" y="95" font-size="16" text-decoration="overline" fill="#00AA00">Overline</text>
+</svg>
+
+Alice -> Bob : <$textDecoration> decorations
+@enduml

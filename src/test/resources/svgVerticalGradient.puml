@@ -1,0 +1,17 @@
+@startuml
+' Test for vertical linear gradient (top to bottom) - policy character: -
+sprite verticalgrad <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#CCE5FF"/>
+      <stop offset="50%" stop-color="#3399FF"/>
+      <stop offset="100%" stop-color="#0066CC"/>
+    </linearGradient>
+  </defs>
+
+  <!-- rectangle using vertical gradient fill -->
+  <rect x="5" y="5" width="90" height="40" rx="6" fill="url(#grad)" stroke="#004080" stroke-width="2"/>
+</svg>
+
+Alice -> Bob : hello <$verticalgrad> there
+@enduml

@@ -70,7 +70,7 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
-public class SvgNanoParser implements Sprite, GrayLevelRange {
+public class SvgNanoParser implements ISvgParser, GrayLevelRange {
 
 	private static final Pattern P_TEXT_OR_DRAW = Pattern
 			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
@@ -131,6 +131,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 		this.svg = svg;
 	}
 
+	@Override
 	public void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor) {
 		final ColorResolver colorResolver = new ColorResolver(fontColor, forcedColor, this);
 		UGraphicWithScale ugs = new UGraphicWithScale(ug, colorResolver, scale);
@@ -274,10 +275,19 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 	}
 
 	private void drawText(UGraphicWithScale ugs, String s, Deque<String> stackG) {
-		final double x = Double.parseDouble(extract(DATA_X, s));
-		final double y = Double.parseDouble(extract(DATA_Y, s));
+		ugs = applyFillAndStroke(ugs, s, stackG);
+		ugs = applyTransform(ugs, s);
+
+		final double scalex = ugs.getAffineTransform().getScaleX();
+		final double scaley = ugs.getAffineTransform().getScaleY();
+
+		final double deltax = ugs.getAffineTransform().getTranslateX();
+		final double deltay = ugs.getAffineTransform().getTranslateY();
+
+		final double x = Double.parseDouble(extract(DATA_X, s)) * scalex + deltax;
+		final double y = Double.parseDouble(extract(DATA_Y, s)) * scaley + deltay;
 		final String fontColor = getFillString(s, stackG);
-		final int fontSize = getTextFontSize(s);
+		final int fontSize = (int) (getTextFontSize(s) * ugs.getInitialScale());
 
 		final Matcher m = P_TEXT.matcher(s);
 		if (m.find()) {
