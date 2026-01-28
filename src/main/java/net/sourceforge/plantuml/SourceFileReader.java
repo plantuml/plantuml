@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
