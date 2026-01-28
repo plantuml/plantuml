@@ -239,8 +239,9 @@ public class Run {
 		if (option != null && (errorStatus.hasError() || errorStatus.isEmpty()))
 			option.getStdrpt().finalMessage(errorStatus);
 
-		if (errorStatus.hasError())
-			Exit.exit(errorStatus.getExitCode());
+		final int exitCode = errorStatus.getExitCode();
+		if (exitCode != 0)
+			Exit.exit(exitCode);
 	}
 
 	private final CliOptions option;
@@ -281,6 +282,8 @@ public class Run {
 			if (sourceFileReader.hasError()) {
 				hasError.set(true);
 				errorStatus.incError();
+			} else {
+				errorStatus.incDiagrams(1);
 			}
 		});
 
@@ -337,12 +340,11 @@ public class Run {
 
 	private void manageFileInternal(File f) throws IOException, InterruptedException {
 		Log.info(() -> "Working on " + f.getPath());
+		errorStatus.incTotalFiles();
 		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
 
 		if (sourceFileReader.hasError())
 			errorStatus.incError();
-		else
-			errorStatus.incOk();
 
 		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return;
@@ -353,25 +355,25 @@ public class Run {
 			return;
 		}
 		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+		errorStatus.incDiagrams(result.size());
 		final Stdrpt rpt = option.getStdrpt();
+
 		if (result.size() == 0) {
 			Log.error("Warning: no image in " + f.getPath());
 			rpt.printInfo(System.err, null);
-			return;
-		}
-		for (BlockUml s : sourceFileReader.getBlocks())
-			rpt.printInfo(System.err, s.getDiagram());
+		} else {
+			for (BlockUml s : sourceFileReader.getBlocks())
+				rpt.printInfo(System.err, s.getDiagram());
 
-		if (result.size() != 0) {
 			for (GeneratedImage image : result) {
 				final int lineError = image.lineErrorRaw();
-				if (lineError != -1) {
+				if (lineError == -1) {
+					errorStatus.incDiagrams(1);
+				} else {
 					rpt.errorLine(lineError, f);
 					errorStatus.incError();
-					return;
 				}
 			}
-			errorStatus.incOk();
 		}
 	}
 
@@ -544,6 +546,7 @@ public class Run {
 		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE ? new LanguageDescriptor().getObfuscate() : null;
 
 		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
+			errorStatus.incDiagrams(1);
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
 					.withPreprocFormat(option.getFileFormatOption().getFileFormat());
 			final SFile file = suggested.getFile(0);

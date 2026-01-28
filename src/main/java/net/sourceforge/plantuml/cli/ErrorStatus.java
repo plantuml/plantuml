@@ -38,14 +38,14 @@ package net.sourceforge.plantuml.cli;
 public class ErrorStatus {
 
 	public static final int ERROR_NO_FILE_FOUND = 50;
-	
+
 	private static final int ERROR_NO_DIAGRAM_FOUND = 100;
-	
+
 	private static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
 
-	
 	private int nbErrors;
-	private int nbOk;
+	private int nbTotalFiles;
+	private int nbDiagrams;
 
 	private ErrorStatus() {
 	}
@@ -58,8 +58,12 @@ public class ErrorStatus {
 		nbErrors++;
 	}
 
-	public synchronized void incOk() {
-		nbOk++;
+	public synchronized void incTotalFiles() {
+		nbTotalFiles++;
+	}
+
+	public synchronized void incDiagrams(int nb) {
+		nbDiagrams += nb;
 	}
 
 	public synchronized boolean hasError() {
@@ -67,22 +71,25 @@ public class ErrorStatus {
 	}
 
 	public synchronized boolean isEmpty() {
-		return nbErrors == 0 && nbOk == 0;
+		return nbDiagrams == 0;
 	}
 
 	public synchronized int getExitCode() {
-		if (isEmpty())
-			return ERROR_NO_DIAGRAM_FOUND;
+		if (nbTotalFiles == 0)
+			return ERROR_NO_FILE_FOUND;
 
 		if (hasError())
 			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;
+
+		if (isEmpty())
+			return ERROR_NO_DIAGRAM_FOUND;
 
 		return 0;
 	}
 
 	@Override
-	public String toString() {
-		return "nbErrors=" + nbErrors + " nbOk=" + nbOk;
+	public synchronized String toString() {
+		return "nbErrors=" + nbErrors + " nbTotalFiles=" + nbTotalFiles + " nbDiagrams=" + nbDiagrams;
 	}
 
 }

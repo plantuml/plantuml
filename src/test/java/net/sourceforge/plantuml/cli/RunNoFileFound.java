@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.cli;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,22 @@ class RunNoFileFound extends AbstractCliTest {
 		});
 
 		assertLs("[]", tempDir);
-		assertTrue(err.capturedString().contains("No file found"));
+		assertTrue(err.capturedString().contains("No file found"), err.capturedString());
+
+	}
+
+	@Test
+	@StdIo
+	void test2(StdErr err) throws Exception {
+		final Path file = tempDir.resolve("empty.txt");
+		Files.writeString(file, "");
+
+		assertExit(100, () -> {
+			Run.main(new String[] { file.toAbsolutePath().toString() });
+		});
+
+		assertLs("[empty.txt]", tempDir);
+		assertTrue(err.capturedString().contains("No diagram found"), err.capturedString());
 
 	}
 
