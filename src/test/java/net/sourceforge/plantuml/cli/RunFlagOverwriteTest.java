@@ -26,6 +26,7 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 
 	@BeforeEach
 	void setUp() {
+		super.setUp();
 		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, false);
 		file = tempDir.resolve("test.txt");
 		ofileSvg = tempDir.resolve("test.svg");
@@ -33,6 +34,7 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 
 	@AfterEach
 	void tearDown() {
+		super.tearDown();
 		// Reset overwrite flag after each test
 		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, false);
 	}
@@ -57,7 +59,7 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 	}
 
 	@Test
-	void testReadOnly() throws IOException, InterruptedException {
+	void testReadOnly() throws Exception {
 
 		alice_bob_hello1();
 		runSvg();
@@ -70,7 +72,9 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 		ofileSvg.toFile().setWritable(false);
 
 		alice_bob_hello2();
-		runSvg();
+		assertExit(100, () -> {
+			runSvg();
+		});
 		// Second run: try to overwrite with hello2 (should fail due to read-only)
 		assertTrue(containsHello1(ofileSvg));
 		assertFalse(containsHello2(ofileSvg));
