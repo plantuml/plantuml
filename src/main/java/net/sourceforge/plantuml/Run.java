@@ -338,6 +338,7 @@ public class Run {
 	private void manageFileInternal(File f) throws IOException, InterruptedException {
 		Log.info(() -> "Working on " + f.getPath());
 		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
+		sourceFileReader.updateStatus(errorStatus);
 
 		if (sourceFileReader.hasError())
 			errorStatus.incError();

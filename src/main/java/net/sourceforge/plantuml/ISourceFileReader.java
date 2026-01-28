@@ -38,6 +38,8 @@ package net.sourceforge.plantuml;
 import java.io.IOException;
 import java.util.List;
 
+import net.sourceforge.plantuml.cli.ErrorStatus;
+
 public interface ISourceFileReader {
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
@@ -51,5 +53,7 @@ public interface ISourceFileReader {
 	public ISourceFileReader setFileFormatOption(FileFormatOption fileFormatOption);
 
 	public void setCheckMetadata(boolean checkMetadata);
+
+	public void updateStatus(ErrorStatus errorStatus);
 
 }
