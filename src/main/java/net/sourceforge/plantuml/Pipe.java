@@ -108,11 +108,13 @@ public class Pipe {
 		final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),
 				option.getFileFormatOption());
 
+		error.incTotalFiles();
+
 		printInfo(noStdErr ? ps : System.err, sourceStringReader);
 		if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
 			error.incError();
 		} else {
-			error.incOk();
+			error.incDiagrams(1);
 			if (noStdErr) {
 				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
 				baos.close();
@@ -129,7 +131,7 @@ public class Pipe {
 				new FileFormatOption(FileFormat.PNG));
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// We don't check errors
-		error.incOk();
+		error.incTotalFiles();
 		if (result == null) {
 //			final CMapData empty = new CMapData();
 //			ps.println(empty.asString("plantuml"));
@@ -146,16 +148,17 @@ public class Pipe {
 	}
 
 	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ErrorStatus error) {
+		error.incTotalFiles();
 		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
 		if (system instanceof UmlDiagram) {
-			error.incOk();
+			error.incDiagrams(1);
 			ps.println(((UmlDiagram) system).getUmlDiagramType().name());
 			ps.println(system.getDescription());
 		} else if (system instanceof PSystemError) {
 			error.incError();
 			stdrpt.printInfo(ps, system);
 		} else {
-			error.incOk();
+			error.incDiagrams(1);
 			ps.println("OTHER");
 			ps.println(system.getDescription());
 		}
