@@ -38,20 +38,24 @@ package net.sourceforge.plantuml.cli;
 public class ErrorStatus {
 
 	public static final int ERROR_NO_FILE_FOUND = 50;
-	
+
 	private static final int ERROR_NO_DIAGRAM_FOUND = 100;
-	
+
 	private static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
 
-	
 	private int nbErrors;
 	private int nbOk;
+	private int nbBlocks;
 
 	private ErrorStatus() {
 	}
 
 	public static ErrorStatus init() {
 		return new ErrorStatus();
+	}
+
+	public synchronized void incBlocks(int nb) {
+		nbBlocks += nb;
 	}
 
 	public synchronized void incError() {

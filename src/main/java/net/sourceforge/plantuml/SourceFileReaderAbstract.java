@@ -106,7 +106,10 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	@Override
 	final public void updateStatus(ErrorStatus errorStatus) {
-		throw new UnsupportedOperationException("WIP");
+		errorStatus.incBlocks(builder.getBlockUmls().size());
+		for (BlockUml blockUml : builder.getBlockUmls()) {
+			final Diagram system = blockUml.getDiagram();
+		}
 	}
 
 	protected final FileFormatOption getFileFormatOption() {
