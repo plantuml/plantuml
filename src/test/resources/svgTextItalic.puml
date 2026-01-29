@@ -1,0 +1,9 @@
+@startuml
+sprite textItalic <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="20" font-family="Arial" font-size="16" font-style="normal" fill="#000000">Normal</text>
+  <text x="10" y="40" font-family="Arial" font-size="16" font-style="italic" fill="#0000FF">Italic Text</text>
+  <text x="10" y="60" font-family="Arial" font-size="16" font-style="oblique" fill="#FF0000">Oblique</text>
+</svg>
+
+Alice -> Bob : <$textItalic> styles
+@enduml

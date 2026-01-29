@@ -80,7 +80,7 @@ public class Emoji {
 		return Collections.unmodifiableMap(new TreeMap<>(ALL));
 	}
 
-	private SvgNanoParser nano;
+	private ISvgParser nano;
 
 	private final String unicode;
 	private final String shortcut;
@@ -129,7 +129,7 @@ public class Emoji {
 			final String singleLine = br.readLine();
 			data.add(singleLine);
 		}
-		this.nano = new SvgNanoParser(data);
+		this.nano = new SvgDomParser(data);
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {

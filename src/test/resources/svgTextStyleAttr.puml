@@ -1,0 +1,8 @@
+@startuml
+sprite textStyleAttr <svg viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="20" style="font-family:Arial;font-size:16px;fill:#FF0000;font-weight:bold">Bold Red</text>
+  <text x="10" y="45" style="font-family:Courier;font-size:14px;fill:#0000FF;font-style:italic">Italic Blue</text>
+</svg>
+
+Alice -> Bob : <$textStyleAttr> inline styles
+@enduml

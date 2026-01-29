@@ -1,0 +1,17 @@
+@startuml
+' Test for diagonal linear gradient (top-left to bottom-right) - policy character: /
+sprite diagonalgrad1 <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#E5CCFF"/>
+      <stop offset="50%" stop-color="#9966FF"/>
+      <stop offset="100%" stop-color="#6600CC"/>
+    </linearGradient>
+  </defs>
+
+  <!-- rectangle using diagonal gradient fill (TL to BR) -->
+  <rect x="5" y="5" width="90" height="40" rx="6" fill="url(#grad)" stroke="#4D0099" stroke-width="2"/>
+</svg>
+
+Alice -> Bob : hello <$diagonalgrad1> there
+@enduml

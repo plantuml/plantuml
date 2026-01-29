@@ -37,7 +37,8 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.emoji.SvgNanoParser;
+import net.sourceforge.plantuml.emoji.ISvgParser;
+import net.sourceforge.plantuml.emoji.SvgDomParser;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -81,7 +82,7 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 		for (StringLocated sl : lines)
 			svg.append(sl.getString());
 
-		final SvgNanoParser nanoParser = new SvgNanoParser(svg.toString());
+		final ISvgParser nanoParser = new SvgDomParser(svg.toString());
 		system.addSprite(line0.get("NAME", 0), nanoParser);
 
 		return CommandExecutionResult.ok();

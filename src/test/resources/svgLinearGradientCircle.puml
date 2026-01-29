@@ -1,0 +1,15 @@
+@startuml
+sprite gradientCircle <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A90E2"/>
+      <stop offset="100%" stop-color="#E24A90"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- circle with horizontal linear gradient fill -->
+  <circle cx="50" cy="50" r="40" fill="url(#circleGrad)" stroke="#333333" stroke-width="2"/>
+</svg>
+
+Alice -> Bob : gradient circle <$gradientCircle> test
+@enduml

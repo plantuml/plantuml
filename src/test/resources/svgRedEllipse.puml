@@ -1,0 +1,8 @@
+@startuml
+sprite redellipse <svg viewBox="0 0 72 36" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sideways oval: width is 2x height -->
+  <ellipse cx="36" cy="18" rx="30" ry="15" fill="#FF0000" />
+</svg>
+
+Alice -> Bob : hello <$redellipse> there
+@enduml

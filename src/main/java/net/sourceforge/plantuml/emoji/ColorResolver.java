@@ -40,12 +40,25 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 
+/**
+ * Resolves colors for Graphical elements based on provided font and forced colors.
+ * - If no colors are provided, defaults to black.
+ * - If a forced color is provided, all colors are converted to monochrome based on it.
+ * - If only a font color is provided, uses it as the default color.
+ */
 public class ColorResolver {
 
 	final private HColorSimple fontColor;
 	final private HColorSimple forcedColor;
 	final private GrayLevelRange grayLevelRange;
 
+	/**
+	 * Constructor for ColorResolver.
+	 * 
+	 * @param fontColor
+	 * @param forcedColor
+	 * @param grayLevelRange
+	 */
 	public ColorResolver(HColor fontColor, HColor forcedColor, GrayLevelRange grayLevelRange) {
 		this.fontColor = (HColorSimple) fontColor;
 		this.forcedColor = (HColorSimple) forcedColor;

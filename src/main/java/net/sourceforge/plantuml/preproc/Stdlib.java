@@ -55,7 +55,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.emoji.SvgNanoParser;
+import net.sourceforge.plantuml.emoji.ISvgParser;
+import net.sourceforge.plantuml.emoji.SvgDomParser;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.spm.SpmChannel;
@@ -82,7 +83,7 @@ public class Stdlib {
 	private final Map<String, byte[]> puml = new HashMap<>();
 	private final Map<String, byte[]> json = new HashMap<>();
 	private final Map<String, StdlibSprite> sprites = new HashMap<>();
-	private final Map<String, SvgNanoParser> svgs = new HashMap<>();
+	private final Map<String, ISvgParser> svgs = new HashMap<>();
 	private final List<FutureBufferedImage> images = new ArrayList<>();
 
 	private final String name;
@@ -398,7 +399,7 @@ public class Stdlib {
 					for (int i = 0; i < nb; i++) {
 						final String spriteName = dis.readUTF();
 						final String svg = dis.readUTF();
-						svgs.put(spriteName, new SvgNanoParser(svg));
+						svgs.put(spriteName, new SvgDomParser(svg));
 					}
 				}
 			}
