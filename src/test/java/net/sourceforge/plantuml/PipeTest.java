@@ -119,12 +119,12 @@ class PipeTest {
 				"(?s).*(<svg.*</svg>.*){2}", Verification.REGEX, false, false));
 
 		// ok computeurl
-		l.add(TestCase.of("-computeurl", "@startuml\na->b\n@enduml", "IzIrIm80\n", Verification.EXACT, false, true));
+		l.add(TestCase.of("-computeurl", "@startuml\na->b\n@enduml", "IzIrIm80\n", Verification.EXACT, false, false));
 		l.add(TestCase.of("-computeurl", "@startuml\na->b\n@enduml\n@startuml\na->b\nb->c\n@enduml\n",
-				"IzIrIm80\nIzIrI-9AqhLB1W00\n", Verification.EXACT, false, true));
+				"IzIrIm80\nIzIrI-9AqhLB1W00\n", Verification.EXACT, false, false));
 
 		// ok encodeurl
-		l.add(TestCase.of("-encodeurl", "@startuml\na->b\n@enduml", "IzIrIm80\n", Verification.EXACT, false, true));
+		l.add(TestCase.of("-encodeurl", "@startuml\na->b\n@enduml", "IzIrIm80\n", Verification.EXACT, false, false));
 		l.add(TestCase.of("-encodeurl", "@startuml\na->b\n@enduml\n@startuml\na->b\nb->c\n@enduml\n",
 				"IzIrIm80\nIzIrI-9AqhLB1W00\n", Verification.EXACT, false, true));
 
