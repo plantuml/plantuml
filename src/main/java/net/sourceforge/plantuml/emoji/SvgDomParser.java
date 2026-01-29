@@ -8,6 +8,8 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -258,10 +260,10 @@ public class SvgDomParser implements ISvgParser, Sprite, GrayLevelRange {
                 // push current graphics state
                 stack.add(0, ugs);
                 LOG.fine(() -> indent(stackG) + "PUSH group id=" + gs.id );
-                // optionally apply transform now if you want transforms applied immediately
+                
+                // Apply transform if present
                 if (gs.transform != null && !gs.transform.isEmpty()) {
-                    // applyTransformFromElement not present in this file - if you have it, call it here.
-                    // ugs = applyTransformFromElement(ugs, el);
+                    ugs = applyTransform(ugs, gs.transform);
                 }
 
                 NodeList gKids = el.getChildNodes();
@@ -777,10 +779,16 @@ public class SvgDomParser implements ISvgParser, Sprite, GrayLevelRange {
 
     /**
      * Apply common styling and transform attributes to UGraphicWithScale.
-     * This method handles stroke-width, stroke color, and fill color for shapes.
+     * This method handles transform, stroke-width, stroke color, and fill color for shapes.
      * Returns the potentially modified UGraphicWithScale.
      */
     private UGraphicWithScale applyStyleAndTransform(Element el, UGraphicWithScale ugs) {
+        // Apply transform first if present
+        final String transform = el.getAttribute("transform");
+        if (transform != null && !transform.isEmpty()) {
+            ugs = applyTransform(ugs, transform);
+        }
+        
         final String fill = el.getAttribute("fill");
         final String stroke = el.getAttribute("stroke");
         final String strokeWidth = el.getAttribute("stroke-width");
@@ -1190,6 +1198,124 @@ public class SvgDomParser implements ISvgParser, Sprite, GrayLevelRange {
             }
         }
         return map;
+    }
+
+    // ---- Transform Parsing Methods ----
+    
+    // Regex patterns for transform parsing
+    private static final Pattern P_TRANSLATE1 = Pattern.compile("translate\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+    private static final Pattern P_TRANSLATE2 = Pattern.compile("translate\\(([-.0-9]+)\\)");
+    private static final Pattern P_ROTATE = Pattern.compile("rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+    private static final Pattern P_SCALE1 = Pattern.compile("scale\\(([-.0-9]+)\\)");
+    private static final Pattern P_SCALE2 = Pattern.compile("scale\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+    private static final Pattern P_MATRIX = Pattern.compile(
+        "matrix\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+    
+    /**
+     * Apply SVG transform attribute to the graphics context.
+     * Supports translate, rotate, scale, and matrix transforms.
+     * 
+     * @param ugs the current graphics context
+     * @param transform the transform attribute string
+     * @return the modified graphics context with transform applied
+     */
+    private UGraphicWithScale applyTransform(UGraphicWithScale ugs, String transform) {
+        if (transform == null || transform.isEmpty()) {
+            return ugs;
+        }
+        
+        if (transform.contains("rotate(")) {
+            return applyRotate(ugs, transform);
+        }
+        
+        if (transform.contains("matrix(")) {
+            return applyMatrix(ugs, transform);
+        }
+        
+        final double[] scale = getScale(transform);
+        final UTranslate translate = getTranslate(transform);
+        ugs = ugs.applyTranslate(translate.getDx(), translate.getDy());
+        
+        return ugs.applyScale(scale[0], scale[1]);
+    }
+    
+    /**
+     * Apply matrix transform to graphics context.
+     * SVG matrix format: matrix(a b c d e f)
+     */
+    private UGraphicWithScale applyMatrix(UGraphicWithScale ugs, final String transform) {
+        final Matcher m = P_MATRIX.matcher(transform);
+        if (m.find()) {
+            final double v1 = Double.parseDouble(m.group(1));
+            final double v2 = Double.parseDouble(m.group(2));
+            final double v3 = Double.parseDouble(m.group(3));
+            final double v4 = Double.parseDouble(m.group(4));
+            final double v5 = Double.parseDouble(m.group(5));
+            final double v6 = Double.parseDouble(m.group(6));
+            ugs = ugs.applyMatrix(v1, v2, v3, v4, v5, v6);
+        } else {
+            System.err.println("WARNING: Failed to parse matrix transform: " + transform);
+        }
+        return ugs;
+    }
+    
+    /**
+     * Apply rotation transform to graphics context.
+     * SVG rotate format: rotate(angle cx cy)
+     */
+    private UGraphicWithScale applyRotate(UGraphicWithScale ugs, String transform) {
+        final Matcher m = P_ROTATE.matcher(transform);
+        if (m.find()) {
+            final double angle = Double.parseDouble(m.group(1));
+            final double x = Double.parseDouble(m.group(2));
+            final double y = Double.parseDouble(m.group(3));
+            ugs = ugs.applyRotate(angle, x, y);
+        } else {
+            System.err.println("WARNING: Failed to parse rotate transform: " + transform);
+        }
+        return ugs;
+    }
+    
+    /**
+     * Extract translate values from transform string.
+     * Supports both translate(x, y) and translate(x) formats.
+     */
+    private UTranslate getTranslate(String transform) {
+        double x = 0;
+        double y = 0;
+        
+        final Matcher m1 = P_TRANSLATE1.matcher(transform);
+        if (m1.find()) {
+            x = Double.parseDouble(m1.group(1));
+            y = Double.parseDouble(m1.group(2));
+        } else {
+            final Matcher m2 = P_TRANSLATE2.matcher(transform);
+            if (m2.find()) {
+                x = Double.parseDouble(m2.group(1));
+                y = x; // Single value applies to both x and y
+            }
+        }
+        return new UTranslate(x, y);
+    }
+    
+    /**
+     * Extract scale values from transform string.
+     * Supports both scale(s) and scale(sx, sy) formats.
+     */
+    private double[] getScale(String transform) {
+        final double[] scale = new double[] { 1, 1 };
+        final Matcher m1 = P_SCALE1.matcher(transform);
+        if (m1.find()) {
+            scale[0] = Double.parseDouble(m1.group(1));
+            scale[1] = scale[0]; // Uniform scaling
+        } else {
+            final Matcher m2 = P_SCALE2.matcher(transform);
+            if (m2.find()) {
+                scale[0] = Double.parseDouble(m2.group(1));
+                scale[1] = Double.parseDouble(m2.group(2));
+            }
+        }
+        return scale;
     }
 
     // Lightweight holder for SVG group attributes used during DOM walk

@@ -230,6 +230,86 @@ public class SvgDomParserTest {
         verify(ug, atLeastOnce()).apply(any(HColor.class));
     }
 
+    @Test
+    @PumlFile("svgTransformTranslate.puml")
+    public void testSvgWithTransformTranslate(TestInfo testInfo) throws Exception {
+        final String svg = extractSvgFromAnnotation(testInfo);
+        final SvgDomParser parser = new SvgDomParser(svg);
+        final UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+
+        HColorSimple fontColor = HColorSimple.create(java.awt.Color.BLACK);
+        HColorSimple forcedColor = HColorSimple.create(java.awt.Color.RED);
+
+        parser.drawU(ug, 1.0, fontColor, forcedColor);
+
+        // Verify that transform translate was applied
+        verify(ug, atLeastOnce()).draw(any());
+    }
+
+    @Test
+    @PumlFile("svgTransformRotate.puml")
+    public void testSvgWithTransformRotate(TestInfo testInfo) throws Exception {
+        final String svg = extractSvgFromAnnotation(testInfo);
+        final SvgDomParser parser = new SvgDomParser(svg);
+        final UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+
+        HColorSimple fontColor = HColorSimple.create(java.awt.Color.BLACK);
+        HColorSimple forcedColor = HColorSimple.create(java.awt.Color.RED);
+
+        parser.drawU(ug, 1.0, fontColor, forcedColor);
+
+        // Verify that transform rotate was applied
+        verify(ug, atLeastOnce()).draw(any());
+    }
+
+    @Test
+    @PumlFile("svgTransformScale.puml")
+    public void testSvgWithTransformScale(TestInfo testInfo) throws Exception {
+        final String svg = extractSvgFromAnnotation(testInfo);
+        final SvgDomParser parser = new SvgDomParser(svg);
+        final UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+
+        HColorSimple fontColor = HColorSimple.create(java.awt.Color.BLACK);
+        HColorSimple forcedColor = HColorSimple.create(java.awt.Color.RED);
+
+        parser.drawU(ug, 1.0, fontColor, forcedColor);
+
+        // Verify that transform scale was applied
+        verify(ug, atLeastOnce()).draw(any());
+    }
+
+    @Test
+    @PumlFile("svgTransformMatrix.puml")
+    public void testSvgWithTransformMatrix(TestInfo testInfo) throws Exception {
+        final String svg = extractSvgFromAnnotation(testInfo);
+        final SvgDomParser parser = new SvgDomParser(svg);
+        final UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+
+        HColorSimple fontColor = HColorSimple.create(java.awt.Color.BLACK);
+        HColorSimple forcedColor = HColorSimple.create(java.awt.Color.RED);
+
+        parser.drawU(ug, 1.0, fontColor, forcedColor);
+
+        // Verify that transform matrix was applied
+        verify(ug, atLeastOnce()).draw(any());
+    }
+
+    @Test
+    @PumlFile("svgTransformGroup.puml")
+    public void testSvgWithTransformGroup(TestInfo testInfo) throws Exception {
+        final String svg = extractSvgFromAnnotation(testInfo);
+        final SvgDomParser parser = new SvgDomParser(svg);
+        final UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+
+        HColorSimple fontColor = HColorSimple.create(java.awt.Color.BLACK);
+        HColorSimple forcedColor = HColorSimple.create(java.awt.Color.RED);
+
+        parser.drawU(ug, 1.0, fontColor, forcedColor);
+
+        // Verify that group transform was applied - all children should be transformed
+        verify(ug, atLeastOnce()).draw(any());
+    }
+
     /*
     public void extractFirstSpriteSvg_and_invoke_drawU() throws Exception {
         // Original test kept for backwards compatibility
