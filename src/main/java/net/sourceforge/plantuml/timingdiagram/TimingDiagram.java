@@ -350,6 +350,12 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		return player;
 	}
 
+	public PlayerDigital createPlayerDigital(String code, String full, boolean compact, Stereotype stereotype) {
+		final PlayerDigital player = new PlayerDigital(full, getSkinParam(), ruler, compactByDefault, stereotype);
+		players.put(code, player);
+		return player;
+	}
+
 	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
 		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),
 				label, getSkinParam());
