@@ -126,7 +126,7 @@ class PipeTest {
 		// ok encodeurl
 		l.add(TestCase.of("-encodeurl", "@startuml\na->b\n@enduml", "IzIrIm80\n", Verification.EXACT, false, false));
 		l.add(TestCase.of("-encodeurl", "@startuml\na->b\n@enduml\n@startuml\na->b\nb->c\n@enduml\n",
-				"IzIrIm80\nIzIrI-9AqhLB1W00\n", Verification.EXACT, false, true));
+				"IzIrIm80\nIzIrI-9AqhLB1W00\n", Verification.EXACT, false, false));
 
 		// valid syntax
 		l.add(TestCase.of("-syntax", "@startuml\na->b\n@enduml", "SEQUENCE\n(2 participants)\n", Verification.EXACT,
