@@ -73,27 +73,27 @@ public class LiveBoxesDrawer {
 	private final Stereotype stereotype;
 
 	public LiveBoxesDrawer(Context2D context, Rose skin, ISkinParam skinParam, Map&lt;Double, Double&gt; delays,
-<span class="fc" id="L76">			Stereotype stereotype) {</span>
-<span class="fc" id="L77">		this.stereotype = stereotype;</span>
-<span class="fc" id="L78">		this.cross = skin.createComponent(</span>
+<span class="nc" id="L76">			Stereotype stereotype) {</span>
+<span class="nc" id="L77">		this.stereotype = stereotype;</span>
+<span class="nc" id="L78">		this.cross = skin.createComponent(</span>
 				new Style[] {
-<span class="fc" id="L80">						ComponentType.DESTROY.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()) },</span>
+<span class="nc" id="L80">						ComponentType.DESTROY.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()) },</span>
 				ComponentType.DESTROY, null, skinParam, null);
-<span class="fc" id="L82">		this.compForWidth = skin.createComponent(</span>
-<span class="fc" id="L83">				new Style[] { ComponentType.ACTIVATION_BOX_CLOSE_CLOSE.getStyleSignature()</span>
-<span class="fc" id="L84">						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },</span>
+<span class="nc" id="L82">		this.compForWidth = skin.createComponent(</span>
+<span class="nc" id="L83">				new Style[] { ComponentType.ACTIVATION_BOX_CLOSE_CLOSE.getStyleSignature()</span>
+<span class="nc" id="L84">						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },</span>
 				ComponentType.ACTIVATION_BOX_CLOSE_CLOSE, null, skinParam, null);
-<span class="fc" id="L86">		this.context = context;</span>
-<span class="fc" id="L87">		this.skin = skin;</span>
-<span class="fc" id="L88">		this.skinParam = skinParam;</span>
-<span class="fc" id="L89">		this.delays = new HashSet&lt;&gt;();</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		for (Map.Entry&lt;Double, Double&gt; ent : delays.entrySet())</span>
+<span class="nc" id="L86">		this.context = context;</span>
+<span class="nc" id="L87">		this.skin = skin;</span>
+<span class="nc" id="L88">		this.skinParam = skinParam;</span>
+<span class="nc" id="L89">		this.delays = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Map.Entry&lt;Double, Double&gt; ent : delays.entrySet())</span>
 <span class="nc" id="L91">			this.delays.add(new Segment(ent.getKey(), ent.getKey() + ent.getValue()));</span>
 
-<span class="fc" id="L93">	}</span>
+<span class="nc" id="L93">	}</span>
 
 	public double getWidth(StringBounder stringBounder) {
-<span class="fc" id="L96">		return compForWidth.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L96">		return compForWidth.getPreferredWidth(stringBounder);</span>
 	}
 
 	public void addStart(double y1, Fashion symbolContext, StyleBuilder styleBuilder) {
@@ -121,12 +121,12 @@ public class LiveBoxesDrawer {
 <span class="nc" id="L121">	}</span>
 
 	public void drawDestroyIfNeeded(UGraphic ug, Step step) {
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (step.isDestroy()) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (step.isDestroy()) {</span>
 <span class="nc" id="L125">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
 <span class="nc" id="L126">			cross.drawU(ug.apply(new UTranslate(-dimCross.getWidth() / 2, step.getValue() - dimCross.getHeight() / 2)),</span>
 					null, context);
 		}
-<span class="fc" id="L129">	}</span>
+<span class="nc" id="L129">	}</span>
 
 	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
 <span class="nc" id="L132">		final double width = getWidth(ug.getStringBounder());</span>
