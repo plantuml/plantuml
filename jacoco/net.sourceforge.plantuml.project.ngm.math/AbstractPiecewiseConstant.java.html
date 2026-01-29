@@ -85,46 +85,43 @@ import java.util.Iterator;
  * boundaries during iteration.
  * &lt;/p&gt;
  *
- * @param instant the instant from which to start iterating; the first segment
- *                returned will begin exactly at this instant
- * @return an iterator over successive segments
  */
-<span class="fc" id="L92">public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {</span>
+<span class="fc" id="L89">public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {</span>
 
 	@Override
 	public final Iterator&lt;Segment&gt; iterateSegmentsFrom(final LocalDateTime instant, final TimeDirection direction) {
-<span class="fc" id="L96">		return new Iterator&lt;Segment&gt;() {</span>
+<span class="fc" id="L93">		return new Iterator&lt;Segment&gt;() {</span>
 
 			// Current iteration position.
 			// This represents the start instant of the next segment to be returned.
-<span class="fc" id="L100">			private LocalDateTime current = instant;</span>
+<span class="fc" id="L97">			private LocalDateTime current = instant;</span>
 			
-<span class="fc" id="L102">			private int counter = 9999;</span>
+<span class="fc" id="L99">			private int counter = 9999;</span>
 
 			@Override
 			public Segment next() {
 				// Check counter to detect infinite loops.
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">				if (counter &lt;= 0)</span>
-<span class="nc" id="L108">					throw new IllegalStateException(&quot;Infinite loop detected in PiecewiseConstant iteration&quot;);</span>
-<span class="fc" id="L109">				counter--;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">				if (counter &lt;= 0)</span>
+<span class="nc" id="L105">					throw new IllegalStateException(&quot;Infinite loop detected in PiecewiseConstant iteration&quot;);</span>
+<span class="fc" id="L106">				counter--;</span>
 				
 				// Retrieve the (possibly larger) segment that contains the original instant.
 				// Implementations of segmentAt(...) are expected to return a segment
 				// that fully covers the given instant.
-<span class="fc" id="L114">				final Segment segment = segmentAt(current, direction);</span>
+<span class="fc" id="L111">				final Segment segment = segmentAt(current, direction);</span>
 
 				// Advance the iterator to the end of the returned segment.
 				// The next call to next() will start from this instant.
-<span class="fc" id="L118">				current = segment.endExclusive();</span>
+<span class="fc" id="L115">				current = segment.endExclusive();</span>
 
-<span class="fc" id="L120">				return segment;</span>
+<span class="fc" id="L117">				return segment;</span>
 			}
 
 			@Override
 			public boolean hasNext() {
 				// Piecewise-constant functions are considered unbounded in time.
 				// Iteration therefore never terminates.
-<span class="fc" id="L127">				return true;</span>
+<span class="fc" id="L124">				return true;</span>
 			}
 		};
 	}

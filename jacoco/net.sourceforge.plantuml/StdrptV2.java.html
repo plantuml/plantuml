@@ -38,7 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 	public void finalMessage() {
 <span class="nc" id="L52">	}</span>
 
-	public void finalMessage(ErrorStatus error) {
+	public void finalMessage(ExitStatus error) {
 <span class="fc" id="L55">	}</span>
 
 	public void errorLine(int lineError, File file) {

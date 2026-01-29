@@ -127,11 +127,11 @@ import net.sourceforge.plantuml.utils.Log;
 	public static boolean canFileBeWritten(SFile f) {
 <span class="fc" id="L128">		Log.info(() -&gt; &quot;Creating file: &quot; + f.getAbsolutePath());</span>
 <span class="fc bfc" id="L129" title="All 4 branches covered.">		if (f.exists() &amp;&amp; f.canWrite() == false) {</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.OVERWRITE)) {</span>
-<span class="pc" id="L131">				Log.info(() -&gt; &quot;Overwrite &quot; + f);</span>
-<span class="fc" id="L132">				f.setWritable(true);</span>
-<span class="fc" id="L133">				f.delete();</span>
-<span class="fc" id="L134">				return true;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.OVERWRITE)) {</span>
+<span class="nc" id="L131">				Log.info(() -&gt; &quot;Overwrite &quot; + f);</span>
+<span class="nc" id="L132">				f.setWritable(true);</span>
+<span class="nc" id="L133">				f.delete();</span>
+<span class="nc" id="L134">				return true;</span>
 			}
 <span class="fc" id="L136">			Log.error(&quot;Cannot write to file &quot; + f.getAbsolutePath());</span>
 <span class="fc" id="L137">			return false;</span>

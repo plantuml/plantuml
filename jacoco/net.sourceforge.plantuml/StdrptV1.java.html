@@ -38,7 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
@@ -87,11 +87,11 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L87">		return false;</span>
 	}
 
-	public void finalMessage(ErrorStatus error) {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (error.hasError())</span>
+	public void finalMessage(ExitStatus error) {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (error.hasErrors())</span>
 <span class="fc" id="L92">			Log.error(&quot;Some diagram description contains errors&quot;);</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (error.isEmpty())</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (error.noDiagramFound())</span>
 <span class="nc" id="L95">			Log.error(&quot;No diagram found&quot;);</span>
 
 <span class="fc" id="L97">	}</span>

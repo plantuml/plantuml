@@ -264,9 +264,9 @@ public abstract class PSystemError extends PlainDiagram {
 <span class="pc bpc" id="L264" title="1 of 2 branches missed.">		} else if (min == 15) {</span>
 <span class="nc" id="L265">			udrawable = addMessageLiberapay(udrawable);</span>
 <span class="pc bpc" id="L266" title="3 of 6 branches missed.">		} else if (min == 30 || min == 39 || min == 48) {</span>
-<span class="fc" id="L267">			udrawable = addMessageDedication(udrawable);</span>
+<span class="nc" id="L267">			udrawable = addMessageDedication(udrawable);</span>
 			// ::comment when __CORE__
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
 <span class="nc" id="L270">			udrawable = addMessageArecibo(udrawable);</span>
 			// ::done
 		}
@@ -327,13 +327,13 @@ public abstract class PSystemError extends PlainDiagram {
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
 		// ::comment when __CORE__
-<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
 <span class="nc" id="L331">			return source;</span>
 		// ::done
 
-<span class="fc" id="L334">		final TextBlock message = getMessageDedication();</span>
-<span class="fc" id="L335">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="fc" id="L336">		return result;</span>
+<span class="nc" id="L334">		final TextBlock message = getMessageDedication();</span>
+<span class="nc" id="L335">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L336">		return result;</span>
 	}
 
 	// ::comment when __CORE__
@@ -355,31 +355,31 @@ public abstract class PSystemError extends PlainDiagram {
 	// ::done
 
 	private TextBlock getMessageDedication() {
-<span class="fc" id="L358">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+<span class="nc" id="L358">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
 		// ::comment when __CORE__
-<span class="fc" id="L361">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="fc" id="L362">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, Color.BLACK, backColor.getAwtColor()));</span>
+<span class="nc" id="L361">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L362">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, Color.BLACK, backColor.getAwtColor()));</span>
 		// ::done
-<span class="fc" id="L364">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+<span class="nc" id="L364">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
 
-<span class="fc" id="L367">		final UFont font = UFont.sansSerif(14);</span>
-<span class="fc" id="L368">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="fc" id="L369">		final TextBlock text = TextBlockUtils</span>
-<span class="fc" id="L370">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L367">		final UFont font = UFont.sansSerif(14);</span>
+<span class="nc" id="L368">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L369">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L370">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
 		// ::comment when __CORE__
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (qrcode == null) {</span>
 			// ::done
 <span class="nc" id="L375">			result = text;</span>
 			// ::comment when __CORE__
 		} else {
-<span class="fc" id="L378">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
-<span class="fc" id="L379">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
+<span class="nc" id="L378">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="nc" id="L379">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
 		}
 		// ::done
-<span class="fc" id="L382">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L382">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
@@ -522,11 +522,11 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private BufferedImage smaller(BufferedImage im) {
-<span class="pc bpc" id="L525" title="1 of 2 branches missed.">		if (im == null) {</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">		if (im == null) {</span>
 <span class="nc" id="L526">			return null;</span>
 		}
-<span class="fc" id="L528">		final int nb = 1;</span>
-<span class="fc" id="L529">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+<span class="nc" id="L528">		final int nb = 1;</span>
+<span class="nc" id="L529">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
 }
