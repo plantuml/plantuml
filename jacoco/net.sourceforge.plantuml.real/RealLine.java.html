@@ -82,13 +82,13 @@ import java.util.Set;
 <span class="fc bfc" id="L82" title="All 2 branches covered.">			for (PositiveForce f : forces) {</span>
 				// System.err.println(&quot;force=&quot; + f);
 <span class="fc" id="L84">				final boolean change = f.apply();</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">				if (change) {</span>
-<span class="nc" id="L86">					incCounter(counter, f);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (change) {</span>
+<span class="fc" id="L86">					incCounter(counter, f);</span>
 					// System.err.println(&quot;changed! &quot; + f);
-<span class="nc" id="L88">					done = false;</span>
+<span class="fc" id="L88">					done = false;</span>
 				}
 <span class="fc" id="L90">			}</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (done) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (done) {</span>
 				// System.err.println(&quot;cpt=&quot; + cpt + &quot; size=&quot; + forces.size());
 <span class="fc" id="L93">				CPT += cpt;</span>
 				// System.err.println(&quot;CPT=&quot; + CPT);
@@ -107,12 +107,12 @@ import java.util.Set;
 				// System.err.println(&quot;RealLine::compile min=&quot; + min + &quot; max=&quot; + max);
 <span class="fc" id="L108">				return;</span>
 			}
-<span class="nc" id="L110">			cpt++;</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (cpt &gt; 99999) {</span>
+<span class="fc" id="L110">			cpt++;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (cpt &gt; 99999) {</span>
 <span class="nc" id="L112">				printCounter(counter);</span>
 <span class="nc" id="L113">				throw new IllegalStateException(&quot;Inifinite Loop?&quot;);</span>
 			}
-<span class="nc" id="L115">		} while (true);</span>
+<span class="fc" id="L115">		} while (true);</span>
 
 	}
 
@@ -126,9 +126,9 @@ import java.util.Set;
 <span class="nc" id="L126">	}</span>
 
 	private static void incCounter(Map&lt;PositiveForce, Integer&gt; counter, PositiveForce f) {
-<span class="nc" id="L129">		final Integer v = counter.get(f);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		counter.put(f, v == null ? 1 : v + 1);</span>
-<span class="nc" id="L131">	}</span>
+<span class="fc" id="L129">		final Integer v = counter.get(f);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		counter.put(f, v == null ? 1 : v + 1);</span>
+<span class="fc" id="L131">	}</span>
 
 	Real asMaxAbsolute() {
 <span class="nc" id="L134">		return new MaxAbsolute();</span>

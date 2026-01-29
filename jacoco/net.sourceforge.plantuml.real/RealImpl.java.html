@@ -45,8 +45,8 @@ class RealImpl extends RealMoveable implements RealOrigin {
 <span class="fc" id="L45">	}</span>
 
 	void move(double delta) {
-<span class="nc" id="L48">		this.currentValue += delta;</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L48">		this.currentValue += delta;</span>
+<span class="fc" id="L49">	}</span>
 
 	@Override
 	double getCurrentValueInternal() {
@@ -60,8 +60,8 @@ class RealImpl extends RealMoveable implements RealOrigin {
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="nc" id="L63">		getLine().addForce(new PositiveForce(other, this, 0));</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L63">		getLine().addForce(new PositiveForce(other, this, 0));</span>
+<span class="fc" id="L64">	}</span>
 
 	public void compileNow() {
 <span class="fc" id="L67">		getLine().compile();</span>
