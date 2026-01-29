@@ -166,7 +166,7 @@ class PipeTest {
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// )
 		l.add(TestCase.of("-pipemap", "@startuml\na->b\n@enduml", "\n", Verification.EXACT, false, false));
-		l.add(TestCase.of("-pipemap", "@startuml\na\n@enduml", "\n", Verification.EXACT, false, false));
+		l.add(TestCase.of("-pipemap", "@startuml\na\n@enduml", "\n", Verification.EXACT, true, false));
 
 		return l;
 	}
