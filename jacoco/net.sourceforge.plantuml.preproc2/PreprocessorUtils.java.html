@@ -143,7 +143,7 @@ import net.sourceforge.plantuml.utils.Log;
 		try {
 <span class="nc" id="L144">			final ReadLine tmp = DiagramDetector.extractFromUrl(url, s, suf, charset);</span>
 <span class="nc bnc" id="L145" title="All 2 branches missed.">			if (tmp != null)</span>
-<span class="nc" id="L146">				return null;</span>
+<span class="nc" id="L146">				return tmp;</span>
 
 <span class="nc" id="L148">			return getReaderInclude(url, s, charset);</span>
 <span class="nc" id="L149">		} catch (IOException e) {</span>
