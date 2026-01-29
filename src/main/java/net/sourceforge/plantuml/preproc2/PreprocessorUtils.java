@@ -143,7 +143,7 @@ public class PreprocessorUtils {
 		try {
 			final ReadLine tmp = DiagramDetector.extractFromUrl(url, s, suf, charset);
 			if (tmp != null)
-				return null;
+				return tmp;
 
 			return getReaderInclude(url, s, charset);
 		} catch (IOException e) {
