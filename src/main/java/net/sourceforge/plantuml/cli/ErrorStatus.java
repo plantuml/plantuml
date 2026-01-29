@@ -54,12 +54,16 @@ public class ErrorStatus {
 		return new ErrorStatus();
 	}
 
-	public synchronized void incBlocks(int nb) {
+	public synchronized void incBlocks42(int nb) {
 		nbBlocks += nb;
 	}
 
-	public synchronized void incError() {
+	public synchronized void incError42() {
 		nbErrors++;
+	}
+
+	public synchronized void incError() {
+		// nbErrors++;
 	}
 
 	public synchronized void incOk() {
@@ -70,23 +74,31 @@ public class ErrorStatus {
 		return nbErrors > 0;
 	}
 
-	public synchronized boolean isEmpty() {
-		return nbErrors == 0 && nbOk == 0;
+	public synchronized boolean noDiagramFound() {
+		return nbBlocks == 0;
 	}
 
-	public synchronized int getExitCode() {
-		if (isEmpty())
-			return ERROR_NO_DIAGRAM_FOUND;
+//	public synchronized boolean isEmpty() {
+//		// return nbErrors == 0 && nbOk == 0;
+//		return nbBlocks == 0;
+//	}
 
-		if (hasError())
+	public synchronized int getExitCode() {
+		if (nbErrors > 0)
 			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;
+
+		if (nbBlocks == 0)
+			return ERROR_NO_FILE_FOUND;
+
+		if (nbOk == 0 && nbErrors == 0)
+			return ERROR_NO_DIAGRAM_FOUND;
 
 		return 0;
 	}
 
-	@Override
-	public String toString() {
-		return "nbErrors=" + nbErrors + " nbOk=" + nbOk;
-	}
+//	@Override
+//	public String toString() {
+//		return "nbErrors=" + nbErrors + " nbOk=" + nbOk;
+//	}
 
 }

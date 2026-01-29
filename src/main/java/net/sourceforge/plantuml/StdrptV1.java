@@ -91,7 +91,7 @@ public class StdrptV1 implements Stdrpt {
 		if (error.hasError())
 			Log.error("Some diagram description contains errors");
 
-		if (error.isEmpty())
+		if (error.noDiagramFound())
 			Log.error("No diagram found");
 
 	}

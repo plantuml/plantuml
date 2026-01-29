@@ -180,8 +180,9 @@ public class Run {
 
 			if (option.isTrue(CliFlag.PIPE) || option.isTrue(CliFlag.PIPEMAP) || option.isTrue(CliFlag.SYNTAX)) {
 				new Pipe(option, System.out, System.in, charset).managePipe(errorStatus);
-				if (errorStatus.hasError())
-					Exit.exit(errorStatus.getExitCode());
+				final int exitCode = errorStatus.getExitCode();
+				if (exitCode != 0)
+					Exit.exit(exitCode);
 				return;
 			}
 
@@ -236,11 +237,12 @@ public class Run {
 			}
 		}
 
-		if (option != null && (errorStatus.hasError() || errorStatus.isEmpty()))
+		if (option != null)
 			option.getStdrpt().finalMessage(errorStatus);
 
-		if (errorStatus.hasError())
-			Exit.exit(errorStatus.getExitCode());
+		final int exitCode = errorStatus.getExitCode();
+		if (exitCode != 0)
+			Exit.exit(exitCode);
 	}
 
 	private final CliOptions option;
@@ -280,8 +282,9 @@ public class Run {
 			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);
 			if (sourceFileReader.hasError()) {
 				hasError.set(true);
-				errorStatus.incError();
-			}
+				errorStatus.incError42();
+			} else
+				errorStatus.incOk();
 		});
 
 		return hasError.get();

@@ -47,9 +47,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -264,6 +266,16 @@ public class SourceStringReader {
 
 	public final List<BlockUml> getBlocks() {
 		return Collections.unmodifiableList(blocks);
+	}
+
+	public void updateStatus(ErrorStatus errorStatus) {
+		errorStatus.incBlocks42(getBlocks().size());
+		for (BlockUml blockUml : getBlocks()) {
+			final Diagram system = blockUml.getDiagram();
+			if (system instanceof PSystemError)
+				errorStatus.incError42();
+		}
+		
 	}
 
 }

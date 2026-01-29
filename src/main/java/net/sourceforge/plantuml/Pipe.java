@@ -89,6 +89,8 @@ public class Pipe {
 			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,
 					option.getConfig(), newCurrentDir);
 
+			sourceStringReader.updateStatus(error);
+
 			if (option.isTrue(CliFlag.COMPUTE_URL))
 				computeUrlForDiagram(sourceStringReader);
 			else if (option.isTrue(CliFlag.SYNTAX))

@@ -106,10 +106,13 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	@Override
 	final public void updateStatus(ErrorStatus errorStatus) {
-		errorStatus.incBlocks(builder.getBlockUmls().size());
+		errorStatus.incBlocks42(builder.getBlockUmls().size());
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final Diagram system = blockUml.getDiagram();
+			if (system instanceof PSystemError)
+				errorStatus.incError42();
 		}
+
 	}
 
 	protected final FileFormatOption getFileFormatOption() {

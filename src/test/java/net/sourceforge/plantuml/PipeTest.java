@@ -59,7 +59,7 @@ class PipeTest {
 		pipe.managePipe(errorStatus);
 
 		assertFalse(errorStatus.hasError());
-		assertTrue(errorStatus.isEmpty());
+		assertTrue(errorStatus.noDiagramFound());
 		assertEquals(0, baos.toByteArray().length);
 	}
 
@@ -181,7 +181,7 @@ class PipeTest {
 		pipe.managePipe(errorStatus);
 
 		assertEquals(testCase.isExpectedHasErrors(), errorStatus.hasError());
-		assertEquals(testCase.isExpectedIsNoData(), errorStatus.isEmpty());
+		assertEquals(testCase.isExpectedIsNoData(), errorStatus.noDiagramFound());
 		testCase.getExpectedOutVerification().assertOk(baos, testCase.getExpectedOut());
 	}
 
