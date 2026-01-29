@@ -24,7 +24,10 @@ class RunFlagPipemapTest extends AbstractCliTest {
 	@StdIo({ "foo" })
 	@Test
 	void test2(StdOut out) throws Exception {
-		Run.main(new String[] { "-pipemap" });
+		assertExit(200, () -> {
+			Run.main(new String[] { "-pipemap" });
+		});
+
 		assertFalse(out.capturedString().contains("<map id=\"plantuml_map\" name=\"plantuml_map\">"));
 
 	}
