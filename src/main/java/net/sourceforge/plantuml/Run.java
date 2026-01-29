@@ -220,9 +220,10 @@ public class Run {
 
 			incTotal(runner.size());
 
-			if (option.isTrue(CliFlag.COMPUTE_URL))
+			if (option.isTrue(CliFlag.COMPUTE_URL)) {
 				runner.computeUrl();
-			else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError())
+				return;
+			} else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError())
 				errorStatus.incError();
 			else
 				runner.processInputsInParallel();
