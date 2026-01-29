@@ -52,7 +52,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -80,7 +80,7 @@ public class Pipe {
 		this.stdrpt = option.getStdrpt();
 	}
 
-	public void managePipe(ErrorStatus error) throws IOException {
+	public void managePipe(ExitStatus exitStatus) throws IOException {
 		final boolean noStdErr = option.isTrue(CliFlag.PIPENOSTDERR);
 
 		for (String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {
@@ -89,30 +89,30 @@ public class Pipe {
 			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,
 					option.getConfig(), newCurrentDir);
 
+			sourceStringReader.updateStatus(exitStatus);
+
 			if (option.isTrue(CliFlag.COMPUTE_URL))
 				computeUrlForDiagram(sourceStringReader);
 			else if (option.isTrue(CliFlag.SYNTAX))
-				syntaxCheckDiagram(sourceStringReader, error);
+				syntaxCheckDiagram(sourceStringReader, exitStatus);
 			else if (option.isTrue(CliFlag.PIPEMAP))
-				createPipeMapForDiagram(sourceStringReader, error);
+				createPipeMapForDiagram(sourceStringReader, exitStatus);
 			else
-				generateDiagram(sourceStringReader, error, noStdErr);
+				generateDiagram(sourceStringReader, exitStatus, noStdErr);
 
 			ps.flush();
 		}
 	}
 
-	private void generateDiagram(SourceStringReader sourceStringReader, ErrorStatus error, boolean noStdErr)
+	private void generateDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus, boolean noStdErr)
 			throws IOException {
 		final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
 		final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),
 				option.getFileFormatOption());
 
 		printInfo(noStdErr ? ps : System.err, sourceStringReader);
-		if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
-			error.incError();
-		} else {
-			error.incOk();
+		if (result == null || "(error)".equalsIgnoreCase(result.getDescription()) == false) {
+			exitStatus.goesHasSuccess();
 			if (noStdErr) {
 				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
 				baos.close();
@@ -124,12 +124,12 @@ public class Pipe {
 
 	}
 
-	private void createPipeMapForDiagram(SourceStringReader sourceStringReader, ErrorStatus error) throws IOException {
+	private void createPipeMapForDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus) throws IOException {
 		final String result = sourceStringReader.getCMapData(option.getImageIndex(),
 				new FileFormatOption(FileFormat.PNG));
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// We don't check errors
-		error.incOk();
+		exitStatus.goesHasSuccess();
 		if (result == null) {
 //			final CMapData empty = new CMapData();
 //			ps.println(empty.asString("plantuml"));
@@ -145,17 +145,17 @@ public class Pipe {
 
 	}
 
-	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ErrorStatus error) {
+	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus) {
 		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
 		if (system instanceof UmlDiagram) {
-			error.incOk();
+			exitStatus.goesHasSuccess();
 			ps.println(((UmlDiagram) system).getUmlDiagramType().name());
 			ps.println(system.getDescription());
 		} else if (system instanceof PSystemError) {
-			error.incError();
+			exitStatus.goesHasErrors();
 			stdrpt.printInfo(ps, system);
 		} else {
-			error.incOk();
+			exitStatus.goesHasSuccess();
 			ps.println("OTHER");
 			ps.println(system.getDescription());
 		}

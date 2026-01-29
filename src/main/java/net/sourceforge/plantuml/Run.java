@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.cli.CliParsingException;
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.cli.Exit;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
@@ -119,7 +119,7 @@ public class Run {
 		else
 			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
-		final ErrorStatus errorStatus = ErrorStatus.init();
+		final ExitStatus exit = ExitStatus.init();
 		CliOptions option = null;
 
 		try {
@@ -179,9 +179,8 @@ public class Run {
 			}
 
 			if (option.isTrue(CliFlag.PIPE) || option.isTrue(CliFlag.PIPEMAP) || option.isTrue(CliFlag.SYNTAX)) {
-				new Pipe(option, System.out, System.in, charset).managePipe(errorStatus);
-				if (errorStatus.hasError())
-					Exit.exit(errorStatus.getExitCode());
+				new Pipe(option, System.out, System.in, charset).managePipe(exit);
+				exit.eventuallyExit();
 				return;
 			}
 
@@ -210,20 +209,21 @@ public class Run {
 			if (option.isTrue(CliFlag.SPLASH))
 				Splash.createSplash();
 
-			final Run runner = new Run(option, errorStatus, charset);
+			final Run runner = new Run(option, exit, charset);
 
 			if (runner.size() == 0) {
 				Log.error("No file found");
-				Exit.exit(ErrorStatus.ERROR_NO_FILE_FOUND);
+				Exit.exit(ExitStatus.ERROR_NO_FILE_FOUND);
 			}
 
 			incTotal(runner.size());
 
-			if (option.isTrue(CliFlag.COMPUTE_URL))
+			if (option.isTrue(CliFlag.COMPUTE_URL)) {
 				runner.computeUrl();
-			else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError())
-				errorStatus.incError();
-			else
+				return;
+			} else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError()) {
+				// There are some errors, we won't do processInputsInParallel()
+			} else
 				runner.processInputsInParallel();
 
 		} catch (CliParsingException e) {
@@ -236,21 +236,21 @@ public class Run {
 			}
 		}
 
-		if (option != null && (errorStatus.hasError() || errorStatus.isEmpty()))
-			option.getStdrpt().finalMessage(errorStatus);
+		if (option != null)
+			option.getStdrpt().finalMessage(exit);
 
-		if (errorStatus.hasError())
-			Exit.exit(errorStatus.getExitCode());
+		exit.eventuallyExit();
+
 	}
 
 	private final CliOptions option;
-	private final ErrorStatus errorStatus;
+	private final ExitStatus exitStatus;
 	private final String charset;
 	private final List<File> files = new ArrayList<>();
 
-	public Run(CliOptions option, ErrorStatus errorStatus, String charset) {
+	public Run(CliOptions option, ExitStatus exitStatus, String charset) {
 		this.option = option;
-		this.errorStatus = errorStatus;
+		this.exitStatus = exitStatus;
 		this.charset = charset;
 
 		for (String s : option.getRemainingArgs()) {
@@ -280,8 +280,9 @@ public class Run {
 			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);
 			if (sourceFileReader.hasError()) {
 				hasError.set(true);
-				errorStatus.incError();
-			}
+				exitStatus.goesHasErrors();
+			} else
+				exitStatus.goesHasSuccess();
 		});
 
 		return hasError.get();
@@ -306,11 +307,11 @@ public class Run {
 				lockFile = dir.file("javaumllock.tmp");
 			}
 			processInParallel(file -> {
-				if (errorStatus.hasError() && option.isFailfastOrFailfast2())
+				if (exitStatus.hasErrors() && option.isFailfastOrFailfast2())
 					return;
 
 				manageFileInternal(file);
-				incDone(errorStatus.hasError());
+				incDone(exitStatus.hasErrors());
 			});
 		} finally {
 			if (lockFile != null)
@@ -338,11 +339,10 @@ public class Run {
 	private void manageFileInternal(File f) throws IOException, InterruptedException {
 		Log.info(() -> "Working on " + f.getPath());
 		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
+		sourceFileReader.updateStatus(exitStatus);
 
-		if (sourceFileReader.hasError())
-			errorStatus.incError();
-		else
-			errorStatus.incOk();
+		if (sourceFileReader.hasError() == false)
+			exitStatus.goesHasSuccess();
 
 		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return;
@@ -367,11 +367,10 @@ public class Run {
 				final int lineError = image.lineErrorRaw();
 				if (lineError != -1) {
 					rpt.errorLine(lineError, f);
-					errorStatus.incError();
 					return;
 				}
 			}
-			errorStatus.incOk();
+			exitStatus.goesHasSuccess();
 		}
 	}
 

@@ -19,7 +19,7 @@ import net.sourceforge.plantuml.Pipe;
 import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 /**
@@ -53,7 +53,7 @@ class EaterTest {
         final ByteArrayInputStream bais = new ByteArrayInputStream(diagram.getBytes(UTF_8));
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Pipe pipe = new Pipe(option, new PrintStream(baos), bais, option.getString(CliFlag.CHARSET));
-        pipe.managePipe(ErrorStatus.init());
+        pipe.managePipe(ExitStatus.init());
         String rendered = new String(baos.toByteArray(), UTF_8);
         // System.err.println(rendered);
         return rendered;

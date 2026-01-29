@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
@@ -101,6 +102,17 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		this.fileFormatOption = fileFormatOption;
 		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
 				SFile.fromFile(file.getAbsoluteFile().getParentFile()), file.getName());
+	}
+
+	@Override
+	final public void updateStatus(ExitStatus errorStatus) {
+		for (BlockUml blockUml : builder.getBlockUmls()) {
+			errorStatus.goesHasBlocks();
+			final Diagram system = blockUml.getDiagram();
+			if (system instanceof PSystemError)
+				errorStatus.goesHasErrors();
+		}
+
 	}
 
 	protected final FileFormatOption getFileFormatOption() {

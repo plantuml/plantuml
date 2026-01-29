@@ -38,7 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.core.Diagram;
 
 public interface Stdrpt {
@@ -47,7 +47,7 @@ public interface Stdrpt {
 
 	public void printInfo(PrintStream output, Diagram sys);
 
-	public void finalMessage(ErrorStatus error);
+	public void finalMessage(ExitStatus error);
 
 	public void errorLine(int lineError, File file);
 
