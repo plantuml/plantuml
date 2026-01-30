@@ -269,6 +269,7 @@ public class SourceStringReader {
 	}
 
 	public void updateStatus(ExitStatus exitStatus) {
+		exitStatus.goesHasFiles();
 		for (BlockUml blockUml : getBlocks()) {
 			exitStatus.goesHasBlocks();
 			final Diagram system = blockUml.getDiagram();

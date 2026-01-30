@@ -213,7 +213,7 @@ public class Run {
 
 			if (runner.size() == 0) {
 				Log.error("No file found");
-				Exit.exit(ExitStatus.ERROR_NO_FILE_FOUND);
+				Exit.exit(ExitStatus.ERROR_50_NO_FILE_FOUND);
 			}
 
 			incTotal(runner.size());
@@ -278,11 +278,11 @@ public class Run {
 			if (hasError.get())
 				return;
 			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);
+			exitStatus.goesHasFiles();
 			if (sourceFileReader.hasError()) {
 				hasError.set(true);
 				exitStatus.goesHasErrors();
-			} else
-				exitStatus.goesHasSuccess();
+			}
 		});
 
 		return hasError.get();
@@ -307,6 +307,7 @@ public class Run {
 				lockFile = dir.file("javaumllock.tmp");
 			}
 			processInParallel(file -> {
+				exitStatus.goesHasFiles();
 				if (exitStatus.hasErrors() && option.isFailfastOrFailfast2())
 					return;
 
@@ -341,9 +342,6 @@ public class Run {
 		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
 		sourceFileReader.updateStatus(exitStatus);
 
-		if (sourceFileReader.hasError() == false)
-			exitStatus.goesHasSuccess();
-
 		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return;
 
@@ -362,7 +360,7 @@ public class Run {
 		for (BlockUml s : sourceFileReader.getBlocks())
 			rpt.printInfo(System.err, s.getDiagram());
 
-		if (result.size() != 0) {
+		if (result.size() != 0)
 			for (GeneratedImage image : result) {
 				final int lineError = image.lineErrorRaw();
 				if (lineError != -1) {
@@ -370,8 +368,6 @@ public class Run {
 					return;
 				}
 			}
-			exitStatus.goesHasSuccess();
-		}
 	}
 
 	private static void runGui(final CliOptions option) {

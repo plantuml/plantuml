@@ -15,7 +15,7 @@ class RunFlagThemeTest extends AbstractCliTest {
 	void testThemeFoo() throws Exception {
 		aliceBob_hello(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-svg", "-theme", "foo", tempDir.toAbsolutePath().toString() });
 		});
 

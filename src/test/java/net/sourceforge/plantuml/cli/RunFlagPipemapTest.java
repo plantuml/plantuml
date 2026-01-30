@@ -24,7 +24,7 @@ class RunFlagPipemapTest extends AbstractCliTest {
 	@StdIo({ "foo" })
 	@Test
 	void test2(StdOut out) throws Exception {
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-pipemap" });
 		});
 

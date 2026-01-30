@@ -39,7 +39,7 @@ class RunFlagPipeTest extends AbstractCliTest {
 	@StdIo({ "foo" })
 	@Test
 	void test3(StdOut out, StdErr err) throws Exception {
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-pipe", "-svg" });
 		});
 		assertLineSplitContains(err.capturedString(), "ERROR", "1", "Syntax Error?");

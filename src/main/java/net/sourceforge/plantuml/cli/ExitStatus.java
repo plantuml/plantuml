@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.cli;
 public class ExitStatus {
 
 	public static final int OK = 0;
-	public static final int ERROR_NO_FILE_FOUND = 50;
-	public static final int ERROR_NO_DIAGRAM_FOUND = 100;
-	public static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
+	public static final int ERROR_50_NO_FILE_FOUND = 50;
+	public static final int ERROR_100_NO_DIAGRAM_FOUND = 100;
+	public static final int ERROR_200_SOME_DIAGRAMS_HAVE_ERROR = 200;
 
 	private static String formatExitCode(int code, String description) {
 		return String.format("  %-4d %s", code, description);
@@ -49,16 +49,16 @@ public class ExitStatus {
 	public static void printExitCodes() {
 		final String[] all = {
 			formatExitCode(OK, "Success"),
-			formatExitCode(ERROR_NO_FILE_FOUND, "No file found"),
-			formatExitCode(ERROR_NO_DIAGRAM_FOUND, "No diagram found in file(s)"),
-			formatExitCode(ERROR_SOME_DIAGRAMS_HAVE_ERROR, "Some diagrams have syntax errors")
+			formatExitCode(ERROR_50_NO_FILE_FOUND, "No file found"),
+			formatExitCode(ERROR_100_NO_DIAGRAM_FOUND, "No diagram found in file(s)"),
+			formatExitCode(ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, "Some diagrams have syntax errors")
 		};
 		for (String line : all)
 			System.out.println(line);
 	}
 
+	private volatile boolean hasFiles;
 	private volatile boolean hasErrors;
-	private volatile boolean hasSuccess;
 	private volatile boolean hasBlocks;
 
 	private ExitStatus() {
@@ -68,16 +68,16 @@ public class ExitStatus {
 		return new ExitStatus();
 	}
 
+	public void goesHasFiles() {
+		hasFiles = true;
+	}
+
 	public void goesHasBlocks() {
 		hasBlocks = true;
 	}
 
 	public void goesHasErrors() {
 		hasErrors = true;
-	}
-
-	public void goesHasSuccess() {
-		hasSuccess = true;
 	}
 
 	public boolean hasErrors() {
@@ -90,13 +90,13 @@ public class ExitStatus {
 
 	private int getExitCode() {
 		if (hasErrors)
-			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;
+			return ERROR_200_SOME_DIAGRAMS_HAVE_ERROR;
+
+		if (hasFiles == false)
+			return ERROR_50_NO_FILE_FOUND;
 
 		if (hasBlocks == false)
-			return ERROR_NO_FILE_FOUND;
-
-		if (hasSuccess == false)
-			return ERROR_NO_DIAGRAM_FOUND;
+			return ERROR_100_NO_DIAGRAM_FOUND;
 
 		return OK;
 	}

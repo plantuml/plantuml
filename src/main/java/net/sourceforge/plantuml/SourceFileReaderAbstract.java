@@ -106,6 +106,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	@Override
 	final public void updateStatus(ExitStatus errorStatus) {
+		errorStatus.goesHasFiles();
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			errorStatus.goesHasBlocks();
 			final Diagram system = blockUml.getDiagram();
