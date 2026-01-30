@@ -64,12 +64,12 @@ public class InstructionFork extends WithNote implements Instruction {
 	private final List<InstructionList> forks = new ArrayList<>();
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
-	private final ISkinParam skinParam;
 	private final Swimlane swimlaneIn;
 	private Swimlane swimlaneOut;
 	private ForkStyle style = ForkStyle.FORK;
 	private String label;
 	boolean finished = false;
+	private final Colors colors;
 
 	@Override
 	public boolean containsBreak() {
@@ -80,10 +80,10 @@ public class InstructionFork extends WithNote implements Instruction {
 		return false;
 	}
 
-	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam, Swimlane swimlane) {
+	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane, Colors colors) {
 		this.parent = parent;
+		this.colors = colors;
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
-		this.skinParam = skinParam;
 		this.swimlaneIn = swimlane;
 		this.swimlaneOut = swimlane;
 		this.forks.add(InstructionList.empty());
@@ -125,7 +125,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		for (InstructionList list : forks)
 			all.add(list.createFtile(factory));
 
-		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut);
+		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut, colors);
 		if (getPositionedNotes().size() > 0)
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);
 
@@ -152,7 +152,8 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		if (finished)
 			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);
 

@@ -101,8 +101,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.swimlane = swimlane;
 		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();
-		this.thens.add(new Branch(currentStyleBuilder, swimlane, whenThen, labelTest, color, LinkRendering.none(),
-				stereotype, skinParam.getIHtmlColorSet()));
+		this.thens.add(new Branch(swimlane, whenThen, labelTest, color, LinkRendering.none(), stereotype));
 		this.current = this.thens.get(0);
 	}
 
@@ -141,8 +140,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branch.updateFtile(factory);
 
 		if (elseBranch == null)
-			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(), Display.NULL, null,
-					LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());
+			this.elseBranch = new Branch(swimlane, LinkRendering.none(), Display.NULL, null, LinkRendering.none(),
+					stereotype);
 
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,
@@ -165,15 +164,14 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return parent;
 	}
 
-	public boolean swithToElse2(LinkRendering whenElse, LinkRendering nextLinkRenderer) {
-		this.current.setSpecial(nextLinkRenderer);
+	public boolean switchToElse2(LinkRendering whenElse, LinkRendering nextLinkRenderer) {
+		this.current.setSpecial(nextLinkRenderer, null);
 
 		if (elseBranch != null)
 			return false;
 
 		this.current.setInlinkRendering(nextLinkRenderer);
-		this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenElse, Display.NULL, null,
-				LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());
+		this.elseBranch = new Branch(swimlane, whenElse, Display.NULL, null, LinkRendering.none(), stereotype);
 		this.current = elseBranch;
 		return true;
 	}
@@ -183,21 +181,20 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		if (elseBranch != null)
 			return false;
 
-		this.current.setSpecial(nextLinkRenderer);
-		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, test, color, inlabel,
-				stereotype, skinParam.getIHtmlColorSet());
+		this.current.setSpecial(nextLinkRenderer, null);
+		this.current = new Branch(swimlane, whenThen, test, color, inlabel, stereotype);
 		this.thens.add(current);
 		return true;
 
 	}
 
-	public void endif(LinkRendering nextLinkRenderer) {
+	public void endif(LinkRendering nextLinkRenderer, Colors colors) {
 		endifCalled = true;
 		if (elseBranch == null)
-			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
-					Display.NULL, null, LinkRendering.none(), stereotype, skinParam.getIHtmlColorSet());
+			this.elseBranch = new Branch(swimlane, LinkRendering.none(), Display.NULL, null, LinkRendering.none(),
+					stereotype);
 
-		this.elseBranch.setSpecial(nextLinkRenderer);
+		this.elseBranch.setSpecial(nextLinkRenderer, colors);
 		this.current.setInlinkRendering(nextLinkRenderer);
 	}
 

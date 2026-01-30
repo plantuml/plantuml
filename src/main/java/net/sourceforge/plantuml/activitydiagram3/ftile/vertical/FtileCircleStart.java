@@ -55,10 +55,10 @@ public class FtileCircleStart extends AbstractFtile {
 	private final CircleStart circle;
 	private final Swimlane swimlane;
 
-	public FtileCircleStart(ISkinParam skinParam, Swimlane swimlane, Style style) {
+	public FtileCircleStart(ISkinParam skinParam, Swimlane swimlane, Style style, Colors colors) {
 		super(skinParam);
 		this.swimlane = swimlane;
-		this.circle = new CircleStart(skinParam, style, Colors.empty());
+		this.circle = new CircleStart(skinParam, style, colors);
 	}
 
 	@Override

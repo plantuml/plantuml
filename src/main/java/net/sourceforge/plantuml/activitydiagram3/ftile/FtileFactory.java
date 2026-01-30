@@ -61,11 +61,11 @@ public interface FtileFactory {
 
 	public ISkinParam skinParam();
 
-	public Ftile start(Swimlane swimlane);
+	public Ftile start(Swimlane swimlane, Colors colors);
 
-	public Ftile stop(Swimlane swimlane);
+	public Ftile stop(Swimlane swimlane, Colors colors);
 
-	public Ftile end(Swimlane swimlane);
+	public Ftile end(Swimlane swimlane, Colors colors);
 
 	public Ftile spot(Swimlane swimlane, String spot, HColor color);
 
@@ -97,9 +97,10 @@ public interface FtileFactory {
 			StyleBuilder currentStyleBuilder);
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest);
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors);
 
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out,
+			Colors colors);
 
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style);

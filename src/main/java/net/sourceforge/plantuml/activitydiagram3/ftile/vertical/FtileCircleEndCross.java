@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -70,14 +71,13 @@ public class FtileCircleEndCross extends AbstractFtile {
 		return Collections.emptyList();
 	}
 
-	public FtileCircleEndCross(ISkinParam skinParam, Swimlane swimlane, Style style) {
+	public FtileCircleEndCross(ISkinParam skinParam, Swimlane swimlane, Style style, Colors colors) {
 		super(skinParam);
 		this.swimlane = swimlane;
 		this.style = style;
 		this.shadowing = style.getShadowing();
-		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-		this.lineColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-
+		this.backColor = colors.getColor(style, PName.BackGroundColor, skinParam.getIHtmlColorSet());
+		this.lineColor = colors.getColor(style, PName.LineColor, skinParam.getIHtmlColorSet());
 	}
 
 	public Set<Swimlane> getSwimlanes() {

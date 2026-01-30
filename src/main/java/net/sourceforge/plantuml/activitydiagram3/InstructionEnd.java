@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileCircleStart;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -51,9 +52,11 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public class InstructionEnd extends MonoSwimable implements Instruction {
 
 	private final LinkRendering inlinkRendering;
+	private final Colors colors;
 
-	public InstructionEnd(Swimlane swimlane, LinkRendering inlinkRendering) {
+	public InstructionEnd(Colors colors, Swimlane swimlane, LinkRendering inlinkRendering) {
 		super(swimlane);
+		this.colors = colors;
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 	}
 
@@ -66,7 +69,7 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-		Ftile result = factory.end(getSwimlaneIn());
+		Ftile result = factory.end(getSwimlaneIn(), colors);
 		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);
 		return result;
 	}

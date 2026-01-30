@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -64,12 +65,14 @@ public class FtileBlackBlock extends AbstractFtile {
 
 	private double width;
 	private double height;
+	private final Colors colors;
 	private TextBlock label = TextBlockUtils.empty(0, 0);
 
 	private final Swimlane swimlane;
 
-	public FtileBlackBlock(ISkinParam skinParam, Swimlane swimlane) {
+	public FtileBlackBlock(ISkinParam skinParam, Swimlane swimlane, Colors colors) {
 		super(skinParam);
+		this.colors = colors;
 		this.swimlane = swimlane;
 	}
 
@@ -101,7 +104,8 @@ public class FtileBlackBlock extends AbstractFtile {
 		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final double shadowing = style.getShadowing();
 		rect.setDeltaShadow(shadowing);
-		final HColor colorBar = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		final HColor colorBar = colors == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
+				: colors.getColor(style, PName.BackGroundColor, getIHtmlColorSet());
 
 		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);
 		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());

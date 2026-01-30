@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -63,8 +64,8 @@ import net.sourceforge.plantuml.style.Style;
 
 public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
-	public ParallelBuilderMerge(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {
-		super(skinParam, stringBounder, all);
+	public ParallelBuilderMerge(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all, Colors colors) {
+		super(skinParam, stringBounder, all, colors);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		Ftile result = inner;
 		final List<Connection> conns = new ArrayList<>();
 
-		final Ftile black = new FtileBlackBlock(skinParam(), list99.get(0).getSwimlaneIn());
+		final Ftile black = new FtileBlackBlock(skinParam(), list99.get(0).getSwimlaneIn(), colors);
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
