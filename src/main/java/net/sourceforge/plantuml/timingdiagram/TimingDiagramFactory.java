@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandClock;
 import net.sourceforge.plantuml.timingdiagram.command.CommandConstraint;
 import net.sourceforge.plantuml.timingdiagram.command.CommandDefineStateLong;
 import net.sourceforge.plantuml.timingdiagram.command.CommandDefineStateShort;
+import net.sourceforge.plantuml.timingdiagram.command.CommandDigital;
 import net.sourceforge.plantuml.timingdiagram.command.CommandHideTimeAxis;
 import net.sourceforge.plantuml.timingdiagram.command.CommandHighlight;
 import net.sourceforge.plantuml.timingdiagram.command.CommandModeCompact;
@@ -84,6 +85,7 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandClock());
 		cmds.add(new CommandAnalog());
 		cmds.add(new CommandBinary());
+		cmds.add(new CommandDigital());
 		cmds.add(new CommandDefineStateShort());
 		cmds.add(new CommandDefineStateLong());
 		cmds.add(new CommandChangeStateByPlayerCode());
