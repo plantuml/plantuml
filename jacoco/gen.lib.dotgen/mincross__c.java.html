@@ -246,10 +246,10 @@ try {
     int r;
     
 <span class="fc" id="L248">    GD_nlist(g, GD_comp(g).list.get_(c));</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">    if (c &gt; 0) {</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="nc" id="L251">	    GD_rank(g).get__(r).v = GD_rank(g).get__(r).v.plus_(GD_rank(g).get__(r).n);</span>
-<span class="nc" id="L252">	    GD_rank(g).get__(r).n = 0;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">    if (c &gt; 0) {</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L251">	    GD_rank(g).get__(r).v = GD_rank(g).get__(r).v.plus_(GD_rank(g).get__(r).n);</span>
+<span class="fc" id="L252">	    GD_rank(g).get__(r).n = 0;</span>
 	}
     }
 } finally {
@@ -703,27 +703,27 @@ try {
     int c;
     ST_Agnode_s u, v;
     
-<span class="pc bpc" id="L706" title="1 of 2 branches missed.">    if (GD_comp(g).size &lt;= 1)</span>
+<span class="fc bfc" id="L706" title="All 2 branches covered.">    if (GD_comp(g).size &lt;= 1)</span>
 <span class="fc" id="L707">	return;</span>
-<span class="nc" id="L708">    u = null;</span>
-<span class="nc bnc" id="L709" title="All 2 branches missed.">    for (c = 0; c &lt; GD_comp(g).size; c++) {</span>
-<span class="nc" id="L710">    v = (ST_Agnode_s) GD_comp(g).list.get_(c);</span>
-<span class="nc bnc" id="L711" title="All 2 branches missed.">	if (u!=null)</span>
-<span class="nc" id="L712">	    ND_next(u, v);</span>
-<span class="nc" id="L713">	ND_prev(v, u);</span>
-<span class="nc bnc" id="L714" title="All 2 branches missed.">	while (ND_next(v)!=null) {</span>
-<span class="nc" id="L715">	    v = ND_next(v);</span>
+<span class="fc" id="L708">    u = null;</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">    for (c = 0; c &lt; GD_comp(g).size; c++) {</span>
+<span class="fc" id="L710">    v = (ST_Agnode_s) GD_comp(g).list.get_(c);</span>
+<span class="fc bfc" id="L711" title="All 2 branches covered.">	if (u!=null)</span>
+<span class="fc" id="L712">	    ND_next(u, v);</span>
+<span class="fc" id="L713">	ND_prev(v, u);</span>
+<span class="fc bfc" id="L714" title="All 2 branches covered.">	while (ND_next(v)!=null) {</span>
+<span class="fc" id="L715">	    v = ND_next(v);</span>
 	}
-<span class="nc" id="L717">	u = v;</span>
+<span class="fc" id="L717">	u = v;</span>
     }
-<span class="nc" id="L719">    GD_comp(g).size = 1;</span>
-<span class="nc" id="L720">    GD_nlist(g, GD_comp(g).list.get_(0));</span>
-<span class="nc" id="L721">    GD_minrank(g, zz.GlobalMinRank);</span>
-<span class="nc" id="L722">    GD_maxrank(g, zz.GlobalMaxRank);</span>
+<span class="fc" id="L719">    GD_comp(g).size = 1;</span>
+<span class="fc" id="L720">    GD_nlist(g, GD_comp(g).list.get_(0));</span>
+<span class="fc" id="L721">    GD_minrank(g, zz.GlobalMinRank);</span>
+<span class="fc" id="L722">    GD_maxrank(g, zz.GlobalMaxRank);</span>
 } finally {
 <span class="fc" id="L724">LEAVING(&quot;6d08fwi4dsk6ikk5d0gy6rq2h&quot;,&quot;merge_components&quot;);</span>
 }
-<span class="nc" id="L726">}</span>
+<span class="fc" id="L726">}</span>
 
 
 
@@ -824,8 +824,8 @@ try {
 <span class="fc" id="L824">    rv = null;</span>
 <span class="pc bpc" id="L825" title="1 of 2 branches missed.">assert(v!=null);</span>
 <span class="fc bfc" id="L826" title="All 2 branches covered.">    if (dir &lt; 0) {</span>
-<span class="pc bpc" id="L827" title="1 of 2 branches missed.">	if (ND_order(v) &gt; 0)</span>
-<span class="nc" id="L828">	    rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) - 1);</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">	if (ND_order(v) &gt; 0)</span>
+<span class="fc" id="L828">	    rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) - 1);</span>
     } else
 <span class="fc" id="L830">	rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) + 1);</span>
 <span class="pc bpc" id="L831" title="1 of 4 branches missed.">assert((rv == null) || (ND_order(rv)-ND_order(v))*dir &gt; 0);</span>
@@ -843,7 +843,7 @@ try {
 public static boolean is_a_normal_node_of(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
 <span class="fc" id="L844">ENTERING(&quot;1waqm8z71hi389dt1wqh0bmhr&quot;,&quot;is_a_normal_node_of&quot;);</span>
 try {
-<span class="pc bpc" id="L846" title="2 of 4 branches missed.">    return ((ND_node_type(v) == NORMAL) &amp;&amp; agcontains(zz, g, v));</span>
+<span class="pc bpc" id="L846" title="1 of 4 branches missed.">    return ((ND_node_type(v) == NORMAL) &amp;&amp; agcontains(zz, g, v));</span>
 } finally {
 <span class="fc" id="L848">LEAVING(&quot;1waqm8z71hi389dt1wqh0bmhr&quot;,&quot;is_a_normal_node_of&quot;);</span>
 }
@@ -897,9 +897,9 @@ try {
     
 <span class="fc" id="L898">    rv = u = v;</span>
 <span class="fc bfc" id="L899" title="All 2 branches covered.">    while ((u = neighbor(zz, u, dir))!=null) {</span>
-<span class="pc bpc" id="L900" title="1 of 2 branches missed.">	if (is_a_normal_node_of(zz, g, u))</span>
+<span class="fc bfc" id="L900" title="All 2 branches covered.">	if (is_a_normal_node_of(zz, g, u))</span>
 <span class="fc" id="L901">	    rv = u;</span>
-<span class="nc bnc" id="L902" title="All 2 branches missed.">	else if (is_a_vnode_of_an_edge_of(zz, g, u))</span>
+<span class="pc bpc" id="L902" title="1 of 2 branches missed.">	else if (is_a_vnode_of_an_edge_of(zz, g, u))</span>
 <span class="nc" id="L903">	    rv = u;</span>
     }
 <span class="fc" id="L905">    return rv;</span>
@@ -1187,7 +1187,7 @@ try {
 <span class="fc" id="L1187">	    v = GD_rank(g).get__(r).v.get_(i);</span>
 <span class="fc" id="L1188">	    ND_mark(v, 0); ND_onstack(v, 0);</span>
 <span class="fc" id="L1189">	    flatindex(v, i);</span>
-<span class="pc bpc" id="L1190" title="1 of 4 branches missed.">	    if ((ND_flat_out(v).size &gt; 0) &amp;&amp; (flat == 0)) {</span>
+<span class="fc bfc" id="L1190" title="All 4 branches covered.">	    if ((ND_flat_out(v).size &gt; 0) &amp;&amp; (flat == 0)) {</span>
 <span class="fc" id="L1191">		GD_rank(g).get__(r).flat =</span>
 <span class="fc" id="L1192">		    new_matrix(GD_rank(g).get__(r).n, GD_rank(g).get__(r).n);</span>
 <span class="fc" id="L1193">		flat = 1;</span>
@@ -1460,7 +1460,7 @@ try {
 <span class="fc bfc" id="L1460" title="All 2 branches covered.">    if (GD_has_flat_edges(g) == 0)</span>
 <span class="fc" id="L1461">	return;</span>
 <span class="fc bfc" id="L1462" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="pc bpc" id="L1463" title="1 of 2 branches missed.">	if (GD_rank(g).get__(r).n == 0) continue;</span>
+<span class="fc bfc" id="L1463" title="All 2 branches covered.">	if (GD_rank(g).get__(r).n == 0) continue;</span>
 <span class="fc" id="L1464">	base_order = ND_order(GD_rank(g).get__(r).v.get_(0));</span>
 <span class="fc bfc" id="L1465" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++)</span>
 <span class="fc" id="L1466">	    ND_mark(GD_rank(g).get__(r).v.get_(i), 0);</span>
@@ -1513,7 +1513,7 @@ try {
 	    /* nonconstraint flat edges must be made LR */
 <span class="fc bfc" id="L1514" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
 <span class="fc" id="L1515">		v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="pc bpc" id="L1516" title="1 of 2 branches missed.">		if (ND_flat_out(v).list!=null) {</span>
+<span class="fc bfc" id="L1516" title="All 2 branches covered.">		if (ND_flat_out(v).list!=null) {</span>
 <span class="fc bfc" id="L1517" title="All 2 branches covered.">		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++) {</span>
 <span class="pc bpc" id="L1518" title="2 of 4 branches missed.">			if ( ((GD_flip(g) == false) &amp;&amp; (ND_order(aghead(e)) &lt; ND_order(agtail(e)))) ||</span>
 <span class="pc bpc" id="L1519" title="3 of 4 branches missed.">				 ( (GD_flip(g)) &amp;&amp; (ND_order(aghead(e)) &gt; ND_order(agtail(e)) ))) {</span>

@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.cli;
 public class ExitStatus {
 
 	public static final int OK = 0;
-	public static final int ERROR_NO_FILE_FOUND = 50;
-	public static final int ERROR_NO_DIAGRAM_FOUND = 100;
-	public static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
+	public static final int ERROR_50_NO_FILE_FOUND = 50;
+	public static final int ERROR_100_NO_DIAGRAM_FOUND = 100;
+	public static final int ERROR_200_SOME_DIAGRAMS_HAVE_ERROR = 200;
 
 	private static String formatExitCode(int code, String description) {
 <span class="fc" id="L46">		return String.format(&quot;  %-4d %s&quot;, code, description);</span>
@@ -49,16 +49,16 @@ public class ExitStatus {
 	public static void printExitCodes() {
 <span class="fc" id="L50">		final String[] all = {</span>
 <span class="fc" id="L51">			formatExitCode(OK, &quot;Success&quot;),</span>
-<span class="fc" id="L52">			formatExitCode(ERROR_NO_FILE_FOUND, &quot;No file found&quot;),</span>
-<span class="fc" id="L53">			formatExitCode(ERROR_NO_DIAGRAM_FOUND, &quot;No diagram found in file(s)&quot;),</span>
-<span class="fc" id="L54">			formatExitCode(ERROR_SOME_DIAGRAMS_HAVE_ERROR, &quot;Some diagrams have syntax errors&quot;)</span>
+<span class="fc" id="L52">			formatExitCode(ERROR_50_NO_FILE_FOUND, &quot;No file found&quot;),</span>
+<span class="fc" id="L53">			formatExitCode(ERROR_100_NO_DIAGRAM_FOUND, &quot;No diagram found in file(s)&quot;),</span>
+<span class="fc" id="L54">			formatExitCode(ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, &quot;Some diagrams have syntax errors&quot;)</span>
 		};
 <span class="fc bfc" id="L56" title="All 2 branches covered.">		for (String line : all)</span>
 <span class="fc" id="L57">			System.out.println(line);</span>
 <span class="fc" id="L58">	}</span>
 
+	private volatile boolean hasFiles;
 	private volatile boolean hasErrors;
-	private volatile boolean hasSuccess;
 	private volatile boolean hasBlocks;
 
 	private ExitStatus() {
@@ -68,16 +68,16 @@ public class ExitStatus {
 <span class="fc" id="L68">		return new ExitStatus();</span>
 	}
 
-	public void goesHasBlocks() {
-<span class="fc" id="L72">		hasBlocks = true;</span>
+	public void goesHasFiles() {
+<span class="fc" id="L72">		hasFiles = true;</span>
 <span class="fc" id="L73">	}</span>
 
-	public void goesHasErrors() {
-<span class="fc" id="L76">		hasErrors = true;</span>
+	public void goesHasBlocks() {
+<span class="fc" id="L76">		hasBlocks = true;</span>
 <span class="fc" id="L77">	}</span>
 
-	public void goesHasSuccess() {
-<span class="fc" id="L80">		hasSuccess = true;</span>
+	public void goesHasErrors() {
+<span class="fc" id="L80">		hasErrors = true;</span>
 <span class="fc" id="L81">	}</span>
 
 	public boolean hasErrors() {
@@ -90,13 +90,13 @@ public class ExitStatus {
 
 	private int getExitCode() {
 <span class="fc bfc" id="L92" title="All 2 branches covered.">		if (hasErrors)</span>
-<span class="fc" id="L93">			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;</span>
+<span class="fc" id="L93">			return ERROR_200_SOME_DIAGRAMS_HAVE_ERROR;</span>
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (hasBlocks == false)</span>
-<span class="nc" id="L96">			return ERROR_NO_FILE_FOUND;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (hasFiles == false)</span>
+<span class="nc" id="L96">			return ERROR_50_NO_FILE_FOUND;</span>
 
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (hasSuccess == false)</span>
-<span class="nc" id="L99">			return ERROR_NO_DIAGRAM_FOUND;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (hasBlocks == false)</span>
+<span class="fc" id="L99">			return ERROR_100_NO_DIAGRAM_FOUND;</span>
 
 <span class="fc" id="L101">		return OK;</span>
 	}

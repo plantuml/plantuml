@@ -269,14 +269,15 @@ public class SourceStringReader {
 	}
 
 	public void updateStatus(ExitStatus exitStatus) {
-<span class="fc bfc" id="L272" title="All 2 branches covered.">		for (BlockUml blockUml : getBlocks()) {</span>
-<span class="fc" id="L273">			exitStatus.goesHasBlocks();</span>
-<span class="fc" id="L274">			final Diagram system = blockUml.getDiagram();</span>
-<span class="fc bfc" id="L275" title="All 2 branches covered.">			if (system instanceof PSystemError)</span>
-<span class="fc" id="L276">				exitStatus.goesHasErrors();</span>
-<span class="fc" id="L277">		}</span>
+<span class="fc" id="L272">		exitStatus.goesHasFiles();</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">		for (BlockUml blockUml : getBlocks()) {</span>
+<span class="fc" id="L274">			exitStatus.goesHasBlocks();</span>
+<span class="fc" id="L275">			final Diagram system = blockUml.getDiagram();</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">			if (system instanceof PSystemError)</span>
+<span class="fc" id="L277">				exitStatus.goesHasErrors();</span>
+<span class="fc" id="L278">		}</span>
 		
-<span class="fc" id="L279">	}</span>
+<span class="fc" id="L280">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
