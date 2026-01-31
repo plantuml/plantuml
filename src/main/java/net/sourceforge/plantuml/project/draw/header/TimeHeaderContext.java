@@ -33,13 +33,15 @@
  * 
  *
  */
-
 package net.sourceforge.plantuml.project.draw.header;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class TimeHeaderContext {
@@ -48,10 +50,18 @@ public class TimeHeaderContext {
 	private final TimeHeaderParameters thParam;
 	private final Map<TimePoint, String> nameDays;
 
-	public TimeHeaderContext(TimeScale timeScale, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays) {
+	private final WeekNumberStrategy weekNumberStrategy;
+	private final WeeklyHeaderStrategy headerStrategy;
+	private final LocalDate printStart;
+
+	public TimeHeaderContext(TimeScale timeScale, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
+			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, LocalDate printStart) {
 		this.timeScale = timeScale;
 		this.thParam = thParam;
 		this.nameDays = nameDays;
+		this.weekNumberStrategy = weekNumberStrategy;
+		this.headerStrategy = headerStrategy;
+		this.printStart = printStart;
 	}
 
 	public TimeScale getTimeScale() {
@@ -64,5 +74,17 @@ public class TimeHeaderContext {
 
 	public Map<TimePoint, String> getNameDays() {
 		return nameDays;
+	}
+
+	public WeekNumberStrategy getWeekNumberStrategy() {
+		return weekNumberStrategy;
+	}
+
+	public WeeklyHeaderStrategy getHeaderStrategy() {
+		return headerStrategy;
+	}
+
+	public LocalDate getPrintStart() {
+		return printStart;
 	}
 }
