@@ -44,10 +44,10 @@ public abstract class AbstractCommunicationTile extends AbstractTile {
 	private final ISkinParam skinParam;
 
 	public AbstractCommunicationTile(StringBounder stringBounder, ISkinParam skinParam, YGauge currentY) {
-<span class="nc" id="L47">		super(stringBounder, currentY);</span>
-<span class="nc" id="L48">		this.skinParam = skinParam;</span>
+<span class="fc" id="L47">		super(stringBounder, currentY);</span>
+<span class="fc" id="L48">		this.skinParam = skinParam;</span>
 
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L50">	}</span>
 
 	final protected boolean sequenceMessageSpan() {
 <span class="nc" id="L53">		return skinParam.getPragma().isTrue(PragmaKey.SEQUENCE_MESSAGE_SPAN);</span>

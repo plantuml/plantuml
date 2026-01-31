@@ -47,11 +47,11 @@ public class MessageExo extends AbstractMessage {
 
 	public MessageExo(StyleBuilder styleBuilder, Participant p, MessageExoType type, Display label,
 			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow) {
-<span class="nc" id="L50">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
-<span class="nc" id="L51">		this.participant = p;</span>
-<span class="nc" id="L52">		this.type = type;</span>
-<span class="nc" id="L53">		this.shortArrow = shortArrow;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L50">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
+<span class="fc" id="L51">		this.participant = p;</span>
+<span class="fc" id="L52">		this.type = type;</span>
+<span class="fc" id="L53">		this.shortArrow = shortArrow;</span>
+<span class="fc" id="L54">	}</span>
 
 	public boolean isShortArrow() {
 <span class="nc" id="L57">		return shortArrow;</span>
@@ -79,7 +79,7 @@ public class MessageExo extends AbstractMessage {
 	}
 
 	public Participant getParticipant() {
-<span class="nc" id="L82">		return participant;</span>
+<span class="fc" id="L82">		return participant;</span>
 	}
 
 	public final MessageExoType getType() {

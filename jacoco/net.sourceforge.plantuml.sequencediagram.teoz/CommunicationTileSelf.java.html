@@ -74,14 +74,14 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 
 	public CommunicationTileSelf(StringBounder stringBounder, LivingSpace livingSpace1, Message message, Rose skin,
 			ISkinParam skinParam, LivingSpaces livingSpaces, YGauge currentY) {
-<span class="nc" id="L77">		super(stringBounder, skinParam, currentY);</span>
-<span class="nc" id="L78">		this.livingSpace1 = livingSpace1;</span>
-<span class="nc" id="L79">		this.livingSpaces = livingSpaces;</span>
-<span class="nc" id="L80">		this.message = message;</span>
-<span class="nc" id="L81">		this.skin = skin;</span>
-<span class="nc" id="L82">		this.skinParam = skinParam;</span>
-<span class="nc" id="L83">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="nc" id="L84">	}</span>
+<span class="fc" id="L77">		super(stringBounder, skinParam, currentY);</span>
+<span class="fc" id="L78">		this.livingSpace1 = livingSpace1;</span>
+<span class="fc" id="L79">		this.livingSpaces = livingSpaces;</span>
+<span class="fc" id="L80">		this.message = message;</span>
+<span class="fc" id="L81">		this.skin = skin;</span>
+<span class="fc" id="L82">		this.skinParam = skinParam;</span>
+<span class="fc" id="L83">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L84">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
@@ -89,11 +89,11 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
-<span class="nc" id="L92">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
-<span class="nc" id="L93">		arrowConfiguration = arrowConfiguration.self();</span>
-<span class="nc" id="L94">		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,</span>
-<span class="nc" id="L95">				message.getLabelNumbered());</span>
-<span class="nc" id="L96">		return comp;</span>
+<span class="fc" id="L92">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
+<span class="fc" id="L93">		arrowConfiguration = arrowConfiguration.self();</span>
+<span class="fc" id="L94">		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,</span>
+<span class="fc" id="L95">				message.getLabelNumbered());</span>
+<span class="fc" id="L96">		return comp;</span>
 	}
 
 	@Override
@@ -145,9 +145,9 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="nc" id="L145">	}</span>
 
 	public double getPreferredHeight() {
-<span class="nc" id="L148">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L149">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L150">		return dim.getHeight();</span>
+<span class="fc" id="L148">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L149">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L150">		return dim.getHeight();</span>
 	}
 
 	public void addConstraints() {
@@ -169,7 +169,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="nc" id="L169">	}</span>
 
 	private boolean isReverseDefine() {
-<span class="nc" id="L172">		return message.getArrowConfiguration().isReverseDefine();</span>
+<span class="fc" id="L172">		return message.getArrowConfiguration().isReverseDefine();</span>
 	}
 
 	private LivingSpace getPrevious() {
@@ -208,15 +208,15 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	public Real getMaxX() {
-<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (isReverseDefine()) {</span>
-<span class="nc" id="L212">			return livingSpace1.getPosC2(getStringBounder());</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L212">			return livingSpace1.getPosC2(getStringBounder());</span>
 		}
-<span class="nc" id="L214">		return livingSpace1.getPosC2(getStringBounder()).addFixed(getCompWidth());</span>
+<span class="fc" id="L214">		return livingSpace1.getPosC2(getStringBounder()).addFixed(getCompWidth());</span>
 	}
 
 	private double getCompWidth() {
-<span class="nc" id="L218">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L219">		return comp.getPreferredDimension(getStringBounder()).getWidth();</span>
+<span class="fc" id="L218">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L219">		return comp.getPreferredDimension(getStringBounder()).getWidth();</span>
 	}
 
 }
