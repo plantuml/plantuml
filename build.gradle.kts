@@ -238,7 +238,7 @@ tasks.register<JavaExec>("jdepend") {
     mainClass.set("jdepend.textui.JDepend")
     classpath = jdependConfig
     
-    val outputDir = file("$buildDir/reports/jdepend")
+    val outputDir = layout.buildDirectory.dir("reports/jdepend").get().asFile
     val textReport = file("$outputDir/jdepend-report.txt")
     
     doFirst {
@@ -262,7 +262,7 @@ tasks.register("jdependHtml") {
     
     dependsOn(tasks.classes)
     
-    val outputDir = file("$buildDir/reports/jdepend")
+    val outputDir = layout.buildDirectory.dir("reports/jdepend").get().asFile
     val htmlReport = file("$outputDir/jdepend-report.html")
     
     doFirst {
@@ -273,7 +273,7 @@ tasks.register("jdependHtml") {
         val xmlReport = file("$outputDir/jdepend-report.xml")
         
         // Generate XML report using xmlui with -file argument (no GUI when file specified)
-        javaexec {
+        project.javaexec {
             mainClass.set("jdepend.xmlui.JDepend")
             classpath = jdependConfig
             args = listOf(
@@ -335,7 +335,7 @@ tasks.register("site") {
 	description = "Generates project site with documentation, reports, and test results"
 	group = "documentation"
 	
-	val siteDir = file("$buildDir/site")
+	val siteDir = layout.buildDirectory.dir("site").get().asFile
 	
 	dependsOn(
 		tasks.javadoc,
@@ -487,22 +487,22 @@ tasks.register("site") {
 	
 		// Copy all reports to site directory
 		copy {
-			from("$buildDir/docs/javadoc")
+			from(layout.buildDirectory.dir("docs/javadoc"))
 			into("$siteDir/javadoc")
 		}
 		
 		copy {
-			from("$buildDir/reports/tests")
+			from(layout.buildDirectory.dir("reports/tests"))
 			into("$siteDir/tests")
 		}
 		
 		copy {
-			from("$buildDir/reports/jacoco")
+			from(layout.buildDirectory.dir("reports/jacoco"))
 			into("$siteDir/jacoco")
 		}
 		
 		copy {
-			from("$buildDir/reports/jdepend")
+			from(layout.buildDirectory.dir("reports/jdepend"))
 			into("$siteDir/jdepend")
 		}
 	}
