@@ -58,6 +58,51 @@ public class PlantUmlTestUtils {
 			return this;
 		}
 
+		/**
+		 * Check if the exported content contains error indicators.
+		 * This detects runtime errors that occur during export (not parsing).
+		 * 
+		 * @param content The exported content (SVG or PNG as string/bytes)
+		 * @return true if content contains error indicators, false otherwise
+		 */
+		public boolean hasRuntimeError(byte[] content) {
+			if (content == null || content.length == 0) {
+				return true;
+			}
+			
+			// Convert to string to check for error signatures
+			String contentStr = new String(content, UTF_8);
+			
+			// Check for PlantUML error signatures
+			return contentStr.contains("An error has occured") || 
+			       contentStr.contains("PlantUML") && contentStr.contains("has crashed") ||
+			       contentStr.contains("java.lang.") && contentStr.contains("Exception");
+		}
+
+		/**
+		 * Assert that the exported diagram doesn't contain runtime errors.
+		 * Checks both parsing errors and export-time errors.
+		 * 
+		 * @param fileFormat The format to check
+		 * @return this ExportDiagram for chaining
+		 * @throws IOException if export fails
+		 */
+		public ExportDiagram assertNoRuntimeError(FileFormat fileFormat) throws IOException {
+			assertNoError(); // Check parsing errors first
+			
+			byte[] content = asByteArray(fileFormat);
+			if (hasRuntimeError(content)) {
+				String preview = new String(content, UTF_8);
+				// Limit preview to first 500 chars
+				if (preview.length() > 500) {
+					preview = preview.substring(0, 500) + "...";
+				}
+				throw new AssertionError("Exported diagram contains runtime error. Preview: " + preview);
+			}
+			return this;
+		}
+
+
 		public byte[] asByteArray(FileFormat fileFormat) throws IOException {
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			stream(os, fileFormat);

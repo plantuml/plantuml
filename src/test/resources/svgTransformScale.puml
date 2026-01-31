@@ -1,0 +1,14 @@
+@startuml
+'Test transform scale(s) - should scale circle uniformly
+skinparam backgroundColor white
+sprite $scaleTest <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="30" cy="30" r="10" fill="blue" transform="scale(2)"/>
+  <circle cx="30" cy="30" r="10" fill="red" fill-opacity="0.3"/>
+</svg>
+
+title Transform Scale Test
+:The blue circle should be scaled 2x uniformly;
+:The red circle should remain at original size;
+:Uniform scale preserves circular shape;
+:<$scaleTest>;
+@enduml

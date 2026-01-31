@@ -1,0 +1,9 @@
+@startuml
+sprite textBold <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="20" font-family="Arial" font-size="16" font-weight="normal" fill="#000000">Normal Text</text>
+  <text x="10" y="40" font-family="Arial" font-size="16" font-weight="bold" fill="#000000">Bold Text</text>
+  <text x="10" y="60" font-family="Arial" font-size="16" font-weight="700" fill="#000000">Bold 700</text>
+</svg>
+
+Alice -> Bob : <$textBold> font weights
+@enduml

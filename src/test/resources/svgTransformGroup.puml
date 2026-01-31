@@ -1,0 +1,18 @@
+@startuml
+'Test transform on groups - all children should inherit group transform
+skinparam backgroundColor white
+sprite $groupTest <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <g transform="translate(30, 30)">
+    <circle cx="10" cy="10" r="8" fill="blue"/>
+    <rect x="5" y="25" width="10" height="10" fill="green"/>
+  </g>
+  <circle cx="10" cy="10" r="8" fill="red" fill-opacity="0.3"/>
+  <rect x="5" y="25" width="10" height="10" fill="orange" fill-opacity="0.3"/>
+</svg>
+
+title Transform Group Test
+:The blue circle and green square are in a translated group;
+:They should appear shifted 30 units right and down;
+:Red circle and orange square are untransformed references;
+:<$groupTest>;
+@enduml

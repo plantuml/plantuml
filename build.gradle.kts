@@ -7,6 +7,8 @@
 
 import java.time.LocalDateTime
 import java.util.jar.JarFile
+import org.gradle.process.ExecOperations
+import javax.inject.Inject
 
 println("Running build.gradle.kts")
 println(project.version)
@@ -56,10 +58,10 @@ dependencies {
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
+	implementation(libs.batik.all)
 
 	// JDepend for package metrics
 	jdependConfig("jdepend:jdepend:2.9.1")
-
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -195,6 +197,10 @@ tasks.test {
 	}
 	useJUnitPlatform()
 	testLogging.showStandardStreams = true
+	
+	// Configure Java Util Logging to use our logging.properties file
+	systemProperty("java.util.logging.config.file", 
+		"${projectDir}/src/test/resources/logging.properties")
 }
 
 tasks.register<Test>("runIntermediateTest") {

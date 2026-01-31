@@ -14,6 +14,9 @@ out
 # Ant result file
 plantuml.jar
 
+# Ant downloaded dependencies
+lib/
+
 # Maven target folder
 target/
 

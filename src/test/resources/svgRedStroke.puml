@@ -1,0 +1,8 @@
+@startuml
+' Test parsing a single red line, width 4, from SVG sprite
+sprite redline <svg viewBox="0 0 100 4" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 2 L100 2" stroke="#FF0000" stroke-width="4" fill="none" stroke-linecap="butt"/>
+</svg>
+
+Alice -> Bob : hello <$redline> there
+@enduml
