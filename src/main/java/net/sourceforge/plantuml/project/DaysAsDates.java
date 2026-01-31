@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.project;
 import java.time.LocalDate;
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
-
 public class DaysAsDates implements Iterable<LocalDate> {
 
 	private final LocalDate date1;

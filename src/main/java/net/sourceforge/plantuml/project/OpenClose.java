@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class OpenClose {
 
