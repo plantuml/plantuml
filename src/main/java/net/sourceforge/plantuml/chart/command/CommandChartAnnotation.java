@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 /**
  * Command to parse annotation syntax:
  * annotation "text" at (xPos, yPos)
- * annotation "text" at (xPos, yPos) <<arrow>>
+ * annotation "text" at (xPos, yPos) &lt;&lt;arrow&gt;&gt;
  */
 public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 
