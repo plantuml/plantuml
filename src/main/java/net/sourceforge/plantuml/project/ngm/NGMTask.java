@@ -110,8 +110,8 @@ import java.time.LocalDateTime;
  *
  * <p>
  * The static factory methods
- * {@link #withFixedDuration(NGMAllocation, Duration)} and
- * {@link #withFixedTotalEffort(NGMAllocation, NGMTotalEffort)} create concrete
+ * {@link #withFixedDuration} and
+ * {@link #withFixedTotalEffort} create concrete
  * implementations representing these two behaviours.
  * </p>
  */
@@ -122,8 +122,6 @@ public abstract class NGMTask {
 	/**
 	 * Creates a new task with a fixed workload allocation.
 	 *
-	 * @param workload the constant full-time-equivalent allocation applied to this
-	 *                 task
 	 */
 	protected NGMTask(NGMAllocation allocation) {
 		this.allocation = allocation;

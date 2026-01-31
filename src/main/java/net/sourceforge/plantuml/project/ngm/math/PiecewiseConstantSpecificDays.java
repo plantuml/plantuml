@@ -121,11 +121,6 @@ public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConsta
 		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant#segmentAt(java.time.LocalDateTime)
-	 */
 	@Override
 	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
 		if (direction == TimeDirection.FORWARD) {

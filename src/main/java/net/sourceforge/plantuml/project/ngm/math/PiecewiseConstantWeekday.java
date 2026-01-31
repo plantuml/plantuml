@@ -59,10 +59,6 @@ import java.util.Objects;
  * conceptually apply across the whole {@link LocalDateTime} timeline.
  * </p>
  *
- * <p>
- * Segments produced by {@link #iterateSegmentsFrom(LocalDateTime)} are daily
- * intervals of the form {@code [dayStart, nextDayStart)}.
- * </p>
  */
 public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 
