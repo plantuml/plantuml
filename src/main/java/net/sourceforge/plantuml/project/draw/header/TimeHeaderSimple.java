@@ -80,8 +80,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(StringBounder stringBounder, TimeHeaderParameters thParam, PrintScale printScale) {
-		super(thParam, new TimeScaleWink(thParam.getCellWidth(stringBounder), thParam.getScale(), printScale));
+	public TimeHeaderSimple(TimeHeaderContext ctx, StringBounder stringBounder, TimeHeaderParameters thParam, PrintScale printScale) {
+		super(ctx, thParam, new TimeScaleWink(thParam.getCellWidth(stringBounder), thParam.getScale(), printScale));
 		this.printScale = printScale;
 	}
 

@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
 
-	public TimeHeaderCalendar(TimeHeaderParameters thParam, TimeScale timeScale) {
-		super(thParam, timeScale);
+	public TimeHeaderCalendar(TimeHeaderContext ctx, TimeHeaderParameters thParam, TimeScale timeScale) {
+		super(ctx, thParam, timeScale);
 	}
 
 	protected final Locale locale() {

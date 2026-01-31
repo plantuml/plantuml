@@ -188,7 +188,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		initMinMax();
 
-		final TimeHeader timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,
+		final TimeHeader2 timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,
 				this.timeScale);
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
 				stringBounder);

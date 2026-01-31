@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderChronology extends TimeHeader {
+public class TimeHeaderChronology extends TimeHeader2 {
 
 	private final PrintScale printScale;
 

@@ -321,18 +321,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				weeklyHeaderStrategy, printStart);
 
 		if (minDay.equals(TimePoint.epoch()))
-			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
+			return new TimeHeaderSimple(ctx, stringBounder, thParam(), printScale);
 		if (printScale == PrintScale.DAILY)
-			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
+			return new TimeHeaderDaily(ctx, stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.WEEKLY)
-			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, nameDays,
+			return new TimeHeaderWeekly(ctx, stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, nameDays,
 					printStart, weekStartingNumber);
 		else if (printScale == PrintScale.MONTHLY)
-			return new TimeHeaderMonthly(stringBounder, thParam(), nameDays, printStart);
+			return new TimeHeaderMonthly(ctx, stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.QUARTERLY)
-			return new TimeHeaderQuarterly(stringBounder, thParam(), printStart);
+			return new TimeHeaderQuarterly(ctx, stringBounder, thParam(), printStart);
 		else if (printScale == PrintScale.YEARLY)
-			return new TimeHeaderYearly(stringBounder, thParam(), printStart);
+			return new TimeHeaderYearly(ctx, stringBounder, thParam(), printStart);
 		else
 			throw new IllegalStateException();
 

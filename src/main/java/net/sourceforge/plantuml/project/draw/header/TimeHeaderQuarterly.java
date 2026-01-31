@@ -69,8 +69,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder);
 	}
 
-	public TimeHeaderQuarterly(StringBounder stringBounder, TimeHeaderParameters thParam, LocalDate printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
+	public TimeHeaderQuarterly(TimeHeaderContext ctx, StringBounder stringBounder, TimeHeaderParameters thParam, LocalDate printStart) {
+		super(ctx, thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
 				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 	}
 

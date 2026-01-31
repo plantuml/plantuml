@@ -95,10 +95,10 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private final Map<TimePoint, String> nameDays;
 
-	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
+	public TimeHeaderWeekly(TimeHeaderContext ctx, StringBounder stringBounder, TimeHeaderParameters thParam,
 			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<TimePoint, String> nameDays,
 			LocalDate printStart, int weekStartingNumber) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
+		super(ctx, thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
 				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
 		this.headerStrategy = headerStrategy;

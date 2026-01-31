@@ -99,9 +99,9 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	private final Map<TimePoint, String> nameDays;
 
-	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
+	public TimeHeaderDaily(TimeHeaderContext ctx, StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
 			LocalDate printStart) {
-		super(thParam,
+		super(ctx, thParam,
 				thParam.isHideClosed()
 						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder),
 								TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), thParam.getOpenClose())
