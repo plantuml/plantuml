@@ -62,10 +62,12 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("binary"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
-				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("as"), //
-				RegexLeaf.spaceOneOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+							new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
+							StereotypePattern.optional("STEREOTYPE"), //
+							new RegexLeaf("as"), //
+							RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.end());
@@ -76,7 +78,9 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 			ParserPass currentPass) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
-		final String full = arg.get("FULL", 0);
+		String full = arg.get("FULL", 0);
+		if (full == null)
+			full = "";
 
 		Stereotype stereotype = null;
 		if (arg.get("STEREOTYPE", 0) != null)
