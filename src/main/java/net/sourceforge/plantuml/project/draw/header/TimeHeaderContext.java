@@ -34,6 +34,8 @@
  *
  */
 
+package net.sourceforge.plantuml.project.draw.header;
+
 import java.util.Map;
 
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
