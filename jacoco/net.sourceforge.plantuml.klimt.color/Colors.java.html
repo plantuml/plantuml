@@ -220,13 +220,17 @@ public class Colors {
 	}
 
 	public HColor getColor(Style style, PName name, HColorSet colorSet) {
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (name == PName.BackGroundColor) {</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (name == PName.BackGroundColor) {</span>
 <span class="fc" id="L224">			final HColor color = map.get(ColorType.BACK);</span>
 <span class="pc bpc" id="L225" title="1 of 2 branches missed.">			if (color != null)</span>
 <span class="nc" id="L226">				return color;</span>
-
 		}
-<span class="fc" id="L229">		return style.value(name).asColor(colorSet);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (name == PName.LineColor) {</span>
+<span class="fc" id="L229">			final HColor color = map.get(ColorType.LINE);</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			if (color != null)</span>
+<span class="nc" id="L231">				return color;</span>
+		}
+<span class="fc" id="L233">		return style.value(name).asColor(colorSet);</span>
 
 	}
 

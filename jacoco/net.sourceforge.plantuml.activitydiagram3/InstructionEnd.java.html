@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileCircleStart;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -51,44 +52,46 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public class InstructionEnd extends MonoSwimable implements Instruction {
 
 	private final LinkRendering inlinkRendering;
+	private final Colors colors;
 
-	public InstructionEnd(Swimlane swimlane, LinkRendering inlinkRendering) {
-<span class="nc" id="L56">		super(swimlane);</span>
-<span class="nc" id="L57">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L58">	}</span>
+	public InstructionEnd(Colors colors, Swimlane swimlane, LinkRendering inlinkRendering) {
+<span class="nc" id="L58">		super(swimlane);</span>
+<span class="nc" id="L59">		this.colors = colors;</span>
+<span class="nc" id="L60">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="nc" id="L61">	}</span>
 
 	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L63">		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());</span>
+<span class="nc" id="L66">		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());</span>
 	}
 	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="nc" id="L69">		Ftile result = factory.end(getSwimlaneIn());</span>
-<span class="nc" id="L70">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
-<span class="nc" id="L71">		return result;</span>
+<span class="nc" id="L72">		Ftile result = factory.end(getSwimlaneIn(), colors);</span>
+<span class="nc" id="L73">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="nc" id="L74">		return result;</span>
 	}
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {
-<span class="nc" id="L76">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L79">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L81">		return false;</span>
+<span class="nc" id="L84">		return false;</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L86">		return inlinkRendering;</span>
+<span class="nc" id="L89">		return inlinkRendering;</span>
 	}
 
 	@Override
 	public boolean containsBreak() {
-<span class="nc" id="L91">		return false;</span>
+<span class="nc" id="L94">		return false;</span>
 	}
 
 }

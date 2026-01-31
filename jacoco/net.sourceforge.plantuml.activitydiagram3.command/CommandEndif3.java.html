@@ -39,34 +39,44 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndif3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandEndif3() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandEndif3.class.getName(), //</span>
-<span class="fc" id="L56">				RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandEndif3.class.getName(), //</span>
+<span class="fc" id="L59">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;if&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L61">				RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		// if (getSystem().getLastEntityConsulted() == null) {
 		// return CommandExecutionResult.error(&quot;No if for this endif&quot;);
 		// }
-<span class="nc" id="L69">		return diagram.endif();</span>
+
+<span class="nc" id="L76">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L77">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+
+<span class="nc" id="L79">		return diagram.endif(colors);</span>
 	}
 
 }

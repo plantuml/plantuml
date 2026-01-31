@@ -64,12 +64,12 @@ public class InstructionFork extends WithNote implements Instruction {
 <span class="nc" id="L64">	private final List&lt;InstructionList&gt; forks = new ArrayList&lt;&gt;();</span>
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
-	private final ISkinParam skinParam;
 	private final Swimlane swimlaneIn;
 	private Swimlane swimlaneOut;
-<span class="nc" id="L70">	private ForkStyle style = ForkStyle.FORK;</span>
+<span class="nc" id="L69">	private ForkStyle style = ForkStyle.FORK;</span>
 	private String label;
-<span class="nc" id="L72">	boolean finished = false;</span>
+<span class="nc" id="L71">	boolean finished = false;</span>
+	private final Colors colors;
 
 	@Override
 	public boolean containsBreak() {
@@ -80,10 +80,10 @@ public class InstructionFork extends WithNote implements Instruction {
 <span class="nc" id="L80">		return false;</span>
 	}
 
-<span class="nc" id="L83">	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam, Swimlane swimlane) {</span>
+<span class="nc" id="L83">	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane, Colors colors) {</span>
 <span class="nc" id="L84">		this.parent = parent;</span>
-<span class="nc" id="L85">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L86">		this.skinParam = skinParam;</span>
+<span class="nc" id="L85">		this.colors = colors;</span>
+<span class="nc" id="L86">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
 <span class="nc" id="L87">		this.swimlaneIn = swimlane;</span>
 <span class="nc" id="L88">		this.swimlaneOut = swimlane;</span>
 <span class="nc" id="L89">		this.forks.add(InstructionList.empty());</span>
@@ -125,7 +125,7 @@ public class InstructionFork extends WithNote implements Instruction {
 <span class="nc bnc" id="L125" title="All 2 branches missed.">		for (InstructionList list : forks)</span>
 <span class="nc" id="L126">			all.add(list.createFtile(factory));</span>
 
-<span class="nc" id="L128">		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut);</span>
+<span class="nc" id="L128">		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut, colors);</span>
 <span class="nc bnc" id="L129" title="All 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
 <span class="nc" id="L130">			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);</span>
 
@@ -152,49 +152,50 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (finished)</span>
-<span class="nc" id="L157">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L158">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (getLastList().getLast() == null)</span>
-<span class="nc" id="L160">			return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (getLastList().getLast() == null)</span>
+<span class="nc" id="L161">			return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="nc" id="L162">		return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L163">		return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L167">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(InstructionList.getSwimlanes2(forks));</span>
-<span class="nc" id="L168">		result.add(swimlaneIn);</span>
-<span class="nc" id="L169">		result.add(swimlaneOut);</span>
-<span class="nc" id="L170">		return result;</span>
+<span class="nc" id="L168">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(InstructionList.getSwimlanes2(forks));</span>
+<span class="nc" id="L169">		result.add(swimlaneIn);</span>
+<span class="nc" id="L170">		result.add(swimlaneOut);</span>
+<span class="nc" id="L171">		return result;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L175">		return swimlaneIn;</span>
+<span class="nc" id="L176">		return swimlaneIn;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L180">		return swimlaneOut;</span>
+<span class="nc" id="L181">		return swimlaneOut;</span>
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (endFork)</span>
-<span class="nc" id="L185">			this.finished = true;</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (endFork)</span>
+<span class="nc" id="L186">			this.finished = true;</span>
 
-<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (nextLinkRenderer == null)</span>
-<span class="nc" id="L188">			return;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (nextLinkRenderer == null)</span>
+<span class="nc" id="L189">			return;</span>
 
-<span class="nc" id="L190">		getLastList().setOutRendering(nextLinkRenderer);</span>
-<span class="nc" id="L191">	}</span>
+<span class="nc" id="L191">		getLastList().setOutRendering(nextLinkRenderer);</span>
+<span class="nc" id="L192">	}</span>
 
 	public void setStyle(ForkStyle style, String label, Swimlane swimlane) {
-<span class="nc" id="L194">		this.style = style;</span>
-<span class="nc" id="L195">		this.label = label;</span>
-<span class="nc" id="L196">		this.swimlaneOut = swimlane;</span>
-<span class="nc" id="L197">	}</span>
+<span class="nc" id="L195">		this.style = style;</span>
+<span class="nc" id="L196">		this.label = label;</span>
+<span class="nc" id="L197">		this.swimlaneOut = swimlane;</span>
+<span class="nc" id="L198">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

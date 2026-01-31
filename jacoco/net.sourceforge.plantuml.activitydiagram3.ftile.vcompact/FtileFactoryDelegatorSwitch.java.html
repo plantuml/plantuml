@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOut
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -68,92 +69,94 @@ import net.sourceforge.plantuml.style.Style;
 public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 	public FtileFactoryDelegatorSwitch(FtileFactory factory) {
-<span class="fc" id="L71">		super(factory);</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L72">		super(factory);</span>
+<span class="fc" id="L73">	}</span>
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest) {
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
 		// return createNude(swimlane, branches);
 		// return createWithDiamonds(swimlane, branches, labelTest);
-<span class="nc" id="L79">		return createWithLinks(swimlane, branches, labelTest);</span>
+<span class="nc" id="L80">		return createWithLinks(swimlane, branches, labelTest, colors, endColors);</span>
 	}
 
 	private Ftile createNude(Swimlane swimlane, List&lt;Branch&gt; branches) {
-<span class="nc" id="L83">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (Branch branch : branches) {</span>
-<span class="nc" id="L85">			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));</span>
-<span class="nc" id="L86">		}</span>
-<span class="nc" id="L87">		return new FtileSwitchNude(ftiles, swimlane);</span>
+<span class="nc" id="L84">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (Branch branch : branches) {</span>
+<span class="nc" id="L86">			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));</span>
+<span class="nc" id="L87">		}</span>
+<span class="nc" id="L88">		return new FtileSwitchNude(ftiles, swimlane);</span>
 	}
 
-	private Ftile createWithDiamonds(Swimlane swimlane, List&lt;Branch&gt; branches, Display labelTest) {
-<span class="nc" id="L91">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (Branch branch : branches) {</span>
-<span class="nc" id="L93">			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));</span>
-<span class="nc" id="L94">		}</span>
-<span class="nc" id="L95">		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);</span>
-<span class="nc" id="L96">		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));</span>
+	private Ftile createWithDiamonds(Swimlane swimlane, List&lt;Branch&gt; branches, Display labelTest, Colors colors,
+			Colors endColors) {
+<span class="nc" id="L93">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (Branch branch : branches) {</span>
+<span class="nc" id="L95">			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));</span>
+<span class="nc" id="L96">		}</span>
+<span class="nc" id="L97">		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest, colors);</span>
+<span class="nc" id="L98">		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0), endColors);</span>
 
-<span class="nc" id="L98">		return new FtileSwitchWithDiamonds(ftiles, branches, swimlane, diamond1, diamond2, getStringBounder());</span>
+<span class="nc" id="L100">		return new FtileSwitchWithDiamonds(ftiles, branches, swimlane, diamond1, diamond2, getStringBounder());</span>
 	}
 
-	private Ftile createWithLinks(Swimlane swimlane, List&lt;Branch&gt; branches, Display labelTest) {
-<span class="nc" id="L102">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L103">		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);</span>
-<span class="nc" id="L104">		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));</span>
+	private Ftile createWithLinks(Swimlane swimlane, List&lt;Branch&gt; branches, Display labelTest, Colors colors,
+			Colors endColors) {
+<span class="nc" id="L105">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L106">		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest, colors);</span>
+<span class="nc" id="L107">		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0), endColors);</span>
 
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (Branch branch : branches) {</span>
-<span class="nc" id="L107">			final XDimension2D dimLabelIn = branch.getTextBlockPositive().calculateDimension(getStringBounder());</span>
-<span class="nc" id="L108">			final XDimension2D dimLabelOut = branch.getTextBlockSpecial().calculateDimension(getStringBounder());</span>
-<span class="nc" id="L109">			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));</span>
-<span class="nc" id="L110">		}</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Branch branch : branches) {</span>
+<span class="nc" id="L110">			final XDimension2D dimLabelIn = branch.getTextBlockPositive().calculateDimension(getStringBounder());</span>
+<span class="nc" id="L111">			final XDimension2D dimLabelOut = branch.getTextBlockSpecial().calculateDimension(getStringBounder());</span>
+<span class="nc" id="L112">			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));</span>
+<span class="nc" id="L113">		}</span>
 
-<span class="nc" id="L112">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L113">		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L115">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L116">		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
 
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (ftiles.size() == 1) {</span>
-<span class="nc" id="L116">			final FtileSwitchWithOneLink result = new FtileSwitchWithOneLink(ftiles, branches, swimlane, diamond1,</span>
-<span class="nc" id="L117">					diamond2, getStringBounder(), arrowColor);</span>
-<span class="nc" id="L118">			return result.addLinks(getStringBounder());</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (ftiles.size() == 1) {</span>
+<span class="nc" id="L119">			final FtileSwitchWithOneLink result = new FtileSwitchWithOneLink(ftiles, branches, swimlane, diamond1,</span>
+<span class="nc" id="L120">					diamond2, getStringBounder(), arrowColor);</span>
+<span class="nc" id="L121">			return result.addLinks(getStringBounder());</span>
 		}
-<span class="nc" id="L120">		final FtileSwitchWithManyLinks result = new FtileSwitchWithManyLinks(ftiles, branches, swimlane, diamond1,</span>
-<span class="nc" id="L121">				diamond2, getStringBounder(), arrowColor);</span>
-<span class="nc" id="L122">		return result.addLinks(getStringBounder());</span>
+<span class="nc" id="L123">		final FtileSwitchWithManyLinks result = new FtileSwitchWithManyLinks(ftiles, branches, swimlane, diamond1,</span>
+<span class="nc" id="L124">				diamond2, getStringBounder(), arrowColor);</span>
+<span class="nc" id="L125">		return result.addLinks(getStringBounder());</span>
 
 	}
 
-	private Ftile getDiamond1(Swimlane swimlane, Branch branch0, Display test) {
+	private Ftile getDiamond1(Swimlane swimlane, Branch branch0, Display test, Colors colors) {
 
-<span class="nc" id="L128">		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;</span>
+<span class="nc" id="L131">		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;</span>
 
-<span class="nc" id="L130">		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L131">		lineBreak = style.wrapWidth();</span>
-<span class="nc" id="L132">		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L133">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		final HColor backColor = branch0.getColor() == null</span>
-<span class="nc" id="L135">				? style.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())</span>
-<span class="nc" id="L136">				: branch0.getColor();</span>
+<span class="nc" id="L133">		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L134">		lineBreak = style.wrapWidth();</span>
+<span class="nc" id="L135">		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L136">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		final HColor backColor = branch0.getColor() == null</span>
+<span class="nc" id="L138">				? colors.getColor(style, PName.BackGroundColor, skinParam().getIHtmlColorSet())</span>
+<span class="nc" id="L139">				: branch0.getColor();</span>
 
 		final TextBlock tbTest;
-<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (Display.isNull(test) || test.isWhite())</span>
-<span class="nc" id="L140">			tbTest = TextBlockUtils.empty(0, 0);</span>
+<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (Display.isNull(test) || test.isWhite())</span>
+<span class="nc" id="L143">			tbTest = TextBlockUtils.empty(0, 0);</span>
 		else
-<span class="nc" id="L142">			tbTest = test.create0(fcDiamond, branch0.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
-<span class="nc" id="L143">					branch0.skinParam(), lineBreak, CreoleMode.FULL, null, null);</span>
+<span class="nc" id="L145">			tbTest = test.create0(fcDiamond, branch0.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="nc" id="L146">					branch0.skinParam(), lineBreak, CreoleMode.FULL, null, null);</span>
 
-<span class="nc" id="L145">		return new FtileDiamondInside(tbTest, branch0.skinParam(), backColor, borderColor, swimlane);</span>
+<span class="nc" id="L148">		return new FtileDiamondInside(tbTest, branch0.skinParam(), backColor, borderColor, swimlane);</span>
 	}
 
-	private Ftile getDiamond2(Swimlane swimlane, Branch branch0) {
+	private Ftile getDiamond2(Swimlane swimlane, Branch branch0, Colors endColors) {
 
-<span class="nc" id="L150">		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L151">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		final HColor backColor = branch0.getColor() == null</span>
-<span class="nc" id="L153">				? style.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())</span>
-<span class="nc" id="L154">				: branch0.getColor();</span>
+<span class="nc" id="L153">		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L154">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		final HColor backColor = branch0.getColor() == null</span>
+<span class="nc" id="L156">				? endColors.getColor(style, PName.BackGroundColor, skinParam().getIHtmlColorSet())</span>
+<span class="nc" id="L157">				: branch0.getColor();</span>
 
-<span class="nc" id="L156">		return new FtileDiamondInside(TextBlockUtils.empty(0, 0), branch0.skinParam(), backColor, borderColor,</span>
+<span class="nc" id="L159">		return new FtileDiamondInside(TextBlockUtils.empty(0, 0), branch0.skinParam(), backColor, borderColor,</span>
 				swimlane);
 	}
 

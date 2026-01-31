@@ -122,18 +122,18 @@ public class FtileFactoryDelegator implements FtileFactory {
 <span class="fc" id="L122">	}</span>
 
 	@Override
-	public Ftile start(Swimlane swimlane) {
-<span class="fc" id="L126">		return factory.start(swimlane);</span>
+	public Ftile start(Swimlane swimlane, Colors colors) {
+<span class="fc" id="L126">		return factory.start(swimlane, colors);</span>
 	}
 
 	@Override
-	public Ftile end(Swimlane swimlane) {
-<span class="nc" id="L131">		return factory.end(swimlane);</span>
+	public Ftile end(Swimlane swimlane, Colors colors) {
+<span class="nc" id="L131">		return factory.end(swimlane, colors);</span>
 	}
 
 	@Override
-	public Ftile stop(Swimlane swimlane) {
-<span class="fc" id="L136">		return factory.stop(swimlane);</span>
+	public Ftile stop(Swimlane swimlane, Colors colors) {
+<span class="fc" id="L136">		return factory.stop(swimlane, colors);</span>
 	}
 
 	@Override
@@ -200,37 +200,38 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest) {
-<span class="nc" id="L204">		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);</span>
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
+<span class="nc" id="L204">		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
+				endColors);
 	}
 
 	@Override
-	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out) {
-<span class="nc" id="L209">		return factory.createParallel(all, style, label, in, out);</span>
+	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out, Colors colors) {
+<span class="nc" id="L210">		return factory.createParallel(all, style, label, in, out, colors);</span>
 	}
 
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style) {
-<span class="nc" id="L215">		return factory.createGroup(list, name, backColor, note, type, style);</span>
+<span class="nc" id="L216">		return factory.createGroup(list, name, backColor, note, type, style);</span>
 	}
 
 	@Override
 	public StringBounder getStringBounder() {
-<span class="fc" id="L220">		return factory.getStringBounder();</span>
+<span class="fc" id="L221">		return factory.getStringBounder();</span>
 	}
 
 	protected final Rose getRose() {
-<span class="nc" id="L224">		return rose;</span>
+<span class="nc" id="L225">		return rose;</span>
 	}
 
 	@Override
 	public final ISkinParam skinParam() {
-<span class="fc" id="L229">		return factory.skinParam();</span>
+<span class="fc" id="L230">		return factory.skinParam();</span>
 	}
 
 	protected FtileFactory getFactory() {
-<span class="nc" id="L233">		return factory;</span>
+<span class="nc" id="L234">		return factory;</span>
 	}
 
 }

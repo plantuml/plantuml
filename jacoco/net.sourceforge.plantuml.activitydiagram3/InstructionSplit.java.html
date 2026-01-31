@@ -62,112 +62,115 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 	private final Swimlane swimlaneIn;
+	private final Colors colors;
 	private Swimlane swimlaneOut;
 
-<span class="nc" id="L67">	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane) {</span>
-<span class="nc" id="L68">		this.parent = parent;</span>
-<span class="nc" id="L69">		this.swimlaneIn = swimlane;</span>
+<span class="nc" id="L68">	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane, Colors colors) {</span>
+<span class="nc" id="L69">		this.parent = parent;</span>
+<span class="nc" id="L70">		this.swimlaneIn = swimlane;</span>
+<span class="nc" id="L71">		this.colors = colors;</span>
 
-<span class="nc" id="L71">		this.splits.add(new InstructionList(swimlane));</span>
-<span class="nc" id="L72">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L73">		this.splits.add(new InstructionList(swimlane));</span>
+<span class="nc" id="L74">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="nc" id="L75">	}</span>
 
 	@Override
 	public boolean containsBreak() {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (InstructionList split : splits)</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (split.containsBreak())</span>
-<span class="nc" id="L79">				return true;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (InstructionList split : splits)</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (split.containsBreak())</span>
+<span class="nc" id="L81">				return true;</span>
 
-<span class="nc" id="L81">		return false;</span>
+<span class="nc" id="L83">		return false;</span>
 	}
 
 	private InstructionList getLast() {
-<span class="nc" id="L85">		return splits.get(splits.size() - 1);</span>
+<span class="nc" id="L87">		return splits.get(splits.size() - 1);</span>
 	}
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-<span class="nc" id="L90">		return getLast().add(ins);</span>
+<span class="nc" id="L92">		return getLast().add(ins);</span>
 	}
 
 	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L96">		final List&lt;Gtile&gt; all = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (InstructionList list : splits) {</span>
-<span class="nc" id="L98">			Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
-<span class="nc" id="L99">			tmp = Gtiles.withIncomingArrow(tmp, 20);</span>
-<span class="nc" id="L100">			tmp = Gtiles.withOutgoingArrow(tmp, 20);</span>
-<span class="nc" id="L101">			all.add(tmp);</span>
-<span class="nc" id="L102">		}</span>
+<span class="nc" id="L98">		final List&lt;Gtile&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (InstructionList list : splits) {</span>
+<span class="nc" id="L100">			Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L101">			tmp = Gtiles.withIncomingArrow(tmp, 20);</span>
+<span class="nc" id="L102">			tmp = Gtiles.withOutgoingArrow(tmp, 20);</span>
+<span class="nc" id="L103">			all.add(tmp);</span>
+<span class="nc" id="L104">		}</span>
 
-<span class="nc" id="L104">		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());</span>
+<span class="nc" id="L106">		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());</span>
 	}
 	// ::done
 
 	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
 		Rainbow color;
-<span class="nc" id="L110">		color = Rainbow.build(skinParam);</span>
-<span class="nc" id="L111">		return color;</span>
+<span class="nc" id="L112">		color = Rainbow.build(skinParam);</span>
+<span class="nc" id="L113">		return color;</span>
 	}
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="nc" id="L116">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (InstructionList list : splits)</span>
-<span class="nc" id="L118">			all.add(list.createFtile(factory));</span>
+<span class="nc" id="L118">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (InstructionList list : splits)</span>
+<span class="nc" id="L120">			all.add(list.createFtile(factory));</span>
 
-<span class="nc" id="L120">		return factory.createParallel(all, ForkStyle.SPLIT, null, swimlaneIn, swimlaneOut);</span>
+<span class="nc" id="L122">		return factory.createParallel(all, ForkStyle.SPLIT, null, swimlaneIn, swimlaneOut, colors);</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L124">		return parent;</span>
+<span class="nc" id="L126">		return parent;</span>
 	}
 
 	public void splitAgain(LinkRendering inlinkRendering) {
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (inlinkRendering != null)</span>
-<span class="nc" id="L129">			getLast().setOutRendering(inlinkRendering);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (inlinkRendering != null)</span>
+<span class="nc" id="L131">			getLast().setOutRendering(inlinkRendering);</span>
 
-<span class="nc" id="L131">		final InstructionList list = new InstructionList(swimlaneIn);</span>
-<span class="nc" id="L132">		this.splits.add(list);</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L133">		final InstructionList list = new InstructionList(swimlaneIn);</span>
+<span class="nc" id="L134">		this.splits.add(list);</span>
+<span class="nc" id="L135">	}</span>
 
 	public void endSplit(LinkRendering inlinkRendering, Swimlane endSwimlane) {
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (inlinkRendering != null)</span>
-<span class="nc" id="L137">			getLast().setOutRendering(inlinkRendering);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (inlinkRendering != null)</span>
+<span class="nc" id="L139">			getLast().setOutRendering(inlinkRendering);</span>
 
-<span class="nc" id="L139">		this.swimlaneOut = endSwimlane;</span>
+<span class="nc" id="L141">		this.swimlaneOut = endSwimlane;</span>
 
-<span class="nc" id="L141">	}</span>
+<span class="nc" id="L143">	}</span>
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L145">		return getLast().kill();</span>
+<span class="nc" id="L147">		return getLast().kill();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L150">		return inlinkRendering;</span>
+<span class="nc" id="L152">		return inlinkRendering;</span>
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="nc" id="L155">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
+<span class="nc" id="L158">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L160">		return InstructionList.getSwimlanes2(splits);</span>
+<span class="nc" id="L163">		return InstructionList.getSwimlanes2(splits);</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L165">		return parent.getSwimlaneOut();</span>
+<span class="nc" id="L168">		return parent.getSwimlaneOut();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L170">		return swimlaneOut;</span>
+<span class="nc" id="L173">		return swimlaneOut;</span>
 		// return getLast().getSwimlaneOut();
 	}
 

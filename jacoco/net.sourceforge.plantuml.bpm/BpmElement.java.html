@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -66,118 +67,118 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 	private final BpmElementType type;
 	private final Display display;
 
-<span class="nc" id="L69">	public BpmElement(String id, BpmElementType type, String label) {</span>
-<span class="nc" id="L70">		this.id = id;</span>
-<span class="nc" id="L71">		this.type = type;</span>
-<span class="nc" id="L72">		this.display = Display.getWithNewlines(getPragma(), label);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L70">	public BpmElement(String id, BpmElementType type, String label) {</span>
+<span class="nc" id="L71">		this.id = id;</span>
+<span class="nc" id="L72">		this.type = type;</span>
+<span class="nc" id="L73">		this.display = Display.getWithNewlines(getPragma(), label);</span>
+<span class="nc" id="L74">	}</span>
 
 	public BpmElement(String id, BpmElementType type) {
-<span class="nc" id="L76">		this(id, type, null);</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L77">		this(id, type, null);</span>
+<span class="nc" id="L78">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (id == null) {</span>
-<span class="nc" id="L82">			return type.toString() + &quot;(&quot; + display + &quot;)&quot;;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (id == null) {</span>
+<span class="nc" id="L83">			return type.toString() + &quot;(&quot; + display + &quot;)&quot;;</span>
 		}
-<span class="nc" id="L84">		return type.toString() + &quot;(&quot; + id + &quot;)&quot;;</span>
+<span class="nc" id="L85">		return type.toString() + &quot;(&quot; + id + &quot;)&quot;;</span>
 	}
 
 	public BpmElementType getType() {
-<span class="nc" id="L88">		return type;</span>
+<span class="nc" id="L89">		return type;</span>
 	}
 
 	public final Display getDisplay() {
-<span class="nc" id="L92">		return display;</span>
+<span class="nc" id="L93">		return display;</span>
 	}
 
 	public TextBlock toTextBlock(ISkinParam skinParam) {
-<span class="nc" id="L96">		final TextBlock raw = toTextBlockInternal(skinParam);</span>
-<span class="nc" id="L97">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L97">		final TextBlock raw = toTextBlockInternal(skinParam);</span>
+<span class="nc" id="L98">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L100">				raw.drawU(ug);</span>
-<span class="nc" id="L101">				ug = ug.apply(HColors.RED);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">				for (Where w : Where.values()) {</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (have(w)) {</span>
-<span class="nc" id="L104">						drawLine(ug, w, raw.calculateDimension(ug.getStringBounder()));</span>
+<span class="nc" id="L101">				raw.drawU(ug);</span>
+<span class="nc" id="L102">				ug = ug.apply(HColors.RED);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">				for (Where w : Where.values()) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">					if (have(w)) {</span>
+<span class="nc" id="L105">						drawLine(ug, w, raw.calculateDimension(ug.getStringBounder()));</span>
 					}
 				}
-<span class="nc" id="L107">			}</span>
+<span class="nc" id="L108">			}</span>
 
 			@Override
 			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L111">				return raw.getInnerPosition(member, stringBounder);</span>
+<span class="nc" id="L112">				return raw.getInnerPosition(member, stringBounder);</span>
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L115">				return raw.calculateDimension(stringBounder);</span>
+<span class="nc" id="L116">				return raw.calculateDimension(stringBounder);</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L119">				return raw.getMinMax(stringBounder);</span>
+<span class="nc" id="L120">				return raw.getMinMax(stringBounder);</span>
 			}
 		};
 	}
 
 	private void drawLine(UGraphic ug, Where w, XDimension2D total) {
-<span class="nc" id="L125">		final double width = total.getWidth();</span>
-<span class="nc" id="L126">		final double height = total.getHeight();</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (w == Where.WEST) {</span>
-<span class="nc" id="L128">			ug.apply(new UTranslate(-10, height / 2)).draw(ULine.hline(10));</span>
+<span class="nc" id="L126">		final double width = total.getWidth();</span>
+<span class="nc" id="L127">		final double height = total.getHeight();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (w == Where.WEST) {</span>
+<span class="nc" id="L129">			ug.apply(new UTranslate(-10, height / 2)).draw(ULine.hline(10));</span>
 		}
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (w == Where.EAST) {</span>
-<span class="nc" id="L131">			ug.apply(new UTranslate(width, height / 2)).draw(ULine.hline(10));</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (w == Where.EAST) {</span>
+<span class="nc" id="L132">			ug.apply(new UTranslate(width, height / 2)).draw(ULine.hline(10));</span>
 		}
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (w == Where.NORTH) {</span>
-<span class="nc" id="L134">			ug.apply(new UTranslate(width / 2, -10)).draw(ULine.vline(10));</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (w == Where.NORTH) {</span>
+<span class="nc" id="L135">			ug.apply(new UTranslate(width / 2, -10)).draw(ULine.vline(10));</span>
 		}
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (w == Where.SOUTH) {</span>
-<span class="nc" id="L137">			ug.apply(new UTranslate(width / 2, height)).draw(ULine.vline(10));</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (w == Where.SOUTH) {</span>
+<span class="nc" id="L138">			ug.apply(new UTranslate(width / 2, height)).draw(ULine.vline(10));</span>
 		}
-<span class="nc" id="L139">	}</span>
+<span class="nc" id="L140">	}</span>
 
 	private StyleSignatureBasic getSignatureCircle() {
-<span class="nc" id="L142">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle);</span>
+<span class="nc" id="L143">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle);</span>
 	}
 
 	private Style getStyle(ISkinParam skinParam) {
-<span class="nc" id="L146">		return getSignatureCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L147">		return getSignatureCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (type == BpmElementType.START) {</span>
-<span class="nc" id="L151">			return new FtileCircleStart(skinParam, null, getStyle(skinParam));</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (type == BpmElementType.START) {</span>
+<span class="nc" id="L152">			return new FtileCircleStart(skinParam, null, getStyle(skinParam), Colors.empty());</span>
 		}
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (type == BpmElementType.MERGE) {</span>
-<span class="nc" id="L154">			final HColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);</span>
-<span class="nc" id="L155">			final HColor backColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBackground);</span>
-<span class="nc" id="L156">			return new FtileDiamond(skinParam, backColor, borderColor, null);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (type == BpmElementType.MERGE) {</span>
+<span class="nc" id="L155">			final HColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);</span>
+<span class="nc" id="L156">			final HColor backColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBackground);</span>
+<span class="nc" id="L157">			return new FtileDiamond(skinParam, backColor, borderColor, null);</span>
 		}
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (type == BpmElementType.DOCKED_EVENT) {</span>
-<span class="nc" id="L159">			final UFont font = UFont.serif(14);</span>
-<span class="nc" id="L160">			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN, null, null);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (type == BpmElementType.DOCKED_EVENT) {</span>
+<span class="nc" id="L160">			final UFont font = UFont.serif(14);</span>
+<span class="nc" id="L161">			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN, null, null);</span>
 		}
-<span class="nc" id="L162">		final UFont font = UFont.serif(14);</span>
-<span class="nc" id="L163">		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, null);</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (Display.isNull(display)) {</span>
-<span class="nc" id="L165">			return Display.getWithNewlines(skinParam.getPragma(), type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L163">		final UFont font = UFont.serif(14);</span>
+<span class="nc" id="L164">		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, null);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (Display.isNull(display)) {</span>
+<span class="nc" id="L166">			return Display.getWithNewlines(skinParam.getPragma(), type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);</span>
 		}
-<span class="nc" id="L167">		return display.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L168">		return display.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	private XDimension2D dimension;
 
 	public XDimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam) {
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (dimension == null) {</span>
-<span class="nc" id="L174">			dimension = toTextBlock(skinParam).calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (dimension == null) {</span>
+<span class="nc" id="L175">			dimension = toTextBlock(skinParam).calculateDimension(stringBounder);</span>
 		}
-<span class="nc" id="L176">		return dimension;</span>
+<span class="nc" id="L177">		return dimension;</span>
 	}
 
 	public final String getId() {
-<span class="nc" id="L180">		return id;</span>
+<span class="nc" id="L181">		return id;</span>
 	}
 
 }

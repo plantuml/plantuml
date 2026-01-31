@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -60,109 +61,111 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public abstract class AbstractParallelFtilesBuilder {
 
-<span class="nc" id="L63">	protected final double barHeight = 6;</span>
+<span class="nc" id="L64">	protected final double barHeight = 6;</span>
 
-<span class="nc" id="L65">	private final Rose rose = new Rose();</span>
+<span class="nc" id="L66">	private final Rose rose = new Rose();</span>
 
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
-<span class="nc" id="L69">	protected final List&lt;Ftile&gt; list99 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L70">	protected final List&lt;Ftile&gt; list99 = new ArrayList&lt;&gt;();</span>
+	protected final Colors colors;
 
 	public StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L72">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
+<span class="nc" id="L74">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
 	}
 
 	final public StyleSignatureBasic getStyleSignatureArrow() {
-<span class="nc" id="L76">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+<span class="nc" id="L78">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
 	}
 
-<span class="nc" id="L79">	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List&lt;Ftile&gt; all) {</span>
-<span class="nc" id="L80">		this.skinParam = skinParam;</span>
-<span class="nc" id="L81">		this.stringBounder = stringBounder;</span>
-<span class="nc" id="L82">		this.list99.addAll(decorateAllTiles(all));</span>
-<span class="nc" id="L83">	}</span>
+	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List&lt;Ftile&gt; all,
+<span class="nc" id="L82">			Colors colors) {</span>
+<span class="nc" id="L83">		this.skinParam = skinParam;</span>
+<span class="nc" id="L84">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L85">		this.list99.addAll(decorateAllTiles(all));</span>
+<span class="nc" id="L86">		this.colors = colors;</span>
+<span class="nc" id="L87">	}</span>
 
 	private List&lt;Ftile&gt; decorateAllTiles(List&lt;Ftile&gt; all) {
-<span class="nc" id="L86">		final double maxHeight = computeMaxHeight(all);</span>
-<span class="nc" id="L87">		final double ymargin1 = getSuppSpace1(all, getStringBounder());</span>
-<span class="nc" id="L88">		final double ymargin2 = getSuppSpace2(all, getStringBounder());</span>
-<span class="nc" id="L89">		final List&lt;Ftile&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Ftile ftile : all) {</span>
-<span class="nc" id="L91">			final Ftile newFtile = computeNewFtile(ftile, maxHeight, ymargin1, ymargin2);</span>
-<span class="nc" id="L92">			result.add(newFtile);</span>
-<span class="nc" id="L93">		}</span>
-<span class="nc" id="L94">		return result;</span>
+<span class="nc" id="L90">		final double maxHeight = computeMaxHeight(all);</span>
+<span class="nc" id="L91">		final double ymargin1 = getSuppSpace1(all, getStringBounder());</span>
+<span class="nc" id="L92">		final double ymargin2 = getSuppSpace2(all, getStringBounder());</span>
+<span class="nc" id="L93">		final List&lt;Ftile&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (Ftile ftile : all) {</span>
+<span class="nc" id="L95">			final Ftile newFtile = computeNewFtile(ftile, maxHeight, ymargin1, ymargin2);</span>
+<span class="nc" id="L96">			result.add(newFtile);</span>
+<span class="nc" id="L97">		}</span>
+<span class="nc" id="L98">		return result;</span>
 	}
 
 	private double getSuppSpace1(List&lt;Ftile&gt; all, StringBounder stringBounder) {
-<span class="nc" id="L98">		double result = 0;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (Ftile child : all) {</span>
-<span class="nc" id="L100">			final TextBlock text = getTextBlock(child.getInLinkRendering().getDisplay());</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (text == null)</span>
-<span class="nc" id="L102">				continue;</span>
+<span class="nc" id="L102">		double result = 0;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (Ftile child : all) {</span>
+<span class="nc" id="L104">			final TextBlock text = getTextBlock(child.getInLinkRendering().getDisplay());</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (text == null)</span>
+<span class="nc" id="L106">				continue;</span>
 
-<span class="nc" id="L104">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L105">			result = Math.max(result, dim.getHeight());</span>
+<span class="nc" id="L108">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
+<span class="nc" id="L109">			result = Math.max(result, dim.getHeight());</span>
 
-<span class="nc" id="L107">		}</span>
-<span class="nc" id="L108">		return result;</span>
+<span class="nc" id="L111">		}</span>
+<span class="nc" id="L112">		return result;</span>
 	}
 
 	private double getSuppSpace2(List&lt;Ftile&gt; all, StringBounder stringBounder) {
-<span class="nc" id="L112">		double result = 0;</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (Ftile child : all) {</span>
-<span class="nc" id="L114">			final TextBlock text = getTextBlock(child.getOutLinkRendering().getDisplay());</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (text == null)</span>
-<span class="nc" id="L116">				continue;</span>
+<span class="nc" id="L116">		double result = 0;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (Ftile child : all) {</span>
+<span class="nc" id="L118">			final TextBlock text = getTextBlock(child.getOutLinkRendering().getDisplay());</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (text == null)</span>
+<span class="nc" id="L120">				continue;</span>
 
-<span class="nc" id="L118">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L119">			result = Math.max(result, dim.getHeight());</span>
-<span class="nc" id="L120">		}</span>
-<span class="nc" id="L121">		return result;</span>
+<span class="nc" id="L122">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
+<span class="nc" id="L123">			result = Math.max(result, dim.getHeight());</span>
+<span class="nc" id="L124">		}</span>
+<span class="nc" id="L125">		return result;</span>
 	}
 
-
 	private Ftile computeNewFtile(Ftile ftile, double maxHeight, double ymargin1, double ymargin2) {
-<span class="nc" id="L126">		final double spaceArroundBlackBar = 20;</span>
-<span class="nc" id="L127">		final double xMargin = 14;</span>
+<span class="nc" id="L129">		final double spaceArroundBlackBar = 20;</span>
+<span class="nc" id="L130">		final double xMargin = 14;</span>
 		Ftile tmp;
-<span class="nc" id="L129">		tmp = FtileUtils.addHorizontalMargin(ftile, xMargin, xMargin + getSuppForIncomingArrow(ftile));</span>
-<span class="nc" id="L130">		tmp = new FtileHeightFixedCentered(tmp, maxHeight + 2 * spaceArroundBlackBar);</span>
-<span class="nc" id="L131">		tmp = new FtileHeightFixedMarged(ymargin1, tmp, ymargin2);</span>
-<span class="nc" id="L132">		return tmp;</span>
+<span class="nc" id="L132">		tmp = FtileUtils.addHorizontalMargin(ftile, xMargin, xMargin + getSuppForIncomingArrow(ftile));</span>
+<span class="nc" id="L133">		tmp = new FtileHeightFixedCentered(tmp, maxHeight + 2 * spaceArroundBlackBar);</span>
+<span class="nc" id="L134">		tmp = new FtileHeightFixedMarged(ymargin1, tmp, ymargin2);</span>
+<span class="nc" id="L135">		return tmp;</span>
 	}
 
 	private double getSuppForIncomingArrow(Ftile ftile) {
-<span class="nc" id="L136">		final double x1 = getXSuppForDisplay(ftile, ftile.getInLinkRendering().getDisplay());</span>
-<span class="nc" id="L137">		final double x2 = getXSuppForDisplay(ftile, ftile.getOutLinkRendering().getDisplay());</span>
-<span class="nc" id="L138">		return Math.max(x1, x2);</span>
+<span class="nc" id="L139">		final double x1 = getXSuppForDisplay(ftile, ftile.getInLinkRendering().getDisplay());</span>
+<span class="nc" id="L140">		final double x2 = getXSuppForDisplay(ftile, ftile.getOutLinkRendering().getDisplay());</span>
+<span class="nc" id="L141">		return Math.max(x1, x2);</span>
 	}
 
 	private double getXSuppForDisplay(Ftile ftile, Display label) {
-<span class="nc" id="L142">		final TextBlock text = getTextBlock(label);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (text == null)</span>
-<span class="nc" id="L144">			return 0;</span>
+<span class="nc" id="L145">		final TextBlock text = getTextBlock(label);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (text == null)</span>
+<span class="nc" id="L147">			return 0;</span>
 
-<span class="nc" id="L146">		final double textWidth = text.calculateDimension(getStringBounder()).getWidth();</span>
-<span class="nc" id="L147">		final FtileGeometry ftileDim = ftile.calculateDimension(getStringBounder());</span>
-<span class="nc" id="L148">		final double pos2 = ftileDim.getLeft() + textWidth;</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (pos2 &gt; ftileDim.getWidth())</span>
-<span class="nc" id="L150">			return pos2 - ftileDim.getWidth();</span>
+<span class="nc" id="L149">		final double textWidth = text.calculateDimension(getStringBounder()).getWidth();</span>
+<span class="nc" id="L150">		final FtileGeometry ftileDim = ftile.calculateDimension(getStringBounder());</span>
+<span class="nc" id="L151">		final double pos2 = ftileDim.getLeft() + textWidth;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (pos2 &gt; ftileDim.getWidth())</span>
+<span class="nc" id="L153">			return pos2 - ftileDim.getWidth();</span>
 
-<span class="nc" id="L152">		return 0;</span>
+<span class="nc" id="L155">		return 0;</span>
 	}
 
 	final protected double computeMaxHeight(List&lt;Ftile&gt; all) {
-<span class="nc" id="L156">		double height = 0;</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		for (Ftile tmp : all)</span>
-<span class="nc" id="L158">			height = Math.max(height, tmp.calculateDimension(getStringBounder()).getHeight());</span>
+<span class="nc" id="L159">		double height = 0;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (Ftile tmp : all)</span>
+<span class="nc" id="L161">			height = Math.max(height, tmp.calculateDimension(getStringBounder()).getHeight());</span>
 
-<span class="nc" id="L160">		return height;</span>
+<span class="nc" id="L163">		return height;</span>
 	}
 
 	public final Ftile build(Ftile inner) {
-<span class="nc" id="L164">		final Ftile step1 = doStep1(inner);</span>
-<span class="nc" id="L165">		return doStep2(inner, step1);</span>
+<span class="nc" id="L167">		final Ftile step1 = doStep1(inner);</span>
+<span class="nc" id="L168">		return doStep2(inner, step1);</span>
 	}
 
 	protected abstract Ftile doStep1(Ftile inner);
@@ -170,40 +173,40 @@ public abstract class AbstractParallelFtilesBuilder {
 	protected abstract Ftile doStep2(Ftile inner, Ftile step1);
 
 	protected StringBounder getStringBounder() {
-<span class="nc" id="L173">		return stringBounder;</span>
+<span class="nc" id="L176">		return stringBounder;</span>
 	}
 
 	protected Rose getRose() {
-<span class="nc" id="L177">		return rose;</span>
+<span class="nc" id="L180">		return rose;</span>
 	}
 
 	protected ISkinParam skinParam() {
-<span class="nc" id="L181">		return skinParam;</span>
+<span class="nc" id="L184">		return skinParam;</span>
 	}
 
 	protected final TextBlock getTextBlock(Display display) {
 		// DUP3945
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (Display.isNull(display))</span>
-<span class="nc" id="L187">			return null;</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L190">			return null;</span>
 
-<span class="nc" id="L189">		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L190">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L192">		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L193">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L192">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);</span>
+<span class="nc" id="L195">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);</span>
 	}
 
 	protected TextBlock getTextBlock(LinkRendering linkRendering) {
 		// DUP1433
-<span class="nc" id="L197">		final Display display = linkRendering.getDisplay();</span>
-<span class="nc" id="L198">		return getTextBlock(display);</span>
+<span class="nc" id="L200">		final Display display = linkRendering.getDisplay();</span>
+<span class="nc" id="L201">		return getTextBlock(display);</span>
 	}
 
 	protected final double getHeightOfMiddle(Ftile middle) {
-<span class="nc" id="L202">		return middle.calculateDimension(getStringBounder()).getHeight();</span>
+<span class="nc" id="L205">		return middle.calculateDimension(getStringBounder()).getHeight();</span>
 	}
 
 	protected Swimlane swimlaneOutForStep2() {
-<span class="nc" id="L206">		return list99.get(list99.size() - 1).getSwimlaneOut();</span>
+<span class="nc" id="L209">		return list99.get(list99.size() - 1).getSwimlaneOut();</span>
 	}
 
 }

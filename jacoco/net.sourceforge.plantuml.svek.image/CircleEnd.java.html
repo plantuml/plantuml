@@ -71,13 +71,13 @@ public class CircleEnd implements UDrawable {
 	final public void drawU(UGraphic ug) {
 <span class="fc" id="L72">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
 
-<span class="fc" id="L74">		HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L75">		HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L74">		final HColor backColor = colors.getColor(style, PName.BackGroundColor, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L75">		final HColor lineColor = colors.getColor(style, PName.LineColor, skinParam.getIHtmlColorSet());</span>
 
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (colors.getColor(ColorType.BACK) != null) {</span>
-<span class="nc" id="L78">			lineColor = colors.getColor(ColorType.BACK);</span>
-<span class="nc" id="L79">			backColor = colors.getColor(ColorType.BACK);</span>
-		}
+//		if (colors.getColor(ColorType.BACK) != null) {
+//			lineColor = colors.getColor(ColorType.BACK);
+//			backColor = colors.getColor(ColorType.BACK);
+//		}
 
 <span class="fc" id="L82">		final double shadowing = style.getShadowing();</span>
 

@@ -62,10 +62,10 @@ public class FtileCircleStop extends AbstractFtile {
 <span class="nc" id="L62">		return Collections.emptyList();</span>
 	}
 
-	public FtileCircleStop(ISkinParam skinParam, Swimlane swimlane, Style style) {
+	public FtileCircleStop(ISkinParam skinParam, Swimlane swimlane, Style style, Colors colors) {
 <span class="fc" id="L66">		super(skinParam);</span>
 <span class="fc" id="L67">		this.swimlane = swimlane;</span>
-<span class="fc" id="L68">		this.circle = new CircleEnd(skinParam, style, Colors.empty());</span>
+<span class="fc" id="L68">		this.circle = new CircleEnd(skinParam, style, colors);</span>
 
 <span class="fc" id="L70">	}</span>
 

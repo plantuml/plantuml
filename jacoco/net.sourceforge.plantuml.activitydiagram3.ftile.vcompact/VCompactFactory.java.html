@@ -109,15 +109,15 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile start(Swimlane swimlane) {
+	public Ftile start(Swimlane swimlane, Colors colors) {
 <span class="fc" id="L113">		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L114">		return new FtileCircleStart(skinParam(), swimlane, style);</span>
+<span class="fc" id="L114">		return new FtileCircleStart(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override
-	public Ftile stop(Swimlane swimlane) {
+	public Ftile stop(Swimlane swimlane, Colors colors) {
 <span class="fc" id="L119">		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L120">		return new FtileCircleStop(skinParam(), swimlane, style);</span>
+<span class="fc" id="L120">		return new FtileCircleStop(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override
@@ -128,9 +128,9 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile end(Swimlane swimlane) {
+	public Ftile end(Swimlane swimlane, Colors colors) {
 <span class="nc" id="L132">		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L133">		return new FtileCircleEndCross(skinParam(), swimlane, style);</span>
+<span class="nc" id="L133">		return new FtileCircleEndCross(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public class VCompactFactory implements FtileFactory {
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest) {
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
 <span class="nc" id="L191">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
 <span class="nc bnc" id="L192" title="All 2 branches missed.">		for (Branch branch : branches)</span>
 <span class="nc" id="L193">			ftiles.add(branch.getFtile());</span>
@@ -196,7 +196,7 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out) {
+	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out, Colors colors) {
 <span class="nc" id="L200">		return new FtileForkInner(all);</span>
 	}
 

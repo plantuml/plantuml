@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -61,133 +60,136 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
 	// ::remove folder when __HAXE__
 
-<span class="nc" id="L64">	private final List&lt;Branch&gt; switches = new ArrayList&lt;&gt;();</span>
-	private final ISkinParam skinParam;
+<span class="nc" id="L63">	private final List&lt;Branch&gt; switches = new ArrayList&lt;&gt;();</span>
 
 	private final Instruction parent;
 
 	private Branch current;
 	private final LinkRendering topInlinkRendering;
-<span class="nc" id="L71">	private LinkRendering afterEndwhile = LinkRendering.none();</span>
+<span class="nc" id="L69">	private LinkRendering afterEndwhile = LinkRendering.none();</span>
 	private final Display labelTest;
 
 	private final Swimlane swimlane;
 
+	private final Colors colors;
+	private Colors endColors;
+
 	@Override
 	public boolean containsBreak() {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Branch branch : switches)</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (branch.containsBreak())</span>
-<span class="nc" id="L80">				return true;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (Branch branch : switches)</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (branch.containsBreak())</span>
+<span class="nc" id="L81">				return true;</span>
 
-<span class="nc" id="L82">		return false;</span>
+<span class="nc" id="L83">		return false;</span>
 	}
 
 	public InstructionSwitch(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering inlinkRendering,
-<span class="nc" id="L86">			HColor color, ISkinParam skinParam) {</span>
-<span class="nc" id="L87">		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L88">		this.parent = parent;</span>
-<span class="nc" id="L89">		this.skinParam = skinParam;</span>
+<span class="nc" id="L87">			Colors colors) {</span>
+<span class="nc" id="L88">		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="nc" id="L89">		this.parent = parent;</span>
 <span class="nc" id="L90">		this.labelTest = labelTest;</span>
 <span class="nc" id="L91">		this.swimlane = swimlane;</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L92">		this.colors = colors;</span>
+<span class="nc" id="L93">	}</span>
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (current == null)</span>
-<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;No 'case' in this switch&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (current == null)</span>
+<span class="nc" id="L98">			return CommandExecutionResult.error(&quot;No 'case' in this switch&quot;);</span>
 
-<span class="nc" id="L99">		return current.add(ins);</span>
+<span class="nc" id="L100">		return current.add(ins);</span>
 	}
 
 	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (Branch branch : switches)</span>
-<span class="nc" id="L106">			branch.updateGtile(skinParam, stringBounder);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (Branch branch : switches)</span>
+<span class="nc" id="L107">			branch.updateGtile(skinParam, stringBounder);</span>
 
-<span class="nc" id="L108">		final List&lt;Gtile&gt; gtiles = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L109">		final List&lt;Branch&gt; branches = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (Branch branch : switches) {</span>
-<span class="nc" id="L111">			gtiles.add(branch.getGtile());</span>
-<span class="nc" id="L112">			branches.add(branch);</span>
-<span class="nc" id="L113">		}</span>
+<span class="nc" id="L109">		final List&lt;Gtile&gt; gtiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L110">		final List&lt;Branch&gt; branches = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (Branch branch : switches) {</span>
+<span class="nc" id="L112">			gtiles.add(branch.getGtile());</span>
+<span class="nc" id="L113">			branches.add(branch);</span>
+<span class="nc" id="L114">		}</span>
 
-<span class="nc" id="L115">		return GtileIfHexagon.build(swimlane, gtiles, switches);</span>
+<span class="nc" id="L116">		return GtileIfHexagon.build(swimlane, gtiles, switches);</span>
 	}
 	// ::done
 
 	public Ftile createFtile(FtileFactory factory) {
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (Branch branch : switches)</span>
-<span class="nc" id="L121">			branch.updateFtile(factory);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (Branch branch : switches)</span>
+<span class="nc" id="L122">			branch.updateFtile(factory);</span>
 
-<span class="nc" id="L123">		Ftile result = factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest);</span>
-<span class="nc" id="L124">		result = eventuallyAddNote(factory, result, getSwimlaneIn(), VerticalAlignment.TOP);</span>
-<span class="nc" id="L125">		return result;</span>
+<span class="nc" id="L124">		Ftile result = factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
+<span class="nc" id="L125">				colors.mergeWith(endColors));</span>
+<span class="nc" id="L126">		result = eventuallyAddNote(factory, result, getSwimlaneIn(), VerticalAlignment.TOP);</span>
+<span class="nc" id="L127">		return result;</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L130">		return current.kill();</span>
+<span class="nc" id="L132">		return current.kill();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L135">		return topInlinkRendering;</span>
+<span class="nc" id="L137">		return topInlinkRendering;</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L140">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (swimlane != null)</span>
-<span class="nc" id="L142">			result.add(swimlane);</span>
+<span class="nc" id="L142">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (swimlane != null)</span>
+<span class="nc" id="L144">			result.add(swimlane);</span>
 
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (Branch branch : switches)</span>
-<span class="nc" id="L145">			result.addAll(branch.getSwimlanes());</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (Branch branch : switches)</span>
+<span class="nc" id="L147">			result.addAll(branch.getSwimlanes());</span>
 
-<span class="nc" id="L147">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L149">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L152">		return swimlane;</span>
+<span class="nc" id="L154">		return swimlane;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L157">		return swimlane;</span>
+<span class="nc" id="L159">		return swimlane;</span>
 	}
 
 	@Override
 	public Instruction getLast() {
-<span class="nc" id="L162">		return switches.get(switches.size() - 1).getLast();</span>
+<span class="nc" id="L164">		return switches.get(switches.size() - 1).getLast();</span>
 	}
 
 	public boolean switchCase(Display labelCase, LinkRendering nextLinkRenderer) {
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (this.current != null)</span>
-<span class="nc" id="L167">			this.current.setSpecial(nextLinkRenderer);</span>
-<span class="nc" id="L168">		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane,</span>
-<span class="nc" id="L169">				LinkRendering.none().withDisplay(labelCase), labelCase, null,</span>
-<span class="nc" id="L170">				LinkRendering.none().withDisplay(labelCase), null, skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L171">		this.switches.add(this.current);</span>
-<span class="nc" id="L172">		return true;</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (this.current != null)</span>
+<span class="nc" id="L169">			this.current.setSpecial(nextLinkRenderer, null);</span>
+<span class="nc" id="L170">		this.current = new Branch(swimlane, LinkRendering.none().withDisplay(labelCase), labelCase, null,</span>
+<span class="nc" id="L171">				LinkRendering.none().withDisplay(labelCase), null);</span>
+<span class="nc" id="L172">		this.switches.add(this.current);</span>
+<span class="nc" id="L173">		return true;</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L176">		return parent;</span>
+<span class="nc" id="L177">		return parent;</span>
 	}
 
-	public void endSwitch(LinkRendering nextLinkRenderer) {
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (this.current != null)</span>
-<span class="nc" id="L181">			this.current.setSpecial(nextLinkRenderer);</span>
-<span class="nc" id="L182">	}</span>
+	public void endSwitch(LinkRendering nextLinkRenderer, Colors endColors) {
+<span class="nc" id="L181">		this.endColors = endColors;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (this.current != null)</span>
+<span class="nc" id="L183">			this.current.setSpecial(nextLinkRenderer, endColors);</span>
+<span class="nc" id="L184">	}</span>
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
 			Stereotype stereotype) {
-<span class="nc bnc" id="L187" title="All 4 branches missed.">		if (current == null || current.isEmpty())</span>
-<span class="nc" id="L188">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		if (current == null || current.isEmpty())</span>
+<span class="nc" id="L190">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 		else
-<span class="nc" id="L190">			return current.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L192">			return current.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
 	}
 

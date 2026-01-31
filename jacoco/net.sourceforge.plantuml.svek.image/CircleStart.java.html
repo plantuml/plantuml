@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -55,31 +54,31 @@ public class CircleStart implements UDrawable {
 	private final Style style;
 	private final Colors colors;
 
-<span class="fc" id="L58">	public CircleStart(ISkinParam skinParam, Style style, Colors colors) {</span>
-<span class="fc" id="L59">		this.style = style;</span>
-<span class="fc" id="L60">		this.colors = colors;</span>
-<span class="fc" id="L61">		this.skinParam = skinParam;</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L57">	public CircleStart(ISkinParam skinParam, Style style, Colors colors) {</span>
+<span class="fc" id="L58">		this.style = style;</span>
+<span class="fc" id="L59">		this.colors = colors;</span>
+<span class="fc" id="L60">		this.skinParam = skinParam;</span>
+<span class="fc" id="L61">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L65">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="fc" id="L64">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L69">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="fc" id="L68">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
 
-<span class="fc" id="L71">		HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L72">		HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (colors.getColor(ColorType.BACK) != null) {</span>
-<span class="nc" id="L74">			lineColor = colors.getColor(ColorType.BACK);</span>
-<span class="nc" id="L75">			backColor = colors.getColor(ColorType.BACK);</span>
-		}
+<span class="fc" id="L70">		final HColor backColor = colors.getColor(style, PName.BackGroundColor, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L71">		final HColor lineColor = colors.getColor(style, PName.LineColor, skinParam.getIHtmlColorSet());</span>
+//		if (colors.getColor(ColorType.BACK) != null) {
+//			lineColor = colors.getColor(ColorType.BACK);
+//			backColor = colors.getColor(ColorType.BACK);
+//		}
 
-<span class="fc" id="L78">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L77">		final double shadowing = style.getShadowing();</span>
 
-<span class="fc" id="L80">		circle.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L81">		ug.apply(lineColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L79">		circle.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L80">		ug.apply(lineColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
+<span class="fc" id="L81">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
