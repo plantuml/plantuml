@@ -97,6 +97,7 @@ import net.sourceforge.plantuml.project.draw.TaskDrawRegular;
 import net.sourceforge.plantuml.project.draw.TaskDrawSeparator;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.draw.header.TimeHeader;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderContext;
 import net.sourceforge.plantuml.project.draw.header.TimeHeaderDaily;
 import net.sourceforge.plantuml.project.draw.header.TimeHeaderMonthly;
 import net.sourceforge.plantuml.project.draw.header.TimeHeaderQuarterly;
@@ -315,6 +316,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimeHeader getTimeHeader(StringBounder stringBounder) {
+
+		final TimeHeaderContext ctx = new TimeHeaderContext(printScale, thParam(), nameDays, weekNumberStrategy,
+				weeklyHeaderStrategy, printStart);
+
 		if (minDay.equals(TimePoint.epoch()))
 			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
 		if (printScale == PrintScale.DAILY)

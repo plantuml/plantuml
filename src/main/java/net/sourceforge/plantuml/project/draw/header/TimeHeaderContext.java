@@ -39,14 +39,14 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
-import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class TimeHeaderContext {
 
-	private final TimeScale timeScale;
+	private final PrintScale printScale;
 	private final TimeHeaderParameters thParam;
 	private final Map<TimePoint, String> nameDays;
 
@@ -54,9 +54,9 @@ public class TimeHeaderContext {
 	private final WeeklyHeaderStrategy headerStrategy;
 	private final LocalDate printStart;
 
-	public TimeHeaderContext(TimeScale timeScale, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
+	public TimeHeaderContext(PrintScale printScale, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
 			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, LocalDate printStart) {
-		this.timeScale = timeScale;
+		this.printScale = printScale;
 		this.thParam = thParam;
 		this.nameDays = nameDays;
 		this.weekNumberStrategy = weekNumberStrategy;
@@ -64,8 +64,8 @@ public class TimeHeaderContext {
 		this.printStart = printStart;
 	}
 
-	public TimeScale getTimeScale() {
-		return timeScale;
+	public PrintScale getPrintScale() {
+		return printScale;
 	}
 
 	public TimeHeaderParameters getTimeHeaderParameters() {
