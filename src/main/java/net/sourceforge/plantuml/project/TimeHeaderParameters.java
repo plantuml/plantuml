@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.style.PName;
@@ -144,7 +143,7 @@ public class TimeHeaderParameters implements GanttStyle {
 		return ganttStyle.getStyle(param);
 	}
 
-	public double getCellWidth(StringBounder stringBounder) {
+	final public double getCellWidth() {
 		final double w = getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
 		return w * 1.6;
 	}

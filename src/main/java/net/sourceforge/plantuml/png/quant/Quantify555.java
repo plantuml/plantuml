@@ -82,7 +82,7 @@ import net.sourceforge.plantuml.utils.Log;
  * <ul>
  * <li>Very fast: one pass to count, one pass to remap pixels.</li>
  * <li>Simple and predictable (no recursion, no complex math).</li>
- * <li>Guaranteed <= 256 colors (or aborts safely).</li>
+ * <li>Guaranteed &lt;= 256 colors (or aborts safely).</li>
  * </ul>
  * 
  * <p>
@@ -115,7 +115,7 @@ public final class Quantify555 {
 	private static final int MIN_CUBES_THRESHOLD = 32;
 
 	/**
-	 * Attempts to quantize an image to <= 256 colors using the Cube555 structure.
+	 * Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.
 	 * 
 	 * @param src any {@link BufferedImage}
 	 * @return a new {@link BufferedImage} with an indexed color model, or

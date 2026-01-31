@@ -33,22 +33,21 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.draw.header;
 
 import java.time.LocalDate;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
 
-	public TimeHeaderCalendar(TimeHeaderParameters thParam, TimeScale timeScale) {
-		super(thParam, timeScale);
+	public TimeHeaderCalendar(TimeHeaderContext ctx, TimeScale timeScale) {
+		super(ctx, timeScale);
 	}
 
 	protected final Locale locale() {

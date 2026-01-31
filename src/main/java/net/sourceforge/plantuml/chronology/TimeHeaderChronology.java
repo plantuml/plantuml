@@ -50,13 +50,13 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.draw.TimeHeader;
+import net.sourceforge.plantuml.project.draw.header.TimeHeader;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderChronology extends TimeHeader {
+public class TimeHeaderChronology extends TimeHeader2 {
 
 	private final PrintScale printScale;
 

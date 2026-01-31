@@ -33,20 +33,12 @@
  * 
  *
  */
+package net.sourceforge.plantuml.project.draw.header;
 
-/**
- * Provides classes used to compose regex partials.
- * 
- * <p>
- * PlantUML parses text using regular expressions. To aid in readability, these
- * are sepecified as trees of {@link RegexComposed} branches and
- * {@link RegexLeaf} leaves.
- * 
- * <p>
- * Before a {@link RegexComposed} can be matched, it must first have each
- * of its constituent parts concatenated into one large regex string using
- * {@link RegexComposed#getPattern}. This string is then transformed
- * to replace some macros (e.g. %s for whitespace, %q for single quote)
- * and compiled using {@link java.util.regex.Pattern#compile}.
- */
-package net.sourceforge.plantuml.regex;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+
+public interface HeaderPiece {
+	public double getHeight(TimeHeaderContext ctx);
+
+	public void drawU(UGraphic ug, TimeHeaderContext ctx);
+}

@@ -95,14 +95,15 @@ import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TaskDrawGroup;
 import net.sourceforge.plantuml.project.draw.TaskDrawRegular;
 import net.sourceforge.plantuml.project.draw.TaskDrawSeparator;
-import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
-import net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
-import net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly;
-import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
-import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
-import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
+import net.sourceforge.plantuml.project.draw.header.TimeHeader;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderContext;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderDaily;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderMonthly;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderQuarterly;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderSimple;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderWeekly;
+import net.sourceforge.plantuml.project.draw.header.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
@@ -315,22 +316,14 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private TimeHeader getTimeHeader(StringBounder stringBounder) {
-		if (minDay.equals(TimePoint.epoch()))
-			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
-		if (printScale == PrintScale.DAILY)
-			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
-		else if (printScale == PrintScale.WEEKLY)
-			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, nameDays,
-					printStart, weekStartingNumber);
-		else if (printScale == PrintScale.MONTHLY)
-			return new TimeHeaderMonthly(stringBounder, thParam(), nameDays, printStart);
-		else if (printScale == PrintScale.QUARTERLY)
-			return new TimeHeaderQuarterly(stringBounder, thParam(), printStart);
-		else if (printScale == PrintScale.YEARLY)
-			return new TimeHeaderYearly(stringBounder, thParam(), printStart);
-		else
-			throw new IllegalStateException();
 
+		final TimeHeaderContext ctx = new TimeHeaderContext(printScale, thParam(), nameDays, weekNumberStrategy,
+				weeklyHeaderStrategy, printStart, weekStartingNumber);
+
+		if (minDay.equals(TimePoint.epoch()))
+			return new TimeHeaderSimple(stringBounder, ctx);
+
+		return ctx.buildTimeHeader();
 	}
 
 	private TimeHeaderParameters thParam() {

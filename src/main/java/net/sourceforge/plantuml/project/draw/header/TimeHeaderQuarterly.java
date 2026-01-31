@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.draw.header;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -42,13 +42,15 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderQuarterly extends TimeHeaderCalendar {
+
+	public TimeHeaderQuarterly(TimeHeaderContext ctx) {
+		super(ctx, ctx.quaterly());
+	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
@@ -67,11 +69,6 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
 		return getTimeHeaderHeight(stringBounder);
-	}
-
-	public TimeHeaderQuarterly(StringBounder stringBounder, TimeHeaderParameters thParam, LocalDate printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
-				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
 	}
 
 	@Override

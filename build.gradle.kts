@@ -182,7 +182,7 @@ tasks.withType<Javadoc>().configureEach {
 	options {
 		this as StandardJavadocDocletOptions
 		addBooleanOption("Xdoclint:none", true)
-		addStringOption("Xmaxwarns", "1")
+		addStringOption("Xmaxwarns", "50")
 		encoding = "UTF-8"
 		isUse = true
 	}
