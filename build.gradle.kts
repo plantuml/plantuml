@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.elk.alg.mrtree)
 
 	// JDepend for package metrics
-	jdependConfig("jdepend:jdepend:2.9.1")
+	jdependConfig(libs.jdepend)
 
 
     // Custom configuration for pdfJar task
