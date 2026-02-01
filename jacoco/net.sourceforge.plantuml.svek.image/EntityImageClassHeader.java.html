@@ -124,22 +124,22 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L124">					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);</span>
 
 		TextBlock genericBlock;
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (generic == null) {</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (generic == null) {</span>
 <span class="fc" id="L128">			genericBlock = null;</span>
 		} else {
-<span class="fc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
-<span class="fc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
-<span class="fc" id="L132">					.withTOBECHANGED(stereotype) //</span>
-<span class="fc" id="L133">					.with(entity.getStereostyles()) //</span>
-<span class="fc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
+<span class="nc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
+<span class="nc" id="L132">					.withTOBECHANGED(stereotype) //</span>
+<span class="nc" id="L133">					.with(entity.getStereostyles()) //</span>
+<span class="nc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 
-<span class="fc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
-<span class="fc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
-<span class="fc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="fc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="nc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
+<span class="nc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 
-<span class="fc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
 <span class="nc" id="L144">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
 <span class="nc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>

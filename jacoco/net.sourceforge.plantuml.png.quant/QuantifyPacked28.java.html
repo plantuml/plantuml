@@ -37,37 +37,78 @@ package net.sourceforge.plantuml.png.quant;
 
 import java.awt.image.BufferedImage;
 
-<span class="pc" id="L40">public final class QuantifyPacked28 {</span>
+import net.sourceforge.plantuml.png.PngIO;
+import net.sourceforge.plantuml.utils.Log;
+
+<span class="pc" id="L43">public final class QuantifyPacked28 {</span>
 
 	public static BufferedImage packMeIfPossible(BufferedImage src) {
 
-<span class="fc" id="L44">		final int type = src.getType();</span>
+<span class="fc" id="L47">		final int type = src.getType();</span>
 
-<span class="pc bpc" id="L46" title="6 of 8 branches missed.">		assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
+<span class="pc bpc" id="L49" title="6 of 8 branches missed.">		assert type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB</span>
 				|| type == BufferedImage.TYPE_3BYTE_BGR || type == BufferedImage.TYPE_4BYTE_ABGR;
 
-<span class="fc" id="L49">		final int w = src.getWidth();</span>
-<span class="fc" id="L50">		final int h = src.getHeight();</span>
+<span class="fc" id="L52">		final int w = src.getWidth();</span>
+<span class="fc" id="L53">		final int h = src.getHeight();</span>
+<span class="fc" id="L54">		final int pixelCount = w * h;</span>
+
+<span class="pc" id="L56">		Log.info(() -&gt; &quot;QuantifyPacked28: starting, image &quot; + w + &quot;x&quot; + h + &quot; (&quot; + pixelCount + &quot; pixels), type=&quot;</span>
+<span class="nc" id="L57">				+ type + &quot;, memory: &quot; + PngIO.getUsedMemoryMB() + &quot; MB&quot;);</span>
 
 		try {
-<span class="fc" id="L53">			final BufferedImage dst = new BufferedImage(w, h, type);</span>
+			// Step 1: Create destination image
+<span class="fc" id="L61">			final long startCreate = System.currentTimeMillis();</span>
+<span class="fc" id="L62">			final long memBeforeCreate = PngIO.getUsedMemoryMB();</span>
+<span class="fc" id="L63">			final BufferedImage dst = new BufferedImage(w, h, type);</span>
+<span class="fc" id="L64">			final long createDuration = System.currentTimeMillis() - startCreate;</span>
+<span class="fc" id="L65">			final long memAfterCreate = PngIO.getUsedMemoryMB();</span>
+<span class="pc" id="L66">			Log.info(() -&gt; &quot;QuantifyPacked28: destination image created in &quot; + createDuration + &quot; ms, memory: &quot;</span>
+					+ memBeforeCreate + &quot; -&gt; &quot; + memAfterCreate + &quot; MB (delta: &quot; + (memAfterCreate - memBeforeCreate)
+					+ &quot; MB)&quot;);
 
-<span class="fc" id="L55">			final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
-<span class="fc" id="L56">			final int[] out = new int[pixels.length];</span>
+			// Step 2: Extract pixels
+<span class="fc" id="L71">			final long startExtract = System.currentTimeMillis();</span>
+<span class="fc" id="L72">			final long memBeforeExtract = PngIO.getUsedMemoryMB();</span>
+<span class="fc" id="L73">			final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);</span>
+<span class="fc" id="L74">			final long extractDuration = System.currentTimeMillis() - startExtract;</span>
+<span class="fc" id="L75">			final long memAfterExtract = PngIO.getUsedMemoryMB();</span>
+<span class="pc" id="L76">			Log.info(() -&gt; &quot;QuantifyPacked28: pixel extraction in &quot; + extractDuration + &quot; ms, memory: &quot;</span>
+					+ memBeforeExtract + &quot; -&gt; &quot; + memAfterExtract + &quot; MB (delta: &quot;
+					+ (memAfterExtract - memBeforeExtract) + &quot; MB)&quot;);
 
-<span class="fc bfc" id="L58" title="All 2 branches covered.">			for (int i = 0; i &lt; pixels.length; i++) {</span>
-<span class="fc" id="L59">				final int argb = pixels[i];</span>
-<span class="fc" id="L60">				out[i] = QuantUtils.compressPackedARGB(argb);</span>
+			// Step 3: Compress pixels
+<span class="fc" id="L81">			final long startCompress = System.currentTimeMillis();</span>
+<span class="fc" id="L82">			final long memBeforeCompress = PngIO.getUsedMemoryMB();</span>
+<span class="fc" id="L83">			final int[] out = new int[pixels.length];</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			for (int i = 0; i &lt; pixels.length; i++) {</span>
+<span class="fc" id="L85">				final int argb = pixels[i];</span>
+<span class="fc" id="L86">				out[i] = QuantUtils.compressPackedARGB(argb);</span>
 			}
+<span class="fc" id="L88">			final long compressDuration = System.currentTimeMillis() - startCompress;</span>
+<span class="fc" id="L89">			final long memAfterCompress = PngIO.getUsedMemoryMB();</span>
+<span class="pc" id="L90">			Log.info(() -&gt; &quot;QuantifyPacked28: pixel compression in &quot; + compressDuration + &quot; ms, memory: &quot;</span>
+					+ memBeforeCompress + &quot; -&gt; &quot; + memAfterCompress + &quot; MB (delta: &quot;
+					+ (memAfterCompress - memBeforeCompress) + &quot; MB)&quot;);
 
-<span class="fc" id="L63">			dst.setRGB(0, 0, w, h, out, 0, w);</span>
-<span class="fc" id="L64">			return dst;</span>
-<span class="nc" id="L65">		} catch (Throwable t) {</span>
+			// Step 4: Write to destination
+<span class="fc" id="L95">			final long startWrite = System.currentTimeMillis();</span>
+<span class="fc" id="L96">			final long memBeforeWrite = PngIO.getUsedMemoryMB();</span>
+<span class="fc" id="L97">			dst.setRGB(0, 0, w, h, out, 0, w);</span>
+<span class="fc" id="L98">			final long writeDuration = System.currentTimeMillis() - startWrite;</span>
+<span class="fc" id="L99">			final long memAfterWrite = PngIO.getUsedMemoryMB();</span>
+<span class="pc" id="L100">			Log.info(() -&gt; &quot;QuantifyPacked28: pixel write in &quot; + writeDuration + &quot; ms, memory: &quot; + memBeforeWrite</span>
+					+ &quot; -&gt; &quot; + memAfterWrite + &quot; MB (delta: &quot; + (memAfterWrite - memBeforeWrite) + &quot; MB)&quot;);
+
+<span class="fc" id="L103">			return dst;</span>
+<span class="nc" id="L104">		} catch (Throwable t) {</span>
 			// Swallowing all throwables is intentional here: any unexpected failure
 			// during pixel extraction or packing (including OutOfMemoryError or JVM-level
 			// errors) prevents safe recovery. Returning null signals that the packed
 			// representation could not be produced.
-<span class="nc" id="L70">			return null;</span>
+<span class="nc" id="L109">			Log.info(() -&gt; &quot;QuantifyPacked28: exception caught: &quot; + t.getClass().getSimpleName() + &quot; - &quot;</span>
+<span class="nc" id="L110">					+ t.getMessage());</span>
+<span class="nc" id="L111">			return null;</span>
 		}
 	}
 

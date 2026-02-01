@@ -2205,8 +2205,8 @@ try {
 <span class="fc" id="L2205">	hcl = ND_clust(aghead(orig));</span>
     }
 <span class="fc bfc" id="L2207" title="All 2 branches covered.">    if (ND_node_type(adj) == 0) {</span>
-<span class="fc bfc" id="L2208" title="All 2 branches covered.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
-<span class="pc bpc" id="L2209" title="3 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
+<span class="pc bpc" id="L2208" title="1 of 2 branches missed.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
+<span class="pc bpc" id="L2209" title="5 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
 <span class="nc" id="L2210">	    rv = cl;</span>
     } else {
 <span class="fc" id="L2212">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
