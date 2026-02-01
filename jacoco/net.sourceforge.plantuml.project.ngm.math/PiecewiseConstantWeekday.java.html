@@ -59,14 +59,10 @@ import java.util.Objects;
  * conceptually apply across the whole {@link LocalDateTime} timeline.
  * &lt;/p&gt;
  *
- * &lt;p&gt;
- * Segments produced by {@link #iterateSegmentsFrom(LocalDateTime)} are daily
- * intervals of the form {@code [dayStart, nextDayStart)}.
- * &lt;/p&gt;
  */
 public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 
-<span class="fc" id="L69">	private static final EnumSet&lt;DayOfWeek&gt; ALL_DAYS = EnumSet.allOf(DayOfWeek.class);</span>
+<span class="fc" id="L65">	private static final EnumSet&lt;DayOfWeek&gt; ALL_DAYS = EnumSet.allOf(DayOfWeek.class);</span>
 
 	/**
 	 * Immutable day-to-workload mapping.
@@ -77,9 +73,9 @@ public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 	 * Private constructor expecting a fully validated, complete mapping containing
 	 * all 7 days.
 	 */
-<span class="fc" id="L80">	private PiecewiseConstantWeekday(EnumMap&lt;DayOfWeek, Fraction&gt; workloadByDay) {</span>
-<span class="fc" id="L81">		this.workloadByDay = workloadByDay;</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L76">	private PiecewiseConstantWeekday(EnumMap&lt;DayOfWeek, Fraction&gt; workloadByDay) {</span>
+<span class="fc" id="L77">		this.workloadByDay = workloadByDay;</span>
+<span class="fc" id="L78">	}</span>
 
 	/**
 	 * Creates a weekly pattern where all days share the same workload fraction.
@@ -88,13 +84,13 @@ public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 	 * @return an immutable weekly pattern
 	 */
 	public static PiecewiseConstantWeekday of(Fraction sameWorkload) {
-<span class="fc" id="L91">		Objects.requireNonNull(sameWorkload, &quot;sameWorkload&quot;);</span>
+<span class="fc" id="L87">		Objects.requireNonNull(sameWorkload, &quot;sameWorkload&quot;);</span>
 
-<span class="fc" id="L93">		final EnumMap&lt;DayOfWeek, Fraction&gt; map = new EnumMap&lt;&gt;(DayOfWeek.class);</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (DayOfWeek day : ALL_DAYS)</span>
-<span class="fc" id="L95">			map.put(day, sameWorkload);</span>
+<span class="fc" id="L89">		final EnumMap&lt;DayOfWeek, Fraction&gt; map = new EnumMap&lt;&gt;(DayOfWeek.class);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (DayOfWeek day : ALL_DAYS)</span>
+<span class="fc" id="L91">			map.put(day, sameWorkload);</span>
 
-<span class="fc" id="L97">		return new PiecewiseConstantWeekday(map);</span>
+<span class="fc" id="L93">		return new PiecewiseConstantWeekday(map);</span>
 	}
 
 	/**
@@ -111,32 +107,32 @@ public final class PiecewiseConstantWeekday extends AbstractPiecewiseConstant {
 	 * @throws NullPointerException if any argument is null
 	 */
 	public PiecewiseConstantWeekday with(DayOfWeek day, Fraction newWorkload) {
-<span class="fc" id="L114">		Objects.requireNonNull(day, &quot;day&quot;);</span>
-<span class="fc" id="L115">		Objects.requireNonNull(newWorkload, &quot;newWorkload&quot;);</span>
+<span class="fc" id="L110">		Objects.requireNonNull(day, &quot;day&quot;);</span>
+<span class="fc" id="L111">		Objects.requireNonNull(newWorkload, &quot;newWorkload&quot;);</span>
 
-<span class="fc" id="L117">		final EnumMap&lt;DayOfWeek, Fraction&gt; copy = new EnumMap&lt;&gt;(this.workloadByDay);</span>
-<span class="fc" id="L118">		copy.put(day, newWorkload);</span>
-<span class="fc" id="L119">		return new PiecewiseConstantWeekday(copy);</span>
+<span class="fc" id="L113">		final EnumMap&lt;DayOfWeek, Fraction&gt; copy = new EnumMap&lt;&gt;(this.workloadByDay);</span>
+<span class="fc" id="L114">		copy.put(day, newWorkload);</span>
+<span class="fc" id="L115">		return new PiecewiseConstantWeekday(copy);</span>
 	}
 
 	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
-<span class="fc" id="L123">		final LocalDateTime midnight = instant.toLocalDate().atStartOfDay();</span>
+<span class="fc" id="L119">		final LocalDateTime midnight = instant.toLocalDate().atStartOfDay();</span>
 
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
-<span class="fc" id="L126">			final Fraction value = workloadByDay.get(midnight.getDayOfWeek());</span>
-<span class="fc" id="L127">			return Segment.forward(midnight, midnight.plusDays(1), value);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc" id="L122">			final Fraction value = workloadByDay.get(midnight.getDayOfWeek());</span>
+<span class="fc" id="L123">			return Segment.forward(midnight, midnight.plusDays(1), value);</span>
 		}
 
 		// BACKWARD: determine which day contains the instant
 		final LocalDateTime end;
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))</span>
 			// Midnight belongs to the previous day in backward iteration
-<span class="fc" id="L134">			end = midnight.minusDays(1);</span>
+<span class="fc" id="L130">			end = midnight.minusDays(1);</span>
 		else
-<span class="fc" id="L136">			end = midnight;</span>
+<span class="fc" id="L132">			end = midnight;</span>
 
-<span class="fc" id="L138">		final Fraction value = workloadByDay.get(end.getDayOfWeek());</span>
-<span class="fc" id="L139">		return Segment.backward(end.plusDays(1), end, value);</span>
+<span class="fc" id="L134">		final Fraction value = workloadByDay.get(end.getDayOfWeek());</span>
+<span class="fc" id="L135">		return Segment.backward(end.plusDays(1), end, value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

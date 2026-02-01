@@ -69,8 +69,10 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.timescale">net.sourceforge.plantuml.project.timescale</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.draw.header">net.sourceforge.plantuml.project.draw.header</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.timescale">net.sourceforge.plantuml.project.timescale</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -84,6 +86,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../chronology/TimeScaleChronology.html" class="type-name-link" title="class in net.sourceforge.plantuml.chronology">TimeScaleChronology</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../chronology/package-summary.html">net.sourceforge.plantuml.chronology</a> that return <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeader2.</span><code><a href="../../../chronology/TimeHeader2.html#getTimeScale()" class="member-name-link">getTimeScale</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../../../chronology/package-summary.html">net.sourceforge.plantuml.chronology</a> with parameters of type <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../chronology/TimeHeader2.html#%3Cinit%3E(net.sourceforge.plantuml.project.TimeHeaderParameters,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader2</a><wbr>(<a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
+ <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -128,15 +149,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected final <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractTaskDraw.</span><code><a href="../../draw/AbstractTaskDraw.html#timeScale" class="member-name-link">timeScale</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Methods in <a href="../../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> that return <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/TimeHeader.html#getTimeScale()" class="member-name-link">getTimeScale</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with parameters of type <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
@@ -206,12 +218,50 @@ loadScripts(document, 'script');</script>
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.project.draw.header">
+<h2>Uses of <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a> in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a></h2>
+<div class="caption"><span>Methods in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> that return <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#daily()" class="member-name-link">daily</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/header/TimeHeader.html#getTimeScale()" class="member-name-link">getTimeScale</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#monthly()" class="member-name-link">monthly</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#quaterly()" class="member-name-link">quaterly</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#simple()" class="member-name-link">simple</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#weekly()" class="member-name-link">weekly</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#yearly()" class="member-name-link">yearly</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> with parameters of type <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/TimeHeader.html#%3Cinit%3E(net.sourceforge.plantuml.project.TimeHeaderParameters,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader</a><wbr>(<a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
+<div class="col-second even-row-color"><code><a href="../../draw/header/TimeHeader.html#%3Cinit%3E(net.sourceforge.plantuml.project.draw.header.TimeHeaderContext,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader</a><wbr>(<a href="../../draw/header/TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx,
  <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../draw/TimeHeaderCalendar.html#%3Cinit%3E(net.sourceforge.plantuml.project.TimeHeaderParameters,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeaderCalendar</a><wbr>(<a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
+<div class="col-second odd-row-color"><code><a href="../../draw/header/TimeHeaderCalendar.html#%3Cinit%3E(net.sourceforge.plantuml.project.draw.header.TimeHeaderContext,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeaderCalendar</a><wbr>(<a href="../../draw/header/TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx,
  <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>

@@ -51,18 +51,18 @@ import net.sourceforge.plantuml.skin.Context2D;
 
 public class Dolls {
 
-<span class="fc" id="L54">	private final Map&lt;ParticipantEnglober, Doll&gt; alls = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L54">	private final Map&lt;ParticipantEnglober, Doll&gt; alls = new LinkedHashMap&lt;&gt;();</span>
 
-<span class="fc" id="L56">	public Dolls(TileArguments tileArguments) {</span>
+<span class="nc" id="L56">	public Dolls(TileArguments tileArguments) {</span>
 
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		for (Participant p : tileArguments.getLivingSpaces().participants()) {</span>
-<span class="fc" id="L59">			final ParticipantEnglober englober = tileArguments.getLivingSpaces().get(p).getEnglober();</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (englober != null)</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (Participant p : tileArguments.getLivingSpaces().participants()) {</span>
+<span class="nc" id="L59">			final ParticipantEnglober englober = tileArguments.getLivingSpaces().get(p).getEnglober();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (englober != null)</span>
 <span class="nc bnc" id="L61" title="All 2 branches missed.">				for (ParticipantEnglober pe : englober.getGenealogy())</span>
 <span class="nc" id="L62">					addParticipant(p, pe, tileArguments);</span>
 
-<span class="fc" id="L64">		}</span>
-<span class="fc" id="L65">	}</span>
+<span class="nc" id="L64">		}</span>
+<span class="nc" id="L65">	}</span>
 
 	private void addParticipant(Participant p, ParticipantEnglober englober, TileArguments tileArguments) {
 <span class="nc" id="L68">		Doll already = alls.get(englober);</span>
@@ -74,7 +74,7 @@ public class Dolls {
 <span class="nc" id="L74">	}</span>
 
 	public int size() {
-<span class="fc" id="L77">		return alls.size();</span>
+<span class="nc" id="L77">		return alls.size();</span>
 	}
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {

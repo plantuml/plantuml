@@ -110,8 +110,8 @@ import java.time.LocalDateTime;
  *
  * &lt;p&gt;
  * The static factory methods
- * {@link #withFixedDuration(NGMAllocation, Duration)} and
- * {@link #withFixedTotalEffort(NGMAllocation, NGMTotalEffort)} create concrete
+ * {@link #withFixedDuration} and
+ * {@link #withFixedTotalEffort} create concrete
  * implementations representing these two behaviours.
  * &lt;/p&gt;
  */
@@ -122,12 +122,10 @@ public abstract class NGMTask {
 	/**
 	 * Creates a new task with a fixed workload allocation.
 	 *
-	 * @param workload the constant full-time-equivalent allocation applied to this
-	 *                 task
 	 */
-<span class="fc" id="L128">	protected NGMTask(NGMAllocation allocation) {</span>
-<span class="fc" id="L129">		this.allocation = allocation;</span>
-<span class="fc" id="L130">	}</span>
+<span class="fc" id="L126">	protected NGMTask(NGMAllocation allocation) {</span>
+<span class="fc" id="L127">		this.allocation = allocation;</span>
+<span class="fc" id="L128">	}</span>
 
 	/**
 	 * Returns the current start instant of the task.
@@ -296,7 +294,7 @@ public abstract class NGMTask {
 	 * @return the constant FTE allocation applied to the task
 	 */
 	public NGMAllocation getAllocation() {
-<span class="nc" id="L299">		return allocation;</span>
+<span class="nc" id="L297">		return allocation;</span>
 	}
 
 	/**
@@ -332,7 +330,7 @@ public abstract class NGMTask {
 	 * @return a new fixed-duration task
 	 */
 	public static NGMTask withFixedDuration(NGMAllocation allocation, Duration duration) {
-<span class="fc" id="L335">		return new NGMTaskFixedDuration(allocation, duration);</span>
+<span class="fc" id="L333">		return new NGMTaskFixedDuration(allocation, duration);</span>
 	}
 
 	/**
@@ -370,7 +368,7 @@ public abstract class NGMTask {
 	 */
 	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, LocalDateTime start,
 			NGMTotalEffort totalEffort) {
-<span class="fc" id="L373">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
+<span class="fc" id="L371">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
 	}
 
 }

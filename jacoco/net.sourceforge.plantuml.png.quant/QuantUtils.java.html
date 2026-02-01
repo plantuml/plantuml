@@ -109,9 +109,9 @@ import java.awt.image.RenderedImage;
 	 * return (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;
 	 * }&lt;/pre&gt;
 	 *
-	 * &lt;h4&gt;Perceptual &amp; compression rationale&lt;/h4&gt;
+	 * &lt;h4&gt;Perceptual and compression rationale&lt;/h4&gt;
 	 * &lt;ul&gt;
-	 *   &lt;li&gt;&lt;b&gt;Visually negligible:&lt;/b&gt; Flipping at most one LSB per channel changes the value by &lt;=1/255
+	 *   &lt;li&gt;&lt;b&gt;Visually negligible:&lt;/b&gt; Flipping at most one LSB per channel changes the value by &amp;lt;=1/255
 	 *       (~0.4%) per component. Under normal viewing conditions and typical display gamma, such changes
 	 *       are below the just-noticeable difference for flat regions, lines, and text—effectively invisible
 	 *       to the naked eye. Pure black ({@code 0x00}) and pure white ({@code 0xFF}) remain unchanged.&lt;/li&gt;
@@ -153,10 +153,9 @@ import java.awt.image.RenderedImage;
 	 * @return the pixel with each channel’s LSB replaced by its MSB.
 	 * @implNote Packed equivalent of the per-channel form:
 	 *           {@code (argb &amp; 0xFEFEFEFE) | ((argb &gt;&gt;&gt; 7) &amp; 0x01010101)}.
-	 * @see #smartCompress(int)
 	 */
 	public static int compressPackedARGB(int argb) {
-<span class="fc" id="L159">	    return (argb &amp; 0xFEFEFEFE) | ((argb &gt;&gt;&gt; 7) &amp; 0x01010101);</span>
+<span class="fc" id="L158">	    return (argb &amp; 0xFEFEFEFE) | ((argb &gt;&gt;&gt; 7) &amp; 0x01010101);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

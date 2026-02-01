@@ -207,7 +207,7 @@ loadScripts(document, 'script');</script>
  return (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;
  </code></pre>
 
- <h4>Perceptual &amp; compression rationale</h4>
+ <h4>Perceptual and compression rationale</h4>
  <ul>
    <li><b>Visually negligible:</b> Flipping at most one LSB per channel changes the value by &lt;=1/255
        (~0.4%) per component. Under normal viewing conditions and typical display gamma, such changes
@@ -251,12 +251,6 @@ loadScripts(document, 'script');</script>
 <dd><code>argb</code> - packed 32-bit pixel in ARGB order (<code>0xAARRGGBB</code>).</dd>
 <dt>Returns:</dt>
 <dd>the pixel with each channel’s LSB replaced by its MSB.</dd>
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><code>#smartCompress(int)</code></li>
-</ul>
-</dd>
 </dl>
 </section>
 </li>

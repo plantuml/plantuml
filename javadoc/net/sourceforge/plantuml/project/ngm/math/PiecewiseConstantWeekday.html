@@ -99,11 +99,6 @@ loadScripts(document, 'script');</script>
  segments. Instead, it generates one-day <a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>Segment</code></a> instances lazily as
  the caller iterates forward in time. This design scales well for rules that
  conceptually apply across the whole <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link"><code>LocalDateTime</code></a> timeline.
- </p>
-
- <p>
- Segments produced by <code>#iterateSegmentsFrom(LocalDateTime)</code> are daily
- intervals of the form <code>[dayStart, nextDayStart)</code>.
  </p></div>
 </section>
 <section class="summary">

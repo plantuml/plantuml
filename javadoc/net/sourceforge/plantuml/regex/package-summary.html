@@ -76,10 +76,9 @@ loadScripts(document, 'script');</script>
  <p>
  Before a <a href="RegexComposed.html" title="class in net.sourceforge.plantuml.regex"><code>RegexComposed</code></a> can be matched, it must first have each
  of its constituent parts concatenated into one large regex string using
- <code>RegexComposed#getFullSlow</code>. This string is then transformed by
- <code>MyPattern#transform</code> to replace some macros (e.g. %s
- for whitespace, %q for single quote) and compiled using
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html#compile(java.lang.String)" title="class or interface in java.util.regex" class="external-link"><code>Pattern.compile(java.lang.String)</code></a>.</div>
+ <a href="RegexComposed.html#getPattern()"><code>RegexComposed.getPattern()</code></a>. This string is then transformed
+ to replace some macros (e.g. %s for whitespace, %q for single quote)
+ and compiled using <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html#compile(java.lang.String)" title="class or interface in java.util.regex" class="external-link"><code>Pattern.compile(java.lang.String)</code></a>.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">

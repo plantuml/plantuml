@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeHeader2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chronology</a> &gt; <span class="el_source">TimeHeader2.java</span></div><h1>TimeHeader2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.chronology;
+
+import java.time.LocalDate;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+
+public abstract class TimeHeader2 {
+	// ::remove folder when __HAXE__
+
+	private final TimeScale timeScale;
+
+	protected final TimeHeaderParameters thParam;
+
+<span class="nc" id="L67">	public TimeHeader2(TimeHeaderParameters thParam, TimeScale timeScale) {</span>
+<span class="nc" id="L68">		this.thParam = thParam;</span>
+<span class="nc" id="L69">		this.timeScale = timeScale;</span>
+<span class="nc" id="L70">	}</span>
+
+	protected final boolean isBold2(TimePoint wink) {
+<span class="nc" id="L73">		return thParam.getVerticalSeparatorBefore().contains(wink);</span>
+	}
+
+	protected final LocalDate getMinDay() {
+<span class="nc" id="L77">		return thParam.getMinDay();</span>
+	}
+
+	protected final LocalDate getMaxDay() {
+<span class="nc" id="L81">		return thParam.getMaxDay();</span>
+	}
+
+	protected final HColor closedBackgroundColor() {
+<span class="nc" id="L85">		return thParam.getClosedStyle().value(PName.BackGroundColor).asColor(thParam.getColorSet());</span>
+	}
+
+	protected final HColor closedFontColor() {
+<span class="nc" id="L89">		return thParam.getClosedStyle().value(PName.FontColor).asColor(thParam.getColorSet());</span>
+	}
+
+	protected final HColor openFontColor() {
+<span class="nc" id="L93">		return thParam.getTimelineStyle().value(PName.FontColor).asColor(thParam.getColorSet());</span>
+	}
+
+	protected final HColor getLineColor() {
+<span class="nc" id="L97">		return thParam.getTimelineStyle().value(PName.LineColor).asColor(thParam.getColorSet());</span>
+	}
+
+	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
+
+	public abstract double getTimeFooterHeight(StringBounder stringBounder);
+
+	public abstract double getFullHeaderHeight(StringBounder stringBounder);
+
+	public abstract void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter);
+
+	public abstract void drawTimeFooter(UGraphic ug);
+
+	public final TimeScale getTimeScale() {
+<span class="nc" id="L111">		return timeScale;</span>
+	}
+
+	protected final void drawHline(UGraphic ug, double y) {
+<span class="nc" id="L115">		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(thParam.getMinDay()));</span>
+<span class="nc" id="L116">		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(thParam.getMaxDay()));</span>
+<span class="nc" id="L117">		final ULine hline = ULine.hline(xmax - xmin);</span>
+<span class="nc" id="L118">		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);</span>
+<span class="nc" id="L119">	}</span>
+
+	protected final void drawVline(UGraphic ug, double x, double y1, double y2) {
+<span class="nc" id="L122">		final ULine vbar = ULine.vline(y2 - y1);</span>
+<span class="nc" id="L123">		ug.apply(new UTranslate(x, y1)).draw(vbar);</span>
+<span class="nc" id="L124">	}</span>
+
+	final protected FontConfiguration getFontConfiguration(UFont font, boolean bold, HColor color) {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (bold)</span>
+<span class="nc" id="L128">			font = font.bold();</span>
+
+<span class="nc" id="L130">		return FontConfiguration.create(font, color, color, null);</span>
+	}
+
+	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
+<span class="nc" id="L134">		final UFont font = thParam.getStyle(SName.timeline, param).getUFont();</span>
+<span class="nc" id="L135">		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);</span>
+<span class="nc" id="L136">		return Display.getWithNewlines(getPragma(), text).create(fontConfiguration, HorizontalAlignment.LEFT,</span>
+				new SpriteContainerEmpty());
+	}
+
+	protected final void printCentered(UGraphic ug, TextBlock text, double start, double end) {
+<span class="nc" id="L141">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L142">		final double available = end - start;</span>
+<span class="nc" id="L143">		final double diff = Math.max(0, available - width);</span>
+<span class="nc" id="L144">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="nc" id="L145">	}</span>
+
+	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
+			TextBlock... texts) {
+<span class="nc" id="L149">		final double available = end - start;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L151">			final TextBlock text = texts[i];</span>
+<span class="nc" id="L152">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc bnc" id="L153" title="All 6 branches missed.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
+<span class="nc" id="L154">				final double diff = Math.max(0, available - width);</span>
+<span class="nc" id="L155">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="nc" id="L156">				return;</span>
+			}
+		}
+<span class="nc" id="L159">	}</span>
+
+	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (height == 0)</span>
+<span class="nc" id="L163">			return;</span>
+
+<span class="nc" id="L165">		ug = ug.apply(HColors.none());</span>
+<span class="nc" id="L166">		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (x2 &gt; x1)</span>
+<span class="nc" id="L168">			ug.draw(URectangle.build(x2 - x1, height));</span>
+<span class="nc" id="L169">	}</span>
+
+	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
+<span class="nc" id="L172">		ug = thParam.forVerticalSeparator(ug);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L174">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (isBold2(wink))</span>
+<span class="nc" id="L176">				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),</span>
+						totalHeightWithoutFooter);
+		}
+<span class="nc" id="L179">	}</span>
+
+	protected Pragma getPragma() {
+<span class="nc" id="L182">		return Pragma.createEmpty();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

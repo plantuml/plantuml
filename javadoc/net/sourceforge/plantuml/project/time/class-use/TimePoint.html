@@ -71,10 +71,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.time">net.sourceforge.plantuml.project.time</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.draw.header">net.sourceforge.plantuml.project.draw.header</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.timescale">net.sourceforge.plantuml.project.timescale</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.time">net.sourceforge.plantuml.project.time</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.timescale">net.sourceforge.plantuml.project.timescale</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -118,15 +120,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>double</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">TimeScaleChronology.</span><code><a href="../../../chronology/TimeScaleChronology.html#getWidth(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">getWidth</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;instant)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeScaleChronology.</span><code><a href="../../../chronology/TimeScaleChronology.html#isBreaking(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">isBreaking</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;instant)</code></div>
+<div class="col-first even-row-color"><code>protected final boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeader2.</span><code><a href="../../../chronology/TimeHeader2.html#isBold2(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">isBold2</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TaskChronology.</span><code><a href="../../../chronology/TaskChronology.html#setEnd(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">setEnd</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;end)</code></div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimeScaleChronology.</span><code><a href="../../../chronology/TimeScaleChronology.html#isBreaking(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">isBreaking</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;instant)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TaskChronology.</span><code><a href="../../../chronology/TaskChronology.html#setStart(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">setStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TaskChronology.</span><code><a href="../../../chronology/TaskChronology.html#setEnd(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">setEnd</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;end)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TaskChronology.</span><code><a href="../../../chronology/TaskChronology.html#setStart(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">setStart</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -318,18 +323,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractTaskDraw.</span><code><a href="../../draw/AbstractTaskDraw.html#start" class="member-name-link">start</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
-<div class="caption"><span>Methods in <a href="../../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with parameters of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected final int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderCalendar.</span><code><a href="../../draw/TimeHeaderCalendar.html#getLoadAt(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">getLoadAt</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;instant)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/TimeHeader.html#isBold2(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">isBold2</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-</div>
 <div class="caption"><span>Constructors in <a href="../../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with parameters of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier</div>
@@ -389,29 +382,43 @@ loadScripts(document, 'script');</script>
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
-<div class="caption"><span>Constructor parameters in <a href="../../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with type arguments of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.project.draw.header">
+<h2>Uses of <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a> in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a></h2>
+<div class="caption"><span>Methods in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> that return types with arguments of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#getNameDays()" class="member-name-link">getNameDays</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> with parameters of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected final int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderCalendar.</span><code><a href="../../draw/header/TimeHeaderCalendar.html#getLoadAt(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">getLoadAt</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;instant)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/header/TimeHeader.html#isBold2(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">isBold2</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructor parameters in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> with type arguments of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier</div>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/TimeHeaderDaily.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.TimeHeaderParameters,java.util.Map,java.time.LocalDate)" class="member-name-link">TimeHeaderDaily</a><wbr>(<a href="../../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+<div class="col-second even-row-color"><code><a href="../../draw/header/TimeHeaderContext.html#%3Cinit%3E(net.sourceforge.plantuml.project.core.PrintScale,net.sourceforge.plantuml.project.TimeHeaderParameters,java.util.Map,net.sourceforge.plantuml.project.time.WeekNumberStrategy,net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy,java.time.LocalDate,int)" class="member-name-link">TimeHeaderContext</a><wbr>(<a href="../../core/PrintScale.html" title="enum class in net.sourceforge.plantuml.project.core">PrintScale</a>&nbsp;printScale,
  <a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;nameDays,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;printStart)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../draw/TimeHeaderMonthly.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.TimeHeaderParameters,java.util.Map,java.time.LocalDate)" class="member-name-link">TimeHeaderMonthly</a><wbr>(<a href="../../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;nameDays,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;printStart)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/TimeHeaderWeekly.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.TimeHeaderParameters,net.sourceforge.plantuml.project.time.WeekNumberStrategy,net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy,java.util.Map,java.time.LocalDate,int)" class="member-name-link">TimeHeaderWeekly</a><wbr>(<a href="../../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
  <a href="../WeekNumberStrategy.html" title="class in net.sourceforge.plantuml.project.time">WeekNumberStrategy</a>&nbsp;weekNumberStrategy,
  <a href="../../draw/WeeklyHeaderStrategy.html" title="enum class in net.sourceforge.plantuml.project.draw">WeeklyHeaderStrategy</a>&nbsp;headerStrategy,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;nameDays,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;printStart,
  int&nbsp;weekStartingNumber)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>

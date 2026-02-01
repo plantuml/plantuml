@@ -58,21 +58,21 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
-<span class="fc" id="L61">public class LiveBoxes {</span>
+<span class="nc" id="L61">public class LiveBoxes {</span>
 
 	private final Rose skin;
 	private final ISkinParam skinParam;
-<span class="fc" id="L65">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
+<span class="nc" id="L65">	private final Map&lt;Double, Double&gt; delays = new TreeMap&lt;Double, Double&gt;();</span>
 	private final Participant p;
 	private final List&lt;Event&gt; events;
-<span class="fc" id="L68">	private final Map&lt;Event, Double&gt; eventsStep = new HashMap&lt;Event, Double&gt;();</span>
+<span class="nc" id="L68">	private final Map&lt;Event, Double&gt; eventsStep = new HashMap&lt;Event, Double&gt;();</span>
 
-<span class="fc" id="L70">	public LiveBoxes(Participant p, List&lt;Event&gt; events, Rose skin, ISkinParam skinParam) {</span>
-<span class="fc" id="L71">		this.p = p;</span>
-<span class="fc" id="L72">		this.events = events;</span>
-<span class="fc" id="L73">		this.skin = skin;</span>
-<span class="fc" id="L74">		this.skinParam = skinParam;</span>
-<span class="fc" id="L75">	}</span>
+<span class="nc" id="L70">	public LiveBoxes(Participant p, List&lt;Event&gt; events, Rose skin, ISkinParam skinParam) {</span>
+<span class="nc" id="L71">		this.p = p;</span>
+<span class="nc" id="L72">		this.events = events;</span>
+<span class="nc" id="L73">		this.skin = skin;</span>
+<span class="nc" id="L74">		this.skinParam = skinParam;</span>
+<span class="nc" id="L75">	}</span>
 
 	public void addStep(Event event, double y) {
 <span class="nc bnc" id="L78" title="All 2 branches missed.">		if (event.dealWith(p)) {</span>
@@ -286,10 +286,10 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 	}
 
 	public int getMaxValue() {
-<span class="fc" id="L289">		int max = 0;</span>
-<span class="fc" id="L290">		int level = 0;</span>
-<span class="fc bfc" id="L291" title="All 2 branches covered.">		for (Event current : events) {</span>
-<span class="pc bpc" id="L292" title="1 of 2 branches missed.">			if (current instanceof LifeEvent) {</span>
+<span class="nc" id="L289">		int max = 0;</span>
+<span class="nc" id="L290">		int level = 0;</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		for (Event current : events) {</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">			if (current instanceof LifeEvent) {</span>
 <span class="nc" id="L293">				final LifeEvent le = (LifeEvent) current;</span>
 <span class="nc bnc" id="L294" title="All 4 branches missed.">				if (le.getParticipant() == p &amp;&amp; le.isActivate())</span>
 <span class="nc" id="L295">					level++;</span>
@@ -301,15 +301,15 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="nc" id="L301">					level--;</span>
 
 			}
-<span class="fc" id="L304">		}</span>
-<span class="fc" id="L305">		return max;</span>
+<span class="nc" id="L304">		}</span>
+<span class="nc" id="L305">		return max;</span>
 	}
 
 	public double getMaxPosition(StringBounder stringBounder) {
-<span class="fc" id="L309">		final int max = getMaxValue();</span>
-<span class="fc" id="L310">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(new SimpleContext2D(true), skin, skinParam, delays,</span>
-<span class="fc" id="L311">				p.getStereotype());</span>
-<span class="fc" id="L312">		return drawer.getWidth(stringBounder) / 2.0 * max;</span>
+<span class="nc" id="L309">		final int max = getMaxValue();</span>
+<span class="nc" id="L310">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(new SimpleContext2D(true), skin, skinParam, delays,</span>
+<span class="nc" id="L311">				p.getStereotype());</span>
+<span class="nc" id="L312">		return drawer.getWidth(stringBounder) / 2.0 * max;</span>
 	}
 
 	public void drawBoxes(UGraphic ug, Context2D context, double createY, double endY) {

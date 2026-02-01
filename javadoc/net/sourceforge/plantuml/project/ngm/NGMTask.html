@@ -154,8 +154,8 @@ loadScripts(document, 'script');</script>
 
  <p>
  The static factory methods
- <a href="#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)"><code>withFixedDuration(NGMAllocation, Duration)</code></a> and
- <code>#withFixedTotalEffort(NGMAllocation, NGMTotalEffort)</code> create concrete
+ <a href="#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)"><code>withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation, java.time.Duration)</code></a> and
+ <a href="#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)"><code>withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation, java.time.LocalDateTime, net.sourceforge.plantuml.project.ngm.NGMTotalEffort)</code></a> create concrete
  implementations representing these two behaviours.
  </p></div>
 </section>
@@ -293,11 +293,6 @@ loadScripts(document, 'script');</script>
 <h3>NGMTask</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">NGMTask</span><wbr><span class="parameters">(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.project.ngm">NGMAllocation</a>&nbsp;allocation)</span></div>
 <div class="block">Creates a new task with a fixed workload allocation.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>workload</code> - the constant full-time-equivalent allocation applied to this
-                 task</dd>
-</dl>
 </section>
 </li>
 </ul>

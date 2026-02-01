@@ -64,46 +64,46 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 	public static List&lt;Tile&gt; buildSeveral(Iterator&lt;Event&gt; it, TileArguments tileArguments, Tile parent,
 			YGauge currentY) {
-<span class="fc" id="L67">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="fc" id="L69">			final Event ev = it.next();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent, currentY)) {</span>
-<span class="fc" id="L71">				tiles.add(tile);</span>
-<span class="fc" id="L72">				final Real tmpMax = tile.getMaxX();</span>
+<span class="nc" id="L67">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L69">			final Event ev = it.next();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent, currentY)) {</span>
+<span class="nc" id="L71">				tiles.add(tile);</span>
+<span class="nc" id="L72">				final Real tmpMax = tile.getMaxX();</span>
 				if (YGauge.USE_ME) {
 					final YGauge gauge = tile.getYGauge();
 					currentY = gauge;
 				}
-<span class="fc" id="L77">			}</span>
-<span class="fc" id="L78">		}</span>
+<span class="nc" id="L77">			}</span>
+<span class="nc" id="L78">		}</span>
 <span class="nc" id="L79">		return Collections.unmodifiableList(tiles);</span>
 	}
 
 	public static List&lt;Tile&gt; buildOne(Iterator&lt;Event&gt; it, TileArguments tileArguments, final Event ev, Tile parent,
 			YGauge currentY) {
 
-<span class="fc" id="L85">		final StringBounder stringBounder = tileArguments.getStringBounder();</span>
-<span class="fc" id="L86">		final Rose skin = tileArguments.getSkin();</span>
-<span class="fc" id="L87">		final ISkinParam skinParam = tileArguments.getSkinParam();</span>
-<span class="fc" id="L88">		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();</span>
+<span class="nc" id="L85">		final StringBounder stringBounder = tileArguments.getStringBounder();</span>
+<span class="nc" id="L86">		final Rose skin = tileArguments.getSkin();</span>
+<span class="nc" id="L87">		final ISkinParam skinParam = tileArguments.getSkinParam();</span>
+<span class="nc" id="L88">		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();</span>
 
-<span class="fc" id="L90">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L90">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
 		// System.err.println(&quot;TileBuilder::buildOne &quot; + ev);
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (ev instanceof Message) {</span>
-<span class="fc" id="L93">			final Message msg = (Message) ev;</span>
-<span class="fc" id="L94">			final LivingSpace livingSpace1 = livingSpaces.get(msg.getParticipant1());</span>
-<span class="fc" id="L95">			final LivingSpace livingSpace2 = livingSpaces.get(msg.getParticipant2());</span>
-<span class="fc" id="L96">			boolean reverse = false;</span>
-<span class="fc" id="L97">			Tile result = null;</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (msg.isSelfMessage()) {</span>
-<span class="fc" id="L99">				result = new CommunicationTileSelf(tileArguments.getStringBounder(), livingSpace1, msg, skin, skinParam,</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (ev instanceof Message) {</span>
+<span class="nc" id="L93">			final Message msg = (Message) ev;</span>
+<span class="nc" id="L94">			final LivingSpace livingSpace1 = livingSpaces.get(msg.getParticipant1());</span>
+<span class="nc" id="L95">			final LivingSpace livingSpace2 = livingSpaces.get(msg.getParticipant2());</span>
+<span class="nc" id="L96">			boolean reverse = false;</span>
+<span class="nc" id="L97">			Tile result = null;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (msg.isSelfMessage()) {</span>
+<span class="nc" id="L99">				result = new CommunicationTileSelf(tileArguments.getStringBounder(), livingSpace1, msg, skin, skinParam,</span>
 						livingSpaces, currentY);
 			} else {
-<span class="fc" id="L102">				result = new CommunicationTile(tileArguments.getStringBounder(), livingSpaces, msg, skin, skinParam,</span>
+<span class="nc" id="L102">				result = new CommunicationTile(tileArguments.getStringBounder(), livingSpaces, msg, skin, skinParam,</span>
 						currentY);
-<span class="fc" id="L104">				reverse = ((CommunicationTile) result).isReverse(stringBounder);</span>
+<span class="nc" id="L104">				reverse = ((CommunicationTile) result).isReverse(stringBounder);</span>
 			}
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
 <span class="nc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
 <span class="nc bnc" id="L108" title="All 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
 <span class="nc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
@@ -123,11 +123,11 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="nc" id="L123">					result = new CommunicationTileNoteTop(result, msg, skin, skinParam, noteOnMessage, currentY);</span>
 
 <span class="nc" id="L125">			}</span>
-<span class="fc" id="L126">			tiles.add(result);</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		} else if (ev instanceof MessageExo) {</span>
-<span class="fc" id="L128">			final MessageExo exo = (MessageExo) ev;</span>
-<span class="fc" id="L129">			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());</span>
-<span class="fc" id="L130">			Tile result = null;</span>
+<span class="nc" id="L126">			tiles.add(result);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (ev instanceof MessageExo) {</span>
+<span class="nc" id="L128">			final MessageExo exo = (MessageExo) ev;</span>
+<span class="nc" id="L129">			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());</span>
+<span class="nc" id="L130">			Tile result = null;</span>
 <span class="nc" id="L131">			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments, currentY);</span>
 <span class="nc bnc" id="L132" title="All 2 branches missed.">			for (Note noteOnMessage : exo.getNoteOnMessages()) {</span>
 <span class="nc" id="L133">				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getPosition();</span>
@@ -195,7 +195,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="nc" id="L195">		} else {</span>
 <span class="nc" id="L196">			System.err.println(&quot;TileBuilder::Ignoring &quot; + ev.getClass());</span>
 		}
-<span class="fc" id="L198">		return tiles;</span>
+<span class="nc" id="L198">		return tiles;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

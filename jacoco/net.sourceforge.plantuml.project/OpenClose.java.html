@@ -48,162 +48,161 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
-<span class="fc" id="L53">public class OpenClose {</span>
+<span class="fc" id="L52">public class OpenClose {</span>
 
-<span class="fc" id="L55">	private final Map&lt;DayOfWeek, DayStatus&gt; weekdayStatus = new EnumMap&lt;&gt;(DayOfWeek.class);</span>
-<span class="fc" id="L56">	private final Map&lt;LocalDate, DayStatus&gt; dayStatus = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L54">	private final Map&lt;DayOfWeek, DayStatus&gt; weekdayStatus = new EnumMap&lt;&gt;(DayOfWeek.class);</span>
+<span class="fc" id="L55">	private final Map&lt;LocalDate, DayStatus&gt; dayStatus = new HashMap&lt;&gt;();</span>
 	private LocalDate offBefore;
 	private LocalDate offAfter;
 
 	public OpenClose mutateMe(final OpenClose except) {
-<span class="fc" id="L61">		final OpenClose result = new OpenClose();</span>
-<span class="fc" id="L62">		result.weekdayStatus.putAll(this.weekdayStatus);</span>
-<span class="fc" id="L63">		result.dayStatus.putAll(this.dayStatus);</span>
-<span class="fc" id="L64">		result.offBefore = this.offBefore;</span>
-<span class="fc" id="L65">		result.offAfter = this.offAfter;</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (except != null) {</span>
-<span class="nc" id="L67">			result.weekdayStatus.putAll(except.weekdayStatus);</span>
-<span class="nc" id="L68">			result.dayStatus.putAll(except.dayStatus);</span>
+<span class="fc" id="L60">		final OpenClose result = new OpenClose();</span>
+<span class="fc" id="L61">		result.weekdayStatus.putAll(this.weekdayStatus);</span>
+<span class="fc" id="L62">		result.dayStatus.putAll(this.dayStatus);</span>
+<span class="fc" id="L63">		result.offBefore = this.offBefore;</span>
+<span class="fc" id="L64">		result.offAfter = this.offAfter;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (except != null) {</span>
+<span class="nc" id="L66">			result.weekdayStatus.putAll(except.weekdayStatus);</span>
+<span class="nc" id="L67">			result.dayStatus.putAll(except.dayStatus);</span>
 		}
-<span class="fc" id="L70">		return result;</span>
+<span class="fc" id="L69">		return result;</span>
 
 	}
 
 	public int daysInWeek() {
-<span class="nc" id="L75">		int result = 7;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (DayStatus status : weekdayStatus.values())</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (status == DayStatus.CLOSE)</span>
-<span class="nc" id="L78">				result--;</span>
-<span class="nc" id="L79">		return result;</span>
+<span class="nc" id="L74">		int result = 7;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (DayStatus status : weekdayStatus.values())</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (status == DayStatus.CLOSE)</span>
+<span class="nc" id="L77">				result--;</span>
+<span class="nc" id="L78">		return result;</span>
 	}
 
 	private boolean isThereSomeChangeAfter(LocalDate day) {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
-<span class="nc" id="L84">			return true;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
+<span class="nc" id="L83">			return true;</span>
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (LocalDate tmp : dayStatus.keySet())</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (tmp.compareTo(day) &gt;= 0)</span>
-<span class="nc" id="L88">				return true;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (LocalDate tmp : dayStatus.keySet())</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (tmp.compareTo(day) &gt;= 0)</span>
+<span class="nc" id="L87">				return true;</span>
 
-<span class="nc" id="L90">		return false;</span>
+<span class="nc" id="L89">		return false;</span>
 	}
 
 	private boolean isThereSomeChangeBefore(LocalDate day) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
-<span class="nc" id="L95">			return true;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (weekdayStatus.size() &gt; 0)</span>
+<span class="nc" id="L94">			return true;</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (LocalDate tmp : dayStatus.keySet())</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (tmp.compareTo(day) &lt;= 0)</span>
-<span class="nc" id="L99">				return true;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (LocalDate tmp : dayStatus.keySet())</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (tmp.compareTo(day) &lt;= 0)</span>
+<span class="nc" id="L98">				return true;</span>
 
-<span class="nc" id="L101">		return false;</span>
+<span class="nc" id="L100">		return false;</span>
 	}
 
 	public boolean isClosed(LocalDate day) {
-<span class="nc" id="L105">		final DayStatus status = getLocalStatus(day);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (status != null)</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">			return status == DayStatus.CLOSE;</span>
+<span class="nc" id="L104">		final DayStatus status = getLocalStatus(day);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (status != null)</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			return status == DayStatus.CLOSE;</span>
 
-<span class="nc" id="L109">		return false;</span>
+<span class="nc" id="L108">		return false;</span>
 	}
 
 	private DayStatus getLocalStatus(LocalDate day) {
-<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (offBefore != null &amp;&amp; day.compareTo(offBefore) &lt; 0)</span>
-<span class="nc" id="L114">			return DayStatus.CLOSE;</span>
-<span class="nc bnc" id="L115" title="All 4 branches missed.">		if (offAfter != null &amp;&amp; day.compareTo(offAfter) &gt; 0)</span>
-<span class="nc" id="L116">			return DayStatus.CLOSE;</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">		if (offBefore != null &amp;&amp; day.compareTo(offBefore) &lt; 0)</span>
+<span class="nc" id="L113">			return DayStatus.CLOSE;</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">		if (offAfter != null &amp;&amp; day.compareTo(offAfter) &gt; 0)</span>
+<span class="nc" id="L115">			return DayStatus.CLOSE;</span>
 
-<span class="nc" id="L118">		final DayStatus status1 = dayStatus.get(day);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (status1 != null)</span>
-<span class="nc" id="L120">			return status1;</span>
+<span class="nc" id="L117">		final DayStatus status1 = dayStatus.get(day);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (status1 != null)</span>
+<span class="nc" id="L119">			return status1;</span>
 
-<span class="nc" id="L122">		final DayOfWeek dayOfWeek = day.getDayOfWeek();</span>
-<span class="nc" id="L123">		final DayStatus status2 = weekdayStatus.get(dayOfWeek);</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (status2 != null)</span>
-<span class="nc" id="L125">			return status2;</span>
+<span class="nc" id="L121">		final DayOfWeek dayOfWeek = day.getDayOfWeek();</span>
+<span class="nc" id="L122">		final DayStatus status2 = weekdayStatus.get(dayOfWeek);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (status2 != null)</span>
+<span class="nc" id="L124">			return status2;</span>
 
-<span class="nc" id="L127">		return null;</span>
+<span class="nc" id="L126">		return null;</span>
 	}
 
 	public void close(DayOfWeek day) {
-<span class="fc" id="L131">		weekdayStatus.put(day, DayStatus.CLOSE);</span>
-<span class="fc" id="L132">	}</span>
+<span class="fc" id="L130">		weekdayStatus.put(day, DayStatus.CLOSE);</span>
+<span class="fc" id="L131">	}</span>
 
 	public void open(DayOfWeek day) {
-<span class="nc" id="L135">		weekdayStatus.put(day, DayStatus.OPEN);</span>
-<span class="nc" id="L136">	}</span>
+<span class="nc" id="L134">		weekdayStatus.put(day, DayStatus.OPEN);</span>
+<span class="nc" id="L135">	}</span>
 
 	public void close(LocalDate day) {
-<span class="nc" id="L139">		dayStatus.put(day, DayStatus.CLOSE);</span>
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L138">		dayStatus.put(day, DayStatus.CLOSE);</span>
+<span class="nc" id="L139">	}</span>
 
 	public void open(LocalDate day) {
-<span class="nc" id="L143">		dayStatus.put(day, DayStatus.OPEN);</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L142">		dayStatus.put(day, DayStatus.OPEN);</span>
+<span class="nc" id="L143">	}</span>
 
 	public int getLoadAtDUMMY(LocalDate day) {
-<span class="nc" id="L147">		return getLoatAtInternal(day);</span>
+<span class="nc" id="L146">		return getLoatAtInternal(day);</span>
 	}
 
 	public void setOffBeforeDate(LocalDate day) {
-<span class="nc" id="L151">		this.offBefore = day;</span>
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L150">		this.offBefore = day;</span>
+<span class="nc" id="L151">	}</span>
 
 	public void setOffAfterDate(LocalDate day) {
-<span class="nc" id="L155">		this.offAfter = day;</span>
-<span class="nc" id="L156">	}</span>
+<span class="nc" id="L154">		this.offAfter = day;</span>
+<span class="nc" id="L155">	}</span>
 
 	private int getLoatAtInternal(LocalDate day) {
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (isClosed(day))</span>
-<span class="nc" id="L160">			return 0;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (isClosed(day))</span>
+<span class="nc" id="L159">			return 0;</span>
 
-<span class="nc" id="L162">		return 100;</span>
+<span class="nc" id="L161">		return 100;</span>
 	}
 
 	public LocalDate getLastDayIfAny() {
-<span class="nc" id="L166">		return offAfter;</span>
+<span class="nc" id="L165">		return offAfter;</span>
 	}
 
 	public PiecewiseConstant asPiecewiseConstant() {
-<span class="fc" id="L170">		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);</span>
+<span class="fc" id="L169">		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);</span>
 
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		for (DayOfWeek day : weekdayStatus.keySet())</span>
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			if (weekdayStatus.get(day) == DayStatus.CLOSE)</span>
-<span class="fc" id="L174">				weekPattern = weekPattern.with(day, Fraction.ZERO);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (DayOfWeek day : weekdayStatus.keySet())</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (weekdayStatus.get(day) == DayStatus.CLOSE)</span>
+<span class="fc" id="L173">				weekPattern = weekPattern.with(day, Fraction.ZERO);</span>
 
-<span class="fc" id="L176">		PiecewiseConstant result = weekPattern;</span>
+<span class="fc" id="L175">		PiecewiseConstant result = weekPattern;</span>
 
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (dayStatus.isEmpty() == false) {</span>
-<span class="nc" id="L179">			PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE);</span>
-<span class="nc" id="L180">			PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (dayStatus.isEmpty() == false) {</span>
+<span class="nc" id="L178">			PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE);</span>
+<span class="nc" id="L179">			PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO);</span>
 
-<span class="nc bnc" id="L182" title="All 2 branches missed.">			for (Map.Entry&lt;LocalDate, DayStatus&gt; entry : dayStatus.entrySet()) {</span>
-<span class="nc" id="L183">				final LocalDate date = entry.getKey();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			for (Map.Entry&lt;LocalDate, DayStatus&gt; entry : dayStatus.entrySet()) {</span>
+<span class="nc" id="L182">				final LocalDate date = entry.getKey();</span>
 
-<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (entry.getValue() == DayStatus.CLOSE)</span>
-<span class="nc" id="L186">					specificDaysClosed = specificDaysClosed.withDay(date, Fraction.ZERO);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">				if (entry.getValue() == DayStatus.CLOSE)</span>
+<span class="nc" id="L185">					specificDaysClosed = specificDaysClosed.withDay(date, Fraction.ZERO);</span>
 				else
-<span class="nc" id="L188">					specificDaysOpen = specificDaysOpen.withDay(date, Fraction.ONE);</span>
-<span class="nc" id="L189">			}</span>
+<span class="nc" id="L187">					specificDaysOpen = specificDaysOpen.withDay(date, Fraction.ONE);</span>
+<span class="nc" id="L188">			}</span>
 
-<span class="nc" id="L191">			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));</span>
+<span class="nc" id="L190">			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));</span>
 		}
 
-<span class="pc bpc" id="L194" title="2 of 4 branches missed.">		if (offBefore == null &amp;&amp; offAfter == null)</span>
-<span class="fc" id="L195">			return result;</span>
+<span class="pc bpc" id="L193" title="2 of 4 branches missed.">		if (offBefore == null &amp;&amp; offAfter == null)</span>
+<span class="fc" id="L194">			return result;</span>
 
-<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (offBefore == null)</span>
-<span class="nc" id="L198">			return Combiner.product(result,</span>
-<span class="nc" id="L199">					new PiecewiseConstantTimeWindow(LocalDateTime.MIN, offAfter.plusDays(1).atStartOfDay()));</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (offBefore == null)</span>
+<span class="nc" id="L197">			return Combiner.product(result,</span>
+<span class="nc" id="L198">					new PiecewiseConstantTimeWindow(LocalDateTime.MIN, offAfter.plusDays(1).atStartOfDay()));</span>
 
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (offAfter == null)</span>
-<span class="nc" id="L202">			return Combiner.product(result,</span>
-<span class="nc" id="L203">					new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), LocalDateTime.MAX));</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (offAfter == null)</span>
+<span class="nc" id="L201">			return Combiner.product(result,</span>
+<span class="nc" id="L202">					new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), LocalDateTime.MAX));</span>
 
-<span class="nc" id="L205">		return Combiner.product(result,</span>
-<span class="nc" id="L206">				new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), offAfter.plusDays(1).atStartOfDay()));</span>
+<span class="nc" id="L204">		return Combiner.product(result,</span>
+<span class="nc" id="L205">				new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), offAfter.plusDays(1).atStartOfDay()));</span>
 
 	}
 

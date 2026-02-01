@@ -38,61 +38,59 @@ package net.sourceforge.plantuml.project;
 import java.time.LocalDate;
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.project.time.TimePoint;
-
 public class DaysAsDates implements Iterable&lt;LocalDate&gt; {
 
 	private final LocalDate date1;
 	private final LocalDate date2;
 
-<span class="fc" id="L48">	public DaysAsDates(LocalDate date1, LocalDate date2) {</span>
-<span class="fc" id="L49">		this.date1 = date1;</span>
-<span class="fc" id="L50">		this.date2 = date2;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L46">	public DaysAsDates(LocalDate date1, LocalDate date2) {</span>
+<span class="fc" id="L47">		this.date1 = date1;</span>
+<span class="fc" id="L48">		this.date2 = date2;</span>
+<span class="fc" id="L49">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L55">		return &quot;{ &quot; + date1 + &quot; , &quot; + date2 + &quot; }&quot;;</span>
+<span class="nc" id="L53">		return &quot;{ &quot; + date1 + &quot; , &quot; + date2 + &quot; }&quot;;</span>
 	}
 
-<span class="nc" id="L58">	public DaysAsDates(GanttDiagram gantt, LocalDate date1, int count) {</span>
-<span class="nc" id="L59">		this.date1 = date1;</span>
-<span class="nc" id="L60">		LocalDate tmp = date1;</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		while (count &gt; 0) {</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (gantt.isOpen(tmp)) {</span>
-<span class="nc" id="L63">				count--;</span>
+<span class="nc" id="L56">	public DaysAsDates(GanttDiagram gantt, LocalDate date1, int count) {</span>
+<span class="nc" id="L57">		this.date1 = date1;</span>
+<span class="nc" id="L58">		LocalDate tmp = date1;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		while (count &gt; 0) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (gantt.isOpen(tmp)) {</span>
+<span class="nc" id="L61">				count--;</span>
 			}
-<span class="nc" id="L65">			tmp = tmp.plusDays(1);</span>
+<span class="nc" id="L63">			tmp = tmp.plusDays(1);</span>
 		}
-<span class="nc" id="L67">		this.date2 = tmp;</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L65">		this.date2 = tmp;</span>
+<span class="nc" id="L66">	}</span>
 
 	class MyIterator implements Iterator&lt;LocalDate&gt; {
 
 		private LocalDate current;
 
-<span class="fc" id="L74">		public MyIterator(LocalDate current) {</span>
-<span class="fc" id="L75">			this.current = current;</span>
-<span class="fc" id="L76">		}</span>
+<span class="fc" id="L72">		public MyIterator(LocalDate current) {</span>
+<span class="fc" id="L73">			this.current = current;</span>
+<span class="fc" id="L74">		}</span>
 
 		public boolean hasNext() {
-<span class="fc bfc" id="L79" title="All 2 branches covered.">			return current.compareTo(date2) &lt;= 0;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			return current.compareTo(date2) &lt;= 0;</span>
 		}
 
 		public LocalDate next() {
-<span class="fc" id="L83">			final LocalDate result = current;</span>
-<span class="fc" id="L84">			current = current.plusDays(1);</span>
-<span class="fc" id="L85">			return result;</span>
+<span class="fc" id="L81">			final LocalDate result = current;</span>
+<span class="fc" id="L82">			current = current.plusDays(1);</span>
+<span class="fc" id="L83">			return result;</span>
 		}
 
 		public void remove() {
-<span class="nc" id="L89">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L87">			throw new UnsupportedOperationException();</span>
 		}
 
 	}
 
 	public Iterator&lt;LocalDate&gt; iterator() {
-<span class="fc" id="L95">		return new MyIterator(date1);</span>
+<span class="fc" id="L93">		return new MyIterator(date1);</span>
 	}
 
 }

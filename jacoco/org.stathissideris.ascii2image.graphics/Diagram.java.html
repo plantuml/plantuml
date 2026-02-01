@@ -105,31 +105,27 @@ public class Diagram {
 	 * &lt;/ol&gt;
 	 * 
 	 * &lt;p&gt;Finally, the text processing occurs: [pending]&lt;/p&gt;
-	 * 
-	 * @param grid
-	 * @param cellWidth
-	 * @param cellHeight
 	 */
-<span class="nc" id="L113">	public Diagram(TextGrid grid, ConversionOptions options) {</span>
+<span class="nc" id="L109">	public Diagram(TextGrid grid, ConversionOptions options) {</span>
 		
-<span class="nc" id="L115">		this.cellWidth = options.renderingOptions.getCellWidth();</span>
-<span class="nc" id="L116">		this.cellHeight = options.renderingOptions.getCellHeight();</span>
+<span class="nc" id="L111">		this.cellWidth = options.renderingOptions.getCellWidth();</span>
+<span class="nc" id="L112">		this.cellHeight = options.renderingOptions.getCellHeight();</span>
 		
-<span class="nc" id="L118">		width = grid.getWidth() * cellWidth;</span>
-<span class="nc" id="L119">		height = grid.getHeight() * cellHeight;</span>
+<span class="nc" id="L114">		width = grid.getWidth() * cellWidth;</span>
+<span class="nc" id="L115">		height = grid.getHeight() * cellHeight;</span>
 		
-<span class="nc" id="L121">		TextGrid workGrid = new TextGrid(grid);</span>
-<span class="nc" id="L122">		workGrid.replaceTypeOnLine();</span>
-<span class="nc" id="L123">		workGrid.replacePointMarkersOnLine();</span>
+<span class="nc" id="L117">		TextGrid workGrid = new TextGrid(grid);</span>
+<span class="nc" id="L118">		workGrid.replaceTypeOnLine();</span>
+<span class="nc" id="L119">		workGrid.replacePointMarkersOnLine();</span>
 		if(DEBUG) workGrid.printDebug();
 		
-<span class="nc" id="L126">		int width = grid.getWidth();</span>
-<span class="nc" id="L127">		int height = grid.getHeight();</span>
+<span class="nc" id="L122">		int width = grid.getWidth();</span>
+<span class="nc" id="L123">		int height = grid.getHeight();</span>
 
 	
 		//split distinct shapes using AbstractionGrid 
-<span class="nc" id="L131">		AbstractionGrid temp = new AbstractionGrid(workGrid, workGrid.getAllBoundaries());</span>
-<span class="nc" id="L132">		ArrayList&lt;CellSet&gt; boundarySetsStep1 = temp.getDistinctShapes();</span>
+<span class="nc" id="L127">		AbstractionGrid temp = new AbstractionGrid(workGrid, workGrid.getAllBoundaries());</span>
+<span class="nc" id="L128">		ArrayList&lt;CellSet&gt; boundarySetsStep1 = temp.getDistinctShapes();</span>
 		
 		if(DEBUG){
 			System.out.println(&quot;******* Distinct shapes found using AbstractionGrid *******&quot;);
@@ -144,30 +140,30 @@ public class Diagram {
 		
 		//Find all the boundaries by using the special version of the filling method
 		//(fills in a different buffer than the buffer it reads from)
-<span class="nc" id="L147">		ArrayList&lt;CellSet&gt; boundarySetsStep2 = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		for(CellSet set : boundarySetsStep1) {			</span>
+<span class="nc" id="L143">		ArrayList&lt;CellSet&gt; boundarySetsStep2 = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for(CellSet set : boundarySetsStep1) {			</span>
 			//the fill buffer keeps track of which cells have been
 			//filled already
-<span class="nc" id="L151">			TextGrid fillBuffer = new TextGrid(width * 3, height * 3);</span>
+<span class="nc" id="L147">			TextGrid fillBuffer = new TextGrid(width * 3, height * 3);</span>
 			
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			for(int yi = 0; yi &lt; height * 3; yi++){</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">				for(int xi = 0; xi &lt; width * 3; xi++){</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">					if(fillBuffer.isBlank(xi, yi)){</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			for(int yi = 0; yi &lt; height * 3; yi++){</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				for(int xi = 0; xi &lt; width * 3; xi++){</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">					if(fillBuffer.isBlank(xi, yi)){</span>
 						
-<span class="nc" id="L157">						TextGrid copyGrid = new AbstractionGrid(workGrid, set).getCopyOfInternalBuffer();</span>
+<span class="nc" id="L153">						TextGrid copyGrid = new AbstractionGrid(workGrid, set).getCopyOfInternalBuffer();</span>
 
-<span class="nc" id="L159">						CellSet boundaries =</span>
+<span class="nc" id="L155">						CellSet boundaries =</span>
 							copyGrid
-<span class="nc" id="L161">							.findBoundariesExpandingFrom(copyGrid.new Cell(xi, yi));</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">						if(boundaries.size() == 0) continue; //i'm not sure why these occur</span>
-<span class="nc" id="L163">						boundarySetsStep2.add(boundaries.makeScaledOneThirdEquivalent());</span>
+<span class="nc" id="L157">							.findBoundariesExpandingFrom(copyGrid.new Cell(xi, yi));</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">						if(boundaries.size() == 0) continue; //i'm not sure why these occur</span>
+<span class="nc" id="L159">						boundarySetsStep2.add(boundaries.makeScaledOneThirdEquivalent());</span>
 					
-<span class="nc" id="L165">						copyGrid = new AbstractionGrid(workGrid, set).getCopyOfInternalBuffer();</span>
-<span class="nc" id="L166">						CellSet filled =</span>
+<span class="nc" id="L161">						copyGrid = new AbstractionGrid(workGrid, set).getCopyOfInternalBuffer();</span>
+<span class="nc" id="L162">						CellSet filled =</span>
 							copyGrid
-<span class="nc" id="L168">							.fillContinuousArea(copyGrid.new Cell(xi, yi), '*');</span>
-<span class="nc" id="L169">						fillBuffer.fillCellsWith(filled, '*');</span>
-<span class="nc" id="L170">						fillBuffer.fillCellsWith(boundaries, '-');</span>
+<span class="nc" id="L164">							.fillContinuousArea(copyGrid.new Cell(xi, yi), '*');</span>
+<span class="nc" id="L165">						fillBuffer.fillCellsWith(filled, '*');</span>
+<span class="nc" id="L166">						fillBuffer.fillCellsWith(boundaries, '-');</span>
 						
 						if(DEBUG){
 							//System.out.println(&quot;Fill buffer:&quot;);
@@ -179,12 +175,12 @@ public class Diagram {
 					}
 				}
 			}
-<span class="nc" id="L182">		}</span>
+<span class="nc" id="L178">		}</span>
 
 		if (DEBUG)
 			System.out.println(&quot;******* Removed duplicates *******&quot;);
 
-<span class="nc" id="L187">		boundarySetsStep2 = CellSet.removeDuplicateSets(boundarySetsStep2);</span>
+<span class="nc" id="L183">		boundarySetsStep2 = CellSet.removeDuplicateSets(boundarySetsStep2);</span>
 
 		if(DEBUG){
 			Iterator&lt;CellSet&gt; dit = boundarySetsStep2.iterator();
@@ -194,8 +190,8 @@ public class Diagram {
 			}
 		}
 
-<span class="nc" id="L197">		int originalSize = boundarySetsStep2.size(); </span>
-<span class="nc" id="L198">		boundarySetsStep2 = CellSet.removeDuplicateSets(boundarySetsStep2);</span>
+<span class="nc" id="L193">		int originalSize = boundarySetsStep2.size(); </span>
+<span class="nc" id="L194">		boundarySetsStep2 = CellSet.removeDuplicateSets(boundarySetsStep2);</span>
 		if(DEBUG) {
 			System.out.println(
 				&quot;******* Removed duplicates: there were &quot;
@@ -210,54 +206,54 @@ public class Diagram {
 		if (DEBUG)
 			System.out.println(&quot;******* First evaluation of openess *******&quot;);
 		
-<span class="nc" id="L213">		ArrayList&lt;CellSet&gt; open = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc" id="L214">		ArrayList&lt;CellSet&gt; closed = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc" id="L215">		ArrayList&lt;CellSet&gt; mixed = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L209">		ArrayList&lt;CellSet&gt; open = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L210">		ArrayList&lt;CellSet&gt; closed = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L211">		ArrayList&lt;CellSet&gt; mixed = new ArrayList&lt;CellSet&gt;();</span>
 		
-<span class="nc" id="L217">		Iterator&lt;CellSet&gt; sets = boundarySetsStep2.iterator();</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		while(sets.hasNext()){</span>
-<span class="nc" id="L219">			CellSet set = (CellSet) sets.next();</span>
-<span class="nc" id="L220">			int type = set.getType(workGrid);</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">			if(type == CellSet.TYPE_CLOSED) closed.add(set);</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">			else if(type == CellSet.TYPE_OPEN) open.add(set);</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			else if(type == CellSet.TYPE_MIXED) mixed.add(set);</span>
+<span class="nc" id="L213">		Iterator&lt;CellSet&gt; sets = boundarySetsStep2.iterator();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		while(sets.hasNext()){</span>
+<span class="nc" id="L215">			CellSet set = (CellSet) sets.next();</span>
+<span class="nc" id="L216">			int type = set.getType(workGrid);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if(type == CellSet.TYPE_CLOSED) closed.add(set);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">			else if(type == CellSet.TYPE_OPEN) open.add(set);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">			else if(type == CellSet.TYPE_MIXED) mixed.add(set);</span>
 			if(DEBUG){
 				if(type == CellSet.TYPE_CLOSED) System.out.println(&quot;Closed boundaries:&quot;);
 				else if(type == CellSet.TYPE_OPEN) System.out.println(&quot;Open boundaries:&quot;);
 				else if(type == CellSet.TYPE_MIXED) System.out.println(&quot;Mixed boundaries:&quot;);
 				set.printAsGrid();
 			}
-<span class="nc" id="L230">		}</span>
+<span class="nc" id="L226">		}</span>
 		
-<span class="nc" id="L232">		boolean hadToEliminateMixed = false;</span>
+<span class="nc" id="L228">		boolean hadToEliminateMixed = false;</span>
 		
-<span class="nc bnc" id="L234" title="All 4 branches missed.">		if(mixed.size() &gt; 0 &amp;&amp; closed.size() &gt; 0) {</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">		if(mixed.size() &gt; 0 &amp;&amp; closed.size() &gt; 0) {</span>
 							// mixed shapes can be eliminated by
 							// subtracting all the closed shapes from them 
 			if (DEBUG)
 				System.out.println(&quot;******* Eliminating mixed shapes (basic algorithm) *******&quot;);
 		
-<span class="nc" id="L240">			hadToEliminateMixed = true;</span>
+<span class="nc" id="L236">			hadToEliminateMixed = true;</span>
 			
 			//subtract from each of the mixed sets all the closed sets
-<span class="nc" id="L243">			sets = mixed.iterator();</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">			while(sets.hasNext()){</span>
-<span class="nc" id="L245">				CellSet set = (CellSet) sets.next();</span>
-<span class="nc" id="L246">				Iterator&lt;CellSet&gt; closedSets = closed.iterator();</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">				while(closedSets.hasNext()){</span>
-<span class="nc" id="L248">					CellSet closedSet = closedSets.next();</span>
-<span class="nc" id="L249">					set.subtractSet(closedSet);</span>
-<span class="nc" id="L250">				}</span>
+<span class="nc" id="L239">			sets = mixed.iterator();</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">			while(sets.hasNext()){</span>
+<span class="nc" id="L241">				CellSet set = (CellSet) sets.next();</span>
+<span class="nc" id="L242">				Iterator&lt;CellSet&gt; closedSets = closed.iterator();</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">				while(closedSets.hasNext()){</span>
+<span class="nc" id="L244">					CellSet closedSet = closedSets.next();</span>
+<span class="nc" id="L245">					set.subtractSet(closedSet);</span>
+<span class="nc" id="L246">				}</span>
 				// this is necessary because some mixed sets produce
 				// several distinct open sets after you subtract the
 				// closed sets from them
-<span class="nc bnc" id="L254" title="All 2 branches missed.">				if(set.getType(workGrid) == CellSet.TYPE_OPEN) {</span>
-<span class="nc" id="L255">					boundarySetsStep2.remove(set);</span>
-<span class="nc" id="L256">					boundarySetsStep2.addAll(set.breakIntoDistinctBoundaries(workGrid));</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">				if(set.getType(workGrid) == CellSet.TYPE_OPEN) {</span>
+<span class="nc" id="L251">					boundarySetsStep2.remove(set);</span>
+<span class="nc" id="L252">					boundarySetsStep2.addAll(set.breakIntoDistinctBoundaries(workGrid));</span>
 				}
-<span class="nc" id="L258">			}</span>
+<span class="nc" id="L254">			}</span>
 
-<span class="nc bnc" id="L260" title="All 4 branches missed.">		} else if(mixed.size() &gt; 0 &amp;&amp; closed.size() == 0) {</span>
+<span class="nc bnc" id="L256" title="All 4 branches missed.">		} else if(mixed.size() &gt; 0 &amp;&amp; closed.size() == 0) {</span>
 							// no closed shape exists, will have to
 							// handle mixed shape on its own 
 			// an example of this case is the following:
@@ -267,17 +263,17 @@ public class Diagram {
 			// |     |
 			// +-----+
 
-<span class="nc" id="L270">			hadToEliminateMixed = true;</span>
+<span class="nc" id="L266">			hadToEliminateMixed = true;</span>
 
 			if (DEBUG)
 				System.out.println(&quot;******* Eliminating mixed shapes (advanced algorithm for truly mixed shapes) *******&quot;);
 				
-<span class="nc" id="L275">			sets = mixed.iterator();</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">			while(sets.hasNext()){</span>
-<span class="nc" id="L277">				CellSet set = (CellSet) sets.next();</span>
-<span class="nc" id="L278">				boundarySetsStep2.remove(set);</span>
-<span class="nc" id="L279">				boundarySetsStep2.addAll(set.breakTrulyMixedBoundaries(workGrid));</span>
-<span class="nc" id="L280">			}</span>
+<span class="nc" id="L271">			sets = mixed.iterator();</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">			while(sets.hasNext()){</span>
+<span class="nc" id="L273">				CellSet set = (CellSet) sets.next();</span>
+<span class="nc" id="L274">				boundarySetsStep2.remove(set);</span>
+<span class="nc" id="L275">				boundarySetsStep2.addAll(set.breakTrulyMixedBoundaries(workGrid));</span>
+<span class="nc" id="L276">			}</span>
 
 		} else {
 			if (DEBUG)
@@ -285,35 +281,35 @@ public class Diagram {
 		}
 		
 		
-<span class="nc bnc" id="L288" title="All 2 branches missed.">		if(hadToEliminateMixed){</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		if(hadToEliminateMixed){</span>
 			if (DEBUG)
 				System.out.println(&quot;******* Second evaluation of openess *******&quot;);
 		
 			//split boundaries again to open, closed and mixed
-<span class="nc" id="L293">			open = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc" id="L294">			closed = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc" id="L295">			mixed = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L289">			open = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L290">			closed = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L291">			mixed = new ArrayList&lt;CellSet&gt;();</span>
 		
-<span class="nc" id="L297">			sets = boundarySetsStep2.iterator();</span>
-<span class="nc bnc" id="L298" title="All 2 branches missed.">			while(sets.hasNext()){</span>
-<span class="nc" id="L299">				CellSet set = (CellSet) sets.next();</span>
-<span class="nc" id="L300">				int type = set.getType(workGrid);</span>
-<span class="nc bnc" id="L301" title="All 2 branches missed.">				if(type == CellSet.TYPE_CLOSED) closed.add(set);</span>
-<span class="nc bnc" id="L302" title="All 2 branches missed.">				else if(type == CellSet.TYPE_OPEN) open.add(set);</span>
-<span class="nc bnc" id="L303" title="All 2 branches missed.">				else if(type == CellSet.TYPE_MIXED) mixed.add(set);</span>
+<span class="nc" id="L293">			sets = boundarySetsStep2.iterator();</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">			while(sets.hasNext()){</span>
+<span class="nc" id="L295">				CellSet set = (CellSet) sets.next();</span>
+<span class="nc" id="L296">				int type = set.getType(workGrid);</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">				if(type == CellSet.TYPE_CLOSED) closed.add(set);</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">				else if(type == CellSet.TYPE_OPEN) open.add(set);</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">				else if(type == CellSet.TYPE_MIXED) mixed.add(set);</span>
 				if(DEBUG){
 					if(type == CellSet.TYPE_CLOSED) System.out.println(&quot;Closed boundaries:&quot;);
 					else if(type == CellSet.TYPE_OPEN) System.out.println(&quot;Open boundaries:&quot;);
 					else if(type == CellSet.TYPE_MIXED) System.out.println(&quot;Mixed boundaries:&quot;);
 					set.printAsGrid();
 				}
-<span class="nc" id="L310">			}</span>
+<span class="nc" id="L306">			}</span>
 		}
 
-<span class="nc" id="L313">		boolean removedAnyObsolete = removeObsoleteShapes(workGrid, closed);</span>
+<span class="nc" id="L309">		boolean removedAnyObsolete = removeObsoleteShapes(workGrid, closed);</span>
 		
-<span class="nc" id="L315">		boolean allCornersRound = false;</span>
-<span class="nc bnc" id="L316" title="All 2 branches missed.">		if(options.processingOptions.areAllCornersRound()) allCornersRound = true;</span>
+<span class="nc" id="L311">		boolean allCornersRound = false;</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		if(options.processingOptions.areAllCornersRound()) allCornersRound = true;</span>
 		
 		//make shapes from the boundary sets
 		//make closed shapes
@@ -322,294 +318,294 @@ public class Diagram {
 			System.out.println(&quot;***** CLOSED: *****&quot;);
 		}
 		
-<span class="nc" id="L325">		ArrayList&lt;DiagramComponent&gt; closedShapes = new ArrayList&lt;DiagramComponent&gt;();</span>
-<span class="nc" id="L326">		sets = closed.iterator();</span>
-<span class="nc bnc" id="L327" title="All 2 branches missed.">		while(sets.hasNext()){</span>
-<span class="nc" id="L328">			CellSet set = (CellSet) sets.next();</span>
+<span class="nc" id="L321">		ArrayList&lt;DiagramComponent&gt; closedShapes = new ArrayList&lt;DiagramComponent&gt;();</span>
+<span class="nc" id="L322">		sets = closed.iterator();</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">		while(sets.hasNext()){</span>
+<span class="nc" id="L324">			CellSet set = (CellSet) sets.next();</span>
 			
 			if(DEBUG_MAKE_SHAPES) {
 				set.printAsGrid();
 			}
 			
-<span class="nc" id="L334">			DiagramComponent shape = DiagramComponent.createClosedFromBoundaryCells(workGrid, set, cellWidth, cellHeight, allCornersRound); </span>
-<span class="nc bnc" id="L335" title="All 2 branches missed.">			if(shape != null){</span>
-<span class="nc bnc" id="L336" title="All 2 branches missed.">				if(shape instanceof DiagramShape){</span>
-<span class="nc" id="L337">					addToShapes((DiagramShape) shape);</span>
-<span class="nc" id="L338">					closedShapes.add(shape);</span>
-<span class="nc bnc" id="L339" title="All 2 branches missed.">				} else if(shape instanceof CompositeDiagramShape)</span>
-<span class="nc" id="L340">					addToCompositeShapes((CompositeDiagramShape) shape);</span>
+<span class="nc" id="L330">			DiagramComponent shape = DiagramComponent.createClosedFromBoundaryCells(workGrid, set, cellWidth, cellHeight, allCornersRound); </span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">			if(shape != null){</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">				if(shape instanceof DiagramShape){</span>
+<span class="nc" id="L333">					addToShapes((DiagramShape) shape);</span>
+<span class="nc" id="L334">					closedShapes.add(shape);</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">				} else if(shape instanceof CompositeDiagramShape)</span>
+<span class="nc" id="L336">					addToCompositeShapes((CompositeDiagramShape) shape);</span>
 			}
-<span class="nc" id="L342">		}</span>
+<span class="nc" id="L338">		}</span>
 
-<span class="nc bnc" id="L344" title="All 2 branches missed.">		if(options.processingOptions.performSeparationOfCommonEdges())</span>
-<span class="nc" id="L345">			separateCommonEdges(closedShapes);</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if(options.processingOptions.performSeparationOfCommonEdges())</span>
+<span class="nc" id="L341">			separateCommonEdges(closedShapes);</span>
 
 		//make open shapes
-<span class="nc" id="L348">		sets = open.iterator();</span>
-<span class="nc bnc" id="L349" title="All 2 branches missed.">		while(sets.hasNext()){</span>
-<span class="nc" id="L350">			CellSet set = (CellSet) sets.next();</span>
-<span class="nc bnc" id="L351" title="All 2 branches missed.">			if(set.size() == 1){ //single cell &quot;shape&quot;</span>
-<span class="nc" id="L352">				TextGrid.Cell cell = (TextGrid.Cell) set.getFirst();</span>
-<span class="nc bnc" id="L353" title="All 2 branches missed.">				if(!grid.cellContainsDashedLineChar(cell)) { </span>
-<span class="nc" id="L354">					DiagramShape shape = DiagramShape.createSmallLine(workGrid, cell, cellWidth, cellHeight); </span>
-<span class="nc bnc" id="L355" title="All 2 branches missed.">					if(shape != null) {</span>
-<span class="nc" id="L356">						addToShapes(shape); </span>
-<span class="nc" id="L357">						shape.connectEndsToAnchors(workGrid, this);</span>
+<span class="nc" id="L344">		sets = open.iterator();</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		while(sets.hasNext()){</span>
+<span class="nc" id="L346">			CellSet set = (CellSet) sets.next();</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			if(set.size() == 1){ //single cell &quot;shape&quot;</span>
+<span class="nc" id="L348">				TextGrid.Cell cell = (TextGrid.Cell) set.getFirst();</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">				if(!grid.cellContainsDashedLineChar(cell)) { </span>
+<span class="nc" id="L350">					DiagramShape shape = DiagramShape.createSmallLine(workGrid, cell, cellWidth, cellHeight); </span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">					if(shape != null) {</span>
+<span class="nc" id="L352">						addToShapes(shape); </span>
+<span class="nc" id="L353">						shape.connectEndsToAnchors(workGrid, this);</span>
 					}
 				}
-<span class="nc" id="L360">			} else { //normal shape</span>
+<span class="nc" id="L356">			} else { //normal shape</span>
                 if (DEBUG)
                     System.out.println(set.getCellsAsString());				
 				
-<span class="nc" id="L364">				DiagramComponent shape =</span>
+<span class="nc" id="L360">				DiagramComponent shape =</span>
 					CompositeDiagramShape
-<span class="nc" id="L366">						.createOpenFromBoundaryCells(</span>
+<span class="nc" id="L362">						.createOpenFromBoundaryCells(</span>
 								workGrid, set, cellWidth, cellHeight, allCornersRound);
 
-<span class="nc bnc" id="L369" title="All 2 branches missed.">				if(shape != null){</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">					if(shape instanceof CompositeDiagramShape){</span>
-<span class="nc" id="L371">						addToCompositeShapes((CompositeDiagramShape) shape);</span>
-<span class="nc" id="L372">						((CompositeDiagramShape) shape).connectEndsToAnchors(workGrid, this);</span>
-<span class="nc bnc" id="L373" title="All 2 branches missed.">					} else if(shape instanceof DiagramShape) {</span>
-<span class="nc" id="L374">						addToShapes((DiagramShape) shape);</span>
-<span class="nc" id="L375">						((DiagramShape) shape).connectEndsToAnchors(workGrid, this);</span>
-<span class="nc" id="L376">						((DiagramShape) shape).moveEndsToCellEdges(grid, this);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">				if(shape != null){</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">					if(shape instanceof CompositeDiagramShape){</span>
+<span class="nc" id="L367">						addToCompositeShapes((CompositeDiagramShape) shape);</span>
+<span class="nc" id="L368">						((CompositeDiagramShape) shape).connectEndsToAnchors(workGrid, this);</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">					} else if(shape instanceof DiagramShape) {</span>
+<span class="nc" id="L370">						addToShapes((DiagramShape) shape);</span>
+<span class="nc" id="L371">						((DiagramShape) shape).connectEndsToAnchors(workGrid, this);</span>
+<span class="nc" id="L372">						((DiagramShape) shape).moveEndsToCellEdges(grid, this);</span>
 					}
 				}
 					
 			}
-<span class="nc" id="L381">		}</span>
+<span class="nc" id="L377">		}</span>
 
 		//assign color codes to shapes
 		//TODO: text on line should not change its color
 		
-<span class="nc" id="L386">		Iterator&lt;CellColorPair&gt; cellColorPairs = grid.findColorCodes().iterator();</span>
-<span class="nc bnc" id="L387" title="All 2 branches missed.">		while(cellColorPairs.hasNext()){</span>
-<span class="nc" id="L388">			TextGrid.CellColorPair pair =</span>
-<span class="nc" id="L389">				(TextGrid.CellColorPair) cellColorPairs.next();</span>
+<span class="nc" id="L382">		Iterator&lt;CellColorPair&gt; cellColorPairs = grid.findColorCodes().iterator();</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">		while(cellColorPairs.hasNext()){</span>
+<span class="nc" id="L384">			TextGrid.CellColorPair pair =</span>
+<span class="nc" id="L385">				(TextGrid.CellColorPair) cellColorPairs.next();</span>
 			
-<span class="nc" id="L391">			ShapePoint point =</span>
-<span class="nc" id="L392">				new ShapePoint(getCellMidX(pair.cell), getCellMidY(pair.cell));</span>
-<span class="nc" id="L393">			DiagramShape containingShape = findSmallestShapeContaining(point);</span>
+<span class="nc" id="L387">			ShapePoint point =</span>
+<span class="nc" id="L388">				new ShapePoint(getCellMidX(pair.cell), getCellMidY(pair.cell));</span>
+<span class="nc" id="L389">			DiagramShape containingShape = findSmallestShapeContaining(point);</span>
 			
-<span class="nc bnc" id="L395" title="All 2 branches missed.">			if(containingShape != null)</span>
-<span class="nc" id="L396">				containingShape.setFillColor(pair.color);</span>
-<span class="nc" id="L397">		}</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">			if(containingShape != null)</span>
+<span class="nc" id="L392">				containingShape.setFillColor(pair.color);</span>
+<span class="nc" id="L393">		}</span>
 
 		//assign markup to shapes
-<span class="nc" id="L400">		Iterator&lt;CellTagPair&gt; cellTagPairs = grid.findMarkupTags().iterator();</span>
-<span class="nc bnc" id="L401" title="All 2 branches missed.">		while(cellTagPairs.hasNext()){</span>
-<span class="nc" id="L402">			TextGrid.CellTagPair pair =</span>
-<span class="nc" id="L403">				(TextGrid.CellTagPair) cellTagPairs.next();</span>
+<span class="nc" id="L396">		Iterator&lt;CellTagPair&gt; cellTagPairs = grid.findMarkupTags().iterator();</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		while(cellTagPairs.hasNext()){</span>
+<span class="nc" id="L398">			TextGrid.CellTagPair pair =</span>
+<span class="nc" id="L399">				(TextGrid.CellTagPair) cellTagPairs.next();</span>
 			
-<span class="nc" id="L405">			ShapePoint point =</span>
-<span class="nc" id="L406">				new ShapePoint(getCellMidX(pair.cell), getCellMidY(pair.cell));</span>
+<span class="nc" id="L401">			ShapePoint point =</span>
+<span class="nc" id="L402">				new ShapePoint(getCellMidX(pair.cell), getCellMidY(pair.cell));</span>
 			
-<span class="nc" id="L408">			DiagramShape containingShape = findSmallestShapeContaining(point);</span>
+<span class="nc" id="L404">			DiagramShape containingShape = findSmallestShapeContaining(point);</span>
 			
 			//this tag is not within a shape, skip
-<span class="nc bnc" id="L411" title="All 2 branches missed.">			if(containingShape == null) continue;</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">			if(containingShape == null) continue;</span>
 			
 			//TODO: the code below could be a lot more concise
-<span class="nc bnc" id="L414" title="All 2 branches missed.">			if(pair.tag.equals(&quot;d&quot;)){</span>
-<span class="nc" id="L415">				CustomShapeDefinition def =</span>
-<span class="nc" id="L416">					options.processingOptions.getFromCustomShapes(&quot;d&quot;);</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L418">					containingShape.setType(DiagramShape.TYPE_DOCUMENT);</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">			if(pair.tag.equals(&quot;d&quot;)){</span>
+<span class="nc" id="L411">				CustomShapeDefinition def =</span>
+<span class="nc" id="L412">					options.processingOptions.getFromCustomShapes(&quot;d&quot;);</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L414">					containingShape.setType(DiagramShape.TYPE_DOCUMENT);</span>
 				else {
-<span class="nc" id="L420">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L421">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L416">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L417">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc bnc" id="L423" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;s&quot;)){</span>
-<span class="nc" id="L424">				CustomShapeDefinition def =</span>
-<span class="nc" id="L425">					options.processingOptions.getFromCustomShapes(&quot;s&quot;);</span>
-<span class="nc bnc" id="L426" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L427">					containingShape.setType(DiagramShape.TYPE_STORAGE);</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;s&quot;)){</span>
+<span class="nc" id="L420">				CustomShapeDefinition def =</span>
+<span class="nc" id="L421">					options.processingOptions.getFromCustomShapes(&quot;s&quot;);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L423">					containingShape.setType(DiagramShape.TYPE_STORAGE);</span>
 				else {
-<span class="nc" id="L429">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L430">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L425">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L426">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc bnc" id="L432" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;io&quot;)){</span>
-<span class="nc" id="L433">				CustomShapeDefinition def =</span>
-<span class="nc" id="L434">					options.processingOptions.getFromCustomShapes(&quot;io&quot;);</span>
-<span class="nc bnc" id="L435" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L436">					containingShape.setType(DiagramShape.TYPE_IO);</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;io&quot;)){</span>
+<span class="nc" id="L429">				CustomShapeDefinition def =</span>
+<span class="nc" id="L430">					options.processingOptions.getFromCustomShapes(&quot;io&quot;);</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L432">					containingShape.setType(DiagramShape.TYPE_IO);</span>
 				else {
-<span class="nc" id="L438">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L439">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L434">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L435">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc bnc" id="L441" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;c&quot;)){</span>
-<span class="nc" id="L442">				CustomShapeDefinition def =</span>
-<span class="nc" id="L443">					options.processingOptions.getFromCustomShapes(&quot;c&quot;);</span>
-<span class="nc bnc" id="L444" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L445">					containingShape.setType(DiagramShape.TYPE_DECISION);</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;c&quot;)){</span>
+<span class="nc" id="L438">				CustomShapeDefinition def =</span>
+<span class="nc" id="L439">					options.processingOptions.getFromCustomShapes(&quot;c&quot;);</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L441">					containingShape.setType(DiagramShape.TYPE_DECISION);</span>
 				else {
-<span class="nc" id="L447">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L448">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L443">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L444">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc bnc" id="L450" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;mo&quot;)){</span>
-<span class="nc" id="L451">				CustomShapeDefinition def =</span>
-<span class="nc" id="L452">					options.processingOptions.getFromCustomShapes(&quot;mo&quot;);</span>
-<span class="nc bnc" id="L453" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L454">					containingShape.setType(DiagramShape.TYPE_MANUAL_OPERATION);</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;mo&quot;)){</span>
+<span class="nc" id="L447">				CustomShapeDefinition def =</span>
+<span class="nc" id="L448">					options.processingOptions.getFromCustomShapes(&quot;mo&quot;);</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L450">					containingShape.setType(DiagramShape.TYPE_MANUAL_OPERATION);</span>
 				else {
-<span class="nc" id="L456">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L457">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L452">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L453">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc bnc" id="L459" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;tr&quot;)){</span>
-<span class="nc" id="L460">				CustomShapeDefinition def =</span>
-<span class="nc" id="L461">					options.processingOptions.getFromCustomShapes(&quot;tr&quot;);</span>
-<span class="nc bnc" id="L462" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L463">					containingShape.setType(DiagramShape.TYPE_TRAPEZOID);</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;tr&quot;)){</span>
+<span class="nc" id="L456">				CustomShapeDefinition def =</span>
+<span class="nc" id="L457">					options.processingOptions.getFromCustomShapes(&quot;tr&quot;);</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L459">					containingShape.setType(DiagramShape.TYPE_TRAPEZOID);</span>
 				else {
-<span class="nc" id="L465">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L466">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L461">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L462">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc bnc" id="L468" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;o&quot;)){</span>
-<span class="nc" id="L469">				CustomShapeDefinition def =</span>
-<span class="nc" id="L470">					options.processingOptions.getFromCustomShapes(&quot;o&quot;);</span>
-<span class="nc bnc" id="L471" title="All 2 branches missed.">				if(def == null)</span>
-<span class="nc" id="L472">					containingShape.setType(DiagramShape.TYPE_ELLIPSE);</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">			} else if(pair.tag.equals(&quot;o&quot;)){</span>
+<span class="nc" id="L465">				CustomShapeDefinition def =</span>
+<span class="nc" id="L466">					options.processingOptions.getFromCustomShapes(&quot;o&quot;);</span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">				if(def == null)</span>
+<span class="nc" id="L468">					containingShape.setType(DiagramShape.TYPE_ELLIPSE);</span>
 				else {
-<span class="nc" id="L474">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L475">					containingShape.setDefinition(def);</span>
+<span class="nc" id="L470">					containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L471">					containingShape.setDefinition(def);</span>
 				}
-<span class="nc" id="L477">			} else {</span>
-<span class="nc" id="L478">				CustomShapeDefinition def =</span>
-<span class="nc" id="L479">					options.processingOptions.getFromCustomShapes(pair.tag);</span>
-<span class="nc" id="L480">				containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
-<span class="nc" id="L481">				containingShape.setDefinition(def);						</span>
+<span class="nc" id="L473">			} else {</span>
+<span class="nc" id="L474">				CustomShapeDefinition def =</span>
+<span class="nc" id="L475">					options.processingOptions.getFromCustomShapes(pair.tag);</span>
+<span class="nc" id="L476">				containingShape.setType(DiagramShape.TYPE_CUSTOM);</span>
+<span class="nc" id="L477">				containingShape.setDefinition(def);						</span>
 			}
-<span class="nc" id="L483">		}</span>
+<span class="nc" id="L479">		}</span>
 		
 		//make arrowheads
-<span class="nc" id="L486">		Iterator&lt;Cell&gt; arrowheadCells = workGrid.findArrowheads().iterator();</span>
-<span class="nc bnc" id="L487" title="All 2 branches missed.">		while(arrowheadCells.hasNext()){</span>
-<span class="nc" id="L488">			TextGrid.Cell cell = arrowheadCells.next();</span>
-<span class="nc" id="L489">			DiagramShape arrowhead = DiagramShape.createArrowhead(workGrid, cell, cellWidth, cellHeight);</span>
-<span class="nc bnc" id="L490" title="All 2 branches missed.">			if(arrowhead != null) addToShapes(arrowhead);</span>
-<span class="nc" id="L491">			else System.err.println(&quot;Could not create arrowhead shape. Unexpected error.&quot;);</span>
-<span class="nc" id="L492">		}</span>
+<span class="nc" id="L482">		Iterator&lt;Cell&gt; arrowheadCells = workGrid.findArrowheads().iterator();</span>
+<span class="nc bnc" id="L483" title="All 2 branches missed.">		while(arrowheadCells.hasNext()){</span>
+<span class="nc" id="L484">			TextGrid.Cell cell = arrowheadCells.next();</span>
+<span class="nc" id="L485">			DiagramShape arrowhead = DiagramShape.createArrowhead(workGrid, cell, cellWidth, cellHeight);</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">			if(arrowhead != null) addToShapes(arrowhead);</span>
+<span class="nc" id="L487">			else System.err.println(&quot;Could not create arrowhead shape. Unexpected error.&quot;);</span>
+<span class="nc" id="L488">		}</span>
 		
 		//make point markers
-<span class="nc" id="L495">		Iterator&lt;TextGrid.Cell&gt; markersIt = grid.getPointMarkersOnLine().iterator();</span>
-<span class="nc bnc" id="L496" title="All 2 branches missed.">		while (markersIt.hasNext()) {</span>
-<span class="nc" id="L497">			TextGrid.Cell cell = markersIt.next();</span>
+<span class="nc" id="L491">		Iterator&lt;TextGrid.Cell&gt; markersIt = grid.getPointMarkersOnLine().iterator();</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">		while (markersIt.hasNext()) {</span>
+<span class="nc" id="L493">			TextGrid.Cell cell = markersIt.next();</span>
 
-<span class="nc" id="L499">			DiagramShape mark = new DiagramShape();</span>
-<span class="nc" id="L500">			mark.addToPoints(new ShapePoint(</span>
-<span class="nc" id="L501">					getCellMidX(cell),</span>
-<span class="nc" id="L502">					getCellMidY(cell)</span>
+<span class="nc" id="L495">			DiagramShape mark = new DiagramShape();</span>
+<span class="nc" id="L496">			mark.addToPoints(new ShapePoint(</span>
+<span class="nc" id="L497">					getCellMidX(cell),</span>
+<span class="nc" id="L498">					getCellMidY(cell)</span>
 				));
-<span class="nc" id="L504">			mark.setType(DiagramShape.TYPE_POINT_MARKER);</span>
-<span class="nc" id="L505">			mark.setFillColor(Color.white);</span>
-<span class="nc" id="L506">			shapes.add(mark);</span>
-<span class="nc" id="L507">		}</span>
+<span class="nc" id="L500">			mark.setType(DiagramShape.TYPE_POINT_MARKER);</span>
+<span class="nc" id="L501">			mark.setFillColor(Color.white);</span>
+<span class="nc" id="L502">			shapes.add(mark);</span>
+<span class="nc" id="L503">		}</span>
 
-<span class="nc" id="L509">		removeDuplicateShapes();</span>
+<span class="nc" id="L505">		removeDuplicateShapes();</span>
 		
 		if(DEBUG) System.out.println(&quot;Shape count: &quot;+shapes.size());
 		if(DEBUG) System.out.println(&quot;Composite shape count: &quot;+compositeShapes.size());
 		
 		//copy again
-<span class="nc" id="L515">		workGrid = new TextGrid(grid);</span>
-<span class="nc" id="L516">		workGrid.removeNonText();</span>
+<span class="nc" id="L511">		workGrid = new TextGrid(grid);</span>
+<span class="nc" id="L512">		workGrid.removeNonText();</span>
 		
 		
 		// ****** handle text *******
 		//break up text into groups
-<span class="nc" id="L521">		TextGrid textGroupGrid = new TextGrid(workGrid);</span>
-<span class="nc" id="L522">		CellSet gaps = textGroupGrid.getAllBlanksBetweenCharacters();</span>
+<span class="nc" id="L517">		TextGrid textGroupGrid = new TextGrid(workGrid);</span>
+<span class="nc" id="L518">		CellSet gaps = textGroupGrid.getAllBlanksBetweenCharacters();</span>
 		//kludge
-<span class="nc" id="L524">		textGroupGrid.fillCellsWith(gaps, '|');</span>
-<span class="nc" id="L525">		CellSet nonBlank = textGroupGrid.getAllNonBlank();</span>
-<span class="nc" id="L526">		ArrayList&lt;CellSet&gt; textGroups = nonBlank.breakIntoDistinctBoundaries();</span>
+<span class="nc" id="L520">		textGroupGrid.fillCellsWith(gaps, '|');</span>
+<span class="nc" id="L521">		CellSet nonBlank = textGroupGrid.getAllNonBlank();</span>
+<span class="nc" id="L522">		ArrayList&lt;CellSet&gt; textGroups = nonBlank.breakIntoDistinctBoundaries();</span>
 		if(DEBUG) System.out.println(textGroups.size()+&quot; text groups found&quot;);
 		
-<span class="nc" id="L529">		Font font = FontMeasurer.instance().getFontFor(cellHeight);</span>
+<span class="nc" id="L525">		Font font = FontMeasurer.instance().getFontFor(cellHeight);</span>
 		
-<span class="nc" id="L531">		Iterator&lt;CellSet&gt; textGroupIt = textGroups.iterator();</span>
-<span class="nc bnc" id="L532" title="All 2 branches missed.">		while(textGroupIt.hasNext()){</span>
-<span class="nc" id="L533">			CellSet textGroupCellSet = (CellSet) textGroupIt.next();</span>
+<span class="nc" id="L527">		Iterator&lt;CellSet&gt; textGroupIt = textGroups.iterator();</span>
+<span class="nc bnc" id="L528" title="All 2 branches missed.">		while(textGroupIt.hasNext()){</span>
+<span class="nc" id="L529">			CellSet textGroupCellSet = (CellSet) textGroupIt.next();</span>
 			
-<span class="nc" id="L535">			TextGrid isolationGrid = new TextGrid(width, height);</span>
-<span class="nc" id="L536">			workGrid.copyCellsTo(textGroupCellSet, isolationGrid);</span>
+<span class="nc" id="L531">			TextGrid isolationGrid = new TextGrid(width, height);</span>
+<span class="nc" id="L532">			workGrid.copyCellsTo(textGroupCellSet, isolationGrid);</span>
 			 
-<span class="nc" id="L538">			ArrayList&lt;CellStringPair&gt; strings = isolationGrid.findStrings();</span>
-<span class="nc" id="L539">			Iterator&lt;CellStringPair&gt; it = strings.iterator();</span>
-<span class="nc bnc" id="L540" title="All 2 branches missed.">			while(it.hasNext()){</span>
-<span class="nc" id="L541">				TextGrid.CellStringPair pair = it.next();</span>
-<span class="nc" id="L542">				TextGrid.Cell cell = pair.cell;</span>
-<span class="nc" id="L543">				String string = pair.string;</span>
+<span class="nc" id="L534">			ArrayList&lt;CellStringPair&gt; strings = isolationGrid.findStrings();</span>
+<span class="nc" id="L535">			Iterator&lt;CellStringPair&gt; it = strings.iterator();</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">			while(it.hasNext()){</span>
+<span class="nc" id="L537">				TextGrid.CellStringPair pair = it.next();</span>
+<span class="nc" id="L538">				TextGrid.Cell cell = pair.cell;</span>
+<span class="nc" id="L539">				String string = pair.string;</span>
 				if (DEBUG)
 					System.out.println(&quot;Found string &quot;+string);
-<span class="nc" id="L546">				TextGrid.Cell lastCell = isolationGrid.new Cell(cell.x + string.length() - 1, cell.y);</span>
+<span class="nc" id="L542">				TextGrid.Cell lastCell = isolationGrid.new Cell(cell.x + string.length() - 1, cell.y);</span>
 			
-<span class="nc" id="L548">				int minX = getCellMinX(cell);</span>
-<span class="nc" id="L549">				int y = getCellMaxY(cell);</span>
-<span class="nc" id="L550">				int maxX = getCellMaxX(lastCell);</span>
+<span class="nc" id="L544">				int minX = getCellMinX(cell);</span>
+<span class="nc" id="L545">				int y = getCellMaxY(cell);</span>
+<span class="nc" id="L546">				int maxX = getCellMaxX(lastCell);</span>
 			
 				DiagramText textObject;
-<span class="nc bnc" id="L553" title="All 2 branches missed.">				if(FontMeasurer.instance().getWidthFor(string, font) &gt; maxX - minX){ //does not fit horizontally</span>
-<span class="nc" id="L554">					Font lessWideFont = FontMeasurer.instance().getFontFor(maxX - minX, string);</span>
-<span class="nc" id="L555">					textObject = new DiagramText(minX, y, string, lessWideFont);</span>
-<span class="nc" id="L556">				} else textObject = new DiagramText(minX, y, string, font);</span>
+<span class="nc bnc" id="L549" title="All 2 branches missed.">				if(FontMeasurer.instance().getWidthFor(string, font) &gt; maxX - minX){ //does not fit horizontally</span>
+<span class="nc" id="L550">					Font lessWideFont = FontMeasurer.instance().getFontFor(maxX - minX, string);</span>
+<span class="nc" id="L551">					textObject = new DiagramText(minX, y, string, lessWideFont);</span>
+<span class="nc" id="L552">				} else textObject = new DiagramText(minX, y, string, font);</span>
 			
-<span class="nc" id="L558">				textObject.centerVerticallyBetween(getCellMinY(cell), getCellMaxY(cell));</span>
+<span class="nc" id="L554">				textObject.centerVerticallyBetween(getCellMinY(cell), getCellMaxY(cell));</span>
 			
 				//TODO: if the strings start with bullets they should be aligned to the left
 			
 				//position text correctly
-<span class="nc" id="L563">				int otherStart = isolationGrid.otherStringsStartInTheSameColumn(cell);</span>
-<span class="nc" id="L564">				int otherEnd = isolationGrid.otherStringsEndInTheSameColumn(lastCell);</span>
-<span class="nc bnc" id="L565" title="All 4 branches missed.">				if(0 == otherStart &amp;&amp; 0 == otherEnd) {</span>
-<span class="nc" id="L566">					textObject.centerHorizontallyBetween(minX, maxX);</span>
-<span class="nc bnc" id="L567" title="All 4 branches missed.">				} else if(otherEnd &gt; 0 &amp;&amp; otherStart == 0) {</span>
-<span class="nc" id="L568">					textObject.alignRightEdgeTo(maxX);</span>
-<span class="nc bnc" id="L569" title="All 4 branches missed.">				} else if(otherEnd &gt; 0 &amp;&amp; otherStart &gt; 0){</span>
-<span class="nc bnc" id="L570" title="All 2 branches missed.">					if(otherEnd &gt; otherStart){</span>
-<span class="nc" id="L571">						textObject.alignRightEdgeTo(maxX);</span>
-<span class="nc bnc" id="L572" title="All 2 branches missed.">					} else if(otherEnd == otherStart){</span>
-<span class="nc" id="L573">						textObject.centerHorizontallyBetween(minX, maxX);</span>
+<span class="nc" id="L559">				int otherStart = isolationGrid.otherStringsStartInTheSameColumn(cell);</span>
+<span class="nc" id="L560">				int otherEnd = isolationGrid.otherStringsEndInTheSameColumn(lastCell);</span>
+<span class="nc bnc" id="L561" title="All 4 branches missed.">				if(0 == otherStart &amp;&amp; 0 == otherEnd) {</span>
+<span class="nc" id="L562">					textObject.centerHorizontallyBetween(minX, maxX);</span>
+<span class="nc bnc" id="L563" title="All 4 branches missed.">				} else if(otherEnd &gt; 0 &amp;&amp; otherStart == 0) {</span>
+<span class="nc" id="L564">					textObject.alignRightEdgeTo(maxX);</span>
+<span class="nc bnc" id="L565" title="All 4 branches missed.">				} else if(otherEnd &gt; 0 &amp;&amp; otherStart &gt; 0){</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">					if(otherEnd &gt; otherStart){</span>
+<span class="nc" id="L567">						textObject.alignRightEdgeTo(maxX);</span>
+<span class="nc bnc" id="L568" title="All 2 branches missed.">					} else if(otherEnd == otherStart){</span>
+<span class="nc" id="L569">						textObject.centerHorizontallyBetween(minX, maxX);</span>
 					}
 				}
 			
-<span class="nc" id="L577">				addToTextObjects(textObject);</span>
-<span class="nc" id="L578">			}</span>
-<span class="nc" id="L579">		}</span>
+<span class="nc" id="L573">				addToTextObjects(textObject);</span>
+<span class="nc" id="L574">			}</span>
+<span class="nc" id="L575">		}</span>
 		
 		if (DEBUG)
 			System.out.println(&quot;Positioned text&quot;);
 		
 		//correct the color of the text objects according
 		//to the underlying color
-<span class="nc bnc" id="L586" title="All 2 branches missed.">		for(DiagramText textObject : getTextObjects()) {</span>
-<span class="nc" id="L587">			DiagramShape shape = findSmallestShapeIntersecting(textObject.getBounds());</span>
-<span class="nc bnc" id="L588" title="All 2 branches missed.">			if(shape != null </span>
-<span class="nc bnc" id="L589" title="All 2 branches missed.">					&amp;&amp; shape.getFillColor() != null </span>
-<span class="nc bnc" id="L590" title="All 2 branches missed.">					&amp;&amp; BitmapRenderer.isColorDark(shape.getFillColor())) {</span>
-<span class="nc" id="L591">				textObject.setColor(Color.white);</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">		for(DiagramText textObject : getTextObjects()) {</span>
+<span class="nc" id="L583">			DiagramShape shape = findSmallestShapeIntersecting(textObject.getBounds());</span>
+<span class="nc bnc" id="L584" title="All 2 branches missed.">			if(shape != null </span>
+<span class="nc bnc" id="L585" title="All 2 branches missed.">					&amp;&amp; shape.getFillColor() != null </span>
+<span class="nc bnc" id="L586" title="All 2 branches missed.">					&amp;&amp; BitmapRenderer.isColorDark(shape.getFillColor())) {</span>
+<span class="nc" id="L587">				textObject.setColor(Color.white);</span>
 			}
-<span class="nc" id="L593">		}</span>
+<span class="nc" id="L589">		}</span>
 
 		//set outline to true for test within custom shapes
-<span class="nc" id="L596">		Iterator&lt;DiagramShape&gt; shapes = this.getAllDiagramShapes().iterator();</span>
-<span class="nc bnc" id="L597" title="All 2 branches missed.">		while(shapes.hasNext()){</span>
-<span class="nc" id="L598">			DiagramShape shape = (DiagramShape) shapes.next();</span>
-<span class="nc bnc" id="L599" title="All 2 branches missed.">			if(shape.getType() == DiagramShape.TYPE_CUSTOM){</span>
-<span class="nc" id="L600">				Iterator&lt;DiagramText&gt; textObjects = getTextObjects().iterator();</span>
-<span class="nc bnc" id="L601" title="All 2 branches missed.">				while(textObjects.hasNext()){</span>
-<span class="nc" id="L602">					DiagramText textObject = (DiagramText) textObjects.next();</span>
-<span class="nc" id="L603">					textObject.setHasOutline(true);</span>
-<span class="nc" id="L604">					textObject.setColor(DiagramText.DEFAULT_COLOR);</span>
-<span class="nc" id="L605">				}</span>
+<span class="nc" id="L592">		Iterator&lt;DiagramShape&gt; shapes = this.getAllDiagramShapes().iterator();</span>
+<span class="nc bnc" id="L593" title="All 2 branches missed.">		while(shapes.hasNext()){</span>
+<span class="nc" id="L594">			DiagramShape shape = (DiagramShape) shapes.next();</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">			if(shape.getType() == DiagramShape.TYPE_CUSTOM){</span>
+<span class="nc" id="L596">				Iterator&lt;DiagramText&gt; textObjects = getTextObjects().iterator();</span>
+<span class="nc bnc" id="L597" title="All 2 branches missed.">				while(textObjects.hasNext()){</span>
+<span class="nc" id="L598">					DiagramText textObject = (DiagramText) textObjects.next();</span>
+<span class="nc" id="L599">					textObject.setHasOutline(true);</span>
+<span class="nc" id="L600">					textObject.setColor(DiagramText.DEFAULT_COLOR);</span>
+<span class="nc" id="L601">				}</span>
 			}
-<span class="nc" id="L607">		}</span>
+<span class="nc" id="L603">		}</span>
 		
 		if (DEBUG)
 			System.out.println(&quot;Corrected color of text according to underlying color&quot;);
 
-<span class="nc" id="L612">	}</span>
+<span class="nc" id="L608">	}</span>
 	
 	/**
 	 * Returns a list of all DiagramShapes in the Diagram, including
@@ -618,13 +614,13 @@ public class Diagram {
 	 * @return
 	 */
 	public ArrayList&lt;DiagramShape&gt; getAllDiagramShapes(){
-<span class="nc" id="L621">		ArrayList&lt;DiagramShape&gt; shapes = new ArrayList&lt;DiagramShape&gt;();</span>
-<span class="nc" id="L622">		shapes.addAll(this.getShapes());</span>
+<span class="nc" id="L617">		ArrayList&lt;DiagramShape&gt; shapes = new ArrayList&lt;DiagramShape&gt;();</span>
+<span class="nc" id="L618">		shapes.addAll(this.getShapes());</span>
 		
-<span class="nc bnc" id="L624" title="All 2 branches missed.">		for(CompositeDiagramShape compShape : getCompositeShapes()) {</span>
-<span class="nc" id="L625">			shapes.addAll(compShape.getShapes());</span>
-<span class="nc" id="L626">		}</span>
-<span class="nc" id="L627">		return shapes;		</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">		for(CompositeDiagramShape compShape : getCompositeShapes()) {</span>
+<span class="nc" id="L621">			shapes.addAll(compShape.getShapes());</span>
+<span class="nc" id="L622">		}</span>
+<span class="nc" id="L623">		return shapes;		</span>
 	}
 	
 	/**
@@ -638,9 +634,9 @@ public class Diagram {
 		if (DEBUG)
 			System.out.println(&quot;******* Removing obsolete shapes *******&quot;);
 		
-<span class="nc" id="L641">		boolean removedAny = false;</span>
+<span class="nc" id="L637">		boolean removedAny = false;</span>
 		
-<span class="nc" id="L643">		ArrayList&lt;CellSet&gt; filledSets = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L639">		ArrayList&lt;CellSet&gt; filledSets = new ArrayList&lt;CellSet&gt;();</span>
 
 		Iterator it;
 
@@ -654,19 +650,19 @@ public class Diagram {
 		}
 
 		//make filled versions of all the boundary sets
-<span class="nc" id="L657">		it = sets.iterator();</span>
-<span class="nc bnc" id="L658" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L659">			CellSet set = (CellSet) it.next();</span>
-<span class="nc" id="L660">			set = set.getFilledEquivalent(grid);</span>
-<span class="nc bnc" id="L661" title="All 2 branches missed.">			if(set == null){</span>
-<span class="nc" id="L662">				return false;</span>
-<span class="nc" id="L663">			} else filledSets.add(set);</span>
-<span class="nc" id="L664">		}</span>
+<span class="nc" id="L653">		it = sets.iterator();</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L655">			CellSet set = (CellSet) it.next();</span>
+<span class="nc" id="L656">			set = set.getFilledEquivalent(grid);</span>
+<span class="nc bnc" id="L657" title="All 2 branches missed.">			if(set == null){</span>
+<span class="nc" id="L658">				return false;</span>
+<span class="nc" id="L659">			} else filledSets.add(set);</span>
+<span class="nc" id="L660">		}</span>
 		
-<span class="nc" id="L666">		ArrayList&lt;Integer&gt; toBeRemovedIndices = new ArrayList&lt;Integer&gt;();</span>
-<span class="nc" id="L667">		it = filledSets.iterator();</span>
-<span class="nc bnc" id="L668" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L669">			CellSet set = (CellSet) it.next();</span>
+<span class="nc" id="L662">		ArrayList&lt;Integer&gt; toBeRemovedIndices = new ArrayList&lt;Integer&gt;();</span>
+<span class="nc" id="L663">		it = filledSets.iterator();</span>
+<span class="nc bnc" id="L664" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L665">			CellSet set = (CellSet) it.next();</span>
 			
 			if(DEBUG_VERBOSE){
 				System.out.println(&quot;*** Deciding if the following should be removed:&quot;);
@@ -674,27 +670,27 @@ public class Diagram {
 			}
 			
 			//find the other sets that have common cells with set
-<span class="nc" id="L677">			ArrayList&lt;CellSet&gt; common = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc" id="L678">			common.add(set);</span>
-<span class="nc" id="L679">			Iterator it2 = filledSets.iterator();</span>
-<span class="nc bnc" id="L680" title="All 2 branches missed.">			while(it2.hasNext()){</span>
-<span class="nc" id="L681">				CellSet set2 = (CellSet) it2.next();</span>
-<span class="nc bnc" id="L682" title="All 4 branches missed.">				if(set != set2 &amp;&amp; set.hasCommonCells(set2)){</span>
-<span class="nc" id="L683">					common.add(set2);</span>
+<span class="nc" id="L673">			ArrayList&lt;CellSet&gt; common = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L674">			common.add(set);</span>
+<span class="nc" id="L675">			Iterator it2 = filledSets.iterator();</span>
+<span class="nc bnc" id="L676" title="All 2 branches missed.">			while(it2.hasNext()){</span>
+<span class="nc" id="L677">				CellSet set2 = (CellSet) it2.next();</span>
+<span class="nc bnc" id="L678" title="All 4 branches missed.">				if(set != set2 &amp;&amp; set.hasCommonCells(set2)){</span>
+<span class="nc" id="L679">					common.add(set2);</span>
 				}
-<span class="nc" id="L685">			}</span>
+<span class="nc" id="L681">			}</span>
 			//it only makes sense for more than 2 sets
-<span class="nc bnc" id="L687" title="All 2 branches missed.">			if(common.size() == 2) continue;</span>
+<span class="nc bnc" id="L683" title="All 2 branches missed.">			if(common.size() == 2) continue;</span>
 			
 			//find largest set
-<span class="nc" id="L690">			CellSet largest = set;</span>
-<span class="nc" id="L691">			it2 = common.iterator();</span>
-<span class="nc bnc" id="L692" title="All 2 branches missed.">			while(it2.hasNext()){</span>
-<span class="nc" id="L693">				CellSet set2 = (CellSet) it2.next();</span>
-<span class="nc bnc" id="L694" title="All 2 branches missed.">				if(set2.size() &gt; largest.size()){</span>
-<span class="nc" id="L695">					largest = set2;</span>
+<span class="nc" id="L686">			CellSet largest = set;</span>
+<span class="nc" id="L687">			it2 = common.iterator();</span>
+<span class="nc bnc" id="L688" title="All 2 branches missed.">			while(it2.hasNext()){</span>
+<span class="nc" id="L689">				CellSet set2 = (CellSet) it2.next();</span>
+<span class="nc bnc" id="L690" title="All 2 branches missed.">				if(set2.size() &gt; largest.size()){</span>
+<span class="nc" id="L691">					largest = set2;</span>
 				}
-<span class="nc" id="L697">			}</span>
+<span class="nc" id="L693">			}</span>
 			
 			if(DEBUG_VERBOSE){
 				System.out.println(&quot;Largest:&quot;);
@@ -702,31 +698,31 @@ public class Diagram {
 			}
 
 			//see if largest is sum of others
-<span class="nc" id="L705">			common.remove(largest);</span>
+<span class="nc" id="L701">			common.remove(largest);</span>
 
 			//make the sum set of the small sets on a grid
-<span class="nc" id="L708">			TextGrid gridOfSmalls = new TextGrid(largest.getMaxX() + 2, largest.getMaxY() + 2);</span>
-<span class="nc" id="L709">			CellSet sumOfSmall = new CellSet();</span>
-<span class="nc" id="L710">			it2 = common.iterator();</span>
-<span class="nc bnc" id="L711" title="All 2 branches missed.">			while(it2.hasNext()){</span>
-<span class="nc" id="L712">				CellSet set2 = (CellSet) it2.next();</span>
+<span class="nc" id="L704">			TextGrid gridOfSmalls = new TextGrid(largest.getMaxX() + 2, largest.getMaxY() + 2);</span>
+<span class="nc" id="L705">			CellSet sumOfSmall = new CellSet();</span>
+<span class="nc" id="L706">			it2 = common.iterator();</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed.">			while(it2.hasNext()){</span>
+<span class="nc" id="L708">				CellSet set2 = (CellSet) it2.next();</span>
 				if(DEBUG_VERBOSE){
 					System.out.println(&quot;One of smalls:&quot;);
 					set2.printAsGrid();
 				}
-<span class="nc" id="L717">				gridOfSmalls.fillCellsWith(set2, '*');</span>
-<span class="nc" id="L718">			}</span>
+<span class="nc" id="L713">				gridOfSmalls.fillCellsWith(set2, '*');</span>
+<span class="nc" id="L714">			}</span>
 			if(DEBUG_VERBOSE){
 				System.out.println(&quot;Sum of smalls:&quot;);
 				gridOfSmalls.printDebug();
 			}
-<span class="nc" id="L723">			TextGrid gridLargest = new TextGrid(largest.getMaxX() + 2, largest.getMaxY() + 2);</span>
-<span class="nc" id="L724">			gridLargest.fillCellsWith(largest, '*');</span>
+<span class="nc" id="L719">			TextGrid gridLargest = new TextGrid(largest.getMaxX() + 2, largest.getMaxY() + 2);</span>
+<span class="nc" id="L720">			gridLargest.fillCellsWith(largest, '*');</span>
 
-<span class="nc" id="L726">			int index = filledSets.indexOf(largest);</span>
-<span class="nc bnc" id="L727" title="All 2 branches missed.">			if(gridLargest.equals(gridOfSmalls)</span>
-<span class="nc bnc" id="L728" title="All 2 branches missed.">					&amp;&amp; !toBeRemovedIndices.contains(new Integer(index))) {</span>
-<span class="nc" id="L729">				toBeRemovedIndices.add(new Integer(index));</span>
+<span class="nc" id="L722">			int index = filledSets.indexOf(largest);</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">			if(gridLargest.equals(gridOfSmalls)</span>
+<span class="nc bnc" id="L724" title="All 2 branches missed.">					&amp;&amp; !toBeRemovedIndices.contains(new Integer(index))) {</span>
+<span class="nc" id="L725">				toBeRemovedIndices.add(new Integer(index));</span>
 				if (DEBUG){
 					System.out.println(&quot;Decided to remove set:&quot;);
 					largest.printAsGrid();
@@ -736,21 +732,21 @@ public class Diagram {
 				largest.printAsGrid();
 			}*/
 			//if(gridLargest.equals(gridOfSmalls)) toBeRemovedIndices.add(new Integer(index));
-<span class="nc" id="L739">		}</span>
+<span class="nc" id="L735">		}</span>
 		
-<span class="nc" id="L741">		ArrayList&lt;CellSet&gt; setsToBeRemoved = new ArrayList&lt;CellSet&gt;();</span>
-<span class="nc" id="L742">		it = toBeRemovedIndices.iterator();</span>
-<span class="nc bnc" id="L743" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L744">			int i = ((Integer) it.next()).intValue();</span>
-<span class="nc" id="L745">			setsToBeRemoved.add(sets.get(i));</span>
-<span class="nc" id="L746">		}</span>
+<span class="nc" id="L737">		ArrayList&lt;CellSet&gt; setsToBeRemoved = new ArrayList&lt;CellSet&gt;();</span>
+<span class="nc" id="L738">		it = toBeRemovedIndices.iterator();</span>
+<span class="nc bnc" id="L739" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L740">			int i = ((Integer) it.next()).intValue();</span>
+<span class="nc" id="L741">			setsToBeRemoved.add(sets.get(i));</span>
+<span class="nc" id="L742">		}</span>
 	
-<span class="nc" id="L748">		it = setsToBeRemoved.iterator();</span>
-<span class="nc bnc" id="L749" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L750">			CellSet set = (CellSet) it.next();</span>
-<span class="nc" id="L751">			removedAny = true;</span>
-<span class="nc" id="L752">			sets.remove(set);</span>
-<span class="nc" id="L753">		}</span>
+<span class="nc" id="L744">		it = setsToBeRemoved.iterator();</span>
+<span class="nc bnc" id="L745" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L746">			CellSet set = (CellSet) it.next();</span>
+<span class="nc" id="L747">			removedAny = true;</span>
+<span class="nc" id="L748">			sets.remove(set);</span>
+<span class="nc" id="L749">		}</span>
 	
 		if(DEBUG_VERBOSE) {
 			System.out.println(&quot;******* Sets after *******&quot;);
@@ -761,229 +757,229 @@ public class Diagram {
 			}
 		}
 		
-<span class="nc" id="L764">		return removedAny;</span>
+<span class="nc" id="L760">		return removedAny;</span>
 	}
 	
 	public float getMinimumOfCellDimension(){
-<span class="nc" id="L768">		return Math.min(getCellWidth(), getCellHeight());</span>
+<span class="nc" id="L764">		return Math.min(getCellWidth(), getCellHeight());</span>
 	}
 	
 	private void separateCommonEdges(ArrayList shapes){
 
-<span class="nc" id="L773">		float offset = getMinimumOfCellDimension() / 5;</span>
+<span class="nc" id="L769">		float offset = getMinimumOfCellDimension() / 5;</span>
 
-<span class="nc" id="L775">		ArrayList&lt;ShapeEdge&gt; edges = new ArrayList&lt;ShapeEdge&gt;();</span>
+<span class="nc" id="L771">		ArrayList&lt;ShapeEdge&gt; edges = new ArrayList&lt;ShapeEdge&gt;();</span>
 
 		//get all adges
-<span class="nc" id="L778">		Iterator it = shapes.iterator();</span>
-<span class="nc bnc" id="L779" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L780">			DiagramShape shape = (DiagramShape) it.next();</span>
-<span class="nc" id="L781">			edges.addAll(shape.getEdges());</span>
-<span class="nc" id="L782">		}</span>
+<span class="nc" id="L774">		Iterator it = shapes.iterator();</span>
+<span class="nc bnc" id="L775" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L776">			DiagramShape shape = (DiagramShape) it.next();</span>
+<span class="nc" id="L777">			edges.addAll(shape.getEdges());</span>
+<span class="nc" id="L778">		}</span>
 		
 		//group edges into pairs of touching edges
-<span class="nc" id="L785">		ArrayList&lt;Pair&lt;ShapeEdge, ShapeEdge&gt;&gt; listOfPairs = new ArrayList&lt;Pair&lt;ShapeEdge, ShapeEdge&gt;&gt;();</span>
-<span class="nc" id="L786">		it = edges.iterator();</span>
+<span class="nc" id="L781">		ArrayList&lt;Pair&lt;ShapeEdge, ShapeEdge&gt;&gt; listOfPairs = new ArrayList&lt;Pair&lt;ShapeEdge, ShapeEdge&gt;&gt;();</span>
+<span class="nc" id="L782">		it = edges.iterator();</span>
 		
 		//all-against-all touching test for the edges
-<span class="nc" id="L789">		int startIndex = 1; //skip some to avoid duplicate comparisons and self-to-self comparisons</span>
+<span class="nc" id="L785">		int startIndex = 1; //skip some to avoid duplicate comparisons and self-to-self comparisons</span>
 		
-<span class="nc bnc" id="L791" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L792">			ShapeEdge edge1 = (ShapeEdge) it.next();</span>
+<span class="nc bnc" id="L787" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L788">			ShapeEdge edge1 = (ShapeEdge) it.next();</span>
 			
-<span class="nc bnc" id="L794" title="All 2 branches missed.">			for(int k = startIndex; k &lt; edges.size(); k++) {</span>
-<span class="nc" id="L795">				ShapeEdge edge2 =  edges.get(k);</span>
+<span class="nc bnc" id="L790" title="All 2 branches missed.">			for(int k = startIndex; k &lt; edges.size(); k++) {</span>
+<span class="nc" id="L791">				ShapeEdge edge2 =  edges.get(k);</span>
 				
-<span class="nc bnc" id="L797" title="All 2 branches missed.">				if(edge1.touchesWith(edge2)) {</span>
-<span class="nc" id="L798">					listOfPairs.add(new Pair&lt;ShapeEdge, ShapeEdge&gt;(edge1, edge2));</span>
+<span class="nc bnc" id="L793" title="All 2 branches missed.">				if(edge1.touchesWith(edge2)) {</span>
+<span class="nc" id="L794">					listOfPairs.add(new Pair&lt;ShapeEdge, ShapeEdge&gt;(edge1, edge2));</span>
 				}
 			}
-<span class="nc" id="L801">			startIndex++;</span>
-<span class="nc" id="L802">		}</span>
+<span class="nc" id="L797">			startIndex++;</span>
+<span class="nc" id="L798">		}</span>
 		
-<span class="nc" id="L804">		ArrayList&lt;ShapeEdge&gt; movedEdges = new ArrayList&lt;ShapeEdge&gt;();</span>
+<span class="nc" id="L800">		ArrayList&lt;ShapeEdge&gt; movedEdges = new ArrayList&lt;ShapeEdge&gt;();</span>
 		
 		//move equivalent edges inwards
-<span class="nc" id="L807">		it = listOfPairs.iterator();</span>
-<span class="nc bnc" id="L808" title="All 2 branches missed.">		while(it.hasNext()){</span>
-<span class="nc" id="L809">			Pair&lt;ShapeEdge, ShapeEdge&gt; pair = (Pair&lt;ShapeEdge, ShapeEdge&gt;) it.next();</span>
-<span class="nc bnc" id="L810" title="All 2 branches missed.">			if(!movedEdges.contains(pair.first)) {</span>
-<span class="nc" id="L811">				pair.first.moveInwardsBy(offset);</span>
-<span class="nc" id="L812">				movedEdges.add(pair.first);</span>
+<span class="nc" id="L803">		it = listOfPairs.iterator();</span>
+<span class="nc bnc" id="L804" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L805">			Pair&lt;ShapeEdge, ShapeEdge&gt; pair = (Pair&lt;ShapeEdge, ShapeEdge&gt;) it.next();</span>
+<span class="nc bnc" id="L806" title="All 2 branches missed.">			if(!movedEdges.contains(pair.first)) {</span>
+<span class="nc" id="L807">				pair.first.moveInwardsBy(offset);</span>
+<span class="nc" id="L808">				movedEdges.add(pair.first);</span>
 			}
-<span class="nc bnc" id="L814" title="All 2 branches missed.">			if(!movedEdges.contains(pair.second)) {</span>
-<span class="nc" id="L815">				pair.second.moveInwardsBy(offset);</span>
-<span class="nc" id="L816">				movedEdges.add(pair.second);</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">			if(!movedEdges.contains(pair.second)) {</span>
+<span class="nc" id="L811">				pair.second.moveInwardsBy(offset);</span>
+<span class="nc" id="L812">				movedEdges.add(pair.second);</span>
 			}
-<span class="nc" id="L818">		}</span>
+<span class="nc" id="L814">		}</span>
 
-<span class="nc" id="L820">	}</span>
+<span class="nc" id="L816">	}</span>
 	
 	
 	//TODO: removes more than it should
 	private void removeDuplicateShapes() {
-<span class="nc" id="L825">		ArrayList originalShapes = new ArrayList();</span>
+<span class="nc" id="L821">		ArrayList originalShapes = new ArrayList();</span>
 
-<span class="nc" id="L827">		Iterator shapesIt = getShapesIterator();</span>
-<span class="nc bnc" id="L828" title="All 2 branches missed.">		while(shapesIt.hasNext()){</span>
-<span class="nc" id="L829">			DiagramShape shape = (DiagramShape) shapesIt.next();</span>
-<span class="nc" id="L830">			boolean isOriginal = true;</span>
-<span class="nc" id="L831">			Iterator originals = originalShapes.iterator();</span>
-<span class="nc bnc" id="L832" title="All 2 branches missed.">			while(originals.hasNext()){</span>
-<span class="nc" id="L833">				DiagramShape originalShape = (DiagramShape) originals.next();</span>
-<span class="nc bnc" id="L834" title="All 2 branches missed.">				if(shape.equals(originalShape)){</span>
-<span class="nc" id="L835">					isOriginal = false;</span>
+<span class="nc" id="L823">		Iterator shapesIt = getShapesIterator();</span>
+<span class="nc bnc" id="L824" title="All 2 branches missed.">		while(shapesIt.hasNext()){</span>
+<span class="nc" id="L825">			DiagramShape shape = (DiagramShape) shapesIt.next();</span>
+<span class="nc" id="L826">			boolean isOriginal = true;</span>
+<span class="nc" id="L827">			Iterator originals = originalShapes.iterator();</span>
+<span class="nc bnc" id="L828" title="All 2 branches missed.">			while(originals.hasNext()){</span>
+<span class="nc" id="L829">				DiagramShape originalShape = (DiagramShape) originals.next();</span>
+<span class="nc bnc" id="L830" title="All 2 branches missed.">				if(shape.equals(originalShape)){</span>
+<span class="nc" id="L831">					isOriginal = false;</span>
 				}
-<span class="nc" id="L837">			}</span>
-<span class="nc bnc" id="L838" title="All 2 branches missed.">			if(isOriginal) originalShapes.add(shape);</span>
-<span class="nc" id="L839">		}</span>
+<span class="nc" id="L833">			}</span>
+<span class="nc bnc" id="L834" title="All 2 branches missed.">			if(isOriginal) originalShapes.add(shape);</span>
+<span class="nc" id="L835">		}</span>
 
-<span class="nc" id="L841">		shapes.clear();</span>
-<span class="nc" id="L842">		shapes.addAll(originalShapes);</span>
-<span class="nc" id="L843">	}</span>
+<span class="nc" id="L837">		shapes.clear();</span>
+<span class="nc" id="L838">		shapes.addAll(originalShapes);</span>
+<span class="nc" id="L839">	}</span>
 	
 	private DiagramShape findSmallestShapeContaining(ShapePoint point) {
-<span class="nc" id="L846">		DiagramShape containingShape = null;</span>
-<span class="nc" id="L847">		Iterator&lt;DiagramShape&gt; shapes = getShapes().iterator();</span>
-<span class="nc bnc" id="L848" title="All 2 branches missed.">		while(shapes.hasNext()){</span>
-<span class="nc" id="L849">			DiagramShape shape = shapes.next();</span>
-<span class="nc bnc" id="L850" title="All 2 branches missed.">			if(shape.contains(point)){</span>
-<span class="nc bnc" id="L851" title="All 2 branches missed.">				if(containingShape == null){</span>
-<span class="nc" id="L852">					containingShape = shape;</span>
+<span class="nc" id="L842">		DiagramShape containingShape = null;</span>
+<span class="nc" id="L843">		Iterator&lt;DiagramShape&gt; shapes = getShapes().iterator();</span>
+<span class="nc bnc" id="L844" title="All 2 branches missed.">		while(shapes.hasNext()){</span>
+<span class="nc" id="L845">			DiagramShape shape = shapes.next();</span>
+<span class="nc bnc" id="L846" title="All 2 branches missed.">			if(shape.contains(point)){</span>
+<span class="nc bnc" id="L847" title="All 2 branches missed.">				if(containingShape == null){</span>
+<span class="nc" id="L848">					containingShape = shape;</span>
 				} else {
-<span class="nc bnc" id="L854" title="All 2 branches missed.">					if(shape.isSmallerThan(containingShape)){</span>
-<span class="nc" id="L855">						containingShape = shape;</span>
+<span class="nc bnc" id="L850" title="All 2 branches missed.">					if(shape.isSmallerThan(containingShape)){</span>
+<span class="nc" id="L851">						containingShape = shape;</span>
 					}
 				}
 			}
-<span class="nc" id="L859">		}</span>
-<span class="nc" id="L860">		return containingShape;</span>
+<span class="nc" id="L855">		}</span>
+<span class="nc" id="L856">		return containingShape;</span>
 	}
 	
 	private DiagramShape findSmallestShapeIntersecting(Rectangle2D rect) {
-<span class="nc" id="L864">		DiagramShape intersectingShape = null;</span>
-<span class="nc" id="L865">		Iterator&lt;DiagramShape&gt; shapes = getShapes().iterator();</span>
-<span class="nc bnc" id="L866" title="All 2 branches missed.">		while(shapes.hasNext()){</span>
-<span class="nc" id="L867">			DiagramShape shape = shapes.next();</span>
-<span class="nc bnc" id="L868" title="All 2 branches missed.">			if(shape.intersects(rect)){</span>
-<span class="nc bnc" id="L869" title="All 2 branches missed.">				if(intersectingShape == null){</span>
-<span class="nc" id="L870">					intersectingShape = shape;</span>
+<span class="nc" id="L860">		DiagramShape intersectingShape = null;</span>
+<span class="nc" id="L861">		Iterator&lt;DiagramShape&gt; shapes = getShapes().iterator();</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">		while(shapes.hasNext()){</span>
+<span class="nc" id="L863">			DiagramShape shape = shapes.next();</span>
+<span class="nc bnc" id="L864" title="All 2 branches missed.">			if(shape.intersects(rect)){</span>
+<span class="nc bnc" id="L865" title="All 2 branches missed.">				if(intersectingShape == null){</span>
+<span class="nc" id="L866">					intersectingShape = shape;</span>
 				} else {
-<span class="nc bnc" id="L872" title="All 2 branches missed.">					if(shape.isSmallerThan(intersectingShape)){</span>
-<span class="nc" id="L873">						intersectingShape = shape;</span>
+<span class="nc bnc" id="L868" title="All 2 branches missed.">					if(shape.isSmallerThan(intersectingShape)){</span>
+<span class="nc" id="L869">						intersectingShape = shape;</span>
 					}
 				}
 			}
-<span class="nc" id="L877">		}</span>
-<span class="nc" id="L878">		return intersectingShape;</span>
+<span class="nc" id="L873">		}</span>
+<span class="nc" id="L874">		return intersectingShape;</span>
 	}
 	
 	private void addToTextObjects(DiagramText shape){
-<span class="nc" id="L882">		textObjects.add(shape);</span>
-<span class="nc" id="L883">	}</span>
+<span class="nc" id="L878">		textObjects.add(shape);</span>
+<span class="nc" id="L879">	}</span>
 
 	private void addToCompositeShapes(CompositeDiagramShape shape){
-<span class="nc" id="L886">		compositeShapes.add(shape);</span>
-<span class="nc" id="L887">	}</span>
+<span class="nc" id="L882">		compositeShapes.add(shape);</span>
+<span class="nc" id="L883">	}</span>
 
 	
 	private void addToShapes(DiagramShape shape){
-<span class="nc" id="L891">		shapes.add(shape);</span>
-<span class="nc" id="L892">	}</span>
+<span class="nc" id="L887">		shapes.add(shape);</span>
+<span class="nc" id="L888">	}</span>
 	
 	public Iterator getShapesIterator(){
-<span class="nc" id="L895">		return shapes.iterator();</span>
+<span class="nc" id="L891">		return shapes.iterator();</span>
 	}	
 
 	/**
 	 * @return
 	 */
 	public int getHeight() {
-<span class="nc" id="L902">		return height;</span>
+<span class="nc" id="L898">		return height;</span>
 	}
 
 	/**
 	 * @return
 	 */
 	public int getWidth() {
-<span class="nc" id="L909">		return width;</span>
+<span class="nc" id="L905">		return width;</span>
 	}
 
 	/**
 	 * @return
 	 */
 	public int getCellWidth() {
-<span class="nc" id="L916">		return cellWidth;</span>
+<span class="nc" id="L912">		return cellWidth;</span>
 	}
 
 	/**
 	 * @return
 	 */
 	public int getCellHeight() {
-<span class="nc" id="L923">		return cellHeight;</span>
+<span class="nc" id="L919">		return cellHeight;</span>
 	}
 
 	/**
 	 * @return
 	 */
 	public ArrayList&lt;CompositeDiagramShape&gt; getCompositeShapes() {
-<span class="nc" id="L930">		return compositeShapes;</span>
+<span class="nc" id="L926">		return compositeShapes;</span>
 	}
 
 	/**
 	 * @return
 	 */
 	public ArrayList&lt;DiagramShape&gt; getShapes() {
-<span class="nc" id="L937">		return shapes;</span>
+<span class="nc" id="L933">		return shapes;</span>
 	}
 	
 	public int getCellMinX(TextGrid.Cell cell){
-<span class="nc" id="L941">		return getCellMinX(cell, cellWidth);</span>
+<span class="nc" id="L937">		return getCellMinX(cell, cellWidth);</span>
 	}
 	public static int getCellMinX(TextGrid.Cell cell, int cellXSize){
-<span class="nc" id="L944">		return cell.x * cellXSize;</span>
+<span class="nc" id="L940">		return cell.x * cellXSize;</span>
 	}
 
 	public int getCellMidX(TextGrid.Cell cell){
-<span class="nc" id="L948">		return getCellMidX(cell, cellWidth);</span>
+<span class="nc" id="L944">		return getCellMidX(cell, cellWidth);</span>
 	}
 	public static int getCellMidX(TextGrid.Cell cell, int cellXSize){
-<span class="nc" id="L951">		return cell.x * cellXSize + cellXSize / 2;</span>
+<span class="nc" id="L947">		return cell.x * cellXSize + cellXSize / 2;</span>
 	}
 
 	public int getCellMaxX(TextGrid.Cell cell){
-<span class="nc" id="L955">		return getCellMaxX(cell, cellWidth);</span>
+<span class="nc" id="L951">		return getCellMaxX(cell, cellWidth);</span>
 	}
 	public static int getCellMaxX(TextGrid.Cell cell, int cellXSize){
-<span class="nc" id="L958">		return cell.x * cellXSize + cellXSize;</span>
+<span class="nc" id="L954">		return cell.x * cellXSize + cellXSize;</span>
 	}
 
 	public int getCellMinY(TextGrid.Cell cell){
-<span class="nc" id="L962">		return getCellMinY(cell, cellHeight);</span>
+<span class="nc" id="L958">		return getCellMinY(cell, cellHeight);</span>
 	}
 	public static int getCellMinY(TextGrid.Cell cell, int cellYSize){
-<span class="nc" id="L965">		return cell.y * cellYSize;</span>
+<span class="nc" id="L961">		return cell.y * cellYSize;</span>
 	}
 
 	public int getCellMidY(TextGrid.Cell cell){
-<span class="nc" id="L969">		return getCellMidY(cell, cellHeight);</span>
+<span class="nc" id="L965">		return getCellMidY(cell, cellHeight);</span>
 	}
 	public static int getCellMidY(TextGrid.Cell cell, int cellYSize){
-<span class="nc" id="L972">		return cell.y * cellYSize + cellYSize / 2;</span>
+<span class="nc" id="L968">		return cell.y * cellYSize + cellYSize / 2;</span>
 	}
 
 	public int getCellMaxY(TextGrid.Cell cell){
-<span class="nc" id="L976">		return getCellMaxY(cell, cellHeight);</span>
+<span class="nc" id="L972">		return getCellMaxY(cell, cellHeight);</span>
 	}
 	public static int getCellMaxY(TextGrid.Cell cell, int cellYSize){
-<span class="nc" id="L979">		return cell.y * cellYSize + cellYSize;</span>
+<span class="nc" id="L975">		return cell.y * cellYSize + cellYSize;</span>
 	}
 
 	public TextGrid.Cell getCellFor(ShapePoint point){
-<span class="nc bnc" id="L983" title="All 2 branches missed.">		if(point == null) throw new IllegalArgumentException(&quot;ShapePoint cannot be null&quot;);</span>
+<span class="nc bnc" id="L979" title="All 2 branches missed.">		if(point == null) throw new IllegalArgumentException(&quot;ShapePoint cannot be null&quot;);</span>
 		//TODO: the fake grid is a problem
-<span class="nc" id="L985">		TextGrid g = new TextGrid();</span>
-<span class="nc" id="L986">		return g.new Cell((int) point.x / cellWidth,</span>
+<span class="nc" id="L981">		TextGrid g = new TextGrid();</span>
+<span class="nc" id="L982">		return g.new Cell((int) point.x / cellWidth,</span>
 							(int) point.y / cellHeight);
 	}
 
@@ -992,7 +988,7 @@ public class Diagram {
 	 * @return
 	 */
 	public ArrayList&lt;DiagramText&gt; getTextObjects() {
-<span class="nc" id="L995">		return textObjects;</span>
+<span class="nc" id="L991">		return textObjects;</span>
 	}
 
 }

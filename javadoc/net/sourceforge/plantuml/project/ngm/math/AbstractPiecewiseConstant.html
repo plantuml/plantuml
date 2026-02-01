@@ -93,7 +93,7 @@ implements <a href="PiecewiseConstant.html" title="interface in net.sourceforge.
 
  <p>
  This class provides a implementation of
- <code>#iterateSegmentsFrom(LocalDateTime)</code> that lazily iterates over
+ <a href="#iterateSegmentsFrom(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)"><code>iterateSegmentsFrom(LocalDateTime, TimeDirection)</code></a> that lazily iterates over
  successive <a href="Segment.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>segments</code></a>, starting from the segment that contains
  a given instant.
  </p>
@@ -112,15 +112,8 @@ implements <a href="PiecewiseConstant.html" title="interface in net.sourceforge.
  </ul>
 
  <p>
- This method relies on the concrete implementation of
- <code>#segmentAt(LocalDateTime)</code> to locate the segment covering a given
- instant. It does not precompute or materialize all segments, making it
- suitable for efficient forward traversal over long or infinite timelines.
- </p>
-
- <p>
  <strong>Important:</strong> Implementations of
- <code>#segmentAt(LocalDateTime)</code> must guarantee that the returned segment:
+ <a href="#iterateSegmentsFrom(java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.math.TimeDirection)"><code>iterateSegmentsFrom(java.time.LocalDateTime, net.sourceforge.plantuml.project.ngm.math.TimeDirection)</code></a> must guarantee that the returned segment:
  </p>
  <ul>
  <li>contains the provided instant,</li>
