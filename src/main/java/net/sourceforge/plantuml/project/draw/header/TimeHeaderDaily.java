@@ -43,30 +43,30 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderDaily extends TimeHeaderCalendar {
 
-	public TimeHeaderDaily(TimeHeaderContext ctx) {
-		super(ctx, ctx.daily());
+	public TimeHeaderDaily(GanttPreparedModel model) {
+		super(model, model.daily());
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 2;
+		final double h = getFontSizeMonth().asDouble() + 2;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 2;
+		final double h = getFontSizeDay().asDouble() + 2;
 		return getH1(stringBounder) + h;
 	}
 
 	private double getH3(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 3;
+		final double h = getFontSizeDay().asDouble() + 3;
 		return getH2(stringBounder) + h;
 	}
 
@@ -77,15 +77,15 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
-		final double h3 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeDay().asDouble();
+		final double h2 = getFontSizeDay().asDouble();
+		final double h3 = getFontSizeMonth().asDouble();
 		return h1 + h2 + h3 + 8;
 	}
 
 	private double getHeaderNameDayHeight() {
-		if (ctx.getNameDays().size() > 0) {
-			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+		if (model.nameDays.size() > 0) {
+			final double h = getFontSizeDay().asDouble() + 6;
 			return h;
 		}
 
@@ -113,7 +113,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-		final UGraphic ugVerticalSeparator = thParam.forVerticalSeparator(ug);
+		final UGraphic ugVerticalSeparator = model.forVerticalSeparator(ug);
 		final UGraphic ugLineColor = ug.apply(getLineColor());
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
@@ -132,7 +132,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 2;
+		final double h = getFontSizeDay().asDouble() + 2;
 		drawTextsDayOfWeek(ug);
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(h + 2)));
 		drawMonths(ug.apply(UTranslate.dy(2 * h + 3)));
@@ -167,7 +167,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private boolean isHidden(TimePoint wink) {
-		if (thParam.isHideClosed() && thParam.getOpenClose().isClosed(wink.toDay()))
+		if (model.hideClosed && model.openClose.isClosed(wink.toDay()))
 			return true;
 		return false;
 	}
@@ -212,11 +212,11 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void printNamedDays(final UGraphic ug) {
-		if (ctx.getNameDays().size() > 0) {
+		if (model.nameDays.size() > 0) {
 			String last = null;
 			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 				final TimePoint wink = TimePoint.ofStartOfDay(day);
-				final String name = ctx.getNameDays().get(wink);
+				final String name = model.nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);
 					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());

@@ -42,24 +42,24 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
-	public TimeHeaderMonthly(TimeHeaderContext ctx) {
-		super(ctx, ctx.monthly());
+	public TimeHeaderMonthly(GanttPreparedModel model) {
+		super(model, model.monthly());
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble() + 2;
+		final double h = getFontSizeYear().asDouble() + 2;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 2;
+		final double h = getFontSizeMonth().asDouble() + 2;
 		return getH1(stringBounder) + h;
 	}
 
@@ -70,8 +70,8 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		return h1 + h2 + 5;
 	}
 
@@ -99,8 +99,8 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		// ug = ug.apply(UTranslate.dy(3));
 		drawMonths(ug);
 		drawYears(ug.apply(UTranslate.dy(h2 + 2)));
@@ -111,7 +111,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void drawYears(final UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
@@ -135,7 +135,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void drawMonths(UGraphic ug) {
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
@@ -176,8 +176,8 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private double getHeaderNameDayHeight() {
-		if (ctx.getNameDays().size() > 0) {
-			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+		if (model.nameDays.size() > 0) {
+			final double h = getFontSizeDay().asDouble() + 6;
 			return h;
 		}
 
@@ -185,11 +185,11 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void printNamedDays(final UGraphic ug) {
-		if (ctx.getNameDays().size() > 0) {
+		if (model.nameDays.size() > 0) {
 			String last = null;
 			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = day.plusDays(1)) {
 				final TimePoint wink = TimePoint.ofStartOfDay(day);
-				final String name = ctx.getNameDays().get(wink);
+				final String name = model.nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);
 					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);

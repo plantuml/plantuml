@@ -40,42 +40,26 @@ import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
 
-	public TimeHeaderCalendar(TimeHeaderContext ctx, TimeScale timeScale) {
-		super(ctx, timeScale);
+	public TimeHeaderCalendar(GanttPreparedModel model, TimeScale timeScale) {
+		super(model, timeScale);
 	}
 
 	protected final Locale locale() {
-		return thParam.getLocale();
+		return model.locale;
 	}
 
 	protected final int getLoadAt(TimePoint instant) {
-		if (PiecewiseConstantUtils.isZeroOnDay(thParam.getLoadPlanable(), instant.toDay()))
+		if (PiecewiseConstantUtils.isZeroOnDay(model.openClose.asPiecewiseConstant(), instant.toDay()))
 			return 0;
 
 		return 100;
-	}
-
-	// Duplicate in TimeHeaderSimple
-	class Pending {
-		final double x1;
-		double x2;
-		final HColor color;
-
-		Pending(HColor color, double x1, double x2) {
-			this.x1 = x1;
-			this.x2 = x2;
-			this.color = color;
-		}
-
-		public void draw(UGraphic ug, double height) {
-			drawRectangle(ug.apply(color.bg()), height, x1, x2);
-		}
 	}
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
@@ -87,9 +71,9 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
-			HColor back = thParam.getColor(wink);
+			HColor back = getColor(wink);
 			// Day of week should be stronger than period of time (back color).
-			final HColor backDoW = thParam.getColor(wink.toDayOfWeek());
+			final HColor backDoW = getColor(wink.toDayOfWeek());
 			if (backDoW != null)
 				back = backDoW;
 

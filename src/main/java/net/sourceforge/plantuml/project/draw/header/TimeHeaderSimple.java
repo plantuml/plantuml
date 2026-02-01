@@ -48,15 +48,15 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderSimple extends TimeHeader {
 
-	public TimeHeaderSimple(StringBounder stringBounder, TimeHeaderContext ctx) {
-		super(ctx, ctx.simple());
+	public TimeHeaderSimple(GanttPreparedModel model, StringBounder stringBounder) {
+		super(model, model.simple());
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		final double h = getFontSizeDay().asDouble();
 		return h + 6;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		final double h = getFontSizeDay().asDouble();
 		return h + 6;
 	}
 
@@ -87,7 +87,7 @@ public class TimeHeaderSimple extends TimeHeader {
 			initDelta(day);
 
 		for (int i = 0; i < delta; i++)
-			day = day.increment(ctx.getPrintScale());
+			day = day.increment(model.printScale);
 
 		return day;
 	}
@@ -97,7 +97,7 @@ public class TimeHeaderSimple extends TimeHeader {
 			initDelta(day);
 
 		for (int i = 0; i < delta; i++)
-			day = increment(day, ctx.getPrintScale());
+			day = increment(day, model.printScale);
 
 		return day;
 	}
@@ -109,7 +109,7 @@ public class TimeHeaderSimple extends TimeHeader {
 	}
 
 	private void initDelta(LocalDate day) {
-		if (ctx.getPrintScale() == PrintScale.DAILY) {
+		if (model.printScale == PrintScale.DAILY) {
 			final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(day));
 			do {
 				delta++;
@@ -122,7 +122,7 @@ public class TimeHeaderSimple extends TimeHeader {
 	}
 
 	private void initDelta(TimePoint day) {
-		if (ctx.getPrintScale() == PrintScale.DAILY) {
+		if (model.printScale == PrintScale.DAILY) {
 			final double x1 = getTimeScale().getPosition(day);
 			do {
 				delta++;
@@ -149,17 +149,17 @@ public class TimeHeaderSimple extends TimeHeader {
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = increment(day)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final int value;
-			if (ctx.getPrintScale() == PrintScale.WEEKLY)
+			if (model.printScale == PrintScale.WEEKLY)
 				value = wink.getAbsoluteDayNum() / 7 + 1;
 			else
 				value = wink.getAbsoluteDayNum() + 1;
-			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
+			final UFont font = getStyleDay().getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
 			final TextBlock num = Display.getWithNewlines(getPragma(), "" + value).create(fontConfiguration,
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2;
-			if (ctx.getPrintScale() == PrintScale.WEEKLY)
+			if (model.printScale == PrintScale.WEEKLY)
 				x2 = getTimeScale().getPosition(wink.addDays(6)) + getTimeScale().getWidth(wink.addDays(6));
 			else
 				x2 = getTimeScale().getPosition(increment(wink));
@@ -186,23 +186,6 @@ public class TimeHeaderSimple extends TimeHeader {
 		drawSimpleDayCounter(ug);
 	}
 
-	// Duplicate in TimeHeaderDaily
-	class Pending {
-		final double x1;
-		double x2;
-		final HColor color;
-
-		Pending(HColor color, double x1, double x2) {
-			this.x1 = x1;
-			this.x2 = x2;
-			this.color = color;
-		}
-
-		public void draw(UGraphic ug, double height) {
-			drawRectangle(ug.apply(color.bg()), height, x1, x2);
-		}
-	}
-
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
@@ -212,7 +195,7 @@ public class TimeHeaderSimple extends TimeHeader {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
-			HColor back = thParam.getColor(wink);
+			HColor back = getColor(wink);
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 //			if (backDoW != null) {

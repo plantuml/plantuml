@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.chronology;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -46,27 +46,29 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.project.GanttStyle;
+import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 
-public class TimeHeaderParameters implements GanttStyle {
+public class TimeHeaderParameters2 implements GanttStyle {
 
-	private final Map<TimePoint, HColor> colorDays;
-	private final double scale;
-	private final LocalDate minDay;
-	private final LocalDate maxDay;
-	private final HColorSet colorSet;
-	private final GanttStyle ganttStyle;
-	private final Locale locale;
-	private final OpenClose openClose;
-	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
-	private final Set<TimePoint> verticalSeparatorBefore;
-	private final boolean hideClosed;
+	final Map<TimePoint, HColor> colorDays;
+	final double scale;
+	final LocalDate minDay;
+	final LocalDate maxDay;
+	final HColorSet colorSet;
+	final GanttStyle ganttStyle;
+	final Locale locale;
+	final OpenClose openClose;
+	final Map<DayOfWeek, HColor> colorDaysOfWeek;
+	final Set<TimePoint> verticalSeparatorBefore;
+	final boolean hideClosed;
 
-	public TimeHeaderParameters(Map<TimePoint, HColor> colorDays, double scale, LocalDate minDay, LocalDate maxDay,
+	public TimeHeaderParameters2(Map<TimePoint, HColor> colorDays, double scale, LocalDate minDay, LocalDate maxDay,
 			HColorSet colorSet, Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
 			Set<TimePoint> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {
 		this.colorDays = colorDays;

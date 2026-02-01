@@ -42,27 +42,27 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 
-	public TimeHeaderQuarterly(TimeHeaderContext ctx) {
-		super(ctx, ctx.quaterly());
+	public TimeHeaderQuarterly(GanttPreparedModel model) {
+		super(model, model.quaterly());
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		return h1 + h2 + 5;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		return h1 + h2 + 5;
 	}
 
@@ -75,8 +75,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawYears(ug);
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		drawQuarters(ug.apply(UTranslate.dy(h1 + 2)));
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
@@ -87,8 +87,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		// ug = ug.apply(UTranslate.dy(3));
 		drawQuarters(ug);
 		drawYears(ug.apply(UTranslate.dy(h2 + 2)));
@@ -99,7 +99,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 	}
 
 	private void drawYears(final UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
 		YearMonth last = null;
 		double lastChange = -1;
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
@@ -123,7 +123,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 	}
 
 	private void drawQuarters(UGraphic ug) {
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h2 = getFontSizeMonth().asDouble();
 		String last = null;
 		double lastChange = -1;
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {

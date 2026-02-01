@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.core.Task;
@@ -70,7 +69,6 @@ import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskGroup;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
-import net.sourceforge.plantuml.project.draw.header.TimeHeader;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
@@ -255,8 +253,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	}
 
-	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
+	private TimeHeaderParameters2 thParam() {
+		return new TimeHeaderParameters2(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
 	}
 
 //	private Map<Day, HColor> colorDays() {

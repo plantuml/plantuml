@@ -41,25 +41,25 @@ import java.time.YearMonth;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderYearly extends TimeHeaderCalendar {
 
-	public TimeHeaderYearly(TimeHeaderContext ctx) {
-		super(ctx, ctx.yearly());
+	public TimeHeaderYearly(GanttPreparedModel model) {
+		super(model, model.yearly());
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
 		return h1 + 3;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
 		return h1 + 3;
 	}
 
@@ -86,7 +86,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	}
 
 	private void drawYears(final UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = getFontSizeYear().asDouble();
 
 		YearMonth last = null;
 		double lastChange = -1;

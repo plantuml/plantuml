@@ -36,9 +36,11 @@
 package net.sourceforge.plantuml.project.draw.header;
 
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 
 public interface HeaderPiece {
-	public double getHeight(TimeHeaderContext ctx);
+	
+	public double getHeight(GanttPreparedModel ctx);
 
-	public void drawU(UGraphic ug, TimeHeaderContext ctx);
+	public void drawU(UGraphic ug, GanttPreparedModel ctx);
 }

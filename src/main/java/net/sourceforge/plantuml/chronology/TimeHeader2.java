@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -62,9 +61,9 @@ public abstract class TimeHeader2 {
 
 	private final TimeScale timeScale;
 
-	protected final TimeHeaderParameters thParam;
+	protected final TimeHeaderParameters2 thParam;
 
-	public TimeHeader2(TimeHeaderParameters thParam, TimeScale timeScale) {
+	public TimeHeader2(TimeHeaderParameters2 thParam, TimeScale timeScale) {
 		this.thParam = thParam;
 		this.timeScale = timeScale;
 	}
