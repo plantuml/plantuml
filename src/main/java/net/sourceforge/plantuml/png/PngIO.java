@@ -80,16 +80,39 @@ public class PngIO {
 			Log.info(() -> "Trying to pack image. hasAlpha=" + hasAlpha);
 
 			BufferedImage tmp = null;
-			if (hasAlpha == false)
+			if (hasAlpha == false) {
+				final long memBefore555 = getUsedMemoryMB();
+				final long start555 = System.currentTimeMillis();
 				tmp = Quantify555.packMeIfPossible(bufferedImage);
-			if (tmp == null)
+				final long duration555 = System.currentTimeMillis() - start555;
+				final long memAfter555 = getUsedMemoryMB();
+				final boolean success555 = tmp != null;
+				Log.info(() -> "Quantify555: " + (success555 ? "SUCCESS" : "FAILED") + " in " + duration555
+						+ " ms, memory " + memBefore555 + " -> " + memAfter555 + " MB (delta: "
+						+ (memAfter555 - memBefore555) + " MB)");
+			}
+			if (tmp == null) {
+				final long memBefore28 = getUsedMemoryMB();
+				final long start28 = System.currentTimeMillis();
 				tmp = QuantifyPacked28.packMeIfPossible(bufferedImage);
+				final long duration28 = System.currentTimeMillis() - start28;
+				final long memAfter28 = getUsedMemoryMB();
+				final boolean success28 = tmp != null;
+				Log.info(() -> "QuantifyPacked28: " + (success28 ? "SUCCESS" : "FAILED") + " in " + duration28
+						+ " ms, memory " + memBefore28 + " -> " + memAfter28 + " MB (delta: "
+						+ (memAfter28 - memBefore28) + " MB)");
+			}
 
 			if (tmp != null)
 				image = tmp;
 		}
 
 		PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, null, 7);
+	}
+
+	public static long getUsedMemoryMB() {
+		final Runtime rt = Runtime.getRuntime();
+		return (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024);
 	}
 
 //	/** writes a BufferedImage of type TYPE_INT_ARGB to PNG using PNGJ */
