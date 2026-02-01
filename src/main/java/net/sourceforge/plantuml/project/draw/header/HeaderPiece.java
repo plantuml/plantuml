@@ -38,7 +38,8 @@ package net.sourceforge.plantuml.project.draw.header;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public interface HeaderPiece {
-	public double getHeight(TimeHeaderContext ctx);
+	
+	public double getHeight(Object ctx);
 
-	public void drawU(UGraphic ug, TimeHeaderContext ctx);
+	public void drawU(UGraphic ug, Object ctx);
 }

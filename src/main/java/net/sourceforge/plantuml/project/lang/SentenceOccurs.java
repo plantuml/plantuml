@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceOccurs extends SentenceSimple<GanttDiagram> {
 

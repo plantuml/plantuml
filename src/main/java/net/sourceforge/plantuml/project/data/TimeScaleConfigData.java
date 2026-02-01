@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,50 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project.data;
 
-public interface Value {
+import net.sourceforge.plantuml.project.core.PrintScale;
+
+/**
+ * Value object containing the time scale configuration.
+ */
+public class TimeScaleConfigData {
+
+	private PrintScale printScale = PrintScale.DAILY;
+	private double factorScale = 1.0;
+	private boolean hideClosed;
+
+	public PrintScale getPrintScale() {
+		return printScale;
+	}
+
+	public double getFactorScale() {
+		return factorScale;
+	}
+
+	public double getEffectiveScale() {
+		return printScale.getDefaultScale() * factorScale;
+	}
+
+	public boolean isHideClosed() {
+		return hideClosed;
+	}
+
+	// Setters
+
+	public void setPrintScale(PrintScale printScale) {
+		this.printScale = printScale;
+	}
+
+	public void setFactorScale(double factorScale) {
+		this.factorScale = factorScale;
+	}
+
+	public void setHideClosed(boolean hideClosed) {
+		this.hideClosed = hideClosed;
+	}
 
 }

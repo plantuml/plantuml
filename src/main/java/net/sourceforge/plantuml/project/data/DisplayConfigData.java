@@ -33,53 +33,54 @@
  *
  *
  */
-package net.sourceforge.plantuml.project.time;
+package net.sourceforge.plantuml.project.data;
 
-import net.sourceforge.plantuml.project.PValue;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.project.LabelPosition;
+import net.sourceforge.plantuml.project.LabelStrategy;
 
-public class Instant implements Comparable<Instant>, PValue {
-    // ::remove folder when __HAXE__
+/**
+ * Value object containing display configuration options.
+ */
+public class DisplayConfigData {
 
-	private final long ms;
+	private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
+	private boolean showFootbox = true;
+	private boolean hideResourceName;
+	private boolean hideResourceFootbox;
 
-	public static Instant create(long ms) {
-		return new Instant(ms);
+	public LabelStrategy getLabelStrategy() {
+		return labelStrategy;
 	}
 
-	public static Instant today() {
-		return create(System.currentTimeMillis());
+	public boolean isShowFootbox() {
+		return showFootbox;
 	}
 
-	private Instant(long ms) {
-		this.ms = ms;
+	public boolean isHideResourceName() {
+		return hideResourceName;
 	}
 
-	public final long getMillis() {
-		return ms;
+	public boolean isHideResourceFootbox() {
+		return hideResourceFootbox;
 	}
 
-	@Override
-	public String toString() {
-		return "" + ms;
+	// Setters
+
+	public void setLabelStrategy(LabelStrategy labelStrategy) {
+		this.labelStrategy = labelStrategy;
 	}
 
-	@Override
-	public int hashCode() {
-		return toLong().hashCode();
+	public void setShowFootbox(boolean showFootbox) {
+		this.showFootbox = showFootbox;
 	}
 
-	private Long toLong() {
-		return Long.valueOf(ms);
+	public void setHideResourceName(boolean hideResourceName) {
+		this.hideResourceName = hideResourceName;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		final Instant other = (Instant) obj;
-		return this.ms == other.ms;
-	}
-
-	public int compareTo(Instant other) {
-		return toLong().compareTo(other.toLong());
+	public void setHideResourceFootbox(boolean hideResourceFootbox) {
+		this.hideResourceFootbox = hideResourceFootbox;
 	}
 
 }

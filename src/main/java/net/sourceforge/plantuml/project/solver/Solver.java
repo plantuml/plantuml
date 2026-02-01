@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.Value;
+import net.sourceforge.plantuml.project.PValue;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.ngm.NGMAllocation;
 import net.sourceforge.plantuml.project.ngm.NGMTask;
@@ -52,18 +52,18 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 public class Solver {
 	// ::remove folder when __HAXE__
 
-	private final Map<TaskAttribute, Value> values = new LinkedHashMap<TaskAttribute, Value>();
+	private final Map<TaskAttribute, PValue> values = new LinkedHashMap<TaskAttribute, PValue>();
 
 //	public Solver(NGMAllocation allocation) {
 //		this.allocation = allocation;
 //	}
 
-	public final void setData(TaskAttribute attribute, Value value) {
+	public final void setData(TaskAttribute attribute, PValue value) {
 		if (value instanceof TimePoint) {
 			if (value.toString().endsWith("T00:00") == false)
 				throw new IllegalArgumentException(value.toString());
 		}
-		final Value previous = values.remove(attribute);
+		final PValue previous = values.remove(attribute);
 		if (previous != null && attribute == TaskAttribute.START) {
 			final TimePoint previousInstant = (TimePoint) previous;
 			if (previousInstant.compareTo((TimePoint) value) > 0)
@@ -79,13 +79,13 @@ public class Solver {
 	}
 
 	private void removeFirstElement() {
-		final Iterator<Entry<TaskAttribute, Value>> it = values.entrySet().iterator();
+		final Iterator<Entry<TaskAttribute, PValue>> it = values.entrySet().iterator();
 		it.next();
 		it.remove();
 	}
 
-	public final Value getData(NGMAllocation allocation, TaskAttribute attribute) {
-		Value result = values.get(attribute);
+	public final PValue getData(NGMAllocation allocation, TaskAttribute attribute) {
+		PValue result = values.get(attribute);
 		if (result == null) {
 			if (attribute == TaskAttribute.END)
 				return computeEnd(allocation);

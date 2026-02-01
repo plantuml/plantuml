@@ -47,8 +47,9 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.data.GanttModelData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
@@ -59,20 +60,22 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	private final double y;
 	private final TimePoint min;
 	private final TimePoint maxTimePointPrintedEndOfDay;
-	private final GanttDiagram gantt;
+	private final GanttModelData ganttModelData;
+	private final TimelineStyleData timelineStyleData;
 
-	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min,
-			TimePoint maxTimePointPrintedEndOfDay) {
+	public ResourceDrawNumbers(GanttModelData ganttModelData, TimelineStyleData timelineStyleData, Resource res,
+			TimeScale timeScale, double y, TimePoint min, TimePoint maxTimePointPrintedEndOfDay) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
 		this.min = min;
 		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;
-		this.gantt = gantt;
+		this.ganttModelData = ganttModelData;
+		this.timelineStyleData = timelineStyleData;
 	}
 
 	public void drawU(UGraphic ug) {
-		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName())
+		final TextBlock title = Display.getWithNewlines(timelineStyleData.getPragma(), res.getName())
 				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getPosition(maxTimePointPrintedEndOfDay) - timeScale.getPosition(min));
@@ -84,7 +87,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 		boolean isRed = false;
 		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) <= 0; i = i.increment()) {
 			final boolean isBreaking = timeScale.isBreaking(i);
-			final int load = gantt.getLoadForResource(res, i);
+			final int load = ganttModelData.getLoadForResource(res, i);
 			if (load > 100)
 				isRed = true;
 			totalLoad += load;
@@ -110,7 +113,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	}
 
 	private TextBlock getTextBlock(int totalLoad, boolean isRed) {
-		final Display display = Display.getWithNewlines(gantt.getSkinParam().getPragma(), "" + totalLoad);
+		final Display display = Display.getWithNewlines(timelineStyleData.getSkinParam().getPragma(), "" + totalLoad);
 		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}

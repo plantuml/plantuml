@@ -42,25 +42,31 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderWeekly extends TimeHeaderCalendar {
+class TimeHeaderWeekly extends TimeHeaderCalendar {
 
-	public TimeHeaderWeekly(TimeHeaderContext ctx) {
-		super(ctx, ctx.weekly());
+	public TimeHeaderWeekly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;
+		final double h = timelineStyle.getFontSizeMonth() + 4;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 1;
+		final double h = timelineStyle.getFontSizeDay() + 1;
 		return getH1(stringBounder) + h;
 	}
 
@@ -71,13 +77,13 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;
+		final double h = timelineStyle.getFontSizeMonth() + 4;
 		return h;
 	}
 
 	private double getHeaderNameDayHeight() {
-		if (ctx.getNameDays().size() > 0) {
-			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+		if (dayCalendar.getNameDays().size() > 0) {
+			final double h = timelineStyle.getFontSizeDay() + 6;
 			return h;
 		}
 
@@ -90,9 +96,10 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsBackground(ug, totalHeightWithoutFooter);
-		drawCalendar(ug, totalHeightWithoutFooter);
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
+		printDaysOfMonth(ug);
+		printVerticalSeparators(ug, totalHeightWithoutFooter);
+		printMonths(ug);
 
 		printNamedDays(ug);
 
@@ -106,12 +113,6 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		drawHline(ug, 0);
 		printMonths(ug);
 		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));
-	}
-
-	private void drawCalendar(final UGraphic ug, double totalHeightWithoutFooter) {
-		printDaysOfMonth(ug);
-		printVerticalSeparators(ug, totalHeightWithoutFooter);
-		printMonths(ug);
 	}
 
 	private void printMonths(final UGraphic ug) {
@@ -138,33 +139,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	}
 
-	private void printNamedDays(final UGraphic ug) {
-		if (ctx.getNameDays().size() > 0) {
-			String last = null;
-			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
-				final TimePoint wink = TimePoint.ofStartOfDay(day);
-				final String name = ctx.getNameDays().get(wink);
-				if (name != null && name.equals(last) == false) {
-					final double x1 = getTimeScale().getPosition(wink);
-					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
-					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
-					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
-					double y1 = getTimeHeaderHeight(ug.getStringBounder());
-					double y2 = getFullHeaderHeight(ug.getStringBounder());
-
-					final double position = getH2(ug.getStringBounder());
-					label.drawU(ug.apply(new UTranslate(x1, position)));
-				}
-				last = name;
-			}
-		}
-	}
-
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
-			if (wink.toDayOfWeek() == ctx.getWeekNumberStrategy().getFirstDayOfWeek())
+			if (wink.toDayOfWeek() == weekConfigData.getWeekNumberStrategy().getFirstDayOfWeek())
 				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(ug.getStringBounder()),
 						totalHeightWithoutFooter);
 		}
@@ -175,17 +154,17 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
-		int counter = ctx.getWeekStartingNumber();
+		int counter = weekConfigData.getWeekStartingNumber();
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(-1)) < 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
-			if (wink.toDayOfWeek() == ctx.getWeekNumberStrategy().getFirstDayOfWeek()) {
+			if (wink.toDayOfWeek() == weekConfigData.getWeekNumberStrategy().getFirstDayOfWeek()) {
 				final String num;
-				if (ctx.getHeaderStrategy() == WeeklyHeaderStrategy.FROM_N)
+				if (weekConfigData.getWeeklyHeaderStrategy() == WeeklyHeaderStrategy.FROM_N)
 					num = "" + (counter++);
-				else if (ctx.getHeaderStrategy() == WeeklyHeaderStrategy.DAY_OF_MONTH)
+				else if (weekConfigData.getWeeklyHeaderStrategy() == WeeklyHeaderStrategy.DAY_OF_MONTH)
 					num = "" + wink.getDayOfMonth();
 				else
-					num = "" + wink.getWeekOfYear(ctx.getWeekNumberStrategy());
+					num = "" + wink.getWeekOfYear(weekConfigData.getWeekNumberStrategy());
 				final TextBlock textBlock = getTextBlock(SName.day, num, false, openFontColor());
 				printLeft(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))), textBlock,
 						getTimeScale().getPosition(wink) + 5);

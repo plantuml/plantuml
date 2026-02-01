@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw.header;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -50,11 +51,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.skin.Pragma;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public abstract class TimeHeader {
@@ -62,41 +66,56 @@ public abstract class TimeHeader {
 
 	private final TimeScale timeScale;
 
-	protected final TimeHeaderParameters thParam;
-	protected final TimeHeaderContext ctx;
+	protected final DayCalendarData dayCalendar;
+	protected final TimeBoundsData timeBounds;
+	protected final TimeScaleConfigData scaleConfig;
+	protected final TimelineStyleData timelineStyle;
+	protected final WeekConfigData weekConfigData;
 
-	public TimeHeader(TimeHeaderContext ctx, TimeScale timeScale) {
-		this.thParam = ctx.thParam();
-		this.ctx = ctx;
+	public TimeHeader(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+		this.weekConfigData = weekConfigData;
+		this.dayCalendar = dayCalendar;
+		this.timeBounds = timeBounds;
+		this.scaleConfig = scaleConfig;
+		this.timelineStyle = timelineStyle;
 		this.timeScale = timeScale;
 	}
 
-	protected final boolean isBold2(TimePoint wink) {
-		return thParam.getVerticalSeparatorBefore().contains(wink);
+	public HColor getColor(TimePoint wink) {
+		return dayCalendar.getDayColor(wink);
+	}
+
+	public HColor getColor(DayOfWeek dayOfWeek) {
+		return dayCalendar.getDayOfWeekColor(dayOfWeek);
+	}
+
+	protected final boolean isBold(LocalDate wink) {
+		return dayCalendar.hasSeparatorBefore(wink);
 	}
 
 	protected final LocalDate getMinDay() {
-		return thParam.getMinDay();
+		return timeBounds.getMinDay();
 	}
 
 	protected final LocalDate getMaxDay() {
-		return thParam.getMaxDay();
+		return timeBounds.getMaxDay();
 	}
 
 	protected final HColor closedBackgroundColor() {
-		return thParam.getClosedStyle().value(PName.BackGroundColor).asColor(thParam.getColorSet());
+		return timelineStyle.getClosedBackgroundColor();
 	}
 
 	protected final HColor closedFontColor() {
-		return thParam.getClosedStyle().value(PName.FontColor).asColor(thParam.getColorSet());
+		return timelineStyle.getClosedFontColor();
 	}
 
 	protected final HColor openFontColor() {
-		return thParam.getTimelineStyle().value(PName.FontColor).asColor(thParam.getColorSet());
+		return timelineStyle.getOpenFontColor();
 	}
 
 	protected final HColor getLineColor() {
-		return thParam.getTimelineStyle().value(PName.LineColor).asColor(thParam.getColorSet());
+		return timelineStyle.getLineColor();
 	}
 
 	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
@@ -114,8 +133,8 @@ public abstract class TimeHeader {
 	}
 
 	protected final void drawHline(UGraphic ug, double y) {
-		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(thParam.getMinDay()));
-		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(thParam.getMaxDay()));
+		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMinDay()));
+		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay()));
 		final ULine hline = ULine.hline(xmax - xmin);
 		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);
 	}
@@ -133,7 +152,7 @@ public abstract class TimeHeader {
 	}
 
 	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
-		final UFont font = thParam.getStyle(SName.timeline, param).getUFont();
+		final UFont font = timelineStyle.getFont(param);
 		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);
 		return Display.getWithNewlines(getPragma(), text).create(fontConfiguration, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
@@ -171,17 +190,32 @@ public abstract class TimeHeader {
 	}
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
-		ug = thParam.forVerticalSeparator(ug);
-		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
-			final TimePoint wink = TimePoint.ofStartOfDay(day);
-			if (isBold2(wink))
-				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
-						totalHeightWithoutFooter);
-		}
+		ug = timelineStyle.applyVerticalSeparatorStyle(ug);
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1))
+			if (isBold(day))
+				drawVline(ug, getTimeScale().getPosition(TimePoint.ofStartOfDay(day)),
+						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
+
 	}
 
 	protected Pragma getPragma() {
 		return Pragma.createEmpty();
+	}
+
+	class Pending {
+		final double x1;
+		double x2;
+		final HColor color;
+
+		Pending(HColor color, double x1, double x2) {
+			this.x1 = x1;
+			this.x2 = x2;
+			this.color = color;
+		}
+
+		public void draw(UGraphic ug, double height) {
+			drawRectangle(ug.apply(color.bg()), height, x1, x2);
+		}
 	}
 
 }

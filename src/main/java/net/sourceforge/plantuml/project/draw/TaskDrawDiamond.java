@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -46,10 +47,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -64,9 +65,9 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
-	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
+	public TaskDrawDiamond(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
+			Task task, TaskDrawRegistryData toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
+		super(colorSet, timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 	}
 
 	@Override

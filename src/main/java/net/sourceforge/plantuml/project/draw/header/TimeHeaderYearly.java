@@ -41,25 +41,31 @@ import java.time.YearMonth;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderYearly extends TimeHeaderCalendar {
+class TimeHeaderYearly extends TimeHeaderCalendar {
 
-	public TimeHeaderYearly(TimeHeaderContext ctx) {
-		super(ctx, ctx.yearly());
+	public TimeHeaderYearly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeYear();
 		return h1 + 3;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeYear();
 		return h1 + 3;
 	}
 
@@ -69,8 +75,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsBackground(ug, totalHeightWithoutFooter);
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawYears(ug);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
@@ -86,7 +91,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	}
 
 	private void drawYears(final UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeYear();
 
 		YearMonth last = null;
 		double lastChange = -1;

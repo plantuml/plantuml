@@ -42,36 +42,42 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderMonthly extends TimeHeaderCalendar {
+class TimeHeaderMonthly extends TimeHeaderCalendar {
 
-	public TimeHeaderMonthly(TimeHeaderContext ctx) {
-		super(ctx, ctx.monthly());
+	public TimeHeaderMonthly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble() + 2;
+		final double h = timelineStyle.getFontSizeYear() + 2;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 2;
+		final double h = timelineStyle.getFontSizeMonth() + 2;
 		return getH1(stringBounder) + h;
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		return getH2(stringBounder) + 1;
+		return getH2(stringBounder);
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeYear();
+		final double h2 = timelineStyle.getFontSizeMonth();
 		return h1 + h2 + 5;
 	}
 
@@ -81,8 +87,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsBackground(ug, totalHeightWithoutFooter);
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawYears(ug);
 		final double h1 = getH1(ug.getStringBounder());
 		final double h2 = getH2(ug.getStringBounder());
@@ -94,13 +99,12 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		drawHline(ug, 0);
 		drawHline(ug, h1);
 		drawHline(ug, h2);
-//		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
 	}
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeYear();
+		final double h2 = timelineStyle.getFontSizeMonth();
 		// ug = ug.apply(UTranslate.dy(3));
 		drawMonths(ug);
 		drawYears(ug.apply(UTranslate.dy(h2 + 2)));
@@ -111,7 +115,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void drawYears(final UGraphic ug) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeYear();
 		YearMonth last = null;
 		double lastChange = -1;
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
@@ -135,7 +139,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void drawMonths(UGraphic ug) {
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h2 = timelineStyle.getFontSizeMonth();
 		YearMonth last = null;
 		double lastChange = -1;
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = day.plusDays(1)) {
@@ -171,40 +175,13 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		printCentered(ug, false, start, end, small, big);
 	}
 
-	private void printLeft(UGraphic ug, TextBlock text, double start) {
-		text.drawU(ug.apply(UTranslate.dx(start)));
-	}
-
 	private double getHeaderNameDayHeight() {
-		if (ctx.getNameDays().size() > 0) {
-			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+		if (dayCalendar.getNameDays().size() > 0) {
+			final double h = timelineStyle.getFontSizeDay() + 6;
 			return h;
 		}
 
 		return 0;
-	}
-
-	private void printNamedDays(final UGraphic ug) {
-		if (ctx.getNameDays().size() > 0) {
-			String last = null;
-			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = day.plusDays(1)) {
-				final TimePoint wink = TimePoint.ofStartOfDay(day);
-				final String name = ctx.getNameDays().get(wink);
-				if (name != null && name.equals(last) == false) {
-					final double x1 = getTimeScale().getPosition(wink);
-					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
-					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
-					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
-					double y1 = getTimeHeaderHeight(ug.getStringBounder());
-					double y2 = getFullHeaderHeight(ug.getStringBounder());
-
-					final double position = getH2(ug.getStringBounder());
-					label.drawU(ug.apply(new UTranslate(x1, position)));
-				}
-				last = name;
-			}
-
-		}
 	}
 
 }

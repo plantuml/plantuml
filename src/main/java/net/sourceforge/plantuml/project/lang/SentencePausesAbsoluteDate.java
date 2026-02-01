@@ -40,7 +40,6 @@ import java.time.LocalDate;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentencePausesAbsoluteDate extends SentenceSimple<GanttDiagram> {
 

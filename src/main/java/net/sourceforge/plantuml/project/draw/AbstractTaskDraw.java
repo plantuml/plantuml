@@ -48,9 +48,9 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -82,9 +82,9 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected final TimePoint start;
 	private final StyleBuilder styleBuilder;
 	private final Task task;
-	private final ToTaskDraw toTaskDraw;
+	private final TaskDrawRegistryData toTaskDraw;
 	private final ISkinParam skinParam;
-
+	private final HColorSet colorSet;
 
 	@Override
 	final public String toString() {
@@ -100,8 +100,9 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.noteStereotype = noteStereotype;
 	}
 
-	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
+	public AbstractTaskDraw(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
+			Task task, TaskDrawRegistryData toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
+		this.colorSet = colorSet;
 		this.y = y;
 		this.skinParam = skinParam;
 		this.styleBuilder = styleBuilder;
@@ -196,7 +197,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected final HColorSet getColorSet() {
-		return toTaskDraw.getIHtmlColorSet();
+		return colorSet;
 	}
 
 	protected CenterBorderColor getColors() {
@@ -210,7 +211,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected Pragma getPragma() {
 		return skinParam.getPragma();
 	}
-	
+
 	protected Opale getOpaleNote() {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
 				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());
@@ -228,7 +229,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());
 	}
-	
+
 	protected void drawNote(UGraphic ug) {
 		if (note == null)
 			return;

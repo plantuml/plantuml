@@ -48,9 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.draw.header.TimeHeader;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
@@ -81,7 +79,7 @@ public class TimeHeaderChronology extends TimeHeader2 {
 		return 0;
 	}
 
-	public TimeHeaderChronology(StringBounder stringBounder, TimeHeaderParameters thParam, PrintScale printScale,
+	public TimeHeaderChronology(StringBounder stringBounder, TimeHeaderParameters2 thParam, PrintScale printScale,
 			TimeScaleChronology timeScale) {
 		super(thParam, timeScale);
 		this.printScale = printScale;

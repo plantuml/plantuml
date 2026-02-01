@@ -39,7 +39,6 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import net.sourceforge.plantuml.project.time.MonthUtils;
-import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;

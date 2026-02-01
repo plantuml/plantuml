@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -46,10 +47,10 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -66,9 +67,10 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	private final TimePoint end;
 
-	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
+	public TaskDrawGroup(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
+			TimePoint end, Task task, TaskDrawRegistryData toTaskDraw, StyleBuilder styleBuilder,
+			ISkinParam skinParam) {
+		super(colorSet, timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 		this.end = end;
 	}
 
@@ -154,7 +156,6 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());
 	}
-
 
 	@Override
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {

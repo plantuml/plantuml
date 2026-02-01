@@ -62,15 +62,11 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskGroup;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
-import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
-import net.sourceforge.plantuml.project.draw.header.TimeHeader;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
@@ -81,7 +77,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
+public class ChronologyDiagram extends TitledDiagram implements WithSprite, GanttStyle {
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
@@ -255,8 +251,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	}
 
-	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
+	private TimeHeaderParameters2 thParam() {
+		return new TimeHeaderParameters2(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
 	}
 
 //	private Map<Day, HColor> colorDays() {
@@ -371,10 +367,10 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			final String disp = task.getCode().getDisplay();
-			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(),
-					getSkinParam());
-			final double height = draw.getFullHeightTask(stringBounder);
-			y = y.addAtLeast(height);
+//			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(),
+//					getSkinParam());
+//			final double height = draw.getFullHeightTask(stringBounder);
+//			y = y.addAtLeast(height);
 //			if (task instanceof TaskSeparator) {
 //				final TaskSeparator taskSeparator = (TaskSeparator) task;
 //				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, min, max, task.getStyleBuilder(),
@@ -399,7 +395,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //			if (task.getRow() == null)
 //				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
 //
-			draws.put(task, draw);
+//			draws.put(task, draw);
 		}
 //		origin.compileNow();
 //		magicPush(stringBounder);
@@ -749,18 +745,18 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //		return CommandExecutionResult.ok();
 //	}
 
-	@Override
+	// @Override
 	public PiecewiseConstant getDefaultPlan() {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+	// @Override
 	public TaskDraw getTaskDraw(Task task) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	// @Override
 	public HColorSet getIHtmlColorSet() {
 		return colorSet;
 	}

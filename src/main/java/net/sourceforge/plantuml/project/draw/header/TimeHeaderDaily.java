@@ -43,30 +43,36 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderDaily extends TimeHeaderCalendar {
+class TimeHeaderDaily extends TimeHeaderCalendar {
 
-	public TimeHeaderDaily(TimeHeaderContext ctx) {
-		super(ctx, ctx.daily());
+	public TimeHeaderDaily(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 2;
+		final double h = timelineStyle.getFontSizeMonth() + 2;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 2;
+		final double h = timelineStyle.getFontSizeDay() + 2;
 		return getH1(stringBounder) + h;
 	}
 
 	private double getH3(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 3;
+		final double h = timelineStyle.getFontSizeDay() + 3;
 		return getH2(stringBounder) + h;
 	}
 
@@ -77,15 +83,15 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
-		final double h3 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		final double h1 = timelineStyle.getFontSizeDay();
+		final double h2 = timelineStyle.getFontSizeDay();
+		final double h3 = timelineStyle.getFontSizeMonth();
 		return h1 + h2 + h3 + 8;
 	}
 
 	private double getHeaderNameDayHeight() {
-		if (ctx.getNameDays().size() > 0) {
-			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+		if (dayCalendar.getNameDays().size() > 0) {
+			final double h = timelineStyle.getFontSizeDay() + 6;
 			return h;
 		}
 
@@ -98,8 +104,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsBackground(ug, totalHeightWithoutFooter);
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))));
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2(ug.getStringBounder()))));
 		drawMonths(ug);
@@ -113,11 +118,11 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
-		final UGraphic ugVerticalSeparator = thParam.forVerticalSeparator(ug);
+		final UGraphic ugVerticalSeparator = timelineStyle.applyVerticalSeparatorStyle(ug);
 		final UGraphic ugLineColor = ug.apply(getLineColor());
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
-			if (isBold2(wink) || getTimeScale().getWidth(wink.decrement()) == 0)
+			if (isBold(day) || getTimeScale().getWidth(wink.decrement()) == 0)
 				drawVline(ugVerticalSeparator, getTimeScale().getPosition(wink),
 						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 			else
@@ -132,7 +137,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 2;
+		final double h = timelineStyle.getFontSizeDay() + 2;
 		drawTextsDayOfWeek(ug);
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(h + 2)));
 		drawMonths(ug.apply(UTranslate.dy(2 * h + 3)));
@@ -167,7 +172,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private boolean isHidden(TimePoint wink) {
-		if (thParam.isHideClosed() && thParam.getOpenClose().isClosed(wink.toDay()))
+		if (scaleConfig.isHideClosed() && dayCalendar.getOpenClose().isClosed(wink.toDay()))
 			return true;
 		return false;
 	}
@@ -209,23 +214,6 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		final TextBlock big = getTextBlock(SName.month, YearMonthUtils.longNameYYYY(monthYear, locale()), true,
 				openFontColor());
 		printCentered(ug, false, start, end, tiny, small, big);
-	}
-
-	private void printNamedDays(final UGraphic ug) {
-		if (ctx.getNameDays().size() > 0) {
-			String last = null;
-			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
-				final TimePoint wink = TimePoint.ofStartOfDay(day);
-				final String name = ctx.getNameDays().get(wink);
-				if (name != null && name.equals(last) == false) {
-					final double x1 = getTimeScale().getPosition(wink);
-					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
-					final double position = getH3(ug.getStringBounder());
-					label.drawU(ug.apply(new UTranslate(x1, position)));
-				}
-				last = name;
-			}
-		}
 	}
 
 }

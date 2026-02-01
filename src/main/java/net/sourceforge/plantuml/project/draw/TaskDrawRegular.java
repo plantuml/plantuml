@@ -42,6 +42,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -51,11 +52,11 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
@@ -80,10 +81,10 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final Collection<LocalDate> paused;
 	private final Collection<GanttConstraint> constraints;
 
-	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end,
-			boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
+	public TaskDrawRegular(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
+			TimePoint end, boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, TaskDrawRegistryData toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
+		super(colorSet, timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 		this.constraints = constraints;
 		this.end = end;
 		this.oddStart = oddStart;

@@ -36,9 +36,6 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 /**
  * Immutable implementation of {@link PiecewiseConstant} that models a time

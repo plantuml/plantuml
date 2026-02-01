@@ -38,47 +38,47 @@ package net.sourceforge.plantuml.project.draw.header;
 import java.time.LocalDate;
 import java.util.Locale;
 
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.SName;
 
-public abstract class TimeHeaderCalendar extends TimeHeader {
+abstract class TimeHeaderCalendar extends TimeHeader {
 
-	public TimeHeaderCalendar(TimeHeaderContext ctx, TimeScale timeScale) {
-		super(ctx, timeScale);
+	public TimeHeaderCalendar(WeekConfigData weekConfigData, DayCalendarData dayCalendar, TimeBoundsData timeBounds,
+			TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle, TimeScale timeScale) {
+		super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle);
 	}
 
 	protected final Locale locale() {
-		return thParam.getLocale();
+		return weekConfigData.getLocale();
 	}
 
 	protected final int getLoadAt(TimePoint instant) {
-		if (PiecewiseConstantUtils.isZeroOnDay(thParam.getLoadPlanable(), instant.toDay()))
+		if (PiecewiseConstantUtils.isZeroOnDay(dayCalendar.getOpenClose().asPiecewiseConstant(), instant.toDay()))
 			return 0;
 
 		return 100;
 	}
 
-	// Duplicate in TimeHeaderSimple
-	class Pending {
-		final double x1;
-		double x2;
-		final HColor color;
-
-		Pending(HColor color, double x1, double x2) {
-			this.x1 = x1;
-			this.x2 = x2;
-			this.color = color;
-		}
-
-		public void draw(UGraphic ug, double height) {
-			drawRectangle(ug.apply(color.bg()), height, x1, x2);
-		}
+	@Override
+	final public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawColorsBackground(ug, totalHeightWithoutFooter);
+		drawTimeHeaderInternal(ug, totalHeightWithoutFooter);
 	}
 
-	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
+	public abstract void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter);
+
+	private final void drawColorsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
@@ -87,9 +87,9 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);
-			HColor back = thParam.getColor(wink);
+			HColor back = getColor(wink);
 			// Day of week should be stronger than period of time (back color).
-			final HColor backDoW = thParam.getColor(wink.toDayOfWeek());
+			final HColor backDoW = getColor(wink.toDayOfWeek());
 			if (backDoW != null)
 				back = backDoW;
 
@@ -117,5 +117,26 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 			pending.draw(ug, height);
 
 	}
+	
+	
+	protected final void printNamedDays(final UGraphic ug) {
+		if (dayCalendar.getNameDays().size() > 0) {
+			String last = null;
+			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+				final TimePoint wink = TimePoint.ofStartOfDay(day);
+				final String name = dayCalendar.getDayName(wink);
+				if (name != null && name.equals(last) == false) {
+					final double x1 = getTimeScale().getPosition(wink);
+					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
+
+					final double position = getTimeHeaderHeight(ug.getStringBounder());
+					label.drawU(ug.apply(new UTranslate(x1, position)));
+				}
+				last = name;
+			}
+		}
+	}
+
+
 
 }
