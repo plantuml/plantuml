@@ -85,11 +85,11 @@ public class USymbolFolder extends USymbol {
 	private void drawFolder(UGraphic ug, double width, double height, XDimension2D dimName, double shadowing,
 			double roundCorner) {
 
-<span class="nc" id="L88">		final double wtitle = getWTitle(width, dimName);</span>
-<span class="nc" id="L89">		final double htitle = getHTitle(dimName);</span>
+<span class="fc" id="L88">		final double wtitle = getWTitle(width, dimName);</span>
+<span class="fc" id="L89">		final double htitle = getHTitle(dimName);</span>
 
 		final Shadowable shape;
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (roundCorner == 0) {</span>
 <span class="nc" id="L93">			final UPolygon poly = new UPolygon();</span>
 <span class="nc" id="L94">			poly.addPoint(0, 0);</span>
 <span class="nc" id="L95">			poly.addPoint(wtitle, 0);</span>
@@ -101,46 +101,46 @@ public class USymbolFolder extends USymbol {
 <span class="nc" id="L101">			poly.addPoint(0, 0);</span>
 <span class="nc" id="L102">			shape = poly;</span>
 <span class="nc" id="L103">		} else {</span>
-<span class="nc" id="L104">			final UPath path = UPath.none();</span>
-<span class="nc" id="L105">			path.moveTo(roundCorner / 2, 0);</span>
-<span class="nc" id="L106">			path.lineTo(wtitle - roundCorner / 2, 0);</span>
+<span class="fc" id="L104">			final UPath path = UPath.none();</span>
+<span class="fc" id="L105">			path.moveTo(roundCorner / 2, 0);</span>
+<span class="fc" id="L106">			path.lineTo(wtitle - roundCorner / 2, 0);</span>
 			// path.lineTo(wtitle, roundCorner / 2);
-<span class="nc" id="L108">			path.arcTo(new XPoint2D(wtitle, roundCorner / 2), roundCorner / 2 * 1.5, 0, 1);</span>
-<span class="nc" id="L109">			path.lineTo(wtitle + marginTitleX3, htitle);</span>
-<span class="nc" id="L110">			path.lineTo(width - roundCorner / 2, htitle);</span>
-<span class="nc" id="L111">			path.arcTo(new XPoint2D(width, htitle + roundCorner / 2), roundCorner / 2, 0, 1);</span>
-<span class="nc" id="L112">			path.lineTo(width, height - roundCorner / 2);</span>
-<span class="nc" id="L113">			path.arcTo(new XPoint2D(width - roundCorner / 2, height), roundCorner / 2, 0, 1);</span>
-<span class="nc" id="L114">			path.lineTo(roundCorner / 2, height);</span>
-<span class="nc" id="L115">			path.arcTo(new XPoint2D(0, height - roundCorner / 2), roundCorner / 2, 0, 1);</span>
-<span class="nc" id="L116">			path.lineTo(0, roundCorner / 2);</span>
-<span class="nc" id="L117">			path.arcTo(new XPoint2D(roundCorner / 2, 0), roundCorner / 2, 0, 1);</span>
-<span class="nc" id="L118">			path.closePath();</span>
-<span class="nc" id="L119">			shape = path;</span>
+<span class="fc" id="L108">			path.arcTo(new XPoint2D(wtitle, roundCorner / 2), roundCorner / 2 * 1.5, 0, 1);</span>
+<span class="fc" id="L109">			path.lineTo(wtitle + marginTitleX3, htitle);</span>
+<span class="fc" id="L110">			path.lineTo(width - roundCorner / 2, htitle);</span>
+<span class="fc" id="L111">			path.arcTo(new XPoint2D(width, htitle + roundCorner / 2), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L112">			path.lineTo(width, height - roundCorner / 2);</span>
+<span class="fc" id="L113">			path.arcTo(new XPoint2D(width - roundCorner / 2, height), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L114">			path.lineTo(roundCorner / 2, height);</span>
+<span class="fc" id="L115">			path.arcTo(new XPoint2D(0, height - roundCorner / 2), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L116">			path.lineTo(0, roundCorner / 2);</span>
+<span class="fc" id="L117">			path.arcTo(new XPoint2D(roundCorner / 2, 0), roundCorner / 2, 0, 1);</span>
+<span class="fc" id="L118">			path.closePath();</span>
+<span class="fc" id="L119">			shape = path;</span>
 		}
-<span class="nc" id="L121">		shape.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L121">		shape.setDeltaShadow(shadowing);</span>
 
-<span class="nc" id="L123">		ug.draw(shape);</span>
-<span class="nc" id="L124">		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));</span>
-<span class="nc" id="L125">	}</span>
+<span class="fc" id="L123">		ug.draw(shape);</span>
+<span class="fc" id="L124">		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));</span>
+<span class="fc" id="L125">	}</span>
 
 	private double getWTitle(double width, XDimension2D dimTitle) {
 		final double wtitle;
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
 <span class="nc" id="L130">			wtitle = Math.max(30, width / 4);</span>
 		else
-<span class="nc" id="L132">			wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;</span>
-<span class="nc" id="L133">		return wtitle;</span>
+<span class="fc" id="L132">			wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;</span>
+<span class="fc" id="L133">		return wtitle;</span>
 	}
 
 	private double getHTitle(XDimension2D dimTitle) {
 		final double htitle;
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
 <span class="nc" id="L139">			htitle = 10;</span>
 		else
-<span class="nc" id="L141">			htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;</span>
+<span class="fc" id="L141">			htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;</span>
 
-<span class="nc" id="L143">		return htitle;</span>
+<span class="fc" id="L143">		return htitle;</span>
 	}
 
 	private Margin getMargin() {
@@ -214,24 +214,24 @@ public class USymbolFolder extends USymbol {
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L217">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L217">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L220">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L221">				final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L222">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L223">				final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L224">				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),</span>
-<span class="nc" id="L225">						symbolContext.getRoundCorner());</span>
-<span class="nc" id="L226">				title.drawU(ug.apply(new UTranslate(4, 2)));</span>
-<span class="nc" id="L227">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L228">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
+<span class="fc" id="L220">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L221">				final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L222">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L223">				final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L224">				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),</span>
+<span class="fc" id="L225">						symbolContext.getRoundCorner());</span>
+<span class="fc" id="L226">				title.drawU(ug.apply(new UTranslate(4, 2)));</span>
+<span class="fc" id="L227">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L228">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
 
-<span class="nc" id="L230">				stereotype.drawU(ug.apply(new UTranslate(4 + posStereo, 2 + getHTitle(dimTitle))));</span>
-<span class="nc" id="L231">			}</span>
+<span class="fc" id="L230">				stereotype.drawU(ug.apply(new UTranslate(4 + posStereo, 2 + getHTitle(dimTitle))));</span>
+<span class="fc" id="L231">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L234">				return new XDimension2D(width, height);</span>
+<span class="fc" id="L234">				return new XDimension2D(width, height);</span>
 			}
 
 			@Override

@@ -383,7 +383,7 @@ public class Cluster implements Moveable {
 
 	private Style getStyle() {
 <span class="fc" id="L385">		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();</span>
-<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
 <span class="fc" id="L387">		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())</span>
 <span class="fc" id="L388">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 <span class="fc" id="L389">		return style;</span>
@@ -691,7 +691,7 @@ public class Cluster implements Moveable {
 <span class="pc bpc" id="L691" title="1 of 2 branches missed.">		if (backColor == null)</span>
 <span class="nc" id="L692">			backColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
 
-<span class="pc bpc" id="L694" title="2 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
+<span class="pc bpc" id="L694" title="1 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
 <span class="fc" id="L695">			backColor = HColors.transparent();</span>
 
 <span class="fc" id="L697">		return backColor;</span>

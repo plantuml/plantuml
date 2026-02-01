@@ -44,9 +44,9 @@ public class CounterOutputStream extends OutputStream {
 	private int length;
 	private final OutputStream os;
 
-<span class="nc" id="L47">	public CounterOutputStream(OutputStream os) {</span>
-<span class="nc" id="L48">		this.os = os;</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L47">	public CounterOutputStream(OutputStream os) {</span>
+<span class="fc" id="L48">		this.os = os;</span>
+<span class="fc" id="L49">	}</span>
 
 	/**
 	 * Writes to nowhere
@@ -71,18 +71,18 @@ public class CounterOutputStream extends OutputStream {
 	 */
 	@Override
 	public void write(byte b[], int off, int len) throws IOException {
-<span class="nc" id="L74">		os.write(b, off, len);</span>
-<span class="nc" id="L75">		length += len;</span>
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L74">		os.write(b, off, len);</span>
+<span class="fc" id="L75">		length += len;</span>
+<span class="fc" id="L76">	}</span>
 
 	public int getLength() {
-<span class="nc" id="L79">		return length;</span>
+<span class="fc" id="L79">		return length;</span>
 	}
 
 	@Override
 	public void flush() throws IOException {
-<span class="nc" id="L84">		os.flush();</span>
-<span class="nc" id="L85">	}</span>
+<span class="fc" id="L84">		os.flush();</span>
+<span class="fc" id="L85">	}</span>
 
 	@Override
 	public void close() throws IOException {
