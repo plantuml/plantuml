@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - testUrl(String, String, String, String, String)</title>
+<link href="../../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<a class="breadcrumb" href="../../index.html">all</a> &gt; 
+<a class="breadcrumb" href="../index.html">net.sourceforge.plantuml.url.UbrexUrlBuilderTest</a> &gt; 
+<span class="breadcrumb">testUrl(String, String, String, String, String)</span>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="successGroup" href="#">Gradle Test Run :test</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Gradle Test Run :test</h2>
+<h1>testUrl(String, String, String, String, String)</h1>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">summary</a>
+</li>
+</ul>
+<div class="tab">
+<h2>summary</h2>
+<div>
+<div class="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox">
+<div class="counter">20</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>skipped</p>
+</div>
+</td>
+<td>
+<div class="infoBox duration">
+<div class="counter">0.018s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="test-results">
+<thead>
+<tr>
+<th>Child</th>
+<th>Name</th>
+<th>Tests</th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Duration</th>
+<th>Success rate</th>
+</tr>
+</thead>
+<tr>
+<td class="success">[10] &quot;[[http://google.com {a nice toolip} &lt;img:HelloWorld.png{scale=2}&gt;]]&quot;, &quot;STRICT&quot;, &quot;http://google.com&quot;, &quot;a nice toolip&quot;, &quot;&lt;img:HelloWorld.png{scale=2}&gt;&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[10]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[11] &quot;[[http://google.com &lt;img:HelloWorld.png{scale=2}&gt;]]&quot;, &quot;STRICT&quot;, &quot;http://google.com&quot;, &quot;http://google.com&quot;, &quot;&lt;img:HelloWorld.png{scale=2}&gt;&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[11]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[12] &quot;[[http://foo?dummy={123}&amp;action=edit]]&quot;, &quot;STRICT&quot;, &quot;http://foo?dummy={123}&amp;action=edit&quot;, &quot;http://foo?dummy={123}&amp;action=edit&quot;, &quot;http://foo?dummy={123}&amp;action=edit&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[12]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[13] &quot;[[http://www.plantuml.com{Json: {\&quot;firstName\&quot;:\&quot;Bob\&quot;, \&quot;lastName\&quot;:\&quot;Smith\&quot;}}]]&quot;, &quot;STRICT&quot;, &quot;http://www.plantuml.com&quot;, &quot;Json: {\&quot;firstName\&quot;:\&quot;Bob\&quot;, \&quot;lastName\&quot;:\&quot;Smith\&quot;}&quot;, &quot;http://www.plantuml.com&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[13]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[14] &quot;[[http://foo?dummy={123}z{}]]&quot;, &quot;STRICT&quot;, &quot;http://foo?dummy=&quot;, &quot;123}z{&quot;, &quot;http://foo?dummy=&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[14]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[15] &quot;[[{tooltip} some text]]&quot;, &quot;STRICT&quot;, &quot;&quot;, &quot;tooltip&quot;, &quot;some text&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[15]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[16] &quot;fromor [[www.google.com POST /session/csrStart]] end&quot;, &quot;ANYWHERE&quot;, &quot;www.google.com&quot;, &quot;www.google.com&quot;, &quot;POST /session/csrStart&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[16]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.003s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[17] &quot;[[ blaha(xyz,12){ tooltip } ]]&quot;, &quot;STRICT&quot;, &quot;blaha(xyz,12)&quot;, &quot; tooltip &quot;, &quot;blaha(xyz,12)&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[17]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[18] &quot;[[{Json: {\&quot;firstName\&quot;:\&quot;Bob\&quot;, \&quot;lastName\&quot;:\&quot;Smith\&quot;}}]]&quot;, &quot;STRICT&quot;, &quot;&quot;, &quot;Json: {\&quot;firstName\&quot;:\&quot;Bob\&quot;, \&quot;lastName\&quot;:\&quot;Smith\&quot;}&quot;, &quot;&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[18]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[19] &quot;[[http://foo?dummy={123}{}]]&quot;, &quot;STRICT&quot;, &quot;http://foo?dummy=&quot;, &quot;123}{&quot;, &quot;http://foo?dummy=&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[19]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[1] &quot;[[http://foo]]&quot;, &quot;STRICT&quot;, &quot;http://foo&quot;, &quot;http://foo&quot;, &quot;http://foo&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[1]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.002s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[20] &quot;[[\&quot;http://foo?dummy={123}\&quot;{}]]&quot;, &quot;STRICT&quot;, &quot;http://foo?dummy={123}&quot;, &quot;&quot;, &quot;http://foo?dummy={123}&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[20]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[2] &quot;[[http://foo{tooltip} text]]&quot;, &quot;STRICT&quot;, &quot;http://foo&quot;, &quot;tooltip&quot;, &quot;text&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[2]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[3] &quot;[[http://foo {tooltip} text]]&quot;, &quot;STRICT&quot;, &quot;http://foo&quot;, &quot;tooltip&quot;, &quot;text&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[3]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[4] &quot;[[http://foo {tooltip}]]&quot;, &quot;STRICT&quot;, &quot;http://foo&quot;, &quot;tooltip&quot;, &quot;http://foo&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[4]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[5] &quot;[[http://foo text]]&quot;, &quot;STRICT&quot;, &quot;http://foo&quot;, &quot;http://foo&quot;, &quot;text&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[5]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[6] &quot;[[  http://foo  ]]&quot;, &quot;STRICT&quot;, &quot;http://foo&quot;, &quot;http://foo&quot;, &quot;http://foo&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[6]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[7] &quot;[[\&quot;http://foo text\&quot;]]&quot;, &quot;STRICT&quot;, &quot;http://foo text&quot;, &quot;http://foo text&quot;, &quot;http://foo text&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[7]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[8] &quot;start [[\&quot;http://foo test\&quot;]] end&quot;, &quot;ANYWHERE&quot;, &quot;http://foo test&quot;, &quot;http://foo test&quot;, &quot;http://foo test&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[8]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">[9] &quot;[[http://google.com{a nice toolip} &lt;img:HelloWorld.png{scale=2}&gt;]]&quot;, &quot;STRICT&quot;, &quot;http://google.com&quot;, &quot;a nice toolip&quot;, &quot;&lt;img:HelloWorld.png{scale=2}&gt;&quot;</td>
+<td class="path">testUrl(String, String, String, String, String)[9]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.3.0</a> at Feb 1, 2026, 6:55:07 PM</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - testHelp()</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<a class="breadcrumb" href="../index.html">all</a> &gt; 
+<a class="breadcrumb" href="index.html">net.sourceforge.plantuml.cli.RunHelpMoreTest</a> &gt; 
+<span class="breadcrumb">testHelp()</span>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="successGroup" href="#">Gradle Test Run :test</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Gradle Test Run :test</h2>
+<h1>testHelp()</h1>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">summary</a>
+</li>
+<li>
+<a class="" href="#">standard output</a>
+</li>
+</ul>
+<div class="tab">
+<h2>summary</h2>
+<div>
+<div class="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>skipped</p>
+</div>
+</td>
+<td>
+<div class="infoBox duration">
+<div class="counter">0.027s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="tab">
+<h2>standard output</h2>
+<span class="code">
+<pre id="root-0-test-stdout-testHelp()">plantuml - generate diagrams from plain text
+
+Usage:
+  java -jar plantuml.jar [options] [file|dir]...
+  java -jar plantuml.jar [options] --gui
+
+Description:
+  Process PlantUML sources from files, directories (optionally recursive), or stdin (-pipe).
+
+Wildcards (for files/dirs):
+  *   any characters except '/' and '\'
+  ?   exactly one character except '/' and '\'
+  **  any characters across directories (recursive)
+  Tip: quote patterns to avoid shell expansion (e.g., &quot;**/*.puml&quot;).
+
+General:
+
+General:
+     --author ..................... Show information about PlantUML authors
+     --check-graphviz ............. Check Graphviz installation
+     --dark-mode .................. Render diagrams in dark mode
+     --duration ................... Print total processing time
+     --gui ........................ Launch the graphical user interface
+ -h, --help ....................... Show help and usage information
+     --help-more .................. Show extended help (advanced options)
+     --http-server[:&lt;port&gt;] ....... Start internal HTTP server for rendering (default port : 8080)
+     --progress-bar ............... Show a textual progress bar
+     --splash-screen .............. Show splash screen with progress bar
+ -v, --verbose .................... Enable verbose logging
+     --version .................... Show PlantUML and Java version
+
+Input &amp; preprocessing:
+     --charset &lt;name&gt; ............. Use a specific input charset
+     --config &lt;file&gt; .............. Specify configuration file
+ -d, --define &lt;VAR&gt;=&lt;value&gt; ....... Define a preprocessing variable (equivalent to '!define &lt;var&gt; &lt;value&gt;')
+     --exclude &lt;pattern&gt; .......... Exclude input files matching the given pattern
+ -I, --include &lt;file&gt; ............. Include external file (as with '!include &lt;file&gt;')
+ -p, --pipe ....................... Read source from stdin, write result to stdout
+ -P, --pragma &lt;key&gt;=&lt;value&gt; ....... Set pragma (equivalent to '!pragma &lt;key&gt; &lt;value&gt;')
+     --skinparam &lt;key&gt;=&lt;value&gt; .... Set skin parameter (equivalent to 'skinparam &lt;key&gt; &lt;value&gt;')
+     --theme &lt;name&gt; ............... Apply a theme
+
+Execution control:
+     --check-before-run ........... Pre-check syntax of all inputs and stop faster on error
+     --check-syntax ............... Check diagram syntax without generating images
+     --graphviz-timeout &lt;seconds&gt;   Set Graphviz processing timeout (in seconds)
+     --ignore-startuml-filename ... Ignore '@startuml &lt;name&gt;' and always derive output filenames from input files
+     --no-error-image ............. Do not generate error images for diagrams with syntax errors
+     --stop-on-error .............. Stop at the first syntax error
+     --threads &lt;n|auto&gt; ........... Use &lt;n&gt; threads for processing  (auto = available processors)
+
+Metadata &amp; assets:
+     --decode-url &lt;string&gt; ........ Decode a PlantUML encoded URL back to its source
+     --disable-metadata ........... Do not include metadata in generated files
+     --dot-path &lt;path-to-dot-exe&gt;   Specify the path to the Graphviz 'dot' executable
+     --encode-url ................. Generate an encoded PlantUML URL from a source file
+     --extract-source ............. Extract embedded PlantUML source from PNG or SVG metadata
+     --ftp-server ................. Start a local FTP server for diagram rendering (rarely used)
+     --list-keywords .............. Print the list of PlantUML language keywords
+     --skip-fresh ................. Skip PNG/SVG files that are already up-to-date (using metadata)
+     --sprite &lt;4|8|16[z]&gt; &lt;file&gt; .. Encode a sprite definition from an image file
+
+Output control:
+     --output-dir &lt;dir&gt; ........... Generate output files in the specified directory
+     --overwrite .................. Allow overwriting of read-only output files
+
+Output format (choose one):
+ -f, --format &lt;name&gt; .............. Set the output format for generated diagrams
+                                    (e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)
+
+Available formats:
+     --eps ........................ Generate images in EPS format
+     --html ....................... Generate HTML files for class diagrams
+     --latex ...................... Generate LaTeX/TikZ output
+     --latex-nopreamble ........... Generate LaTeX/TikZ output without preamble
+     --obfuscate .................. Replace text in diagrams with obfuscated strings to share diagrams safely
+     --pdf ........................ Generate PDF images
+     --png ........................ Generate PNG images (default)
+     --preproc .................... Generate the preprocessed source after applying !include, !define... (no rendering)
+     --scxml ...................... Generate SCXML files for state diagrams
+     --svg ........................ Generate SVG images
+     --txt ........................ Generate ASCII art diagrams
+     --utxt ....................... Generate ASCII art diagrams using Unicode characters
+     --vdx ........................ Generate VDX files
+     --xmi ........................ Generate XMI files for class diagrams
+
+Statistics:
+     --disable-stats .............. Disable statistics collection (default behavior)
+     --enable-stats ............... Enable statistics collection
+     --export-stats ............... Export collected statistics to a text report and exit
+     --export-stats-html .......... Export collected statistics to an HTML report and exit
+     --html-stats ................. Output general statistics in HTML format
+     --loop-stats ................. Continuously print usage statistics during execution
+     --realtime-stats ............. Generate statistics in real time during processing
+     --xml-stats .................. Output general statistics in XML format
+
+
+Examples:
+  # Process all .puml recursively
+  java -jar plantuml.jar &quot;**/*.puml&quot;
+
+  # Check syntax only (CI)
+  java -jar plantuml.jar --check-syntax src/diagrams
+
+  # Read from stdin and write to stdout (SVG)
+  cat diagram.puml | java -jar plantuml.jar --svg -pipe &gt; out.svg
+
+  # Encode a sprite from an image
+  java -jar plantuml.jar --sprite 16z myicon.png
+
+  # Use a define
+  java -jar plantuml.jar -DAUTHOR=John diagram.puml
+
+  # Change output directory
+  java -jar plantuml.jar --format svg --output-dir out diagrams/
+
+Exit codes:
+  0    Success
+  50   No file found
+  100  No diagram found in file(s)
+  200  Some diagrams have syntax errors
+
+See also:
+  java -jar plantuml.jar --help-more
+  Documentation: https://plantuml.com
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stdout-testHelp()">Copy</button>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.3.0</a> at Feb 1, 2026, 6:55:07 PM</p>
+</div>
+</div>
+</body>
+</html>
