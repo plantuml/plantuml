@@ -96,7 +96,13 @@ public class EntityImageState extends EntityImageStateCommon {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
+		final UGroup group = UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint());
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
 		if (url != null)
 			ug.startUrl(url);
 
