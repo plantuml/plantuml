@@ -38,17 +38,18 @@ import net.sourceforge.plantuml.style.Value;
 
 public class GanttPreparedModel {
 
-	final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
-	double totalHeightWithoutFooter;
-	public LocalDate minDay = TimePoint.epoch();
-	public LocalDate maxDay;
+	// ------------------------------------------------------------------------
+	// inputs / configuration
+	// ------------------------------------------------------------------------
+	public final GanttStyle ganttStyle;
 
-	final Map<TimePoint, HColor> colorDaysToday = new HashMap<TimePoint, HColor>();
-	final Map<TimePoint, HColor> colorDaysInternal = new HashMap<TimePoint, HColor>();
-	public final Map<DayOfWeek, HColor> colorDaysOfWeek = new HashMap<DayOfWeek, HColor>();
-	public final Map<TimePoint, String> nameDays = new HashMap<TimePoint, String>();
+	public Locale locale = Locale.ENGLISH;
 
 	public PrintScale printScale = PrintScale.DAILY;
+	public double factorScale = 1.0;
+
+	public boolean hideClosed;
+	public LocalDate printStart;
 
 	public WeeklyHeaderStrategy weeklyHeaderStrategy;
 	public int weekStartingNumber;
@@ -56,18 +57,34 @@ public class GanttPreparedModel {
 	// Let's follow ISO-8601 rules
 	public WeekNumberStrategy weekNumberStrategy = new WeekNumberStrategy(DayOfWeek.MONDAY, 4);
 
-	public LocalDate printStart;
-	public boolean hideClosed;
+	// ------------------------------------------------------------------------
+	// model bounds / computed scalars
+	// ------------------------------------------------------------------------
+	public LocalDate minDay = TimePoint.epoch();
+	public LocalDate maxDay;
+
+	double totalHeightWithoutFooter;
+
+	// ------------------------------------------------------------------------
+	// prepared drawing / layout artifacts
+	// ------------------------------------------------------------------------
+	final Map<Task, TaskDraw> draws = new LinkedHashMap<>();
 	public final Set<TimePoint> verticalSeparatorBefore = new HashSet<>();
 
+	// ------------------------------------------------------------------------
+	// timeline labels and colors (prepared caches)
+	// ------------------------------------------------------------------------
+	public final Map<TimePoint, String> nameDays = new HashMap<>();
+
+	final Map<TimePoint, HColor> colorDaysToday = new HashMap<>();
+	final Map<TimePoint, HColor> colorDaysInternal = new HashMap<>();
+	public final Map<DayOfWeek, HColor> colorDaysOfWeek = new HashMap<>();
+
+	// ------------------------------------------------------------------------
+	// internal helpers / shared infrastructure
+	// ------------------------------------------------------------------------
 	public final OpenClose openClose = new OpenClose();
-
-	public Locale locale = Locale.ENGLISH;
-
 	public final HColorSet colorSet = HColorSet.instance();
-
-	public double factorScale = 1.0;
-	public final GanttStyle ganttStyle;
 
 	public GanttPreparedModel(GanttStyle ganttStyle) {
 		this.ganttStyle = ganttStyle;

@@ -103,33 +103,53 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
 
+	// ------------------------------------------------------------------------
+	// model / prepared state
+	// ------------------------------------------------------------------------
 	protected GanttPreparedModel model = new GanttPreparedModel(this);
 
-	protected final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
-
+	// ------------------------------------------------------------------------
+	// core domain data
+	// ------------------------------------------------------------------------
+	protected final Map<TaskCode, Task> tasks = new LinkedHashMap<>();
 	protected final List<GanttConstraint> constraints = new ArrayList<>();
+	protected final Map<String, Resource> resources = new LinkedHashMap<>();
 
-	protected final Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
-
+	// ------------------------------------------------------------------------
+	// diagram configuration (styling / options)
+	// ------------------------------------------------------------------------
 	protected LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
 
-	private TimePoint today;
-
-	protected LocalDate printEnd;
-
-	protected final RealOrigin origin = RealUtils.createOrigin();
-
-	private int defaultCompletion = 100;
-
-	private Task it;
-	private Resource they;
-
-	private final Map<String, OpenClose> openCloseForTask = new HashMap<>();
-	private TaskGroup currentGroup = null;
-	private static final Pattern p = Pattern.compile("([^:]+)(:(\\d+))?");
 	protected boolean showFootbox = true;
 	protected boolean hideResourceName;
 	protected boolean hideResourceFoobox;
+
+	protected LocalDate printEnd;
+	private TimePoint today;
+
+	private int defaultCompletion = 100;
+
+	// ------------------------------------------------------------------------
+	// parsing / "current" pointers (stateful command interpretation)
+	// ------------------------------------------------------------------------
+	private Task it;
+	private Resource they;
+	private TaskGroup currentGroup = null;
+
+	// ------------------------------------------------------------------------
+	// layout / origin
+	// ------------------------------------------------------------------------
+	protected final RealOrigin origin = RealUtils.createOrigin();
+
+	// ------------------------------------------------------------------------
+	// per-task helpers / caches
+	// ------------------------------------------------------------------------
+	private final Map<String, OpenClose> openCloseForTask = new HashMap<>();
+
+	// ------------------------------------------------------------------------
+	// constants / patterns
+	// ------------------------------------------------------------------------
+	private static final Pattern RESOURCE_ASSIGNMENT_PATTERN = Pattern.compile("([^:]+)(:(\\d+))?");
 
 	public CommandExecutionResult changeLanguage(String lang) {
 		this.model.locale = new Locale(lang);
@@ -504,7 +524,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public boolean affectResource(Task result, String description) {
-		final Matcher m = p.matcher(description);
+		final Matcher m = RESOURCE_ASSIGNMENT_PATTERN.matcher(description);
 		if (m.find() == false)
 			throw new IllegalArgumentException();
 
