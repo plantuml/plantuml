@@ -30,59 +30,15 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.cli;
+package net.sourceforge.plantuml.project.draw.header;
 
-public class ErrorStatus {
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
-	public static final int ERROR_NO_FILE_FOUND = 50;
-	
-	private static final int ERROR_NO_DIAGRAM_FOUND = 100;
-	
-	private static final int ERROR_SOME_DIAGRAMS_HAVE_ERROR = 200;
+public interface HeaderPiece {
+	public double getHeight(TimeHeaderContext ctx);
 
-	
-	private int nbErrors;
-	private int nbOk;
-
-	private ErrorStatus() {
-	}
-
-	public static ErrorStatus init() {
-		return new ErrorStatus();
-	}
-
-	public synchronized void incError() {
-		nbErrors++;
-	}
-
-	public synchronized void incOk() {
-		nbOk++;
-	}
-
-	public synchronized boolean hasError() {
-		return nbErrors > 0;
-	}
-
-	public synchronized boolean isEmpty() {
-		return nbErrors == 0 && nbOk == 0;
-	}
-
-	public synchronized int getExitCode() {
-		if (isEmpty())
-			return ERROR_NO_DIAGRAM_FOUND;
-
-		if (hasError())
-			return ERROR_SOME_DIAGRAMS_HAVE_ERROR;
-
-		return 0;
-	}
-
-	@Override
-	public String toString() {
-		return "nbErrors=" + nbErrors + " nbOk=" + nbOk;
-	}
-
+	public void drawU(UGraphic ug, TimeHeaderContext ctx);
 }

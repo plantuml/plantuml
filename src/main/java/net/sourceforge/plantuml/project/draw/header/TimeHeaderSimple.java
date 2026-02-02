@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.draw.header;
 
 import java.time.LocalDate;
 
@@ -48,16 +48,16 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderSimple extends TimeHeader {
 
-	private final PrintScale printScale;
+	public TimeHeaderSimple(StringBounder stringBounder, TimeHeaderContext ctx) {
+		super(ctx, ctx.simple());
+	}
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
@@ -80,11 +80,6 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(StringBounder stringBounder, TimeHeaderParameters thParam, PrintScale printScale) {
-		super(thParam, new TimeScaleWink(thParam.getCellWidth(stringBounder), thParam.getScale(), printScale));
-		this.printScale = printScale;
-	}
-
 	private int delta = 0;
 
 	private TimePoint increment(TimePoint day) {
@@ -92,7 +87,7 @@ public class TimeHeaderSimple extends TimeHeader {
 			initDelta(day);
 
 		for (int i = 0; i < delta; i++)
-			day = day.increment(printScale);
+			day = day.increment(ctx.getPrintScale());
 
 		return day;
 	}
@@ -102,7 +97,7 @@ public class TimeHeaderSimple extends TimeHeader {
 			initDelta(day);
 
 		for (int i = 0; i < delta; i++)
-			day = increment(day, printScale);
+			day = increment(day, ctx.getPrintScale());
 
 		return day;
 	}
@@ -114,7 +109,7 @@ public class TimeHeaderSimple extends TimeHeader {
 	}
 
 	private void initDelta(LocalDate day) {
-		if (printScale == PrintScale.DAILY) {
+		if (ctx.getPrintScale() == PrintScale.DAILY) {
 			final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(day));
 			do {
 				delta++;
@@ -127,7 +122,7 @@ public class TimeHeaderSimple extends TimeHeader {
 	}
 
 	private void initDelta(TimePoint day) {
-		if (printScale == PrintScale.DAILY) {
+		if (ctx.getPrintScale() == PrintScale.DAILY) {
 			final double x1 = getTimeScale().getPosition(day);
 			do {
 				delta++;
@@ -154,7 +149,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = increment(day)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final int value;
-			if (printScale == PrintScale.WEEKLY)
+			if (ctx.getPrintScale() == PrintScale.WEEKLY)
 				value = wink.getAbsoluteDayNum() / 7 + 1;
 			else
 				value = wink.getAbsoluteDayNum() + 1;
@@ -164,7 +159,7 @@ public class TimeHeaderSimple extends TimeHeader {
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final double x1 = getTimeScale().getPosition(wink);
 			final double x2;
-			if (printScale == PrintScale.WEEKLY)
+			if (ctx.getPrintScale() == PrintScale.WEEKLY)
 				x2 = getTimeScale().getPosition(wink.addDays(6)) + getTimeScale().getWidth(wink.addDays(6));
 			else
 				x2 = getTimeScale().getPosition(increment(wink));
@@ -179,8 +174,6 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
-//		final double xmin = getTimeScale().getStartingPosition(getMin());
-//		final double xmax = getTimeScale().getEndingPosition(getMax());
 		drawSmallVlinesDay(ug, totalHeightWithoutFooter);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug);
@@ -189,8 +182,6 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-//		final double xmin = getTimeScale().getStartingPosition(getMin());
-//		final double xmax = getTimeScale().getEndingPosition(getMax());
 		ug = ug.apply(UTranslate.dy(3));
 		drawSimpleDayCounter(ug);
 	}

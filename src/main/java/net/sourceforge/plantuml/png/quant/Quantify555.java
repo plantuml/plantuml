@@ -40,6 +40,7 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.util.Arrays;
 
+import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.utils.Log;
 
 /**
@@ -82,7 +83,7 @@ import net.sourceforge.plantuml.utils.Log;
  * <ul>
  * <li>Very fast: one pass to count, one pass to remap pixels.</li>
  * <li>Simple and predictable (no recursion, no complex math).</li>
- * <li>Guaranteed <= 256 colors (or aborts safely).</li>
+ * <li>Guaranteed &lt;= 256 colors (or aborts safely).</li>
  * </ul>
  * 
  * <p>
@@ -115,7 +116,7 @@ public final class Quantify555 {
 	private static final int MIN_CUBES_THRESHOLD = 32;
 
 	/**
-	 * Attempts to quantize an image to <= 256 colors using the Cube555 structure.
+	 * Attempts to quantize an image to &lt;= 256 colors using the Cube555 structure.
 	 * 
 	 * @param src any {@link BufferedImage}
 	 * @return a new {@link BufferedImage} with an indexed color model, or
@@ -125,15 +126,26 @@ public final class Quantify555 {
 
 		final int w = src.getWidth();
 		final int h = src.getHeight();
+		final int pixelCount = w * h;
+
+		Log.info(() -> "Quantify555: starting, image " + w + "x" + h + " (" + pixelCount + " pixels), memory: "
+				+ PngIO.getUsedMemoryMB() + " MB");
 
 		try {
+			// Step 1: Extract pixels
+			final long startExtract = System.currentTimeMillis();
+			final long memBeforeExtract = PngIO.getUsedMemoryMB();
 			final int[] pixels = src.getRGB(0, 0, w, h, null, 0, w);
-
-			Log.info(() -> "Using Quantify555.");
+			final long extractDuration = System.currentTimeMillis() - startExtract;
+			final long memAfterExtract = PngIO.getUsedMemoryMB();
+			Log.info(() -> "Quantify555: pixel extraction in " + extractDuration + " ms, memory: " + memBeforeExtract
+					+ " -> " + memAfterExtract + " MB (delta: " + (memAfterExtract - memBeforeExtract) + " MB)");
 
 			int nbCubes = 0;
 
-			// Step 1: Fill Cube555 structures with frequency counts
+			// Step 2: Fill Cube555 structures with frequency counts
+			final long startCubes = System.currentTimeMillis();
+			final long memBeforeCubes = PngIO.getUsedMemoryMB();
 			final Cube555[] cubes = new Cube555[TOTAL_CUBE_SLOTS];
 			for (int argb : pixels) {
 				final int cubeIndex = getCubeIndex(argb);
@@ -142,7 +154,8 @@ public final class Quantify555 {
 				if (cube == null) {
 					// Abort if too many distinct cubes are found
 					if (nbCubes++ > 255) {
-						Log.info(() -> "...abort, too many colors");
+						final int finalNbCubes = nbCubes;
+						Log.info(() -> "Quantify555: abort, too many colors (" + finalNbCubes + " cubes)");
 						return null;
 					}
 					cube = new Cube555(cubeIndex);
@@ -155,21 +168,37 @@ public final class Quantify555 {
 				cube.increment(sub);
 
 			}
+			final long cubesDuration = System.currentTimeMillis() - startCubes;
+			final long memAfterCubes = PngIO.getUsedMemoryMB();
+			final int finalNbCubes = nbCubes;
+			Log.info(() -> "Quantify555: cube analysis in " + cubesDuration + " ms, found " + finalNbCubes
+					+ " cubes, memory: " + memBeforeCubes + " -> " + memAfterCubes + " MB (delta: "
+					+ (memAfterCubes - memBeforeCubes) + " MB)");
 
 			// Abort if there are not enough cubes, risk of over-quantization
 			if (nbCubes < MIN_CUBES_THRESHOLD) {
-				Log.info(() -> "...abort, not enough distinct colors");
+				Log.info(() -> "Quantify555: abort, not enough distinct colors (" + finalNbCubes + " < "
+						+ MIN_CUBES_THRESHOLD + ")");
 				return null;
 			}
 
-			// Step 2: Build the final indexed image
-			return buildIndexedImageFromCubes(src, cubes);
+			// Step 3: Build the final indexed image
+			final long startBuild = System.currentTimeMillis();
+			final long memBeforeBuild = PngIO.getUsedMemoryMB();
+			final BufferedImage result = buildIndexedImageFromCubes(src, cubes);
+			final long buildDuration = System.currentTimeMillis() - startBuild;
+			final long memAfterBuild = PngIO.getUsedMemoryMB();
+			Log.info(() -> "Quantify555: indexed image built in " + buildDuration + " ms, memory: " + memBeforeBuild
+					+ " -> " + memAfterBuild + " MB (delta: " + (memAfterBuild - memBeforeBuild) + " MB)");
+
+			return result;
 
 		} catch (Throwable t) {
 			// Swallowing all throwables is intentional here: any unexpected failure
 			// during pixel extraction or packing (including OutOfMemoryError or JVM-level
 			// errors) prevents safe recovery. Returning null signals that the packed
 			// representation could not be produced.
+			Log.info(() -> "Quantify555: exception caught: " + t.getClass().getSimpleName() + " - " + t.getMessage());
 			return null;
 		}
 	}

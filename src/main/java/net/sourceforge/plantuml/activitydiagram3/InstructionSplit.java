@@ -62,11 +62,13 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 	private final Swimlane swimlaneIn;
+	private final Colors colors;
 	private Swimlane swimlaneOut;
 
-	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane) {
+	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane, Colors colors) {
 		this.parent = parent;
 		this.swimlaneIn = swimlane;
+		this.colors = colors;
 
 		this.splits.add(new InstructionList(swimlane));
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
@@ -117,7 +119,7 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 		for (InstructionList list : splits)
 			all.add(list.createFtile(factory));
 
-		return factory.createParallel(all, ForkStyle.SPLIT, null, swimlaneIn, swimlaneOut);
+		return factory.createParallel(all, ForkStyle.SPLIT, null, swimlaneIn, swimlaneOut, colors);
 	}
 
 	public Instruction getParent() {
@@ -151,7 +153,8 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);
 	}
 

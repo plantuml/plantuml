@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileThinSplit;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -63,8 +64,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
-	public ParallelBuilderSplit(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {
-		super(skinParam, stringBounder, all);
+	public ParallelBuilderSplit(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all, Colors colors) {
+		super(skinParam, stringBounder, all, colors);
 	}
 
 	@Override

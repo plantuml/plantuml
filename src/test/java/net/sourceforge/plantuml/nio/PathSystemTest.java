@@ -30,13 +30,22 @@ class PathSystemTest {
 
 		final PathSystem cut = PathSystem.fetch();
 
-		// act
-		final InputFile in = cut.getInputFile("rel.txt");
+		try {
+			// act
+			final InputFile in = cut.getInputFile("rel.txt");
 
-		// assert
-		try (InputStream is = in.newInputStream()) {
-			final byte[] buf = is.readAllBytes();
-			assertEquals("hello-rel", new String(buf, StandardCharsets.UTF_8));
+			// assert
+			try (InputStream is = in.newInputStream()) {
+				final byte[] buf = is.readAllBytes();
+				assertEquals("hello-rel", new String(buf, StandardCharsets.UTF_8));
+			}
+		} finally {
+			// Clean up the test file from root directory
+			try {
+				Files.deleteIfExists(file);
+			} catch (IOException e) {
+				System.err.println("Warning: Failed to delete rel.txt after test: " + e.getMessage());
+			}
 		}
 	}
 

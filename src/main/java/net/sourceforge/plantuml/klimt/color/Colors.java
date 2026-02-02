@@ -224,7 +224,11 @@ public class Colors {
 			final HColor color = map.get(ColorType.BACK);
 			if (color != null)
 				return color;
-
+		}
+		if (name == PName.LineColor) {
+			final HColor color = map.get(ColorType.LINE);
+			if (color != null)
+				return color;
 		}
 		return style.value(name).asColor(colorSet);
 

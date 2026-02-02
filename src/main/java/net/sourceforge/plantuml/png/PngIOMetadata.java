@@ -49,6 +49,7 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
 
+import net.sourceforge.plantuml.directdot.CounterOutputStream;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -59,6 +60,18 @@ public class PngIOMetadata {
 
 	public static void writeWithMetadata(RenderedImage image, OutputStream os, String metadata, int dpi,
 			String debugData, int level) throws IOException {
+
+		final int w = image.getWidth();
+		final int h = image.getHeight();
+		final String imageType = image.getClass().getSimpleName();
+		final String colorModel = image instanceof BufferedImage ? getImageTypeName(((BufferedImage) image).getType())
+				: "unknown";
+
+		Log.info(() -> "PngIOMetadata: starting, image " + w + "x" + h + " (" + imageType + ", " + colorModel
+				+ "), compression level=" + level + ", memory: " + PngIO.getUsedMemoryMB() + " MB");
+
+		final long startTotal = System.currentTimeMillis();
+		final long memBefore = PngIO.getUsedMemoryMB();
 
 		final ImageWriter writer = javax.imageio.ImageIO.getImageWritersByFormatName("png").next();
 		try {
@@ -92,12 +105,66 @@ public class PngIOMetadata {
 			final IIOImage iioImage = new IIOImage(image, null, meta);
 			Log.debug(() -> "PngIOMetadata iioImage=" + iioImage);
 
-			try (final ImageOutputStream ios = SImageIO.createImageOutputStream(os)) {
+			final long startWrite = System.currentTimeMillis();
+			final CounterOutputStream cos = new CounterOutputStream(os);
+			try (final ImageOutputStream ios = SImageIO.createImageOutputStream(cos)) {
 				writer.setOutput(ios);
 				writer.write(null, iioImage, writeParam);
+				ios.flush();
+
+				final long writeDuration = System.currentTimeMillis() - startWrite;
+				final long totalDuration = System.currentTimeMillis() - startTotal;
+				final long memAfter = PngIO.getUsedMemoryMB();
+				final int byteCount = cos.getLength();
+				Log.info(() -> "PngIOMetadata: PNG written, " + byteCount + " bytes (" + formatSize(byteCount)
+						+ "), write: " + writeDuration + " ms, total: " + totalDuration + " ms, memory: " + memBefore
+						+ " -> " + memAfter + " MB (delta: " + (memAfter - memBefore) + " MB)");
 			}
 		} finally {
 			writer.dispose();
+		}
+	}
+
+	private static String formatSize(long bytes) {
+		if (bytes < 1024)
+			return bytes + " B";
+		if (bytes < 1024 * 1024)
+			return String.format("%.1f KB", bytes / 1024.0);
+		return String.format("%.2f MB", bytes / (1024.0 * 1024.0));
+	}
+
+	private static String getImageTypeName(int type) {
+		switch (type) {
+		case BufferedImage.TYPE_INT_RGB:
+			return "INT_RGB";
+		case BufferedImage.TYPE_INT_ARGB:
+			return "INT_ARGB";
+		case BufferedImage.TYPE_INT_ARGB_PRE:
+			return "INT_ARGB_PRE";
+		case BufferedImage.TYPE_INT_BGR:
+			return "INT_BGR";
+		case BufferedImage.TYPE_3BYTE_BGR:
+			return "3BYTE_BGR";
+		case BufferedImage.TYPE_4BYTE_ABGR:
+			return "4BYTE_ABGR";
+		case BufferedImage.TYPE_4BYTE_ABGR_PRE:
+			return "4BYTE_ABGR_PRE";
+		case BufferedImage.TYPE_BYTE_GRAY:
+			return "BYTE_GRAY";
+		case BufferedImage.TYPE_BYTE_BINARY:
+			return "BYTE_BINARY";
+		case BufferedImage.TYPE_BYTE_INDEXED:
+			return "BYTE_INDEXED";
+		case BufferedImage.TYPE_USHORT_GRAY:
+			return "USHORT_GRAY";
+		case BufferedImage.TYPE_USHORT_565_RGB:
+			return "USHORT_565_RGB";
+		case BufferedImage.TYPE_USHORT_555_RGB:
+			return "USHORT_555_RGB";
+		case BufferedImage.TYPE_CUSTOM:
+			return "CUSTOM";
+		default:
+			return "type=" + type;
 		}
 	}
 

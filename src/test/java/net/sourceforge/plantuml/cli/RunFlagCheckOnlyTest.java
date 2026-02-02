@@ -16,7 +16,7 @@ class RunFlagCheckOnlyTest extends AbstractCliTest {
 
 		syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-checkonly", tempDir.toAbsolutePath().toString() });
 		});
 

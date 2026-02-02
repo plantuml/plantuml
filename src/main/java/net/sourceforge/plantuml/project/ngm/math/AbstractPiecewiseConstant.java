@@ -44,7 +44,7 @@ import java.util.Iterator;
  *
  * <p>
  * This class provides a implementation of
- * {@link #iterateSegmentsFrom(LocalDateTime)} that lazily iterates over
+ * {@link #iterateSegmentsFrom(LocalDateTime, TimeDirection)} that lazily iterates over
  * successive {@link Segment segments}, starting from the segment that contains
  * a given instant.
  * </p>
@@ -63,15 +63,8 @@ import java.util.Iterator;
  * </ul>
  *
  * <p>
- * This method relies on the concrete implementation of
- * {@link #segmentAt(LocalDateTime)} to locate the segment covering a given
- * instant. It does not precompute or materialize all segments, making it
- * suitable for efficient forward traversal over long or infinite timelines.
- * </p>
- *
- * <p>
  * <strong>Important:</strong> Implementations of
- * {@link #segmentAt(LocalDateTime)} must guarantee that the returned segment:
+ * {@link #iterateSegmentsFrom} must guarantee that the returned segment:
  * </p>
  * <ul>
  * <li>contains the provided instant,</li>
@@ -85,9 +78,6 @@ import java.util.Iterator;
  * boundaries during iteration.
  * </p>
  *
- * @param instant the instant from which to start iterating; the first segment
- *                returned will begin exactly at this instant
- * @return an iterator over successive segments
  */
 public abstract class AbstractPiecewiseConstant implements PiecewiseConstant {
 

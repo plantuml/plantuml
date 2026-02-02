@@ -11,6 +11,7 @@ elk                 = "0.10.0"
 fop                 = "2.11"
 glytching-junit-ext = "2.6.0"
 graalvm-native      = "0.11.4"
+jdepend             = "2.9.1"
 jlatexmath          = "1.0.7"
 junit-jupiter       = "6.0.2"
 junit-platform-launcher = "6.0.2"
@@ -30,6 +31,7 @@ elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.la
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
 fop                         = { module = "org.apache.xmlgraphics:fop", version.ref = "fop" }
 glytching-junit-extensions  = { module = "io.github.glytching:junit-extensions", version.ref = "glytching-junit-ext" }
+jdepend                     = { module = "jdepend:jdepend", version.ref = "jdepend" }
 jlatexmath                  = { module = "org.scilab.forge:jlatexmath", version.ref = "jlatexmath" }
 junit-jupiter               = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
 junit-bom                   = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
@@ -51,7 +51,7 @@ public class StdrptV2 implements Stdrpt {
 	public void finalMessage() {
 	}
 
-	public void finalMessage(ErrorStatus error) {
+	public void finalMessage(ExitStatus error) {
 	}
 
 	public void errorLine(int lineError, File file) {

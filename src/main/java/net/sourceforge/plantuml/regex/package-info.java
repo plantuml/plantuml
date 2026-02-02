@@ -45,9 +45,8 @@
  * <p>
  * Before a {@link RegexComposed} can be matched, it must first have each
  * of its constituent parts concatenated into one large regex string using
- * {@link RegexComposed#getFullSlow}. This string is then transformed by
- * {@link MyPattern#transform} to replace some macros (e.g. %s
- * for whitespace, %q for single quote) and compiled using
- * {@link java.util.regex.Pattern#compile}.
+ * {@link RegexComposed#getPattern}. This string is then transformed
+ * to replace some macros (e.g. %s for whitespace, %q for single quote)
+ * and compiled using {@link java.util.regex.Pattern#compile}.
  */
 package net.sourceforge.plantuml.regex;

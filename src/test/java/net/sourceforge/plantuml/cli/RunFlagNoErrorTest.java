@@ -18,7 +18,7 @@ class RunFlagNoErrorTest extends AbstractCliTest {
 
 		assertLs("[error.txt, ok.txt]", tempDir);
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-v", "-noerror", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 		assertTrue(err.capturedString().contains("Error line 2 in file"));

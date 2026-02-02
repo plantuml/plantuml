@@ -19,7 +19,7 @@ class RunFlagStdrptTest extends AbstractCliTest {
 	void test(StdErr err) throws Exception {
 		Path f = syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-stdrpt", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 
@@ -35,7 +35,7 @@ class RunFlagStdrptTest extends AbstractCliTest {
 	void test1(StdErr err) throws Exception {
 		Path f = syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-stdrpt:1", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 
@@ -52,7 +52,7 @@ class RunFlagStdrptTest extends AbstractCliTest {
 	void test2(StdErr err) throws Exception {
 		syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-stdrpt:2", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 

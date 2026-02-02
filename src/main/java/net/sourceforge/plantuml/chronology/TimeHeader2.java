@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.chronology;
 
 import java.time.LocalDate;
 
@@ -57,14 +57,14 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
-public abstract class TimeHeader {
+public abstract class TimeHeader2 {
 	// ::remove folder when __HAXE__
 
 	private final TimeScale timeScale;
 
 	protected final TimeHeaderParameters thParam;
 
-	public TimeHeader(TimeHeaderParameters thParam, TimeScale timeScale) {
+	public TimeHeader2(TimeHeaderParameters thParam, TimeScale timeScale) {
 		this.thParam = thParam;
 		this.timeScale = timeScale;
 	}

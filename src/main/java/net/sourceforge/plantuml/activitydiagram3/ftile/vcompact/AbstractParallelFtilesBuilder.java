@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -67,6 +68,7 @@ public abstract class AbstractParallelFtilesBuilder {
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
 	protected final List<Ftile> list99 = new ArrayList<>();
+	protected final Colors colors;
 
 	public StyleSignatureBasic getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
@@ -76,10 +78,12 @@ public abstract class AbstractParallelFtilesBuilder {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
-	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {
+	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all,
+			Colors colors) {
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
 		this.list99.addAll(decorateAllTiles(all));
+		this.colors = colors;
 	}
 
 	private List<Ftile> decorateAllTiles(List<Ftile> all) {
@@ -120,7 +124,6 @@ public abstract class AbstractParallelFtilesBuilder {
 		}
 		return result;
 	}
-
 
 	private Ftile computeNewFtile(Ftile ftile, double maxHeight, double ymargin1, double ymargin2) {
 		final double spaceArroundBlackBar = 20;

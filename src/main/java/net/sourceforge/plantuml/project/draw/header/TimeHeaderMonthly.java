@@ -33,24 +33,25 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.draw.header;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.YearMonthUtils;
-import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderMonthly extends TimeHeaderCalendar {
+
+	public TimeHeaderMonthly(TimeHeaderContext ctx) {
+		super(ctx, ctx.monthly());
+	}
 
 	private double getH1(StringBounder stringBounder) {
 		final double h = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble() + 2;
@@ -77,15 +78,6 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
-	}
-
-	private final Map<TimePoint, String> nameDays;
-
-	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Map<TimePoint, String> nameDays,
-			LocalDate printStart) {
-		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder),
-				TimePoint.ofStartOfDay(thParam.getMinDay()), thParam.getScale(), printStart));
-		this.nameDays = nameDays;
 	}
 
 	@Override
@@ -184,7 +176,7 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private double getHeaderNameDayHeight() {
-		if (nameDays.size() > 0) {
+		if (ctx.getNameDays().size() > 0) {
 			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
 			return h;
 		}
@@ -193,11 +185,11 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void printNamedDays(final UGraphic ug) {
-		if (nameDays.size() > 0) {
+		if (ctx.getNameDays().size() > 0) {
 			String last = null;
 			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = day.plusDays(1)) {
 				final TimePoint wink = TimePoint.ofStartOfDay(day);
-				final String name = nameDays.get(wink);
+				final String name = ctx.getNameDays().get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getPosition(wink);
 					final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);

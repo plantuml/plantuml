@@ -70,9 +70,8 @@ import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskGroup;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
-import net.sourceforge.plantuml.project.draw.TimeHeader;
+import net.sourceforge.plantuml.project.draw.header.TimeHeader;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealOrigin;
@@ -189,7 +188,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		initMinMax();
 
-		final TimeHeader timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,
+		final TimeHeader2 timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,
 				this.timeScale);
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
 				stringBounder);

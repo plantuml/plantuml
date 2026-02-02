@@ -109,9 +109,9 @@ public final class QuantUtils {
 	 * return (a << 24) | (r << 16) | (g << 8) | b;
 	 * }</pre>
 	 *
-	 * <h4>Perceptual & compression rationale</h4>
+	 * <h4>Perceptual and compression rationale</h4>
 	 * <ul>
-	 *   <li><b>Visually negligible:</b> Flipping at most one LSB per channel changes the value by <=1/255
+	 *   <li><b>Visually negligible:</b> Flipping at most one LSB per channel changes the value by &lt;=1/255
 	 *       (~0.4%) per component. Under normal viewing conditions and typical display gamma, such changes
 	 *       are below the just-noticeable difference for flat regions, lines, and text—effectively invisible
 	 *       to the naked eye. Pure black ({@code 0x00}) and pure white ({@code 0xFF}) remain unchanged.</li>
@@ -153,7 +153,6 @@ public final class QuantUtils {
 	 * @return the pixel with each channel’s LSB replaced by its MSB.
 	 * @implNote Packed equivalent of the per-channel form:
 	 *           {@code (argb & 0xFEFEFEFE) | ((argb >>> 7) & 0x01010101)}.
-	 * @see #smartCompress(int)
 	 */
 	public static int compressPackedARGB(int argb) {
 	    return (argb & 0xFEFEFEFE) | ((argb >>> 7) & 0x01010101);
