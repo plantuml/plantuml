@@ -81,7 +81,7 @@ public class GanttPreparedModel {
 	public double getFactorScale() {
 		return printScale.getDefaultScale() * factorScale;
 	}
-	
+
 	public Value getFontSizeDay() {
 		return getStyleDay().value(PName.FontSize);
 	}
@@ -98,11 +98,10 @@ public class GanttPreparedModel {
 		return getStyleTOTO3(SName.timeline, SName.day);
 	}
 
-
 	// TimeScale Builder
 
 	final public double getCellWidth() {
-		final double w = getStyleTOTO3(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		final double w = getStyleDay().value(PName.FontSize).asDouble();
 		return w * 1.6;
 	}
 
