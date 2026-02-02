@@ -72,57 +72,8 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 
 	public GanttDiagramMainBlock(GanttDiagram diagram, TimeHeader timeHeader, StringBounder stringBounder) {
 		this.diagram = diagram;
-		this.timeHeader = timeHeader;
-		
-		initTaskAndResourceDraws(diagram, timeHeader, stringBounder);
-		
+		this.timeHeader = timeHeader;		
 		this.layout = new GanttLayout(stringBounder, diagram, timeHeader);
-	}
-
-	public static void initTaskAndResourceDraws(GanttDiagram diagram, TimeHeader timeHeader, StringBounder stringBounder) {
-		final TimeScale timeScale = timeHeader.getTimeScale();
-		final double fullHeaderHeight = timeHeader.getFullHeaderHeight(stringBounder);
-		Real y = diagram.origin.addFixed(fullHeaderHeight);
-		for (Task task : diagram.tasks.values()) {
-			final TaskDraw draw;
-			if (task instanceof TaskSeparator) {
-				final TaskSeparator taskSeparator = (TaskSeparator) task;
-				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, diagram.model.minDay, diagram.model.maxDay,
-						task.getStyleBuilder(), diagram.getSkinParam());
-			} else if (task instanceof TaskGroup) {
-				final TaskGroup taskGroup = (TaskGroup) task;
-				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(), diagram.getStartForDrawing(taskGroup),
-						diagram.getEndForDrawing(taskGroup), task, diagram, task.getStyleBuilder(), diagram.getSkinParam());
-			} else {
-				final TaskImpl taskImpl = (TaskImpl) task;
-				final String display = diagram.hideResourceName ? taskImpl.getCode().getDisplay() : taskImpl.getPrettyDisplay();
-				if (taskImpl.isDiamond())
-					draw = new TaskDrawDiamond(timeScale, y, display, diagram.getStartForDrawing(taskImpl), taskImpl, diagram,
-							task.getStyleBuilder(), diagram.getSkinParam());
-				else
-					draw = diagram.createTaskDrawRegular(timeScale, y, taskImpl, display);
-
-				draw.setColorsAndCompletion(taskImpl.getColors(), taskImpl.getCompletion(), taskImpl.getUrl(),
-						taskImpl.getNote(), taskImpl.getNoteStereotype());
-			}
-			if (task.getRow() == null)
-				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
-
-			diagram.model.draws.put(task, draw);
-		}
-		diagram.origin.compileNow();
-		diagram.magicPush(stringBounder);
-		double yy = diagram.lastY(stringBounder);
-		if (yy == 0) {
-			yy = fullHeaderHeight;
-		} else if (diagram.hideResourceFoobox == false)
-			for (Resource res : diagram.resources.values()) {
-				final ResourceDraw draw = diagram.buildResourceDraw(diagram, res, timeScale, yy);
-				res.setTaskDraw(draw);
-				yy += draw.getHeight(stringBounder);
-			}
-
-		diagram.model.totalHeightWithoutFooter = yy;
 	}
 
 	@Override
