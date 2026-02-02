@@ -45,10 +45,10 @@ import java.time.ZoneOffset;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
-import net.sourceforge.plantuml.project.Value;
+import net.sourceforge.plantuml.project.PValue;
 import net.sourceforge.plantuml.project.core.PrintScale;
 
-public class TimePoint implements Comparable<TimePoint>, Value {
+public class TimePoint implements Comparable<TimePoint>, PValue {
 
 	static final public long MILLISECONDS_PER_DAY = 1000L * 3600L * 24;
 

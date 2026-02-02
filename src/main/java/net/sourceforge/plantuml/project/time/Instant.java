@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.project.time;
 
-import net.sourceforge.plantuml.project.Value;
+import net.sourceforge.plantuml.project.PValue;
 
-public class Instant implements Comparable<Instant>, Value {
+public class Instant implements Comparable<Instant>, PValue {
     // ::remove folder when __HAXE__
 
 	private final long ms;
