@@ -75,13 +75,13 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 		this.timeHeader = timeHeader;
 		
 		final double fullHeaderHeight = timeHeader.getFullHeaderHeight(stringBounder);
-		initTaskAndResourceDraws(timeHeader.getTimeScale(), fullHeaderHeight, stringBounder);
+		initTaskAndResourceDraws(diagram, timeHeader.getTimeScale(), fullHeaderHeight, stringBounder);
 
 		
 		this.layout = new GanttLayout(stringBounder, diagram, timeHeader);
 	}
 
-	private void initTaskAndResourceDraws(TimeScale timeScale, double headerHeight, StringBounder stringBounder) {
+	public static void initTaskAndResourceDraws(GanttDiagram diagram, TimeScale timeScale, double headerHeight, StringBounder stringBounder) {
 		Real y = diagram.origin.addFixed(headerHeight);
 		for (Task task : diagram.tasks.values()) {
 			final TaskDraw draw;
@@ -115,14 +115,14 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 		double yy = diagram.lastY(stringBounder);
 		if (yy == 0) {
 			yy = headerHeight;
-		} else if (this.diagram.hideResourceFoobox == false)
+		} else if (diagram.hideResourceFoobox == false)
 			for (Resource res : diagram.resources.values()) {
 				final ResourceDraw draw = diagram.buildResourceDraw(diagram, res, timeScale, yy);
 				res.setTaskDraw(draw);
 				yy += draw.getHeight(stringBounder);
 			}
 
-		this.diagram.model.totalHeightWithoutFooter = yy;
+		diagram.model.totalHeightWithoutFooter = yy;
 	}
 
 	@Override
