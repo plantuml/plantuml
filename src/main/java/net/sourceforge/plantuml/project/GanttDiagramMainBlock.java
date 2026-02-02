@@ -74,15 +74,15 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 		this.diagram = diagram;
 		this.timeHeader = timeHeader;
 		
-		final double fullHeaderHeight = timeHeader.getFullHeaderHeight(stringBounder);
-		initTaskAndResourceDraws(diagram, timeHeader.getTimeScale(), fullHeaderHeight, stringBounder);
-
+		initTaskAndResourceDraws(diagram, timeHeader, stringBounder);
 		
 		this.layout = new GanttLayout(stringBounder, diagram, timeHeader);
 	}
 
-	public static void initTaskAndResourceDraws(GanttDiagram diagram, TimeScale timeScale, double headerHeight, StringBounder stringBounder) {
-		Real y = diagram.origin.addFixed(headerHeight);
+	public static void initTaskAndResourceDraws(GanttDiagram diagram, TimeHeader timeHeader, StringBounder stringBounder) {
+		final TimeScale timeScale = timeHeader.getTimeScale();
+		final double fullHeaderHeight = timeHeader.getFullHeaderHeight(stringBounder);
+		Real y = diagram.origin.addFixed(fullHeaderHeight);
 		for (Task task : diagram.tasks.values()) {
 			final TaskDraw draw;
 			if (task instanceof TaskSeparator) {
@@ -114,7 +114,7 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 		diagram.magicPush(stringBounder);
 		double yy = diagram.lastY(stringBounder);
 		if (yy == 0) {
-			yy = headerHeight;
+			yy = fullHeaderHeight;
 		} else if (diagram.hideResourceFoobox == false)
 			for (Resource res : diagram.resources.values()) {
 				final ResourceDraw draw = diagram.buildResourceDraw(diagram, res, timeScale, yy);
