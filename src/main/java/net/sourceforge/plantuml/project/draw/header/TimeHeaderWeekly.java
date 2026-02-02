@@ -55,12 +55,12 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = getFontSizeMonth().asDouble() + 4;
+		final double h = model.getFontSizeMonth().asDouble() + 4;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = getFontSizeDay().asDouble() + 1;
+		final double h = model.getFontSizeDay().asDouble() + 1;
 		return getH1(stringBounder) + h;
 	}
 
@@ -71,13 +71,13 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = getFontSizeMonth().asDouble() + 4;
+		final double h = model.getFontSizeMonth().asDouble() + 4;
 		return h;
 	}
 
 	private double getHeaderNameDayHeight() {
 		if (model.nameDays.size() > 0) {
-			final double h = getFontSizeDay().asDouble() + 6;
+			final double h = model.getFontSizeDay().asDouble() + 6;
 			return h;
 		}
 

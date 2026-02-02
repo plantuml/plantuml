@@ -66,13 +66,13 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h = getFontSizeDay().asDouble();
+		final double h = model.getFontSizeDay().asDouble();
 		return h + 6;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = getFontSizeDay().asDouble();
+		final double h = model.getFontSizeDay().asDouble();
 		return h + 6;
 	}
 
@@ -153,7 +153,7 @@ public class TimeHeaderSimple extends TimeHeader {
 				value = wink.getAbsoluteDayNum() / 7 + 1;
 			else
 				value = wink.getAbsoluteDayNum() + 1;
-			final UFont font = getStyleDay().getUFont();
+			final UFont font = model.getStyleDay().getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
 			final TextBlock num = Display.getWithNewlines(getPragma(), "" + value).create(fontConfiguration,
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());

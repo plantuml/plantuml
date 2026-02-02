@@ -56,17 +56,17 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private double getH1(StringBounder stringBounder) {
-		final double h = getFontSizeMonth().asDouble() + 2;
+		final double h = model.getFontSizeMonth().asDouble() + 2;
 		return h;
 	}
 
 	private double getH2(StringBounder stringBounder) {
-		final double h = getFontSizeDay().asDouble() + 2;
+		final double h = model.getFontSizeDay().asDouble() + 2;
 		return getH1(stringBounder) + h;
 	}
 
 	private double getH3(StringBounder stringBounder) {
-		final double h = getFontSizeDay().asDouble() + 3;
+		final double h = model.getFontSizeDay().asDouble() + 3;
 		return getH2(stringBounder) + h;
 	}
 
@@ -77,15 +77,15 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = getFontSizeDay().asDouble();
-		final double h2 = getFontSizeDay().asDouble();
-		final double h3 = getFontSizeMonth().asDouble();
+		final double h1 = model.getFontSizeDay().asDouble();
+		final double h2 = model.getFontSizeDay().asDouble();
+		final double h3 = model.getFontSizeMonth().asDouble();
 		return h1 + h2 + h3 + 8;
 	}
 
 	private double getHeaderNameDayHeight() {
 		if (model.nameDays.size() > 0) {
-			final double h = getFontSizeDay().asDouble() + 6;
+			final double h = model.getFontSizeDay().asDouble() + 6;
 			return h;
 		}
 
@@ -132,7 +132,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double h = getFontSizeDay().asDouble() + 2;
+		final double h = model.getFontSizeDay().asDouble() + 2;
 		drawTextsDayOfWeek(ug);
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(h + 2)));
 		drawMonths(ug.apply(UTranslate.dy(2 * h + 3)));

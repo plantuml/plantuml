@@ -34,6 +34,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.Value;
 
 public class GanttPreparedModel {
 
@@ -80,6 +81,23 @@ public class GanttPreparedModel {
 	public double getFactorScale() {
 		return printScale.getDefaultScale() * factorScale;
 	}
+	
+	public Value getFontSizeDay() {
+		return getStyleDay().value(PName.FontSize);
+	}
+
+	public Value getFontSizeMonth() {
+		return getStyleTOTO3(SName.timeline, SName.month).value(PName.FontSize);
+	}
+
+	public Value getFontSizeYear() {
+		return getStyleTOTO3(SName.timeline, SName.year).value(PName.FontSize);
+	}
+
+	public Style getStyleDay() {
+		return getStyleTOTO3(SName.timeline, SName.day);
+	}
+
 
 	// TimeScale Builder
 

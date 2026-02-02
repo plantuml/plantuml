@@ -209,20 +209,4 @@ public abstract class TimeHeader {
 		}
 	}
 
-	public Value getFontSizeDay() {
-		return getStyleDay().value(PName.FontSize);
-	}
-
-	public Value getFontSizeMonth() {
-		return model.getStyleTOTO3(SName.timeline, SName.month).value(PName.FontSize);
-	}
-
-	public Value getFontSizeYear() {
-		return model.getStyleTOTO3(SName.timeline, SName.year).value(PName.FontSize);
-	}
-
-	public Style getStyleDay() {
-		return model.getStyleTOTO3(SName.timeline, SName.day);
-	}
-
 }
