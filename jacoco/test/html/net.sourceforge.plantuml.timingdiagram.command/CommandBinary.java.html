@@ -62,30 +62,34 @@ public class CommandBinary extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="fc" id="L62">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(&quot;binary&quot;), //
 <span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
-				new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L66">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-				new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOptional( //
+						new RegexConcat( //
+							new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+<span class="fc" id="L68">							StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+							new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L70">							RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L70">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
-<span class="fc" id="L71">				RegexLeaf.end());</span>
+<span class="fc" id="L72">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+<span class="fc" id="L73">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L77">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
-<span class="nc" id="L78">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L79">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc" id="L79">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
+<span class="nc" id="L80">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L81">		String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (full == null)</span>
+<span class="nc" id="L83">			full = &quot;&quot;;</span>
 
-<span class="nc" id="L81">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
-<span class="nc" id="L83">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		else if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
-<span class="nc" id="L85">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
+<span class="nc" id="L85">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
+<span class="nc" id="L87">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		else if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
+<span class="nc" id="L89">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
 
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		diagram.createPlayerBinary(code, full, compact != null, stereotype);</span>
-<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		diagram.createPlayerBinary(code, full, compact != null, stereotype);</span>
+<span class="nc" id="L92">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -164,7 +164,7 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;UmlDiagram&gt
 <span class="fc" id="L164">		EntityGender gender = null;</span>
 <span class="fc" id="L165">		String arg1 = arg.get(&quot;GENDER&quot;, 0);</span>
 <span class="fc bfc" id="L166" title="All 2 branches covered.">		if (arg1 == null)</span>
-<span class="nc" id="L167">			gender = EntityGenderUtils.all();</span>
+<span class="fc" id="L167">			gender = EntityGenderUtils.all();</span>
 <span class="pc bpc" id="L168" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;class&quot;))</span>
 <span class="nc" id="L169">			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);</span>
 <span class="pc bpc" id="L170" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;object&quot;))</span>
