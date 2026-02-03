@@ -93,19 +93,19 @@ public abstract class TimeHeader {
 	}
 
 	protected final HColor closedBackgroundColor() {
-		return model.getStyleTOTO4(SName.closed).value(PName.BackGroundColor).asColor(model.colorSet);
+		return model.closedBackgroundColor();
 	}
 
 	protected final HColor closedFontColor() {
-		return model.getStyleTOTO4(SName.closed).value(PName.FontColor).asColor(model.colorSet);
+		return model.closedFontColor();
 	}
 
 	protected final HColor openFontColor() {
-		return model.getStyleTOTO4(SName.timeline).value(PName.FontColor).asColor(model.colorSet);
+		return model.openFontColor();
 	}
 
 	protected final HColor getLineColor() {
-		return model.getStyleTOTO4(SName.timeline).value(PName.LineColor).asColor(model.colorSet);
+		return model.getLineColor();
 	}
 
 	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
@@ -142,7 +142,7 @@ public abstract class TimeHeader {
 	}
 
 	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
-		final UFont font = model.getStyleTOTO3(SName.timeline, param).getUFont();
+		final UFont font = model.getStyleUFont(param);
 		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);
 		return Display.getWithNewlines(getPragma(), text).create(fontConfiguration, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.GanttPreparedModel;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -59,9 +60,9 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	private final double y;
 	private final TimePoint min;
 	private final TimePoint maxTimePointPrintedEndOfDay;
-	private final GanttDiagram gantt;
+	private final GanttPreparedModel gantt;
 
-	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, TimePoint min,
+	public ResourceDrawNumbers(GanttPreparedModel gantt, Resource res, TimeScale timeScale, double y, TimePoint min,
 			TimePoint maxTimePointPrintedEndOfDay) {
 		this.res = res;
 		this.timeScale = timeScale;

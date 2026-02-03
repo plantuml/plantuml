@@ -53,13 +53,13 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h1 = model.getFontSizeYear().asDouble();
+		final double h1 = model.getFontSizeYear();
 		return h1 + 3;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h1 = model.getFontSizeYear().asDouble();
+		final double h1 = model.getFontSizeYear();
 		return h1 + 3;
 	}
 
@@ -86,7 +86,7 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	}
 
 	private void drawYears(final UGraphic ug) {
-		final double h1 = model.getFontSizeYear().asDouble();
+		final double h1 = model.getFontSizeYear();
 
 		YearMonth last = null;
 		double lastChange = -1;

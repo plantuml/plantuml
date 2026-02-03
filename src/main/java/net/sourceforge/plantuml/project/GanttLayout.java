@@ -60,20 +60,20 @@ public final class GanttLayout {
 	final double headerHeight;
 	final double footerHeight;
 
-	public GanttLayout(StringBounder stringBounder, GanttDiagram diagram, TimeHeader timeHeader) {
+	public GanttLayout(StringBounder stringBounder, GanttPreparedModel model, TimeHeader timeHeader) {
 
-		initTaskAndResourceDraws(stringBounder, diagram, timeHeader);
+		model.initTaskAndResourceDraws(stringBounder, timeHeader);
 
 		final double computedTitlesWidth;
-		if (diagram.labelStrategy.titleInside()) {
+		if (model.labelStrategy.titleInside()) {
 			computedTitlesWidth = 0;
 		} else {
 			double w = 0;
-			for (Task task : diagram.tasks.values()) {
-				if (diagram.isHidden(task))
+			for (Task task : model.tasks.values()) {
+				if (model.isHidden(task))
 					continue;
 
-				final TaskDraw draw = diagram.model.draws.get(task);
+				final TaskDraw draw = model.draws.get(task);
 				if (draw == null)
 					continue;
 
@@ -83,58 +83,10 @@ public final class GanttLayout {
 		}
 
 		this.titlesWidth = computedTitlesWidth;
-		this.barsWidth = getBarsColumnWidth(diagram, timeHeader);
+		this.barsWidth = getBarsColumnWidth(model, timeHeader);
 		this.headerHeight = timeHeader.getTimeHeaderHeight(stringBounder);
-		this.footerHeight = diagram.showFootbox ? timeHeader.getTimeFooterHeight(stringBounder) : 0;
-		this.totalHeight = diagram.model.totalHeightWithoutFooter + this.footerHeight;
-	}
-
-	private void initTaskAndResourceDraws(StringBounder stringBounder, GanttDiagram diagram, TimeHeader timeHeader) {
-		final TimeScale timeScale = timeHeader.getTimeScale();
-		final double fullHeaderHeight = timeHeader.getFullHeaderHeight(stringBounder);
-		Real y = diagram.origin.addFixed(fullHeaderHeight);
-		for (Task task : diagram.tasks.values()) {
-			final TaskDraw draw;
-			if (task instanceof TaskSeparator) {
-				final TaskSeparator taskSeparator = (TaskSeparator) task;
-				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, diagram.model.minDay,
-						diagram.model.maxDay, task.getStyleBuilder(), diagram.getSkinParam());
-			} else if (task instanceof TaskGroup) {
-				final TaskGroup taskGroup = (TaskGroup) task;
-				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(),
-						diagram.getStartForDrawing(taskGroup), diagram.getEndForDrawing(taskGroup), task, diagram,
-						task.getStyleBuilder(), diagram.getSkinParam());
-			} else {
-				final TaskImpl taskImpl = (TaskImpl) task;
-				final String display = diagram.hideResourceName ? taskImpl.getCode().getDisplay()
-						: taskImpl.getPrettyDisplay();
-				if (taskImpl.isDiamond())
-					draw = new TaskDrawDiamond(timeScale, y, display, diagram.getStartForDrawing(taskImpl), taskImpl,
-							diagram, task.getStyleBuilder(), diagram.getSkinParam());
-				else
-					draw = diagram.createTaskDrawRegular(timeScale, y, taskImpl, display);
-
-				draw.setColorsAndCompletion(taskImpl.getColors(), taskImpl.getCompletion(), taskImpl.getUrl(),
-						taskImpl.getNote(), taskImpl.getNoteStereotype());
-			}
-			if (task.getRow() == null)
-				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
-
-			diagram.model.draws.put(task, draw);
-		}
-		diagram.origin.compileNow();
-		diagram.magicPush(stringBounder);
-		double yy = diagram.lastY(stringBounder);
-		if (yy == 0) {
-			yy = fullHeaderHeight;
-		} else if (diagram.hideResourceFoobox == false)
-			for (Resource res : diagram.resources.values()) {
-				final ResourceDraw draw = diagram.buildResourceDraw(diagram, res, timeScale, yy);
-				res.setTaskDraw(draw);
-				yy += draw.getHeight(stringBounder);
-			}
-
-		diagram.model.totalHeightWithoutFooter = yy;
+		this.footerHeight = model.showFootbox ? timeHeader.getTimeFooterHeight(stringBounder) : 0;
+		this.totalHeight = model.totalHeightWithoutFooter + this.footerHeight;
 	}
 
 	public XDimension2D calculateDimension() {
@@ -142,10 +94,9 @@ public final class GanttLayout {
 		return new XDimension2D(width, totalHeight);
 	}
 
-	private double getBarsColumnWidth(GanttDiagram diagram, TimeHeader timeHeader) {
-		final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(diagram.model.minDay));
-		final double xmax = timeHeader.getTimeScale()
-				.getPosition(TimePoint.ofEndOfDayMinusOneSecond(diagram.model.maxDay));
+	private double getBarsColumnWidth(GanttPreparedModel model, TimeHeader timeHeader) {
+		final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(model.minDay));
+		final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(model.maxDay));
 		return xmax - xmin;
 	}
 }

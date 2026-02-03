@@ -66,13 +66,13 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h = model.getFontSizeDay().asDouble();
+		final double h = model.getFontSizeDay();
 		return h + 6;
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = model.getFontSizeDay().asDouble();
+		final double h = model.getFontSizeDay();
 		return h + 6;
 	}
 
