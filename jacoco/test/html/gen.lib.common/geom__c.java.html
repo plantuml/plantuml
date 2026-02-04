@@ -148,13 +148,13 @@ private static ST_pointf ccwrotatepf_w_(final ST_pointf p, int ccwrot) {
 <span class="fc" id="L148">ENTERING(&quot;6np74e9pfmv8uek8irqru2tma&quot;,&quot;ccwrotatepf&quot;);</span>
 try {
 <span class="fc" id="L150">    double x = p.x, y = p.y;</span>
-<span class="pc bpc" id="L151" title="3 of 5 branches missed.">    switch (ccwrot) {</span>
+<span class="pc bpc" id="L151" title="4 of 5 branches missed.">    switch (ccwrot) {</span>
     case 0:
 <span class="fc" id="L153">	break;</span>
     case 90:
-<span class="fc" id="L155">	p.x = -y;</span>
-<span class="fc" id="L156">	p.y = x;</span>
-<span class="fc" id="L157">	break;</span>
+<span class="nc" id="L155">	p.x = -y;</span>
+<span class="nc" id="L156">	p.y = x;</span>
+<span class="nc" id="L157">	break;</span>
     case 180:
 <span class="nc" id="L159">	p.x = x;</span>
 <span class="nc" id="L160">	p.y = -y;</span>

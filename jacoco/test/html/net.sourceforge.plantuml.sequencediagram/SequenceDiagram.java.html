@@ -589,12 +589,12 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L589">	private final Set&lt;EntityPortion&gt; hiddenPortions = EnumSet.&lt;EntityPortion&gt;noneOf(EntityPortion.class);</span>
 
 	public void hideOrShow(Set&lt;EntityPortion&gt; portions, boolean show) {
-<span class="pc bpc" id="L592" title="1 of 2 branches missed.">		if (show)</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">		if (show)</span>
 <span class="nc" id="L593">			hiddenPortions.removeAll(portions);</span>
 		else
-<span class="fc" id="L595">			hiddenPortions.addAll(portions);</span>
+<span class="nc" id="L595">			hiddenPortions.addAll(portions);</span>
 
-<span class="fc" id="L597">	}</span>
+<span class="nc" id="L597">	}</span>
 
 	public Display manageVariable(Display labels) {
 <span class="fc" id="L600">		return labels.replace(&quot;%autonumber%&quot;, autoNumber.getCurrentMessageNumber(false));</span>

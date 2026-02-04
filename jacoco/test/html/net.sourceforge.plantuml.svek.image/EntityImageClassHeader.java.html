@@ -116,7 +116,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 		final TextBlock stereo;
 <span class="fc" id="L117">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
 <span class="pc bpc" id="L118" title="1 of 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">				|| stereotypeLabels.isEmpty())</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				|| stereotypeLabels.isEmpty())</span>
 <span class="fc" id="L120">			stereo = null;</span>
 		else
 <span class="fc" id="L122">			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(</span>
@@ -169,14 +169,14 @@ import net.sourceforge.plantuml.text.Guillemet;
 
 <span class="fc" id="L170">		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="fc bfc" id="L172" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
 <span class="fc" id="L173">			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,</span>
 <span class="pc bpc" id="L174" title="1 of 2 branches missed.">					stereotype.getHtmlColor() == null ? spotBackColor : stereotype.getHtmlColor(), spotBorder,</span>
 					fontColor);
 
 <span class="fc" id="L177">		char circledChar = 0;</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L179">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L179">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
 
 <span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (circledChar == 0)</span>
 <span class="fc" id="L182">			circledChar = getCircledChar(leafType);</span>

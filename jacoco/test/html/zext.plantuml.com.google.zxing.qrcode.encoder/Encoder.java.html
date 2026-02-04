@@ -281,7 +281,7 @@ public final class Encoder {
     // If we have more space, we'll fill the space with padding patterns defined in 8.4.9 (p.24).
 <span class="fc" id="L282">    int numPaddingBytes = numDataBytes - bits.getSizeInBytes();</span>
 <span class="fc bfc" id="L283" title="All 2 branches covered.">    for (int i = 0; i &lt; numPaddingBytes; ++i) {</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">      bits.appendBits(((i &amp; 0x01) == 0) ? 0xEC : 0x11, 8);</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">      bits.appendBits(((i &amp; 0x01) == 0) ? 0xEC : 0x11, 8);</span>
     }
 <span class="pc bpc" id="L286" title="1 of 2 branches missed.">    if (bits.getSize() != capacity) {</span>
 <span class="nc" id="L287">      throw new WriterException(&quot;Bits size does not equal capacity&quot;);</span>
