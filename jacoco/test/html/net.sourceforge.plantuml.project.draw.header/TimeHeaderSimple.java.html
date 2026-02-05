@@ -49,170 +49,159 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.core.PrintScale;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderSimple extends TimeHeader {
+class TimeHeaderSimple extends TimeHeader {
 
-	public TimeHeaderSimple(StringBounder stringBounder, TimeHeaderContext ctx) {
-<span class="nc" id="L59">		super(ctx, ctx.simple());</span>
-<span class="nc" id="L60">	}</span>
+	public TimeHeaderSimple(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+<span class="nc" id="L65">		super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle);</span>
+<span class="nc" id="L66">	}</span>
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L64">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
+<span class="nc" id="L70">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L69">		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L70">		return h + 6;</span>
+<span class="nc" id="L75">		final double h = timelineStyle.getFontSizeDay();</span>
+<span class="nc" id="L76">		return h + 6;</span>
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-<span class="nc" id="L75">		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L76">		return h + 6;</span>
+<span class="nc" id="L81">		final double h = timelineStyle.getFontSizeDay();</span>
+<span class="nc" id="L82">		return h + 6;</span>
 	}
 
 	private double getHeaderNameDayHeight() {
-<span class="nc" id="L80">		return 0;</span>
+<span class="nc" id="L86">		return 0;</span>
 	}
 
-<span class="nc" id="L83">	private int delta = 0;</span>
+<span class="nc" id="L89">	private int delta = 0;</span>
 
 	private TimePoint increment(TimePoint day) {
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (delta == 0)</span>
-<span class="nc" id="L87">			initDelta(day);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (delta == 0)</span>
+<span class="nc" id="L93">			initDelta(day);</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (int i = 0; i &lt; delta; i++)</span>
-<span class="nc" id="L90">			day = day.increment(ctx.getPrintScale());</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (int i = 0; i &lt; delta; i++)</span>
+<span class="nc" id="L96">			day = day.increment(scaleConfig.getPrintScale());</span>
 
-<span class="nc" id="L92">		return day;</span>
+<span class="nc" id="L98">		return day;</span>
 	}
 
 	private LocalDate increment(LocalDate day) {
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (delta == 0)</span>
-<span class="nc" id="L97">			initDelta(day);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (delta == 0)</span>
+<span class="nc" id="L103">			initDelta(day);</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = 0; i &lt; delta; i++)</span>
-<span class="nc" id="L100">			day = increment(day, ctx.getPrintScale());</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (int i = 0; i &lt; delta; i++)</span>
+<span class="nc" id="L106">			day = increment(day, scaleConfig.getPrintScale());</span>
 
-<span class="nc" id="L102">		return day;</span>
+<span class="nc" id="L108">		return day;</span>
 	}
 
 	private LocalDate increment(LocalDate day, PrintScale printScale) {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY)</span>
-<span class="nc" id="L107">			return day.plusDays(7);</span>
-<span class="nc" id="L108">		return day.plusDays(1);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY)</span>
+<span class="nc" id="L113">			return day.plusDays(7);</span>
+<span class="nc" id="L114">		return day.plusDays(1);</span>
 	}
 
 	private void initDelta(LocalDate day) {
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (ctx.getPrintScale() == PrintScale.DAILY) {</span>
-<span class="nc" id="L113">			final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(day));</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (scaleConfig.getPrintScale() == PrintScale.DAILY) {</span>
+<span class="nc" id="L119">			final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(day));</span>
 			do {
-<span class="nc" id="L115">				delta++;</span>
-<span class="nc" id="L116">				day = day.plusDays(1);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">			} while (getTimeScale().getPosition(TimePoint.ofStartOfDay(day)) &lt; x1 + 16);</span>
-<span class="nc" id="L118">		} else {</span>
-<span class="nc" id="L119">			delta = 1;</span>
+<span class="nc" id="L121">				delta++;</span>
+<span class="nc" id="L122">				day = day.plusDays(1);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			} while (getTimeScale().getPosition(TimePoint.ofStartOfDay(day)) &lt; x1 + 16);</span>
+<span class="nc" id="L124">		} else {</span>
+<span class="nc" id="L125">			delta = 1;</span>
 		}
 
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L128">	}</span>
 
 	private void initDelta(TimePoint day) {
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (ctx.getPrintScale() == PrintScale.DAILY) {</span>
-<span class="nc" id="L126">			final double x1 = getTimeScale().getPosition(day);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (scaleConfig.getPrintScale() == PrintScale.DAILY) {</span>
+<span class="nc" id="L132">			final double x1 = getTimeScale().getPosition(day);</span>
 			do {
-<span class="nc" id="L128">				delta++;</span>
-<span class="nc" id="L129">				day = day.increment();</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			} while (getTimeScale().getPosition(day) &lt; x1 + 16);</span>
-<span class="nc" id="L131">		} else {</span>
-<span class="nc" id="L132">			delta = 1;</span>
+<span class="nc" id="L134">				delta++;</span>
+<span class="nc" id="L135">				day = day.increment();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			} while (getTimeScale().getPosition(day) &lt; x1 + 16);</span>
+<span class="nc" id="L137">		} else {</span>
+<span class="nc" id="L138">			delta = 1;</span>
 		}
 
-<span class="nc" id="L135">	}</span>
+<span class="nc" id="L141">	}</span>
 
 	private void drawSmallVlinesDay(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="nc" id="L138">		ug = ug.apply(getLineColor());</span>
-<span class="nc" id="L139">		ug = ug.apply(UTranslate.dy(6));</span>
-<span class="nc" id="L140">		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) &lt;= 0; day = increment(day)) {</span>
-<span class="nc" id="L142">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L143">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L144">			ug.apply(UTranslate.dx(x1)).draw(vbar);</span>
+<span class="nc" id="L144">		ug = ug.apply(getLineColor());</span>
+<span class="nc" id="L145">		ug = ug.apply(UTranslate.dy(6));</span>
+<span class="nc" id="L146">		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) &lt;= 0; day = increment(day)) {</span>
+<span class="nc" id="L148">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L149">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L150">			ug.apply(UTranslate.dx(x1)).draw(vbar);</span>
 		}
-<span class="nc" id="L146">	}</span>
+<span class="nc" id="L152">	}</span>
 
 	private void drawSimpleDayCounter(UGraphic ug) {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) &lt;= 0; day = increment(day)) {</span>
-<span class="nc" id="L150">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) &lt;= 0; day = increment(day)) {</span>
+<span class="nc" id="L156">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
 			final int value;
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (ctx.getPrintScale() == PrintScale.WEEKLY)</span>
-<span class="nc" id="L153">				value = wink.getAbsoluteDayNum() / 7 + 1;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (scaleConfig.getPrintScale() == PrintScale.WEEKLY)</span>
+<span class="nc" id="L159">				value = wink.getAbsoluteDayNum() / 7 + 1;</span>
 			else
-<span class="nc" id="L155">				value = wink.getAbsoluteDayNum() + 1;</span>
-<span class="nc" id="L156">			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();</span>
-<span class="nc" id="L157">			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());</span>
-<span class="nc" id="L158">			final TextBlock num = Display.getWithNewlines(getPragma(), &quot;&quot; + value).create(fontConfiguration,</span>
+<span class="nc" id="L161">				value = wink.getAbsoluteDayNum() + 1;</span>
+<span class="nc" id="L162">			final UFont font = timelineStyle.getFont(SName.day);</span>
+<span class="nc" id="L163">			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());</span>
+<span class="nc" id="L164">			final TextBlock num = Display.getWithNewlines(getPragma(), &quot;&quot; + value).create(fontConfiguration,</span>
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-<span class="nc" id="L160">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L166">			final double x1 = getTimeScale().getPosition(wink);</span>
 			final double x2;
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (ctx.getPrintScale() == PrintScale.WEEKLY)</span>
-<span class="nc" id="L163">				x2 = getTimeScale().getPosition(wink.addDays(6)) + getTimeScale().getWidth(wink.addDays(6));</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (scaleConfig.getPrintScale() == PrintScale.WEEKLY)</span>
+<span class="nc" id="L169">				x2 = getTimeScale().getPosition(wink.addDays(6)) + getTimeScale().getWidth(wink.addDays(6));</span>
 			else
-<span class="nc" id="L165">				x2 = getTimeScale().getPosition(increment(wink));</span>
-<span class="nc" id="L166">			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="nc" id="L167">			final double delta = (x2 - x1) - width;</span>
+<span class="nc" id="L171">				x2 = getTimeScale().getPosition(increment(wink));</span>
+<span class="nc" id="L172">			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L173">			final double delta = (x2 - x1) - width;</span>
 
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (wink.compareTo(TimePoint.ofStartOfDay(getMaxDay().plusDays(1))) &lt; 0)</span>
-<span class="nc" id="L170">				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (wink.compareTo(TimePoint.ofStartOfDay(getMaxDay().plusDays(1))) &lt; 0)</span>
+<span class="nc" id="L176">				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));</span>
 
 		}
-<span class="nc" id="L173">	}</span>
+<span class="nc" id="L179">	}</span>
 
 	@Override
 	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="nc" id="L177">		drawSmallVlinesDay(ug, totalHeightWithoutFooter);</span>
-<span class="nc" id="L178">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
-<span class="nc" id="L179">		drawSimpleDayCounter(ug);</span>
+<span class="nc" id="L183">		drawSmallVlinesDay(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L184">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L185">		drawSimpleDayCounter(ug);</span>
 
-<span class="nc" id="L181">	}</span>
+<span class="nc" id="L187">	}</span>
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-<span class="nc" id="L185">		ug = ug.apply(UTranslate.dy(3));</span>
-<span class="nc" id="L186">		drawSimpleDayCounter(ug);</span>
-<span class="nc" id="L187">	}</span>
-
-	// Duplicate in TimeHeaderDaily
-	class Pending {
-		final double x1;
-		double x2;
-		final HColor color;
-
-<span class="nc" id="L195">		Pending(HColor color, double x1, double x2) {</span>
-<span class="nc" id="L196">			this.x1 = x1;</span>
-<span class="nc" id="L197">			this.x2 = x2;</span>
-<span class="nc" id="L198">			this.color = color;</span>
-<span class="nc" id="L199">		}</span>
-
-		public void draw(UGraphic ug, double height) {
-<span class="nc" id="L202">			drawRectangle(ug.apply(color.bg()), height, x1, x2);</span>
-<span class="nc" id="L203">		}</span>
-	}
+<span class="nc" id="L191">		ug = ug.apply(UTranslate.dy(3));</span>
+<span class="nc" id="L192">		drawSimpleDayCounter(ug);</span>
+<span class="nc" id="L193">	}</span>
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-<span class="nc" id="L208">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
-<span class="nc" id="L209">		Pending pending = null;</span>
+<span class="nc" id="L197">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="nc" id="L198">		Pending pending = null;</span>
 
-<span class="nc bnc" id="L211" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L212">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L213">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L214">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
-<span class="nc" id="L215">			HColor back = thParam.getColor(wink);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L201">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L202">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L203">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
+<span class="nc" id="L204">			HColor back = getColor(wink);</span>
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 //			if (backDoW != null) {
@@ -221,23 +210,23 @@ public class TimeHeaderSimple extends TimeHeader {
 //			if (back == null &amp;&amp; defaultPlan.getLoadAt(wink) == 0) {
 //				back = closedBackgroundColor();
 //			}
-<span class="nc bnc" id="L224" title="All 2 branches missed.">			if (back == null) {</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">				if (pending != null)</span>
-<span class="nc" id="L226">					pending.draw(ug, height);</span>
-<span class="nc" id="L227">				pending = null;</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (back == null) {</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">				if (pending != null)</span>
+<span class="nc" id="L215">					pending.draw(ug, height);</span>
+<span class="nc" id="L216">				pending = null;</span>
 			} else {
-<span class="nc bnc" id="L229" title="All 4 branches missed.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
-<span class="nc" id="L230">					pending.draw(ug, height);</span>
-<span class="nc" id="L231">					pending = null;</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
+<span class="nc" id="L219">					pending.draw(ug, height);</span>
+<span class="nc" id="L220">					pending = null;</span>
 				}
-<span class="nc bnc" id="L233" title="All 2 branches missed.">				if (pending == null)</span>
-<span class="nc" id="L234">					pending = new Pending(back, x1, x2);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">				if (pending == null)</span>
+<span class="nc" id="L223">					pending = new Pending(back, x1, x2);</span>
 				else
-<span class="nc" id="L236">					pending.x2 = x2;</span>
+<span class="nc" id="L225">					pending.x2 = x2;</span>
 
 			}
 		}
-<span class="nc" id="L240">	}</span>
+<span class="nc" id="L229">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

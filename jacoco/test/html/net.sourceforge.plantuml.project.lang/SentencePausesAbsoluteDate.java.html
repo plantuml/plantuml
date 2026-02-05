@@ -40,21 +40,20 @@ import java.time.LocalDate;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentencePausesAbsoluteDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentencePausesAbsoluteDate() {
-<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
-<span class="fc" id="L49">				ComplementDate.any());</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L47">		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L48">				ComplementDate.any());</span>
+<span class="fc" id="L49">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L54">		final Task task = (Task) subject;</span>
-<span class="nc" id="L55">		final LocalDate pause = (LocalDate) complement;</span>
-<span class="nc" id="L56">		task.addPause(pause);</span>
-<span class="nc" id="L57">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L53">		final Task task = (Task) subject;</span>
+<span class="nc" id="L54">		final LocalDate pause = (LocalDate) complement;</span>
+<span class="nc" id="L55">		task.addPause(pause);</span>
+<span class="nc" id="L56">		return CommandExecutionResult.ok();</span>
 	}
 
 }

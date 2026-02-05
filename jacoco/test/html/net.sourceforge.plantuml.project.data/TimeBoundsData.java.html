@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeBoundsData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.data</a> &gt; <span class="el_source">TimeBoundsData.java</span></div><h1>TimeBoundsData.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.project.data;
+
+import java.time.LocalDate;
+
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskGroup;
+import net.sourceforge.plantuml.project.core.TaskSeparator;
+import net.sourceforge.plantuml.project.draw.header.TimeHeader;
+import net.sourceforge.plantuml.project.time.TimePoint;
+
+/**
+ * Value object containing the time bounds of a Gantt diagram.
+ */
+<span class="fc" id="L49">public class TimeBoundsData {</span>
+
+<span class="fc" id="L51">	private LocalDate minDay = TimePoint.epoch();</span>
+	private LocalDate maxDay;
+	private LocalDate printStart;
+	private LocalDate printEnd;
+
+	public LocalDate getMinDay() {
+<span class="fc" id="L57">		return minDay;</span>
+	}
+
+	public LocalDate getMaxDay() {
+<span class="fc" id="L61">		return maxDay;</span>
+	}
+
+	public LocalDate getPrintStart() {
+<span class="fc" id="L65">		return printStart;</span>
+	}
+
+	public LocalDate getPrintEnd() {
+<span class="nc" id="L69">		return printEnd;</span>
+	}
+
+	// Setters
+
+	public void setMinDay(LocalDate minDay) {
+<span class="fc" id="L75">		this.minDay = minDay;</span>
+<span class="fc" id="L76">	}</span>
+
+	public void setMaxDay(LocalDate maxDay) {
+<span class="fc" id="L79">		this.maxDay = maxDay;</span>
+<span class="fc" id="L80">	}</span>
+
+	public void setPrintStart(LocalDate printStart) {
+<span class="nc" id="L83">		this.printStart = printStart;</span>
+<span class="nc" id="L84">	}</span>
+
+	public void setPrintEnd(LocalDate printEnd) {
+<span class="nc" id="L87">		this.printEnd = printEnd;</span>
+<span class="nc" id="L88">	}</span>
+
+	public TimePoint getStartForDrawing(final Task tmp) {
+		TimePoint result;
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (getPrintStart() == null)</span>
+<span class="fc" id="L93">			result = tmp.getStart();</span>
+		else
+<span class="nc" id="L95">			result = TimePoint.max(TimePoint.ofStartOfDay(getMinDay()), tmp.getStart());</span>
+
+<span class="fc" id="L97">		return result;</span>
+	}
+
+	public TimePoint getEndForDrawing(final Task tmp) {
+		TimePoint result;
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (getPrintStart() == null)</span>
+<span class="fc" id="L103">			result = tmp.getEnd();</span>
+		else
+<span class="nc" id="L105">			result = TimePoint.min(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)), tmp.getEnd());</span>
+
+<span class="fc" id="L107">		return result;</span>
+	}
+
+	public boolean isHidden(Task task) {
+<span class="pc bpc" id="L111" title="3 of 4 branches missed.">		if (this.getPrintStart() == null || task instanceof TaskSeparator)</span>
+<span class="fc" id="L112">			return false;</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (task.getEndMinusOneDayTOBEREMOVED().compareTo(TimePoint.ofStartOfDay(this.getMinDay())) &lt; 0)</span>
+<span class="nc" id="L115">			return true;</span>
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (task.getStart().compareTo(TimePoint.ofEndOfDayMinusOneSecond(this.getMaxDay())) &gt; 0)</span>
+<span class="nc" id="L118">			return true;</span>
+
+<span class="nc" id="L120">		return false;</span>
+	}
+
+	public double getBarsColumnWidth(TimeHeader timeHeader) {
+<span class="fc" id="L124">		final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(getMinDay()));</span>
+<span class="fc" id="L125">		final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(getMaxDay()));</span>
+<span class="fc" id="L126">		return xmax - xmin;</span>
+	}
+
+	public void initMinMax(GanttModelData modelData, DayCalendarData dayCalendar) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (modelData.getTasks().isEmpty()) {</span>
+<span class="nc" id="L131">			this.setMaxDay(this.getMinDay());</span>
+		} else {
+<span class="fc" id="L133">			this.setMaxDay(null);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			for (Task task : modelData.getTasks()) {</span>
+<span class="pc bpc" id="L135" title="2 of 4 branches missed.">				if (task instanceof TaskSeparator || task instanceof TaskGroup)</span>
+<span class="nc" id="L136">					continue;</span>
+
+<span class="fc" id="L138">				final TimePoint tmp = task.getEnd().minusOneSecond();</span>
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">				if (this.getMaxDay() == null || this.getMaxDay().compareTo(tmp.toDay()) &lt; 0)</span>
+<span class="fc" id="L140">					this.setMaxDay(tmp.toDay());</span>
+<span class="fc" id="L141">			}</span>
+		}
+
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (TimePoint d : dayCalendar.getColorDays())</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
+<span class="nc" id="L146">				this.setMaxDay(d.toDay());</span>
+
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		for (TimePoint d : dayCalendar.getNameDays().keySet())</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
+<span class="nc" id="L150">				this.setMaxDay(d.toDay());</span>
+<span class="fc" id="L151">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -106,9 +106,9 @@ public class XDimension2D {
 	// ::done
 
 	public XDimension2D mergeLR(XDimension2D right) {
-<span class="fc" id="L109">		final double height = Math.max(this.getHeight(), right.getHeight());</span>
-<span class="fc" id="L110">		final double width = this.getWidth() + right.getWidth();</span>
-<span class="fc" id="L111">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L109">		final double height = Math.max(this.getHeight(), right.getHeight());</span>
+<span class="nc" id="L110">		final double width = this.getWidth() + right.getWidth();</span>
+<span class="nc" id="L111">		return new XDimension2D(width, height);</span>
 	}
 
 	public XDimension2D atLeast(double minWidth, double minHeight) {

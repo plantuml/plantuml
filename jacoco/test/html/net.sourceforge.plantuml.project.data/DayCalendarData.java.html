@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayCalendarData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.data</a> &gt; <span class="el_source">DayCalendarData.java</span></div><h1>DayCalendarData.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.project.data;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.project.OpenClose;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.time.TimePoint;
+
+/**
+ * Value object containing day calendar information: open/closed days, day
+ * colors, and day names.
+ */
+<span class="fc" id="L56">public class DayCalendarData {</span>
+
+<span class="fc" id="L58">	private final OpenClose openClose = new OpenClose();</span>
+<span class="fc" id="L59">	private final Map&lt;TimePoint, String&gt; nameDays = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L60">	private final Map&lt;TimePoint, HColor&gt; colorDaysToday = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L61">	private final Map&lt;TimePoint, HColor&gt; colorDaysInternal = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L62">	private final Map&lt;DayOfWeek, HColor&gt; colorDaysOfWeek = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L63">	private final Set&lt;LocalDate&gt; verticalSeparatorBefore = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L64">	private final Map&lt;String, OpenClose&gt; openCloseForTask = new HashMap&lt;&gt;();</span>
+
+	public boolean isOpen(LocalDate day) {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		return openClose.getLoadAtDUMMY(day) &gt; 0;</span>
+	}
+
+	public boolean isOpen(TimePoint instant) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		return openClose.getLoadAtDUMMY(instant.toDay()) &gt; 0;</span>
+	}
+
+	public HColor getDayColor(TimePoint day) {
+<span class="fc" id="L75">		HColor color = colorDaysToday.get(day);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc" id="L77">			color = colorDaysInternal.get(day);</span>
+
+<span class="fc" id="L79">		return color;</span>
+	}
+
+	public HColor getDayOfWeekColor(DayOfWeek dayOfWeek) {
+<span class="fc" id="L83">		return colorDaysOfWeek.get(dayOfWeek);</span>
+	}
+
+	public String getDayName(TimePoint day) {
+<span class="nc" id="L87">		return nameDays.get(day);</span>
+	}
+
+	public OpenClose getOpenClose() {
+<span class="fc" id="L91">		return openClose;</span>
+	}
+
+	public Collection&lt;TimePoint&gt; getColorDays() {
+<span class="fc" id="L95">		return colorDaysInternal.keySet();</span>
+	}
+
+	public Map&lt;TimePoint, String&gt; getNameDays() {
+<span class="fc" id="L99">		return Collections.unmodifiableMap(nameDays);</span>
+	}
+
+	public boolean hasSeparatorBefore(LocalDate day) {
+<span class="fc" id="L103">		return verticalSeparatorBefore.contains(day);</span>
+	}
+
+	// Mutator
+
+	public void addSeparatorBefore(LocalDate day) {
+<span class="nc" id="L109">		verticalSeparatorBefore.add(day);</span>
+<span class="nc" id="L110">	}</span>
+
+	public void putNameDay(TimePoint day, String name) {
+<span class="nc" id="L113">		nameDays.put(day, name);</span>
+<span class="nc" id="L114">	}</span>
+
+	public void putColorDayToday(TimePoint day, HColor color) {
+<span class="nc" id="L117">		colorDaysToday.put(day, color);</span>
+<span class="nc" id="L118">	}</span>
+
+	public void putColorDay(TimePoint day, HColor color) {
+<span class="fc" id="L121">		colorDaysInternal.put(day, color);</span>
+<span class="fc" id="L122">	}</span>
+
+	public void putColorDayOfWeek(DayOfWeek dow, HColor color) {
+<span class="nc" id="L125">		colorDaysOfWeek.put(dow, color);</span>
+<span class="nc" id="L126">	}</span>
+
+	public OpenClose getOpenCloseForTask(String task) {
+<span class="fc" id="L129">		return openCloseForTask.computeIfAbsent(task, k -&gt; new OpenClose());</span>
+	}
+
+	public PiecewiseConstant getDefaultPlan() {
+<span class="nc" id="L133">		return openClose.asPiecewiseConstant();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -76,10 +76,6 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">net.sourceforge.plantuml.project.draw.header.TimeHeader</div>
 </div>
 <section class="class-description" id="class-description">
-<dl class="notes">
-<dt>Direct Known Subclasses:</dt>
-<dd><code><a href="TimeHeaderCalendar.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderCalendar</a></code>, <code><a href="TimeHeaderSimple.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderSimple</a></code></dd>
-</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">TimeHeader</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
@@ -95,12 +91,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected final <a href="TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a></code></div>
-<div class="col-second even-row-color"><code><a href="#ctx" class="member-name-link">ctx</a></code></div>
+<div class="col-first even-row-color"><code>protected final <a href="../../data/DayCalendarData.html" title="class in net.sourceforge.plantuml.project.data">DayCalendarData</a></code></div>
+<div class="col-second even-row-color"><code><a href="#dayCalendar" class="member-name-link">dayCalendar</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#thParam" class="member-name-link">thParam</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="../../data/TimeScaleConfigData.html" title="class in net.sourceforge.plantuml.project.data">TimeScaleConfigData</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#scaleConfig" class="member-name-link">scaleConfig</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected final <a href="../../data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a></code></div>
+<div class="col-second even-row-color"><code><a href="#timeBounds" class="member-name-link">timeBounds</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final <a href="../../data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#timelineStyle" class="member-name-link">timelineStyle</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected final <a href="../../data/WeekConfigData.html" title="class in net.sourceforge.plantuml.project.data">WeekConfigData</a></code></div>
+<div class="col-second even-row-color"><code><a href="#weekConfigData" class="member-name-link">weekConfigData</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -112,8 +117,12 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.project.draw.header.TimeHeaderContext,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader</a><wbr>(<a href="TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx,
- <a href="../../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.data.WeekConfigData,net.sourceforge.plantuml.project.data.DayCalendarData,net.sourceforge.plantuml.project.data.TimeBoundsData,net.sourceforge.plantuml.project.data.TimeScaleConfigData,net.sourceforge.plantuml.project.data.TimelineStyleData)" class="member-name-link">TimeHeader</a><wbr>(<a href="../../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../data/WeekConfigData.html" title="class in net.sourceforge.plantuml.project.data">WeekConfigData</a>&nbsp;weekConfigData,
+ <a href="../../data/DayCalendarData.html" title="class in net.sourceforge.plantuml.project.data">DayCalendarData</a>&nbsp;dayCalendar,
+ <a href="../../data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a>&nbsp;timeBounds,
+ <a href="../../data/TimeScaleConfigData.html" title="class in net.sourceforge.plantuml.project.data">TimeScaleConfigData</a>&nbsp;scaleConfig,
+ <a href="../../data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyle)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -158,6 +167,12 @@ loadScripts(document, 'script');</script>
  double&nbsp;y1,
  double&nbsp;y2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColor(java.time.DayOfWeek)" class="member-name-link">getColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/DayOfWeek.html" title="class or interface in java.time" class="external-link">DayOfWeek</a>&nbsp;dayOfWeek)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColor(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">getColor</a><wbr>(<a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFontConfiguration(net.sourceforge.plantuml.klimt.font.UFont,boolean,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">getFontConfiguration</a><wbr>(<a href="../../../klimt/font/UFont.html" title="class in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
  boolean&nbsp;bold,
@@ -194,7 +209,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeScale()" class="member-name-link">getTimeScale</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isBold2(net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">isBold2</a><wbr>(<a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isBold(java.time.LocalDate)" class="member-name-link">isBold</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;wink)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openFontColor()" class="member-name-link">openFontColor</a>()</code></div>
@@ -234,15 +249,33 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="thParam">
-<h3>thParam</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a></span>&nbsp;<span class="element-name">thParam</span></div>
+<section class="detail" id="dayCalendar">
+<h3>dayCalendar</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../data/DayCalendarData.html" title="class in net.sourceforge.plantuml.project.data">DayCalendarData</a></span>&nbsp;<span class="element-name">dayCalendar</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="ctx">
-<h3>ctx</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a></span>&nbsp;<span class="element-name">ctx</span></div>
+<section class="detail" id="timeBounds">
+<h3>timeBounds</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a></span>&nbsp;<span class="element-name">timeBounds</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="scaleConfig">
+<h3>scaleConfig</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../data/TimeScaleConfigData.html" title="class in net.sourceforge.plantuml.project.data">TimeScaleConfigData</a></span>&nbsp;<span class="element-name">scaleConfig</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="timelineStyle">
+<h3>timelineStyle</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a></span>&nbsp;<span class="element-name">timelineStyle</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="weekConfigData">
+<h3>weekConfigData</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../data/WeekConfigData.html" title="class in net.sourceforge.plantuml.project.data">WeekConfigData</a></span>&nbsp;<span class="element-name">weekConfigData</span></div>
 </section>
 </li>
 </ul>
@@ -254,10 +287,14 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.project.draw.header.TimeHeaderContext,net.sourceforge.plantuml.project.timescale.TimeScale)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.data.WeekConfigData,net.sourceforge.plantuml.project.data.DayCalendarData,net.sourceforge.plantuml.project.data.TimeBoundsData,net.sourceforge.plantuml.project.data.TimeScaleConfigData,net.sourceforge.plantuml.project.data.TimelineStyleData)">
 <h3>TimeHeader</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimeHeader</span><wbr><span class="parameters">(<a href="TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx,
- <a href="../../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimeHeader</span><wbr><span class="parameters">(<a href="../../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../data/WeekConfigData.html" title="class in net.sourceforge.plantuml.project.data">WeekConfigData</a>&nbsp;weekConfigData,
+ <a href="../../data/DayCalendarData.html" title="class in net.sourceforge.plantuml.project.data">DayCalendarData</a>&nbsp;dayCalendar,
+ <a href="../../data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a>&nbsp;timeBounds,
+ <a href="../../data/TimeScaleConfigData.html" title="class in net.sourceforge.plantuml.project.data">TimeScaleConfigData</a>&nbsp;scaleConfig,
+ <a href="../../data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyle)</span></div>
 </section>
 </li>
 </ul>
@@ -269,9 +306,21 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="isBold2(net.sourceforge.plantuml.project.time.TimePoint)">
-<h3>isBold2</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isBold2</span><wbr><span class="parameters">(<a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</span></div>
+<section class="detail" id="getColor(net.sourceforge.plantuml.project.time.TimePoint)">
+<h3>getColor</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span>&nbsp;<span class="element-name">getColor</span><wbr><span class="parameters">(<a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;wink)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getColor(java.time.DayOfWeek)">
+<h3>getColor</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span>&nbsp;<span class="element-name">getColor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/DayOfWeek.html" title="class or interface in java.time" class="external-link">DayOfWeek</a>&nbsp;dayOfWeek)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isBold(java.time.LocalDate)">
+<h3>isBold</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isBold</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;wink)</span></div>
 </section>
 </li>
 <li>

@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.Value;
+import net.sourceforge.plantuml.project.PValue;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.ngm.NGMAllocation;
 import net.sourceforge.plantuml.project.ngm.NGMTask;
@@ -52,18 +52,18 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="fc" id="L52">public class Solver {</span>
 	// ::remove folder when __HAXE__
 
-<span class="fc" id="L55">	private final Map&lt;TaskAttribute, Value&gt; values = new LinkedHashMap&lt;TaskAttribute, Value&gt;();</span>
+<span class="fc" id="L55">	private final Map&lt;TaskAttribute, PValue&gt; values = new LinkedHashMap&lt;TaskAttribute, PValue&gt;();</span>
 
 //	public Solver(NGMAllocation allocation) {
 //		this.allocation = allocation;
 //	}
 
-	public final void setData(TaskAttribute attribute, Value value) {
+	public final void setData(TaskAttribute attribute, PValue value) {
 <span class="fc bfc" id="L62" title="All 2 branches covered.">		if (value instanceof TimePoint) {</span>
 <span class="pc bpc" id="L63" title="1 of 2 branches missed.">			if (value.toString().endsWith(&quot;T00:00&quot;) == false)</span>
 <span class="nc" id="L64">				throw new IllegalArgumentException(value.toString());</span>
 		}
-<span class="fc" id="L66">		final Value previous = values.remove(attribute);</span>
+<span class="fc" id="L66">		final PValue previous = values.remove(attribute);</span>
 <span class="fc bfc" id="L67" title="All 4 branches covered.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
 <span class="fc" id="L68">			final TimePoint previousInstant = (TimePoint) previous;</span>
 <span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (previousInstant.compareTo((TimePoint) value) &gt; 0)</span>
@@ -79,13 +79,13 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="fc" id="L79">	}</span>
 
 	private void removeFirstElement() {
-<span class="nc" id="L82">		final Iterator&lt;Entry&lt;TaskAttribute, Value&gt;&gt; it = values.entrySet().iterator();</span>
+<span class="nc" id="L82">		final Iterator&lt;Entry&lt;TaskAttribute, PValue&gt;&gt; it = values.entrySet().iterator();</span>
 <span class="nc" id="L83">		it.next();</span>
 <span class="nc" id="L84">		it.remove();</span>
 <span class="nc" id="L85">	}</span>
 
-	public final Value getData(NGMAllocation allocation, TaskAttribute attribute) {
-<span class="fc" id="L88">		Value result = values.get(attribute);</span>
+	public final PValue getData(NGMAllocation allocation, TaskAttribute attribute) {
+<span class="fc" id="L88">		PValue result = values.get(attribute);</span>
 <span class="fc bfc" id="L89" title="All 2 branches covered.">		if (result == null) {</span>
 <span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.END)</span>
 <span class="fc" id="L91">				return computeEnd(allocation);</span>

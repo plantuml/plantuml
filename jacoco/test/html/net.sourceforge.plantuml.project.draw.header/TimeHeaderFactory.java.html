@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeHeaderFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.draw.header</a> &gt; <span class="el_source">TimeHeaderFactory.java</span></div><h1>TimeHeaderFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.project.draw.header;
+
+import java.time.LocalDate;
+
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
+import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
+import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
+import net.sourceforge.plantuml.project.timescale.TimeScaleDailyHideClosed;
+import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
+
+public class TimeHeaderFactory {
+
+	private final TimeBoundsData timeBounds;
+	private final DayCalendarData dayCalendar;
+	private final TimelineStyleData timelineStyle;
+	private final TimeScaleConfigData scaleConfig;
+	private final WeekConfigData weekConfig;
+
+	public TimeHeaderFactory(WeekConfigData weekConfig, DayCalendarData dayCalendar, TimeBoundsData timeBounds,
+<span class="fc" id="L61">			TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {</span>
+<span class="fc" id="L62">		this.weekConfig = weekConfig;</span>
+<span class="fc" id="L63">		this.timeBounds = timeBounds;</span>
+<span class="fc" id="L64">		this.dayCalendar = dayCalendar;</span>
+<span class="fc" id="L65">		this.scaleConfig = scaleConfig;</span>
+<span class="fc" id="L66">		this.timelineStyle = timelineStyle;</span>
+<span class="fc" id="L67">	}</span>
+
+	// ========================================================================
+	// Public API
+	// ========================================================================
+
+	public TimeHeader createTimeHeader() {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (timeBounds.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="nc" id="L75">			return new TimeHeaderSimple(createSimpleScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+					timelineStyle);
+
+<span class="pc bpc" id="L78" title="5 of 6 branches missed.">		switch (scaleConfig.getPrintScale()) {</span>
+		case DAILY:
+<span class="nc" id="L80">			return new TimeHeaderDaily(createDailyScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+					timelineStyle);
+
+		case WEEKLY:
+<span class="fc" id="L84">			return new TimeHeaderWeekly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+					timelineStyle);
+
+		case MONTHLY:
+<span class="nc" id="L88">			return new TimeHeaderMonthly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+					timelineStyle);
+
+		case QUARTERLY:
+<span class="nc" id="L92">			return new TimeHeaderQuarterly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+					timelineStyle);
+
+		case YEARLY:
+<span class="nc" id="L96">			return new TimeHeaderYearly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+					timelineStyle);
+
+		default:
+<span class="nc" id="L100">			throw new IllegalStateException(&quot;Unsupported print scale: &quot; + scaleConfig.getPrintScale());</span>
+		}
+	}
+
+	// ========================================================================
+	// TimeScale builders
+	// ========================================================================
+
+	private TimeScale createSimpleScale() {
+<span class="nc" id="L109">		return new TimeScaleWink(getCellWidth(), getEffectiveScale(), scaleConfig.getPrintScale());</span>
+	}
+
+	private TimeScale createDailyScale() {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (scaleConfig.isHideClosed())</span>
+<span class="nc" id="L114">			return new TimeScaleDailyHideClosed(getCellWidth(), getStart(), getEffectiveScale(),</span>
+<span class="nc" id="L115">					dayCalendar.getOpenClose());</span>
+
+<span class="nc" id="L117">		return new TimeScaleDaily(getCellWidth(), getStart(), getEffectiveScale(), getPrintStart());</span>
+	}
+
+	private TimeScale createCompressedScale() {
+<span class="fc" id="L121">		return new TimeScaleCompressed(getCellWidth(), getStart(), getEffectiveScale(), getPrintStart());</span>
+	}
+
+	// ========================================================================
+	// Helpers
+	// ========================================================================
+
+	private TimePoint getStart() {
+<span class="fc" id="L129">		return TimePoint.ofStartOfDay(timeBounds.getMinDay());</span>
+	}
+
+	private LocalDate getPrintStart() {
+<span class="fc" id="L133">		return timeBounds.getPrintStart();</span>
+	}
+
+	private double getEffectiveScale() {
+<span class="fc" id="L137">		return scaleConfig.getEffectiveScale();</span>
+	}
+
+	private double getCellWidth() {
+<span class="fc" id="L141">		return timelineStyle.getCellWidth();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

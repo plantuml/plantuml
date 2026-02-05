@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
@@ -60,73 +61,73 @@ public class GanttConstraint extends WithLinkType {
 	private final HColorSet colorSet;
 
 	public GanttConstraint(HColorSet colorSet, StyleBuilder styleBuilder, TaskInstant source, TaskInstant dest,
-<span class="fc" id="L63">			HColor forcedColor) {</span>
-<span class="fc" id="L64">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L65">		this.colorSet = colorSet;</span>
-<span class="fc" id="L66">		this.source = source;</span>
-<span class="fc" id="L67">		this.dest = dest;</span>
-<span class="fc" id="L68">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="fc" id="L69">		this.setSpecificColor(forcedColor);</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L64">			HColor forcedColor) {</span>
+<span class="fc" id="L65">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L66">		this.colorSet = colorSet;</span>
+<span class="fc" id="L67">		this.source = source;</span>
+<span class="fc" id="L68">		this.dest = dest;</span>
+<span class="fc" id="L69">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc" id="L70">		this.setSpecificColor(forcedColor);</span>
+<span class="fc" id="L71">	}</span>
 
 	public GanttConstraint(HColorSet colorSet, StyleBuilder styleBuilder, TaskInstant source, TaskInstant dest) {
-<span class="fc" id="L73">		this(colorSet, styleBuilder, source, dest, null);</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L74">		this(colorSet, styleBuilder, source, dest, null);</span>
+<span class="fc" id="L75">	}</span>
 
 	public boolean isOn(Task task) {
-<span class="pc bpc" id="L77" title="1 of 4 branches missed.">		return source.getMoment() == task || dest.getMoment() == task;</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">		return source.getMoment() == task || dest.getMoment() == task;</span>
 	}
 
 	public boolean isThereRightArrow(Task task) {
-<span class="pc bpc" id="L81" title="1 of 4 branches missed.">		if (dest.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END)</span>
-<span class="nc" id="L82">			return true;</span>
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">		if (dest.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END)</span>
+<span class="nc" id="L83">			return true;</span>
 
-<span class="pc bpc" id="L84" title="1 of 4 branches missed.">		if (source.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">				&amp;&amp; source.getAttribute() == TaskAttribute.END)</span>
-<span class="nc" id="L86">			return true;</span>
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">		if (source.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				&amp;&amp; source.getAttribute() == TaskAttribute.END)</span>
+<span class="nc" id="L87">			return true;</span>
 
-<span class="fc" id="L88">		return false;</span>
+<span class="fc" id="L89">		return false;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L93">		return source.toString() + &quot; --&gt; &quot; + dest.toString();</span>
+<span class="nc" id="L94">		return source.toString() + &quot; --&gt; &quot; + dest.toString();</span>
 	}
 
 	final public StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L97">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);</span>
+<span class="fc" id="L98">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);</span>
 	}
 
-	public UDrawable getUDrawable(TimeScale timeScale, ToTaskDraw toTaskDraw) {
-<span class="fc" id="L101">		Style style = getStyleSignature().getMergedStyle(styleBuilder).eventuallyOverride(PName.LineColor,</span>
-<span class="fc" id="L102">				getSpecificColor());</span>
-<span class="fc" id="L103">		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));</span>
-<span class="fc" id="L104">		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);</span>
+	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {
+<span class="fc" id="L102">		Style style = getStyleSignature().getMergedStyle(styleBuilder).eventuallyOverride(PName.LineColor,</span>
+<span class="fc" id="L103">				getSpecificColor());</span>
+<span class="fc" id="L104">		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));</span>
+<span class="fc" id="L105">		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);</span>
 	}
 
 	public boolean isHidden(TimePoint min, TimePoint max) {
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (isHidden(source.getInstantPrecise(), min, max))</span>
-<span class="nc" id="L109">			return true;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (isHidden(source.getInstantPrecise(), min, max))</span>
+<span class="nc" id="L110">			return true;</span>
 
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (isHidden(dest.getInstantPrecise(), min, max))</span>
-<span class="nc" id="L112">			return true;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (isHidden(dest.getInstantPrecise(), min, max))</span>
+<span class="nc" id="L113">			return true;</span>
 
-<span class="nc" id="L114">		return false;</span>
+<span class="nc" id="L115">		return false;</span>
 	}
 
 	private boolean isHidden(TimePoint now, TimePoint min, TimePoint max) {
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (now.compareTo(min) &lt; 0)</span>
-<span class="nc" id="L119">			return true;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (now.compareTo(min) &lt; 0)</span>
+<span class="nc" id="L120">			return true;</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (now.compareTo(max) &gt; 0)</span>
-<span class="nc" id="L122">			return true;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (now.compareTo(max) &gt; 0)</span>
+<span class="nc" id="L123">			return true;</span>
 
-<span class="nc" id="L124">		return false;</span>
+<span class="nc" id="L125">		return false;</span>
 	}
 
 	@Override
 	public void goNorank() {
-<span class="nc" id="L129">	}</span>
+<span class="nc" id="L130">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

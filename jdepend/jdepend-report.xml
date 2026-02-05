@@ -5653,14 +5653,14 @@
 
         <Package name="net.sourceforge.plantuml.chronology">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>33</Ce>
-                <A>0.08</A>
+                <A>0.07</A>
                 <I>1</I>
-                <D>0.08</D>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
@@ -5703,6 +5703,9 @@
                 </Class>
                 <Class sourceFile="TimeHeaderChronology.java">
                     net.sourceforge.plantuml.chronology.TimeHeaderChronology$Pending
+                </Class>
+                <Class sourceFile="TimeHeaderParameters2.java">
+                    net.sourceforge.plantuml.chronology.TimeHeaderParameters2
                 </Class>
                 <Class sourceFile="TimeScaleChronology.java">
                     net.sourceforge.plantuml.chronology.TimeScaleChronology
@@ -10326,11 +10329,11 @@
                 <TotalClasses>31</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>104</Ca>
+                <Ca>105</Ca>
                 <Ce>13</Ce>
                 <A>0.06</A>
                 <I>0.11</I>
-                <D>0.82</D>
+                <D>0.83</D>
                 <V>1</V>
             </Stats>
 
@@ -10524,6 +10527,7 @@
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -11198,7 +11202,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
-                <Ca>84</Ca>
+                <Ca>85</Ca>
                 <Ce>15</Ce>
                 <A>0.44</A>
                 <I>0.15</I>
@@ -11339,6 +11343,7 @@
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -12045,11 +12050,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>89</Ca>
+                <Ca>90</Ca>
                 <Ce>14</Ce>
                 <A>0.25</A>
-                <I>0.14</I>
-                <D>0.61</D>
+                <I>0.13</I>
+                <D>0.62</D>
                 <V>1</V>
             </Stats>
 
@@ -12178,6 +12183,7 @@
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
@@ -12210,7 +12216,7 @@
                 <TotalClasses>43</TotalClasses>
                 <ConcreteClasses>37</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>92</Ca>
+                <Ca>93</Ca>
                 <Ce>11</Ce>
                 <A>0.14</A>
                 <I>0.11</I>
@@ -12434,6 +12440,7 @@
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
@@ -14592,14 +14599,14 @@
 
         <Package name="net.sourceforge.plantuml.project">
             <Stats>
-                <TotalClasses>21</TotalClasses>
+                <TotalClasses>20</TotalClasses>
                 <ConcreteClasses>18</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
-                <Ca>11</Ca>
-                <Ce>35</Ce>
-                <A>0.14</A>
-                <I>0.76</I>
-                <D>0.1</D>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>12</Ca>
+                <Ce>36</Ce>
+                <A>0.1</A>
+                <I>0.75</I>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
@@ -14607,11 +14614,8 @@
                 <Class sourceFile="GanttStyle.java">
                     net.sourceforge.plantuml.project.GanttStyle
                 </Class>
-                <Class sourceFile="ToTaskDraw.java">
-                    net.sourceforge.plantuml.project.ToTaskDraw
-                </Class>
-                <Class sourceFile="Value.java">
-                    net.sourceforge.plantuml.project.Value
+                <Class sourceFile="PValue.java">
+                    net.sourceforge.plantuml.project.PValue
                 </Class>
             </AbstractClasses>
 
@@ -14646,11 +14650,14 @@
                 <Class sourceFile="GanttDiagram.java">
                     net.sourceforge.plantuml.project.GanttDiagram
                 </Class>
-                <Class sourceFile="GanttDiagram.java">
-                    net.sourceforge.plantuml.project.GanttDiagram$1
-                </Class>
                 <Class sourceFile="GanttDiagramFactory.java">
                     net.sourceforge.plantuml.project.GanttDiagramFactory
+                </Class>
+                <Class sourceFile="GanttDiagramMainBlock.java">
+                    net.sourceforge.plantuml.project.GanttDiagramMainBlock
+                </Class>
+                <Class sourceFile="GanttLayout.java">
+                    net.sourceforge.plantuml.project.GanttLayout
                 </Class>
                 <Class sourceFile="LabelPosition.java">
                     net.sourceforge.plantuml.project.LabelPosition
@@ -14663,9 +14670,6 @@
                 </Class>
                 <Class sourceFile="OpenClose.java">
                     net.sourceforge.plantuml.project.OpenClose
-                </Class>
-                <Class sourceFile="TimeHeaderParameters.java">
-                    net.sourceforge.plantuml.project.TimeHeaderParameters
                 </Class>
                 <Class sourceFile="Today.java">
                     net.sourceforge.plantuml.project.Today
@@ -14696,6 +14700,7 @@
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -14716,6 +14721,7 @@
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -14824,11 +14830,11 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>9</Ca>
+                <Ca>10</Ca>
                 <Ce>14</Ce>
                 <A>0.21</A>
-                <I>0.61</I>
-                <D>0.18</D>
+                <I>0.58</I>
+                <D>0.2</D>
                 <V>1</V>
             </Stats>
 
@@ -14901,6 +14907,7 @@
                 <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -14910,16 +14917,82 @@
             </UsedBy>
         </Package>
 
+        <Package name="net.sourceforge.plantuml.project.data">
+            <Stats>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>16</Ce>
+                <A>0</A>
+                <I>0.84</I>
+                <D>0.16</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DisplayConfigData.java">
+                    net.sourceforge.plantuml.project.data.DisplayConfigData
+                </Class>
+                <Class sourceFile="GanttModelData.java">
+                    net.sourceforge.plantuml.project.data.GanttModelData
+                </Class>
+                <Class sourceFile="TaskDrawRegistryData.java">
+                    net.sourceforge.plantuml.project.data.TaskDrawRegistryData
+                </Class>
+                <Class sourceFile="TimeBoundsData.java">
+                    net.sourceforge.plantuml.project.data.TimeBoundsData
+                </Class>
+                <Class sourceFile="TimeScaleConfigData.java">
+                    net.sourceforge.plantuml.project.data.TimeScaleConfigData
+                </Class>
+                <Class sourceFile="TimelineStyleData.java">
+                    net.sourceforge.plantuml.project.data.TimelineStyleData
+                </Class>
+                <Class sourceFile="WeekConfigData.java">
+                    net.sourceforge.plantuml.project.data.WeekConfigData
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.draw</Package>
+                <Package>net.sourceforge.plantuml.project.draw.header</Package>
+                <Package>net.sourceforge.plantuml.project.time</Package>
+                <Package>net.sourceforge.plantuml.project.timescale</Package>
+                <Package>net.sourceforge.plantuml.real</Package>
+                <Package>net.sourceforge.plantuml.skin</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.draw</Package>
+                <Package>net.sourceforge.plantuml.project.draw.header</Package>
+            </UsedBy>
+        </Package>
+
         <Package name="net.sourceforge.plantuml.project.draw">
             <Stats>
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>5</Ca>
-                <Ce>24</Ce>
+                <Ca>6</Ca>
+                <Ce>25</Ce>
                 <A>0.25</A>
-                <I>0.83</I>
-                <D>0.08</D>
+                <I>0.81</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -14979,6 +15052,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.project.ngm.math</Package>
                 <Package>net.sourceforge.plantuml.project.time</Package>
@@ -14997,6 +15071,7 @@
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
             </UsedBy>
         </Package>
@@ -15006,11 +15081,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>1</Ca>
-                <Ce>19</Ce>
+                <Ca>2</Ca>
+                <Ce>20</Ce>
                 <A>0.25</A>
-                <I>0.95</I>
-                <D>0.2</D>
+                <I>0.91</I>
+                <D>0.16</D>
                 <V>1</V>
             </Stats>
 
@@ -15027,14 +15102,17 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="TimeHeaderCalendar.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeaderCalendar$Pending
-                </Class>
-                <Class sourceFile="TimeHeaderContext.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeaderContext
+                <Class sourceFile="TimeHeader.java">
+                    net.sourceforge.plantuml.project.draw.header.TimeHeader$Pending
                 </Class>
                 <Class sourceFile="TimeHeaderDaily.java">
                     net.sourceforge.plantuml.project.draw.header.TimeHeaderDaily
+                </Class>
+                <Class sourceFile="TimeHeaderFactory.java">
+                    net.sourceforge.plantuml.project.draw.header.TimeHeaderFactory
+                </Class>
+                <Class sourceFile="TimeHeaderFactory.java">
+                    net.sourceforge.plantuml.project.draw.header.TimeHeaderFactory$1
                 </Class>
                 <Class sourceFile="TimeHeaderMonthly.java">
                     net.sourceforge.plantuml.project.draw.header.TimeHeaderMonthly
@@ -15044,9 +15122,6 @@
                 </Class>
                 <Class sourceFile="TimeHeaderSimple.java">
                     net.sourceforge.plantuml.project.draw.header.TimeHeaderSimple
-                </Class>
-                <Class sourceFile="TimeHeaderSimple.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeaderSimple$Pending
                 </Class>
                 <Class sourceFile="TimeHeaderWeekly.java">
                     net.sourceforge.plantuml.project.draw.header.TimeHeaderWeekly
@@ -15070,6 +15145,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.ngm.math</Package>
                 <Package>net.sourceforge.plantuml.project.time</Package>
@@ -15080,6 +15156,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
             </UsedBy>
         </Package>
 
@@ -15569,11 +15646,11 @@
                 <TotalClasses>6</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>9</Ca>
+                <Ca>10</Ca>
                 <Ce>8</Ce>
                 <A>0.33</A>
-                <I>0.47</I>
-                <D>0.2</D>
+                <I>0.44</I>
+                <D>0.22</D>
                 <V>1</V>
             </Stats>
 
@@ -15617,6 +15694,7 @@
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -15630,11 +15708,11 @@
                 <TotalClasses>5</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>4</Ca>
+                <Ca>5</Ca>
                 <Ce>6</Ce>
                 <A>0.2</A>
-                <I>0.6</I>
-                <D>0.2</D>
+                <I>0.55</I>
+                <D>0.25</D>
                 <V>1</V>
             </Stats>
 
@@ -15671,6 +15749,7 @@
             <UsedBy>
                 <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
             </UsedBy>
@@ -15681,11 +15760,11 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>5</Ca>
+                <Ca>6</Ca>
                 <Ce>5</Ce>
                 <A>0.31</A>
-                <I>0.5</I>
-                <D>0.19</D>
+                <I>0.45</I>
+                <D>0.23</D>
                 <V>1</V>
             </Stats>
 
@@ -15754,6 +15833,7 @@
             <UsedBy>
                 <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
@@ -17530,7 +17610,7 @@
                 <TotalClasses>47</TotalClasses>
                 <ConcreteClasses>42</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>81</Ca>
                 <Ce>34</Ce>
                 <A>0.11</A>
                 <I>0.3</I>
@@ -17778,6 +17858,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
@@ -18352,11 +18433,11 @@
                 <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>22</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
-                <Ca>79</Ca>
+                <Ca>80</Ca>
                 <Ce>29</Ce>
                 <A>0.27</A>
                 <I>0.27</I>
-                <D>0.46</D>
+                <D>0.47</D>
                 <V>1</V>
             </Stats>
 
@@ -18545,6 +18626,7 @@
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
+                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
@@ -23979,9 +24061,14 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.project">
-            <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.klimt.geom</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.project.data</Package>
+            <Package>net.sourceforge.plantuml.project.core</Package>
+            <Package>net.sourceforge.plantuml.project.draw</Package>
+            <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.cli</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.project.command">
@@ -24001,6 +24088,16 @@
             <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
+        <Package Name="net.sourceforge.plantuml.project.data">
+            <Package>net.sourceforge.plantuml.project.core</Package>
+            <Package>net.sourceforge.plantuml.project.draw</Package>
+            <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.cli</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+        </Package>
+
         <Package Name="net.sourceforge.plantuml.project.draw">
             <Package>net.sourceforge.plantuml.klimt.sprite</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -24010,10 +24107,9 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.project.draw.header">
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.cli</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.project.lang">
@@ -24042,17 +24138,27 @@
 
         <Package Name="net.sourceforge.plantuml.project.time">
             <Package>net.sourceforge.plantuml.project</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.klimt.geom</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.project.data</Package>
+            <Package>net.sourceforge.plantuml.project.core</Package>
+            <Package>net.sourceforge.plantuml.project.draw</Package>
+            <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.cli</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.project.timescale">
             <Package>net.sourceforge.plantuml.project.time</Package>
             <Package>net.sourceforge.plantuml.project</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.klimt.geom</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.project.data</Package>
+            <Package>net.sourceforge.plantuml.project.core</Package>
+            <Package>net.sourceforge.plantuml.project.draw</Package>
+            <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.cli</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.regex">

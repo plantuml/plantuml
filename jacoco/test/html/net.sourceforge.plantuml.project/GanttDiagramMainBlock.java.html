@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GanttDiagramMainBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project</a> &gt; <span class="el_source">GanttDiagramMainBlock.java</span></div><h1>GanttDiagramMainBlock.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.project;
+
+import net.sourceforge.plantuml.crash.CrashImage;
+import net.sourceforge.plantuml.crash.ReportLog;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.data.DisplayConfigData;
+import net.sourceforge.plantuml.project.data.GanttModelData;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.draw.ResourceDraw;
+import net.sourceforge.plantuml.project.draw.TaskDraw;
+import net.sourceforge.plantuml.project.draw.header.TimeHeader;
+import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class GanttDiagramMainBlock extends AbstractTextBlock {
+
+	private final GanttDiagram diagram;
+	private final TimeHeader timeHeader;
+	private final GanttLayout layout;
+	private final GanttModelData modelData;
+	private final TimeBoundsData timeBounds;
+
+	private final DisplayConfigData displayConfig;
+	private final TimelineStyleData timelineStyle;
+	private final TaskDrawRegistryData drawRegistry;
+
+	public GanttDiagramMainBlock(TimeBoundsData timeBounds, GanttModelData modelData, TaskDrawRegistryData drawRegistry,
+			DisplayConfigData displayConfig, TimelineStyleData timelineStyle, GanttDiagram diagram,
+<span class="fc" id="L79">			TimeHeader timeHeader, StringBounder stringBounder) {</span>
+<span class="fc" id="L80">		this.diagram = diagram;</span>
+<span class="fc" id="L81">		this.timeBounds = timeBounds;</span>
+<span class="fc" id="L82">		this.modelData = modelData;</span>
+<span class="fc" id="L83">		this.drawRegistry = drawRegistry;</span>
+<span class="fc" id="L84">		this.displayConfig = displayConfig;</span>
+<span class="fc" id="L85">		this.timelineStyle = timelineStyle;</span>
+<span class="fc" id="L86">		this.timeHeader = timeHeader;</span>
+<span class="fc" id="L87">		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,</span>
+				timeHeader);
+<span class="fc" id="L89">	}</span>
+
+	@Override
+	public void drawU(UGraphic ug) {
+		try {
+<span class="fc" id="L94">			final UGraphic ugOrig = ug;</span>
+
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			if (displayConfig.getLabelStrategy().titleInFirstColumn())</span>
+<span class="nc" id="L97">				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));</span>
+
+<span class="fc" id="L99">			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)</span>
+<span class="fc" id="L100">					.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());</span>
+
+<span class="fc" id="L102">			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (back.isTransparent() == false) {</span>
+
+<span class="nc" id="L105">				final double fullWidth = layout.getTitlesWidth() + layout.getBarsWidth();</span>
+
+<span class="nc" id="L107">				final URectangle rect1 = URectangle.build(fullWidth, layout.getHeaderHeight());</span>
+<span class="nc" id="L108">				ug.apply(back.bg()).draw(rect1);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (displayConfig.isShowFootbox()) {</span>
+<span class="nc" id="L110">					final URectangle rect2 = URectangle.build(fullWidth, layout.getFooterHeight());</span>
+<span class="nc" id="L111">					ug.apply(back.bg()).apply(UTranslate.dy(drawRegistry.getTotalHeightWithoutFooter())).draw(rect2);</span>
+				}
+			}
+
+<span class="fc" id="L115">			timeHeader.drawTimeHeader(ug, drawRegistry.getTotalHeightWithoutFooter());</span>
+
+<span class="fc" id="L117">			drawConstraints(ug, timeHeader.getTimeScale());</span>
+<span class="fc" id="L118">			drawTasksRect(ug);</span>
+<span class="fc" id="L119">			drawTasksTitle(ugOrig, layout.getTitlesWidth(), layout.getBarsWidth());</span>
+
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (displayConfig.isHideResourceFootbox() == false)</span>
+<span class="fc" id="L122">				drawResources(ug);</span>
+
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (displayConfig.isShowFootbox())</span>
+<span class="fc" id="L125">				timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(drawRegistry.getTotalHeightWithoutFooter())));</span>
+
+<span class="nc" id="L127">		} catch (Throwable e) {</span>
+<span class="nc" id="L128">			Logme.error(e);</span>
+
+<span class="nc" id="L130">			final ReportLog report = new ReportLog();</span>
+<span class="nc" id="L131">			report.anErrorHasOccured(e, diagram.getFlashData());</span>
+
+<span class="nc" id="L133">			report.addProperties();</span>
+<span class="nc" id="L134">			report.addEmptyLine();</span>
+<span class="nc" id="L135">			report.youShouldSendThisDiagram();</span>
+
+<span class="nc" id="L137">			final CrashImage image = new CrashImage(e, diagram.getFlashData(), report);</span>
+<span class="nc" id="L138">			image.drawU(ug);</span>
+
+<span class="fc" id="L140">		}</span>
+
+<span class="fc" id="L142">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L145">		return layout.calculateDimension();</span>
+	}
+
+	private void drawTasksRect(UGraphic ug) {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L151">				continue;</span>
+
+<span class="fc" id="L153">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="fc" id="L154">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+<span class="fc" id="L155">			draw.drawU(ug.apply(move));</span>
+<span class="fc" id="L156">		}</span>
+<span class="fc" id="L157">	}</span>
+
+	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (GanttConstraint constraint : modelData.getConstraints()) {</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (timeBounds.getPrintStart() != null</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">					&amp;&amp; constraint.isHidden(TimePoint.ofStartOfDay(timeBounds.getMinDay()),</span>
+<span class="nc" id="L163">							TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay())))</span>
+<span class="nc" id="L164">				continue;</span>
+
+<span class="fc" id="L166">			constraint.getUDrawable(timeScale, drawRegistry).drawU(ug);</span>
+<span class="fc" id="L167">		}</span>
+
+<span class="fc" id="L169">	}</span>
+
+	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L174">				continue;</span>
+
+<span class="fc" id="L176">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="fc" id="L177">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+<span class="fc" id="L178">			draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);</span>
+<span class="fc" id="L179">		}</span>
+<span class="fc" id="L180">	}</span>
+
+	private void drawResources(UGraphic ug) {
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		for (Resource res : modelData.getResources()) {</span>
+<span class="nc" id="L184">			final ResourceDraw draw = res.getResourceDraw();</span>
+<span class="nc" id="L185">			final UTranslate move = UTranslate.dy(draw.getY());</span>
+<span class="nc" id="L186">			draw.drawU(ug.apply(move));</span>
+<span class="nc" id="L187">		}</span>
+<span class="fc" id="L188">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

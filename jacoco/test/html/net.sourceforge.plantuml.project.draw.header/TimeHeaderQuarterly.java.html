@@ -42,127 +42,132 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderQuarterly extends TimeHeaderCalendar {
+class TimeHeaderQuarterly extends TimeHeaderCalendar {
 
-	public TimeHeaderQuarterly(TimeHeaderContext ctx) {
-<span class="nc" id="L52">		super(ctx, ctx.quaterly());</span>
-<span class="nc" id="L53">	}</span>
+	public TimeHeaderQuarterly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+<span class="nc" id="L58">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
+<span class="nc" id="L59">	}</span>
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L57">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L58">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L59">		return h1 + h2 + 5;</span>
+<span class="nc" id="L63">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L64">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L65">		return h1 + h2 + 5;</span>
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-<span class="nc" id="L64">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L65">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L66">		return h1 + h2 + 5;</span>
+<span class="nc" id="L70">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L71">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L72">		return h1 + h2 + 5;</span>
 	}
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L71">		return getTimeHeaderHeight(stringBounder);</span>
+<span class="nc" id="L77">		return getTimeHeaderHeight(stringBounder);</span>
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
-<span class="nc" id="L76">		drawTextsBackground(ug, totalHeightWithoutFooter);</span>
-<span class="nc" id="L77">		drawYears(ug);</span>
-<span class="nc" id="L78">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L79">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L80">		drawQuarters(ug.apply(UTranslate.dy(h1 + 2)));</span>
-<span class="nc" id="L81">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
-<span class="nc" id="L82">		drawHline(ug, 0);</span>
-<span class="nc" id="L83">		drawHline(ug, h1 + 2);</span>
-<span class="nc" id="L84">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
+<span class="nc" id="L82">		drawYears(ug);</span>
+<span class="nc" id="L83">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L84">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L85">		drawQuarters(ug.apply(UTranslate.dy(h1 + 2)));</span>
+<span class="nc" id="L86">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L87">		drawHline(ug, 0);</span>
+<span class="nc" id="L88">		drawHline(ug, h1 + 2);</span>
+<span class="nc" id="L89">		drawHline(ug, h1 + 2 + h2 + 2);</span>
 		// drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-<span class="nc" id="L90">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L91">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L95">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L96">		final double h2 = timelineStyle.getFontSizeMonth();</span>
 		// ug = ug.apply(UTranslate.dy(3));
-<span class="nc" id="L93">		drawQuarters(ug);</span>
-<span class="nc" id="L94">		drawYears(ug.apply(UTranslate.dy(h2 + 2)));</span>
-<span class="nc" id="L95">		drawHline(ug, 0);</span>
-<span class="nc" id="L96">		drawHline(ug, h2 + 2);</span>
-<span class="nc" id="L97">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+<span class="nc" id="L98">		drawQuarters(ug);</span>
+<span class="nc" id="L99">		drawYears(ug.apply(UTranslate.dy(h2 + 2)));</span>
+<span class="nc" id="L100">		drawHline(ug, 0);</span>
+<span class="nc" id="L101">		drawHline(ug, h2 + 2);</span>
+<span class="nc" id="L102">		drawHline(ug, h1 + 2 + h2 + 2);</span>
 //		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));
-<span class="nc" id="L99">	}</span>
+<span class="nc" id="L104">	}</span>
 
 	private void drawYears(final UGraphic ug) {
-<span class="nc" id="L102">		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L103">		YearMonth last = null;</span>
-<span class="nc" id="L104">		double lastChange = -1;</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L106">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L107">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc bnc" id="L108" title="All 4 branches missed.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
-<span class="nc" id="L109">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">				if (last != null)</span>
-<span class="nc" id="L111">					printYear(ug, last, lastChange, x1);</span>
+<span class="nc" id="L107">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L108">		YearMonth last = null;</span>
+<span class="nc" id="L109">		double lastChange = -1;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L111">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L112">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
+<span class="nc" id="L114">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L116">					printYear(ug, last, lastChange, x1);</span>
 
-<span class="nc" id="L113">				lastChange = x1;</span>
-<span class="nc" id="L114">				last = wink.monthYear();</span>
+<span class="nc" id="L118">				lastChange = x1;</span>
+<span class="nc" id="L119">				last = wink.monthYear();</span>
 			}
 		}
-<span class="nc" id="L117">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
-<span class="nc" id="L119">			printYear(ug, last, lastChange, x1);</span>
+<span class="nc" id="L122">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L124">			printYear(ug, last, lastChange, x1);</span>
 
-<span class="nc" id="L121">		final double end = x1;</span>
-<span class="nc" id="L122">		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);</span>
-<span class="nc" id="L123">	}</span>
+<span class="nc" id="L126">		final double end = x1;</span>
+<span class="nc" id="L127">		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);</span>
+<span class="nc" id="L128">	}</span>
 
 	private void drawQuarters(UGraphic ug) {
-<span class="nc" id="L126">		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
-<span class="nc" id="L127">		String last = null;</span>
-<span class="nc" id="L128">		double lastChange = -1;</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L130">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L131">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">			if (quarter(wink).equals(last) == false) {</span>
-<span class="nc" id="L133">				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">				if (last != null)</span>
-<span class="nc" id="L135">					printQuarter(ug, last, lastChange, x1);</span>
+<span class="nc" id="L131">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L132">		String last = null;</span>
+<span class="nc" id="L133">		double lastChange = -1;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L135">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L136">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (quarter(wink).equals(last) == false) {</span>
+<span class="nc" id="L138">				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L140">					printQuarter(ug, last, lastChange, x1);</span>
 
-<span class="nc" id="L137">				lastChange = x1;</span>
-<span class="nc" id="L138">				last = quarter(wink);</span>
+<span class="nc" id="L142">				lastChange = x1;</span>
+<span class="nc" id="L143">				last = quarter(wink);</span>
 			}
 		}
-<span class="nc" id="L141">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
-<span class="nc" id="L143">			printQuarter(ug, last, lastChange, x1);</span>
+<span class="nc" id="L146">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L148">			printQuarter(ug, last, lastChange, x1);</span>
 
-<span class="nc" id="L145">		final double end = x1;</span>
-<span class="nc" id="L146">		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);</span>
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L150">		final double end = x1;</span>
+<span class="nc" id="L151">		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);</span>
+<span class="nc" id="L152">	}</span>
 
 	private String quarter(TimePoint day) {
-<span class="nc" id="L150">		return &quot;Q&quot; + ((day.month().ordinal() + 3) / 3);</span>
+<span class="nc" id="L155">		return &quot;Q&quot; + ((day.month().ordinal() + 3) / 3);</span>
 	}
 
 	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
-<span class="nc" id="L154">		final TextBlock small = getTextBlock(SName.month, &quot;&quot; + monthYear.getYear(), true, openFontColor());</span>
-<span class="nc" id="L155">		printCentered(ug, false, start, end, small);</span>
-<span class="nc" id="L156">	}</span>
-
-	private void printQuarter(UGraphic ug, String quarter, double start, double end) {
-<span class="nc" id="L159">		final TextBlock small = getTextBlock(SName.day, quarter, false, openFontColor());</span>
+<span class="nc" id="L159">		final TextBlock small = getTextBlock(SName.month, &quot;&quot; + monthYear.getYear(), true, openFontColor());</span>
 <span class="nc" id="L160">		printCentered(ug, false, start, end, small);</span>
 <span class="nc" id="L161">	}</span>
 
+	private void printQuarter(UGraphic ug, String quarter, double start, double end) {
+<span class="nc" id="L164">		final TextBlock small = getTextBlock(SName.day, quarter, false, openFontColor());</span>
+<span class="nc" id="L165">		printCentered(ug, false, start, end, small);</span>
+<span class="nc" id="L166">	}</span>
+
 	private void printLeft(UGraphic ug, TextBlock text, double start) {
-<span class="nc" id="L164">		text.drawU(ug.apply(UTranslate.dx(start)));</span>
-<span class="nc" id="L165">	}</span>
+<span class="nc" id="L169">		text.drawU(ug.apply(UTranslate.dx(start)));</span>
+<span class="nc" id="L170">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -197,14 +197,14 @@ public class Stereotype implements CharSequence {
 	}
 
 	public PackageStyle getPackageStyle() {
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (automaticPackageStyle == false)</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (automaticPackageStyle == false)</span>
 <span class="fc" id="L201">			return null;</span>
 
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))</span>
-<span class="nc bnc" id="L204" title="All 2 branches missed.">			if ((&quot;&lt;&lt;&quot; + p + &quot;&gt;&gt;&quot;).equalsIgnoreCase(decoration.label))</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			if ((&quot;&lt;&lt;&quot; + p + &quot;&gt;&gt;&quot;).equalsIgnoreCase(decoration.label))</span>
 <span class="nc" id="L205">				return p;</span>
 
-<span class="nc" id="L207">		return null;</span>
+<span class="fc" id="L207">		return null;</span>
 	}
 
 	public boolean isBiddableOrUncertain() {

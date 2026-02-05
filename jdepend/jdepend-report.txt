@@ -3574,16 +3574,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 13
-    Concrete Classes: 12
+    Total Classes: 14
+    Concrete Classes: 13
     Abstract Classes: 1
 
     Ca: 0
     Ce: 33
 
-    A: 0.08
+    A: 0.07
     I: 1
-    D: 0.08
+    D: 0.07
 
 Abstract Classes:
     net.sourceforge.plantuml.chronology.TimeHeader2
@@ -3600,6 +3600,7 @@ Concrete Classes:
     net.sourceforge.plantuml.chronology.TaskChronology
     net.sourceforge.plantuml.chronology.TimeHeaderChronology
     net.sourceforge.plantuml.chronology.TimeHeaderChronology$Pending
+    net.sourceforge.plantuml.chronology.TimeHeaderParameters2
     net.sourceforge.plantuml.chronology.TimeScaleChronology
 
 Depends Upon:
@@ -6894,12 +6895,12 @@ Stats:
     Concrete Classes: 29
     Abstract Classes: 2
 
-    Ca: 104
+    Ca: 105
     Ce: 13
 
     A: 0.06
     I: 0.11
-    D: 0.82
+    D: 0.83
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.color.ColorMapper
@@ -7026,6 +7027,7 @@ Used By:
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.command
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.project.lang
@@ -7500,7 +7502,7 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 7
 
-    Ca: 84
+    Ca: 85
     Ce: 15
 
     A: 0.44
@@ -7605,6 +7607,7 @@ Used By:
     net.sourceforge.plantuml.openiconic
     net.sourceforge.plantuml.posimo
     net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.project.lang
@@ -8105,12 +8108,12 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 3
 
-    Ca: 89
+    Ca: 90
     Ce: 14
 
     A: 0.25
-    I: 0.14
-    D: 0.61
+    I: 0.13
+    D: 0.62
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.font.FontParamConstant
@@ -8210,6 +8213,7 @@ Used By:
     net.sourceforge.plantuml.png
     net.sourceforge.plantuml.posimo
     net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.regexdiagram
@@ -8244,7 +8248,7 @@ Stats:
     Concrete Classes: 37
     Abstract Classes: 6
 
-    Ca: 92
+    Ca: 93
     Ce: 11
 
     A: 0.14
@@ -8378,6 +8382,7 @@ Used By:
     net.sourceforge.plantuml.posimo
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.command
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.regexdiagram
@@ -9964,21 +9969,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 21
+    Total Classes: 20
     Concrete Classes: 18
-    Abstract Classes: 3
+    Abstract Classes: 2
 
-    Ca: 11
-    Ce: 35
+    Ca: 12
+    Ce: 36
 
-    A: 0.14
-    I: 0.76
-    D: 0.1
+    A: 0.1
+    I: 0.75
+    D: 0.15
 
 Abstract Classes:
     net.sourceforge.plantuml.project.GanttStyle
-    net.sourceforge.plantuml.project.ToTaskDraw
-    net.sourceforge.plantuml.project.Value
+    net.sourceforge.plantuml.project.PValue
 
 Concrete Classes:
     net.sourceforge.plantuml.project.Completion
@@ -9991,13 +9995,13 @@ Concrete Classes:
     net.sourceforge.plantuml.project.GanttConstraint
     net.sourceforge.plantuml.project.GanttConstraintMode
     net.sourceforge.plantuml.project.GanttDiagram
-    net.sourceforge.plantuml.project.GanttDiagram$1
     net.sourceforge.plantuml.project.GanttDiagramFactory
+    net.sourceforge.plantuml.project.GanttDiagramMainBlock
+    net.sourceforge.plantuml.project.GanttLayout
     net.sourceforge.plantuml.project.LabelPosition
     net.sourceforge.plantuml.project.LabelStrategy
     net.sourceforge.plantuml.project.Load
     net.sourceforge.plantuml.project.OpenClose
-    net.sourceforge.plantuml.project.TimeHeaderParameters
     net.sourceforge.plantuml.project.Today
 
 Depends Upon:
@@ -10024,6 +10028,7 @@ Depends Upon:
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.project.command
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.project.lang
@@ -10043,6 +10048,7 @@ Used By:
     net.sourceforge.plantuml.classdiagram.command
     net.sourceforge.plantuml.project.command
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.project.lang
@@ -10117,12 +10123,12 @@ Stats:
     Concrete Classes: 11
     Abstract Classes: 3
 
-    Ca: 9
+    Ca: 10
     Ce: 14
 
     A: 0.21
-    I: 0.61
-    D: 0.18
+    I: 0.58
+    D: 0.2
 
 Abstract Classes:
     net.sourceforge.plantuml.project.core.AbstractTask
@@ -10162,12 +10168,63 @@ Used By:
     net.sourceforge.plantuml.chronology
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.command
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.project.lang
     net.sourceforge.plantuml.project.solver
     net.sourceforge.plantuml.project.time
     net.sourceforge.plantuml.project.timescale
+
+--------------------------------------------------
+- Package: net.sourceforge.plantuml.project.data
+--------------------------------------------------
+
+Stats:
+    Total Classes: 7
+    Concrete Classes: 7
+    Abstract Classes: 0
+
+    Ca: 3
+    Ce: 16
+
+    A: 0
+    I: 0.84
+    D: 0.16
+
+Abstract Classes:
+
+Concrete Classes:
+    net.sourceforge.plantuml.project.data.DisplayConfigData
+    net.sourceforge.plantuml.project.data.GanttModelData
+    net.sourceforge.plantuml.project.data.TaskDrawRegistryData
+    net.sourceforge.plantuml.project.data.TimeBoundsData
+    net.sourceforge.plantuml.project.data.TimeScaleConfigData
+    net.sourceforge.plantuml.project.data.TimelineStyleData
+    net.sourceforge.plantuml.project.data.WeekConfigData
+
+Depends Upon:
+    java.lang
+    java.time
+    java.util
+    net.sourceforge.plantuml.klimt.color
+    net.sourceforge.plantuml.klimt.drawing
+    net.sourceforge.plantuml.klimt.font
+    net.sourceforge.plantuml.klimt.geom
+    net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.draw
+    net.sourceforge.plantuml.project.draw.header
+    net.sourceforge.plantuml.project.time
+    net.sourceforge.plantuml.project.timescale
+    net.sourceforge.plantuml.real
+    net.sourceforge.plantuml.skin
+    net.sourceforge.plantuml.style
+
+Used By:
+    net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.draw
+    net.sourceforge.plantuml.project.draw.header
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.project.draw
@@ -10178,12 +10235,12 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 3
 
-    Ca: 5
-    Ce: 24
+    Ca: 6
+    Ce: 25
 
     A: 0.25
-    I: 0.83
-    D: 0.08
+    I: 0.81
+    D: 0.06
 
 Abstract Classes:
     net.sourceforge.plantuml.project.draw.AbstractTaskDraw
@@ -10215,6 +10272,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.lang
     net.sourceforge.plantuml.project.ngm.math
     net.sourceforge.plantuml.project.time
@@ -10232,6 +10290,7 @@ Used By:
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.command
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw.header
 
 --------------------------------------------------
@@ -10243,12 +10302,12 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 3
 
-    Ca: 1
-    Ce: 19
+    Ca: 2
+    Ce: 20
 
     A: 0.25
-    I: 0.95
-    D: 0.2
+    I: 0.91
+    D: 0.16
 
 Abstract Classes:
     net.sourceforge.plantuml.project.draw.header.HeaderPiece
@@ -10256,13 +10315,13 @@ Abstract Classes:
     net.sourceforge.plantuml.project.draw.header.TimeHeaderCalendar
 
 Concrete Classes:
-    net.sourceforge.plantuml.project.draw.header.TimeHeaderCalendar$Pending
-    net.sourceforge.plantuml.project.draw.header.TimeHeaderContext
+    net.sourceforge.plantuml.project.draw.header.TimeHeader$Pending
     net.sourceforge.plantuml.project.draw.header.TimeHeaderDaily
+    net.sourceforge.plantuml.project.draw.header.TimeHeaderFactory
+    net.sourceforge.plantuml.project.draw.header.TimeHeaderFactory$1
     net.sourceforge.plantuml.project.draw.header.TimeHeaderMonthly
     net.sourceforge.plantuml.project.draw.header.TimeHeaderQuarterly
     net.sourceforge.plantuml.project.draw.header.TimeHeaderSimple
-    net.sourceforge.plantuml.project.draw.header.TimeHeaderSimple$Pending
     net.sourceforge.plantuml.project.draw.header.TimeHeaderWeekly
     net.sourceforge.plantuml.project.draw.header.TimeHeaderYearly
 
@@ -10280,6 +10339,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.ngm.math
     net.sourceforge.plantuml.project.time
@@ -10289,6 +10349,7 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.data
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.project.lang
@@ -10550,12 +10611,12 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 2
 
-    Ca: 9
+    Ca: 10
     Ce: 8
 
     A: 0.33
-    I: 0.47
-    D: 0.2
+    I: 0.44
+    D: 0.22
 
 Abstract Classes:
     net.sourceforge.plantuml.project.time.DayOfWeekUtils
@@ -10582,6 +10643,7 @@ Used By:
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.command
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.project.lang
@@ -10597,12 +10659,12 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 1
 
-    Ca: 4
+    Ca: 5
     Ce: 6
 
     A: 0.2
-    I: 0.6
-    D: 0.2
+    I: 0.55
+    D: 0.25
 
 Abstract Classes:
     net.sourceforge.plantuml.project.timescale.TimeScale
@@ -10624,6 +10686,7 @@ Depends Upon:
 Used By:
     net.sourceforge.plantuml.chronology
     net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
 
@@ -10636,12 +10699,12 @@ Stats:
     Concrete Classes: 11
     Abstract Classes: 5
 
-    Ca: 5
+    Ca: 6
     Ce: 5
 
     A: 0.31
-    I: 0.5
-    D: 0.19
+    I: 0.45
+    D: 0.23
 
 Abstract Classes:
     net.sourceforge.plantuml.real.AbstractReal
@@ -10673,6 +10736,7 @@ Depends Upon:
 Used By:
     net.sourceforge.plantuml.chronology
     net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.sequencediagram
     net.sourceforge.plantuml.sequencediagram.teoz
@@ -11785,7 +11849,7 @@ Stats:
     Concrete Classes: 42
     Abstract Classes: 5
 
-    Ca: 80
+    Ca: 81
     Ce: 34
 
     A: 0.11
@@ -11935,6 +11999,7 @@ Used By:
     net.sourceforge.plantuml.objectdiagram.command
     net.sourceforge.plantuml.oregon
     net.sourceforge.plantuml.project
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.regexdiagram
@@ -12357,12 +12422,12 @@ Stats:
     Concrete Classes: 22
     Abstract Classes: 8
 
-    Ca: 79
+    Ca: 80
     Ce: 29
 
     A: 0.27
     I: 0.27
-    D: 0.46
+    D: 0.47
 
 Abstract Classes:
     net.sourceforge.plantuml.style.AutomaticCounter
@@ -12486,6 +12551,7 @@ Used By:
     net.sourceforge.plantuml.posimo
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.core
+    net.sourceforge.plantuml.project.data
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.draw.header
     net.sourceforge.plantuml.regexdiagram
@@ -16295,9 +16361,14 @@ net.sourceforge.plantuml.preproc2
 
 net.sourceforge.plantuml.project
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.project.data
+    |   net.sourceforge.plantuml.project.core
+    |   net.sourceforge.plantuml.project.draw
+    |   net.sourceforge.plantuml.klimt.sprite
+    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.cli
+    |-> net.sourceforge.plantuml.klimt.color
 
 net.sourceforge.plantuml.project.command
     |
@@ -16316,6 +16387,16 @@ net.sourceforge.plantuml.project.core
     |   net.sourceforge.plantuml.cli
     |-> net.sourceforge.plantuml.klimt.color
 
+net.sourceforge.plantuml.project.data
+    |
+    |   net.sourceforge.plantuml.project.core
+    |   net.sourceforge.plantuml.project.draw
+    |   net.sourceforge.plantuml.klimt.sprite
+    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.cli
+    |-> net.sourceforge.plantuml.klimt.color
+
 net.sourceforge.plantuml.project.draw
     |
     |   net.sourceforge.plantuml.klimt.sprite
@@ -16326,10 +16407,9 @@ net.sourceforge.plantuml.project.draw
 
 net.sourceforge.plantuml.project.draw.header
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt
 
 net.sourceforge.plantuml.project.lang
     |
@@ -16358,17 +16438,27 @@ net.sourceforge.plantuml.project.solver
 net.sourceforge.plantuml.project.time
     |
     |   net.sourceforge.plantuml.project
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.project.data
+    |   net.sourceforge.plantuml.project.core
+    |   net.sourceforge.plantuml.project.draw
+    |   net.sourceforge.plantuml.klimt.sprite
+    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.cli
+    |-> net.sourceforge.plantuml.klimt.color
 
 net.sourceforge.plantuml.project.timescale
     |
     |   net.sourceforge.plantuml.project.time
     |   net.sourceforge.plantuml.project
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.project.data
+    |   net.sourceforge.plantuml.project.core
+    |   net.sourceforge.plantuml.project.draw
+    |   net.sourceforge.plantuml.klimt.sprite
+    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.cli
+    |-> net.sourceforge.plantuml.klimt.color
 
 net.sourceforge.plantuml.regex
     |
@@ -16840,7 +16930,7 @@ java.awt.font,0,0,7,0,0,0,1,1
 java.awt.geom,0,0,21,0,0,0,1,1
 java.awt.image,0,0,35,0,0,0,1,1
 java.io,0,0,124,0,0,0,1,1
-java.lang,0,0,233,0,0,0,1,1
+java.lang,0,0,234,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,8,0,0,0,1,1
 java.math,0,0,7,0,0,0,1,1
@@ -16852,10 +16942,10 @@ java.nio.file.attribute,0,0,1,0,0,0,1,1
 java.security,0,0,5,0,0,0,1,1
 java.security.spec,0,0,3,0,0,0,1,1
 java.text,0,0,9,0,0,0,1,1
-java.time,0,0,11,0,0,0,1,1
+java.time,0,0,12,0,0,0,1,1
 java.time.format,0,0,1,0,0,0,1,1
 java.time.temporal,0,0,1,0,0,0,1,1
-java.util,0,0,190,0,0,0,1,1
+java.util,0,0,191,0,0,0,1,1
 java.util.concurrent,0,0,10,0,0,0,1,1
 java.util.concurrent.atomic,0,0,12,0,0,0,1,1
 java.util.concurrent.locks,0,0,2,0,0,0,1,1
@@ -16918,7 +17008,7 @@ net.sourceforge.plantuml.chart,20,0,1,20,0,0.95,0.05,1
 net.sourceforge.plantuml.chart.command,11,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.cheneer,2,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.cheneer.command,6,0,1,14,0,0.93,0.07,1
-net.sourceforge.plantuml.chronology,13,1,0,33,0.08,1,0.08,1
+net.sourceforge.plantuml.chronology,14,1,0,33,0.07,1,0.07,1
 net.sourceforge.plantuml.classdiagram,5,1,12,24,0.2,0.67,0.13,1
 net.sourceforge.plantuml.classdiagram.command,21,0,9,28,0,0.76,0.24,1
 net.sourceforge.plantuml.cli,18,3,14,15,0.17,0.52,0.32,1
@@ -16974,13 +17064,13 @@ net.sourceforge.plantuml.jcckit,2,0,0,18,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,5,30,0,0.86,0.14,1
 net.sourceforge.plantuml.klimt,26,10,83,14,0.38,0.14,0.47,1
-net.sourceforge.plantuml.klimt.color,31,2,104,13,0.06,0.11,0.82,1
+net.sourceforge.plantuml.klimt.color,31,2,105,13,0.06,0.11,0.83,1
 net.sourceforge.plantuml.klimt.compress,14,2,5,10,0.14,0.67,0.19,1
 net.sourceforge.plantuml.klimt.creole,23,4,84,24,0.17,0.22,0.6,1
 net.sourceforge.plantuml.klimt.creole.atom,17,2,3,28,0.12,0.9,0.02,1
 net.sourceforge.plantuml.klimt.creole.command,24,2,3,21,0.08,0.88,0.04,1
 net.sourceforge.plantuml.klimt.creole.legacy,18,2,10,30,0.11,0.75,0.14,1
-net.sourceforge.plantuml.klimt.drawing,16,7,84,15,0.44,0.15,0.41,1
+net.sourceforge.plantuml.klimt.drawing,16,7,85,15,0.44,0.15,0.41,1
 net.sourceforge.plantuml.klimt.drawing.debug,2,0,4,12,0,0.75,0.25,1
 net.sourceforge.plantuml.klimt.drawing.eps,25,1,3,19,0.04,0.86,0.1,1
 net.sourceforge.plantuml.klimt.drawing.g2d,14,1,5,18,0.07,0.78,0.15,1
@@ -16990,8 +17080,8 @@ net.sourceforge.plantuml.klimt.drawing.svg,17,0,7,20,0,0.74,0.26,1
 net.sourceforge.plantuml.klimt.drawing.tikz,12,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,5,12,0,0.71,0.29,1
 net.sourceforge.plantuml.klimt.drawing.visio,12,1,1,13,0.08,0.93,0.01,1
-net.sourceforge.plantuml.klimt.font,12,3,89,14,0.25,0.14,0.61,1
-net.sourceforge.plantuml.klimt.geom,43,6,92,11,0.14,0.11,0.75,1
+net.sourceforge.plantuml.klimt.font,12,3,90,14,0.25,0.13,0.62,1
+net.sourceforge.plantuml.klimt.geom,43,6,93,11,0.14,0.11,0.75,1
 net.sourceforge.plantuml.klimt.shape,51,4,90,21,0.08,0.19,0.73,1
 net.sourceforge.plantuml.klimt.sprite,27,2,24,32,0.07,0.57,0.35,1
 net.sourceforge.plantuml.licensing,8,0,0,5,0,1,0,1
@@ -17018,18 +17108,19 @@ net.sourceforge.plantuml.posimo,9,2,1,17,0.22,0.94,0.17,1
 net.sourceforge.plantuml.preproc,24,3,71,19,0.12,0.21,0.66,1
 net.sourceforge.plantuml.preproc.spm,1,0,0,4,0,1,0,1
 net.sourceforge.plantuml.preproc2,10,1,4,8,0.1,0.67,0.23,1
-net.sourceforge.plantuml.project,21,3,11,35,0.14,0.76,0.1,1
+net.sourceforge.plantuml.project,20,2,12,36,0.1,0.75,0.15,1
 net.sourceforge.plantuml.project.command,17,0,2,15,0,0.88,0.12,1
-net.sourceforge.plantuml.project.core,14,3,9,14,0.21,0.61,0.18,1
-net.sourceforge.plantuml.project.draw,12,3,5,24,0.25,0.83,0.08,1
-net.sourceforge.plantuml.project.draw.header,12,3,1,19,0.25,0.95,0.2,1
+net.sourceforge.plantuml.project.core,14,3,10,14,0.21,0.58,0.2,1
+net.sourceforge.plantuml.project.data,7,0,3,16,0,0.84,0.16,1
+net.sourceforge.plantuml.project.draw,12,3,6,25,0.25,0.81,0.06,1
+net.sourceforge.plantuml.project.draw.header,12,3,2,20,0.25,0.91,0.16,1
 net.sourceforge.plantuml.project.lang,92,7,5,13,0.08,0.72,0.2,1
 net.sourceforge.plantuml.project.ngm,5,1,4,3,0.2,0.43,0.37,1
 net.sourceforge.plantuml.project.ngm.math,12,2,6,5,0.17,0.45,0.38,1
 net.sourceforge.plantuml.project.solver,2,0,2,6,0,0.75,0.25,1
-net.sourceforge.plantuml.project.time,6,2,9,8,0.33,0.47,0.2,1
-net.sourceforge.plantuml.project.timescale,5,1,4,6,0.2,0.6,0.2,1
-net.sourceforge.plantuml.real,16,5,5,5,0.31,0.5,0.19,1
+net.sourceforge.plantuml.project.time,6,2,10,8,0.33,0.44,0.22,1
+net.sourceforge.plantuml.project.timescale,5,1,5,6,0.2,0.55,0.25,1
+net.sourceforge.plantuml.real,16,5,6,5,0.31,0.45,0.23,1
 net.sourceforge.plantuml.regex,11,2,51,6,0.18,0.11,0.71,1
 net.sourceforge.plantuml.regexdiagram,10,0,0,22,0,1,0,1
 net.sourceforge.plantuml.salt,12,1,3,21,0.08,0.88,0.04,1
@@ -17046,14 +17137,14 @@ net.sourceforge.plantuml.sequencediagram.command,35,2,4,21,0.06,0.84,0.1,1
 net.sourceforge.plantuml.sequencediagram.graphic,65,10,4,29,0.15,0.88,0.03,1
 net.sourceforge.plantuml.sequencediagram.puma,7,0,0,2,0,1,0,1
 net.sourceforge.plantuml.sequencediagram.teoz,58,6,1,25,0.1,0.96,0.06,1
-net.sourceforge.plantuml.skin,47,5,80,34,0.11,0.3,0.6,1
+net.sourceforge.plantuml.skin,47,5,81,34,0.11,0.3,0.6,1
 net.sourceforge.plantuml.skin.rose,26,1,14,16,0.04,0.53,0.43,1
 net.sourceforge.plantuml.statediagram,2,0,4,18,0,0.82,0.18,1
 net.sourceforge.plantuml.statediagram.command,10,1,2,20,0.1,0.91,0.01,1
 net.sourceforge.plantuml.stats,23,1,2,32,0.04,0.94,0.02,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
 net.sourceforge.plantuml.stereo,6,0,47,14,0,0.23,0.77,1
-net.sourceforge.plantuml.style,30,8,79,29,0.27,0.27,0.46,1
+net.sourceforge.plantuml.style,30,8,80,29,0.27,0.27,0.47,1
 net.sourceforge.plantuml.style.parser,6,0,6,5,0,0.45,0.55,1
 net.sourceforge.plantuml.sudoku,8,1,0,25,0.12,1,0.12,1
 net.sourceforge.plantuml.svek,82,10,25,39,0.12,0.61,0.27,1

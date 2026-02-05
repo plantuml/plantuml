@@ -38,47 +38,47 @@ package net.sourceforge.plantuml.project.draw.header;
 import java.time.LocalDate;
 import java.util.Locale;
 
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.SName;
 
-public abstract class TimeHeaderCalendar extends TimeHeader {
+abstract class TimeHeaderCalendar extends TimeHeader {
 
-	public TimeHeaderCalendar(TimeHeaderContext ctx, TimeScale timeScale) {
-<span class="fc" id="L50">		super(ctx, timeScale);</span>
-<span class="fc" id="L51">	}</span>
+	public TimeHeaderCalendar(WeekConfigData weekConfigData, DayCalendarData dayCalendar, TimeBoundsData timeBounds,
+			TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle, TimeScale timeScale) {
+<span class="fc" id="L59">		super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle);</span>
+<span class="fc" id="L60">	}</span>
 
 	protected final Locale locale() {
-<span class="fc" id="L54">		return thParam.getLocale();</span>
+<span class="fc" id="L63">		return weekConfigData.getLocale();</span>
 	}
 
 	protected final int getLoadAt(TimePoint instant) {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (PiecewiseConstantUtils.isZeroOnDay(thParam.getLoadPlanable(), instant.toDay()))</span>
-<span class="fc" id="L59">			return 0;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (PiecewiseConstantUtils.isZeroOnDay(dayCalendar.getOpenClose().asPiecewiseConstant(), instant.toDay()))</span>
+<span class="fc" id="L68">			return 0;</span>
 
-<span class="fc" id="L61">		return 100;</span>
+<span class="fc" id="L70">		return 100;</span>
 	}
 
-	// Duplicate in TimeHeaderSimple
-	class Pending {
-		final double x1;
-		double x2;
-		final HColor color;
+	@Override
+	final public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+<span class="fc" id="L75">		drawColorsBackground(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L76">		drawTimeHeaderInternal(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L77">	}</span>
 
-<span class="fc" id="L70">		Pending(HColor color, double x1, double x2) {</span>
-<span class="fc" id="L71">			this.x1 = x1;</span>
-<span class="fc" id="L72">			this.x2 = x2;</span>
-<span class="fc" id="L73">			this.color = color;</span>
-<span class="fc" id="L74">		}</span>
+	public abstract void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter);
 
-		public void draw(UGraphic ug, double height) {
-<span class="fc" id="L77">			drawRectangle(ug.apply(color.bg()), height, x1, x2);</span>
-<span class="fc" id="L78">		}</span>
-	}
-
-	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
+	private final void drawColorsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
 <span class="fc" id="L83">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
 <span class="fc" id="L84">		Pending pending = null;</span>
@@ -87,9 +87,9 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 <span class="fc" id="L87">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
 <span class="fc" id="L88">			final double x1 = getTimeScale().getPosition(wink);</span>
 <span class="fc" id="L89">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
-<span class="fc" id="L90">			HColor back = thParam.getColor(wink);</span>
+<span class="fc" id="L90">			HColor back = getColor(wink);</span>
 			// Day of week should be stronger than period of time (back color).
-<span class="fc" id="L92">			final HColor backDoW = thParam.getColor(wink.toDayOfWeek());</span>
+<span class="fc" id="L92">			final HColor backDoW = getColor(wink.toDayOfWeek());</span>
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (backDoW != null)</span>
 <span class="nc" id="L94">				back = backDoW;</span>
 
@@ -117,6 +117,27 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 <span class="nc" id="L117">			pending.draw(ug, height);</span>
 
 <span class="fc" id="L119">	}</span>
+	
+	
+	protected final void printNamedDays(final UGraphic ug) {
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (dayCalendar.getNameDays().size() &gt; 0) {</span>
+<span class="nc" id="L124">			String last = null;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L126">				final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L127">				final String name = dayCalendar.getDayName(wink);</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
+<span class="nc" id="L129">					final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L130">					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());</span>
+
+<span class="nc" id="L132">					final double position = getTimeHeaderHeight(ug.getStringBounder());</span>
+<span class="nc" id="L133">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
+				}
+<span class="nc" id="L135">				last = name;</span>
+			}
+		}
+<span class="fc" id="L138">	}</span>
+
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

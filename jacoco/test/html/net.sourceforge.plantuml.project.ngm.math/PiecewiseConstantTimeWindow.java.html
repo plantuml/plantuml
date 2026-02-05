@@ -36,9 +36,6 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 /**
  * Immutable implementation of {@link PiecewiseConstant} that models a time
@@ -82,14 +79,14 @@ public final class PiecewiseConstantTimeWindow extends AbstractPiecewiseConstant
 	 * @throws NullPointerException     if either parameter is null
 	 * @throws IllegalArgumentException if offAfter is not after offBefore
 	 */
-<span class="nc" id="L85">	public PiecewiseConstantTimeWindow(LocalDateTime offBefore, LocalDateTime offAfter) {</span>
+<span class="nc" id="L82">	public PiecewiseConstantTimeWindow(LocalDateTime offBefore, LocalDateTime offAfter) {</span>
 
-<span class="nc" id="L87">		this.offBefore = offBefore;</span>
-<span class="nc" id="L88">		this.offAfter = offAfter;</span>
+<span class="nc" id="L84">		this.offBefore = offBefore;</span>
+<span class="nc" id="L85">		this.offAfter = offAfter;</span>
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (this.offBefore.isBefore(this.offAfter) == false)</span>
-<span class="nc" id="L91">			throw new IllegalArgumentException(&quot;offAfter must be after offBefore&quot;);</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (this.offBefore.isBefore(this.offAfter) == false)</span>
+<span class="nc" id="L88">			throw new IllegalArgumentException(&quot;offAfter must be after offBefore&quot;);</span>
+<span class="nc" id="L89">	}</span>
 
 	/**
 	 * Returns the segment containing the given instant.
@@ -106,10 +103,10 @@ public final class PiecewiseConstantTimeWindow extends AbstractPiecewiseConstant
 	 */
 	@Override
 	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (direction == TimeDirection.FORWARD)</span>
-<span class="nc" id="L110">			return segmentAtForward(instant);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="nc" id="L107">			return segmentAtForward(instant);</span>
 		else
-<span class="nc" id="L112">			return segmentAtBackward(instant);</span>
+<span class="nc" id="L109">			return segmentAtBackward(instant);</span>
 	}
 
 	/**
@@ -121,17 +118,17 @@ public final class PiecewiseConstantTimeWindow extends AbstractPiecewiseConstant
 	private Segment segmentAtForward(LocalDateTime instant) {
 		// Before the active window: return a segment from instant to offBefore with
 		// value 0
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (instant.isBefore(offBefore))</span>
-<span class="nc" id="L125">			return Segment.forward(instant, offBefore, Fraction.ZERO);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (instant.isBefore(offBefore))</span>
+<span class="nc" id="L122">			return Segment.forward(instant, offBefore, Fraction.ZERO);</span>
 
 		// After the active window: return an unbounded segment from instant onwards
 		// with value 0
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (instant.isBefore(offAfter) == false)</span>
-<span class="nc" id="L130">			return Segment.forward(instant, LocalDateTime.MAX, Fraction.ZERO);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (instant.isBefore(offAfter) == false)</span>
+<span class="nc" id="L127">			return Segment.forward(instant, LocalDateTime.MAX, Fraction.ZERO);</span>
 
 		// Within the active window: return a segment from instant to offAfter with
 		// value 1
-<span class="nc" id="L134">		return Segment.forward(instant, offAfter, Fraction.ONE);</span>
+<span class="nc" id="L131">		return Segment.forward(instant, offAfter, Fraction.ONE);</span>
 	}
 
 	/**
@@ -143,17 +140,17 @@ public final class PiecewiseConstantTimeWindow extends AbstractPiecewiseConstant
 	private Segment segmentAtBackward(LocalDateTime instant) {
 		// After the active window: return a segment from instant back to offAfter with
 		// value 0
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (instant.isAfter(offAfter))</span>
-<span class="nc" id="L147">			return Segment.backward(instant, offAfter, Fraction.ZERO);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (instant.isAfter(offAfter))</span>
+<span class="nc" id="L144">			return Segment.backward(instant, offAfter, Fraction.ZERO);</span>
 
 		// Before the active window: return an unbounded segment from instant backwards
 		// with value 0
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (instant.isAfter(offBefore) == false)</span>
-<span class="nc" id="L152">			return Segment.backward(instant, LocalDateTime.MIN, Fraction.ZERO);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (instant.isAfter(offBefore) == false)</span>
+<span class="nc" id="L149">			return Segment.backward(instant, LocalDateTime.MIN, Fraction.ZERO);</span>
 
 		// Within the active window: return a segment from instant back to offBefore
 		// with value 1
-<span class="nc" id="L156">		return Segment.backward(instant, offBefore, Fraction.ONE);</span>
+<span class="nc" id="L153">		return Segment.backward(instant, offBefore, Fraction.ONE);</span>
 	}
 
 }

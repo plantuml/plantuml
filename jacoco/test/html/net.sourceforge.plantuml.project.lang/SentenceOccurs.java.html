@@ -41,35 +41,34 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceOccurs extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceOccurs() {
-<span class="fc" id="L49">		super(SubjectTask.ME, Verbs.occurs, new ComplementFromTo());</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.occurs, new ComplementFromTo());</span>
+<span class="fc" id="L49">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L54">		final Task task = (Task) subject;</span>
-<span class="nc" id="L55">		final TwoNames bothNames = (TwoNames) complement;</span>
-<span class="nc" id="L56">		final String name1 = bothNames.getName1();</span>
-<span class="nc" id="L57">		final String name2 = bothNames.getName2();</span>
-<span class="nc" id="L58">		final Task from = project.getExistingTask(name1);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (from == null) </span>
-<span class="nc" id="L60">			return CommandExecutionResult.error(&quot;No such &quot; + name1 + &quot; task&quot;);</span>
+<span class="nc" id="L53">		final Task task = (Task) subject;</span>
+<span class="nc" id="L54">		final TwoNames bothNames = (TwoNames) complement;</span>
+<span class="nc" id="L55">		final String name1 = bothNames.getName1();</span>
+<span class="nc" id="L56">		final String name2 = bothNames.getName2();</span>
+<span class="nc" id="L57">		final Task from = project.getExistingTask(name1);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (from == null) </span>
+<span class="nc" id="L59">			return CommandExecutionResult.error(&quot;No such &quot; + name1 + &quot; task&quot;);</span>
 		
-<span class="nc" id="L62">		final Task to = project.getExistingTask(name2);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (to == null) </span>
-<span class="nc" id="L64">			return CommandExecutionResult.error(&quot;No such &quot; + name2 + &quot; task&quot;);</span>
+<span class="nc" id="L61">		final Task to = project.getExistingTask(name2);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (to == null) </span>
+<span class="nc" id="L63">			return CommandExecutionResult.error(&quot;No such &quot; + name2 + &quot; task&quot;);</span>
 		
-<span class="nc" id="L66">		task.setStart(from.getStart());</span>
-<span class="nc" id="L67">		task.setEnd(to.getEnd());</span>
-<span class="nc" id="L68">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="nc" id="L65">		task.setStart(from.getStart());</span>
+<span class="nc" id="L66">		task.setEnd(to.getEnd());</span>
+<span class="nc" id="L67">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 				new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
-<span class="nc" id="L70">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="nc" id="L69">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 				new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
-<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
 	}
 
 }

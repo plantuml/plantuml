@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw.header;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -50,11 +51,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
+import net.sourceforge.plantuml.project.data.DayCalendarData;
+import net.sourceforge.plantuml.project.data.TimeBoundsData;
+import net.sourceforge.plantuml.project.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.project.data.TimelineStyleData;
+import net.sourceforge.plantuml.project.data.WeekConfigData;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.skin.Pragma;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 public abstract class TimeHeader {
@@ -62,41 +66,56 @@ public abstract class TimeHeader {
 
 	private final TimeScale timeScale;
 
-	protected final TimeHeaderParameters thParam;
-	protected final TimeHeaderContext ctx;
+	protected final DayCalendarData dayCalendar;
+	protected final TimeBoundsData timeBounds;
+	protected final TimeScaleConfigData scaleConfig;
+	protected final TimelineStyleData timelineStyle;
+	protected final WeekConfigData weekConfigData;
 
-<span class="fc" id="L68">	public TimeHeader(TimeHeaderContext ctx, TimeScale timeScale) {</span>
-<span class="fc" id="L69">		this.thParam = ctx.thParam();</span>
-<span class="fc" id="L70">		this.ctx = ctx;</span>
-<span class="fc" id="L71">		this.timeScale = timeScale;</span>
-<span class="fc" id="L72">	}</span>
+	public TimeHeader(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+<span class="fc" id="L76">			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {</span>
+<span class="fc" id="L77">		this.weekConfigData = weekConfigData;</span>
+<span class="fc" id="L78">		this.dayCalendar = dayCalendar;</span>
+<span class="fc" id="L79">		this.timeBounds = timeBounds;</span>
+<span class="fc" id="L80">		this.scaleConfig = scaleConfig;</span>
+<span class="fc" id="L81">		this.timelineStyle = timelineStyle;</span>
+<span class="fc" id="L82">		this.timeScale = timeScale;</span>
+<span class="fc" id="L83">	}</span>
 
-	protected final boolean isBold2(TimePoint wink) {
-<span class="fc" id="L75">		return thParam.getVerticalSeparatorBefore().contains(wink);</span>
+	public HColor getColor(TimePoint wink) {
+<span class="fc" id="L86">		return dayCalendar.getDayColor(wink);</span>
+	}
+
+	public HColor getColor(DayOfWeek dayOfWeek) {
+<span class="fc" id="L90">		return dayCalendar.getDayOfWeekColor(dayOfWeek);</span>
+	}
+
+	protected final boolean isBold(LocalDate wink) {
+<span class="fc" id="L94">		return dayCalendar.hasSeparatorBefore(wink);</span>
 	}
 
 	protected final LocalDate getMinDay() {
-<span class="fc" id="L79">		return thParam.getMinDay();</span>
+<span class="fc" id="L98">		return timeBounds.getMinDay();</span>
 	}
 
 	protected final LocalDate getMaxDay() {
-<span class="fc" id="L83">		return thParam.getMaxDay();</span>
+<span class="fc" id="L102">		return timeBounds.getMaxDay();</span>
 	}
 
 	protected final HColor closedBackgroundColor() {
-<span class="fc" id="L87">		return thParam.getClosedStyle().value(PName.BackGroundColor).asColor(thParam.getColorSet());</span>
+<span class="fc" id="L106">		return timelineStyle.getClosedBackgroundColor();</span>
 	}
 
 	protected final HColor closedFontColor() {
-<span class="nc" id="L91">		return thParam.getClosedStyle().value(PName.FontColor).asColor(thParam.getColorSet());</span>
+<span class="nc" id="L110">		return timelineStyle.getClosedFontColor();</span>
 	}
 
 	protected final HColor openFontColor() {
-<span class="fc" id="L95">		return thParam.getTimelineStyle().value(PName.FontColor).asColor(thParam.getColorSet());</span>
+<span class="fc" id="L114">		return timelineStyle.getOpenFontColor();</span>
 	}
 
 	protected final HColor getLineColor() {
-<span class="fc" id="L99">		return thParam.getTimelineStyle().value(PName.LineColor).asColor(thParam.getColorSet());</span>
+<span class="fc" id="L118">		return timelineStyle.getLineColor();</span>
 	}
 
 	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
@@ -110,78 +129,93 @@ public abstract class TimeHeader {
 	public abstract void drawTimeFooter(UGraphic ug);
 
 	public final TimeScale getTimeScale() {
-<span class="fc" id="L113">		return timeScale;</span>
+<span class="fc" id="L132">		return timeScale;</span>
 	}
 
 	protected final void drawHline(UGraphic ug, double y) {
-<span class="fc" id="L117">		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(thParam.getMinDay()));</span>
-<span class="fc" id="L118">		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(thParam.getMaxDay()));</span>
-<span class="fc" id="L119">		final ULine hline = ULine.hline(xmax - xmin);</span>
-<span class="fc" id="L120">		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);</span>
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L136">		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMinDay()));</span>
+<span class="fc" id="L137">		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay()));</span>
+<span class="fc" id="L138">		final ULine hline = ULine.hline(xmax - xmin);</span>
+<span class="fc" id="L139">		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);</span>
+<span class="fc" id="L140">	}</span>
 
 	protected final void drawVline(UGraphic ug, double x, double y1, double y2) {
-<span class="fc" id="L124">		final ULine vbar = ULine.vline(y2 - y1);</span>
-<span class="fc" id="L125">		ug.apply(new UTranslate(x, y1)).draw(vbar);</span>
-<span class="fc" id="L126">	}</span>
+<span class="fc" id="L143">		final ULine vbar = ULine.vline(y2 - y1);</span>
+<span class="fc" id="L144">		ug.apply(new UTranslate(x, y1)).draw(vbar);</span>
+<span class="fc" id="L145">	}</span>
 
 	final protected FontConfiguration getFontConfiguration(UFont font, boolean bold, HColor color) {
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (bold)</span>
-<span class="fc" id="L130">			font = font.bold();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (bold)</span>
+<span class="fc" id="L149">			font = font.bold();</span>
 
-<span class="fc" id="L132">		return FontConfiguration.create(font, color, color, null);</span>
+<span class="fc" id="L151">		return FontConfiguration.create(font, color, color, null);</span>
 	}
 
 	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
-<span class="fc" id="L136">		final UFont font = thParam.getStyle(SName.timeline, param).getUFont();</span>
-<span class="fc" id="L137">		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);</span>
-<span class="fc" id="L138">		return Display.getWithNewlines(getPragma(), text).create(fontConfiguration, HorizontalAlignment.LEFT,</span>
+<span class="fc" id="L155">		final UFont font = timelineStyle.getFont(param);</span>
+<span class="fc" id="L156">		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);</span>
+<span class="fc" id="L157">		return Display.getWithNewlines(getPragma(), text).create(fontConfiguration, HorizontalAlignment.LEFT,</span>
 				new SpriteContainerEmpty());
 	}
 
 	protected final void printCentered(UGraphic ug, TextBlock text, double start, double end) {
-<span class="nc" id="L143">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="nc" id="L144">		final double available = end - start;</span>
-<span class="nc" id="L145">		final double diff = Math.max(0, available - width);</span>
-<span class="nc" id="L146">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L162">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L163">		final double available = end - start;</span>
+<span class="nc" id="L164">		final double diff = Math.max(0, available - width);</span>
+<span class="nc" id="L165">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="nc" id="L166">	}</span>
 
 	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
 			TextBlock... texts) {
-<span class="fc" id="L151">		final double available = end - start;</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
-<span class="fc" id="L153">			final TextBlock text = texts[i];</span>
-<span class="fc" id="L154">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="pc bpc" id="L155" title="1 of 6 branches missed.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
-<span class="fc" id="L156">				final double diff = Math.max(0, available - width);</span>
-<span class="fc" id="L157">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="fc" id="L158">				return;</span>
+<span class="fc" id="L170">		final double available = end - start;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L172">			final TextBlock text = texts[i];</span>
+<span class="fc" id="L173">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="pc bpc" id="L174" title="1 of 6 branches missed.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
+<span class="fc" id="L175">				final double diff = Math.max(0, available - width);</span>
+<span class="fc" id="L176">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="fc" id="L177">				return;</span>
 			}
 		}
-<span class="nc" id="L161">	}</span>
+<span class="nc" id="L180">	}</span>
 
 	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (height == 0)</span>
-<span class="nc" id="L165">			return;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (height == 0)</span>
+<span class="nc" id="L184">			return;</span>
 
-<span class="fc" id="L167">		ug = ug.apply(HColors.none());</span>
-<span class="fc" id="L168">		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (x2 &gt; x1)</span>
-<span class="fc" id="L170">			ug.draw(URectangle.build(x2 - x1, height));</span>
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L186">		ug = ug.apply(HColors.none());</span>
+<span class="fc" id="L187">		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (x2 &gt; x1)</span>
+<span class="fc" id="L189">			ug.draw(URectangle.build(x2 - x1, height));</span>
+<span class="fc" id="L190">	}</span>
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L174">		ug = thParam.forVerticalSeparator(ug);</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="fc" id="L176">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">			if (isBold2(wink))</span>
-<span class="nc" id="L178">				drawVline(ug, getTimeScale().getPosition(wink), getFullHeaderHeight(ug.getStringBounder()),</span>
-						totalHeightWithoutFooter);
-		}
-<span class="fc" id="L181">	}</span>
+<span class="fc" id="L193">		ug = timelineStyle.applyVerticalSeparatorStyle(ug);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1))</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">			if (isBold(day))</span>
+<span class="nc" id="L196">				drawVline(ug, getTimeScale().getPosition(TimePoint.ofStartOfDay(day)),</span>
+<span class="nc" id="L197">						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);</span>
+
+<span class="fc" id="L199">	}</span>
 
 	protected Pragma getPragma() {
-<span class="fc" id="L184">		return Pragma.createEmpty();</span>
+<span class="fc" id="L202">		return Pragma.createEmpty();</span>
+	}
+
+	class Pending {
+		final double x1;
+		double x2;
+		final HColor color;
+
+<span class="fc" id="L210">		Pending(HColor color, double x1, double x2) {</span>
+<span class="fc" id="L211">			this.x1 = x1;</span>
+<span class="fc" id="L212">			this.x2 = x2;</span>
+<span class="fc" id="L213">			this.color = color;</span>
+<span class="fc" id="L214">		}</span>
+
+		public void draw(UGraphic ug, double height) {
+<span class="fc" id="L217">			drawRectangle(ug.apply(color.bg()), height, x1, x2);</span>
+<span class="fc" id="L218">		}</span>
 	}
 
 }

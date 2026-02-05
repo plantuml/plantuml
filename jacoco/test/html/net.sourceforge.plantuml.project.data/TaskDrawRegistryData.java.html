@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskDrawRegistryData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.data</a> &gt; <span class="el_source">TaskDrawRegistryData.java</span></div><h1>TaskDrawRegistryData.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.project.data;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskGroup;
+import net.sourceforge.plantuml.project.core.TaskImpl;
+import net.sourceforge.plantuml.project.core.TaskSeparator;
+import net.sourceforge.plantuml.project.draw.FingerPrint;
+import net.sourceforge.plantuml.project.draw.ResourceDraw;
+import net.sourceforge.plantuml.project.draw.ResourceDrawNumbers;
+import net.sourceforge.plantuml.project.draw.TaskDraw;
+import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
+import net.sourceforge.plantuml.project.draw.TaskDrawGroup;
+import net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+import net.sourceforge.plantuml.project.draw.TaskDrawSeparator;
+import net.sourceforge.plantuml.project.draw.header.TimeHeader;
+import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealOrigin;
+import net.sourceforge.plantuml.real.RealUtils;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+/**
+ * Value object containing the mapping from Task to TaskDraw.
+ */
+<span class="fc" id="L68">public class TaskDrawRegistryData {</span>
+
+<span class="fc" id="L70">	private final RealOrigin origin = RealUtils.createOrigin();</span>
+<span class="fc" id="L71">	private final Map&lt;Task, TaskDraw&gt; draws = new LinkedHashMap&lt;&gt;();</span>
+	private double totalHeightWithoutFooter;
+
+	public double getTotalHeightWithoutFooter() {
+<span class="fc" id="L75">		return totalHeightWithoutFooter;</span>
+	}
+
+	public RealOrigin getOrigin() {
+<span class="fc" id="L79">		return origin;</span>
+	}
+
+	public TaskDraw getTaskDraw(Task task) {
+<span class="fc" id="L83">		return draws.get(task);</span>
+	}
+
+	// Mutators
+
+	public void putTaskDraw(Task task, TaskDraw draw) {
+<span class="fc" id="L89">		draws.put(task, draw);</span>
+<span class="fc" id="L90">	}</span>
+
+	// Internal access
+
+	private double computeBottomY(StringBounder stringBounder) {
+<span class="fc" id="L95">		double result = 0;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (TaskDraw td : draws.values())</span>
+<span class="fc" id="L97">			result = Math.max(result, td.getY(stringBounder).getCurrentValue() + td.getHeightMax(stringBounder));</span>
+
+<span class="fc" id="L99">		return result;</span>
+	}
+
+	private void resolveNoteOverlaps(StringBounder stringBounder) {
+<span class="fc" id="L103">		final List&lt;TaskDraw&gt; notes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (TaskDraw td : draws.values()) {</span>
+<span class="fc" id="L105">			final FingerPrint taskPrint = td.getFingerPrint(stringBounder);</span>
+<span class="fc" id="L106">			final FingerPrint fingerPrintNote = td.getFingerPrintNote(stringBounder);</span>
+
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			if (td.getTrueRow() == null)</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				for (TaskDraw note : notes) {</span>
+<span class="nc" id="L110">					final FingerPrint otherNote = note.getFingerPrintNote(stringBounder);</span>
+<span class="nc" id="L111">					final double deltaY = otherNote.overlap(taskPrint);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">					if (deltaY &gt; 0) {</span>
+<span class="nc" id="L113">						final Real bottom = note.getY(stringBounder).addAtLeast(note.getHeightMax(stringBounder));</span>
+<span class="nc" id="L114">						td.getY(stringBounder).ensureBiggerThan(bottom);</span>
+<span class="nc" id="L115">						getOrigin().compileNow();</span>
+					}
+
+<span class="nc" id="L118">				}</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (fingerPrintNote != null)</span>
+<span class="nc" id="L121">				notes.add(td);</span>
+
+<span class="fc" id="L123">		}</span>
+<span class="fc" id="L124">	}</span>
+
+	private TaskDraw createRegularTaskDraw(GanttModelData modelData, TimeBoundsData timeBounds,
+			TimelineStyleData timelineStyle, TimeScale timeScale, Real y, final Task task, final String display) {
+		final boolean oddEnd;
+		final boolean oddStart;
+<span class="fc" id="L130">		final TimePoint startForDrawing = timeBounds.getStartForDrawing(task);</span>
+<span class="fc" id="L131">		final TimePoint endForDrawing = timeBounds.getEndForDrawing(task);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (timeBounds.getPrintStart() != null) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			oddStart = TimePoint.ofStartOfDay(timeBounds.getMinDay()).compareTo(startForDrawing) == 0;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			oddEnd = TimePoint.ofStartOfDay(timeBounds.getMaxDay().plusDays(1)).compareTo(endForDrawing) == 0;</span>
+		} else {
+<span class="fc" id="L136">			oddStart = false;</span>
+<span class="fc" id="L137">			oddEnd = false;</span>
+		}
+<span class="fc" id="L139">		return new TaskDrawRegular(timelineStyle.getColorSet(), timeScale, y, display, startForDrawing, endForDrawing,</span>
+<span class="fc" id="L140">				oddStart, oddEnd, timelineStyle.getSkinParam(), task, this, modelData.getConstraintsForTask(task),</span>
+<span class="fc" id="L141">				task.getStyleBuilder());</span>
+	}
+
+	public void buildTaskAndResourceDraws(StringBounder stringBounder, TimeHeader timeHeader, GanttModelData modelData,
+			DisplayConfigData displayConfig, TimeBoundsData timeBounds, TimelineStyleData timelineStyle) {
+
+<span class="fc" id="L147">		final TimeScale timeScale = timeHeader.getTimeScale();</span>
+<span class="fc" id="L148">		final double headerTotalHeight = timeHeader.getFullHeaderHeight(stringBounder);</span>
+<span class="fc" id="L149">		final ISkinParam skinParam = timelineStyle.getSkinParam();</span>
+
+<span class="fc" id="L151">		Real y = getOrigin().addFixed(headerTotalHeight);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
+			final TaskDraw draw;
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (task instanceof TaskSeparator) {</span>
+<span class="nc" id="L155">				final TaskSeparator taskSeparator = (TaskSeparator) task;</span>
+<span class="nc" id="L156">				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, timeBounds.getMinDay(),</span>
+<span class="nc" id="L157">						timeBounds.getMaxDay(), task.getStyleBuilder(), skinParam);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			} else if (task instanceof TaskGroup) {</span>
+<span class="nc" id="L159">				final TaskGroup taskGroup = (TaskGroup) task;</span>
+<span class="nc" id="L160">				draw = new TaskDrawGroup(timelineStyle.getColorSet(), timeScale, y, taskGroup.getCode().getDisplay(),</span>
+<span class="nc" id="L161">						timeBounds.getStartForDrawing(taskGroup), timeBounds.getEndForDrawing(taskGroup), task, this,</span>
+<span class="nc" id="L162">						task.getStyleBuilder(), skinParam);</span>
+<span class="nc" id="L163">			} else {</span>
+<span class="fc" id="L164">				final TaskImpl taskImpl = (TaskImpl) task;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">				final String taskLabel = displayConfig.isHideResourceName() ? taskImpl.getCode().getDisplay()</span>
+<span class="fc" id="L166">						: taskImpl.getPrettyDisplay();</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">				if (taskImpl.isDiamond())</span>
+<span class="nc" id="L168">					draw = new TaskDrawDiamond(timelineStyle.getColorSet(), timeScale, y, taskLabel,</span>
+<span class="nc" id="L169">							timeBounds.getStartForDrawing(taskImpl), taskImpl, this, task.getStyleBuilder(), skinParam);</span>
+				else
+<span class="fc" id="L171">					draw = createRegularTaskDraw(modelData, timeBounds, timelineStyle, timeScale, y, taskImpl,</span>
+							taskLabel);
+
+<span class="fc" id="L174">				draw.setColorsAndCompletion(taskImpl.getColors(), taskImpl.getCompletion(), taskImpl.getUrl(),</span>
+<span class="fc" id="L175">						taskImpl.getNote(), taskImpl.getNoteStereotype());</span>
+			}
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">			if (task.getRow() == null)</span>
+<span class="fc" id="L178">				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));</span>
+
+<span class="fc" id="L180">			putTaskDraw(task, draw);</span>
+<span class="fc" id="L181">		}</span>
+<span class="fc" id="L182">		getOrigin().compileNow();</span>
+<span class="fc" id="L183">		resolveNoteOverlaps(stringBounder);</span>
+<span class="fc" id="L184">		buildResourceDraws(stringBounder, timeScale, modelData, displayConfig, timeBounds, timelineStyle,</span>
+				headerTotalHeight);
+<span class="fc" id="L186">	}</span>
+
+	private void buildResourceDraws(StringBounder stringBounder, final TimeScale timeScale, GanttModelData modelData,
+			DisplayConfigData displayConfig, TimeBoundsData timeBounds, TimelineStyleData timelineStyle,
+			final double fullHeaderHeight) {
+<span class="fc" id="L191">		double yy = computeBottomY(stringBounder);</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (yy == 0) {</span>
+<span class="nc" id="L193">			yy = fullHeaderHeight;</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		} else if (displayConfig.isHideResourceFootbox() == false)</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">			for (Resource res : modelData.getResources()) {</span>
+<span class="nc" id="L196">				final ResourceDraw draw = new ResourceDrawNumbers(modelData, timelineStyle, res, timeScale, yy,</span>
+<span class="nc" id="L197">						TimePoint.ofStartOfDay(timeBounds.getMinDay()),</span>
+<span class="nc" id="L198">						TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay()));</span>
+<span class="nc" id="L199">				res.setTaskDraw(draw);</span>
+<span class="nc" id="L200">				yy += draw.getHeight(stringBounder);</span>
+<span class="nc" id="L201">			}</span>
+
+<span class="fc" id="L203">		totalHeightWithoutFooter = yy;</span>
+<span class="fc" id="L204">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

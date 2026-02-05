@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -46,10 +47,10 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -66,95 +67,95 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	private final TimePoint end;
 
-	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, TimePoint start, TimePoint end, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinParam skinParam) {
-<span class="nc" id="L71">		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
-<span class="nc" id="L72">		this.end = end;</span>
-<span class="nc" id="L73">	}</span>
+	public TaskDrawGroup(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
+			TimePoint end, Task task, TaskDrawRegistryData toTaskDraw, StyleBuilder styleBuilder,
+			ISkinParam skinParam) {
+<span class="nc" id="L73">		super(colorSet, timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
+<span class="nc" id="L74">		this.end = end;</span>
+<span class="nc" id="L75">	}</span>
 
 	@Override
 	protected double getShapeHeight(StringBounder stringBounder) {
-<span class="nc" id="L77">		final Style style = getStyle();</span>
-<span class="nc" id="L78">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
+<span class="nc" id="L79">		final Style style = getStyle();</span>
+<span class="nc" id="L80">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
 		// return padding.getTop() +
 		// getTitle().calculateDimension(stringBounder).getHeight() +
 		// padding.getBottom() + 8;
-<span class="nc" id="L82">		final double pos1 = timeScale.getPosition(start) + 6;</span>
-<span class="nc" id="L83">		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;</span>
-<span class="nc" id="L84">		final TextBlock title = getTitle();</span>
-<span class="nc" id="L85">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth())</span>
-<span class="nc" id="L87">			return dim.getHeight() + 2;</span>
+<span class="nc" id="L84">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="nc" id="L85">		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;</span>
+<span class="nc" id="L86">		final TextBlock title = getTitle();</span>
+<span class="nc" id="L87">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth())</span>
+<span class="nc" id="L89">			return dim.getHeight() + 2;</span>
 		else
-<span class="nc" id="L89">			return dim.getHeight();</span>
+<span class="nc" id="L91">			return dim.getHeight();</span>
 	}
 
 	@Override
 	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars) {
-<span class="nc" id="L94">		final TextBlock title = getTitle();</span>
-<span class="nc" id="L95">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L96">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L96">		final TextBlock title = getTitle();</span>
+<span class="nc" id="L97">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L98">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L98">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
-<span class="nc" id="L99">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="nc" id="L100">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
+<span class="nc" id="L100">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="nc" id="L101">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L102">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
 
-<span class="nc" id="L102">		final double pos1 = timeScale.getPosition(start) + 6;</span>
-<span class="nc" id="L103">		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;</span>
+<span class="nc" id="L104">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="nc" id="L105">		final double pos2 = timeScale.getPosition(end) + timeScale.getWidth(end) - 6;</span>
 		final double pos;
 		final double y;
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth()) {</span>
-<span class="nc" id="L107">			pos = pos1 + (pos2 - pos1 - dim.getWidth()) / 2;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth()) {</span>
+<span class="nc" id="L109">			pos = pos1 + (pos2 - pos1 - dim.getWidth()) / 2;</span>
 			// y = margin.getTop() + padding.getTop();
-<span class="nc" id="L109">			y = 0;</span>
+<span class="nc" id="L111">			y = 0;</span>
 		} else {
-<span class="nc" id="L111">			pos = pos2 + 6;</span>
-<span class="nc" id="L112">			y = (getFullHeightTask(stringBounder) - dim.getHeight());</span>
+<span class="nc" id="L113">			pos = pos2 + 6;</span>
+<span class="nc" id="L114">			y = (getFullHeightTask(stringBounder) - dim.getHeight());</span>
 		}
-<span class="nc" id="L114">		title.drawU(ug.apply(new UTranslate(pos, y)));</span>
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L116">		title.drawU(ug.apply(new UTranslate(pos, y)));</span>
+<span class="nc" id="L117">	}</span>
 
 	@Override
 	protected TextBlock getTitle() {
-<span class="nc" id="L119">		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(),</span>
+<span class="nc" id="L121">		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(),</span>
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	@Override
 	StyleSignature getStyleSignature() {
-<span class="nc" id="L125">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);</span>
+<span class="nc" id="L127">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// final double startPos = timeScale.getStartingPosition(start);
-<span class="nc" id="L130">		ug = applyColors(ug);</span>
-<span class="nc" id="L131">		drawShape(ug);</span>
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L132">		ug = applyColors(ug);</span>
+<span class="nc" id="L133">		drawShape(ug);</span>
+<span class="nc" id="L134">	}</span>
 
 	@Override
 	public double getHeightMax(StringBounder stringBounder) {
-<span class="nc" id="L136">		return getFullHeightTask(stringBounder);</span>
+<span class="nc" id="L138">		return getFullHeightTask(stringBounder);</span>
 	}
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
-<span class="nc" id="L140">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="nc" id="L141">		final double startPos = timeScale.getPosition(start);</span>
-<span class="nc" id="L142">		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end);</span>
-<span class="nc" id="L143">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);</span>
+<span class="nc" id="L142">		final double h = getFullHeightTask(stringBounder);</span>
+<span class="nc" id="L143">		final double startPos = timeScale.getPosition(start);</span>
+<span class="nc" id="L144">		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end);</span>
+<span class="nc" id="L145">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);</span>
 	}
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-<span class="nc" id="L147">		return null;</span>
+<span class="nc" id="L149">		return null;</span>
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
-<span class="nc" id="L151">		final CenterBorderColor col = this.getColors();</span>
-<span class="nc bnc" id="L152" title="All 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
-<span class="nc" id="L153">			return col.apply(ug);</span>
+<span class="nc" id="L153">		final CenterBorderColor col = this.getColors();</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
+<span class="nc" id="L155">			return col.apply(ug);</span>
 
-<span class="nc" id="L155">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
+<span class="nc" id="L157">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
 	}
-
 
 	@Override
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
@@ -162,100 +163,100 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		// final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final double x;
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (side == GSide.LEFT)</span>
-<span class="nc" id="L166">			x = timeScale.getPosition(start);</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L168">			x = timeScale.getPosition(end) + timeScale.getWidth(end);</span>
-<span class="nc bnc" id="L169" title="All 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT)</span>
-<span class="nc" id="L170">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
-<span class="nc bnc" id="L171" title="All 4 branches missed.">		else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT)</span>
-<span class="nc" id="L172">			x = (timeScale.getPosition(end) + timeScale.getPosition(end) + timeScale.getWidth(end)) / 2;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (side == GSide.LEFT)</span>
+<span class="nc" id="L167">			x = timeScale.getPosition(start);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		else if (side == GSide.RIGHT)</span>
+<span class="nc" id="L169">			x = timeScale.getPosition(end) + timeScale.getWidth(end);</span>
+<span class="nc bnc" id="L170" title="All 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT)</span>
+<span class="nc" id="L171">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed.">		else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT)</span>
+<span class="nc" id="L173">			x = (timeScale.getPosition(end) + timeScale.getPosition(end) + timeScale.getWidth(end)) / 2;</span>
 		else
-<span class="nc" id="L174">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L175">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L176">		return x;</span>
+<span class="nc" id="L177">		return x;</span>
 	}
 
 	private void drawShape(UGraphic ug) {
-<span class="nc" id="L180">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
-<span class="nc" id="L181">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L181">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="nc" id="L182">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="nc" id="L183">		final double startPos = timeScale.getPosition(start) + margin.getLeft();</span>
-<span class="nc" id="L184">		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end) - margin.getRight();</span>
+<span class="nc" id="L184">		final double startPos = timeScale.getPosition(start) + margin.getLeft();</span>
+<span class="nc" id="L185">		final double endPos = timeScale.getPosition(end) + timeScale.getWidth(end) - margin.getRight();</span>
 
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L187">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L188">			ug.startUrl(url);</span>
 
 		// ug = ug.apply(UTranslate.dy(margin.getTop() + 7));
-<span class="nc" id="L190">		ug = ug.apply(UTranslate.dy(getFullHeightTask(ug.getStringBounder()) - height));</span>
+<span class="nc" id="L191">		ug = ug.apply(UTranslate.dy(getFullHeightTask(ug.getStringBounder()) - height));</span>
 
-<span class="nc" id="L192">		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());</span>
-<span class="nc" id="L193">		ug.draw(getShape(startPos, endPos));</span>
+<span class="nc" id="L193">		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());</span>
+<span class="nc" id="L194">		ug.draw(getShape(startPos, endPos));</span>
 
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L196">			ug.closeUrl();</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L197">			ug.closeUrl();</span>
 
-<span class="nc" id="L198">	}</span>
+<span class="nc" id="L199">	}</span>
 
-<span class="nc" id="L200">	final private double height = 10;</span>
+<span class="nc" id="L201">	final private double height = 10;</span>
 
 	private UPath getShape(final double startPos, final double endPos) {
-<span class="nc" id="L203">		final UPath rect = UPath.none();</span>
+<span class="nc" id="L204">		final UPath rect = UPath.none();</span>
 
-<span class="nc" id="L205">		final double thick = 2;</span>
-<span class="nc" id="L206">		final double y1 = (height - thick) / 2;</span>
-<span class="nc" id="L207">		final double y2 = height - (height - thick) / 2;</span>
-<span class="nc" id="L208">		final double dx = 6;</span>
+<span class="nc" id="L206">		final double thick = 2;</span>
+<span class="nc" id="L207">		final double y1 = (height - thick) / 2;</span>
+<span class="nc" id="L208">		final double y2 = height - (height - thick) / 2;</span>
+<span class="nc" id="L209">		final double dx = 6;</span>
 
-<span class="nc" id="L210">		rect.moveTo(startPos, 0);</span>
-<span class="nc" id="L211">		rect.lineTo(startPos + dx, y1);</span>
-<span class="nc" id="L212">		rect.lineTo(endPos - dx, y1);</span>
-<span class="nc" id="L213">		rect.lineTo(endPos, 0);</span>
-<span class="nc" id="L214">		rect.lineTo(endPos, height);</span>
-<span class="nc" id="L215">		rect.lineTo(endPos - dx, y2);</span>
-<span class="nc" id="L216">		rect.lineTo(startPos + dx, y2);</span>
-<span class="nc" id="L217">		rect.lineTo(startPos, height);</span>
-<span class="nc" id="L218">		rect.lineTo(startPos, 0);</span>
+<span class="nc" id="L211">		rect.moveTo(startPos, 0);</span>
+<span class="nc" id="L212">		rect.lineTo(startPos + dx, y1);</span>
+<span class="nc" id="L213">		rect.lineTo(endPos - dx, y1);</span>
+<span class="nc" id="L214">		rect.lineTo(endPos, 0);</span>
+<span class="nc" id="L215">		rect.lineTo(endPos, height);</span>
+<span class="nc" id="L216">		rect.lineTo(endPos - dx, y2);</span>
+<span class="nc" id="L217">		rect.lineTo(startPos + dx, y2);</span>
+<span class="nc" id="L218">		rect.lineTo(startPos, height);</span>
+<span class="nc" id="L219">		rect.lineTo(startPos, 0);</span>
 
-<span class="nc" id="L220">		rect.closePath();</span>
-<span class="nc" id="L221">		return rect;</span>
+<span class="nc" id="L221">		rect.closePath();</span>
+<span class="nc" id="L222">		return rect;</span>
 	}
 
 	private UPath getShapeOld2(final double startPos, final double endPos) {
-<span class="nc" id="L225">		final UPath rect = UPath.none();</span>
+<span class="nc" id="L226">		final UPath rect = UPath.none();</span>
 
-<span class="nc" id="L227">		final double height1 = 9;</span>
-<span class="nc" id="L228">		final double height2 = 7;</span>
-<span class="nc" id="L229">		final double dx = 6;</span>
+<span class="nc" id="L228">		final double height1 = 9;</span>
+<span class="nc" id="L229">		final double height2 = 7;</span>
+<span class="nc" id="L230">		final double dx = 6;</span>
 
-<span class="nc" id="L231">		rect.moveTo(startPos, 0);</span>
-<span class="nc" id="L232">		rect.lineTo(startPos + dx, height2);</span>
-<span class="nc" id="L233">		rect.lineTo(endPos - dx, height2);</span>
-<span class="nc" id="L234">		rect.lineTo(endPos, 0);</span>
-<span class="nc" id="L235">		rect.lineTo(endPos, height1);</span>
-<span class="nc" id="L236">		rect.lineTo(startPos, height1);</span>
-<span class="nc" id="L237">		rect.lineTo(startPos, 0);</span>
+<span class="nc" id="L232">		rect.moveTo(startPos, 0);</span>
+<span class="nc" id="L233">		rect.lineTo(startPos + dx, height2);</span>
+<span class="nc" id="L234">		rect.lineTo(endPos - dx, height2);</span>
+<span class="nc" id="L235">		rect.lineTo(endPos, 0);</span>
+<span class="nc" id="L236">		rect.lineTo(endPos, height1);</span>
+<span class="nc" id="L237">		rect.lineTo(startPos, height1);</span>
+<span class="nc" id="L238">		rect.lineTo(startPos, 0);</span>
 
-<span class="nc" id="L239">		rect.closePath();</span>
-<span class="nc" id="L240">		return rect;</span>
+<span class="nc" id="L240">		rect.closePath();</span>
+<span class="nc" id="L241">		return rect;</span>
 	}
 
 	private UPath getShapeOld(final double startPos, final double endPos) {
-<span class="nc" id="L244">		final UPath rect = UPath.none();</span>
+<span class="nc" id="L245">		final UPath rect = UPath.none();</span>
 
-<span class="nc" id="L246">		final double height1 = 9;</span>
-<span class="nc" id="L247">		final double height2 = 2;</span>
-<span class="nc" id="L248">		final double dx = 6;</span>
+<span class="nc" id="L247">		final double height1 = 9;</span>
+<span class="nc" id="L248">		final double height2 = 2;</span>
+<span class="nc" id="L249">		final double dx = 6;</span>
 
-<span class="nc" id="L250">		rect.moveTo(startPos, 0);</span>
-<span class="nc" id="L251">		rect.lineTo(endPos, 0);</span>
-<span class="nc" id="L252">		rect.lineTo(endPos, height1);</span>
-<span class="nc" id="L253">		rect.lineTo(endPos - dx, height2);</span>
-<span class="nc" id="L254">		rect.lineTo(startPos + dx, height2);</span>
-<span class="nc" id="L255">		rect.lineTo(startPos, height1);</span>
-<span class="nc" id="L256">		rect.lineTo(startPos, 0);</span>
-<span class="nc" id="L257">		rect.closePath();</span>
-<span class="nc" id="L258">		return rect;</span>
+<span class="nc" id="L251">		rect.moveTo(startPos, 0);</span>
+<span class="nc" id="L252">		rect.lineTo(endPos, 0);</span>
+<span class="nc" id="L253">		rect.lineTo(endPos, height1);</span>
+<span class="nc" id="L254">		rect.lineTo(endPos - dx, height2);</span>
+<span class="nc" id="L255">		rect.lineTo(startPos + dx, height2);</span>
+<span class="nc" id="L256">		rect.lineTo(startPos, height1);</span>
+<span class="nc" id="L257">		rect.lineTo(startPos, 0);</span>
+<span class="nc" id="L258">		rect.closePath();</span>
+<span class="nc" id="L259">		return rect;</span>
 	}
 
 }

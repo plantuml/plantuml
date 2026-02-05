@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project;
 
 import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
 
-public class Load implements Value {
+public class Load implements PValue {
 
 	private final NGMTotalEffort effort;
 

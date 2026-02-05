@@ -61,8 +61,10 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/gantt-diagram" target="_top">
  Gantt Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.data">net.sourceforge.plantuml.project.data</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -91,6 +93,32 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.project.data">
+<h2>Uses of <a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a> in <a href="../data/package-summary.html">net.sourceforge.plantuml.project.data</a></h2>
+<div class="caption"><span>Methods in <a href="../data/package-summary.html">net.sourceforge.plantuml.project.data</a> that return types with arguments of type <a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttModelData.</span><code><a href="../data/GanttModelData.html#getConstraints()" class="member-name-link">getConstraints</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GanttModelData.</span><code><a href="../data/GanttModelData.html#getConstraintsForTask(net.sourceforge.plantuml.project.core.Task)" class="member-name-link">getConstraintsForTask</a><wbr>(<a href="../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../data/package-summary.html">net.sourceforge.plantuml.project.data</a> with parameters of type <a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttModelData.</span><code><a href="../data/GanttModelData.html#addConstraint(net.sourceforge.plantuml.project.GanttConstraint)" class="member-name-link">addConstraint</a><wbr>(<a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a>&nbsp;constraint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.project.draw">
 <h2>Uses of <a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a> in <a href="../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a></h2>
 <div class="caption"><span>Constructor parameters in <a href="../draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with type arguments of type <a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a></span></div>
@@ -99,7 +127,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../draw/TaskDrawRegular.html#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,boolean,boolean,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">TaskDrawRegular</a><wbr>(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-second even-row-color"><code><a href="../draw/TaskDrawRegular.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,boolean,boolean,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">TaskDrawRegular</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
  <a href="../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
@@ -108,7 +137,7 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;oddEnd,
  <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  <a href="../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
+ <a href="../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a>&gt;&nbsp;constraints,
  <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>

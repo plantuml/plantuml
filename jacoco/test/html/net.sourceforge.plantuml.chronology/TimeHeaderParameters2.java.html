@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeHeaderParameters2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chronology</a> &gt; <span class="el_source">TimeHeaderParameters2.java</span></div><h1>TimeHeaderParameters2.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.chronology;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.project.GanttStyle;
+import net.sourceforge.plantuml.project.OpenClose;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+
+public class TimeHeaderParameters2 implements GanttStyle {
+
+	final Map&lt;TimePoint, HColor&gt; colorDays;
+	final double scale;
+	final LocalDate minDay;
+	final LocalDate maxDay;
+	final HColorSet colorSet;
+	final GanttStyle ganttStyle;
+	final Locale locale;
+	final OpenClose openClose;
+	final Map&lt;DayOfWeek, HColor&gt; colorDaysOfWeek;
+	final Set&lt;TimePoint&gt; verticalSeparatorBefore;
+	final boolean hideClosed;
+
+	public TimeHeaderParameters2(Map&lt;TimePoint, HColor&gt; colorDays, double scale, LocalDate minDay, LocalDate maxDay,
+			HColorSet colorSet, Locale locale, OpenClose openClose, Map&lt;DayOfWeek, HColor&gt; colorDaysOfWeek,
+<span class="nc" id="L73">			Set&lt;TimePoint&gt; verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {</span>
+<span class="nc" id="L74">		this.colorDays = colorDays;</span>
+<span class="nc" id="L75">		this.scale = scale;</span>
+<span class="nc" id="L76">		this.minDay = minDay;</span>
+<span class="nc" id="L77">		this.maxDay = maxDay;</span>
+<span class="nc" id="L78">		this.colorSet = Objects.requireNonNull(colorSet);</span>
+<span class="nc" id="L79">		this.ganttStyle = ganttStyle;</span>
+<span class="nc" id="L80">		this.locale = locale;</span>
+<span class="nc" id="L81">		this.openClose = openClose;</span>
+<span class="nc" id="L82">		this.colorDaysOfWeek = colorDaysOfWeek;</span>
+<span class="nc" id="L83">		this.verticalSeparatorBefore = verticalSeparatorBefore;</span>
+<span class="nc" id="L84">		this.hideClosed = hideClosed;</span>
+<span class="nc" id="L85">	}</span>
+
+	public HColor getColor(TimePoint wink) {
+<span class="nc" id="L88">		return colorDays.get(wink);</span>
+	}
+
+	public HColor getColor(DayOfWeek dayOfWeek) {
+<span class="nc" id="L92">		return colorDaysOfWeek.get(dayOfWeek);</span>
+	}
+
+	public final double getScale() {
+<span class="nc" id="L96">		return scale;</span>
+	}
+
+	public final LocalDate getMinDay() {
+<span class="nc" id="L100">		return minDay;</span>
+	}
+
+	public final LocalDate getMaxDay() {
+<span class="nc" id="L104">		return maxDay;</span>
+	}
+
+	public final HColorSet getColorSet() {
+<span class="nc" id="L108">		return colorSet;</span>
+	}
+
+	public final Style getTimelineStyle() {
+<span class="nc" id="L112">		return getStyle(SName.timeline);</span>
+	}
+
+	public final Style getClosedStyle() {
+<span class="nc" id="L116">		return getStyle(SName.closed);</span>
+	}
+
+	public final Locale getLocale() {
+<span class="nc" id="L120">		return locale;</span>
+	}
+
+	public final PiecewiseConstant getLoadPlanable() {
+<span class="nc" id="L124">		return openClose.asPiecewiseConstant();</span>
+	}
+
+	public final Set&lt;TimePoint&gt; getVerticalSeparatorBefore() {
+<span class="nc" id="L128">		return verticalSeparatorBefore;</span>
+	}
+
+	public final UGraphic forVerticalSeparator(UGraphic ug) {
+<span class="nc" id="L132">		final Style style = getStyle(SName.verticalSeparator);</span>
+<span class="nc" id="L133">		final HColor color = style.value(PName.LineColor).asColor(getColorSet());</span>
+<span class="nc" id="L134">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L135">		return ug.apply(color).apply(stroke);</span>
+	}
+
+	@Override
+	public final Style getStyle(SName param1, SName param2) {
+<span class="nc" id="L140">		return ganttStyle.getStyle(param1, param2);</span>
+	}
+
+	@Override
+	public Style getStyle(SName param) {
+<span class="nc" id="L145">		return ganttStyle.getStyle(param);</span>
+	}
+
+	final public double getCellWidth() {
+<span class="nc" id="L149">		final double w = getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L150">		return w * 1.6;</span>
+	}
+
+	public boolean isHideClosed() {
+<span class="nc" id="L154">		return hideClosed;</span>
+	}
+
+	public OpenClose getOpenClose() {
+<span class="nc" id="L158">		return openClose;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

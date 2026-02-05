@@ -103,7 +103,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../chronology/TimeHeader2.html#%3Cinit%3E(net.sourceforge.plantuml.project.TimeHeaderParameters,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader2</a><wbr>(<a href="../../TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
+<div class="col-second even-row-color"><code><a href="../../../chronology/TimeHeader2.html#%3Cinit%3E(net.sourceforge.plantuml.chronology.TimeHeaderParameters2,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader2</a><wbr>(<a href="../../../chronology/TimeHeaderParameters2.html" title="class in net.sourceforge.plantuml.chronology">TimeHeaderParameters2</a>&nbsp;thParam,
  <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -118,8 +118,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../../../klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">GanttConstraint.</span><code><a href="../../GanttConstraint.html#getUDrawable(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.ToTaskDraw)" class="member-name-link">getUDrawable</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
- <a href="../../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttConstraint.</span><code><a href="../../GanttConstraint.html#getUDrawable(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.data.TaskDrawRegistryData)" class="member-name-link">getUDrawable</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../package-summary.html">net.sourceforge.plantuml.project</a> with parameters of type <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
@@ -128,12 +128,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../GanttArrow.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">GanttArrow</a><wbr>(<a href="../../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+<div class="col-second even-row-color"><code><a href="../../GanttArrow.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">GanttArrow</a><wbr>(<a href="../../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
  <a href="../../../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../core/TaskInstant.html" title="class in net.sourceforge.plantuml.project.core">TaskInstant</a>&nbsp;source,
  <a href="../../core/TaskInstant.html" title="class in net.sourceforge.plantuml.project.core">TaskInstant</a>&nbsp;dest,
- <a href="../../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
+ <a href="../../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -157,17 +157,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/AbstractTaskDraw.html#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-second even-row-color"><code><a href="../../draw/AbstractTaskDraw.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
  <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
  <a href="../../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
+ <a href="../../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../draw/ResourceDrawNumbers.html#%3Cinit%3E(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.project.core.Resource,net.sourceforge.plantuml.project.timescale.TimeScale,double,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">ResourceDrawNumbers</a><wbr>(<a href="../../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;gantt,
+<div class="col-second odd-row-color"><code><a href="../../draw/ResourceDrawNumbers.html#%3Cinit%3E(net.sourceforge.plantuml.project.data.GanttModelData,net.sourceforge.plantuml.project.data.TimelineStyleData,net.sourceforge.plantuml.project.core.Resource,net.sourceforge.plantuml.project.timescale.TimeScale,double,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">ResourceDrawNumbers</a><wbr>(<a href="../../data/GanttModelData.html" title="class in net.sourceforge.plantuml.project.data">GanttModelData</a>&nbsp;ganttModelData,
+ <a href="../../data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyleData,
  <a href="../../core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a>&nbsp;res,
  <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  double&nbsp;y,
@@ -175,28 +177,31 @@ loadScripts(document, 'script');</script>
  <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;maxTimePointPrintedEndOfDay)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/TaskDrawDiamond.html#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawDiamond</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-second even-row-color"><code><a href="../../draw/TaskDrawDiamond.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawDiamond</a><wbr>(<a href="../../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
  <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
  <a href="../../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
+ <a href="../../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../draw/TaskDrawGroup.html#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawGroup</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-second odd-row-color"><code><a href="../../draw/TaskDrawGroup.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawGroup</a><wbr>(<a href="../../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
  <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
  <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;end,
  <a href="../../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
+ <a href="../../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/TaskDrawRegular.html#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,boolean,boolean,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">TaskDrawRegular</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-second even-row-color"><code><a href="../../draw/TaskDrawRegular.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,boolean,boolean,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">TaskDrawRegular</a><wbr>(<a href="../../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
  <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
@@ -205,7 +210,7 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;oddEnd,
  <a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  <a href="../../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
+ <a href="../../data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a>&gt;&nbsp;constraints,
  <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -229,26 +234,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#daily()" class="member-name-link">daily</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/header/TimeHeader.html#getTimeScale()" class="member-name-link">getTimeScale</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#monthly()" class="member-name-link">monthly</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#quaterly()" class="member-name-link">quaterly</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#simple()" class="member-name-link">simple</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#weekly()" class="member-name-link">weekly</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderContext.</span><code><a href="../../draw/header/TimeHeaderContext.html#yearly()" class="member-name-link">yearly</a>()</code></div>
+<div class="col-first even-row-color"><code>final <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/header/TimeHeader.html#getTimeScale()" class="member-name-link">getTimeScale</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> with parameters of type <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a></span></div>
@@ -257,13 +244,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../draw/header/TimeHeader.html#%3Cinit%3E(net.sourceforge.plantuml.project.draw.header.TimeHeaderContext,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeader</a><wbr>(<a href="../../draw/header/TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx,
- <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
+<div class="col-second even-row-color"><code><a href="../../draw/header/TimeHeader.html#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.data.WeekConfigData,net.sourceforge.plantuml.project.data.DayCalendarData,net.sourceforge.plantuml.project.data.TimeBoundsData,net.sourceforge.plantuml.project.data.TimeScaleConfigData,net.sourceforge.plantuml.project.data.TimelineStyleData)" class="member-name-link">TimeHeader</a><wbr>(<a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../data/WeekConfigData.html" title="class in net.sourceforge.plantuml.project.data">WeekConfigData</a>&nbsp;weekConfigData,
+ <a href="../../data/DayCalendarData.html" title="class in net.sourceforge.plantuml.project.data">DayCalendarData</a>&nbsp;dayCalendar,
+ <a href="../../data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a>&nbsp;timeBounds,
+ <a href="../../data/TimeScaleConfigData.html" title="class in net.sourceforge.plantuml.project.data">TimeScaleConfigData</a>&nbsp;scaleConfig,
+ <a href="../../data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyle)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../draw/header/TimeHeaderCalendar.html#%3Cinit%3E(net.sourceforge.plantuml.project.draw.header.TimeHeaderContext,net.sourceforge.plantuml.project.timescale.TimeScale)" class="member-name-link">TimeHeaderCalendar</a><wbr>(<a href="../../draw/header/TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx,
- <a href="../TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

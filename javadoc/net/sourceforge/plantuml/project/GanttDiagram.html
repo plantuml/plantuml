@@ -82,12 +82,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a></code>, <code><a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code>, <code><a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a></code>, <code><a href="ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a></code>, <code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code>, <code><a href="../WithSprite.html" title="interface in net.sourceforge.plantuml">WithSprite</a></code></dd>
+<dd><code><a href="../Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a></code>, <code><a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code>, <code><a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a></code>, <code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code>, <code><a href="../WithSprite.html" title="interface in net.sourceforge.plantuml">WithSprite</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GanttDiagram</span>
 <span class="extends-implements">extends <a href="../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>
-implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>, <a href="../WithSprite.html" title="interface in net.sourceforge.plantuml">WithSprite</a>, <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a></span></div>
+implements <a href="../WithSprite.html" title="interface in net.sourceforge.plantuml">WithSprite</a>, <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -218,41 +218,34 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIt()" class="member-name-link">getIt</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadForResource(net.sourceforge.plantuml.project.core.Resource,net.sourceforge.plantuml.project.time.TimePoint)" class="member-name-link">getLoadForResource</a><wbr>(<a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a>&nbsp;res,
- <a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;i)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ngm/math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.project.ngm.math">PiecewiseConstant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadPlanableForTask(java.lang.String)" class="member-name-link">getLoadPlanableForTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;taskId)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ngm/math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.project.ngm.math">PiecewiseConstant</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadPlanableForTask(java.lang.String)" class="member-name-link">getLoadPlanableForTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;taskId)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxDay()" class="member-name-link">getMaxDay</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxDay()" class="member-name-link">getMaxDay</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxTimePoint()" class="member-name-link">getMaxTimePoint</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxTimePoint()" class="member-name-link">getMaxTimePoint</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinDay()" class="member-name-link">getMinDay</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinDay()" class="member-name-link">getMinDay</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinTimePoint()" class="member-name-link">getMinTimePoint</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinTimePoint()" class="member-name-link">getMinTimePoint</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrCreateTask(net.sourceforge.plantuml.project.core.TaskCode,boolean)" class="member-name-link">getOrCreateTask</a><wbr>(<a href="core/TaskCode.html" title="class in net.sourceforge.plantuml.project.core">TaskCode</a>&nbsp;code,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrCreateTask(net.sourceforge.plantuml.project.core.TaskCode,boolean)" class="member-name-link">getOrCreateTask</a><wbr>(<a href="core/TaskCode.html" title="class in net.sourceforge.plantuml.project.core">TaskCode</a>&nbsp;code,
  boolean&nbsp;linkedToPrevious)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResource(java.lang.String)" class="member-name-link">getResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResource(java.lang.String)" class="member-name-link">getResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param1,
- <a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param2)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="draw/TaskDraw.html" title="interface in net.sourceforge.plantuml.project.draw">TaskDraw</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTaskDraw(net.sourceforge.plantuml.project.core.Task)" class="member-name-link">getTaskDraw</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param1,
+ <a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextMainBlock(net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextMainBlock</a><wbr>(<a href="../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
@@ -564,16 +557,6 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 </section>
 </li>
 <li>
-<section class="detail" id="getIHtmlColorSet()">
-<h3>getIHtmlColorSet</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></span>&nbsp;<span class="element-name">getIHtmlColorSet</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="ToTaskDraw.html#getIHtmlColorSet()">getIHtmlColorSet</a></code>&nbsp;in interface&nbsp;<code><a href="ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="updateStartingPoint(java.time.LocalDate)">
 <h3>updateStartingPoint</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></span>&nbsp;<span class="element-name">updateStartingPoint</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;start)</span></div>
@@ -635,13 +618,6 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 </section>
 </li>
 <li>
-<section class="detail" id="getLoadForResource(net.sourceforge.plantuml.project.core.Resource,net.sourceforge.plantuml.project.time.TimePoint)">
-<h3>getLoadForResource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getLoadForResource</span><wbr><span class="parameters">(<a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a>&nbsp;res,
- <a href="time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;i)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="getExistingMoment(java.lang.String)">
 <h3>getExistingMoment</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="core/Moment.html" title="interface in net.sourceforge.plantuml.project.core">Moment</a></span>&nbsp;<span class="element-name">getExistingMoment</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
@@ -700,30 +676,10 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 </section>
 </li>
 <li>
-<section class="detail" id="getTaskDraw(net.sourceforge.plantuml.project.core.Task)">
-<h3>getTaskDraw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="draw/TaskDraw.html" title="interface in net.sourceforge.plantuml.project.draw">TaskDraw</a></span>&nbsp;<span class="element-name">getTaskDraw</span><wbr><span class="parameters">(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="ToTaskDraw.html#getTaskDraw(net.sourceforge.plantuml.project.core.Task)">getTaskDraw</a></code>&nbsp;in interface&nbsp;<code><a href="ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="addNote(net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.stereo.Stereotype)">
 <h3>addNote</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></span>&nbsp;<span class="element-name">addNote</span><wbr><span class="parameters">(<a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="getDefaultPlan()">
-<h3>getDefaultPlan</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ngm/math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.project.ngm.math">PiecewiseConstant</a></span>&nbsp;<span class="element-name">getDefaultPlan</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="ToTaskDraw.html#getDefaultPlan()">getDefaultPlan</a></code>&nbsp;in interface&nbsp;<code><a href="ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
@@ -813,6 +769,18 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 <section class="detail" id="setHideClosed(boolean)">
 <h3>setHideClosed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHideClosed</span><wbr><span class="parameters">(boolean&nbsp;hideClosed)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDefaultPlan()">
+<h3>getDefaultPlan</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ngm/math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.project.ngm.math">PiecewiseConstant</a></span>&nbsp;<span class="element-name">getDefaultPlan</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIHtmlColorSet()">
+<h3>getIHtmlColorSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></span>&nbsp;<span class="element-name">getIHtmlColorSet</span>()</div>
 </section>
 </li>
 </ul>

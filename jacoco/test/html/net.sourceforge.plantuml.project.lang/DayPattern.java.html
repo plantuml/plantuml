@@ -39,7 +39,6 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import net.sourceforge.plantuml.project.time.MonthUtils;
-import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -59,53 +58,53 @@ public class DayPattern {
 	private final String dayKeyB;
 	private final String dayKeyC;
 
-<span class="fc" id="L62">	public DayPattern(String id) {</span>
-<span class="fc" id="L63">		this.id = id;</span>
-<span class="fc" id="L64">		this.yearKeyA = &quot;AYEAR&quot; + id;</span>
-<span class="fc" id="L65">		this.yearKeyB = &quot;BYEAR&quot; + id;</span>
-<span class="fc" id="L66">		this.yearKeyC = &quot;CYEAR&quot; + id;</span>
-<span class="fc" id="L67">		this.monthKeyA = &quot;AMONTH&quot; + id;</span>
-<span class="fc" id="L68">		this.monthKeyB = &quot;BMONTH&quot; + id;</span>
-<span class="fc" id="L69">		this.monthKeyC = &quot;CMONTH&quot; + id;</span>
-<span class="fc" id="L70">		this.dayKeyA = &quot;ADAY&quot; + id;</span>
-<span class="fc" id="L71">		this.dayKeyB = &quot;BDAY&quot; + id;</span>
-<span class="fc" id="L72">		this.dayKeyC = &quot;CDAY&quot; + id;</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L61">	public DayPattern(String id) {</span>
+<span class="fc" id="L62">		this.id = id;</span>
+<span class="fc" id="L63">		this.yearKeyA = &quot;AYEAR&quot; + id;</span>
+<span class="fc" id="L64">		this.yearKeyB = &quot;BYEAR&quot; + id;</span>
+<span class="fc" id="L65">		this.yearKeyC = &quot;CYEAR&quot; + id;</span>
+<span class="fc" id="L66">		this.monthKeyA = &quot;AMONTH&quot; + id;</span>
+<span class="fc" id="L67">		this.monthKeyB = &quot;BMONTH&quot; + id;</span>
+<span class="fc" id="L68">		this.monthKeyC = &quot;CMONTH&quot; + id;</span>
+<span class="fc" id="L69">		this.dayKeyA = &quot;ADAY&quot; + id;</span>
+<span class="fc" id="L70">		this.dayKeyB = &quot;BDAY&quot; + id;</span>
+<span class="fc" id="L71">		this.dayKeyC = &quot;CDAY&quot; + id;</span>
+<span class="fc" id="L72">	}</span>
 
 	public IRegex toRegex() {
-<span class="fc" id="L76">		return new RegexOr(toRegexA_DD_MONTH_YYYY(), toRegexB_YYYY_MM_DD(), toRegexC_MONTH_DD_YYYY());</span>
+<span class="fc" id="L75">		return new RegexOr(toRegexA_DD_MONTH_YYYY(), toRegexB_YYYY_MM_DD(), toRegexC_MONTH_DD_YYYY());</span>
 	}
 
 	public LocalDate getDay(RegexResult arg) {
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (arg.get(dayKeyA, 0) != null)</span>
-<span class="nc" id="L81">			return resultA(arg);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (arg.get(dayKeyA, 0) != null)</span>
+<span class="nc" id="L80">			return resultA(arg);</span>
 
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (arg.get(dayKeyB, 0) != null)</span>
-<span class="fc" id="L84">			return resultB(arg);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (arg.get(dayKeyB, 0) != null)</span>
+<span class="fc" id="L83">			return resultB(arg);</span>
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (arg.get(dayKeyC, 0) != null)</span>
-<span class="nc" id="L87">			return resultC(arg);</span>
-<span class="nc" id="L88">		return null;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (arg.get(dayKeyC, 0) != null)</span>
+<span class="nc" id="L86">			return resultC(arg);</span>
+<span class="nc" id="L87">		return null;</span>
 	}
 
 	private IRegex toRegexA_DD_MONTH_YYYY() {
-<span class="fc" id="L92">		return new RegexConcat( //</span>
+<span class="fc" id="L91">		return new RegexConcat( //</span>
 				new RegexLeaf(1, dayKeyA, &quot;([\\d]{1,2})&quot;), //
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
-<span class="fc" id="L95">				new RegexLeaf(1, monthKeyA, &quot;(&quot; + MonthUtils.getRegexString() + &quot;)&quot;), //</span>
+<span class="fc" id="L94">				new RegexLeaf(1, monthKeyA, &quot;(&quot; + MonthUtils.getRegexString() + &quot;)&quot;), //</span>
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
 				new RegexLeaf(1, yearKeyA, &quot;([\\d]{1,4})&quot;));
 	}
 
 	private LocalDate resultA(RegexResult arg) {
-<span class="nc" id="L101">		final int day = Integer.parseInt(arg.get(dayKeyA, 0));</span>
-<span class="nc" id="L102">		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));</span>
-<span class="nc" id="L103">		final int year = Integer.parseInt(arg.get(yearKeyA, 0));</span>
-<span class="nc" id="L104">		return LocalDate.of(year, month, day);</span>
+<span class="nc" id="L100">		final int day = Integer.parseInt(arg.get(dayKeyA, 0));</span>
+<span class="nc" id="L101">		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));</span>
+<span class="nc" id="L102">		final int year = Integer.parseInt(arg.get(yearKeyA, 0));</span>
+<span class="nc" id="L103">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private IRegex toRegexB_YYYY_MM_DD() {
-<span class="fc" id="L108">		return new RegexConcat( //</span>
+<span class="fc" id="L107">		return new RegexConcat( //</span>
 				new RegexLeaf(1, yearKeyB, &quot;([\\d]{1,4})&quot;), //
 				new RegexLeaf(&quot;\\D&quot;), //
 				new RegexLeaf(1, monthKeyB, &quot;([\\d]{1,2})&quot;), //
@@ -114,15 +113,15 @@ public class DayPattern {
 	}
 
 	private LocalDate resultB(RegexResult arg) {
-<span class="fc" id="L117">		final int day = Integer.parseInt(arg.get(dayKeyB, 0));</span>
-<span class="fc" id="L118">		final int month = Integer.parseInt(arg.get(monthKeyB, 0));</span>
-<span class="fc" id="L119">		final int year = Integer.parseInt(arg.get(yearKeyB, 0));</span>
-<span class="fc" id="L120">		return LocalDate.of(year, month, day);</span>
+<span class="fc" id="L116">		final int day = Integer.parseInt(arg.get(dayKeyB, 0));</span>
+<span class="fc" id="L117">		final int month = Integer.parseInt(arg.get(monthKeyB, 0));</span>
+<span class="fc" id="L118">		final int year = Integer.parseInt(arg.get(yearKeyB, 0));</span>
+<span class="fc" id="L119">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private IRegex toRegexC_MONTH_DD_YYYY() {
-<span class="fc" id="L124">		return new RegexConcat( //</span>
-<span class="fc" id="L125">				new RegexLeaf(1, monthKeyC, &quot;(&quot; + MonthUtils.getRegexString() + &quot;)&quot;), //</span>
+<span class="fc" id="L123">		return new RegexConcat( //</span>
+<span class="fc" id="L124">				new RegexLeaf(1, monthKeyC, &quot;(&quot; + MonthUtils.getRegexString() + &quot;)&quot;), //</span>
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
 				new RegexLeaf(1, dayKeyC, &quot;([\\d]{1,2})&quot;), //
 				new RegexLeaf(&quot;[\\w, ]*?&quot;), //
@@ -130,10 +129,10 @@ public class DayPattern {
 	}
 
 	private LocalDate resultC(RegexResult arg) {
-<span class="nc" id="L133">		final int day = Integer.parseInt(arg.get(dayKeyC, 0));</span>
-<span class="nc" id="L134">		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));</span>
-<span class="nc" id="L135">		final int year = Integer.parseInt(arg.get(yearKeyC, 0));</span>
-<span class="nc" id="L136">		return LocalDate.of(year, month, day);</span>
+<span class="nc" id="L132">		final int day = Integer.parseInt(arg.get(dayKeyC, 0));</span>
+<span class="nc" id="L133">		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));</span>
+<span class="nc" id="L134">		final int year = Integer.parseInt(arg.get(yearKeyC, 0));</span>
+<span class="nc" id="L135">		return LocalDate.of(year, month, day);</span>
 	}
 
 }

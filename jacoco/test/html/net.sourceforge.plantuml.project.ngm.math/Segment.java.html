@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project.ngm.math;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -106,14 +105,14 @@ public final class Segment {
 	 * Private constructor. Use {@link #forward} or {@link #backward} factory
 	 * methods.
 	 */
-<span class="fc" id="L109">	private Segment(TimeDirection direction, LocalDateTime start, LocalDateTime end, Fraction value) {</span>
-<span class="fc" id="L110">		Objects.requireNonNull(value);</span>
+<span class="fc" id="L108">	private Segment(TimeDirection direction, LocalDateTime start, LocalDateTime end, Fraction value) {</span>
+<span class="fc" id="L109">		Objects.requireNonNull(value);</span>
 
-<span class="fc" id="L112">		this.direction = direction;</span>
-<span class="fc" id="L113">		this.start = start;</span>
-<span class="fc" id="L114">		this.end = end;</span>
-<span class="fc" id="L115">		this.value = value;</span>
-<span class="fc" id="L116">	}</span>
+<span class="fc" id="L111">		this.direction = direction;</span>
+<span class="fc" id="L112">		this.start = start;</span>
+<span class="fc" id="L113">		this.end = end;</span>
+<span class="fc" id="L114">		this.value = value;</span>
+<span class="fc" id="L115">	}</span>
 
 	/**
 	 * Creates a forward segment where {@code start} is chronologically before
@@ -133,9 +132,9 @@ public final class Segment {
 	 *                                  before {@code end}
 	 */
 	public static Segment forward(LocalDateTime start, LocalDateTime end, Fraction value) {
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (start.isBefore(end) == false)</span>
-<span class="fc" id="L137">			throw new IllegalArgumentException(&quot;end must be after start&quot;);</span>
-<span class="fc" id="L138">		return new Segment(TimeDirection.FORWARD, start, end, value);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (start.isBefore(end) == false)</span>
+<span class="fc" id="L136">			throw new IllegalArgumentException(&quot;end must be after start&quot;);</span>
+<span class="fc" id="L137">		return new Segment(TimeDirection.FORWARD, start, end, value);</span>
 	}
 
 	/**
@@ -158,9 +157,9 @@ public final class Segment {
 	 *                                  {@code start}
 	 */
 	public static Segment backward(LocalDateTime start, LocalDateTime end, Fraction value) {
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (end.isBefore(start) == false)</span>
-<span class="fc" id="L162">			throw new IllegalArgumentException(&quot;end must be before start&quot;);</span>
-<span class="fc" id="L163">		return new Segment(TimeDirection.BACKWARD, start, end, value);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (end.isBefore(start) == false)</span>
+<span class="fc" id="L161">			throw new IllegalArgumentException(&quot;end must be before start&quot;);</span>
+<span class="fc" id="L162">		return new Segment(TimeDirection.BACKWARD, start, end, value);</span>
 	}
 
 	/**
@@ -171,7 +170,7 @@ public final class Segment {
 	 *         is chronologically after {@code end}
 	 */
 	public TimeDirection getTimeDirection() {
-<span class="fc" id="L174">		return direction;</span>
+<span class="fc" id="L173">		return direction;</span>
 	}
 
 	/**
@@ -191,7 +190,7 @@ public final class Segment {
 	 * @return the exclusive start bound
 	 */
 	public LocalDateTime startExclusive() {
-<span class="fc" id="L194">		return start;</span>
+<span class="fc" id="L193">		return start;</span>
 	}
 
 	/**
@@ -211,7 +210,7 @@ public final class Segment {
 	 * @return the exclusive end bound
 	 */
 	public LocalDateTime endExclusive() {
-<span class="fc" id="L214">		return end;</span>
+<span class="fc" id="L213">		return end;</span>
 	}
 
 	/**
@@ -220,7 +219,7 @@ public final class Segment {
 	 * @return the workload value, never {@code null}
 	 */
 	public Fraction getValue() {
-<span class="fc" id="L223">		return value;</span>
+<span class="fc" id="L222">		return value;</span>
 	}
 
 	/**
@@ -256,18 +255,18 @@ public final class Segment {
 	 *                                  {@code end}
 	 */
 	public Segment[] split(LocalDateTime time) {
-<span class="fc" id="L259">		Objects.requireNonNull(time, &quot;time must not be null&quot;);</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (includes(time) == false)</span>
-<span class="fc" id="L261">			throw new IllegalArgumentException(&quot;time must be within the segment bounds&quot;);</span>
+<span class="fc" id="L258">		Objects.requireNonNull(time, &quot;time must not be null&quot;);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (includes(time) == false)</span>
+<span class="fc" id="L260">			throw new IllegalArgumentException(&quot;time must be within the segment bounds&quot;);</span>
 
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
-<span class="fc" id="L264">			final Segment first = Segment.forward(start, time, value);</span>
-<span class="fc" id="L265">			final Segment second = Segment.forward(time, end, value);</span>
-<span class="fc" id="L266">			return new Segment[] { first, second };</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc" id="L263">			final Segment first = Segment.forward(start, time, value);</span>
+<span class="fc" id="L264">			final Segment second = Segment.forward(time, end, value);</span>
+<span class="fc" id="L265">			return new Segment[] { first, second };</span>
 		} else {
-<span class="fc" id="L268">			final Segment first = Segment.backward(start, time, value);</span>
-<span class="fc" id="L269">			final Segment second = Segment.backward(time, end, value);</span>
-<span class="fc" id="L270">			return new Segment[] { first, second };</span>
+<span class="fc" id="L267">			final Segment first = Segment.backward(start, time, value);</span>
+<span class="fc" id="L268">			final Segment second = Segment.backward(time, end, value);</span>
+<span class="fc" id="L269">			return new Segment[] { first, second };</span>
 		}
 	}
 
@@ -289,12 +288,12 @@ public final class Segment {
 	 * @throws NullPointerException if {@code time} is {@code null}
 	 */
 	public boolean includes(LocalDateTime time) {
-<span class="fc" id="L292">		Objects.requireNonNull(time, &quot;time must not be null&quot;);</span>
+<span class="fc" id="L291">		Objects.requireNonNull(time, &quot;time must not be null&quot;);</span>
 
-<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
-<span class="fc bfc" id="L295" title="All 4 branches covered.">			return time.isAfter(start) &amp;&amp; time.isBefore(end);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L294" title="All 4 branches covered.">			return time.isAfter(start) &amp;&amp; time.isBefore(end);</span>
 		else
-<span class="fc bfc" id="L297" title="All 4 branches covered.">			return time.isBefore(start) &amp;&amp; time.isAfter(end);</span>
+<span class="fc bfc" id="L296" title="All 4 branches covered.">			return time.isBefore(start) &amp;&amp; time.isAfter(end);</span>
 
 	}
 
@@ -310,7 +309,7 @@ public final class Segment {
 	 */
 	@Override
 	public String toString() {
-<span class="fc" id="L313">		return getTimeDirection() + &quot; ]&quot; + start + &quot;, &quot; + end + &quot;[ value=&quot; + value;</span>
+<span class="fc" id="L312">		return getTimeDirection() + &quot; ]&quot; + start + &quot;, &quot; + end + &quot;[ value=&quot; + value;</span>
 	}
 
 	/**
@@ -336,7 +335,7 @@ public final class Segment {
 	 * @throws NullPointerException     if {@code segments} is {@code null}
 	 */
 	public static Segment intersection(List&lt;Segment&gt; segments) {
-<span class="fc" id="L339">		return intersection(segments, Fraction.PRODUCT);</span>
+<span class="fc" id="L338">		return intersection(segments, Fraction.PRODUCT);</span>
 	}
 
 	/**
@@ -371,57 +370,57 @@ public final class Segment {
 	 *                                  is {@code null}
 	 */
 	public static Segment intersection(List&lt;Segment&gt; segments, BiFunction&lt;Fraction, Fraction, Fraction&gt; valueFunction) {
-<span class="fc" id="L374">		Objects.requireNonNull(valueFunction, &quot;valueFunction must not be null&quot;);</span>
+<span class="fc" id="L373">		Objects.requireNonNull(valueFunction, &quot;valueFunction must not be null&quot;);</span>
 
-<span class="fc bfc" id="L376" title="All 2 branches covered.">		if (segments.isEmpty())</span>
-<span class="fc" id="L377">			throw new IllegalArgumentException(&quot;No segments to intersect&quot;);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (segments.isEmpty())</span>
+<span class="fc" id="L376">			throw new IllegalArgumentException(&quot;No segments to intersect&quot;);</span>
 
-<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (segments.size() == 1)</span>
-<span class="fc" id="L380">			return segments.get(0);</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (segments.size() == 1)</span>
+<span class="fc" id="L379">			return segments.get(0);</span>
 
-<span class="fc" id="L382">		final TimeDirection direction = segments.get(0).getTimeDirection();</span>
+<span class="fc" id="L381">		final TimeDirection direction = segments.get(0).getTimeDirection();</span>
 
-<span class="fc" id="L384">		LocalDateTime start = segments.get(0).startExclusive();</span>
-<span class="fc" id="L385">		LocalDateTime end = segments.get(0).endExclusive();</span>
-<span class="fc" id="L386">		Fraction combinedValue = segments.get(0).getValue();</span>
+<span class="fc" id="L383">		LocalDateTime start = segments.get(0).startExclusive();</span>
+<span class="fc" id="L384">		LocalDateTime end = segments.get(0).endExclusive();</span>
+<span class="fc" id="L385">		Fraction combinedValue = segments.get(0).getValue();</span>
 
-<span class="fc bfc" id="L388" title="All 2 branches covered.">		for (int i = 1; i &lt; segments.size(); i++) {</span>
-<span class="fc" id="L389">			final Segment segment = segments.get(i);</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		for (int i = 1; i &lt; segments.size(); i++) {</span>
+<span class="fc" id="L388">			final Segment segment = segments.get(i);</span>
 
-<span class="fc bfc" id="L391" title="All 2 branches covered.">			if (segment.getTimeDirection() != direction)</span>
-<span class="fc" id="L392">				throw new IllegalArgumentException(&quot;All segments must have the same direction&quot;);</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">			if (segment.getTimeDirection() != direction)</span>
+<span class="fc" id="L391">				throw new IllegalArgumentException(&quot;All segments must have the same direction&quot;);</span>
 
-<span class="fc bfc" id="L394" title="All 2 branches covered.">			if (direction == TimeDirection.FORWARD) {</span>
-<span class="fc bfc" id="L395" title="All 2 branches covered.">				if (segment.startExclusive().isAfter(start))</span>
-<span class="fc" id="L396">					start = segment.startExclusive();</span>
-<span class="pc bpc" id="L397" title="1 of 2 branches missed.">				if (segment.endExclusive().isBefore(end))</span>
-<span class="nc" id="L398">					end = segment.endExclusive();</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">			if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">				if (segment.startExclusive().isAfter(start))</span>
+<span class="fc" id="L395">					start = segment.startExclusive();</span>
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">				if (segment.endExclusive().isBefore(end))</span>
+<span class="nc" id="L397">					end = segment.endExclusive();</span>
 			} else {
-<span class="pc bpc" id="L400" title="1 of 2 branches missed.">				if (segment.startExclusive().isBefore(start))</span>
-<span class="fc" id="L401">					start = segment.startExclusive();</span>
-<span class="fc bfc" id="L402" title="All 2 branches covered.">				if (segment.endExclusive().isAfter(end))</span>
-<span class="fc" id="L403">					end = segment.endExclusive();</span>
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">				if (segment.startExclusive().isBefore(start))</span>
+<span class="fc" id="L400">					start = segment.startExclusive();</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">				if (segment.endExclusive().isAfter(end))</span>
+<span class="fc" id="L402">					end = segment.endExclusive();</span>
 			}
 
-<span class="fc" id="L406">			combinedValue = valueFunction.apply(combinedValue, segment.getValue());</span>
+<span class="fc" id="L405">			combinedValue = valueFunction.apply(combinedValue, segment.getValue());</span>
 		}
 
-<span class="fc bfc" id="L409" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
-<span class="fc bfc" id="L410" title="All 2 branches covered.">			if (start.isBefore(end) == false)</span>
-<span class="fc" id="L411">				throw new IllegalArgumentException(&quot;Segments do not overlap&quot;);</span>
-<span class="fc" id="L412">			return Segment.forward(start, end, combinedValue);</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">			if (start.isBefore(end) == false)</span>
+<span class="fc" id="L410">				throw new IllegalArgumentException(&quot;Segments do not overlap&quot;);</span>
+<span class="fc" id="L411">			return Segment.forward(start, end, combinedValue);</span>
 		} else {
-<span class="fc bfc" id="L414" title="All 2 branches covered.">			if (end.isBefore(start) == false)</span>
-<span class="fc" id="L415">				throw new IllegalArgumentException(&quot;Segments do not overlap&quot;);</span>
-<span class="fc" id="L416">			return Segment.backward(start, end, combinedValue);</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">			if (end.isBefore(start) == false)</span>
+<span class="fc" id="L414">				throw new IllegalArgumentException(&quot;Segments do not overlap&quot;);</span>
+<span class="fc" id="L415">			return Segment.backward(start, end, combinedValue);</span>
 		}
 	}
 
 	public LocalDateTime computeClampedStart(LocalDateTime current) {
-<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
-<span class="fc bfc" id="L422" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
 		else
-<span class="fc bfc" id="L424" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
 	}
 
 }

@@ -236,6 +236,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Provides classes used to manage 
  Positioning Calculation.</div>
 </div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project">net.sourceforge.plantuml.project</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/gantt-diagram" target="_top">
+ Gantt Diagram</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.data">net.sourceforge.plantuml.project.data</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.draw.header">net.sourceforge.plantuml.project.draw.header</a></div>
@@ -1442,8 +1450,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../chronology/TimeHeaderChronology.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.TimeHeaderParameters,net.sourceforge.plantuml.project.core.PrintScale,net.sourceforge.plantuml.chronology.TimeScaleChronology)" class="member-name-link">TimeHeaderChronology</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../../project/TimeHeaderParameters.html" title="class in net.sourceforge.plantuml.project">TimeHeaderParameters</a>&nbsp;thParam,
+<div class="col-second even-row-color"><code><a href="../../../chronology/TimeHeaderChronology.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.chronology.TimeHeaderParameters2,net.sourceforge.plantuml.project.core.PrintScale,net.sourceforge.plantuml.chronology.TimeScaleChronology)" class="member-name-link">TimeHeaderChronology</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+ <a href="../../../chronology/TimeHeaderParameters2.html" title="class in net.sourceforge.plantuml.chronology">TimeHeaderParameters2</a>&nbsp;thParam,
  <a href="../../../project/core/PrintScale.html" title="enum class in net.sourceforge.plantuml.project.core">PrintScale</a>&nbsp;printScale,
  <a href="../../../chronology/TimeScaleChronology.html" title="class in net.sourceforge.plantuml.chronology">TimeScaleChronology</a>&nbsp;timeScale)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -2678,6 +2686,64 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.project">
+<h2>Uses of <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a> in <a href="../../../project/package-summary.html">net.sourceforge.plantuml.project</a></h2>
+<div class="caption"><span>Methods in <a href="../../../project/package-summary.html">net.sourceforge.plantuml.project</a> with parameters of type <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttDiagramMainBlock.</span><code><a href="../../../project/GanttDiagramMainBlock.html#calculateDimension(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">calculateDimension</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../../../project/package-summary.html">net.sourceforge.plantuml.project</a> with parameters of type <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../project/GanttDiagramMainBlock.html#%3Cinit%3E(net.sourceforge.plantuml.project.data.TimeBoundsData,net.sourceforge.plantuml.project.data.GanttModelData,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.project.data.DisplayConfigData,net.sourceforge.plantuml.project.data.TimelineStyleData,net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.project.draw.header.TimeHeader,net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">GanttDiagramMainBlock</a><wbr>(<a href="../../../project/data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a>&nbsp;timeBounds,
+ <a href="../../../project/data/GanttModelData.html" title="class in net.sourceforge.plantuml.project.data">GanttModelData</a>&nbsp;modelData,
+ <a href="../../../project/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;drawRegistry,
+ <a href="../../../project/data/DisplayConfigData.html" title="class in net.sourceforge.plantuml.project.data">DisplayConfigData</a>&nbsp;displayConfig,
+ <a href="../../../project/data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyle,
+ <a href="../../../project/GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;diagram,
+ <a href="../../../project/draw/header/TimeHeader.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeader</a>&nbsp;timeHeader,
+ <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../project/GanttLayout.html#%3Cinit%3E(net.sourceforge.plantuml.project.data.GanttModelData,net.sourceforge.plantuml.project.data.DisplayConfigData,net.sourceforge.plantuml.project.data.TimeBoundsData,net.sourceforge.plantuml.project.data.TimelineStyleData,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.draw.header.TimeHeader)" class="member-name-link">GanttLayout</a><wbr>(<a href="../../../project/data/GanttModelData.html" title="class in net.sourceforge.plantuml.project.data">GanttModelData</a>&nbsp;modelData,
+ <a href="../../../project/data/DisplayConfigData.html" title="class in net.sourceforge.plantuml.project.data">DisplayConfigData</a>&nbsp;displayConfig,
+ <a href="../../../project/data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a>&nbsp;timeBounds,
+ <a href="../../../project/data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyle,
+ <a href="../../../project/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;drawRegistry,
+ <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+ <a href="../../../project/draw/header/TimeHeader.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeader</a>&nbsp;timeHeader)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.project.data">
+<h2>Uses of <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a> in <a href="../../../project/data/package-summary.html">net.sourceforge.plantuml.project.data</a></h2>
+<div class="caption"><span>Methods in <a href="../../../project/data/package-summary.html">net.sourceforge.plantuml.project.data</a> with parameters of type <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TaskDrawRegistryData.</span><code><a href="../../../project/data/TaskDrawRegistryData.html#buildTaskAndResourceDraws(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.draw.header.TimeHeader,net.sourceforge.plantuml.project.data.GanttModelData,net.sourceforge.plantuml.project.data.DisplayConfigData,net.sourceforge.plantuml.project.data.TimeBoundsData,net.sourceforge.plantuml.project.data.TimelineStyleData)" class="member-name-link">buildTaskAndResourceDraws</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+ <a href="../../../project/draw/header/TimeHeader.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeader</a>&nbsp;timeHeader,
+ <a href="../../../project/data/GanttModelData.html" title="class in net.sourceforge.plantuml.project.data">GanttModelData</a>&nbsp;modelData,
+ <a href="../../../project/data/DisplayConfigData.html" title="class in net.sourceforge.plantuml.project.data">DisplayConfigData</a>&nbsp;displayConfig,
+ <a href="../../../project/data/TimeBoundsData.html" title="class in net.sourceforge.plantuml.project.data">TimeBoundsData</a>&nbsp;timeBounds,
+ <a href="../../../project/data/TimelineStyleData.html" title="class in net.sourceforge.plantuml.project.data">TimelineStyleData</a>&nbsp;timelineStyle)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.project.draw">
 <h2>Uses of <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a> in <a href="../../../project/draw/package-summary.html">net.sourceforge.plantuml.project.draw</a></h2>
 <div class="caption"><span>Methods in <a href="../../../project/draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with parameters of type <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a></span></div>
@@ -2830,75 +2896,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>abstract double</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../../project/draw/header/TimeHeader.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderDaily.</span><code><a href="../../../project/draw/header/TimeHeaderDaily.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderMonthly.</span><code><a href="../../../project/draw/header/TimeHeaderMonthly.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderQuarterly.</span><code><a href="../../../project/draw/header/TimeHeaderQuarterly.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderSimple.</span><code><a href="../../../project/draw/header/TimeHeaderSimple.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderWeekly.</span><code><a href="../../../project/draw/header/TimeHeaderWeekly.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderYearly.</span><code><a href="../../../project/draw/header/TimeHeaderYearly.html#getFullHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>abstract double</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../../project/draw/header/TimeHeader.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderDaily.</span><code><a href="../../../project/draw/header/TimeHeaderDaily.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderMonthly.</span><code><a href="../../../project/draw/header/TimeHeaderMonthly.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderQuarterly.</span><code><a href="../../../project/draw/header/TimeHeaderQuarterly.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderSimple.</span><code><a href="../../../project/draw/header/TimeHeaderSimple.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderWeekly.</span><code><a href="../../../project/draw/header/TimeHeaderWeekly.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderYearly.</span><code><a href="../../../project/draw/header/TimeHeaderYearly.html#getTimeFooterHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeFooterHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>abstract double</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../../project/draw/header/TimeHeader.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderDaily.</span><code><a href="../../../project/draw/header/TimeHeaderDaily.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderMonthly.</span><code><a href="../../../project/draw/header/TimeHeaderMonthly.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderQuarterly.</span><code><a href="../../../project/draw/header/TimeHeaderQuarterly.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderSimple.</span><code><a href="../../../project/draw/header/TimeHeaderSimple.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>double</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeHeaderWeekly.</span><code><a href="../../../project/draw/header/TimeHeaderWeekly.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>double</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimeHeaderYearly.</span><code><a href="../../../project/draw/header/TimeHeaderYearly.html#getTimeHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTimeHeaderHeight</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Constructors in <a href="../../../project/draw/header/package-summary.html">net.sourceforge.plantuml.project.draw.header</a> with parameters of type <a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../project/draw/header/TimeHeaderSimple.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.project.draw.header.TimeHeaderContext)" class="member-name-link">TimeHeaderSimple</a><wbr>(<a href="../StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../../project/draw/header/TimeHeaderContext.html" title="class in net.sourceforge.plantuml.project.draw.header">TimeHeaderContext</a>&nbsp;ctx)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
