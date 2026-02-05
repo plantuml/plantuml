@@ -162,26 +162,12 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);
 	}
 
-	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(SName.month, "" + monthYear.getYear(), true, openFontColor());
-		printCentered(ug, false, start, end, small);
-	}
-
 	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end) {
 		final TextBlock small = getTextBlock(SName.day, YearMonthUtils.shortName(monthYear, locale()), false,
 				openFontColor());
 		final TextBlock big = getTextBlock(SName.day, YearMonthUtils.longName(monthYear, locale()), false,
 				openFontColor());
 		printCentered(ug, false, start, end, small, big);
-	}
-
-	private double getHeaderNameDayHeight() {
-		if (dayCalendar.getNameDays().size() > 0) {
-			final double h = timelineStyle.getFontSizeDay() + 6;
-			return h;
-		}
-
-		return 0;
 	}
 
 }

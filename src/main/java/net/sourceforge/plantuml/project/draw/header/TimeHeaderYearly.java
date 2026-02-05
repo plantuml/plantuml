@@ -115,9 +115,4 @@ class TimeHeaderYearly extends TimeHeaderCalendar {
 		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);
 	}
 
-	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(SName.year, "" + monthYear.getYear(), true, openFontColor());
-		printCentered(ug, true, start, end, small);
-	}
-
 }

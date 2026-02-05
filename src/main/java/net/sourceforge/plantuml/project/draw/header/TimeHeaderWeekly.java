@@ -81,15 +81,6 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		return h;
 	}
 
-	private double getHeaderNameDayHeight() {
-		if (dayCalendar.getNameDays().size() > 0) {
-			final double h = timelineStyle.getFontSizeDay() + 6;
-			return h;
-		}
-
-		return 0;
-	}
-
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
@@ -178,10 +169,6 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		final TextBlock big = getTextBlock(SName.month, YearMonthUtils.shortNameYYYY(monthYear, locale()), true,
 				openFontColor());
 		printCentered(ug, false, start, end, small, big);
-	}
-
-	private void printLeft(UGraphic ug, TextBlock text, double start) {
-		text.drawU(ug.apply(UTranslate.dx(start)));
 	}
 
 }

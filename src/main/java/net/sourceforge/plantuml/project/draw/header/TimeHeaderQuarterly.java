@@ -155,18 +155,9 @@ class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		return "Q" + ((day.month().ordinal() + 3) / 3);
 	}
 
-	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(SName.month, "" + monthYear.getYear(), true, openFontColor());
-		printCentered(ug, false, start, end, small);
-	}
-
 	private void printQuarter(UGraphic ug, String quarter, double start, double end) {
 		final TextBlock small = getTextBlock(SName.day, quarter, false, openFontColor());
 		printCentered(ug, false, start, end, small);
-	}
-
-	private void printLeft(UGraphic ug, TextBlock text, double start) {
-		text.drawU(ug.apply(UTranslate.dx(start)));
 	}
 
 }

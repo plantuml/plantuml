@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.draw.header;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -117,8 +118,7 @@ abstract class TimeHeaderCalendar extends TimeHeader {
 			pending.draw(ug, height);
 
 	}
-	
-	
+
 	protected final void printNamedDays(final UGraphic ug) {
 		if (dayCalendar.getNameDays().size() > 0) {
 			String last = null;
@@ -137,6 +137,23 @@ abstract class TimeHeaderCalendar extends TimeHeader {
 		}
 	}
 
+	protected final void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
+		final TextBlock small = getTextBlock(SName.month, "" + monthYear.getYear(), true, openFontColor());
+		printCentered(ug, true, start, end, small);
+	}
+
+	protected final double getHeaderNameDayHeight() {
+		if (dayCalendar.getNameDays().size() > 0) {
+			final double h = timelineStyle.getFontSizeDay() + 6;
+			return h;
+		}
+
+		return 0;
+	}
+
+	protected final void printLeft(UGraphic ug, TextBlock text, double start) {
+		text.drawU(ug.apply(UTranslate.dx(start)));
+	}
 
 
 }

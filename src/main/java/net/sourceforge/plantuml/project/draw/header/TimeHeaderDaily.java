@@ -89,15 +89,6 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 		return h1 + h2 + h3 + 8;
 	}
 
-	private double getHeaderNameDayHeight() {
-		if (dayCalendar.getNameDays().size() > 0) {
-			final double h = timelineStyle.getFontSizeDay() + 6;
-			return h;
-		}
-
-		return 0;
-	}
-
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
