@@ -350,7 +350,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		return player;
 	}
 
-	public PlayerDigital createPlayerAnalogDigital(TimingType type, String code, String full, boolean compact, Stereotype stereotype) {
+	public PlayerAnalogDigital createPlayerAnalogDigital(TimingType type, String code, String full, boolean compact, Stereotype stereotype) {
 		final PlayerAnalogDigital player = new PlayerAnalogDigital(type, full, getSkinParam(), ruler, compactByDefault, stereotype);
 		players.put(code, player);
 		return player;
