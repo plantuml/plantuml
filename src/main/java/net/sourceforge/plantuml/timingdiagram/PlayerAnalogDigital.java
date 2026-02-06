@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PanelsDigital;
 
-public class PlayerDigital extends Player {
+public class PlayerAnalogDigital extends Player {
 
 	private final TimeSeries timeSeries = new TimeSeries();
 
@@ -55,15 +55,24 @@ public class PlayerDigital extends Player {
 
 	private Double initialState;
 	private Integer ticksEvery;
+	private TimingType type;
 
-	public PlayerDigital(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype, null, SName.digital, 100);
+	public PlayerAnalogDigital(TimingType type, String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
+		switch (type) {
+		case ANALOG:
+			super(code, skinParam, ruler, compact, stereotype, null, SName.analog, 100);
+			break;
+		case DIGITAL:
+			super(code, skinParam, ruler, compact, stereotype, null, SName.digital, 100);
+			break;
+		}
+		this.type = type;
 	}
 
 	@Override
 	protected Panels buildPlayerPanels() {
-		return new PanelsDigital(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), timeSeries, constraints,
-				initialState, ticksEvery);
+		return new PanelsAnalogDigital(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), timeSeries, constraints,
+				initialState, ticksEvery, type);
 
 	}
 

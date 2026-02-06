@@ -48,9 +48,10 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.PlayerDigital;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandDigital extends SingleLineCommand2<TimingDiagram> {
+public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 
 	public CommandDigital() {
 		super(getRegexConcat());
@@ -62,7 +63,7 @@ public class CommandDigital extends SingleLineCommand2<TimingDiagram> {
 						new RegexConcat( //
 								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("digital"), //
+				new RegexLeaf(1, "TYPE", "(analog|digital)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -101,7 +102,9 @@ public class CommandDigital extends SingleLineCommand2<TimingDiagram> {
 		else if (arg.get("STEREOTYPE2", 0) != null)
 			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
 
-		final PlayerDigital player = diagram.createPlayerDigital(code, full, compact != null, stereotype);
+		final TimingType type = TimingType.valueOf(arg.get("TYPE", 0).toUpperCase());
+		final PlayerAnalogDigital player = diagram.createPlayerAnalogDigital(type, code, full, compact != null, stereotype);
+
 		final String start = arg.get("START", 0);
 		final String end = arg.get("END", 0);
 		if (start != null && end != null)
