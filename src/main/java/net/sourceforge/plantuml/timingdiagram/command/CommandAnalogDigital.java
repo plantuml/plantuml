@@ -58,7 +58,7 @@ public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandDigital.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandAnalogDigital.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "COMPACT", "(compact)"), //
