@@ -58,14 +58,7 @@ public class PlayerAnalogDigital extends Player {
 	private TimingType type;
 
 	public PlayerAnalogDigital(TimingType type, String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		switch (type) {
-		case ANALOG:
-			super(code, skinParam, ruler, compact, stereotype, null, SName.analog, 100);
-			break;
-		case DIGITAL:
-			super(code, skinParam, ruler, compact, stereotype, null, SName.digital, 100);
-			break;
-		}
+		super(code, skinParam, ruler, compact, stereotype, null, SName.retrieve(type.name()), 100);
 		this.type = type;
 	}
 
