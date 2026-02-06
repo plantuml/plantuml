@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-public enum TimingStyle {
+public enum TimingType {
 
 	ROBUST, CONCISE, RECTANGLE
 
