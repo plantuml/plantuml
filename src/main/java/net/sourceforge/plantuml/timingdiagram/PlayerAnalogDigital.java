@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
-import net.sourceforge.plantuml.timingdiagram.graphic.PanelsDigital;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital;
 
 public class PlayerAnalogDigital extends Player {
 
