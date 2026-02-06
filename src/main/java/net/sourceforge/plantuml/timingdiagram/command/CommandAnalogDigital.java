@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
-import net.sourceforge.plantuml.timingdiagram.PlayerDigital;
+import net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
