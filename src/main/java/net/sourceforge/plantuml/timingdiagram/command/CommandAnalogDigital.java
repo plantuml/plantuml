@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 
-	public CommandDigital() {
+	public CommandAnalogDigital() {
 		super(getRegexConcat());
 	}
 
