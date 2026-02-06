@@ -53,20 +53,23 @@ import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeSeries;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+import net.sourceforge.plantuml.timingdiagram.TimingType;
 
-public class PanelsDigital extends Panels {
+public class PanelsAnalogDigital extends Panels {
 
 	private final TimeSeries timeSeries;
 	private final Double initialState;
 	private final Integer ticksEvery;
+	private final TimingType type;
 
-	public PanelsDigital(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, TimeSeries timeSeries,
-			List<TimeConstraint> constraints, Double initialState, Integer ticksEvery) {
+	public PanelsAnalogDigital(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, TimeSeries timeSeries,
+			List<TimeConstraint> constraints, Double initialState, Integer ticksEvery, TimingType type) {
 		super(ruler, skinParam, suggestedHeight, style, null, constraints);
 
 		this.timeSeries = timeSeries;
 		this.initialState = initialState;
 		this.ticksEvery = ticksEvery;
+		this.type = type;
 	}
 
 	@Override
@@ -165,8 +168,15 @@ public class PanelsDigital extends Panels {
 			final double y1 = getYpos(ug.getStringBounder(), lastValue);
 			final double y2 = getYpos(ug.getStringBounder(), ent.getValue());
 			final double x = ruler.getPosInPixel(ent.getKey());
-			ug.apply(new UTranslate(lastx, y1)).draw(ULine.hline(x - lastx));
-			ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));
+			switch (type) {
+			case ANALOG:
+				ug.apply(new UTranslate(lastx, y1)).draw(new ULine(x - lastx, y2 - y1));
+				break;
+			case DIGITAL:
+				ug.apply(new UTranslate(lastx, y1)).draw(ULine.hline(x - lastx));
+				ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));
+				break;
+			}
 			lastx = x;
 			lastValue = ent.getValue();
 		}
