@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
-import net.sourceforge.plantuml.timingdiagram.TimingStyle;
+import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
@@ -100,7 +100,7 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 		else if (arg.get("STEREOTYPE2", 0) != null)
 			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
 
-		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());
+		final TimingType type = TimingType.valueOf(arg.get("TYPE", 0).toUpperCase());
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
 		switch (type) {
