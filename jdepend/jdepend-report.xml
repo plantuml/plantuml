@@ -12047,14 +12047,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.font">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>9</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>10</ConcreteClasses>
+                <AbstractClasses>4</AbstractClasses>
                 <Ca>90</Ca>
                 <Ce>14</Ce>
-                <A>0.25</A>
+                <A>0.29</A>
                 <I>0.13</I>
-                <D>0.62</D>
+                <D>0.58</D>
                 <V>1</V>
             </Stats>
 
@@ -12067,6 +12067,9 @@
                 </Class>
                 <Class sourceFile="StringBounderRaw.java">
                     net.sourceforge.plantuml.klimt.font.StringBounderRaw
+                </Class>
+                <Class sourceFile="UFont.java">
+                    net.sourceforge.plantuml.klimt.font.UFont
                 </Class>
             </AbstractClasses>
 
@@ -12086,11 +12089,14 @@
                 <Class sourceFile="FontStyle.java">
                     net.sourceforge.plantuml.klimt.font.FontStyle
                 </Class>
-                <Class sourceFile="UFont.java">
-                    net.sourceforge.plantuml.klimt.font.UFont
-                </Class>
                 <Class sourceFile="UFontContext.java">
                     net.sourceforge.plantuml.klimt.font.UFontContext
+                </Class>
+                <Class sourceFile="UFontFactory.java">
+                    net.sourceforge.plantuml.klimt.font.UFontFactory
+                </Class>
+                <Class sourceFile="UFontImpl.java">
+                    net.sourceforge.plantuml.klimt.font.UFontImpl
                 </Class>
                 <Class sourceFile="UnusedSpace.java">
                     net.sourceforge.plantuml.klimt.font.UnusedSpace

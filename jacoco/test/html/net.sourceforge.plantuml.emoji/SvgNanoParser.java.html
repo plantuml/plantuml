@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -72,447 +73,447 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 
 public class SvgNanoParser implements Sprite, GrayLevelRange {
 
-<span class="nc" id="L75">	private static final Pattern P_TEXT_OR_DRAW = Pattern</span>
-<span class="nc" id="L76">			.compile(&quot;(\\&lt;text .*?\\&lt;/text\\&gt;)|(\\&lt;(svg|path|g|circle|ellipse)[^&lt;&gt;]*\\&gt;)|(\\&lt;/[^&lt;&gt;]*\\&gt;)&quot;);</span>
+<span class="nc" id="L76">	private static final Pattern P_TEXT_OR_DRAW = Pattern</span>
+<span class="nc" id="L77">			.compile(&quot;(\\&lt;text .*?\\&lt;/text\\&gt;)|(\\&lt;(svg|path|g|circle|ellipse)[^&lt;&gt;]*\\&gt;)|(\\&lt;/[^&lt;&gt;]*\\&gt;)&quot;);</span>
 
-<span class="nc" id="L78">	private static final Pattern P_TEXT = Pattern.compile(&quot;\\&lt;text[^&lt;&gt;]*\\&gt;(.*?)\\&lt;/text\\&gt;&quot;);</span>
-<span class="nc" id="L79">	private static final Pattern P_FONT_SIZE = Pattern.compile(&quot;^(\\d+)p[tx]$&quot;);</span>
+<span class="nc" id="L79">	private static final Pattern P_TEXT = Pattern.compile(&quot;\\&lt;text[^&lt;&gt;]*\\&gt;(.*?)\\&lt;/text\\&gt;&quot;);</span>
+<span class="nc" id="L80">	private static final Pattern P_FONT_SIZE = Pattern.compile(&quot;^(\\d+)p[tx]$&quot;);</span>
 
-<span class="nc" id="L81">	private static final Pattern P_MATRIX = Pattern.compile(</span>
+<span class="nc" id="L82">	private static final Pattern P_MATRIX = Pattern.compile(</span>
 			&quot;matrix\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);
 
-<span class="nc" id="L84">	private static final Pattern P_ROTATE = Pattern.compile(&quot;rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);</span>
+<span class="nc" id="L85">	private static final Pattern P_ROTATE = Pattern.compile(&quot;rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);</span>
 
-<span class="nc" id="L86">	private static final Pattern P_TRANSLATE1 = Pattern.compile(&quot;translate\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);</span>
-<span class="nc" id="L87">	private static final Pattern P_TRANSLATE2 = Pattern.compile(&quot;translate\\(([-.0-9]+)\\)&quot;);</span>
+<span class="nc" id="L87">	private static final Pattern P_TRANSLATE1 = Pattern.compile(&quot;translate\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);</span>
+<span class="nc" id="L88">	private static final Pattern P_TRANSLATE2 = Pattern.compile(&quot;translate\\(([-.0-9]+)\\)&quot;);</span>
 
-<span class="nc" id="L89">	private static final Pattern P_SCALE1 = Pattern.compile(&quot;scale\\(([-.0-9]+)\\)&quot;);</span>
-<span class="nc" id="L90">	private static final Pattern P_SCALE2 = Pattern.compile(&quot;scale\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);</span>
+<span class="nc" id="L90">	private static final Pattern P_SCALE1 = Pattern.compile(&quot;scale\\(([-.0-9]+)\\)&quot;);</span>
+<span class="nc" id="L91">	private static final Pattern P_SCALE2 = Pattern.compile(&quot;scale\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)&quot;);</span>
 
 	private static final String equals_something = &quot;=\&quot;([^\&quot;]+)\&quot;&quot;;
-<span class="nc" id="L93">	private static final Pattern DATA_CX = Pattern.compile(&quot;cx&quot; + equals_something);</span>
-<span class="nc" id="L94">	private static final Pattern DATA_CY = Pattern.compile(&quot;cy&quot; + equals_something);</span>
-<span class="nc" id="L95">	private static final Pattern DATA_FILL = Pattern.compile(&quot;fill&quot; + equals_something);</span>
-<span class="nc" id="L96">	private static final Pattern DATA_FONT_FAMILY = Pattern.compile(&quot;font-family&quot; + equals_something);</span>
-<span class="nc" id="L97">	private static final Pattern DATA_FONT_SIZE = Pattern.compile(&quot;font-size&quot; + equals_something);</span>
-<span class="nc" id="L98">	private static final Pattern DATA_R = Pattern.compile(&quot;r&quot; + equals_something);</span>
-<span class="nc" id="L99">	private static final Pattern DATA_RX = Pattern.compile(&quot;rx&quot; + equals_something);</span>
-<span class="nc" id="L100">	private static final Pattern DATA_RY = Pattern.compile(&quot;ry&quot; + equals_something);</span>
-<span class="nc" id="L101">	private static final Pattern DATA_STROKE = Pattern.compile(&quot;stroke&quot; + equals_something);</span>
-<span class="nc" id="L102">	private static final Pattern DATA_STROKE_WIDTH = Pattern.compile(&quot;stroke-width&quot; + equals_something);</span>
-<span class="nc" id="L103">	private static final Pattern DATA_STYLE = Pattern.compile(&quot;style&quot; + equals_something);</span>
-<span class="nc" id="L104">	private static final Pattern DATA_TRANSFORM = Pattern.compile(&quot;transform&quot; + equals_something);</span>
-<span class="nc" id="L105">	private static final Pattern DATA_X = Pattern.compile(&quot;x&quot; + equals_something);</span>
-<span class="nc" id="L106">	private static final Pattern DATA_Y = Pattern.compile(&quot;y&quot; + equals_something);</span>
+<span class="nc" id="L94">	private static final Pattern DATA_CX = Pattern.compile(&quot;cx&quot; + equals_something);</span>
+<span class="nc" id="L95">	private static final Pattern DATA_CY = Pattern.compile(&quot;cy&quot; + equals_something);</span>
+<span class="nc" id="L96">	private static final Pattern DATA_FILL = Pattern.compile(&quot;fill&quot; + equals_something);</span>
+<span class="nc" id="L97">	private static final Pattern DATA_FONT_FAMILY = Pattern.compile(&quot;font-family&quot; + equals_something);</span>
+<span class="nc" id="L98">	private static final Pattern DATA_FONT_SIZE = Pattern.compile(&quot;font-size&quot; + equals_something);</span>
+<span class="nc" id="L99">	private static final Pattern DATA_R = Pattern.compile(&quot;r&quot; + equals_something);</span>
+<span class="nc" id="L100">	private static final Pattern DATA_RX = Pattern.compile(&quot;rx&quot; + equals_something);</span>
+<span class="nc" id="L101">	private static final Pattern DATA_RY = Pattern.compile(&quot;ry&quot; + equals_something);</span>
+<span class="nc" id="L102">	private static final Pattern DATA_STROKE = Pattern.compile(&quot;stroke&quot; + equals_something);</span>
+<span class="nc" id="L103">	private static final Pattern DATA_STROKE_WIDTH = Pattern.compile(&quot;stroke-width&quot; + equals_something);</span>
+<span class="nc" id="L104">	private static final Pattern DATA_STYLE = Pattern.compile(&quot;style&quot; + equals_something);</span>
+<span class="nc" id="L105">	private static final Pattern DATA_TRANSFORM = Pattern.compile(&quot;transform&quot; + equals_something);</span>
+<span class="nc" id="L106">	private static final Pattern DATA_X = Pattern.compile(&quot;x&quot; + equals_something);</span>
+<span class="nc" id="L107">	private static final Pattern DATA_Y = Pattern.compile(&quot;y&quot; + equals_something);</span>
 
 	private static final String colon_something = &quot;:([^;\&quot;]+)&quot;;
-<span class="nc" id="L109">	private static final Pattern STYLE_FILL = Pattern.compile(Pattern.quote(&quot;fill&quot;) + colon_something);</span>
-<span class="nc" id="L110">	private static final Pattern STYLE_FONT_SIZE = Pattern.compile(Pattern.quote(&quot;font-size&quot;) + colon_something);</span>
-<span class="nc" id="L111">	private static final Pattern STYLE_FONT_FAMILY = Pattern.compile(Pattern.quote(&quot;font-family&quot;) + colon_something);</span>
+<span class="nc" id="L110">	private static final Pattern STYLE_FILL = Pattern.compile(Pattern.quote(&quot;fill&quot;) + colon_something);</span>
+<span class="nc" id="L111">	private static final Pattern STYLE_FONT_SIZE = Pattern.compile(Pattern.quote(&quot;font-size&quot;) + colon_something);</span>
+<span class="nc" id="L112">	private static final Pattern STYLE_FONT_FAMILY = Pattern.compile(Pattern.quote(&quot;font-family&quot;) + colon_something);</span>
 
-<span class="nc" id="L113">	private final List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L114">	private int minGray = 999;</span>
-<span class="nc" id="L115">	private int maxGray = -1;</span>
+<span class="nc" id="L114">	private final List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L115">	private int minGray = 999;</span>
+<span class="nc" id="L116">	private int maxGray = -1;</span>
 	private List&lt;String&gt; svg;
 
 	private String extract(Pattern p, String s) {
-<span class="nc" id="L119">		final Matcher m = p.matcher(s);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L121">			return m.group(1);</span>
+<span class="nc" id="L120">		final Matcher m = p.matcher(s);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L122">			return m.group(1);</span>
 
-<span class="nc" id="L123">		return null;</span>
+<span class="nc" id="L124">		return null;</span>
 	}
 
 	public SvgNanoParser(String svg) {
-<span class="nc" id="L127">		this(Collections.singletonList(svg));</span>
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L128">		this(Collections.singletonList(svg));</span>
+<span class="nc" id="L129">	}</span>
 
-<span class="nc" id="L130">	public SvgNanoParser(List&lt;String&gt; svg) {</span>
-<span class="nc" id="L131">		this.svg = svg;</span>
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L131">	public SvgNanoParser(List&lt;String&gt; svg) {</span>
+<span class="nc" id="L132">		this.svg = svg;</span>
+<span class="nc" id="L133">	}</span>
 
 	public void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor) {
-<span class="nc" id="L135">		final ColorResolver colorResolver = new ColorResolver(fontColor, forcedColor, this);</span>
-<span class="nc" id="L136">		UGraphicWithScale ugs = new UGraphicWithScale(ug, colorResolver, scale);</span>
+<span class="nc" id="L136">		final ColorResolver colorResolver = new ColorResolver(fontColor, forcedColor, this);</span>
+<span class="nc" id="L137">		UGraphicWithScale ugs = new UGraphicWithScale(ug, colorResolver, scale);</span>
 
-<span class="nc" id="L138">		final List&lt;UGraphicWithScale&gt; stack = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L139">		final Deque&lt;String&gt; stackG = new ArrayDeque&lt;&gt;();</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (String s : getData()) {</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (s.startsWith(&quot;&lt;path &quot;)) {</span>
-<span class="nc" id="L142">				drawPath(ugs, s, stackG);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;/g&gt;&quot;)) {</span>
-<span class="nc" id="L144">				ugs = stack.remove(0);</span>
-<span class="nc" id="L145">				stackG.removeFirst();</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;g&gt;&quot;)) {</span>
-<span class="nc" id="L147">				stack.add(0, ugs);</span>
-<span class="nc" id="L148">				stackG.addFirst(s);</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;g &quot;)) {</span>
-<span class="nc" id="L150">				stack.add(0, ugs);</span>
-<span class="nc" id="L151">				stackG.addFirst(s);</span>
-<span class="nc" id="L152">				ugs = applyFillAndStroke(ugs, s, stackG);</span>
-<span class="nc" id="L153">				ugs = applyTransform(ugs, s);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;circle &quot;)) {</span>
-<span class="nc" id="L155">				drawCircle(ugs, s, stackG);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;ellipse &quot;)) {</span>
-<span class="nc" id="L157">				drawEllipse(ugs, s, stackG);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;text &quot;)) {</span>
-<span class="nc" id="L159">				drawText(ugs, s, stackG);</span>
+<span class="nc" id="L139">		final List&lt;UGraphicWithScale&gt; stack = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L140">		final Deque&lt;String&gt; stackG = new ArrayDeque&lt;&gt;();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (String s : getData()) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (s.startsWith(&quot;&lt;path &quot;)) {</span>
+<span class="nc" id="L143">				drawPath(ugs, s, stackG);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;/g&gt;&quot;)) {</span>
+<span class="nc" id="L145">				ugs = stack.remove(0);</span>
+<span class="nc" id="L146">				stackG.removeFirst();</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;g&gt;&quot;)) {</span>
+<span class="nc" id="L148">				stack.add(0, ugs);</span>
+<span class="nc" id="L149">				stackG.addFirst(s);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;g &quot;)) {</span>
+<span class="nc" id="L151">				stack.add(0, ugs);</span>
+<span class="nc" id="L152">				stackG.addFirst(s);</span>
+<span class="nc" id="L153">				ugs = applyFillAndStroke(ugs, s, stackG);</span>
+<span class="nc" id="L154">				ugs = applyTransform(ugs, s);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;circle &quot;)) {</span>
+<span class="nc" id="L156">				drawCircle(ugs, s, stackG);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;ellipse &quot;)) {</span>
+<span class="nc" id="L158">				drawEllipse(ugs, s, stackG);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			} else if (s.startsWith(&quot;&lt;text &quot;)) {</span>
+<span class="nc" id="L160">				drawText(ugs, s, stackG);</span>
 			} else {
-<span class="nc" id="L161">				System.err.println(&quot;**?=&quot; + s);</span>
+<span class="nc" id="L162">				System.err.println(&quot;**?=&quot; + s);</span>
 			}
-<span class="nc" id="L163">		}</span>
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L164">		}</span>
+<span class="nc" id="L165">	}</span>
 
 	private synchronized Collection&lt;String&gt; getData() {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (data.isEmpty()) {</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">			for (String singleLine : svg) {</span>
-<span class="nc" id="L169">				final Matcher m = P_TEXT_OR_DRAW.matcher(singleLine);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">				while (m.find()) {</span>
-<span class="nc" id="L171">					final String s = m.group(0);</span>
-<span class="nc bnc" id="L172" title="All 8 branches missed.">					if (s.startsWith(&quot;&lt;path&quot;) || s.startsWith(&quot;&lt;g &quot;) || s.startsWith(&quot;&lt;g&gt;&quot;) || s.startsWith(&quot;&lt;/g&gt;&quot;)</span>
-<span class="nc bnc" id="L173" title="All 6 branches missed.">							|| s.startsWith(&quot;&lt;circle &quot;) || s.startsWith(&quot;&lt;ellipse &quot;) || s.startsWith(&quot;&lt;text &quot;))</span>
-<span class="nc" id="L174">						data.add(s);</span>
-<span class="nc bnc" id="L175" title="All 4 branches missed.">					else if (s.startsWith(&quot;&lt;svg&quot;) || s.startsWith(&quot;&lt;/svg&quot;)) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (data.isEmpty()) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			for (String singleLine : svg) {</span>
+<span class="nc" id="L170">				final Matcher m = P_TEXT_OR_DRAW.matcher(singleLine);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">				while (m.find()) {</span>
+<span class="nc" id="L172">					final String s = m.group(0);</span>
+<span class="nc bnc" id="L173" title="All 8 branches missed.">					if (s.startsWith(&quot;&lt;path&quot;) || s.startsWith(&quot;&lt;g &quot;) || s.startsWith(&quot;&lt;g&gt;&quot;) || s.startsWith(&quot;&lt;/g&gt;&quot;)</span>
+<span class="nc bnc" id="L174" title="All 6 branches missed.">							|| s.startsWith(&quot;&lt;circle &quot;) || s.startsWith(&quot;&lt;ellipse &quot;) || s.startsWith(&quot;&lt;text &quot;))</span>
+<span class="nc" id="L175">						data.add(s);</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">					else if (s.startsWith(&quot;&lt;svg&quot;) || s.startsWith(&quot;&lt;/svg&quot;)) {</span>
 						// Ignore
 					} else
-<span class="nc" id="L178">						System.err.println(&quot;???=&quot; + s);</span>
-<span class="nc" id="L179">				}</span>
-<span class="nc" id="L180">			}</span>
+<span class="nc" id="L179">						System.err.println(&quot;???=&quot; + s);</span>
+<span class="nc" id="L180">				}</span>
+<span class="nc" id="L181">			}</span>
 		}
-<span class="nc" id="L182">		return Collections.unmodifiableCollection(data);</span>
+<span class="nc" id="L183">		return Collections.unmodifiableCollection(data);</span>
 	}
 
 	private UGraphicWithScale applyFillAndStroke(UGraphicWithScale ugs, String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L186">		final String fillString = getFillString(s, stackG);</span>
-<span class="nc" id="L187">		final String strokeString = extract(DATA_STROKE, s);</span>
+<span class="nc" id="L187">		final String fillString = getFillString(s, stackG);</span>
+<span class="nc" id="L188">		final String strokeString = extract(DATA_STROKE, s);</span>
 
-<span class="nc" id="L189">		final String strokeWidth = extract(DATA_STROKE_WIDTH, s);</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (strokeWidth != null) {</span>
-<span class="nc" id="L191">			final double scale = ugs.getInitialScale();</span>
-<span class="nc" id="L192">			ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));</span>
+<span class="nc" id="L190">		final String strokeWidth = extract(DATA_STROKE_WIDTH, s);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (strokeWidth != null) {</span>
+<span class="nc" id="L192">			final double scale = ugs.getInitialScale();</span>
+<span class="nc" id="L193">			ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));</span>
 		}
 
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (strokeString != null) {</span>
-<span class="nc" id="L196">			final HColor stroke = ugs.getTrueColor(strokeString);</span>
-<span class="nc" id="L197">			ugs = ugs.apply(stroke);</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (fillString == null)</span>
-<span class="nc" id="L199">				return ugs.apply(ugs.getDefaultColor().bg());</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (strokeString != null) {</span>
+<span class="nc" id="L197">			final HColor stroke = ugs.getTrueColor(strokeString);</span>
+<span class="nc" id="L198">			ugs = ugs.apply(stroke);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (fillString == null)</span>
+<span class="nc" id="L200">				return ugs.apply(ugs.getDefaultColor().bg());</span>
 		}
 
-<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (&quot;none&quot;.equals(fillString)) {</span>
-<span class="nc" id="L203">			ugs = ugs.apply(HColors.none().bg());</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (&quot;none&quot;.equals(fillString)) {</span>
+<span class="nc" id="L204">			ugs = ugs.apply(HColors.none().bg());</span>
 		} else {
-<span class="nc bnc" id="L205" title="All 2 branches missed.">			final HColor fill = fillString == null ? ugs.getDefaultColor() : ugs.getTrueColor(fillString);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			final HColor fill = fillString == null ? ugs.getDefaultColor() : ugs.getTrueColor(fillString);</span>
 
-<span class="nc bnc" id="L207" title="All 2 branches missed.">			if (strokeString == null)</span>
-<span class="nc" id="L208">				ugs = ugs.apply(fill);</span>
-<span class="nc" id="L209">			ugs = ugs.apply(fill.bg());</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">			if (strokeString == null)</span>
+<span class="nc" id="L209">				ugs = ugs.apply(fill);</span>
+<span class="nc" id="L210">			ugs = ugs.apply(fill.bg());</span>
 		}
 
-<span class="nc" id="L212">		return ugs;</span>
+<span class="nc" id="L213">		return ugs;</span>
 	}
 
 	private void drawCircle(UGraphicWithScale ugs, String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L216">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
-<span class="nc" id="L217">		ugs = applyTransform(ugs, s);</span>
+<span class="nc" id="L217">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
+<span class="nc" id="L218">		ugs = applyTransform(ugs, s);</span>
 
-<span class="nc" id="L219">		final double scalex = ugs.getAffineTransform().getScaleX();</span>
-<span class="nc" id="L220">		final double scaley = ugs.getAffineTransform().getScaleY();</span>
+<span class="nc" id="L220">		final double scalex = ugs.getAffineTransform().getScaleX();</span>
+<span class="nc" id="L221">		final double scaley = ugs.getAffineTransform().getScaleY();</span>
 
-<span class="nc" id="L222">		final double deltax = ugs.getAffineTransform().getTranslateX();</span>
-<span class="nc" id="L223">		final double deltay = ugs.getAffineTransform().getTranslateY();</span>
+<span class="nc" id="L223">		final double deltax = ugs.getAffineTransform().getTranslateX();</span>
+<span class="nc" id="L224">		final double deltay = ugs.getAffineTransform().getTranslateY();</span>
 
-<span class="nc" id="L225">		final double cx = Double.parseDouble(extract(DATA_CX, s)) * scalex;</span>
-<span class="nc" id="L226">		final double cy = Double.parseDouble(extract(DATA_CY, s)) * scaley;</span>
-<span class="nc" id="L227">		final double rx = Double.parseDouble(extract(DATA_R, s)) * scalex;</span>
-<span class="nc" id="L228">		final double ry = Double.parseDouble(extract(DATA_R, s)) * scaley;</span>
+<span class="nc" id="L226">		final double cx = Double.parseDouble(extract(DATA_CX, s)) * scalex;</span>
+<span class="nc" id="L227">		final double cy = Double.parseDouble(extract(DATA_CY, s)) * scaley;</span>
+<span class="nc" id="L228">		final double rx = Double.parseDouble(extract(DATA_R, s)) * scalex;</span>
+<span class="nc" id="L229">		final double ry = Double.parseDouble(extract(DATA_R, s)) * scaley;</span>
 
-<span class="nc" id="L230">		final UTranslate translate = new UTranslate(deltax + cx - rx, deltay + cy - ry);</span>
-<span class="nc" id="L231">		ugs.apply(translate).draw(UEllipse.build(rx * 2, ry * 2));</span>
-<span class="nc" id="L232">	}</span>
+<span class="nc" id="L231">		final UTranslate translate = new UTranslate(deltax + cx - rx, deltay + cy - ry);</span>
+<span class="nc" id="L232">		ugs.apply(translate).draw(UEllipse.build(rx * 2, ry * 2));</span>
+<span class="nc" id="L233">	}</span>
 
 	private void drawEllipse(UGraphicWithScale ugs, String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L235">		final boolean debug = false;</span>
-<span class="nc" id="L236">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
-<span class="nc" id="L237">		ugs = applyTransform(ugs, s);</span>
+<span class="nc" id="L236">		final boolean debug = false;</span>
+<span class="nc" id="L237">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
+<span class="nc" id="L238">		ugs = applyTransform(ugs, s);</span>
 
-<span class="nc" id="L239">		final double cx = Double.parseDouble(extract(DATA_CX, s));</span>
-<span class="nc" id="L240">		final double cy = Double.parseDouble(extract(DATA_CY, s));</span>
-<span class="nc" id="L241">		final double rx = Double.parseDouble(extract(DATA_RX, s));</span>
-<span class="nc" id="L242">		final double ry = Double.parseDouble(extract(DATA_RY, s));</span>
+<span class="nc" id="L240">		final double cx = Double.parseDouble(extract(DATA_CX, s));</span>
+<span class="nc" id="L241">		final double cy = Double.parseDouble(extract(DATA_CY, s));</span>
+<span class="nc" id="L242">		final double rx = Double.parseDouble(extract(DATA_RX, s));</span>
+<span class="nc" id="L243">		final double ry = Double.parseDouble(extract(DATA_RY, s));</span>
 
-<span class="nc" id="L244">		UPath path = UPath.none();</span>
-<span class="nc" id="L245">		path.moveTo(0, ry);</span>
+<span class="nc" id="L245">		UPath path = UPath.none();</span>
+<span class="nc" id="L246">		path.moveTo(0, ry);</span>
 
 		if (debug)
 			path.lineTo(rx, 0);
 		else
-<span class="nc" id="L250">			path.arcTo(rx, ry, 0, 0, 1, rx, 0);</span>
+<span class="nc" id="L251">			path.arcTo(rx, ry, 0, 0, 1, rx, 0);</span>
 
 		if (debug)
 			path.lineTo(2 * rx, ry);
 		else
-<span class="nc" id="L255">			path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);</span>
+<span class="nc" id="L256">			path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);</span>
 
 		if (debug)
 			path.lineTo(rx, 2 * ry);
 		else
-<span class="nc" id="L260">			path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);</span>
+<span class="nc" id="L261">			path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);</span>
 
 		if (debug)
 			path.lineTo(0, ry);
 		else
-<span class="nc" id="L265">			path.arcTo(rx, ry, 0, 0, 1, 0, ry);</span>
+<span class="nc" id="L266">			path.arcTo(rx, ry, 0, 0, 1, 0, ry);</span>
 
-<span class="nc" id="L267">		path.closePath();</span>
+<span class="nc" id="L268">		path.closePath();</span>
 
-<span class="nc" id="L269">		path = path.translate(cx - rx, cy - ry);</span>
-<span class="nc" id="L270">		path = path.affine(ugs.getAffineTransform(), ugs.getAngle(), ugs.getInitialScale());</span>
+<span class="nc" id="L270">		path = path.translate(cx - rx, cy - ry);</span>
+<span class="nc" id="L271">		path = path.affine(ugs.getAffineTransform(), ugs.getAngle(), ugs.getInitialScale());</span>
 
-<span class="nc" id="L272">		ugs.draw(path);</span>
+<span class="nc" id="L273">		ugs.draw(path);</span>
 
-<span class="nc" id="L274">	}</span>
+<span class="nc" id="L275">	}</span>
 
 	private void drawText(UGraphicWithScale ugs, String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L277">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
-<span class="nc" id="L278">		ugs = applyTransform(ugs, s);</span>
+<span class="nc" id="L278">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
+<span class="nc" id="L279">		ugs = applyTransform(ugs, s);</span>
 
-<span class="nc" id="L280">		final double scalex = ugs.getAffineTransform().getScaleX();</span>
-<span class="nc" id="L281">		final double scaley = ugs.getAffineTransform().getScaleY();</span>
+<span class="nc" id="L281">		final double scalex = ugs.getAffineTransform().getScaleX();</span>
+<span class="nc" id="L282">		final double scaley = ugs.getAffineTransform().getScaleY();</span>
 
-<span class="nc" id="L283">		final double deltax = ugs.getAffineTransform().getTranslateX();</span>
-<span class="nc" id="L284">		final double deltay = ugs.getAffineTransform().getTranslateY();</span>
+<span class="nc" id="L284">		final double deltax = ugs.getAffineTransform().getTranslateX();</span>
+<span class="nc" id="L285">		final double deltay = ugs.getAffineTransform().getTranslateY();</span>
 
-<span class="nc" id="L286">		final double x = Double.parseDouble(extract(DATA_X, s)) * scalex + deltax;</span>
-<span class="nc" id="L287">		final double y = Double.parseDouble(extract(DATA_Y, s)) * scaley + deltay;</span>
-<span class="nc" id="L288">		final String fontColor = getFillString(s, stackG);</span>
-<span class="nc" id="L289">		final int fontSize = (int) (getTextFontSize(s) * ugs.getInitialScale());</span>
+<span class="nc" id="L287">		final double x = Double.parseDouble(extract(DATA_X, s)) * scalex + deltax;</span>
+<span class="nc" id="L288">		final double y = Double.parseDouble(extract(DATA_Y, s)) * scaley + deltay;</span>
+<span class="nc" id="L289">		final String fontColor = getFillString(s, stackG);</span>
+<span class="nc" id="L290">		final int fontSize = (int) (getTextFontSize(s) * ugs.getInitialScale());</span>
 
-<span class="nc" id="L291">		final Matcher m = P_TEXT.matcher(s);</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L293">			final String text = m.group(1);</span>
-<span class="nc" id="L294">			final HColor color = HColorSet.instance().getColorOrWhite(fontColor);</span>
-<span class="nc" id="L295">			String fontFamily = getTextFontFamily(s, stackG);</span>
-<span class="nc bnc" id="L296" title="All 2 branches missed.">			if (fontFamily == null)</span>
-<span class="nc" id="L297">				fontFamily = &quot;SansSerif&quot;;</span>
-<span class="nc" id="L298">			final UFont font = UFont.build(fontFamily, Font.PLAIN, fontSize);</span>
-<span class="nc" id="L299">			final FontConfiguration fc = FontConfiguration.create(font, color, color, null);</span>
-<span class="nc" id="L300">			final UText utext = UText.build(text, fc);</span>
-<span class="nc" id="L301">			UGraphic ug = ugs.getUg();</span>
-<span class="nc" id="L302">			ug = ug.apply(new UTranslate(x, y));</span>
-<span class="nc" id="L303">			ug.draw(utext);</span>
+<span class="nc" id="L292">		final Matcher m = P_TEXT.matcher(s);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L294">			final String text = m.group(1);</span>
+<span class="nc" id="L295">			final HColor color = HColorSet.instance().getColorOrWhite(fontColor);</span>
+<span class="nc" id="L296">			String fontFamily = getTextFontFamily(s, stackG);</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			if (fontFamily == null)</span>
+<span class="nc" id="L298">				fontFamily = &quot;SansSerif&quot;;</span>
+<span class="nc" id="L299">			final UFont font = UFontFactory.build(fontFamily, Font.PLAIN, fontSize);</span>
+<span class="nc" id="L300">			final FontConfiguration fc = FontConfiguration.create(font, color, color, null);</span>
+<span class="nc" id="L301">			final UText utext = UText.build(text, fc);</span>
+<span class="nc" id="L302">			UGraphic ug = ugs.getUg();</span>
+<span class="nc" id="L303">			ug = ug.apply(new UTranslate(x, y));</span>
+<span class="nc" id="L304">			ug.draw(utext);</span>
 		}
-<span class="nc" id="L305">	}</span>
+<span class="nc" id="L306">	}</span>
 
 	private String getTextFontFamily(String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L308">		String family = extract(DATA_FONT_FAMILY, s);</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (family == null) {</span>
-<span class="nc" id="L310">			final String style = extract(DATA_STYLE, s);</span>
-<span class="nc bnc" id="L311" title="All 2 branches missed.">			if (style != null)</span>
-<span class="nc" id="L312">				family = extract(STYLE_FONT_FAMILY, style);</span>
+<span class="nc" id="L309">		String family = extract(DATA_FONT_FAMILY, s);</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (family == null) {</span>
+<span class="nc" id="L311">			final String style = extract(DATA_STYLE, s);</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">			if (style != null)</span>
+<span class="nc" id="L313">				family = extract(STYLE_FONT_FAMILY, style);</span>
 		}
-<span class="nc bnc" id="L314" title="All 4 branches missed.">		if (family == null &amp;&amp; stackG != null) {</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">			for (String g : stackG) {</span>
-<span class="nc" id="L316">				family = getTextFontFamily(g, null);</span>
-<span class="nc bnc" id="L317" title="All 2 branches missed.">				if (family != null)</span>
-<span class="nc" id="L318">					return family;</span>
-<span class="nc" id="L319">			}</span>
+<span class="nc bnc" id="L315" title="All 4 branches missed.">		if (family == null &amp;&amp; stackG != null) {</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">			for (String g : stackG) {</span>
+<span class="nc" id="L317">				family = getTextFontFamily(g, null);</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">				if (family != null)</span>
+<span class="nc" id="L319">					return family;</span>
+<span class="nc" id="L320">			}</span>
 		}
-<span class="nc" id="L321">		return family;</span>
+<span class="nc" id="L322">		return family;</span>
 	}
 
 	private String getFillString(String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L325">		String color = extract(DATA_FILL, s);</span>
-<span class="nc bnc" id="L326" title="All 2 branches missed.">		if (color == null) {</span>
-<span class="nc" id="L327">			final String style = extract(DATA_STYLE, s);</span>
-<span class="nc bnc" id="L328" title="All 2 branches missed.">			if (style != null)</span>
-<span class="nc" id="L329">				color = extract(STYLE_FILL, style);</span>
+<span class="nc" id="L326">		String color = extract(DATA_FILL, s);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (color == null) {</span>
+<span class="nc" id="L328">			final String style = extract(DATA_STYLE, s);</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">			if (style != null)</span>
+<span class="nc" id="L330">				color = extract(STYLE_FILL, style);</span>
 		}
 
-<span class="nc bnc" id="L332" title="All 4 branches missed.">		if (color == null &amp;&amp; stackG != null)</span>
-<span class="nc bnc" id="L333" title="All 2 branches missed.">			for (String g : stackG) {</span>
-<span class="nc" id="L334">				color = getFillString(g, null);</span>
-<span class="nc bnc" id="L335" title="All 2 branches missed.">				if (color != null)</span>
-<span class="nc" id="L336">					return color;</span>
-<span class="nc" id="L337">			}</span>
+<span class="nc bnc" id="L333" title="All 4 branches missed.">		if (color == null &amp;&amp; stackG != null)</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">			for (String g : stackG) {</span>
+<span class="nc" id="L335">				color = getFillString(g, null);</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">				if (color != null)</span>
+<span class="nc" id="L337">					return color;</span>
+<span class="nc" id="L338">			}</span>
 
-<span class="nc" id="L339">		return color;</span>
+<span class="nc" id="L340">		return color;</span>
 	}
 
 	private int getTextFontSize(String s) {
-<span class="nc" id="L343">		String fontSize = extract(DATA_FONT_SIZE, s);</span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (fontSize == null) {</span>
-<span class="nc" id="L345">			final String style = extract(DATA_STYLE, s);</span>
-<span class="nc bnc" id="L346" title="All 2 branches missed.">			if (style != null)</span>
-<span class="nc" id="L347">				fontSize = extract(STYLE_FONT_SIZE, style);</span>
+<span class="nc" id="L344">		String fontSize = extract(DATA_FONT_SIZE, s);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (fontSize == null) {</span>
+<span class="nc" id="L346">			final String style = extract(DATA_STYLE, s);</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			if (style != null)</span>
+<span class="nc" id="L348">				fontSize = extract(STYLE_FONT_SIZE, style);</span>
 
 		}
-<span class="nc bnc" id="L350" title="All 2 branches missed.">		if (fontSize == null)</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">		if (fontSize == null)</span>
 			// Not perfect, by let's take a default value
-<span class="nc" id="L352">			return 14;</span>
+<span class="nc" id="L353">			return 14;</span>
 
-<span class="nc" id="L354">		final Matcher matcher = P_FONT_SIZE.matcher(fontSize);</span>
+<span class="nc" id="L355">		final Matcher matcher = P_FONT_SIZE.matcher(fontSize);</span>
 
-<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (matcher.matches())</span>
-<span class="nc" id="L357">			return Integer.parseInt(fontSize.replaceAll(&quot;[a-z]&quot;, &quot;&quot;));</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">		if (matcher.matches())</span>
+<span class="nc" id="L358">			return Integer.parseInt(fontSize.replaceAll(&quot;[a-z]&quot;, &quot;&quot;));</span>
 
-<span class="nc" id="L359">		return Integer.parseInt(fontSize);</span>
+<span class="nc" id="L360">		return Integer.parseInt(fontSize);</span>
 	}
 
 	private void drawPath(UGraphicWithScale ugs, String s, Deque&lt;String&gt; stackG) {
-<span class="nc" id="L363">		s = s.replace(&quot;id=\&quot;&quot;, &quot;ID=\&quot;&quot;);</span>
-<span class="nc" id="L364">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
-<span class="nc" id="L365">		ugs = applyTransform(ugs, s);</span>
+<span class="nc" id="L364">		s = s.replace(&quot;id=\&quot;&quot;, &quot;ID=\&quot;&quot;);</span>
+<span class="nc" id="L365">		ugs = applyFillAndStroke(ugs, s, stackG);</span>
+<span class="nc" id="L366">		ugs = applyTransform(ugs, s);</span>
 
-<span class="nc" id="L367">		final int x1 = s.indexOf(&quot;d=\&quot;&quot;);</span>
-<span class="nc" id="L368">		final int x2 = s.indexOf('&quot;', x1 + 3);</span>
-<span class="nc" id="L369">		final String tmp = s.substring(x1 + 3, x2);</span>
+<span class="nc" id="L368">		final int x1 = s.indexOf(&quot;d=\&quot;&quot;);</span>
+<span class="nc" id="L369">		final int x2 = s.indexOf('&quot;', x1 + 3);</span>
+<span class="nc" id="L370">		final String tmp = s.substring(x1 + 3, x2);</span>
 
-<span class="nc" id="L371">		final SvgPath svgPath = new SvgPath(tmp, UTranslate.none());</span>
-<span class="nc" id="L372">		svgPath.drawMe(ugs.getUg(), ugs.getAffineTransform());</span>
+<span class="nc" id="L372">		final SvgPath svgPath = new SvgPath(tmp, UTranslate.none());</span>
+<span class="nc" id="L373">		svgPath.drawMe(ugs.getUg(), ugs.getAffineTransform());</span>
 
-<span class="nc" id="L374">	}</span>
+<span class="nc" id="L375">	}</span>
 
 	private UGraphicWithScale applyTransform(UGraphicWithScale ugs, String s) {
-<span class="nc" id="L377">		final String transform = extract(DATA_TRANSFORM, s);</span>
-<span class="nc bnc" id="L378" title="All 2 branches missed.">		if (transform == null)</span>
-<span class="nc" id="L379">			return ugs;</span>
+<span class="nc" id="L378">		final String transform = extract(DATA_TRANSFORM, s);</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">		if (transform == null)</span>
+<span class="nc" id="L380">			return ugs;</span>
 
-<span class="nc bnc" id="L381" title="All 2 branches missed.">		if (transform.contains(&quot;rotate(&quot;))</span>
-<span class="nc" id="L382">			return applyRotate(ugs, transform);</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">		if (transform.contains(&quot;rotate(&quot;))</span>
+<span class="nc" id="L383">			return applyRotate(ugs, transform);</span>
 
-<span class="nc bnc" id="L384" title="All 2 branches missed.">		if (transform.contains(&quot;matrix(&quot;))</span>
-<span class="nc" id="L385">			return applyMatrix(ugs, transform);</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">		if (transform.contains(&quot;matrix(&quot;))</span>
+<span class="nc" id="L386">			return applyMatrix(ugs, transform);</span>
 
-<span class="nc" id="L387">		final double[] scale = getScale(transform);</span>
-<span class="nc" id="L388">		final UTranslate translate = getTranslate(transform);</span>
-<span class="nc" id="L389">		ugs = ugs.applyTranslate(translate.getDx(), translate.getDy());</span>
+<span class="nc" id="L388">		final double[] scale = getScale(transform);</span>
+<span class="nc" id="L389">		final UTranslate translate = getTranslate(transform);</span>
+<span class="nc" id="L390">		ugs = ugs.applyTranslate(translate.getDx(), translate.getDy());</span>
 
-<span class="nc" id="L391">		return ugs.applyScale(scale[0], scale[1]);</span>
+<span class="nc" id="L392">		return ugs.applyScale(scale[0], scale[1]);</span>
 	}
 
 	private UGraphicWithScale applyMatrix(UGraphicWithScale ugs, final String transform) {
-<span class="nc" id="L395">		final Matcher m3 = P_MATRIX.matcher(transform);</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">		if (m3.find()) {</span>
-<span class="nc" id="L397">			final double v1 = Double.parseDouble(m3.group(1));</span>
-<span class="nc" id="L398">			final double v2 = Double.parseDouble(m3.group(2));</span>
-<span class="nc" id="L399">			final double v3 = Double.parseDouble(m3.group(3));</span>
-<span class="nc" id="L400">			final double v4 = Double.parseDouble(m3.group(4));</span>
-<span class="nc" id="L401">			final double v5 = Double.parseDouble(m3.group(5));</span>
-<span class="nc" id="L402">			final double v6 = Double.parseDouble(m3.group(6));</span>
-<span class="nc" id="L403">			ugs = ugs.applyMatrix(v1, v2, v3, v4, v5, v6);</span>
-<span class="nc" id="L404">		} else</span>
-<span class="nc" id="L405">			System.err.println(&quot;WARNING: &quot; + transform);</span>
-<span class="nc" id="L406">		return ugs;</span>
+<span class="nc" id="L396">		final Matcher m3 = P_MATRIX.matcher(transform);</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		if (m3.find()) {</span>
+<span class="nc" id="L398">			final double v1 = Double.parseDouble(m3.group(1));</span>
+<span class="nc" id="L399">			final double v2 = Double.parseDouble(m3.group(2));</span>
+<span class="nc" id="L400">			final double v3 = Double.parseDouble(m3.group(3));</span>
+<span class="nc" id="L401">			final double v4 = Double.parseDouble(m3.group(4));</span>
+<span class="nc" id="L402">			final double v5 = Double.parseDouble(m3.group(5));</span>
+<span class="nc" id="L403">			final double v6 = Double.parseDouble(m3.group(6));</span>
+<span class="nc" id="L404">			ugs = ugs.applyMatrix(v1, v2, v3, v4, v5, v6);</span>
+<span class="nc" id="L405">		} else</span>
+<span class="nc" id="L406">			System.err.println(&quot;WARNING: &quot; + transform);</span>
+<span class="nc" id="L407">		return ugs;</span>
 	}
 
 	private UGraphicWithScale applyRotate(UGraphicWithScale ugs, String transform) {
-<span class="nc" id="L410">		final Matcher m3 = P_ROTATE.matcher(transform);</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">		if (m3.find()) {</span>
-<span class="nc" id="L412">			final double angle = Double.parseDouble(m3.group(1));</span>
-<span class="nc" id="L413">			final double x = Double.parseDouble(m3.group(2));</span>
-<span class="nc" id="L414">			final double y = Double.parseDouble(m3.group(3));</span>
-<span class="nc" id="L415">			ugs = ugs.applyRotate(angle, x, y);</span>
-<span class="nc" id="L416">		} else</span>
-<span class="nc" id="L417">			System.err.println(&quot;WARNING: &quot; + transform);</span>
-<span class="nc" id="L418">		return ugs;</span>
+<span class="nc" id="L411">		final Matcher m3 = P_ROTATE.matcher(transform);</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">		if (m3.find()) {</span>
+<span class="nc" id="L413">			final double angle = Double.parseDouble(m3.group(1));</span>
+<span class="nc" id="L414">			final double x = Double.parseDouble(m3.group(2));</span>
+<span class="nc" id="L415">			final double y = Double.parseDouble(m3.group(3));</span>
+<span class="nc" id="L416">			ugs = ugs.applyRotate(angle, x, y);</span>
+<span class="nc" id="L417">		} else</span>
+<span class="nc" id="L418">			System.err.println(&quot;WARNING: &quot; + transform);</span>
+<span class="nc" id="L419">		return ugs;</span>
 	}
 
 	private UTranslate getTranslate(String transform) {
-<span class="nc" id="L422">		double x = 0;</span>
-<span class="nc" id="L423">		double y = 0;</span>
+<span class="nc" id="L423">		double x = 0;</span>
+<span class="nc" id="L424">		double y = 0;</span>
 
-<span class="nc" id="L425">		final Matcher m3 = P_TRANSLATE1.matcher(transform);</span>
-<span class="nc bnc" id="L426" title="All 2 branches missed.">		if (m3.find()) {</span>
-<span class="nc" id="L427">			x = Double.parseDouble(m3.group(1));</span>
-<span class="nc" id="L428">			y = Double.parseDouble(m3.group(2));</span>
+<span class="nc" id="L426">		final Matcher m3 = P_TRANSLATE1.matcher(transform);</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (m3.find()) {</span>
+<span class="nc" id="L428">			x = Double.parseDouble(m3.group(1));</span>
+<span class="nc" id="L429">			y = Double.parseDouble(m3.group(2));</span>
 		} else {
-<span class="nc" id="L430">			final Matcher m4 = P_TRANSLATE2.matcher(transform);</span>
-<span class="nc bnc" id="L431" title="All 2 branches missed.">			if (m4.find()) {</span>
-<span class="nc" id="L432">				x = Double.parseDouble(m4.group(1));</span>
-<span class="nc" id="L433">				y = Double.parseDouble(m4.group(1));</span>
+<span class="nc" id="L431">			final Matcher m4 = P_TRANSLATE2.matcher(transform);</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">			if (m4.find()) {</span>
+<span class="nc" id="L433">				x = Double.parseDouble(m4.group(1));</span>
+<span class="nc" id="L434">				y = Double.parseDouble(m4.group(1));</span>
 			}
 		}
-<span class="nc" id="L436">		return new UTranslate(x, y);</span>
+<span class="nc" id="L437">		return new UTranslate(x, y);</span>
 	}
 
 	private double[] getScale(String transform) {
-<span class="nc" id="L440">		final double scale[] = new double[] { 1, 1 };</span>
-<span class="nc" id="L441">		final Matcher m1 = P_SCALE1.matcher(transform);</span>
-<span class="nc bnc" id="L442" title="All 2 branches missed.">		if (m1.find()) {</span>
-<span class="nc" id="L443">			scale[0] = Double.parseDouble(m1.group(1));</span>
-<span class="nc" id="L444">			scale[1] = scale[0];</span>
+<span class="nc" id="L441">		final double scale[] = new double[] { 1, 1 };</span>
+<span class="nc" id="L442">		final Matcher m1 = P_SCALE1.matcher(transform);</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">		if (m1.find()) {</span>
+<span class="nc" id="L444">			scale[0] = Double.parseDouble(m1.group(1));</span>
+<span class="nc" id="L445">			scale[1] = scale[0];</span>
 		} else {
-<span class="nc" id="L446">			final Matcher m2 = P_SCALE2.matcher(transform);</span>
-<span class="nc bnc" id="L447" title="All 2 branches missed.">			if (m2.find()) {</span>
-<span class="nc" id="L448">				scale[0] = Double.parseDouble(m2.group(1));</span>
-<span class="nc" id="L449">				scale[1] = Double.parseDouble(m2.group(2));</span>
+<span class="nc" id="L447">			final Matcher m2 = P_SCALE2.matcher(transform);</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">			if (m2.find()) {</span>
+<span class="nc" id="L449">				scale[0] = Double.parseDouble(m2.group(1));</span>
+<span class="nc" id="L450">				scale[1] = Double.parseDouble(m2.group(2));</span>
 			}
 		}
-<span class="nc" id="L452">		return scale;</span>
+<span class="nc" id="L453">		return scale;</span>
 	}
 
 	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
 			final HColor backColor) {
 
-<span class="nc" id="L459">		final UImageSvg data = new UImageSvg(svg.get(0), scale);</span>
-<span class="nc" id="L460">		final double width = data.getWidth();</span>
-<span class="nc" id="L461">		final double height = data.getHeight();</span>
+<span class="nc" id="L460">		final UImageSvg data = new UImageSvg(svg.get(0), scale);</span>
+<span class="nc" id="L461">		final double width = data.getWidth();</span>
+<span class="nc" id="L462">		final double height = data.getHeight();</span>
 
-<span class="nc" id="L463">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L464">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L466" title="All 2 branches missed.">				if (backColor != null)</span>
-<span class="nc" id="L467">					ug.apply(backColor.bg()).apply(backColor)</span>
-<span class="nc" id="L468">							.draw(URectangle.build(calculateDimension(ug.getStringBounder())));</span>
-<span class="nc" id="L469">				SvgNanoParser.this.drawU(ug, scale, fontColor, forcedColor);</span>
-<span class="nc" id="L470">			}</span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">				if (backColor != null)</span>
+<span class="nc" id="L468">					ug.apply(backColor.bg()).apply(backColor)</span>
+<span class="nc" id="L469">							.draw(URectangle.build(calculateDimension(ug.getStringBounder())));</span>
+<span class="nc" id="L470">				SvgNanoParser.this.drawU(ug, scale, fontColor, forcedColor);</span>
+<span class="nc" id="L471">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L473">				return new XDimension2D(width, height);</span>
+<span class="nc" id="L474">				return new XDimension2D(width, height);</span>
 			}
 		};
 	}
 
 	private void computeMinMaxGray() {
-<span class="nc bnc" id="L479" title="All 2 branches missed.">		for (String s : getData()) {</span>
-<span class="nc bnc" id="L480" title="All 8 branches missed.">			if (s.contains(&quot;&lt;path &quot;) || s.contains(&quot;&lt;g &quot;) || s.contains(&quot;&lt;circle &quot;) || s.contains(&quot;&lt;ellipse &quot;)) {</span>
-<span class="nc" id="L481">				final String fillString = getFillString(s, null);</span>
-<span class="nc" id="L482">				final String strokeString = extract(DATA_STROKE, s);</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">		for (String s : getData()) {</span>
+<span class="nc bnc" id="L481" title="All 8 branches missed.">			if (s.contains(&quot;&lt;path &quot;) || s.contains(&quot;&lt;g &quot;) || s.contains(&quot;&lt;circle &quot;) || s.contains(&quot;&lt;ellipse &quot;)) {</span>
+<span class="nc" id="L482">				final String fillString = getFillString(s, null);</span>
+<span class="nc" id="L483">				final String strokeString = extract(DATA_STROKE, s);</span>
 
-<span class="nc" id="L484">				updateMinMax(strokeString);</span>
-<span class="nc" id="L485">				updateMinMax(fillString);</span>
+<span class="nc" id="L485">				updateMinMax(strokeString);</span>
+<span class="nc" id="L486">				updateMinMax(fillString);</span>
 
 			} else {
 				// Nothing
 			}
-<span class="nc" id="L490">		}</span>
-<span class="nc" id="L491">	}</span>
+<span class="nc" id="L491">		}</span>
+<span class="nc" id="L492">	}</span>
 
 	private void updateMinMax(String colorString) {
-<span class="nc bnc" id="L494" title="All 2 branches missed.">		if (colorString != null) {</span>
-<span class="nc" id="L495">			final HColor color = HColorSet.instance().getColorOrWhite(colorString);</span>
-<span class="nc" id="L496">			final int gray = ColorUtils.getGrayScaleColor(color.toColor(ColorMapper.MONOCHROME)).getGreen();</span>
-<span class="nc" id="L497">			minGray = Math.min(minGray, gray);</span>
-<span class="nc" id="L498">			maxGray = Math.max(maxGray, gray);</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">		if (colorString != null) {</span>
+<span class="nc" id="L496">			final HColor color = HColorSet.instance().getColorOrWhite(colorString);</span>
+<span class="nc" id="L497">			final int gray = ColorUtils.getGrayScaleColor(color.toColor(ColorMapper.MONOCHROME)).getGreen();</span>
+<span class="nc" id="L498">			minGray = Math.min(minGray, gray);</span>
+<span class="nc" id="L499">			maxGray = Math.max(maxGray, gray);</span>
 		}
-<span class="nc" id="L500">	}</span>
+<span class="nc" id="L501">	}</span>
 
 	@Override
 	public int getMinGrayLevel() {
-<span class="nc bnc" id="L504" title="All 2 branches missed.">		if (maxGray == -1)</span>
-<span class="nc" id="L505">			computeMinMaxGray();</span>
+<span class="nc bnc" id="L505" title="All 2 branches missed.">		if (maxGray == -1)</span>
+<span class="nc" id="L506">			computeMinMaxGray();</span>
 
-<span class="nc" id="L507">		return minGray;</span>
+<span class="nc" id="L508">		return minGray;</span>
 	}
 
 	@Override
 	public int getMaxGrayLevel() {
-<span class="nc bnc" id="L512" title="All 2 branches missed.">		if (maxGray == -1)</span>
-<span class="nc" id="L513">			computeMinMaxGray();</span>
+<span class="nc bnc" id="L513" title="All 2 branches missed.">		if (maxGray == -1)</span>
+<span class="nc" id="L514">			computeMinMaxGray();</span>
 
-<span class="nc" id="L515">		return maxGray;</span>
+<span class="nc" id="L516">		return maxGray;</span>
 	}
 
 }

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TileImageSvg;
@@ -75,162 +76,162 @@ public class AtomImg extends AbstractAtom implements Atom {
 	private final Url url;
 	private final String rawFileName;
 
-<span class="nc" id="L78">	private AtomImg(BufferedImage image, double scale, Url url, String rawFileName) {</span>
-<span class="nc" id="L79">		this.image = image;</span>
-<span class="nc" id="L80">		this.scale = scale;</span>
-<span class="nc" id="L81">		this.url = url;</span>
-<span class="nc" id="L82">		this.rawFileName = rawFileName;</span>
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L79">	private AtomImg(BufferedImage image, double scale, Url url, String rawFileName) {</span>
+<span class="nc" id="L80">		this.image = image;</span>
+<span class="nc" id="L81">		this.scale = scale;</span>
+<span class="nc" id="L82">		this.url = url;</span>
+<span class="nc" id="L83">		this.rawFileName = rawFileName;</span>
+<span class="nc" id="L84">	}</span>
 
 	public static Atom createQrcode(String flash, double scale) {
-<span class="nc" id="L86">		BufferedImage im = null;</span>
+<span class="nc" id="L87">		BufferedImage im = null;</span>
 		// :: comment when __CORE__
-<span class="nc" id="L88">		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (im == null)</span>
+<span class="nc" id="L89">		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (im == null)</span>
 			// ::done
-<span class="nc" id="L91">			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L92">			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);</span>
 
-<span class="nc" id="L93">		return new AtomImg(</span>
-<span class="nc" id="L94">				new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1), 1,</span>
+<span class="nc" id="L94">		return new AtomImg(</span>
+<span class="nc" id="L95">				new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1), 1,</span>
 				null, null);
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
-<span class="nc" id="L99">		final UFont font = UFont.monospaced(14);</span>
-<span class="nc" id="L100">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
+<span class="nc" id="L100">		final UFont font = UFontFactory.monospaced(14);</span>
+<span class="nc" id="L101">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (src.startsWith(DATA_IMAGE_PNG_SPM)) {</span>
-<span class="nc" id="L103">			final String data = src.substring(DATA_IMAGE_PNG_SPM.length(), src.length());</span>
-<span class="nc" id="L104">			final int x = data.indexOf('/');</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (x == -1)</span>
-<span class="nc" id="L106">				return AtomTextUtils.createLegacy(&quot;ERROR DATA IMAGE&quot;, fc);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (src.startsWith(DATA_IMAGE_PNG_SPM)) {</span>
+<span class="nc" id="L104">			final String data = src.substring(DATA_IMAGE_PNG_SPM.length(), src.length());</span>
+<span class="nc" id="L105">			final int x = data.indexOf('/');</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (x == -1)</span>
+<span class="nc" id="L107">				return AtomTextUtils.createLegacy(&quot;ERROR DATA IMAGE&quot;, fc);</span>
 			try {
-<span class="nc" id="L108">				final Stdlib lib = Stdlib.retrieve(data.substring(0, x));</span>
-<span class="nc" id="L109">				final int num = Integer.parseInt(data.substring(x + 1));</span>
-<span class="nc" id="L110">				final BufferedImage image = lib.readDataImagePng(num).getNow();</span>
-<span class="nc" id="L111">				return new AtomImg(image, scale, url, null);</span>
+<span class="nc" id="L109">				final Stdlib lib = Stdlib.retrieve(data.substring(0, x));</span>
+<span class="nc" id="L110">				final int num = Integer.parseInt(data.substring(x + 1));</span>
+<span class="nc" id="L111">				final BufferedImage image = lib.readDataImagePng(num).getNow();</span>
+<span class="nc" id="L112">				return new AtomImg(image, scale, url, null);</span>
 
 
-<span class="nc" id="L114">			} catch (Exception e) {</span>
-<span class="nc" id="L115">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
+<span class="nc" id="L115">			} catch (Exception e) {</span>
+<span class="nc" id="L116">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
 			}
 
 		}
 
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (src.startsWith(DATA_IMAGE_PNG_BASE64)) {</span>
-<span class="nc" id="L121">			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (src.startsWith(DATA_IMAGE_PNG_BASE64)) {</span>
+<span class="nc" id="L122">			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());</span>
 			try {
-<span class="nc" id="L123">				final byte bytes[] = Base64Coder.decode(data);</span>
-<span class="nc" id="L124">				return buildRasterFromData(src, fc, bytes, scale, url);</span>
-<span class="nc" id="L125">			} catch (Exception e) {</span>
-<span class="nc" id="L126">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
+<span class="nc" id="L124">				final byte bytes[] = Base64Coder.decode(data);</span>
+<span class="nc" id="L125">				return buildRasterFromData(src, fc, bytes, scale, url);</span>
+<span class="nc" id="L126">			} catch (Exception e) {</span>
+<span class="nc" id="L127">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
 			}
 		}
 
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (src.startsWith(DATA_IMAGE_SVG_BASE64)) {</span>
-<span class="nc" id="L131">			final String data = src.substring(DATA_IMAGE_SVG_BASE64.length(), src.length());</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (src.startsWith(DATA_IMAGE_SVG_BASE64)) {</span>
+<span class="nc" id="L132">			final String data = src.substring(DATA_IMAGE_SVG_BASE64.length(), src.length());</span>
 			try {
-<span class="nc" id="L133">				final byte bytes[] = Base64Coder.decode(data);</span>
-<span class="nc" id="L134">				final String tmp = new String(bytes);</span>
-<span class="nc" id="L135">				return new AtomImgSvg(new TileImageSvg(tmp, scale));</span>
-<span class="nc" id="L136">			} catch (Exception e) {</span>
-<span class="nc" id="L137">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
+<span class="nc" id="L134">				final byte bytes[] = Base64Coder.decode(data);</span>
+<span class="nc" id="L135">				final String tmp = new String(bytes);</span>
+<span class="nc" id="L136">				return new AtomImgSvg(new TileImageSvg(tmp, scale));</span>
+<span class="nc" id="L137">			} catch (Exception e) {</span>
+<span class="nc" id="L138">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
 			}
 		}
 
 		try {
 			// Check if valid URL
-<span class="nc bnc" id="L143" title="All 4 branches missed.">			if (src.startsWith(&quot;http:&quot;) || src.startsWith(&quot;https:&quot;)) {</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">				if (src.endsWith(&quot;.svg&quot;))</span>
-<span class="nc" id="L145">					return buildSvgFromUrl(src, fc, SURL.create(src), scale, url);</span>
+<span class="nc bnc" id="L144" title="All 4 branches missed.">			if (src.startsWith(&quot;http:&quot;) || src.startsWith(&quot;https:&quot;)) {</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">				if (src.endsWith(&quot;.svg&quot;))</span>
+<span class="nc" id="L146">					return buildSvgFromUrl(src, fc, SURL.create(src), scale, url);</span>
 
-<span class="nc" id="L147">				return buildRasterFromUrl(src, fc, SURL.create(src), scale, url);</span>
+<span class="nc" id="L148">				return buildRasterFromUrl(src, fc, SURL.create(src), scale, url);</span>
 			}
-<span class="nc" id="L149">			final SFile f = FileSystem.getInstance().getFile(src);</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (f.exists() == false) {</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-<span class="nc" id="L152">					return AtomTextUtils.createLegacy(&quot;(File not found: &quot; + f.getPrintablePath() + &quot;)&quot;, fc);</span>
+<span class="nc" id="L150">			final SFile f = FileSystem.getInstance().getFile(src);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (f.exists() == false) {</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L153">					return AtomTextUtils.createLegacy(&quot;(File not found: &quot; + f.getPrintablePath() + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L154">				return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
+<span class="nc" id="L155">				return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
 			}
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
-<span class="nc" id="L157">				final String tmp = FileUtils.readSvg(f);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">				if (tmp == null)</span>
-<span class="nc" id="L159">					return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
+<span class="nc" id="L158">				final String tmp = FileUtils.readSvg(f);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				if (tmp == null)</span>
+<span class="nc" id="L160">					return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
 
-<span class="nc" id="L161">				return new AtomImgSvg(new TileImageSvg(tmp, scale));</span>
+<span class="nc" id="L162">				return new AtomImgSvg(new TileImageSvg(tmp, scale));</span>
 			}
-<span class="nc" id="L163">			final BufferedImage read = f.readRasterImageFromFile();</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (read == null) {</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-<span class="nc" id="L166">					return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + f.getPrintablePath() + &quot;)&quot;, fc);</span>
+<span class="nc" id="L164">			final BufferedImage read = f.readRasterImageFromFile();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (read == null) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L167">					return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + f.getPrintablePath() + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L168">				return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
+<span class="nc" id="L169">				return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
 			}
-<span class="nc" id="L170">			return new AtomImg(f.readRasterImageFromFile(), scale, url, src);</span>
-<span class="nc" id="L171">		} catch (IOException e) {</span>
-<span class="nc" id="L172">			Logme.error(e);</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-<span class="nc" id="L174">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
+<span class="nc" id="L171">			return new AtomImg(f.readRasterImageFromFile(), scale, url, src);</span>
+<span class="nc" id="L172">		} catch (IOException e) {</span>
+<span class="nc" id="L173">			Logme.error(e);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L175">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
 
-<span class="nc" id="L176">			return AtomTextUtils.createLegacy(&quot;ERROR&quot;, fc);</span>
+<span class="nc" id="L177">			return AtomTextUtils.createLegacy(&quot;ERROR&quot;, fc);</span>
 		}
 	}
 
 	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,
 			Url url) throws IOException {
-<span class="nc" id="L182">		final BufferedImage read = SImageIO.read(data);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (read == null)</span>
-<span class="nc" id="L184">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + source + &quot;)&quot;, fc);</span>
+<span class="nc" id="L183">		final BufferedImage read = SImageIO.read(data);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (read == null)</span>
+<span class="nc" id="L185">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + source + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L186">		return new AtomImg(read, scale, url, null);</span>
+<span class="nc" id="L187">		return new AtomImg(read, scale, url, null);</span>
 	}
 
 	private static Atom buildRasterFromUrl(String text, final FontConfiguration fc, SURL source, double scale, Url url)
 			throws IOException {
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L192">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + text + &quot;)&quot;, fc);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L193">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + text + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L194">		final BufferedImage read = source.readRasterImageFromURL();</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (read == null)</span>
-<span class="nc" id="L196">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + text + &quot;)&quot;, fc);</span>
+<span class="nc" id="L195">		final BufferedImage read = source.readRasterImageFromURL();</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (read == null)</span>
+<span class="nc" id="L197">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + text + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L198">		return new AtomImg(read, scale, url, &quot;http&quot;);</span>
+<span class="nc" id="L199">		return new AtomImg(read, scale, url, &quot;http&quot;);</span>
 	}
 
 	private static Atom buildSvgFromUrl(String text, final FontConfiguration fc, SURL source, double scale, Url url)
 			throws IOException {
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L204">			return AtomTextUtils.createLegacy(&quot;(Cannot decode SVG: &quot; + text + &quot;)&quot;, fc);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L205">			return AtomTextUtils.createLegacy(&quot;(Cannot decode SVG: &quot; + text + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L206">		final byte[] read = source.getBytes();</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (read == null)</span>
-<span class="nc" id="L208">			return AtomTextUtils.createLegacy(&quot;(Cannot decode SVG: &quot; + text + &quot;)&quot;, fc);</span>
+<span class="nc" id="L207">		final byte[] read = source.getBytes();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (read == null)</span>
+<span class="nc" id="L209">			return AtomTextUtils.createLegacy(&quot;(Cannot decode SVG: &quot; + text + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L210">		return new AtomImgSvg(new TileImageSvg(new String(read, UTF_8), scale));</span>
+<span class="nc" id="L211">		return new AtomImgSvg(new TileImageSvg(new String(read, UTF_8), scale));</span>
 	}
 
 	// End
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L216">		return new XDimension2D(image.getWidth() * scale, image.getHeight() * scale);</span>
+<span class="nc" id="L217">		return new XDimension2D(image.getWidth() * scale, image.getHeight() * scale);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L220">		return 0;</span>
+<span class="nc" id="L221">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L225">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L226">			ug.startUrl(url);</span>
 
-<span class="nc" id="L227">		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)).withRawFileName(rawFileName)</span>
-<span class="nc" id="L228">				.scale(scale));</span>
+<span class="nc" id="L228">		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)).withRawFileName(rawFileName)</span>
+<span class="nc" id="L229">				.scale(scale));</span>
 
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L231">			ug.closeUrl();</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L232">			ug.closeUrl();</span>
 
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L234">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

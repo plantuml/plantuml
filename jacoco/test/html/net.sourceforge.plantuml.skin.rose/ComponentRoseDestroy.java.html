@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseDestroy extends AbstractComponent {
@@ -51,28 +50,28 @@ public class ComponentRoseDestroy extends AbstractComponent {
 	private final HColor foregroundColor;
 
 	public ComponentRoseDestroy(Style style, ISkinParam skinParam) {
-<span class="fc" id="L54">		super(style, skinParam);</span>
-<span class="fc" id="L55">		this.foregroundColor = getColorLine();</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L53">		super(style, skinParam);</span>
+<span class="fc" id="L54">		this.foregroundColor = getColorLine();</span>
+<span class="fc" id="L55">	}</span>
 
-<span class="fc" id="L58">	private final int crossSize = 9;</span>
+<span class="fc" id="L57">	private final int crossSize = 9;</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L62">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
+<span class="fc" id="L61">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
 
-<span class="fc" id="L64">		ug.draw(new ULine(2 * crossSize, 2 * crossSize));</span>
-<span class="fc" id="L65">		ug.apply(UTranslate.dy(2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L63">		ug.draw(new ULine(2 * crossSize, 2 * crossSize));</span>
+<span class="fc" id="L64">		ug.apply(UTranslate.dy(2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));</span>
+<span class="fc" id="L65">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L70">		return crossSize * 2;</span>
+<span class="fc" id="L69">		return crossSize * 2;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L75">		return crossSize * 2;</span>
+<span class="fc" id="L74">		return crossSize * 2;</span>
 	}
 
 }

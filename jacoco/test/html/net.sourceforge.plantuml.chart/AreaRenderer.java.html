@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -59,121 +60,121 @@ public class AreaRenderer {
 	private final ChartAxis axis;
 
 	public AreaRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-<span class="nc" id="L62">			ChartAxis axis) {</span>
-<span class="nc" id="L63">		this.skinParam = skinParam;</span>
-<span class="nc" id="L64">		this.plotWidth = plotWidth;</span>
-<span class="nc" id="L65">		this.plotHeight = plotHeight;</span>
-<span class="nc" id="L66">		this.categoryCount = categoryCount;</span>
-<span class="nc" id="L67">		this.axis = axis;</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L63">			ChartAxis axis) {</span>
+<span class="nc" id="L64">		this.skinParam = skinParam;</span>
+<span class="nc" id="L65">		this.plotWidth = plotWidth;</span>
+<span class="nc" id="L66">		this.plotHeight = plotHeight;</span>
+<span class="nc" id="L67">		this.categoryCount = categoryCount;</span>
+<span class="nc" id="L68">		this.axis = axis;</span>
+<span class="nc" id="L69">	}</span>
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-<span class="nc" id="L71">		draw(ug, series, color, null);</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L72">		draw(ug, series, color, null);</span>
+<span class="nc" id="L73">	}</span>
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color, List&lt;Double&gt; baselineValues) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (categoryCount == 0)</span>
-<span class="nc" id="L76">			return;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (categoryCount == 0)</span>
+<span class="nc" id="L77">			return;</span>
 
-<span class="nc" id="L78">		final List&lt;Double&gt; values = series.getValues();</span>
-<span class="nc" id="L79">		final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="nc" id="L79">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="nc" id="L80">		final double categoryWidth = plotWidth / categoryCount;</span>
 
 		// Create polygon for filled area
-<span class="nc" id="L82">		final UPolygon polygon = new UPolygon();</span>
+<span class="nc" id="L83">		final UPolygon polygon = new UPolygon();</span>
 
 		// Add points along the top of the area (cumulative values)
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
-<span class="nc" id="L86">			final double value = values.get(i);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
+<span class="nc" id="L87">			final double value = values.get(i);</span>
 			// If we have baseline values, add current value to baseline to get cumulative top
-<span class="nc" id="L88">			double topValue = value;</span>
-<span class="nc bnc" id="L89" title="All 4 branches missed.">			if (baselineValues != null &amp;&amp; i &lt; baselineValues.size()) {</span>
-<span class="nc" id="L90">				topValue = baselineValues.get(i) + value;</span>
+<span class="nc" id="L89">			double topValue = value;</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">			if (baselineValues != null &amp;&amp; i &lt; baselineValues.size()) {</span>
+<span class="nc" id="L91">				topValue = baselineValues.get(i) + value;</span>
 			}
-<span class="nc" id="L92">			final double x = (i + 0.5) * categoryWidth;</span>
-<span class="nc" id="L93">			final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-<span class="nc" id="L94">			polygon.addPoint(x, y);</span>
+<span class="nc" id="L93">			final double x = (i + 0.5) * categoryWidth;</span>
+<span class="nc" id="L94">			final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc" id="L95">			polygon.addPoint(x, y);</span>
 		}
 
 		// Add points along the bottom (baseline - either axis minimum or previous series top)
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (int i = Math.min(values.size(), categoryCount) - 1; i &gt;= 0; i--) {</span>
-<span class="nc" id="L99">			final double x = (i + 0.5) * categoryWidth;</span>
-<span class="nc" id="L100">			double baselineValue = axis.getMin();</span>
-<span class="nc bnc" id="L101" title="All 4 branches missed.">			if (baselineValues != null &amp;&amp; i &lt; baselineValues.size()) {</span>
-<span class="nc" id="L102">				baselineValue = baselineValues.get(i);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = Math.min(values.size(), categoryCount) - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L100">			final double x = (i + 0.5) * categoryWidth;</span>
+<span class="nc" id="L101">			double baselineValue = axis.getMin();</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">			if (baselineValues != null &amp;&amp; i &lt; baselineValues.size()) {</span>
+<span class="nc" id="L103">				baselineValue = baselineValues.get(i);</span>
 			}
-<span class="nc" id="L104">			final double y = plotHeight - (baselineValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-<span class="nc" id="L105">			polygon.addPoint(x, y);</span>
+<span class="nc" id="L105">			final double y = plotHeight - (baselineValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc" id="L106">			polygon.addPoint(x, y);</span>
 		}
 
 		// Draw filled area with transparency
-<span class="nc" id="L109">		ug.apply(color).apply(color.bg()).draw(polygon);</span>
+<span class="nc" id="L110">		ug.apply(color).apply(color.bg()).draw(polygon);</span>
 
 		// Draw top line of the area (for definition)
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
-<span class="nc" id="L113">			final double value1 = values.get(i);</span>
-<span class="nc" id="L114">			final double value2 = values.get(i + 1);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
+<span class="nc" id="L114">			final double value1 = values.get(i);</span>
+<span class="nc" id="L115">			final double value2 = values.get(i + 1);</span>
 
 			// Calculate cumulative top values
-<span class="nc" id="L117">			double topValue1 = value1;</span>
-<span class="nc" id="L118">			double topValue2 = value2;</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (baselineValues != null) {</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">				if (i &lt; baselineValues.size()) {</span>
-<span class="nc" id="L121">					topValue1 = baselineValues.get(i) + value1;</span>
+<span class="nc" id="L118">			double topValue1 = value1;</span>
+<span class="nc" id="L119">			double topValue2 = value2;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (baselineValues != null) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">				if (i &lt; baselineValues.size()) {</span>
+<span class="nc" id="L122">					topValue1 = baselineValues.get(i) + value1;</span>
 				}
-<span class="nc bnc" id="L123" title="All 2 branches missed.">				if (i + 1 &lt; baselineValues.size()) {</span>
-<span class="nc" id="L124">					topValue2 = baselineValues.get(i + 1) + value2;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">				if (i + 1 &lt; baselineValues.size()) {</span>
+<span class="nc" id="L125">					topValue2 = baselineValues.get(i + 1) + value2;</span>
 				}
 			}
 
-<span class="nc" id="L128">			final double x1 = (i + 0.5) * categoryWidth;</span>
-<span class="nc" id="L129">			final double y1 = plotHeight - (topValue1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc" id="L129">			final double x1 = (i + 0.5) * categoryWidth;</span>
+<span class="nc" id="L130">			final double y1 = plotHeight - (topValue1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="nc" id="L131">			final double x2 = (i + 1.5) * categoryWidth;</span>
-<span class="nc" id="L132">			final double y2 = plotHeight - (topValue2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc" id="L132">			final double x2 = (i + 1.5) * categoryWidth;</span>
+<span class="nc" id="L133">			final double y2 = plotHeight - (topValue2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="nc" id="L134">			final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="nc" id="L135">			ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+<span class="nc" id="L135">			final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="nc" id="L136">			ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
 		}
 
 		// Draw labels if enabled
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (series.isShowLabels()) {</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
-<span class="nc" id="L141">				final double value = values.get(i);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (series.isShowLabels()) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
+<span class="nc" id="L142">				final double value = values.get(i);</span>
 				// Calculate cumulative top value for label position
-<span class="nc" id="L143">				double topValue = value;</span>
-<span class="nc bnc" id="L144" title="All 4 branches missed.">				if (baselineValues != null &amp;&amp; i &lt; baselineValues.size()) {</span>
-<span class="nc" id="L145">					topValue = baselineValues.get(i) + value;</span>
+<span class="nc" id="L144">				double topValue = value;</span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">				if (baselineValues != null &amp;&amp; i &lt; baselineValues.size()) {</span>
+<span class="nc" id="L146">					topValue = baselineValues.get(i) + value;</span>
 				}
-<span class="nc" id="L147">				final double x = (i + 0.5) * categoryWidth;</span>
-<span class="nc" id="L148">				final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-<span class="nc" id="L149">				drawLabel(ug, value, x, y - 8);</span>
+<span class="nc" id="L148">				final double x = (i + 0.5) * categoryWidth;</span>
+<span class="nc" id="L149">				final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc" id="L150">				drawLabel(ug, value, x, y - 8);</span>
 			}
 		}
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L153">	}</span>
 
 	private void drawLabel(UGraphic ug, double value, double x, double y) {
 		try {
-<span class="nc" id="L156">			final String label = formatValue(value);</span>
-<span class="nc" id="L157">			final UFont font = UFont.sansSerif(10).bold();</span>
-<span class="nc" id="L158">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
-<span class="nc" id="L159">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
-<span class="nc" id="L160">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
-<span class="nc" id="L161">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L162">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L163">			final double labelX = x - textDim.getWidth() / 2;</span>
-<span class="nc" id="L164">			final double labelY = y - textDim.getHeight() - 2;</span>
-<span class="nc" id="L165">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
-<span class="nc" id="L166">		} catch (Exception e) {</span>
+<span class="nc" id="L157">			final String label = formatValue(value);</span>
+<span class="nc" id="L158">			final UFont font = UFontFactory.sansSerif(10).bold();</span>
+<span class="nc" id="L159">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
+<span class="nc" id="L160">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
+<span class="nc" id="L161">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
+<span class="nc" id="L162">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="nc" id="L163">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L164">			final double labelX = x - textDim.getWidth() / 2;</span>
+<span class="nc" id="L165">			final double labelY = y - textDim.getHeight() - 2;</span>
+<span class="nc" id="L166">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
+<span class="nc" id="L167">		} catch (Exception e) {</span>
 			// Silently ignore rendering errors
-<span class="nc" id="L168">		}</span>
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L169">		}</span>
+<span class="nc" id="L170">	}</span>
 
 	private String formatValue(double value) {
-<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
-<span class="nc" id="L173">			return String.format(&quot;%.2e&quot;, value);</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (value == (long) value)</span>
-<span class="nc" id="L175">			return String.format(&quot;%d&quot;, (long) value);</span>
-<span class="nc" id="L176">		return String.format(&quot;%.2f&quot;, value);</span>
+<span class="nc bnc" id="L173" title="All 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="nc" id="L174">			return String.format(&quot;%.2e&quot;, value);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (value == (long) value)</span>
+<span class="nc" id="L176">			return String.format(&quot;%d&quot;, (long) value);</span>
+<span class="nc" id="L177">		return String.format(&quot;%.2f&quot;, value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 	}
 
 	public TextLayout createTextLayout(UFont font, String text) {
-<span class="fc" id="L53">		return new TextLayout(text, font.getUnderlayingFont(text), FileFormat.gg.getFontRenderContext());</span>
+<span class="fc" id="L53">		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());</span>
 	}
 	// ::done
 }

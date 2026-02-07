@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt.factory;
 
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -47,25 +48,25 @@ public class ElementFactoryButton implements ElementFactory {
 	final private DataSource dataSource;
 	final private ISkinSimple spriteContainer;
 
-<span class="fc" id="L50">	public ElementFactoryButton(DataSource dataSource, ISkinSimple spriteContainer) {</span>
-<span class="fc" id="L51">		this.dataSource = dataSource;</span>
-<span class="fc" id="L52">		this.spriteContainer = spriteContainer;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L51">	public ElementFactoryButton(DataSource dataSource, ISkinSimple spriteContainer) {</span>
+<span class="fc" id="L52">		this.dataSource = dataSource;</span>
+<span class="fc" id="L53">		this.spriteContainer = spriteContainer;</span>
+<span class="fc" id="L54">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (ready() == false) {</span>
-<span class="nc" id="L57">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (ready() == false) {</span>
+<span class="nc" id="L58">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L59">		final Terminated&lt;String&gt; next = dataSource.next();</span>
-<span class="nc" id="L60">		final String text = next.getElement();</span>
-<span class="nc" id="L61">		final UFont font = UFont.byDefault(12);</span>
-<span class="nc" id="L62">		return new Terminated&lt;Element&gt;(new ElementButton(text.substring(1, text.length() - 1), font, spriteContainer),</span>
-<span class="nc" id="L63">				next.getTerminator());</span>
+<span class="nc" id="L60">		final Terminated&lt;String&gt; next = dataSource.next();</span>
+<span class="nc" id="L61">		final String text = next.getElement();</span>
+<span class="nc" id="L62">		final UFont font = UFontFactory.byDefault(12);</span>
+<span class="nc" id="L63">		return new Terminated&lt;Element&gt;(new ElementButton(text.substring(1, text.length() - 1), font, spriteContainer),</span>
+<span class="nc" id="L64">				next.getTerminator());</span>
 	}
 
 	public boolean ready() {
-<span class="fc" id="L67">		final String text = dataSource.peek(0).getElement();</span>
-<span class="pc bpc" id="L68" title="3 of 4 branches missed.">		return text.startsWith(&quot;[&quot;) &amp;&amp; text.endsWith(&quot;]&quot;);</span>
+<span class="fc" id="L68">		final String text = dataSource.peek(0).getElement();</span>
+<span class="pc bpc" id="L69" title="3 of 4 branches missed.">		return text.startsWith(&quot;[&quot;) &amp;&amp; text.endsWith(&quot;]&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

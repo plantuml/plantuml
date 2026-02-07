@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseEnglober extends AbstractTextualComponent {
@@ -55,19 +54,19 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final double roundCorner;
 
 	public ComponentRoseEnglober(Style style, Display strings, ISkinParam skinParam) {
-<span class="nc" id="L58">		super(style, LineBreakStrategy.NONE, 3, 3, 1, skinParam, strings, false);</span>
-<span class="nc" id="L59">		this.roundCorner = getRoundCorner();</span>
-<span class="nc" id="L60">		this.symbolContext = getSymbolContext();</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L57">		super(style, LineBreakStrategy.NONE, 3, 3, 1, skinParam, strings, false);</span>
+<span class="nc" id="L58">		this.roundCorner = getRoundCorner();</span>
+<span class="nc" id="L59">		this.symbolContext = getSymbolContext();</span>
+<span class="nc" id="L60">	}</span>
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-<span class="nc" id="L65">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L66">		ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L67">		ug.draw(URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight()).rounded(roundCorner));</span>
-<span class="nc" id="L68">		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;</span>
-<span class="nc" id="L69">		getTextBlock().drawU(ug.apply(UTranslate.dx(xpos)));</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L64">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L65">		ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L66">		ug.draw(URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight()).rounded(roundCorner));</span>
+<span class="nc" id="L67">		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;</span>
+<span class="nc" id="L68">		getTextBlock().drawU(ug.apply(UTranslate.dx(xpos)));</span>
+<span class="nc" id="L69">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
@@ -75,16 +74,16 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 		// ug.getParam().setBackcolor(Color.YELLOW);
 		// ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(),
 		// dimensionToUse.getHeight()));
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L77">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L82">		return getTextHeight(stringBounder) + 3;</span>
+<span class="nc" id="L81">		return getTextHeight(stringBounder) + 3;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L87">		return getTextWidth(stringBounder);</span>
+<span class="nc" id="L86">		return getTextWidth(stringBounder);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

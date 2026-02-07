@@ -84,7 +84,7 @@ import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.drawing.visio.UGraphicVdx;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -287,7 +287,7 @@ public class ImageBuilder {
 <span class="fc" id="L287">		return createImageData(dim);</span>
 	}
 
-<span class="fc" id="L290">	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.monospaced(10));</span>
+<span class="fc" id="L290">	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));</span>
 
 	private void drawWarning(XDimension2D dimWarning, UGraphic ug, double fullWidth) {
 

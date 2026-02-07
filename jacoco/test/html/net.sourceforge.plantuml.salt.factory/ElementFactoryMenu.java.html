@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt.factory;
 
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -43,48 +44,48 @@ import net.sourceforge.plantuml.salt.Terminator;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementMenuBar;
 
-<span class="fc" id="L46">public class ElementFactoryMenu extends AbstractElementFactoryComplex {</span>
+<span class="fc" id="L47">public class ElementFactoryMenu extends AbstractElementFactoryComplex {</span>
 
 	public ElementFactoryMenu(DataSource dataSource, SaltDictionary dictionary) {
-<span class="fc" id="L49">		super(dataSource, dictionary);</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L50">		super(dataSource, dictionary);</span>
+<span class="fc" id="L51">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (ready() == false) {</span>
-<span class="nc" id="L54">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (ready() == false) {</span>
+<span class="nc" id="L55">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L56">		final String header = getDataSource().next().getElement();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		assert header.startsWith(&quot;{*&quot;);</span>
+<span class="nc" id="L57">		final String header = getDataSource().next().getElement();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		assert header.startsWith(&quot;{*&quot;);</span>
 
-<span class="nc" id="L59">		final UFont font = UFont.byDefault(12);</span>
-<span class="nc" id="L60">		final ElementMenuBar result = new ElementMenuBar(font, getDictionary());</span>
+<span class="nc" id="L60">		final UFont font = UFontFactory.byDefault(12);</span>
+<span class="nc" id="L61">		final ElementMenuBar result = new ElementMenuBar(font, getDictionary());</span>
 
-<span class="nc" id="L62">		String subentry = null;</span>
+<span class="nc" id="L63">		String subentry = null;</span>
 
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		while (getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
-<span class="nc" id="L65">			final Terminated&lt;String&gt; t = getDataSource().next();</span>
-<span class="nc" id="L66">			final String s = t.getElement();</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (subentry == null) {</span>
-<span class="nc" id="L68">				result.addEntry(s);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">			} else if (subentry.length() == 0) {</span>
-<span class="nc" id="L70">				subentry = s;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		while (getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
+<span class="nc" id="L66">			final Terminated&lt;String&gt; t = getDataSource().next();</span>
+<span class="nc" id="L67">			final String s = t.getElement();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (subentry == null) {</span>
+<span class="nc" id="L69">				result.addEntry(s);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			} else if (subentry.length() == 0) {</span>
+<span class="nc" id="L71">				subentry = s;</span>
 			} else {
-<span class="nc" id="L72">				result.addSubEntry(subentry, s);</span>
+<span class="nc" id="L73">				result.addSubEntry(subentry, s);</span>
 			}
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (t.getTerminator() == Terminator.NEWLINE) {</span>
-<span class="nc" id="L75">				subentry = &quot;&quot;;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (t.getTerminator() == Terminator.NEWLINE) {</span>
+<span class="nc" id="L76">				subentry = &quot;&quot;;</span>
 			}
-<span class="nc" id="L77">		}</span>
-<span class="nc" id="L78">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
-<span class="nc" id="L79">		return new Terminated&lt;Element&gt;(result, next.getTerminator());</span>
+<span class="nc" id="L78">		}</span>
+<span class="nc" id="L79">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
+<span class="nc" id="L80">		return new Terminated&lt;Element&gt;(result, next.getTerminator());</span>
 	}
 
 	public boolean ready() {
-<span class="fc" id="L83">		final String text = getDataSource().peek(0).getElement();</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (text.equals(&quot;{*&quot;)) {</span>
-<span class="nc" id="L85">			return true;</span>
+<span class="fc" id="L84">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (text.equals(&quot;{*&quot;)) {</span>
+<span class="nc" id="L86">			return true;</span>
 		}
-<span class="fc" id="L87">		return false;</span>
+<span class="fc" id="L88">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

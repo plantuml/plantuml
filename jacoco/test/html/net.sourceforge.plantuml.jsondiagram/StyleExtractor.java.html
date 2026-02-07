@@ -41,7 +41,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
@@ -50,91 +49,91 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class StyleExtractor {
 
-<span class="fc" id="L53">	private final List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L54">	private final List&lt;StringLocated&gt; style = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L55">	private String title = null;</span>
-<span class="fc" id="L56">	private boolean handwritten = false;</span>
-<span class="fc" id="L57">	private String scale = null;</span>
+<span class="fc" id="L52">	private final List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">	private final List&lt;StringLocated&gt; style = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">	private String title = null;</span>
+<span class="fc" id="L55">	private boolean handwritten = false;</span>
+<span class="fc" id="L56">	private String scale = null;</span>
 	private String newSkin;
 
-<span class="fc" id="L60">	public StyleExtractor(Iterator&lt;StringLocated&gt; data) {</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		while (data.hasNext()) {</span>
-<span class="fc" id="L62">			StringLocated line = data.next();</span>
-<span class="fc" id="L63">			final String s = line.getString().trim();</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (s.length() == 0)</span>
-<span class="nc" id="L65">				continue;</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">			if (startStyle(s)) {</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">				while (data.hasNext()) {</span>
-<span class="nc" id="L68">					style.add(line);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">					if (endStyle(line))</span>
-<span class="nc" id="L70">						break;</span>
-<span class="nc" id="L71">					line = data.next();</span>
+<span class="fc" id="L59">	public StyleExtractor(Iterator&lt;StringLocated&gt; data) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		while (data.hasNext()) {</span>
+<span class="fc" id="L61">			StringLocated line = data.next();</span>
+<span class="fc" id="L62">			final String s = line.getString().trim();</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">			if (s.length() == 0)</span>
+<span class="nc" id="L64">				continue;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (startStyle(s)) {</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				while (data.hasNext()) {</span>
+<span class="nc" id="L67">					style.add(line);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">					if (endStyle(line))</span>
+<span class="nc" id="L69">						break;</span>
+<span class="nc" id="L70">					line = data.next();</span>
 				}
-<span class="pc bpc" id="L73" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;!assume &quot;)) {</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;!assume &quot;)) {</span>
 				// Ignore
-<span class="fc bfc" id="L75" title="All 4 branches covered.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;!pragma &quot;)) {</span>
+<span class="fc bfc" id="L74" title="All 4 branches covered.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;!pragma &quot;)) {</span>
 				// Ignore
-<span class="pc bpc" id="L77" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;hide &quot;)) {</span>
+<span class="pc bpc" id="L76" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;hide &quot;)) {</span>
 				// Ignore
-<span class="pc bpc" id="L79" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;scale &quot;)) {</span>
-<span class="nc" id="L80">				this.scale = s;</span>
-<span class="pc bpc" id="L81" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;title &quot;)) {</span>
-<span class="nc" id="L82">				this.title = s.substring(&quot;title &quot;.length()).trim();</span>
-<span class="pc bpc" id="L83" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;skin &quot;)) {</span>
-<span class="nc" id="L84">				this.newSkin = s.substring(&quot;skin &quot;.length()).trim();</span>
-<span class="pc bpc" id="L85" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;skinparam &quot;)) {</span>
-<span class="nc bnc" id="L86" title="All 4 branches missed.">				if (s.contains(&quot;handwritten&quot;) &amp;&amp; s.contains(&quot;true&quot;))</span>
-<span class="nc" id="L87">					handwritten = true;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">				if (s.contains(&quot;{&quot;)) {</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">					while (data.hasNext()) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">						if (line.getString().trim().equals(&quot;}&quot;))</span>
-<span class="nc" id="L91">							break;</span>
-<span class="nc" id="L92">						line = data.next();</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;scale &quot;)) {</span>
+<span class="nc" id="L79">				this.scale = s;</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;title &quot;)) {</span>
+<span class="nc" id="L81">				this.title = s.substring(&quot;title &quot;.length()).trim();</span>
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;skin &quot;)) {</span>
+<span class="nc" id="L83">				this.newSkin = s.substring(&quot;skin &quot;.length()).trim();</span>
+<span class="pc bpc" id="L84" title="1 of 4 branches missed.">			} else if (list.size() &lt;= 1 &amp;&amp; s.startsWith(&quot;skinparam &quot;)) {</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">				if (s.contains(&quot;handwritten&quot;) &amp;&amp; s.contains(&quot;true&quot;))</span>
+<span class="nc" id="L86">					handwritten = true;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">				if (s.contains(&quot;{&quot;)) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">					while (data.hasNext()) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">						if (line.getString().trim().equals(&quot;}&quot;))</span>
+<span class="nc" id="L90">							break;</span>
+<span class="nc" id="L91">						line = data.next();</span>
 					}
 				}
 			} else {
-<span class="fc" id="L96">				list.add(line.getString());</span>
+<span class="fc" id="L95">				list.add(line.getString());</span>
 			}
-<span class="fc" id="L98">		}</span>
+<span class="fc" id="L97">		}</span>
 
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L99">	}</span>
 
 	private boolean startStyle(String line) {
-<span class="fc" id="L103">		return line.equals(&quot;&lt;style&gt;&quot;);</span>
+<span class="fc" id="L102">		return line.equals(&quot;&lt;style&gt;&quot;);</span>
 	}
 
 	private boolean endStyle(StringLocated line) {
-<span class="nc" id="L107">		return line.getString().trim().equals(&quot;&lt;/style&gt;&quot;);</span>
+<span class="nc" id="L106">		return line.getString().trim().equals(&quot;&lt;/style&gt;&quot;);</span>
 	}
 
 	@DuplicateCode(reference = &quot;TitledDiagram&quot;)
 	public void applyStyles(ISkinParam skinParam) throws StyleParsingException {
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (newSkin != null) {</span>
-<span class="nc" id="L113">			final String filename = newSkin + &quot;.skin&quot;;</span>
-<span class="nc" id="L114">			skinParam.setDefaultSkin(filename);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (newSkin != null) {</span>
+<span class="nc" id="L112">			final String filename = newSkin + &quot;.skin&quot;;</span>
+<span class="nc" id="L113">			skinParam.setDefaultSkin(filename);</span>
 		}
 
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (style.size() &gt; 0) {</span>
-<span class="nc" id="L118">			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="nc" id="L119">			final BlocLines blocLines = BlocLines.from(style);</span>
-<span class="nc" id="L120">			skinParam.muteStyle(StyleParser.parse(blocLines, styleBuilder));</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (style.size() &gt; 0) {</span>
+<span class="nc" id="L117">			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="nc" id="L118">			final BlocLines blocLines = BlocLines.from(style);</span>
+<span class="nc" id="L119">			skinParam.muteStyle(StyleParser.parse(blocLines, styleBuilder));</span>
 		}
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L121">	}</span>
 
 	public Iterator&lt;String&gt; getIterator() {
-<span class="fc" id="L125">		return list.iterator();</span>
+<span class="fc" id="L124">		return list.iterator();</span>
 	}
 
 	public String getTitle() {
-<span class="fc" id="L129">		return title;</span>
+<span class="fc" id="L128">		return title;</span>
 	}
 
 	public final boolean isHandwritten() {
-<span class="fc" id="L133">		return handwritten;</span>
+<span class="fc" id="L132">		return handwritten;</span>
 	}
 
 	public String getScale() {
-<span class="fc" id="L137">		return scale;</span>
+<span class="fc" id="L136">		return scale;</span>
 	}
 
 }

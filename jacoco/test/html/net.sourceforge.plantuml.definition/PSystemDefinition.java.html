@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
@@ -58,32 +59,32 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
     // ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
 
-<span class="nc" id="L61">	private final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L62">	private final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
 	private final String startLine;
 
 	public PSystemDefinition(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L65">		super(source, preprocessing);</span>
-<span class="nc" id="L66">		this.startLine = startLine;</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L66">		super(source, preprocessing);</span>
+<span class="nc" id="L67">		this.startLine = startLine;</span>
+<span class="nc" id="L68">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L70">		return new DiagramDescription(&quot;(Definition)&quot;);</span>
+<span class="nc" id="L71">		return new DiagramDescription(&quot;(Definition)&quot;);</span>
 	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L75">		return this;</span>
+<span class="nc" id="L76">		return this;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L79">		final UFont font = UFont.sansSerif(14);</span>
-<span class="nc" id="L80">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L81">		Display.getWithNewlines(Pragma.createEmpty(), startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L80">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L81">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L82">		Display.getWithNewlines(Pragma.createEmpty(), startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);</span>
+<span class="nc" id="L83">	}</span>
 
 	public void doCommandLine(String line) {
-<span class="nc" id="L85">		this.lines.add(line);</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L86">		this.lines.add(line);</span>
+<span class="nc" id="L87">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

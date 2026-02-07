@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
@@ -62,66 +61,66 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final boolean teoz;
 
 	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinParam skinParam) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : &quot;[&quot; + comment + &quot;]&quot;);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : &quot;[&quot; + comment + &quot;]&quot;);</span>
 
-<span class="nc" id="L67">		this.teoz = teoz;</span>
-<span class="nc" id="L68">		this.roundCorner = getRoundCorner();</span>
-<span class="nc" id="L69">		this.groupBorder = getColorLine();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		this.backgroundColor = teoz ? HColors.transparent() : getColorBackGround();</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L66">		this.teoz = teoz;</span>
+<span class="nc" id="L67">		this.roundCorner = getRoundCorner();</span>
+<span class="nc" id="L68">		this.groupBorder = getColorLine();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		this.backgroundColor = teoz ? HColors.transparent() : getColorBackGround();</span>
+<span class="nc" id="L70">	}</span>
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (backgroundColor.isTransparent())</span>
-<span class="nc" id="L76">			return;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (backgroundColor.isTransparent())</span>
+<span class="nc" id="L75">			return;</span>
 
-<span class="nc" id="L78">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L79">		ug = ug.apply(HColors.none()).apply(backgroundColor.bg());</span>
-<span class="nc" id="L80">		final double width = dimensionToUse.getWidth();</span>
-<span class="nc" id="L81">		final double height = dimensionToUse.getHeight();</span>
+<span class="nc" id="L77">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L78">		ug = ug.apply(HColors.none()).apply(backgroundColor.bg());</span>
+<span class="nc" id="L79">		final double width = dimensionToUse.getWidth();</span>
+<span class="nc" id="L80">		final double height = dimensionToUse.getHeight();</span>
 		final UShape rect;
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (roundCorner == 0) {</span>
-<span class="nc" id="L84">			rect = URectangle.build(width, height);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="nc" id="L83">			rect = URectangle.build(width, height);</span>
 		} else {
-<span class="nc" id="L86">			final UPath path = UPath.none();</span>
-<span class="nc" id="L87">			path.moveTo(0, 0);</span>
-<span class="nc" id="L88">			path.lineTo(width, 0);</span>
+<span class="nc" id="L85">			final UPath path = UPath.none();</span>
+<span class="nc" id="L86">			path.moveTo(0, 0);</span>
+<span class="nc" id="L87">			path.lineTo(width, 0);</span>
 
-<span class="nc" id="L90">			path.lineTo(width, height - roundCorner / 2);</span>
-<span class="nc" id="L91">			path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, width - roundCorner / 2, height);</span>
+<span class="nc" id="L89">			path.lineTo(width, height - roundCorner / 2);</span>
+<span class="nc" id="L90">			path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, width - roundCorner / 2, height);</span>
 
-<span class="nc" id="L93">			path.lineTo(roundCorner / 2, height);</span>
-<span class="nc" id="L94">			path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, 0, height - roundCorner / 2);</span>
+<span class="nc" id="L92">			path.lineTo(roundCorner / 2, height);</span>
+<span class="nc" id="L93">			path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, 0, height - roundCorner / 2);</span>
 
-<span class="nc" id="L96">			path.lineTo(0, 0);</span>
-<span class="nc" id="L97">			rect = path;</span>
+<span class="nc" id="L95">			path.lineTo(0, 0);</span>
+<span class="nc" id="L96">			rect = path;</span>
 		}
-<span class="nc" id="L99">		ug.draw(rect);</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L98">		ug.draw(rect);</span>
+<span class="nc" id="L99">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="nc" id="L104">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L105">		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);</span>
-<span class="nc" id="L106">		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));</span>
-<span class="nc" id="L107">		ug = ug.apply(UStroke.simple());</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (teoz)</span>
-<span class="nc" id="L109">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));</span>
+<span class="nc" id="L103">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L104">		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);</span>
+<span class="nc" id="L105">		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));</span>
+<span class="nc" id="L106">		ug = ug.apply(UStroke.simple());</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (teoz)</span>
+<span class="nc" id="L108">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));</span>
 		else
-<span class="nc" id="L111">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));</span>
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L110">			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));</span>
+<span class="nc" id="L111">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (teoz)</span>
-<span class="nc" id="L117">			return getTextHeight(stringBounder) + 16;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (teoz)</span>
+<span class="nc" id="L116">			return getTextHeight(stringBounder) + 16;</span>
 		else
-<span class="nc" id="L119">			return getTextHeight(stringBounder);</span>
+<span class="nc" id="L118">			return getTextHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L124">		return getTextWidth(stringBounder);</span>
+<span class="nc" id="L123">		return getTextWidth(stringBounder);</span>
 	}
 
 }

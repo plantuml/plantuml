@@ -39,6 +39,7 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -50,29 +51,29 @@ public class ElementFactoryText implements ElementFactory {
 	final private DataSource dataSource;
 	final private ISkinSimple spriteContainer;
 
-<span class="fc" id="L53">	public ElementFactoryText(DataSource dataSource, ISkinSimple spriteContainer) {</span>
-<span class="fc" id="L54">		this.dataSource = dataSource;</span>
-<span class="fc" id="L55">		this.spriteContainer = spriteContainer;</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L54">	public ElementFactoryText(DataSource dataSource, ISkinSimple spriteContainer) {</span>
+<span class="fc" id="L55">		this.dataSource = dataSource;</span>
+<span class="fc" id="L56">		this.spriteContainer = spriteContainer;</span>
+<span class="fc" id="L57">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (ready() == false) {</span>
-<span class="nc" id="L60">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (ready() == false) {</span>
+<span class="nc" id="L61">			throw new IllegalStateException();</span>
 		}
-<span class="fc" id="L62">		final Terminated&lt;String&gt; next = dataSource.next();</span>
-<span class="fc" id="L63">		final String text = next.getElement();</span>
-<span class="fc" id="L64">		final UFont font = UFont.byDefault(12);</span>
-<span class="fc" id="L65">		return new Terminated&lt;Element&gt;(new ElementText(Arrays.asList(text), font, spriteContainer),</span>
-<span class="fc" id="L66">				next.getTerminator());</span>
+<span class="fc" id="L63">		final Terminated&lt;String&gt; next = dataSource.next();</span>
+<span class="fc" id="L64">		final String text = next.getElement();</span>
+<span class="fc" id="L65">		final UFont font = UFontFactory.byDefault(12);</span>
+<span class="fc" id="L66">		return new Terminated&lt;Element&gt;(new ElementText(Arrays.asList(text), font, spriteContainer),</span>
+<span class="fc" id="L67">				next.getTerminator());</span>
 	}
 
 	public boolean ready() {
-<span class="fc" id="L70">		final String text = dataSource.peek(0).getElement();</span>
+<span class="fc" id="L71">		final String text = dataSource.peek(0).getElement();</span>
 		// return text.startsWith(&quot;\&quot;&quot;) &amp;&amp; text.endsWith(&quot;\&quot;&quot;);
-<span class="pc bpc" id="L72" title="2 of 4 branches missed.">		if (text.startsWith(&quot;{&quot;) || text.startsWith(&quot;}&quot;)) {</span>
-<span class="nc" id="L73">			return false;</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		if (text.startsWith(&quot;{&quot;) || text.startsWith(&quot;}&quot;)) {</span>
+<span class="nc" id="L74">			return false;</span>
 		}
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		return StringUtils.trin(text).length() &gt; 0;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		return StringUtils.trin(text).length() &gt; 0;</span>
 	}
 
 }

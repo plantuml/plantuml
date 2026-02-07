@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseLine extends AbstractComponent {
@@ -63,50 +62,50 @@ public class ComponentRoseLine extends AbstractComponent {
 	private final Display stringsToDisplay;
 
 	public ComponentRoseLine(Style style, boolean continueLine, Display stringsToDisplay, ISkinParam skinParam) {
-<span class="fc" id="L66">		super(style, skinParam);</span>
-<span class="fc" id="L67">		this.color = getColorLine();</span>
-<span class="fc" id="L68">		this.stroke = getStroke();</span>
-<span class="fc" id="L69">		this.continueLine = continueLine;</span>
+<span class="fc" id="L65">		super(style, skinParam);</span>
+<span class="fc" id="L66">		this.color = getColorLine();</span>
+<span class="fc" id="L67">		this.stroke = getStroke();</span>
+<span class="fc" id="L68">		this.continueLine = continueLine;</span>
 		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 
 		// we default to Display.NULL when it is null.
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		this.stringsToDisplay = stringsToDisplay == null ? Display.NULL : stringsToDisplay;</span>
-<span class="fc" id="L73">	}</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		this.stringsToDisplay = stringsToDisplay == null ? Display.NULL : stringsToDisplay;</span>
+<span class="fc" id="L72">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L77">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L78">		ug = ug.apply(color);</span>
-<span class="fc" id="L79">		ug = ug.apply(stroke);</span>
+<span class="fc" id="L76">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L77">		ug = ug.apply(color);</span>
+<span class="fc" id="L78">		ug = ug.apply(stroke);</span>
 //		if (continueLine)
 //			ug = ug.apply(UStroke.simple());
 
-<span class="fc" id="L83">		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));</span>
-<span class="fc" id="L84">		drawTitleHoverTargetRect(ug, dimensionToUse);</span>
+<span class="fc" id="L82">		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));</span>
+<span class="fc" id="L83">		drawTitleHoverTargetRect(ug, dimensionToUse);</span>
 
-<span class="fc" id="L86">		final int x = (int) (dimensionToUse.getWidth() / 2);</span>
-<span class="fc" id="L87">		ug.apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));</span>
-<span class="fc" id="L88">		ug.closeGroup();</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L85">		final int x = (int) (dimensionToUse.getWidth() / 2);</span>
+<span class="fc" id="L86">		ug.apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));</span>
+<span class="fc" id="L87">		ug.closeGroup();</span>
+<span class="fc" id="L88">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L93">		return 20;</span>
+<span class="fc" id="L92">		return 20;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L98">		return 1;</span>
+<span class="nc" id="L97">		return 1;</span>
 	}
 
 	private void drawTitleHoverTargetRect(UGraphic ug, XDimension2D dimensionToUse) {
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (dimensionToUse.getHeight() &gt; 0) {</span>
-<span class="fc" id="L103">			final double hoverTargetWidth = 8;</span>
-<span class="fc" id="L104">			ug = ug.apply(UStroke.withThickness(0));</span>
-<span class="fc" id="L105">			ug = ug.apply(HColors.transparent());</span>
-<span class="fc" id="L106">			ug = ug.apply(HColors.transparent(WITH_FILL_OPACITY).bg());</span>
-<span class="fc" id="L107">			ug = ug.apply(UTranslate.dx((dimensionToUse.getWidth() - hoverTargetWidth) / 2));</span>
-<span class="fc" id="L108">			ug.draw(URectangle.build(hoverTargetWidth, dimensionToUse.getHeight()));</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (dimensionToUse.getHeight() &gt; 0) {</span>
+<span class="fc" id="L102">			final double hoverTargetWidth = 8;</span>
+<span class="fc" id="L103">			ug = ug.apply(UStroke.withThickness(0));</span>
+<span class="fc" id="L104">			ug = ug.apply(HColors.transparent());</span>
+<span class="fc" id="L105">			ug = ug.apply(HColors.transparent(WITH_FILL_OPACITY).bg());</span>
+<span class="fc" id="L106">			ug = ug.apply(UTranslate.dx((dimensionToUse.getWidth() - hoverTargetWidth) / 2));</span>
+<span class="fc" id="L107">			ug.draw(URectangle.build(hoverTargetWidth, dimensionToUse.getHeight()));</span>
 		}
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L109">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

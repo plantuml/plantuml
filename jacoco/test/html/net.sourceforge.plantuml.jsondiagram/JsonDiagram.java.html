@@ -52,13 +52,12 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -77,72 +76,72 @@ public class JsonDiagram extends TitledDiagram {
 
 	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List&lt;Highlighted&gt; highlighted,
 			StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L80">		super(source, type, null, preprocessing);</span>
-<span class="fc" id="L81">		this.handwritten = styleExtractor.isHandwritten();</span>
-<span class="pc bpc" id="L82" title="5 of 10 branches missed.">		if (json != null &amp;&amp; (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {</span>
-<span class="nc" id="L83">			this.root = new JsonArray();</span>
-<span class="nc" id="L84">			((JsonArray) this.root).add(json);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		} else if (json != null</span>
-<span class="pc bpc" id="L86" title="5 of 8 branches missed.">				&amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty()) || (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
-<span class="nc" id="L87">			this.root = new JsonArray();</span>
-<span class="nc" id="L88">			((JsonArray) this.root).add(&quot;&quot;);</span>
+<span class="fc" id="L79">		super(source, type, null, preprocessing);</span>
+<span class="fc" id="L80">		this.handwritten = styleExtractor.isHandwritten();</span>
+<span class="pc bpc" id="L81" title="5 of 10 branches missed.">		if (json != null &amp;&amp; (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {</span>
+<span class="nc" id="L82">			this.root = new JsonArray();</span>
+<span class="nc" id="L83">			((JsonArray) this.root).add(json);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		} else if (json != null</span>
+<span class="pc bpc" id="L85" title="5 of 8 branches missed.">				&amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty()) || (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
+<span class="nc" id="L86">			this.root = new JsonArray();</span>
+<span class="nc" id="L87">			((JsonArray) this.root).add(&quot;&quot;);</span>
 		} else {
-<span class="fc" id="L90">			this.root = json;</span>
+<span class="fc" id="L89">			this.root = json;</span>
 		}
-<span class="fc" id="L92">		this.highlighted = highlighted;</span>
-<span class="fc" id="L93">		final String scale = styleExtractor.getScale();</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (scale != null) {</span>
-<span class="nc" id="L95">			final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L96">			CommonCommands.addCommonScaleCommands(cmds);</span>
-<span class="nc" id="L97">			final BlocLines lines = BlocLines.singleString(scale);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			for (Command cmd : cmds)</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (cmd.isValid(lines) == CommandControl.OK)</span>
-<span class="nc" id="L100">					((SingleLineCommand2&lt;AbstractPSystem&gt;) cmd).execute(this, lines, ParserPass.ONE);</span>
+<span class="fc" id="L91">		this.highlighted = highlighted;</span>
+<span class="fc" id="L92">		final String scale = styleExtractor.getScale();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (scale != null) {</span>
+<span class="nc" id="L94">			final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L95">			CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="nc" id="L96">			final BlocLines lines = BlocLines.singleString(scale);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			for (Command cmd : cmds)</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">				if (cmd.isValid(lines) == CommandControl.OK)</span>
+<span class="nc" id="L99">					((SingleLineCommand2&lt;AbstractPSystem&gt;) cmd).execute(this, lines, ParserPass.ONE);</span>
 		}
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L101">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (getUmlDiagramType() == UmlDiagramType.YAML)</span>
-<span class="nc" id="L106">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (getUmlDiagramType() == UmlDiagramType.YAML)</span>
+<span class="nc" id="L105">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
 
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (getUmlDiagramType() == UmlDiagramType.HCL)</span>
-<span class="nc" id="L109">			return new DiagramDescription(&quot;(HCL)&quot;);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (getUmlDiagramType() == UmlDiagramType.HCL)</span>
+<span class="nc" id="L108">			return new DiagramDescription(&quot;(HCL)&quot;);</span>
 
-<span class="fc" id="L111">		return new DiagramDescription(&quot;(Json)&quot;);</span>
+<span class="fc" id="L110">		return new DiagramDescription(&quot;(Json)&quot;);</span>
 	}
 
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-<span class="fc" id="L118">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+<span class="fc" id="L117">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
 	}
 
 	private void drawInternal(UGraphic ug) {
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (handwritten)</span>
-<span class="nc" id="L123">			ug = new UGraphicHandwritten(ug);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (root == null) {</span>
-<span class="nc" id="L125">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
-<span class="nc" id="L126">					&quot;Your data does not sound like &quot; + getUmlDiagramType() + &quot; data&quot;);</span>
-<span class="nc" id="L127">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));</span>
-<span class="nc" id="L128">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L129">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
-<span class="nc" id="L130">			result.drawU(ug);</span>
-<span class="nc" id="L131">		} else {</span>
-<span class="fc" id="L132">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (handwritten)</span>
+<span class="nc" id="L122">			ug = new UGraphicHandwritten(ug);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (root == null) {</span>
+<span class="nc" id="L124">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
+<span class="nc" id="L125">					&quot;Your data does not sound like &quot; + getUmlDiagramType() + &quot; data&quot;);</span>
+<span class="nc" id="L126">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));</span>
+<span class="nc" id="L127">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="nc" id="L128">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L129">			result.drawU(ug);</span>
+<span class="nc" id="L130">		} else {</span>
+<span class="fc" id="L131">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
 		}
-<span class="fc" id="L134">	}</span>
+<span class="fc" id="L133">	}</span>
 
 	@Override
 	protected TextBlock getTextMainBlock(final FileFormatOption fileFormatOption) {
-<span class="fc" id="L138">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L137">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L141">				drawInternal(ug);</span>
-<span class="fc" id="L142">			}</span>
+<span class="fc" id="L140">				drawInternal(ug);</span>
+<span class="fc" id="L141">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L145">				return TextBlockUtils.getMinMax(getTextMainBlock(fileFormatOption), stringBounder, true).getDimension();</span>
+<span class="nc" id="L144">				return TextBlockUtils.getMinMax(getTextMainBlock(fileFormatOption), stringBounder, true).getDimension();</span>
 			}
 		};
 	}

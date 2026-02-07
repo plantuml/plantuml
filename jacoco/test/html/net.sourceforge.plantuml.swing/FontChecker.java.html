@@ -62,6 +62,8 @@ import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
@@ -69,127 +71,127 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class FontChecker {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	// ::remove file when __CORE__
 
 	final private UFont font;
-<span class="nc" id="L76">	private static final Set&lt;String&gt; SQUARE = new HashSet&lt;&gt;(Arrays.asList(&quot;MI=I=XM=I=IX&quot;, &quot;MI=I=XM=I=IXMI=I=XM=I=IX&quot;));</span>
+<span class="nc" id="L78">	private static final Set&lt;String&gt; SQUARE = new HashSet&lt;&gt;(Arrays.asList(&quot;MI=I=XM=I=IX&quot;, &quot;MI=I=XM=I=IXMI=I=XM=I=IX&quot;));</span>
 
-<span class="nc" id="L78">	public FontChecker(UFont font) {</span>
-<span class="nc" id="L79">		this.font = font;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L80">	public FontChecker(UFont font) {</span>
+<span class="nc" id="L81">		this.font = font;</span>
+<span class="nc" id="L82">	}</span>
 
 	public boolean isCharOk(char c) {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		return SQUARE.contains(getCharDesc(c)) == false;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		return SQUARE.contains(getCharDesc(c)) == false;</span>
 	}
 
 	static private String getType(int type, double oldX, double oldY, double x, double y) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (type == PathIterator.SEG_CLOSE) {</span>
-<span class="nc" id="L88">			return &quot;X&quot;;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (type == PathIterator.SEG_CLOSE) {</span>
+<span class="nc" id="L90">			return &quot;X&quot;;</span>
 		}
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (type == PathIterator.SEG_LINETO) {</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (oldX == x) {</span>
-<span class="nc" id="L92">				return &quot;I&quot;;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (type == PathIterator.SEG_LINETO) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (oldX == x) {</span>
+<span class="nc" id="L94">				return &quot;I&quot;;</span>
 			}
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (oldY == y) {</span>
-<span class="nc" id="L95">				return &quot;=&quot;;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (oldY == y) {</span>
+<span class="nc" id="L97">				return &quot;=&quot;;</span>
 			}
-<span class="nc" id="L97">			return &quot;L&quot;;</span>
+<span class="nc" id="L99">			return &quot;L&quot;;</span>
 		}
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (type == PathIterator.SEG_MOVETO) {</span>
-<span class="nc" id="L100">			return &quot;M&quot;;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (type == PathIterator.SEG_MOVETO) {</span>
+<span class="nc" id="L102">			return &quot;M&quot;;</span>
 		}
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (type == PathIterator.SEG_QUADTO) {</span>
-<span class="nc" id="L103">			return &quot;Q&quot;;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (type == PathIterator.SEG_QUADTO) {</span>
+<span class="nc" id="L105">			return &quot;Q&quot;;</span>
 		}
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (type == PathIterator.SEG_CUBICTO) {</span>
-<span class="nc" id="L106">			return &quot;C&quot;;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (type == PathIterator.SEG_CUBICTO) {</span>
+<span class="nc" id="L108">			return &quot;C&quot;;</span>
 		}
-<span class="nc" id="L108">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L110">		throw new IllegalArgumentException();</span>
 	}
 
 	public String getCharDesc(char c) {
-<span class="nc" id="L112">		final TextLayout t = UFontContext.G2D.createTextLayout(font, &quot;&quot; + c);</span>
-<span class="nc" id="L113">		final Shape sh = t.getOutline(null);</span>
-<span class="nc" id="L114">		final double current[] = new double[6];</span>
-<span class="nc" id="L115">		final PathIterator it = sh.getPathIterator(null);</span>
-<span class="nc" id="L116">		int sum = 0;</span>
-<span class="nc" id="L117">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		while (it.isDone() == false) {</span>
-<span class="nc" id="L119">			final double oldX = current[0];</span>
-<span class="nc" id="L120">			final double oldY = current[1];</span>
-<span class="nc" id="L121">			final int nb = it.currentSegment(current);</span>
-<span class="nc" id="L122">			sum += nb;</span>
-<span class="nc" id="L123">			result.append(getType(nb, oldX, oldY, current[0], current[1]));</span>
-<span class="nc" id="L124">			it.next();</span>
-<span class="nc" id="L125">		}</span>
-<span class="nc" id="L126">		return result.toString();</span>
+<span class="nc" id="L114">		final TextLayout t = UFontContext.G2D.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L115">		final Shape sh = t.getOutline(null);</span>
+<span class="nc" id="L116">		final double current[] = new double[6];</span>
+<span class="nc" id="L117">		final PathIterator it = sh.getPathIterator(null);</span>
+<span class="nc" id="L118">		int sum = 0;</span>
+<span class="nc" id="L119">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		while (it.isDone() == false) {</span>
+<span class="nc" id="L121">			final double oldX = current[0];</span>
+<span class="nc" id="L122">			final double oldY = current[1];</span>
+<span class="nc" id="L123">			final int nb = it.currentSegment(current);</span>
+<span class="nc" id="L124">			sum += nb;</span>
+<span class="nc" id="L125">			result.append(getType(nb, oldX, oldY, current[0], current[1]));</span>
+<span class="nc" id="L126">			it.next();</span>
+<span class="nc" id="L127">		}</span>
+<span class="nc" id="L128">		return result.toString();</span>
 	}
 
 	public String getCharDescVerbose(char c) {
-<span class="nc" id="L130">		final TextLayout t = UFontContext.G2D.createTextLayout(font, &quot;&quot; + c);</span>
-<span class="nc" id="L131">		final Shape sh = t.getOutline(null);</span>
-<span class="nc" id="L132">		final double current[] = new double[6];</span>
-<span class="nc" id="L133">		final PathIterator it = sh.getPathIterator(null);</span>
-<span class="nc" id="L134">		int sum = 0;</span>
-<span class="nc" id="L135">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		while (it.isDone() == false) {</span>
-<span class="nc" id="L137">			final double oldX = current[0];</span>
-<span class="nc" id="L138">			final double oldY = current[1];</span>
-<span class="nc" id="L139">			final int nb = it.currentSegment(current);</span>
-<span class="nc" id="L140">			sum += nb;</span>
-<span class="nc" id="L141">			result.append(getType(nb, oldX, oldY, current[0], current[1]));</span>
-<span class="nc" id="L142">			appendValue(result, current);</span>
-<span class="nc" id="L143">			it.next();</span>
-<span class="nc" id="L144">		}</span>
-<span class="nc" id="L145">		return result.toString();</span>
+<span class="nc" id="L132">		final TextLayout t = UFontContext.G2D.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L133">		final Shape sh = t.getOutline(null);</span>
+<span class="nc" id="L134">		final double current[] = new double[6];</span>
+<span class="nc" id="L135">		final PathIterator it = sh.getPathIterator(null);</span>
+<span class="nc" id="L136">		int sum = 0;</span>
+<span class="nc" id="L137">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		while (it.isDone() == false) {</span>
+<span class="nc" id="L139">			final double oldX = current[0];</span>
+<span class="nc" id="L140">			final double oldY = current[1];</span>
+<span class="nc" id="L141">			final int nb = it.currentSegment(current);</span>
+<span class="nc" id="L142">			sum += nb;</span>
+<span class="nc" id="L143">			result.append(getType(nb, oldX, oldY, current[0], current[1]));</span>
+<span class="nc" id="L144">			appendValue(result, current);</span>
+<span class="nc" id="L145">			it.next();</span>
+<span class="nc" id="L146">		}</span>
+<span class="nc" id="L147">		return result.toString();</span>
 	}
 
 	private void appendValue(StringBuilder result, double[] current) {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (double v : current) {</span>
-<span class="nc" id="L150">			final int i = (int) (v * 100);</span>
-<span class="nc" id="L151">			result.append(i);</span>
-<span class="nc" id="L152">			result.append(&quot;:&quot;);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (double v : current) {</span>
+<span class="nc" id="L152">			final int i = (int) (v * 100);</span>
+<span class="nc" id="L153">			result.append(i);</span>
+<span class="nc" id="L154">			result.append(&quot;:&quot;);</span>
 		}
 
-<span class="nc" id="L155">	}</span>
+<span class="nc" id="L157">	}</span>
 
 	public void printChar(final PrintWriter pw, char c) throws IOException, TransformerException {
-<span class="nc" id="L158">		pw.println(&quot;&lt;p&gt;&quot;);</span>
-<span class="nc" id="L159">		final int ascii = (int) c;</span>
-<span class="nc" id="L160">		pw.println(ascii + &quot; - &quot; + Integer.toHexString(ascii) + &quot; - &quot;);</span>
-<span class="nc" id="L161">		pw.println(&quot;&amp;#&quot; + ascii + &quot;;&quot;);</span>
-<span class="nc" id="L162">		final String svg = getSvgImage(c);</span>
-<span class="nc" id="L163">		pw.println(svg);</span>
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L160">		pw.println(&quot;&lt;p&gt;&quot;);</span>
+<span class="nc" id="L161">		final int ascii = (int) c;</span>
+<span class="nc" id="L162">		pw.println(ascii + &quot; - &quot; + Integer.toHexString(ascii) + &quot; - &quot;);</span>
+<span class="nc" id="L163">		pw.println(&quot;&amp;#&quot; + ascii + &quot;;&quot;);</span>
+<span class="nc" id="L164">		final String svg = getSvgImage(c);</span>
+<span class="nc" id="L165">		pw.println(svg);</span>
+<span class="nc" id="L166">	}</span>
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
-<span class="nc" id="L167">		final SvgGraphics svg = new SvgGraphics(42, SvgOption.basic());</span>
-<span class="nc" id="L168">		svg.setStrokeColor(&quot;black&quot;);</span>
-<span class="nc" id="L169">		svg.svgImage(getBufferedImage(c), 0, 0);</span>
-<span class="nc" id="L170">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="nc" id="L171">		svg.createXml(os);</span>
-<span class="nc" id="L172">		os.close();</span>
-<span class="nc" id="L173">		return new String(os.toByteArray());</span>
+<span class="nc" id="L169">		final SvgGraphics svg = new SvgGraphics(42, SvgOption.basic());</span>
+<span class="nc" id="L170">		svg.setStrokeColor(&quot;black&quot;);</span>
+<span class="nc" id="L171">		svg.svgImage(getBufferedImage(c), 0, 0);</span>
+<span class="nc" id="L172">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="nc" id="L173">		svg.createXml(os);</span>
+<span class="nc" id="L174">		os.close();</span>
+<span class="nc" id="L175">		return new String(os.toByteArray());</span>
 	}
 
 	public BufferedImage getBufferedImage(final char c) throws IOException {
-<span class="nc bnc" id="L177" title="All 2 branches missed.">		assert c != '\t';</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		assert c != '\t';</span>
 
-<span class="nc" id="L179">		final double dim = 20;</span>
-<span class="nc" id="L180">		final UDrawable drawable = new UDrawable() {</span>
+<span class="nc" id="L181">		final double dim = 20;</span>
+<span class="nc" id="L182">		final UDrawable drawable = new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L182">				ug = ug.apply(HColors.BLACK);</span>
-<span class="nc" id="L183">				ug.draw(URectangle.build(dim - 1, dim - 1));</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">				if (!(ug instanceof LimitFinder)) {</span>
-<span class="nc" id="L185">					ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));</span>
-<span class="nc" id="L186">					final UText text = UText.build(&quot;&quot; + c, FontConfiguration.blackBlueTrue(font));</span>
-<span class="nc" id="L187">					ug.draw(text);</span>
+<span class="nc" id="L184">				ug = ug.apply(HColors.BLACK);</span>
+<span class="nc" id="L185">				ug.draw(URectangle.build(dim - 1, dim - 1));</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">				if (!(ug instanceof LimitFinder)) {</span>
+<span class="nc" id="L187">					ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));</span>
+<span class="nc" id="L188">					final UText text = UText.build(&quot;&quot; + c, FontConfiguration.blackBlueTrue(font));</span>
+<span class="nc" id="L189">					ug.draw(text);</span>
 				}
-<span class="nc" id="L189">			}</span>
+<span class="nc" id="L191">			}</span>
 		};
-<span class="nc" id="L191">		final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), drawable).writeByteArray();</span>
-<span class="nc" id="L192">		return SImageIO.read(bytes);</span>
+<span class="nc" id="L193">		final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), drawable).writeByteArray();</span>
+<span class="nc" id="L194">		return SImageIO.read(bytes);</span>
 	}
 
 	// public BufferedImage getBufferedImageOld(char c) throws IOException {
@@ -210,47 +212,47 @@ public class FontChecker {
 
 	public static void main(String[] args) throws IOException, TransformerException {
 
-<span class="nc" id="L213">		final String name = args[0];</span>
-<span class="nc" id="L214">		final int size = Integer.parseInt(args[1]);</span>
-<span class="nc" id="L215">		final int v1 = Integer.parseInt(args[2]);</span>
-<span class="nc" id="L216">		final int v2 = Integer.parseInt(args[3]);</span>
-<span class="nc" id="L217">		final SFile f = new SFile(&quot;fontchecker-&quot; + name + &quot;-&quot; + v1 + &quot;-&quot; + v2 + &quot;.html&quot;);</span>
+<span class="nc" id="L215">		final String name = args[0];</span>
+<span class="nc" id="L216">		final int size = Integer.parseInt(args[1]);</span>
+<span class="nc" id="L217">		final int v1 = Integer.parseInt(args[2]);</span>
+<span class="nc" id="L218">		final int v2 = Integer.parseInt(args[3]);</span>
+<span class="nc" id="L219">		final SFile f = new SFile(&quot;fontchecker-&quot; + name + &quot;-&quot; + v1 + &quot;-&quot; + v2 + &quot;.html&quot;);</span>
 
-<span class="nc" id="L219">		final FontChecker fc = new FontChecker(UFont.build(name, Font.PLAIN, size));</span>
-<span class="nc" id="L220">		final PrintWriter pw = f.createPrintWriter();</span>
-<span class="nc" id="L221">		pw.println(&quot;&lt;html&gt;&quot;);</span>
-<span class="nc" id="L222">		pw.println(&quot;&lt;h1&gt;PROBLEM&lt;/h1&gt;&quot;);</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		for (int i = v1; i &lt;= v2; i++) {</span>
-<span class="nc" id="L224">			final char c = (char) i;</span>
-<span class="nc" id="L225">			final boolean ok = fc.isCharOk(c);</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (ok == false) {</span>
-<span class="nc" id="L227">				fc.printChar(pw, c);</span>
-<span class="nc" id="L228">				pw.println(&quot;&lt;/p&gt;&quot;);</span>
+<span class="nc" id="L221">		final FontChecker fc = new FontChecker(UFontFactory.build(name, Font.PLAIN, size));</span>
+<span class="nc" id="L222">		final PrintWriter pw = f.createPrintWriter();</span>
+<span class="nc" id="L223">		pw.println(&quot;&lt;html&gt;&quot;);</span>
+<span class="nc" id="L224">		pw.println(&quot;&lt;h1&gt;PROBLEM&lt;/h1&gt;&quot;);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		for (int i = v1; i &lt;= v2; i++) {</span>
+<span class="nc" id="L226">			final char c = (char) i;</span>
+<span class="nc" id="L227">			final boolean ok = fc.isCharOk(c);</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (ok == false) {</span>
+<span class="nc" id="L229">				fc.printChar(pw, c);</span>
+<span class="nc" id="L230">				pw.println(&quot;&lt;/p&gt;&quot;);</span>
 			}
 		}
-<span class="nc" id="L231">		pw.println(&quot;&lt;h1&gt;OK&lt;/h1&gt;&quot;);</span>
-<span class="nc" id="L232">		final String allFontNames[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">		for (int i = v1; i &lt;= v2; i++) {</span>
-<span class="nc" id="L234">			final char c = (char) i;</span>
-<span class="nc" id="L235">			final boolean ok = fc.isCharOk(c);</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">			if (ok) {</span>
-<span class="nc" id="L237">				fc.printChar(pw, c);</span>
-<span class="nc" id="L238">				final String desc = fc.getCharDescVerbose(c);</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">				for (String n : allFontNames) {</span>
-<span class="nc" id="L240">					final FontChecker other = new FontChecker(UFont.build(n, Font.PLAIN, size));</span>
-<span class="nc" id="L241">					final String descOther = other.getCharDescVerbose(c);</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">					if (desc.equals(descOther)) {</span>
-<span class="nc" id="L243">						pw.println(&quot;&amp;nbsp;&quot;);</span>
-<span class="nc" id="L244">						pw.println(n);</span>
+<span class="nc" id="L233">		pw.println(&quot;&lt;h1&gt;OK&lt;/h1&gt;&quot;);</span>
+<span class="nc" id="L234">		final String allFontNames[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (int i = v1; i &lt;= v2; i++) {</span>
+<span class="nc" id="L236">			final char c = (char) i;</span>
+<span class="nc" id="L237">			final boolean ok = fc.isCharOk(c);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">			if (ok) {</span>
+<span class="nc" id="L239">				fc.printChar(pw, c);</span>
+<span class="nc" id="L240">				final String desc = fc.getCharDescVerbose(c);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">				for (String n : allFontNames) {</span>
+<span class="nc" id="L242">					final FontChecker other = new FontChecker(UFontFactory.build(n, Font.PLAIN, size));</span>
+<span class="nc" id="L243">					final String descOther = other.getCharDescVerbose(c);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">					if (desc.equals(descOther)) {</span>
+<span class="nc" id="L245">						pw.println(&quot;&amp;nbsp;&quot;);</span>
+<span class="nc" id="L246">						pw.println(n);</span>
 					}
 				}
-<span class="nc" id="L247">				pw.println(&quot;&lt;/p&gt;&quot;);</span>
+<span class="nc" id="L249">				pw.println(&quot;&lt;/p&gt;&quot;);</span>
 
 			}
 		}
-<span class="nc" id="L251">		pw.println(&quot;&lt;/html&gt;&quot;);</span>
-<span class="nc" id="L252">		pw.close();</span>
+<span class="nc" id="L253">		pw.println(&quot;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L254">		pw.close();</span>
 
-<span class="nc" id="L254">	}</span>
+<span class="nc" id="L256">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

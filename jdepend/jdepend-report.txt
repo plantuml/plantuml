@@ -8104,21 +8104,22 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 12
-    Concrete Classes: 9
-    Abstract Classes: 3
+    Total Classes: 14
+    Concrete Classes: 10
+    Abstract Classes: 4
 
     Ca: 90
     Ce: 14
 
-    A: 0.25
+    A: 0.29
     I: 0.13
-    D: 0.62
+    D: 0.58
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.font.FontParamConstant
     net.sourceforge.plantuml.klimt.font.StringBounder
     net.sourceforge.plantuml.klimt.font.StringBounderRaw
+    net.sourceforge.plantuml.klimt.font.UFont
 
 Concrete Classes:
     net.sourceforge.plantuml.klimt.font.FontConfiguration
@@ -8126,8 +8127,9 @@ Concrete Classes:
     net.sourceforge.plantuml.klimt.font.FontPosition
     net.sourceforge.plantuml.klimt.font.FontStack
     net.sourceforge.plantuml.klimt.font.FontStyle
-    net.sourceforge.plantuml.klimt.font.UFont
     net.sourceforge.plantuml.klimt.font.UFontContext
+    net.sourceforge.plantuml.klimt.font.UFontFactory
+    net.sourceforge.plantuml.klimt.font.UFontImpl
     net.sourceforge.plantuml.klimt.font.UnusedSpace
     net.sourceforge.plantuml.klimt.font.UnusedSpace$Point
 
@@ -17080,7 +17082,7 @@ net.sourceforge.plantuml.klimt.drawing.svg,17,0,7,20,0,0.74,0.26,1
 net.sourceforge.plantuml.klimt.drawing.tikz,12,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,5,12,0,0.71,0.29,1
 net.sourceforge.plantuml.klimt.drawing.visio,12,1,1,13,0.08,0.93,0.01,1
-net.sourceforge.plantuml.klimt.font,12,3,90,14,0.25,0.13,0.62,1
+net.sourceforge.plantuml.klimt.font,14,4,90,14,0.29,0.13,0.58,1
 net.sourceforge.plantuml.klimt.geom,43,6,93,11,0.14,0.11,0.75,1
 net.sourceforge.plantuml.klimt.shape,51,4,90,21,0.08,0.19,0.73,1
 net.sourceforge.plantuml.klimt.sprite,27,2,24,32,0.07,0.57,0.35,1

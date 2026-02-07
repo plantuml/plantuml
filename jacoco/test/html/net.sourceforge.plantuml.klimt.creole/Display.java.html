@@ -45,6 +45,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsFlags;
@@ -82,7 +83,6 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.warning.JawsWarning;
 import net.sourceforge.plantuml.warning.Warning;
-import net.sourceforge.plantuml.EmbeddedDiagram;
 
 public class Display implements Iterable&lt;CharSequence&gt; {
 
@@ -298,12 +298,12 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="fc bfc" id="L298" title="All 2 branches covered.">				} else if (c2 == 't') {</span>
 <span class="fc" id="L299">					current.append('\t');</span>
 <span class="fc" id="L300">					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);</span>
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">				} else if (c2 == '\\') {</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">				} else if (c2 == '\\') {</span>
 <span class="fc" id="L302">					current.append(c2);</span>
 <span class="fc" id="L303">					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);</span>
 				} else {
-<span class="nc" id="L305">					current.append(c);</span>
-<span class="nc" id="L306">					current.append(c2);</span>
+<span class="fc" id="L305">					current.append(c);</span>
+<span class="fc" id="L306">					current.append(c2);</span>
 				}
 <span class="pc bpc" id="L308" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {</span>
 				// current.append('\t');

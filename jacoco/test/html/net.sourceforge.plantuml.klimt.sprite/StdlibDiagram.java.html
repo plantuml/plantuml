@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -140,7 +140,7 @@ public class StdlibDiagram extends UmlDiagram {
 
 <span class="nc bnc" id="L141" title="All 2 branches missed.">		for (String n : getSkinParam().getAllSpriteNames()) {</span>
 <span class="nc" id="L142">			final Sprite sprite = getSkinParam().getSprite(n);</span>
-<span class="nc" id="L143">			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),</span>
+<span class="nc" id="L143">			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)),</span>
 <span class="nc" id="L144">					HorizontalAlignment.LEFT, getSkinParam());</span>
 <span class="nc" id="L145">			TextBlock tb = sprite.asTextBlock(getBlack(), null, 1.0, null);</span>
 <span class="nc" id="L146">			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>

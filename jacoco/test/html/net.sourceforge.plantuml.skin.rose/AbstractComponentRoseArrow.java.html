@@ -46,59 +46,58 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public abstract class AbstractComponentRoseArrow extends AbstractTextualComponent implements ArrowComponent {
 
-<span class="fc" id="L54">	private final int arrowDeltaX = 10;</span>
-<span class="fc" id="L55">	private final int arrowDeltaY = 4;</span>
+<span class="fc" id="L53">	private final int arrowDeltaX = 10;</span>
+<span class="fc" id="L54">	private final int arrowDeltaY = 4;</span>
 	private final HColor foregroundColor;
 	private final HColor backgroundColor;
 	private final ArrowConfiguration arrowConfiguration;
 
 	public AbstractComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
 			ISkinParam skinParam, LineBreakStrategy maxMessageSize) {
-<span class="fc" id="L62">		super(style, maxMessageSize, 7, 7, 1, skinParam, stringsToDisplay, false);</span>
+<span class="fc" id="L61">		super(style, maxMessageSize, 7, 7, 1, skinParam, stringsToDisplay, false);</span>
 
-<span class="fc" id="L64">		this.foregroundColor = getColorLine();</span>
-<span class="fc" id="L65">		this.backgroundColor = getColorBackGround();</span>
-<span class="fc" id="L66">		final UStroke stroke = getStroke();</span>
-<span class="fc" id="L67">		this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());</span>
+<span class="fc" id="L63">		this.foregroundColor = getColorLine();</span>
+<span class="fc" id="L64">		this.backgroundColor = getColorBackGround();</span>
+<span class="fc" id="L65">		final UStroke stroke = getStroke();</span>
+<span class="fc" id="L66">		this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());</span>
 
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L68">	}</span>
 
 	@Override
 	final protected TextBlock getTextBlock() {
-<span class="fc" id="L73">		final Padder padder = getSkinParam().sequenceDiagramPadder();</span>
-<span class="fc" id="L74">		return padder.apply(super.getTextBlock());</span>
+<span class="fc" id="L72">		final Padder padder = getSkinParam().sequenceDiagramPadder();</span>
+<span class="fc" id="L73">		return padder.apply(super.getTextBlock());</span>
 	}
 
 	abstract public double getYPoint(StringBounder stringBounder);
 
 	protected final HColor getForegroundColor() {
-<span class="fc" id="L80">		return foregroundColor;</span>
+<span class="fc" id="L79">		return foregroundColor;</span>
 	}
 
 	protected final HColor getBackgroundColor() {
-<span class="nc" id="L84">		return backgroundColor;</span>
+<span class="nc" id="L83">		return backgroundColor;</span>
 	}
 
 	final protected int getArrowDeltaX() {
-<span class="fc" id="L88">		return arrowDeltaX;</span>
+<span class="fc" id="L87">		return arrowDeltaX;</span>
 	}
 
 	final protected int getArrowDeltaY() {
-<span class="fc" id="L92">		return arrowDeltaY;</span>
+<span class="fc" id="L91">		return arrowDeltaY;</span>
 	}
 
 	@Override
 	public final double getPaddingY() {
-<span class="fc" id="L97">		return 4;</span>
+<span class="fc" id="L96">		return 4;</span>
 	}
 
 	public final ArrowConfiguration getArrowConfiguration() {
-<span class="fc" id="L101">		return arrowConfiguration;</span>
+<span class="fc" id="L100">		return arrowConfiguration;</span>
 	}
 
 }

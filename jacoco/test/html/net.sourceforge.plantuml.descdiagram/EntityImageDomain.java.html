@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2;
 import net.sourceforge.plantuml.klimt.geom.ULayoutGroup;
@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -70,103 +69,103 @@ public class EntityImageDomain extends AbstractEntityImage {
 	final private Url url;
 
 	public EntityImageDomain(Entity entity, char typeLetter) {
-<span class="nc" id="L73">		super(entity);</span>
-<span class="nc" id="L74">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="nc" id="L75">		FontConfiguration fc = FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype);</span>
-<span class="nc" id="L76">		this.name = TextBlockUtils.withMargin(entity.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam()), 2,</span>
+<span class="nc" id="L72">		super(entity);</span>
+<span class="nc" id="L73">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L74">		FontConfiguration fc = FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype);</span>
+<span class="nc" id="L75">		this.name = TextBlockUtils.withMargin(entity.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam()), 2,</span>
 				2);
-<span class="nc bnc" id="L78" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
-<span class="nc" id="L79">			this.stereo = null;</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
+<span class="nc" id="L78">			this.stereo = null;</span>
 		} else {
-<span class="nc" id="L81">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
-<span class="nc" id="L82">					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L83">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L80">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
+<span class="nc" id="L81">					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L82">					HorizontalAlignment.CENTER, getSkinParam());</span>
 		}
-<span class="nc" id="L85">		this.tag = new BoxedCharacter(typeLetter, 8, UFont.byDefault(8), stereotype.getHtmlColor(), null,</span>
-<span class="nc" id="L86">				fc.getColor());</span>
+<span class="nc" id="L84">		this.tag = new BoxedCharacter(typeLetter, 8, UFontFactory.byDefault(8), stereotype.getHtmlColor(), null,</span>
+<span class="nc" id="L85">				fc.getColor());</span>
 
-<span class="nc" id="L88">		this.url = entity.getUrl99();</span>
-<span class="nc" id="L89">	}</span>
+<span class="nc" id="L87">		this.url = entity.getUrl99();</span>
+<span class="nc" id="L88">	}</span>
 
 	private UStroke getStroke() {
-<span class="nc" id="L92">		UStroke stroke = getSkinParam().getThickness(LineParam.domainBorder, getStereo());</span>
+<span class="nc" id="L91">		UStroke stroke = getSkinParam().getThickness(LineParam.domainBorder, getStereo());</span>
 
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (stroke == null) {</span>
-<span class="nc" id="L95">			stroke = UStroke.withThickness(1.5);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (stroke == null) {</span>
+<span class="nc" id="L94">			stroke = UStroke.withThickness(1.5);</span>
 		}
-<span class="nc" id="L97">		return stroke;</span>
+<span class="nc" id="L96">		return stroke;</span>
 	}
 
 	private XDimension2D getTitleDimension(StringBounder stringBounder) {
-<span class="nc" id="L101">		return getNameAndSteretypeDimension(stringBounder);</span>
+<span class="nc" id="L100">		return getNameAndSteretypeDimension(stringBounder);</span>
 	}
 
 	private XDimension2D getNameAndSteretypeDimension(StringBounder stringBounder) {
-<span class="nc" id="L105">		final XDimension2D nameDim = name.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		final XDimension2D stereoDim = stereo == null ? new XDimension2D(0, 0)</span>
-<span class="nc" id="L107">				: stereo.calculateDimension(stringBounder);</span>
-<span class="nc" id="L108">		final XDimension2D nameAndStereo = new XDimension2D(Math.max(nameDim.getWidth(), stereoDim.getWidth()),</span>
-<span class="nc" id="L109">				nameDim.getHeight() + stereoDim.getHeight());</span>
-<span class="nc" id="L110">		return nameAndStereo;</span>
+<span class="nc" id="L104">		final XDimension2D nameDim = name.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		final XDimension2D stereoDim = stereo == null ? new XDimension2D(0, 0)</span>
+<span class="nc" id="L106">				: stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L107">		final XDimension2D nameAndStereo = new XDimension2D(Math.max(nameDim.getWidth(), stereoDim.getWidth()),</span>
+<span class="nc" id="L108">				nameDim.getHeight() + stereoDim.getHeight());</span>
+<span class="nc" id="L109">		return nameAndStereo;</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L114">		return 0;</span>
+<span class="nc" id="L113">		return 0;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L118">		return calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L117">		return calculateDimension(stringBounder).getWidth();</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L122">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L123">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L124">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L125">		final XDimension2D dimTag = getTagDimension(stringBounder);</span>
-<span class="nc" id="L126">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="nc" id="L127">		final double heightTotal = dimTotal.getHeight();</span>
-<span class="nc" id="L128">		final URectangle rect = URectangle.build(widthTotal, heightTotal);</span>
+<span class="nc" id="L121">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L122">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L123">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L124">		final XDimension2D dimTag = getTagDimension(stringBounder);</span>
+<span class="nc" id="L125">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L126">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L127">		final URectangle rect = URectangle.build(widthTotal, heightTotal);</span>
 
-<span class="nc" id="L130">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBorder));</span>
-<span class="nc" id="L131">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (backcolor == null) {</span>
-<span class="nc" id="L133">			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBackground);</span>
+<span class="nc" id="L129">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBorder));</span>
+<span class="nc" id="L130">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (backcolor == null) {</span>
+<span class="nc" id="L132">			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBackground);</span>
 		}
-<span class="nc" id="L135">		ug = ug.apply(backcolor.bg());</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L137">			ug.startUrl(url);</span>
+<span class="nc" id="L134">		ug = ug.apply(backcolor.bg());</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L136">			ug.startUrl(url);</span>
 		}
 
-<span class="nc" id="L140">		final UStroke stroke = getStroke();</span>
-<span class="nc" id="L141">		ug.apply(stroke).draw(rect);</span>
+<span class="nc" id="L139">		final UStroke stroke = getStroke();</span>
+<span class="nc" id="L140">		ug.apply(stroke).draw(rect);</span>
 
-<span class="nc" id="L143">		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));</span>
-<span class="nc" id="L144">		header.add(name);</span>
-<span class="nc" id="L145">		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());</span>
-<span class="nc" id="L146">		final ULayoutGroup footer = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));</span>
-<span class="nc" id="L147">		footer.add(tag);</span>
-<span class="nc" id="L148">		footer.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTag.getWidth(), dimTitle.getHeight())),</span>
-<span class="nc" id="L149">				dimTag.getWidth(), dimTag.getHeight());</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L151">			ug.closeUrl();</span>
+<span class="nc" id="L142">		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));</span>
+<span class="nc" id="L143">		header.add(name);</span>
+<span class="nc" id="L144">		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());</span>
+<span class="nc" id="L145">		final ULayoutGroup footer = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));</span>
+<span class="nc" id="L146">		footer.add(tag);</span>
+<span class="nc" id="L147">		footer.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTag.getWidth(), dimTitle.getHeight())),</span>
+<span class="nc" id="L148">				dimTag.getWidth(), dimTag.getHeight());</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L150">			ug.closeUrl();</span>
 		}
-<span class="nc" id="L153">	}</span>
+<span class="nc" id="L152">	}</span>
 
 	private XDimension2D getTagDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		final XDimension2D tagDim = tag == null ? new XDimension2D(0, 0) : tag.calculateDimension(stringBounder);</span>
-<span class="nc" id="L157">		return tagDim;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		final XDimension2D tagDim = tag == null ? new XDimension2D(0, 0) : tag.calculateDimension(stringBounder);</span>
+<span class="nc" id="L156">		return tagDim;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L161">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L160">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L165">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L166">		final double width = dimTitle.getWidth();</span>
-<span class="nc" id="L167">		final double height = dimTitle.getHeight();</span>
-<span class="nc" id="L168">		final XDimension2D dimTag = getTagDimension(stringBounder);</span>
-<span class="nc" id="L169">		return new XDimension2D(width, height + dimTag.getHeight());</span>
+<span class="nc" id="L164">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L165">		final double width = dimTitle.getWidth();</span>
+<span class="nc" id="L166">		final double height = dimTitle.getHeight();</span>
+<span class="nc" id="L167">		final XDimension2D dimTag = getTagDimension(stringBounder);</span>
+<span class="nc" id="L168">		return new XDimension2D(width, height + dimTag.getHeight());</span>
 	}
 
 }

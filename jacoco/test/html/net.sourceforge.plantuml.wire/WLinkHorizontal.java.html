@@ -42,7 +42,8 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -61,145 +62,145 @@ public class WLinkHorizontal {
 	private final ISkinParam skinParam;
 
 	public WLinkHorizontal(ISkinParam skinParam, UTranslate start, double destination, WLinkType type,
-<span class="nc" id="L64">			WArrowDirection direction, HColor color, Display label) {</span>
-<span class="nc" id="L65">		this.start = start;</span>
-<span class="nc" id="L66">		this.destination = destination;</span>
-<span class="nc" id="L67">		this.skinParam = skinParam;</span>
-<span class="nc" id="L68">		this.direction = direction;</span>
-<span class="nc" id="L69">		this.type = type;</span>
-<span class="nc" id="L70">		this.label = label;</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		this.color = color == null ? getBlack() : color;</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L65">			WArrowDirection direction, HColor color, Display label) {</span>
+<span class="nc" id="L66">		this.start = start;</span>
+<span class="nc" id="L67">		this.destination = destination;</span>
+<span class="nc" id="L68">		this.skinParam = skinParam;</span>
+<span class="nc" id="L69">		this.direction = direction;</span>
+<span class="nc" id="L70">		this.type = type;</span>
+<span class="nc" id="L71">		this.label = label;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		this.color = color == null ? getBlack() : color;</span>
+<span class="nc" id="L73">	}</span>
 
 	private HColor getBlack() {
-<span class="nc" id="L75">		return HColors.BLACK.withDark(HColors.WHITE);</span>
+<span class="nc" id="L76">		return HColors.BLACK.withDark(HColors.WHITE);</span>
 	}
 
 	private HColor getWhite() {
-<span class="nc" id="L79">		return HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="nc" id="L80">		return HColors.WHITE.withDark(HColors.BLACK);</span>
 	}
 
 	private TextBlock getTextBlock() {
-<span class="nc" id="L83">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.sansSerif(10))</span>
-<span class="nc" id="L84">				.changeColor(color);</span>
-<span class="nc" id="L85">		return label.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L84">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(10))</span>
+<span class="nc" id="L85">				.changeColor(color);</span>
+<span class="nc" id="L86">		return label.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public void drawMe(UGraphic ug) {
-<span class="nc" id="L89">		ug = ug.apply(color);</span>
-<span class="nc" id="L90">		final TextBlock textBlock = getTextBlock();</span>
-<span class="nc" id="L91">		final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L90">		ug = ug.apply(color);</span>
+<span class="nc" id="L91">		final TextBlock textBlock = getTextBlock();</span>
+<span class="nc" id="L92">		final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());</span>
 
-<span class="nc" id="L93">		UGraphic ugText = ug.apply(start);</span>
-<span class="nc" id="L94">		final double len = destination - start.getDx();</span>
+<span class="nc" id="L94">		UGraphic ugText = ug.apply(start);</span>
+<span class="nc" id="L95">		final double len = destination - start.getDx();</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (type == WLinkType.NORMAL) {</span>
-<span class="nc" id="L97">			ug = ug.apply(color.bg());</span>
-<span class="nc" id="L98">			drawNormalArrow(ug);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (type == WLinkType.NORMAL) {</span>
+<span class="nc" id="L98">			ug = ug.apply(color.bg());</span>
+<span class="nc" id="L99">			drawNormalArrow(ug);</span>
 
-<span class="nc" id="L100">			ugText = ugText.apply(UTranslate.dy(-dimText.getHeight() / 2));</span>
+<span class="nc" id="L101">			ugText = ugText.apply(UTranslate.dy(-dimText.getHeight() / 2));</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		} else if (type == WLinkType.BUS) {</span>
-<span class="nc" id="L103">			ug = ug.apply(getWhite().bg());</span>
-<span class="nc" id="L104">			drawBusArrow(ug);</span>
-<span class="nc" id="L105">			ugText = ugText.apply(UTranslate.dy((20 - dimText.getHeight()) / 2 - 5));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		} else if (type == WLinkType.BUS) {</span>
+<span class="nc" id="L104">			ug = ug.apply(getWhite().bg());</span>
+<span class="nc" id="L105">			drawBusArrow(ug);</span>
+<span class="nc" id="L106">			ugText = ugText.apply(UTranslate.dy((20 - dimText.getHeight()) / 2 - 5));</span>
 		}
 
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (dimText.getHeight() &gt; 0) {</span>
-<span class="nc bnc" id="L109" title="All 3 branches missed.">			switch (direction) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (dimText.getHeight() &gt; 0) {</span>
+<span class="nc bnc" id="L110" title="All 3 branches missed.">			switch (direction) {</span>
 			case NORMAL:
-<span class="nc" id="L111">				ugText = ugText.apply(UTranslate.dx(4));</span>
-<span class="nc" id="L112">				break;</span>
+<span class="nc" id="L112">				ugText = ugText.apply(UTranslate.dx(4));</span>
+<span class="nc" id="L113">				break;</span>
 			case REVERSE:
-<span class="nc" id="L114">				ugText = ugText.apply(UTranslate.dx(len - dimText.getWidth() - 4));</span>
-<span class="nc" id="L115">				break;</span>
+<span class="nc" id="L115">				ugText = ugText.apply(UTranslate.dx(len - dimText.getWidth() - 4));</span>
+<span class="nc" id="L116">				break;</span>
 			default:
-<span class="nc" id="L117">				ugText = ugText.apply(UTranslate.dx((len - dimText.getWidth()) / 2));</span>
+<span class="nc" id="L118">				ugText = ugText.apply(UTranslate.dx((len - dimText.getWidth()) / 2));</span>
 				break;
 			}
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (type == WLinkType.NORMAL)</span>
-<span class="nc" id="L121">				ugText.apply(getWhite()).apply(getWhite().bg()).draw(URectangle.build(dimText));</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (type == WLinkType.NORMAL)</span>
+<span class="nc" id="L122">				ugText.apply(getWhite()).apply(getWhite().bg()).draw(URectangle.build(dimText));</span>
 
-<span class="nc" id="L123">			textBlock.drawU(ugText);</span>
+<span class="nc" id="L124">			textBlock.drawU(ugText);</span>
 		}
 
-<span class="nc" id="L126">	}</span>
+<span class="nc" id="L127">	}</span>
 
 	private void drawBusArrow(UGraphic ug) {
-<span class="nc" id="L129">		final double dx = destination - start.getDx() - 2;</span>
-<span class="nc" id="L130">		final UPath path = UPath.none();</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (direction == WArrowDirection.NONE) {</span>
-<span class="nc" id="L132">			path.moveTo(0, 0);</span>
-<span class="nc" id="L133">			path.lineTo(dx, 0);</span>
-<span class="nc" id="L134">			path.lineTo(dx, 10);</span>
-<span class="nc" id="L135">			path.lineTo(0, 10);</span>
-<span class="nc" id="L136">			path.lineTo(0, 0);</span>
-<span class="nc" id="L137">			path.closePath();</span>
-<span class="nc" id="L138">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+<span class="nc" id="L130">		final double dx = destination - start.getDx() - 2;</span>
+<span class="nc" id="L131">		final UPath path = UPath.none();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (direction == WArrowDirection.NONE) {</span>
+<span class="nc" id="L133">			path.moveTo(0, 0);</span>
+<span class="nc" id="L134">			path.lineTo(dx, 0);</span>
+<span class="nc" id="L135">			path.lineTo(dx, 10);</span>
+<span class="nc" id="L136">			path.lineTo(0, 10);</span>
+<span class="nc" id="L137">			path.lineTo(0, 0);</span>
+<span class="nc" id="L138">			path.closePath();</span>
+<span class="nc" id="L139">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
 		}
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (direction == WArrowDirection.NORMAL) {</span>
-<span class="nc" id="L141">			path.moveTo(0, 0);</span>
-<span class="nc" id="L142">			path.lineTo(dx - 15, 0);</span>
-<span class="nc" id="L143">			path.lineTo(dx - 15, -5);</span>
-<span class="nc" id="L144">			path.lineTo(dx, 5);</span>
-<span class="nc" id="L145">			path.lineTo(dx - 15, 15);</span>
-<span class="nc" id="L146">			path.lineTo(dx - 15, 10);</span>
-<span class="nc" id="L147">			path.lineTo(0, 10);</span>
-<span class="nc" id="L148">			path.lineTo(0, 0);</span>
-<span class="nc" id="L149">			path.closePath();</span>
-<span class="nc" id="L150">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (direction == WArrowDirection.NORMAL) {</span>
+<span class="nc" id="L142">			path.moveTo(0, 0);</span>
+<span class="nc" id="L143">			path.lineTo(dx - 15, 0);</span>
+<span class="nc" id="L144">			path.lineTo(dx - 15, -5);</span>
+<span class="nc" id="L145">			path.lineTo(dx, 5);</span>
+<span class="nc" id="L146">			path.lineTo(dx - 15, 15);</span>
+<span class="nc" id="L147">			path.lineTo(dx - 15, 10);</span>
+<span class="nc" id="L148">			path.lineTo(0, 10);</span>
+<span class="nc" id="L149">			path.lineTo(0, 0);</span>
+<span class="nc" id="L150">			path.closePath();</span>
+<span class="nc" id="L151">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
 		}
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (direction == WArrowDirection.BOTH) {</span>
-<span class="nc" id="L153">			path.moveTo(0, 5);</span>
-<span class="nc" id="L154">			path.lineTo(15, -5);</span>
-<span class="nc" id="L155">			path.lineTo(15, 0);</span>
-<span class="nc" id="L156">			path.lineTo(dx - 15, 0);</span>
-<span class="nc" id="L157">			path.lineTo(dx - 15, -5);</span>
-<span class="nc" id="L158">			path.lineTo(dx, 5);</span>
-<span class="nc" id="L159">			path.lineTo(dx - 15, 15);</span>
-<span class="nc" id="L160">			path.lineTo(dx - 15, 10);</span>
-<span class="nc" id="L161">			path.lineTo(15, 10);</span>
-<span class="nc" id="L162">			path.lineTo(15, 15);</span>
-<span class="nc" id="L163">			path.lineTo(0, 5);</span>
-<span class="nc" id="L164">			path.closePath();</span>
-<span class="nc" id="L165">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (direction == WArrowDirection.BOTH) {</span>
+<span class="nc" id="L154">			path.moveTo(0, 5);</span>
+<span class="nc" id="L155">			path.lineTo(15, -5);</span>
+<span class="nc" id="L156">			path.lineTo(15, 0);</span>
+<span class="nc" id="L157">			path.lineTo(dx - 15, 0);</span>
+<span class="nc" id="L158">			path.lineTo(dx - 15, -5);</span>
+<span class="nc" id="L159">			path.lineTo(dx, 5);</span>
+<span class="nc" id="L160">			path.lineTo(dx - 15, 15);</span>
+<span class="nc" id="L161">			path.lineTo(dx - 15, 10);</span>
+<span class="nc" id="L162">			path.lineTo(15, 10);</span>
+<span class="nc" id="L163">			path.lineTo(15, 15);</span>
+<span class="nc" id="L164">			path.lineTo(0, 5);</span>
+<span class="nc" id="L165">			path.closePath();</span>
+<span class="nc" id="L166">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
 		}
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (direction == WArrowDirection.REVERSE) {</span>
-<span class="nc" id="L168">			path.moveTo(0, 5);</span>
-<span class="nc" id="L169">			path.lineTo(15, -5);</span>
-<span class="nc" id="L170">			path.lineTo(15, 0);</span>
-<span class="nc" id="L171">			path.lineTo(dx, 0);</span>
-<span class="nc" id="L172">			path.lineTo(dx, 10);</span>
-<span class="nc" id="L173">			path.lineTo(15, 10);</span>
-<span class="nc" id="L174">			path.lineTo(15, 15);</span>
-<span class="nc" id="L175">			path.lineTo(0, 5);</span>
-<span class="nc" id="L176">			path.closePath();</span>
-<span class="nc" id="L177">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (direction == WArrowDirection.REVERSE) {</span>
+<span class="nc" id="L169">			path.moveTo(0, 5);</span>
+<span class="nc" id="L170">			path.lineTo(15, -5);</span>
+<span class="nc" id="L171">			path.lineTo(15, 0);</span>
+<span class="nc" id="L172">			path.lineTo(dx, 0);</span>
+<span class="nc" id="L173">			path.lineTo(dx, 10);</span>
+<span class="nc" id="L174">			path.lineTo(15, 10);</span>
+<span class="nc" id="L175">			path.lineTo(15, 15);</span>
+<span class="nc" id="L176">			path.lineTo(0, 5);</span>
+<span class="nc" id="L177">			path.closePath();</span>
+<span class="nc" id="L178">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
 		}
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L180">	}</span>
 
 	private void drawNormalArrow(UGraphic ug) {
-<span class="nc" id="L182">		final double dx = destination - start.getDx() - 2;</span>
-<span class="nc bnc" id="L183" title="All 4 branches missed.">		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.NORMAL) {</span>
-<span class="nc" id="L184">			final UPath path = UPath.none();</span>
-<span class="nc" id="L185">			path.moveTo(0, 0);</span>
-<span class="nc" id="L186">			path.lineTo(-5, -5);</span>
-<span class="nc" id="L187">			path.lineTo(-5, 5);</span>
-<span class="nc" id="L188">			path.lineTo(0, 0);</span>
-<span class="nc" id="L189">			path.closePath();</span>
-<span class="nc" id="L190">			ug.apply(start.compose(UTranslate.dx(dx))).draw(path);</span>
+<span class="nc" id="L183">		final double dx = destination - start.getDx() - 2;</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.NORMAL) {</span>
+<span class="nc" id="L185">			final UPath path = UPath.none();</span>
+<span class="nc" id="L186">			path.moveTo(0, 0);</span>
+<span class="nc" id="L187">			path.lineTo(-5, -5);</span>
+<span class="nc" id="L188">			path.lineTo(-5, 5);</span>
+<span class="nc" id="L189">			path.lineTo(0, 0);</span>
+<span class="nc" id="L190">			path.closePath();</span>
+<span class="nc" id="L191">			ug.apply(start.compose(UTranslate.dx(dx))).draw(path);</span>
 		}
-<span class="nc bnc" id="L192" title="All 4 branches missed.">		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.REVERSE) {</span>
-<span class="nc" id="L193">			final UPath path = UPath.none();</span>
-<span class="nc" id="L194">			path.moveTo(0, 0);</span>
-<span class="nc" id="L195">			path.lineTo(5, -5);</span>
-<span class="nc" id="L196">			path.lineTo(5, 5);</span>
-<span class="nc" id="L197">			path.lineTo(0, 0);</span>
-<span class="nc" id="L198">			path.closePath();</span>
-<span class="nc" id="L199">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.REVERSE) {</span>
+<span class="nc" id="L194">			final UPath path = UPath.none();</span>
+<span class="nc" id="L195">			path.moveTo(0, 0);</span>
+<span class="nc" id="L196">			path.lineTo(5, -5);</span>
+<span class="nc" id="L197">			path.lineTo(5, 5);</span>
+<span class="nc" id="L198">			path.lineTo(0, 0);</span>
+<span class="nc" id="L199">			path.closePath();</span>
+<span class="nc" id="L200">			ug.apply(start.compose(UTranslate.dx(1))).draw(path);</span>
 		}
-<span class="nc" id="L201">		ug.apply(start.compose(UTranslate.dx(1))).draw(ULine.hline(dx));</span>
-<span class="nc" id="L202">	}</span>
+<span class="nc" id="L202">		ug.apply(start.compose(UTranslate.dx(1))).draw(ULine.hline(dx));</span>
+<span class="nc" id="L203">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

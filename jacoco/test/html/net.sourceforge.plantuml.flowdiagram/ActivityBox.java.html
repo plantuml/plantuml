@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -62,45 +64,45 @@ public class ActivityBox extends AbstractTextBlock {
 	private final String label;
 	private final TextBlock tb;
 
-<span class="nc" id="L65">	public ActivityBox(Tile tile, String id, String label) {</span>
-<span class="nc" id="L66">		this.tile = tile;</span>
-<span class="nc" id="L67">		this.id = id;</span>
-<span class="nc" id="L68">		this.label = label;</span>
-<span class="nc" id="L69">		final UFont font = UFont.serif(14);</span>
-<span class="nc" id="L70">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
-<span class="nc" id="L71">		tb = Display.create(label).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L67">	public ActivityBox(Tile tile, String id, String label) {</span>
+<span class="nc" id="L68">		this.tile = tile;</span>
+<span class="nc" id="L69">		this.id = id;</span>
+<span class="nc" id="L70">		this.label = label;</span>
+<span class="nc" id="L71">		final UFont font = UFontFactory.serif(14);</span>
+<span class="nc" id="L72">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
+<span class="nc" id="L73">		tb = Display.create(label).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="nc" id="L74">	}</span>
 
 	public Tile getTile() {
-<span class="nc" id="L75">		return tile;</span>
+<span class="nc" id="L77">		return tile;</span>
 	}
 
 	public String getId() {
-<span class="nc" id="L79">		return id;</span>
+<span class="nc" id="L81">		return id;</span>
 	}
 
 	public String getLabel() {
-<span class="nc" id="L83">		return label;</span>
+<span class="nc" id="L85">		return label;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L87">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L89">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
 		// final Dimension2D dimDesc = tb.calculateDimension(ug.getStringBounder());
 
-<span class="nc" id="L90">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="nc" id="L91">		final double heightTotal = dimTotal.getHeight();</span>
-<span class="nc" id="L92">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(CORNER);</span>
-<span class="nc" id="L93">		ug = ug.apply(HColors.MY_RED);</span>
-<span class="nc" id="L94">		ug = ug.apply(HColors.MY_YELLOW.bg());</span>
-<span class="nc" id="L95">		ug.apply(UStroke.withThickness(1.5)).draw(rect);</span>
+<span class="nc" id="L92">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L93">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L94">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(CORNER);</span>
+<span class="nc" id="L95">		ug = ug.apply(HColors.MY_RED);</span>
+<span class="nc" id="L96">		ug = ug.apply(HColors.MY_YELLOW.bg());</span>
+<span class="nc" id="L97">		ug.apply(UStroke.withThickness(1.5)).draw(rect);</span>
 
-<span class="nc" id="L97">		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L99">		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));</span>
+<span class="nc" id="L100">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L101">		final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L103">		final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L103">		return dim.delta((2 * MARGIN), (2 * MARGIN));</span>
+<span class="nc" id="L105">		return dim.delta((2 * MARGIN), (2 * MARGIN));</span>
 	}
 
 }

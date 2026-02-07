@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -56,43 +58,43 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 
 public class Tile extends AbstractTextBlock implements TextBlock {
 
-<span class="nc" id="L59">	private static double SIZE = 40;</span>
+<span class="nc" id="L61">	private static double SIZE = 40;</span>
 	private final int num;
 
-<span class="nc" id="L62">	private final UFont numberFont = UFont.monospaced(11);</span>
-<span class="nc" id="L63">	private final FontConfiguration fc = FontConfiguration.blackBlueTrue(numberFont);</span>
+<span class="nc" id="L64">	private final UFont numberFont = UFontFactory.monospaced(11);</span>
+<span class="nc" id="L65">	private final FontConfiguration fc = FontConfiguration.blackBlueTrue(numberFont);</span>
 	private final Map&lt;TileGeometry, TileArea&gt; geometries;
 
-<span class="nc" id="L66">	Tile(int num) {</span>
-<span class="nc" id="L67">		this.num = num;</span>
-<span class="nc" id="L68">		final Map&lt;TileGeometry, TileArea&gt; tmp = new EnumMap&lt;TileGeometry, TileArea&gt;(TileGeometry.class);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		for (TileGeometry g : TileGeometry.values()) {</span>
-<span class="nc" id="L70">			tmp.put(g, new TileArea(this, g));</span>
+<span class="nc" id="L68">	Tile(int num) {</span>
+<span class="nc" id="L69">		this.num = num;</span>
+<span class="nc" id="L70">		final Map&lt;TileGeometry, TileArea&gt; tmp = new EnumMap&lt;TileGeometry, TileArea&gt;(TileGeometry.class);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (TileGeometry g : TileGeometry.values()) {</span>
+<span class="nc" id="L72">			tmp.put(g, new TileArea(this, g));</span>
 		}
-<span class="nc" id="L72">		this.geometries = Collections.unmodifiableMap(tmp);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L74">		this.geometries = Collections.unmodifiableMap(tmp);</span>
+<span class="nc" id="L75">	}</span>
 
 	public TileArea getArea(TileGeometry geometry) {
-<span class="nc" id="L76">		return this.geometries.get(geometry);</span>
+<span class="nc" id="L78">		return this.geometries.get(geometry);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L80">		ug = ug.apply(HColors.BLACK);</span>
-<span class="nc" id="L81">		final TextBlock n = Display.create(&quot;&quot; + num).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
-<span class="nc" id="L82">		final XDimension2D dimNum = n.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L83">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L84">		final double diffx = dimTotal.getWidth() - dimNum.getWidth();</span>
-<span class="nc" id="L85">		final double diffy = dimTotal.getHeight() - dimNum.getHeight();</span>
-<span class="nc" id="L86">		final double radius = Math.max(dimNum.getWidth(), dimNum.getHeight());</span>
-<span class="nc" id="L87">		final double diffx2 = dimTotal.getWidth() - radius;</span>
-<span class="nc" id="L88">		final double diffy2 = dimTotal.getHeight() - radius;</span>
-<span class="nc" id="L89">		n.drawU(ug.apply(new UTranslate((diffx / 2), (diffy / 2))));</span>
-<span class="nc" id="L90">		ug.draw(URectangle.build(SIZE, SIZE));</span>
-<span class="nc" id="L91">		ug.apply(new UTranslate(diffx2 / 2, diffy2 / 2)).draw(UEllipse.build(radius, radius));</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L82">		ug = ug.apply(HColors.BLACK);</span>
+<span class="nc" id="L83">		final TextBlock n = Display.create(&quot;&quot; + num).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="nc" id="L84">		final XDimension2D dimNum = n.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L85">		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L86">		final double diffx = dimTotal.getWidth() - dimNum.getWidth();</span>
+<span class="nc" id="L87">		final double diffy = dimTotal.getHeight() - dimNum.getHeight();</span>
+<span class="nc" id="L88">		final double radius = Math.max(dimNum.getWidth(), dimNum.getHeight());</span>
+<span class="nc" id="L89">		final double diffx2 = dimTotal.getWidth() - radius;</span>
+<span class="nc" id="L90">		final double diffy2 = dimTotal.getHeight() - radius;</span>
+<span class="nc" id="L91">		n.drawU(ug.apply(new UTranslate((diffx / 2), (diffy / 2))));</span>
+<span class="nc" id="L92">		ug.draw(URectangle.build(SIZE, SIZE));</span>
+<span class="nc" id="L93">		ug.apply(new UTranslate(diffx2 / 2, diffy2 / 2)).draw(UEllipse.build(radius, radius));</span>
+<span class="nc" id="L94">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L95">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="nc" id="L97">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

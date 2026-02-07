@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -64,81 +65,81 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	private final TimelineStyleData timelineStyleData;
 
 	public ResourceDrawNumbers(GanttModelData ganttModelData, TimelineStyleData timelineStyleData, Resource res,
-<span class="nc" id="L67">			TimeScale timeScale, double y, TimePoint min, TimePoint maxTimePointPrintedEndOfDay) {</span>
-<span class="nc" id="L68">		this.res = res;</span>
-<span class="nc" id="L69">		this.timeScale = timeScale;</span>
-<span class="nc" id="L70">		this.y = y;</span>
-<span class="nc" id="L71">		this.min = min;</span>
-<span class="nc" id="L72">		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;</span>
-<span class="nc" id="L73">		this.ganttModelData = ganttModelData;</span>
-<span class="nc" id="L74">		this.timelineStyleData = timelineStyleData;</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L68">			TimeScale timeScale, double y, TimePoint min, TimePoint maxTimePointPrintedEndOfDay) {</span>
+<span class="nc" id="L69">		this.res = res;</span>
+<span class="nc" id="L70">		this.timeScale = timeScale;</span>
+<span class="nc" id="L71">		this.y = y;</span>
+<span class="nc" id="L72">		this.min = min;</span>
+<span class="nc" id="L73">		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;</span>
+<span class="nc" id="L74">		this.ganttModelData = ganttModelData;</span>
+<span class="nc" id="L75">		this.timelineStyleData = timelineStyleData;</span>
+<span class="nc" id="L76">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L78">		final TextBlock title = Display.getWithNewlines(timelineStyleData.getPragma(), res.getName())</span>
-<span class="nc" id="L79">				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
-<span class="nc" id="L80">		title.drawU(ug);</span>
-<span class="nc" id="L81">		final ULine line = ULine.hline(timeScale.getPosition(maxTimePointPrintedEndOfDay) - timeScale.getPosition(min));</span>
-<span class="nc" id="L82">		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))</span>
-<span class="nc" id="L83">				.draw(line);</span>
+<span class="nc" id="L79">		final TextBlock title = Display.getWithNewlines(timelineStyleData.getPragma(), res.getName())</span>
+<span class="nc" id="L80">				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="nc" id="L81">		title.drawU(ug);</span>
+<span class="nc" id="L82">		final ULine line = ULine.hline(timeScale.getPosition(maxTimePointPrintedEndOfDay) - timeScale.getPosition(min));</span>
+<span class="nc" id="L83">		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))</span>
+<span class="nc" id="L84">				.draw(line);</span>
 
-<span class="nc" id="L85">		double startingPosition = -1;</span>
-<span class="nc" id="L86">		int totalLoad = 0;</span>
-<span class="nc" id="L87">		boolean isRed = false;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) &lt;= 0; i = i.increment()) {</span>
-<span class="nc" id="L89">			final boolean isBreaking = timeScale.isBreaking(i);</span>
-<span class="nc" id="L90">			final int load = ganttModelData.getLoadForResource(res, i);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (load &gt; 100)</span>
-<span class="nc" id="L92">				isRed = true;</span>
-<span class="nc" id="L93">			totalLoad += load;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (isBreaking) {</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (totalLoad &gt; 0) {</span>
-<span class="nc" id="L96">					final TextBlock value = getTextBlock(totalLoad, isRed);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">					if (startingPosition == -1)</span>
-<span class="nc" id="L98">						startingPosition = timeScale.getPosition(i);</span>
-<span class="nc" id="L99">					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);</span>
-<span class="nc" id="L100">					final double start = (startingPosition + endingPosition) / 2</span>
-<span class="nc" id="L101">							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;</span>
-<span class="nc" id="L102">					value.drawU(ug.apply(new UTranslate(start, 16)));</span>
+<span class="nc" id="L86">		double startingPosition = -1;</span>
+<span class="nc" id="L87">		int totalLoad = 0;</span>
+<span class="nc" id="L88">		boolean isRed = false;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) &lt;= 0; i = i.increment()) {</span>
+<span class="nc" id="L90">			final boolean isBreaking = timeScale.isBreaking(i);</span>
+<span class="nc" id="L91">			final int load = ganttModelData.getLoadForResource(res, i);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (load &gt; 100)</span>
+<span class="nc" id="L93">				isRed = true;</span>
+<span class="nc" id="L94">			totalLoad += load;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (isBreaking) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (totalLoad &gt; 0) {</span>
+<span class="nc" id="L97">					final TextBlock value = getTextBlock(totalLoad, isRed);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">					if (startingPosition == -1)</span>
+<span class="nc" id="L99">						startingPosition = timeScale.getPosition(i);</span>
+<span class="nc" id="L100">					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);</span>
+<span class="nc" id="L101">					final double start = (startingPosition + endingPosition) / 2</span>
+<span class="nc" id="L102">							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;</span>
+<span class="nc" id="L103">					value.drawU(ug.apply(new UTranslate(start, 16)));</span>
 				}
-<span class="nc" id="L104">				startingPosition = -1;</span>
-<span class="nc" id="L105">				totalLoad = 0;</span>
-<span class="nc" id="L106">				isRed = false;</span>
+<span class="nc" id="L105">				startingPosition = -1;</span>
+<span class="nc" id="L106">				totalLoad = 0;</span>
+<span class="nc" id="L107">				isRed = false;</span>
 			} else {
-<span class="nc bnc" id="L108" title="All 2 branches missed.">				if (startingPosition == -1)</span>
-<span class="nc" id="L109">					startingPosition = timeScale.getPosition(i);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (startingPosition == -1)</span>
+<span class="nc" id="L110">					startingPosition = timeScale.getPosition(i);</span>
 			}
 		}
 
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L114">	}</span>
 
 	private TextBlock getTextBlock(int totalLoad, boolean isRed) {
-<span class="nc" id="L116">		final Display display = Display.getWithNewlines(timelineStyleData.getSkinParam().getPragma(), &quot;&quot; + totalLoad);</span>
-<span class="nc" id="L117">		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);</span>
-<span class="nc" id="L118">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="nc" id="L117">		final Display display = Display.getWithNewlines(timelineStyleData.getSkinParam().getPragma(), &quot;&quot; + totalLoad);</span>
+<span class="nc" id="L118">		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);</span>
+<span class="nc" id="L119">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
 	}
 
 	private FontConfiguration getFontConfiguration(boolean isRed) {
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		return getFontConfiguration(9, isRed ? HColors.RED : HColors.BLACK);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		return getFontConfiguration(9, isRed ? HColors.RED : HColors.BLACK);</span>
 	}
 
 	private FontConfiguration getFontConfiguration(int size) {
-<span class="nc" id="L126">		return getFontConfiguration(size, HColors.BLACK);</span>
+<span class="nc" id="L127">		return getFontConfiguration(size, HColors.BLACK);</span>
 	}
 
 	private FontConfiguration getFontConfiguration(int size, HColor color) {
-<span class="nc" id="L130">		final UFont font = UFont.serif(size);</span>
-<span class="nc" id="L131">		return FontConfiguration.create(font, color, color, null);</span>
+<span class="nc" id="L131">		final UFont font = UFontFactory.serif(size);</span>
+<span class="nc" id="L132">		return FontConfiguration.create(font, color, color, null);</span>
 	}
 
 	@Override
 	public double getHeight(StringBounder stringBounder) {
-<span class="nc" id="L136">		return 16 * 2;</span>
+<span class="nc" id="L137">		return 16 * 2;</span>
 	}
 
 	@Override
 	public final double getY() {
-<span class="nc" id="L141">		return y;</span>
+<span class="nc" id="L142">		return y;</span>
 	}
 
 }

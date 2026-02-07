@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -71,107 +72,107 @@ public class GraphicsSudoku {
     // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	private final ISudoku sudoku;
-<span class="nc" id="L74">	private final UFont numberFont = UFont.sansSerif(20).bold();</span>
-<span class="nc" id="L75">	private final UFont font = UFont.sansSerif(11);</span>
+<span class="nc" id="L75">	private final UFont numberFont = UFontFactory.sansSerif(20).bold();</span>
+<span class="nc" id="L76">	private final UFont font = UFontFactory.sansSerif(11);</span>
 
-<span class="nc" id="L77">	public GraphicsSudoku(ISudoku sudoku) {</span>
-<span class="nc" id="L78">		this.sudoku = sudoku;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L78">	public GraphicsSudoku(ISudoku sudoku) {</span>
+<span class="nc" id="L79">		this.sudoku = sudoku;</span>
+<span class="nc" id="L80">	}</span>
 
 	// ::comment when __CORE__
 	public ImageData writeImageEps(OutputStream os) throws IOException {
-<span class="nc" id="L83">		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,</span>
-<span class="nc" id="L84">				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);</span>
-<span class="nc" id="L85">		drawInternal(ug);</span>
-<span class="nc" id="L86">		os.write(ug.getEPSCode().getBytes());</span>
-<span class="nc" id="L87">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L84">		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,</span>
+<span class="nc" id="L85">				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);</span>
+<span class="nc" id="L86">		drawInternal(ug);</span>
+<span class="nc" id="L87">		os.write(ug.getEPSCode().getBytes());</span>
+<span class="nc" id="L88">		return ImageDataSimple.ok();</span>
 	}
 
 	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-<span class="nc" id="L91">		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, ColorMapper.IDENTITY,</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">				FileFormat.LATEX.getDefaultStringBounder(), 1, fileFormat == FileFormat.LATEX, null);</span>
-<span class="nc" id="L93">		drawInternal(ug);</span>
-<span class="nc" id="L94">		ug.writeToStream(os, null, -1); // dpi param is not used</span>
-<span class="nc" id="L95">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L92">		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, ColorMapper.IDENTITY,</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">				FileFormat.LATEX.getDefaultStringBounder(), 1, fileFormat == FileFormat.LATEX, null);</span>
+<span class="nc" id="L94">		drawInternal(ug);</span>
+<span class="nc" id="L95">		ug.writeToStream(os, null, -1); // dpi param is not used</span>
+<span class="nc" id="L96">		return ImageDataSimple.ok();</span>
 	}
 	// ::done
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
-<span class="nc" id="L100">		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);</span>
-<span class="nc" id="L101">		final UGraphicSvg ug = UGraphicSvg.build(option, false, 0, FileFormat.SVG.getDefaultStringBounder());</span>
-<span class="nc" id="L102">		drawInternal(ug);</span>
-<span class="nc" id="L103">		ug.writeToStream(os, null, -1); // dpi param is not used</span>
-<span class="nc" id="L104">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L101">		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);</span>
+<span class="nc" id="L102">		final UGraphicSvg ug = UGraphicSvg.build(option, false, 0, FileFormat.SVG.getDefaultStringBounder());</span>
+<span class="nc" id="L103">		drawInternal(ug);</span>
+<span class="nc" id="L104">		ug.writeToStream(os, null, -1); // dpi param is not used</span>
+<span class="nc" id="L105">		return ImageDataSimple.ok();</span>
 	}
 
-<span class="nc" id="L107">	final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
+<span class="nc" id="L108">	final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
 
 	public ImageData writeImagePng(OutputStream os) throws IOException {
-<span class="nc" id="L110">		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,</span>
+<span class="nc" id="L111">		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,</span>
 				Color.WHITE, stringBounder);
-<span class="nc" id="L112">		final BufferedImage im = builder.getBufferedImage();</span>
-<span class="nc" id="L113">		final Graphics2D g3d = builder.getGraphics2D();</span>
+<span class="nc" id="L113">		final BufferedImage im = builder.getBufferedImage();</span>
+<span class="nc" id="L114">		final Graphics2D g3d = builder.getGraphics2D();</span>
 
-<span class="nc" id="L115">		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0,</span>
+<span class="nc" id="L116">		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0,</span>
 				FileFormat.PNG);
 
-<span class="nc" id="L118">		drawInternal(ug);</span>
-<span class="nc" id="L119">		g3d.dispose();</span>
-<span class="nc" id="L120">		PngIO.write(im, ColorMapper.IDENTITY, os, null, 96);</span>
-<span class="nc" id="L121">		return new ImageDataSimple(im.getWidth(), im.getHeight());</span>
+<span class="nc" id="L119">		drawInternal(ug);</span>
+<span class="nc" id="L120">		g3d.dispose();</span>
+<span class="nc" id="L121">		PngIO.write(im, ColorMapper.IDENTITY, os, null, 96);</span>
+<span class="nc" id="L122">		return new ImageDataSimple(im.getWidth(), im.getHeight());</span>
 	}
 
-<span class="nc" id="L124">	final private int xOffset = 5;</span>
-<span class="nc" id="L125">	final private int yOffset = 5;</span>
+<span class="nc" id="L125">	final private int xOffset = 5;</span>
+<span class="nc" id="L126">	final private int yOffset = 5;</span>
 
-<span class="nc" id="L127">	final private int cellWidth = 30;</span>
-<span class="nc" id="L128">	final private int cellHeight = 32;</span>
+<span class="nc" id="L128">	final private int cellWidth = 30;</span>
+<span class="nc" id="L129">	final private int cellHeight = 32;</span>
 
-<span class="nc" id="L130">	final private int numberxOffset = 10;</span>
-<span class="nc" id="L131">	final private int numberyOffset = 5;</span>
+<span class="nc" id="L131">	final private int numberxOffset = 10;</span>
+<span class="nc" id="L132">	final private int numberyOffset = 5;</span>
 
-<span class="nc" id="L133">	final private int textTotalHeight = 50;</span>
+<span class="nc" id="L134">	final private int textTotalHeight = 50;</span>
 
-<span class="nc" id="L135">	final private int boldWidth = 3;</span>
-<span class="nc" id="L136">	final private int sudoHeight = 9 * cellHeight + 2 * yOffset + boldWidth;</span>
-<span class="nc" id="L137">	final private int sudoWidth = 9 * cellWidth + 2 * xOffset + boldWidth;</span>
+<span class="nc" id="L136">	final private int boldWidth = 3;</span>
+<span class="nc" id="L137">	final private int sudoHeight = 9 * cellHeight + 2 * yOffset + boldWidth;</span>
+<span class="nc" id="L138">	final private int sudoWidth = 9 * cellWidth + 2 * xOffset + boldWidth;</span>
 
 	public void drawInternal(UGraphic ug) {
-<span class="nc" id="L140">		ug = ug.apply(new UTranslate(xOffset, yOffset));</span>
+<span class="nc" id="L141">		ug = ug.apply(new UTranslate(xOffset, yOffset));</span>
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (int x = 0; x &lt; 9; x++) {</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			for (int y = 0; y &lt; 9; y++) {</span>
-<span class="nc" id="L144">				final int num = sudoku.getGiven(x, y);</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">				if (num &gt; 0) {</span>
-<span class="nc" id="L146">					final TextBlock text = Display.create(&quot;&quot; + num).create(FontConfiguration.blackBlueTrue(numberFont),</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (int x = 0; x &lt; 9; x++) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			for (int y = 0; y &lt; 9; y++) {</span>
+<span class="nc" id="L145">				final int num = sudoku.getGiven(x, y);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				if (num &gt; 0) {</span>
+<span class="nc" id="L147">					final TextBlock text = Display.create(&quot;&quot; + num).create(FontConfiguration.blackBlueTrue(numberFont),</span>
 							HorizontalAlignment.CENTER, new SpriteContainerEmpty());
-<span class="nc" id="L148">					text.drawU(ug</span>
-<span class="nc" id="L149">							.apply(new UTranslate((numberxOffset + x * cellWidth), (numberyOffset + y * cellHeight))));</span>
+<span class="nc" id="L149">					text.drawU(ug</span>
+<span class="nc" id="L150">							.apply(new UTranslate((numberxOffset + x * cellWidth), (numberyOffset + y * cellHeight))));</span>
 				}
 			}
 		}
 
-<span class="nc" id="L154">		ug = ug.apply(HColors.BLACK.bg()).apply(HColors.none());</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			final boolean bold = i % boldWidth == 0;</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			final int w = bold ? boldWidth : 1;</span>
-<span class="nc" id="L158">			ug.apply(UTranslate.dy(i * cellHeight)).draw(URectangle.build(9 * cellWidth + boldWidth, w));</span>
+<span class="nc" id="L155">		ug = ug.apply(HColors.BLACK.bg()).apply(HColors.none());</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			final boolean bold = i % boldWidth == 0;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			final int w = bold ? boldWidth : 1;</span>
+<span class="nc" id="L159">			ug.apply(UTranslate.dy(i * cellHeight)).draw(URectangle.build(9 * cellWidth + boldWidth, w));</span>
 		}
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			final boolean bold = i % boldWidth == 0;</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			final int w = bold ? boldWidth : 1;</span>
-<span class="nc" id="L163">			ug.apply(UTranslate.dx(i * cellWidth)).draw(URectangle.build(w, 9 * cellHeight + boldWidth));</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		for (int i = 0; i &lt; 10; i++) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			final boolean bold = i % boldWidth == 0;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			final int w = bold ? boldWidth : 1;</span>
+<span class="nc" id="L164">			ug.apply(UTranslate.dx(i * cellWidth)).draw(URectangle.build(w, 9 * cellHeight + boldWidth));</span>
 		}
 
-<span class="nc" id="L166">		ug = ug.apply(UTranslate.dy(sudoHeight));</span>
-<span class="nc" id="L167">		final List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L168">		texts.add(&quot;https://plantuml.com&quot;);</span>
-<span class="nc" id="L169">		texts.add(&quot;Seed &quot; + Long.toString(sudoku.getSeed(), 36));</span>
-<span class="nc" id="L170">		texts.add(&quot;Difficulty &quot; + sudoku.getRatting());</span>
-<span class="nc" id="L171">		final TextBlock textBlock = Display.create(texts).create(FontConfiguration.blackBlueTrue(font),</span>
+<span class="nc" id="L167">		ug = ug.apply(UTranslate.dy(sudoHeight));</span>
+<span class="nc" id="L168">		final List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L169">		texts.add(&quot;https://plantuml.com&quot;);</span>
+<span class="nc" id="L170">		texts.add(&quot;Seed &quot; + Long.toString(sudoku.getSeed(), 36));</span>
+<span class="nc" id="L171">		texts.add(&quot;Difficulty &quot; + sudoku.getRatting());</span>
+<span class="nc" id="L172">		final TextBlock textBlock = Display.create(texts).create(FontConfiguration.blackBlueTrue(font),</span>
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-<span class="nc" id="L173">		textBlock.drawU(ug);</span>
-<span class="nc" id="L174">	}</span>
+<span class="nc" id="L174">		textBlock.drawU(ug);</span>
+<span class="nc" id="L175">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

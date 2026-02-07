@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -75,70 +74,70 @@ public class EntityImageRequirement extends AbstractEntityImage {
 	final private Url url;
 
 	public EntityImageRequirement(Entity entity) {
-<span class="nc" id="L78">		super(entity);</span>
-<span class="nc" id="L79">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L77">		super(entity);</span>
+<span class="nc" id="L78">		final Stereotype stereotype = entity.getStereotype();</span>
 
-<span class="nc" id="L81">		final TextBlock tmp = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER),</span>
-<span class="nc" id="L82">				entity.getDisplay(), getSkinParam(), stereotype, entity, getStyle());</span>
+<span class="nc" id="L80">		final TextBlock tmp = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER),</span>
+<span class="nc" id="L81">				entity.getDisplay(), getSkinParam(), stereotype, entity, getStyle());</span>
 
-<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
-<span class="nc" id="L85">			this.desc = tmp;</span>
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
+<span class="nc" id="L84">			this.desc = tmp;</span>
 		} else {
-<span class="nc" id="L87">			final TextBlock stereo = Display.getWithNewlines(getSkinParam().getPragma(), stereotype.getLabel(getSkinParam().guillemet())).create(</span>
-<span class="nc" id="L88">					FontConfiguration.create(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L89">					HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="nc" id="L90">			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L86">			final TextBlock stereo = Display.getWithNewlines(getSkinParam().getPragma(), stereotype.getLabel(getSkinParam().guillemet())).create(</span>
+<span class="nc" id="L87">					FontConfiguration.create(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L88">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L89">			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L92">		this.url = entity.getUrl99();</span>
+<span class="nc" id="L91">		this.url = entity.getUrl99();</span>
 
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L93">	}</span>
 
 	private Style getStyle() {
-<span class="nc" id="L97">		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.requirement)</span>
-<span class="nc" id="L98">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L96">		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.requirement)</span>
+<span class="nc" id="L97">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	private UStroke getStroke() {
-<span class="nc" id="L102">		UStroke stroke = getSkinParam().getThickness(LineParam.requirementBorder, getStereo());</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (stroke == null)</span>
-<span class="nc" id="L104">			stroke = new UStroke(7, 7, 1.5);</span>
+<span class="nc" id="L101">		UStroke stroke = getSkinParam().getThickness(LineParam.requirementBorder, getStereo());</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (stroke == null)</span>
+<span class="nc" id="L103">			stroke = new UStroke(7, 7, 1.5);</span>
 
-<span class="nc" id="L106">		return stroke;</span>
+<span class="nc" id="L105">		return stroke;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L110">		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);</span>
+<span class="nc" id="L109">		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L114">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L115">		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);</span>
+<span class="nc" id="L113">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L114">		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);</span>
 
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L118">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L117">			ug.startUrl(url);</span>
 
-<span class="nc" id="L120">		ug = ug.apply(getStroke());</span>
-<span class="nc" id="L121">		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (linecolor == null)</span>
-<span class="nc" id="L123">			linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBorder);</span>
+<span class="nc" id="L119">		ug = ug.apply(getStroke());</span>
+<span class="nc" id="L120">		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (linecolor == null)</span>
+<span class="nc" id="L122">			linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBorder);</span>
 
-<span class="nc" id="L125">		ug = ug.apply(linecolor);</span>
-<span class="nc" id="L126">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (backcolor == null)</span>
-<span class="nc" id="L128">			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBackground);</span>
+<span class="nc" id="L124">		ug = ug.apply(linecolor);</span>
+<span class="nc" id="L125">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L127">			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBackground);</span>
 
-<span class="nc" id="L130">		ug = ug.apply(backcolor.bg());</span>
-<span class="nc" id="L131">		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());</span>
+<span class="nc" id="L129">		ug = ug.apply(backcolor.bg());</span>
+<span class="nc" id="L130">		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());</span>
 
-<span class="nc" id="L133">		ellipse.drawU(ug2);</span>
+<span class="nc" id="L132">		ellipse.drawU(ug2);</span>
 
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L136">			ug.closeUrl();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L135">			ug.closeUrl();</span>
 
-<span class="nc" id="L138">	}</span>
+<span class="nc" id="L137">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L141">		return ShapeType.OVAL;</span>
+<span class="nc" id="L140">		return ShapeType.OVAL;</span>
 	}
 
 	static class MyUGraphicEllipse extends AbstractUGraphicHorizontalLine {
@@ -149,54 +148,54 @@ public class EntityImageRequirement extends AbstractEntityImage {
 
 		@Override
 		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-<span class="nc" id="L152">			return new MyUGraphicEllipse(ug, startingX, yTheoricalPosition, ellipse);</span>
+<span class="nc" id="L151">			return new MyUGraphicEllipse(ug, startingX, yTheoricalPosition, ellipse);</span>
 		}
 
 		MyUGraphicEllipse(UGraphic ug, double startingX, double yTheoricalPosition, UEllipse ellipse) {
-<span class="nc" id="L156">			super(ug);</span>
-<span class="nc" id="L157">			this.startingX = startingX;</span>
-<span class="nc" id="L158">			this.ellipse = ellipse;</span>
-<span class="nc" id="L159">			this.yTheoricalPosition = yTheoricalPosition;</span>
-<span class="nc" id="L160">		}</span>
+<span class="nc" id="L155">			super(ug);</span>
+<span class="nc" id="L156">			this.startingX = startingX;</span>
+<span class="nc" id="L157">			this.ellipse = ellipse;</span>
+<span class="nc" id="L158">			this.yTheoricalPosition = yTheoricalPosition;</span>
+<span class="nc" id="L159">		}</span>
 
 		private double getNormalized(double y) {
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (y &lt; yTheoricalPosition)</span>
-<span class="nc" id="L164">				throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (y &lt; yTheoricalPosition)</span>
+<span class="nc" id="L163">				throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L166">			y = y - yTheoricalPosition;</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">			if (y &gt; ellipse.getHeight())</span>
-<span class="nc" id="L168">				throw new IllegalArgumentException();</span>
+<span class="nc" id="L165">			y = y - yTheoricalPosition;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (y &gt; ellipse.getHeight())</span>
+<span class="nc" id="L167">				throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L170">			return y;</span>
+<span class="nc" id="L169">			return y;</span>
 		}
 
 		private double getStartingXInternal(double y) {
-<span class="nc" id="L174">			return startingX + ellipse.getStartingX(getNormalized(y));</span>
+<span class="nc" id="L173">			return startingX + ellipse.getStartingX(getNormalized(y));</span>
 		}
 
 		private double getEndingXInternal(double y) {
-<span class="nc" id="L178">			return startingX + ellipse.getEndingX(getNormalized(y));</span>
+<span class="nc" id="L177">			return startingX + ellipse.getEndingX(getNormalized(y));</span>
 		}
 
 		private Stencil getStencil2(UTranslate translate) {
-<span class="nc" id="L182">			final double dy = translate.getDy();</span>
-<span class="nc" id="L183">			return new Stencil() {</span>
+<span class="nc" id="L181">			final double dy = translate.getDy();</span>
+<span class="nc" id="L182">			return new Stencil() {</span>
 
 				public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L186">					return getStartingXInternal(y + dy);</span>
+<span class="nc" id="L185">					return getStartingXInternal(y + dy);</span>
 				}
 
 				public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L190">					return getEndingXInternal(y + dy);</span>
+<span class="nc" id="L189">					return getEndingXInternal(y + dy);</span>
 				}
 			};
 		}
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
-<span class="nc" id="L197">			final UStroke stroke = UStroke.withThickness(1.5);</span>
-<span class="nc" id="L198">			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);</span>
-<span class="nc" id="L199">		}</span>
+<span class="nc" id="L196">			final UStroke stroke = UStroke.withThickness(1.5);</span>
+<span class="nc" id="L197">			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);</span>
+<span class="nc" id="L198">		}</span>
 
 	}
 

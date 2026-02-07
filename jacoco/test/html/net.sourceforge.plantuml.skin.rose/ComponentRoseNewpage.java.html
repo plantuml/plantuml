@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseNewpage extends AbstractComponent {
@@ -51,25 +50,25 @@ public class ComponentRoseNewpage extends AbstractComponent {
 	private final HColor foregroundColor;
 
 	public ComponentRoseNewpage(Style style, ISkinParam skinParam) {
-<span class="fc" id="L54">		super(style, skinParam);</span>
-<span class="fc" id="L55">		this.foregroundColor = getColorLine();</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L53">		super(style, skinParam);</span>
+<span class="fc" id="L54">		this.foregroundColor = getColorLine();</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L60">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L61">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
-<span class="fc" id="L62">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L59">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L60">		ug = ug.apply(getStroke()).apply(foregroundColor);</span>
+<span class="fc" id="L61">		ug.draw(ULine.hline(dimensionToUse.getWidth()));</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L67">		return 1;</span>
+<span class="fc" id="L66">		return 1;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L72">		return 0;</span>
+<span class="fc" id="L71">		return 0;</span>
 	}
 
 }

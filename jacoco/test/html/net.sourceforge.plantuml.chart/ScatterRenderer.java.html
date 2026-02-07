@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -65,179 +66,179 @@ public class ScatterRenderer {
 	private final ChartAxis xAxis;
 
 	public ScatterRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-<span class="nc" id="L68">			ChartAxis axis, ChartAxis xAxis) {</span>
-<span class="nc" id="L69">		this.skinParam = skinParam;</span>
-<span class="nc" id="L70">		this.plotWidth = plotWidth;</span>
-<span class="nc" id="L71">		this.plotHeight = plotHeight;</span>
-<span class="nc" id="L72">		this.categoryCount = categoryCount;</span>
-<span class="nc" id="L73">		this.axis = axis;</span>
-<span class="nc" id="L74">		this.xAxis = xAxis;</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L69">			ChartAxis axis, ChartAxis xAxis) {</span>
+<span class="nc" id="L70">		this.skinParam = skinParam;</span>
+<span class="nc" id="L71">		this.plotWidth = plotWidth;</span>
+<span class="nc" id="L72">		this.plotHeight = plotHeight;</span>
+<span class="nc" id="L73">		this.categoryCount = categoryCount;</span>
+<span class="nc" id="L74">		this.axis = axis;</span>
+<span class="nc" id="L75">		this.xAxis = xAxis;</span>
+<span class="nc" id="L76">	}</span>
 
 	private StyleSignatureBasic getScatterStyleSignature() {
-<span class="nc" id="L78">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);</span>
+<span class="nc" id="L79">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);</span>
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-<span class="nc" id="L82">		StyleSignatureBasic signature = getScatterStyleSignature();</span>
-<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (series != null &amp;&amp; series.getStereotype() != null) {</span>
-<span class="nc" id="L84">			return signature.withTOBECHANGED(series.getStereotype())</span>
-<span class="nc" id="L85">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L83">		StyleSignatureBasic signature = getScatterStyleSignature();</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (series != null &amp;&amp; series.getStereotype() != null) {</span>
+<span class="nc" id="L85">			return signature.withTOBECHANGED(series.getStereotype())</span>
+<span class="nc" id="L86">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 		}
-<span class="nc" id="L87">		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L88">		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-<span class="nc bnc" id="L91" title="All 4 branches missed.">		if (categoryCount == 0 &amp;&amp; !series.hasExplicitXValues())</span>
-<span class="nc" id="L92">			return;</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (categoryCount == 0 &amp;&amp; !series.hasExplicitXValues())</span>
+<span class="nc" id="L93">			return;</span>
 
-<span class="nc" id="L94">		final List&lt;Double&gt; values = series.getValues();</span>
-<span class="nc" id="L95">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L95">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="nc" id="L96">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
 		// Get scatter style (with stereotype support)
-<span class="nc" id="L98">		final Style scatterStyle = getScatterStyle(series);</span>
+<span class="nc" id="L99">		final Style scatterStyle = getScatterStyle(series);</span>
 
 		// Extract marker color from style - priority: MarkerColor &gt; LineColor &gt; explicit color
-<span class="nc" id="L101">		HColor markerColor = color;</span>
-<span class="nc" id="L102">		HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (styleMarkerColor != null) {</span>
-<span class="nc" id="L104">			markerColor = styleMarkerColor;</span>
+<span class="nc" id="L102">		HColor markerColor = color;</span>
+<span class="nc" id="L103">		HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (styleMarkerColor != null) {</span>
+<span class="nc" id="L105">			markerColor = styleMarkerColor;</span>
 		} else {
-<span class="nc" id="L106">			HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc bnc" id="L107" title="All 4 branches missed.">			if (styleLineColor != null &amp;&amp; color == null) {</span>
-<span class="nc" id="L108">				markerColor = styleLineColor;</span>
+<span class="nc" id="L107">			HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">			if (styleLineColor != null &amp;&amp; color == null) {</span>
+<span class="nc" id="L109">				markerColor = styleLineColor;</span>
 			}
 		}
 
 		// Extract marker size from style (default 8)
-<span class="nc" id="L113">		double markerSize = 8.0;</span>
+<span class="nc" id="L114">		double markerSize = 8.0;</span>
 		try {
-<span class="nc" id="L115">			final Double styleMarkerSize = scatterStyle.value(PName.MarkerSize).asDouble();</span>
-<span class="nc bnc" id="L116" title="All 4 branches missed.">			if (styleMarkerSize != null &amp;&amp; styleMarkerSize &gt; 0) {</span>
-<span class="nc" id="L117">				markerSize = styleMarkerSize;</span>
+<span class="nc" id="L116">			final Double styleMarkerSize = scatterStyle.value(PName.MarkerSize).asDouble();</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">			if (styleMarkerSize != null &amp;&amp; styleMarkerSize &gt; 0) {</span>
+<span class="nc" id="L118">				markerSize = styleMarkerSize;</span>
 			}
-<span class="nc" id="L119">		} catch (Exception e) {</span>
+<span class="nc" id="L120">		} catch (Exception e) {</span>
 			// Use default
-<span class="nc" id="L121">		}</span>
+<span class="nc" id="L122">		}</span>
 
 		// Extract marker shape from style (default to series marker or CIRCLE)
-<span class="nc" id="L124">		ChartSeries.MarkerShape markerShape = series.getMarkerShape();</span>
+<span class="nc" id="L125">		ChartSeries.MarkerShape markerShape = series.getMarkerShape();</span>
 		try {
-<span class="nc" id="L126">			final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();</span>
-<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (styleMarkerShape != null &amp;&amp; !styleMarkerShape.isEmpty()) {</span>
-<span class="nc bnc" id="L128" title="All 4 branches missed.">				switch (styleMarkerShape.toLowerCase()) {</span>
+<span class="nc" id="L127">			final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">			if (styleMarkerShape != null &amp;&amp; !styleMarkerShape.isEmpty()) {</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">				switch (styleMarkerShape.toLowerCase()) {</span>
 					case &quot;circle&quot;:
-<span class="nc" id="L130">						markerShape = ChartSeries.MarkerShape.CIRCLE;</span>
-<span class="nc" id="L131">						break;</span>
+<span class="nc" id="L131">						markerShape = ChartSeries.MarkerShape.CIRCLE;</span>
+<span class="nc" id="L132">						break;</span>
 					case &quot;square&quot;:
-<span class="nc" id="L133">						markerShape = ChartSeries.MarkerShape.SQUARE;</span>
-<span class="nc" id="L134">						break;</span>
+<span class="nc" id="L134">						markerShape = ChartSeries.MarkerShape.SQUARE;</span>
+<span class="nc" id="L135">						break;</span>
 					case &quot;triangle&quot;:
-<span class="nc" id="L136">						markerShape = ChartSeries.MarkerShape.TRIANGLE;</span>
+<span class="nc" id="L137">						markerShape = ChartSeries.MarkerShape.TRIANGLE;</span>
 						break;
 				}
 			}
-<span class="nc" id="L140">		} catch (Exception e) {</span>
+<span class="nc" id="L141">		} catch (Exception e) {</span>
 			// Use default
-<span class="nc" id="L142">		}</span>
+<span class="nc" id="L143">		}</span>
 
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
 			// Coordinate-pair mode: use explicit x-values
-<span class="nc" id="L146">			final List&lt;Double&gt; xValues = series.getXValues();</span>
+<span class="nc" id="L147">			final List&lt;Double&gt; xValues = series.getXValues();</span>
 
 			// Draw markers at data points (no connecting lines)
-<span class="nc bnc" id="L149" title="All 2 branches missed.">			for (int i = 0; i &lt; values.size(); i++) {</span>
-<span class="nc" id="L150">				final double xVal = xValues.get(i);</span>
-<span class="nc" id="L151">				final double yVal = values.get(i);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="nc" id="L151">				final double xVal = xValues.get(i);</span>
+<span class="nc" id="L152">				final double yVal = values.get(i);</span>
 
-<span class="nc" id="L153">				final double x = xAxis.valueToPixel(xVal, 0, plotWidth);</span>
-<span class="nc" id="L154">				final double y = plotHeight - (yVal - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc" id="L154">				final double x = xAxis.valueToPixel(xVal, 0, plotWidth);</span>
+<span class="nc" id="L155">				final double y = plotHeight - (yVal - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="nc" id="L156">				drawMarker(ug, markerColor, x, y, markerSize, markerShape);</span>
+<span class="nc" id="L157">				drawMarker(ug, markerColor, x, y, markerSize, markerShape);</span>
 
 				// Draw label if enabled
-<span class="nc bnc" id="L159" title="All 2 branches missed.">				if (series.isShowLabels()) {</span>
-<span class="nc" id="L160">					drawLabel(ug, yVal, x, y - markerSize / 2 - 8, stringBounder);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">				if (series.isShowLabels()) {</span>
+<span class="nc" id="L161">					drawLabel(ug, yVal, x, y - markerSize / 2 - 8, stringBounder);</span>
 				}
 			}
-<span class="nc" id="L163">		} else {</span>
+<span class="nc" id="L164">		} else {</span>
 			// Index-based mode: use category positioning
-<span class="nc" id="L165">			final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="nc" id="L166">			final double categoryWidth = plotWidth / categoryCount;</span>
 
 			// Draw markers at data points (no connecting lines)
-<span class="nc bnc" id="L168" title="All 2 branches missed.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
-<span class="nc" id="L169">				final double value = values.get(i);</span>
-<span class="nc" id="L170">				final double x = (i + 0.5) * categoryWidth;</span>
-<span class="nc" id="L171">				final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
+<span class="nc" id="L170">				final double value = values.get(i);</span>
+<span class="nc" id="L171">				final double x = (i + 0.5) * categoryWidth;</span>
+<span class="nc" id="L172">				final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="nc" id="L173">				drawMarker(ug, markerColor, x, y, markerSize, markerShape);</span>
+<span class="nc" id="L174">				drawMarker(ug, markerColor, x, y, markerSize, markerShape);</span>
 
 				// Draw label if enabled
-<span class="nc bnc" id="L176" title="All 2 branches missed.">				if (series.isShowLabels()) {</span>
-<span class="nc" id="L177">					drawLabel(ug, value, x, y - markerSize / 2 - 8, stringBounder);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (series.isShowLabels()) {</span>
+<span class="nc" id="L178">					drawLabel(ug, value, x, y - markerSize / 2 - 8, stringBounder);</span>
 				}
 			}
 		}
-<span class="nc" id="L181">	}</span>
+<span class="nc" id="L182">	}</span>
 
 	private void drawMarker(UGraphic ug, HColor color, double x, double y, double size, ChartSeries.MarkerShape shape) {
-<span class="nc bnc" id="L184" title="All 4 branches missed.">		switch (shape) {</span>
+<span class="nc bnc" id="L185" title="All 4 branches missed.">		switch (shape) {</span>
 		case CIRCLE:
-<span class="nc" id="L186">			drawCircleMarker(ug, color, x, y, size);</span>
-<span class="nc" id="L187">			break;</span>
+<span class="nc" id="L187">			drawCircleMarker(ug, color, x, y, size);</span>
+<span class="nc" id="L188">			break;</span>
 		case SQUARE:
-<span class="nc" id="L189">			drawSquareMarker(ug, color, x, y, size);</span>
-<span class="nc" id="L190">			break;</span>
+<span class="nc" id="L190">			drawSquareMarker(ug, color, x, y, size);</span>
+<span class="nc" id="L191">			break;</span>
 		case TRIANGLE:
-<span class="nc" id="L192">			drawTriangleMarker(ug, color, x, y, size);</span>
-<span class="nc" id="L193">			break;</span>
+<span class="nc" id="L193">			drawTriangleMarker(ug, color, x, y, size);</span>
+<span class="nc" id="L194">			break;</span>
 		default:
-<span class="nc" id="L195">			drawCircleMarker(ug, color, x, y, size);</span>
+<span class="nc" id="L196">			drawCircleMarker(ug, color, x, y, size);</span>
 		}
-<span class="nc" id="L197">	}</span>
+<span class="nc" id="L198">	}</span>
 
 	private void drawCircleMarker(UGraphic ug, HColor color, double x, double y, double size) {
-<span class="nc" id="L200">		final UEllipse marker = UEllipse.build(size, size);</span>
-<span class="nc" id="L201">		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(marker);</span>
-<span class="nc" id="L202">	}</span>
+<span class="nc" id="L201">		final UEllipse marker = UEllipse.build(size, size);</span>
+<span class="nc" id="L202">		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(marker);</span>
+<span class="nc" id="L203">	}</span>
 
 	private void drawSquareMarker(UGraphic ug, HColor color, double x, double y, double size) {
-<span class="nc" id="L205">		final URectangle marker = URectangle.build(size, size);</span>
-<span class="nc" id="L206">		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(marker);</span>
-<span class="nc" id="L207">	}</span>
+<span class="nc" id="L206">		final URectangle marker = URectangle.build(size, size);</span>
+<span class="nc" id="L207">		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(marker);</span>
+<span class="nc" id="L208">	}</span>
 
 	private void drawTriangleMarker(UGraphic ug, HColor color, double x, double y, double size) {
-<span class="nc" id="L210">		final UPolygon triangle = new UPolygon();</span>
+<span class="nc" id="L211">		final UPolygon triangle = new UPolygon();</span>
 		// Create upward-pointing triangle
-<span class="nc" id="L212">		triangle.addPoint(0, -size / 2);          // Top point</span>
-<span class="nc" id="L213">		triangle.addPoint(-size / 2, size / 2);   // Bottom left</span>
-<span class="nc" id="L214">		triangle.addPoint(size / 2, size / 2);    // Bottom right</span>
-<span class="nc" id="L215">		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);</span>
-<span class="nc" id="L216">	}</span>
+<span class="nc" id="L213">		triangle.addPoint(0, -size / 2);          // Top point</span>
+<span class="nc" id="L214">		triangle.addPoint(-size / 2, size / 2);   // Bottom left</span>
+<span class="nc" id="L215">		triangle.addPoint(size / 2, size / 2);    // Bottom right</span>
+<span class="nc" id="L216">		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);</span>
+<span class="nc" id="L217">	}</span>
 
 	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
 		try {
-<span class="nc" id="L220">			final String label = formatValue(value);</span>
-<span class="nc" id="L221">			final UFont font = UFont.sansSerif(10).bold();</span>
-<span class="nc" id="L222">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
-<span class="nc" id="L223">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
-<span class="nc" id="L224">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
-<span class="nc" id="L225">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L226">			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L227">			final double labelX = x - textDim.getWidth() / 2;</span>
-<span class="nc" id="L228">			final double labelY = y - textDim.getHeight() - 2;</span>
-<span class="nc" id="L229">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
-<span class="nc" id="L230">		} catch (Exception e) {</span>
+<span class="nc" id="L221">			final String label = formatValue(value);</span>
+<span class="nc" id="L222">			final UFont font = UFontFactory.sansSerif(10).bold();</span>
+<span class="nc" id="L223">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
+<span class="nc" id="L224">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
+<span class="nc" id="L225">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
+<span class="nc" id="L226">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="nc" id="L227">			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L228">			final double labelX = x - textDim.getWidth() / 2;</span>
+<span class="nc" id="L229">			final double labelY = y - textDim.getHeight() - 2;</span>
+<span class="nc" id="L230">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
+<span class="nc" id="L231">		} catch (Exception e) {</span>
 			// Silently ignore rendering errors
-<span class="nc" id="L232">		}</span>
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L233">		}</span>
+<span class="nc" id="L234">	}</span>
 
 	private String formatValue(double value) {
-<span class="nc bnc" id="L236" title="All 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
-<span class="nc" id="L237">			return String.format(&quot;%.2e&quot;, value);</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (value == (long) value)</span>
-<span class="nc" id="L239">			return String.format(&quot;%d&quot;, (long) value);</span>
-<span class="nc" id="L240">		return String.format(&quot;%.2f&quot;, value);</span>
+<span class="nc bnc" id="L237" title="All 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="nc" id="L238">			return String.format(&quot;%.2e&quot;, value);</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (value == (long) value)</span>
+<span class="nc" id="L240">			return String.format(&quot;%d&quot;, (long) value);</span>
+<span class="nc" id="L241">		return String.format(&quot;%.2f&quot;, value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
