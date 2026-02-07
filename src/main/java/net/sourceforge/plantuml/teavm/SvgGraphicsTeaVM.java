@@ -226,8 +226,18 @@ public class SvgGraphicsTeaVM {
     // ========================================================================
     
     /**
-     * Measures text dimensions using Canvas API.
-     * This is fast and doesn't require adding elements to the DOM.
+     * Initializes the shared canvas for text measurement.
+     * Call once at startup for best performance.
+     */
+    @JSBody(script = 
+        "if (!window._measureCanvas) {" +
+        "  window._measureCanvas = document.createElement('canvas');" +
+        "  window._measureCtx = window._measureCanvas.getContext('2d');" +
+        "}")
+    public static native void initMeasureCanvas();
+    
+    /**
+     * Measures text dimensions using Canvas API (optimized with shared canvas).
      * 
      * @param text The text to measure
      * @param fontFamily Font family (e.g., "Arial")
@@ -236,15 +246,33 @@ public class SvgGraphicsTeaVM {
      * @return Array with [width, height]
      */
     @JSBody(params = {"text", "fontFamily", "fontSize", "fontWeight"}, script = 
+        "if (!window._measureCtx) {" +
+        "  window._measureCanvas = document.createElement('canvas');" +
+        "  window._measureCtx = window._measureCanvas.getContext('2d');" +
+        "}" +
+        "var ctx = window._measureCtx;" +
+        "ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;" +
+        "var metrics = ctx.measureText(text);" +
+        "var width = metrics.width;" +
+        "var height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;" +
+        "if (!height) height = fontSize * 1.2;" +
+        "return [width, height];")
+    public static native double[] measureTextCanvas(String text, String fontFamily, int fontSize, String fontWeight);
+    
+    /**
+     * Measures text dimensions using Canvas API (creates new canvas each time).
+     * Use measureTextCanvas() instead for better performance.
+     */
+    @JSBody(params = {"text", "fontFamily", "fontSize", "fontWeight"}, script = 
         "var canvas = document.createElement('canvas');" +
         "var ctx = canvas.getContext('2d');" +
         "ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;" +
         "var metrics = ctx.measureText(text);" +
         "var width = metrics.width;" +
         "var height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;" +
-        "if (!height) height = fontSize * 1.2;" +  // Fallback for older browsers
+        "if (!height) height = fontSize * 1.2;" +
         "return [width, height];")
-    public static native double[] measureTextCanvas(String text, String fontFamily, int fontSize, String fontWeight);
+    public static native double[] measureTextCanvasNoCache(String text, String fontFamily, int fontSize, String fontWeight);
     
     /**
      * Measures text using Canvas with normal weight.

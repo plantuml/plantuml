@@ -130,12 +130,19 @@ public class HelloWorldTeaVM {
         StringBuilder perfHtml = new StringBuilder();
         perfHtml.append("<strong>Performance Benchmark (" + iterations + " iterations):</strong><br><br>");
         
-        // Benchmark Canvas measureText
-        double startCanvas = now();
+        // Benchmark Canvas (cached)
+        double startCanvasCached = now();
         for (int i = 0; i < iterations; i++) {
             SvgGraphicsTeaVM.measureText(testStrings[i % testStrings.length], "Arial", 14);
         }
-        double canvasTime = now() - startCanvas;
+        double canvasCachedTime = now() - startCanvasCached;
+        
+        // Benchmark Canvas (no cache)
+        double startCanvasNoCache = now();
+        for (int i = 0; i < iterations; i++) {
+            SvgGraphicsTeaVM.measureTextCanvasNoCache(testStrings[i % testStrings.length], "Arial", 14, "normal");
+        }
+        double canvasNoCacheTime = now() - startCanvasNoCache;
         
         // Benchmark SVG getBBox
         double startSvg = now();
@@ -144,16 +151,25 @@ public class HelloWorldTeaVM {
         }
         double svgTime = now() - startSvg;
         
-        perfHtml.append("<u>Canvas measureText():</u><br>");
-        perfHtml.append("&nbsp;&nbsp;" + String.format("%.2f", canvasTime) + " ms total<br>");
-        perfHtml.append("&nbsp;&nbsp;" + String.format("%.4f", canvasTime / iterations) + " ms/call<br><br>");
+        perfHtml.append("<u>Canvas (cached):</u><br>");
+        perfHtml.append("&nbsp;&nbsp;" + String.format("%.2f", canvasCachedTime) + " ms total<br>");
+        perfHtml.append("&nbsp;&nbsp;" + String.format("%.4f", canvasCachedTime / iterations) + " ms/call<br><br>");
+        
+        perfHtml.append("<u>Canvas (no cache):</u><br>");
+        perfHtml.append("&nbsp;&nbsp;" + String.format("%.2f", canvasNoCacheTime) + " ms total<br>");
+        perfHtml.append("&nbsp;&nbsp;" + String.format("%.4f", canvasNoCacheTime / iterations) + " ms/call<br><br>");
         
         perfHtml.append("<u>SVG getBBox():</u><br>");
         perfHtml.append("&nbsp;&nbsp;" + String.format("%.2f", svgTime) + " ms total<br>");
         perfHtml.append("&nbsp;&nbsp;" + String.format("%.4f", svgTime / iterations) + " ms/call<br><br>");
         
-        double ratio = svgTime / canvasTime;
-        perfHtml.append("<strong>Canvas is " + String.format("%.1f", ratio) + "x faster</strong>");
+        // Find fastest
+        double fastest = Math.min(canvasCachedTime, Math.min(canvasNoCacheTime, svgTime));
+        String winner = canvasCachedTime == fastest ? "Canvas (cached)" : 
+                       (canvasNoCacheTime == fastest ? "Canvas (no cache)" : "SVG getBBox");
+        perfHtml.append("<strong>Winner: " + winner + "</strong><br>");
+        perfHtml.append("Canvas cached vs no-cache: " + String.format("%.1f", canvasNoCacheTime / canvasCachedTime) + "x<br>");
+        perfHtml.append("Canvas cached vs SVG: " + String.format("%.1f", svgTime / canvasCachedTime) + "x");
         
         perfSection.setInnerHTML(perfHtml.toString());
         container.appendChild(perfSection);
