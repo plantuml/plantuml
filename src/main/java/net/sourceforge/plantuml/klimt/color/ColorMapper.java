@@ -50,6 +50,14 @@ public abstract class ColorMapper {
 			return simple.getAwtColor();
 		}
 	};
+	
+	public final static ColorMapper TEAVM = new ColorMapper() {
+		@Override
+		public Color fromColorSimple(HColorSimple simple) {
+			return simple.getAwtColor();
+		}
+	};
+
 	// ::comment when __HAXE__
 	public final static ColorMapper DARK_MODE = new ColorMapper() {
 		@Override
