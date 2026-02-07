@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -93,7 +93,7 @@ public class ListSpriteDiagram extends UmlDiagram {
 				double rawHeight = 0;
 				for (String n : getSkinParam().getAllSpriteNames()) {
 					final Sprite sprite = getSkinParam().getSprite(n);
-					TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),
+					TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)),
 							HorizontalAlignment.LEFT, getSkinParam());
 					TextBlock tb = sprite.asTextBlock(HColors.BLACK, null, 1.0, null);
 					tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);

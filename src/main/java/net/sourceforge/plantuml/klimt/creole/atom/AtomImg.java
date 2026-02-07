@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TileImageSvg;
@@ -96,7 +97,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
-		final UFont font = UFont.monospaced(14);
+		final UFont font = UFontFactory.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
 		if (src.startsWith(DATA_IMAGE_PNG_SPM)) {

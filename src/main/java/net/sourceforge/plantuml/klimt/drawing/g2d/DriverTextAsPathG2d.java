@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
@@ -86,7 +87,8 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		final UFont font = fontConfiguration.getFont();
-		final XDimension2D dim = stringBounder.calculateDimension(font, shape.getText());
+		final String text = shape.getText();
+		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
 
@@ -101,9 +103,9 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		visible.ensureVisible(x, y - height + 1.5);
 		visible.ensureVisible(x + width, y + 1.5);
 
-		g2d.setFont(font.getUnderlayingFont(shape.getText()));
+		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));
 		g2d.setColor(fontConfiguration.getColor().toColor(mapper));
-		final TextLayout t = UFontContext.G2D.createTextLayout(font, shape.getText());
+		final TextLayout t = UFontContext.G2D.createTextLayout(font, text);
 		g2d.translate(x, y);
 		g2d.fill(t.getOutline(null));
 		g2d.translate(-x, -y);
@@ -130,7 +132,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 			}
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont(shape.getText()));
+			final FontMetrics fm = g2d.getFontMetrics(UFontImpl.getUnderlayingFont(font, text));
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null)

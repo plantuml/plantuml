@@ -76,6 +76,7 @@ import net.sourceforge.plantuml.klimt.drawing.svg.LengthAdjust;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
@@ -497,7 +498,7 @@ public class SkinParam implements ISkinParam {
 		final String fontFamily = getFontFamily(stereotype, fontParam);
 		final int fontStyle = getFontStyle(stereotype, inPackageTitle, fontParam);
 		final int fontSize = getFontSize(stereotype, fontParam);
-		return UFont.build(fontFamily, fontStyle, fontSize);
+		return UFontFactory.build(fontFamily, fontStyle, fontSize);
 	}
 
 	@Override

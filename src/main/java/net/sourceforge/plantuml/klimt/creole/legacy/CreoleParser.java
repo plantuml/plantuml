@@ -180,7 +180,7 @@ public class CreoleParser implements SheetBuilder {
 	}
 
 //	public static void checkColor(Display result) throws NoSuchColorException {
-//		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
+//		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontImpl.byDefault(10));
 //		try {
 //			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)
 //					.createSheetSlow(result, true);

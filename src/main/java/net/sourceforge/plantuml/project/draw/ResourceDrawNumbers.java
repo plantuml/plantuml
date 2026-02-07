@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -127,7 +128,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 	}
 
 	private FontConfiguration getFontConfiguration(int size, HColor color) {
-		final UFont font = UFont.serif(size);
+		final UFont font = UFontFactory.serif(size);
 		return FontConfiguration.create(font, color, color, null);
 	}
 

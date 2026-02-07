@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -66,7 +68,7 @@ public class ActivityBox extends AbstractTextBlock {
 		this.tile = tile;
 		this.id = id;
 		this.label = label;
-		final UFont font = UFont.serif(14);
+		final UFont font = UFontFactory.serif(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 		tb = Display.create(label).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}

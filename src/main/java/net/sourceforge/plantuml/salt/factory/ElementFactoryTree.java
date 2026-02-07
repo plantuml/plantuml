@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt.factory;
 
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -61,7 +62,7 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 			strategy = TableStrategy.fromChar(textT.charAt(1));
 		}
 
-		final UFont font = UFont.byDefault(12);
+		final UFont font = UFontFactory.byDefault(12);
 		final ElementTree result = new ElementTree(font, getDictionary(), strategy);
 
 		boolean takeMe = true;

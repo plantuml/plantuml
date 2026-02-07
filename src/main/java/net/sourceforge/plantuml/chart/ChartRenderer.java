@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -635,7 +636,7 @@ public class ChartRenderer {
 		if (xAxisLabels.isEmpty())
 			return;
 
-		final UFont font = UFont.sansSerif(10);
+		final UFont font = UFontFactory.sansSerif(10);
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 		final double categoryHeight = height / xAxisLabels.size();
 
@@ -660,7 +661,7 @@ public class ChartRenderer {
 		ug.draw(ULine.hline(width));
 
 		// Draw ticks and labels
-		final UFont font = UFont.sansSerif(10);
+		final UFont font = UFontFactory.sansSerif(10);
 		final FontConfiguration fontConfig = FontConfiguration.create(font, fontColor, fontColor, null);
 
 		// Calculate grid line color (lighter than axis color)

@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -68,13 +68,13 @@ public class MagicBox {
 	}
 
 	private TextBlock getSmallBlock() {
-		final FontConfiguration fc = FontConfiguration.create(UFont.monospaced(15).bold(), fontColor, fontColor, null);
+		final FontConfiguration fc = FontConfiguration.create(UFontFactory.monospaced(15).bold(), fontColor, fontColor, null);
 		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 	}
 
 	private TextBlock getCommentBlock() {
 		if (node.getComment() != null && node.isTop()) {
-			final FontConfiguration tag = FontConfiguration.create(UFont.sansSerif(13), fontColor, fontColor, null);
+			final FontConfiguration tag = FontConfiguration.create(UFontFactory.sansSerif(13), fontColor, fontColor, null);
 			return Display.create(node.getComment()).create(tag, HorizontalAlignment.CENTER, skinParam);
 		}
 		return TextBlockUtils.empty(0, 0);

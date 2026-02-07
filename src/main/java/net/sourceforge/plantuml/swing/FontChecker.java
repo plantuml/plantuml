@@ -62,6 +62,8 @@ import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
@@ -69,7 +71,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class FontChecker {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	// ::remove file when __CORE__
 
 	final private UFont font;
@@ -216,7 +218,7 @@ public class FontChecker {
 		final int v2 = Integer.parseInt(args[3]);
 		final SFile f = new SFile("fontchecker-" + name + "-" + v1 + "-" + v2 + ".html");
 
-		final FontChecker fc = new FontChecker(UFont.build(name, Font.PLAIN, size));
+		final FontChecker fc = new FontChecker(UFontFactory.build(name, Font.PLAIN, size));
 		final PrintWriter pw = f.createPrintWriter();
 		pw.println("<html>");
 		pw.println("<h1>PROBLEM</h1>");
@@ -237,7 +239,7 @@ public class FontChecker {
 				fc.printChar(pw, c);
 				final String desc = fc.getCharDescVerbose(c);
 				for (String n : allFontNames) {
-					final FontChecker other = new FontChecker(UFont.build(n, Font.PLAIN, size));
+					final FontChecker other = new FontChecker(UFontFactory.build(n, Font.PLAIN, size));
 					final String descOther = other.getCharDescVerbose(c);
 					if (desc.equals(descOther)) {
 						pw.println("&nbsp;");

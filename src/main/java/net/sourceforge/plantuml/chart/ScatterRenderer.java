@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -218,7 +219,7 @@ public class ScatterRenderer {
 	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
 		try {
 			final String label = formatValue(value);
-			final UFont font = UFont.sansSerif(10).bold();
+			final UFont font = UFontFactory.sansSerif(10).bold();
 			final HColor labelColor = skinParam.getIHtmlColorSet().getColor("#000000");
 			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)

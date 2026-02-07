@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -295,7 +296,7 @@ public class SvgNanoParser implements Sprite, GrayLevelRange {
 			String fontFamily = getTextFontFamily(s, stackG);
 			if (fontFamily == null)
 				fontFamily = "SansSerif";
-			final UFont font = UFont.build(fontFamily, Font.PLAIN, fontSize);
+			final UFont font = UFontFactory.build(fontFamily, Font.PLAIN, fontSize);
 			final FontConfiguration fc = FontConfiguration.create(font, color, color, null);
 			final UText utext = UText.build(text, fc);
 			UGraphic ug = ugs.getUg();

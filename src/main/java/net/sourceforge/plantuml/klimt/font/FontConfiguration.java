@@ -246,9 +246,9 @@ public class FontConfiguration {
 	}
 
 	public FontConfiguration changeFamily(String family) {
-		return new FontConfiguration(styles, motherFont, motherColor,
-				UFont.build(family, currentFont.getStyle(), currentFont.getSize()), currentColor, extendedColor,
-				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
+		final UFont font = UFontFactory.build(family, currentFont.getStyle(), currentFont.getSize());
+		return new FontConfiguration(styles, motherFont, motherColor, font, currentColor, extendedColor, fontPosition,
+				svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration resetFont() {

@@ -33,41 +33,35 @@
  * 
  *
  */
-package net.sourceforge.plantuml.salt.factory;
+package net.sourceforge.plantuml.klimt.font;
 
-import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontFactory;
-import net.sourceforge.plantuml.salt.DataSource;
-import net.sourceforge.plantuml.salt.Terminated;
-import net.sourceforge.plantuml.salt.element.Element;
-import net.sourceforge.plantuml.salt.element.ElementTextField;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import java.awt.Font;
 
-public class ElementFactoryTextField implements ElementFactory {
+public class UFontFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
-
-	public ElementFactoryTextField(DataSource dataSource, ISkinSimple spriteContainer) {
-		this.dataSource = dataSource;
-		this.spriteContainer = spriteContainer;
+	public static UFont build(String fullDefinition, int fontStyle, int fontSize) {
+		final FontStack fontStack = new FontStack(fullDefinition);
+		return new UFontImpl(fontStack, fontStyle, fontSize);
 	}
 
-	public Terminated<Element> create() {
-		if (ready() == false) {
-			throw new IllegalStateException();
-		}
-		final Terminated<String> next = dataSource.next();
-		final String text = next.getElement();
-		final UFont font = UFontFactory.byDefault(12);
-		return new Terminated<Element>(
-				new ElementTextField(text.substring(1, text.length() - 1), font, spriteContainer),
-				next.getTerminator());
+	public static UFont serif(int size) {
+		return build("Serif", Font.PLAIN, size);
 	}
 
-	public boolean ready() {
-		final String text = dataSource.peek(0).getElement();
-		return text.startsWith("\"") && text.endsWith("\"");
+	public static UFont sansSerif(int size) {
+		return build("SansSerif", Font.PLAIN, size);
+	}
+
+	public static UFont courier(int size) {
+		return build("Courier", Font.PLAIN, size);
+	}
+
+	public static UFont byDefault(int size) {
+		return sansSerif(12);
+	}
+
+	public static UFont monospaced(int size) {
+		return build("Monospaced", Font.PLAIN, size);
 	}
 
 }

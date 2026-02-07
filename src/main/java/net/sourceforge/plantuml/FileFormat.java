@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.png.MetadataTag;
@@ -253,7 +254,7 @@ public enum FileFormat {
 			if (cached != null)
 				return cached;
 
-			final Font javaFont = font.getUnderlayingFont(text);
+			final Font javaFont = UFontImpl.getUnderlayingFont(font, text);
 			final FontMetrics fm = gg.getFontMetrics(javaFont);
 			final Rectangle2D rect = fm.getStringBounds(text, gg);
 			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());

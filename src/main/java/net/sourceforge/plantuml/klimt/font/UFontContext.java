@@ -50,7 +50,7 @@ public enum UFontContext {
 	}
 
 	public TextLayout createTextLayout(UFont font, String text) {
-		return new TextLayout(text, font.getUnderlayingFont(text), FileFormat.gg.getFontRenderContext());
+		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());
 	}
 	// ::done
 }
