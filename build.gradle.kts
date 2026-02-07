@@ -11,7 +11,7 @@ import java.util.jar.JarFile
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
 
 plugins {
 	java
@@ -34,6 +34,7 @@ java {
 }
 
 val jdependConfig by configurations.creating
+val teavmConfig by configurations.creating
 
 dependencies {
 	compileOnly(libs.ant)
@@ -60,6 +61,12 @@ dependencies {
 	// JDepend for package metrics
 	jdependConfig(libs.jdepend)
 
+	// TeaVM CLI for compilation (contains the main class)
+	teavmConfig("org.teavm:teavm-cli:0.10.2")
+	
+	// TeaVM dependencies for Java to JavaScript compilation
+	compileOnly("org.teavm:teavm-jso-apis:0.10.2")
+	compileOnly("org.teavm:teavm-jso:0.10.2")
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -74,11 +81,7 @@ repositories {
 }
 
 tasks.compileJava {
-	if (JavaVersion.current().isJava8) {
-		java.targetCompatibility = JavaVersion.VERSION_1_8
-	} else {
-		options.release.set(Integer.parseInt(javacRelease))
-	}
+	options.release.set(Integer.parseInt(javacRelease))
 }
 
 tasks.withType<Jar>().configureEach {
@@ -531,5 +534,70 @@ tasks.register("site") {
 		println("  - Code Coverage Report (JaCoCo)")
 		println("  - Package Dependencies (JDepend)")
 		println("========================================")
+	}
+}
+
+// ============================================
+// TeaVM Configuration - Java to JavaScript
+// ============================================
+
+// Task to compile Java to JavaScript using TeaVM
+tasks.register<JavaExec>("generateJavaScript") {
+	description = "Compiles Java to JavaScript using TeaVM"
+	group = "teavm"
+	
+	dependsOn(tasks.classes)
+	
+	mainClass.set("org.teavm.cli.TeaVMRunner")
+	classpath = teavmConfig + sourceSets.main.get().output
+	
+	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
+	
+	args(
+		"-d", outputDir.absolutePath,
+		"-t", "javascript",
+		"-G",  // Generate source maps
+		"-g",  // Generate debug information
+		"net.sourceforge.plantuml.teavm.HelloWorldTeaVM"  // Main class as positional argument
+	)
+	
+	doFirst {
+		outputDir.mkdirs()
+		println("Compiling Java to JavaScript with TeaVM...")
+		println("Output directory: ${outputDir.absolutePath}")
+	}
+	
+	doLast {
+		println("JavaScript generation complete!")
+	}
+}
+
+// Custom task to prepare TeaVM demo with HTML file
+tasks.register<Copy>("prepareTeaVMDemo") {
+	description = "Prepares TeaVM Hello World demo with HTML file"
+	group = "teavm"
+	
+	dependsOn("generateJavaScript")
+	
+	// Copy the HTML template
+	from("src/main/teavm/index.html")
+	into(layout.buildDirectory.dir("teavm/js"))
+	
+	doLast {
+		val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
+		println("")
+		println("========================================")
+		println("TeaVM Hello World Demo Ready! 🚀")
+		println("========================================")
+		println("Location: ${outputDir.absolutePath}")
+		println("")
+		println("To view the demo:")
+		println("  1. Open: ${outputDir.absolutePath}/index.html")
+		println("  2. Or run a local server:")
+		println("     cd ${outputDir.absolutePath}")
+		println("     python -m http.server 8000")
+		println("     Then open: http://localhost:8000")
+		println("========================================")
+		println("")
 	}
 }
