@@ -76,13 +76,25 @@ public class HelloWorldTeaVM {
         svg.drawLine(120, 45, 180, 45);
         svg.drawPolygon(175, 40, 180, 45, 175, 50);
         
-        // Draw circle
+        // Draw circle with centered text
         svg.setFillColor("#FFF3E0");
         svg.setStrokeColor("#F57C00");
-        svg.drawCircle(150, 110, 25);
+        double circleCx = 150;
+        double circleCy = 110;
+        double circleR = 25;
+        svg.drawCircle(circleCx, circleCy, circleR);
+        
+        // Center "Node" text in circle
+        String nodeText = "Node";
+        int nodeFontSize = 12;
+        double[] nodeMetrics = SvgGraphicsTeaVM.measureText(nodeText, "Arial", nodeFontSize);
+        double nodeWidth = nodeMetrics[0];
+        double nodeHeight = nodeMetrics[1];
+        double nodeX = circleCx - nodeWidth / 2;
+        double nodeY = circleCy + nodeHeight / 2;  // baseline is at bottom of text
         
         svg.setFillColor("#333");
-        svg.drawText("Node", 132, 115, "Arial", 12);
+        svg.drawText(nodeText, nodeX, nodeY, "Arial", nodeFontSize);
         
         // Append SVG to section
         Element svgElement = svg.getSvgRoot();
