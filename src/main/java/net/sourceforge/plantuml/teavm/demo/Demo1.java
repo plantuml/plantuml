@@ -1,15 +1,17 @@
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.demo;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 
+import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
+
 /**
  * Hello World example for TeaVM integration testing.
  * Demonstrates DOM manipulation and SVG generation using TeaVM's JSO API.
  */
-public class HelloWorldTeaVM {
+public class Demo1 {
     
     /**
      * Entry point for TeaVM application.
@@ -32,7 +34,7 @@ public class HelloWorldTeaVM {
         // Create heading
         HTMLElement heading = document.createElement("h1");
         heading.setAttribute("style", "color: #333; margin: 0 0 20px 0;");
-        heading.setInnerHTML("Hello from PlantUML + TeaVM!");
+        heading.setInnerHTML("Hello1 from PlantUML + TeaVM!");
         container.appendChild(heading);
         
         // Create paragraph
