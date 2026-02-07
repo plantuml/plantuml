@@ -139,12 +139,23 @@ public class SvgGraphicsTeaVM {
     }
     
     public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
+        drawText(text, x, y, fontFamily, fontSize, "normal", "normal");
+    }
+    
+    public void drawText(String text, double x, double y, String fontFamily, int fontSize, 
+            String fontWeight, String fontStyle) {
         Element textElem = createSvgElement("text");
         textElem.setAttribute("x", format(x));
         textElem.setAttribute("y", format(y));
         textElem.setAttribute("font-family", fontFamily);
         textElem.setAttribute("font-size", String.valueOf(fontSize));
         textElem.setAttribute("fill", fillColor);
+        if (!"normal".equals(fontWeight)) {
+            textElem.setAttribute("font-weight", fontWeight);
+        }
+        if (!"normal".equals(fontStyle)) {
+            textElem.setAttribute("font-style", fontStyle);
+        }
         textElem.setTextContent(text);
         mainGroup.appendChild(textElem);
     }

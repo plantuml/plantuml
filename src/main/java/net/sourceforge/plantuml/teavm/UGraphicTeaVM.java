@@ -37,27 +37,13 @@ package net.sourceforge.plantuml.teavm;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.xml.transform.TransformerException;
-
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverCenteredCharacterSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverDotPathSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverEllipseSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverImagePng;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverImageSvgSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverLineSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverPathSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverPixelSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverPolygonSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverRectangleSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverTextAsPathSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.DriverTextSvg;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
@@ -73,15 +59,84 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements ClipContainer {
-	
-	// @Claude: tu peux t'inspirer de UGraphicSVG.java
+
+	private UGraphicTeaVM(StringBounder stringBounder) {
+		super(stringBounder);
+		register();
+	}
+
+	public static UGraphicTeaVM build(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
+			SvgGraphicsTeaVM svg) {
+		final UGraphicTeaVM result = new UGraphicTeaVM(stringBounder);
+		result.copy(defaultBackground, colorMapper, svg);
+		return result;
+	}
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+		final UGraphicTeaVM result = new UGraphicTeaVM(getStringBounder());
+		result.copy(this);
+		return result;
+	}
 
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleTeaVM(this));
+		registerDriver(ULine.class, new DriverLineTeaVM(this));
+		registerDriver(UPolygon.class, new DriverPolygonTeaVM(this));
+		registerDriver(UEllipse.class, new DriverEllipseTeaVM(this));
+		registerDriver(UText.class, new DriverTextTeaVM(this));
+		registerDriver(UPath.class, new DriverPathTeaVM(this));
+
+		// NOP drivers for shapes not yet implemented
+		ignoreShape(DotPath.class);
+		ignoreShape(UImage.class);
+		ignoreShape(UImageSvg.class);
+		ignoreShape(UCenteredCharacter.class);
+		ignoreShape(UPixel.class);
 	}
 
 	public SvgGraphicsTeaVM getSvgGraphics() {
-		
+		return getGraphicObject();
+	}
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+		final String svgString = getGraphicObject().toSvgString();
+		os.write(svgString.getBytes("UTF-8"));
+	}
+
+	@Override
+	public void startGroup(UGroup group) {
+		// TODO: implement group support
+	}
+
+	@Override
+	public void closeGroup() {
+		// TODO: implement group support
+	}
+
+	@Override
+	public void startUrl(Url url) {
+		// TODO: implement URL/link support
+	}
+
+	@Override
+	public void closeUrl() {
+		// TODO: implement URL/link support
+	}
+
+	@Override
+	protected void drawComment(UComment comment) {
+		// TODO: implement comment support
+	}
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		if (propertyName.equalsIgnoreCase("TEAVM"))
+			return true;
+		if (propertyName.equalsIgnoreCase("SVG"))
+			return true;
+		return super.matchesProperty(propertyName);
 	}
 
 }
