@@ -240,7 +240,7 @@ jobs:
           enableCrossOsArchive: true
 
   deploy_site_to_gh_page:
-    needs: [ build_artifacts, test_linux, jdk8 ]
+    needs: [ build_artifacts, jdk8 ]
     if: needs.workflow_config.outputs.do_javadoc == 'true'
     runs-on: ubuntu-latest
     steps:
