@@ -8,6 +8,7 @@ import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -86,12 +87,15 @@ public class Demo2 {
 		ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
 
 		PSystemSudokuFactory factory = new PSystemSudokuFactory();
-		StringLocated sl = new StringLocated("sudoku 42", null);
-		System.err.println("sl=" + sl);
 		List<StringLocated> list = new ArrayList<>();
-		list.add(sl);
+		list.add(new StringLocated("@startuml", null));
+		list.add(new StringLocated("sudoku 42", null));
+		list.add(new StringLocated("@enduml", null));
+		System.err.println("list=" + list);
 		UmlSource source = UmlSource.create(list, false);
 		System.err.println("source=" + source);
+		Diagram diagram = factory.createSystem(null, source, null, null);
+		System.err.println("diagram=" + diagram);
 
 		// Append SVG to section
 		Element svgElement = svg.getSvgRoot();
