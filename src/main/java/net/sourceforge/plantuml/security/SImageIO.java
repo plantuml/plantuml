@@ -51,67 +51,54 @@ public class SImageIO {
 
 	// ::comment when __CORE__
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-		// return javax.imageio.ImageIO.createImageOutputStream(os);
+		return javax.imageio.ImageIO.createImageOutputStream(os);
 	}
 	// ::done
 
 	public static void write(RenderedImage image, String format, OutputStream os) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-		// javax.imageio.ImageIO.write(image, format, os);
+		javax.imageio.ImageIO.write(image, format, os);
 	}
 
 	// ::comment when __CORE__
 	public static void write(RenderedImage image, String format, SFile file) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-		// javax.imageio.ImageIO.write(image, format, file.conv());
+		javax.imageio.ImageIO.write(image, format, file.conv());
 	}
 
 	public static BufferedImage read(java.io.File file) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-		// return javax.imageio.ImageIO.read(file);
+		return javax.imageio.ImageIO.read(file);
 	}
 
 	public static BufferedImage read(SFile file) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-		// return javax.imageio.ImageIO.read(file.conv());
+		return javax.imageio.ImageIO.read(file.conv());
 	}
 	// ::done
 
 	public static BufferedImage read(InputStream is) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-		// return javax.imageio.ImageIO.read(is);
+		return javax.imageio.ImageIO.read(is);
 	}
 
 	public static BufferedImage read(byte[] bytes) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-//		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
+		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
 	}
 
 	// ::comment when __CORE__
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {
-		throw new UnsupportedOperationException("TEAVM");
-//		return javax.imageio.ImageIO.createImageInputStream(file.conv());
+		return javax.imageio.ImageIO.createImageInputStream(file.conv());
 	}
 
 	public static ImageInputStream createImageInputStream(Object obj) throws IOException {
-//		if (obj instanceof SFile)
-//			obj = ((SFile) obj).conv();
-//
-//		return javax.imageio.ImageIO.createImageInputStream(obj);
-		throw new UnsupportedOperationException("TEAVM");
+		if (obj instanceof SFile)
+			obj = ((SFile) obj).conv();
 
+		return javax.imageio.ImageIO.createImageInputStream(obj);
 	}
 
 	public static ImageInputStream createImageInputStream(InputStream is) throws IOException {
-//		return javax.imageio.ImageIO.createImageInputStream(is);
-		throw new UnsupportedOperationException("TEAVM");
-
+		return javax.imageio.ImageIO.createImageInputStream(is);
 	}
 
 	public static Iterator<ImageReader> getImageReaders(ImageInputStream iis) {
-		throw new UnsupportedOperationException("TEAVM");
-//		return javax.imageio.ImageIO.getImageReaders(iis);
+		return javax.imageio.ImageIO.getImageReaders(iis);
 	}
 	// ::done
 

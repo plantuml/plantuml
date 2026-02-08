@@ -100,9 +100,7 @@ public class StripeLatex implements StripeRaw {
 	}
 
 	public void drawU(UGraphic ug) {
-		// getAtom().drawU(ug);
-		throw new UnsupportedOperationException("TEAVM");
-
+		getAtom().drawU(ug);
 	}
 
 	@Override

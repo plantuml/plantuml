@@ -124,16 +124,15 @@ public class PSystemVersion extends PlainStringsDiagram {
 	// ::done
 
 	private static BufferedImage getImage(final String name) {
-		throw new UnsupportedOperationException("TEAVM");
-//		try {
-//			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
-//			final BufferedImage image = SImageIO.read(is);
-//			is.close();
-//			return image;
-//		} catch (IOException e) {
-//			Logme.error(e);
-//		}
-//		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		try {
+			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
+			final BufferedImage image = SImageIO.read(is);
+			is.close();
+			return image;
+		} catch (IOException e) {
+			Logme.error(e);
+		}
+		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	// ::comment when __CORE__

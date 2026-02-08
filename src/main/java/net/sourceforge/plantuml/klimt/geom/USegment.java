@@ -84,16 +84,14 @@ public class USegment {
 
 	// ::comment when __HAXE__
 	public USegment rotate(double theta) {
-		throw new UnsupportedOperationException("TEAVM");
+		if (coord.length != 2)
+			throw new UnsupportedOperationException();
 
-//		if (coord.length != 2)
-//			throw new UnsupportedOperationException();
-//
-//		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);
-//		final AffineTransform rotate = AffineTransform.getRotateInstance(theta);
-//		p1 = p1.transform(rotate);
-//
-//		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
+		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);
+		final AffineTransform rotate = AffineTransform.getRotateInstance(theta);
+		p1 = p1.transform(rotate);
+
+		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
 	}
 
 	public USegment affine(AffineTransform transform, double angle, double scale) {

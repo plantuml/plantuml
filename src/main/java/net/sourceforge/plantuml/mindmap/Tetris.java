@@ -91,34 +91,32 @@ public class Tetris {
 	}
 
 	public void add(SymetricalTee tee) {
-		throw new UnsupportedOperationException("TEAVM");
+		// System.err.println("Adding in " + this + " " + tee);
 
-//		// System.err.println("Adding in " + this + " " + tee);
-//
-//		if (frontier.isEmpty()) {
-//			final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);
-//			addInternal(p1);
-//			return;
-//		}
-//
-//		// System.err.println("frontier=" + frontier);
-//
-//		final double c1 = frontier.getContact(0, tee.getElongation1());
-//		final double c2 = frontier.getContact(tee.getElongation1(), tee.getElongation1() + tee.getElongation2());
-//
-//		// System.err.println("c1=" + c1 + " c2=" + c2);
-//
-//		final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);
-//		p1.moveSoThatSegmentA1isOn(c1);
-//
-//		final SymetricalTeePositioned p2 = new SymetricalTeePositioned(tee);
-//		p2.moveSoThatSegmentA2isOn(c2);
-//
-//		final SymetricalTeePositioned result = p1.getMax(p2);
-//
-//		// System.err.println("p1=" + p1.getY() + " p2=" + p2.getY());
-//		// System.err.println("result=" + result.getY());
-//		addInternal(result);
+		if (frontier.isEmpty()) {
+			final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);
+			addInternal(p1);
+			return;
+		}
+
+		// System.err.println("frontier=" + frontier);
+
+		final double c1 = frontier.getContact(0, tee.getElongation1());
+		final double c2 = frontier.getContact(tee.getElongation1(), tee.getElongation1() + tee.getElongation2());
+
+		// System.err.println("c1=" + c1 + " c2=" + c2);
+
+		final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);
+		p1.moveSoThatSegmentA1isOn(c1);
+
+		final SymetricalTeePositioned p2 = new SymetricalTeePositioned(tee);
+		p2.moveSoThatSegmentA2isOn(c2);
+
+		final SymetricalTeePositioned result = p1.getMax(p2);
+
+		// System.err.println("p1=" + p1.getY() + " p2=" + p2.getY());
+		// System.err.println("result=" + result.getY());
+		addInternal(result);
 	}
 
 	private void addInternal(SymetricalTeePositioned result) {
