@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.code;
 
 public class SpiralOnRectangle {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final Spiral spiral = new Spiral();
 	private final int width;

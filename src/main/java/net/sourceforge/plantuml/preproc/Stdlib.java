@@ -60,21 +60,16 @@ import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.spm.SpmChannel;
 import net.sourceforge.plantuml.utils.Log;
-// ::uncomment when __CORE__
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
-// ::done
 
 public class Stdlib {
 
-	// ::uncomment when __CORE__
+	// ::uncomment when __CORE__ or __TEAVM__
 //	public static InputStream getResourceAsStream(String fullname) {
 //			return null;
 //	}
 	// ::done
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 
 	private static final ConcurrentMap<String, Stdlib> all = new ConcurrentHashMap<>();
 
@@ -365,7 +360,6 @@ public class Stdlib {
 			System.out.println(s.replace("<b>", ""));
 
 	}
-	// ::done
 
 	public Sprite readSprite(String name) throws IOException {
 		synchronized (sprites) {
@@ -448,5 +442,8 @@ public class Stdlib {
 	public String getName() {
 		return name;
 	}
+
+	// ::done
+
 
 }

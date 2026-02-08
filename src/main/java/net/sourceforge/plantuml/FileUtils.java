@@ -110,7 +110,7 @@ public class FileUtils {
 		return readSvg(br, true, true);
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	static public File createTempFileLegacy(String prefix, String suffix) throws IOException {
 		if (suffix.startsWith(".") == false)
 			throw new IllegalArgumentException();

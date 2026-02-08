@@ -43,13 +43,13 @@ import net.sourceforge.plantuml.code.deflate.Decompressor;
 
 public class CompressionZlib implements Compression {
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private static boolean USE_ZOPFLI = false;
 	// ::done
 	private static final int COMPRESSION_LEVEL = 9;
 
 	public byte[] compress(byte[] in) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (USE_ZOPFLI)
 			return new CompressionZopfliZlib().compress(in);
 		// ::done

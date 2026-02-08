@@ -47,7 +47,7 @@ public class SpriteUtils {
 	private SpriteUtils() {
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public static String encodeColor(PortableImage img, String name) {
 		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() * 2);
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/color] {\n");

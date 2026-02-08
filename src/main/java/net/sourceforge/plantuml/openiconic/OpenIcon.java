@@ -124,7 +124,7 @@ public class OpenIcon {
 		return UTranslate.none();
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	void saveCopy(SFile fnew) throws IOException {
 		try (PrintWriter pw = fnew.createPrintWriter()) {
 			pw.println(rawData.get(0));

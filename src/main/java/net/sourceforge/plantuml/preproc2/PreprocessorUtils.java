@@ -88,7 +88,7 @@ public class PreprocessorUtils {
 		return null;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 		if (filename.endsWith(".puml") == false)
 			filename = filename + ".puml";
@@ -104,7 +104,6 @@ public class PreprocessorUtils {
 		final String description = "[" + filename + "]";
 		return ReadLineReader.create(new InputStreamReader(is), description);
 	}
-	// ::done
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
 		Log.info(() -> "Loading sdlib " + filename);
@@ -161,5 +160,6 @@ public class PreprocessorUtils {
 
 		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 	}
+	// ::done
 
 }

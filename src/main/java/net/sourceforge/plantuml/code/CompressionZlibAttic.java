@@ -42,7 +42,7 @@ import java.util.zip.Inflater;
 
 @Deprecated
 public class CompressionZlibAttic implements Compression {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private static boolean USE_ZOPFLI = false;
 	private static final int COMPRESSION_LEVEL = 9;

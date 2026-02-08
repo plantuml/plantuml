@@ -78,14 +78,14 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SecurityUtils {
 
-	// ::uncomment when __CORE__
+	// ::uncomment when __CORE__ or __TEAVM__
 //	public static SecurityProfile getSecurityProfile() {
 //		return SecurityProfile.UNSECURE;
 //	}
 	// ::done
 
 	public static boolean ignoreThisLink(String url) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (allowJavascriptInLink() == false && isJavascriptLink(url))
 			return true;
 		// ::done
@@ -109,7 +109,7 @@ public class SecurityUtils {
 		return image;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	/**
 	 * Java class paths to import files from.
 	 */

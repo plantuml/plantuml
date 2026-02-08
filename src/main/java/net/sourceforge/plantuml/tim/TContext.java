@@ -192,6 +192,7 @@ public class TContext {
 	}
 
 	private void addStandardFunctions(Defines defines) {
+		// ::comment when __TEAVM__
 		functionsSet.addFunction(new AlwaysFalse());
 		functionsSet.addFunction(new AlwaysTrue());
 		functionsSet.addFunction(new Backslash());
@@ -267,6 +268,7 @@ public class TContext {
 		functionsSet.addFunction(new Upper());
 		functionsSet.addFunction(new VariableExists());
 		functionsSet.addFunction(new Xargs());
+		// ::done
 		// %standard_exists_function
 		// %str_replace
 		// !exit
@@ -587,6 +589,7 @@ public class TContext {
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
+		// ::comment when __TEAVM__
 		final EaterImport _import = new EaterImport(s.getTrimmed());
 		_import.analyze(this, memory);
 
@@ -601,6 +604,7 @@ public class TContext {
 			Logme.error(e);
 			throw new EaterException("Cannot import " + e.getMessage(), s);
 		}
+		// ::done
 
 		throw new EaterException("Cannot import", s);
 	}
@@ -619,6 +623,7 @@ public class TContext {
 //	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
+		// ::comment when __TEAVM__
 		PathSystem saveImportedFiles = null;
 		try {
 			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
@@ -663,9 +668,11 @@ public class TContext {
 				this.pathSystem = saveImportedFiles;
 
 		}
+		// ::done
 	}
 
 	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException {
+		// ::comment when __TEAVM__
 		final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());
 		include.analyze(this, memory);
 		final String definitionName = include.getLocation();
@@ -692,6 +699,7 @@ public class TContext {
 				Logme.error(e);
 			}
 		}
+		// ::done
 	}
 
 	private JsonObject themeMetadata = new JsonObject();
@@ -701,6 +709,7 @@ public class TContext {
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
+		// ::comment when __TEAVM__
 		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
 		eater.analyze(this, memory);
 		final Theme theme = eater.getTheme();
@@ -732,6 +741,7 @@ public class TContext {
 				Logme.error(e);
 			}
 		}
+		// ::done
 	}
 
 //	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
@@ -768,6 +778,7 @@ public class TContext {
 //	}
 
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
+		// ::comment when __TEAVM__
 		final EaterInclude include = new EaterInclude(s.getTrimmed());
 		include.analyze(this, memory);
 		String what = include.getWhat();
@@ -797,12 +808,10 @@ public class TContext {
 				// this.importedFiles = this.importedFiles.withCurrentDir(new
 				// AParentFolderStdlib(s, libname));
 				reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
-				// ::comment when __CORE__
 			} else if (what.startsWith("[") && what.endsWith("]")) {
 				throw new IOException("To be finished");
 				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
 				// what.length() - 1));
-				// ::done
 //			} else if (importedFiles.getCurrentDir() instanceof AParentFolderStdlib) {
 //				final AParentFolderStdlib folderStdlib = (AParentFolderStdlib) importedFiles.getCurrentDir();
 //				reader = folderStdlib.getReader(what);
@@ -860,8 +869,8 @@ public class TContext {
 				}
 
 		}
-
 		throw new EaterException("cannot include " + what, s);
+		// ::done
 	}
 
 	public boolean isLegacyDefine(String functionName) {

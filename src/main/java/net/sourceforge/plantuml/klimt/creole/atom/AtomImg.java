@@ -85,7 +85,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	public static Atom createQrcode(String flash, double scale) {
 		PortableImage im = null;
-		// :: comment when __CORE__
+		// :: comment when __CORE__ or __TEAVM__
 		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		if (im == null)
 			// ::done
@@ -97,6 +97,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
+		// ::revert when __TEAVM__
 		final UFont font = UFontFactory.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
@@ -139,7 +140,6 @@ public class AtomImg extends AbstractAtom implements Atom {
 		}
 
 		try {
-			// Check if valid URL
 			if (src.startsWith("http:") || src.startsWith("https:")) {
 				if (src.endsWith(".svg"))
 					return buildSvgFromUrl(src, fc, SURL.create(src), scale, url);
@@ -175,6 +175,10 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 			return AtomTextUtils.createLegacy("ERROR", fc);
 		}
+
+		// throw new UnsupportedOperationException();
+		// ::done
+
 	}
 
 	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,

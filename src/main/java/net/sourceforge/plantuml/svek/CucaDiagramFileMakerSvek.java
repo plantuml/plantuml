@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
 		super(diagram);

@@ -86,6 +86,7 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
+		// ::revert when __TEAVM__
 		if (name.endsWith(".png") || name.endsWith(".svg"))
 			throw new IllegalArgumentException();
 
@@ -102,7 +103,8 @@ public class SpriteImage implements Sprite {
 			Logme.error(e);
 			return null;
 		}
-
+		// return null;
+		// ::done
 	}
 
 	private static InputStream getInternalSprite(final String inner) {

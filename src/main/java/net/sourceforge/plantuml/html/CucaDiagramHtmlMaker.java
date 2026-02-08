@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stereo.Stereotype;
 
 public final class CucaDiagramHtmlMaker {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final CucaDiagram diagram;
 	private final SFile dir;

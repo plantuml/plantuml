@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.code;
 
 public class AsciiEncoderFinalZeros {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public String encode(byte data[]) {
 		if (data == null) {

@@ -41,7 +41,7 @@ import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 
 public class CompressionGZip implements Compression {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public byte[] compress(byte[] in) {
 		throw new UnsupportedOperationException();

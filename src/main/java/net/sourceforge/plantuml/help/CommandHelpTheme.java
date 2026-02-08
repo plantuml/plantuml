@@ -68,6 +68,7 @@ public class CommandHelpTheme extends SingleLineCommand2<Help> {
 		diagram.add(" ");
 		diagram.add(" The possible themes are :");
 
+		// ::comment when __TEAVM__
 		try {
 			for (String theme : ThemeUtils.getAllThemeNames()) {
 				diagram.add("* " + theme);
@@ -78,6 +79,7 @@ public class CommandHelpTheme extends SingleLineCommand2<Help> {
 			Logme.error(e);
 			return CommandExecutionResult.error(message);
 		}
+		// ::done
 
 		return CommandExecutionResult.ok();
 	}

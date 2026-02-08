@@ -162,10 +162,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return this.internal.compareTo(other.internal);
 	}
 
-//	public String getPath() {
-//		return internal.getPath();
-//	}
-
 	public long length() {
 		return internal.length();
 	}
@@ -181,18 +177,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 	public void delete() {
 		internal.delete();
 	}
-
-//	public Collection<SFile> listFiles() {
-//		final File[] tmp = internal.listFiles();
-//		if (tmp == null)
-//			return Collections.emptyList();
-//
-//		final List<SFile> result = new ArrayList<>(tmp.length);
-//		for (File f : tmp)
-//			result.add(new SFile(f));
-//
-//		return Collections.unmodifiableCollection(result);
-//	}
 
 	public String[] list() {
 		return internal.list();
@@ -319,7 +303,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * @throws IOException If an I/O error occurs, which is possible because the
 	 *                     check the pathname may require filesystem queries
 	 */
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private boolean isDenied() throws IOException {
 		final SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
@@ -357,7 +341,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 		if (isFileOk())
 			try {
-				// ::comment when __CORE__
+				// ::comment when __CORE__ or __TEAVM__
 				if (internal.getName().endsWith(".webp"))
 					return readWebp();
 				else
@@ -442,7 +426,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return null;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	// Writing
 	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
 		return new BufferedOutputStream(new FileOutputStream(internal));
