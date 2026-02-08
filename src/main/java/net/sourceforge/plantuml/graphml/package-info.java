@@ -3,3 +3,4 @@
  *
  */
 package net.sourceforge.plantuml.graphml;
+// ::remove folder when __TEAVM__

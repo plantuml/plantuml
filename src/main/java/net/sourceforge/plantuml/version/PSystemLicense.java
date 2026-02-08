@@ -54,7 +54,8 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
-
+	// ::remove file when __TEAVM__
+	
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
 		return this;

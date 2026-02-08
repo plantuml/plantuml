@@ -43,6 +43,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -55,7 +56,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy;
 import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.png.PngIO;
 
 public class GraphicsSudoku {
-    // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	private final ISudoku sudoku;
 	private final UFont numberFont = UFontFactory.sansSerif(20).bold();
@@ -79,7 +79,13 @@ public class GraphicsSudoku {
 		this.sudoku = sudoku;
 	}
 
-	// ::comment when __CORE__
+	// ::uncomment when __TEAVM__
+//	public ImageData writeImageSvg(OutputStream os) throws IOException {
+//		throw new UnsupportedOperationException("TEAVM");
+//	}
+	// ::done
+
+	// ::comment when __CORE__ or __TEAVM__
 	public ImageData writeImageEps(OutputStream os) throws IOException {
 		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
@@ -95,7 +101,6 @@ public class GraphicsSudoku {
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
 	}
-	// ::done
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);
@@ -121,6 +126,7 @@ public class GraphicsSudoku {
 		PngIO.write(im, ColorMapper.IDENTITY, os, null, 96);
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
+	// ::done
 
 	final private int xOffset = 5;
 	final private int yOffset = 5;

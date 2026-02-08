@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderCanvas extends StringBounderRaw {
+	// ::remove file when __TEAVM__
 
 	private final Graphics2D g2d;
 

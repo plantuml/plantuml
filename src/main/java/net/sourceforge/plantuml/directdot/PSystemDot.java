@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDot extends AbstractPSystem {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final String data;
 

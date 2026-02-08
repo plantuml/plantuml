@@ -43,7 +43,7 @@ import java.util.TreeSet;
 
 public class HelpGroup implements Iterable<CliFlag> {
 
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private static final Comparator<CliFlag> COMPARATOR = new Comparator<CliFlag>() {

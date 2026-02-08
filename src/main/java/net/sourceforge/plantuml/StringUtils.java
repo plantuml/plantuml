@@ -514,8 +514,6 @@ public class StringUtils {
 		return h;
 	}
 
-	// ::done
-
 	public static String trin(String arg) {
 		if (arg.length() == 0)
 			return arg;
@@ -560,7 +558,7 @@ public class StringUtils {
 		return "#" + s;
 	}
 
-	// ::comment when __CORE__ or __HAXE__
+	// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagramFactory extends PSystemCommandFactory {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {

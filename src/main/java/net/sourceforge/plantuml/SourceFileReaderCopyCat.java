@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private final File outputDirectory;

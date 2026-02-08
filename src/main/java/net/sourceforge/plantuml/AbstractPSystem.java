@@ -214,7 +214,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 //			}
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
-			// ::comment when __CORE__
+			// ::comment when __CORE__ or __TEAVM__
 			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))
 				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
 						fileFormatOption.getFileFormat());

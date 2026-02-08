@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.klimt.drawing.svg;
+package net.sourceforge.plantuml.style;
 
 public enum LengthAdjust {
 	NONE, SPACING, SPACING_AND_GLYPHS;

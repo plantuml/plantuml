@@ -110,7 +110,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		fileFormatOption.getTikzFontDistortion().updateFromPragma(getPragma());
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF)
 			return exportDiagramInternalPdf(os, index);
 		// ::done
@@ -168,7 +168,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");

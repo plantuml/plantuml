@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemColorsFactory extends PSystemSingleLineFactory {
-
+	// ::remove file when __TEAVM__
 	private static final Pattern pattern = Pattern.compile("^colors?\\s*(#?\\w+)?\\s*$");
 
 	@Override

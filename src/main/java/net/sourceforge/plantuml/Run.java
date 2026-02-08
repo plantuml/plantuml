@@ -87,7 +87,7 @@ import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public static void main(String[] argsArray)

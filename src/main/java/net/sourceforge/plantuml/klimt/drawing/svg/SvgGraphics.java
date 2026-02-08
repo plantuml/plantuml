@@ -68,6 +68,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -83,6 +84,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;

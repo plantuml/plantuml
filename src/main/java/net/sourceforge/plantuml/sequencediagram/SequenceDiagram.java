@@ -286,7 +286,7 @@ public class SequenceDiagram extends UmlDiagram {
 		this.cpt.set(1);
 
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 

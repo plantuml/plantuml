@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HelpPrint {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private static void printHeader() {

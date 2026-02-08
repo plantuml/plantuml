@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.klimt.drawing.svg;
+package net.atmp;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.LengthAdjust;
 
 public class SvgOption {
 

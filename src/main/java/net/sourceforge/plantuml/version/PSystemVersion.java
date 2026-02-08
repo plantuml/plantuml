@@ -62,6 +62,8 @@ import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class PSystemVersion extends PlainStringsDiagram {
+	// ::remove file when __TEAVM__
+
 
 	PSystemVersion(UmlSource source, boolean withImage, List<String> args, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

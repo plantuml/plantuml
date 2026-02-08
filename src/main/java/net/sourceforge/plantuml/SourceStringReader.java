@@ -121,7 +121,7 @@ public class SourceStringReader {
 		return outputImage(os, 0);
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	/**
 	 * @deprecated Use {@link #outputImage(SFile)} instead
 	 */

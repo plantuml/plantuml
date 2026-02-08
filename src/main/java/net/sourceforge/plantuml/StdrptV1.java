@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptV1 implements Stdrpt {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public void printInfo(final PrintStream output, Diagram sys) {

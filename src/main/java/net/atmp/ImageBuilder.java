@@ -77,7 +77,6 @@ import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.drawing.html5.UGraphicHtml5;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
@@ -277,6 +276,7 @@ public class ImageBuilder {
 		ug.writeToStream(os, metadata, 96);
 		os.flush();
 
+		// ::comment when __TEAVM__
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
@@ -284,6 +284,7 @@ public class ImageBuilder {
 				return new ImageDataComplex(dim, cmap, warningOrError, status);
 			}
 		}
+		// ::done
 		return createImageData(dim);
 	}
 
@@ -375,6 +376,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
+		// ::comment when __TEAVM__
 		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
@@ -384,7 +386,6 @@ public class ImageBuilder {
 					fileFormatOption.getFileFormat());
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim, pragma);
-		// ::comment when __CORE__
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -405,12 +406,15 @@ public class ImageBuilder {
 		case DEBUG:
 			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,
 					getPreserveAspectRatio());
-		// ::done
 		default:
+			// ::done
 			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());
+		// ::comment when __TEAVM__
 		}
+		// ::done
 	}
 
+	// ::comment when __TEAVM__
 	private UGraphic createUGraphicSVG(double scaleFactor, XDimension2D dim, Pragma pragma) {
 		SvgOption option = SvgOption.basic().withPreserveAspectRatio(getPreserveAspectRatio());
 		option = option.withHoverPathColorRGB(getHoverPathColorRGB());
@@ -472,10 +476,6 @@ public class ImageBuilder {
 		return ug;
 	}
 
-	static private HColor getDefaultHBackColor() {
-		return HColors.WHITE.withDark(HColors.BLACK);
-	}
-
 	private String getHoverPathColorRGB() {
 		if (fileFormatOption.getHoverColor() != null) {
 			return fileFormatOption.getHoverColor();
@@ -487,6 +487,7 @@ public class ImageBuilder {
 		}
 		return null;
 	}
+	// ::done
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
@@ -509,6 +510,10 @@ public class ImageBuilder {
 
 	private ImageDataSimple createImageData(XDimension2D dim) {
 		return new ImageDataSimple(dim, status);
+	}
+
+	static private HColor getDefaultHBackColor() {
+		return HColors.WHITE.withDark(HColors.BLACK);
 	}
 
 }

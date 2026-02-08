@@ -38,7 +38,8 @@ package net.sourceforge.plantuml.cli;
 import java.io.IOException;
 
 public class CliParser {
-
+	// ::remove file when __TEAVM__
+	
 	public static CliOptions parse(String... arg) throws InterruptedException, IOException, CliParsingException {
 		return new CliOptions(arg);
 	}

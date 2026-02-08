@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggested,

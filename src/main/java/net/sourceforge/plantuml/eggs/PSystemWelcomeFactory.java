@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemWelcomeFactory implements PSystemFactory {
-
+	// ::remove file when __TEAVM__
 	@Override
 	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		if (source.getTotalLineCount() == 2)

@@ -42,7 +42,7 @@ import java.awt.image.BufferedImage;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngRotation {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public static BufferedImage process(BufferedImage im) {
 

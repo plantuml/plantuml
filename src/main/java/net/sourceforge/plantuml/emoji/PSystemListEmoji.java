@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListEmoji extends PlainDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final String text;
 

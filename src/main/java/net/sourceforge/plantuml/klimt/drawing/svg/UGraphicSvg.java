@@ -39,6 +39,7 @@ import java.io.OutputStream;
 
 import javax.xml.transform.TransformerException;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UPath;

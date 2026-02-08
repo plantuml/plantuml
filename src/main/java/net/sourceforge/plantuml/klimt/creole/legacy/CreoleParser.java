@@ -101,7 +101,7 @@ public class CreoleParser implements SheetBuilder {
 			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));
 		} else if (Parser.isCodeStart(line)) {
 			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));
-			// ::comment when __CORE__
+			// ::comment when __CORE__ or __TEAVM__
 		} else if (Parser.isLatexStart(line)) {
 			return Arrays.asList(new StripeLatex(fontConfiguration));
 			// ::done

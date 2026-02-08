@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 public class DriverCenteredCharacterG2d implements UDriver<UCenteredCharacter, Graphics2D> {
+	// ::remove folder when __TEAVM__
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			Graphics2D g2d) {

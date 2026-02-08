@@ -44,7 +44,7 @@ public enum UFontContext {
 
 	EPS, SVG, G2D, TIKZ;
 
-	// ::comment when __HAXE__
+	// ::comment when __HAXE__ or __TEAVM__
 	public TextLayout createTextLayout(UText shape) {
 		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
 	}

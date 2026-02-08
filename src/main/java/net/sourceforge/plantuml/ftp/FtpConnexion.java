@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
 
 public class FtpConnexion {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final String user;
 	private final Map<String, String> incoming = new HashMap<String, String>();

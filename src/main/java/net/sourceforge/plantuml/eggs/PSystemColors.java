@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 
 // http://www.redblobgames.com/grids/hexagons/
 public class PSystemColors extends PlainDiagram implements UDrawable {
-
+	// ::remove file when __TEAVM__
 	private final double rectangleHeight = 28;
 	private final double rectangleWidth = 175;
 	private final HColorSet colors = HColorSet.instance();

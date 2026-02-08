@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 //::done
 
 public class JsonResult {
+	// ::remove file when __TEAVM__
 
 	private final StringBuilder sb = new StringBuilder();
 

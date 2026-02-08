@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public abstract class AbstractComponentText implements Component {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__  or __TEAVM__
 
 	public final XDimension2D getPreferredDimension(StringBounder stringBounder) {
 		final double w = getPreferredWidth(stringBounder);

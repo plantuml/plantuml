@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StdlibDiagram extends UmlDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private static final int WIDTH = 1800;
 	private String name;

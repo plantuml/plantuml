@@ -80,7 +80,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 // Carriage Return in UTF-8 XML: &#13;
 // Line Feed in UTF-8 XML: &#10;
 public class PlantUmlTask extends Task {
-	// ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__ or __TEAVM__
 
 	private String dir = null;
 	private final CliOptions option = new CliOptions();

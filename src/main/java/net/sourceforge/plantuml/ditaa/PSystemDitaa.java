@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class PSystemDitaa extends AbstractPSystem {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final ConversionOptions options = new ConversionOptions();
 	private final List<String> data = new ArrayList<>();

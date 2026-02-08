@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSplitter {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final List<SFile> files = new ArrayList<>();
 

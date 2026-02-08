@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	final private File file;

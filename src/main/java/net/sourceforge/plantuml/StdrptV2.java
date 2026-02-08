@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.error.PSystemError;
 
 public class StdrptV2 implements Stdrpt {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public void finalMessage() {

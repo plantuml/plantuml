@@ -59,7 +59,7 @@ public class EmptyImageBuilder {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("width and height must be positive");
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (width > GraphvizUtils.getenvImageLimit()) {
 			final int width2 = width;
 			Log.info(() -> "Width too large " + width2 + ". You should set PLANTUML_LIMIT_SIZE");
@@ -150,6 +150,7 @@ public class EmptyImageBuilder {
 		return result;
 	}
 
+	// ::comment when __TEAVM__
 	public BufferedImage getBufferedImage() {
 		return im;
 	}
@@ -157,5 +158,6 @@ public class EmptyImageBuilder {
 	public Graphics2D getGraphics2D() {
 		return g2d;
 	}
+	// ::done
 
 }

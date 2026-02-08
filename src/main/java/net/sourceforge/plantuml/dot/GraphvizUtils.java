@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class GraphvizUtils {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private static int DOT_VERSION_LIMIT = 226;
 

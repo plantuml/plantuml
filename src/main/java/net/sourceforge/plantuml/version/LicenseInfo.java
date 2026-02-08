@@ -53,7 +53,8 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class LicenseInfo {
-
+	// ::remove file when __TEAVM__
+	
 	public static synchronized LicenseInfo retrieveQuick() {
 		// ::revert when __CORE__
 		if (cache == null)

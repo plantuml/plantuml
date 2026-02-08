@@ -205,7 +205,7 @@ public final class GraphvizImageBuilder {
 
 	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
 			boolean fileFormatOptionIsDebugSvek) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 
@@ -292,7 +292,7 @@ public final class GraphvizImageBuilder {
 					source.getPlainString(BackSlash.lineSeparator()));
 		}
 		// ::done
-		// ::uncomment when __CORE__
+		// ::uncomment when __CORE__ or __TEAVM__
 		// return null;
 		// ::done
 
@@ -327,7 +327,7 @@ public final class GraphvizImageBuilder {
 		return single;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private IEntityImage error(File dotExe) {
 		final List<String> msg = new ArrayList<>();
 		msg.add("Dot Executable: " + dotExe);

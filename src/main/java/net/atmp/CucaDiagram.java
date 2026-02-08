@@ -410,7 +410,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return result.toArray(new String[result.size()]);
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
 		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);
 		maker.createFiles(suggestedFile);
@@ -448,7 +448,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
 			createFilesTxt(os, index, fileFormat);
 			return ImageDataSimple.ok();
@@ -475,13 +475,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		this.eventuallyBuildPhantomGroups(null);
 		final CucaDiagramFileMaker maker;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (this.isUseElk())
 			maker = new CucaDiagramFileMakerElk(this);
 		else if (this.isUseSmetana())
 			// ::done
 			maker = new CucaDiagramFileMakerSmetana(this);
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		else
 			maker = new CucaDiagramFileMakerSvek(this);
 		// ::done

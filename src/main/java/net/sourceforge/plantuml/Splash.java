@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class Splash extends Window implements MouseListener, MouseMotionListener {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private static final Color LINK_NORMAL = Color.BLUE;

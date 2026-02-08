@@ -144,7 +144,7 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
 @DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final Map<Entity, ElkNode> nodes = new LinkedHashMap<Entity, ElkNode>();
 	private final Map<Entity, ElkNode> clusters = new LinkedHashMap<Entity, ElkNode>();

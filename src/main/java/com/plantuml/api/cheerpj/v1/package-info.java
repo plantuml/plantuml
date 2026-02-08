@@ -4,4 +4,5 @@
  * CheerpJ</a> API.
  * 
  */
-package com.plantuml.api.cheerpj;
+package com.plantuml.api.cheerpj.v1;
+// ::remove folder when __TEAVM__

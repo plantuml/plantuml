@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
 public class CliOptions {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private final List<String> config = new ArrayList<>();
@@ -266,9 +266,6 @@ public class CliOptions {
 	}
 	// ::done
 
-//	public void define(String name, String value) {
-//		defines.put(name, value);
-//	}
 
 	private Map<String, String> defines() {
 		final Map<String, String> result = flags.getMap(CliFlag.DEFINE, CliFlag.DEFINE_LONG);
@@ -311,11 +308,8 @@ public class CliOptions {
 
 		return fileFormatOption;
 	}
-//	// ::done
-//
-//	public final boolean isDuration() {
-//		return duration;
-//	}
+
+
 
 	public final int getNbThreads() {
 		final String value = flags.getString(CliFlag.NB_THREAD);
@@ -327,66 +321,18 @@ public class CliOptions {
 		return defaultNbThreads();
 	}
 
-//	public final void setNbThreads(int nb) {
-//		this.nbThreads = nb;
-//	}
+
 
 	public static int defaultNbThreads() {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
-//	// ::comment when __CORE__
-//	public final boolean isCheckOnly() {
-//		return checkOnly;
-//	}
-//
-//	public final void setCheckOnly(boolean checkOnly) {
-//		this.checkOnly = checkOnly;
-//	}
-//	// ::done
 
 	public final boolean isFailfastOrFailfast2() {
 		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);
 	}
 
-//	public final void setDebugSvek(boolean debugsvek) {
-//		this.debugsvek = debugsvek;
-//	}
-//
-//	boolean isDebugSvek() {
-//		return debugsvek;
-//	}
-//
-//	// ::comment when __CORE__
-//	public final boolean isSplash() {
-//		return splash;
-//	}
-//
-//	public final void setSplash(boolean splash) {
-//		this.splash = splash;
-//	}
-//
-//	public final boolean isTextProgressBar() {
-//		return textProgressBar;
-//	}
-//
-//	public String getPipeDelimitor() {
-//		return pipeDelimitor;
-//	}
-//
-//	public final boolean isPipeNoStdErr() {
-//		return pipeNoStdErr;
-//	}
-//
-//	public final boolean isCheckMetadata() {
-//		return checkMetadata;
-//	}
-//
-//	public final void setFilename(String filename) {
-//		this.filename = filename;
-//	}
 
-	// ::done
 
 	public final int getImageIndex() {
 		try {

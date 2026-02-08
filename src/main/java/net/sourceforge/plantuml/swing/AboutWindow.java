@@ -62,8 +62,6 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 class AboutWindow extends JFrame {
-	// ::remove folder when __CORE__
-
 	public AboutWindow() {
 		super();
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());

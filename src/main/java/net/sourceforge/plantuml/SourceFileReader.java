@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private File outputDirectory;

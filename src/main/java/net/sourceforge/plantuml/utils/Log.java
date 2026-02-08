@@ -99,7 +99,7 @@ public abstract class Log {
 	}
 
 	public synchronized static void info(Supplier<String> msgSupplier) {
-		// ::comment when __CORE__ or __HAXE__
+		// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 			ProgressBar.clear();
 			System.err.println(format(msgSupplier.get()));
@@ -108,7 +108,7 @@ public abstract class Log {
 	}
 
 	public synchronized static void error(String s) {
-		// ::comment when __CORE__ or __HAXE__
+		// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 		ProgressBar.clear();
 		// ::done
 		System.err.println(s);
