@@ -57,8 +57,7 @@ class Back implements UBackground {
 public abstract class HColor implements UChange {
 
 	public enum TransparentFillBehavior {
-		WITH_FILL_NONE,
-		WITH_FILL_OPACITY
+		WITH_FILL_NONE, WITH_FILL_OPACITY
 	}
 
 	public UBackground bg() {
@@ -75,17 +74,33 @@ public abstract class HColor implements UChange {
 	}
 
 	final public String toSvg(ColorMapper mapper) {
-		if (this.isTransparent())
+		return toSvgTeaVM(mapper);
+//		if (this.isTransparent())
+//			return "#00000000";
+//
+//		final Color color = toColor(mapper);
+//		final int alpha = color.getAlpha();
+//		if (alpha == 255)
+//			return toRGB(mapper);
+//
+//		String s = "0" + Integer.toHexString(alpha).toUpperCase();
+//		s = s.substring(s.length() - 2);
+//		return toRGB(mapper) + s;
+	}
+
+	private final String toSvgTeaVM(ColorMapper mapper) {
+		final Color color = toColor(mapper);
+
+		final int alpha = color.getAlpha();
+		if (alpha == 0)
 			return "#00000000";
 
-		final Color color = toColor(mapper);
-		final int alpha = color.getAlpha();
-		if (alpha == 255)
-			return toRGB(mapper);
+		final String rgb = String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
 
-		String s = "0" + Integer.toHexString(alpha).toUpperCase();
-		s = s.substring(s.length() - 2);
-		return toRGB(mapper) + s;
+		if (alpha == 255)
+			return rgb;
+
+		return rgb + String.format("%02X", alpha);
 	}
 
 	public HColor lighten(int ratio) {

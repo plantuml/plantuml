@@ -5,6 +5,7 @@ import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -76,9 +77,7 @@ public class Demo2 {
 		final URectangle rect = URectangle.build(30, 30);
 		// consoleLog("rect= " + rect.toString());
 
-		final HColor blue = HColors.BLUE;
-		consoleLog("blue= " + blue);
-		ug.apply(blue).draw(rect);
+		ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
 
 		// Append SVG to section
 		Element svgElement = svg.getSvgRoot();
