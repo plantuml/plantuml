@@ -8,7 +8,7 @@
         <meta charset="UTF-8"/>
         <title>JDepend Analysis Report</title>
         <style>
-          body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+          body { font-family: system-ui, Arial, sans-serif; margin: 20px; background: #f5f5f5; }
           h1 { color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
           h2 { color: #666; margin-top: 30px; }
           .summary { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -16,7 +16,7 @@
           th { background: #4CAF50; color: white; padding: 12px; text-align: left; font-weight: bold; }
           td { padding: 10px; border-bottom: 1px solid #ddd; }
           tr:hover { background: #f5f5f5; }
-          .numeric { text-align: center; font-family: 'Courier New', monospace; }
+          .numeric { text-align: center; font-family: Consolas, monaco, monospace; }
           .package-name { font-weight: bold; color: #333; }
           .good { color: #4CAF50; font-weight: bold; }
           .warning { color: #FF9800; font-weight: bold; }
