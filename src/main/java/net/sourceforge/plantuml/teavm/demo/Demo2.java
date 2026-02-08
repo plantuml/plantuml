@@ -95,10 +95,10 @@ public class Demo2 {
 		UmlSource source = UmlSource.create(list, false);
 		System.err.println("source=" + source);
 		Diagram diagram = factory.createSystem(null, source, null, null);
-		// diagram.exportDiagramGraphic(ug, null);
 		// ::uncomment when __TEAVM__
 		// System.err.println("diagram=" + diagram);
 		// ::done
+		diagram.exportDiagramGraphic(ug, null);
 
 		// Append SVG to section
 		Element svgElement = svg.getSvgRoot();
