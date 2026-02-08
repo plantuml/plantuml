@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +45,7 @@ import java.util.TreeSet;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -151,7 +151,7 @@ public class LicenseInfo {
 <span class="nc" id="L151">		return LicenseInfo.NONE;</span>
 	}
 
-	public static BufferedImage retrieveDistributorImage(LicenseInfo licenseInfo) {
+	public static PortableImage retrieveDistributorImage(LicenseInfo licenseInfo) {
 <span class="nc bnc" id="L155" title="All 2 branches missed.">		if (licenseInfo.getLicenseType() != LicenseType.DISTRIBUTOR) {</span>
 <span class="nc" id="L156">			return null;</span>
 		}
@@ -165,7 +165,7 @@ public class LicenseInfo {
 <span class="nc" id="L165">				return null;</span>
 
 			try {
-<span class="nc" id="L168">				final BufferedImage result = SImageIO.read(dis);</span>
+<span class="nc" id="L168">				final PortableImage result = SImageIO.read(dis);</span>
 <span class="nc" id="L169">				return result;</span>
 			} finally {
 <span class="nc" id="L171">				dis.close();</span>

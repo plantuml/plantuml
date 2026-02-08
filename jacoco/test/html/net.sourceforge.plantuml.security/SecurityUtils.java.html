@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.security;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,6 +59,7 @@ import javax.swing.ImageIcon;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
@@ -97,13 +97,13 @@ import net.sourceforge.plantuml.utils.Log;
 	 */
 	public static final String NO_CREDENTIALS = &quot;&lt;none&gt;&quot;;
 
-	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
+	public synchronized static PortableImage readRasterImage(final ImageIcon imageIcon) {
 <span class="nc" id="L101">		final Image tmpImage = imageIcon.getImage();</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">		if (imageIcon.getIconWidth() == -1)</span>
 <span class="nc" id="L103">			return null;</span>
 
-<span class="nc" id="L105">		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),</span>
-				BufferedImage.TYPE_INT_ARGB);
+<span class="nc" id="L105">		final PortableImage image = new PortableImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),</span>
+				PortableImage.TYPE_INT_ARGB);
 <span class="nc" id="L107">		image.getGraphics().drawImage(tmpImage, 0, 0, null);</span>
 <span class="nc" id="L108">		tmpImage.flush();</span>
 <span class="nc" id="L109">		return image;</span>

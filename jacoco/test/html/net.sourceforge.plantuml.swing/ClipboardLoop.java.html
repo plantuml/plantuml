@@ -46,83 +46,84 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L52">public class ClipboardLoop {</span>
+<span class="nc" id="L53">public class ClipboardLoop {</span>
 	// ::remove file when __CORE__
 
 	public static void runLoop() {
-<span class="nc" id="L56">		final ClipboardLoop clipboardLoop = new ClipboardLoop();</span>
+<span class="nc" id="L57">		final ClipboardLoop clipboardLoop = new ClipboardLoop();</span>
 		try {
 			while (true) {
-<span class="nc" id="L59">				final String text = clipboardLoop.getClipboardText();</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">				if (clipboardLoop.isTextOk(text))</span>
-<span class="nc" id="L61">					clipboardLoop.runText(text);</span>
+<span class="nc" id="L60">				final String text = clipboardLoop.getClipboardText();</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">				if (clipboardLoop.isTextOk(text))</span>
+<span class="nc" id="L62">					clipboardLoop.runText(text);</span>
 
-<span class="nc" id="L63">				Thread.sleep(10000L);</span>
-<span class="nc" id="L64">			}</span>
-<span class="nc" id="L65">		} catch (InterruptedException | IOException e) {</span>
-<span class="nc" id="L66">			e.printStackTrace();</span>
+<span class="nc" id="L64">				Thread.sleep(10000L);</span>
+<span class="nc" id="L65">			}</span>
+<span class="nc" id="L66">		} catch (InterruptedException | IOException e) {</span>
+<span class="nc" id="L67">			e.printStackTrace();</span>
 		}
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L69">	}</span>
 
 	public static void runOnce() {
-<span class="nc" id="L71">		final ClipboardLoop clipboardLoop = new ClipboardLoop();</span>
-<span class="nc" id="L72">		final String text = clipboardLoop.getClipboardText();</span>
+<span class="nc" id="L72">		final ClipboardLoop clipboardLoop = new ClipboardLoop();</span>
+<span class="nc" id="L73">		final String text = clipboardLoop.getClipboardText();</span>
 		try {
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (clipboardLoop.isTextOk(text))</span>
-<span class="nc" id="L75">				clipboardLoop.runText(text);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (clipboardLoop.isTextOk(text))</span>
+<span class="nc" id="L76">				clipboardLoop.runText(text);</span>
 			else
-<span class="nc" id="L77">				clipboardLoop.setClipboardImage(new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB));</span>
-<span class="nc" id="L78">		} catch (InterruptedException | IOException e) {</span>
-<span class="nc" id="L79">			e.printStackTrace();</span>
-<span class="nc" id="L80">		}</span>
+<span class="nc" id="L78">				clipboardLoop.setClipboardImage(new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB));</span>
+<span class="nc" id="L79">		} catch (InterruptedException | IOException e) {</span>
+<span class="nc" id="L80">			e.printStackTrace();</span>
+<span class="nc" id="L81">		}</span>
 
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L83">	}</span>
 
 	private boolean isTextOk(String text) {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (text == null)</span>
-<span class="nc" id="L86">			return false;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (text == null)</span>
+<span class="nc" id="L87">			return false;</span>
 
-<span class="nc" id="L88">		return text.startsWith(&quot;@start&quot;);</span>
+<span class="nc" id="L89">		return text.startsWith(&quot;@start&quot;);</span>
 	}
 
 	private void runText(String text) throws IOException, InterruptedException {
-<span class="nc" id="L92">		Log.info(() -&gt; &quot;Getting some text from clipboard&quot;);</span>
-<span class="nc" id="L93">		final SourceStringReader source = new SourceStringReader(text);</span>
-<span class="nc" id="L94">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L95">		final DiagramDescription desc = source.outputImage(baos);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (desc == null) {</span>
-<span class="nc" id="L97">			Log.info(() -&gt; &quot;No image generated&quot;);</span>
+<span class="nc" id="L93">		Log.info(() -&gt; &quot;Getting some text from clipboard&quot;);</span>
+<span class="nc" id="L94">		final SourceStringReader source = new SourceStringReader(text);</span>
+<span class="nc" id="L95">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L96">		final DiagramDescription desc = source.outputImage(baos);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (desc == null) {</span>
+<span class="nc" id="L98">			Log.info(() -&gt; &quot;No image generated&quot;);</span>
 		} else {
-<span class="nc" id="L99">			Log.info(() -&gt; &quot;Image ok &quot; + desc.getDescription());</span>
-<span class="nc" id="L100">			baos.close();</span>
-<span class="nc" id="L101">			final BufferedImage image = SImageIO.read(baos.toByteArray());</span>
-<span class="nc" id="L102">			setClipboardImage(image);</span>
-<span class="nc" id="L103">			Log.info(() -&gt; &quot;Image copied in clipboard&quot;);</span>
+<span class="nc" id="L100">			Log.info(() -&gt; &quot;Image ok &quot; + desc.getDescription());</span>
+<span class="nc" id="L101">			baos.close();</span>
+<span class="nc" id="L102">			final PortableImage image = SImageIO.read(baos.toByteArray());</span>
+<span class="nc" id="L103">			setClipboardImage(image);</span>
+<span class="nc" id="L104">			Log.info(() -&gt; &quot;Image copied in clipboard&quot;);</span>
 		}
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L106">	}</span>
 
 	private String getClipboardText() {
-<span class="nc" id="L108">		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);</span>
+<span class="nc" id="L109">		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);</span>
 		try {
-<span class="nc bnc" id="L110" title="All 4 branches missed.">			if (t != null &amp;&amp; t.isDataFlavorSupported(DataFlavor.stringFlavor)) {</span>
-<span class="nc" id="L111">				final String text = (String) t.getTransferData(DataFlavor.stringFlavor);</span>
-<span class="nc" id="L112">				return text;</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">			if (t != null &amp;&amp; t.isDataFlavorSupported(DataFlavor.stringFlavor)) {</span>
+<span class="nc" id="L112">				final String text = (String) t.getTransferData(DataFlavor.stringFlavor);</span>
+<span class="nc" id="L113">				return text;</span>
 			}
-<span class="nc" id="L114">		} catch (UnsupportedFlavorException e) {</span>
-<span class="nc" id="L115">			Log.error(e.toString());</span>
-<span class="nc" id="L116">		} catch (IOException e) {</span>
-<span class="nc" id="L117">			Log.error(e.toString());</span>
-<span class="nc" id="L118">		}</span>
-<span class="nc" id="L119">		return null;</span>
+<span class="nc" id="L115">		} catch (UnsupportedFlavorException e) {</span>
+<span class="nc" id="L116">			Log.error(e.toString());</span>
+<span class="nc" id="L117">		} catch (IOException e) {</span>
+<span class="nc" id="L118">			Log.error(e.toString());</span>
+<span class="nc" id="L119">		}</span>
+<span class="nc" id="L120">		return null;</span>
 	}
 
-	private void setClipboardImage(BufferedImage image) {
-<span class="nc" id="L123">		final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();</span>
-<span class="nc" id="L124">		clipboard.setContents(new ImageSelection(image), null);</span>
-<span class="nc" id="L125">	}</span>
+	private void setClipboardImage(PortableImage image) {
+<span class="nc" id="L124">		final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();</span>
+<span class="nc" id="L125">		clipboard.setContents(new ImageSelection(image.getBufferedImage()), null);</span>
+<span class="nc" id="L126">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,22 +35,21 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.awt.image.BufferedImage;
-
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-<span class="fc" id="L45">public class PSystemDedicationFactory extends PSystemSingleLineFactory {</span>
+<span class="fc" id="L44">public class PSystemDedicationFactory extends PSystemSingleLineFactory {</span>
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L49">		final BufferedImage dedication = Dedications.get(line);</span>
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (dedication != null)</span>
-<span class="nc" id="L51">			return new PSystemDedication(source, dedication, preprocessing);</span>
+<span class="fc" id="L48">		final PortableImage dedication = Dedications.get(line);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (dedication != null)</span>
+<span class="nc" id="L50">			return new PSystemDedication(source, dedication, preprocessing);</span>
 
-<span class="fc" id="L53">		return null;</span>
+<span class="fc" id="L52">		return null;</span>
 	}
 
 }

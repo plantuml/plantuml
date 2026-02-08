@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.security;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +45,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+
 <span class="nc" id="L50">public class SImageIO {</span>
 
 	// ::comment when __CORE__
@@ -55,30 +55,30 @@ import javax.imageio.stream.ImageOutputStream;
 	}
 	// ::done
 
-	public static void write(RenderedImage image, String format, OutputStream os) throws IOException {
-<span class="fc" id="L59">		javax.imageio.ImageIO.write(image, format, os);</span>
+	public static void write(PortableImage image, String format, OutputStream os) throws IOException {
+<span class="fc" id="L59">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, os);</span>
 <span class="fc" id="L60">	}</span>
 
 	// ::comment when __CORE__
-	public static void write(RenderedImage image, String format, SFile file) throws IOException {
-<span class="nc" id="L64">		javax.imageio.ImageIO.write(image, format, file.conv());</span>
+	public static void write(PortableImage image, String format, SFile file) throws IOException {
+<span class="nc" id="L64">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, file.conv());</span>
 <span class="nc" id="L65">	}</span>
 
-	public static BufferedImage read(java.io.File file) throws IOException {
-<span class="nc" id="L68">		return javax.imageio.ImageIO.read(file);</span>
+	public static PortableImage read(java.io.File file) throws IOException {
+<span class="nc" id="L68">		return new PortableImage(javax.imageio.ImageIO.read(file));</span>
 	}
 
-	public static BufferedImage read(SFile file) throws IOException {
-<span class="fc" id="L72">		return javax.imageio.ImageIO.read(file.conv());</span>
+	public static PortableImage read(SFile file) throws IOException {
+<span class="fc" id="L72">		return new PortableImage(javax.imageio.ImageIO.read(file.conv()));</span>
 	}
 	// ::done
 
-	public static BufferedImage read(InputStream is) throws IOException {
-<span class="fc" id="L77">		return javax.imageio.ImageIO.read(is);</span>
+	public static PortableImage read(InputStream is) throws IOException {
+<span class="fc" id="L77">		return new PortableImage(javax.imageio.ImageIO.read(is));</span>
 	}
 
-	public static BufferedImage read(byte[] bytes) throws IOException {
-<span class="fc" id="L81">		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));</span>
+	public static PortableImage read(byte[] bytes) throws IOException {
+<span class="fc" id="L81">		return new PortableImage(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));</span>
 	}
 
 	// ::comment when __CORE__

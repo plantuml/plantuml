@@ -59,11 +59,11 @@ public class DriverImageG2d implements UDriver&lt;UImage, Graphics2D&gt; {
 <span class="fc" id="L59">		visible.ensureVisible(x, y);</span>
 <span class="fc" id="L60">		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());</span>
 <span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (dpiFactor == 1) {</span>
-<span class="fc" id="L62">			g2d.drawImage(shape.getImage(1), (int) (x), (int) (y), null);</span>
+<span class="fc" id="L62">			g2d.drawImage(shape.getImage(1).getBufferedImage(), (int) (x), (int) (y), null);</span>
 		} else {
 <span class="nc" id="L64">			final AffineTransform back = g2d.getTransform();</span>
 <span class="nc" id="L65">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
-<span class="nc" id="L66">			g2d.drawImage(shape.getImage(dpiFactor), (int) (x * dpiFactor), (int) (y * dpiFactor), null);</span>
+<span class="nc" id="L66">			g2d.drawImage(shape.getImage(dpiFactor).getBufferedImage(), (int) (x * dpiFactor), (int) (y * dpiFactor), null);</span>
 <span class="nc" id="L67">			g2d.setTransform(back);</span>
 		}
 <span class="fc" id="L69">	}</span>

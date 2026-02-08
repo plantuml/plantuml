@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.crash;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 <span class="nc" id="L56">public class CrashImage implements UDrawable {</span>
 
-	private final BufferedImage flashcodeImage;
+	private final PortableImage flashcodeImage;
 	private final TextBlock graphicStrings;
 
 <span class="nc" id="L61">	public CrashImage(Throwable exception, String flash, ReportLog strings) {</span>
@@ -81,12 +81,12 @@ import net.sourceforge.plantuml.utils.Log;
 
 <span class="nc" id="L82">	}</span>
 
-	private BufferedImage generateFlashcodeImage(String flash, ReportLog strings) {
+	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
 <span class="nc bnc" id="L85" title="All 2 branches missed.">		assert flash != null;</span>
 		// ::comment when __CORE__
 <span class="nc" id="L87">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
 		try {
-<span class="nc" id="L89">			final BufferedImage flashcodeImage = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
+<span class="nc" id="L89">			final PortableImage flashcodeImage = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">			if (flashcodeImage != null)</span>
 <span class="nc" id="L91">				strings.addDecodeHint();</span>
 <span class="nc" id="L92">			return flashcodeImage;</span>

@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.klimt.shape;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public class UImage implements UShape {
     // ::remove file when __HAXE__
@@ -78,33 +78,32 @@ public class UImage implements UShape {
 <span class="fc" id="L78">		return new UImage(image.withScale(scale), rawFileName, formula);</span>
 	}
 
-	public final BufferedImage getImage(double withScale) {
+	public final PortableImage getImage(double withScale) {
 <span class="fc" id="L82">		return image.withScale(withScale).getImage();</span>
-		// return bufferedImage.getImage();
 	}
 
 	public int getWidth() {
-<span class="fc" id="L87">		return image.getImage().getWidth() - 1;</span>
+<span class="fc" id="L86">		return image.getImage().getWidth() - 1;</span>
 	}
 
 	public int getHeight() {
-<span class="fc" id="L91">		return image.getImage().getHeight() - 1;</span>
+<span class="fc" id="L90">		return image.getImage().getHeight() - 1;</span>
 	}
 
 	public UImage muteColor(Color newColor) {
-<span class="nc" id="L95">		return new UImage(image.muteColor(newColor), rawFileName, formula);</span>
+<span class="nc" id="L94">		return new UImage(image.muteColor(newColor), rawFileName, formula);</span>
 	}
 
 	public UImage muteTransparentColor(Color newColor) {
-<span class="nc" id="L99">		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);</span>
+<span class="nc" id="L98">		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);</span>
 	}
 
 	public UImage monochrome() {
-<span class="nc" id="L103">		return new UImage(image.monochrome(), rawFileName, formula);</span>
+<span class="nc" id="L102">		return new UImage(image.monochrome(), rawFileName, formula);</span>
 	}
 
 	public double getScale() {
-<span class="nc" id="L107">		return image.getScale();</span>
+<span class="nc" id="L106">		return image.getScale();</span>
 	}
 
 }

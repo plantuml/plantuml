@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.file.SuggestedFile;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -52,74 +53,75 @@ import net.sourceforge.plantuml.utils.Log;
 public class PngSplitter {
 	// ::remove file when __CORE__ or __TEAVM__
 
-<span class="fc" id="L55">	private final List&lt;SFile&gt; files = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">	private final List&lt;SFile&gt; files = new ArrayList&lt;&gt;();</span>
 
 	public PngSplitter(ColorMapper colorMapper, SuggestedFile pngFile, int horizontalPages, int verticalPages,
-<span class="fc" id="L58">			String metadata, int dpi, SplitParam splitParam) throws IOException {</span>
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">		if (horizontalPages == 1 &amp;&amp; verticalPages == 1) {</span>
-<span class="fc" id="L60">			this.files.add(pngFile.getFile(0));</span>
-<span class="fc" id="L61">			return;</span>
+<span class="fc" id="L59">			String metadata, int dpi, SplitParam splitParam) throws IOException {</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">		if (horizontalPages == 1 &amp;&amp; verticalPages == 1) {</span>
+<span class="fc" id="L61">			this.files.add(pngFile.getFile(0));</span>
+<span class="fc" id="L62">			return;</span>
 		}
 
-<span class="pc" id="L64">		Log.info(() -&gt; &quot;Splitting &quot; + horizontalPages + &quot; x &quot; + verticalPages);</span>
-<span class="fc" id="L65">		final SFile full = pngFile.getTmpFile(); // SecurityUtils.File(pngFile.getParentFile(), pngFile.getName() +</span>
+<span class="pc" id="L65">		Log.info(() -&gt; &quot;Splitting &quot; + horizontalPages + &quot; x &quot; + verticalPages);</span>
+<span class="fc" id="L66">		final SFile full = pngFile.getTmpFile(); // SecurityUtils.File(pngFile.getParentFile(), pngFile.getName() +</span>
 													// &quot;.tmp&quot;);
 		// Thread.yield();
-<span class="fc" id="L68">		full.delete();</span>
+<span class="fc" id="L69">		full.delete();</span>
 		// Thread.yield();
-<span class="fc" id="L70">		final boolean ok = pngFile.getFile(0).renameTo(full);</span>
+<span class="fc" id="L71">		final boolean ok = pngFile.getFile(0).renameTo(full);</span>
 		// Thread.yield();
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (ok == false) {</span>
-<span class="nc" id="L73">			throw new IOException(&quot;Cannot rename&quot;);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (ok == false) {</span>
+<span class="nc" id="L74">			throw new IOException(&quot;Cannot rename&quot;);</span>
 		}
 
 		// Thread.yield();
-<span class="fc" id="L77">		final BufferedImage im = SImageIO.read(full);</span>
+<span class="fc" id="L78">		final PortableImage im = SImageIO.read(full);</span>
 		// Thread.yield();
-<span class="fc" id="L79">		final PngSegment horizontalSegment = new PngSegment(im.getWidth(), horizontalPages);</span>
-<span class="fc" id="L80">		final PngSegment verticalSegment = new PngSegment(im.getHeight(), verticalPages);</span>
+<span class="fc" id="L80">		final PngSegment horizontalSegment = new PngSegment(im.getWidth(), horizontalPages);</span>
+<span class="fc" id="L81">		final PngSegment verticalSegment = new PngSegment(im.getHeight(), verticalPages);</span>
 
-<span class="fc" id="L82">		int x = 0;</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (int i = 0; i &lt; horizontalPages; i++) {</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">			for (int j = 0; j &lt; verticalPages; j++) {</span>
-<span class="fc" id="L85">				final SFile f = pngFile.getFile(x++);</span>
-<span class="fc" id="L86">				this.files.add(f);</span>
-<span class="fc" id="L87">				final int width = horizontalSegment.getLen(i);</span>
-<span class="fc" id="L88">				final int height = verticalSegment.getLen(j);</span>
-<span class="fc" id="L89">				BufferedImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,</span>
+<span class="fc" id="L83">		int x = 0;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (int i = 0; i &lt; horizontalPages; i++) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			for (int j = 0; j &lt; verticalPages; j++) {</span>
+<span class="fc" id="L86">				final SFile f = pngFile.getFile(x++);</span>
+<span class="fc" id="L87">				this.files.add(f);</span>
+<span class="fc" id="L88">				final int width = horizontalSegment.getLen(i);</span>
+<span class="fc" id="L89">				final int height = verticalSegment.getLen(j);</span>
+<span class="fc" id="L90">				PortableImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,</span>
 						height);
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">				if (splitParam.isSet()) {</span>
-<span class="nc" id="L92">					BufferedImage withMargin = new BufferedImage(width + 2 * splitParam.getExternalMargin(),</span>
-<span class="nc" id="L93">							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);</span>
-<span class="nc" id="L94">					final Graphics2D g2d = withMargin.createGraphics();</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">					if (splitParam.getExternalColor() != null) {</span>
-<span class="nc" id="L96">						g2d.setColor(splitParam.getExternalColor());</span>
-<span class="nc" id="L97">						g2d.fillRect(0, 0, withMargin.getWidth(), withMargin.getHeight());</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (splitParam.isSet()) {</span>
+<span class="nc" id="L93">					PortableImage withMargin = new PortableImage(width + 2 * splitParam.getExternalMargin(),</span>
+<span class="nc" id="L94">							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L95">					final Graphics2D g2d = withMargin.createGraphics();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">					if (splitParam.getExternalColor() != null) {</span>
+<span class="nc" id="L97">						g2d.setColor(splitParam.getExternalColor());</span>
+<span class="nc" id="L98">						g2d.fillRect(0, 0, withMargin.getWidth(), withMargin.getHeight());</span>
 					}
-<span class="nc" id="L99">					g2d.drawImage(piece, splitParam.getExternalMargin(), splitParam.getExternalMargin(), null);</span>
+<span class="nc" id="L100">					g2d.drawImage(piece.getBufferedImage(), splitParam.getExternalMargin(),</span>
+<span class="nc" id="L101">							splitParam.getExternalMargin(), null);</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">					if (splitParam.getBorderColor() != null) {</span>
-<span class="nc" id="L102">						g2d.setColor(splitParam.getBorderColor());</span>
-<span class="nc" id="L103">						g2d.drawRect(splitParam.getExternalMargin() - 1, splitParam.getExternalMargin() - 1,</span>
-<span class="nc" id="L104">								piece.getWidth() + 1, piece.getHeight() + 1);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (splitParam.getBorderColor() != null) {</span>
+<span class="nc" id="L104">						g2d.setColor(splitParam.getBorderColor());</span>
+<span class="nc" id="L105">						g2d.drawRect(splitParam.getExternalMargin() - 1, splitParam.getExternalMargin() - 1,</span>
+<span class="nc" id="L106">								piece.getWidth() + 1, piece.getHeight() + 1);</span>
 					}
 
-<span class="nc" id="L107">					piece = withMargin;</span>
+<span class="nc" id="L109">					piece = withMargin;</span>
 
-<span class="nc" id="L109">					g2d.dispose();</span>
+<span class="nc" id="L111">					g2d.dispose();</span>
 				}
 				// Thread.yield();
-<span class="fc" id="L112">				PngIO.write(piece, colorMapper, f, metadata, dpi);</span>
+<span class="fc" id="L114">				PngIO.write(piece, colorMapper, f, metadata, dpi);</span>
 				// Thread.yield();
 			}
 		}
 
-<span class="fc" id="L117">		full.delete();</span>
-<span class="pc" id="L118">		Log.info(() -&gt; &quot;End of splitting&quot;);</span>
-<span class="fc" id="L119">	}</span>
+<span class="fc" id="L119">		full.delete();</span>
+<span class="pc" id="L120">		Log.info(() -&gt; &quot;End of splitting&quot;);</span>
+<span class="fc" id="L121">	}</span>
 
 	public List&lt;SFile&gt; getFiles() {
-<span class="fc" id="L122">		return Collections.unmodifiableList(files);</span>
+<span class="fc" id="L124">		return Collections.unmodifiableList(files);</span>
 	}
 
 }

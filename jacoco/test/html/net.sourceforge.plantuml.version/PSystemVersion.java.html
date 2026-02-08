@@ -44,7 +44,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.cli.OptionPrint;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -78,71 +78,71 @@ public class PSystemVersion extends PlainStringsDiagram {
 <span class="fc" id="L78">		}</span>
 <span class="fc" id="L79">	}</span>
 
-	private PSystemVersion(UmlSource source, List&lt;String&gt; args, BufferedImage image, PreprocessingArtifact preprocessing) {
+	private PSystemVersion(UmlSource source, List&lt;String&gt; args, PortableImage image, PreprocessingArtifact preprocessing) {
 <span class="nc" id="L82">		super(source, preprocessing);</span>
 <span class="nc" id="L83">		this.strings.addAll(args);</span>
 <span class="nc" id="L84">		this.image = image;</span>
 <span class="nc" id="L85">		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
 <span class="nc" id="L86">	}</span>
 
-	public static BufferedImage getPlantumlImage() {
+	public static PortableImage getPlantumlImage() {
 <span class="fc" id="L89">		return getImage(&quot;logo.png&quot;);</span>
 	}
 
-	public static BufferedImage getTime01() {
+	public static PortableImage getTime01() {
 <span class="nc" id="L93">		return getImage(&quot;time01.png&quot;);</span>
 	}
 
-	public static BufferedImage getTime15() {
+	public static PortableImage getTime15() {
 <span class="nc" id="L97">		return getImage(&quot;time15.png&quot;);</span>
 	}
 
-	public static BufferedImage getCharlieImage() {
+	public static PortableImage getCharlieImage() {
 <span class="nc" id="L101">		return getImage(&quot;charlie.png&quot;);</span>
 	}
 
-	public static BufferedImage getPlantumlSmallIcon() {
+	public static PortableImage getPlantumlSmallIcon() {
 <span class="nc" id="L105">		return getImage(&quot;favicon.png&quot;);</span>
 	}
 
 	// ::comment when __CORE__
-	public static BufferedImage getArecibo() {
+	public static PortableImage getArecibo() {
 <span class="nc" id="L110">		return getImage(&quot;arecibo.png&quot;);</span>
 	}
 
-	public static BufferedImage getDotc() {
+	public static PortableImage getDotc() {
 <span class="nc" id="L114">		return getImage(&quot;dotc.png&quot;);</span>
 	}
 
-	public static BufferedImage getDotd() {
+	public static PortableImage getDotd() {
 <span class="nc" id="L118">		return getImage(&quot;dotd.png&quot;);</span>
 	}
 
-	public static BufferedImage getApple2Image() {
+	public static PortableImage getApple2Image() {
 <span class="nc" id="L122">		return getImageWebp(&quot;apple2.png&quot;);</span>
 	}
 	// ::done
 
-	private static BufferedImage getImage(final String name) {
+	private static PortableImage getImage(final String name) {
 		try {
 <span class="fc" id="L128">			final InputStream is = PSystemVersion.class.getResourceAsStream(name);</span>
-<span class="fc" id="L129">			final BufferedImage image = SImageIO.read(is);</span>
+<span class="fc" id="L129">			final PortableImage image = SImageIO.read(is);</span>
 <span class="fc" id="L130">			is.close();</span>
 <span class="fc" id="L131">			return image;</span>
 <span class="nc" id="L132">		} catch (IOException e) {</span>
 <span class="nc" id="L133">			Logme.error(e);</span>
 		}
-<span class="nc" id="L135">		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L135">		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 	}
 
 	// ::comment when __CORE__
-	private static BufferedImage getImageWebp(final String name) {
+	private static PortableImage getImageWebp(final String name) {
 <span class="nc" id="L140">		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {</span>
-<span class="nc" id="L141">			return SFile.getBufferedImageFromWebpButHeader(is);</span>
+<span class="nc" id="L141">			return SFile.getImageFromWebpButHeader(is);</span>
 <span class="nc" id="L142">		} catch (IOException e) {</span>
 <span class="nc" id="L143">			Logme.error(e);</span>
 		}
-<span class="nc" id="L145">		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L145">		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 	}
 	// ::done
 
@@ -152,7 +152,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 <span class="nc bnc" id="L152" title="All 2 branches missed.">		if (transparentIcon != null) {</span>
 <span class="nc" id="L153">			return transparentIcon;</span>
 		}
-<span class="nc" id="L155">		final BufferedImage ico = getPlantumlSmallIcon();</span>
+<span class="nc" id="L155">		final PortableImage ico = getPlantumlSmallIcon();</span>
 <span class="nc bnc" id="L156" title="All 2 branches missed.">		if (ico == null) {</span>
 <span class="nc" id="L157">			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 		}
@@ -276,7 +276,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	// ::comment when __CORE__
 	public static PSystemVersion createKeyDistributor(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 <span class="nc" id="L278">		final LicenseInfo license = LicenseInfo.retrieveDistributor();</span>
-<span class="nc" id="L279">		BufferedImage im = null;</span>
+<span class="nc" id="L279">		PortableImage im = null;</span>
 <span class="nc" id="L280">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 <span class="nc bnc" id="L281" title="All 2 branches missed.">		if (license == null) {</span>
 <span class="nc" id="L282">			strings.add(&quot;No license found&quot;);</span>

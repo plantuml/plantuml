@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortableImage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.awt</a> &gt; <span class="el_source">PortableImage.java</span></div><h1>PortableImage.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.awt;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+public class PortableImage {
+
+	public static final int TYPE_INT_ARGB = BufferedImage.TYPE_INT_ARGB;
+	public static final int TYPE_INT_ARGB_PRE = BufferedImage.TYPE_INT_ARGB_PRE;
+	public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
+
+	private final BufferedImage image;
+
+<span class="fc" id="L15">	public PortableImage(int width, int height, int imageType) {</span>
+<span class="fc" id="L16">		this.image = new BufferedImage(width, height, imageType);</span>
+<span class="fc" id="L17">	}</span>
+
+<span class="fc" id="L19">	public PortableImage(BufferedImage image) {</span>
+<span class="fc" id="L20">		this.image = image;</span>
+<span class="fc" id="L21">	}</span>
+
+	public int getWidth() {
+<span class="fc" id="L24">		return image.getWidth();</span>
+	}
+
+	public int getHeight() {
+<span class="fc" id="L28">		return image.getHeight();</span>
+	}
+
+	public int getRGB(int x, int y) {
+<span class="fc" id="L32">		return image.getRGB(x, y);</span>
+	}
+
+	public void setRGB(int x, int y, int rgb) {
+<span class="fc" id="L36">		image.setRGB(x, y, rgb);</span>
+<span class="fc" id="L37">	}</span>
+
+	public int getType() {
+<span class="fc" id="L40">		return image.getType();</span>
+	}
+
+	public BufferedImage getBufferedImage() {
+<span class="fc" id="L44">		return image;</span>
+	}
+
+	public PortableImage getSubimage(int x, int y, int width, int height) {
+<span class="fc" id="L48">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
+	}
+
+	public Graphics2D createGraphics() {
+<span class="fc" id="L52">		return image.createGraphics();</span>
+	}
+
+	public int getTransparency() {
+<span class="nc" id="L56">		return image.getTransparency();</span>
+	}
+
+	public Graphics getGraphics() {
+<span class="nc" id="L60">		return image.getGraphics();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

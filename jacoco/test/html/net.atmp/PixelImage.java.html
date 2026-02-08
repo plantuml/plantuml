@@ -43,130 +43,131 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 
 public class PixelImage implements MutableImage {
 
-	private final BufferedImage bufferedImageScale1;
+	private final PortableImage imageScale1;
 	private final double scale;
 	private final AffineTransformType type;
-<span class="fc" id="L53">	private BufferedImage cache = null;</span>
+<span class="fc" id="L54">	private PortableImage cache = null;</span>
 
-	public PixelImage(BufferedImage bufferedImage, AffineTransformType type) {
-<span class="fc" id="L56">		this(bufferedImage, type, 1);</span>
-<span class="fc" id="L57">	}</span>
+	public PixelImage(PortableImage image, AffineTransformType type) {
+<span class="fc" id="L57">		this(image, type, 1);</span>
+<span class="fc" id="L58">	}</span>
 
-<span class="fc" id="L59">	private PixelImage(BufferedImage bufferedImage, AffineTransformType type, double scale) {</span>
-<span class="fc" id="L60">		this.bufferedImageScale1 = bufferedImage;</span>
-<span class="fc" id="L61">		this.scale = scale;</span>
-<span class="fc" id="L62">		this.type = Objects.requireNonNull(type);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L60">	private PixelImage(PortableImage image, AffineTransformType type, double scale) {</span>
+<span class="fc" id="L61">		this.imageScale1 = image;</span>
+<span class="fc" id="L62">		this.scale = scale;</span>
+<span class="fc" id="L63">		this.type = Objects.requireNonNull(type);</span>
+<span class="fc" id="L64">	}</span>
 
 	@Override
 	public MutableImage withScale(double scale) {
-<span class="fc" id="L67">		return new PixelImage(bufferedImageScale1, type, this.scale * scale);</span>
+<span class="fc" id="L68">		return new PixelImage(imageScale1, type, this.scale * scale);</span>
 	}
 
 	@Override
-	public final BufferedImage getImage() {
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (scale == 1)</span>
-<span class="fc" id="L73">			return bufferedImageScale1;</span>
+	public final PortableImage getImage() {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (scale == 1)</span>
+<span class="fc" id="L74">			return imageScale1;</span>
 
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (cache == null) {</span>
-<span class="fc" id="L76">			final int w = (int) Math.round(bufferedImageScale1.getWidth() * scale);</span>
-<span class="fc" id="L77">			final int h = (int) Math.round(bufferedImageScale1.getHeight() * scale);</span>
-<span class="fc" id="L78">			final BufferedImage after = new BufferedImage(w, h, bufferedImageScale1.getType());</span>
-<span class="fc" id="L79">			final AffineTransform at = new AffineTransform();</span>
-<span class="fc" id="L80">			at.scale(scale, scale);</span>
-<span class="fc" id="L81">			final AffineTransformOp scaleOp = new AffineTransformOp(at, type.toLegacyInt());</span>
-<span class="fc" id="L82">			this.cache = scaleOp.filter(bufferedImageScale1, after);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (cache == null) {</span>
+<span class="fc" id="L77">			final int w = (int) Math.round(imageScale1.getWidth() * scale);</span>
+<span class="fc" id="L78">			final int h = (int) Math.round(imageScale1.getHeight() * scale);</span>
+<span class="fc" id="L79">			final BufferedImage after = new BufferedImage(w, h, imageScale1.getType());</span>
+<span class="fc" id="L80">			final AffineTransform at = new AffineTransform();</span>
+<span class="fc" id="L81">			at.scale(scale, scale);</span>
+<span class="fc" id="L82">			final AffineTransformOp scaleOp = new AffineTransformOp(at, type.toLegacyInt());</span>
+<span class="fc" id="L83">			this.cache = new PortableImage(scaleOp.filter(imageScale1.getBufferedImage(), after));</span>
 		}
-<span class="fc" id="L84">		return cache;</span>
+<span class="fc" id="L85">		return cache;</span>
 	}
 
 	@Override
 	public MutableImage monochrome() {
-<span class="nc" id="L89">		final BufferedImage copy = deepCopy();</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (int i = 0; i &lt; bufferedImageScale1.getWidth(); i++)</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			for (int j = 0; j &lt; bufferedImageScale1.getHeight(); j++) {</span>
-<span class="nc" id="L92">				final int color = bufferedImageScale1.getRGB(i, j);</span>
-<span class="nc" id="L93">				final int rgb = getRgb(color);</span>
-<span class="nc" id="L94">				final int grayScale = ColorUtils.getGrayScaleFromRGB(rgb);</span>
-<span class="nc" id="L95">				final int gray = grayScale + grayScale &lt;&lt; 8 + grayScale &lt;&lt; 16;</span>
-<span class="nc" id="L96">				final int a = getA(color);</span>
-<span class="nc" id="L97">				copy.setRGB(i, j, gray + a);</span>
+<span class="nc" id="L90">		final PortableImage copy = deepCopy();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		for (int i = 0; i &lt; imageScale1.getWidth(); i++)</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			for (int j = 0; j &lt; imageScale1.getHeight(); j++) {</span>
+<span class="nc" id="L93">				final int color = imageScale1.getRGB(i, j);</span>
+<span class="nc" id="L94">				final int rgb = getRgb(color);</span>
+<span class="nc" id="L95">				final int grayScale = ColorUtils.getGrayScaleFromRGB(rgb);</span>
+<span class="nc" id="L96">				final int gray = grayScale + grayScale &lt;&lt; 8 + grayScale &lt;&lt; 16;</span>
+<span class="nc" id="L97">				final int a = getA(color);</span>
+<span class="nc" id="L98">				copy.setRGB(i, j, gray + a);</span>
 			}
 
-<span class="nc" id="L100">		return new PixelImage(copy, type, scale);</span>
+<span class="nc" id="L101">		return new PixelImage(copy, type, scale);</span>
 	}
 
 	@Override
 	public MutableImage muteColor(Color newColor) {
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (newColor == null)</span>
-<span class="nc" id="L106">			return this;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (newColor == null)</span>
+<span class="nc" id="L107">			return this;</span>
 
-<span class="nc" id="L108">		int darkerRgb = getDarkerRgb();</span>
-<span class="nc" id="L109">		final BufferedImage copy = deepCopy();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (int i = 0; i &lt; bufferedImageScale1.getWidth(); i++)</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			for (int j = 0; j &lt; bufferedImageScale1.getHeight(); j++) {</span>
-<span class="nc" id="L112">				final int color = bufferedImageScale1.getRGB(i, j);</span>
-<span class="nc" id="L113">				final int rgb = getRgb(color);</span>
-<span class="nc" id="L114">				final int a = getA(color);</span>
-<span class="nc bnc" id="L115" title="All 4 branches missed.">				if (a != 0 &amp;&amp; rgb == darkerRgb)</span>
-<span class="nc" id="L116">					copy.setRGB(i, j, newColor.getRGB() + a);</span>
+<span class="nc" id="L109">		int darkerRgb = getDarkerRgb();</span>
+<span class="nc" id="L110">		final PortableImage copy = deepCopy();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (int i = 0; i &lt; imageScale1.getWidth(); i++)</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			for (int j = 0; j &lt; imageScale1.getHeight(); j++) {</span>
+<span class="nc" id="L113">				final int color = imageScale1.getRGB(i, j);</span>
+<span class="nc" id="L114">				final int rgb = getRgb(color);</span>
+<span class="nc" id="L115">				final int a = getA(color);</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">				if (a != 0 &amp;&amp; rgb == darkerRgb)</span>
+<span class="nc" id="L117">					copy.setRGB(i, j, newColor.getRGB() + a);</span>
 			}
 
-<span class="nc" id="L119">		return new PixelImage(copy, type, scale);</span>
+<span class="nc" id="L120">		return new PixelImage(copy, type, scale);</span>
 	}
 
 	@Override
 	public MutableImage muteTransparentColor(Color newColor) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (newColor == null)</span>
-<span class="nc" id="L125">			newColor = Color.WHITE;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (newColor == null)</span>
+<span class="nc" id="L126">			newColor = Color.WHITE;</span>
 
-<span class="nc" id="L127">		final BufferedImage copy = deepCopy();</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		for (int i = 0; i &lt; bufferedImageScale1.getWidth(); i++)</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			for (int j = 0; j &lt; bufferedImageScale1.getHeight(); j++) {</span>
-<span class="nc" id="L130">				final int color = bufferedImageScale1.getRGB(i, j);</span>
-<span class="nc" id="L131">				final int a = getA(color);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">				if (a == 0)</span>
-<span class="nc" id="L133">					copy.setRGB(i, j, newColor.getRGB());</span>
+<span class="nc" id="L128">		final PortableImage copy = deepCopy();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (int i = 0; i &lt; imageScale1.getWidth(); i++)</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (int j = 0; j &lt; imageScale1.getHeight(); j++) {</span>
+<span class="nc" id="L131">				final int color = imageScale1.getRGB(i, j);</span>
+<span class="nc" id="L132">				final int a = getA(color);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">				if (a == 0)</span>
+<span class="nc" id="L134">					copy.setRGB(i, j, newColor.getRGB());</span>
 
 			}
 
-<span class="nc" id="L137">		return new PixelImage(copy, type, scale);</span>
+<span class="nc" id="L138">		return new PixelImage(copy, type, scale);</span>
 	}
 
 	private int getDarkerRgb() {
-<span class="nc" id="L141">		int darkerRgb = -1;</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (int i = 0; i &lt; bufferedImageScale1.getWidth(); i++)</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			for (int j = 0; j &lt; bufferedImageScale1.getHeight(); j++) {</span>
-<span class="nc" id="L144">				final int color = bufferedImageScale1.getRGB(i, j);</span>
-<span class="nc" id="L145">				final int rgb = getRgb(color);</span>
-<span class="nc" id="L146">				final int a = getA(color);</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">				if (a != mask_a__)</span>
-<span class="nc" id="L148">					continue;</span>
+<span class="nc" id="L142">		int darkerRgb = -1;</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (int i = 0; i &lt; imageScale1.getWidth(); i++)</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			for (int j = 0; j &lt; imageScale1.getHeight(); j++) {</span>
+<span class="nc" id="L145">				final int color = imageScale1.getRGB(i, j);</span>
+<span class="nc" id="L146">				final int rgb = getRgb(color);</span>
+<span class="nc" id="L147">				final int a = getA(color);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">				if (a != mask_a__)</span>
+<span class="nc" id="L149">					continue;</span>
 
 				// if (isTransparent(color)) {
 				// continue;
 				// }
-<span class="nc" id="L153">				final int gray = ColorUtils.getGrayScaleFromRGB(rgb);</span>
-<span class="nc bnc" id="L154" title="All 4 branches missed.">				if (darkerRgb == -1 || gray &lt; ColorUtils.getGrayScaleFromRGB(darkerRgb))</span>
-<span class="nc" id="L155">					darkerRgb = rgb;</span>
+<span class="nc" id="L154">				final int gray = ColorUtils.getGrayScaleFromRGB(rgb);</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">				if (darkerRgb == -1 || gray &lt; ColorUtils.getGrayScaleFromRGB(darkerRgb))</span>
+<span class="nc" id="L156">					darkerRgb = rgb;</span>
 
 			}
-<span class="nc" id="L158">		return darkerRgb;</span>
+<span class="nc" id="L159">		return darkerRgb;</span>
 	}
 
 	private static final int mask_a__ = 0xFF000000;
 	private static final int mask_rgb = 0x00FFFFFF;
 
 	private int getRgb(int color) {
-<span class="nc" id="L165">		return color &amp; mask_rgb;</span>
+<span class="nc" id="L166">		return color &amp; mask_rgb;</span>
 	}
 
 	private int getA(int color) {
-<span class="nc" id="L169">		return color &amp; mask_a__;</span>
+<span class="nc" id="L170">		return color &amp; mask_a__;</span>
 	}
 
 	// From
@@ -178,19 +179,19 @@ public class PixelImage implements MutableImage {
 //		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 //	}
 
-	private BufferedImage deepCopy() {
-<span class="nc" id="L182">		final BufferedImage result = new BufferedImage(bufferedImageScale1.getWidth(), bufferedImageScale1.getHeight(),</span>
-				BufferedImage.TYPE_INT_ARGB);
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		for (int i = 0; i &lt; this.bufferedImageScale1.getWidth(); i++)</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">			for (int j = 0; j &lt; this.bufferedImageScale1.getHeight(); j++)</span>
-<span class="nc" id="L186">				result.setRGB(i, j, bufferedImageScale1.getRGB(i, j));</span>
+	private PortableImage deepCopy() {
+<span class="nc" id="L183">		final PortableImage result = new PortableImage(imageScale1.getWidth(),</span>
+<span class="nc" id="L184">				imageScale1.getHeight(), PortableImage.TYPE_INT_ARGB);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		for (int i = 0; i &lt; this.imageScale1.getWidth(); i++)</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			for (int j = 0; j &lt; this.imageScale1.getHeight(); j++)</span>
+<span class="nc" id="L187">				result.setRGB(i, j, imageScale1.getRGB(i, j));</span>
 
-<span class="nc" id="L188">		return result;</span>
+<span class="nc" id="L189">		return result;</span>
 	}
 
 	@Override
 	public final double getScale() {
-<span class="nc" id="L193">		return scale;</span>
+<span class="nc" id="L194">		return scale;</span>
 	}
 
 }

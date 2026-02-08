@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -99,7 +99,7 @@ public class SpriteColor implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor forecolor) {
-<span class="nc" id="L102">		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L102">		final PortableImage im = new PortableImage(width, height, PortableImage.TYPE_INT_RGB);</span>
 
 <span class="nc bnc" id="L104" title="All 2 branches missed.">		if (backcolor == null)</span>
 <span class="nc" id="L105">			backcolor = HColors.WHITE;</span>

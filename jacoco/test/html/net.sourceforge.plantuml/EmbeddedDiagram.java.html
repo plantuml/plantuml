@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -139,7 +139,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
 	private final List&lt;StringLocated&gt; list;
 	private final ISkinSimple skinParam;
-	private BufferedImage image;
+	private PortableImage image;
 	private String svg;
 
 <span class="fc" id="L145">	private EmbeddedDiagram(ISkinSimple skinParam, List&lt;StringLocated&gt; system) {</span>
@@ -162,7 +162,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 <span class="nc" id="L162">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
 <span class="nc" id="L163">				return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
 			}
-<span class="fc" id="L165">			final BufferedImage im = getImage();</span>
+<span class="fc" id="L165">			final PortableImage im = getImage();</span>
 <span class="fc" id="L166">			return new XDimension2D(im.getWidth(), im.getHeight());</span>
 <span class="nc" id="L167">		} catch (IOException e) {</span>
 <span class="nc" id="L168">			Logme.error(e);</span>
@@ -181,7 +181,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 <span class="nc" id="L181">				ug.draw(svg);</span>
 <span class="nc" id="L182">				return;</span>
 			}
-<span class="fc" id="L184">			final BufferedImage im = getImage();</span>
+<span class="fc" id="L184">			final PortableImage im = getImage();</span>
 <span class="fc" id="L185">			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
 <span class="fc" id="L186">			ug.draw(image);</span>
 <span class="nc" id="L187">		} catch (IOException e) {</span>
@@ -208,13 +208,13 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 <span class="nc" id="L208">		return new String(os.toByteArray());</span>
 	}
 
-	private BufferedImage getImage() throws IOException, InterruptedException {
+	private PortableImage getImage() throws IOException, InterruptedException {
 <span class="fc bfc" id="L212" title="All 2 branches covered.">		if (image == null)</span>
 <span class="fc" id="L213">			image = getImageSlow();</span>
 <span class="fc" id="L214">		return image;</span>
 	}
 
-	private BufferedImage getImageSlow() throws IOException, InterruptedException {
+	private PortableImage getImageSlow() throws IOException, InterruptedException {
 <span class="fc" id="L218">		final Diagram system = getSystem();</span>
 <span class="fc" id="L219">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
 <span class="fc" id="L220">		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>

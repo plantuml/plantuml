@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.klimt.drawing.eps;
 
 import java.awt.Color;
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
 import net.sourceforge.plantuml.klimt.geom.USegment;
@@ -693,7 +693,7 @@ import net.sourceforge.plantuml.version.Version;
 
 <span class="nc" id="L694">	}</span>
 
-	final public void drawImage(BufferedImage image, double x, double y) {
+	final public void drawImage(PortableImage image, double x, double y) {
 <span class="nc" id="L697">		final int width = image.getWidth();</span>
 <span class="nc" id="L698">		final int height = image.getHeight();</span>
 <span class="nc" id="L699">		append(&quot;gsave&quot;, true);</span>

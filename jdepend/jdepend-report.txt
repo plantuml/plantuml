@@ -72,7 +72,6 @@ Concrete Classes:
 Depends Upon:
     com.plantuml.api.cheerpj
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.nio.charset
@@ -82,6 +81,7 @@ Depends Upon:
     net.sourceforge.plantuml.code
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.error
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.drawing.g2d
@@ -1356,11 +1356,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 53
-    Ce: 54
+    Ce: 55
 
     A: 0.17
-    I: 0.5
-    D: 0.33
+    I: 0.51
+    D: 0.32
 
 Abstract Classes:
     net.atmp.CucaDiagram
@@ -1395,6 +1395,7 @@ Depends Upon:
     net.sourceforge.plantuml.elk
     net.sourceforge.plantuml.graphml
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.compress
     net.sourceforge.plantuml.klimt.creole
@@ -1493,7 +1494,7 @@ Stats:
     Abstract Classes: 14
 
     Ca: 118
-    Ce: 61
+    Ce: 62
 
     A: 0.23
     I: 0.34
@@ -1599,6 +1600,7 @@ Depends Upon:
     net.sourceforge.plantuml.file
     net.sourceforge.plantuml.jaws
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.creole.atom
@@ -2870,7 +2872,6 @@ Concrete Classes:
     net.sourceforge.plantuml.api.v2.DiagramUtils$1
 
 Depends Upon:
-    java.awt.image
     java.io
     java.lang
     java.nio.charset
@@ -2878,6 +2879,7 @@ Depends Upon:
     net.sourceforge.plantuml
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.error
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.security
     net.sourceforge.plantuml.utils
@@ -4061,7 +4063,6 @@ Concrete Classes:
 Depends Upon:
     com.plantuml.ubrex
     com.plantuml.ubrex.builder
-    java.awt.image
     java.io
     java.lang
     java.util
@@ -4078,6 +4079,7 @@ Depends Upon:
     net.sourceforge.plantuml.emoji
     net.sourceforge.plantuml.error
     net.sourceforge.plantuml.jaws
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.font
@@ -4496,7 +4498,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.util
@@ -4509,6 +4510,7 @@ Depends Upon:
     net.sourceforge.plantuml.flashcode
     net.sourceforge.plantuml.fun
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
@@ -4907,7 +4909,6 @@ Concrete Classes:
     net.sourceforge.plantuml.dedication.TurningBytes
 
 Depends Upon:
-    java.awt.image
     java.io
     java.lang
     java.math
@@ -4921,6 +4922,7 @@ Depends Upon:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.log
@@ -5162,7 +5164,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 19
+    Ce: 20
 
     A: 0
     I: 1
@@ -5186,6 +5188,7 @@ Depends Upon:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.crash
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.security
     net.sourceforge.plantuml.skin
@@ -5466,7 +5469,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.math
@@ -5479,6 +5481,7 @@ Depends Upon:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.drawing
@@ -5825,7 +5828,6 @@ Concrete Classes:
 Depends Upon:
     java.awt
     java.awt.geom
-    java.awt.image
     java.io
     java.lang
     java.util
@@ -5836,6 +5838,7 @@ Depends Upon:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.emoji.data
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
@@ -5908,7 +5911,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.util
@@ -5922,6 +5924,7 @@ Depends Upon:
     net.sourceforge.plantuml.eggs
     net.sourceforge.plantuml.flashcode
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.drawing
@@ -6059,8 +6062,8 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.lang
+    net.sourceforge.plantuml.klimt.awt
 
 Used By:
     net.sourceforge.plantuml.crash
@@ -6219,11 +6222,11 @@ Concrete Classes:
     net.sourceforge.plantuml.fun.IconLoader
 
 Depends Upon:
-    java.awt.image
     java.io
     java.lang
     java.util
     java.util.concurrent
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.log
     net.sourceforge.plantuml.security
 
@@ -6572,7 +6575,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 18
+    Ce: 19
 
     A: 0
     I: 1
@@ -6596,6 +6599,7 @@ Depends Upon:
     net.sourceforge.plantuml.api
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.log
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.regex
@@ -6751,11 +6755,11 @@ Stats:
     Abstract Classes: 10
 
     Ca: 83
-    Ce: 14
+    Ce: 15
 
     A: 0.38
-    I: 0.14
-    D: 0.47
+    I: 0.15
+    D: 0.46
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.AbstractShadowable
@@ -6795,6 +6799,7 @@ Depends Upon:
     java.util
     java.util.regex
     net.sourceforge.plantuml
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.compress
     net.sourceforge.plantuml.klimt.drawing
@@ -6887,6 +6892,62 @@ Used By:
     net.sourceforge.plantuml.version
     net.sourceforge.plantuml.wbs
     net.sourceforge.plantuml.wire
+
+--------------------------------------------------
+- Package: net.sourceforge.plantuml.klimt.awt
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 28
+    Ce: 3
+
+    A: 0
+    I: 0.1
+    D: 0.9
+
+Abstract Classes:
+
+Concrete Classes:
+    net.sourceforge.plantuml.klimt.awt.PortableImage
+
+Depends Upon:
+    java.awt
+    java.awt.image
+    java.lang
+
+Used By:
+    com.plantuml.api.cheerpj.v1
+    net.atmp
+    net.sourceforge.plantuml
+    net.sourceforge.plantuml.api.v2
+    net.sourceforge.plantuml.command
+    net.sourceforge.plantuml.crash
+    net.sourceforge.plantuml.dedication
+    net.sourceforge.plantuml.ditaa
+    net.sourceforge.plantuml.eggs
+    net.sourceforge.plantuml.emoji
+    net.sourceforge.plantuml.error
+    net.sourceforge.plantuml.flashcode
+    net.sourceforge.plantuml.fun
+    net.sourceforge.plantuml.jcckit
+    net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.creole.atom
+    net.sourceforge.plantuml.klimt.creole.command
+    net.sourceforge.plantuml.klimt.drawing.eps
+    net.sourceforge.plantuml.klimt.drawing.g2d
+    net.sourceforge.plantuml.klimt.font
+    net.sourceforge.plantuml.klimt.shape
+    net.sourceforge.plantuml.klimt.sprite
+    net.sourceforge.plantuml.math
+    net.sourceforge.plantuml.preproc
+    net.sourceforge.plantuml.security
+    net.sourceforge.plantuml.sudoku
+    net.sourceforge.plantuml.swing
+    net.sourceforge.plantuml.version
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.klimt.color
@@ -7308,7 +7369,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.nio.charset
@@ -7318,6 +7378,7 @@ Depends Upon:
     net.sourceforge.plantuml.emoji
     net.sourceforge.plantuml.flashcode
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.creole.legacy
@@ -7387,12 +7448,12 @@ Concrete Classes:
 
 Depends Upon:
     com.plantuml.ubrex
-    java.awt.image
     java.io
     java.lang
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.creole.legacy
@@ -7726,12 +7787,12 @@ Depends Upon:
     java.awt
     java.awt.font
     java.awt.geom
-    java.awt.image
     java.io
     java.lang
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
@@ -7758,11 +7819,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 5
-    Ce: 18
+    Ce: 19
 
     A: 0.07
-    I: 0.78
-    D: 0.15
+    I: 0.79
+    D: 0.14
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.drawing.g2d.ExtendedPathIterator
@@ -7791,6 +7852,7 @@ Depends Upon:
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
@@ -8136,11 +8198,11 @@ Concrete Classes:
 Depends Upon:
     java.awt
     java.awt.font
-    java.awt.image
     java.lang
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
@@ -8486,13 +8548,13 @@ Concrete Classes:
 Depends Upon:
     java.awt
     java.awt.geom
-    java.awt.image
     java.lang
     java.util
     java.util.regex
     net.atmp
     net.sourceforge.plantuml.jaws
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.compress
     net.sourceforge.plantuml.klimt.creole
@@ -8647,7 +8709,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.net
@@ -8661,6 +8722,7 @@ Depends Upon:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.donors
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.creole.legacy
@@ -8858,7 +8920,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.lang.reflect
@@ -8869,6 +8930,7 @@ Depends Upon:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
@@ -9783,7 +9845,7 @@ Concrete Classes:
     net.sourceforge.plantuml.preproc.DiagramExtractor
     net.sourceforge.plantuml.preproc.EvalBoolean
     net.sourceforge.plantuml.preproc.EvalMath
-    net.sourceforge.plantuml.preproc.FutureBufferedImage
+    net.sourceforge.plantuml.preproc.FutureImage
     net.sourceforge.plantuml.preproc.NumericCompare
     net.sourceforge.plantuml.preproc.OptionKey
     net.sourceforge.plantuml.preproc.PreprocessingArtifact
@@ -9797,12 +9859,12 @@ Concrete Classes:
     net.sourceforge.plantuml.preproc.Variables
 
 Depends Upon:
-    java.awt.image
     java.io
     java.lang
     java.nio.charset
     java.util
     java.util.regex
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.klimt.sprite
@@ -11156,11 +11218,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 41
-    Ce: 18
+    Ce: 19
 
     A: 0
-    I: 0.31
-    D: 0.69
+    I: 0.32
+    D: 0.68
 
 Abstract Classes:
 
@@ -11191,6 +11253,7 @@ Depends Upon:
     javax.net.ssl
     javax.swing
     net.sourceforge.plantuml
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.log
     net.sourceforge.plantuml.nio
     net.sourceforge.plantuml.security.authentication
@@ -12648,7 +12711,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.image
     java.io
     java.lang
     java.util
@@ -12658,6 +12720,7 @@ Depends Upon:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.drawing
@@ -13070,7 +13133,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 29
+    Ce: 30
 
     A: 0
     I: 1
@@ -13143,6 +13206,7 @@ Depends Upon:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.file
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.drawing.svg
@@ -14172,11 +14236,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 17
-    Ce: 34
+    Ce: 35
 
     A: 0.07
     I: 0.67
-    D: 0.27
+    D: 0.26
 
 Abstract Classes:
     net.sourceforge.plantuml.version.IteratorCounter2
@@ -14222,6 +14286,7 @@ Depends Upon:
     net.sourceforge.plantuml.dot
     net.sourceforge.plantuml.flashcode
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
@@ -16925,14 +16990,14 @@ gen.lib.pathplan,4,0,1,5,0,0.83,0.17,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,104,2,12,5,0.02,0.29,0.69,1
 java.applet,0,0,1,0,0,0,1,1
-java.awt,0,0,41,0,0,0,1,1
+java.awt,0,0,42,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,2,0,0,0,1,1
 java.awt.font,0,0,7,0,0,0,1,1
 java.awt.geom,0,0,21,0,0,0,1,1
-java.awt.image,0,0,35,0,0,0,1,1
+java.awt.image,0,0,17,0,0,0,1,1
 java.io,0,0,124,0,0,0,1,1
-java.lang,0,0,234,0,0,0,1,1
+java.lang,0,0,235,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,8,0,0,0,1,1
 java.math,0,0,7,0,0,0,1,1
@@ -16978,8 +17043,8 @@ jcckit.plot,26,8,1,7,0.31,0.88,0.18,1
 jcckit.renderer,2,0,1,4,0,0.8,0.2,1
 jcckit.transformation,2,1,1,4,0.5,0.8,0.3,1
 jcckit.util,13,3,6,6,0.23,0.5,0.27,1
-net.atmp,6,1,53,54,0.17,0.5,0.33,1
-net.sourceforge.plantuml,61,14,118,61,0.23,0.34,0.43,1
+net.atmp,6,1,53,55,0.17,0.51,0.32,1
+net.sourceforge.plantuml,61,14,118,62,0.23,0.34,0.43,1
 net.sourceforge.plantuml.abel,34,8,39,25,0.24,0.39,0.37,1
 net.sourceforge.plantuml.activitydiagram,3,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.activitydiagram.command,12,0,1,19,0,0.95,0.05,1
@@ -17032,7 +17097,7 @@ net.sourceforge.plantuml.definition,2,0,0,15,0,1,0,1
 net.sourceforge.plantuml.descdiagram,10,0,5,31,0,0.86,0.14,1
 net.sourceforge.plantuml.descdiagram.command,11,0,9,24,0,0.73,0.27,1
 net.sourceforge.plantuml.directdot,3,0,1,13,0,0.93,0.07,1
-net.sourceforge.plantuml.ditaa,2,0,0,19,0,1,0,1
+net.sourceforge.plantuml.ditaa,2,0,0,20,0,1,0,1
 net.sourceforge.plantuml.donors,6,0,2,18,0,0.9,0.1,1
 net.sourceforge.plantuml.dot,24,3,14,28,0.12,0.67,0.21,1
 net.sourceforge.plantuml.ebnf,34,2,1,24,0.06,0.96,0.02,1
@@ -17062,10 +17127,11 @@ net.sourceforge.plantuml.hcl,5,0,0,11,0,1,0,1
 net.sourceforge.plantuml.help,7,0,0,23,0,1,0,1
 net.sourceforge.plantuml.html,2,0,0,12,0,1,0,1
 net.sourceforge.plantuml.jaws,4,1,11,4,0.25,0.27,0.48,1
-net.sourceforge.plantuml.jcckit,2,0,0,18,0,1,0,1
+net.sourceforge.plantuml.jcckit,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,5,30,0,0.86,0.14,1
-net.sourceforge.plantuml.klimt,26,10,83,14,0.38,0.14,0.47,1
+net.sourceforge.plantuml.klimt,26,10,83,15,0.38,0.15,0.46,1
+net.sourceforge.plantuml.klimt.awt,1,0,28,3,0,0.1,0.9,1
 net.sourceforge.plantuml.klimt.color,31,2,105,13,0.06,0.11,0.83,1
 net.sourceforge.plantuml.klimt.compress,14,2,5,10,0.14,0.67,0.19,1
 net.sourceforge.plantuml.klimt.creole,23,4,84,24,0.17,0.22,0.6,1
@@ -17075,7 +17141,7 @@ net.sourceforge.plantuml.klimt.creole.legacy,18,2,10,30,0.11,0.75,0.14,1
 net.sourceforge.plantuml.klimt.drawing,16,7,85,15,0.44,0.15,0.41,1
 net.sourceforge.plantuml.klimt.drawing.debug,2,0,4,12,0,0.75,0.25,1
 net.sourceforge.plantuml.klimt.drawing.eps,25,1,3,19,0.04,0.86,0.1,1
-net.sourceforge.plantuml.klimt.drawing.g2d,14,1,5,18,0.07,0.78,0.15,1
+net.sourceforge.plantuml.klimt.drawing.g2d,14,1,5,19,0.07,0.79,0.14,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,2,7,0,0.78,0.22,1
 net.sourceforge.plantuml.klimt.drawing.html5,4,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.klimt.drawing.svg,16,0,5,21,0,0.81,0.19,1
@@ -17129,7 +17195,7 @@ net.sourceforge.plantuml.salt,12,1,3,21,0.08,0.88,0.04,1
 net.sourceforge.plantuml.salt.element,32,3,3,16,0.09,0.84,0.06,1
 net.sourceforge.plantuml.salt.factory,20,2,1,7,0.1,0.88,0.02,1
 net.sourceforge.plantuml.sdot,6,0,2,35,0,0.95,0.05,1
-net.sourceforge.plantuml.security,9,0,41,18,0,0.31,0.69,1
+net.sourceforge.plantuml.security,9,0,41,19,0,0.32,0.68,1
 net.sourceforge.plantuml.security.authentication,7,3,4,5,0.43,0.56,0.02,1
 net.sourceforge.plantuml.security.authentication.basicauth,2,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.security.authentication.oauth,5,1,0,11,0.2,1,0.2,1
@@ -17152,7 +17218,7 @@ net.sourceforge.plantuml.sudoku,8,1,0,26,0.12,1,0.12,1
 net.sourceforge.plantuml.svek,82,10,25,39,0.12,0.61,0.27,1
 net.sourceforge.plantuml.svek.extremity,56,4,5,11,0.07,0.69,0.24,1
 net.sourceforge.plantuml.svek.image,52,2,16,25,0.04,0.61,0.35,1
-net.sourceforge.plantuml.swing,42,0,0,29,0,1,0,1
+net.sourceforge.plantuml.swing,42,0,0,30,0,1,0,1
 net.sourceforge.plantuml.syntax,3,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.telnet,2,0,0,6,0,1,0,1
 net.sourceforge.plantuml.text,9,1,51,9,0.11,0.15,0.74,1
@@ -17167,7 +17233,7 @@ net.sourceforge.plantuml.timingdiagram.command,24,1,1,15,0.04,0.94,0.02,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,14,0.18,0.93,0.11,1
 net.sourceforge.plantuml.url,8,0,40,7,0,0.15,0.85,1
 net.sourceforge.plantuml.utils,22,6,92,23,0.27,0.2,0.53,1
-net.sourceforge.plantuml.version,15,1,17,34,0.07,0.67,0.27,1
+net.sourceforge.plantuml.version,15,1,17,35,0.07,0.67,0.26,1
 net.sourceforge.plantuml.vizjs,7,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.warning,3,1,9,2,0.33,0.18,0.48,1
 net.sourceforge.plantuml.wbs,13,2,1,25,0.15,0.96,0.12,1

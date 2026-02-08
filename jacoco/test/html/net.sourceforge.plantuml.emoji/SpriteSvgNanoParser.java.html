@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.emoji;
 
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -54,7 +54,7 @@ public class SpriteSvgNanoParser implements Sprite {
 
 	private final UImage img;
 
-<span class="nc" id="L57">	public SpriteSvgNanoParser(BufferedImage img) {</span>
+<span class="nc" id="L57">	public SpriteSvgNanoParser(PortableImage img) {</span>
 <span class="nc" id="L58">		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));</span>
 <span class="nc" id="L59">	}</span>
 

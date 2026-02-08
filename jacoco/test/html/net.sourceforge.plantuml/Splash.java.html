@@ -47,10 +47,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
@@ -65,7 +65,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 
 <span class="nc" id="L66">	private final int width = 280;</span>
 <span class="nc" id="L67">	private final int height = 80;</span>
-	private final BufferedImage logo;
+	private final PortableImage logo;
 <span class="nc" id="L69">	private final AtomicInteger total = new AtomicInteger();</span>
 <span class="nc" id="L70">	private final AtomicInteger done = new AtomicInteger();</span>
 <span class="nc" id="L71">	private final AtomicInteger errors = new AtomicInteger();</span>
@@ -186,7 +186,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 		// g.setColor(Color.RED);
 		// final String status = done + &quot;/&quot; + total;
 		// g.drawString(status, width / 2, height / 2);
-<span class="nc" id="L189">		g.drawImage(logo, width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);</span>
+<span class="nc" id="L189">		g.drawImage(logo.getBufferedImage(), width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);</span>
 <span class="nc" id="L190">		drawProgessBar(g, done.intValue(), total.intValue());</span>
 <span class="nc" id="L191">		final int nbErrors = errors.get();</span>
 <span class="nc bnc" id="L192" title="All 2 branches missed.">		if (nbErrors &gt; 0) {</span>

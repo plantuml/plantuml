@@ -36,11 +36,11 @@ package net.sourceforge.plantuml;
 
 import static net.sourceforge.plantuml.klimt.shape.GraphicStrings.createBlackOnWhite;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 public abstract class PlainStringsDiagram extends PlainDiagram {
 	// ::remove file when __HAXE__
 
-<span class="fc" id="L51">	protected BufferedImage image = null;</span>
+<span class="fc" id="L51">	protected PortableImage image = null;</span>
 <span class="fc" id="L52">	protected GraphicPosition imagePosition = null;</span>
 
 <span class="fc" id="L54">	protected final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>

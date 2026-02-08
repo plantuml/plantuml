@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 
 public class Dedications {
@@ -88,12 +88,12 @@ public class Dedications {
 	private Dedications() {
 	}
 
-	public static BufferedImage get(String line) {
+	public static PortableImage get(String line) {
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (line.length() &gt; 25) {</span>
 <span class="nc" id="L93">			final TinyHashableString sentence = new TinyHashableString(line);</span>
 <span class="nc" id="L94">			synchronized (Dedications.class) {</span>
 <span class="nc bnc" id="L95" title="All 2 branches missed.">				for (Dedication dedication : all) {</span>
-<span class="nc" id="L96">					final BufferedImage image = dedication.getImage(sentence);</span>
+<span class="nc" id="L96">					final PortableImage image = dedication.getImage(sentence);</span>
 <span class="nc bnc" id="L97" title="All 2 branches missed.">					if (image != null)</span>
 <span class="nc" id="L98">						return image;</span>
 <span class="nc" id="L99">				}</span>

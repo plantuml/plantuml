@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
@@ -90,7 +90,7 @@ public class LatexBuilder implements ScientificEquation {
 		private final Icon icon;
 		private final Color foregroundColor;
 		private final Color backgroundColor;
-<span class="nc" id="L93">		private BufferedImage cache = null;</span>
+<span class="nc" id="L93">		private PortableImage cache = null;</span>
 
 <span class="nc" id="L95">		public LatexImage(Icon icon, double scale, Color foregroundColor, Color backgroundColor) {</span>
 <span class="nc" id="L96">			this.scale = scale;</span>
@@ -100,10 +100,10 @@ public class LatexBuilder implements ScientificEquation {
 <span class="nc" id="L100">		}</span>
 
 		@Override
-		public BufferedImage getImage() {
+		public PortableImage getImage() {
 <span class="nc bnc" id="L104" title="All 2 branches missed.">			if (cache == null) {</span>
-<span class="nc" id="L105">				cache = new BufferedImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),</span>
-						BufferedImage.TYPE_INT_ARGB);
+<span class="nc" id="L105">				cache = new PortableImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),</span>
+						PortableImage.TYPE_INT_ARGB);
 <span class="nc" id="L107">				final Graphics2D g2 = cache.createGraphics();</span>
 <span class="nc" id="L108">				g2.scale(scale, scale);</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">				if (backgroundColor != null) {</span>

@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class SpriteUtils {
@@ -48,7 +48,7 @@ public class SpriteUtils {
 	}
 
 	// ::comment when __CORE__
-	public static String encodeColor(BufferedImage img, String name) {
+	public static String encodeColor(PortableImage img, String name) {
 <span class="nc" id="L52">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() * 2);</span>
 <span class="nc" id="L53">		sb.append(&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/color] {\n&quot;);</span>
 <span class="nc" id="L54">		final List&lt;String&gt; result = SpriteColorBuilder4096.encodeImage(img);</span>
@@ -60,7 +60,7 @@ public class SpriteUtils {
 <span class="nc" id="L60">		return sb.toString();</span>
 	}
 
-	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
+	public static String encode(PortableImage img, String name, SpriteGrayLevel level) {
 <span class="fc" id="L64">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
 <span class="fc" id="L65">		sb.append(</span>
 <span class="fc" id="L66">				&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;] {\n&quot;);</span>
@@ -73,7 +73,7 @@ public class SpriteUtils {
 <span class="fc" id="L73">		return sb.toString();</span>
 	}
 
-	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
+	public static String encodeCompressed(PortableImage img, String name, SpriteGrayLevel level) {
 <span class="nc" id="L77">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
 <span class="nc" id="L78">		sb.append(&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;z] &quot;);</span>
 <span class="nc" id="L79">		final List&lt;String&gt; list = level.encodeZ(img);</span>

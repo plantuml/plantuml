@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.dedication;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.MTRandom;
@@ -62,7 +62,7 @@ public class DedicationCrypted implements Dedication {
 <span class="fc" id="L62">		this.tinyHash = tinyHash;</span>
 <span class="fc" id="L63">	}</span>
 
-	public synchronized BufferedImage getImage(final TinyHashableString sentence) {
+	public synchronized PortableImage getImage(final TinyHashableString sentence) {
 <span class="nc" id="L66">		final String line = sentence.getSentence();</span>
 
 <span class="nc bnc" id="L68" title="All 2 branches missed.">		if (line.length() &lt; 40)</span>
@@ -110,7 +110,7 @@ public class DedicationCrypted implements Dedication {
 <span class="nc" id="L110">			Noise.shuffle(current, rndMT);</span>
 <span class="nc" id="L111">			current = Noise.reverse(current, rndMT.nextInt());</span>
 
-<span class="nc" id="L113">			final BufferedImage img = SFile.getBufferedImageFromWebpButHeader(new ByteArrayInputStream(current));</span>
+<span class="nc" id="L113">			final PortableImage img = SFile.getImageFromWebpButHeader(new ByteArrayInputStream(current));</span>
 <span class="nc" id="L114">			this.solution = line;</span>
 <span class="nc" id="L115">			return img;</span>
 <span class="nc" id="L116">		} catch (Throwable t) {</span>

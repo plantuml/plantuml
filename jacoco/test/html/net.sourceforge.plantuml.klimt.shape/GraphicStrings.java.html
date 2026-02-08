@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -72,7 +72,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final List&lt;String&gt; strings;
 
-	private final BufferedImage image;
+	private final PortableImage image;
 <span class="fc" id="L76">	private final double imagePadding = 30;</span>
 
 	private final GraphicPosition position;
@@ -111,7 +111,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 <span class="nc" id="L111">		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);</span>
 	}
 
-	public static TextBlock createBlackOnWhite(List&lt;String&gt; strings, BufferedImage image, GraphicPosition position) {
+	public static TextBlock createBlackOnWhite(List&lt;String&gt; strings, PortableImage image, GraphicPosition position) {
 <span class="fc" id="L115">		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, image, position,</span>
 				CreoleMode.FULL_BUT_UNDERSCORE, false);
 	}
@@ -133,7 +133,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final boolean isCrash;
 
 	private GraphicStrings(List&lt;String&gt; strings, FontConfiguration fontConfiguration, HColor background,
-<span class="fc" id="L136">			BufferedImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {</span>
+<span class="fc" id="L136">			PortableImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {</span>
 <span class="fc" id="L137">		this.strings = strings;</span>
 <span class="fc" id="L138">		this.background = background;</span>
 <span class="fc" id="L139">		this.image = image;</span>

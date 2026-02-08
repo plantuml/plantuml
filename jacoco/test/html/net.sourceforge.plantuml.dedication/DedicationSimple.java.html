@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
@@ -51,7 +51,7 @@ public class DedicationSimple implements Dedication {
 <span class="fc" id="L51">		this.sentence = sentence;</span>
 <span class="fc" id="L52">	}</span>
 
-	public synchronized BufferedImage getImage(TinyHashableString sentence) {
+	public synchronized PortableImage getImage(TinyHashableString sentence) {
 <span class="nc bnc" id="L55" title="All 2 branches missed.">		if (same(this.sentence, sentence.getSentence()) == false)</span>
 <span class="nc" id="L56">			return null;</span>
 
@@ -61,7 +61,7 @@ public class DedicationSimple implements Dedication {
 <span class="nc" id="L61">			final RBlocks init = RBlocks.readFrom(current, 513);</span>
 <span class="nc" id="L62">			final RBlocks decoded = init.change(E, N);</span>
 <span class="nc" id="L63">			current = decoded.toByteArray(512);</span>
-<span class="nc" id="L64">			return SFile.getBufferedImageFromWebpButHeader(new ByteArrayInputStream(current));</span>
+<span class="nc" id="L64">			return SFile.getImageFromWebpButHeader(new ByteArrayInputStream(current));</span>
 <span class="nc" id="L65">		} catch (Throwable t) {</span>
 <span class="nc" id="L66">			Logme.error(t);</span>
 <span class="nc" id="L67">			return null;</span>

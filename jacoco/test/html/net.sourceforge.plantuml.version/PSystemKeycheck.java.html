@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.version;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -126,7 +126,7 @@ public class PSystemKeycheck extends PlainDiagram {
 
 <span class="nc" id="L127">		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));</span>
 <span class="nc" id="L128">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
-<span class="nc" id="L129">		final BufferedImage im = utils.exportFlashcode(</span>
+<span class="nc" id="L129">		final PortableImage im = utils.exportFlashcode(</span>
 <span class="nc" id="L130">				Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK,</span>
 				Color.WHITE);
 <span class="nc bnc" id="L132" title="All 2 branches missed.">		if (im != null) {</span>

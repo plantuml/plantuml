@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TileImage;
@@ -105,7 +105,7 @@ public class Img implements HtmlCommand {
 <span class="nc bnc" id="L105" title="All 2 branches missed.">					if (tmp == null)</span>
 <span class="nc" id="L106">						return new PlainText(&quot;(Cannot decode: &quot; + src + &quot;)&quot;);</span>
 
-<span class="nc" id="L108">					final BufferedImage read = tmp.readRasterImageFromURL();</span>
+<span class="nc" id="L108">					final PortableImage read = tmp.readRasterImageFromURL();</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">					if (read == null)</span>
 <span class="nc" id="L110">						return new PlainText(&quot;(Cannot decode: &quot; + src + &quot;)&quot;);</span>
 
@@ -120,7 +120,7 @@ public class Img implements HtmlCommand {
 
 <span class="nc" id="L121">				return new Img(new TileImageSvg(tmp, 1));</span>
 			}
-<span class="nc" id="L123">			final BufferedImage read = f.readRasterImageFromFile();</span>
+<span class="nc" id="L123">			final PortableImage read = f.readRasterImageFromFile();</span>
 <span class="nc bnc" id="L124" title="All 2 branches missed.">			if (read == null)</span>
 <span class="nc" id="L125">				return new PlainText(&quot;(Cannot decode: &quot; + f + &quot;)&quot;);</span>
 

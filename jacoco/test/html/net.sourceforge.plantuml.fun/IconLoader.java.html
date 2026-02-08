@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.fun;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 
@@ -51,10 +51,10 @@ import net.sourceforge.plantuml.security.SImageIO;
 
 	private static final int NUMBER_OF_ICONS = 31;
 
-<span class="nc" id="L54">	private final static Map&lt;String, BufferedImage&gt; all = new ConcurrentHashMap&lt;String, BufferedImage&gt;();</span>
+<span class="nc" id="L54">	private final static Map&lt;String, PortableImage&gt; all = new ConcurrentHashMap&lt;String, PortableImage&gt;();</span>
 <span class="nc" id="L55">	static private final List&lt;String&gt; tmp = new ArrayList&lt;&gt;();</span>
 
-	public static BufferedImage getRandom() {
+	public static PortableImage getRandom() {
 		// return addTransparent(getIcon(&quot;sprite029.png&quot;));
 <span class="nc" id="L59">		return addTransparent(getIcon(getSomeQuote()));</span>
 	}
@@ -74,8 +74,8 @@ import net.sourceforge.plantuml.security.SImageIO;
 		}
 	}
 
-	private static BufferedImage getIcon(String name) {
-<span class="nc" id="L78">		BufferedImage result = all.get(name);</span>
+	private static PortableImage getIcon(String name) {
+<span class="nc" id="L78">		PortableImage result = all.get(name);</span>
 <span class="nc bnc" id="L79" title="All 2 branches missed.">		if (result == null) {</span>
 <span class="nc" id="L80">			result = getIconSlow(name);</span>
 <span class="nc bnc" id="L81" title="All 2 branches missed.">			if (result != null)</span>
@@ -85,13 +85,13 @@ import net.sourceforge.plantuml.security.SImageIO;
 <span class="nc" id="L85">		return result;</span>
 	}
 
-	private static BufferedImage getIconSlow(String name) {
+	private static PortableImage getIconSlow(String name) {
 		try {
 <span class="nc" id="L90">			final InputStream is = IconLoader.class.getResourceAsStream(name);</span>
 <span class="nc bnc" id="L91" title="All 2 branches missed.">			if (is == null)</span>
 <span class="nc" id="L92">				return null;</span>
 
-<span class="nc" id="L94">			final BufferedImage image = SImageIO.read(is);</span>
+<span class="nc" id="L94">			final PortableImage image = SImageIO.read(is);</span>
 <span class="nc" id="L95">			is.close();</span>
 <span class="nc" id="L96">			return image;</span>
 <span class="nc" id="L97">		} catch (IOException e) {</span>
@@ -100,12 +100,12 @@ import net.sourceforge.plantuml.security.SImageIO;
 <span class="nc" id="L100">		return null;</span>
 	}
 
-	private static BufferedImage addTransparent(BufferedImage ico) {
+	private static PortableImage addTransparent(PortableImage ico) {
 <span class="nc bnc" id="L104" title="All 2 branches missed.">		if (ico == null)</span>
 <span class="nc" id="L105">			return null;</span>
 
-<span class="nc" id="L107">		final BufferedImage transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(),</span>
-				BufferedImage.TYPE_INT_ARGB_PRE);
+<span class="nc" id="L107">		final PortableImage transparentIcon = new PortableImage(ico.getWidth(), ico.getHeight(),</span>
+				PortableImage.TYPE_INT_ARGB_PRE);
 <span class="nc bnc" id="L109" title="All 2 branches missed.">		for (int i = 0; i &lt; ico.getWidth(); i++)</span>
 <span class="nc bnc" id="L110" title="All 2 branches missed.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
 <span class="nc" id="L111">				final int col = ico.getRGB(i, j);</span>

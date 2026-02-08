@@ -36,52 +36,53 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-<span class="nc" id="L44">public class SpriteColorBuilder {</span>
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+
+<span class="nc" id="L45">public class SpriteColorBuilder {</span>
     // ::remove folder when __HAXE__
 
-<span class="nc" id="L47">	private final static ColorPalette COLOR_PALETTE = new ColorPalette();</span>
+<span class="nc" id="L48">	private final static ColorPalette COLOR_PALETTE = new ColorPalette();</span>
 
 	public static Sprite buildSprite(List&lt;CharSequence&gt; strings) {
-<span class="nc" id="L50">		final SpriteColor result = new SpriteColor(strings.get(0).length(), strings.size());</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++) {</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
-<span class="nc" id="L54">					continue;</span>
+<span class="nc" id="L51">		final SpriteColor result = new SpriteColor(strings.get(0).length(), strings.size());</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">				if (col &gt;= strings.get(line).length()) {</span>
+<span class="nc" id="L55">					continue;</span>
 				}
-<span class="nc" id="L56">				final char charColor = strings.get(line).charAt(col);</span>
-<span class="nc" id="L57">				final int idx = &quot;0123456789ABCDEF&quot;.indexOf(charColor);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">				if (idx != -1) {</span>
-<span class="nc" id="L59">					result.setGray(col, line, idx);</span>
+<span class="nc" id="L57">				final char charColor = strings.get(line).charAt(col);</span>
+<span class="nc" id="L58">				final int idx = &quot;0123456789ABCDEF&quot;.indexOf(charColor);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">				if (idx != -1) {</span>
+<span class="nc" id="L60">					result.setGray(col, line, idx);</span>
 				} else {
-<span class="nc" id="L61">					final Color rgb = COLOR_PALETTE.getColorFor(charColor);</span>
-<span class="nc" id="L62">					result.setColor(col, line, rgb.getRGB() &amp; 0xFFFFFF);</span>
+<span class="nc" id="L62">					final Color rgb = COLOR_PALETTE.getColorFor(charColor);</span>
+<span class="nc" id="L63">					result.setColor(col, line, rgb.getRGB() &amp; 0xFFFFFF);</span>
 				}
 			}
 		}
-<span class="nc" id="L66">		return result;</span>
+<span class="nc" id="L67">		return result;</span>
 	}
 
-	static public List&lt;String&gt; encodeColor(BufferedImage img) {
-<span class="nc" id="L70">		final int width = img.getWidth();</span>
-<span class="nc" id="L71">		final int height = img.getHeight();</span>
+	static public List&lt;String&gt; encodeColor(PortableImage img) {
+<span class="nc" id="L71">		final int width = img.getWidth();</span>
+<span class="nc" id="L72">		final int height = img.getHeight();</span>
 
-<span class="nc" id="L73">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L74">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
-<span class="nc" id="L76">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
-<span class="nc" id="L78">				final int rgb = (img.getRGB(x, y) &amp; 0xFFFFFF);</span>
-<span class="nc" id="L79">				final char code = COLOR_PALETTE.getCharFor(new Color(rgb));</span>
-<span class="nc" id="L80">				sb.append(code);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
+<span class="nc" id="L77">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc" id="L79">				final int rgb = (img.getRGB(x, y) &amp; 0xFFFFFF);</span>
+<span class="nc" id="L80">				final char code = COLOR_PALETTE.getCharFor(new Color(rgb));</span>
+<span class="nc" id="L81">				sb.append(code);</span>
 			}
-<span class="nc" id="L82">			result.add(sb.toString());</span>
+<span class="nc" id="L83">			result.add(sb.toString());</span>
 		}
-<span class="nc" id="L84">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L85">		return Collections.unmodifiableList(result);</span>
 	}
 
 }

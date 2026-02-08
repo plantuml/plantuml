@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
@@ -51,9 +51,9 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDedication extends PlainDiagram {
 
-	private final BufferedImage img;
+	private final PortableImage img;
 
-	public PSystemDedication(UmlSource source, BufferedImage img, PreprocessingArtifact preprocessing) {
+	public PSystemDedication(UmlSource source, PortableImage img, PreprocessingArtifact preprocessing) {
 <span class="nc" id="L57">		super(source, preprocessing);</span>
 <span class="nc" id="L58">		this.img = Objects.requireNonNull(img);</span>
 <span class="nc" id="L59">	}</span>

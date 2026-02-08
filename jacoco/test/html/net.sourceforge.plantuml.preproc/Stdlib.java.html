@@ -83,7 +83,7 @@ public class Stdlib {
 <span class="fc" id="L83">	private final Map&lt;String, byte[]&gt; json = new HashMap&lt;&gt;();</span>
 <span class="fc" id="L84">	private final Map&lt;String, StdlibSprite&gt; sprites = new HashMap&lt;&gt;();</span>
 <span class="fc" id="L85">	private final Map&lt;String, SvgNanoParser&gt; svgs = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L86">	private final List&lt;FutureBufferedImage&gt; images = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L86">	private final List&lt;FutureImage&gt; images = new ArrayList&lt;&gt;();</span>
 
 	private final String name;
 <span class="fc" id="L89">	private final Map&lt;String, String&gt; info = new HashMap&lt;String, String&gt;();</span>
@@ -407,7 +407,7 @@ public class Stdlib {
 
 	}
 
-	public FutureBufferedImage readDataImagePng(int num) throws IOException {
+	public FutureImage readDataImagePng(int num) throws IOException {
 <span class="nc" id="L411">		synchronized (images) {</span>
 <span class="nc bnc" id="L412" title="All 2 branches missed.">			if (images.size() == 0) {</span>
 <span class="nc" id="L413">				try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);</span>
@@ -418,7 +418,7 @@ public class Stdlib {
 <span class="nc" id="L418">						final int width = dis.readInt();</span>
 <span class="nc" id="L419">						final int height = dis.readInt();</span>
 <span class="nc" id="L420">						final byte data[] = FileUtils.readExactly(dis, width * height * 2);</span>
-<span class="nc" id="L421">						images.add(new FutureBufferedImage(colors, width, height, data));</span>
+<span class="nc" id="L421">						images.add(new FutureImage(colors, width, height, data));</span>
 					}
 				}
 			}

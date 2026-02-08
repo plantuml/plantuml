@@ -108,6 +108,7 @@ net.sourceforge.plantuml.jcckit
 net.sourceforge.plantuml.json
 net.sourceforge.plantuml.jsondiagram
 net.sourceforge.plantuml.klimt
+net.sourceforge.plantuml.klimt.awt
 net.sourceforge.plantuml.klimt.color
 net.sourceforge.plantuml.klimt.compress
 net.sourceforge.plantuml.klimt.creole

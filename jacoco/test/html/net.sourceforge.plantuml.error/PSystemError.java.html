@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.error;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -348,7 +348,7 @@ public abstract class PSystemError extends PlainDiagram {
 	private TextBlock getMessageDedication() {
 <span class="nc" id="L349">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
-<span class="nc" id="L351">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L351">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
 <span class="nc" id="L352">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, Color.BLACK, backColor.getAwtColor()));</span>
 <span class="nc" id="L353">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
@@ -390,7 +390,7 @@ public abstract class PSystemError extends PlainDiagram {
 <span class="nc" id="L390">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
 <span class="nc" id="L391">		final HColor backColor = HColors.simple(back);</span>
 
-<span class="nc" id="L393">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L393">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
 <span class="nc" id="L394">				.exportFlashcode(&quot;https://plantuml.com/patreon&quot;, Color.BLACK, Color.WHITE));</span>
 
 <span class="nc" id="L396">		final int scale = 2;</span>
@@ -438,7 +438,7 @@ public abstract class PSystemError extends PlainDiagram {
 <span class="nc" id="L438">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
 <span class="nc" id="L439">		final HColor backColor = HColors.simple(back);</span>
 
-<span class="nc" id="L441">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L441">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
 <span class="nc" id="L442">				.exportFlashcode(&quot;https://plantuml.com/lp&quot;, Color.BLACK, Color.WHITE));</span>
 
 <span class="nc" id="L444">		final int scale = 2;</span>
@@ -481,7 +481,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	}
 
-	private BufferedImage smaller(BufferedImage im) {
+	private PortableImage smaller(PortableImage im) {
 <span class="nc bnc" id="L485" title="All 2 branches missed.">		if (im == null)</span>
 <span class="nc" id="L486">			return null;</span>
 

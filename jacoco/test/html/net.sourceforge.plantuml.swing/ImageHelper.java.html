@@ -42,11 +42,13 @@ import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+
 /**
  * A collection of methods to help with processing images. A majority of this
  * code was originally found online.
  */
-<span class="nc" id="L49">public class ImageHelper {</span>
+<span class="nc" id="L51">public class ImageHelper {</span>
 	/**
 	 * Returns a scaled instance of a {@code BufferedImage}.
 	 * 
@@ -64,53 +66,53 @@ import java.awt.image.BufferedImage;
 	 *                      specified)
 	 * @return a scaled version of the original {@code BufferedImage}
 	 */
-	public static BufferedImage getScaledInstance(BufferedImage img, Dimension targetDim, RenderingHints hints,
+	public static PortableImage getScaledInstance(PortableImage img, Dimension targetDim, RenderingHints hints,
 			boolean higherQuality) {
-<span class="nc" id="L69">		final int targetWidth = targetDim.width;</span>
-<span class="nc" id="L70">		final int targetHeight = targetDim.height;</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		final int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB</span>
-<span class="nc" id="L72">				: BufferedImage.TYPE_INT_ARGB;</span>
-<span class="nc" id="L73">		BufferedImage ret = (BufferedImage) img;</span>
+<span class="nc" id="L71">		final int targetWidth = targetDim.width;</span>
+<span class="nc" id="L72">		final int targetHeight = targetDim.height;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		final int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB</span>
+<span class="nc" id="L74">				: BufferedImage.TYPE_INT_ARGB;</span>
+<span class="nc" id="L75">		PortableImage ret = img;</span>
 		int w;
 		int h;
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (higherQuality) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (higherQuality) {</span>
 			// Use multi-step technique: start with original size, then
 			// scale down in multiple passes with drawImage()
 			// until the target size is reached
-<span class="nc" id="L80">			w = img.getWidth();</span>
-<span class="nc" id="L81">			h = img.getHeight();</span>
+<span class="nc" id="L82">			w = img.getWidth();</span>
+<span class="nc" id="L83">			h = img.getHeight();</span>
 		} else {
 			// Use one-step technique: scale directly from original
 			// size to target size with a single drawImage() call
-<span class="nc" id="L85">			w = targetWidth;</span>
-<span class="nc" id="L86">			h = targetHeight;</span>
+<span class="nc" id="L87">			w = targetWidth;</span>
+<span class="nc" id="L88">			h = targetHeight;</span>
 		}
 
 		do {
-<span class="nc bnc" id="L90" title="All 4 branches missed.">			if (higherQuality &amp;&amp; w &gt; targetWidth) {</span>
-<span class="nc" id="L91">				w /= 2;</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (w &lt; targetWidth) {</span>
-<span class="nc" id="L93">					w = targetWidth;</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">			if (higherQuality &amp;&amp; w &gt; targetWidth) {</span>
+<span class="nc" id="L93">				w /= 2;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (w &lt; targetWidth) {</span>
+<span class="nc" id="L95">					w = targetWidth;</span>
 				}
 			}
 
-<span class="nc bnc" id="L97" title="All 4 branches missed.">			if (higherQuality &amp;&amp; h &gt; targetHeight) {</span>
-<span class="nc" id="L98">				h /= 2;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (h &lt; targetHeight) {</span>
-<span class="nc" id="L100">					h = targetHeight;</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">			if (higherQuality &amp;&amp; h &gt; targetHeight) {</span>
+<span class="nc" id="L100">				h /= 2;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				if (h &lt; targetHeight) {</span>
+<span class="nc" id="L102">					h = targetHeight;</span>
 				}
 			}
 
-<span class="nc" id="L104">			final BufferedImage tmp = new BufferedImage(w, h, type);</span>
-<span class="nc" id="L105">			final Graphics2D g2 = tmp.createGraphics();</span>
-<span class="nc" id="L106">			g2.setRenderingHints(hints);</span>
-<span class="nc" id="L107">			g2.drawImage(ret, 0, 0, w, h, null);</span>
-<span class="nc" id="L108">			g2.dispose();</span>
+<span class="nc" id="L106">			final BufferedImage tmp = new BufferedImage(w, h, type);</span>
+<span class="nc" id="L107">			final Graphics2D g2 = tmp.createGraphics();</span>
+<span class="nc" id="L108">			g2.setRenderingHints(hints);</span>
+<span class="nc" id="L109">			g2.drawImage(ret.getBufferedImage(), 0, 0, w, h, null);</span>
+<span class="nc" id="L110">			g2.dispose();</span>
 
-<span class="nc" id="L110">			ret = tmp;</span>
-<span class="nc bnc" id="L111" title="All 4 branches missed.">		} while (w != targetWidth || h != targetHeight);</span>
+<span class="nc" id="L112">			ret = new PortableImage(tmp);</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		} while (w != targetWidth || h != targetHeight);</span>
 
-<span class="nc" id="L113">		return ret;</span>
+<span class="nc" id="L115">		return ret;</span>
 	}
 
 	/**
@@ -120,19 +122,19 @@ import java.awt.image.BufferedImage;
 	 * http://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
 	 */
 	public static BufferedImage toBufferedImage(Image img) {
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (img instanceof BufferedImage) {</span>
-<span class="nc" id="L124">			return (BufferedImage) img;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (img instanceof BufferedImage) {</span>
+<span class="nc" id="L126">			return (BufferedImage) img;</span>
 		}
 		// Create a buffered image with transparency
-<span class="nc" id="L127">		final BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null),</span>
+<span class="nc" id="L129">		final BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null),</span>
 				BufferedImage.TYPE_INT_ARGB);
 
 		// Draw the image on to the buffered image
-<span class="nc" id="L131">		final Graphics2D bGr = bimage.createGraphics();</span>
-<span class="nc" id="L132">		bGr.drawImage(img, 0, 0, null);</span>
-<span class="nc" id="L133">		bGr.dispose();</span>
+<span class="nc" id="L133">		final Graphics2D bGr = bimage.createGraphics();</span>
+<span class="nc" id="L134">		bGr.drawImage(img, 0, 0, null);</span>
+<span class="nc" id="L135">		bGr.dispose();</span>
 
-<span class="nc" id="L135">		return bimage;</span>
+<span class="nc" id="L137">		return bimage;</span>
 	}
 
 	/**
@@ -146,53 +148,53 @@ import java.awt.image.BufferedImage;
 	 * @param boundary dimensions of the area the image is to be drawn in.
 	 */
 	public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
-<span class="nc" id="L149">		final int originalWidth = imgSize.width;</span>
-<span class="nc" id="L150">		final int originaHeight = imgSize.height;</span>
-<span class="nc" id="L151">		final int boundWidth = boundary.width;</span>
-<span class="nc" id="L152">		final int boundHeight = boundary.height;</span>
-<span class="nc" id="L153">		int newWidth = originalWidth;</span>
-<span class="nc" id="L154">		int newHeight = originaHeight;</span>
+<span class="nc" id="L151">		final int originalWidth = imgSize.width;</span>
+<span class="nc" id="L152">		final int originaHeight = imgSize.height;</span>
+<span class="nc" id="L153">		final int boundWidth = boundary.width;</span>
+<span class="nc" id="L154">		final int boundHeight = boundary.height;</span>
+<span class="nc" id="L155">		int newWidth = originalWidth;</span>
+<span class="nc" id="L156">		int newHeight = originaHeight;</span>
 
 		// first check if we need to scale width
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (originalWidth &gt; boundWidth) {</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (originalWidth &gt; boundWidth) {</span>
 			// scale width to fit
-<span class="nc" id="L159">			newWidth = boundWidth;</span>
+<span class="nc" id="L161">			newWidth = boundWidth;</span>
 			// scale height to maintain aspect ratio
-<span class="nc" id="L161">			newHeight = (newWidth * originaHeight) / originalWidth;</span>
+<span class="nc" id="L163">			newHeight = (newWidth * originaHeight) / originalWidth;</span>
 		}
 
 		// then check if we need to scale even with the new height
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (newHeight &gt; boundHeight) {</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (newHeight &gt; boundHeight) {</span>
 			// scale height to fit instead
-<span class="nc" id="L167">			newHeight = boundHeight;</span>
+<span class="nc" id="L169">			newHeight = boundHeight;</span>
 			// scale width to maintain aspect ratio
-<span class="nc" id="L169">			newWidth = (newHeight * originalWidth) / originaHeight;</span>
+<span class="nc" id="L171">			newWidth = (newHeight * originalWidth) / originaHeight;</span>
 		}
 
-<span class="nc" id="L172">		return new Dimension(newWidth, newHeight);</span>
+<span class="nc" id="L174">		return new Dimension(newWidth, newHeight);</span>
 	}
 
 	public static Dimension getScaledDimensionWidthFit(Dimension imgSize, Dimension boundary) {
-<span class="nc" id="L176">		final int originalWidth = imgSize.width;</span>
-<span class="nc" id="L177">		final int originaHeight = imgSize.height;</span>
-<span class="nc" id="L178">		final int boundWidth = boundary.width;</span>
-<span class="nc" id="L179">		final int boundHeight = boundary.height;</span>
-<span class="nc" id="L180">		int newWidth = originalWidth;</span>
-<span class="nc" id="L181">		int newHeight = originaHeight;</span>
+<span class="nc" id="L178">		final int originalWidth = imgSize.width;</span>
+<span class="nc" id="L179">		final int originaHeight = imgSize.height;</span>
+<span class="nc" id="L180">		final int boundWidth = boundary.width;</span>
+<span class="nc" id="L181">		final int boundHeight = boundary.height;</span>
+<span class="nc" id="L182">		int newWidth = originalWidth;</span>
+<span class="nc" id="L183">		int newHeight = originaHeight;</span>
 
 		// first check if we need to scale width
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (originalWidth != boundWidth) {</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (originalWidth != boundWidth) {</span>
 			// scale width to fit
-<span class="nc" id="L186">			newWidth = boundWidth;</span>
+<span class="nc" id="L188">			newWidth = boundWidth;</span>
 			// scale height to maintain aspect ratio
-<span class="nc" id="L188">			newHeight = (newWidth * originaHeight) / originalWidth;</span>
+<span class="nc" id="L190">			newHeight = (newWidth * originaHeight) / originalWidth;</span>
 		}
 
-<span class="nc" id="L191">		return new Dimension(newWidth, newHeight);</span>
+<span class="nc" id="L193">		return new Dimension(newWidth, newHeight);</span>
 	}
 
 	public static Dimension getScaledDimension(Dimension dim, double zoom) {
-<span class="nc" id="L195">		return new Dimension((int) (dim.getWidth() * zoom), (int) (dim.getHeight() * zoom));</span>
+<span class="nc" id="L197">		return new Dimension((int) (dim.getWidth() * zoom), (int) (dim.getHeight() * zoom));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.api.v2;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Optional;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 class DiagramReturnError implements DiagramReturn {
 
@@ -65,7 +65,7 @@ class DiagramReturnError implements DiagramReturn {
 	}
 
 	@Override
-	public BufferedImage asImage() throws IOException {
+	public PortableImage asImage() throws IOException {
 <span class="nc" id="L69">		throw new IOException(&quot;No diagram available: &quot; + errorMessage);</span>
 	}
 

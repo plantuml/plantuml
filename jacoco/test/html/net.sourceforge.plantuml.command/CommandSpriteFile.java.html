@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
@@ -44,6 +43,7 @@ import java.util.zip.ZipInputStream;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteSvg;
@@ -109,7 +109,7 @@ public class CommandSpriteFile extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 <span class="nc" id="L110">					sprite = new SpriteSvg(tmp);</span>
 <span class="nc" id="L111">				} else {</span>
-<span class="nc" id="L112">					final BufferedImage tmp = f.readRasterImageFromFile();</span>
+<span class="nc" id="L112">					final PortableImage tmp = f.readRasterImageFromFile();</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">					if (tmp == null)</span>
 <span class="nc" id="L114">						return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
 

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
 
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,6 +72,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -913,7 +913,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 
 <span class="nc" id="L914">	}</span>
 
-	public void svgImage(BufferedImage image, double x, double y) throws IOException {
+	public void svgImage(PortableImage image, double x, double y) throws IOException {
 <span class="pc bpc" id="L917" title="1 of 2 branches missed.">		if (hidden == false) {</span>
 <span class="fc" id="L918">			final Element elt = document.createElement(&quot;image&quot;);</span>
 <span class="fc" id="L919">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
@@ -998,7 +998,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="nc" id="L998">		return svg;</span>
 	}
 
-	private String toBase64(BufferedImage image) throws IOException {
+	private String toBase64(PortableImage image) throws IOException {
 <span class="fc" id="L1002">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
 <span class="fc" id="L1003">		SImageIO.write(image, &quot;png&quot;, baos);</span>
 <span class="fc" id="L1004">		final byte data[] = baos.toByteArray();</span>

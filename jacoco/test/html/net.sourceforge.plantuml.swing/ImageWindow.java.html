@@ -49,7 +49,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -70,6 +69,7 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
@@ -316,7 +316,7 @@ class ImageWindow extends JFrame {
 <span class="nc" id="L316">			return null;</span>
 		}
 <span class="nc" id="L318">		final File png = generatedImage.getPngFile();</span>
-<span class="nc" id="L319">		BufferedImage image = null;</span>
+<span class="nc" id="L319">		PortableImage image = null;</span>
 		try {
 <span class="nc" id="L321">			image = SImageIO.read(new SFile(png.getAbsolutePath()));</span>
 <span class="nc bnc" id="L322" title="All 2 branches missed.">			if (sizeMode == SizeMode.ZOOM_FIT) {</span>
@@ -344,7 +344,7 @@ class ImageWindow extends JFrame {
 <span class="nc" id="L344">				Logme.error(e);</span>
 <span class="nc" id="L345">			}</span>
 <span class="nc" id="L346">		}</span>
-<span class="nc" id="L347">		final ImageIcon imageIcon = new ImageIcon(image, simpleLine.toString());</span>
+<span class="nc" id="L347">		final ImageIcon imageIcon = new ImageIcon(image.toString(), simpleLine.toString());</span>
 <span class="nc" id="L348">		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);</span>
 
 <span class="nc" id="L350">		scrollablePicture.addMouseListener(new MouseAdapter() {</span>
@@ -393,7 +393,7 @@ class ImageWindow extends JFrame {
 		}
 		try {
 <span class="nc" id="L395">			final File png = generatedImage.getPngFile();</span>
-<span class="nc" id="L396">			final Image image = SImageIO.read(png);</span>
+<span class="nc" id="L396">			final Image image = SImageIO.read(png).getBufferedImage();</span>
 <span class="nc" id="L397">			final ImageSelection imgSel = new ImageSelection(image);</span>
 <span class="nc" id="L398">			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);</span>
 <span class="nc" id="L399">		} catch (IOException e) {</span>

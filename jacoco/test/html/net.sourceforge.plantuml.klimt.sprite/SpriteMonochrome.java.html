@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -184,7 +184,7 @@ public class SpriteMonochrome implements Sprite {
 <span class="pc bpc" id="L184" title="1 of 4 branches missed.">		if (color == null || color.isTransparent())</span>
 <span class="fc" id="L185">			color = HColors.BLACK.withDark(HColors.WHITE);</span>
 
-<span class="fc" id="L187">		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L187">		final PortableImage im = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);</span>
 <span class="fc" id="L188">		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');</span>
 <span class="fc" id="L189">		double maxCoef = 0;</span>
 <span class="fc bfc" id="L190" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>

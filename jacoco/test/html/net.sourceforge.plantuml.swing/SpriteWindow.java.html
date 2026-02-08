@@ -52,6 +52,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -60,114 +61,115 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 public class SpriteWindow extends JFrame {
 
 	// private final JButton encode = new JButton(&quot;Encode&quot;);
-<span class="nc" id="L63">	private final JTextArea area = new JTextArea();</span>
+<span class="nc" id="L64">	private final JTextArea area = new JTextArea();</span>
 
 	public SpriteWindow() {
-<span class="nc" id="L66">		super(&quot;SpriteWindows&quot;);</span>
-<span class="nc" id="L67">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
+<span class="nc" id="L67">		super(&quot;SpriteWindows&quot;);</span>
+<span class="nc" id="L68">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
 		// encode.addActionListener(new ActionListener() {
 		// public void actionPerformed(ActionEvent ae) {
 		// encode();
 		// }
 		// });
 
-<span class="nc" id="L74">		area.setFont(new Font(&quot;Courier&quot;, Font.PLAIN, 14));</span>
-<span class="nc" id="L75">		area.setText(&quot;Copy an image to the clipboard.\nIt will be converted inside this window.\n&quot;);</span>
+<span class="nc" id="L75">		area.setFont(new Font(&quot;Courier&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L76">		area.setText(&quot;Copy an image to the clipboard.\nIt will be converted inside this window.\n&quot;);</span>
 
-<span class="nc" id="L77">		final JScrollPane scroll = new JScrollPane(area);</span>
+<span class="nc" id="L78">		final JScrollPane scroll = new JScrollPane(area);</span>
 
 		// getContentPane().add(encode, BorderLayout.SOUTH);
-<span class="nc" id="L80">		getContentPane().add(scroll, BorderLayout.CENTER);</span>
-<span class="nc" id="L81">		setSize(400, 320);</span>
-<span class="nc" id="L82">		setVisible(true);</span>
-<span class="nc" id="L83">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L81">		getContentPane().add(scroll, BorderLayout.CENTER);</span>
+<span class="nc" id="L82">		setSize(400, 320);</span>
+<span class="nc" id="L83">		setVisible(true);</span>
+<span class="nc" id="L84">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
 
-<span class="nc" id="L85">		startTimer();</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L86">		startTimer();</span>
+<span class="nc" id="L87">	}</span>
 
 	private void startTimer() {
-<span class="nc" id="L89">		Log.info(() -&gt; &quot;Init done&quot;);</span>
-<span class="nc" id="L90">		final Timer timer = new Timer(10000, new ActionListener() {</span>
+<span class="nc" id="L90">		Log.info(() -&gt; &quot;Init done&quot;);</span>
+<span class="nc" id="L91">		final Timer timer = new Timer(10000, new ActionListener() {</span>
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L92">				tick();</span>
-<span class="nc" id="L93">			}</span>
+<span class="nc" id="L93">				tick();</span>
+<span class="nc" id="L94">			}</span>
 		});
-<span class="nc" id="L95">		timer.setInitialDelay(0);</span>
-<span class="nc" id="L96">		timer.start();</span>
-<span class="nc" id="L97">		Log.info(() -&gt; &quot;Timer started&quot;);</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L96">		timer.setInitialDelay(0);</span>
+<span class="nc" id="L97">		timer.start();</span>
+<span class="nc" id="L98">		Log.info(() -&gt; &quot;Timer started&quot;);</span>
+<span class="nc" id="L99">	}</span>
 
 	private void tick() {
-<span class="nc" id="L101">		SwingUtilities.invokeLater(new Runnable() {</span>
+<span class="nc" id="L102">		SwingUtilities.invokeLater(new Runnable() {</span>
 			public void run() {
-<span class="nc" id="L103">				encode();</span>
-<span class="nc" id="L104">			}</span>
+<span class="nc" id="L104">				encode();</span>
+<span class="nc" id="L105">			}</span>
 		});
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L107">	}</span>
 
 	private void encode() {
-<span class="nc" id="L109">		final BufferedImage img = getClipboard();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (img == null) {</span>
-<span class="nc" id="L111">			return;</span>
+<span class="nc" id="L110">		final PortableImage img = getClipboard();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (img == null) {</span>
+<span class="nc" id="L112">			return;</span>
 		}
-<span class="nc" id="L113">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L114">		encodeColor(img, sb);</span>
-<span class="nc" id="L115">		encode(img, SpriteGrayLevel.GRAY_16, sb);</span>
-<span class="nc" id="L116">		encodeCompressed(img, SpriteGrayLevel.GRAY_16, sb);</span>
-<span class="nc" id="L117">		encode(img, SpriteGrayLevel.GRAY_8, sb);</span>
-<span class="nc" id="L118">		encodeCompressed(img, SpriteGrayLevel.GRAY_8, sb);</span>
-<span class="nc" id="L119">		encode(img, SpriteGrayLevel.GRAY_4, sb);</span>
-<span class="nc" id="L120">		encodeCompressed(img, SpriteGrayLevel.GRAY_4, sb);</span>
-<span class="nc" id="L121">		printData(sb.toString());</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L114">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L115">		encodeColor(img, sb);</span>
+<span class="nc" id="L116">		encode(img, SpriteGrayLevel.GRAY_16, sb);</span>
+<span class="nc" id="L117">		encodeCompressed(img, SpriteGrayLevel.GRAY_16, sb);</span>
+<span class="nc" id="L118">		encode(img, SpriteGrayLevel.GRAY_8, sb);</span>
+<span class="nc" id="L119">		encodeCompressed(img, SpriteGrayLevel.GRAY_8, sb);</span>
+<span class="nc" id="L120">		encode(img, SpriteGrayLevel.GRAY_4, sb);</span>
+<span class="nc" id="L121">		encodeCompressed(img, SpriteGrayLevel.GRAY_4, sb);</span>
+<span class="nc" id="L122">		printData(sb.toString());</span>
+<span class="nc" id="L123">	}</span>
 
-	private void encodeColor(BufferedImage img, StringBuilder sb) {
-<span class="nc" id="L125">		sb.append(&quot;\n&quot;);</span>
-<span class="nc" id="L126">		sb.append(SpriteUtils.encodeColor(img, &quot;demo&quot;));</span>
+	private void encodeColor(PortableImage img, StringBuilder sb) {
+<span class="nc" id="L126">		sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L127">		sb.append(SpriteUtils.encodeColor(img, &quot;demo&quot;));</span>
 
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L129">	}</span>
 
-	private void encodeCompressed(BufferedImage img, SpriteGrayLevel level, StringBuilder sb) {
-<span class="nc" id="L131">		sb.append(&quot;\n&quot;);</span>
-<span class="nc" id="L132">		sb.append(SpriteUtils.encodeCompressed(img, &quot;demo&quot;, level));</span>
+	private void encodeCompressed(PortableImage img, SpriteGrayLevel level, StringBuilder sb) {
+<span class="nc" id="L132">		sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L133">		sb.append(SpriteUtils.encodeCompressed(img, &quot;demo&quot;, level));</span>
 
-<span class="nc" id="L134">	}</span>
+<span class="nc" id="L135">	}</span>
 
-	private void encode(BufferedImage img, SpriteGrayLevel level, StringBuilder sb) {
-<span class="nc" id="L137">		sb.append(&quot;\n&quot;);</span>
-<span class="nc" id="L138">		sb.append(SpriteUtils.encode(img, &quot;demo&quot;, level));</span>
-<span class="nc" id="L139">	}</span>
+	private void encode(PortableImage img, SpriteGrayLevel level, StringBuilder sb) {
+<span class="nc" id="L138">		sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L139">		sb.append(SpriteUtils.encode(img, &quot;demo&quot;, level));</span>
+<span class="nc" id="L140">	}</span>
 
 	private String last;
 
 	private void printData(final String s) {
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (s.equals(last) == false) {</span>
-<span class="nc" id="L145">			area.setText(s);</span>
-<span class="nc" id="L146">			last = s;</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (s.equals(last) == false) {</span>
+<span class="nc" id="L146">			area.setText(s);</span>
+<span class="nc" id="L147">			last = s;</span>
 		}
-<span class="nc" id="L148">	}</span>
+<span class="nc" id="L149">	}</span>
 
-	public static BufferedImage getClipboard() {
-<span class="nc" id="L151">		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);</span>
+	public static PortableImage getClipboard() {
+<span class="nc" id="L152">		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);</span>
 
 		try {
-<span class="nc bnc" id="L154" title="All 4 branches missed.">			if (t != null &amp;&amp; t.isDataFlavorSupported(DataFlavor.imageFlavor)) {</span>
-<span class="nc" id="L155">				final BufferedImage text = (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);</span>
-<span class="nc" id="L156">				return text;</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">			if (t != null &amp;&amp; t.isDataFlavorSupported(DataFlavor.imageFlavor)) {</span>
+<span class="nc" id="L156">				final PortableImage text = new PortableImage(</span>
+<span class="nc" id="L157">						(BufferedImage) t.getTransferData(DataFlavor.imageFlavor));</span>
+<span class="nc" id="L158">				return text;</span>
 			}
 
-<span class="nc" id="L159">		} catch (UnsupportedFlavorException e) {</span>
-<span class="nc" id="L160">			Log.error(e.toString());</span>
-<span class="nc" id="L161">		} catch (IOException e) {</span>
+<span class="nc" id="L161">		} catch (UnsupportedFlavorException e) {</span>
 <span class="nc" id="L162">			Log.error(e.toString());</span>
-<span class="nc" id="L163">		}</span>
-<span class="nc" id="L164">		return null;</span>
+<span class="nc" id="L163">		} catch (IOException e) {</span>
+<span class="nc" id="L164">			Log.error(e.toString());</span>
+<span class="nc" id="L165">		}</span>
+<span class="nc" id="L166">		return null;</span>
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L168">		new SpriteWindow();</span>
+<span class="nc" id="L170">		new SpriteWindow();</span>
 
-<span class="nc" id="L170">	}</span>
+<span class="nc" id="L172">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

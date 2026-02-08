@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.g2d;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements EnsureVisible {
 
-	private BufferedImage bufferedImage;
+	private PortableImage portableImage;
 
 	private final double dpiFactor;
 	private final FileFormat format;
@@ -109,7 +109,7 @@ public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements E
 <span class="fc" id="L109">		super(other.getStringBounder());</span>
 <span class="fc" id="L110">		copy(other);</span>
 <span class="fc" id="L111">		this.dpiFactor = other.dpiFactor;</span>
-<span class="fc" id="L112">		this.bufferedImage = other.bufferedImage;</span>
+<span class="fc" id="L112">		this.portableImage = other.portableImage;</span>
 <span class="fc" id="L113">		this.urls = other.urls;</span>
 <span class="fc" id="L114">		this.allUrls = other.allUrls;</span>
 <span class="fc" id="L115">		this.antiAliasing = other.antiAliasing;</span>
@@ -194,12 +194,12 @@ public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements E
 
 <span class="fc" id="L195">	}</span>
 
-	public BufferedImage getBufferedImage() {
-<span class="fc" id="L198">		return bufferedImage;</span>
+	public PortableImage getPortableImage() {
+<span class="fc" id="L198">		return portableImage;</span>
 	}
 
-	public void setBufferedImage(BufferedImage bufferedImage) {
-<span class="fc" id="L202">		this.bufferedImage = bufferedImage;</span>
+	public void setPortableImage(PortableImage bufferedImage) {
+<span class="fc" id="L202">		this.portableImage = bufferedImage;</span>
 <span class="fc" id="L203">	}</span>
 
 	public Graphics2D getGraphics2D() {
@@ -210,7 +210,7 @@ public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements E
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 <span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (format == FileFormat.PNG_EMPTY)</span>
 <span class="nc" id="L212">			return;</span>
-<span class="fc" id="L213">		final BufferedImage im = getBufferedImage();</span>
+<span class="fc" id="L213">		final PortableImage im = getPortableImage();</span>
 <span class="fc" id="L214">		PngIO.write(im, getColorMapper(), os, metadata, dpi);</span>
 <span class="fc" id="L215">	}</span>
 
