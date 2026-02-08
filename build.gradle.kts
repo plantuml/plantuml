@@ -7,6 +7,7 @@
 
 import java.time.LocalDateTime
 import java.util.jar.JarFile
+import org.gradle.api.tasks.Sync
 
 println("Running build.gradle.kts")
 println(project.version)
@@ -30,6 +31,16 @@ java {
 	withJavadocJar()
 	registerFeature("pdf") {
 		usingSourceSet(sourceSets["main"])
+	}
+}
+
+sourceSets {
+	create("teavm") {
+		java.srcDir(layout.buildDirectory.dir("generated/teavm-sjpp"))
+		// If resources are needed at TeaVM runtime, you can also add them:
+		resources.srcDir("src/main/resources")
+		compileClasspath += sourceSets.main.get().compileClasspath
+		runtimeClasspath += sourceSets.main.get().runtimeClasspath
 	}
 }
 
@@ -84,6 +95,11 @@ repositories {
 
 tasks.compileJava {
 	options.release.set(Integer.parseInt(javacRelease))
+}
+
+tasks.named<JavaCompile>("compileTeavmJava") {
+	options.release.set(Integer.parseInt(javacRelease))
+	dependsOn("preprocessForTeaVM")
 }
 
 tasks.withType<Jar>().configureEach {
@@ -543,15 +559,48 @@ tasks.register("site") {
 // TeaVM Configuration - Java to JavaScript
 // ============================================
 
+// Sync sources for TeaVM preprocessing
+val syncSourcesForTeaVM by tasks.registering(Sync::class) {
+	from(rootProject.layout.projectDirectory.dir("src/main/java"))
+	into(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
+}
+
+// Preprocess sources with SJPP for TeaVM
+val preprocessForTeaVM by tasks.registering {
+	dependsOn(syncSourcesForTeaVM)
+
+	inputs.dir(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
+	outputs.dir(layout.buildDirectory.dir("generated/teavm-sjpp"))
+
+	doLast {
+		ant.withGroovyBuilder {
+			"taskdef"(
+				"name" to "sjpp",
+				"classname" to "sjpp.SjppAntTask",
+				"classpath" to rootProject.layout.projectDirectory.files("sjpp.jar").asPath
+			)
+			"sjpp"(
+				"src" to layout.buildDirectory.dir("sources/teavm-sjpp/java").get().asFile.absolutePath,
+				"dest" to layout.buildDirectory.dir("generated/teavm-sjpp").get().asFile.absolutePath,
+				"define" to "__TEAVM__"
+			)
+		}
+	}
+}
+
 // Task to compile Java to JavaScript using TeaVM
 tasks.register<JavaExec>("generateJavaScript") {
 	description = "Compiles Java to JavaScript using TeaVM"
 	group = "teavm"
 	
-	dependsOn(tasks.classes)
+	// 1) preprocess -> 2) compile the preprocessed sources -> 3) TeaVM
+	dependsOn(preprocessForTeaVM)
+	dependsOn(tasks.named("compileTeavmJava"))
 	
 	mainClass.set("org.teavm.cli.TeaVMRunner")
-	classpath = teavmConfig + sourceSets.main.get().output
+	
+	// TeaVMRunner + compiled classes from the teavm sourceSet
+	classpath = teavmConfig + sourceSets["teavm"].output
 	
 	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
 	
@@ -565,7 +614,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 	
 	doFirst {
 		outputDir.mkdirs()
-		println("Compiling Java to JavaScript with TeaVM...")
+		println("Compiling Java to JavaScript with TeaVM (preprocessed __TEAVM__) ...")
 		println("Output directory: ${outputDir.absolutePath}")
 	}
 	
