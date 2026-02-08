@@ -1343,13 +1343,13 @@ try {
 <span class="nc" id="L1343">    UNSUPPORTED(&quot;1b3hbd5artrq77i58q2o9kgz3&quot;); // 	agerr(AGERR, &quot;surprise\n&quot;);</span>
 <span class="fc bfc" id="L1344" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
 <span class="fc" id="L1345">	GD_rank(zz.Root).get__(i).valid = 0;</span>
-<span class="pc bpc" id="L1346" title="3 of 4 branches missed.">	if (GD_flip(g) &amp;&amp; (GD_rank(g).get__(i).n &gt; 0)) {</span>
+<span class="pc bpc" id="L1346" title="1 of 4 branches missed.">	if (GD_flip(g) &amp;&amp; (GD_rank(g).get__(i).n &gt; 0)) {</span>
 	    int nn, ndiv2;
-<span class="nc" id="L1348">	    CArrayOfStar&lt;ST_Agnode_s&gt; vlist = GD_rank(g).get__(i).v;</span>
-<span class="nc" id="L1349">	    nn = GD_rank(g).get__(i).n - 1;</span>
-<span class="nc" id="L1350">	    ndiv2 = nn / 2;</span>
-<span class="nc bnc" id="L1351" title="All 2 branches missed.">	    for (j = 0; j &lt;= ndiv2; j++)</span>
-<span class="nc" id="L1352">		exchange(zz, vlist.get_(j), vlist.get_(nn - j));</span>
+<span class="fc" id="L1348">	    CArrayOfStar&lt;ST_Agnode_s&gt; vlist = GD_rank(g).get__(i).v;</span>
+<span class="fc" id="L1349">	    nn = GD_rank(g).get__(i).n - 1;</span>
+<span class="fc" id="L1350">	    ndiv2 = nn / 2;</span>
+<span class="fc bfc" id="L1351" title="All 2 branches covered.">	    for (j = 0; j &lt;= ndiv2; j++)</span>
+<span class="fc" id="L1352">		exchange(zz, vlist.get_(j), vlist.get_(nn - j));</span>
 	}
     }
     
@@ -1513,7 +1513,7 @@ try {
 	    /* nonconstraint flat edges must be made LR */
 <span class="fc bfc" id="L1514" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
 <span class="fc" id="L1515">		v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="pc bpc" id="L1516" title="1 of 2 branches missed.">		if (ND_flat_out(v).list!=null) {</span>
+<span class="fc bfc" id="L1516" title="All 2 branches covered.">		if (ND_flat_out(v).list!=null) {</span>
 <span class="fc bfc" id="L1517" title="All 2 branches covered.">		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++) {</span>
 <span class="pc bpc" id="L1518" title="2 of 4 branches missed.">			if ( ((GD_flip(g) == false) &amp;&amp; (ND_order(aghead(e)) &lt; ND_order(agtail(e)))) ||</span>
 <span class="pc bpc" id="L1519" title="3 of 4 branches missed.">				 ( (GD_flip(g)) &amp;&amp; (ND_order(aghead(e)) &gt; ND_order(agtail(e)) ))) {</span>

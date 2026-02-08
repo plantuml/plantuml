@@ -265,13 +265,13 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/fastgr.c&quot;, name=&quot;other_edge&quot;, key=&quot;73oebfcfiescklohgt8mddswc&quot;, definition=&quot;void other_edge(edge_t * e)&quot;)
 public static void other_edge(ST_Agedge_s e) {
-<span class="nc" id="L268">ENTERING(&quot;73oebfcfiescklohgt8mddswc&quot;,&quot;other_edge&quot;);</span>
+<span class="fc" id="L268">ENTERING(&quot;73oebfcfiescklohgt8mddswc&quot;,&quot;other_edge&quot;);</span>
 try {
-<span class="nc" id="L270">    elist_append(e, ND_other(agtail(e)));</span>
+<span class="fc" id="L270">    elist_append(e, ND_other(agtail(e)));</span>
 } finally {
-<span class="nc" id="L272">LEAVING(&quot;73oebfcfiescklohgt8mddswc&quot;,&quot;other_edge&quot;);</span>
+<span class="fc" id="L272">LEAVING(&quot;73oebfcfiescklohgt8mddswc&quot;,&quot;other_edge&quot;);</span>
 }
-<span class="nc" id="L274">}</span>
+<span class="fc" id="L274">}</span>
 
 
 
@@ -475,20 +475,20 @@ try {
 @Reviewed(when = &quot;14/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/fastgr.c&quot;, name=&quot;basic_merge&quot;, key=&quot;dcfpol11cvlt6aaa6phqbp6fo&quot;, definition=&quot;static void  basic_merge(edge_t * e, edge_t * rep)&quot;)
 public static void basic_merge(ST_Agedge_s e, ST_Agedge_s rep) {
-<span class="nc" id="L478">ENTERING(&quot;dcfpol11cvlt6aaa6phqbp6fo&quot;,&quot;basic_merge&quot;);</span>
+<span class="fc" id="L478">ENTERING(&quot;dcfpol11cvlt6aaa6phqbp6fo&quot;,&quot;basic_merge&quot;);</span>
 try {
-<span class="nc bnc" id="L480" title="All 2 branches missed.">    if (ED_minlen(rep) &lt; ED_minlen(e))</span>
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">    if (ED_minlen(rep) &lt; ED_minlen(e))</span>
 <span class="nc" id="L481">	ED_minlen(rep, ED_minlen(e));</span>
-<span class="nc bnc" id="L482" title="All 2 branches missed.">    while (rep!=null) {</span>
-<span class="nc" id="L483">	ED_count(rep, ED_count(rep) + ED_count(e));</span>
-<span class="nc" id="L484">	ED_xpenalty(rep, ED_xpenalty(rep) + ED_xpenalty(e));</span>
-<span class="nc" id="L485">	ED_weight(rep, ED_weight(rep) + ED_weight(e));</span>
-<span class="nc" id="L486">	rep = ED_to_virt(rep);</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">    while (rep!=null) {</span>
+<span class="fc" id="L483">	ED_count(rep, ED_count(rep) + ED_count(e));</span>
+<span class="fc" id="L484">	ED_xpenalty(rep, ED_xpenalty(rep) + ED_xpenalty(e));</span>
+<span class="fc" id="L485">	ED_weight(rep, ED_weight(rep) + ED_weight(e));</span>
+<span class="fc" id="L486">	rep = ED_to_virt(rep);</span>
     }
 } finally {
-<span class="nc" id="L489">LEAVING(&quot;dcfpol11cvlt6aaa6phqbp6fo&quot;,&quot;basic_merge&quot;);</span>
+<span class="fc" id="L489">LEAVING(&quot;dcfpol11cvlt6aaa6phqbp6fo&quot;,&quot;basic_merge&quot;);</span>
 }
-<span class="nc" id="L491">}</span>
+<span class="fc" id="L491">}</span>
 
 
 
@@ -496,19 +496,19 @@ try {
 @Reviewed(when = &quot;14/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/fastgr.c&quot;, name=&quot;merge_oneway&quot;, key=&quot;6dxgtoii76tmonlnvz4rmiytd&quot;, definition=&quot;void  merge_oneway(edge_t * e, edge_t * rep)&quot;)
 public static void merge_oneway(ST_Agedge_s e, ST_Agedge_s rep) {
-<span class="nc" id="L499">ENTERING(&quot;6dxgtoii76tmonlnvz4rmiytd&quot;,&quot;merge_oneway&quot;);</span>
+<span class="fc" id="L499">ENTERING(&quot;6dxgtoii76tmonlnvz4rmiytd&quot;,&quot;merge_oneway&quot;);</span>
 try {
-<span class="nc bnc" id="L501" title="All 2 branches missed.">    if (rep == ED_to_virt(e)) {</span>
+<span class="pc bpc" id="L501" title="1 of 2 branches missed.">    if (rep == ED_to_virt(e)) {</span>
 <span class="nc" id="L502">UNSUPPORTED(&quot;84xxsh1cgsif42hgizyxw36ul&quot;); // 	agerr(AGWARN, &quot;merge_oneway glitch\n&quot;);</span>
 <span class="nc" id="L503">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
     }
     //assert(ED_to_virt(e) == NULL);
-<span class="nc" id="L506">    ED_to_virt(e, rep);</span>
-<span class="nc" id="L507">    basic_merge(e, rep);</span>
+<span class="fc" id="L506">    ED_to_virt(e, rep);</span>
+<span class="fc" id="L507">    basic_merge(e, rep);</span>
 } finally {
-<span class="nc" id="L509">LEAVING(&quot;6dxgtoii76tmonlnvz4rmiytd&quot;,&quot;merge_oneway&quot;);</span>
+<span class="fc" id="L509">LEAVING(&quot;6dxgtoii76tmonlnvz4rmiytd&quot;,&quot;merge_oneway&quot;);</span>
 }
-<span class="nc" id="L511">}</span>
+<span class="fc" id="L511">}</span>
 
 
 

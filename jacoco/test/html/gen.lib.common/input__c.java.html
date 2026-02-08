@@ -257,9 +257,9 @@ try {
      * with record shapes, so we store the real rankdir in the next 2 bits.
      */
 <span class="fc" id="L259">    rankdir = RANKDIR_TB;</span>
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">    if ((p = agget(zz, g, new CString(&quot;rankdir&quot;)))!=null) {</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">    	if (streq(p, &quot;LR&quot;))</span>
-<span class="nc" id="L262">    	    rankdir = RANKDIR_LR;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">    if ((p = agget(zz, g, new CString(&quot;rankdir&quot;)))!=null) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">    	if (streq(p, &quot;LR&quot;))</span>
+<span class="fc" id="L262">    	    rankdir = RANKDIR_LR;</span>
 //UNSUPPORTED(&quot;ry8itlrmblmuegdwk1iu1t0x&quot;); // 	else if ((*(p)==*(&quot;BT&quot;)&amp;&amp;!strcmp(p,&quot;BT&quot;)))
 //UNSUPPORTED(&quot;5hno0xn18yt443qg815w3c2s2&quot;); // 	    rankdir = 2;
 //UNSUPPORTED(&quot;aal39mi047mhafrsrxoutcffk&quot;); // 	else if ((*(p)==*(&quot;RL&quot;)&amp;&amp;!strcmp(p,&quot;RL&quot;)))

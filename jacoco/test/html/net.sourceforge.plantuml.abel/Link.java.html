@@ -143,16 +143,16 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="fc" id="L143">	}</span>
 
 	public Link getInv() {
-<span class="nc" id="L146">		final Link result = new Link(location, cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		result.inverted = !this.inverted;</span>
-<span class="nc" id="L148">		result.port1 = this.port2;</span>
-<span class="nc" id="L149">		result.port2 = this.port1;</span>
-<span class="nc" id="L150">		result.url = this.url;</span>
-<span class="nc" id="L151">		result.linkConstraint = this.linkConstraint;</span>
-<span class="nc" id="L152">		result.stereotype = stereotype;</span>
-<span class="nc" id="L153">		result.linkArg.setVisibilityModifier(this.linkArg.getVisibilityModifier());</span>
-<span class="nc" id="L154">		result.linkArrow = linkArrow;</span>
-<span class="nc" id="L155">		return result;</span>
+<span class="fc" id="L146">		final Link result = new Link(location, cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		result.inverted = !this.inverted;</span>
+<span class="fc" id="L148">		result.port1 = this.port2;</span>
+<span class="fc" id="L149">		result.port2 = this.port1;</span>
+<span class="fc" id="L150">		result.url = this.url;</span>
+<span class="fc" id="L151">		result.linkConstraint = this.linkConstraint;</span>
+<span class="fc" id="L152">		result.stereotype = stereotype;</span>
+<span class="fc" id="L153">		result.linkArg.setVisibilityModifier(this.linkArg.getVisibilityModifier());</span>
+<span class="fc" id="L154">		result.linkArrow = linkArrow;</span>
+<span class="fc" id="L155">		return result;</span>
 	}
 
 	@Override
@@ -413,8 +413,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final LinkArrow getLinkArrow() {
-<span class="pc bpc" id="L416" title="1 of 2 branches missed.">		if (inverted)</span>
-<span class="nc" id="L417">			return linkArrow.reverse();</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">		if (inverted)</span>
+<span class="fc" id="L417">			return linkArrow.reverse();</span>
 
 <span class="fc" id="L419">		return linkArrow;</span>
 	}

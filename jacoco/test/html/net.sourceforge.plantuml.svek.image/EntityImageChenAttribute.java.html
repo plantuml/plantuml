@@ -157,7 +157,7 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 <span class="fc" id="L157">		Colors colors = getEntity().getColors();</span>
 
 <span class="fc" id="L159">		HColor border = colors.getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (border == null)</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (border == null)</span>
 <span class="fc" id="L161">			border = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L162">		ug = ug.apply(border);</span>
 
