@@ -358,144 +358,32 @@ tasks.register("site") {
 	
 	doFirst {
 		siteDir.mkdirs()
-		
+
 		// Generate timestamp
 		val timestamp = LocalDateTime.now().toString().replace('T', ' ').substring(0, 19)
+
+		// Read template and perform substitutions
+		val templateFile = file("site/index.template.html")
+		var htmlContent = templateFile.readText()
 		
-		// Create index.html for site navigation
+		htmlContent = htmlContent
+			.replace("{{VERSION}}", project.version.toString())
+			.replace("{{TIMESTAMP}}", timestamp)
+			.replace("{{JAVA_RELEASE}}", javacRelease)
+			.replace("{{GROUP}}", project.group.toString())
+			.replace("{{DESCRIPTION}}", project.description ?: "")
+			.replace("{{GRADLE_VERSION}}", gradle.gradleVersion)
+
+		// Write the index.html file
 		val indexHtml = file("$siteDir/index.html")
-		indexHtml.writeText("""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlantUML Project Site - ${project.version}</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.5em;
-        }
-        .header p {
-            margin: 0;
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .card h2 {
-            margin-top: 0;
-            color: #333;
-            font-size: 1.5em;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
-        }
-        .card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        .card a {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.2s;
-        }
-        .card a:hover {
-            background: #5568d3;
-        }
-        .footer {
-            text-align: center;
-            color: #666;
-            padding: 20px;
-            margin-top: 30px;
-        }
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            font-size: 0.9em;
-            margin: 5px 5px 0 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>PlantUML Project Site</h1>
-        <p>Version ${project.version} | Generated $timestamp</p>
-        <div style="margin-top: 15px;">
-            <span class="badge">Java ${javacRelease}</span>
-            <span class="badge">${group}</span>
-        </div>
-    </div>
+		indexHtml.writeText(htmlContent)
+		
+		// Copy CSS file to site directory
+		copy {
+			from("site/css/main-site.css")
+			into("$siteDir/css")
+		}
 
-    <div class="grid">
-        <div class="card">
-            <h2>📚 API Documentation</h2>
-            <p>Complete JavaDoc API documentation for all classes and packages.</p>
-            <a href="javadoc/index.html">View Javadoc</a>
-        </div>
-
-        <div class="card">
-            <h2>🧪 Test Results</h2>
-            <p>Detailed test execution reports with pass/fail status and execution times.</p>
-            <a href="tests/test/index.html">View Test Report</a>
-        </div>
-
-        <div class="card">
-            <h2>📊 Code Coverage</h2>
-            <p>JaCoCo code coverage analysis showing tested vs untested code paths.</p>
-            <a href="jacoco/test/html/index.html">View Coverage Report</a>
-        </div>
-
-        <div class="card">
-            <h2>🔍 JDepend Analysis</h2>
-            <p>Package dependency metrics including abstractness, instability, and cycles.</p>
-            <a href="jdepend/jdepend-report.html">View HTML Report</a>
-            <a href="jdepend/jdepend-report.txt" style="margin-left: 10px; background: #999;">Text Report</a>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p><strong>${project.description}</strong></p>
-        <p>Generated by Gradle ${gradle.gradleVersion}</p>
-    </div>
-</body>
-</html>""")
-	
 		// Copy all reports to site directory
 		copy {
 			from(layout.buildDirectory.dir("docs/javadoc"))
