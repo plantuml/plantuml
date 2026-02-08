@@ -2121,11 +2121,11 @@
                 <TotalClasses>6</TotalClasses>
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>51</Ca>
+                <Ca>53</Ca>
                 <Ce>54</Ce>
                 <A>0.17</A>
-                <I>0.51</I>
-                <D>0.32</D>
+                <I>0.5</I>
+                <D>0.33</D>
                 <V>1</V>
             </Stats>
 
@@ -2244,6 +2244,7 @@
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
@@ -2255,6 +2256,7 @@
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
+                <Package>net.sourceforge.plantuml.sudoku</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
@@ -11743,14 +11745,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.svg">
             <Stats>
-                <TotalClasses>17</TotalClasses>
-                <ConcreteClasses>17</ConcreteClasses>
+                <TotalClasses>16</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>7</Ca>
-                <Ce>20</Ce>
+                <Ca>5</Ca>
+                <Ce>21</Ce>
                 <A>0</A>
-                <I>0.74</I>
-                <D>0.26</D>
+                <I>0.81</I>
+                <D>0.19</D>
                 <V>1</V>
             </Stats>
 
@@ -11794,9 +11796,6 @@
                 <Class sourceFile="DriverTextSvg.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.DriverTextSvg
                 </Class>
-                <Class sourceFile="LengthAdjust.java">
-                    net.sourceforge.plantuml.klimt.drawing.svg.LengthAdjust
-                </Class>
                 <Class sourceFile="SvgData.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.SvgData
                 </Class>
@@ -11820,6 +11819,7 @@
                 <Package>java.util</Package>
                 <Package>java.util.regex</Package>
                 <Package>javax.xml.transform</Package>
+                <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -11838,8 +11838,6 @@
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.hand</Package>
-                <Package>net.sourceforge.plantuml.skin</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.sudoku</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
             </UsedBy>
@@ -17617,9 +17615,9 @@
                 <ConcreteClasses>42</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>81</Ca>
-                <Ce>34</Ce>
+                <Ce>33</Ce>
                 <A>0.11</A>
-                <I>0.3</I>
+                <I>0.29</I>
                 <D>0.6</D>
                 <V>1</V>
             </Stats>
@@ -17788,7 +17786,6 @@
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
@@ -18436,14 +18433,14 @@
 
         <Package name="net.sourceforge.plantuml.style">
             <Stats>
-                <TotalClasses>30</TotalClasses>
-                <ConcreteClasses>22</ConcreteClasses>
+                <TotalClasses>31</TotalClasses>
+                <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
                 <Ca>80</Ca>
-                <Ce>29</Ce>
-                <A>0.27</A>
-                <I>0.27</I>
-                <D>0.47</D>
+                <Ce>28</Ce>
+                <A>0.26</A>
+                <I>0.26</I>
+                <D>0.48</D>
                 <V>1</V>
             </Stats>
 
@@ -18492,6 +18489,9 @@
                 </Class>
                 <Class sourceFile="FromSkinparamToStyle.java">
                     net.sourceforge.plantuml.style.FromSkinparamToStyle$Data
+                </Class>
+                <Class sourceFile="LengthAdjust.java">
+                    net.sourceforge.plantuml.style.LengthAdjust
                 </Class>
                 <Class sourceFile="MergeStrategy.java">
                     net.sourceforge.plantuml.style.MergeStrategy
@@ -18557,7 +18557,6 @@
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
@@ -18720,7 +18719,7 @@
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>25</Ce>
+                <Ce>26</Ce>
                 <A>0.12</A>
                 <I>1</I>
                 <D>0.12</D>
@@ -18763,6 +18762,7 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.command</Package>

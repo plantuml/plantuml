@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.Pragma;
 
 public final class CucaDiagramTxtMaker {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;

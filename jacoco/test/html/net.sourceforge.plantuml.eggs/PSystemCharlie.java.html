@@ -51,31 +51,32 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemCharlie extends PlainDiagram {
-
+	// ::remove file when __TEAVM__
+	
 	private BufferedImage image;
 
 	PSystemCharlie(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L58">		super(source, preprocessing);</span>
-<span class="nc" id="L59">		image = PSystemVersion.getCharlieImage();</span>
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L59">		super(source, preprocessing);</span>
+<span class="nc" id="L60">		image = PSystemVersion.getCharlieImage();</span>
+<span class="nc" id="L61">	}</span>
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L64">		return super.createImageBuilder(fileFormatOption).blackBackcolor();</span>
+<span class="nc" id="L65">		return super.createImageBuilder(fileFormatOption).blackBackcolor();</span>
 	}
 
 	@Override
 	public UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L69">		return new UDrawable() {</span>
+<span class="nc" id="L70">		return new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L71">				final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L72">				ug.draw(im);</span>
-<span class="nc" id="L73">			}</span>
+<span class="nc" id="L72">				final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L73">				ug.draw(im);</span>
+<span class="nc" id="L74">			}</span>
 		};
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L78">		return new DiagramDescription(&quot;(Je Suis Charlie)&quot;);</span>
+<span class="nc" id="L79">		return new DiagramDescription(&quot;(Je Suis Charlie)&quot;);</span>
 	}
 
 }

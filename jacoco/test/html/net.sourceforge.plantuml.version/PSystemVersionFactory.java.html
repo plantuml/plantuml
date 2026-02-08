@@ -44,48 +44,49 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 <span class="fc" id="L46">public class PSystemVersionFactory extends PSystemSingleLineFactory {</span>
+	// ::remove file when __TEAVM__
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^(authors?|about)\\s*$&quot;))</span>
-<span class="nc" id="L52">				return PSystemVersion.createShowAuthors2(source, preprocessing);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^(authors?|about)\\s*$&quot;))</span>
+<span class="nc" id="L53">				return PSystemVersion.createShowAuthors2(source, preprocessing);</span>
 
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^version\\s*$&quot;))</span>
-<span class="nc" id="L55">				return PSystemVersion.createShowVersion2(source, preprocessing);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^version\\s*$&quot;))</span>
+<span class="nc" id="L56">				return PSystemVersion.createShowVersion2(source, preprocessing);</span>
 
 			// ::comment when __CORE__
-<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (line.matches(&quot;(?i)^stdlib\\s*$&quot;))</span>
-<span class="fc" id="L59">				return PSystemVersion.createStdLib(source, preprocessing);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (line.matches(&quot;(?i)^stdlib\\s*$&quot;))</span>
+<span class="fc" id="L60">				return PSystemVersion.createStdLib(source, preprocessing);</span>
 
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^testdot\\s*$&quot;))</span>
-<span class="nc" id="L62">				return PSystemVersion.createTestDot(source, preprocessing);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^testdot\\s*$&quot;))</span>
+<span class="nc" id="L63">				return PSystemVersion.createTestDot(source, preprocessing);</span>
 
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keydistributor\\s*$&quot;))</span>
-<span class="nc" id="L65">				return PSystemVersion.createKeyDistributor(source, preprocessing);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keydistributor\\s*$&quot;))</span>
+<span class="nc" id="L66">				return PSystemVersion.createKeyDistributor(source, preprocessing);</span>
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keygen\\s*$&quot;)) {</span>
-<span class="nc" id="L68">				line = line.trim();</span>
-<span class="nc" id="L69">				return new PSystemKeygen(source, &quot;&quot;, preprocessing);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keygen\\s*$&quot;)) {</span>
+<span class="nc" id="L69">				line = line.trim();</span>
+<span class="nc" id="L70">				return new PSystemKeygen(source, &quot;&quot;, preprocessing);</span>
 			}
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keyimport(\\s+[0-9a-z]+)?\\s*$&quot;)) {</span>
-<span class="nc" id="L72">				line = line.trim();</span>
-<span class="nc" id="L73">				final String key = line.substring(&quot;keyimport&quot;.length()).trim();</span>
-<span class="nc" id="L74">				return new PSystemKeygen(source, key, preprocessing);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keyimport(\\s+[0-9a-z]+)?\\s*$&quot;)) {</span>
+<span class="nc" id="L73">				line = line.trim();</span>
+<span class="nc" id="L74">				final String key = line.substring(&quot;keyimport&quot;.length()).trim();</span>
+<span class="nc" id="L75">				return new PSystemKeygen(source, key, preprocessing);</span>
 			}
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$&quot;)) {</span>
-<span class="nc" id="L77">				final Pattern p = Pattern.compile(&quot;(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$&quot;);</span>
-<span class="nc" id="L78">				final Matcher m = p.matcher(line);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (m.find())</span>
-<span class="nc" id="L80">					return new PSystemKeycheck(source, m.group(1), m.group(2), preprocessing);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$&quot;)) {</span>
+<span class="nc" id="L78">				final Pattern p = Pattern.compile(&quot;(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$&quot;);</span>
+<span class="nc" id="L79">				final Matcher m = p.matcher(line);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">				if (m.find())</span>
+<span class="nc" id="L81">					return new PSystemKeycheck(source, m.group(1), m.group(2), preprocessing);</span>
 
 			}
 			// ::done
-<span class="nc" id="L84">		} catch (Exception e) {</span>
-<span class="nc" id="L85">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L85">		} catch (Exception e) {</span>
+<span class="nc" id="L86">			Log.error(&quot;Error &quot; + e);</span>
 
-<span class="fc" id="L87">		}</span>
-<span class="fc" id="L88">		return null;</span>
+<span class="fc" id="L88">		}</span>
+<span class="fc" id="L89">		return null;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -59,7 +59,7 @@ public class EmptyImageBuilder {
 <span class="pc bpc" id="L59" title="2 of 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
 <span class="nc" id="L60">			throw new IllegalArgumentException(&quot;width and height must be positive&quot;);</span>
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (width &gt; GraphvizUtils.getenvImageLimit()) {</span>
 <span class="nc" id="L64">			final int width2 = width;</span>
 <span class="nc" id="L65">			Log.info(() -&gt; &quot;Width too large &quot; + width2 + &quot;. You should set PLANTUML_LIMIT_SIZE&quot;);</span>
@@ -150,13 +150,15 @@ public class EmptyImageBuilder {
 <span class="nc" id="L150">		return result;</span>
 	}
 
+	// ::comment when __TEAVM__
 	public BufferedImage getBufferedImage() {
-<span class="fc" id="L154">		return im;</span>
+<span class="fc" id="L155">		return im;</span>
 	}
 
 	public Graphics2D getGraphics2D() {
-<span class="fc" id="L158">		return g2d;</span>
+<span class="fc" id="L159">		return g2d;</span>
 	}
+	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

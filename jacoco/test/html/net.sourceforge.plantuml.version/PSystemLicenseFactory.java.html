@@ -43,17 +43,18 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 <span class="fc" id="L45">public class PSystemLicenseFactory extends PSystemSingleLineFactory {</span>
-
+	// ::remove file when __TEAVM__
+	
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^li[sc][ea]n[sc]e\\s*$&quot;)) {</span>
-<span class="nc" id="L51">				return PSystemLicense.create(source, preprocessing);</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">			if (line.matches(&quot;(?i)^li[sc][ea]n[sc]e\\s*$&quot;)) {</span>
+<span class="nc" id="L52">				return PSystemLicense.create(source, preprocessing);</span>
 			}
-<span class="nc" id="L53">		} catch (IOException e) {</span>
-<span class="nc" id="L54">			Log.error(&quot;Error &quot; + e);</span>
-<span class="fc" id="L55">		}</span>
-<span class="fc" id="L56">		return null;</span>
+<span class="nc" id="L54">		} catch (IOException e) {</span>
+<span class="nc" id="L55">			Log.error(&quot;Error &quot; + e);</span>
+<span class="fc" id="L56">		}</span>
+<span class="fc" id="L57">		return null;</span>
 	}
 
 }

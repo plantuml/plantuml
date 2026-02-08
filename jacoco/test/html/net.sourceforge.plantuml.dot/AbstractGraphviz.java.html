@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Log;
 
 abstract class AbstractGraphviz implements Graphviz {
-	// ::remove file when __CORE__
-
+	// ::remove file when __CORE__ or __TEAVM__
+	
 	private final File dotExe;
 	private final String dotString;
 	private final String[] type;

@@ -41,13 +41,14 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 <span class="fc" id="L43">public class PSystemCharlieFactory extends PSystemSingleLineFactory {</span>
-
+	// ::remove file when __TEAVM__
+	
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L47" title="2 of 4 branches missed.">		if (line.equalsIgnoreCase(&quot;charlie&quot;) || line.equalsIgnoreCase(&quot;jesuischarlie&quot;)) {</span>
-<span class="nc" id="L48">			return new PSystemCharlie(source, preprocessing);</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">		if (line.equalsIgnoreCase(&quot;charlie&quot;) || line.equalsIgnoreCase(&quot;jesuischarlie&quot;)) {</span>
+<span class="nc" id="L49">			return new PSystemCharlie(source, preprocessing);</span>
 		}
-<span class="fc" id="L50">		return null;</span>
+<span class="fc" id="L51">		return null;</span>
 	}
 
 }

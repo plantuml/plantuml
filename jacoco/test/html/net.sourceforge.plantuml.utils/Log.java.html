@@ -99,7 +99,7 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 <span class="fc" id="L99">	}</span>
 
 	public synchronized static void info(Supplier&lt;String&gt; msgSupplier) {
-		// ::comment when __CORE__ or __HAXE__
+		// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 <span class="fc bfc" id="L103" title="All 2 branches covered.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
 <span class="fc" id="L104">			ProgressBar.clear();</span>
 <span class="fc" id="L105">			System.err.println(format(msgSupplier.get()));</span>
@@ -108,7 +108,7 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 <span class="fc" id="L108">	}</span>
 
 	public synchronized static void error(String s) {
-		// ::comment when __CORE__ or __HAXE__
+		// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 <span class="fc" id="L112">		ProgressBar.clear();</span>
 		// ::done
 <span class="fc" id="L114">		System.err.println(s);</span>

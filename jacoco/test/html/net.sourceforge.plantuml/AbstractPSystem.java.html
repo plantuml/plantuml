@@ -214,7 +214,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 //			}
 <span class="fc" id="L215">			return exportDiagramNow(os, index, fileFormatOption);</span>
 		} finally {
-			// ::comment when __CORE__
+			// ::comment when __CORE__ or __TEAVM__
 <span class="fc bfc" id="L218" title="All 2 branches covered.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))</span>
 <span class="fc" id="L219">				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
 <span class="fc" id="L220">						fileFormatOption.getFileFormat());</span>

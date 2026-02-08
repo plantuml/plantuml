@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public final class SvekResult extends AbstractTextBlock implements IEntityImage {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final DotData dotData;
 	private final DotStringFactory clusterManager;

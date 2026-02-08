@@ -110,7 +110,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 <span class="fc" id="L110">		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());</span>
 <span class="fc" id="L111">		fileFormatOption.getTikzFontDistortion().updateFromPragma(getPragma());</span>
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (fileFormatOption.getFileFormat() == FileFormat.PDF)</span>
 <span class="nc" id="L115">			return exportDiagramInternalPdf(os, index);</span>
 		// ::done
@@ -168,7 +168,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 <span class="nc" id="L173">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
 <span class="nc" id="L174">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>

@@ -39,18 +39,19 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 <span class="nc" id="L41">public class SvgOutputStream extends OutputStream {</span>
+	// ::remove file when __TEAVM__
 
-<span class="nc" id="L43">	private final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L44">	private final StringBuilder sb = new StringBuilder();</span>
 
 	@Override
 	public void write(int data) throws IOException {
-<span class="nc bnc" id="L47" title="All 4 branches missed.">		if (data &gt; 0 &amp;&amp; data &lt; 255)</span>
-<span class="nc" id="L48">			sb.append((char) data);</span>
-<span class="nc" id="L49">	}</span>
+<span class="nc bnc" id="L48" title="All 4 branches missed.">		if (data &gt; 0 &amp;&amp; data &lt; 255)</span>
+<span class="nc" id="L49">			sb.append((char) data);</span>
+<span class="nc" id="L50">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L53">		return sb.toString();</span>
+<span class="nc" id="L54">		return sb.toString();</span>
 	}
 
 }

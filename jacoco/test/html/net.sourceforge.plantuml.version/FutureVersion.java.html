@@ -48,85 +48,86 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 
 <span class="nc" id="L49">public class FutureVersion {</span>
 	// ::remove folder when __HAXE__
-
+	// ::remove file when __TEAVM__
+	
 	public static String versionString() {
-<span class="nc" id="L53">		readVersionTxtIfNeeded();</span>
-<span class="nc" id="L54">		return versionCache.get(0);</span>
+<span class="nc" id="L54">		readVersionTxtIfNeeded();</span>
+<span class="nc" id="L55">		return versionCache.get(0);</span>
 	}
 
 	public static long compileTime() {
-<span class="nc" id="L58">		readVersionTxtIfNeeded();</span>
-<span class="nc" id="L59">		return compileTimeCache.get(0);</span>
+<span class="nc" id="L59">		readVersionTxtIfNeeded();</span>
+<span class="nc" id="L60">		return compileTimeCache.get(0);</span>
 	}
 
-<span class="nc" id="L62">	private static List&lt;String&gt; versionCache = new CopyOnWriteArrayList&lt;String&gt;();</span>
-<span class="nc" id="L63">	private static List&lt;Long&gt; compileTimeCache = new CopyOnWriteArrayList&lt;Long&gt;();</span>
-<span class="nc" id="L64">	private static List&lt;String&gt; etagCache = new CopyOnWriteArrayList&lt;String&gt;();</span>
+<span class="nc" id="L63">	private static List&lt;String&gt; versionCache = new CopyOnWriteArrayList&lt;String&gt;();</span>
+<span class="nc" id="L64">	private static List&lt;Long&gt; compileTimeCache = new CopyOnWriteArrayList&lt;Long&gt;();</span>
+<span class="nc" id="L65">	private static List&lt;String&gt; etagCache = new CopyOnWriteArrayList&lt;String&gt;();</span>
 
 	private static void readVersionTxtIfNeeded() {
-<span class="nc bnc" id="L67" title="All 4 branches missed.">		if (compileTimeCache.size() == 0 || versionCache.size() == 0) {</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">		if (compileTimeCache.size() == 0 || versionCache.size() == 0) {</span>
 			try {
-<span class="nc" id="L69">				final InputStream is = FutureVersion.class.getResourceAsStream(&quot;version.txt&quot;);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">				if (is != null)</span>
-<span class="nc" id="L71">					try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
-<span class="nc" id="L72">						versionCache.add(br.readLine());</span>
-<span class="nc" id="L73">						compileTimeCache.add(Long.parseLong(br.readLine()));</span>
+<span class="nc" id="L70">				final InputStream is = FutureVersion.class.getResourceAsStream(&quot;version.txt&quot;);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">				if (is != null)</span>
+<span class="nc" id="L72">					try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L73">						versionCache.add(br.readLine());</span>
+<span class="nc" id="L74">						compileTimeCache.add(Long.parseLong(br.readLine()));</span>
 					}
-<span class="nc" id="L75">			} catch (Exception e) {</span>
-<span class="nc" id="L76">				e.printStackTrace();</span>
-<span class="nc" id="L77">			}</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (versionCache.size() == 0)</span>
-<span class="nc" id="L79">				versionCache.add(&quot;Unknown version&quot;);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (compileTimeCache.size() == 0)</span>
-<span class="nc" id="L81">				compileTimeCache.add(0L);</span>
+<span class="nc" id="L76">			} catch (Exception e) {</span>
+<span class="nc" id="L77">				e.printStackTrace();</span>
+<span class="nc" id="L78">			}</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (versionCache.size() == 0)</span>
+<span class="nc" id="L80">				versionCache.add(&quot;Unknown version&quot;);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (compileTimeCache.size() == 0)</span>
+<span class="nc" id="L82">				compileTimeCache.add(0L);</span>
 		}
 
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L85">	}</span>
 
 	public static String fullDescription() {
-<span class="nc" id="L87">		return &quot;PlantUML version &quot; + FutureVersion.versionString() + &quot; (&quot; + FutureVersion.compileTimeString() + &quot;)&quot;;</span>
+<span class="nc" id="L88">		return &quot;PlantUML version &quot; + FutureVersion.versionString() + &quot; (&quot; + FutureVersion.compileTimeString() + &quot;)&quot;;</span>
 	}
 
 	public static String versionString(int size) {
-<span class="nc" id="L91">		final StringBuilder sb = new StringBuilder(versionString());</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		while (sb.length() &lt; size)</span>
-<span class="nc" id="L93">			sb.append(' ');</span>
+<span class="nc" id="L92">		final StringBuilder sb = new StringBuilder(versionString());</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		while (sb.length() &lt; size)</span>
+<span class="nc" id="L94">			sb.append(' ');</span>
 
-<span class="nc" id="L95">		return sb.toString();</span>
+<span class="nc" id="L96">		return sb.toString();</span>
 	}
 
 	public static String etag() {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (etagCache.size() == 0)</span>
-<span class="nc" id="L100">			etagCache.add(SignatureUtils.getMD5Hex(versionString()));</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (etagCache.size() == 0)</span>
+<span class="nc" id="L101">			etagCache.add(SignatureUtils.getMD5Hex(versionString()));</span>
 
-<span class="nc" id="L102">		return etagCache.get(0);</span>
+<span class="nc" id="L103">		return etagCache.get(0);</span>
 	}
 
 	public static String turningId() {
-<span class="nc" id="L106">		return etag();</span>
+<span class="nc" id="L107">		return etag();</span>
 	}
 
 	public static String compileTimeString() {
-<span class="nc" id="L110">		return new Date(FutureVersion.compileTime()).toString();</span>
+<span class="nc" id="L111">		return new Date(FutureVersion.compileTime()).toString();</span>
 	}
 
 	// ::comment when __CORE__
 	public static String getJarPath() {
 		try {
-<span class="nc" id="L116">			final ClassLoader loader = FutureVersion.class.getClassLoader();</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (loader == null)</span>
-<span class="nc" id="L118">				return &quot;No ClassLoader?&quot;;</span>
+<span class="nc" id="L117">			final ClassLoader loader = FutureVersion.class.getClassLoader();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (loader == null)</span>
+<span class="nc" id="L119">				return &quot;No ClassLoader?&quot;;</span>
 
-<span class="nc" id="L120">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (url == null)</span>
-<span class="nc" id="L122">				return &quot;No URL?&quot;;</span>
+<span class="nc" id="L121">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L123">				return &quot;No URL?&quot;;</span>
 
-<span class="nc" id="L124">			String fullpath = url.toString();</span>
-<span class="nc" id="L125">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
-<span class="nc" id="L126">			return fullpath;</span>
-<span class="nc" id="L127">		} catch (Throwable t) {</span>
-<span class="nc" id="L128">			Logme.error(t);</span>
-<span class="nc" id="L129">			return t.toString();</span>
+<span class="nc" id="L125">			String fullpath = url.toString();</span>
+<span class="nc" id="L126">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
+<span class="nc" id="L127">			return fullpath;</span>
+<span class="nc" id="L128">		} catch (Throwable t) {</span>
+<span class="nc" id="L129">			Logme.error(t);</span>
+<span class="nc" id="L130">			return t.toString();</span>
 		}
 	}
 	// ::done

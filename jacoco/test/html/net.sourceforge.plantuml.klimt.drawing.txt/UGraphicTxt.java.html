@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
 	// ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final UmlCharArea charArea;
 

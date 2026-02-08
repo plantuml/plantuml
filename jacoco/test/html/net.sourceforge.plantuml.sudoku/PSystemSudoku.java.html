@@ -55,35 +55,40 @@ public class PSystemSudoku extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 <span class="nc" id="L57">		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="nc bnc" id="L59" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS)</span>
 <span class="nc" id="L60">			return sud.writeImageEps(os);</span>
 
 <span class="nc bnc" id="L62" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.LATEX</span>
 <span class="nc bnc" id="L63" title="All 2 branches missed.">				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE)</span>
 <span class="nc" id="L64">			return sud.writeImageLatex(os, fileFormat.getFileFormat());</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG)</span>
+<span class="nc" id="L67">			return sud.writeImageSvg(os);</span>
+
+<span class="nc" id="L69">		return sud.writeImagePng(os);</span>
 		// ::done
 
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG)</span>
-<span class="nc" id="L68">			return sud.writeImageSvg(os);</span>
+		// ::uncomment when __TEAVM__
+		// throw new UnsupportedOperationException(&quot;TEAVM&quot;);
+		// ::done
 
-<span class="nc" id="L70">		return sud.writeImagePng(os);</span>
 	}
 
 	@Override
 	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
-<span class="nc" id="L75">		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);</span>
-<span class="nc" id="L76">		sud.drawInternal(ug);</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L80">		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);</span>
+<span class="nc" id="L81">		sud.drawInternal(ug);</span>
+<span class="nc" id="L82">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L80">		return new DiagramDescription(&quot;(Sudoku)&quot;);</span>
+<span class="nc" id="L85">		return new DiagramDescription(&quot;(Sudoku)&quot;);</span>
 	}
 
 	public PSystemSudoku(UmlSource source, Long seed, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L84">		super(source, preprocessing);</span>
-<span class="nc" id="L85">		sudoku = new SudokuDLX(seed);</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L89">		super(source, preprocessing);</span>
+<span class="nc" id="L90">		sudoku = new SudokuDLX(seed);</span>
+<span class="nc" id="L91">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

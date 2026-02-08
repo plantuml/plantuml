@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.png.PngIO;
 
 public class GraphicsPath {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final String path;
 	private final ColorMapper colorMapper;

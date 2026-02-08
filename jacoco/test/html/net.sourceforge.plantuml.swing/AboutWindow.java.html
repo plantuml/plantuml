@@ -62,99 +62,97 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 class AboutWindow extends JFrame {
-	// ::remove folder when __CORE__
-
 	public AboutWindow() {
-<span class="nc" id="L68">		super();</span>
-<span class="nc" id="L69">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
+<span class="nc" id="L66">		super();</span>
+<span class="nc" id="L67">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
 
-<span class="nc" id="L71">		this.setTitle(&quot;About PlantUML (&quot; + Version.versionString() + &quot;)&quot;);</span>
+<span class="nc" id="L69">		this.setTitle(&quot;About PlantUML (&quot; + Version.versionString() + &quot;)&quot;);</span>
 
-<span class="nc" id="L73">		final JPanel panel1 = new JPanel(new GridLayout(2, 1));</span>
-<span class="nc" id="L74">		panel1.add(getInfoVersion());</span>
-<span class="nc" id="L75">		panel1.add(getInfoAuthors());</span>
+<span class="nc" id="L71">		final JPanel panel1 = new JPanel(new GridLayout(2, 1));</span>
+<span class="nc" id="L72">		panel1.add(getInfoVersion());</span>
+<span class="nc" id="L73">		panel1.add(getInfoAuthors());</span>
 
-<span class="nc" id="L77">		getContentPane().add(getNorthLabel(), BorderLayout.NORTH);</span>
-<span class="nc" id="L78">		getContentPane().add(panel1, BorderLayout.CENTER);</span>
-<span class="nc" id="L79">		getContentPane().add(getSouthLabel(), BorderLayout.SOUTH);</span>
+<span class="nc" id="L75">		getContentPane().add(getNorthLabel(), BorderLayout.NORTH);</span>
+<span class="nc" id="L76">		getContentPane().add(panel1, BorderLayout.CENTER);</span>
+<span class="nc" id="L77">		getContentPane().add(getSouthLabel(), BorderLayout.SOUTH);</span>
 
-<span class="nc" id="L81">		pack();</span>
-<span class="nc" id="L82">		this.setLocationRelativeTo(this.getParent());</span>
-<span class="nc" id="L83">		setVisible(true);</span>
-<span class="nc" id="L84">		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L79">		pack();</span>
+<span class="nc" id="L80">		this.setLocationRelativeTo(this.getParent());</span>
+<span class="nc" id="L81">		setVisible(true);</span>
+<span class="nc" id="L82">		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L83">	}</span>
 
 	private JComponent getNorthLabel() {
-<span class="nc" id="L88">		final JLabel text = new JLabel(&quot;PlantUML (&quot; + Version.versionString() + &quot;)&quot;);</span>
-<span class="nc" id="L89">		final Font font = text.getFont().deriveFont(Font.BOLD, (float) 20.0);</span>
-<span class="nc" id="L90">		text.setFont(font);</span>
-<span class="nc" id="L91">		final JPanel ptext = new JPanel();</span>
-<span class="nc" id="L92">		ptext.add(text);</span>
+<span class="nc" id="L86">		final JLabel text = new JLabel(&quot;PlantUML (&quot; + Version.versionString() + &quot;)&quot;);</span>
+<span class="nc" id="L87">		final Font font = text.getFont().deriveFont(Font.BOLD, (float) 20.0);</span>
+<span class="nc" id="L88">		text.setFont(font);</span>
+<span class="nc" id="L89">		final JPanel ptext = new JPanel();</span>
+<span class="nc" id="L90">		ptext.add(text);</span>
 
-<span class="nc" id="L94">		final JLabel icon = new JLabel(new ImageIcon(PSystemVersion.getPlantumlImage()));</span>
+<span class="nc" id="L92">		final JLabel icon = new JLabel(new ImageIcon(PSystemVersion.getPlantumlImage()));</span>
 
-<span class="nc" id="L96">		final JPanel result = new JPanel(new BorderLayout());</span>
-<span class="nc" id="L97">		result.add(ptext, BorderLayout.CENTER);</span>
-<span class="nc" id="L98">		result.add(icon, BorderLayout.EAST);</span>
+<span class="nc" id="L94">		final JPanel result = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L95">		result.add(ptext, BorderLayout.CENTER);</span>
+<span class="nc" id="L96">		result.add(icon, BorderLayout.EAST);</span>
 
-<span class="nc" id="L100">		return result;</span>
+<span class="nc" id="L98">		return result;</span>
 	}
 
 	private JComponent getSouthLabel() {
-<span class="nc" id="L104">		final JPanel result = new JPanel();</span>
-<span class="nc" id="L105">		final JButton license = new JButton(&quot;License&quot;);</span>
-<span class="nc" id="L106">		license.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L102">		final JPanel result = new JPanel();</span>
+<span class="nc" id="L103">		final JButton license = new JButton(&quot;License&quot;);</span>
+<span class="nc" id="L104">		license.addActionListener(new ActionListener() {</span>
 			public void actionPerformed(ActionEvent ae) {
-<span class="nc" id="L108">				new LicenseWindow();</span>
-<span class="nc" id="L109">			}</span>
+<span class="nc" id="L106">				new LicenseWindow();</span>
+<span class="nc" id="L107">			}</span>
 		});
-<span class="nc" id="L111">		final JButton ok = new JButton(&quot;OK&quot;);</span>
-<span class="nc" id="L112">		ok.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L109">		final JButton ok = new JButton(&quot;OK&quot;);</span>
+<span class="nc" id="L110">		ok.addActionListener(new ActionListener() {</span>
 			public void actionPerformed(ActionEvent ae) {
-<span class="nc" id="L114">				dispose();</span>
-<span class="nc" id="L115">			}</span>
+<span class="nc" id="L112">				dispose();</span>
+<span class="nc" id="L113">			}</span>
 		});
-<span class="nc" id="L117">		result.add(license);</span>
-<span class="nc" id="L118">		result.add(ok);</span>
-<span class="nc" id="L119">		return result;</span>
+<span class="nc" id="L115">		result.add(license);</span>
+<span class="nc" id="L116">		result.add(ok);</span>
+<span class="nc" id="L117">		return result;</span>
 	}
 
 	private JComponent getInfoVersion() {
-<span class="nc" id="L123">		final PSystemVersion p1 = PSystemVersion</span>
-<span class="nc" id="L124">				.createShowVersion2(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
-<span class="nc" id="L125">		return getJComponent(skip(p1.getLines()));</span>
+<span class="nc" id="L121">		final PSystemVersion p1 = PSystemVersion</span>
+<span class="nc" id="L122">				.createShowVersion2(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
+<span class="nc" id="L123">		return getJComponent(skip(p1.getLines()));</span>
 	}
 
 	private JComponent getInfoAuthors() {
-<span class="nc" id="L129">		final PSystemVersion p1 = PSystemVersion</span>
-<span class="nc" id="L130">				.createShowAuthors2(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
-<span class="nc" id="L131">		return getJComponent(skip(p1.getLines()));</span>
+<span class="nc" id="L127">		final PSystemVersion p1 = PSystemVersion</span>
+<span class="nc" id="L128">				.createShowAuthors2(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
+<span class="nc" id="L129">		return getJComponent(skip(p1.getLines()));</span>
 	}
 
 	private List&lt;String&gt; skip(List&lt;String&gt; lines) {
-<span class="nc" id="L135">		return lines.subList(2, lines.size());</span>
+<span class="nc" id="L133">		return lines.subList(2, lines.size());</span>
 	}
 
 	private JComponent getJComponent(List&lt;String&gt; lines) {
-<span class="nc" id="L139">		final StringBuilder sb = new StringBuilder(&quot;&lt;html&gt;&quot;);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (String s : lines) {</span>
-<span class="nc" id="L141">			sb.append(s + &quot;&lt;/b&gt;&lt;/i&gt;&lt;/u&gt;&quot;);</span>
-<span class="nc" id="L142">			sb.append(&quot;&lt;br&gt;&quot;);</span>
-<span class="nc" id="L143">		}</span>
-<span class="nc" id="L144">		sb.append(&quot;&lt;/html&gt;&quot;);</span>
-<span class="nc" id="L145">		final JEditorPane text = new JEditorPane(&quot;text/html&quot;, sb.toString());</span>
-<span class="nc" id="L146">		text.setEditable(false);</span>
-<span class="nc" id="L147">		CompoundBorder border = new CompoundBorder(BorderFactory.createEtchedBorder(BevelBorder.RAISED),</span>
-<span class="nc" id="L148">				BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
-<span class="nc" id="L149">		border = new CompoundBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, getBackground()), border);</span>
-<span class="nc" id="L150">		text.setBorder(border);</span>
+<span class="nc" id="L137">		final StringBuilder sb = new StringBuilder(&quot;&lt;html&gt;&quot;);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (String s : lines) {</span>
+<span class="nc" id="L139">			sb.append(s + &quot;&lt;/b&gt;&lt;/i&gt;&lt;/u&gt;&quot;);</span>
+<span class="nc" id="L140">			sb.append(&quot;&lt;br&gt;&quot;);</span>
+<span class="nc" id="L141">		}</span>
+<span class="nc" id="L142">		sb.append(&quot;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L143">		final JEditorPane text = new JEditorPane(&quot;text/html&quot;, sb.toString());</span>
+<span class="nc" id="L144">		text.setEditable(false);</span>
+<span class="nc" id="L145">		CompoundBorder border = new CompoundBorder(BorderFactory.createEtchedBorder(BevelBorder.RAISED),</span>
+<span class="nc" id="L146">				BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
+<span class="nc" id="L147">		border = new CompoundBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, getBackground()), border);</span>
+<span class="nc" id="L148">		text.setBorder(border);</span>
 
-<span class="nc" id="L152">		return text;</span>
+<span class="nc" id="L150">		return text;</span>
 	}
 
 	public static void main(String arg[]) {
-<span class="nc" id="L156">		new AboutWindow();</span>
-<span class="nc" id="L157">	}</span>
+<span class="nc" id="L154">		new AboutWindow();</span>
+<span class="nc" id="L155">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

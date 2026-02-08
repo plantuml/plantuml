@@ -514,65 +514,63 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L514">		return h;</span>
 	}
 
-	// ::done
-
 	public static String trin(String arg) {
-<span class="fc bfc" id="L520" title="All 2 branches covered.">		if (arg.length() == 0)</span>
-<span class="fc" id="L521">			return arg;</span>
+<span class="fc bfc" id="L518" title="All 2 branches covered.">		if (arg.length() == 0)</span>
+<span class="fc" id="L519">			return arg;</span>
 
-<span class="fc" id="L523">		return trinEndingInternal(arg, getPositionStartNonSpace(arg));</span>
+<span class="fc" id="L521">		return trinEndingInternal(arg, getPositionStartNonSpace(arg));</span>
 	}
 
 	private static int getPositionStartNonSpace(String arg) {
-<span class="fc" id="L527">		int i = 0;</span>
-<span class="fc bfc" id="L528" title="All 4 branches covered.">		while (i &lt; arg.length() &amp;&amp; isSpaceOrTabOrNull(arg.charAt(i)))</span>
-<span class="fc" id="L529">			i++;</span>
+<span class="fc" id="L525">		int i = 0;</span>
+<span class="fc bfc" id="L526" title="All 4 branches covered.">		while (i &lt; arg.length() &amp;&amp; isSpaceOrTabOrNull(arg.charAt(i)))</span>
+<span class="fc" id="L527">			i++;</span>
 
-<span class="fc" id="L531">		return i;</span>
+<span class="fc" id="L529">		return i;</span>
 	}
 
 	private static String trinEnding(String arg) {
-<span class="nc bnc" id="L535" title="All 2 branches missed.">		if (arg.length() == 0)</span>
-<span class="nc" id="L536">			return arg;</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">		if (arg.length() == 0)</span>
+<span class="nc" id="L534">			return arg;</span>
 
-<span class="nc" id="L538">		return trinEndingInternal(arg, 0);</span>
+<span class="nc" id="L536">		return trinEndingInternal(arg, 0);</span>
 	}
 
 	private static String trinEndingInternal(String arg, int from) {
-<span class="fc" id="L542">		int j = arg.length() - 1;</span>
-<span class="fc bfc" id="L543" title="All 4 branches covered.">		while (j &gt;= from &amp;&amp; isSpaceOrTabOrNull(arg.charAt(j)))</span>
-<span class="fc" id="L544">			j--;</span>
+<span class="fc" id="L540">		int j = arg.length() - 1;</span>
+<span class="fc bfc" id="L541" title="All 4 branches covered.">		while (j &gt;= from &amp;&amp; isSpaceOrTabOrNull(arg.charAt(j)))</span>
+<span class="fc" id="L542">			j--;</span>
 
-<span class="fc bfc" id="L546" title="All 4 branches covered.">		if (from == 0 &amp;&amp; j == arg.length() - 1)</span>
-<span class="fc" id="L547">			return arg;</span>
+<span class="fc bfc" id="L544" title="All 4 branches covered.">		if (from == 0 &amp;&amp; j == arg.length() - 1)</span>
+<span class="fc" id="L545">			return arg;</span>
 
-<span class="fc" id="L549">		return arg.substring(from, j + 1);</span>
+<span class="fc" id="L547">		return arg.substring(from, j + 1);</span>
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {
-<span class="fc bfc" id="L553" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
+<span class="fc bfc" id="L551" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
 	}
 
 	public static String sharp000000(int color) {
-<span class="fc" id="L557">		final int v = 0xFFFFFF &amp; color;</span>
-<span class="fc" id="L558">		String s = &quot;000000&quot; + Integer.toHexString(v).toUpperCase();</span>
-<span class="fc" id="L559">		s = s.substring(s.length() - 6);</span>
-<span class="fc" id="L560">		return &quot;#&quot; + s;</span>
+<span class="fc" id="L555">		final int v = 0xFFFFFF &amp; color;</span>
+<span class="fc" id="L556">		String s = &quot;000000&quot; + Integer.toHexString(v).toUpperCase();</span>
+<span class="fc" id="L557">		s = s.substring(s.length() - 6);</span>
+<span class="fc" id="L558">		return &quot;#&quot; + s;</span>
 	}
 
-	// ::comment when __CORE__ or __HAXE__
+	// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
-<span class="fc" id="L565">		int result = 1;</span>
-<span class="fc bfc" id="L566" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
-<span class="pc bpc" id="L567" title="1 of 2 branches missed.">			if (s == null)</span>
-<span class="nc" id="L568">				continue;</span>
+<span class="fc" id="L563">		int result = 1;</span>
+<span class="fc bfc" id="L564" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
+<span class="pc bpc" id="L565" title="1 of 2 branches missed.">			if (s == null)</span>
+<span class="nc" id="L566">				continue;</span>
 
-<span class="fc" id="L570">			final int length = Wcwidth.length(s);</span>
-<span class="fc bfc" id="L571" title="All 2 branches covered.">			if (result &lt; length)</span>
-<span class="fc" id="L572">				result = length;</span>
+<span class="fc" id="L568">			final int length = Wcwidth.length(s);</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">			if (result &lt; length)</span>
+<span class="fc" id="L570">				result = length;</span>
 
-<span class="fc" id="L574">		}</span>
-<span class="fc" id="L575">		return result;</span>
+<span class="fc" id="L572">		}</span>
+<span class="fc" id="L573">		return result;</span>
 	}
 	// ::done
 

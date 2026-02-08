@@ -205,7 +205,7 @@ public final class GraphvizImageBuilder {
 
 	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
 			boolean fileFormatOptionIsDebugSvek) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
 <span class="nc" id="L210">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
 
@@ -292,7 +292,7 @@ public final class GraphvizImageBuilder {
 <span class="nc" id="L292">					source.getPlainString(BackSlash.lineSeparator()));</span>
 		}
 		// ::done
-		// ::uncomment when __CORE__
+		// ::uncomment when __CORE__ or __TEAVM__
 		// return null;
 		// ::done
 
@@ -327,7 +327,7 @@ public final class GraphvizImageBuilder {
 <span class="nc" id="L327">		return single;</span>
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private IEntityImage error(File dotExe) {
 <span class="fc" id="L332">		final List&lt;String&gt; msg = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L333">		msg.add(&quot;Dot Executable: &quot; + dotExe);</span>

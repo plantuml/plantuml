@@ -77,7 +77,6 @@ import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.drawing.html5.UGraphicHtml5;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
@@ -113,170 +112,171 @@ import net.sourceforge.plantuml.warning.Warning;
 public class ImageBuilder {
 
 	private boolean annotations;
-<span class="fc" id="L116">	private HColor backcolor = getDefaultHBackColor();</span>
+<span class="fc" id="L115">	private HColor backcolor = getDefaultHBackColor();</span>
 
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	private UDrawable udrawable;
-<span class="fc" id="L121">	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L120">	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();</span>
 	private String metadata;
-<span class="fc" id="L123">	private long seed = 42;</span>
+<span class="fc" id="L122">	private long seed = 42;</span>
 	private ISkinParam skinParam;
 	private StringBounder stringBounder;
-<span class="fc" id="L126">	private int status = 0;</span>
+<span class="fc" id="L125">	private int status = 0;</span>
 	private TitledDiagram diagram;
 	private boolean randomPixel;
 	private String warningOrError;
-<span class="fc" id="L130">	private final Collection&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L129">	private final Collection&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
 
 	public static ImageBuilder create(FileFormatOption fileFormatOption) {
-<span class="fc" id="L133">		return new ImageBuilder(fileFormatOption);</span>
+<span class="fc" id="L132">		return new ImageBuilder(fileFormatOption);</span>
 	}
 
 	public static ImageBuilder create(FileFormatOption fileFormatOption, UDrawable drawable) {
-<span class="nc" id="L137">		return create(fileFormatOption).drawable(drawable);</span>
+<span class="nc" id="L136">		return create(fileFormatOption).drawable(drawable);</span>
 	}
 
-<span class="fc" id="L140">	private ImageBuilder(FileFormatOption fileFormatOption) {</span>
-<span class="fc" id="L141">		this.fileFormatOption = fileFormatOption;</span>
-<span class="fc" id="L142">		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L139">	private ImageBuilder(FileFormatOption fileFormatOption) {</span>
+<span class="fc" id="L140">		this.fileFormatOption = fileFormatOption;</span>
+<span class="fc" id="L141">		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);</span>
+<span class="fc" id="L142">	}</span>
 
 	public ImageBuilder annotations(boolean annotations) {
-<span class="fc" id="L146">		this.annotations = annotations;</span>
-<span class="fc" id="L147">		return this;</span>
+<span class="fc" id="L145">		this.annotations = annotations;</span>
+<span class="fc" id="L146">		return this;</span>
 	}
 
 	public ImageBuilder backcolor(HColor backcolor) {
-<span class="fc" id="L151">		this.backcolor = backcolor;</span>
-<span class="fc" id="L152">		return this;</span>
+<span class="fc" id="L150">		this.backcolor = backcolor;</span>
+<span class="fc" id="L151">		return this;</span>
 	}
 
 	public ImageBuilder blackBackcolor() {
-<span class="fc" id="L156">		return backcolor(HColors.BLACK);</span>
+<span class="fc" id="L155">		return backcolor(HColors.BLACK);</span>
 	}
 
 	public ImageBuilder dimension(XDimension2D dimension) {
-<span class="nc" id="L160">		this.dimension = dimension;</span>
-<span class="nc" id="L161">		return this;</span>
+<span class="nc" id="L159">		this.dimension = dimension;</span>
+<span class="nc" id="L160">		return this;</span>
 	}
 
 	private int getDpi() {
-<span class="fc bfc" id="L165" title="All 2 branches covered.">		return skinParam == null ? 96 : skinParam.getDpi();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		return skinParam == null ? 96 : skinParam.getDpi();</span>
 	}
 
 	public ImageBuilder drawable(UDrawable drawable) {
-<span class="fc" id="L169">		this.udrawable = drawable;</span>
-<span class="pc bpc" id="L170" title="3 of 4 branches missed.">		if (backcolor == null &amp;&amp; drawable instanceof TextBlock)</span>
-<span class="nc" id="L171">			backcolor = ((TextBlock) drawable).getBackcolor();</span>
+<span class="fc" id="L168">		this.udrawable = drawable;</span>
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">		if (backcolor == null &amp;&amp; drawable instanceof TextBlock)</span>
+<span class="nc" id="L170">			backcolor = ((TextBlock) drawable).getBackcolor();</span>
 
-<span class="fc" id="L173">		return this;</span>
+<span class="fc" id="L172">		return this;</span>
 	}
 
 	public ImageBuilder margin(ClockwiseTopRightBottomLeft margin) {
-<span class="fc" id="L177">		this.margin = margin;</span>
-<span class="fc" id="L178">		return this;</span>
+<span class="fc" id="L176">		this.margin = margin;</span>
+<span class="fc" id="L177">		return this;</span>
 	}
 
 	public ImageBuilder metadata(String metadata) {
-<span class="fc" id="L182">		this.metadata = metadata;</span>
-<span class="fc" id="L183">		return this;</span>
+<span class="fc" id="L181">		this.metadata = metadata;</span>
+<span class="fc" id="L182">		return this;</span>
 	}
 
 	public ImageBuilder randomPixel() {
-<span class="fc" id="L187">		this.randomPixel = true;</span>
-<span class="fc" id="L188">		return this;</span>
+<span class="fc" id="L186">		this.randomPixel = true;</span>
+<span class="fc" id="L187">		return this;</span>
 	}
 
 	public ImageBuilder seed(long seed) {
-<span class="fc" id="L192">		this.seed = seed;</span>
-<span class="fc" id="L193">		return this;</span>
+<span class="fc" id="L191">		this.seed = seed;</span>
+<span class="fc" id="L192">		return this;</span>
 	}
 
 	public ImageBuilder status(int status) {
-<span class="fc" id="L197">		this.status = status;</span>
-<span class="fc" id="L198">		return this;</span>
+<span class="fc" id="L196">		this.status = status;</span>
+<span class="fc" id="L197">		return this;</span>
 	}
 
 	private String getSvgLinkTarget() {
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (fileFormatOption.getSvgLinkTarget() != null)</span>
-<span class="nc" id="L203">			return fileFormatOption.getSvgLinkTarget();</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		else if (skinParam != null)</span>
-<span class="fc" id="L205">			return skinParam.getSvgLinkTarget();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (fileFormatOption.getSvgLinkTarget() != null)</span>
+<span class="nc" id="L202">			return fileFormatOption.getSvgLinkTarget();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		else if (skinParam != null)</span>
+<span class="fc" id="L204">			return skinParam.getSvgLinkTarget();</span>
 		else
-<span class="fc" id="L207">			return null;</span>
+<span class="fc" id="L206">			return null;</span>
 
 	}
 
 	public ImageBuilder warningOrError(String warningOrError) {
-<span class="fc" id="L212">		this.warningOrError = warningOrError;</span>
-<span class="fc" id="L213">		return this;</span>
+<span class="fc" id="L211">		this.warningOrError = warningOrError;</span>
+<span class="fc" id="L212">		return this;</span>
 	}
 
 	public ImageBuilder styled(TitledDiagram fromDiagram) {
-<span class="fc" id="L217">		this.skinParam = fromDiagram.getSkinParam();</span>
-<span class="fc" id="L218">		this.stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);</span>
-<span class="fc" id="L219">		this.annotations = true;</span>
-<span class="fc" id="L220">		this.backcolor = fromDiagram.calculateBackColor();</span>
-<span class="fc" id="L221">		this.margin = calculateMargin(fromDiagram);</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">		this.metadata = fileFormatOption.isWithMetadata() ? fromDiagram.getMetadata() : null;</span>
-<span class="fc" id="L223">		this.seed = fromDiagram.seed();</span>
-<span class="fc" id="L224">		this.diagram = fromDiagram;</span>
-<span class="fc" id="L225">		this.warningOrError = fromDiagram.getWarningOrError();</span>
-<span class="fc" id="L226">		this.warnings.addAll(fromDiagram.getWarnings());</span>
-<span class="fc" id="L227">		return this;</span>
+<span class="fc" id="L216">		this.skinParam = fromDiagram.getSkinParam();</span>
+<span class="fc" id="L217">		this.stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);</span>
+<span class="fc" id="L218">		this.annotations = true;</span>
+<span class="fc" id="L219">		this.backcolor = fromDiagram.calculateBackColor();</span>
+<span class="fc" id="L220">		this.margin = calculateMargin(fromDiagram);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		this.metadata = fileFormatOption.isWithMetadata() ? fromDiagram.getMetadata() : null;</span>
+<span class="fc" id="L222">		this.seed = fromDiagram.seed();</span>
+<span class="fc" id="L223">		this.diagram = fromDiagram;</span>
+<span class="fc" id="L224">		this.warningOrError = fromDiagram.getWarningOrError();</span>
+<span class="fc" id="L225">		this.warnings.addAll(fromDiagram.getWarnings());</span>
+<span class="fc" id="L226">		return this;</span>
 	}
 
 	public ImageData write(OutputStream os) throws IOException {
-<span class="pc bpc" id="L231" title="1 of 4 branches missed.">		if (annotations &amp;&amp; diagram != null) {</span>
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">			if (!(udrawable instanceof TextBlock))</span>
-<span class="nc" id="L233">				throw new IllegalStateException(&quot;udrawable is not a TextBlock&quot;);</span>
-<span class="fc" id="L234">			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);</span>
-<span class="fc" id="L235">			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, builder);</span>
-<span class="fc" id="L236">			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);</span>
+<span class="pc bpc" id="L230" title="1 of 4 branches missed.">		if (annotations &amp;&amp; diagram != null) {</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			if (!(udrawable instanceof TextBlock))</span>
+<span class="nc" id="L232">				throw new IllegalStateException(&quot;udrawable is not a TextBlock&quot;);</span>
+<span class="fc" id="L233">			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);</span>
+<span class="fc" id="L234">			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, builder);</span>
+<span class="fc" id="L235">			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);</span>
 		}
 
-<span class="fc" id="L239">		return writeImageInternal(os);</span>
+<span class="fc" id="L238">		return writeImageInternal(os);</span>
 	}
 
 	public byte[] writeByteArray() throws IOException {
-<span class="nc" id="L243">		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
-<span class="nc" id="L244">			write(baos);</span>
-<span class="nc" id="L245">			return baos.toByteArray();</span>
+<span class="nc" id="L242">		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
+<span class="nc" id="L243">			write(baos);</span>
+<span class="nc" id="L244">			return baos.toByteArray();</span>
 		}
 	}
 
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
-<span class="fc" id="L250">		XDimension2D dim = getFinalDimension();</span>
-<span class="fc" id="L251">		XDimension2D dimWarning = null;</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (warnings.size() &gt; 0) {</span>
-<span class="nc" id="L253">			dimWarning = getWarningDimension(fileFormatOption.getFileFormat().getDefaultStringBounder());</span>
-<span class="nc" id="L254">			dim = dim.atLeast(dimWarning.getWidth(), 0);</span>
-<span class="nc" id="L255">			dim = dim.delta(15, dimWarning.getHeight() + 20);</span>
+<span class="fc" id="L249">		XDimension2D dim = getFinalDimension();</span>
+<span class="fc" id="L250">		XDimension2D dimWarning = null;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (warnings.size() &gt; 0) {</span>
+<span class="nc" id="L252">			dimWarning = getWarningDimension(fileFormatOption.getFileFormat().getDefaultStringBounder());</span>
+<span class="nc" id="L253">			dim = dim.atLeast(dimWarning.getWidth(), 0);</span>
+<span class="nc" id="L254">			dim = dim.delta(15, dimWarning.getHeight() + 20);</span>
 		}
-<span class="fc bfc" id="L257" title="All 2 branches covered.">		final Scale scale = diagram == null ? null : diagram.getScale();</span>
-<span class="fc bfc" id="L258" title="All 2 branches covered.">		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		final Scale scale = diagram == null ? null : diagram.getScale();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()</span>
 				/ 96.0;
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (scaleFactor &lt;= 0)</span>
-<span class="nc" id="L261">			throw new IllegalStateException(&quot;Bad scaleFactor&quot;);</span>
-<span class="fc" id="L262">		WasmLog.log(&quot;...image drawing...&quot;);</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		UGraphic ug = createUGraphic(dim, scaleFactor, diagram == null ? Pragma.createEmpty() : diagram.getPragma());</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">		if (scaleFactor &lt;= 0)</span>
+<span class="nc" id="L260">			throw new IllegalStateException(&quot;Bad scaleFactor&quot;);</span>
+<span class="fc" id="L261">		WasmLog.log(&quot;...image drawing...&quot;);</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		UGraphic ug = createUGraphic(dim, scaleFactor, diagram == null ? Pragma.createEmpty() : diagram.getPragma());</span>
 
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (warnings.size() &gt; 0) {</span>
-<span class="nc" id="L266">			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());</span>
-<span class="nc" id="L267">			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (warnings.size() &gt; 0) {</span>
+<span class="nc" id="L265">			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());</span>
+<span class="nc" id="L266">			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));</span>
 		}
 
-<span class="fc" id="L270">		maybeDrawBorder(ug, dim);</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">		if (randomPixel)</span>
-<span class="fc" id="L272">			drawRandomPoint(ug);</span>
+<span class="fc" id="L269">		maybeDrawBorder(ug, dim);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">		if (randomPixel)</span>
+<span class="fc" id="L271">			drawRandomPoint(ug);</span>
 
-<span class="fc" id="L274">		ug = handwritten(ug.apply(new UTranslate(margin.getLeft(), margin.getTop())));</span>
-<span class="fc" id="L275">		udrawable.drawU(ug);</span>
-<span class="fc" id="L276">		ug.flushUg();</span>
-<span class="fc" id="L277">		ug.writeToStream(os, metadata, 96);</span>
-<span class="fc" id="L278">		os.flush();</span>
+<span class="fc" id="L273">		ug = handwritten(ug.apply(new UTranslate(margin.getLeft(), margin.getTop())));</span>
+<span class="fc" id="L274">		udrawable.drawU(ug);</span>
+<span class="fc" id="L275">		ug.flushUg();</span>
+<span class="fc" id="L276">		ug.writeToStream(os, metadata, 96);</span>
+<span class="fc" id="L277">		os.flush();</span>
 
+		// ::comment when __TEAVM__
 <span class="fc bfc" id="L280" title="All 2 branches covered.">		if (ug instanceof UGraphicG2d) {</span>
 <span class="fc" id="L281">			final Set&lt;Url&gt; urls = ((UGraphicG2d) ug).getAllUrlsEncountered();</span>
 <span class="fc bfc" id="L282" title="All 2 branches covered.">			if (urls.size() &gt; 0) {</span>
@@ -284,196 +284,196 @@ public class ImageBuilder {
 <span class="fc" id="L284">				return new ImageDataComplex(dim, cmap, warningOrError, status);</span>
 			}
 		}
-<span class="fc" id="L287">		return createImageData(dim);</span>
+		// ::done
+<span class="fc" id="L288">		return createImageData(dim);</span>
 	}
 
-<span class="fc" id="L290">	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));</span>
+<span class="fc" id="L291">	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));</span>
 
 	private void drawWarning(XDimension2D dimWarning, UGraphic ug, double fullWidth) {
 
-<span class="nc" id="L294">		final HColorSet set = HColorSet.instance();</span>
+<span class="nc" id="L295">		final HColorSet set = HColorSet.instance();</span>
 
-<span class="nc" id="L296">		final HColor back = set.getColorOrWhite(&quot;ffffcc&quot;).withDark(set.getColorOrWhite(&quot;774400&quot;));</span>
-<span class="nc" id="L297">		final HColor border = set.getColorOrWhite(&quot;ffdd88&quot;).withDark(set.getColorOrWhite(&quot;aa5500&quot;));</span>
+<span class="nc" id="L297">		final HColor back = set.getColorOrWhite(&quot;ffffcc&quot;).withDark(set.getColorOrWhite(&quot;774400&quot;));</span>
+<span class="nc" id="L298">		final HColor border = set.getColorOrWhite(&quot;ffdd88&quot;).withDark(set.getColorOrWhite(&quot;aa5500&quot;));</span>
 
-<span class="nc" id="L299">		ug = ug.apply(back.bg()).apply(border);</span>
-<span class="nc" id="L300">		final URectangle rect = URectangle.build(fullWidth - 10, dimWarning.getHeight() + 10).rounded(5);</span>
-<span class="nc" id="L301">		ug.apply(new UTranslate(5, 0)).apply(UStroke.withThickness(3)).draw(rect);</span>
+<span class="nc" id="L300">		ug = ug.apply(back.bg()).apply(border);</span>
+<span class="nc" id="L301">		final URectangle rect = URectangle.build(fullWidth - 10, dimWarning.getHeight() + 10).rounded(5);</span>
+<span class="nc" id="L302">		ug.apply(new UTranslate(5, 0)).apply(UStroke.withThickness(3)).draw(rect);</span>
 
-<span class="nc" id="L303">		ug = ug.apply(HColors.BLACK);</span>
-<span class="nc" id="L304">		ug = ug.apply(new UTranslate(10, 15));</span>
+<span class="nc" id="L304">		ug = ug.apply(HColors.BLACK);</span>
+<span class="nc" id="L305">		ug = ug.apply(new UTranslate(10, 15));</span>
 
-<span class="nc bnc" id="L306" title="All 2 branches missed.">		for (Warning w : warnings) {</span>
-<span class="nc bnc" id="L307" title="All 2 branches missed.">			for (String s : w.getMessage()) {</span>
-<span class="nc" id="L308">				final UText text = UText.build(s, fc);</span>
-<span class="nc" id="L309">				ug.draw(text);</span>
-<span class="nc" id="L310">				final double height = text.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="nc" id="L311">				ug = ug.apply(UTranslate.dy(height));</span>
-<span class="nc" id="L312">			}</span>
-<span class="nc" id="L313">			ug = ug.apply(UTranslate.dy(10));</span>
-<span class="nc" id="L314">		}</span>
-<span class="nc" id="L315">	}</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		for (Warning w : warnings) {</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">			for (String s : w.getMessage()) {</span>
+<span class="nc" id="L309">				final UText text = UText.build(s, fc);</span>
+<span class="nc" id="L310">				ug.draw(text);</span>
+<span class="nc" id="L311">				final double height = text.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L312">				ug = ug.apply(UTranslate.dy(height));</span>
+<span class="nc" id="L313">			}</span>
+<span class="nc" id="L314">			ug = ug.apply(UTranslate.dy(10));</span>
+<span class="nc" id="L315">		}</span>
+<span class="nc" id="L316">	}</span>
 
 	private XDimension2D getWarningDimension(StringBounder stringBounder) {
-<span class="nc" id="L318">		XDimension2D result = new XDimension2D(0, 0);</span>
-<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (Warning w : warnings) {</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">			for (String s : w.getMessage()) {</span>
-<span class="nc" id="L321">				final UText text = UText.build(s, fc);</span>
-<span class="nc" id="L322">				final XDimension2D dim = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L323">				result = result.mergeTB(dim);</span>
-<span class="nc" id="L324">			}</span>
-<span class="nc" id="L325">		}</span>
-<span class="nc" id="L326">		return result.delta(10, 5 + 10 * (warnings.size() - 1));</span>
+<span class="nc" id="L319">		XDimension2D result = new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">		for (Warning w : warnings) {</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">			for (String s : w.getMessage()) {</span>
+<span class="nc" id="L322">				final UText text = UText.build(s, fc);</span>
+<span class="nc" id="L323">				final XDimension2D dim = text.calculateDimension(stringBounder);</span>
+<span class="nc" id="L324">				result = result.mergeTB(dim);</span>
+<span class="nc" id="L325">			}</span>
+<span class="nc" id="L326">		}</span>
+<span class="nc" id="L327">		return result.delta(10, 5 + 10 * (warnings.size() - 1));</span>
 	}
 
 	private void maybeDrawBorder(UGraphic ug, XDimension2D dim) {
-<span class="fc bfc" id="L330" title="All 2 branches covered.">		if (skinParam == null)</span>
-<span class="fc" id="L331">			return;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (skinParam == null)</span>
+<span class="fc" id="L332">			return;</span>
 
-<span class="fc" id="L333">		final HColor color = new Rose().getHtmlColor(skinParam, ColorParam.diagramBorder);</span>
+<span class="fc" id="L334">		final HColor color = new Rose().getHtmlColor(skinParam, ColorParam.diagramBorder);</span>
 
-<span class="fc" id="L335">		UStroke stroke = skinParam.getThickness(LineParam.diagramBorder, null);</span>
-<span class="pc bpc" id="L336" title="2 of 4 branches missed.">		if (stroke == null &amp;&amp; color != null)</span>
-<span class="nc" id="L337">			stroke = UStroke.simple();</span>
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (stroke == null)</span>
-<span class="fc" id="L339">			return;</span>
+<span class="fc" id="L336">		UStroke stroke = skinParam.getThickness(LineParam.diagramBorder, null);</span>
+<span class="pc bpc" id="L337" title="2 of 4 branches missed.">		if (stroke == null &amp;&amp; color != null)</span>
+<span class="nc" id="L338">			stroke = UStroke.simple();</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="fc" id="L340">			return;</span>
 
-<span class="nc" id="L341">		final URectangle rectangle = URectangle</span>
-<span class="nc" id="L342">				.build(dim.getWidth() - stroke.getThickness(), dim.getHeight() - stroke.getThickness())</span>
-<span class="nc" id="L343">				.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));</span>
+<span class="nc" id="L342">		final URectangle rectangle = URectangle</span>
+<span class="nc" id="L343">				.build(dim.getWidth() - stroke.getThickness(), dim.getHeight() - stroke.getThickness())</span>
+<span class="nc" id="L344">				.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));</span>
 
-<span class="nc bnc" id="L345" title="All 2 branches missed.">		ug.apply(color == null ? HColors.BLACK : color).apply(stroke).draw(rectangle);</span>
-<span class="nc" id="L346">	}</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">		ug.apply(color == null ? HColors.BLACK : color).apply(stroke).draw(rectangle);</span>
+<span class="nc" id="L347">	}</span>
 
 	private void drawRandomPoint(UGraphic ug2) {
-<span class="fc" id="L349">		final Random rnd = new Random();</span>
-<span class="fc" id="L350">		final int red = rnd.nextInt(40);</span>
-<span class="fc" id="L351">		final int green = rnd.nextInt(40);</span>
-<span class="fc" id="L352">		final int blue = rnd.nextInt(40);</span>
-<span class="fc" id="L353">		final Color c = new Color(red, green, blue);</span>
-<span class="fc" id="L354">		final HColor color = HColors.simple(c);</span>
-<span class="fc" id="L355">		ug2.apply(color).apply(color.bg()).draw(URectangle.build(1, 1));</span>
-<span class="fc" id="L356">	}</span>
+<span class="fc" id="L350">		final Random rnd = new Random();</span>
+<span class="fc" id="L351">		final int red = rnd.nextInt(40);</span>
+<span class="fc" id="L352">		final int green = rnd.nextInt(40);</span>
+<span class="fc" id="L353">		final int blue = rnd.nextInt(40);</span>
+<span class="fc" id="L354">		final Color c = new Color(red, green, blue);</span>
+<span class="fc" id="L355">		final HColor color = HColors.simple(c);</span>
+<span class="fc" id="L356">		ug2.apply(color).apply(color.bg()).draw(URectangle.build(1, 1));</span>
+<span class="fc" id="L357">	}</span>
 
 	private XDimension2D getFinalDimension() {
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">		if (dimension == null) {</span>
-<span class="fc" id="L360">			final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
-<span class="fc" id="L361">			udrawable.drawU(limitFinder);</span>
-<span class="fc" id="L362">			dimension = new XDimension2D(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),</span>
-<span class="fc" id="L363">					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">		if (dimension == null) {</span>
+<span class="fc" id="L361">			final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
+<span class="fc" id="L362">			udrawable.drawU(limitFinder);</span>
+<span class="fc" id="L363">			dimension = new XDimension2D(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),</span>
+<span class="fc" id="L364">					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());</span>
 		}
-<span class="fc" id="L365">		return dimension;</span>
+<span class="fc" id="L366">		return dimension;</span>
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
-<span class="pc bpc" id="L369" title="1 of 4 branches missed.">		if (skinParam != null &amp;&amp; skinParam.handwritten())</span>
-<span class="nc" id="L370">			return new UGraphicHandwritten(ug);</span>
-<span class="pc bpc" id="L371" title="1 of 4 branches missed.">		if (diagram != null &amp;&amp; diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))</span>
-<span class="nc" id="L372">			return new UGraphicHandwritten(ug);</span>
+<span class="pc bpc" id="L370" title="1 of 4 branches missed.">		if (skinParam != null &amp;&amp; skinParam.handwritten())</span>
+<span class="nc" id="L371">			return new UGraphicHandwritten(ug);</span>
+<span class="pc bpc" id="L372" title="1 of 4 branches missed.">		if (diagram != null &amp;&amp; diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))</span>
+<span class="nc" id="L373">			return new UGraphicHandwritten(ug);</span>
 
-<span class="fc" id="L374">		return ug;</span>
+<span class="fc" id="L375">		return ug;</span>
 	}
 
 	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
-<span class="fc" id="L378">		final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
-<span class="pc bpc" id="L379" title="6 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
+		// ::comment when __TEAVM__
+<span class="fc" id="L380">		final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
+<span class="pc bpc" id="L381" title="6 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
 		case PNG:
 		case PNG_EMPTY:
 		case RAW:
-<span class="fc" id="L383">			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),</span>
-<span class="fc" id="L384">					fileFormatOption.getFileFormat());</span>
+<span class="fc" id="L385">			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),</span>
+<span class="fc" id="L386">					fileFormatOption.getFileFormat());</span>
 		case SVG:
-<span class="fc" id="L386">			return createUGraphicSVG(scaleFactor, dim, pragma);</span>
-		// ::comment when __CORE__
+<span class="fc" id="L388">			return createUGraphicSVG(scaleFactor, dim, pragma);</span>
 		case EPS:
-<span class="fc" id="L389">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());</span>
+<span class="fc" id="L390">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());</span>
 		case EPS_TEXT:
-<span class="fc" id="L391">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);</span>
+<span class="fc" id="L392">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);</span>
 		case HTML5:
-<span class="nc" id="L393">			return new UGraphicHtml5(backcolor, colorMapper, stringBounder);</span>
+<span class="nc" id="L394">			return new UGraphicHtml5(backcolor, colorMapper, stringBounder);</span>
 		case VDX:
-<span class="nc" id="L395">			return new UGraphicVdx(backcolor, colorMapper, stringBounder);</span>
+<span class="nc" id="L396">			return new UGraphicVdx(backcolor, colorMapper, stringBounder);</span>
 		case LATEX:
-<span class="nc" id="L397">			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true, pragma);</span>
+<span class="nc" id="L398">			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true, pragma);</span>
 		case LATEX_NO_PREAMBLE:
-<span class="nc" id="L399">			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false, pragma);</span>
+<span class="nc" id="L400">			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false, pragma);</span>
 		case BRAILLE_PNG:
-<span class="nc" id="L401">			return new UGraphicBraille(backcolor, colorMapper, stringBounder);</span>
+<span class="nc" id="L402">			return new UGraphicBraille(backcolor, colorMapper, stringBounder);</span>
 		case UTXT:
 		case ATXT:
-<span class="fc" id="L404">			return new UGraphicTxt();</span>
+<span class="fc" id="L405">			return new UGraphicTxt();</span>
 		case DEBUG:
-<span class="fc" id="L406">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
-<span class="fc" id="L407">					getPreserveAspectRatio());</span>
-		// ::done
+<span class="fc" id="L407">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
+<span class="fc" id="L408">					getPreserveAspectRatio());</span>
 		default:
-<span class="nc" id="L410">			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());</span>
+			// ::done
+<span class="nc" id="L411">			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());</span>
+		// ::comment when __TEAVM__
 		}
+		// ::done
 	}
 
+	// ::comment when __TEAVM__
 	private UGraphic createUGraphicSVG(double scaleFactor, XDimension2D dim, Pragma pragma) {
-<span class="fc" id="L415">		SvgOption option = SvgOption.basic().withPreserveAspectRatio(getPreserveAspectRatio());</span>
-<span class="fc" id="L416">		option = option.withHoverPathColorRGB(getHoverPathColorRGB());</span>
-<span class="fc" id="L417">		option = option.withMinDim(dim);</span>
-<span class="fc" id="L418">		option = option.withBackcolor(backcolor);</span>
-<span class="fc" id="L419">		option = option.withScale(scaleFactor);</span>
-<span class="fc" id="L420">		option = option.withColorMapper(fileFormatOption.getColorMapper());</span>
-<span class="fc" id="L421">		option = option.withLinkTarget(getSvgLinkTarget());</span>
-<span class="fc" id="L422">		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));</span>
-<span class="fc" id="L423">		option = option.withPragma(pragma);</span>
-<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (skinParam != null)</span>
-<span class="fc" id="L425">			option = option.withConfigurationStore(skinParam.options());</span>
-<span class="fc bfc" id="L426" title="All 2 branches covered.">		if (diagram != null) {</span>
-<span class="fc" id="L427">			option = option.withTitle(diagram.getTitleDisplay());</span>
-<span class="fc" id="L428">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagram.getUmlDiagramType().name());</span>
+<span class="fc" id="L419">		SvgOption option = SvgOption.basic().withPreserveAspectRatio(getPreserveAspectRatio());</span>
+<span class="fc" id="L420">		option = option.withHoverPathColorRGB(getHoverPathColorRGB());</span>
+<span class="fc" id="L421">		option = option.withMinDim(dim);</span>
+<span class="fc" id="L422">		option = option.withBackcolor(backcolor);</span>
+<span class="fc" id="L423">		option = option.withScale(scaleFactor);</span>
+<span class="fc" id="L424">		option = option.withColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="fc" id="L425">		option = option.withLinkTarget(getSvgLinkTarget());</span>
+<span class="fc" id="L426">		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));</span>
+<span class="fc" id="L427">		option = option.withPragma(pragma);</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">		if (skinParam != null)</span>
+<span class="fc" id="L429">			option = option.withConfigurationStore(skinParam.options());</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">		if (diagram != null) {</span>
+<span class="fc" id="L431">			option = option.withTitle(diagram.getTitleDisplay());</span>
+<span class="fc" id="L432">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagram.getUmlDiagramType().name());</span>
 		}
 
-<span class="pc bpc" id="L431" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
-<span class="nc" id="L432">			String interactiveBaseFilename = &quot;default&quot;;</span>
-<span class="nc bnc" id="L433" title="All 4 branches missed.">			if (diagram != null &amp;&amp; diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)</span>
-<span class="nc" id="L434">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
-<span class="nc" id="L435">			option = option.withInteractive(interactiveBaseFilename);</span>
+<span class="pc bpc" id="L435" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
+<span class="nc" id="L436">			String interactiveBaseFilename = &quot;default&quot;;</span>
+<span class="nc bnc" id="L437" title="All 4 branches missed.">			if (diagram != null &amp;&amp; diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)</span>
+<span class="nc" id="L438">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
+<span class="nc" id="L439">			option = option.withInteractive(interactiveBaseFilename);</span>
 		}
 
-<span class="fc bfc" id="L438" title="All 2 branches covered.">		if (skinParam != null) {</span>
-<span class="fc" id="L439">			option = option.withLengthAdjust(skinParam.getlengthAdjust());</span>
-<span class="fc" id="L440">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">		if (skinParam != null) {</span>
+<span class="fc" id="L443">			option = option.withLengthAdjust(skinParam.getlengthAdjust());</span>
+<span class="fc" id="L444">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
 		}
 
-<span class="fc" id="L443">		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);</span>
-<span class="fc" id="L444">		return ug;</span>
+<span class="fc" id="L447">		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);</span>
+<span class="fc" id="L448">		return ug;</span>
 
 	}
 
 	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, String watermark,
 			FileFormat format) {
-<span class="fc" id="L450">		Color pngBackColor = new Color(0, 0, 0, 0);</span>
+<span class="fc" id="L454">		Color pngBackColor = new Color(0, 0, 0, 0);</span>
 
-<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorSimple)</span>
-<span class="fc" id="L453">			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());</span>
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorSimple)</span>
+<span class="fc" id="L457">			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());</span>
 
-<span class="pc bpc" id="L455" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT)</span>
-<span class="nc bnc" id="L456" title="All 4 branches missed.">				&amp;&amp; (Color.WHITE.equals(pngBackColor) || Color.BLACK.equals(pngBackColor)))</span>
-<span class="nc" id="L457">			pngBackColor = new Color(0, 0, 0, 0);</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT)</span>
+<span class="nc bnc" id="L460" title="All 4 branches missed.">				&amp;&amp; (Color.WHITE.equals(pngBackColor) || Color.BLACK.equals(pngBackColor)))</span>
+<span class="nc" id="L461">			pngBackColor = new Color(0, 0, 0, 0);</span>
 
-<span class="fc" id="L459">		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),</span>
-<span class="fc" id="L460">				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);</span>
-<span class="fc" id="L461">		final Graphics2D graphics2D = builder.getGraphics2D();</span>
+<span class="fc" id="L463">		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),</span>
+<span class="fc" id="L464">				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);</span>
+<span class="fc" id="L465">		final Graphics2D graphics2D = builder.getGraphics2D();</span>
 
-<span class="fc" id="L463">		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,</span>
+<span class="fc" id="L467">		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,</span>
 				scaleFactor, format);
 
-<span class="fc" id="L466">		ug.setBufferedImage(builder.getBufferedImage());</span>
-<span class="fc" id="L467">		final BufferedImage im = ug.getBufferedImage();</span>
-<span class="pc bpc" id="L468" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorGradient)</span>
-<span class="nc" id="L469">			ug.apply(this.backcolor.bg())</span>
-<span class="nc" id="L470">					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));</span>
+<span class="fc" id="L470">		ug.setBufferedImage(builder.getBufferedImage());</span>
+<span class="fc" id="L471">		final BufferedImage im = ug.getBufferedImage();</span>
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorGradient)</span>
+<span class="nc" id="L473">			ug.apply(this.backcolor.bg())</span>
+<span class="nc" id="L474">					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));</span>
 
-<span class="fc" id="L472">		return ug;</span>
-	}
-
-	static private HColor getDefaultHBackColor() {
-<span class="fc" id="L476">		return HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="fc" id="L476">		return ug;</span>
 	}
 
 	private String getHoverPathColorRGB() {
@@ -487,28 +487,33 @@ public class ImageBuilder {
 		}
 <span class="fc" id="L488">		return null;</span>
 	}
+	// ::done
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
-<span class="fc" id="L492">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
-<span class="fc" id="L493">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc bfc" id="L494" title="All 2 branches covered.">		if (style.hasValue(PName.Margin))</span>
-<span class="fc" id="L495">			return style.getMargin();</span>
+<span class="fc" id="L493">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="fc" id="L494">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">		if (style.hasValue(PName.Margin))</span>
+<span class="fc" id="L496">			return style.getMargin();</span>
 
-<span class="fc" id="L497">		return diagram.getDefaultMargins();</span>
+<span class="fc" id="L498">		return diagram.getDefaultMargins();</span>
 	}
 
 	public String getPreserveAspectRatio() {
-<span class="fc bfc" id="L501" title="All 2 branches covered.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
-<span class="fc" id="L502">			return fileFormatOption.getPreserveAspectRatio();</span>
-<span class="fc bfc" id="L503" title="All 2 branches covered.">		else if (skinParam != null)</span>
-<span class="fc" id="L504">			return skinParam.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
+<span class="fc" id="L503">			return fileFormatOption.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">		else if (skinParam != null)</span>
+<span class="fc" id="L505">			return skinParam.getPreserveAspectRatio();</span>
 		else
-<span class="fc" id="L506">			return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
+<span class="fc" id="L507">			return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
 
 	}
 
 	private ImageDataSimple createImageData(XDimension2D dim) {
-<span class="fc" id="L511">		return new ImageDataSimple(dim, status);</span>
+<span class="fc" id="L512">		return new ImageDataSimple(dim, status);</span>
+	}
+
+	static private HColor getDefaultHBackColor() {
+<span class="fc" id="L516">		return HColors.WHITE.withDark(HColors.BLACK);</span>
 	}
 
 }

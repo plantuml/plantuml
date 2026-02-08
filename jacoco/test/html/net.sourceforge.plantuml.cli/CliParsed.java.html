@@ -48,184 +48,185 @@ import net.sourceforge.plantuml.utils.Peeker;
 import net.sourceforge.plantuml.utils.PeekerUtils;
 
 <span class="fc" id="L50">public class CliParsed {</span>
-
-<span class="fc" id="L52">	private final Map&lt;CliFlag, List&lt;Object&gt;&gt; lists = new EnumMap&lt;&gt;(CliFlag.class);</span>
-<span class="fc" id="L53">	private final Map&lt;CliFlag, Map&lt;String, String&gt;&gt; maps = new EnumMap&lt;&gt;(CliFlag.class);</span>
-<span class="fc" id="L54">	private final List&lt;String&gt; args = new ArrayList&lt;&gt;();</span>
+	// ::remove file when __TEAVM__
+	
+<span class="fc" id="L53">	private final Map&lt;CliFlag, List&lt;Object&gt;&gt; lists = new EnumMap&lt;&gt;(CliFlag.class);</span>
+<span class="fc" id="L54">	private final Map&lt;CliFlag, Map&lt;String, String&gt;&gt; maps = new EnumMap&lt;&gt;(CliFlag.class);</span>
+<span class="fc" id="L55">	private final List&lt;String&gt; args = new ArrayList&lt;&gt;();</span>
 
 	public void putValue(CliFlag flag, Object value) {
-<span class="fc" id="L57">		final List&lt;Object&gt; list = lists.computeIfAbsent(flag, k -&gt; new ArrayList&lt;&gt;());</span>
-<span class="fc" id="L58">		list.add(value);</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L58">		final List&lt;Object&gt; list = lists.computeIfAbsent(flag, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L59">		list.add(value);</span>
+<span class="fc" id="L60">	}</span>
 
 	private void putMapValue(CliFlag flag, String key, String value) {
-<span class="fc" id="L62">		final Map&lt;String, String&gt; map = maps.computeIfAbsent(flag, k -&gt; new LinkedHashMap&lt;&gt;());</span>
-<span class="fc" id="L63">		map.put(key, value);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L63">		final Map&lt;String, String&gt; map = maps.computeIfAbsent(flag, k -&gt; new LinkedHashMap&lt;&gt;());</span>
+<span class="fc" id="L64">		map.put(key, value);</span>
+<span class="fc" id="L65">	}</span>
 
 	public boolean isTrue(CliFlag flag) {
-<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (maps.containsKey(flag))</span>
-<span class="fc" id="L68">			return true;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (maps.containsKey(flag))</span>
+<span class="fc" id="L69">			return true;</span>
 
-<span class="fc" id="L70">		final List&lt;Object&gt; list = lists.get(flag);</span>
+<span class="fc" id="L71">		final List&lt;Object&gt; list = lists.get(flag);</span>
 
 		// Useless: cannot be Boolean.FALSE
-<span class="fc bfc" id="L73" title="All 6 branches covered.">		if (list != null &amp;&amp; list.size() &gt; 0 &amp;&amp; list.get(0) instanceof Boolean)</span>
-<span class="fc" id="L74">			return (Boolean) list.get(0);</span>
+<span class="fc bfc" id="L74" title="All 6 branches covered.">		if (list != null &amp;&amp; list.size() &gt; 0 &amp;&amp; list.get(0) instanceof Boolean)</span>
+<span class="fc" id="L75">			return (Boolean) list.get(0);</span>
 
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		return list != null;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		return list != null;</span>
 	}
 
 	public String getString(CliFlag flag) {
-<span class="fc" id="L80">		final List&lt;Object&gt; list = lists.get(flag);</span>
-<span class="fc bfc" id="L81" title="All 4 branches covered.">		if (list != null &amp;&amp; list.size() &gt; 0)</span>
-<span class="fc" id="L82">			return (String) list.get(0);</span>
+<span class="fc" id="L81">		final List&lt;Object&gt; list = lists.get(flag);</span>
+<span class="fc bfc" id="L82" title="All 4 branches covered.">		if (list != null &amp;&amp; list.size() &gt; 0)</span>
+<span class="fc" id="L83">			return (String) list.get(0);</span>
 
-<span class="fc" id="L84">		return flag.getDefaultValue();</span>
+<span class="fc" id="L85">		return flag.getDefaultValue();</span>
 	}
 
 	public Object getObject(CliFlag flag) {
-<span class="fc" id="L88">		final List&lt;Object&gt; list = lists.get(flag);</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (list != null)</span>
-<span class="fc" id="L90">			return list.get(0);</span>
+<span class="fc" id="L89">		final List&lt;Object&gt; list = lists.get(flag);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (list != null)</span>
+<span class="fc" id="L91">			return list.get(0);</span>
 
-<span class="nc" id="L92">		return flag.getDefaultValue();</span>
+<span class="nc" id="L93">		return flag.getDefaultValue();</span>
 	}
 
 	public Object getFromType(Class&lt;?&gt; clazz) {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (List&lt;Object&gt; list : lists.values())</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (list.size() == 1) {</span>
-<span class="fc" id="L98">				final Object element = list.get(0);</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">				if (element.getClass() == clazz)</span>
-<span class="fc" id="L100">					return element;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (List&lt;Object&gt; list : lists.values())</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (list.size() == 1) {</span>
+<span class="fc" id="L99">				final Object element = list.get(0);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				if (element.getClass() == clazz)</span>
+<span class="fc" id="L101">					return element;</span>
 			}
 
-<span class="fc" id="L103">		return null;</span>
+<span class="fc" id="L104">		return null;</span>
 	}
 
 	public Map&lt;String, String&gt; getMap(CliFlag flag) {
-<span class="fc" id="L107">		final Map&lt;String, String&gt; result = maps.get(flag);</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (result == null)</span>
-<span class="fc" id="L109">			return Collections.emptyMap();</span>
-<span class="fc" id="L110">		return result;</span>
+<span class="fc" id="L108">		final Map&lt;String, String&gt; result = maps.get(flag);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L110">			return Collections.emptyMap();</span>
+<span class="fc" id="L111">		return result;</span>
 	}
 
 	public List&lt;Object&gt; getList(CliFlag flag) {
-<span class="fc" id="L114">		final List&lt;Object&gt; result = lists.get(flag);</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (result == null)</span>
-<span class="fc" id="L116">			return Collections.emptyList();</span>
-<span class="fc" id="L117">		return result;</span>
+<span class="fc" id="L115">		final List&lt;Object&gt; result = lists.get(flag);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L117">			return Collections.emptyList();</span>
+<span class="fc" id="L118">		return result;</span>
 	}
 
 	public Map&lt;String, String&gt; getMap(CliFlag mapFlag, CliFlag listFlag) {
-<span class="fc" id="L121">		final Map&lt;String, String&gt; result = new LinkedHashMap&lt;String, String&gt;(getMap(mapFlag));</span>
+<span class="fc" id="L122">		final Map&lt;String, String&gt; result = new LinkedHashMap&lt;String, String&gt;(getMap(mapFlag));</span>
 
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (Object s : getList(listFlag)) {</span>
-<span class="fc" id="L124">			final String keyValue[] = s.toString().split(&quot;=&quot;);</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (keyValue.length == 1)</span>
-<span class="fc" id="L126">				result.put(keyValue[0], null);</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			else if (keyValue.length == 2)</span>
-<span class="fc" id="L128">				result.put(keyValue[0], keyValue[1]);</span>
-<span class="fc" id="L129">		}</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (Object s : getList(listFlag)) {</span>
+<span class="fc" id="L125">			final String keyValue[] = s.toString().split(&quot;=&quot;);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (keyValue.length == 1)</span>
+<span class="fc" id="L127">				result.put(keyValue[0], null);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			else if (keyValue.length == 2)</span>
+<span class="fc" id="L129">				result.put(keyValue[0], keyValue[1]);</span>
+<span class="fc" id="L130">		}</span>
 
-<span class="fc" id="L131">		return Collections.unmodifiableMap(result);</span>
+<span class="fc" id="L132">		return Collections.unmodifiableMap(result);</span>
 
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L137">		final Map&lt;CliFlag, Object&gt; merge = new EnumMap&lt;&gt;(CliFlag.class);</span>
-<span class="fc" id="L138">		merge.putAll(lists);</span>
-<span class="fc" id="L139">		merge.putAll(maps);</span>
-<span class="fc" id="L140">		return merge.toString();</span>
+<span class="fc" id="L138">		final Map&lt;CliFlag, Object&gt; merge = new EnumMap&lt;&gt;(CliFlag.class);</span>
+<span class="fc" id="L139">		merge.putAll(lists);</span>
+<span class="fc" id="L140">		merge.putAll(maps);</span>
+<span class="fc" id="L141">		return merge.toString();</span>
 	}
 
 	public CliAction getImmediateAction() {
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (Entry&lt;CliFlag, List&lt;Object&gt;&gt; entry : lists.entrySet())</span>
-<span class="pc bpc" id="L145" title="1 of 4 branches missed.">			if (entry.getKey().getType() == Arity.UNARY_IMMEDIATE_ACTION &amp;&amp; entry.getValue().size() == 1) {</span>
-<span class="fc" id="L146">				final Object data = entry.getValue().get(0);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">				if (data instanceof CliAction)</span>
-<span class="fc" id="L148">					return (CliAction) data;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (Entry&lt;CliFlag, List&lt;Object&gt;&gt; entry : lists.entrySet())</span>
+<span class="pc bpc" id="L146" title="1 of 4 branches missed.">			if (entry.getKey().getType() == Arity.UNARY_IMMEDIATE_ACTION &amp;&amp; entry.getValue().size() == 1) {</span>
+<span class="fc" id="L147">				final Object data = entry.getValue().get(0);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">				if (data instanceof CliAction)</span>
+<span class="fc" id="L149">					return (CliAction) data;</span>
 			}
-<span class="fc" id="L150">		return null;</span>
+<span class="fc" id="L151">		return null;</span>
 	}
 
 	public void triggerNonImmediateCliAction() {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (Entry&lt;CliFlag, List&lt;Object&gt;&gt; entry : lists.entrySet())</span>
-<span class="fc bfc" id="L155" title="All 4 branches covered.">			if (entry.getKey().getType() != Arity.UNARY_IMMEDIATE_ACTION &amp;&amp; entry.getValue().size() == 1) {</span>
-<span class="fc" id="L156">				final Object data = entry.getValue().get(0);</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">				if (data instanceof CliAction)</span>
-<span class="fc" id="L158">					((CliAction) data).runAction();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		for (Entry&lt;CliFlag, List&lt;Object&gt;&gt; entry : lists.entrySet())</span>
+<span class="fc bfc" id="L156" title="All 4 branches covered.">			if (entry.getKey().getType() != Arity.UNARY_IMMEDIATE_ACTION &amp;&amp; entry.getValue().size() == 1) {</span>
+<span class="fc" id="L157">				final Object data = entry.getValue().get(0);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">				if (data instanceof CliAction)</span>
+<span class="fc" id="L159">					((CliAction) data).runAction();</span>
 
 			}
 
-<span class="fc" id="L162">	}</span>
+<span class="fc" id="L163">	}</span>
 
 	public static CliParsed parse(String... args) throws CliParsingException {
-<span class="fc" id="L165">		final CliParsed result = new CliParsed();</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (final Peeker&lt;String&gt; peeker = PeekerUtils.peeker(Arrays.asList(args)); peeker.peek(0) != null; peeker</span>
-<span class="fc" id="L167">				.jump()) {</span>
+<span class="fc" id="L166">		final CliParsed result = new CliParsed();</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (final Peeker&lt;String&gt; peeker = PeekerUtils.peeker(Arrays.asList(args)); peeker.peek(0) != null; peeker</span>
+<span class="fc" id="L168">				.jump()) {</span>
 
-<span class="fc" id="L169">			final String peek0 = peeker.peek(0);</span>
-<span class="fc" id="L170">			boolean found = false;</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">			for (CliFlag flag : CliFlag.values()) {</span>
-<span class="fc bfc" id="L172" title="All 4 branches covered.">				if (found || flag.match(peek0) == false)</span>
-<span class="fc" id="L173">					continue;</span>
+<span class="fc" id="L170">			final String peek0 = peeker.peek(0);</span>
+<span class="fc" id="L171">			boolean found = false;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			for (CliFlag flag : CliFlag.values()) {</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">				if (found || flag.match(peek0) == false)</span>
+<span class="fc" id="L174">					continue;</span>
 
-<span class="fc" id="L175">				found = true;</span>
-<span class="pc bpc" id="L176" title="1 of 6 branches missed.">				switch (flag.getType()) {</span>
+<span class="fc" id="L176">				found = true;</span>
+<span class="pc bpc" id="L177" title="1 of 6 branches missed.">				switch (flag.getType()) {</span>
 
 				case UNARY_BOOLEAN:
-<span class="fc" id="L179">					final Object foo = flag.getFoo();</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">					result.putValue(flag, foo == null ? Boolean.TRUE : foo);</span>
-<span class="fc" id="L181">					break;</span>
+<span class="fc" id="L180">					final Object foo = flag.getFoo();</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">					result.putValue(flag, foo == null ? Boolean.TRUE : foo);</span>
+<span class="fc" id="L182">					break;</span>
 
 				case UNARY_IMMEDIATE_ACTION:
-<span class="fc" id="L184">					result.putValue(flag, flag.getFoo());</span>
-<span class="fc" id="L185">					break;</span>
+<span class="fc" id="L185">					result.putValue(flag, flag.getFoo());</span>
+<span class="fc" id="L186">					break;</span>
 
 				case BINARY_NEXT_ARGUMENT_VALUE:
-<span class="fc" id="L188">					peeker.jump();</span>
-<span class="fc" id="L189">					result.putValue(flag, peeker.peek(0));</span>
-<span class="fc" id="L190">					break;</span>
+<span class="fc" id="L189">					peeker.jump();</span>
+<span class="fc" id="L190">					result.putValue(flag, peeker.peek(0));</span>
+<span class="fc" id="L191">					break;</span>
 
 				case UNARY_INLINE_KEY_OR_KEY_VALUE:
-<span class="fc" id="L193">					String s = peeker.peek(0).substring(2);</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">					if (s.length() == 0) {</span>
-<span class="fc" id="L195">						peeker.jump();</span>
-<span class="fc" id="L196">						s = peeker.peek(0);</span>
+<span class="fc" id="L194">					String s = peeker.peek(0).substring(2);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">					if (s.length() == 0) {</span>
+<span class="fc" id="L196">						peeker.jump();</span>
+<span class="fc" id="L197">						s = peeker.peek(0);</span>
 					}
 
-<span class="fc bfc" id="L199" title="All 2 branches covered.">					if (s == null)</span>
-<span class="fc" id="L200">						throw new CliParsingException(flag, &quot;missing value&quot;);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">					if (s == null)</span>
+<span class="fc" id="L201">						throw new CliParsingException(flag, &quot;missing value&quot;);</span>
 
-<span class="fc" id="L202">					final int eqIndex = s.indexOf('=');</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">					final String k = eqIndex &lt; 0 ? s : s.substring(0, eqIndex);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">					final String v = eqIndex &lt; 0 ? null : s.substring(eqIndex + 1);</span>
-<span class="fc" id="L205">					result.putMapValue(flag, k, v);</span>
-<span class="fc" id="L206">					break;</span>
+<span class="fc" id="L203">					final int eqIndex = s.indexOf('=');</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">					final String k = eqIndex &lt; 0 ? s : s.substring(0, eqIndex);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">					final String v = eqIndex &lt; 0 ? null : s.substring(eqIndex + 1);</span>
+<span class="fc" id="L206">					result.putMapValue(flag, k, v);</span>
+<span class="fc" id="L207">					break;</span>
 
 				case UNARY_OPTIONAL_COLON:
-<span class="fc" id="L209">					final int colon = peek0.indexOf(':');</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">					if (colon == -1) {</span>
-<span class="fc" id="L211">						result.lists.computeIfAbsent(flag, k1 -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L210">					final int colon = peek0.indexOf(':');</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">					if (colon == -1) {</span>
+<span class="fc" id="L212">						result.lists.computeIfAbsent(flag, k1 -&gt; new ArrayList&lt;&gt;());</span>
 					} else
-<span class="fc bfc" id="L213" title="All 2 branches covered.">						for (String part : peek0.substring(colon + 1).split(&quot;:&quot;))</span>
-<span class="fc" id="L214">							result.putValue(flag, part);</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">						for (String part : peek0.substring(colon + 1).split(&quot;:&quot;))</span>
+<span class="fc" id="L215">							result.putValue(flag, part);</span>
 					break;
 				}
 			}
-<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (found == false)</span>
-<span class="fc" id="L219">				result.args.add(peek0);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">			if (found == false)</span>
+<span class="fc" id="L220">				result.args.add(peek0);</span>
 
 		}
 
-<span class="fc" id="L223">		return result;</span>
+<span class="fc" id="L224">		return result;</span>
 
 	}
 
 	public List&lt;String&gt; getRemainingArgs() {
-<span class="fc" id="L228">		return Collections.unmodifiableList(args);</span>
+<span class="fc" id="L229">		return Collections.unmodifiableList(args);</span>
 	}
 
 }

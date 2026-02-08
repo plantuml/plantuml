@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemPath extends AbstractPSystem {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final GraphicsPath path;
 

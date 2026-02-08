@@ -43,24 +43,25 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 <span class="nc" id="L45">public class License {</span>
-
+	// ::remove file when __TEAVM__
+	
 	public static void main(String[] args) {
-<span class="nc" id="L48">		List&lt;String&gt; lines = License.getCurrent().getTextFull();</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (int line = 0; line &lt; lines.size(); line++) {</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">			if (line == 0) {</span>
-<span class="nc" id="L51">				System.out.print(&quot;/* &quot;);</span>
+<span class="nc" id="L49">		List&lt;String&gt; lines = License.getCurrent().getTextFull();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		for (int line = 0; line &lt; lines.size(); line++) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">			if (line == 0) {</span>
+<span class="nc" id="L52">				System.out.print(&quot;/* &quot;);</span>
 			} else {
-<span class="nc" id="L53">				System.out.print(&quot; * &quot;);</span>
+<span class="nc" id="L54">				System.out.print(&quot; * &quot;);</span>
 			}
-<span class="nc" id="L55">			System.out.println(lines.get(line));</span>
+<span class="nc" id="L56">			System.out.println(lines.get(line));</span>
 		}
-<span class="nc" id="L57">		System.out.println(&quot; */&quot;);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L58">		System.out.println(&quot; */&quot;);</span>
+<span class="nc" id="L59">	}</span>
 
 	@Override
 	public String toString() {
 		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
-<span class="nc" id="L63">		return &quot;GPL&quot;;</span>
+<span class="nc" id="L64">		return &quot;GPL&quot;;</span>
 		// ::done
 		// ::uncomment when __CORE__ or __MIT__
 		// return &quot;MIT&quot;;
@@ -83,95 +84,95 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 	}
 
 	public static License getCurrent() {
-<span class="nc" id="L86">		return new License();</span>
+<span class="nc" id="L87">		return new License();</span>
 	}
 
 	public List&lt;String&gt; getTextFull() {
-<span class="nc" id="L90">		final List&lt;String&gt; text = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L91">		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();</span>
-<span class="nc" id="L92">		header1(text, licenseInfo);</span>
-<span class="nc" id="L93">		header2(text, licenseInfo, false);</span>
-<span class="nc" id="L94">		end3(licenseInfo, text);</span>
-<span class="nc" id="L95">		return text;</span>
+<span class="nc" id="L91">		final List&lt;String&gt; text = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L92">		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();</span>
+<span class="nc" id="L93">		header1(text, licenseInfo);</span>
+<span class="nc" id="L94">		header2(text, licenseInfo, false);</span>
+<span class="nc" id="L95">		end3(licenseInfo, text);</span>
+<span class="nc" id="L96">		return text;</span>
 	}
 
 	public List&lt;String&gt; getText1(LicenseInfo licenseInfo) {
-<span class="nc" id="L99">		final List&lt;String&gt; text = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L100">		header1(text, licenseInfo);</span>
-<span class="nc" id="L101">		return text;</span>
+<span class="nc" id="L100">		final List&lt;String&gt; text = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L101">		header1(text, licenseInfo);</span>
+<span class="nc" id="L102">		return text;</span>
 	}
 
 	public List&lt;String&gt; getText2(LicenseInfo licenseInfo) {
-<span class="nc" id="L105">		final List&lt;String&gt; text = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L106">		header2(text, licenseInfo, true);</span>
-<span class="nc" id="L107">		end3(licenseInfo, text);</span>
-<span class="nc" id="L108">		return text;</span>
+<span class="nc" id="L106">		final List&lt;String&gt; text = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L107">		header2(text, licenseInfo, true);</span>
+<span class="nc" id="L108">		end3(licenseInfo, text);</span>
+<span class="nc" id="L109">		return text;</span>
 	}
 
 	private void header1(final List&lt;String&gt; text, LicenseInfo licenseInfo) {
 
 		// ::comment when __CORE__
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (licenseInfo.isNone()) {</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (licenseInfo.isNone()) {</span>
 			// ::done
-<span class="nc" id="L116">			text.add(&quot;+=======================================================================&quot;);</span>
-<span class="nc" id="L117">			text.add(&quot;| &quot;);</span>
-<span class="nc" id="L118">			text.add(&quot;|      PlantUML : a free UML diagram generator&quot;);</span>
-<span class="nc" id="L119">			text.add(&quot;| &quot;);</span>
-<span class="nc" id="L120">			text.add(&quot;+=======================================================================&quot;);</span>
+<span class="nc" id="L117">			text.add(&quot;+=======================================================================&quot;);</span>
+<span class="nc" id="L118">			text.add(&quot;| &quot;);</span>
+<span class="nc" id="L119">			text.add(&quot;|      PlantUML : a free UML diagram generator&quot;);</span>
+<span class="nc" id="L120">			text.add(&quot;| &quot;);</span>
+<span class="nc" id="L121">			text.add(&quot;+=======================================================================&quot;);</span>
 			// ::comment when __CORE__
 		} else {
-<span class="nc" id="L123">			text.add(&quot;+=======================================================================&quot;);</span>
-<span class="nc" id="L124">			text.add(&quot;| &quot;);</span>
-<span class="nc" id="L125">			text.add(&quot;|      PlantUML Professional Edition&quot;);</span>
-<span class="nc" id="L126">			text.add(&quot;| &quot;);</span>
-<span class="nc" id="L127">			text.add(&quot;+=======================================================================&quot;);</span>
-<span class="nc" id="L128">			addLicenseInfo(text, licenseInfo);</span>
-<span class="nc" id="L129">			text.add(&quot;+=======================================================================&quot;);</span>
+<span class="nc" id="L124">			text.add(&quot;+=======================================================================&quot;);</span>
+<span class="nc" id="L125">			text.add(&quot;| &quot;);</span>
+<span class="nc" id="L126">			text.add(&quot;|      PlantUML Professional Edition&quot;);</span>
+<span class="nc" id="L127">			text.add(&quot;| &quot;);</span>
+<span class="nc" id="L128">			text.add(&quot;+=======================================================================&quot;);</span>
+<span class="nc" id="L129">			addLicenseInfo(text, licenseInfo);</span>
+<span class="nc" id="L130">			text.add(&quot;+=======================================================================&quot;);</span>
 		}
 		// ::done
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L133">	}</span>
 
 	private void header2(final List&lt;String&gt; text, LicenseInfo licenseInfo, boolean withQrcode) {
-<span class="nc" id="L135">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L136">		text.add(&quot;(C) Copyright 2009-2024, Arnaud Roques&quot;);</span>
-<span class="nc" id="L137">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L138">		text.add(&quot;Project Info:  https://plantuml.com&quot;);</span>
-<span class="nc" id="L139">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L136">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L137">		text.add(&quot;(C) Copyright 2009-2024, Arnaud Roques&quot;);</span>
+<span class="nc" id="L138">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L139">		text.add(&quot;Project Info:  https://plantuml.com&quot;);</span>
+<span class="nc" id="L140">		text.add(&quot; &quot;);</span>
 
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (licenseInfo.isValid() == false) {</span>
-<span class="nc" id="L142">			text.add(&quot;If you like this project or if you find it useful, you can support us at:&quot;);</span>
-<span class="nc" id="L143">			text.add(&quot; &quot;);</span>
-<span class="nc" id="L144">			text.add(&quot;https://plantuml.com/patreon (only 1$ per month!)&quot;);</span>
-<span class="nc" id="L145">			text.add(&quot;https://plantuml.com/liberapay (only 1\u20ac per month!)&quot;);</span>
-<span class="nc" id="L146">			text.add(&quot;https://plantuml.com/paypal&quot;);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (licenseInfo.isValid() == false) {</span>
+<span class="nc" id="L143">			text.add(&quot;If you like this project or if you find it useful, you can support us at:&quot;);</span>
+<span class="nc" id="L144">			text.add(&quot; &quot;);</span>
+<span class="nc" id="L145">			text.add(&quot;https://plantuml.com/patreon (only 1$ per month!)&quot;);</span>
+<span class="nc" id="L146">			text.add(&quot;https://plantuml.com/liberapay (only 1\u20ac per month!)&quot;);</span>
+<span class="nc" id="L147">			text.add(&quot;https://plantuml.com/paypal&quot;);</span>
 			// ::comment when __CORE__
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (withQrcode) {</span>
-<span class="nc" id="L149">				text.add(</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (withQrcode) {</span>
+<span class="nc" id="L150">				text.add(</span>
 						&quot;\t&lt;qrcode:https://plantuml.com/patreon&gt;\t\t&lt;qrcode:https://plantuml.com/lp&gt;\t\t&lt;qrcode:https://plantuml.com/paypal&gt;&quot;);
 			} else {
 				// ::done
-<span class="nc" id="L153">				text.add(&quot;&quot;);</span>
-<span class="nc" id="L154">				text.add(&quot; &quot;);</span>
+<span class="nc" id="L154">				text.add(&quot;&quot;);</span>
+<span class="nc" id="L155">				text.add(&quot; &quot;);</span>
 				// ::comment when __CORE__
 			}
 			// ::done
 		}
-<span class="nc" id="L159">	}</span>
+<span class="nc" id="L160">	}</span>
 
 	private void end3(final LicenseInfo licenseInfo, final List&lt;String&gt; text) {
 		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
-<span class="nc" id="L163">		text.add(&quot;PlantUML is free software; you can redistribute it and/or modify it&quot;);</span>
-<span class="nc" id="L164">		text.add(&quot;under the terms of the GNU General Public License as published by&quot;);</span>
-<span class="nc" id="L165">		text.add(&quot;the Free Software Foundation, either version 3 of the License, or&quot;);</span>
-<span class="nc" id="L166">		text.add(&quot;(at your option) any later version.&quot;);</span>
-<span class="nc" id="L167">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L168">		text.add(&quot;PlantUML distributed in the hope that it will be useful, but&quot;);</span>
-<span class="nc" id="L169">		text.add(&quot;WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY&quot;);</span>
-<span class="nc" id="L170">		text.add(&quot;or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public&quot;);</span>
-<span class="nc" id="L171">		text.add(&quot;License for more details.&quot;);</span>
-<span class="nc" id="L172">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L173">		text.add(&quot;You should have received a copy of the GNU General Public License&quot;);</span>
-<span class="nc" id="L174">		text.add(&quot;along with this library.  If not, see &lt;https://www.gnu.org/licenses/&gt;.&quot;);</span>
+<span class="nc" id="L164">		text.add(&quot;PlantUML is free software; you can redistribute it and/or modify it&quot;);</span>
+<span class="nc" id="L165">		text.add(&quot;under the terms of the GNU General Public License as published by&quot;);</span>
+<span class="nc" id="L166">		text.add(&quot;the Free Software Foundation, either version 3 of the License, or&quot;);</span>
+<span class="nc" id="L167">		text.add(&quot;(at your option) any later version.&quot;);</span>
+<span class="nc" id="L168">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L169">		text.add(&quot;PlantUML distributed in the hope that it will be useful, but&quot;);</span>
+<span class="nc" id="L170">		text.add(&quot;WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY&quot;);</span>
+<span class="nc" id="L171">		text.add(&quot;or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public&quot;);</span>
+<span class="nc" id="L172">		text.add(&quot;License for more details.&quot;);</span>
+<span class="nc" id="L173">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L174">		text.add(&quot;You should have received a copy of the GNU General Public License&quot;);</span>
+<span class="nc" id="L175">		text.add(&quot;along with this library.  If not, see &lt;https://www.gnu.org/licenses/&gt;.&quot;);</span>
 		// ::done
 
 		// ::uncomment when __CORE__
@@ -196,57 +197,57 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 		// addGplv2(licenseInfo, text);
 		// ::done
 
-<span class="nc" id="L199">		text.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (licenseInfo.isValid() == false) {</span>
-<span class="nc" id="L201">			text.add(&quot;PlantUML can occasionally display sponsored or advertising messages. Those&quot;);</span>
-<span class="nc" id="L202">			text.add(&quot;messages are usually generated on welcome or error images and never on&quot;);</span>
-<span class="nc" id="L203">			text.add(&quot;functional diagrams.&quot;);</span>
-<span class="nc" id="L204">			text.add(&quot;See https://plantuml.com/professional if you want to remove them&quot;);</span>
-<span class="nc" id="L205">			text.add(&quot; &quot;);</span>
+<span class="nc" id="L200">		text.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (licenseInfo.isValid() == false) {</span>
+<span class="nc" id="L202">			text.add(&quot;PlantUML can occasionally display sponsored or advertising messages. Those&quot;);</span>
+<span class="nc" id="L203">			text.add(&quot;messages are usually generated on welcome or error images and never on&quot;);</span>
+<span class="nc" id="L204">			text.add(&quot;functional diagrams.&quot;);</span>
+<span class="nc" id="L205">			text.add(&quot;See https://plantuml.com/professional if you want to remove them&quot;);</span>
+<span class="nc" id="L206">			text.add(&quot; &quot;);</span>
 		}
 
-<span class="nc" id="L208">		text.add(&quot;Images (whatever their format : PNG, SVG, EPS...) generated by running PlantUML&quot;);</span>
-<span class="nc" id="L209">		text.add(&quot;are owned by the author of their corresponding sources code (that is, their&quot;);</span>
-<span class="nc" id="L210">		text.add(&quot;textual description in PlantUML language). Those images are not covered by&quot;);</span>
-<span class="nc" id="L211">		text.add(&quot;this &quot; + this + &quot; license.&quot;);</span>
-<span class="nc" id="L212">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L213">		text.add(&quot;The generated images can then be used without any reference to the &quot; + this + &quot; license.&quot;);</span>
-<span class="nc" id="L214">		text.add(&quot;It is not even necessary to stipulate that they have been generated with PlantUML,&quot;);</span>
-<span class="nc" id="L215">		text.add(&quot;although this will be appreciated by the PlantUML team.&quot;);</span>
-<span class="nc" id="L216">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L217">		text.add(&quot;There is an exception : if the textual description in PlantUML language is also covered&quot;);</span>
-<span class="nc" id="L218">		text.add(&quot;by any license, then the generated images are logically covered&quot;);</span>
-<span class="nc" id="L219">		text.add(&quot;by the very same license.&quot;);</span>
+<span class="nc" id="L209">		text.add(&quot;Images (whatever their format : PNG, SVG, EPS...) generated by running PlantUML&quot;);</span>
+<span class="nc" id="L210">		text.add(&quot;are owned by the author of their corresponding sources code (that is, their&quot;);</span>
+<span class="nc" id="L211">		text.add(&quot;textual description in PlantUML language). Those images are not covered by&quot;);</span>
+<span class="nc" id="L212">		text.add(&quot;this &quot; + this + &quot; license.&quot;);</span>
+<span class="nc" id="L213">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L214">		text.add(&quot;The generated images can then be used without any reference to the &quot; + this + &quot; license.&quot;);</span>
+<span class="nc" id="L215">		text.add(&quot;It is not even necessary to stipulate that they have been generated with PlantUML,&quot;);</span>
+<span class="nc" id="L216">		text.add(&quot;although this will be appreciated by the PlantUML team.&quot;);</span>
+<span class="nc" id="L217">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L218">		text.add(&quot;There is an exception : if the textual description in PlantUML language is also covered&quot;);</span>
+<span class="nc" id="L219">		text.add(&quot;by any license, then the generated images are logically covered&quot;);</span>
+<span class="nc" id="L220">		text.add(&quot;by the very same license.&quot;);</span>
 
 		// ::comment when __CORE__
-<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
-<span class="nc" id="L223">			text.add(&quot; &quot;);</span>
-<span class="nc" id="L224">			text.add(&quot;This version of PlantUML records general local statistics about usage.&quot;);</span>
-<span class="nc" id="L225">			text.add(&quot;(more info on https://plantuml.com/statistics-report)&quot;);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
+<span class="nc" id="L224">			text.add(&quot; &quot;);</span>
+<span class="nc" id="L225">			text.add(&quot;This version of PlantUML records general local statistics about usage.&quot;);</span>
+<span class="nc" id="L226">			text.add(&quot;(more info on https://plantuml.com/statistics-report)&quot;);</span>
 		}
-<span class="nc" id="L227">		text.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (WindowsDotArchive.getInstance().isThereArchive()) {</span>
-<span class="nc" id="L229">			text.add(&quot;This distribution bundles a minimal set of GraphViz files and may install them&quot;);</span>
-<span class="nc" id="L230">			text.add(&quot; if needed in the local temporary directory.&quot;);</span>
+<span class="nc" id="L228">		text.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (WindowsDotArchive.getInstance().isThereArchive()) {</span>
+<span class="nc" id="L230">			text.add(&quot;This distribution bundles a minimal set of GraphViz files and may install them&quot;);</span>
+<span class="nc" id="L231">			text.add(&quot; if needed in the local temporary directory.&quot;);</span>
 		} else {
-<span class="nc" id="L232">			text.add(&quot;This is the IGY distribution (Install GraphViz by Yourself).&quot;);</span>
-<span class="nc" id="L233">			text.add(&quot;You have to install GraphViz and to setup the GRAPHVIZ_DOT environment variable&quot;);</span>
+<span class="nc" id="L233">			text.add(&quot;This is the IGY distribution (Install GraphViz by Yourself).&quot;);</span>
+<span class="nc" id="L234">			text.add(&quot;You have to install GraphViz and to setup the GRAPHVIZ_DOT environment variable&quot;);</span>
 		}
-<span class="nc" id="L235">		text.add(&quot;(see https://plantuml.com/graphviz-dot )&quot;);</span>
+<span class="nc" id="L236">		text.add(&quot;(see https://plantuml.com/graphviz-dot )&quot;);</span>
 		// ::done
-<span class="nc" id="L237">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L238">		text.add(&quot;Icons provided by OpenIconic :  https://useiconic.com/open&quot;);</span>
-<span class="nc" id="L239">		text.add(&quot;Archimate sprites provided by Archi :  http://www.archimatetool.com&quot;);</span>
-<span class="nc" id="L240">		text.add(&quot;Stdlib AWS provided by https://github.com/milo-minderbinder/AWS-PlantUML&quot;);</span>
-<span class="nc" id="L241">		text.add(&quot;Stdlib Icons provided https://github.com/tupadr3/plantuml-icon-font-sprites&quot;);</span>
-<span class="nc" id="L242">		text.add(&quot;ASCIIMathML (c) Peter Jipsen http://www.chapman.edu/~jipsen&quot;);</span>
-<span class="nc" id="L243">		text.add(&quot;ASCIIMathML (c) David Lippman http://www.pierce.ctc.edu/dlippman&quot;);</span>
-<span class="nc" id="L244">		text.add(&quot;CafeUndZopfli ported by Eugene Klyuchnikov https://github.com/eustas/CafeUndZopfli&quot;);</span>
-<span class="nc" id="L245">		text.add(&quot;Brotli (c) by the Brotli Authors https://github.com/google/brotli&quot;);</span>
-<span class="nc" id="L246">		text.add(&quot;Themes (c) by Brett Schwarz https://github.com/bschwarz/puml-themes&quot;);</span>
-<span class="nc" id="L247">		text.add(&quot;Twemoji (c) by Twitter at https://twemoji.twitter.com/&quot;);</span>
-<span class="nc" id="L248">		text.add(&quot; &quot;);</span>
-<span class="nc" id="L249">	}</span>
+<span class="nc" id="L238">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L239">		text.add(&quot;Icons provided by OpenIconic :  https://useiconic.com/open&quot;);</span>
+<span class="nc" id="L240">		text.add(&quot;Archimate sprites provided by Archi :  http://www.archimatetool.com&quot;);</span>
+<span class="nc" id="L241">		text.add(&quot;Stdlib AWS provided by https://github.com/milo-minderbinder/AWS-PlantUML&quot;);</span>
+<span class="nc" id="L242">		text.add(&quot;Stdlib Icons provided https://github.com/tupadr3/plantuml-icon-font-sprites&quot;);</span>
+<span class="nc" id="L243">		text.add(&quot;ASCIIMathML (c) Peter Jipsen http://www.chapman.edu/~jipsen&quot;);</span>
+<span class="nc" id="L244">		text.add(&quot;ASCIIMathML (c) David Lippman http://www.pierce.ctc.edu/dlippman&quot;);</span>
+<span class="nc" id="L245">		text.add(&quot;CafeUndZopfli ported by Eugene Klyuchnikov https://github.com/eustas/CafeUndZopfli&quot;);</span>
+<span class="nc" id="L246">		text.add(&quot;Brotli (c) by the Brotli Authors https://github.com/google/brotli&quot;);</span>
+<span class="nc" id="L247">		text.add(&quot;Themes (c) by Brett Schwarz https://github.com/bschwarz/puml-themes&quot;);</span>
+<span class="nc" id="L248">		text.add(&quot;Twemoji (c) by Twitter at https://twemoji.twitter.com/&quot;);</span>
+<span class="nc" id="L249">		text.add(&quot; &quot;);</span>
+<span class="nc" id="L250">	}</span>
 
 // ::uncomment when __CORE__
 //	private void addCore(final LicenseInfo licenseInfo, final List&lt;String&gt; text) {
@@ -412,22 +413,22 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 	// ::done
 
 	public static void addLicenseInfo(final List&lt;String&gt; text, LicenseInfo licenseInfo) {
-<span class="nc bnc" id="L415" title="All 2 branches missed.">		if (licenseInfo.getLicenseType() == LicenseType.NAMED) {</span>
-<span class="nc" id="L416">			text.add(&quot;| &quot;);</span>
-<span class="nc" id="L417">			text.add(&quot;|      LICENSED TO : &quot; + licenseInfo.getOwner());</span>
-<span class="nc" id="L418">			text.add(</span>
-<span class="nc" id="L419">					&quot;|      EXPIRATION DATE : &quot; + DateFormat.getDateInstance().format(licenseInfo.getExpirationDate()));</span>
-<span class="nc" id="L420">			text.add(&quot;|  &quot;);</span>
-<span class="nc bnc" id="L421" title="All 2 branches missed.">		} else if (licenseInfo.getLicenseType() == LicenseType.DISTRIBUTOR) {</span>
-<span class="nc" id="L422">			text.add(&quot;|  &quot;);</span>
-<span class="nc" id="L423">			text.add(&quot;|      DISTRIBUTED BY : &quot; + licenseInfo.getOwner());</span>
-<span class="nc" id="L424">			text.add(&quot;|  &quot;);</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">		if (licenseInfo.getLicenseType() == LicenseType.NAMED) {</span>
+<span class="nc" id="L417">			text.add(&quot;| &quot;);</span>
+<span class="nc" id="L418">			text.add(&quot;|      LICENSED TO : &quot; + licenseInfo.getOwner());</span>
+<span class="nc" id="L419">			text.add(</span>
+<span class="nc" id="L420">					&quot;|      EXPIRATION DATE : &quot; + DateFormat.getDateInstance().format(licenseInfo.getExpirationDate()));</span>
+<span class="nc" id="L421">			text.add(&quot;|  &quot;);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">		} else if (licenseInfo.getLicenseType() == LicenseType.DISTRIBUTOR) {</span>
+<span class="nc" id="L423">			text.add(&quot;|  &quot;);</span>
+<span class="nc" id="L424">			text.add(&quot;|      DISTRIBUTED BY : &quot; + licenseInfo.getOwner());</span>
+<span class="nc" id="L425">			text.add(&quot;|  &quot;);</span>
 		}
-<span class="nc bnc" id="L426" title="All 4 branches missed.">		if (licenseInfo.getLicenseType() != LicenseType.UNKNOWN &amp;&amp; licenseInfo.hasExpired()) {</span>
-<span class="nc" id="L427">			text.add(&quot;|      &lt;i&gt;Warning: Your license has expired.&quot;);</span>
-<span class="nc" id="L428">			text.add(&quot;|  &quot;);</span>
+<span class="nc bnc" id="L427" title="All 4 branches missed.">		if (licenseInfo.getLicenseType() != LicenseType.UNKNOWN &amp;&amp; licenseInfo.hasExpired()) {</span>
+<span class="nc" id="L428">			text.add(&quot;|      &lt;i&gt;Warning: Your license has expired.&quot;);</span>
+<span class="nc" id="L429">			text.add(&quot;|  &quot;);</span>
 		}
-<span class="nc" id="L430">	}</span>
+<span class="nc" id="L431">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

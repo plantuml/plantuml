@@ -43,33 +43,36 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderDebug extends StringBounderRaw {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
 
 	public StringBounderDebug() {
-<span class="fc" id="L50">		super(FileFormat.gg.getFontRenderContext());</span>
-<span class="fc" id="L51">	}</span>
+		// ::revert when __TEAVM__
+<span class="fc" id="L51">		super(FileFormat.gg.getFontRenderContext());</span>
+		// super(null);
+		// ::done
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-<span class="fc" id="L55">		final Random rnd = new Random(StringUtils.seed(text));</span>
+<span class="fc" id="L58">		final Random rnd = new Random(StringUtils.seed(text));</span>
 		// We want a random factor between 80% et 130%
-<span class="fc" id="L57">		final double factor = 0.8 + 0.5 * rnd.nextDouble();</span>
-<span class="fc" id="L58">		final double size = font.getSize2D();</span>
-<span class="fc" id="L59">		final double height = size;</span>
-<span class="fc" id="L60">		final double width = size * text.length() * factor;</span>
-<span class="fc" id="L61">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L60">		final double factor = 0.8 + 0.5 * rnd.nextDouble();</span>
+<span class="fc" id="L61">		final double size = font.getSize2D();</span>
+<span class="fc" id="L62">		final double height = size;</span>
+<span class="fc" id="L63">		final double width = size * text.length() * factor;</span>
+<span class="fc" id="L64">		return new XDimension2D(width, height);</span>
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-<span class="fc" id="L66">		final double descent = font.getSize2D() / 4.5;</span>
-<span class="fc" id="L67">		return descent;</span>
+<span class="fc" id="L69">		final double descent = font.getSize2D() / 4.5;</span>
+<span class="fc" id="L70">		return descent;</span>
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="fc" id="L72">		return false;</span>
+<span class="fc" id="L75">		return false;</span>
 	}
 
 }

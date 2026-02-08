@@ -41,9 +41,11 @@ public class CliParsingException extends Exception {
 <span class="fc" id="L41">		super(description);</span>
 <span class="fc" id="L42">	}</span>
 
+	// ::comment when __TEAVM__
 	public CliParsingException(CliFlag flag, String description) {
-<span class="fc" id="L45">		super(flag.getFlag() + &quot; [&quot; + flag.name() + &quot;]: &quot; + description);</span>
-<span class="fc" id="L46">	}</span>
+<span class="fc" id="L46">		super(flag.getFlag() + &quot; [&quot; + flag.name() + &quot;]: &quot; + description);</span>
+<span class="fc" id="L47">	}</span>
+	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

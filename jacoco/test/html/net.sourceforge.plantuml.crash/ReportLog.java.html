@@ -106,49 +106,51 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L106">			add(&quot;An error has occured!&quot;);</span>
 		else
 <span class="nc" id="L108">			add(&quot;An error has occured : &quot; + exception);</span>
-<span class="nc" id="L109">		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());</span>
-<span class="nc" id="L110">		add(&quot;&lt;i&gt;&quot; + quote);</span>
-<span class="nc" id="L111">		addEmptyLine();</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L110">		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());</span>
+<span class="nc" id="L111">		add(&quot;&lt;i&gt;&quot; + quote);</span>
+<span class="nc" id="L112">		addEmptyLine();</span>
 
-<span class="nc" id="L113">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
-<span class="nc" id="L114">		addEmptyLine();</span>
-<span class="nc" id="L115">		checkOldVersionWarning();</span>
-<span class="nc" id="L116">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
-<span class="nc" id="L117">		addEmptyLine();</span>
-<span class="nc" id="L118">	}</span>
+<span class="nc" id="L114">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
+<span class="nc" id="L115">		addEmptyLine();</span>
+<span class="nc" id="L116">		checkOldVersionWarning();</span>
+<span class="nc" id="L117">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
+<span class="nc" id="L118">		addEmptyLine();</span>
+		// ::done
+<span class="nc" id="L120">	}</span>
 
 	private int lines(String text) {
-<span class="nc" id="L121">		int result = 0;</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (int i = 0; i &lt; text.length(); i++)</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
-<span class="nc" id="L124">				result++;</span>
+<span class="nc" id="L123">		int result = 0;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (int i = 0; i &lt; text.length(); i++)</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
+<span class="nc" id="L126">				result++;</span>
 
-<span class="nc" id="L126">		return result;</span>
+<span class="nc" id="L128">		return result;</span>
 	}
 
 	public void pleaseCheckYourGraphVizVersion() {
-<span class="nc" id="L130">		addEmptyLine();</span>
-<span class="nc" id="L131">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
 <span class="nc" id="L132">		addEmptyLine();</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L133">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
+<span class="nc" id="L134">		addEmptyLine();</span>
+<span class="nc" id="L135">	}</span>
 
 	public void thisMayBeCaused() {
-<span class="nc" id="L136">		add(&quot;This may be caused by :&quot;);</span>
-<span class="nc" id="L137">		add(&quot; - a bug in PlantUML&quot;);</span>
-<span class="nc" id="L138">		add(&quot; - a problem in GraphViz&quot;);</span>
-<span class="nc" id="L139">	}</span>
+<span class="nc" id="L138">		add(&quot;This may be caused by :&quot;);</span>
+<span class="nc" id="L139">		add(&quot; - a bug in PlantUML&quot;);</span>
+<span class="nc" id="L140">		add(&quot; - a problem in GraphViz&quot;);</span>
+<span class="nc" id="L141">	}</span>
 
 	public void addDecodeHint() {
-<span class="nc" id="L142">		addEmptyLine();</span>
-<span class="nc" id="L143">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L144">		addEmptyLine();</span>
+<span class="nc" id="L145">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
+<span class="nc" id="L146">	}</span>
 
 	public void addProperties() {
-		// ::comment when __CORE__
-<span class="nc" id="L148">		addAll(OptionPrint.interestingProperties());</span>
-<span class="nc" id="L149">		addAll(OptionPrint.interestingValues());</span>
+		// ::comment when __CORE__ or __TEAVM__
+<span class="nc" id="L150">		addAll(OptionPrint.interestingProperties());</span>
+<span class="nc" id="L151">		addAll(OptionPrint.interestingValues());</span>
 		// ::done
-<span class="nc" id="L151">	}</span>
+<span class="nc" id="L153">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

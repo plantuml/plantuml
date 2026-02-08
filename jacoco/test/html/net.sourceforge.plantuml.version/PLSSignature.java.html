@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class PLSSignature {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final int type;
 	private final byte[] sha;

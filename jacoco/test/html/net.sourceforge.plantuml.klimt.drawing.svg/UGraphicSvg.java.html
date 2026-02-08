@@ -39,6 +39,7 @@ import java.io.OutputStream;
 
 import javax.xml.transform.TransformerException;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -65,110 +66,110 @@ public class UGraphicSvg extends AbstractUGraphic&lt;SvgGraphics&gt; implements 
 	private /* final */ SvgOption option;
 
 	public double dpiFactor() {
-<span class="nc" id="L68">		return 1;</span>
+<span class="nc" id="L69">		return 1;</span>
 	}
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="fc" id="L73">		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath);</span>
-<span class="fc" id="L74">		result.copy(this);</span>
-<span class="fc" id="L75">		result.option = this.option;</span>
-<span class="fc" id="L76">		return result;</span>
+<span class="fc" id="L74">		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath);</span>
+<span class="fc" id="L75">		result.copy(this);</span>
+<span class="fc" id="L76">		result.option = this.option;</span>
+<span class="fc" id="L77">		return result;</span>
 	}
 
 	private UGraphicSvg(StringBounder stringBounder, boolean textAsPath) {
-<span class="fc" id="L80">		super(stringBounder);</span>
-<span class="fc" id="L81">		this.textAsPath = textAsPath;</span>
-<span class="fc" id="L82">		register();</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L81">		super(stringBounder);</span>
+<span class="fc" id="L82">		this.textAsPath = textAsPath;</span>
+<span class="fc" id="L83">		register();</span>
+<span class="fc" id="L84">	}</span>
 
 	public static UGraphicSvg build(SvgOption option, boolean textAsPath, long seed, StringBounder stringBounder) {
-<span class="fc" id="L86">		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath);</span>
-<span class="fc" id="L87">		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option));</span>
-<span class="fc" id="L88">		result.option = option;</span>
-<span class="fc" id="L89">		return result;</span>
+<span class="fc" id="L87">		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath);</span>
+<span class="fc" id="L88">		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option));</span>
+<span class="fc" id="L89">		result.option = option;</span>
+<span class="fc" id="L90">		return result;</span>
 	}
 
 	@Override
 	protected boolean manageHiddenAutomatically() {
-<span class="nc" id="L94">		return false;</span>
+<span class="nc" id="L95">		return false;</span>
 	}
 
 	@Override
 	protected void beforeDraw() {
-<span class="fc" id="L99">		getGraphicObject().setHidden(getParam().isHidden());</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L100">		getGraphicObject().setHidden(getParam().isHidden());</span>
+<span class="fc" id="L101">	}</span>
 
 	@Override
 	protected void afterDraw() {
-<span class="fc" id="L104">		getGraphicObject().setHidden(false);</span>
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L105">		getGraphicObject().setHidden(false);</span>
+<span class="fc" id="L106">	}</span>
 
 	private void register() {
-<span class="fc" id="L108">		registerDriver(URectangle.class, new DriverRectangleSvg(this));</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (textAsPath)</span>
-<span class="nc" id="L110">			registerDriver(UText.class, new DriverTextAsPathSvg(this));</span>
+<span class="fc" id="L109">		registerDriver(URectangle.class, new DriverRectangleSvg(this));</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (textAsPath)</span>
+<span class="nc" id="L111">			registerDriver(UText.class, new DriverTextAsPathSvg(this));</span>
 		else
-<span class="fc" id="L112">			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));</span>
+<span class="fc" id="L113">			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));</span>
 
-<span class="fc" id="L114">		registerDriver(ULine.class, new DriverLineSvg(this));</span>
-<span class="fc" id="L115">		registerDriver(UPixel.class, new DriverPixelSvg());</span>
-<span class="fc" id="L116">		registerDriver(UPolygon.class, new DriverPolygonSvg(this));</span>
-<span class="fc" id="L117">		registerDriver(UEllipse.class, new DriverEllipseSvg(this));</span>
-<span class="fc" id="L118">		registerDriver(UImage.class, new DriverImagePng(this));</span>
-<span class="fc" id="L119">		registerDriver(UImageSvg.class, new DriverImageSvgSvg());</span>
-<span class="fc" id="L120">		registerDriver(UPath.class, new DriverPathSvg(this));</span>
-<span class="fc" id="L121">		registerDriver(DotPath.class, new DriverDotPathSvg());</span>
-<span class="fc" id="L122">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg());</span>
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L115">		registerDriver(ULine.class, new DriverLineSvg(this));</span>
+<span class="fc" id="L116">		registerDriver(UPixel.class, new DriverPixelSvg());</span>
+<span class="fc" id="L117">		registerDriver(UPolygon.class, new DriverPolygonSvg(this));</span>
+<span class="fc" id="L118">		registerDriver(UEllipse.class, new DriverEllipseSvg(this));</span>
+<span class="fc" id="L119">		registerDriver(UImage.class, new DriverImagePng(this));</span>
+<span class="fc" id="L120">		registerDriver(UImageSvg.class, new DriverImageSvgSvg());</span>
+<span class="fc" id="L121">		registerDriver(UPath.class, new DriverPathSvg(this));</span>
+<span class="fc" id="L122">		registerDriver(DotPath.class, new DriverDotPathSvg());</span>
+<span class="fc" id="L123">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg());</span>
+<span class="fc" id="L124">	}</span>
 
 	public SvgGraphics getSvgGraphics() {
-<span class="nc" id="L126">		return this.getGraphicObject();</span>
+<span class="nc" id="L127">		return this.getGraphicObject();</span>
 	}
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		try {
-<span class="fc bfc" id="L132" title="All 2 branches covered.">			if (metadata != null)</span>
-<span class="fc" id="L133">				getGraphicObject().addCommentMetadata(metadata);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (metadata != null)</span>
+<span class="fc" id="L134">				getGraphicObject().addCommentMetadata(metadata);</span>
 
-<span class="fc" id="L135">			getGraphicObject().createXml(os);</span>
-<span class="nc" id="L136">		} catch (TransformerException e) {</span>
-<span class="nc" id="L137">			throw new IOException(e);</span>
-<span class="fc" id="L138">		}</span>
-<span class="fc" id="L139">	}</span>
+<span class="fc" id="L136">			getGraphicObject().createXml(os);</span>
+<span class="nc" id="L137">		} catch (TransformerException e) {</span>
+<span class="nc" id="L138">			throw new IOException(e);</span>
+<span class="fc" id="L139">		}</span>
+<span class="fc" id="L140">	}</span>
 
 	@Override
 	public void startGroup(UGroup group) {
-<span class="fc" id="L143">		getGraphicObject().startGroup(group.asMap());</span>
-<span class="fc" id="L144">	}</span>
+<span class="fc" id="L144">		getGraphicObject().startGroup(group.asMap());</span>
+<span class="fc" id="L145">	}</span>
 
 	@Override
 	public void closeGroup() {
-<span class="fc" id="L148">		getGraphicObject().closeGroup();</span>
-<span class="fc" id="L149">	}</span>
+<span class="fc" id="L149">		getGraphicObject().closeGroup();</span>
+<span class="fc" id="L150">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
-<span class="nc" id="L153">		getGraphicObject().openLink(url.getUrl(), url.getTooltip(), option.getLinkTarget());</span>
-<span class="nc" id="L154">	}</span>
+<span class="nc" id="L154">		getGraphicObject().openLink(url.getUrl(), url.getTooltip(), option.getLinkTarget());</span>
+<span class="nc" id="L155">	}</span>
 
 	@Override
 	public void closeUrl() {
-<span class="nc" id="L158">		getGraphicObject().closeLink();</span>
-<span class="nc" id="L159">	}</span>
+<span class="nc" id="L159">		getGraphicObject().closeLink();</span>
+<span class="nc" id="L160">	}</span>
 
 	@Override
 	protected void drawComment(UComment comment) {
-<span class="nc" id="L163">		getGraphicObject().addComment(comment.getComment());</span>
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L164">		getGraphicObject().addComment(comment.getComment());</span>
+<span class="nc" id="L165">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
-<span class="nc" id="L169">			return true;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
+<span class="nc" id="L170">			return true;</span>
 
-<span class="fc" id="L171">		return super.matchesProperty(propertyName);</span>
+<span class="fc" id="L172">		return super.matchesProperty(propertyName);</span>
 	}
 
 	// @Override

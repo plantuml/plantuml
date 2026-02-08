@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.dot;
 
 public class ProcessState {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final String name;
 	private final Throwable cause;

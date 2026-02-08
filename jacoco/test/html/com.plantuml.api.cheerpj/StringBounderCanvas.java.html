@@ -46,25 +46,26 @@ import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderCanvas extends StringBounderRaw {
+	// ::remove file when __TEAVM__
 
 	private final Graphics2D g2d;
 
 	public StringBounderCanvas(Graphics2D g2d) {
-<span class="nc" id="L53">		super(g2d.getFontRenderContext());</span>
-<span class="nc" id="L54">		this.g2d = g2d;</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L54">		super(g2d.getFontRenderContext());</span>
+<span class="nc" id="L55">		this.g2d = g2d;</span>
+<span class="nc" id="L56">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc" id="L59">		return false;</span>
+<span class="nc" id="L60">		return false;</span>
 	}
 
 	@Override
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-<span class="nc" id="L64">		final Font javaFont = UFontImpl.getUnderlayingFont(font, text);</span>
-<span class="nc" id="L65">		final FontMetrics fm = g2d.getFontMetrics(javaFont);</span>
-<span class="nc" id="L66">		final Rectangle2D rect = fm.getStringBounds(text, g2d);</span>
-<span class="nc" id="L67">		return new XDimension2D(rect.getWidth(), rect.getHeight());</span>
+<span class="nc" id="L65">		final Font javaFont = UFontImpl.getUnderlayingFont(font, text);</span>
+<span class="nc" id="L66">		final FontMetrics fm = g2d.getFontMetrics(javaFont);</span>
+<span class="nc" id="L67">		final Rectangle2D rect = fm.getStringBounds(text, g2d);</span>
+<span class="nc" id="L68">		return new XDimension2D(rect.getWidth(), rect.getHeight());</span>
 	}
 
 }

@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends PlainDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;

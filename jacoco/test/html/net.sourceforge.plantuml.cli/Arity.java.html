@@ -36,20 +36,21 @@
 package net.sourceforge.plantuml.cli;
 
 <span class="fc" id="L38">public enum Arity {</span>
+	// ::remove file when __TEAVM__
 
 	/** Option without any value, e.g. -verbose */
-<span class="fc" id="L41">	UNARY_BOOLEAN,</span>
+<span class="fc" id="L42">	UNARY_BOOLEAN,</span>
 
 	/** Option without any value that break the usual behaviour, e.g. -help, -testdot */
-<span class="fc" id="L44">	UNARY_IMMEDIATE_ACTION,</span>
+<span class="fc" id="L45">	UNARY_IMMEDIATE_ACTION,</span>
 
 	/** Option with a key and an optional value, e.g. -ftp or -ftp:8080*/
-<span class="fc" id="L47">	UNARY_OPTIONAL_COLON,</span>
+<span class="fc" id="L48">	UNARY_OPTIONAL_COLON,</span>
 
 	/** Option with an argument or a key/value, e.g. -DSOME_FLAG or -DKEY=VALUE or -D SOME_FLAG or -D KEY=VALUE  */
-<span class="fc" id="L50">	UNARY_INLINE_KEY_OR_KEY_VALUE,</span>
+<span class="fc" id="L51">	UNARY_INLINE_KEY_OR_KEY_VALUE,</span>
 
 	/** Option with a single value, e.g. -graphvizdot &quot;foo.exe&quot; */
-<span class="fc" id="L53">	BINARY_NEXT_ARGUMENT_VALUE;</span>
+<span class="fc" id="L54">	BINARY_NEXT_ARGUMENT_VALUE;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

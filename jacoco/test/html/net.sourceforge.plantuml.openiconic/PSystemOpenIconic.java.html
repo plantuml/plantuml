@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class PSystemOpenIconic extends PlainDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final String iconName;
 	private final double factor;

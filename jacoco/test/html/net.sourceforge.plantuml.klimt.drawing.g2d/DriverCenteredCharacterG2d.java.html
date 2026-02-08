@@ -46,21 +46,22 @@ import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 <span class="fc" id="L48">public class DriverCenteredCharacterG2d implements UDriver&lt;UCenteredCharacter, Graphics2D&gt; {</span>
+	// ::remove folder when __TEAVM__
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			Graphics2D g2d) {
-<span class="fc" id="L52">		final char c = characterCircled.getChar();</span>
-<span class="fc" id="L53">		final UFont font = characterCircled.getFont();</span>
-<span class="fc" id="L54">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="fc" id="L53">		final char c = characterCircled.getChar();</span>
+<span class="fc" id="L54">		final UFont font = characterCircled.getFont();</span>
+<span class="fc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="fc" id="L56">		g2d.setColor(param.getColor().toColor(mapper));</span>
-<span class="fc" id="L57">		final double xpos = x - unusedSpace.getCenterX();</span>
-<span class="fc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="fc" id="L57">		g2d.setColor(param.getColor().toColor(mapper));</span>
+<span class="fc" id="L58">		final double xpos = x - unusedSpace.getCenterX();</span>
+<span class="fc" id="L59">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="fc" id="L60">		final String text = &quot;&quot; + c;</span>
-<span class="fc" id="L61">		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));</span>
-<span class="fc" id="L62">		g2d.drawString(text, (float) xpos, (float) ypos);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L61">		final String text = &quot;&quot; + c;</span>
+<span class="fc" id="L62">		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));</span>
+<span class="fc" id="L63">		g2d.drawString(text, (float) xpos, (float) ypos);</span>
+<span class="fc" id="L64">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

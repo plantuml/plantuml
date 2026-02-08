@@ -233,7 +233,7 @@ public abstract class PSystemError extends PlainDiagram {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L237" title="1 of 4 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
 <span class="fc" id="L238">			final UGraphicTxt ugt = new UGraphicTxt();</span>
 <span class="fc" id="L239">			final UmlCharArea area = ugt.getCharArea();</span>
@@ -250,284 +250,250 @@ public abstract class PSystemError extends PlainDiagram {
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
 <span class="fc" id="L251">		final TextBlock result = getGraphicalFormatted();</span>
 
-		TextBlock udrawable;
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (getSource().getTotalLineCountLessThan5()) {</span>
-<span class="fc" id="L255">			udrawable = addWelcome(result);</span>
-		} else {
-<span class="nc" id="L257">			udrawable = result;</span>
-		}
-<span class="fc" id="L259">		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
-		// udrawable = addMessageAdopt(udrawable);
-<span class="fc bfc" id="L261" title="All 2 branches covered.">		if (disableTimeBasedErrorDecorations) {</span>
+<span class="fc" id="L253">		TextBlock udrawable = result;</span>
+		// ::comment when __TEAVM__
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (getSource().getTotalLineCountLessThan5())</span>
+<span class="fc" id="L256">			udrawable = addWelcome(udrawable);</span>
+
+<span class="fc" id="L258">		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (disableTimeBasedErrorDecorations) {</span>
 			// do nothing
-<span class="pc bpc" id="L263" title="4 of 8 branches missed.">		} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
-<span class="nc" id="L264">			udrawable = addMessagePatreon(udrawable);</span>
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		} else if (min == 15) {</span>
-<span class="nc" id="L266">			udrawable = addMessageLiberapay(udrawable);</span>
-<span class="pc bpc" id="L267" title="3 of 6 branches missed.">		} else if (min == 30 || min == 39 || min == 48) {</span>
-<span class="nc" id="L268">			udrawable = addMessageDedication(udrawable);</span>
-			// ::comment when __CORE__
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
-<span class="nc" id="L271">			udrawable = addMessageArecibo(udrawable);</span>
-			// ::done
+<span class="pc bpc" id="L261" title="4 of 8 branches missed.">		} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
+<span class="nc" id="L262">			udrawable = addMessagePatreon(udrawable);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		} else if (min == 15) {</span>
+<span class="nc" id="L264">			udrawable = addMessageLiberapay(udrawable);</span>
+<span class="pc bpc" id="L265" title="3 of 6 branches missed.">		} else if (min == 30 || min == 39 || min == 48) {</span>
+<span class="nc" id="L266">			udrawable = addMessageDedication(udrawable);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
+<span class="nc" id="L268">			udrawable = addMessageArecibo(udrawable);</span>
 		}
-<span class="fc" id="L274">		return udrawable;</span>
+		// ::done
+<span class="fc" id="L271">		return udrawable;</span>
 	}
 
 	private void append(List&lt;String&gt; result, LineLocation lineLocation) {
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (lineLocation.getDescription() != null) {</span>
-<span class="fc" id="L279">			result.add(&quot;[From &quot; + lineLocation.getDescription() + &quot; (line &quot; + (lineLocation.getPosition() + 1) + &quot;) ]&quot;);</span>
-		}
-<span class="fc" id="L281">	}</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (lineLocation.getDescription() != null)</span>
+<span class="fc" id="L276">			result.add(&quot;[From &quot; + lineLocation.getDescription() + &quot; (line &quot; + (lineLocation.getPosition() + 1) + &quot;) ]&quot;);</span>
+
+<span class="fc" id="L278">	}</span>
 
 	final public DiagramDescription getDescription() {
-<span class="fc" id="L284">		return new DiagramDescription(&quot;(Error)&quot;);</span>
+<span class="fc" id="L281">		return new DiagramDescription(&quot;(Error)&quot;);</span>
 	}
 
 	private List&lt;String&gt; allButLast(List&lt;String&gt; full) {
-<span class="fc" id="L288">		return full.subList(0, full.size() - 1);</span>
+<span class="fc" id="L285">		return full.subList(0, full.size() - 1);</span>
 	}
 
 	private List&lt;String&gt; onlyLast(List&lt;String&gt; full) {
-<span class="fc" id="L292">		return full.subList(full.size() - 1, full.size());</span>
+<span class="fc" id="L289">		return full.subList(full.size() - 1, full.size());</span>
 	}
 
+	// ::comment when __TEAVM__
 	private TextBlock getWelcome() throws IOException {
-<span class="fc" id="L296">		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())</span>
-<span class="fc" id="L297">				.getGraphicStrings();</span>
+<span class="fc" id="L294">		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())</span>
+<span class="fc" id="L295">				.getGraphicStrings();</span>
 	}
 
 	private TextBlock addWelcome(final TextBlock result) throws IOException {
-<span class="fc" id="L301">		final TextBlock welcome = getWelcome();</span>
-<span class="fc" id="L302">		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L299">		final TextBlock welcome = getWelcome();</span>
+<span class="fc" id="L300">		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);</span>
 	}
 
 	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L307" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L308">			return source;</span>
-		// ::done
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L305">			return source;</span>
 
-<span class="nc" id="L311">		final TextBlock message = getMessageLiberapay();</span>
-<span class="nc" id="L312">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L313">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L314">		return result;</span>
+<span class="nc" id="L307">		final TextBlock message = getMessageLiberapay();</span>
+<span class="nc" id="L308">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L309">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L310">		return result;</span>
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L320">			return source;</span>
-		// ::done
+<span class="nc bnc" id="L314" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L315">			return source;</span>
 
-<span class="nc" id="L323">		final TextBlock message = getMessagePatreon();</span>
-<span class="nc" id="L324">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L325">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L326">		return result;</span>
+<span class="nc" id="L317">		final TextBlock message = getMessagePatreon();</span>
+<span class="nc" id="L318">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L319">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L320">		return result;</span>
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L332">			return source;</span>
-		// ::done
+<span class="nc bnc" id="L324" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L325">			return source;</span>
 
-<span class="nc" id="L335">		final TextBlock message = getMessageDedication();</span>
-<span class="nc" id="L336">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L337">		return result;</span>
+<span class="nc" id="L327">		final TextBlock message = getMessageDedication();</span>
+<span class="nc" id="L328">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L329">		return result;</span>
 	}
 
-	// ::comment when __CORE__
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {</span>
-<span class="nc" id="L343">			return source;</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {</span>
+<span class="nc" id="L334">			return source;</span>
 		}
-<span class="nc" id="L345">		final TextBlock message = getMessageAdopt();</span>
-<span class="nc" id="L346">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L347">		return result;</span>
+<span class="nc" id="L336">		final TextBlock message = getMessageAdopt();</span>
+<span class="nc" id="L337">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L338">		return result;</span>
 	}
 
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
-<span class="nc" id="L351">		final UImage message = new UImage(</span>
-<span class="nc" id="L352">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L353">		TextBlock result = TextBlockUtils.mergeLR(source, TextBlockUtils.fromUImage(message), VerticalAlignment.TOP);</span>
-<span class="nc" id="L354">		return result;</span>
+<span class="nc" id="L342">		final UImage message = new UImage(</span>
+<span class="nc" id="L343">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L344">		TextBlock result = TextBlockUtils.mergeLR(source, TextBlockUtils.fromUImage(message), VerticalAlignment.TOP);</span>
+<span class="nc" id="L345">		return result;</span>
 	}
-	// ::done
 
 	private TextBlock getMessageDedication() {
-<span class="nc" id="L359">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+<span class="nc" id="L349">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
-		// ::comment when __CORE__
-<span class="nc" id="L362">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L363">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, Color.BLACK, backColor.getAwtColor()));</span>
-		// ::done
-<span class="nc" id="L365">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+<span class="nc" id="L351">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L352">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, Color.BLACK, backColor.getAwtColor()));</span>
+<span class="nc" id="L353">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
 
-<span class="nc" id="L368">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L369">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L370">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L371">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L356">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L357">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L358">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L359">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-		// ::comment when __CORE__
-<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (qrcode == null) {</span>
-			// ::done
-<span class="nc" id="L376">			result = text;</span>
-			// ::comment when __CORE__
+<span class="nc bnc" id="L361" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L362">			result = text;</span>
 		} else {
-<span class="nc" id="L379">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
-<span class="nc" id="L380">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
+<span class="nc" id="L364">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="nc" id="L365">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
 		}
-		// ::done
-<span class="nc" id="L383">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L367">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
 	private TextBlock getMessageAdopt() {
-<span class="nc" id="L388">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
+<span class="nc" id="L372">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
 
-<span class="nc" id="L390">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
+<span class="nc" id="L374">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/adopt]]&quot;, &quot; &quot;);
 
-<span class="nc" id="L393">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L394">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L395">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L396">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L377">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L378">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L379">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L380">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc" id="L398">		result = text;</span>
-<span class="nc" id="L399">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L382">		result = text;</span>
+<span class="nc" id="L383">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
 	private TextBlock getMessagePatreon() {
-<span class="nc" id="L404">		final UImage message = new UImage(</span>
-<span class="nc" id="L405">				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L406">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
-<span class="nc" id="L407">		final HColor backColor = HColors.simple(back);</span>
+<span class="nc" id="L388">		final UImage message = new UImage(</span>
+<span class="nc" id="L389">				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L390">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
+<span class="nc" id="L391">		final HColor backColor = HColors.simple(back);</span>
 
-		// ::comment when __CORE__
-<span class="nc" id="L410">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L411">				.exportFlashcode(&quot;https://plantuml.com/patreon&quot;, Color.BLACK, Color.WHITE));</span>
-		// ::done
+<span class="nc" id="L393">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L394">				.exportFlashcode(&quot;https://plantuml.com/patreon&quot;, Color.BLACK, Color.WHITE));</span>
 
-<span class="nc" id="L414">		final int scale = 2;</span>
+<span class="nc" id="L396">		final int scale = 2;</span>
 
 		final double imWidth;
 		final double imHeight;
-		// ::comment when __CORE__
-<span class="nc bnc" id="L419" title="All 2 branches missed.">		if (qrcode == null) {</span>
-			// ::done
-<span class="nc" id="L421">			imWidth = message.getWidth();</span>
-<span class="nc" id="L422">			imHeight = message.getHeight();</span>
-			// ::comment when __CORE__
+<span class="nc bnc" id="L400" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L401">			imWidth = message.getWidth();</span>
+<span class="nc" id="L402">			imHeight = message.getHeight();</span>
 		} else {
-<span class="nc" id="L425">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
-<span class="nc" id="L426">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
+<span class="nc" id="L404">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
+<span class="nc" id="L405">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
 		}
-		// ::done
-<span class="nc" id="L429">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L407">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-				// ::comment when __CORE__
-<span class="nc bnc" id="L433" title="All 2 branches missed.">				if (qrcode == null) {</span>
-					// ::done
-<span class="nc" id="L435">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
-					// ::comment when __CORE__
+<span class="nc bnc" id="L410" title="All 2 branches missed.">				if (qrcode == null) {</span>
+<span class="nc" id="L411">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
 				} else {
-<span class="nc" id="L438">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
-<span class="nc" id="L439">							.scale(scale);</span>
-<span class="nc" id="L440">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
-<span class="nc" id="L441">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
+<span class="nc" id="L413">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="nc" id="L414">							.scale(scale);</span>
+<span class="nc" id="L415">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
+<span class="nc" id="L416">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
 				}
-				// ::done
-<span class="nc" id="L444">			}</span>
+<span class="nc" id="L418">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L447">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
+<span class="nc" id="L421">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L451">				return MinMax.fromMax(imWidth + 1, imHeight + 1);</span>
+<span class="nc" id="L425">				return MinMax.fromMax(imWidth + 1, imHeight + 1);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L455">				return backColor;</span>
+<span class="nc" id="L429">				return backColor;</span>
 			}
 		};
 
 	}
 
 	private TextBlock getMessageLiberapay() {
-<span class="nc" id="L462">		final UImage message = new UImage(</span>
-<span class="nc" id="L463">				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L464">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
-<span class="nc" id="L465">		final HColor backColor = HColors.simple(back);</span>
+<span class="nc" id="L436">		final UImage message = new UImage(</span>
+<span class="nc" id="L437">				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L438">		final Color back = new Color(message.getImage(1).getRGB(0, 0));</span>
+<span class="nc" id="L439">		final HColor backColor = HColors.simple(back);</span>
 
-		// ::comment when __CORE__
-<span class="nc" id="L468">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L469">				.exportFlashcode(&quot;https://plantuml.com/lp&quot;, Color.BLACK, Color.WHITE));</span>
-		// ::done
+<span class="nc" id="L441">		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L442">				.exportFlashcode(&quot;https://plantuml.com/lp&quot;, Color.BLACK, Color.WHITE));</span>
 
-<span class="nc" id="L472">		final int scale = 2;</span>
+<span class="nc" id="L444">		final int scale = 2;</span>
 
 		final double imWidth;
 		final double imHeight;
-		// ::comment when __CORE__
-<span class="nc bnc" id="L477" title="All 2 branches missed.">		if (qrcode == null) {</span>
-			// ::done
-<span class="nc" id="L479">			imWidth = message.getWidth();</span>
-<span class="nc" id="L480">			imHeight = message.getHeight();</span>
-			// ::comment when __CORE__
+<span class="nc bnc" id="L448" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L449">			imWidth = message.getWidth();</span>
+<span class="nc" id="L450">			imHeight = message.getHeight();</span>
 		} else {
-<span class="nc" id="L483">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
-<span class="nc" id="L484">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
+<span class="nc" id="L452">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
+<span class="nc" id="L453">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
 		}
-		// ::done
 
-<span class="nc" id="L488">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L456">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-				// ::comment when __CORE__
-<span class="nc bnc" id="L492" title="All 2 branches missed.">				if (qrcode == null) {</span>
-					// ::done
-<span class="nc" id="L494">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
-					// ::comment when __CORE__
+<span class="nc bnc" id="L459" title="All 2 branches missed.">				if (qrcode == null) {</span>
+<span class="nc" id="L460">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
 				} else {
-<span class="nc" id="L497">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
-<span class="nc" id="L498">							.scale(scale);</span>
-<span class="nc" id="L499">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
-<span class="nc" id="L500">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
+<span class="nc" id="L462">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="nc" id="L463">							.scale(scale);</span>
+<span class="nc" id="L464">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
+<span class="nc" id="L465">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
 				}
-				// ::done
-<span class="nc" id="L503">			}</span>
+<span class="nc" id="L467">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L506">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
+<span class="nc" id="L470">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L510">				return MinMax.fromMax(imWidth + 1, imHeight + 1);</span>
+<span class="nc" id="L474">				return MinMax.fromMax(imWidth + 1, imHeight + 1);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L514">				return backColor;</span>
+<span class="nc" id="L478">				return backColor;</span>
 			}
 		};
 
 	}
 
-	public int score() {
-<span class="fc" id="L521">		final int result = trace.size() * 10 + singleError.score();</span>
-<span class="fc" id="L522">		return result;</span>
+	private BufferedImage smaller(BufferedImage im) {
+<span class="nc bnc" id="L485" title="All 2 branches missed.">		if (im == null)</span>
+<span class="nc" id="L486">			return null;</span>
+
+<span class="nc" id="L488">		final int nb = 1;</span>
+<span class="nc" id="L489">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
-	private BufferedImage smaller(BufferedImage im) {
-<span class="nc bnc" id="L526" title="All 2 branches missed.">		if (im == null) {</span>
-<span class="nc" id="L527">			return null;</span>
-		}
-<span class="nc" id="L529">		final int nb = 1;</span>
-<span class="nc" id="L530">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+	// ::done
+
+	public int score() {
+<span class="fc" id="L495">		final int result = trace.size() * 10 + singleError.score();</span>
+<span class="fc" id="L496">		return result;</span>
 	}
 
 }

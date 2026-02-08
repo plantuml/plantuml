@@ -67,14 +67,14 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private final TextBlock text1;
 	private final String flash;
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private final BufferedImage flashCode;
 	private final boolean graphviz244onWindows;
 	// ::done
 
 <span class="nc" id="L75">	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {</span>
 <span class="nc" id="L76">		this.flash = flash;</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="nc" id="L78">		this.graphviz244onWindows = graphviz244onWindows;</span>
 <span class="nc" id="L79">		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
 		// ::done
@@ -99,7 +99,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 <span class="nc" id="L99">		strings.addEmptyLine();</span>
 <span class="nc" id="L100">		strings.addProperties();</span>
 <span class="nc" id="L101">		strings.addEmptyLine();</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		try {
 <span class="nc" id="L104">			final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();</span>
 <span class="nc" id="L105">			strings.add(&quot;Default dot version: &quot; + dotVersion);</span>
@@ -109,7 +109,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		// ::done
 <span class="nc" id="L110">		strings.pleaseCheckYourGraphVizVersion();</span>
 <span class="nc" id="L111">		strings.youShouldSendThisDiagram();</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="nc bnc" id="L113" title="All 2 branches missed.">		if (flashCode != null)</span>
 <span class="nc" id="L114">			strings.addDecodeHint();</span>
 		// ::done
@@ -150,7 +150,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private TextBlock getMain() {
 <span class="nc" id="L152">		TextBlock result = text1;</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="nc bnc" id="L154" title="All 2 branches missed.">		if (flashCode != null) {</span>
 <span class="nc" id="L155">			final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
 <span class="nc" id="L156">					.scale(3);</span>

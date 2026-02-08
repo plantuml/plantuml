@@ -40,7 +40,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.UnsupportedEncodingException;
 
 public class SentenceDecoder {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final String secret;
 

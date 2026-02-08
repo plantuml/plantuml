@@ -79,7 +79,7 @@ public class CommandPragma extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="nc" id="L79">			}</span>
 		} else {
 <span class="fc" id="L81">			system.getPragma().define(name, value);</span>
-			// ::comment when __CORE__
+			// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L83" title="3 of 4 branches missed.">			if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
 <span class="nc" id="L84">				return CommandExecutionResult.error(</span>
 						&quot;This directive has been renamed to '!pragma layout smetana'. Please update your diagram.&quot;);

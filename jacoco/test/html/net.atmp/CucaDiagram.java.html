@@ -410,7 +410,7 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="fc" id="L410">		return result.toArray(new String[result.size()]);</span>
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
 <span class="fc" id="L415">		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);</span>
 <span class="fc" id="L416">		maker.createFiles(suggestedFile);</span>
@@ -448,7 +448,7 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 			throws IOException {
 <span class="fc" id="L449">		final FileFormat fileFormat = fileFormatOption.getFileFormat();</span>
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L452" title="2 of 4 branches missed.">		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {</span>
 <span class="nc" id="L453">			createFilesTxt(os, index, fileFormat);</span>
 <span class="nc" id="L454">			return ImageDataSimple.ok();</span>
@@ -475,13 +475,13 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 <span class="fc" id="L476">		this.eventuallyBuildPhantomGroups(null);</span>
 		final CucaDiagramFileMaker maker;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L479" title="1 of 2 branches missed.">		if (this.isUseElk())</span>
 <span class="nc" id="L480">			maker = new CucaDiagramFileMakerElk(this);</span>
 <span class="fc bfc" id="L481" title="All 2 branches covered.">		else if (this.isUseSmetana())</span>
 			// ::done
 <span class="fc" id="L483">			maker = new CucaDiagramFileMakerSmetana(this);</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		else
 <span class="fc" id="L486">			maker = new CucaDiagramFileMakerSvek(this);</span>
 		// ::done
