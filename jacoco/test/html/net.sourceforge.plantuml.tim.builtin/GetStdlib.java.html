@@ -52,58 +52,59 @@ import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L54">public class GetStdlib extends SimpleReturnFunction {</span>
-
-<span class="fc" id="L56">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_stdlib&quot;, 1);</span>
+	// ::remove file when __TEAVM__
+	
+<span class="fc" id="L57">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_stdlib&quot;, 1);</span>
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L59">		return SIGNATURE;</span>
+<span class="fc" id="L60">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L64" title="All 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
+<span class="nc bnc" id="L65" title="All 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
 
-<span class="nc" id="L71">		final JsonObject result = Json.object();</span>
+<span class="nc" id="L72">		final JsonObject result = Json.object();</span>
 		try {
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (values.size() == 0) {</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				for (String folderName : Stdlib.getAllFolderNames()) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (values.size() == 0) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">				for (String folderName : Stdlib.getAllFolderNames()) {</span>
 					// This can be optimized: no need to load the full folder
-<span class="nc" id="L76">					final Stdlib folder = Stdlib.retrieve(folderName);</span>
-<span class="nc" id="L77">					final JsonObject metadata = Json.object();</span>
+<span class="nc" id="L77">					final Stdlib folder = Stdlib.retrieve(folderName);</span>
+<span class="nc" id="L78">					final JsonObject metadata = Json.object();</span>
 					// Key in README.md will be in lowercase anyway
-<span class="nc bnc" id="L79" title="All 2 branches missed.">					for (Entry&lt;String, String&gt; ent : folder.getMetadata().entrySet())</span>
-<span class="nc" id="L80">						metadata.add(ent.getKey().toLowerCase(), ent.getValue());</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">					for (Entry&lt;String, String&gt; ent : folder.getMetadata().entrySet())</span>
+<span class="nc" id="L81">						metadata.add(ent.getKey().toLowerCase(), ent.getValue());</span>
 
-<span class="nc" id="L82">					result.add(folderName, metadata);</span>
-<span class="nc" id="L83">				}</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">			} else if (values.size() == 1) {</span>
-<span class="nc" id="L85">				final String folderName = values.get(0).toString();</span>
+<span class="nc" id="L83">					result.add(folderName, metadata);</span>
+<span class="nc" id="L84">				}</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			} else if (values.size() == 1) {</span>
+<span class="nc" id="L86">				final String folderName = values.get(0).toString();</span>
 				// This can be optimized: no need to load the full folder
-<span class="nc" id="L87">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
+<span class="nc" id="L88">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
 				// Key in README.md will be in lowercase anyway
-<span class="nc bnc" id="L89" title="All 2 branches missed.">				for (Entry&lt;String, String&gt; ent : folder.getMetadata().entrySet())</span>
-<span class="nc" id="L90">					result.add(ent.getKey().toLowerCase(), ent.getValue());</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			} else if (values.size() == 2) {</span>
-<span class="nc" id="L92">				final String folderName = values.get(0).toString();</span>
-<span class="nc" id="L93">				final String key = values.get(1).toString().toLowerCase();</span>
-<span class="nc" id="L94">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
-<span class="nc" id="L95">				String value = folder.getMetadata().get(key);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				for (Entry&lt;String, String&gt; ent : folder.getMetadata().entrySet())</span>
+<span class="nc" id="L91">					result.add(ent.getKey().toLowerCase(), ent.getValue());</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			} else if (values.size() == 2) {</span>
+<span class="nc" id="L93">				final String folderName = values.get(0).toString();</span>
+<span class="nc" id="L94">				final String key = values.get(1).toString().toLowerCase();</span>
+<span class="nc" id="L95">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
+<span class="nc" id="L96">				String value = folder.getMetadata().get(key);</span>
 				// Temporary, we check the upercase key if needed
-<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (value == null)</span>
-<span class="nc" id="L98">					value = folder.getMetadata().get(key.toUpperCase());</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">				if (value == null)</span>
-<span class="nc" id="L100">					value = &quot;&quot;;</span>
-<span class="nc" id="L101">				return TValue.fromString(value);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">				if (value == null)</span>
+<span class="nc" id="L99">					value = folder.getMetadata().get(key.toUpperCase());</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (value == null)</span>
+<span class="nc" id="L101">					value = &quot;&quot;;</span>
+<span class="nc" id="L102">				return TValue.fromString(value);</span>
 			}
-<span class="nc" id="L103">		} catch (IOException e) {</span>
-<span class="nc" id="L104">			Logme.error(e);</span>
-<span class="nc" id="L105">		}</span>
-<span class="nc" id="L106">		return TValue.fromJson(result);</span>
+<span class="nc" id="L104">		} catch (IOException e) {</span>
+<span class="nc" id="L105">			Logme.error(e);</span>
+<span class="nc" id="L106">		}</span>
+<span class="nc" id="L107">		return TValue.fromJson(result);</span>
 
 	}
 }

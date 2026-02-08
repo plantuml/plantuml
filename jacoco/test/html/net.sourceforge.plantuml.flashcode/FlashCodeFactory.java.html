@@ -36,19 +36,20 @@
 package net.sourceforge.plantuml.flashcode;
 
 <span class="nc" id="L38">public class FlashCodeFactory {</span>
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
+
 
 	public static FlashCodeUtils getFlashCodeUtils() {
-<span class="nc" id="L42">		final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
+<span class="nc" id="L43">		final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
 		try {
-<span class="nc" id="L44">			final Class cl = Class.forName(name);</span>
-<span class="nc" id="L45">			return (FlashCodeUtils) cl.newInstance();</span>
-<span class="nc" id="L46">		} catch (ClassNotFoundException e) {</span>
-<span class="nc" id="L47">			return new FlashCodeUtilsNone();</span>
-<span class="nc" id="L48">		} catch (InstantiationException e) {</span>
-<span class="nc" id="L49">			return new FlashCodeUtilsNone();</span>
-<span class="nc" id="L50">		} catch (IllegalAccessException e) {</span>
-<span class="nc" id="L51">			return new FlashCodeUtilsNone();</span>
+<span class="nc" id="L45">			final Class cl = Class.forName(name);</span>
+<span class="nc" id="L46">			return (FlashCodeUtils) cl.newInstance();</span>
+<span class="nc" id="L47">		} catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L48">			return new FlashCodeUtilsNone();</span>
+<span class="nc" id="L49">		} catch (InstantiationException e) {</span>
+<span class="nc" id="L50">			return new FlashCodeUtilsNone();</span>
+<span class="nc" id="L51">		} catch (IllegalAccessException e) {</span>
+<span class="nc" id="L52">			return new FlashCodeUtilsNone();</span>
 		}
 	}
 

@@ -24,9 +24,9 @@ public class XLine2D implements UDrawable {
 	}
 
 	public XPoint2D getMiddle() {
-<span class="nc" id="L27">		final double mx = (this.x1 + this.x2) / 2;</span>
-<span class="nc" id="L28">		final double my = (this.y1 + this.y2) / 2;</span>
-<span class="nc" id="L29">		return new XPoint2D(mx, my);</span>
+<span class="fc" id="L27">		final double mx = (this.x1 + this.x2) / 2;</span>
+<span class="fc" id="L28">		final double my = (this.y1 + this.y2) / 2;</span>
+<span class="fc" id="L29">		return new XPoint2D(mx, my);</span>
 	}
 
 	public final double getX1() {
@@ -54,11 +54,11 @@ public class XLine2D implements UDrawable {
 	}
 
 	public XLine2D withPoint1(XPoint2D other) {
-<span class="nc" id="L57">		return new XLine2D(other.x, other.y, x2, y2);</span>
+<span class="fc" id="L57">		return new XLine2D(other.x, other.y, x2, y2);</span>
 	}
 
 	public XLine2D withPoint2(XPoint2D other) {
-<span class="nc" id="L61">		return new XLine2D(x1, y1, other.x, other.y);</span>
+<span class="fc" id="L61">		return new XLine2D(x1, y1, other.x, other.y);</span>
 	}
 
 	/**
@@ -83,14 +83,14 @@ public class XLine2D implements UDrawable {
 	public static double ptSegDistSq(double x1, double y1, double x2, double y2, double px, double py) {
 		// Adjust vectors relative to x1,y1
 		// x2,y2 becomes relative vector from x1,y1 to end of segment
-<span class="nc" id="L86">		x2 -= x1;</span>
-<span class="nc" id="L87">		y2 -= y1;</span>
+<span class="fc" id="L86">		x2 -= x1;</span>
+<span class="fc" id="L87">		y2 -= y1;</span>
 		// px,py becomes relative vector from x1,y1 to test point
-<span class="nc" id="L89">		px -= x1;</span>
-<span class="nc" id="L90">		py -= y1;</span>
-<span class="nc" id="L91">		double dotprod = px * x2 + py * y2;</span>
+<span class="fc" id="L89">		px -= x1;</span>
+<span class="fc" id="L90">		py -= y1;</span>
+<span class="fc" id="L91">		double dotprod = px * x2 + py * y2;</span>
 		double projlenSq;
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (dotprod &lt;= 0.0) {</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (dotprod &lt;= 0.0) {</span>
 			// px,py is on the side of x1,y1 away from x2,y2
 			// distance to segment is length of px,py vector
 			// &quot;length of its (clipped) projection&quot; is now 0.0
@@ -101,10 +101,10 @@ public class XLine2D implements UDrawable {
 			// to get px,py to be the negative of px,py=&gt;x2,y2
 			// the dot product of two negated vectors is the same
 			// as the dot product of the two normal vectors
-<span class="nc" id="L104">			px = x2 - px;</span>
-<span class="nc" id="L105">			py = y2 - py;</span>
-<span class="nc" id="L106">			dotprod = px * x2 + py * y2;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (dotprod &lt;= 0.0) {</span>
+<span class="fc" id="L104">			px = x2 - px;</span>
+<span class="fc" id="L105">			py = y2 - py;</span>
+<span class="fc" id="L106">			dotprod = px * x2 + py * y2;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (dotprod &lt;= 0.0) {</span>
 				// px,py is on the side of x2,y2 away from x1,y1
 				// distance to segment is length of (backwards) px,py vector
 				// &quot;length of its (clipped) projection&quot; is now 0.0
@@ -114,18 +114,18 @@ public class XLine2D implements UDrawable {
 				// dotprod is the length of the px,py vector
 				// projected on the x2,y2=&gt;x1,y1 vector times the
 				// length of the x2,y2=&gt;x1,y1 vector
-<span class="nc" id="L117">				projlenSq = dotprod * dotprod / (x2 * x2 + y2 * y2);</span>
+<span class="fc" id="L117">				projlenSq = dotprod * dotprod / (x2 * x2 + y2 * y2);</span>
 			}
 		}
 		// Distance to line is now the length of the relative point
 		// vector minus the length of its projection onto the line
 		// (which is zero if the projection falls outside the range
 		// of the line segment).
-<span class="nc" id="L124">		double lenSq = px * px + py * py - projlenSq;</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (lenSq &lt; 0) {</span>
+<span class="fc" id="L124">		double lenSq = px * px + py * py - projlenSq;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (lenSq &lt; 0) {</span>
 <span class="nc" id="L126">			lenSq = 0;</span>
 		}
-<span class="nc" id="L128">		return lenSq;</span>
+<span class="fc" id="L128">		return lenSq;</span>
 	}
 
 	public XPoint2D intersect(XLine2D line2) {
@@ -139,7 +139,7 @@ public class XLine2D implements UDrawable {
 <span class="fc" id="L139">		final double s = (-s1y * (this.x1 - line2.x1) + s1x * (this.y1 - line2.y1)) / (-s2x * s1y + s1x * s2y);</span>
 <span class="fc" id="L140">		final double t = (s2x * (this.y1 - line2.y1) - s2y * (this.x1 - line2.x1)) / (-s2x * s1y + s1x * s2y);</span>
 
-<span class="pc bpc" id="L142" title="2 of 8 branches missed.">		if (s &gt;= 0 &amp;&amp; s &lt;= 1 &amp;&amp; t &gt;= 0 &amp;&amp; t &lt;= 1)</span>
+<span class="pc bpc" id="L142" title="1 of 8 branches missed.">		if (s &gt;= 0 &amp;&amp; s &lt;= 1 &amp;&amp; t &gt;= 0 &amp;&amp; t &lt;= 1)</span>
 <span class="fc" id="L143">			return new XPoint2D(this.x1 + (t * s1x), this.y1 + (t * s1y));</span>
 
 <span class="fc" id="L145">		return null;</span>

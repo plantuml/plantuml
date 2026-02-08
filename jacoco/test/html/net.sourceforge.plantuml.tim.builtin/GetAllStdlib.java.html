@@ -55,56 +55,57 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 <span class="fc" id="L55">public class GetAllStdlib extends SimpleReturnFunction {</span>
 	// Maybe the function %get_all_stdlib() will be removed and replaced by
 	// %get_stdlib()
-
-<span class="fc" id="L59">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_all_stdlib&quot;, 1);</span>
+	// ::remove file when __TEAVM__
+	
+<span class="fc" id="L60">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_all_stdlib&quot;, 1);</span>
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L62">		return SIGNATURE;</span>
+<span class="fc" id="L63">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L67" title="All 4 branches missed.">		return nbArg == 0 || nbArg == 1;</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">		return nbArg == 0 || nbArg == 1;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
 
-<span class="pc bpc" id="L74" title="1 of 3 branches missed.">		switch (values.size()) {</span>
+<span class="pc bpc" id="L75" title="1 of 3 branches missed.">		switch (values.size()) {</span>
 		case 0:
-<span class="fc" id="L76">			final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L77">			final JsonArray result = new JsonArray();</span>
 			try {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">				for (String name : Stdlib.getAllFolderNames()) {</span>
-<span class="fc" id="L79">					result.add(name);</span>
-<span class="fc" id="L80">				}</span>
-<span class="fc" id="L81">				return TValue.fromJson(result);</span>
-<span class="nc" id="L82">			} catch (IOException e) {</span>
-<span class="nc" id="L83">				Logme.error(e);</span>
-<span class="nc" id="L84">				return TValue.fromJson(result);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">				for (String name : Stdlib.getAllFolderNames()) {</span>
+<span class="fc" id="L80">					result.add(name);</span>
+<span class="fc" id="L81">				}</span>
+<span class="fc" id="L82">				return TValue.fromJson(result);</span>
+<span class="nc" id="L83">			} catch (IOException e) {</span>
+<span class="nc" id="L84">				Logme.error(e);</span>
+<span class="nc" id="L85">				return TValue.fromJson(result);</span>
 			}
 
 		case 1:
-<span class="fc" id="L88">			final JsonObject res = new JsonObject();</span>
+<span class="fc" id="L89">			final JsonObject res = new JsonObject();</span>
 			try {
 				// Inspired by Stdlib.addInfoVersion
-<span class="fc bfc" id="L91" title="All 2 branches covered.">				for (String name : Stdlib.getAllFolderNames()) {</span>
-<span class="fc" id="L92">					final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="fc" id="L93">					final JsonObject object = Json.object() //</span>
-<span class="fc" id="L94">							.add(&quot;name&quot;, name) //</span>
-<span class="fc" id="L95">							.add(&quot;version&quot;, folder.getVersion()) //</span>
-<span class="fc" id="L96">							.add(&quot;source&quot;, folder.getSource());</span>
-<span class="fc" id="L97">					res.add(name, object);</span>
-<span class="fc" id="L98">				}</span>
-<span class="fc" id="L99">				return TValue.fromJson(res);</span>
-<span class="nc" id="L100">			} catch (IOException e) {</span>
-<span class="nc" id="L101">				Logme.error(e);</span>
-<span class="nc" id="L102">				return TValue.fromJson(res);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">				for (String name : Stdlib.getAllFolderNames()) {</span>
+<span class="fc" id="L93">					final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="fc" id="L94">					final JsonObject object = Json.object() //</span>
+<span class="fc" id="L95">							.add(&quot;name&quot;, name) //</span>
+<span class="fc" id="L96">							.add(&quot;version&quot;, folder.getVersion()) //</span>
+<span class="fc" id="L97">							.add(&quot;source&quot;, folder.getSource());</span>
+<span class="fc" id="L98">					res.add(name, object);</span>
+<span class="fc" id="L99">				}</span>
+<span class="fc" id="L100">				return TValue.fromJson(res);</span>
+<span class="nc" id="L101">			} catch (IOException e) {</span>
+<span class="nc" id="L102">				Logme.error(e);</span>
+<span class="nc" id="L103">				return TValue.fromJson(res);</span>
 			}
 
 		default:
-<span class="nc" id="L106">			assert false; // Should not append because of canCover()</span>
-<span class="nc" id="L107">			throw new EaterException(&quot;Error on get_all_stdlib: Too many arguments&quot;, location);</span>
+<span class="nc" id="L107">			assert false; // Should not append because of canCover()</span>
+<span class="nc" id="L108">			throw new EaterException(&quot;Error on get_all_stdlib: Too many arguments&quot;, location);</span>
 		}
 	}
 }

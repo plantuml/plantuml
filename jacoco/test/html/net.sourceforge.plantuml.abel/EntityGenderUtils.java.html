@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	static public EntityGender byStereotype(final String stereotype) {
-<span class="nc" id="L69">		return new EntityGender() {</span>
+<span class="fc" id="L69">		return new EntityGender() {</span>
 			public boolean contains(Entity test) {
 <span class="nc bnc" id="L71" title="All 2 branches missed.">				if (test.getStereotype() == null) {</span>
 <span class="nc" id="L72">					return false;</span>
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 
 			@Override
 			public String getGender() {
-<span class="nc" id="L86">				return stereotype;</span>
+<span class="fc" id="L86">				return stereotype;</span>
 			}
 		};
 	}

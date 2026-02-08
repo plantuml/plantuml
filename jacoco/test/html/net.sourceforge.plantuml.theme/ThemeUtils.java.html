@@ -74,7 +74,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 	private static final String THEME_PATH = &quot;themes&quot;;
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 
 	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
 			throws IOException, EaterException {
@@ -151,8 +151,8 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static List&lt;String&gt; getAllThemeNames() throws IOException {
-<span class="fc" id="L154">		final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
-<span class="fc" id="L155">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L154">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L155">		final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
 <span class="fc bfc" id="L156" title="All 2 branches covered.">		for (String f : filenames)</span>
 <span class="pc bpc" id="L157" title="2 of 4 branches missed.">			if (f.startsWith(THEME_FILE_PREFIX) &amp;&amp; f.endsWith(THEME_FILE_SUFFIX))</span>
 <span class="fc" id="L158">				result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));</span>

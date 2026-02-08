@@ -42,28 +42,29 @@ import java.nio.file.Path;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
 public class InputFileStdlib implements InputFile {
-
+	// ::remove file when __TEAVM__
+	
 	private final Stdlib stdlib;
 	private final Path stdlibPath;
 
-<span class="fc" id="L49">	public InputFileStdlib(Stdlib stdlib, Path stdlibPath) throws IOException {</span>
-<span class="fc" id="L50">		this.stdlib = stdlib;</span>
-<span class="fc" id="L51">		this.stdlibPath = stdlibPath.normalize();</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L50">	public InputFileStdlib(Stdlib stdlib, Path stdlibPath) throws IOException {</span>
+<span class="fc" id="L51">		this.stdlib = stdlib;</span>
+<span class="fc" id="L52">		this.stdlibPath = stdlibPath.normalize();</span>
+<span class="fc" id="L53">	}</span>
 
 	@Override
 	public InputStream newInputStream() throws IOException {
-<span class="fc" id="L56">		return stdlib.newInputStream(stdlibPath);</span>
+<span class="fc" id="L57">		return stdlib.newInputStream(stdlibPath);</span>
 	}
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
-<span class="fc" id="L61">		return new NFolderStdlib(stdlib).getSubfolder(stdlibPath);</span>
+<span class="fc" id="L62">		return new NFolderStdlib(stdlib).getSubfolder(stdlibPath);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L66">		return stdlib.getName() + &quot;!&quot; + stdlibPath.toString().replace('\\', '/');</span>
+<span class="fc" id="L67">		return stdlib.getName() + &quot;!&quot; + stdlibPath.toString().replace('\\', '/');</span>
 	}
 
 }

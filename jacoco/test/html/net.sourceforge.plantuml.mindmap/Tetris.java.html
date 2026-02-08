@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import java.awt.geom.Line2D;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -121,11 +121,11 @@ import java.util.List;
 
 	private void addInternal(SymetricalTeePositioned result) {
 <span class="fc" id="L123">		this.elements.add(result);</span>
-<span class="fc" id="L124">		final Line2D b1 = result.getSegmentB1();</span>
+<span class="fc" id="L124">		final XLine2D b1 = result.getSegmentB1();</span>
 <span class="fc" id="L125">		frontier.addSegment(b1.getX1(), b1.getX2(), b1.getY1());</span>
 <span class="pc bpc" id="L126" title="1 of 2 branches missed.">		assert b1.getY1() == b1.getY2();</span>
 
-<span class="fc" id="L128">		final Line2D b2 = result.getSegmentB2();</span>
+<span class="fc" id="L128">		final XLine2D b2 = result.getSegmentB2();</span>
 <span class="fc bfc" id="L129" title="All 2 branches covered.">		if (b2.getX1() != b2.getX2())</span>
 <span class="fc" id="L130">			frontier.addSegment(b2.getX1(), b2.getX2(), b2.getY1());</span>
 

@@ -73,18 +73,20 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2&lt;TitledDiagr
 	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="nc" id="L76">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L77">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
-<span class="nc" id="L78">		lines = lines.subExtract(1, 0);</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L77">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L78">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
+<span class="nc" id="L79">		lines = lines.subExtract(1, 0);</span>
 
-<span class="nc" id="L80">		final StringBuilder svg = new StringBuilder(svgStart);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
-<span class="nc" id="L82">			svg.append(sl.getString());</span>
+<span class="nc" id="L81">		final StringBuilder svg = new StringBuilder(svgStart);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
+<span class="nc" id="L83">			svg.append(sl.getString());</span>
 
-<span class="nc" id="L84">		final SvgNanoParser nanoParser = new SvgNanoParser(svg.toString());</span>
-<span class="nc" id="L85">		system.addSprite(line0.get(&quot;NAME&quot;, 0), nanoParser);</span>
+<span class="nc" id="L85">		final SvgNanoParser nanoParser = new SvgNanoParser(svg.toString());</span>
+<span class="nc" id="L86">		system.addSprite(line0.get(&quot;NAME&quot;, 0), nanoParser);</span>
+		// ::done
 
-<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

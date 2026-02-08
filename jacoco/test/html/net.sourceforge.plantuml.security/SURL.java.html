@@ -74,7 +74,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-//::uncomment when __CORE__
+//::uncomment when __CORE__ or __TEAVM__
 //import net.sourceforge.plantuml.FileUtils;
 //::done
 
@@ -164,7 +164,7 @@ public class SURL {
 <span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (url == null)</span>
 <span class="nc" id="L165">			throw new MalformedURLException(&quot;URL cannot be null&quot;);</span>
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="fc" id="L168">		final String credentialId = url.getUserInfo();</span>
 
 <span class="fc bfc" id="L170" title="All 4 branches covered.">		if (credentialId == null || credentialId.indexOf(':') &gt; 0)</span>
@@ -179,7 +179,7 @@ public class SURL {
 <span class="fc" id="L179">			return new SURL(url, WITHOUT_AUTHENTICATION);</span>
 	}
 
-	// ::uncomment when __CORE__
+	// ::uncomment when __CORE__ or __TEAVM__
 //	public InputStream openStream() {
 //	try {
 //		return internal.openStream();
@@ -220,7 +220,7 @@ public class SURL {
 	 * Check SecurityProfile to see if this URL can be opened.
 	 */
 	public boolean isUrlOk() {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
 			// In SANDBOX, we cannot read any URL
 <span class="nc" id="L226">			return false;</span>
@@ -228,7 +228,7 @@ public class SURL {
 <span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (isInUrlAllowList())</span>
 			// ::done
 <span class="nc" id="L230">			return true;</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 
 <span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {</span>
 <span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
@@ -252,7 +252,7 @@ public class SURL {
 		// ::done
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */

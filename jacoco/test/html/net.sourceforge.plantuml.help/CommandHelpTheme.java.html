@@ -68,18 +68,20 @@ public class CommandHelpTheme extends SingleLineCommand2&lt;Help&gt; {
 <span class="fc" id="L68">		diagram.add(&quot; &quot;);</span>
 <span class="fc" id="L69">		diagram.add(&quot; The possible themes are :&quot;);</span>
 
+		// ::comment when __TEAVM__
 		try {
-<span class="fc bfc" id="L72" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
-<span class="fc" id="L73">				diagram.add(&quot;* &quot; + theme);</span>
-<span class="fc" id="L74">			}</span>
-<span class="nc" id="L75">		} catch (IOException e) {</span>
-<span class="nc" id="L76">			final String message = &quot;Unexpected error listing themes: &quot; + e.getMessage();</span>
-<span class="nc" id="L77">			Log.error(message);</span>
-<span class="nc" id="L78">			Logme.error(e);</span>
-<span class="nc" id="L79">			return CommandExecutionResult.error(message);</span>
-<span class="fc" id="L80">		}</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
+<span class="fc" id="L74">				diagram.add(&quot;* &quot; + theme);</span>
+<span class="fc" id="L75">			}</span>
+<span class="nc" id="L76">		} catch (IOException e) {</span>
+<span class="nc" id="L77">			final String message = &quot;Unexpected error listing themes: &quot; + e.getMessage();</span>
+<span class="nc" id="L78">			Log.error(message);</span>
+<span class="nc" id="L79">			Logme.error(e);</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(message);</span>
+<span class="fc" id="L81">		}</span>
+		// ::done
 
-<span class="fc" id="L82">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

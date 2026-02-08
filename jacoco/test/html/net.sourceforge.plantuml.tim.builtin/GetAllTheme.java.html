@@ -50,30 +50,31 @@ import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L52">public class GetAllTheme extends SimpleReturnFunction {</span>
-
-<span class="fc" id="L54">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_all_theme&quot;, 0);</span>
+	// ::remove file when __TEAVM__
+	
+<span class="fc" id="L55">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%get_all_theme&quot;, 0);</span>
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L57">		return SIGNATURE;</span>
+<span class="fc" id="L58">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		return nbArg == 0;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		return nbArg == 0;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L68">		final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L69">		final JsonArray result = new JsonArray();</span>
 		try {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
-<span class="fc" id="L71">				result.add(theme);</span>
-<span class="fc" id="L72">			}</span>
-<span class="fc" id="L73">			return TValue.fromJson(result);</span>
-<span class="nc" id="L74">		} catch (IOException e) {</span>
-<span class="nc" id="L75">			Logme.error(e);</span>
-<span class="nc" id="L76">			return TValue.fromJson(result);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
+<span class="fc" id="L72">				result.add(theme);</span>
+<span class="fc" id="L73">			}</span>
+<span class="fc" id="L74">			return TValue.fromJson(result);</span>
+<span class="nc" id="L75">		} catch (IOException e) {</span>
+<span class="nc" id="L76">			Logme.error(e);</span>
+<span class="nc" id="L77">			return TValue.fromJson(result);</span>
 		}
 	}
 }

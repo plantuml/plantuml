@@ -242,69 +242,71 @@ public class StripeSimple implements Stripe {
 <span class="nc" id="L242">	}</span>
 
 	public void addEmoji(String emojiName, double scale, String forcedColor) {
-<span class="nc" id="L245">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (emoji == null) {</span>
-<span class="nc" id="L247">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
-<span class="nc" id="L248">			return;</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L246">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		if (emoji == null) {</span>
+<span class="nc" id="L248">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
+<span class="nc" id="L249">			return;</span>
 		}
 
-<span class="nc" id="L251">		HColor col = null;</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L253">			col = null;</span>
-<span class="nc bnc" id="L254" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
-<span class="nc" id="L255">			col = fontConfiguration.getColor();</span>
+<span class="nc" id="L252">		HColor col = null;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (forcedColor == null)</span>
+<span class="nc" id="L254">			col = null;</span>
+<span class="nc bnc" id="L255" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
+<span class="nc" id="L256">			col = fontConfiguration.getColor();</span>
 		else
 			try {
-<span class="nc" id="L258">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
-<span class="nc" id="L259">			} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L260">				col = null;</span>
-<span class="nc" id="L261">			}</span>
+<span class="nc" id="L259">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
+<span class="nc" id="L260">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L261">				col = null;</span>
+<span class="nc" id="L262">			}</span>
 
-<span class="nc" id="L263">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
-<span class="nc" id="L264">	}</span>
+<span class="nc" id="L264">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
+		// ::done
+<span class="nc" id="L266">	}</span>
 
 	// ::comment when __CORE__  or __TEAVM__
 	public void addMath(ScientificEquationSafe math) {
-<span class="nc" id="L268">		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
-<span class="nc" id="L269">	}</span>
+<span class="nc" id="L270">		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
+<span class="nc" id="L271">	}</span>
 	// ::done
 
 	private void modifyStripe(String line) {
-<span class="fc" id="L273">		final StringBuilder pending = new StringBuilder();</span>
+<span class="fc" id="L275">		final StringBuilder pending = new StringBuilder();</span>
 
-<span class="fc bfc" id="L275" title="All 2 branches covered.">		while (line.length() &gt; 0) {</span>
-<span class="fc" id="L276">			final Command cmd = searchCommand(line);</span>
-<span class="fc bfc" id="L277" title="All 2 branches covered.">			if (cmd == null) {</span>
-<span class="fc" id="L278">				pending.append(line.charAt(0));</span>
-<span class="fc" id="L279">				line = line.substring(1);</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		while (line.length() &gt; 0) {</span>
+<span class="fc" id="L278">			final Command cmd = searchCommand(line);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">			if (cmd == null) {</span>
+<span class="fc" id="L280">				pending.append(line.charAt(0));</span>
+<span class="fc" id="L281">				line = line.substring(1);</span>
 			} else {
-<span class="fc" id="L281">				addPending(pending);</span>
-<span class="fc" id="L282">				line = cmd.executeAndGetRemaining(line, this);</span>
+<span class="fc" id="L283">				addPending(pending);</span>
+<span class="fc" id="L284">				line = cmd.executeAndGetRemaining(line, this);</span>
 			}
-<span class="fc" id="L284">		}</span>
-<span class="fc" id="L285">		addPending(pending);</span>
-<span class="fc" id="L286">	}</span>
+<span class="fc" id="L286">		}</span>
+<span class="fc" id="L287">		addPending(pending);</span>
+<span class="fc" id="L288">	}</span>
 
 	private void addPending(StringBuilder pending) {
-<span class="fc bfc" id="L289" title="All 2 branches covered.">		if (pending.length() == 0)</span>
-<span class="fc" id="L290">			return;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		if (pending.length() == 0)</span>
+<span class="fc" id="L292">			return;</span>
 
-<span class="fc" id="L292">		atoms.add(AtomTextUtils.createLegacy(pending.toString(), fontConfiguration));</span>
-<span class="fc" id="L293">		pending.setLength(0);</span>
-<span class="fc" id="L294">	}</span>
+<span class="fc" id="L294">		atoms.add(AtomTextUtils.createLegacy(pending.toString(), fontConfiguration));</span>
+<span class="fc" id="L295">		pending.setLength(0);</span>
+<span class="fc" id="L296">	}</span>
 
 	private Command searchCommand(String line) {
-<span class="fc" id="L297">		final List&lt;Command&gt; localList = commands.get(line.charAt(0));</span>
-<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (localList != null)</span>
-<span class="fc bfc" id="L299" title="All 2 branches covered.">			for (Command cmd : localList)</span>
-<span class="fc bfc" id="L300" title="All 2 branches covered.">				if (cmd.matchingSize(line) != 0)</span>
-<span class="fc" id="L301">					return cmd;</span>
+<span class="fc" id="L299">		final List&lt;Command&gt; localList = commands.get(line.charAt(0));</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		if (localList != null)</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">			for (Command cmd : localList)</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">				if (cmd.matchingSize(line) != 0)</span>
+<span class="fc" id="L303">					return cmd;</span>
 
-<span class="fc" id="L303">		return null;</span>
+<span class="fc" id="L305">		return null;</span>
 	}
 
 	public ISkinSimple getSkinParam() {
-<span class="fc" id="L307">		return skinParam;</span>
+<span class="fc" id="L309">		return skinParam;</span>
 	}
 
 }

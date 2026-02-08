@@ -32,51 +32,55 @@ public class XPoint2D {
 <span class="nc" id="L32">		return Double.valueOf(x).hashCode() + Double.valueOf(y).hashCode();</span>
 	}
 
+	// ::revert when __TEAVM__
 	public XPoint2D transform(AffineTransform rotate) {
-<span class="fc" id="L36">		final Point2D.Double tmp = new Point2D.Double(x, y);</span>
-<span class="fc" id="L37">		rotate.transform(tmp, tmp);</span>
-<span class="fc" id="L38">		return new XPoint2D(tmp.x, tmp.y);</span>
+<span class="fc" id="L37">		final Point2D.Double tmp = new Point2D.Double(x, y);</span>
+<span class="fc" id="L38">		rotate.transform(tmp, tmp);</span>
+<span class="fc" id="L39">		return new XPoint2D(tmp.x, tmp.y);</span>
 	}
+//	public XPoint2D transform(Object... foo) {
+//	return this;
+//}
 	// ::done
 
 	public final double getX() {
-<span class="fc" id="L43">		return x;</span>
+<span class="fc" id="L47">		return x;</span>
 	}
 
 	public final double getY() {
-<span class="fc" id="L47">		return y;</span>
+<span class="fc" id="L51">		return y;</span>
 	}
 
 	public double distance(XPoint2D other) {
-<span class="fc" id="L51">		final double px = other.getX() - this.getX();</span>
-<span class="fc" id="L52">		final double py = other.getY() - this.getY();</span>
-<span class="fc" id="L53">		return Math.sqrt(px * px + py * py);</span>
+<span class="fc" id="L55">		final double px = other.getX() - this.getX();</span>
+<span class="fc" id="L56">		final double py = other.getY() - this.getY();</span>
+<span class="fc" id="L57">		return Math.sqrt(px * px + py * py);</span>
 	}
 
 	public double distanceSq(XPoint2D other) {
-<span class="nc" id="L57">		final double px = other.getX() - this.getX();</span>
-<span class="nc" id="L58">		final double py = other.getY() - this.getY();</span>
-<span class="nc" id="L59">		return px * px + py * py;</span>
+<span class="nc" id="L61">		final double px = other.getX() - this.getX();</span>
+<span class="nc" id="L62">		final double py = other.getY() - this.getY();</span>
+<span class="nc" id="L63">		return px * px + py * py;</span>
 	}
 
 	public static double distance(double x1, double y1, double x2, double y2) {
-<span class="nc" id="L63">		x1 -= x2;</span>
-<span class="nc" id="L64">		y1 -= y2;</span>
-<span class="nc" id="L65">		return Math.sqrt(x1 * x1 + y1 * y1);</span>
+<span class="nc" id="L67">		x1 -= x2;</span>
+<span class="nc" id="L68">		y1 -= y2;</span>
+<span class="nc" id="L69">		return Math.sqrt(x1 * x1 + y1 * y1);</span>
 	}
 
 	public double distance(double px, double py) {
-<span class="nc" id="L69">		px -= getX();</span>
-<span class="nc" id="L70">		py -= getY();</span>
-<span class="nc" id="L71">		return Math.sqrt(px * px + py * py);</span>
+<span class="nc" id="L73">		px -= getX();</span>
+<span class="nc" id="L74">		py -= getY();</span>
+<span class="nc" id="L75">		return Math.sqrt(px * px + py * py);</span>
 	}
 
 	public XPoint2D move(double dx, double dy) {
-<span class="fc" id="L75">		return new XPoint2D(x + dx, y + dy);</span>
+<span class="fc" id="L79">		return new XPoint2D(x + dx, y + dy);</span>
 	}
 
 	public XPoint2D move(XPoint2D delta) {
-<span class="nc" id="L79">		return new XPoint2D(x + delta.x, y + delta.y);</span>
+<span class="nc" id="L83">		return new XPoint2D(x + delta.x, y + delta.y);</span>
 	}
 
 }

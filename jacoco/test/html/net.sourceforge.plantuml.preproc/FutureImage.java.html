@@ -59,24 +59,26 @@ public class FutureImage {
 <span class="nc" id="L59">	}</span>
 
 	public PortableImage getNow() {
-<span class="nc" id="L62">		synchronized (this) {</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (image == null) {</span>
-<span class="nc" id="L64">				image = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L63">		synchronized (this) {</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (image == null) {</span>
+<span class="nc" id="L65">				image = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);</span>
 
-<span class="nc" id="L66">				try (InputStream is = new ByteArrayInputStream(data)) {</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">					for (int y = 0; y &lt; height; y++)</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">						for (int x = 0; x &lt; width; x++) {</span>
-<span class="nc" id="L69">							final int rgb = colors.get(Stdlib.read2bytes(is));</span>
-<span class="nc" id="L70">							image.setRGB(x, y, rgb);</span>
+<span class="nc" id="L67">				try (InputStream is = new ByteArrayInputStream(data)) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">					for (int y = 0; y &lt; height; y++)</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">						for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc" id="L70">							final int rgb = colors.get(Stdlib.read2bytes(is));</span>
+<span class="nc" id="L71">							image.setRGB(x, y, rgb);</span>
 						}
-<span class="nc" id="L72">				} catch (IOException e) {</span>
-<span class="nc" id="L73">					throw new UncheckedIOException(e);</span>
-<span class="nc" id="L74">				}</span>
-<span class="nc" id="L75">				data = null; // free memory</span>
+<span class="nc" id="L73">				} catch (IOException e) {</span>
+<span class="nc" id="L74">					throw new UncheckedIOException(e);</span>
+<span class="nc" id="L75">				}</span>
+<span class="nc" id="L76">				data = null; // free memory</span>
 			}
 
-<span class="nc" id="L78">		}</span>
-<span class="nc" id="L79">		return image;</span>
+<span class="nc" id="L79">		}</span>
+		// ::done
+<span class="nc" id="L81">		return image;</span>
 	}
 
 }

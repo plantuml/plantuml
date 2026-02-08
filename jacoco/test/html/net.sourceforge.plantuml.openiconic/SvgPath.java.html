@@ -189,66 +189,70 @@ public class SvgPath {
 <span class="nc" id="L189">		return result;</span>
 	}
 
+	// ::comment when __TEAVM__
 	private UPath toUPath(AffineTransform at) {
-<span class="nc" id="L193">		UPath result = UPath.none();</span>
-<span class="nc" id="L194">		Movement previous = null;</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (Movement move : movements) {</span>
-<span class="nc" id="L196">			final char letter = move.getLetter();</span>
-<span class="nc" id="L197">			final SvgPosition position = move.lastPosition();</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (letter == 'M') {</span>
-<span class="nc" id="L199">				result.moveTo(position.affine(at));</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">			} else if (letter == 'C') {</span>
-<span class="nc" id="L201">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
-<span class="nc" id="L202">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
-<span class="nc" id="L203">				result.cubicTo(ctl1.affine(at), ctl2.affine(at), position.affine(at));</span>
-<span class="nc bnc" id="L204" title="All 2 branches missed.">			} else if (letter == 'Q') {</span>
-<span class="nc" id="L205">				final SvgPosition ctl = move.getSvgPosition(0);</span>
-<span class="nc" id="L206">				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">			} else if (letter == 'T') {</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">				if (previous.getLetter() == 'Q') {</span>
+<span class="nc" id="L194">		UPath result = UPath.none();</span>
+<span class="nc" id="L195">		Movement previous = null;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (Movement move : movements) {</span>
+<span class="nc" id="L197">			final char letter = move.getLetter();</span>
+<span class="nc" id="L198">			final SvgPosition position = move.lastPosition();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (letter == 'M') {</span>
+<span class="nc" id="L200">				result.moveTo(position.affine(at));</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			} else if (letter == 'C') {</span>
+<span class="nc" id="L202">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
+<span class="nc" id="L203">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
+<span class="nc" id="L204">				result.cubicTo(ctl1.affine(at), ctl2.affine(at), position.affine(at));</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			} else if (letter == 'Q') {</span>
+<span class="nc" id="L206">				final SvgPosition ctl = move.getSvgPosition(0);</span>
+<span class="nc" id="L207">				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">			} else if (letter == 'T') {</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">				if (previous.getLetter() == 'Q') {</span>
 					// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
-<span class="nc" id="L210">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
-<span class="nc" id="L211">					final SvgPosition lastP = previous.lastPosition();</span>
-<span class="nc" id="L212">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
-<span class="nc" id="L213">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">				} else if (previous.getLetter() == 'T') {</span>
+<span class="nc" id="L211">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="nc" id="L212">					final SvgPosition lastP = previous.lastPosition();</span>
+<span class="nc" id="L213">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="nc" id="L214">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">				} else if (previous.getLetter() == 'T') {</span>
 					// Same logic as for Q followed by T: reflect the previous control point
-<span class="nc" id="L216">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
-<span class="nc" id="L217">					final SvgPosition lastP = previous.lastPosition();</span>
-<span class="nc" id="L218">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
-<span class="nc" id="L219">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
-<span class="nc" id="L220">				} else</span>
-<span class="nc" id="L221">					throw new IllegalArgumentException(&quot;&quot; + previous.getLetter());</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">			} else if (letter == 'L') {</span>
-<span class="nc" id="L223">				result.lineTo(position.affine(at));</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">			} else if (letter == 'A') {</span>
-<span class="nc" id="L225">				final double rx = move.getArgument(0);</span>
-<span class="nc" id="L226">				final double ry = move.getArgument(1);</span>
-<span class="nc" id="L227">				final double x_axis_rotation = move.getArgument(2);</span>
-<span class="nc" id="L228">				final double large_arc_flag = move.getArgument(3);</span>
-<span class="nc" id="L229">				final double sweep_flag = move.getArgument(4);</span>
-<span class="nc" id="L230">				final XPoint2D tmp = position.affine(at);</span>
-<span class="nc" id="L231">				result.arcTo(rx * at.getScaleX(), ry * at.getScaleY(), x_axis_rotation, large_arc_flag, sweep_flag,</span>
-<span class="nc" id="L232">						tmp.getX(), tmp.getY());</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">			} else if (letter == 'Z') {</span>
-<span class="nc" id="L234">				result.closePath();</span>
+<span class="nc" id="L217">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="nc" id="L218">					final SvgPosition lastP = previous.lastPosition();</span>
+<span class="nc" id="L219">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="nc" id="L220">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="nc" id="L221">				} else</span>
+<span class="nc" id="L222">					throw new IllegalArgumentException(&quot;&quot; + previous.getLetter());</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			} else if (letter == 'L') {</span>
+<span class="nc" id="L224">				result.lineTo(position.affine(at));</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">			} else if (letter == 'A') {</span>
+<span class="nc" id="L226">				final double rx = move.getArgument(0);</span>
+<span class="nc" id="L227">				final double ry = move.getArgument(1);</span>
+<span class="nc" id="L228">				final double x_axis_rotation = move.getArgument(2);</span>
+<span class="nc" id="L229">				final double large_arc_flag = move.getArgument(3);</span>
+<span class="nc" id="L230">				final double sweep_flag = move.getArgument(4);</span>
+<span class="nc" id="L231">				final XPoint2D tmp = position.affine(at);</span>
+<span class="nc" id="L232">				result.arcTo(rx * at.getScaleX(), ry * at.getScaleY(), x_axis_rotation, large_arc_flag, sweep_flag,</span>
+<span class="nc" id="L233">						tmp.getX(), tmp.getY());</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">			} else if (letter == 'Z') {</span>
+<span class="nc" id="L235">				result.closePath();</span>
 			} else {
-<span class="nc" id="L236">				throw new UnsupportedOperationException(&quot;letter &quot; + letter);</span>
+<span class="nc" id="L237">				throw new UnsupportedOperationException(&quot;letter &quot; + letter);</span>
 			}
-<span class="nc" id="L238">			previous = move;</span>
-<span class="nc" id="L239">		}</span>
-<span class="nc" id="L240">		result = result.translate(translate.getDx() * at.getScaleX(), translate.getDy() * at.getScaleY());</span>
-<span class="nc" id="L241">		return result;</span>
+<span class="nc" id="L239">			previous = move;</span>
+<span class="nc" id="L240">		}</span>
+<span class="nc" id="L241">		result = result.translate(translate.getDx() * at.getScaleX(), translate.getDy() * at.getScaleY());</span>
+<span class="nc" id="L242">		return result;</span>
 	}
 
-	public void drawMe(UGraphic ug, double factor) {
-<span class="nc" id="L245">		final UPath path = toUPath(factor, factor);</span>
-<span class="nc" id="L246">		ug.draw(path);</span>
-<span class="nc" id="L247">	}</span>
-
 	public void drawMe(UGraphic ug, AffineTransform at) {
-<span class="nc" id="L250">		final UPath path = toUPath(at);</span>
-<span class="nc" id="L251">		ug.draw(path);</span>
-<span class="nc" id="L252">	}</span>
+<span class="nc" id="L246">		final UPath path = toUPath(at);</span>
+<span class="nc" id="L247">		ug.draw(path);</span>
+<span class="nc" id="L248">	}</span>
+
+	// ::done
+
+	public void drawMe(UGraphic ug, double factor) {
+<span class="nc" id="L253">		final UPath path = toUPath(factor, factor);</span>
+<span class="nc" id="L254">		ug.draw(path);</span>
+<span class="nc" id="L255">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

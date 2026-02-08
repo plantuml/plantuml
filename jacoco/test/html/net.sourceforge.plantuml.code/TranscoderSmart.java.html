@@ -43,7 +43,7 @@ import java.io.IOException;
 			new CompressionZlib());
 <span class="fc" id="L44">	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new ArobaseStringCompressor(),</span>
 			new CompressionNone());
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	// Legacy encoder
 <span class="fc" id="L48">	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),</span>
 			new CompressionHuffman());
@@ -60,29 +60,27 @@ import java.io.IOException;
 <span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~0&quot;))</span>
 <span class="nc" id="L61">			return zlib.decode(code.substring(2));</span>
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~1&quot;))</span>
 <span class="nc" id="L65">			return oldOne.decode(code.substring(2));</span>
+
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~h&quot;))</span>
+<span class="nc" id="L68">			return hexOnly.decode(code.substring(2));</span>
+
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~g&quot;))</span>
+<span class="nc" id="L71">			return gzip.decode(code.substring(2));</span>
+
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~zip~&quot;))</span>
+<span class="nc" id="L74">			return zip.decode(code.substring(5));</span>
 		// ::done
 
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~h&quot;))</span>
-<span class="nc" id="L69">			return hexOnly.decode(code.substring(2));</span>
-
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~g&quot;))</span>
-<span class="nc" id="L72">			return gzip.decode(code.substring(2));</span>
-
-		// ::comment when __CORE__
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~zip~&quot;))</span>
-<span class="nc" id="L76">			return zip.decode(code.substring(5));</span>
-		// ::done
-
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		try {
 			// ::done
-<span class="fc" id="L82">			return zlib.decode(code);</span>
-			// ::comment when __CORE__
-<span class="fc" id="L84">		} catch (Exception ex) {</span>
-<span class="nc" id="L85">			return oldOne.decode(code);</span>
+<span class="fc" id="L80">			return zlib.decode(code);</span>
+			// ::comment when __CORE__ or __TEAVM__
+<span class="fc" id="L82">		} catch (Exception ex) {</span>
+<span class="nc" id="L83">			return oldOne.decode(code);</span>
 		}
 		// ::done
 		// return zlib.decode(code);
@@ -91,7 +89,7 @@ import java.io.IOException;
 	public String encode(String text) throws IOException {
 		// Right now, we still use the legacy encoding.
 		// This will be changed in the incoming months
-<span class="fc" id="L94">		return zlib.encode(text);</span>
+<span class="fc" id="L92">		return zlib.encode(text);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

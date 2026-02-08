@@ -43,34 +43,35 @@ import java.util.Objects;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
 public final class NFolderStdlib implements NFolder {
+	// ::remove file when __TEAVM__
 
 	private final Stdlib stdlib;
 	private final Path pathInsideStdlib;
 
 	/** Creates a folder view of the ZIP root. */
 	public NFolderStdlib(Stdlib stdlib) {
-<span class="fc" id="L52">		this(stdlib, Paths.get(&quot;&quot;));</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		this(stdlib, Paths.get(&quot;&quot;));</span>
+<span class="fc" id="L54">	}</span>
 
-<span class="fc" id="L55">	private NFolderStdlib(Stdlib stdlib, Path pathInsideStdlib) {</span>
-<span class="fc" id="L56">		this.stdlib = Objects.requireNonNull(stdlib);</span>
-<span class="fc" id="L57">		this.pathInsideStdlib = Objects.requireNonNull(pathInsideStdlib).normalize();</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L56">	private NFolderStdlib(Stdlib stdlib, Path pathInsideStdlib) {</span>
+<span class="fc" id="L57">		this.stdlib = Objects.requireNonNull(stdlib);</span>
+<span class="fc" id="L58">		this.pathInsideStdlib = Objects.requireNonNull(pathInsideStdlib).normalize();</span>
+<span class="fc" id="L59">	}</span>
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
-<span class="fc" id="L62">		return new InputFileStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());</span>
+<span class="fc" id="L63">		return new InputFileStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());</span>
 	}
 
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
-<span class="fc" id="L67">		return new NFolderStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());</span>
+<span class="fc" id="L68">		return new NFolderStdlib(stdlib, pathInsideStdlib.resolve(nameOrPath).normalize());</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L72">		final String prefix = pathInsideStdlib.toString().replace('\\', '/');</span>
-<span class="fc" id="L73">		return stdlib.getName() + &quot;!&quot; + prefix;</span>
+<span class="fc" id="L73">		final String prefix = pathInsideStdlib.toString().replace('\\', '/');</span>
+<span class="fc" id="L74">		return stdlib.getName() + &quot;!&quot; + prefix;</span>
 	}
 
 }

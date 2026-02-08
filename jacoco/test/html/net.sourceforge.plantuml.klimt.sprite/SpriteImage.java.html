@@ -86,30 +86,32 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
-<span class="nc bnc" id="L89" title="All 4 branches missed.">		if (name.endsWith(&quot;.png&quot;) || name.endsWith(&quot;.svg&quot;))</span>
-<span class="nc" id="L90">			throw new IllegalArgumentException();</span>
+		// ::revert when __TEAVM__
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (name.endsWith(&quot;.png&quot;) || name.endsWith(&quot;.svg&quot;))</span>
+<span class="nc" id="L91">			throw new IllegalArgumentException();</span>
 
 		try {
-<span class="nc" id="L93">			InputStream is = getInternalSprite(name + &quot;.svg&quot;);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (is != null)</span>
-<span class="nc" id="L95">				return new SvgNanoParser(FileUtils.readAllBytes(is));</span>
-<span class="nc" id="L96">			is = getInternalSprite(name + &quot;.png&quot;);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (is != null)</span>
-<span class="nc" id="L98">				return new SpriteImage(SImageIO.read(is));</span>
-<span class="nc" id="L99">			return null;</span>
+<span class="nc" id="L94">			InputStream is = getInternalSprite(name + &quot;.svg&quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (is != null)</span>
+<span class="nc" id="L96">				return new SvgNanoParser(FileUtils.readAllBytes(is));</span>
+<span class="nc" id="L97">			is = getInternalSprite(name + &quot;.png&quot;);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (is != null)</span>
+<span class="nc" id="L99">				return new SpriteImage(SImageIO.read(is));</span>
+<span class="nc" id="L100">			return null;</span>
 
-<span class="nc" id="L101">		} catch (Throwable e) {</span>
-<span class="nc" id="L102">			Logme.error(e);</span>
-<span class="nc" id="L103">			return null;</span>
+<span class="nc" id="L102">		} catch (Throwable e) {</span>
+<span class="nc" id="L103">			Logme.error(e);</span>
+<span class="nc" id="L104">			return null;</span>
 		}
-
+		// return null;
+		// ::done
 	}
 
 	private static InputStream getInternalSprite(final String inner) {
-<span class="nc" id="L109">		final String path = &quot;/sprites/&quot; + inner;</span>
-<span class="nc" id="L110">		Log.info(() -&gt; &quot;Triying &quot; + path);</span>
-<span class="nc" id="L111">		final InputStream is = SpriteImage.class.getResourceAsStream(path);</span>
-<span class="nc" id="L112">		return is;</span>
+<span class="nc" id="L111">		final String path = &quot;/sprites/&quot; + inner;</span>
+<span class="nc" id="L112">		Log.info(() -&gt; &quot;Triying &quot; + path);</span>
+<span class="nc" id="L113">		final InputStream is = SpriteImage.class.getResourceAsStream(path);</span>
+<span class="nc" id="L114">		return is;</span>
 	}
 
 }

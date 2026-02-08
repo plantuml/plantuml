@@ -106,7 +106,7 @@ package net.sourceforge.plantuml.security;
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="fc" id="L110">		final String env = SecurityUtils.getenv(&quot;PLANTUML_SECURITY_PROFILE&quot;);</span>
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (&quot;SANDBOX&quot;.equalsIgnoreCase(env))</span>
 <span class="nc" id="L112">			return SANDBOX;</span>
@@ -117,7 +117,7 @@ package net.sourceforge.plantuml.security;
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">		else if (&quot;UNSECURE&quot;.equalsIgnoreCase(env))</span>
 			// ::done
 <span class="nc" id="L119">			return UNSECURE;</span>
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 
 <span class="fc" id="L122">		return LEGACY;</span>
 		// ::done

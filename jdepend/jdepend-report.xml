@@ -13273,10 +13273,10 @@
                 <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>24</Ce>
+                <Ce>23</Ce>
                 <A>0.06</A>
                 <I>0.96</I>
-                <D>0.02</D>
+                <D>0.01</D>
                 <V>1</V>
             </Stats>
 
@@ -13341,7 +13341,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt.geom</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>

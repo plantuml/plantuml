@@ -41,19 +41,23 @@ import java.util.logging.Logger;
 
 <span class="nc" id="L42">public class Logme {</span>
 
+	// ::comment when __TEAVM__
 	private static final Logger logger;
 
 	static {
-<span class="fc" id="L47">		logger = Logger.getLogger(&quot;com.plantuml&quot;);</span>
-<span class="fc" id="L48">		logger.setUseParentHandlers(false);</span>
-<span class="fc" id="L49">		final ConsoleHandler handler = new ConsoleHandler();</span>
-<span class="fc" id="L50">		handler.setFormatter(new SimpleFormatter());</span>
-<span class="fc" id="L51">		logger.addHandler(handler);</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L48">		logger = Logger.getLogger(&quot;com.plantuml&quot;);</span>
+<span class="fc" id="L49">		logger.setUseParentHandlers(false);</span>
+<span class="fc" id="L50">		final ConsoleHandler handler = new ConsoleHandler();</span>
+<span class="fc" id="L51">		handler.setFormatter(new SimpleFormatter());</span>
+<span class="fc" id="L52">		logger.addHandler(handler);</span>
+<span class="fc" id="L53">	}</span>
+	// ::done
 
 	public static void error(Throwable thrown) {
-<span class="fc" id="L55">		logger.log(Level.SEVERE, &quot;&quot;, thrown);</span>
-<span class="fc" id="L56">	}</span>
+		// ::comment when __TEAVM__
+<span class="fc" id="L58">		logger.log(Level.SEVERE, &quot;&quot;, thrown);</span>
+		// ::done
+<span class="fc" id="L60">	}</span>
 
 	// Unused right now
 	//

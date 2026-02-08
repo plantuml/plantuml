@@ -49,56 +49,58 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 <span class="nc" id="L50">public class SImageIO {</span>
 
-	// ::comment when __CORE__
-	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
-<span class="fc" id="L54">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
-	}
-	// ::done
-
-	public static void write(PortableImage image, String format, OutputStream os) throws IOException {
-<span class="fc" id="L59">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, os);</span>
-<span class="fc" id="L60">	}</span>
-
-	// ::comment when __CORE__
-	public static void write(PortableImage image, String format, SFile file) throws IOException {
-<span class="nc" id="L64">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, file.conv());</span>
-<span class="nc" id="L65">	}</span>
-
-	public static PortableImage read(java.io.File file) throws IOException {
-<span class="nc" id="L68">		return new PortableImage(javax.imageio.ImageIO.read(file));</span>
-	}
-
-	public static PortableImage read(SFile file) throws IOException {
-<span class="fc" id="L72">		return new PortableImage(javax.imageio.ImageIO.read(file.conv()));</span>
-	}
-	// ::done
-
 	public static PortableImage read(InputStream is) throws IOException {
-<span class="fc" id="L77">		return new PortableImage(javax.imageio.ImageIO.read(is));</span>
+		// ::revert when __TEAVM__
+<span class="fc" id="L54">		return new PortableImage(javax.imageio.ImageIO.read(is));</span>
+		// return null;
+		// ::done
 	}
 
 	public static PortableImage read(byte[] bytes) throws IOException {
-<span class="fc" id="L81">		return new PortableImage(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));</span>
+		// ::revert when __TEAVM__
+<span class="fc" id="L61">		return new PortableImage(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));</span>
+		// return null;
+		// ::done
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
+	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
+<span class="fc" id="L68">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
+	}
+
+	public static void write(PortableImage image, String format, OutputStream os) throws IOException {
+<span class="fc" id="L72">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, os);</span>
+<span class="fc" id="L73">	}</span>
+
+	public static void write(PortableImage image, String format, SFile file) throws IOException {
+<span class="nc" id="L76">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, file.conv());</span>
+<span class="nc" id="L77">	}</span>
+
+	public static PortableImage read(java.io.File file) throws IOException {
+<span class="nc" id="L80">		return new PortableImage(javax.imageio.ImageIO.read(file));</span>
+	}
+
+	public static PortableImage read(SFile file) throws IOException {
+<span class="fc" id="L84">		return new PortableImage(javax.imageio.ImageIO.read(file.conv()));</span>
+	}
+
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {
-<span class="nc" id="L86">		return javax.imageio.ImageIO.createImageInputStream(file.conv());</span>
+<span class="nc" id="L88">		return javax.imageio.ImageIO.createImageInputStream(file.conv());</span>
 	}
 
 	public static ImageInputStream createImageInputStream(Object obj) throws IOException {
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (obj instanceof SFile)</span>
-<span class="nc" id="L91">			obj = ((SFile) obj).conv();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (obj instanceof SFile)</span>
+<span class="nc" id="L93">			obj = ((SFile) obj).conv();</span>
 
-<span class="fc" id="L93">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
+<span class="fc" id="L95">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
 	}
 
 	public static ImageInputStream createImageInputStream(InputStream is) throws IOException {
-<span class="nc" id="L97">		return javax.imageio.ImageIO.createImageInputStream(is);</span>
+<span class="nc" id="L99">		return javax.imageio.ImageIO.createImageInputStream(is);</span>
 	}
 
 	public static Iterator&lt;ImageReader&gt; getImageReaders(ImageInputStream iis) {
-<span class="fc" id="L101">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
+<span class="fc" id="L103">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
 	}
 	// ::done
 

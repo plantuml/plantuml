@@ -63,11 +63,13 @@ public class CommandSpriteSvg extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L66">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
-<span class="nc" id="L67">		final SvgNanoParser nanoParser = new SvgNanoParser(svg);</span>
-<span class="nc" id="L68">		system.addSprite(arg.get(&quot;NAME&quot;, 0), nanoParser);</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L67">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
+<span class="nc" id="L68">		final SvgNanoParser nanoParser = new SvgNanoParser(svg);</span>
+<span class="nc" id="L69">		system.addSprite(arg.get(&quot;NAME&quot;, 0), nanoParser);</span>
+		// ::done
 
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

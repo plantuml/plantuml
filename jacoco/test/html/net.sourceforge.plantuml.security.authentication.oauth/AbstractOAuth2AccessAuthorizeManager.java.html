@@ -57,7 +57,8 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
  */
 <span class="fc" id="L58">public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAuthorizeManager {</span>
     // ::remove folder when __HAXE__
-
+	// ::remove folder when __TEAVM__
+	
 	/**
 	 * Default headers for token service access.
 	 * &lt;p&gt;
@@ -71,10 +72,10 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 	 * @return headers
 	 */
 	protected Map&lt;String, Object&gt; headers() {
-<span class="nc" id="L74">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L75">		map.put(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;);</span>
-<span class="nc" id="L76">		map.put(&quot;Accept&quot;, &quot;application/json&quot;);</span>
-<span class="nc" id="L77">		return map;</span>
+<span class="nc" id="L75">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L76">		map.put(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;);</span>
+<span class="nc" id="L77">		map.put(&quot;Accept&quot;, &quot;application/json&quot;);</span>
+<span class="nc" id="L78">		return map;</span>
 	}
 
 	/**
@@ -85,26 +86,26 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 	 * @return data-map
 	 */
 	protected Map&lt;String, Object&gt; buildAccessDataFromResponse(JsonObject tokenResponse, String tokenType) {
-<span class="fc" id="L88">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L89">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L90">		toMap(map, tokenResponse, OAuth2Tokens.ACCESS_TOKEN);</span>
-<span class="fc" id="L91">		toMap(map, tokenResponse, OAuth2Tokens.SCOPE);</span>
-<span class="fc" id="L92">		toMap(map, tokenResponse, OAuth2Tokens.EXPIRES_IN);</span>
+<span class="fc" id="L91">		toMap(map, tokenResponse, OAuth2Tokens.ACCESS_TOKEN);</span>
+<span class="fc" id="L92">		toMap(map, tokenResponse, OAuth2Tokens.SCOPE);</span>
+<span class="fc" id="L93">		toMap(map, tokenResponse, OAuth2Tokens.EXPIRES_IN);</span>
 
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (tokenType == null) {</span>
-<span class="fc" id="L95">			toMap(map, tokenResponse, OAuth2Tokens.TOKEN_TYPE);</span>
-<span class="fc bfc" id="L96" title="All 4 branches covered.">			if (!map.isEmpty() &amp;&amp; !map.containsKey(OAuth2Tokens.TOKEN_TYPE.key())) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (tokenType == null) {</span>
+<span class="fc" id="L96">			toMap(map, tokenResponse, OAuth2Tokens.TOKEN_TYPE);</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">			if (!map.isEmpty() &amp;&amp; !map.containsKey(OAuth2Tokens.TOKEN_TYPE.key())) {</span>
 				// default token type is bearer
-<span class="fc" id="L98">				map.put(OAuth2Tokens.TOKEN_TYPE.key(), &quot;bearer&quot;);</span>
+<span class="fc" id="L99">				map.put(OAuth2Tokens.TOKEN_TYPE.key(), &quot;bearer&quot;);</span>
 			}
 		} else {
 			// Caller don't belief in the token_type response
-<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (!map.isEmpty()) {</span>
-<span class="fc" id="L103">				map.put(OAuth2Tokens.TOKEN_TYPE.key(), tokenType);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (!map.isEmpty()) {</span>
+<span class="fc" id="L104">				map.put(OAuth2Tokens.TOKEN_TYPE.key(), tokenType);</span>
 			}
 		}
 
-<span class="fc" id="L107">		return map;</span>
+<span class="fc" id="L108">		return map;</span>
 	}
 
 	/**
@@ -115,17 +116,17 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 	 * @param name     name of the value
 	 */
 	private void toMap(Map&lt;String, Object&gt; map, JsonObject response, OAuth2Tokens name) {
-<span class="fc" id="L118">		JsonValue jsonValue = response.get(name.key());</span>
-<span class="pc bpc" id="L119" title="1 of 4 branches missed.">		if (jsonValue != null &amp;&amp; !jsonValue.isNull()) {</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (jsonValue.isString()) {</span>
-<span class="fc" id="L121">				map.put(name.key(), jsonValue.asString());</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			} else if (jsonValue.isNumber()) {</span>
-<span class="fc" id="L123">				map.put(name.key(), jsonValue.asInt());</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (jsonValue.isBoolean()) {</span>
-<span class="nc" id="L125">				map.put(name.key(), jsonValue.asBoolean());</span>
+<span class="fc" id="L119">		JsonValue jsonValue = response.get(name.key());</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">		if (jsonValue != null &amp;&amp; !jsonValue.isNull()) {</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (jsonValue.isString()) {</span>
+<span class="fc" id="L122">				map.put(name.key(), jsonValue.asString());</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">			} else if (jsonValue.isNumber()) {</span>
+<span class="fc" id="L124">				map.put(name.key(), jsonValue.asInt());</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			} else if (jsonValue.isBoolean()) {</span>
+<span class="nc" id="L126">				map.put(name.key(), jsonValue.asBoolean());</span>
 			}
 		}
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L129">	}</span>
 
 	/**
 	 * Encodes the data to UTF-8 into {@code application/x-www-form-urlencoded}.
@@ -135,10 +136,10 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 	 */
 	protected String urlEncode(String data) {
 		try {
-<span class="fc" id="L138">			return URLEncoder.encode(data, &quot;UTF-8&quot;);</span>
-<span class="nc" id="L139">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L140">			Logme.error(e);</span>
-<span class="nc" id="L141">			return data;</span>
+<span class="fc" id="L139">			return URLEncoder.encode(data, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L140">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L141">			Logme.error(e);</span>
+<span class="nc" id="L142">			return data;</span>
 		}
 	}
 
@@ -156,15 +157,15 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 	 */
 	protected SecurityAuthentication requestAndCreateAuthFromResponse(Proxy proxy, String grantType, String tokenType,
 			SURL tokenService, String content, SecurityAuthentication basicAuth) {
-<span class="nc" id="L159">		byte[] bytes = tokenService.getBytesOnPost(proxy, basicAuth, content, headers());</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (bytes != null) {</span>
-<span class="nc" id="L161">			JsonValue tokenResponse = Json.parse(new String(bytes, StandardCharsets.UTF_8));</span>
-<span class="nc bnc" id="L162" title="All 4 branches missed.">			if (tokenResponse != null &amp;&amp; !tokenResponse.isNull()) {</span>
-<span class="nc" id="L163">				return new SecurityAuthentication(&quot;oauth2&quot;, null, grantType,</span>
-<span class="nc" id="L164">						buildAccessDataFromResponse(tokenResponse.asObject(), tokenType));</span>
+<span class="nc" id="L160">		byte[] bytes = tokenService.getBytesOnPost(proxy, basicAuth, content, headers());</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (bytes != null) {</span>
+<span class="nc" id="L162">			JsonValue tokenResponse = Json.parse(new String(bytes, StandardCharsets.UTF_8));</span>
+<span class="nc bnc" id="L163" title="All 4 branches missed.">			if (tokenResponse != null &amp;&amp; !tokenResponse.isNull()) {</span>
+<span class="nc" id="L164">				return new SecurityAuthentication(&quot;oauth2&quot;, null, grantType,</span>
+<span class="nc" id="L165">						buildAccessDataFromResponse(tokenResponse.asObject(), tokenType));</span>
 			}
 		}
-<span class="nc" id="L167">		return null;</span>
+<span class="nc" id="L168">		return null;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

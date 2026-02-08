@@ -62,7 +62,7 @@ public class TranscoderImpl implements Transcoder {
 <span class="fc" id="L62">		return new TranscoderImpl(urlEncoder, stringCompressor, compression, Format.UTF8);</span>
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public static Transcoder upf9(URLEncoder urlEncoder, StringCompressor stringCompressor, Compression compression) {
 <span class="nc" id="L67">		return new TranscoderImpl(urlEncoder, stringCompressor, compression, Format.UPF9);</span>
 	}
@@ -71,7 +71,7 @@ public class TranscoderImpl implements Transcoder {
 	public String encode(String text) throws IOException {
 <span class="fc" id="L72">		final String stringAnnoted = stringCompressor.compress(text);</span>
 		final byte[] data;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (format == Format.UPF9)</span>
 <span class="nc" id="L76">			data = Upf9Encoder.getBytes(stringAnnoted);</span>
 		else
@@ -88,7 +88,7 @@ public class TranscoderImpl implements Transcoder {
 <span class="fc" id="L88">			final byte compressedData[] = urlEncoder.decode(code);</span>
 <span class="fc" id="L89">			final ByteArray data = compression.decompress(compressedData);</span>
 			final String string;
-			// ::comment when __CORE__
+			// ::comment when __CORE__ or __TEAVM__
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (format == Format.UPF9)</span>
 <span class="nc" id="L93">				string = data.toUPF9String();</span>
 			else

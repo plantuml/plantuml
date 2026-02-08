@@ -49,7 +49,8 @@ import net.sourceforge.plantuml.utils.Base64Coder;
  * @author Aljoscha Rittner
  */
 <span class="fc" id="L51">public class BasicAuthAccessInterceptor implements SecurityAccessInterceptor {</span>
-
+	// ::remove folder when __TEAVM__
+	
 	/**
 	 * Applies from {@link SecurityAuthentication} data a BasicAuth authentication
 	 * access header.
@@ -62,23 +63,23 @@ import net.sourceforge.plantuml.utils.Base64Coder;
 	 */
 	@Override
 	public void apply(SecurityAuthentication authentication, URLConnection connection) {
-<span class="nc" id="L65">		String auth = getAuth(authentication);</span>
-<span class="nc" id="L66">		String authorization = Base64Coder.encodeString(auth);</span>
-<span class="nc" id="L67">		String authHeaderValue = &quot;Basic &quot; + authorization;</span>
-<span class="nc" id="L68">		connection.setRequestProperty(&quot;Authorization&quot;, authHeaderValue);</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L66">		String auth = getAuth(authentication);</span>
+<span class="nc" id="L67">		String authorization = Base64Coder.encodeString(auth);</span>
+<span class="nc" id="L68">		String authHeaderValue = &quot;Basic &quot; + authorization;</span>
+<span class="nc" id="L69">		connection.setRequestProperty(&quot;Authorization&quot;, authHeaderValue);</span>
+<span class="nc" id="L70">	}</span>
 
 	private String getAuth(SecurityAuthentication authentication) {
-<span class="nc" id="L72">		String id = (String) authentication.getTokens().get(&quot;identifier&quot;);</span>
-<span class="nc" id="L73">		char[] secret = (char[]) authentication.getTokens().get(&quot;secret&quot;);</span>
-<span class="nc" id="L74">		StringBuilder auth = new StringBuilder();</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(id)) {</span>
-<span class="nc" id="L76">			auth.append(id);</span>
-<span class="nc bnc" id="L77" title="All 4 branches missed.">			if (secret != null &amp;&amp; secret.length &gt; 0) {</span>
-<span class="nc" id="L78">				auth.append(':').append(secret);</span>
+<span class="nc" id="L73">		String id = (String) authentication.getTokens().get(&quot;identifier&quot;);</span>
+<span class="nc" id="L74">		char[] secret = (char[]) authentication.getTokens().get(&quot;secret&quot;);</span>
+<span class="nc" id="L75">		StringBuilder auth = new StringBuilder();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(id)) {</span>
+<span class="nc" id="L77">			auth.append(id);</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">			if (secret != null &amp;&amp; secret.length &gt; 0) {</span>
+<span class="nc" id="L79">				auth.append(':').append(secret);</span>
 			}
 		}
-<span class="nc" id="L81">		return auth.toString();</span>
+<span class="nc" id="L82">		return auth.toString();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

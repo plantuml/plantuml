@@ -8990,11 +8990,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 1
-    Ce: 24
+    Ce: 23
 
     A: 0.06
     I: 0.96
-    D: 0.02
+    D: 0.01
 
 Abstract Classes:
     net.sourceforge.plantuml.mindmap.Finger
@@ -9019,7 +9019,6 @@ Concrete Classes:
     net.sourceforge.plantuml.mindmap.Tetris
 
 Depends Upon:
-    java.awt.geom
     java.io
     java.lang
     java.util
@@ -16994,7 +16993,7 @@ java.awt,0,0,42,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,2,0,0,0,1,1
 java.awt.font,0,0,7,0,0,0,1,1
-java.awt.geom,0,0,21,0,0,0,1,1
+java.awt.geom,0,0,20,0,0,0,1,1
 java.awt.image,0,0,17,0,0,0,1,1
 java.io,0,0,124,0,0,0,1,1
 java.lang,0,0,235,0,0,0,1,1
@@ -17156,7 +17155,7 @@ net.sourceforge.plantuml.licensing,8,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,50,3,0,0.06,0.94,1
 net.sourceforge.plantuml.math,14,1,4,19,0.07,0.83,0.1,1
 net.sourceforge.plantuml.mda,3,0,1,7,0,0.88,0.12,1
-net.sourceforge.plantuml.mindmap,18,1,1,24,0.06,0.96,0.02,1
+net.sourceforge.plantuml.mindmap,18,1,1,23,0.06,0.96,0.01,1
 net.sourceforge.plantuml.nio,11,2,40,8,0.18,0.17,0.65,1
 net.sourceforge.plantuml.nwdiag,13,0,1,25,0,0.96,0.04,1
 net.sourceforge.plantuml.nwdiag.core,4,1,2,15,0.25,0.88,0.13,1

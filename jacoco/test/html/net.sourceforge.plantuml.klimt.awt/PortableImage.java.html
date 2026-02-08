@@ -6,59 +6,104 @@ import java.awt.image.BufferedImage;
 
 public class PortableImage {
 
+	// ::comment when __TEAVM__
+	public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 	public static final int TYPE_INT_ARGB = BufferedImage.TYPE_INT_ARGB;
 	public static final int TYPE_INT_ARGB_PRE = BufferedImage.TYPE_INT_ARGB_PRE;
-	public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
 	private final BufferedImage image;
 
-<span class="fc" id="L15">	public PortableImage(int width, int height, int imageType) {</span>
-<span class="fc" id="L16">		this.image = new BufferedImage(width, height, imageType);</span>
-<span class="fc" id="L17">	}</span>
+<span class="fc" id="L16">	public PortableImage(int width, int height, int imageType) {</span>
+<span class="fc" id="L17">		this.image = new BufferedImage(width, height, imageType);</span>
+<span class="fc" id="L18">	}</span>
 
-<span class="fc" id="L19">	public PortableImage(BufferedImage image) {</span>
-<span class="fc" id="L20">		this.image = image;</span>
-<span class="fc" id="L21">	}</span>
+<span class="fc" id="L20">	public PortableImage(BufferedImage image) {</span>
+<span class="fc" id="L21">		this.image = image;</span>
+<span class="fc" id="L22">	}</span>
 
 	public int getWidth() {
-<span class="fc" id="L24">		return image.getWidth();</span>
+<span class="fc" id="L25">		return image.getWidth();</span>
 	}
 
 	public int getHeight() {
-<span class="fc" id="L28">		return image.getHeight();</span>
+<span class="fc" id="L29">		return image.getHeight();</span>
 	}
 
 	public int getRGB(int x, int y) {
-<span class="fc" id="L32">		return image.getRGB(x, y);</span>
+<span class="fc" id="L33">		return image.getRGB(x, y);</span>
 	}
 
 	public void setRGB(int x, int y, int rgb) {
-<span class="fc" id="L36">		image.setRGB(x, y, rgb);</span>
-<span class="fc" id="L37">	}</span>
+<span class="fc" id="L37">		image.setRGB(x, y, rgb);</span>
+<span class="fc" id="L38">	}</span>
 
 	public int getType() {
-<span class="fc" id="L40">		return image.getType();</span>
+<span class="fc" id="L41">		return image.getType();</span>
 	}
 
 	public BufferedImage getBufferedImage() {
-<span class="fc" id="L44">		return image;</span>
+<span class="fc" id="L45">		return image;</span>
 	}
 
 	public PortableImage getSubimage(int x, int y, int width, int height) {
-<span class="fc" id="L48">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
+<span class="fc" id="L49">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
 	}
 
 	public Graphics2D createGraphics() {
-<span class="fc" id="L52">		return image.createGraphics();</span>
+<span class="fc" id="L53">		return image.createGraphics();</span>
 	}
 
 	public int getTransparency() {
-<span class="nc" id="L56">		return image.getTransparency();</span>
+<span class="nc" id="L57">		return image.getTransparency();</span>
 	}
 
 	public Graphics getGraphics() {
-<span class="nc" id="L60">		return image.getGraphics();</span>
+<span class="nc" id="L61">		return image.getGraphics();</span>
 	}
+	// ::done
+
+	// ::uncomment when __TEAVM__
+//	public static final int TYPE_INT_RGB = 1;
+//	public static final int TYPE_INT_ARGB = 2;
+//	public static final int TYPE_INT_ARGB_PRE = 3;
+//
+//	private final int width;
+//	private final int height;
+//	private final int imageType;
+//
+//	public PortableImage(int width, int height, int imageType) {
+//		this.width = width;
+//		this.height = height;
+//		this.imageType = imageType;
+//	}
+//
+//	public int getWidth() {
+//		return width;
+//	}
+//
+//	public int getHeight() {
+//		return height;
+//	}
+//
+//	public int getRGB(int x, int y) {
+//		return 0;
+//	}
+//
+//	public void setRGB(int x, int y, int rgb) {
+//	}
+//
+//	public int getType() {
+//		return imageType;
+//	}
+//
+//	public PortableImage getSubimage(int x, int y, int width, int height) {
+//		return this;
+//	}
+//
+//	public int getTransparency() {
+//		return 0;
+//	}
+	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

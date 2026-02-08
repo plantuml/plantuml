@@ -42,30 +42,31 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class AtomEmoji extends AbstractAtom implements Atom {
+	// ::remove file when __TEAVM__
 
 	private static final double MAGIC = 24.0;
 	private final Emoji emoji;
 	private final double factor;
 	private final HColor color;
 
-<span class="nc" id="L51">	public AtomEmoji(Emoji emoji, double scale, double size2D, HColor color) {</span>
-<span class="nc" id="L52">		this.emoji = emoji;</span>
-<span class="nc" id="L53">		this.factor = scale * size2D / MAGIC;</span>
-<span class="nc" id="L54">		this.color = color;</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L52">	public AtomEmoji(Emoji emoji, double scale, double size2D, HColor color) {</span>
+<span class="nc" id="L53">		this.emoji = emoji;</span>
+<span class="nc" id="L54">		this.factor = scale * size2D / MAGIC;</span>
+<span class="nc" id="L55">		this.color = color;</span>
+<span class="nc" id="L56">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L58">		final double size = 36 * factor;</span>
-<span class="nc" id="L59">		return new XDimension2D(size, size);</span>
+<span class="nc" id="L59">		final double size = 36 * factor;</span>
+<span class="nc" id="L60">		return new XDimension2D(size, size);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L63">		return -3 * factor;</span>
+<span class="nc" id="L64">		return -3 * factor;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L67">		emoji.drawU(ug, this.factor, this.color);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L68">		emoji.drawU(ug, this.factor, this.color);</span>
+<span class="nc" id="L69">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

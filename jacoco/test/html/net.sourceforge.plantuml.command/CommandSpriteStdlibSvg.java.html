@@ -68,15 +68,17 @@ public class CommandSpriteStdlibSvg extends SingleLineCommand2&lt;TitledDiagram&
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		// ::comment when __TEAVM__
 		try {
-<span class="nc" id="L72">			final Stdlib lib = Stdlib.retrieve(arg.get(&quot;STDLIB&quot;, 0));</span>
-<span class="nc" id="L73">			final String exportedName = arg.get(&quot;STDLIB&quot;, 1);</span>
-<span class="nc" id="L74">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L75">			system.addSprite(name, new StdlibSpriteSvg(lib, exportedName));</span>
-<span class="nc" id="L76">		} catch (IOException e) {</span>
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;Cannot read sprite &quot; + e.toString());</span>
-<span class="nc" id="L78">		}</span>
-<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L73">			final Stdlib lib = Stdlib.retrieve(arg.get(&quot;STDLIB&quot;, 0));</span>
+<span class="nc" id="L74">			final String exportedName = arg.get(&quot;STDLIB&quot;, 1);</span>
+<span class="nc" id="L75">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L76">			system.addSprite(name, new StdlibSpriteSvg(lib, exportedName));</span>
+<span class="nc" id="L77">		} catch (IOException e) {</span>
+<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;Cannot read sprite &quot; + e.toString());</span>
+<span class="nc" id="L79">		}</span>
+		// ::done
+<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
 	}
 
 }

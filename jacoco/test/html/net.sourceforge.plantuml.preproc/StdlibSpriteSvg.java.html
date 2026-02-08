@@ -45,27 +45,28 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
 public class StdlibSpriteSvg implements Sprite {
-
+	// ::remove file when __TEAVM__
+	
 	final private Lazy&lt;Sprite&gt; sprite;
 
-<span class="nc" id="L51">	public StdlibSpriteSvg(Stdlib lib, String name) {</span>
-<span class="nc" id="L52">		this.sprite = new Lazy&lt;&gt;(() -&gt; {</span>
+<span class="nc" id="L52">	public StdlibSpriteSvg(Stdlib lib, String name) {</span>
+<span class="nc" id="L53">		this.sprite = new Lazy&lt;&gt;(() -&gt; {</span>
 			try {
-<span class="nc" id="L54">				return lib.readSvgSprite(name);</span>
-<span class="nc" id="L55">			} catch (IOException e) {</span>
-<span class="nc" id="L56">				e.printStackTrace();</span>
-<span class="nc" id="L57">				throw new UncheckedIOException(e);</span>
+<span class="nc" id="L55">				return lib.readSvgSprite(name);</span>
+<span class="nc" id="L56">			} catch (IOException e) {</span>
+<span class="nc" id="L57">				e.printStackTrace();</span>
+<span class="nc" id="L58">				throw new UncheckedIOException(e);</span>
 			}
 		});
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L61">	}</span>
 
 	@Override
 	public TextBlock asTextBlock(HColor fontColor, HColor forcedColor, double scale, final HColor backColor) {
-<span class="nc" id="L64">		final Sprite tmp = this.sprite.get();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (tmp == null)</span>
-<span class="nc" id="L66">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L65">		final Sprite tmp = this.sprite.get();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L67">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 		
-<span class="nc" id="L68">		return tmp.asTextBlock(fontColor, forcedColor, scale, backColor);</span>
+<span class="nc" id="L69">		return tmp.asTextBlock(fontColor, forcedColor, scale, backColor);</span>
 	}
 
 }
