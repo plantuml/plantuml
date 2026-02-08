@@ -140,7 +140,7 @@ public class HColorSet {
 <span class="fc bfc" id="L140" title="All 2 branches covered.">		} else if (len == 6) {</span>
 <span class="fc" id="L141">			final int rgb = parseHex24(s, 0);</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">			if (rgb &gt;= 0)</span>
-<span class="fc" id="L143">				return new Color(rgb);</span>
+<span class="fc" id="L143">				return new Color(0xFF000000 | rgb);</span>
 <span class="fc bfc" id="L144" title="All 2 branches covered.">		} else if (len == 8) {</span>
 			// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
 <span class="fc" id="L146">			final int r = parseHexByte(s, 0);</span>
