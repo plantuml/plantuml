@@ -79,7 +79,7 @@ public class HColorSimple extends HColor {
 		if (alpha == 255)
 			return String.format("#%02X%02X%02X", red, green, blue);
 
-		return String.format("#%02X%02X%02X%02X", red, green, blue, alpha);
+		return String.format("#%02x%02x%02x%02x", alpha, red, green, blue);
 	}
 
 	@Override
