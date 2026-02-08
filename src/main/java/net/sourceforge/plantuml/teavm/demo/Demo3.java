@@ -1,31 +1,25 @@
 package net.sourceforge.plantuml.teavm.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 
-import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
-import net.sourceforge.plantuml.text.StringLocated;
 
 /**
  * Hello World example for TeaVM integration testing. Demonstrates DOM
  * manipulation and SVG generation using TeaVM's JSO API.
  */
-public class Demo2 {
+public class Demo3 {
 
 	/**
 	 * Entry point for TeaVM application.
@@ -84,14 +78,6 @@ public class Demo2 {
 		// consoleLog("rect= " + rect.toString());
 
 		ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
-
-		PSystemSudokuFactory factory = new PSystemSudokuFactory();
-		StringLocated sl = new StringLocated("sudoku 42", null);
-		System.err.println("sl=" + sl);
-		List<StringLocated> list = new ArrayList<>();
-		list.add(sl);
-		UmlSource source = UmlSource.create(list, false);
-		System.err.println("source=" + source);
 
 		// Append SVG to section
 		Element svgElement = svg.getSvgRoot();
