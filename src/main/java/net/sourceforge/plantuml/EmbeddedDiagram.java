@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -139,7 +139,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
 	private final List<StringLocated> list;
 	private final ISkinSimple skinParam;
-	private BufferedImage image;
+	private PortableImage image;
 	private String svg;
 
 	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> system) {
@@ -162,7 +162,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 				final UImageSvg svg = new UImageSvg(imageSvg, 1);
 				return new XDimension2D(svg.getWidth(), svg.getHeight());
 			}
-			final BufferedImage im = getImage();
+			final PortableImage im = getImage();
 			return new XDimension2D(im.getWidth(), im.getHeight());
 		} catch (IOException e) {
 			Logme.error(e);
@@ -181,7 +181,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 				ug.draw(svg);
 				return;
 			}
-			final BufferedImage im = getImage();
+			final PortableImage im = getImage();
 			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 			ug.draw(image);
 		} catch (IOException e) {
@@ -208,13 +208,13 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		return new String(os.toByteArray());
 	}
 
-	private BufferedImage getImage() throws IOException, InterruptedException {
+	private PortableImage getImage() throws IOException, InterruptedException {
 		if (image == null)
 			image = getImageSlow();
 		return image;
 	}
 
-	private BufferedImage getImageSlow() throws IOException, InterruptedException {
+	private PortableImage getImageSlow() throws IOException, InterruptedException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));

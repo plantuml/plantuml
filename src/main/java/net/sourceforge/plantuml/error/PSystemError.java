@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.error;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -348,7 +348,7 @@ public abstract class PSystemError extends PlainDiagram {
 	private TextBlock getMessageDedication() {
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
-		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
 				"Details on <i>[[https://plantuml.com/dedication]]");
@@ -390,7 +390,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/patreon", Color.BLACK, Color.WHITE));
 
 		final int scale = 2;
@@ -438,7 +438,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/lp", Color.BLACK, Color.WHITE));
 
 		final int scale = 2;
@@ -481,7 +481,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	}
 
-	private BufferedImage smaller(BufferedImage im) {
+	private PortableImage smaller(PortableImage im) {
 		if (im == null)
 			return null;
 

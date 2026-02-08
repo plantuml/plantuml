@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -184,7 +184,7 @@ public class SpriteMonochrome implements Sprite {
 		if (color == null || color.isTransparent())
 			color = HColors.BLACK.withDark(HColors.WHITE);
 
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		final PortableImage im = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);
 		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');
 		double maxCoef = 0;
 		for (int col = 0; col < width; col++)

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.security;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +45,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+
 public class SImageIO {
 
 	// ::comment when __CORE__
@@ -55,30 +55,30 @@ public class SImageIO {
 	}
 	// ::done
 
-	public static void write(RenderedImage image, String format, OutputStream os) throws IOException {
-		javax.imageio.ImageIO.write(image, format, os);
+	public static void write(PortableImage image, String format, OutputStream os) throws IOException {
+		javax.imageio.ImageIO.write(image.getBufferedImage(), format, os);
 	}
 
 	// ::comment when __CORE__
-	public static void write(RenderedImage image, String format, SFile file) throws IOException {
-		javax.imageio.ImageIO.write(image, format, file.conv());
+	public static void write(PortableImage image, String format, SFile file) throws IOException {
+		javax.imageio.ImageIO.write(image.getBufferedImage(), format, file.conv());
 	}
 
-	public static BufferedImage read(java.io.File file) throws IOException {
-		return javax.imageio.ImageIO.read(file);
+	public static PortableImage read(java.io.File file) throws IOException {
+		return new PortableImage(javax.imageio.ImageIO.read(file));
 	}
 
-	public static BufferedImage read(SFile file) throws IOException {
-		return javax.imageio.ImageIO.read(file.conv());
+	public static PortableImage read(SFile file) throws IOException {
+		return new PortableImage(javax.imageio.ImageIO.read(file.conv()));
 	}
 	// ::done
 
-	public static BufferedImage read(InputStream is) throws IOException {
-		return javax.imageio.ImageIO.read(is);
+	public static PortableImage read(InputStream is) throws IOException {
+		return new PortableImage(javax.imageio.ImageIO.read(is));
 	}
 
-	public static BufferedImage read(byte[] bytes) throws IOException {
-		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
+	public static PortableImage read(byte[] bytes) throws IOException {
+		return new PortableImage(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));
 	}
 
 	// ::comment when __CORE__

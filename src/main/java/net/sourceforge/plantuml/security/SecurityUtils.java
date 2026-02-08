@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.security;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,6 +59,7 @@ import javax.swing.ImageIcon;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
@@ -97,13 +97,13 @@ public class SecurityUtils {
 	 */
 	public static final String NO_CREDENTIALS = "<none>";
 
-	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
+	public synchronized static PortableImage readRasterImage(final ImageIcon imageIcon) {
 		final Image tmpImage = imageIcon.getImage();
 		if (imageIcon.getIconWidth() == -1)
 			return null;
 
-		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
+		final PortableImage image = new PortableImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
+				PortableImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(tmpImage, 0, 0, null);
 		tmpImage.flush();
 		return image;

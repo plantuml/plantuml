@@ -36,10 +36,11 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public class SpriteColorBuilder4096 {
 
@@ -60,7 +61,7 @@ public class SpriteColorBuilder4096 {
 		return result;
 	}
 
-	static public List<String> encodeImage(BufferedImage img) {
+	static public List<String> encodeImage(PortableImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
 

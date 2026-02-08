@@ -35,32 +35,33 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.List;
 
-public class FutureBufferedImage {
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+
+public class FutureImage {
 
 	private final int width;
 	private final int height;
 	private final List<Integer> colors;
 	private byte[] data;
-	private BufferedImage image;
+	private PortableImage image;
 
-	public FutureBufferedImage(List<Integer> colors, int width, int height, byte[] data) {
+	public FutureImage(List<Integer> colors, int width, int height, byte[] data) {
 		this.colors = colors;
 		this.width = width;
 		this.height = height;
 		this.data = data;
 	}
 
-	public BufferedImage getNow() {
+	public PortableImage getNow() {
 		synchronized (this) {
 			if (image == null) {
-				image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+				image = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);
 
 				try (InputStream is = new ByteArrayInputStream(data)) {
 					for (int y = 0; y < height; y++)

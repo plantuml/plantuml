@@ -89,7 +89,7 @@ class AboutWindow extends JFrame {
 		final JPanel ptext = new JPanel();
 		ptext.add(text);
 
-		final JLabel icon = new JLabel(new ImageIcon(PSystemVersion.getPlantumlImage()));
+		final JLabel icon = new JLabel(new ImageIcon(PSystemVersion.getPlantumlImage().getBufferedImage()));
 
 		final JPanel result = new JPanel(new BorderLayout());
 		result.add(ptext, BorderLayout.CENTER);

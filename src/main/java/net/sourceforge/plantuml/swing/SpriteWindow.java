@@ -52,6 +52,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -106,7 +107,7 @@ public class SpriteWindow extends JFrame {
 	}
 
 	private void encode() {
-		final BufferedImage img = getClipboard();
+		final PortableImage img = getClipboard();
 		if (img == null) {
 			return;
 		}
@@ -121,19 +122,19 @@ public class SpriteWindow extends JFrame {
 		printData(sb.toString());
 	}
 
-	private void encodeColor(BufferedImage img, StringBuilder sb) {
+	private void encodeColor(PortableImage img, StringBuilder sb) {
 		sb.append("\n");
 		sb.append(SpriteUtils.encodeColor(img, "demo"));
 
 	}
 
-	private void encodeCompressed(BufferedImage img, SpriteGrayLevel level, StringBuilder sb) {
+	private void encodeCompressed(PortableImage img, SpriteGrayLevel level, StringBuilder sb) {
 		sb.append("\n");
 		sb.append(SpriteUtils.encodeCompressed(img, "demo", level));
 
 	}
 
-	private void encode(BufferedImage img, SpriteGrayLevel level, StringBuilder sb) {
+	private void encode(PortableImage img, SpriteGrayLevel level, StringBuilder sb) {
 		sb.append("\n");
 		sb.append(SpriteUtils.encode(img, "demo", level));
 	}
@@ -147,12 +148,13 @@ public class SpriteWindow extends JFrame {
 		}
 	}
 
-	public static BufferedImage getClipboard() {
+	public static PortableImage getClipboard() {
 		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 
 		try {
 			if (t != null && t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-				final BufferedImage text = (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
+				final PortableImage text = new PortableImage(
+						(BufferedImage) t.getTransferData(DataFlavor.imageFlavor));
 				return text;
 			}
 

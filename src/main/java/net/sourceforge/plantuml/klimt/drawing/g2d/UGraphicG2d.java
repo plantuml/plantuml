@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.g2d;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureVisible {
 
-	private BufferedImage bufferedImage;
+	private PortableImage portableImage;
 
 	private final double dpiFactor;
 	private final FileFormat format;
@@ -109,7 +109,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		super(other.getStringBounder());
 		copy(other);
 		this.dpiFactor = other.dpiFactor;
-		this.bufferedImage = other.bufferedImage;
+		this.portableImage = other.portableImage;
 		this.urls = other.urls;
 		this.allUrls = other.allUrls;
 		this.antiAliasing = other.antiAliasing;
@@ -194,12 +194,12 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	}
 
-	public BufferedImage getBufferedImage() {
-		return bufferedImage;
+	public PortableImage getPortableImage() {
+		return portableImage;
 	}
 
-	public void setBufferedImage(BufferedImage bufferedImage) {
-		this.bufferedImage = bufferedImage;
+	public void setPortableImage(PortableImage bufferedImage) {
+		this.portableImage = bufferedImage;
 	}
 
 	public Graphics2D getGraphics2D() {
@@ -210,7 +210,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		if (format == FileFormat.PNG_EMPTY)
 			return;
-		final BufferedImage im = getBufferedImage();
+		final PortableImage im = getPortableImage();
 		PngIO.write(im, getColorMapper(), os, metadata, dpi);
 	}
 

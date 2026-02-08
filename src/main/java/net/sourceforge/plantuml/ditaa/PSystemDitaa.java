@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -111,7 +112,7 @@ public class PSystemDitaa extends AbstractPSystem {
 				return ImageDataSimple.ok();
 			}
 
-			SImageIO.write(image, "png", os);
+			SImageIO.write(new PortableImage(image), "png", os);
 			return new ImageDataSimple(image.getWidth(), image.getHeight());
 		} catch (Throwable e) {
 			final CrashReportHandler report = new CrashReportHandler(e, null, null);

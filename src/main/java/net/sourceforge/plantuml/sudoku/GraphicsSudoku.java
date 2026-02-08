@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.sudoku;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -115,7 +115,7 @@ public class GraphicsSudoku {
 	public ImageData writeImagePng(OutputStream os) throws IOException {
 		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
 				Color.WHITE, stringBounder);
-		final BufferedImage im = builder.getBufferedImage();
+		final PortableImage im = builder.getPortableImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
 		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0,

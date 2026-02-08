@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.security;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -70,6 +69,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
@@ -202,7 +202,7 @@ public class SURL {
 //}
 	// ::done
 
-	public BufferedImage readRasterImageFromURL() {
+	public PortableImage readRasterImageFromURL() {
 		if (isUrlOk())
 			try {
 				final byte[] bytes = getBytes();

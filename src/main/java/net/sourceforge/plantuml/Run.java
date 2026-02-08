@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.ftp.FtpServer;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
@@ -450,7 +451,7 @@ public class Run {
 		if (source == null)
 			return;
 
-		final BufferedImage im;
+		final PortableImage im;
 		try (InputStream stream = source.openStream()) {
 			im = SImageIO.read(stream);
 		}

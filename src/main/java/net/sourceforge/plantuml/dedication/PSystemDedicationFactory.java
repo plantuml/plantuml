@@ -35,18 +35,17 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.awt.image.BufferedImage;
-
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDedicationFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final BufferedImage dedication = Dedications.get(line);
+		final PortableImage dedication = Dedications.get(line);
 		if (dedication != null)
 			return new PSystemDedication(source, dedication, preprocessing);
 

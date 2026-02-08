@@ -40,7 +40,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Shape;
 import java.awt.font.TextLayout;
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,6 +54,7 @@ import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
@@ -175,7 +174,7 @@ public class FontChecker {
 		return new String(os.toByteArray());
 	}
 
-	public BufferedImage getBufferedImage(final char c) throws IOException {
+	public PortableImage getBufferedImage(final char c) throws IOException {
 		assert c != '\t';
 
 		final double dim = 20;

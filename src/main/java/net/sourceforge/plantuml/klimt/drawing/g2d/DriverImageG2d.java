@@ -59,11 +59,11 @@ public class DriverImageG2d implements UDriver<UImage, Graphics2D> {
 		visible.ensureVisible(x, y);
 		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());
 		if (dpiFactor == 1) {
-			g2d.drawImage(shape.getImage(1), (int) (x), (int) (y), null);
+			g2d.drawImage(shape.getImage(1).getBufferedImage(), (int) (x), (int) (y), null);
 		} else {
 			final AffineTransform back = g2d.getTransform();
 			g2d.scale(1 / dpiFactor, 1 / dpiFactor);
-			g2d.drawImage(shape.getImage(dpiFactor), (int) (x * dpiFactor), (int) (y * dpiFactor), null);
+			g2d.drawImage(shape.getImage(dpiFactor).getBufferedImage(), (int) (x * dpiFactor), (int) (y * dpiFactor), null);
 			g2d.setTransform(back);
 		}
 	}

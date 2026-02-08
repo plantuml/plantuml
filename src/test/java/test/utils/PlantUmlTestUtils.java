@@ -3,7 +3,6 @@ package test.utils;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,6 +16,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class PlantUmlTestUtils {
@@ -64,11 +64,11 @@ public class PlantUmlTestUtils {
 			return os.toByteArray();
 		}
 
-		public BufferedImage asImage() throws IOException {
+		public PortableImage asImage() throws IOException {
 			return asImage(FileFormat.PNG);
 		}
 
-		public BufferedImage asImage(FileFormat fileFormat) throws IOException {
+		public PortableImage asImage(FileFormat fileFormat) throws IOException {
 			return SImageIO.read(asByteArray(fileFormat));
 		}
 

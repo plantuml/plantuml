@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.atmp.ImageBuilder;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 public class PSystemCharlie extends PlainDiagram {
 	// ::remove file when __TEAVM__
 	
-	private BufferedImage image;
+	private PortableImage image;
 
 	PSystemCharlie(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

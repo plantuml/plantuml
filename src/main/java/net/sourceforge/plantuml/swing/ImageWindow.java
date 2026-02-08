@@ -49,7 +49,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -70,6 +69,7 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
@@ -316,7 +316,7 @@ class ImageWindow extends JFrame {
 			return null;
 		}
 		final File png = generatedImage.getPngFile();
-		BufferedImage image = null;
+		PortableImage image = null;
 		try {
 			image = SImageIO.read(new SFile(png.getAbsolutePath()));
 			if (sizeMode == SizeMode.ZOOM_FIT) {
@@ -344,7 +344,7 @@ class ImageWindow extends JFrame {
 				Logme.error(e);
 			}
 		}
-		final ImageIcon imageIcon = new ImageIcon(image, simpleLine.toString());
+		final ImageIcon imageIcon = new ImageIcon(image.toString(), simpleLine.toString());
 		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);
 
 		scrollablePicture.addMouseListener(new MouseAdapter() {
@@ -393,7 +393,7 @@ class ImageWindow extends JFrame {
 		}
 		try {
 			final File png = generatedImage.getPngFile();
-			final Image image = SImageIO.read(png);
+			final Image image = SImageIO.read(png).getBufferedImage();
 			final ImageSelection imgSel = new ImageSelection(image);
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);
 		} catch (IOException e) {

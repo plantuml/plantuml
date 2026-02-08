@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.fun;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 
@@ -51,10 +51,10 @@ public class IconLoader {
 
 	private static final int NUMBER_OF_ICONS = 31;
 
-	private final static Map<String, BufferedImage> all = new ConcurrentHashMap<String, BufferedImage>();
+	private final static Map<String, PortableImage> all = new ConcurrentHashMap<String, PortableImage>();
 	static private final List<String> tmp = new ArrayList<>();
 
-	public static BufferedImage getRandom() {
+	public static PortableImage getRandom() {
 		// return addTransparent(getIcon("sprite029.png"));
 		return addTransparent(getIcon(getSomeQuote()));
 	}
@@ -74,8 +74,8 @@ public class IconLoader {
 		}
 	}
 
-	private static BufferedImage getIcon(String name) {
-		BufferedImage result = all.get(name);
+	private static PortableImage getIcon(String name) {
+		PortableImage result = all.get(name);
 		if (result == null) {
 			result = getIconSlow(name);
 			if (result != null)
@@ -85,13 +85,13 @@ public class IconLoader {
 		return result;
 	}
 
-	private static BufferedImage getIconSlow(String name) {
+	private static PortableImage getIconSlow(String name) {
 		try {
 			final InputStream is = IconLoader.class.getResourceAsStream(name);
 			if (is == null)
 				return null;
 
-			final BufferedImage image = SImageIO.read(is);
+			final PortableImage image = SImageIO.read(is);
 			is.close();
 			return image;
 		} catch (IOException e) {
@@ -100,12 +100,12 @@ public class IconLoader {
 		return null;
 	}
 
-	private static BufferedImage addTransparent(BufferedImage ico) {
+	private static PortableImage addTransparent(PortableImage ico) {
 		if (ico == null)
 			return null;
 
-		final BufferedImage transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(),
-				BufferedImage.TYPE_INT_ARGB_PRE);
+		final PortableImage transparentIcon = new PortableImage(ico.getWidth(), ico.getHeight(),
+				PortableImage.TYPE_INT_ARGB_PRE);
 		for (int i = 0; i < ico.getWidth(); i++)
 			for (int j = 0; j < ico.getHeight(); j++) {
 				final int col = ico.getRGB(i, j);

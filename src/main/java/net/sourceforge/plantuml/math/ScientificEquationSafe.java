@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.math;
 
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -140,7 +140,7 @@ public class ScientificEquationSafe {
 	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, Color foregroundColor,
 			Color backgroundColor) throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.PNG) {
-			final BufferedImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
+			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
 			SImageIO.write(image, "png", os);
 			return new ImageDataSimple(image.getWidth(), image.getHeight());
 		}
@@ -149,7 +149,7 @@ public class ScientificEquationSafe {
 			return dimSvg;
 		}
 		if (fileFormat.getFileFormat() == FileFormat.EPS) {
-			final BufferedImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
+			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
 			final EpsGraphics out = new EpsGraphics();
 			out.drawImage(image, 0, 0);
 			out.close();

@@ -37,7 +37,6 @@ package net.atmp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -467,8 +467,8 @@ public class ImageBuilder {
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
 				scaleFactor, format);
 
-		ug.setBufferedImage(builder.getBufferedImage());
-		final BufferedImage im = ug.getBufferedImage();
+		ug.setPortableImage(builder.getPortableImage());
+		final PortableImage im = ug.getPortableImage();
 		if (this.backcolor instanceof HColorGradient)
 			ug.apply(this.backcolor.bg())
 					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));

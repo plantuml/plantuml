@@ -36,12 +36,13 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public class UnusedSpace {
 	// ::remove file when __HAXE__
@@ -82,7 +83,7 @@ public class UnusedSpace {
 	}
 
 	private UnusedSpace(UFont font, char c) {
-		final BufferedImage im = new BufferedImage(2 * HALF_SIZE, 2 * HALF_SIZE, BufferedImage.TYPE_INT_RGB);
+		final PortableImage im = new PortableImage(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
 		final String text = "" + c;
 		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));
@@ -155,7 +156,7 @@ public class UnusedSpace {
 		return result;
 	}
 
-	private static boolean isPoint(BufferedImage im, int x, int y) {
+	private static boolean isPoint(PortableImage im, int x, int y) {
 		final int color = im.getRGB(x, y) & 0x00FFFFFF;
 		if (color == 0) {
 			return false;

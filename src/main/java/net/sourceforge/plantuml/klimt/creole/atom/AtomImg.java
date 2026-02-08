@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.creole.atom;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.atmp.PixelImage;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -71,12 +71,12 @@ public class AtomImg extends AbstractAtom implements Atom {
 	public static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
 	public static final String DATA_IMAGE_PNG_SPM = "data:image/png;spm ";
 	private static final String DATA_IMAGE_SVG_BASE64 = "data:image/svg+xml;base64,";
-	private final BufferedImage image;
+	private final PortableImage image;
 	private final double scale;
 	private final Url url;
 	private final String rawFileName;
 
-	private AtomImg(BufferedImage image, double scale, Url url, String rawFileName) {
+	private AtomImg(PortableImage image, double scale, Url url, String rawFileName) {
 		this.image = image;
 		this.scale = scale;
 		this.url = url;
@@ -84,12 +84,12 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public static Atom createQrcode(String flash, double scale) {
-		BufferedImage im = null;
+		PortableImage im = null;
 		// :: comment when __CORE__
 		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		if (im == null)
 			// ::done
-			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+			im = new PortableImage(10, 10, PortableImage.TYPE_INT_RGB);
 
 		return new AtomImg(
 				new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1), 1,
@@ -108,9 +108,8 @@ public class AtomImg extends AbstractAtom implements Atom {
 			try {
 				final Stdlib lib = Stdlib.retrieve(data.substring(0, x));
 				final int num = Integer.parseInt(data.substring(x + 1));
-				final BufferedImage image = lib.readDataImagePng(num).getNow();
+				final PortableImage image = lib.readDataImagePng(num).getNow();
 				return new AtomImg(image, scale, url, null);
-
 
 			} catch (Exception e) {
 				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
@@ -161,7 +160,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 				return new AtomImgSvg(new TileImageSvg(tmp, scale));
 			}
-			final BufferedImage read = f.readRasterImageFromFile();
+			final PortableImage read = f.readRasterImageFromFile();
 			if (read == null) {
 				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 					return AtomTextUtils.createLegacy("(Cannot decode: " + f.getPrintablePath() + ")", fc);
@@ -180,7 +179,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,
 			Url url) throws IOException {
-		final BufferedImage read = SImageIO.read(data);
+		final PortableImage read = SImageIO.read(data);
 		if (read == null)
 			return AtomTextUtils.createLegacy("(Cannot decode: " + source + ")", fc);
 
@@ -192,7 +191,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (source == null)
 			return AtomTextUtils.createLegacy("(Cannot decode: " + text + ")", fc);
 
-		final BufferedImage read = source.readRasterImageFromURL();
+		final PortableImage read = source.readRasterImageFromURL();
 		if (read == null)
 			return AtomTextUtils.createLegacy("(Cannot decode: " + text + ")", fc);
 

@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
@@ -49,10 +49,10 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 public class TileImage extends AbstractTextBlock implements TextBlock {
     // ::remove file when __HAXE__
 
-	private final BufferedImage image;
+	private final PortableImage image;
 	private final int vspace;
 
-	public TileImage(BufferedImage image, ImgValign valign, int vspace) {
+	public TileImage(PortableImage image, ImgValign valign, int vspace) {
 		this.image = Objects.requireNonNull(image);
 		this.vspace = vspace;
 	}

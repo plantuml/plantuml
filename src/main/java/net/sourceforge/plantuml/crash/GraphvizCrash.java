@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.crash;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -68,7 +68,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	private final TextBlock text1;
 	private final String flash;
 	// ::comment when __CORE__ or __TEAVM__
-	private final BufferedImage flashCode;
+	private final PortableImage flashCode;
 	private final boolean graphviz244onWindows;
 	// ::done
 

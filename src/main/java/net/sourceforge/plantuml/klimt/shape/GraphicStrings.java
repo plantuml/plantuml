@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -72,7 +72,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final List<String> strings;
 
-	private final BufferedImage image;
+	private final PortableImage image;
 	private final double imagePadding = 30;
 
 	private final GraphicPosition position;
@@ -111,7 +111,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);
 	}
 
-	public static TextBlock createBlackOnWhite(List<String> strings, BufferedImage image, GraphicPosition position) {
+	public static TextBlock createBlackOnWhite(List<String> strings, PortableImage image, GraphicPosition position) {
 		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, image, position,
 				CreoleMode.FULL_BUT_UNDERSCORE, false);
 	}
@@ -133,7 +133,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final boolean isCrash;
 
 	private GraphicStrings(List<String> strings, FontConfiguration fontConfiguration, HColor background,
-			BufferedImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {
+			PortableImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {
 		this.strings = strings;
 		this.background = background;
 		this.image = image;

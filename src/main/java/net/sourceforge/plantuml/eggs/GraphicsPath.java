@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.eggs;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UMotif;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
@@ -65,19 +65,19 @@ public class GraphicsPath {
 	}
 
 	public ImageData writeImage(OutputStream os) throws IOException {
-		final BufferedImage im = createImage();
+		final PortableImage im = createImage();
 		PngIO.write(im, colorMapper, os, null, 96);
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
 
-	private BufferedImage createImage() {
+	private PortableImage createImage() {
 		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 50, 50, Color.WHITE, stringBounder);
-		final BufferedImage im = builder.getBufferedImage();
+		final PortableImage im = builder.getPortableImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 
 		final UGraphicG2d ug = new UGraphicG2d(HColors.WHITE, colorMapper, stringBounder, g2d, 1.0, FileFormat.PNG);
-		ug.setBufferedImage(im);
+		ug.setPortableImage(im);
 		final UMotif motif = new UMotif(path);
 		motif.drawHorizontal(ug.apply((UChange) HColors.BLACK), 20, 20, 1);
 

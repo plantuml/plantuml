@@ -46,6 +46,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -74,7 +75,7 @@ public class ClipboardLoop {
 			if (clipboardLoop.isTextOk(text))
 				clipboardLoop.runText(text);
 			else
-				clipboardLoop.setClipboardImage(new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB));
+				clipboardLoop.setClipboardImage(new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB));
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
@@ -98,7 +99,7 @@ public class ClipboardLoop {
 		} else {
 			Log.info(() -> "Image ok " + desc.getDescription());
 			baos.close();
-			final BufferedImage image = SImageIO.read(baos.toByteArray());
+			final PortableImage image = SImageIO.read(baos.toByteArray());
 			setClipboardImage(image);
 			Log.info(() -> "Image copied in clipboard");
 		}
@@ -119,9 +120,9 @@ public class ClipboardLoop {
 		return null;
 	}
 
-	private void setClipboardImage(BufferedImage image) {
+	private void setClipboardImage(PortableImage image) {
 		final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		clipboard.setContents(new ImageSelection(image), null);
+		clipboard.setContents(new ImageSelection(image.getBufferedImage()), null);
 	}
 
 }

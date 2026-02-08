@@ -43,53 +43,54 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 
 public class PixelImage implements MutableImage {
 
-	private final BufferedImage bufferedImageScale1;
+	private final PortableImage imageScale1;
 	private final double scale;
 	private final AffineTransformType type;
-	private BufferedImage cache = null;
+	private PortableImage cache = null;
 
-	public PixelImage(BufferedImage bufferedImage, AffineTransformType type) {
-		this(bufferedImage, type, 1);
+	public PixelImage(PortableImage image, AffineTransformType type) {
+		this(image, type, 1);
 	}
 
-	private PixelImage(BufferedImage bufferedImage, AffineTransformType type, double scale) {
-		this.bufferedImageScale1 = bufferedImage;
+	private PixelImage(PortableImage image, AffineTransformType type, double scale) {
+		this.imageScale1 = image;
 		this.scale = scale;
 		this.type = Objects.requireNonNull(type);
 	}
 
 	@Override
 	public MutableImage withScale(double scale) {
-		return new PixelImage(bufferedImageScale1, type, this.scale * scale);
+		return new PixelImage(imageScale1, type, this.scale * scale);
 	}
 
 	@Override
-	public final BufferedImage getImage() {
+	public final PortableImage getImage() {
 		if (scale == 1)
-			return bufferedImageScale1;
+			return imageScale1;
 
 		if (cache == null) {
-			final int w = (int) Math.round(bufferedImageScale1.getWidth() * scale);
-			final int h = (int) Math.round(bufferedImageScale1.getHeight() * scale);
-			final BufferedImage after = new BufferedImage(w, h, bufferedImageScale1.getType());
+			final int w = (int) Math.round(imageScale1.getWidth() * scale);
+			final int h = (int) Math.round(imageScale1.getHeight() * scale);
+			final BufferedImage after = new BufferedImage(w, h, imageScale1.getType());
 			final AffineTransform at = new AffineTransform();
 			at.scale(scale, scale);
 			final AffineTransformOp scaleOp = new AffineTransformOp(at, type.toLegacyInt());
-			this.cache = scaleOp.filter(bufferedImageScale1, after);
+			this.cache = new PortableImage(scaleOp.filter(imageScale1.getBufferedImage(), after));
 		}
 		return cache;
 	}
 
 	@Override
 	public MutableImage monochrome() {
-		final BufferedImage copy = deepCopy();
-		for (int i = 0; i < bufferedImageScale1.getWidth(); i++)
-			for (int j = 0; j < bufferedImageScale1.getHeight(); j++) {
-				final int color = bufferedImageScale1.getRGB(i, j);
+		final PortableImage copy = deepCopy();
+		for (int i = 0; i < imageScale1.getWidth(); i++)
+			for (int j = 0; j < imageScale1.getHeight(); j++) {
+				final int color = imageScale1.getRGB(i, j);
 				final int rgb = getRgb(color);
 				final int grayScale = ColorUtils.getGrayScaleFromRGB(rgb);
 				final int gray = grayScale + grayScale << 8 + grayScale << 16;
@@ -106,10 +107,10 @@ public class PixelImage implements MutableImage {
 			return this;
 
 		int darkerRgb = getDarkerRgb();
-		final BufferedImage copy = deepCopy();
-		for (int i = 0; i < bufferedImageScale1.getWidth(); i++)
-			for (int j = 0; j < bufferedImageScale1.getHeight(); j++) {
-				final int color = bufferedImageScale1.getRGB(i, j);
+		final PortableImage copy = deepCopy();
+		for (int i = 0; i < imageScale1.getWidth(); i++)
+			for (int j = 0; j < imageScale1.getHeight(); j++) {
+				final int color = imageScale1.getRGB(i, j);
 				final int rgb = getRgb(color);
 				final int a = getA(color);
 				if (a != 0 && rgb == darkerRgb)
@@ -124,10 +125,10 @@ public class PixelImage implements MutableImage {
 		if (newColor == null)
 			newColor = Color.WHITE;
 
-		final BufferedImage copy = deepCopy();
-		for (int i = 0; i < bufferedImageScale1.getWidth(); i++)
-			for (int j = 0; j < bufferedImageScale1.getHeight(); j++) {
-				final int color = bufferedImageScale1.getRGB(i, j);
+		final PortableImage copy = deepCopy();
+		for (int i = 0; i < imageScale1.getWidth(); i++)
+			for (int j = 0; j < imageScale1.getHeight(); j++) {
+				final int color = imageScale1.getRGB(i, j);
 				final int a = getA(color);
 				if (a == 0)
 					copy.setRGB(i, j, newColor.getRGB());
@@ -139,9 +140,9 @@ public class PixelImage implements MutableImage {
 
 	private int getDarkerRgb() {
 		int darkerRgb = -1;
-		for (int i = 0; i < bufferedImageScale1.getWidth(); i++)
-			for (int j = 0; j < bufferedImageScale1.getHeight(); j++) {
-				final int color = bufferedImageScale1.getRGB(i, j);
+		for (int i = 0; i < imageScale1.getWidth(); i++)
+			for (int j = 0; j < imageScale1.getHeight(); j++) {
+				final int color = imageScale1.getRGB(i, j);
 				final int rgb = getRgb(color);
 				final int a = getA(color);
 				if (a != mask_a__)
@@ -178,12 +179,12 @@ public class PixelImage implements MutableImage {
 //		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 //	}
 
-	private BufferedImage deepCopy() {
-		final BufferedImage result = new BufferedImage(bufferedImageScale1.getWidth(), bufferedImageScale1.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		for (int i = 0; i < this.bufferedImageScale1.getWidth(); i++)
-			for (int j = 0; j < this.bufferedImageScale1.getHeight(); j++)
-				result.setRGB(i, j, bufferedImageScale1.getRGB(i, j));
+	private PortableImage deepCopy() {
+		final PortableImage result = new PortableImage(imageScale1.getWidth(),
+				imageScale1.getHeight(), PortableImage.TYPE_INT_ARGB);
+		for (int i = 0; i < this.imageScale1.getWidth(); i++)
+			for (int j = 0; j < this.imageScale1.getHeight(); j++)
+				result.setRGB(i, j, imageScale1.getRGB(i, j));
 
 		return result;
 	}

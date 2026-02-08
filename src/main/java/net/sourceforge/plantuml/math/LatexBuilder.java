@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
@@ -90,7 +90,7 @@ public class LatexBuilder implements ScientificEquation {
 		private final Icon icon;
 		private final Color foregroundColor;
 		private final Color backgroundColor;
-		private BufferedImage cache = null;
+		private PortableImage cache = null;
 
 		public LatexImage(Icon icon, double scale, Color foregroundColor, Color backgroundColor) {
 			this.scale = scale;
@@ -100,10 +100,10 @@ public class LatexBuilder implements ScientificEquation {
 		}
 
 		@Override
-		public BufferedImage getImage() {
+		public PortableImage getImage() {
 			if (cache == null) {
-				cache = new BufferedImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
-						BufferedImage.TYPE_INT_ARGB);
+				cache = new PortableImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
+						PortableImage.TYPE_INT_ARGB);
 				final Graphics2D g2 = cache.createGraphics();
 				g2.scale(scale, scale);
 				if (backgroundColor != null) {

@@ -42,6 +42,8 @@ import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+
 /**
  * A collection of methods to help with processing images. A majority of this
  * code was originally found online.
@@ -64,13 +66,13 @@ public class ImageHelper {
 	 *                      specified)
 	 * @return a scaled version of the original {@code BufferedImage}
 	 */
-	public static BufferedImage getScaledInstance(BufferedImage img, Dimension targetDim, RenderingHints hints,
+	public static PortableImage getScaledInstance(PortableImage img, Dimension targetDim, RenderingHints hints,
 			boolean higherQuality) {
 		final int targetWidth = targetDim.width;
 		final int targetHeight = targetDim.height;
 		final int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB
 				: BufferedImage.TYPE_INT_ARGB;
-		BufferedImage ret = (BufferedImage) img;
+		PortableImage ret = img;
 		int w;
 		int h;
 		if (higherQuality) {
@@ -104,10 +106,10 @@ public class ImageHelper {
 			final BufferedImage tmp = new BufferedImage(w, h, type);
 			final Graphics2D g2 = tmp.createGraphics();
 			g2.setRenderingHints(hints);
-			g2.drawImage(ret, 0, 0, w, h, null);
+			g2.drawImage(ret.getBufferedImage(), 0, 0, w, h, null);
 			g2.dispose();
 
-			ret = tmp;
+			ret = new PortableImage(tmp);
 		} while (w != targetWidth || h != targetHeight);
 
 		return ret;

@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.klimt.shape;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public class UImage implements UShape {
     // ::remove file when __HAXE__
@@ -78,9 +78,8 @@ public class UImage implements UShape {
 		return new UImage(image.withScale(scale), rawFileName, formula);
 	}
 
-	public final BufferedImage getImage(double withScale) {
+	public final PortableImage getImage(double withScale) {
 		return image.withScale(withScale).getImage();
-		// return bufferedImage.getImage();
 	}
 
 	public int getWidth() {

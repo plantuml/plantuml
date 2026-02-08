@@ -36,11 +36,12 @@
 package net.sourceforge.plantuml.klimt;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
+
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public interface MutableImage {
 
-	public BufferedImage getImage();
+	public PortableImage getImage();
 
 	public MutableImage withScale(double scale);
 

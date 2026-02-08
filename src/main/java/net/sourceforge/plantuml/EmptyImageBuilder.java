@@ -40,19 +40,19 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.utils.Log;
 
 public class EmptyImageBuilder {
 	// ::remove file when __HAXE__
 
-	private final BufferedImage im;
+	private final PortableImage im;
 	private final Graphics2D g2d;
 
 	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder) {
@@ -76,7 +76,7 @@ public class EmptyImageBuilder {
 		final int type = getType(background);
 		Log.info(() -> "Creating image " + widthFinal + "x" + heightFinal + " type=" + type);
 
-		im = new BufferedImage(width, height, type);
+		im = new PortableImage(width, height, type);
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		if (background != null) {
@@ -92,12 +92,12 @@ public class EmptyImageBuilder {
 
 	private int getType(Color background) {
 		if (background == null)
-			return BufferedImage.TYPE_INT_ARGB;
+			return PortableImage.TYPE_INT_ARGB;
 
 		if (background.getAlpha() != 255)
-			return BufferedImage.TYPE_INT_ARGB;
+			return PortableImage.TYPE_INT_ARGB;
 
-		return BufferedImage.TYPE_INT_RGB;
+		return PortableImage.TYPE_INT_RGB;
 	}
 
 	private void printWatermark(String watermark, int maxWidth, int maxHeight) {
@@ -151,7 +151,7 @@ public class EmptyImageBuilder {
 	}
 
 	// ::comment when __TEAVM__
-	public BufferedImage getBufferedImage() {
+	public PortableImage getPortableImage() {
 		return im;
 	}
 

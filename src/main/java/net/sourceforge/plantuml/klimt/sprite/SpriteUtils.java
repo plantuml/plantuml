@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class SpriteUtils {
@@ -48,7 +48,7 @@ public class SpriteUtils {
 	}
 
 	// ::comment when __CORE__
-	public static String encodeColor(BufferedImage img, String name) {
+	public static String encodeColor(PortableImage img, String name) {
 		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() * 2);
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/color] {\n");
 		final List<String> result = SpriteColorBuilder4096.encodeImage(img);
@@ -60,7 +60,7 @@ public class SpriteUtils {
 		return sb.toString();
 	}
 
-	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
+	public static String encode(PortableImage img, String name, SpriteGrayLevel level) {
 		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);
 		sb.append(
 				"sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "] {\n");
@@ -73,7 +73,7 @@ public class SpriteUtils {
 		return sb.toString();
 	}
 
-	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
+	public static String encodeCompressed(PortableImage img, String name, SpriteGrayLevel level) {
 		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "z] ");
 		final List<String> list = level.encodeZ(img);
