@@ -35,6 +35,8 @@ java {
 
 val jdependConfig by configurations.creating
 val teavmConfig by configurations.creating
+val teavmVersion = "0.13.0"
+
 
 dependencies {
 	compileOnly(libs.ant)
@@ -62,11 +64,11 @@ dependencies {
 	jdependConfig(libs.jdepend)
 
 	// TeaVM CLI for compilation (contains the main class)
-	teavmConfig("org.teavm:teavm-cli:0.10.2")
+    teavmConfig("org.teavm:teavm-cli:$teavmVersion")
 	
 	// TeaVM dependencies for Java to JavaScript compilation
-	compileOnly("org.teavm:teavm-jso-apis:0.10.2")
-	compileOnly("org.teavm:teavm-jso:0.10.2")
+    compileOnly("org.teavm:teavm-jso-apis:$teavmVersion")
+    compileOnly("org.teavm:teavm-jso:$teavmVersion")
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
