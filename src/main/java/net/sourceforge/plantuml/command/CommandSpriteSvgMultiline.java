@@ -73,6 +73,7 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 
+		// ::comment when __TEAVM__
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String svgStart = line0.get("SVGSTART", 0);
 		lines = lines.subExtract(1, 0);
@@ -83,6 +84,7 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 
 		final SvgNanoParser nanoParser = new SvgNanoParser(svg.toString());
 		system.addSprite(line0.get("NAME", 0), nanoParser);
+		// ::done
 
 		return CommandExecutionResult.ok();
 	}

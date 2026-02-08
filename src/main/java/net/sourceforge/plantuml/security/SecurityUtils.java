@@ -98,15 +98,19 @@ public class SecurityUtils {
 	public static final String NO_CREDENTIALS = "<none>";
 
 	public synchronized static PortableImage readRasterImage(final ImageIcon imageIcon) {
+		// ::comment when __TEAVM__
 		final Image tmpImage = imageIcon.getImage();
 		if (imageIcon.getIconWidth() == -1)
+			// ::done
 			return null;
 
+		// ::comment when __TEAVM__
 		final PortableImage image = new PortableImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				PortableImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(tmpImage, 0, 0, null);
 		tmpImage.flush();
 		return image;
+		// ::done
 	}
 
 	// ::comment when __CORE__ or __TEAVM__

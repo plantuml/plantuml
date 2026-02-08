@@ -53,7 +53,10 @@ public class EmptyImageBuilder {
 	// ::remove file when __HAXE__
 
 	private final PortableImage im;
+
+	// ::comment when __TEAVM__
 	private final Graphics2D g2d;
+	// ::done
 
 	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder) {
 		if (width <= 0 || height <= 0)
@@ -71,12 +74,15 @@ public class EmptyImageBuilder {
 			height = GraphvizUtils.getenvImageLimit();
 		}
 		// ::done
+		
 		final int widthFinal = width;
 		final int heightFinal = height;
 		final int type = getType(background);
 		Log.info(() -> "Creating image " + widthFinal + "x" + heightFinal + " type=" + type);
 
 		im = new PortableImage(width, height, type);
+
+		// ::comment when __CORE__ or __TEAVM__
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		if (background != null) {
@@ -88,6 +94,7 @@ public class EmptyImageBuilder {
 			g2d.setColor(new Color(gray, gray, gray));
 			printWatermark(watermark, width, height);
 		}
+		// ::done
 	}
 
 	private int getType(Color background) {
@@ -100,6 +107,7 @@ public class EmptyImageBuilder {
 		return PortableImage.TYPE_INT_RGB;
 	}
 
+	// ::comment when __TEAVM__
 	private void printWatermark(String watermark, int maxWidth, int maxHeight) {
 		final Font javaFont = g2d.getFont();
 		final FontMetrics fm = g2d.getFontMetrics(javaFont);
@@ -150,14 +158,13 @@ public class EmptyImageBuilder {
 		return result;
 	}
 
-	// ::comment when __TEAVM__
-	public PortableImage getPortableImage() {
-		return im;
-	}
-
 	public Graphics2D getGraphics2D() {
 		return g2d;
 	}
 	// ::done
+
+	public PortableImage getPortableImage() {
+		return im;
+	}
 
 }

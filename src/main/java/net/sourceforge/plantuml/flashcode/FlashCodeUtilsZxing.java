@@ -51,7 +51,7 @@ import zext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
-
+	// ::remove file when __TEAVM__
 	private static final Lock lock = new ReentrantLock();
 
 	public PortableImage exportFlashcode(String s, Color fore, Color back) {

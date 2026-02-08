@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 // Shorcut from https://api.github.com/emojis
 
 public class SvgNanoParser implements Sprite, GrayLevelRange {
+	// ::remove file when __TEAVM__
 
 	private static final Pattern P_TEXT_OR_DRAW = Pattern
 			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");

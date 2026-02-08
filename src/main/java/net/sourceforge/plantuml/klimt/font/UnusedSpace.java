@@ -83,6 +83,9 @@ public class UnusedSpace {
 	}
 
 	private UnusedSpace(UFont font, char c) {
+
+		// ::comment when __TEAVM__
+
 		final PortableImage im = new PortableImage(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
 		final String text = "" + c;
@@ -115,7 +118,7 @@ public class UnusedSpace {
 		}
 
 		double min = Double.MAX_VALUE;
-		for (int i = minI * 4; i <= maxI * 4; i++) 
+		for (int i = minI * 4; i <= maxI * 4; i++)
 			for (int j = minJ * 4; j < maxJ * 4; j++) {
 				final Point p = new Point(i / 4.0, j / 4.0);
 				final double d = biggestDistSqFromPoint(p);
@@ -125,23 +128,7 @@ public class UnusedSpace {
 					this.meanY2 = j / 4.0 - HALF_SIZE;
 				}
 			}
-		
-
-		// g2d.setColor(Color.RED);
-		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE - 1, meanY2 + HALF_SIZE
-		// - 1, meanX2 + HALF_SIZE + 1, meanY2
-		// + HALF_SIZE + 1));
-		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE + 1, meanY2 + HALF_SIZE
-		// - 1, meanX2 + HALF_SIZE - 1, meanY2
-		// + HALF_SIZE + 1));
-
-		// int cpt = 1;
-		// try {
-		// ImageIO.write(im, "png", SecurityUtils.File("c:/img" + cpt + ".png"));
-		// cpt++;
-		// } catch (IOException e) {
-		// Logme.error(e);
-		// }
+		// ::done
 
 	}
 

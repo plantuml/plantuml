@@ -73,6 +73,7 @@ public class PixelImage implements MutableImage {
 		if (scale == 1)
 			return imageScale1;
 
+		// ::comment when __TEAVM__
 		if (cache == null) {
 			final int w = (int) Math.round(imageScale1.getWidth() * scale);
 			final int h = (int) Math.round(imageScale1.getHeight() * scale);
@@ -82,6 +83,7 @@ public class PixelImage implements MutableImage {
 			final AffineTransformOp scaleOp = new AffineTransformOp(at, type.toLegacyInt());
 			this.cache = new PortableImage(scaleOp.filter(imageScale1.getBufferedImage(), after));
 		}
+		// ::done
 		return cache;
 	}
 
@@ -180,8 +182,8 @@ public class PixelImage implements MutableImage {
 //	}
 
 	private PortableImage deepCopy() {
-		final PortableImage result = new PortableImage(imageScale1.getWidth(),
-				imageScale1.getHeight(), PortableImage.TYPE_INT_ARGB);
+		final PortableImage result = new PortableImage(imageScale1.getWidth(), imageScale1.getHeight(),
+				PortableImage.TYPE_INT_ARGB);
 		for (int i = 0; i < this.imageScale1.getWidth(); i++)
 			for (int j = 0; j < this.imageScale1.getHeight(); j++)
 				result.setRGB(i, j, imageScale1.getRGB(i, j));
