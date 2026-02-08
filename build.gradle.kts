@@ -497,7 +497,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 		"-t", "javascript",
 		"-G",  // Generate source maps
 		"-g",  // Generate debug information
-		"net.sourceforge.plantuml.teavm.demo.Demo2"  // Main class as positional argument
+		"net.sourceforge.plantuml.teavm.demo.Demo4"  // Main class as positional argument
 	)
 	
 	doFirst {
