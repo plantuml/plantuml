@@ -69,8 +69,9 @@ public class PSystemLatex extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);
-		return asciiMath.export(os, fileFormat, scale, color, backColor);
+//		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);
+//		return asciiMath.export(os, fileFormat, scale, color, backColor);
+		throw new UnsupportedOperationException("TEAVM");
 	}
 
 	public void doCommandLine(String line) {
