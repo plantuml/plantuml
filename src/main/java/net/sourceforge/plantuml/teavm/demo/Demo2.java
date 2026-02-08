@@ -96,6 +96,7 @@ public class Demo2 {
 		System.err.println("source=" + source);
 		Diagram diagram = factory.createSystem(null, source, null, null);
 		System.err.println("diagram=" + diagram);
+		diagram.exportDiagramGraphic(ug, null);
 
 		// Append SVG to section
 		Element svgElement = svg.getSvgRoot();
