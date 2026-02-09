@@ -106,7 +106,7 @@ public class Pattern2 {
 	public static Pattern compileInternal(String patternString) {
 		// ::revert when __TEAVM__
 		final String regex = transform(patternString);
-		// final String regex = transform(patternString) + "/u";
+		// final String regex = transform(patternString) + "";
 		// ::done
 		
 		// ::uncomment when __TEAVM__
