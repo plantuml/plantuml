@@ -80,6 +80,12 @@ dependencies {
 	// TeaVM dependencies for Java to JavaScript compilation
     compileOnly("org.teavm:teavm-jso-apis:$teavmVersion")
     compileOnly("org.teavm:teavm-jso:$teavmVersion")
+    compileOnly("org.teavm:teavm-classlib:$teavmVersion")
+    
+    // TeaVM dependencies for the teavm sourceSet - use implementation to make them available
+    add("teavmImplementation", "org.teavm:teavm-jso-apis:$teavmVersion")
+    add("teavmImplementation", "org.teavm:teavm-jso:$teavmVersion")
+    add("teavmImplementation", "org.teavm:teavm-classlib:$teavmVersion")
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -100,6 +106,10 @@ tasks.compileJava {
 tasks.named<JavaCompile>("compileTeavmJava") {
 	options.release.set(Integer.parseInt(javacRelease))
 	dependsOn("preprocessForTeaVM")
+	doFirst {
+		println("Classpath for compileTeavmJava:")
+		classpath.files.forEach { println("  - ${it.name}") }
+	}
 }
 
 tasks.withType<Jar>().configureEach {
@@ -487,8 +497,9 @@ tasks.register<JavaExec>("generateJavaScript") {
 	
 	mainClass.set("org.teavm.cli.TeaVMRunner")
 	
-	// TeaVMRunner + compiled classes from the teavm sourceSet
-	classpath = teavmConfig + sourceSets["teavm"].output
+	// TeaVMRunner + compiled classes from the teavm sourceSet + resources
+	val resourcesDir = file("src/main/resources")
+	classpath = teavmConfig + sourceSets["teavm"].output + files(resourcesDir)
 	
 	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
 	
@@ -504,6 +515,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 		outputDir.mkdirs()
 		println("Compiling Java to JavaScript with TeaVM (preprocessed __TEAVM__) ...")
 		println("Output directory: ${outputDir.absolutePath}")
+		println("Resources directory: ${resourcesDir.absolutePath}")
 	}
 	
 	doLast {

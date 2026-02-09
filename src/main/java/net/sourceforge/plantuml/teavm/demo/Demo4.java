@@ -90,7 +90,7 @@ public class Demo4 {
 		final URectangle rect = URectangle.build(30, 30);
 		// consoleLog("rect= " + rect.toString());
 
-		InputStream is = Demo4.class.getResourceAsStream("/skin/plantuml.skin");
+		InputStream is = Demo4.class.getClassLoader().getResourceAsStream("skin/plantuml.skin");
 		System.out.println("is="+is);
 
 		// ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
