@@ -2,9 +2,9 @@ package net.sourceforge.plantuml.teavm.demo;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Set;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.html.HTMLDocument;
@@ -18,10 +18,8 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.mindmap.CommandMindMapOrgmode;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
@@ -47,6 +45,10 @@ public class Demo4 {
 			loading.getParentNode().removeChild(loading);
 		}
 
+		final Set<String> set1 = new HashSet<>();
+		final Set<String> set2 = new HashSet<>();
+		System.out.println("containsAll=" + set1.containsAll(set2));
+
 		// Create main container
 		HTMLElement container = document.createElement("div");
 		container.setAttribute("style", "max-width: 800px; margin: 40px auto; padding: 40px; "
@@ -61,7 +63,8 @@ public class Demo4 {
 		// Create paragraph
 		HTMLElement paragraph = document.createElement("p");
 		paragraph.setAttribute("style", "color: #555; font-size: 1.1em; line-height: 1.6;");
-		// paragraph.setInnerHTML("TeaVM is successfully compiling Java to JavaScript!");
+		// paragraph.setInnerHTML("TeaVM is successfully compiling Java to
+		// JavaScript!");
 		container.appendChild(paragraph);
 
 		// Create SVG demo section
@@ -96,7 +99,7 @@ public class Demo4 {
 		// is = net.sourceforge.plantuml.teavm.EmbeddedResources.openPlantumlSkin();
 		// ::done
 		System.out.println("is=" + is);
-		
+
 		// Read a few bytes to verify the stream works
 		if (is != null) {
 			try {
@@ -109,9 +112,11 @@ public class Demo4 {
 			}
 		}
 
-		// ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
-		
-		// Matcher2 pattern=^([ 	]*[*#]+)(?:\[(#\w+)\])?(_)?[\s ]*(.*)$ input=* Hello from TeaVM
+		// ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10,
+		// 10)).draw(rect);
+
+		// Matcher2 pattern=^([ ]*[*#]+)(?:\[(#\w+)\])?(_)?[\s ]*(.*)$ input=* Hello
+		// from TeaVM
 		// Pattern p = Pattern.compile("^(.*)$");
 //		Pattern p = Pattern.compile("^([ 	]*[*#]+)(?:\\[(#\\w+)\\])?(_)?[\\s ]*(.*)$");
 //		String ss = "* Hello from TeaVM";
