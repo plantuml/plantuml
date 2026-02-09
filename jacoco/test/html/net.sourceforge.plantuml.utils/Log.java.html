@@ -51,22 +51,23 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 <span class="fc" id="L51">	private static final long start = System.currentTimeMillis();</span>
 
 	private static String format(String s) {
-<span class="fc" id="L54">		final long delta = System.currentTimeMillis() - start;</span>
+<span class="fc" id="L54">		final StringBuilder sb = new StringBuilder();</span>
+		// ::comment when __TEAVM__
+<span class="fc" id="L56">		final long delta = System.currentTimeMillis() - start;</span>
 		// final HealthCheck healthCheck = Performance.getHealthCheck();
 		// final long cpu = healthCheck.jvmCpuTime() / 1000L / 1000L;
 		// final long dot = healthCheck.dotTime().getSum();
 
-<span class="fc" id="L59">		final long freeMemory = Runtime.getRuntime().freeMemory();</span>
-<span class="fc" id="L60">		final long maxMemory = Runtime.getRuntime().maxMemory();</span>
-<span class="fc" id="L61">		final long totalMemory = Runtime.getRuntime().totalMemory();</span>
-<span class="fc" id="L62">		final long usedMemory = totalMemory - freeMemory;</span>
-<span class="fc" id="L63">		final int threadActiveCount = Thread.activeCount();</span>
+<span class="fc" id="L61">		final long freeMemory = Runtime.getRuntime().freeMemory();</span>
+<span class="fc" id="L62">		final long maxMemory = Runtime.getRuntime().maxMemory();</span>
+<span class="fc" id="L63">		final long totalMemory = Runtime.getRuntime().totalMemory();</span>
+<span class="fc" id="L64">		final long usedMemory = totalMemory - freeMemory;</span>
+<span class="fc" id="L65">		final int threadActiveCount = Thread.activeCount();</span>
 
-<span class="fc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L66">		sb.append(&quot;(&quot;);</span>
-<span class="fc" id="L67">		sb.append(delta / 1000L);</span>
-<span class="fc" id="L68">		sb.append(&quot;.&quot;);</span>
-<span class="fc" id="L69">		sb.append(String.format(&quot;%03d&quot;, delta % 1000L));</span>
+<span class="fc" id="L67">		sb.append(&quot;(&quot;);</span>
+<span class="fc" id="L68">		sb.append(delta / 1000L);</span>
+<span class="fc" id="L69">		sb.append(&quot;.&quot;);</span>
+<span class="fc" id="L70">		sb.append(String.format(&quot;%03d&quot;, delta % 1000L));</span>
 		// if (cpu != -1) {
 		// sb.append(&quot; - &quot;);
 		// sb.append(cpu / 1000L);
@@ -80,88 +81,95 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 		// sb.append(&quot;(&quot;);
 		// sb.append(healthCheck.dotTime().getNb());
 		// sb.append(&quot;)&quot;);
-<span class="fc" id="L83">		sb.append(&quot; - &quot;);</span>
-<span class="fc" id="L84">		final long total = totalMemory / 1024 / 1024;</span>
-<span class="fc" id="L85">		final long free = freeMemory / 1024 / 1024;</span>
-<span class="fc" id="L86">		sb.append(total);</span>
-<span class="fc" id="L87">		sb.append(&quot; Mo) &quot;);</span>
-<span class="fc" id="L88">		sb.append(free);</span>
-<span class="fc" id="L89">		sb.append(&quot; Mo - &quot;);</span>
-<span class="fc" id="L90">		sb.append(s);</span>
-<span class="fc" id="L91">		return sb.toString();</span>
+<span class="fc" id="L84">		sb.append(&quot; - &quot;);</span>
+<span class="fc" id="L85">		final long total = totalMemory / 1024 / 1024;</span>
+<span class="fc" id="L86">		final long free = freeMemory / 1024 / 1024;</span>
+<span class="fc" id="L87">		sb.append(total);</span>
+<span class="fc" id="L88">		sb.append(&quot; Mo) &quot;);</span>
+<span class="fc" id="L89">		sb.append(free);</span>
+<span class="fc" id="L90">		sb.append(&quot; Mo - &quot;);</span>
+<span class="fc" id="L91">		sb.append(s);</span>
+		// ::done
+
+<span class="fc" id="L94">		return sb.toString();</span>
+		
 	}
 
 	public static void println(Object s) {
-<span class="nc" id="L95">	}</span>
+<span class="nc" id="L99">	}</span>
 	// ::done
 
 	public synchronized static void debug(Supplier&lt;String&gt; msgSupplier) {
-<span class="fc" id="L99">	}</span>
+<span class="fc" id="L103">	}</span>
 
 	public synchronized static void info(Supplier&lt;String&gt; msgSupplier) {
 		// ::comment when __CORE__ or __HAXE__ or __TEAVM__
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
-<span class="fc" id="L104">			ProgressBar.clear();</span>
-<span class="fc" id="L105">			System.err.println(format(msgSupplier.get()));</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {</span>
+<span class="fc" id="L108">			ProgressBar.clear();</span>
+<span class="fc" id="L109">			System.err.println(format(msgSupplier.get()));</span>
 		}
 		// ::done
-<span class="fc" id="L108">	}</span>
+<span class="fc" id="L112">	}</span>
 
 	public synchronized static void error(String s) {
 		// ::comment when __CORE__ or __HAXE__ or __TEAVM__
-<span class="fc" id="L112">		ProgressBar.clear();</span>
+<span class="fc" id="L116">		ProgressBar.clear();</span>
 		// ::done
-<span class="fc" id="L114">		System.err.println(s);</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L118">		System.err.println(s);</span>
+<span class="fc" id="L119">	}</span>
 
 	public static void header(String s) {
-<span class="nc" id="L118">	}</span>
+<span class="nc" id="L122">	}</span>
 
 	private static final String PERFLOG_FILENAME = &quot;perflog.txt&quot;;
-<span class="fc" id="L121">	private static boolean firstCall = true;</span>
+<span class="fc" id="L125">	private static boolean firstCall = true;</span>
 
 	public static void perflog(String line) {
 		// perflogInternal(line);
-<span class="nc" id="L125">	}</span>
+<span class="nc" id="L129">	}</span>
 
 	public static void deletePerfLogFile() {
-<span class="nc" id="L128">		final File file = new File(PERFLOG_FILENAME);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (file.exists()) {</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (!file.delete()) {</span>
-<span class="nc" id="L131">				error(&quot;Cannot del &quot; + PERFLOG_FILENAME);</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L133">		final File file = new File(PERFLOG_FILENAME);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (file.exists()) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (!file.delete()) {</span>
+<span class="nc" id="L136">				error(&quot;Cannot del &quot; + PERFLOG_FILENAME);</span>
 			}
 		}
-<span class="nc" id="L134">	}</span>
+		// ::done
+<span class="nc" id="L140">	}</span>
 
 	private synchronized static void perflogInternal(String line) {
 		try {
-<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (firstCall) {</span>
-<span class="nc" id="L139">				deletePerfLogFile();</span>
-<span class="nc" id="L140">				firstCall = false;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (firstCall) {</span>
+<span class="nc" id="L145">				deletePerfLogFile();</span>
+<span class="nc" id="L146">				firstCall = false;</span>
 			}
-<span class="nc" id="L142">			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);</span>
-<span class="nc" id="L143">					BufferedWriter bw = new BufferedWriter(fw);</span>
-<span class="nc" id="L144">					PrintWriter out = new PrintWriter(bw)) {</span>
-<span class="nc" id="L145">				out.println(line);</span>
+<span class="nc" id="L148">			try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true);</span>
+<span class="nc" id="L149">					BufferedWriter bw = new BufferedWriter(fw);</span>
+<span class="nc" id="L150">					PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="nc" id="L151">				out.println(line);</span>
 			}
-<span class="nc" id="L147">		} catch (IOException e) {</span>
-<span class="nc" id="L148">			error(&quot;Cannot write in &quot; + PERFLOG_FILENAME + &quot; : &quot; + e.getMessage());</span>
-<span class="nc" id="L149">		}</span>
-<span class="nc" id="L150">	}</span>
+<span class="nc" id="L153">		} catch (IOException e) {</span>
+<span class="nc" id="L154">			error(&quot;Cannot write in &quot; + PERFLOG_FILENAME + &quot; : &quot; + e.getMessage());</span>
+<span class="nc" id="L155">		}</span>
+<span class="nc" id="L156">	}</span>
 
 	public static synchronized void logStackTrace(String s) {
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (firstCall) {</span>
-<span class="nc" id="L154">			deletePerfLogFile();</span>
-<span class="nc" id="L155">			firstCall = false;</span>
+		// ::comment when __TEAVM__
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (firstCall) {</span>
+<span class="nc" id="L161">			deletePerfLogFile();</span>
+<span class="nc" id="L162">			firstCall = false;</span>
 		}
-<span class="nc" id="L157">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
-<span class="nc" id="L158">			final Exception e = new Exception(&quot;StackTrace &quot; + s);</span>
-<span class="nc" id="L159">			e.fillInStackTrace();</span>
-<span class="nc" id="L160">			e.printStackTrace(pw);</span>
-<span class="nc" id="L161">		} catch (IOException ex) {</span>
-<span class="nc" id="L162">			ex.printStackTrace();</span>
-<span class="nc" id="L163">		}</span>
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L164">		try (FileWriter fw = new FileWriter(PERFLOG_FILENAME, true); PrintWriter pw = new PrintWriter(fw)) {</span>
+<span class="nc" id="L165">			final Exception e = new Exception(&quot;StackTrace &quot; + s);</span>
+<span class="nc" id="L166">			e.fillInStackTrace();</span>
+<span class="nc" id="L167">			e.printStackTrace(pw);</span>
+<span class="nc" id="L168">		} catch (IOException ex) {</span>
+<span class="nc" id="L169">			ex.printStackTrace();</span>
+<span class="nc" id="L170">		}</span>
+		// ::done
+<span class="nc" id="L172">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

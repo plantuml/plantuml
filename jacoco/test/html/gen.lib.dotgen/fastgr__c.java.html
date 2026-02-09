@@ -317,7 +317,7 @@ try {
 <span class="fc" id="L317">    ED_edge_type(e, VIRTUAL);</span>
     
     
-<span class="pc bpc" id="L320" title="1 of 2 branches missed.">    if (orig!=null) {</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">    if (orig!=null) {</span>
 <span class="fc" id="L321">	AGSEQ(e, orig.tag.seq);</span>
 <span class="fc" id="L322">	AGSEQ(e2.in, orig.tag.seq);</span>
 <span class="fc" id="L323">	ED_count(e, ED_count(orig));</span>
@@ -338,10 +338,10 @@ try {
 <span class="fc" id="L338">	    ED_to_virt(orig, e);</span>
 <span class="fc" id="L339">	ED_to_orig(e, orig);</span>
     } else {
-<span class="nc" id="L341">	ED_minlen(e, 1);</span>
-<span class="nc" id="L342">	ED_count(e, 1);</span>
-<span class="nc" id="L343">	ED_xpenalty(e, 1);</span>
-<span class="nc" id="L344">	ED_weight(e, 1);</span>
+<span class="fc" id="L341">	ED_minlen(e, 1);</span>
+<span class="fc" id="L342">	ED_count(e, 1);</span>
+<span class="fc" id="L343">	ED_xpenalty(e, 1);</span>
+<span class="fc" id="L344">	ED_weight(e, 1);</span>
 	}
 <span class="fc" id="L346">    return e;</span>
 } finally {

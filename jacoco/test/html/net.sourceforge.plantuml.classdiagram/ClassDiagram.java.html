@@ -130,10 +130,10 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	public CommandExecutionResult checkIfPackageHierarchyIsOk(Entity entity) {
 <span class="fc" id="L132">		Quark&lt;Entity&gt; current = entity.getQuark().getParent();</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		while (current.isRoot() == false) {</span>
-<span class="nc bnc" id="L134" title="All 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		while (current.isRoot() == false) {</span>
+<span class="pc bpc" id="L134" title="2 of 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
 <span class="nc" id="L135">				return CommandExecutionResult.error(&quot;Bad hierarchy for class &quot; + entity.getQuark().getQualifiedName());</span>
-<span class="nc" id="L136">			current = current.getParent();</span>
+<span class="fc" id="L136">			current = current.getParent();</span>
 		}
 <span class="fc" id="L138">		return CommandExecutionResult.ok();</span>
 	}

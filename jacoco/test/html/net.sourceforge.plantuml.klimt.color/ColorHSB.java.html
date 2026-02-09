@@ -8,38 +8,40 @@ import java.util.Locale;
  */
 public class ColorHSB extends Color {
 	// ::remove file when __HAXE__
+	// ::remove file when __TEAVM__
+	
 	private final float hue;
 	private final float saturation;
 	private final float brightness;
 
 	public ColorHSB(int rgba) {
-<span class="fc" id="L16">		super(rgba, true);</span>
-<span class="fc" id="L17">		final float[] hsb = Color.RGBtoHSB(getRed(), getGreen(), getBlue(), null);</span>
-<span class="fc" id="L18">		hue = hsb[0];</span>
-<span class="fc" id="L19">		saturation = hsb[1];</span>
-<span class="fc" id="L20">		brightness = hsb[2];</span>
-<span class="fc" id="L21">	}</span>
+<span class="fc" id="L18">		super(rgba, true);</span>
+<span class="fc" id="L19">		final float[] hsb = Color.RGBtoHSB(getRed(), getGreen(), getBlue(), null);</span>
+<span class="fc" id="L20">		hue = hsb[0];</span>
+<span class="fc" id="L21">		saturation = hsb[1];</span>
+<span class="fc" id="L22">		brightness = hsb[2];</span>
+<span class="fc" id="L23">	}</span>
 
 	public ColorHSB(Color other) {
-<span class="nc" id="L24">		this(other.getRGB());</span>
-<span class="nc" id="L25">	}</span>
+<span class="nc" id="L26">		this(other.getRGB());</span>
+<span class="nc" id="L27">	}</span>
 
 	public float getHue() {
-<span class="fc" id="L28">		return hue;</span>
+<span class="fc" id="L30">		return hue;</span>
 	}
 
 	public float getSaturation() {
-<span class="fc" id="L32">		return saturation;</span>
+<span class="fc" id="L34">		return saturation;</span>
 	}
 
 	public float getBrightness() {
-<span class="fc" id="L36">		return brightness;</span>
+<span class="fc" id="L38">		return brightness;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L41">		return String.format(Locale.US, &quot;%s[a=%02X r=%02X g=%02X b=%02X / h=%f s=%f b=%f]&quot;, getClass().getSimpleName(),</span>
-<span class="fc" id="L42">				getAlpha(), getRed(), getGreen(), getBlue(), getHue(), getSaturation(), getBrightness());</span>
+<span class="fc" id="L43">		return String.format(Locale.US, &quot;%s[a=%02X r=%02X g=%02X b=%02X / h=%f s=%f b=%f]&quot;, getClass().getSimpleName(),</span>
+<span class="fc" id="L44">				getAlpha(), getRed(), getGreen(), getBlue(), getHue(), getSaturation(), getBrightness());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

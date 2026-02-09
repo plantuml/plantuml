@@ -177,7 +177,7 @@ public class SpriteMonochrome implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
-
+		// ::revert when __TEAVM__
 <span class="pc bpc" id="L181" title="1 of 4 branches missed.">		if (backcolor == null || backcolor.isTransparent())</span>
 <span class="fc" id="L182">			backcolor = HColors.WHITE.withDark(HColors.BLACK);</span>
 
@@ -205,33 +205,36 @@ public class SpriteMonochrome implements Sprite {
 			}
 
 <span class="fc" id="L207">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+		
+		// return null;
+		// ::done
 	}
 
 	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
-<span class="fc" id="L212">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L215">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L215">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
-<span class="fc" id="L217">				ug.draw(image.scale(scale));</span>
-<span class="fc" id="L218">			}</span>
+<span class="fc" id="L218">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
+<span class="fc" id="L220">				ug.draw(image.scale(scale));</span>
+<span class="fc" id="L221">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L221">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
+<span class="fc" id="L224">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
 			}
 		};
 	}
 
 	public void exportSprite1(OutputStream fos) throws IOException {
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
-<span class="nc" id="L229">				int b1 = this.getGray(x, y);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
-<span class="nc" id="L231">				fos.write(b1 * 16 + b2);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
+<span class="nc" id="L232">				int b1 = this.getGray(x, y);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
+<span class="nc" id="L234">				fos.write(b1 * 16 + b2);</span>
 			}
 
-<span class="nc" id="L234">	}</span>
+<span class="nc" id="L237">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

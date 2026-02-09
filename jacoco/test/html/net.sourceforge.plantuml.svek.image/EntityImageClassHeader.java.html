@@ -116,7 +116,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 		final TextBlock stereo;
 <span class="fc" id="L117">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
 <span class="pc bpc" id="L118" title="1 of 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				|| stereotypeLabels.isEmpty())</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				|| stereotypeLabels.isEmpty())</span>
 <span class="fc" id="L120">			stereo = null;</span>
 		else
 <span class="fc" id="L122">			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(</span>

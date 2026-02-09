@@ -86,18 +86,26 @@ public class HColorGradient extends HColor {
 
 	}
 
+	public final int getRGB(ColorMapper mapper, double coeff, int alpha) {
+		// ::revert when __TEAVM__
+<span class="nc" id="L91">		return getColor(mapper, coeff, alpha).getRGB();</span>
+		// return 0;
+		// ::done
+
+	}
+
 	public final char getPolicy() {
-<span class="nc" id="L90">		return policy;</span>
+<span class="nc" id="L98">		return policy;</span>
 	}
 
 	@Override
 	public Color toColor(ColorMapper mapper) {
-<span class="nc" id="L95">		return color1.toColor(mapper);</span>
+<span class="nc" id="L103">		return color1.toColor(mapper);</span>
 	}
 
 	@Override
 	public HColor opposite() {
-<span class="nc" id="L100">		return color1.opposite();</span>
+<span class="nc" id="L108">		return color1.opposite();</span>
 	}
 
 }

@@ -81,8 +81,8 @@ public final class ClusterHeader {
 <span class="fc" id="L81">			final double attributeWidth = dimAttribute.getWidth();</span>
 <span class="pc bpc" id="L82" title="1 of 2 branches missed.">			final double marginForFields = attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0;</span>
 <span class="fc" id="L83">			final USymbol uSymbol = g.getUSymbol();</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			final int suppHeightBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppHeightBecauseOfShape();</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			final int suppHeightBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppHeightBecauseOfShape();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();</span>
 
 <span class="fc" id="L87">			this.titleAndAttributeWidth = (int) Math.max(dimLabel.getWidth(), attributeWidth) + suppWidthBecauseOfShape;</span>
 <span class="fc" id="L88">			this.titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields</span>
@@ -138,11 +138,11 @@ public final class ClusterHeader {
 <span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (g.getGroupType() == GroupType.STATE)</span>
 <span class="nc" id="L139">			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state,</span>
 					SName.composite, SName.title);
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		else if (uSymbol != null)</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		else if (uSymbol != null)</span>
 <span class="fc" id="L142">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,</span>
 					SName.title);
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		else if (g.getGroupType() == GroupType.PACKAGE)</span>
-<span class="nc" id="L145">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		else if (g.getGroupType() == GroupType.PACKAGE)</span>
+<span class="fc" id="L145">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);</span>
 		else
 <span class="nc" id="L147">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);</span>
 <span class="fc" id="L148">		return signature;</span>

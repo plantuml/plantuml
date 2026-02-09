@@ -48,35 +48,37 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 	public static Sprite buildSprite(List&lt;String&gt; strings) {
 <span class="nc" id="L50">		final SpriteColor result = new SpriteColor(strings.get(0).length() / 2, strings.size());</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++) {</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">				if (col * 2 &gt;= strings.get(line).length()) {</span>
-<span class="nc" id="L54">					continue;</span>
+		// ::comment when __TEAVM__
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		for (int col = 0; col &lt; result.getWidth(); col++) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">				if (col * 2 &gt;= strings.get(line).length()) {</span>
+<span class="nc" id="L55">					continue;</span>
 				}
-<span class="nc" id="L56">				final String encodedColor = strings.get(line).toString().substring(col * 2, col * 2 + 2);</span>
-<span class="nc" id="L57">				final Color rgb = COLOR_PALETTE.getColorFor(encodedColor);</span>
-<span class="nc" id="L58">				result.setColor(col, line, rgb.getRGB() &amp; 0xFFFFFF);</span>
+<span class="nc" id="L57">				final String encodedColor = strings.get(line).toString().substring(col * 2, col * 2 + 2);</span>
+<span class="nc" id="L58">				final Color rgb = COLOR_PALETTE.getColorFor(encodedColor);</span>
+<span class="nc" id="L59">				result.setColor(col, line, rgb.getRGB() &amp; 0xFFFFFF);</span>
 			}
 		}
-<span class="nc" id="L61">		return result;</span>
+		// ::done
+<span class="nc" id="L63">		return result;</span>
 	}
 
 	static public List&lt;String&gt; encodeImage(PortableImage img) {
-<span class="nc" id="L65">		final int width = img.getWidth();</span>
-<span class="nc" id="L66">		final int height = img.getHeight();</span>
+<span class="nc" id="L67">		final int width = img.getWidth();</span>
+<span class="nc" id="L68">		final int height = img.getHeight();</span>
 
-<span class="nc" id="L68">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L70">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
-<span class="nc" id="L71">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
-<span class="nc" id="L73">				final int rgb = (img.getRGB(x, y) &amp; 0xFFFFFF);</span>
-<span class="nc" id="L74">				final String encodedColor = COLOR_PALETTE.getStringFor(new Color(rgb));</span>
-<span class="nc" id="L75">				sb.append(encodedColor);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (int y = 0; y &lt; height; y++) {</span>
+<span class="nc" id="L73">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc" id="L75">				final int rgb = (img.getRGB(x, y) &amp; 0xFFFFFF);</span>
+<span class="nc" id="L76">				final String encodedColor = COLOR_PALETTE.getStringFor(new Color(rgb));</span>
+<span class="nc" id="L77">				sb.append(encodedColor);</span>
 			}
-<span class="nc" id="L77">			result.add(sb.toString());</span>
+<span class="nc" id="L79">			result.add(sb.toString());</span>
 		}
-<span class="nc" id="L79">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L81">		return Collections.unmodifiableList(result);</span>
 	}
 
 }
