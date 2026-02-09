@@ -64,13 +64,13 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileBoxOld extends AbstractFtile {
 
@@ -104,7 +104,7 @@ public class FtileBoxOld extends AbstractFtile {
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
 <span class="nc bnc" id="L106" title="All 2 branches missed.">		if (swimlane == null)</span>
-<span class="nc" id="L107">			return Collections.emptySet();</span>
+<span class="nc" id="L107">			return PatchUtils.emptySet();</span>
 
 <span class="nc" id="L109">		return Collections.singleton(swimlane);</span>
 	}

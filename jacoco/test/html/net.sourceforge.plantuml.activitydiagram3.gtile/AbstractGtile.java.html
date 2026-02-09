@@ -47,19 +47,20 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 
 	protected final Swimlane singleSwimlane;
 
 	public AbstractGtile(StringBounder stringBounder, ISkinParam skinParam, Swimlane singleSwimlane) {
-<span class="nc" id="L56">		super(stringBounder, skinParam);</span>
-<span class="nc" id="L57">		this.singleSwimlane = singleSwimlane;</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L57">		super(stringBounder, skinParam);</span>
+<span class="nc" id="L58">		this.singleSwimlane = singleSwimlane;</span>
+<span class="nc" id="L59">	}</span>
 
 	public AbstractGtile(StringBounder stringBounder, ISkinParam skinParam) {
-<span class="nc" id="L61">		this(stringBounder, skinParam, null);</span>
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L62">		this(stringBounder, skinParam, null);</span>
+<span class="nc" id="L63">	}</span>
 
 //	@Override
 //	public UTranslate getTranslateFor(Gtile child) {
@@ -68,33 +69,33 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 
 //	@Override
 //	public Collection&lt;Gtile&gt; getMyChildren() {
-//		return Collections.emptySet();
+//		return PatchUtils.emptySet();
 //	}
 
 	@Override
 	protected UTranslate getCoordImpl(String name) {
-<span class="nc" id="L76">		final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (name.equals(GPoint.NORTH_HOOK))</span>
-<span class="nc" id="L78">			return new UTranslate(dim.getWidth() / 2, 0);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (name.equals(GPoint.SOUTH_HOOK))</span>
-<span class="nc" id="L80">			return new UTranslate(dim.getWidth() / 2, dim.getHeight());</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (name.equals(GPoint.WEST_HOOK))</span>
-<span class="nc" id="L82">			return new UTranslate(0, dim.getHeight() / 2);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (name.equals(GPoint.EAST_HOOK))</span>
-<span class="nc" id="L84">			return new UTranslate(dim.getWidth(), dim.getHeight() / 2);</span>
-<span class="nc" id="L85">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L77">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (name.equals(GPoint.NORTH_HOOK))</span>
+<span class="nc" id="L79">			return new UTranslate(dim.getWidth() / 2, 0);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (name.equals(GPoint.SOUTH_HOOK))</span>
+<span class="nc" id="L81">			return new UTranslate(dim.getWidth() / 2, dim.getHeight());</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (name.equals(GPoint.WEST_HOOK))</span>
+<span class="nc" id="L83">			return new UTranslate(0, dim.getHeight() / 2);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (name.equals(GPoint.EAST_HOOK))</span>
+<span class="nc" id="L85">			return new UTranslate(dim.getWidth(), dim.getHeight() / 2);</span>
+<span class="nc" id="L86">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (singleSwimlane == null)</span>
-<span class="nc" id="L91">			return Collections.emptySet();</span>
-<span class="nc" id="L92">		return Collections.singleton(singleSwimlane);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (singleSwimlane == null)</span>
+<span class="nc" id="L92">			return PatchUtils.emptySet();</span>
+<span class="nc" id="L93">		return Collections.singleton(singleSwimlane);</span>
 	}
 
 	@Override
 	public Swimlane getSwimlane(String point) {
-<span class="nc" id="L97">		return singleSwimlane;</span>
+<span class="nc" id="L98">		return singleSwimlane;</span>
 	}
 
 //	public LinkRendering getInLinkRendering() {
@@ -106,7 +107,7 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 //	}
 
 	public Collection&lt;GConnection&gt; getInnerConnections() {
-<span class="nc" id="L109">		return Collections.emptyList();</span>
+<span class="nc" id="L110">		return Collections.emptyList();</span>
 	}
 
 //	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
@@ -114,17 +115,17 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 //	}
 
 	public final UStroke getThickness() {
-<span class="nc" id="L117">		UStroke thickness = skinParam().getThickness(LineParam.activityBorder, null);</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (thickness == null) {</span>
-<span class="nc" id="L119">			thickness = UStroke.withThickness(1.5);</span>
+<span class="nc" id="L118">		UStroke thickness = skinParam().getThickness(LineParam.activityBorder, null);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (thickness == null) {</span>
+<span class="nc" id="L120">			thickness = UStroke.withThickness(1.5);</span>
 		}
-<span class="nc" id="L121">		return thickness;</span>
+<span class="nc" id="L122">		return thickness;</span>
 	}
 
-<span class="nc" id="L124">	private static final Rose rose = new Rose();</span>
+<span class="nc" id="L125">	private static final Rose rose = new Rose();</span>
 
 	protected final Rose getRose() {
-<span class="nc" id="L127">		return rose;</span>
+<span class="nc" id="L128">		return rose;</span>
 	}
 
 //	public List&lt;WeldingPoint&gt; getWeldingPoints() {

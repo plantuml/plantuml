@@ -1982,11 +1982,11 @@ Stats:
     Abstract Classes: 5
 
     Ca: 7
-    Ce: 26
+    Ce: 27
 
     A: 0.17
     I: 0.79
-    D: 0.04
+    D: 0.03
 
 Abstract Classes:
     net.sourceforge.plantuml.activitydiagram3.AbstractInstruction
@@ -2048,6 +2048,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.url
+    net.sourceforge.plantuml.utils
 
 Used By:
     net.sourceforge.plantuml.activitydiagram3.command
@@ -2498,11 +2499,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 6
-    Ce: 18
+    Ce: 19
 
     A: 0.09
-    I: 0.75
-    D: 0.16
+    I: 0.76
+    D: 0.15
 
 Abstract Classes:
     net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate
@@ -2549,6 +2550,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svek.image
+    net.sourceforge.plantuml.utils
 
 Used By:
     net.sourceforge.plantuml.activitydiagram3.ftile
@@ -14069,16 +14071,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 22
-    Concrete Classes: 16
+    Total Classes: 23
+    Concrete Classes: 17
     Abstract Classes: 6
 
-    Ca: 92
+    Ca: 94
     Ce: 23
 
-    A: 0.27
+    A: 0.26
     I: 0.2
-    D: 0.53
+    D: 0.54
 
 Abstract Classes:
     net.sourceforge.plantuml.utils.CharInspector
@@ -14101,6 +14103,7 @@ Concrete Classes:
     net.sourceforge.plantuml.utils.MathUtils
     net.sourceforge.plantuml.utils.Obfuscate
     net.sourceforge.plantuml.utils.ObjectUtils
+    net.sourceforge.plantuml.utils.PatchUtils
     net.sourceforge.plantuml.utils.PeekerUtils$1
     net.sourceforge.plantuml.utils.Position
     net.sourceforge.plantuml.utils.SignatureUtils
@@ -14137,10 +14140,12 @@ Used By:
     net.sourceforge.plantuml.abel
     net.sourceforge.plantuml.activitydiagram
     net.sourceforge.plantuml.activitydiagram.command
+    net.sourceforge.plantuml.activitydiagram3
     net.sourceforge.plantuml.activitydiagram3.command
     net.sourceforge.plantuml.activitydiagram3.ftile
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond
+    net.sourceforge.plantuml.activitydiagram3.ftile.vertical
     net.sourceforge.plantuml.activitydiagram3.gtile
     net.sourceforge.plantuml.api.v2
     net.sourceforge.plantuml.board
@@ -17047,12 +17052,12 @@ net.sourceforge.plantuml,61,14,118,62,0.23,0.34,0.43,1
 net.sourceforge.plantuml.abel,34,8,39,25,0.24,0.39,0.37,1
 net.sourceforge.plantuml.activitydiagram,3,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.activitydiagram.command,12,0,1,19,0,0.95,0.05,1
-net.sourceforge.plantuml.activitydiagram3,29,5,7,26,0.17,0.79,0.04,1
+net.sourceforge.plantuml.activitydiagram3,29,5,7,27,0.17,0.79,0.03,1
 net.sourceforge.plantuml.activitydiagram3.command,44,0,1,21,0,0.95,0.05,1
 net.sourceforge.plantuml.activitydiagram3.ftile,73,9,16,26,0.12,0.62,0.26,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact,75,1,6,26,0.01,0.81,0.17,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond,24,1,1,21,0.04,0.95,0,1
-net.sourceforge.plantuml.activitydiagram3.ftile.vertical,22,2,6,18,0.09,0.75,0.16,1
+net.sourceforge.plantuml.activitydiagram3.ftile.vertical,22,2,6,19,0.09,0.76,0.15,1
 net.sourceforge.plantuml.activitydiagram3.gtile,40,7,3,22,0.17,0.88,0.05,1
 net.sourceforge.plantuml.annotation,3,3,0,2,1,1,1,1
 net.sourceforge.plantuml.ant,3,0,0,15,0,1,0,1
@@ -17231,7 +17236,7 @@ net.sourceforge.plantuml.timingdiagram,28,4,2,27,0.14,0.93,0.07,1
 net.sourceforge.plantuml.timingdiagram.command,24,1,1,15,0.04,0.94,0.02,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,14,0.18,0.93,0.11,1
 net.sourceforge.plantuml.url,8,0,40,7,0,0.15,0.85,1
-net.sourceforge.plantuml.utils,22,6,92,23,0.27,0.2,0.53,1
+net.sourceforge.plantuml.utils,23,6,94,23,0.26,0.2,0.54,1
 net.sourceforge.plantuml.version,15,1,17,35,0.07,0.67,0.26,1
 net.sourceforge.plantuml.vizjs,7,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.warning,3,1,9,2,0.33,0.18,0.48,1

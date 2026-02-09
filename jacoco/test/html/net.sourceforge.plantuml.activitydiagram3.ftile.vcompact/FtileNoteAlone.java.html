@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.image.Opale;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable {
 
@@ -74,74 +75,74 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 	private final Swimlane swimlane;
 
 	public StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L77">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);</span>
+<span class="nc" id="L78">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);</span>
 	}
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L82">		return Collections.emptyList();</span>
+<span class="nc" id="L83">		return Collections.emptyList();</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (swimlane == null) {</span>
-<span class="nc" id="L87">			return Collections.emptySet();</span>
-		}
-<span class="nc" id="L89">		return Collections.singleton(swimlane);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (swimlane == null) </span>
+<span class="nc" id="L88">			return PatchUtils.emptySet();</span>
+		
+<span class="nc" id="L90">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L93">		return swimlane;</span>
+<span class="nc" id="L94">		return swimlane;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L97">		return swimlane;</span>
+<span class="nc" id="L98">		return swimlane;</span>
 	}
 
 	public FtileNoteAlone(boolean shadow, Display note, ISkinParam skinParam, boolean withOutPoint, Swimlane swimlane) {
-<span class="nc" id="L101">		super(skinParam);</span>
-<span class="nc" id="L102">		this.swimlane = swimlane;</span>
-<span class="nc" id="L103">		this.withOutPoint = withOutPoint;</span>
+<span class="nc" id="L102">		super(skinParam);</span>
+<span class="nc" id="L103">		this.swimlane = swimlane;</span>
+<span class="nc" id="L104">		this.withOutPoint = withOutPoint;</span>
 
-<span class="nc" id="L105">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L106">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L107">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L108">		final double shadowing = style.getShadowing();</span>
-<span class="nc" id="L109">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
-<span class="nc" id="L110">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L106">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L107">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L108">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L109">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L110">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="nc" id="L111">		final UStroke stroke = style.getStroke();</span>
 
-<span class="nc" id="L112">		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);</span>
+<span class="nc" id="L113">		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);</span>
 
-<span class="nc" id="L114">		final Sheet sheet = skinParam</span>
-<span class="nc" id="L115">				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
-<span class="nc" id="L116">				.createSheet(note);</span>
-<span class="nc" id="L117">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this, stroke);</span>
-<span class="nc" id="L118">		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, false, stroke);</span>
+<span class="nc" id="L115">		final Sheet sheet = skinParam</span>
+<span class="nc" id="L116">				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
+<span class="nc" id="L117">				.createSheet(note);</span>
+<span class="nc" id="L118">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this, stroke);</span>
+<span class="nc" id="L119">		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, false, stroke);</span>
 
-<span class="nc" id="L120">	}</span>
+<span class="nc" id="L121">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L123">		opale.drawU(ug);</span>
-<span class="nc" id="L124">	}</span>
+<span class="nc" id="L124">		opale.drawU(ug);</span>
+<span class="nc" id="L125">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L128">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (withOutPoint) {</span>
-<span class="nc" id="L130">			return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
+<span class="nc" id="L129">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (withOutPoint) {</span>
+<span class="nc" id="L131">			return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
 		}
-<span class="nc" id="L132">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);</span>
+<span class="nc" id="L133">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);</span>
 	}
 
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
-<span class="nc" id="L136">		return opale.calculateDimension(stringBounder);</span>
+<span class="nc" id="L137">		return opale.calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L140">		return -opale.getMarginX1();</span>
+<span class="nc" id="L141">		return -opale.getMarginX1();</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L144">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
+<span class="nc" id="L145">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
 	}
 
 }

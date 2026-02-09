@@ -2990,10 +2990,10 @@
                 <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>7</Ca>
-                <Ce>26</Ce>
+                <Ce>27</Ce>
                 <A>0.17</A>
                 <I>0.79</I>
-                <D>0.04</D>
+                <D>0.03</D>
                 <V>1</V>
             </Stats>
 
@@ -3117,6 +3117,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -4006,10 +4007,10 @@
                 <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>18</Ce>
+                <Ce>19</Ce>
                 <A>0.09</A>
-                <I>0.75</I>
-                <D>0.16</D>
+                <I>0.76</I>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
@@ -4104,6 +4105,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -21192,14 +21194,14 @@
 
         <Package name="net.sourceforge.plantuml.utils">
             <Stats>
-                <TotalClasses>22</TotalClasses>
-                <ConcreteClasses>16</ConcreteClasses>
+                <TotalClasses>23</TotalClasses>
+                <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>92</Ca>
+                <Ca>94</Ca>
                 <Ce>23</Ce>
-                <A>0.27</A>
+                <A>0.26</A>
                 <I>0.2</I>
-                <D>0.53</D>
+                <D>0.54</D>
                 <V>1</V>
             </Stats>
 
@@ -21261,6 +21263,9 @@
                 <Class sourceFile="ObjectUtils.java">
                     net.sourceforge.plantuml.utils.ObjectUtils
                 </Class>
+                <Class sourceFile="PatchUtils.java">
+                    net.sourceforge.plantuml.utils.PatchUtils
+                </Class>
                 <Class sourceFile="PeekerUtils.java">
                     net.sourceforge.plantuml.utils.PeekerUtils$1
                 </Class>
@@ -21307,10 +21312,12 @@
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
+                <Package>net.sourceforge.plantuml.activitydiagram3</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.command</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</Package>
+                <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vertical</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.api.v2</Package>
                 <Package>net.sourceforge.plantuml.board</Package>

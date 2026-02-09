@@ -98,47 +98,50 @@ public final class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
-		// ::uncomment when __CORE__
-//		final String res = &quot;/skin/&quot; + filename;
-//		final InputStream is = StyleLoader.class.getResourceAsStream(res);
-//		return is;
+<span class="fc" id="L101">		InputStream is = null;</span>
+		
+		// ::uncomment when __TEAVM__
+		// System.out.println(&quot;StyleLoader! &quot;+filename);
+		// is = net.sourceforge.plantuml.teavm.EmbeddedResources.openPlantumlSkin();
+		// System.out.println(&quot;is=&quot;+is);
 		// ::done
+		
 
-		// ::comment when __CORE__
-<span class="fc" id="L108">		InputStream internalIs = null;</span>
-<span class="fc" id="L109">		SFile localFile = new SFile(filename);</span>
-<span class="pc" id="L110">		Log.info(() -&gt; &quot;Trying to load style &quot; + filename);</span>
+		// ::comment when __TEAVM__
+<span class="fc" id="L111">		SFile localFile = new SFile(filename);</span>
+<span class="pc" id="L112">		Log.info(() -&gt; &quot;Trying to load style &quot; + filename);</span>
 		try {
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (localFile.exists() == false)</span>
-<span class="fc" id="L113">				localFile = FileSystem.getInstance().getFile(filename);</span>
-<span class="nc" id="L114">		} catch (IOException e) {</span>
-<span class="nc" id="L115">			Log.info(() -&gt; &quot;Cannot open file. &quot; + e);</span>
-<span class="fc" id="L116">		}</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (localFile.exists() == false)</span>
+<span class="fc" id="L115">				localFile = FileSystem.getInstance().getFile(filename);</span>
+<span class="nc" id="L116">		} catch (IOException e) {</span>
+<span class="nc" id="L117">			Log.info(() -&gt; &quot;Cannot open file. &quot; + e);</span>
+<span class="fc" id="L118">		}</span>
 
-<span class="fc" id="L118">		final SFile localFile2 = localFile;</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (localFile.exists()) {</span>
-<span class="nc" id="L120">			Log.info(() -&gt; &quot;File found : &quot; + localFile2.getPrintablePath());</span>
-<span class="nc" id="L121">			internalIs = localFile.openFile();</span>
+<span class="fc" id="L120">		final SFile localFile2 = localFile;</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (localFile.exists()) {</span>
+<span class="nc" id="L122">			Log.info(() -&gt; &quot;File found : &quot; + localFile2.getPrintablePath());</span>
+<span class="nc" id="L123">			is = localFile.openFile();</span>
 		} else {
-<span class="pc" id="L123">			Log.info(() -&gt; &quot;File not found : &quot; + localFile2.getPrintablePath());</span>
-<span class="fc" id="L124">			final String res = &quot;/skin/&quot; + filename;</span>
-<span class="fc" id="L125">			internalIs = StyleLoader.class.getResourceAsStream(res);</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (internalIs != null)</span>
-<span class="pc" id="L127">				Log.info(() -&gt; &quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
+<span class="pc" id="L125">			Log.info(() -&gt; &quot;File not found : &quot; + localFile2.getPrintablePath());</span>
+<span class="fc" id="L126">			final String res = &quot;/skin/&quot; + filename;</span>
+<span class="fc" id="L127">			is = StyleLoader.class.getResourceAsStream(res);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (is != null)</span>
+<span class="pc" id="L129">				Log.info(() -&gt; &quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
 
 		}
-<span class="fc" id="L130">		return internalIs;</span>
 		// ::done
+<span class="fc" id="L133">		return is;</span>
 	}
+
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 
 	public static Map&lt;PName, Value&gt; addPriorityForStereotype(Map&lt;PName, Value&gt; tmp) {
-<span class="fc" id="L137">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
-<span class="fc" id="L139">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
+<span class="fc" id="L140">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
+<span class="fc" id="L142">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
 
-<span class="fc" id="L141">		return result;</span>
+<span class="fc" id="L144">		return result;</span>
 	}
 
 }

@@ -40,27 +40,28 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 abstract class MonoSwimable extends WithNote implements Swimable {
 
 	private final Swimlane swimlane;
 
-<span class="fc" id="L48">	public MonoSwimable(Swimlane swimlane) {</span>
-<span class="fc" id="L49">		this.swimlane = swimlane;</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L49">	public MonoSwimable(Swimlane swimlane) {</span>
+<span class="fc" id="L50">		this.swimlane = swimlane;</span>
+<span class="fc" id="L51">	}</span>
 
 	final public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (swimlane == null)</span>
-<span class="nc" id="L54">			return Collections.emptySet();</span>
-<span class="nc" id="L55">		return Collections.&lt;Swimlane&gt;singleton(swimlane);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc" id="L55">			return PatchUtils.emptySet();</span>
+<span class="nc" id="L56">		return Collections.&lt;Swimlane&gt;singleton(swimlane);</span>
 	}
 
 	final public Swimlane getSwimlaneIn() {
-<span class="fc" id="L59">		return swimlane;</span>
+<span class="fc" id="L60">		return swimlane;</span>
 	}
 
 	final public Swimlane getSwimlaneOut() {
-<span class="nc" id="L63">		return swimlane;</span>
+<span class="nc" id="L64">		return swimlane;</span>
 	}
 
 }

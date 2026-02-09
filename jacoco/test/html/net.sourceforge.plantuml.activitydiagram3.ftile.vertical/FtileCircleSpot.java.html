@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileCircleSpot extends AbstractFtile {
 
@@ -68,53 +69,53 @@ public class FtileCircleSpot extends AbstractFtile {
 
 	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font, HColor backColor,
 			Style style) {
-<span class="nc" id="L71">		super(skinParam);</span>
-<span class="nc" id="L72">		this.style = style;</span>
-<span class="nc" id="L73">		this.spot = spot;</span>
-<span class="nc" id="L74">		this.swimlane = swimlane;</span>
-<span class="nc" id="L75">		this.backColor = backColor;</span>
-<span class="nc" id="L76">		this.fc = FontConfiguration.create(skinParam, FontParam.ACTIVITY, null);</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L72">		super(skinParam);</span>
+<span class="nc" id="L73">		this.style = style;</span>
+<span class="nc" id="L74">		this.spot = spot;</span>
+<span class="nc" id="L75">		this.swimlane = swimlane;</span>
+<span class="nc" id="L76">		this.backColor = backColor;</span>
+<span class="nc" id="L77">		this.fc = FontConfiguration.create(skinParam, FontParam.ACTIVITY, null);</span>
+<span class="nc" id="L78">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L81">		return Collections.emptyList();</span>
+<span class="nc" id="L82">		return Collections.emptyList();</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (swimlane == null)</span>
-<span class="nc" id="L86">			return Collections.emptySet();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc" id="L87">			return PatchUtils.emptySet();</span>
 
-<span class="nc" id="L88">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L89">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L92">		return swimlane;</span>
+<span class="nc" id="L93">		return swimlane;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L96">		return swimlane;</span>
+<span class="nc" id="L97">		return swimlane;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L100">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="nc" id="L101">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		final HColor backColor = this.backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())</span>
-<span class="nc" id="L103">				: this.backColor;</span>
-<span class="nc" id="L104">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L105">		final double shadow = style.getShadowing();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		final HColor backColor = this.backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())</span>
+<span class="nc" id="L104">				: this.backColor;</span>
+<span class="nc" id="L105">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L106">		final double shadow = style.getShadowing();</span>
 
-<span class="nc" id="L107">		circle.setDeltaShadow(shadow);</span>
-<span class="nc" id="L108">		ug.apply(borderColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
+<span class="nc" id="L108">		circle.setDeltaShadow(shadow);</span>
+<span class="nc" id="L109">		ug.apply(borderColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
 
-<span class="nc" id="L110">		ug.apply(fc.getColor()).apply(new UTranslate(SIZE / 2, SIZE / 2))</span>
-<span class="nc" id="L111">				.draw(new UCenteredCharacter(spot.charAt(0), fc.getFont()));</span>
+<span class="nc" id="L111">		ug.apply(fc.getColor()).apply(new UTranslate(SIZE / 2, SIZE / 2))</span>
+<span class="nc" id="L112">				.draw(new UCenteredCharacter(spot.charAt(0), fc.getFont()));</span>
 
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L114">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L117">		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0, SIZE);</span>
+<span class="nc" id="L118">		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0, SIZE);</span>
 	}
 
 }
