@@ -143,6 +143,8 @@ public class Demo4 {
 		List<StringLocated> list = new ArrayList<>();
 		list.add(new StringLocated("@startmindmap", new LineLocationImpl("foo1", null)));
 		list.add(new StringLocated("* Hello from TeaVM", new LineLocationImpl("foo2", null)));
+		list.add(new StringLocated("** Java", new LineLocationImpl("foo2", null)));
+		list.add(new StringLocated("** Js", new LineLocationImpl("foo2", null)));
 		list.add(new StringLocated("@endmindmap", new LineLocationImpl("foo3", null)));
 		System.err.println("list=" + list);
 		UmlSource source = UmlSource.create(list, false);
