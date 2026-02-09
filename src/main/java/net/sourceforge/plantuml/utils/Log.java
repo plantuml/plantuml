@@ -51,6 +51,8 @@ public abstract class Log {
 	private static final long start = System.currentTimeMillis();
 
 	private static String format(String s) {
+		final StringBuilder sb = new StringBuilder();
+		// ::comment when __TEAVM__
 		final long delta = System.currentTimeMillis() - start;
 		// final HealthCheck healthCheck = Performance.getHealthCheck();
 		// final long cpu = healthCheck.jvmCpuTime() / 1000L / 1000L;
@@ -62,7 +64,6 @@ public abstract class Log {
 		final long usedMemory = totalMemory - freeMemory;
 		final int threadActiveCount = Thread.activeCount();
 
-		final StringBuilder sb = new StringBuilder();
 		sb.append("(");
 		sb.append(delta / 1000L);
 		sb.append(".");
@@ -88,7 +89,10 @@ public abstract class Log {
 		sb.append(free);
 		sb.append(" Mo - ");
 		sb.append(s);
+		// ::done
+
 		return sb.toString();
+		
 	}
 
 	public static void println(Object s) {
@@ -125,12 +129,14 @@ public abstract class Log {
 	}
 
 	public static void deletePerfLogFile() {
+		// ::comment when __TEAVM__
 		final File file = new File(PERFLOG_FILENAME);
 		if (file.exists()) {
 			if (!file.delete()) {
 				error("Cannot del " + PERFLOG_FILENAME);
 			}
 		}
+		// ::done
 	}
 
 	private synchronized static void perflogInternal(String line) {
@@ -150,6 +156,7 @@ public abstract class Log {
 	}
 
 	public static synchronized void logStackTrace(String s) {
+		// ::comment when __TEAVM__
 		if (firstCall) {
 			deletePerfLogFile();
 			firstCall = false;
@@ -161,6 +168,7 @@ public abstract class Log {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		// ::done
 	}
 
 }

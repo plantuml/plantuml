@@ -86,6 +86,14 @@ public class HColorGradient extends HColor {
 
 	}
 
+	public final int getRGB(ColorMapper mapper, double coeff, int alpha) {
+		// ::revert when __TEAVM__
+		return getColor(mapper, coeff, alpha).getRGB();
+		// return 0;
+		// ::done
+
+	}
+
 	public final char getPolicy() {
 		return policy;
 	}

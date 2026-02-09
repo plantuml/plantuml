@@ -48,6 +48,7 @@ public class SpriteColorBuilder4096 {
 
 	public static Sprite buildSprite(List<String> strings) {
 		final SpriteColor result = new SpriteColor(strings.get(0).length() / 2, strings.size());
+		// ::comment when __TEAVM__
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < result.getHeight(); line++) {
 				if (col * 2 >= strings.get(line).length()) {
@@ -58,6 +59,7 @@ public class SpriteColorBuilder4096 {
 				result.setColor(col, line, rgb.getRGB() & 0xFFFFFF);
 			}
 		}
+		// ::done
 		return result;
 	}
 

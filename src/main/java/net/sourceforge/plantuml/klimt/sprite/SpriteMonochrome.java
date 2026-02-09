@@ -177,7 +177,7 @@ public class SpriteMonochrome implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
-
+		// ::revert when __TEAVM__
 		if (backcolor == null || backcolor.isTransparent())
 			backcolor = HColors.WHITE.withDark(HColors.BLACK);
 
@@ -205,6 +205,9 @@ public class SpriteMonochrome implements Sprite {
 			}
 
 		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
+		
+		// return null;
+		// ::done
 	}
 
 	@Override
