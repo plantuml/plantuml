@@ -56,14 +56,14 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
+		// CommonCommands.addCommonCommands1(cmds);
 		// cmds.add(new CommandMindMapTabulation());
-		cmds.add(new CommandRankDir());
-		cmds.add(new CommandMindMapOrgmodeMultiline());
+//		cmds.add(new CommandRankDir());
+//		cmds.add(new CommandMindMapOrgmodeMultiline());
 		cmds.add(new CommandMindMapOrgmode());
-		cmds.add(new CommandMindMapRoot());
-		cmds.add(new CommandMindMapPlus());
-		cmds.add(new CommandMindMapDirection());
+//		cmds.add(new CommandMindMapRoot());
+//		cmds.add(new CommandMindMapPlus());
+//		cmds.add(new CommandMindMapDirection());
 	}
 
 	@Override

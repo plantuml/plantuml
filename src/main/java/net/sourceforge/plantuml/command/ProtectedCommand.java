@@ -57,7 +57,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 			final CommandExecutionResult result = cmd.execute(system, lines, currentPass);
 			// if (result.isOk()) {
 			// // TRACECOMMAND
-			// System.err.println("CMD = " + cmd.getClass() + " " + currentPass);
+			System.err.println("CMD = " + cmd.getClass() + " " + currentPass);
 			// }
 			return result;
 		} catch (Throwable t) {

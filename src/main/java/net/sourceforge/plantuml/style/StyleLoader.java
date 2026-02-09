@@ -98,6 +98,7 @@ public final class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
+		System.out.println("StyleLoader! "+filename);
 		// ::uncomment when __CORE__
 //		final String res = "/skin/" + filename;
 //		final InputStream is = StyleLoader.class.getResourceAsStream(res);
