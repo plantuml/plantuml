@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileBoxEmoji extends AbstractFtile {
 
@@ -87,7 +88,7 @@ public class FtileBoxEmoji extends AbstractFtile {
 
 	public Set<Swimlane> getSwimlanes() {
 		if (swimlane == null)
-			return Collections.emptySet();
+			return PatchUtils.emptySet();
 
 		return Collections.singleton(swimlane);
 	}

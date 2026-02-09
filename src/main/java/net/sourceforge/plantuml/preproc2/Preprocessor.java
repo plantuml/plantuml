@@ -64,7 +64,7 @@ public class Preprocessor implements ReadLineNumbered {
 
 //	public Set<FileWithSuffix> getFilesUsedTOBEREMOVED() {
 //		// System.err.println("************************** WARNING **************************");
-//		return Collections.emptySet();
+//		return PatchUtils.emptySet();
 //		// return Collections.unmodifiableSet(include.getFilesUsedGlobal());
 //	}
 }

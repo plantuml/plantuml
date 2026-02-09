@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileCircleEndCross extends AbstractFtile {
 
@@ -82,7 +83,7 @@ public class FtileCircleEndCross extends AbstractFtile {
 
 	public Set<Swimlane> getSwimlanes() {
 		if (swimlane == null)
-			return Collections.emptySet();
+			return PatchUtils.emptySet();
 
 		return Collections.singleton(swimlane);
 	}
