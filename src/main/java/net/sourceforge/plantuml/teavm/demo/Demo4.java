@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.teavm.demo;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,10 @@ public class Demo4 {
 
 		final Set<String> set1 = new HashSet<>();
 		final Set<String> set2 = new HashSet<>();
-		System.out.println("containsAll=" + set1.containsAll(set2));
+		System.out.println("containsAll1=" + set1.containsAll(set2));
+
+		final Set<String> emptySet = Collections.emptySet();
+		System.out.println("containsAll2=" + emptySet.containsAll(set2));
 
 		// Create main container
 		HTMLElement container = document.createElement("div");
