@@ -7,6 +7,7 @@
 
 import java.time.LocalDateTime
 import java.util.jar.JarFile
+import java.util.Base64
 import org.gradle.api.tasks.Sync
 
 println("Running build.gradle.kts")
@@ -474,6 +475,54 @@ val preprocessForTeaVM by tasks.registering {
 			)
 		}
 	}
+}
+
+// Generate embedded resources for TeaVM (Base64 encoded)
+val generateTeavmEmbeddedResources by tasks.registering {
+	dependsOn(preprocessForTeaVM)
+
+	val outDir = layout.buildDirectory.dir("generated/teavm-sjpp/net/sourceforge/plantuml/teavm")
+	inputs.file("src/main/resources/skin/plantuml.skin")
+	outputs.dir(outDir)
+
+	doLast {
+		val skinFile = file("src/main/resources/skin/plantuml.skin")
+		val bytes = skinFile.readBytes()
+		val b64 = Base64.getEncoder().encodeToString(bytes)
+
+		// Split into lines to avoid a giant single line
+		val chunks = b64.chunked(120).joinToString(separator = "\" +\n            \"", prefix = "\"", postfix = "\"")
+
+		val target = outDir.get().file("EmbeddedResources.java").asFile
+		target.parentFile.mkdirs()
+		target.writeText(
+			"""
+			package net.sourceforge.plantuml.teavm;
+
+			import java.io.ByteArrayInputStream;
+			import java.io.InputStream;
+			import java.util.Base64;
+
+			public final class EmbeddedResources {
+				private EmbeddedResources() {
+				}
+
+				private static final String PLANTUML_SKIN_B64 =
+						$chunks;
+
+				public static InputStream openPlantumlSkin() {
+					byte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);
+					return new ByteArrayInputStream(data);
+				}
+			}
+			""".trimIndent(),
+			Charsets.UTF_8
+		)
+	}
+}
+
+tasks.named<JavaCompile>("compileTeavmJava") {
+	dependsOn(generateTeavmEmbeddedResources)
 }
 
 // Task to compile Java to JavaScript using TeaVM

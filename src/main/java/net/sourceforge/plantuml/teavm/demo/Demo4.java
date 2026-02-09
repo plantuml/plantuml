@@ -90,8 +90,24 @@ public class Demo4 {
 		final URectangle rect = URectangle.build(30, 30);
 		// consoleLog("rect= " + rect.toString());
 
-		InputStream is = Demo4.class.getResourceAsStream("/skin/plantuml.skin");
-		System.out.println("is="+is);
+		// Load embedded skin resource
+		InputStream is = null;
+		// ::uncomment when __TEAVM__
+		// is = net.sourceforge.plantuml.teavm.EmbeddedResources.openPlantumlSkin();
+		// ::done
+		System.out.println("is=" + is);
+		
+		// Read a few bytes to verify the stream works
+		if (is != null) {
+			try {
+				byte[] buf = new byte[16];
+				int read = is.read(buf);
+				System.out.println("Successfully read " + read + " bytes from plantuml.skin");
+				is.close();
+			} catch (Exception e) {
+				System.err.println("Error reading plantuml.skin: " + e.getMessage());
+			}
+		}
 
 		// ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
 		
