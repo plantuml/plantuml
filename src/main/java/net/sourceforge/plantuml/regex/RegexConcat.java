@@ -124,6 +124,7 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 
 	@Override
 	public boolean match(StringLocated s) {
+		// ::comment when __TEAVM__
 		if (limitSize != 0 && s.getString().length() > limitSize)
 			return false;
 
@@ -150,7 +151,11 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 			}
 
 		}
-		return super.match(s);
+		// ::done
+		System.out.println("RegexConcat::match "+s);
+		final boolean match = super.match(s);
+		System.out.println("RegexConcat::match r="+match);
+		return match;
 	}
 
 	@Override

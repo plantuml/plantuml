@@ -1,7 +1,10 @@
 package net.sourceforge.plantuml.teavm.demo;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.html.HTMLDocument;
@@ -15,11 +18,15 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.mindmap.CommandMindMapOrgmode;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.LineLocationImpl;
 
 /**
  * Hello World example for TeaVM integration testing. Demonstrates DOM
@@ -48,13 +55,13 @@ public class Demo4 {
 		// Create heading
 		HTMLElement heading = document.createElement("h1");
 		heading.setAttribute("style", "color: #333; margin: 0 0 20px 0;");
-		heading.setInnerHTML("Hello4 from PlantUML + TeaVM!");
+		// heading.setInnerHTML("Hello4 from PlantUML + TeaVM!");
 		container.appendChild(heading);
 
 		// Create paragraph
 		HTMLElement paragraph = document.createElement("p");
 		paragraph.setAttribute("style", "color: #555; font-size: 1.1em; line-height: 1.6;");
-		paragraph.setInnerHTML("TeaVM is successfully compiling Java to JavaScript!");
+		// paragraph.setInnerHTML("TeaVM is successfully compiling Java to JavaScript!");
 		container.appendChild(paragraph);
 
 		// Create SVG demo section
@@ -64,7 +71,7 @@ public class Demo4 {
 
 		HTMLElement svgTitle = document.createElement("h3");
 		svgTitle.setAttribute("style", "color: #555; margin: 0 0 15px 0;");
-		svgTitle.setInnerHTML("SVG Generation Demo:");
+		// svgTitle.setInnerHTML("SVG Generation Demo:");
 		svgSection.appendChild(svgTitle);
 
 		// Create SVG using SvgGraphicsTeaVM
@@ -83,17 +90,48 @@ public class Demo4 {
 		final URectangle rect = URectangle.build(30, 30);
 		// consoleLog("rect= " + rect.toString());
 
+		InputStream is = Demo4.class.getResourceAsStream("/skin/plantuml.skin");
+		System.out.println("is="+is);
+
 		// ug.apply(HColors.BLUE).apply(HColors.RED.bg()).apply(new UTranslate(10, 10)).draw(rect);
+		
+		// Matcher2 pattern=^([ 	]*[*#]+)(?:\[(#\w+)\])?(_)?[\s ]*(.*)$ input=* Hello from TeaVM
+		// Pattern p = Pattern.compile("^(.*)$");
+//		Pattern p = Pattern.compile("^([ 	]*[*#]+)(?:\\[(#\\w+)\\])?(_)?[\\s ]*(.*)$");
+//		String ss = "* Hello from TeaVM";
+//		Matcher m = p.matcher(ss);
+//		System.out.println("TESTINIT "+m.find());
+//
+//		Pattern2 test1 = Pattern2.cmpile("toto");
+//		
+//		final String aregex = "\\p{L}";
+//		System.out.println("aregex = "+aregex);
+//		Pattern  atest = Pattern.compile(aregex, Pattern.CASE_INSENSITIVE);
+//		System.out.println("atest1 = "+atest);
+//		System.out.println("atest2 = "+atest);
+
+//		final String bregex = "\\p{Number}";
+//		System.out.println("bregex = "+bregex);
+//		Pattern  btest = Pattern.compile(bregex, Pattern.CASE_INSENSITIVE);
+//		System.out.println("btest1 = "+btest);
+//		System.out.println("btest2 = "+btest);
+
+//		Pattern2 test20 = Pattern2.cmpile("[%pLN]");
+//		
+//		CommandMindMapOrgmode cmd = new CommandMindMapOrgmode();
+//		System.out.println("------------");
+//		System.out.println(CommandMindMapOrgmode.getRegexConcat().getPatternAsString());
+//		System.out.println("------------");
 
 		MindMapDiagramFactory factory = new MindMapDiagramFactory();
 		List<StringLocated> list = new ArrayList<>();
-		list.add(new StringLocated("@startuml", null));
-		list.add(new StringLocated("* Hello from TeaVM", null));
-		list.add(new StringLocated("@enduml", null));
+		list.add(new StringLocated("@startmindmap", new LineLocationImpl("foo1", null)));
+		list.add(new StringLocated("* Hello from TeaVM", new LineLocationImpl("foo2", null)));
+		list.add(new StringLocated("@endmindmap", new LineLocationImpl("foo3", null)));
 		System.err.println("list=" + list);
 		UmlSource source = UmlSource.create(list, false);
 		System.err.println("source=" + source);
-		Diagram diagram = factory.createSystem(null, source, null, null);
+		Diagram diagram = factory.createSystem(null, source, null, new PreprocessingArtifact());
 		// ::uncomment when __TEAVM__
 		// System.err.println("diagram=" + diagram);
 		// ::done
