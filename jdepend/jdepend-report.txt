@@ -6900,8 +6900,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 1
-    Concrete Classes: 1
+    Total Classes: 2
+    Concrete Classes: 2
     Abstract Classes: 0
 
     Ca: 28
@@ -6915,6 +6915,7 @@ Abstract Classes:
 
 Concrete Classes:
     net.sourceforge.plantuml.klimt.awt.PortableImage
+    net.sourceforge.plantuml.klimt.awt.XColor
 
 Depends Upon:
     java.awt
@@ -17135,7 +17136,7 @@ net.sourceforge.plantuml.jcckit,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,5,30,0,0.86,0.14,1
 net.sourceforge.plantuml.klimt,26,10,83,15,0.38,0.15,0.46,1
-net.sourceforge.plantuml.klimt.awt,1,0,28,3,0,0.1,0.9,1
+net.sourceforge.plantuml.klimt.awt,2,0,28,3,0,0.1,0.9,1
 net.sourceforge.plantuml.klimt.color,31,2,105,13,0.06,0.11,0.83,1
 net.sourceforge.plantuml.klimt.compress,14,2,5,10,0.14,0.67,0.19,1
 net.sourceforge.plantuml.klimt.creole,23,4,84,24,0.17,0.22,0.6,1

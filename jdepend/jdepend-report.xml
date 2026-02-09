@@ -10335,8 +10335,8 @@
 
         <Package name="net.sourceforge.plantuml.klimt.awt">
             <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>1</ConcreteClasses>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>28</Ca>
                 <Ce>3</Ce>
@@ -10352,6 +10352,9 @@
             <ConcreteClasses>
                 <Class sourceFile="PortableImage.java">
                     net.sourceforge.plantuml.klimt.awt.PortableImage
+                </Class>
+                <Class sourceFile="XColor.java">
+                    net.sourceforge.plantuml.klimt.awt.XColor
                 </Class>
             </ConcreteClasses>
 
