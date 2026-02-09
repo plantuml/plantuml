@@ -1,31 +1,29 @@
 package net.sourceforge.plantuml.klimt.awt;
 
-import java.awt.Color;
+public class Color {
 
-public class XColor {
-
-	public static final XColor BLACK = new XColor(0, 0, 0);
-	public static final XColor WHITE = new XColor(255, 255, 255);
-	public static final XColor RED = new XColor(255, 0, 0);
-	public static final XColor BLUE = new XColor(0, 0, 255);
+	public static final Color BLACK = new Color(0, 0, 0);
+	public static final Color WHITE = new Color(255, 255, 255);
+	public static final Color RED = new Color(255, 0, 0);
+	public static final Color BLUE = new Color(0, 0, 255);
 
 	private final int red;
 	private final int green;
 	private final int blue;
 	private final int alpha;
 
-	public XColor(int r, int g, int b) {
+	public Color(int r, int g, int b) {
 		this(r, g, b, 255);
 	}
 
-	public XColor(int r, int g, int b, int a) {
+	public Color(int r, int g, int b, int a) {
 		this.red = r & 0xFF;
 		this.green = g & 0xFF;
 		this.blue = b & 0xFF;
 		this.alpha = a & 0xFF;
 	}
 
-	public XColor(int rgb) {
+	public Color(int rgb) {
 		this.alpha = (rgb >> 24) & 0xFF;
 		this.red = (rgb >> 16) & 0xFF;
 		this.green = (rgb >> 8) & 0xFF;
@@ -65,8 +63,8 @@ public class XColor {
 		return result;
 	}
 
-	public Color toAwtColor() {
-		return new Color(red, green, blue, alpha);
+	public java.awt.Color toAwtColor() {
+		return new java.awt.Color(red, green, blue, alpha);
 	}
 
 	@Override
@@ -80,7 +78,7 @@ public class XColor {
 			return true;
 		if (obj == null || getClass() != obj.getClass())
 			return false;
-		XColor other = (XColor) obj;
+		Color other = (Color) obj;
 		return red == other.red && green == other.green && blue == other.blue && alpha == other.alpha;
 	}
 
