@@ -1,3 +1,3 @@
 @echo off
 cd C:\github\plantuml
-gradlew.bat prepareTeaVMDemo
+gradlew.bat clean prepareTeaVMDemo
