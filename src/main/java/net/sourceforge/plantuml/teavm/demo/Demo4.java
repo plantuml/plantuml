@@ -1,8 +1,5 @@
 package net.sourceforge.plantuml.teavm.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.events.Event;
 import org.teavm.jso.dom.events.EventListener;
@@ -13,22 +10,15 @@ import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
-import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.utils.LineLocationImpl;
-import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 
 public class Demo4 {
 
