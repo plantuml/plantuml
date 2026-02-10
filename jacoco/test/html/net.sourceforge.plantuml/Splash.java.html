@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
+
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -51,6 +51,7 @@ import java.net.URI;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
@@ -58,44 +59,44 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
-<span class="fc" id="L61">	private static final Color LINK_NORMAL = Color.BLUE;</span>
-<span class="fc" id="L62">	private static final Color LINK_HOVER = new Color(127, 0, 127);</span>
+<span class="fc" id="L62">	private static final XColor LINK_NORMAL = XColor.BLUE;</span>
+<span class="fc" id="L63">	private static final XColor LINK_HOVER = new XColor(127, 0, 127);</span>
 
 	private static Splash singleton;
 
-<span class="nc" id="L66">	private final int width = 280;</span>
-<span class="nc" id="L67">	private final int height = 80;</span>
+<span class="nc" id="L67">	private final int width = 280;</span>
+<span class="nc" id="L68">	private final int height = 80;</span>
 	private final PortableImage logo;
-<span class="nc" id="L69">	private final AtomicInteger total = new AtomicInteger();</span>
-<span class="nc" id="L70">	private final AtomicInteger done = new AtomicInteger();</span>
-<span class="nc" id="L71">	private final AtomicInteger errors = new AtomicInteger();</span>
-<span class="nc" id="L72">	private final Font font = new Font(&quot;SansSerif&quot;, Font.BOLD, 12);</span>
+<span class="nc" id="L70">	private final AtomicInteger total = new AtomicInteger();</span>
+<span class="nc" id="L71">	private final AtomicInteger done = new AtomicInteger();</span>
+<span class="nc" id="L72">	private final AtomicInteger errors = new AtomicInteger();</span>
+<span class="nc" id="L73">	private final Font font = new Font(&quot;SansSerif&quot;, Font.BOLD, 12);</span>
 
 	public static void main(String[] args) throws Exception {
-<span class="nc" id="L75">		Splash.createSplash();</span>
-<span class="nc" id="L76">		Splash.incTotal(30);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			Splash.incDone(i &gt; 3);</span>
-<span class="nc" id="L79">			Thread.sleep(1000);</span>
+<span class="nc" id="L76">		Splash.createSplash();</span>
+<span class="nc" id="L77">		Splash.incTotal(30);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			Splash.incDone(i &gt; 3);</span>
+<span class="nc" id="L80">			Thread.sleep(1000);</span>
 		}
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L82">	}</span>
 
 	private Splash() {
-<span class="nc" id="L84">		super(null);</span>
-<span class="nc" id="L85">		this.logo = PSystemVersion.getPlantumlImage();</span>
-<span class="nc" id="L86">		final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();</span>
-<span class="nc" id="L87">		final int x = (int) ((dimension.getWidth() - width)) / 2;</span>
-<span class="nc" id="L88">		final int y = (int) ((dimension.getHeight() - height)) / 2;</span>
+<span class="nc" id="L85">		super(null);</span>
+<span class="nc" id="L86">		this.logo = PSystemVersion.getPlantumlImage();</span>
+<span class="nc" id="L87">		final Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();</span>
+<span class="nc" id="L88">		final int x = (int) ((dimension.getWidth() - width)) / 2;</span>
+<span class="nc" id="L89">		final int y = (int) ((dimension.getHeight() - height)) / 2;</span>
 
-<span class="nc" id="L90">		this.setBounds(x, y, width, height);</span>
-<span class="nc" id="L91">		this.setVisible(true);</span>
-<span class="nc" id="L92">		this.setAlwaysOnTop(true);</span>
-<span class="nc" id="L93">		this.setFocusable(false);</span>
-<span class="nc" id="L94">		this.setFocusableWindowState(false);</span>
+<span class="nc" id="L91">		this.setBounds(x, y, width, height);</span>
+<span class="nc" id="L92">		this.setVisible(true);</span>
+<span class="nc" id="L93">		this.setAlwaysOnTop(true);</span>
+<span class="nc" id="L94">		this.setFocusable(false);</span>
+<span class="nc" id="L95">		this.setFocusableWindowState(false);</span>
 
-<span class="nc" id="L96">		addMouseListener(this);</span>
-<span class="nc" id="L97">		addMouseMotionListener(this);</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L97">		addMouseListener(this);</span>
+<span class="nc" id="L98">		addMouseMotionListener(this);</span>
+<span class="nc" id="L99">	}</span>
 
 	private int xClicked;
 	private int yClicked;
@@ -103,161 +104,161 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 	private int limX;
 
 	public void mouseDragged(MouseEvent event) {
-<span class="nc" id="L106">		int x = event.getXOnScreen();</span>
-<span class="nc" id="L107">		int y = event.getYOnScreen();</span>
-<span class="nc" id="L108">		this.setBounds(x - xClicked, y - yClicked, width, height);</span>
+<span class="nc" id="L107">		int x = event.getXOnScreen();</span>
+<span class="nc" id="L108">		int y = event.getYOnScreen();</span>
+<span class="nc" id="L109">		this.setBounds(x - xClicked, y - yClicked, width, height);</span>
 
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L111">	}</span>
 
-<span class="nc" id="L112">	private Color link = LINK_NORMAL;</span>
+<span class="nc" id="L113">	private XColor link = LINK_NORMAL;</span>
 
 	public void mouseMoved(MouseEvent event) {
-<span class="nc bnc" id="L115" title="All 4 branches missed.">		if (event.getY() &gt; limY &amp;&amp; event.getX() &lt; limX) {</span>
-<span class="nc" id="L116">			updateLinkColor(LINK_HOVER);</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">		if (event.getY() &gt; limY &amp;&amp; event.getX() &lt; limX) {</span>
+<span class="nc" id="L117">			updateLinkColor(LINK_HOVER);</span>
 		} else {
-<span class="nc" id="L118">			updateLinkColor(LINK_NORMAL);</span>
+<span class="nc" id="L119">			updateLinkColor(LINK_NORMAL);</span>
 		}
-<span class="nc" id="L120">	}</span>
+<span class="nc" id="L121">	}</span>
 
-	private void updateLinkColor(final Color newLink) {
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (link != newLink) {</span>
-<span class="nc" id="L124">			link = newLink;</span>
-<span class="nc" id="L125">			this.setCursor(</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">					link == LINK_NORMAL ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));</span>
-<span class="nc" id="L127">			repaint();</span>
+	private void updateLinkColor(final XColor newLink) {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (link != newLink) {</span>
+<span class="nc" id="L125">			link = newLink;</span>
+<span class="nc" id="L126">			this.setCursor(</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">					link == LINK_NORMAL ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L128">			repaint();</span>
 		}
-<span class="nc" id="L129">	}</span>
+<span class="nc" id="L130">	}</span>
 
 	public void mouseReleased(MouseEvent event) {
 		// System.err.println(&quot;mouseReleased &quot; + event);
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L134">	}</span>
 
 	public void mousePressed(MouseEvent event) {
-<span class="nc" id="L136">		this.xClicked = event.getX();</span>
-<span class="nc" id="L137">		this.yClicked = event.getY();</span>
-<span class="nc" id="L138">	}</span>
+<span class="nc" id="L137">		this.xClicked = event.getX();</span>
+<span class="nc" id="L138">		this.yClicked = event.getY();</span>
+<span class="nc" id="L139">	}</span>
 
 	public void mouseClicked(MouseEvent event) {
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (link != LINK_NORMAL) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (link != LINK_NORMAL) {</span>
 			try {
-<span class="nc" id="L143">				Desktop.getDesktop().browse(new URI(&quot;https://plantuml.com&quot;));</span>
-<span class="nc" id="L144">			} catch (Exception e) {</span>
-<span class="nc" id="L145">				Logme.error(e);</span>
-<span class="nc" id="L146">			}</span>
-<span class="nc" id="L147">			return;</span>
+<span class="nc" id="L144">				Desktop.getDesktop().browse(new URI(&quot;https://plantuml.com&quot;));</span>
+<span class="nc" id="L145">			} catch (Exception e) {</span>
+<span class="nc" id="L146">				Logme.error(e);</span>
+<span class="nc" id="L147">			}</span>
+<span class="nc" id="L148">			return;</span>
 		}
-<span class="nc" id="L149">		this.xClicked = event.getX();</span>
-<span class="nc" id="L150">		this.yClicked = event.getY();</span>
-<span class="nc" id="L151">	}</span>
+<span class="nc" id="L150">		this.xClicked = event.getX();</span>
+<span class="nc" id="L151">		this.yClicked = event.getY();</span>
+<span class="nc" id="L152">	}</span>
 
 	public void mouseExited(MouseEvent event) {
-<span class="nc" id="L154">		updateLinkColor(LINK_NORMAL);</span>
-<span class="nc" id="L155">	}</span>
+<span class="nc" id="L155">		updateLinkColor(LINK_NORMAL);</span>
+<span class="nc" id="L156">	}</span>
 
 	public void mouseEntered(MouseEvent event) {
 		// System.err.println(&quot;mouseEntered &quot; + event);
-<span class="nc" id="L159">	}</span>
+<span class="nc" id="L160">	}</span>
 
 	private void incTotalInternal(int nb) {
-<span class="nc" id="L162">		this.total.addAndGet(nb);</span>
+<span class="nc" id="L163">		this.total.addAndGet(nb);</span>
 		// invalidate();
-<span class="nc" id="L164">		repaint();</span>
+<span class="nc" id="L165">		repaint();</span>
 		// System.err.println(&quot;INC TOTAL=&quot; + done + &quot;/&quot; + total);
-<span class="nc" id="L166">	}</span>
+<span class="nc" id="L167">	}</span>
 
 	private void incDoneInternal(boolean error) {
-<span class="nc" id="L169">		this.done.incrementAndGet();</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (error) {</span>
-<span class="nc" id="L171">			this.errors.incrementAndGet();</span>
+<span class="nc" id="L170">		this.done.incrementAndGet();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (error) {</span>
+<span class="nc" id="L172">			this.errors.incrementAndGet();</span>
 		}
 		// invalidate();
-<span class="nc" id="L174">		repaint();</span>
+<span class="nc" id="L175">		repaint();</span>
 		// System.err.println(&quot;INC TOTAL=&quot; + done + &quot;/&quot; + total);
-<span class="nc" id="L176">	}</span>
+<span class="nc" id="L177">	}</span>
 
 	@Override
 	public void paint(Graphics g) {
-<span class="nc" id="L180">		super.paint(g);</span>
-<span class="nc" id="L181">		g.setColor(Color.WHITE);</span>
-<span class="nc" id="L182">		g.fillRect(0, 0, width, height);</span>
-<span class="nc" id="L183">		g.setColor(Color.BLACK);</span>
-<span class="nc" id="L184">		g.drawRect(0, 0, width - 1, height - 1);</span>
-<span class="nc" id="L185">		g.drawRect(1, 1, width - 3, height - 3);</span>
+<span class="nc" id="L181">		super.paint(g);</span>
+<span class="nc" id="L182">		g.setColor(XColor.WHITE.toAwtColor());</span>
+<span class="nc" id="L183">		g.fillRect(0, 0, width, height);</span>
+<span class="nc" id="L184">		g.setColor(XColor.BLACK.toAwtColor());</span>
+<span class="nc" id="L185">		g.drawRect(0, 0, width - 1, height - 1);</span>
+<span class="nc" id="L186">		g.drawRect(1, 1, width - 3, height - 3);</span>
 		// g.setColor(Color.RED);
 		// final String status = done + &quot;/&quot; + total;
 		// g.drawString(status, width / 2, height / 2);
-<span class="nc" id="L189">		g.drawImage(logo.getBufferedImage(), width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);</span>
-<span class="nc" id="L190">		drawProgessBar(g, done.intValue(), total.intValue());</span>
-<span class="nc" id="L191">		final int nbErrors = errors.get();</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (nbErrors &gt; 0) {</span>
-<span class="nc" id="L193">			g.setColor(Color.RED);</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">			final String message = &quot;&quot; + nbErrors + (nbErrors &gt; 1 ? &quot; diagrams&quot; : &quot; diagram&quot;) + &quot; contains errors&quot;;</span>
-<span class="nc" id="L195">			g.drawString(message, 10, 20);</span>
+<span class="nc" id="L190">		g.drawImage(logo.getBufferedImage(), width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);</span>
+<span class="nc" id="L191">		drawProgessBar(g, done.intValue(), total.intValue());</span>
+<span class="nc" id="L192">		final int nbErrors = errors.get();</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (nbErrors &gt; 0) {</span>
+<span class="nc" id="L194">			g.setColor(XColor.RED.toAwtColor());</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			final String message = &quot;&quot; + nbErrors + (nbErrors &gt; 1 ? &quot; diagrams&quot; : &quot; diagram&quot;) + &quot; contains errors&quot;;</span>
+<span class="nc" id="L196">			g.drawString(message, 10, 20);</span>
 		}
-<span class="nc" id="L197">		g.setColor(link);</span>
-<span class="nc" id="L198">		final String urllink = &quot;https://plantuml.com&quot;;</span>
-<span class="nc" id="L199">		final Rectangle2D rect = getUsed(g, urllink);</span>
-<span class="nc" id="L200">		g.drawString(urllink, 10, (int) (height - rect.getMaxY()));</span>
-<span class="nc" id="L201">		limY = (int) (height - rect.getMaxY() + rect.getMinY());</span>
-<span class="nc" id="L202">		limX = (int) (10 + rect.getMaxX());</span>
+<span class="nc" id="L198">		g.setColor(link.toAwtColor());</span>
+<span class="nc" id="L199">		final String urllink = &quot;https://plantuml.com&quot;;</span>
+<span class="nc" id="L200">		final Rectangle2D rect = getUsed(g, urllink);</span>
+<span class="nc" id="L201">		g.drawString(urllink, 10, (int) (height - rect.getMaxY()));</span>
+<span class="nc" id="L202">		limY = (int) (height - rect.getMaxY() + rect.getMinY());</span>
+<span class="nc" id="L203">		limX = (int) (10 + rect.getMaxX());</span>
 
-<span class="nc" id="L204">	}</span>
+<span class="nc" id="L205">	}</span>
 
 	private void drawProgessBar(Graphics g, int intValue, int totalValue) {
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (totalValue == 0) {</span>
-<span class="nc" id="L208">			return;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (totalValue == 0) {</span>
+<span class="nc" id="L209">			return;</span>
 		}
-<span class="nc" id="L210">		g.setFont(font);</span>
-<span class="nc" id="L211">		final String label = &quot;&quot; + intValue + &quot;/&quot; + totalValue;</span>
-<span class="nc" id="L212">		final Rectangle2D rect = getUsed(g, label);</span>
+<span class="nc" id="L211">		g.setFont(font);</span>
+<span class="nc" id="L212">		final String label = &quot;&quot; + intValue + &quot;/&quot; + totalValue;</span>
+<span class="nc" id="L213">		final Rectangle2D rect = getUsed(g, label);</span>
 
-<span class="nc" id="L214">		final int x = 10;</span>
-<span class="nc" id="L215">		final int y = 33;</span>
-<span class="nc" id="L216">		final int barWidth = 170;</span>
-<span class="nc" id="L217">		final int barHeight = (int) (rect.getHeight() + 2);</span>
-<span class="nc" id="L218">		final int gray = 230;</span>
-<span class="nc" id="L219">		g.setColor(new Color(gray, gray, gray));</span>
-<span class="nc" id="L220">		final int value = barWidth * intValue / totalValue;</span>
-<span class="nc" id="L221">		g.fillRect(x, y, value, barHeight);</span>
-<span class="nc" id="L222">		g.setColor(Color.BLACK);</span>
-<span class="nc" id="L223">		g.drawRect(x, y, barWidth, barHeight);</span>
+<span class="nc" id="L215">		final int x = 10;</span>
+<span class="nc" id="L216">		final int y = 33;</span>
+<span class="nc" id="L217">		final int barWidth = 170;</span>
+<span class="nc" id="L218">		final int barHeight = (int) (rect.getHeight() + 2);</span>
+<span class="nc" id="L219">		final int gray = 230;</span>
+<span class="nc" id="L220">		g.setColor(new XColor(gray, gray, gray).toAwtColor());</span>
+<span class="nc" id="L221">		final int value = barWidth * intValue / totalValue;</span>
+<span class="nc" id="L222">		g.fillRect(x, y, value, barHeight);</span>
+<span class="nc" id="L223">		g.setColor(XColor.BLACK.toAwtColor());</span>
+<span class="nc" id="L224">		g.drawRect(x, y, barWidth, barHeight);</span>
 
-<span class="nc" id="L225">		final double xLabel = x + (barWidth - rect.getWidth()) / 2;</span>
-<span class="nc" id="L226">		final double yLabel = y - rect.getY() + (barHeight - rect.getHeight()) / 2;</span>
-<span class="nc" id="L227">		g.drawString(label, (int) xLabel, (int) yLabel);</span>
-<span class="nc" id="L228">	}</span>
+<span class="nc" id="L226">		final double xLabel = x + (barWidth - rect.getWidth()) / 2;</span>
+<span class="nc" id="L227">		final double yLabel = y - rect.getY() + (barHeight - rect.getHeight()) / 2;</span>
+<span class="nc" id="L228">		g.drawString(label, (int) xLabel, (int) yLabel);</span>
+<span class="nc" id="L229">	}</span>
 
 	private Rectangle2D getUsed(Graphics g, final String label) {
-<span class="nc" id="L231">		return g.getFontMetrics().getStringBounds(label, g);</span>
+<span class="nc" id="L232">		return g.getFontMetrics().getStringBounds(label, g);</span>
 	}
 
 	// Static
 
 	public synchronized static void createSplash() {
-<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (singleton == null) {</span>
-<span class="nc" id="L238">			singleton = new Splash();</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (singleton == null) {</span>
+<span class="nc" id="L239">			singleton = new Splash();</span>
 		}
-<span class="nc" id="L240">	}</span>
+<span class="nc" id="L241">	}</span>
 
 	public static void incTotal(int nb) {
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (singleton != null) {</span>
-<span class="nc" id="L244">			singleton.incTotalInternal(nb);</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (singleton != null) {</span>
+<span class="nc" id="L245">			singleton.incTotalInternal(nb);</span>
 		}
-<span class="fc" id="L246">	}</span>
+<span class="fc" id="L247">	}</span>
 
 	public static void incDone(boolean error) {
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (singleton != null) {</span>
-<span class="nc" id="L250">			singleton.incDoneInternal(error);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (singleton != null) {</span>
+<span class="nc" id="L251">			singleton.incDoneInternal(error);</span>
 		}
-<span class="fc" id="L252">	}</span>
+<span class="fc" id="L253">	}</span>
 
 	public synchronized static void disposeSplash() {
-<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (singleton != null) {</span>
-<span class="nc" id="L256">			singleton.setVisible(false);</span>
-<span class="nc" id="L257">			singleton.dispose();</span>
-<span class="nc" id="L258">			singleton = null;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (singleton != null) {</span>
+<span class="nc" id="L257">			singleton.setVisible(false);</span>
+<span class="nc" id="L258">			singleton.dispose();</span>
+<span class="nc" id="L259">			singleton = null;</span>
 		}
-<span class="nc" id="L260">	}</span>
+<span class="nc" id="L261">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -91,7 +91,7 @@ public class BlockUml {
 <span class="nc" id="L91">		this(PathSystem.fetch(), convert(strings), Defines.createEmpty(), null, null, null);</span>
 <span class="nc" id="L92">	}</span>
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public String getEncodedUrl() throws IOException {
 <span class="fc" id="L96">		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();</span>
 <span class="fc" id="L97">		final String source = getDiagram().getSource().getPlainString(&quot;\n&quot;);</span>
@@ -160,7 +160,7 @@ public class BlockUml {
 		}
 <span class="fc" id="L161">	}</span>
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public String getFileOrDirname() {
 <span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))</span>
 <span class="nc" id="L166">			return null;</span>
@@ -190,63 +190,66 @@ public class BlockUml {
 	// ::done
 
 	public Diagram getDiagram() {
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (system == null) {</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">			if (preprocessorError)</span>
-<span class="fc" id="L195">				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);</span>
+		// ::revert when __CORE__ or __TEAVM__
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (system == null) {</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">			if (preprocessorError)</span>
+<span class="fc" id="L196">				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);</span>
 			else
-<span class="fc" id="L197">				system = new PSystemBuilder().createPSystem(pathSystem, data, rawSource, previous,</span>
+<span class="fc" id="L198">				system = new PSystemBuilder().createPSystem(pathSystem, data, rawSource, previous,</span>
 						preprocessingArtifact);
 		}
-<span class="fc" id="L200">		return system;</span>
+<span class="fc" id="L201">		return system;</span>
+		// throw new UnsupportedOperationException(&quot;TEAVM11&quot;);
+		// ::done
 	}
 
 	public final List&lt;StringLocated&gt; getData() {
-<span class="fc" id="L204">		return data;</span>
+<span class="fc" id="L207">		return data;</span>
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private String internalEtag() {
 		try {
-<span class="nc" id="L210">			final AsciiEncoder coder = new AsciiEncoder();</span>
-<span class="nc" id="L211">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">			for (StringLocated s : data)</span>
-<span class="nc" id="L213">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
+<span class="nc" id="L213">			final AsciiEncoder coder = new AsciiEncoder();</span>
+<span class="nc" id="L214">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			for (StringLocated s : data)</span>
+<span class="nc" id="L216">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
 
-<span class="nc" id="L215">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L216">			return coder.encode(digest);</span>
-<span class="nc" id="L217">		} catch (Exception e) {</span>
-<span class="nc" id="L218">			Logme.error(e);</span>
-<span class="nc" id="L219">			return &quot;NOETAG&quot;;</span>
+<span class="nc" id="L218">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L219">			return coder.encode(digest);</span>
+<span class="nc" id="L220">		} catch (Exception e) {</span>
+<span class="nc" id="L221">			Logme.error(e);</span>
+<span class="nc" id="L222">			return &quot;NOETAG&quot;;</span>
 		}
 	}
 
 	public String etag() {
-<span class="nc" id="L224">		return Version.etag() + internalEtag();</span>
+<span class="nc" id="L227">		return Version.etag() + internalEtag();</span>
 	}
 	// ::done
 
 	public long lastModified() {
-<span class="nc" id="L229">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
+<span class="nc" id="L232">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
 	}
 
 	public boolean isStartDef(String name) {
-<span class="nc" id="L233">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
-<span class="nc" id="L234">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
+<span class="nc" id="L236">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
+<span class="nc" id="L237">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
 	}
 
 	public List&lt;String&gt; getDefinition(boolean withHeader) {
-<span class="fc" id="L238">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">		for (StringLocated s : data)</span>
-<span class="fc" id="L240">			result.add(s.getString());</span>
+<span class="fc" id="L241">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">		for (StringLocated s : data)</span>
+<span class="fc" id="L243">			result.add(s.getString());</span>
 
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (withHeader)</span>
-<span class="fc" id="L243">			return Collections.unmodifiableList(result);</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (withHeader)</span>
+<span class="fc" id="L246">			return Collections.unmodifiableList(result);</span>
 
-<span class="nc" id="L245">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
+<span class="nc" id="L248">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
 	}
 
 	public Defines getLocalDefines() {
-<span class="nc" id="L249">		return localDefines;</span>
+<span class="nc" id="L252">		return localDefines;</span>
 	}
 
 }

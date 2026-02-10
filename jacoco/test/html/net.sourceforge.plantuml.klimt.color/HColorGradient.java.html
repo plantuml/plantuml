@@ -34,8 +34,10 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+
 import java.util.Objects;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class HColorGradient extends HColor {
 
@@ -43,69 +45,69 @@ public class HColorGradient extends HColor {
 	private final HColor color2;
 	private final char policy;
 
-<span class="fc" id="L46">	HColorGradient(HColor color1arg, HColor color2arg, char policy) {</span>
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (color1arg instanceof HColorGradient)</span>
-<span class="nc" id="L48">			color1arg = ((HColorGradient) color1arg).color1;</span>
+<span class="fc" id="L48">	HColorGradient(HColor color1arg, HColor color2arg, char policy) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (color1arg instanceof HColorGradient)</span>
+<span class="nc" id="L50">			color1arg = ((HColorGradient) color1arg).color1;</span>
 
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (color2arg instanceof HColorGradient)</span>
-<span class="nc" id="L51">			color2arg = ((HColorGradient) color2arg).color2;</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (color2arg instanceof HColorGradient)</span>
+<span class="nc" id="L53">			color2arg = ((HColorGradient) color2arg).color2;</span>
 
-<span class="fc" id="L53">		this.color1 = Objects.requireNonNull(color1arg);</span>
-<span class="fc" id="L54">		this.color2 = Objects.requireNonNull(color2arg);</span>
-<span class="fc" id="L55">		this.policy = policy;</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L55">		this.color1 = Objects.requireNonNull(color1arg);</span>
+<span class="fc" id="L56">		this.color2 = Objects.requireNonNull(color2arg);</span>
+<span class="fc" id="L57">		this.policy = policy;</span>
+<span class="fc" id="L58">	}</span>
 
 	public final HColor getColor1() {
-<span class="nc" id="L59">		return color1;</span>
+<span class="nc" id="L61">		return color1;</span>
 	}
 
 	public final HColor getColor2() {
-<span class="nc" id="L63">		return color2;</span>
+<span class="nc" id="L65">		return color2;</span>
 	}
 
-	public final Color getColor(ColorMapper mapper, double coeff, int alpha) {
-<span class="pc bpc" id="L67" title="2 of 4 branches missed.">		if (coeff &gt; 1 || coeff &lt; 0)</span>
-<span class="nc" id="L68">			throw new IllegalArgumentException(&quot;c=&quot; + coeff);</span>
+	public final XColor getColor(ColorMapper mapper, double coeff, int alpha) {
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">		if (coeff &gt; 1 || coeff &lt; 0)</span>
+<span class="nc" id="L70">			throw new IllegalArgumentException(&quot;c=&quot; + coeff);</span>
 
-<span class="fc" id="L70">		final Color c1 = color1.toColor(mapper);</span>
-<span class="fc" id="L71">		final Color c2 = color2.toColor(mapper);</span>
+<span class="fc" id="L72">		final XColor c1 = color1.toColor(mapper);</span>
+<span class="fc" id="L73">		final XColor c2 = color2.toColor(mapper);</span>
 
-<span class="fc" id="L73">		final int diffRed = c2.getRed() - c1.getRed();</span>
-<span class="fc" id="L74">		final int diffGreen = c2.getGreen() - c1.getGreen();</span>
-<span class="fc" id="L75">		final int diffBlue = c2.getBlue() - c1.getBlue();</span>
+<span class="fc" id="L75">		final int diffRed = c2.getRed() - c1.getRed();</span>
+<span class="fc" id="L76">		final int diffGreen = c2.getGreen() - c1.getGreen();</span>
+<span class="fc" id="L77">		final int diffBlue = c2.getBlue() - c1.getBlue();</span>
 
-<span class="fc" id="L77">		final int vRed = (int) (coeff * diffRed);</span>
-<span class="fc" id="L78">		final int vGreen = (int) (coeff * diffGreen);</span>
-<span class="fc" id="L79">		final int vBlue = (int) (coeff * diffBlue);</span>
+<span class="fc" id="L79">		final int vRed = (int) (coeff * diffRed);</span>
+<span class="fc" id="L80">		final int vGreen = (int) (coeff * diffGreen);</span>
+<span class="fc" id="L81">		final int vBlue = (int) (coeff * diffBlue);</span>
 
-<span class="fc" id="L81">		final int red = c1.getRed() + vRed;</span>
-<span class="fc" id="L82">		final int green = c1.getGreen() + vGreen;</span>
-<span class="fc" id="L83">		final int blue = c1.getBlue() + vBlue;</span>
+<span class="fc" id="L83">		final int red = c1.getRed() + vRed;</span>
+<span class="fc" id="L84">		final int green = c1.getGreen() + vGreen;</span>
+<span class="fc" id="L85">		final int blue = c1.getBlue() + vBlue;</span>
 
-<span class="fc" id="L85">		return new Color(red, green, blue, alpha);</span>
+<span class="fc" id="L87">		return new XColor(red, green, blue, alpha);</span>
 
 	}
 
 	public final int getRGB(ColorMapper mapper, double coeff, int alpha) {
 		// ::revert when __TEAVM__
-<span class="nc" id="L91">		return getColor(mapper, coeff, alpha).getRGB();</span>
+<span class="nc" id="L93">		return getColor(mapper, coeff, alpha).getRGB();</span>
 		// return 0;
 		// ::done
 
 	}
 
 	public final char getPolicy() {
-<span class="nc" id="L98">		return policy;</span>
+<span class="nc" id="L100">		return policy;</span>
 	}
 
 	@Override
-	public Color toColor(ColorMapper mapper) {
-<span class="nc" id="L103">		return color1.toColor(mapper);</span>
+	public XColor toColor(ColorMapper mapper) {
+<span class="nc" id="L105">		return color1.toColor(mapper);</span>
 	}
 
 	@Override
 	public HColor opposite() {
-<span class="nc" id="L108">		return color1.opposite();</span>
+<span class="nc" id="L110">		return color1.opposite();</span>
 	}
 
 }

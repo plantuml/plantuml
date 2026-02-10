@@ -4,10 +4,10 @@ import java.awt.Color;
 
 public class XColor {
 
-<span class="nc" id="L7">	public static final XColor BLACK = new XColor(0, 0, 0);</span>
-<span class="nc" id="L8">	public static final XColor WHITE = new XColor(255, 255, 255);</span>
-<span class="nc" id="L9">	public static final XColor RED = new XColor(255, 0, 0);</span>
-<span class="nc" id="L10">	public static final XColor BLUE = new XColor(0, 0, 255);</span>
+<span class="fc" id="L7">	public static final XColor BLACK = new XColor(0, 0, 0);</span>
+<span class="fc" id="L8">	public static final XColor WHITE = new XColor(255, 255, 255);</span>
+<span class="fc" id="L9">	public static final XColor RED = new XColor(255, 0, 0);</span>
+<span class="fc" id="L10">	public static final XColor BLUE = new XColor(0, 0, 255);</span>
 
 	private final int red;
 	private final int green;
@@ -15,78 +15,105 @@ public class XColor {
 	private final int alpha;
 
 	public XColor(int r, int g, int b) {
-<span class="nc" id="L18">		this(r, g, b, 255);</span>
-<span class="nc" id="L19">	}</span>
+<span class="fc" id="L18">		this(r, g, b, 255);</span>
+<span class="fc" id="L19">	}</span>
 
-<span class="nc" id="L21">	public XColor(int r, int g, int b, int a) {</span>
-<span class="nc" id="L22">		this.red = r &amp; 0xFF;</span>
-<span class="nc" id="L23">		this.green = g &amp; 0xFF;</span>
-<span class="nc" id="L24">		this.blue = b &amp; 0xFF;</span>
-<span class="nc" id="L25">		this.alpha = a &amp; 0xFF;</span>
-<span class="nc" id="L26">	}</span>
+<span class="fc" id="L21">	public XColor(int r, int g, int b, int a) {</span>
+<span class="fc" id="L22">		this.red = r &amp; 0xFF;</span>
+<span class="fc" id="L23">		this.green = g &amp; 0xFF;</span>
+<span class="fc" id="L24">		this.blue = b &amp; 0xFF;</span>
+<span class="fc" id="L25">		this.alpha = a &amp; 0xFF;</span>
+<span class="fc" id="L26">	}</span>
 
-<span class="nc" id="L28">	public XColor(int rgb) {</span>
-<span class="nc" id="L29">		this.alpha = (rgb &gt;&gt; 24) &amp; 0xFF;</span>
-<span class="nc" id="L30">		this.red = (rgb &gt;&gt; 16) &amp; 0xFF;</span>
-<span class="nc" id="L31">		this.green = (rgb &gt;&gt; 8) &amp; 0xFF;</span>
-<span class="nc" id="L32">		this.blue = rgb &amp; 0xFF;</span>
-<span class="nc" id="L33">	}</span>
+	public static XColor from(int rgb) {
+<span class="fc" id="L29">		final int alpha = 255;</span>
+<span class="fc" id="L30">		final int red = (rgb &gt;&gt; 16) &amp; 0xFF;</span>
+<span class="fc" id="L31">		final int green = (rgb &gt;&gt; 8) &amp; 0xFF;</span>
+<span class="fc" id="L32">		final int blue = rgb &amp; 0xFF;</span>
+<span class="fc" id="L33">		return new XColor(red, green, blue, alpha);</span>
+	}
+
+	public static XColor fromFloat(float r, float g, float b, float a) {
+<span class="pc bpc" id="L37" title="12 of 24 branches missed.">		if (!Float.isFinite(r) || !Float.isFinite(g) || !Float.isFinite(b) || !Float.isFinite(a) || r &lt; 0.0f || r &gt; 1.0f</span>
+				|| g &lt; 0.0f || g &gt; 1.0f || b &lt; 0.0f || b &gt; 1.0f || a &lt; 0.0f || a &gt; 1.0f) {
+<span class="nc" id="L39">			throw new IllegalArgumentException();</span>
+		}
+<span class="fc" id="L41">		final int red = Math.round(r * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L42">		final int green = Math.round(g * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L43">		final int blue = Math.round(b * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L44">		final int alpha = Math.round(a * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L45">		return new XColor(red, green, blue, alpha);</span>
+	}
 
 	public int getAlpha() {
-<span class="nc" id="L36">		return alpha;</span>
+<span class="fc" id="L49">		return alpha;</span>
 	}
 
 	public int getRed() {
-<span class="nc" id="L40">		return red;</span>
+<span class="fc" id="L53">		return red;</span>
 	}
 
 	public int getBlue() {
-<span class="nc" id="L44">		return blue;</span>
+<span class="fc" id="L57">		return blue;</span>
 	}
 
 	public int getGreen() {
-<span class="nc" id="L48">		return green;</span>
+<span class="fc" id="L61">		return green;</span>
 	}
 
 	public int getRGB() {
-<span class="nc" id="L52">		return ((alpha &amp; 0xFF) &lt;&lt; 24) | ((red &amp; 0xFF) &lt;&lt; 16) | ((green &amp; 0xFF) &lt;&lt; 8) | (blue &amp; 0xFF);</span>
+<span class="fc" id="L65">		return ((alpha &amp; 0xFF) &lt;&lt; 24) | ((red &amp; 0xFF) &lt;&lt; 16) | ((green &amp; 0xFF) &lt;&lt; 8) | (blue &amp; 0xFF);</span>
 	}
 
 	public float[] getRGBColorComponents(Object object) {
 		float[] result;
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (object == null)</span>
-<span class="nc" id="L58">			result = new float[3];</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (object == null)</span>
+<span class="fc" id="L71">			result = new float[3];</span>
 		else
-<span class="nc" id="L60">			result = (float[]) object;</span>
+<span class="nc" id="L73">			result = (float[]) object;</span>
 
-<span class="nc" id="L62">		result[0] = red / 255.0f;</span>
-<span class="nc" id="L63">		result[1] = green / 255.0f;</span>
-<span class="nc" id="L64">		result[2] = blue / 255.0f;</span>
-<span class="nc" id="L65">		return result;</span>
+<span class="fc" id="L75">		result[0] = red / 255.0f;</span>
+<span class="fc" id="L76">		result[1] = green / 255.0f;</span>
+<span class="fc" id="L77">		result[2] = blue / 255.0f;</span>
+<span class="fc" id="L78">		return result;</span>
 	}
 
 	public Color toAwtColor() {
-<span class="nc" id="L69">		return new Color(red, green, blue, alpha);</span>
+<span class="fc" id="L82">		return new Color(red, green, blue, alpha);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L74">		return getRGB();</span>
+<span class="fc" id="L87">		return getRGB();</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L80">			return true;</span>
-<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (obj == null || getClass() != obj.getClass())</span>
-<span class="nc" id="L82">			return false;</span>
-<span class="nc" id="L83">		XColor other = (XColor) obj;</span>
-<span class="nc bnc" id="L84" title="All 8 branches missed.">		return red == other.red &amp;&amp; green == other.green &amp;&amp; blue == other.blue &amp;&amp; alpha == other.alpha;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L93">			return true;</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">		if (obj == null || getClass() != obj.getClass())</span>
+<span class="nc" id="L95">			return false;</span>
+<span class="fc" id="L96">		XColor other = (XColor) obj;</span>
+<span class="fc bfc" id="L97" title="All 8 branches covered.">		return red == other.red &amp;&amp; green == other.green &amp;&amp; blue == other.blue &amp;&amp; alpha == other.alpha;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L89">		return &quot;[r=&quot; + red + &quot;,g=&quot; + green + &quot;,b=&quot; + blue + &quot;,a=&quot; + alpha + &quot;]&quot;;</span>
+<span class="nc" id="L102">		return &quot;[r=&quot; + red + &quot;,g=&quot; + green + &quot;,b=&quot; + blue + &quot;,a=&quot; + alpha + &quot;]&quot;;</span>
+	}
+
+	public String toSvg() {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (alpha == 0)</span>
+<span class="nc" id="L107">			return &quot;#00000000&quot;;</span>
+
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (alpha == 255)</span>
+<span class="fc" id="L110">			return String.format(&quot;#%02X%02X%02X&quot;, red, green, blue);</span>
+
+<span class="nc" id="L112">		return String.format(&quot;#%02X%02X%02X%02X&quot;, red, green, blue, alpha);</span>
+	}
+
+	public static String toHexRGBColor(int rgb) {
+<span class="nc" id="L116">		return String.format(&quot;#%06X&quot;, rgb &amp; 0xFFFFFF);</span>
 	}
 
 }

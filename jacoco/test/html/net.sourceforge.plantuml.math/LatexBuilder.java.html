@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -44,6 +44,7 @@ import javax.swing.Icon;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
@@ -51,98 +52,98 @@ public class LatexBuilder implements ScientificEquation {
 
 	private final String tex;
 
-<span class="nc" id="L54">	public LatexBuilder(String tex) {</span>
-<span class="nc" id="L55">		this.tex = tex;</span>
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L55">	public LatexBuilder(String tex) {</span>
+<span class="nc" id="L56">		this.tex = tex;</span>
+<span class="nc" id="L57">	}</span>
 
 	private XDimension2D dimension;
 
 	public XDimension2D getDimension() {
-<span class="nc" id="L61">		return dimension;</span>
+<span class="nc" id="L62">		return dimension;</span>
 	}
 
-	private Icon buildIcon(Color foregroundColor)
+	private Icon buildIcon(XColor foregroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-<span class="nc" id="L67">		return new TeXIconBuilder(tex, foregroundColor).getIcon();</span>
+<span class="nc" id="L68">		return new TeXIconBuilder(tex, foregroundColor).getIcon();</span>
 	}
 
-	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor)
+	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, IOException {
-<span class="nc" id="L73">		final Icon icon = buildIcon(foregroundColor);</span>
-<span class="nc" id="L74">		final ConverterSvg converterSvg = new ConverterSvg(icon);</span>
-<span class="nc" id="L75">		final String svg = converterSvg.getSvg(scale, true, backgroundColor);</span>
-<span class="nc" id="L76">		dimension = converterSvg.getDimension();</span>
-<span class="nc" id="L77">		return new UImageSvg(svg, scale);</span>
+<span class="nc" id="L74">		final Icon icon = buildIcon(foregroundColor);</span>
+<span class="nc" id="L75">		final ConverterSvg converterSvg = new ConverterSvg(icon);</span>
+<span class="nc" id="L76">		final String svg = converterSvg.getSvg(scale, true, backgroundColor);</span>
+<span class="nc" id="L77">		dimension = converterSvg.getDimension();</span>
+<span class="nc" id="L78">		return new UImageSvg(svg, scale);</span>
 	}
 
-	public MutableImage getImage(Color foregroundColor, Color backgroundColor)
+	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-<span class="nc" id="L83">		final Icon icon = buildIcon(foregroundColor);</span>
-<span class="nc" id="L84">		return new LatexImage(icon, 1, foregroundColor, backgroundColor);</span>
+<span class="nc" id="L84">		final Icon icon = buildIcon(foregroundColor);</span>
+<span class="nc" id="L85">		return new LatexImage(icon, 1, foregroundColor, backgroundColor);</span>
 	}
 
 	class LatexImage implements MutableImage {
 
 		private final double scale;
 		private final Icon icon;
-		private final Color foregroundColor;
-		private final Color backgroundColor;
-<span class="nc" id="L93">		private PortableImage cache = null;</span>
+		private final XColor foregroundColor;
+		private final XColor backgroundColor;
+<span class="nc" id="L94">		private PortableImage cache = null;</span>
 
-<span class="nc" id="L95">		public LatexImage(Icon icon, double scale, Color foregroundColor, Color backgroundColor) {</span>
-<span class="nc" id="L96">			this.scale = scale;</span>
-<span class="nc" id="L97">			this.foregroundColor = foregroundColor;</span>
-<span class="nc" id="L98">			this.backgroundColor = backgroundColor;</span>
-<span class="nc" id="L99">			this.icon = icon;</span>
-<span class="nc" id="L100">		}</span>
+<span class="nc" id="L96">		public LatexImage(Icon icon, double scale, XColor foregroundColor, XColor backgroundColor) {</span>
+<span class="nc" id="L97">			this.scale = scale;</span>
+<span class="nc" id="L98">			this.foregroundColor = foregroundColor;</span>
+<span class="nc" id="L99">			this.backgroundColor = backgroundColor;</span>
+<span class="nc" id="L100">			this.icon = icon;</span>
+<span class="nc" id="L101">		}</span>
 
 		@Override
 		public PortableImage getImage() {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (cache == null) {</span>
-<span class="nc" id="L105">				cache = new PortableImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (cache == null) {</span>
+<span class="nc" id="L106">				cache = new PortableImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),</span>
 						PortableImage.TYPE_INT_ARGB);
-<span class="nc" id="L107">				final Graphics2D g2 = cache.createGraphics();</span>
-<span class="nc" id="L108">				g2.scale(scale, scale);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (backgroundColor != null) {</span>
-<span class="nc" id="L110">					g2.setColor(backgroundColor);</span>
-<span class="nc" id="L111">					g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());</span>
+<span class="nc" id="L108">				final Graphics2D g2 = cache.createGraphics();</span>
+<span class="nc" id="L109">				g2.scale(scale, scale);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				if (backgroundColor != null) {</span>
+<span class="nc" id="L111">					g2.setColor(backgroundColor.toAwtColor());</span>
+<span class="nc" id="L112">					g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());</span>
 				}
-<span class="nc" id="L113">				icon.paintIcon(null, g2, 0, 0);</span>
+<span class="nc" id="L114">				icon.paintIcon(null, g2, 0, 0);</span>
 			}
-<span class="nc" id="L115">			return cache;</span>
+<span class="nc" id="L116">			return cache;</span>
 		}
 
 		public MutableImage withScale(double scale) {
-<span class="nc" id="L119">			return new LatexImage(icon, this.scale * scale, foregroundColor, backgroundColor);</span>
+<span class="nc" id="L120">			return new LatexImage(icon, this.scale * scale, foregroundColor, backgroundColor);</span>
 		}
 
 		@Override
-		public MutableImage muteColor(Color newColor) {
-<span class="nc" id="L124">			return this;</span>
+		public MutableImage muteColor(XColor newColor) {
+<span class="nc" id="L125">			return this;</span>
 		}
 
 		@Override
-		public MutableImage muteTransparentColor(Color newColor) {
-<span class="nc" id="L129">			return this;</span>
+		public MutableImage muteTransparentColor(XColor newColor) {
+<span class="nc" id="L130">			return this;</span>
 		}
 
 		@Override
 		public MutableImage monochrome() {
-<span class="nc" id="L134">			return this;</span>
+<span class="nc" id="L135">			return this;</span>
 		}
 
 		@Override
 		public double getScale() {
-<span class="nc" id="L139">			return scale;</span>
+<span class="nc" id="L140">			return scale;</span>
 		}
 
 	}
 
 	public String getSource() {
-<span class="nc" id="L145">		return tex;</span>
+<span class="nc" id="L146">		return tex;</span>
 	}
 
 }

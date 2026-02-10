@@ -55,7 +55,7 @@ public class DriverDotPathG2d implements UDriver&lt;DotPath, Graphics2D&gt; {
 <span class="fc" id="L55">		DriverLineG2d.manageStroke(param, g2d);</span>
 
 <span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
-<span class="fc" id="L58">			g2d.setColor(param.getColor().toColor(mapper));</span>
+<span class="fc" id="L58">			g2d.setColor(param.getColor().toColor(mapper).toAwtColor());</span>
 <span class="fc" id="L59">			shape.draw(g2d, x, y);</span>
 <span class="fc" id="L60">			shape.manageEnsureVisible(x, y, visible);</span>
 		}

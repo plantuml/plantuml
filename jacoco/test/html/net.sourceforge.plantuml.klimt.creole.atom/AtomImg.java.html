@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.creole.atom;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.io.IOException;
 
 import net.atmp.PixelImage;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -86,7 +86,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 	public static Atom createQrcode(String flash, double scale) {
 <span class="nc" id="L87">		PortableImage im = null;</span>
 		// :: comment when __CORE__ or __TEAVM__
-<span class="nc" id="L89">		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
+<span class="nc" id="L89">		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">		if (im == null)</span>
 			// ::done
 <span class="nc" id="L92">			im = new PortableImage(10, 10, PortableImage.TYPE_INT_RGB);</span>

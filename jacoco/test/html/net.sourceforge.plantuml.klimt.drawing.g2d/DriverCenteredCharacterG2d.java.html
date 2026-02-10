@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 <span class="fc" id="L54">		final UFont font = characterCircled.getFont();</span>
 <span class="fc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="fc" id="L57">		g2d.setColor(param.getColor().toColor(mapper));</span>
+<span class="fc" id="L57">		g2d.setColor(param.getColor().toColor(mapper).toAwtColor());</span>
 <span class="fc" id="L58">		final double xpos = x - unusedSpace.getCenterX();</span>
 <span class="fc" id="L59">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 

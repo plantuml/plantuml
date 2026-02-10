@@ -35,8 +35,9 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Color;
 
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 
@@ -47,38 +48,38 @@ public class SplitParam {
 	private final int externalMargin;
 
 	private static SplitParam empty() {
-<span class="nc" id="L50">		return new SplitParam(null, null, 0);</span>
+<span class="nc" id="L51">		return new SplitParam(null, null, 0);</span>
 	}
 
-<span class="fc" id="L53">	public SplitParam(HColor borderColor, HColor externalColor, int externalMargin) {</span>
-<span class="pc bpc" id="L54" title="1 of 4 branches missed.">		if (borderColor != null &amp;&amp; externalMargin == 0) {</span>
-<span class="nc" id="L55">			externalMargin = 1;</span>
+<span class="fc" id="L54">	public SplitParam(HColor borderColor, HColor externalColor, int externalMargin) {</span>
+<span class="pc bpc" id="L55" title="1 of 4 branches missed.">		if (borderColor != null &amp;&amp; externalMargin == 0) {</span>
+<span class="nc" id="L56">			externalMargin = 1;</span>
 		}
-<span class="fc" id="L57">		this.borderColor = borderColor;</span>
-<span class="fc" id="L58">		this.externalColor = externalColor;</span>
-<span class="fc" id="L59">		this.externalMargin = externalMargin;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L58">		this.borderColor = borderColor;</span>
+<span class="fc" id="L59">		this.externalColor = externalColor;</span>
+<span class="fc" id="L60">		this.externalMargin = externalMargin;</span>
+<span class="fc" id="L61">	}</span>
 
 	public boolean isSet() {
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		return externalMargin &gt; 0;</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		return externalMargin &gt; 0;</span>
 	}
 
 	public int getExternalMargin() {
-<span class="fc" id="L67">		return externalMargin;</span>
+<span class="fc" id="L68">		return externalMargin;</span>
 	}
 
-	public Color getBorderColor() {
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (borderColor == null)</span>
-<span class="fc" id="L72">			return null;</span>
+	public XColor getBorderColor() {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (borderColor == null)</span>
+<span class="fc" id="L73">			return null;</span>
 
-<span class="fc" id="L74">		return ((HColorSimple) borderColor).getAwtColor();</span>
+<span class="fc" id="L75">		return ((HColorSimple) borderColor).getAwtColor();</span>
 	}
 
-	public Color getExternalColor() {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (externalColor == null)</span>
-<span class="fc" id="L79">			return null;</span>
+	public XColor getExternalColor() {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (externalColor == null)</span>
+<span class="fc" id="L80">			return null;</span>
 
-<span class="fc" id="L81">		return ((HColorSimple) externalColor).getAwtColor();</span>
+<span class="fc" id="L82">		return ((HColorSimple) externalColor).getAwtColor();</span>
 	}
 
 }

@@ -35,77 +35,78 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.Color;
+
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 
-<span class="nc" id="L44">public class ColorPalette4096 {</span>
+<span class="nc" id="L45">public class ColorPalette4096 {</span>
 
 	// private static final String colorValue = &quot;!#$%&amp;*+-:;&lt;=&gt;?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;
 	// Maybe ! and # will be used for something else in the future
 	// So we replace them by . and '
 	private static final String colorValue = &quot;.,$%&amp;*+-:;&lt;=&gt;?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;
 
-	public String getStringFor(Color dest) {
-<span class="nc" id="L52">		return getStringFor((HColorSimple) HColors.simple(dest));</span>
+	public String getStringFor(XColor dest) {
+<span class="nc" id="L53">		return getStringFor((HColorSimple) HColors.simple(dest));</span>
 	}
 
 	private String getStringFor(HColorSimple dest) {
-<span class="nc" id="L56">		int result = 0;</span>
-<span class="nc" id="L57">		int resultDist = Integer.MAX_VALUE;</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (int i = 0; i &lt; 4096; i++) {</span>
-<span class="nc" id="L59">			final int dist = dest.distanceTo(getHtmlColorSimpleFor(i));</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (dist &lt; resultDist) {</span>
-<span class="nc" id="L61">				result = i;</span>
-<span class="nc" id="L62">				resultDist = dist;</span>
+<span class="nc" id="L57">		int result = 0;</span>
+<span class="nc" id="L58">		int resultDist = Integer.MAX_VALUE;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (int i = 0; i &lt; 4096; i++) {</span>
+<span class="nc" id="L60">			final int dist = dest.distanceTo(getHtmlColorSimpleFor(i));</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (dist &lt; resultDist) {</span>
+<span class="nc" id="L62">				result = i;</span>
+<span class="nc" id="L63">				resultDist = dist;</span>
 			}
 		}
-<span class="nc" id="L65">		return encodeInt(result);</span>
+<span class="nc" id="L66">		return encodeInt(result);</span>
 	}
 
 	protected String encodeInt(int result) {
-<span class="nc" id="L69">		final int v2 = result % 64;</span>
-<span class="nc" id="L70">		final int v1 = result / 64;</span>
-<span class="nc bnc" id="L71" title="All 8 branches missed.">		assert v1 &gt;= 0 &amp;&amp; v1 &lt;= 63 &amp;&amp; v2 &gt;= 0 &amp;&amp; v2 &lt;= 63;</span>
-<span class="nc" id="L72">		return &quot;&quot; + colorValue.charAt(v1) + colorValue.charAt(v2);</span>
+<span class="nc" id="L70">		final int v2 = result % 64;</span>
+<span class="nc" id="L71">		final int v1 = result / 64;</span>
+<span class="nc bnc" id="L72" title="All 8 branches missed.">		assert v1 &gt;= 0 &amp;&amp; v1 &lt;= 63 &amp;&amp; v2 &gt;= 0 &amp;&amp; v2 &lt;= 63;</span>
+<span class="nc" id="L73">		return &quot;&quot; + colorValue.charAt(v1) + colorValue.charAt(v2);</span>
 	}
 
 	private HColorSimple getHtmlColorSimpleFor(int s) {
-<span class="nc" id="L76">		final Color color = Objects.requireNonNull(getColorFor(s));</span>
-<span class="nc" id="L77">		return (HColorSimple) HColors.simple(color);</span>
+<span class="nc" id="L77">		final XColor color = Objects.requireNonNull(getColorFor(s));</span>
+<span class="nc" id="L78">		return (HColorSimple) HColors.simple(color);</span>
 	}
 
-	protected Color getColorFor(String s) {
+	protected XColor getColorFor(String s) {
 		// Migration
-<span class="nc" id="L82">		s = s.replace('!', '.');</span>
-<span class="nc" id="L83">		s = s.replace('#', ',');</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (s.length() != 2)</span>
-<span class="nc" id="L85">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L83">		s = s.replace('!', '.');</span>
+<span class="nc" id="L84">		s = s.replace('#', ',');</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (s.length() != 2)</span>
+<span class="nc" id="L86">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L87">		final int v1 = colorValue.indexOf(s.charAt(0));</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (v1 == -1)</span>
-<span class="nc" id="L89">			return null;</span>
+<span class="nc" id="L88">		final int v1 = colorValue.indexOf(s.charAt(0));</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (v1 == -1)</span>
+<span class="nc" id="L90">			return null;</span>
 
-<span class="nc" id="L91">		final int v2 = colorValue.indexOf(s.charAt(1));</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (v2 == -1)</span>
-<span class="nc" id="L93">			return null;</span>
+<span class="nc" id="L92">		final int v2 = colorValue.indexOf(s.charAt(1));</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (v2 == -1)</span>
+<span class="nc" id="L94">			return null;</span>
 
-<span class="nc" id="L95">		final int code = v1 * 64 + v2;</span>
-<span class="nc" id="L96">		return getColorFor(code);</span>
+<span class="nc" id="L96">		final int code = v1 * 64 + v2;</span>
+<span class="nc" id="L97">		return getColorFor(code);</span>
 	}
 
-	protected Color getColorFor(final int code) {
-<span class="nc" id="L100">		final int blue = code % 16;</span>
-<span class="nc" id="L101">		final int green = (code / 16) % 16;</span>
-<span class="nc" id="L102">		final int red = (code / 256) % 16;</span>
-<span class="nc" id="L103">		return new Color(dup(red), dup(green), dup(blue));</span>
+	protected XColor getColorFor(final int code) {
+<span class="nc" id="L101">		final int blue = code % 16;</span>
+<span class="nc" id="L102">		final int green = (code / 16) % 16;</span>
+<span class="nc" id="L103">		final int red = (code / 256) % 16;</span>
+<span class="nc" id="L104">		return new XColor(dup(red), dup(green), dup(blue));</span>
 	}
 
 	private int dup(int v) {
-<span class="nc bnc" id="L107" title="All 4 branches missed.">		assert v &gt;= 0 &amp;&amp; v &lt;= 15;</span>
-<span class="nc" id="L108">		return v * 16 + v;</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		assert v &gt;= 0 &amp;&amp; v &lt;= 15;</span>
+<span class="nc" id="L109">		return v * 16 + v;</span>
 	}
 
 }

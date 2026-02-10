@@ -94,14 +94,14 @@ public class PngSplitter {
 <span class="nc" id="L94">							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);</span>
 <span class="nc" id="L95">					final Graphics2D g2d = withMargin.createGraphics();</span>
 <span class="nc bnc" id="L96" title="All 2 branches missed.">					if (splitParam.getExternalColor() != null) {</span>
-<span class="nc" id="L97">						g2d.setColor(splitParam.getExternalColor());</span>
+<span class="nc" id="L97">						g2d.setColor(splitParam.getExternalColor().toAwtColor());</span>
 <span class="nc" id="L98">						g2d.fillRect(0, 0, withMargin.getWidth(), withMargin.getHeight());</span>
 					}
 <span class="nc" id="L100">					g2d.drawImage(piece.getBufferedImage(), splitParam.getExternalMargin(),</span>
 <span class="nc" id="L101">							splitParam.getExternalMargin(), null);</span>
 
 <span class="nc bnc" id="L103" title="All 2 branches missed.">					if (splitParam.getBorderColor() != null) {</span>
-<span class="nc" id="L104">						g2d.setColor(splitParam.getBorderColor());</span>
+<span class="nc" id="L104">						g2d.setColor(splitParam.getBorderColor().toAwtColor());</span>
 <span class="nc" id="L105">						g2d.drawRect(splitParam.getExternalMargin() - 1, splitParam.getExternalMargin() - 1,</span>
 <span class="nc" id="L106">								piece.getWidth() + 1, piece.getHeight() + 1);</span>
 					}

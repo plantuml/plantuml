@@ -35,52 +35,60 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public abstract class ColorMapper {
 
 	private ColorMapper() {
 	}
 
-	public abstract Color fromColorSimple(HColorSimple simple);
+	public abstract XColor fromColorSimple(HColorSimple simple);
 
 <span class="fc" id="L47">	public final static ColorMapper IDENTITY = new ColorMapper() {</span>
 		@Override
-		public Color fromColorSimple(HColorSimple simple) {
+		public XColor fromColorSimple(HColorSimple simple) {
 <span class="fc" id="L50">			return simple.getAwtColor();</span>
 		}
 	};
+	
+<span class="fc" id="L54">	public final static ColorMapper TEAVM = new ColorMapper() {</span>
+		@Override
+		public XColor fromColorSimple(HColorSimple simple) {
+<span class="nc" id="L57">			return simple.getAwtColor();</span>
+		}
+	};
+
 	// ::comment when __HAXE__
-<span class="fc" id="L54">	public final static ColorMapper DARK_MODE = new ColorMapper() {</span>
+<span class="fc" id="L62">	public final static ColorMapper DARK_MODE = new ColorMapper() {</span>
 		@Override
-		public Color fromColorSimple(HColorSimple simple) {
-<span class="fc" id="L57">			return ((HColorSimple) simple.darkSchemeTheme()).getAwtColor();</span>
+		public XColor fromColorSimple(HColorSimple simple) {
+<span class="fc" id="L65">			return ((HColorSimple) simple.darkSchemeTheme()).getAwtColor();</span>
 		}
 	};
-<span class="fc" id="L60">	public final static ColorMapper LIGTHNESS_INVERSE = new ColorMapper() {</span>
+<span class="fc" id="L68">	public final static ColorMapper LIGTHNESS_INVERSE = new ColorMapper() {</span>
 		@Override
-		public Color fromColorSimple(HColorSimple simple) {
-<span class="nc" id="L63">			return ColorUtils.getReversed(simple.getAwtColor());</span>
+		public XColor fromColorSimple(HColorSimple simple) {
+<span class="nc" id="L71">			return ColorUtils.getReversed(simple.getAwtColor());</span>
 		}
 	};
-<span class="fc" id="L66">	public static final ColorMapper MONOCHROME = new ColorMapper() {</span>
+<span class="fc" id="L74">	public static final ColorMapper MONOCHROME = new ColorMapper() {</span>
 		@Override
-		public Color fromColorSimple(HColorSimple simple) {
-<span class="nc" id="L69">			return ColorUtils.getGrayScaleColor(simple.getAwtColor());</span>
+		public XColor fromColorSimple(HColorSimple simple) {
+<span class="nc" id="L77">			return ColorUtils.getGrayScaleColor(simple.getAwtColor());</span>
 		}
 	};
-<span class="fc" id="L72">	public static final ColorMapper MONOCHROME_REVERSE = new ColorMapper() {</span>
+<span class="fc" id="L80">	public static final ColorMapper MONOCHROME_REVERSE = new ColorMapper() {</span>
 		@Override
-		public Color fromColorSimple(HColorSimple simple) {
-<span class="nc" id="L75">			return ColorUtils.getGrayScaleColorReverse(simple.getAwtColor());</span>
+		public XColor fromColorSimple(HColorSimple simple) {
+<span class="nc" id="L83">			return ColorUtils.getGrayScaleColorReverse(simple.getAwtColor());</span>
 		}
 	};
 
 	public static ColorMapper reverse(final ColorOrder order) {
-<span class="nc" id="L80">		return new ColorMapper() {</span>
+<span class="nc" id="L88">		return new ColorMapper() {</span>
 			@Override
-			public Color fromColorSimple(HColorSimple simple) {
-<span class="nc" id="L83">				return order.getReverse(simple.getAwtColor());</span>
+			public XColor fromColorSimple(HColorSimple simple) {
+<span class="nc" id="L91">				return order.getReverse(simple.getAwtColor());</span>
 			}
 		};
 	}

@@ -35,40 +35,41 @@
  */
 package net.sourceforge.plantuml.png;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L44">public class PngSizer {</span>
+<span class="nc" id="L45">public class PngSizer {</span>
 	// ::remove file when __TEAVM__
 	static public BufferedImage process(BufferedImage im, int minsize) {
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (minsize != Integer.MAX_VALUE) {</span>
-<span class="nc" id="L49">			return resize(im, minsize);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (minsize != Integer.MAX_VALUE) {</span>
+<span class="nc" id="L50">			return resize(im, minsize);</span>
 		}
-<span class="nc" id="L51">		return im;</span>
+<span class="nc" id="L52">		return im;</span>
 
 	}
 
 	static private BufferedImage resize(BufferedImage im, int minsize) {
-<span class="nc" id="L56">		Log.info(() -&gt; &quot;Resizing file to &quot; + minsize);</span>
+<span class="nc" id="L57">		Log.info(() -&gt; &quot;Resizing file to &quot; + minsize);</span>
 
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (im.getWidth() &gt;= minsize) {</span>
-<span class="nc" id="L59">			return im;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (im.getWidth() &gt;= minsize) {</span>
+<span class="nc" id="L60">			return im;</span>
 		}
 
-<span class="nc" id="L62">		final BufferedImage newIm = new BufferedImage(minsize, im.getHeight(), BufferedImage.TYPE_INT_RGB);</span>
-<span class="nc" id="L63">		final Graphics2D g2d = newIm.createGraphics();</span>
-<span class="nc" id="L64">		g2d.setColor(Color.WHITE);</span>
-<span class="nc" id="L65">		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());</span>
-<span class="nc" id="L66">		final int delta = (minsize - im.getWidth()) / 2;</span>
-<span class="nc" id="L67">		g2d.drawImage(im, delta, 0, null);</span>
+<span class="nc" id="L63">		final BufferedImage newIm = new BufferedImage(minsize, im.getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L64">		final Graphics2D g2d = newIm.createGraphics();</span>
+<span class="nc" id="L65">		g2d.setColor(XColor.WHITE.toAwtColor());</span>
+<span class="nc" id="L66">		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());</span>
+<span class="nc" id="L67">		final int delta = (minsize - im.getWidth()) / 2;</span>
+<span class="nc" id="L68">		g2d.drawImage(im, delta, 0, null);</span>
 
-<span class="nc" id="L69">		g2d.dispose();</span>
+<span class="nc" id="L70">		g2d.dispose();</span>
 
-<span class="nc" id="L71">		return newIm;</span>
+<span class="nc" id="L72">		return newIm;</span>
 
 	}
 

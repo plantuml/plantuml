@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -53,69 +54,69 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLatex extends AbstractPSystem {
 
-<span class="nc" id="L56">	private String latex = &quot;&quot;;</span>
-<span class="nc" id="L57">	private float scale = 1;</span>
-<span class="nc" id="L58">	private Color color = Color.BLACK;</span>
-<span class="nc" id="L59">	private Color backColor = Color.WHITE;</span>
+<span class="nc" id="L57">	private String latex = &quot;&quot;;</span>
+<span class="nc" id="L58">	private float scale = 1;</span>
+<span class="nc" id="L59">	private XColor color = XColor.BLACK;</span>
+<span class="nc" id="L60">	private XColor backColor = XColor.WHITE;</span>
 
 	public PSystemLatex(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L62">		super(source, preprocessing);</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L63">		super(source, preprocessing);</span>
+<span class="nc" id="L64">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L66">		return new DiagramDescription(&quot;(Latex)&quot;);</span>
+<span class="nc" id="L67">		return new DiagramDescription(&quot;(Latex)&quot;);</span>
 	}
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-<span class="nc" id="L72">		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);</span>
-<span class="nc" id="L73">		return asciiMath.export(os, fileFormat, scale, color, backColor);</span>
+<span class="nc" id="L73">		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);</span>
+<span class="nc" id="L74">		return asciiMath.export(os, fileFormat, scale, color, backColor);</span>
 	}
 
 	public void doCommandLine(String line) {
-<span class="nc" id="L77">		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));</span>
-<span class="nc" id="L78">		final String colorParam = &quot;color &quot;;</span>
-<span class="nc" id="L79">		final String backParam = &quot;backgroundcolor &quot;;</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (lineLower.startsWith(colorParam)) {</span>
-<span class="nc" id="L81">			final Color col3 = getColor(line.substring(colorParam.length()));</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (col3 != null) {</span>
-<span class="nc" id="L83">				color = col3;</span>
+<span class="nc" id="L78">		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));</span>
+<span class="nc" id="L79">		final String colorParam = &quot;color &quot;;</span>
+<span class="nc" id="L80">		final String backParam = &quot;backgroundcolor &quot;;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (lineLower.startsWith(colorParam)) {</span>
+<span class="nc" id="L82">			final XColor col3 = getColor(line.substring(colorParam.length()));</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (col3 != null) {</span>
+<span class="nc" id="L84">				color = col3;</span>
 			}
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		} else if (lineLower.startsWith(backParam)) {</span>
-<span class="nc" id="L86">			final Color col3 = getColor(line.substring(backParam.length()));</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (col3 != null) {</span>
-<span class="nc" id="L88">				backColor = col3;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		} else if (lineLower.startsWith(backParam)) {</span>
+<span class="nc" id="L87">			final XColor col3 = getColor(line.substring(backParam.length()));</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (col3 != null) {</span>
+<span class="nc" id="L89">				backColor = col3;</span>
 			}
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		} else if (lineLower.startsWith(&quot;scale &quot;)) {</span>
-<span class="nc" id="L91">			final String value = line.substring(&quot;scale &quot;.length());</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		} else if (lineLower.startsWith(&quot;scale &quot;)) {</span>
+<span class="nc" id="L92">			final String value = line.substring(&quot;scale &quot;.length());</span>
 			try {
-<span class="nc" id="L93">				final float scale1 = Float.parseFloat(value);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (scale1 &gt; 0) {</span>
-<span class="nc" id="L95">					scale = scale1;</span>
+<span class="nc" id="L94">				final float scale1 = Float.parseFloat(value);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (scale1 &gt; 0) {</span>
+<span class="nc" id="L96">					scale = scale1;</span>
 				}
-<span class="nc" id="L97">			} catch (Exception e) {</span>
-<span class="nc" id="L98">				Logme.error(e);</span>
-<span class="nc" id="L99">			}</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		} else if (lineLower.startsWith(&quot;dpi &quot;)) {</span>
-<span class="nc" id="L101">			final String value = line.substring(&quot;dpi &quot;.length());</span>
+<span class="nc" id="L98">			} catch (Exception e) {</span>
+<span class="nc" id="L99">				Logme.error(e);</span>
+<span class="nc" id="L100">			}</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		} else if (lineLower.startsWith(&quot;dpi &quot;)) {</span>
+<span class="nc" id="L102">			final String value = line.substring(&quot;dpi &quot;.length());</span>
 			try {
-<span class="nc" id="L103">				final float dpi1 = Float.parseFloat(value);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">				if (dpi1 &gt; 0) {</span>
-<span class="nc" id="L105">					scale = dpi1 / 96;</span>
+<span class="nc" id="L104">				final float dpi1 = Float.parseFloat(value);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">				if (dpi1 &gt; 0) {</span>
+<span class="nc" id="L106">					scale = dpi1 / 96;</span>
 				}
-<span class="nc" id="L107">			} catch (Exception e) {</span>
-<span class="nc" id="L108">				Logme.error(e);</span>
-<span class="nc" id="L109">			}</span>
-<span class="nc" id="L110">		} else {</span>
-<span class="nc" id="L111">			this.latex = line;</span>
+<span class="nc" id="L108">			} catch (Exception e) {</span>
+<span class="nc" id="L109">				Logme.error(e);</span>
+<span class="nc" id="L110">			}</span>
+<span class="nc" id="L111">		} else {</span>
+<span class="nc" id="L112">			this.latex = line;</span>
 		}
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L114">	}</span>
 
-	private Color getColor(final String col) {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
-<span class="nc" id="L117">		final Color col3 = col2.toColor(ColorMapper.IDENTITY);</span>
-<span class="nc" id="L118">		return col3;</span>
+	private XColor getColor(final String col) {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
+<span class="nc" id="L118">		final XColor col3 = col2.toColor(ColorMapper.IDENTITY);</span>
+<span class="nc" id="L119">		return col3;</span>
 	}
 
 }

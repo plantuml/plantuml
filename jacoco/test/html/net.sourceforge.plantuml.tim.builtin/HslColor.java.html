@@ -34,11 +34,12 @@
  */
 package net.sourceforge.plantuml.tim.builtin;
 
-import java.awt.Color;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.HSLColor;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -48,34 +49,34 @@ import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-<span class="fc" id="L51">public class HslColor extends SimpleReturnFunction {</span>
+<span class="fc" id="L52">public class HslColor extends SimpleReturnFunction {</span>
 
-<span class="fc" id="L53">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%hsl_color&quot;, 3);</span>
+<span class="fc" id="L54">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%hsl_color&quot;, 3);</span>
 
 	public TFunctionSignature getSignature() {
-<span class="fc" id="L56">		return SIGNATURE;</span>
+<span class="fc" id="L57">		return SIGNATURE;</span>
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L61" title="All 4 branches missed.">		return nbArg == 3 || nbArg == 4;</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		return nbArg == 3 || nbArg == 4;</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L67">		final int h = values.get(0).toInt();</span>
-<span class="fc" id="L68">		final int s = values.get(1).toInt();</span>
-<span class="fc" id="L69">		final int l = values.get(2).toInt();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (values.size() == 3) {</span>
-<span class="fc" id="L71">			final HSLColor color = new HSLColor(h, s, l);</span>
-<span class="fc" id="L72">			final Color rgb = color.getRGB();</span>
-<span class="fc" id="L73">			return TValue.fromString(HColors.simple(rgb).asString());</span>
+<span class="fc" id="L68">		final int h = values.get(0).toInt();</span>
+<span class="fc" id="L69">		final int s = values.get(1).toInt();</span>
+<span class="fc" id="L70">		final int l = values.get(2).toInt();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (values.size() == 3) {</span>
+<span class="fc" id="L72">			final HSLColor color = new HSLColor(h, s, l);</span>
+<span class="fc" id="L73">			final XColor rgb = color.getRGB();</span>
+<span class="fc" id="L74">			return TValue.fromString(HColors.simple(rgb).asString());</span>
 		}
-<span class="fc" id="L75">		final int a = values.get(3).toInt();</span>
-<span class="fc" id="L76">		final HSLColor color = new HSLColor(h, s, l, (float) (a / 100.0));</span>
-<span class="fc" id="L77">		final Color rgb = color.getRGB();</span>
-<span class="fc" id="L78">		return TValue.fromString(HColors.simple(rgb).asString());</span>
+<span class="fc" id="L76">		final int a = values.get(3).toInt();</span>
+<span class="fc" id="L77">		final HSLColor color = new HSLColor(h, s, l, (float) (a / 100.0));</span>
+<span class="fc" id="L78">		final XColor rgb = color.getRGB();</span>
+<span class="fc" id="L79">		return TValue.fromString(HColors.simple(rgb).asString());</span>
 
 	}
 }

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.shape.UPixel;
 <span class="fc" id="L45">public class DriverPixelG2d implements UDriver&lt;UPixel, Graphics2D&gt; {</span>
 
 	public void draw(UPixel pixel, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-<span class="nc" id="L48">		g2d.setColor(param.getColor().toColor(mapper));</span>
+<span class="nc" id="L48">		g2d.setColor(param.getColor().toColor(mapper).toAwtColor());</span>
 <span class="nc" id="L49">		g2d.fillRect((int) x, (int) y, 1, 1);</span>
 <span class="nc" id="L50">	}</span>
 

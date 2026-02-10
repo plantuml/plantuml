@@ -35,66 +35,67 @@
  */
 package net.sourceforge.plantuml.png;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class PngFlashcoder {
 	// ::remove file when __CORE__ or __TEAVM__
 
 	private final List&lt;BufferedImage&gt; flashcodes;
 
-<span class="nc" id="L50">	public PngFlashcoder(List&lt;BufferedImage&gt; flashcodes) {</span>
-<span class="nc" id="L51">		this.flashcodes = flashcodes;</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L51">	public PngFlashcoder(List&lt;BufferedImage&gt; flashcodes) {</span>
+<span class="nc" id="L52">		this.flashcodes = flashcodes;</span>
+<span class="nc" id="L53">	}</span>
 
-	public BufferedImage processImage(BufferedImage im, Color background) {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (flashcodes != null) {</span>
-<span class="nc" id="L56">			im = addImage(im, background);</span>
+	public BufferedImage processImage(BufferedImage im, XColor background) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (flashcodes != null) {</span>
+<span class="nc" id="L57">			im = addImage(im, background);</span>
 		}
-<span class="nc" id="L58">		return im;</span>
+<span class="nc" id="L59">		return im;</span>
 
 	}
 
-	private BufferedImage addImage(BufferedImage im, Color background) {
+	private BufferedImage addImage(BufferedImage im, XColor background) {
 
-<span class="nc" id="L64">		final double width = Math.max(im.getWidth(), getWidth(flashcodes));</span>
-<span class="nc" id="L65">		final double height = im.getHeight() + getHeight(flashcodes);</span>
+<span class="nc" id="L65">		final double width = Math.max(im.getWidth(), getWidth(flashcodes));</span>
+<span class="nc" id="L66">		final double height = im.getHeight() + getHeight(flashcodes);</span>
 
-<span class="nc" id="L67">		final BufferedImage newIm = new BufferedImage((int) width, (int) height, BufferedImage.TYPE_INT_RGB);</span>
-<span class="nc" id="L68">		final Graphics2D g2d = newIm.createGraphics();</span>
+<span class="nc" id="L68">		final BufferedImage newIm = new BufferedImage((int) width, (int) height, BufferedImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L69">		final Graphics2D g2d = newIm.createGraphics();</span>
 
-<span class="nc" id="L70">		UAntiAliasing.ANTI_ALIASING_OFF.apply(g2d);</span>
-<span class="nc" id="L71">		g2d.setColor(background);</span>
-<span class="nc" id="L72">		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());</span>
-<span class="nc" id="L73">		g2d.drawImage(im, null, 0, 0);</span>
-<span class="nc" id="L74">		int x = 0;</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (BufferedImage f : flashcodes) {</span>
-<span class="nc" id="L76">			g2d.drawImage(f, null, x, (int) im.getHeight());</span>
-<span class="nc" id="L77">			x += f.getWidth();</span>
-<span class="nc" id="L78">		}</span>
-<span class="nc" id="L79">		g2d.dispose();</span>
-<span class="nc" id="L80">		return newIm;</span>
+<span class="nc" id="L71">		UAntiAliasing.ANTI_ALIASING_OFF.apply(g2d);</span>
+<span class="nc" id="L72">		g2d.setColor(background.toAwtColor());</span>
+<span class="nc" id="L73">		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());</span>
+<span class="nc" id="L74">		g2d.drawImage(im, null, 0, 0);</span>
+<span class="nc" id="L75">		int x = 0;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (BufferedImage f : flashcodes) {</span>
+<span class="nc" id="L77">			g2d.drawImage(f, null, x, (int) im.getHeight());</span>
+<span class="nc" id="L78">			x += f.getWidth();</span>
+<span class="nc" id="L79">		}</span>
+<span class="nc" id="L80">		g2d.dispose();</span>
+<span class="nc" id="L81">		return newIm;</span>
 
 	}
 
 	public static int getHeight(List&lt;BufferedImage&gt; flashcodes) {
-<span class="nc" id="L85">		int result = 0;</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (BufferedImage im : flashcodes) {</span>
-<span class="nc" id="L87">			result = Math.max(result, im.getWidth());</span>
-<span class="nc" id="L88">		}</span>
-<span class="nc" id="L89">		return result;</span>
+<span class="nc" id="L86">		int result = 0;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		for (BufferedImage im : flashcodes) {</span>
+<span class="nc" id="L88">			result = Math.max(result, im.getWidth());</span>
+<span class="nc" id="L89">		}</span>
+<span class="nc" id="L90">		return result;</span>
 	}
 
 	public static int getWidth(List&lt;BufferedImage&gt; flashcodes) {
-<span class="nc" id="L93">		int result = 0;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (BufferedImage im : flashcodes) {</span>
-<span class="nc" id="L95">			result += im.getWidth();</span>
-<span class="nc" id="L96">		}</span>
-<span class="nc" id="L97">		return result;</span>
+<span class="nc" id="L94">		int result = 0;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (BufferedImage im : flashcodes) {</span>
+<span class="nc" id="L96">			result += im.getWidth();</span>
+<span class="nc" id="L97">		}</span>
+<span class="nc" id="L98">		return result;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

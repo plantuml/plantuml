@@ -41,34 +41,39 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
+
+
+
 public class TeXIconBuilder {
 
 	private Icon icon;
 
-	public TeXIconBuilder(String tex, Color foregroundColor)
+	public TeXIconBuilder(String tex, XColor foregroundColor2)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-<span class="nc" id="L50">			IllegalAccessException, IllegalArgumentException, InvocationTargetException {</span>
+<span class="nc" id="L54">			IllegalAccessException, IllegalArgumentException, InvocationTargetException {</span>
 
 		// TeXFormula formula = new TeXFormula(latex);
-<span class="nc" id="L53">		final Class&lt;?&gt; clTeXFormula = Class.forName(&quot;org.scilab.forge.jlatexmath.TeXFormula&quot;);</span>
-<span class="nc" id="L54">		final Object formula = clTeXFormula.getConstructor(String.class).newInstance(tex);</span>
+<span class="nc" id="L57">		final Class&lt;?&gt; clTeXFormula = Class.forName(&quot;org.scilab.forge.jlatexmath.TeXFormula&quot;);</span>
+<span class="nc" id="L58">		final Object formula = clTeXFormula.getConstructor(String.class).newInstance(tex);</span>
 
 		// TeXIcon icon = formula.new
 		// TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
-<span class="nc" id="L58">		final Class&lt;?&gt; clTeXIconBuilder = clTeXFormula.getClasses()[0];</span>
-<span class="nc" id="L59">		final Object builder = clTeXIconBuilder.getConstructors()[0].newInstance(formula);</span>
-<span class="nc" id="L60">		clTeXIconBuilder.getMethod(&quot;setStyle&quot;, int.class).invoke(builder, 0);</span>
-<span class="nc" id="L61">		clTeXIconBuilder.getMethod(&quot;setSize&quot;, float.class).invoke(builder, (float) 20);</span>
-<span class="nc" id="L62">		icon = (Icon) clTeXIconBuilder.getMethod(&quot;build&quot;).invoke(builder);</span>
+<span class="nc" id="L62">		final Class&lt;?&gt; clTeXIconBuilder = clTeXFormula.getClasses()[0];</span>
+<span class="nc" id="L63">		final Object builder = clTeXIconBuilder.getConstructors()[0].newInstance(formula);</span>
+<span class="nc" id="L64">		clTeXIconBuilder.getMethod(&quot;setStyle&quot;, int.class).invoke(builder, 0);</span>
+<span class="nc" id="L65">		clTeXIconBuilder.getMethod(&quot;setSize&quot;, float.class).invoke(builder, (float) 20);</span>
+<span class="nc" id="L66">		icon = (Icon) clTeXIconBuilder.getMethod(&quot;build&quot;).invoke(builder);</span>
 
-<span class="nc" id="L64">		final int margin = 1;</span>
-<span class="nc" id="L65">		final Insets insets = new Insets(margin, margin, margin, margin);</span>
-<span class="nc" id="L66">		icon.getClass().getMethod(&quot;setInsets&quot;, insets.getClass()).invoke(icon, insets);</span>
-<span class="nc" id="L67">		icon.getClass().getMethod(&quot;setForeground&quot;, foregroundColor.getClass()).invoke(icon, foregroundColor);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L68">		final int margin = 1;</span>
+<span class="nc" id="L69">		final Insets insets = new Insets(margin, margin, margin, margin);</span>
+<span class="nc" id="L70">		icon.getClass().getMethod(&quot;setInsets&quot;, insets.getClass()).invoke(icon, insets);</span>
+<span class="nc" id="L71">		final Color awtColor = foregroundColor2.toAwtColor();</span>
+<span class="nc" id="L72">		icon.getClass().getMethod(&quot;setForeground&quot;, awtColor.getClass()).invoke(icon, awtColor);</span>
+<span class="nc" id="L73">	}</span>
 
 	public Icon getIcon() {
-<span class="nc" id="L71">		return icon;</span>
+<span class="nc" id="L76">		return icon;</span>
 	}
 
 }

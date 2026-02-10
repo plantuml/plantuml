@@ -124,11 +124,12 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 	@Override
 	public boolean match(StringLocated s) {
-<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (limitSize != 0 &amp;&amp; s.getString().length() &gt; limitSize)</span>
-<span class="nc" id="L128">			return false;</span>
+		// ::comment when __TEAVM__
+<span class="pc bpc" id="L128" title="1 of 4 branches missed.">		if (limitSize != 0 &amp;&amp; s.getString().length() &gt; limitSize)</span>
+<span class="nc" id="L129">			return false;</span>
 
 		// vtot.incrementAndGet();
-<span class="fc" id="L131">		final long foxRegex = foxRegex();</span>
+<span class="fc" id="L132">		final long foxRegex = foxRegex();</span>
 //		synchronized (PRINTED) {
 //			final String full = getFullSlow();
 //			final boolean added = PRINTED.add(full);
@@ -138,33 +139,34 @@ import net.sourceforge.plantuml.text.StringLocated;
 //						+ FoxSignature.backToString(foxRegex) + &quot; &quot; + full);
 //			}
 //		}
-<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (foxRegex != 0L) {</span>
-<span class="fc" id="L142">			final long foxLine = s.getFoxSignature();</span>
-<span class="fc" id="L143">			final long check = foxRegex &amp; foxLine;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (foxRegex != 0L) {</span>
+<span class="fc" id="L143">			final long foxLine = s.getFoxSignature();</span>
+<span class="fc" id="L144">			final long check = foxRegex &amp; foxLine;</span>
 			// System.err.println(&quot;r=&quot; + getFullSlow() + &quot; s=&quot; + s + &quot; line=&quot; + foxLine + &quot;
 			// regex&quot; + foxRegex + &quot; &quot;
 			// + check + &quot; &lt;&quot; + FoxSignature.backToString(check) + &quot;&gt;&quot;);
-<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (check != foxRegex) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (check != foxRegex) {</span>
 				// vescaped.incrementAndGet();
-<span class="fc" id="L149">				return false;</span>
+<span class="fc" id="L150">				return false;</span>
 			}
 
 		}
-<span class="fc" id="L153">		return super.match(s);</span>
+		// ::done
+<span class="fc" id="L155">		return super.match(s);</span>
 	}
 
 	@Override
 	public String getPatternAsString() {
-<span class="fc" id="L158">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (IRegex p : partials())</span>
-<span class="fc" id="L160">			sb.append(p.getPatternAsString());</span>
+<span class="fc" id="L160">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (IRegex p : partials())</span>
+<span class="fc" id="L162">			sb.append(p.getPatternAsString());</span>
 
-<span class="fc" id="L162">		return sb.toString();</span>
+<span class="fc" id="L164">		return sb.toString();</span>
 	}
 
 	public RegexConcat protectSize(int size) {
-<span class="fc" id="L166">		limitSize = size;</span>
-<span class="fc" id="L167">		return this;</span>
+<span class="fc" id="L168">		limitSize = size;</span>
+<span class="fc" id="L169">		return this;</span>
 	}
 
 }

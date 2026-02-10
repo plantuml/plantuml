@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.crash;
 
-import java.awt.Color;
+
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
@@ -53,49 +54,49 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L56">public class CrashImage implements UDrawable {</span>
+<span class="nc" id="L57">public class CrashImage implements UDrawable {</span>
 
 	private final PortableImage flashcodeImage;
 	private final TextBlock graphicStrings;
 
-<span class="nc" id="L61">	public CrashImage(Throwable exception, String flash, ReportLog strings) {</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (exception != null)</span>
-<span class="nc" id="L63">			strings.addAll(CommandExecutionResult.getStackTrace(exception));</span>
+<span class="nc" id="L62">	public CrashImage(Throwable exception, String flash, ReportLog strings) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (exception != null)</span>
+<span class="nc" id="L64">			strings.addAll(CommandExecutionResult.getStackTrace(exception));</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		this.flashcodeImage = flash == null ? null : generateFlashcodeImage(flash, strings);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		this.flashcodeImage = flash == null ? null : generateFlashcodeImage(flash, strings);</span>
 
-<span class="nc" id="L67">		this.graphicStrings = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
+<span class="nc" id="L68">		this.graphicStrings = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L71">	}</span>
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L74">		graphicStrings.drawU(ug);</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (flashcodeImage == null)</span>
-<span class="nc" id="L76">			return;</span>
+<span class="nc" id="L75">		graphicStrings.drawU(ug);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (flashcodeImage == null)</span>
+<span class="nc" id="L77">			return;</span>
 
-<span class="nc" id="L78">		final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="nc" id="L79">		ug = ug.apply(UTranslate.dy(height));</span>
-<span class="nc" id="L80">		ug.draw(new UImage(new PixelImage(flashcodeImage, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3));</span>
+<span class="nc" id="L79">		final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L80">		ug = ug.apply(UTranslate.dy(height));</span>
+<span class="nc" id="L81">		ug.draw(new UImage(new PixelImage(flashcodeImage, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3));</span>
 
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L83">	}</span>
 
 	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		assert flash != null;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		assert flash != null;</span>
 		// ::comment when __CORE__ or __TEAVM__
-<span class="nc" id="L87">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
+<span class="nc" id="L88">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
 		try {
-<span class="nc" id="L89">			final PortableImage flashcodeImage = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (flashcodeImage != null)</span>
-<span class="nc" id="L91">				strings.addDecodeHint();</span>
-<span class="nc" id="L92">			return flashcodeImage;</span>
-<span class="nc" id="L93">		} catch (Throwable e) {</span>
-<span class="nc" id="L94">			Log.error(&quot;Issue in flashcode generation &quot; + e);</span>
+<span class="nc" id="L90">			final PortableImage flashcodeImage = utils.exportFlashcode(flash, XColor.BLACK, XColor.WHITE);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (flashcodeImage != null)</span>
+<span class="nc" id="L92">				strings.addDecodeHint();</span>
+<span class="nc" id="L93">			return flashcodeImage;</span>
+<span class="nc" id="L94">		} catch (Throwable e) {</span>
+<span class="nc" id="L95">			Log.error(&quot;Issue in flashcode generation &quot; + e);</span>
 			// Logme.error(e);
 		}
 		// ::done
-<span class="nc" id="L98">		return null;</span>
+<span class="nc" id="L99">		return null;</span>
 	}
 
 }

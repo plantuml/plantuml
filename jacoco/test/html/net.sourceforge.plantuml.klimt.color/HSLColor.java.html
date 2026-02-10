@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HSLColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">HSLColor.java</span></div><h1>HSLColor.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 /**
  * Taken from http://www.camick.com/java/source/HSLColor.java
@@ -24,7 +24,7 @@ import java.awt.Color;
  */
 public class HSLColor {
 	// ::remove file when __HAXE__
-	private Color rgb;
+	private XColor rgb;
 	private float[] hsl;
 	private float alpha;
 
@@ -33,7 +33,7 @@ public class HSLColor {
 	 *
 	 * @param rgb the RGB Color object
 	 */
-<span class="fc" id="L36">	public HSLColor(Color rgb) {</span>
+<span class="fc" id="L36">	public HSLColor(XColor rgb) {</span>
 <span class="fc" id="L37">		this.rgb = rgb;</span>
 <span class="fc" id="L38">		hsl = fromRGB(rgb);</span>
 <span class="fc" id="L39">		alpha = rgb.getAlpha() / 255.0f;</span>
@@ -95,7 +95,7 @@ public class HSLColor {
 	 * @param degrees - the Hue value between 0 - 360
 	 * @return the RGB Color object
 	 */
-	public Color adjustHue(float degrees) {
+	public XColor adjustHue(float degrees) {
 <span class="nc" id="L99">		return toRGB(degrees, hsl[1], hsl[2], alpha);</span>
 	}
 
@@ -106,7 +106,7 @@ public class HSLColor {
 	 * @param percent - the Luminance value between 0 - 100
 	 * @return the RGB Color object
 	 */
-	public Color adjustLuminance(float percent) {
+	public XColor adjustLuminance(float percent) {
 <span class="nc" id="L110">		return toRGB(hsl[0], hsl[1], percent, alpha);</span>
 	}
 
@@ -117,7 +117,7 @@ public class HSLColor {
 	 * @param percent - the Saturation value between 0 - 100
 	 * @return the RGB Color object
 	 */
-	public Color adjustSaturation(float percent) {
+	public XColor adjustSaturation(float percent) {
 <span class="nc" id="L121">		return toRGB(hsl[0], percent, hsl[2], alpha);</span>
 	}
 
@@ -129,7 +129,7 @@ public class HSLColor {
 	 * @param percent - the value between 0 - 100
 	 * @return the RGB Color object
 	 */
-	public Color adjustShade(float percent) {
+	public XColor adjustShade(float percent) {
 <span class="nc" id="L133">		float multiplier = (100.0f - percent) / 100.0f;</span>
 <span class="nc" id="L134">		float l = Math.max(0.0f, hsl[2] * multiplier);</span>
 
@@ -144,7 +144,7 @@ public class HSLColor {
 	 * @param percent - the value between 0 - 100
 	 * @return the RGB Color object
 	 */
-	public Color adjustTone(float percent) {
+	public XColor adjustTone(float percent) {
 <span class="nc" id="L148">		float multiplier = (100.0f + percent) / 100.0f;</span>
 <span class="nc" id="L149">		float l = Math.min(100.0f, hsl[2] * multiplier);</span>
 
@@ -167,7 +167,7 @@ public class HSLColor {
 	 * 
 	 * @return the RGB Color object
 	 */
-	public Color getComplementary() {
+	public XColor getComplementary() {
 <span class="nc" id="L171">		float hue = (hsl[0] + 180.0f) % 360.0f;</span>
 <span class="nc" id="L172">		return toRGB(hue, hsl[1], hsl[2]);</span>
 	}
@@ -204,7 +204,7 @@ public class HSLColor {
 	 *
 	 * @return the RGB Color object.
 	 */
-	public Color getRGB() {
+	public XColor getRGB() {
 <span class="fc" id="L208">		return rgb;</span>
 	}
 
@@ -228,7 +228,7 @@ public class HSLColor {
 	 *
 	 * @return an array containing the 3 HSL values.
 	 */
-	public static float[] fromRGB(Color color) {
+	public static float[] fromRGB(XColor color) {
 		// Get RGB values in the range 0 - 1
 
 <span class="fc" id="L234">		float[] rgb = color.getRGBColorComponents(null);</span>
@@ -282,7 +282,7 @@ public class HSLColor {
 	 *
 	 * @return the RGB Color object
 	 */
-	public static Color toRGB(float[] hsl) {
+	public static XColor toRGB(float[] hsl) {
 <span class="nc" id="L286">		return toRGB(hsl, 1.0f);</span>
 	}
 
@@ -296,7 +296,7 @@ public class HSLColor {
 	 *
 	 * @return the RGB Color object
 	 */
-	public static Color toRGB(float[] hsl, float alpha) {
+	public static XColor toRGB(float[] hsl, float alpha) {
 <span class="fc" id="L300">		return toRGB(hsl[0], hsl[1], hsl[2], alpha);</span>
 	}
 
@@ -309,7 +309,7 @@ public class HSLColor {
 	 *
 	 * @return the RGB Color object
 	 */
-	public static Color toRGB(float h, float s, float l) {
+	public static XColor toRGB(float h, float s, float l) {
 <span class="nc" id="L313">		return toRGB(h, s, l, 1.0f);</span>
 	}
 
@@ -323,7 +323,7 @@ public class HSLColor {
 	 *
 	 * @return the RGB Color object
 	 */
-	public static Color toRGB(float h, float s, float l, float alpha) {
+	public static XColor toRGB(float h, float s, float l, float alpha) {
 
 <span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (s &lt; 0)</span>
 <span class="nc" id="L329">			s = 0;</span>
@@ -362,7 +362,7 @@ public class HSLColor {
 <span class="fc" id="L362">		g = Math.min(g, 1.0f);</span>
 <span class="fc" id="L363">		b = Math.min(b, 1.0f);</span>
 
-<span class="fc" id="L365">		return new Color(r, g, b, alpha);</span>
+<span class="fc" id="L365">		return XColor.fromFloat(r, g, b, alpha);</span>
 	}
 
 	private static float HueToRGB(float p, float q, float h) {

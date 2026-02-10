@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -73,7 +73,7 @@ public class PSystemDitaa extends AbstractPSystem {
 <span class="nc" id="L73">		super(source, preprocessing);</span>
 
 <span class="nc" id="L75">		options.setDropShadows(dropShadows);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		options.renderingOptions.setBackgroundColor(transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		options.renderingOptions.setBackgroundColor(transparentBackground ? new XColor(0, 0, 0, 0).toAwtColor() : XColor.WHITE.toAwtColor());</span>
 <span class="nc" id="L77">		options.renderingOptions.setScale(scale);</span>
 <span class="nc" id="L78">		options.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);</span>
 <span class="nc" id="L79">		options.processingOptions.setAllCornersAreRound(allCornersAreRound);</span>

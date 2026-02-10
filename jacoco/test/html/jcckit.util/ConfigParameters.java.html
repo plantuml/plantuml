@@ -305,7 +305,7 @@ public class ConfigParameters {
 private Color decodeInternal(String value) {
 <span class="nc bnc" id="L306" title="All 2 branches missed.">	if (value!=null) {</span>
 		  try {
-<span class="nc" id="L308">			return colors.getColor(value).toColor(ColorMapper.IDENTITY);</span>
+<span class="nc" id="L308">			return colors.getColor(value).toColor(ColorMapper.IDENTITY).toAwtColor();</span>
 <span class="nc" id="L309">		} catch (NoSuchColorException e) {</span>
 <span class="nc" id="L310">			return Color.WHITE;</span>
 		}

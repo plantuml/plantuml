@@ -35,12 +35,14 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 /**
  * Class AnimatedGifEncoder - Encodes a GIF file consisting of one or more
@@ -66,7 +68,7 @@ import java.io.OutputStream;
  * 
  */
 
-<span class="nc" id="L69">public class AnimatedGifEncoder {</span>
+<span class="nc" id="L71">public class AnimatedGifEncoder {</span>
 	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
@@ -74,15 +76,15 @@ import java.io.OutputStream;
 
 	protected int height;
 
-<span class="nc" id="L77">	protected Color transparent = null; // transparent color if given</span>
+<span class="nc" id="L79">	protected XColor transparent = null; // transparent color if given</span>
 
 	protected int transIndex; // transparent index in color table
 
-<span class="nc" id="L81">	protected int repeat = -1; // no repeat</span>
+<span class="nc" id="L83">	protected int repeat = -1; // no repeat</span>
 
-<span class="nc" id="L83">	protected int delay = 0; // frame delay (hundredths)</span>
+<span class="nc" id="L85">	protected int delay = 0; // frame delay (hundredths)</span>
 
-<span class="nc" id="L85">	protected boolean started = false; // ready to output frames</span>
+<span class="nc" id="L87">	protected boolean started = false; // ready to output frames</span>
 
 	protected OutputStream out;
 
@@ -96,20 +98,20 @@ import java.io.OutputStream;
 
 	protected byte[] colorTab; // RGB palette
 
-<span class="nc" id="L99">	protected boolean[] usedEntry = new boolean[256]; // active palette</span>
+<span class="nc" id="L101">	protected boolean[] usedEntry = new boolean[256]; // active palette</span>
 														// entries
 
-<span class="nc" id="L102">	protected int palSize = 7; // color table size (bits-1)</span>
+<span class="nc" id="L104">	protected int palSize = 7; // color table size (bits-1)</span>
 
-<span class="nc" id="L104">	protected int dispose = -1; // disposal code (-1 = use default)</span>
+<span class="nc" id="L106">	protected int dispose = -1; // disposal code (-1 = use default)</span>
 
-<span class="nc" id="L106">	protected boolean closeStream = false; // close stream when finished</span>
+<span class="nc" id="L108">	protected boolean closeStream = false; // close stream when finished</span>
 
-<span class="nc" id="L108">	protected boolean firstFrame = true;</span>
+<span class="nc" id="L110">	protected boolean firstFrame = true;</span>
 
-<span class="nc" id="L110">	protected boolean sizeSet = false; // if false, get size from first frame</span>
+<span class="nc" id="L112">	protected boolean sizeSet = false; // if false, get size from first frame</span>
 
-<span class="nc" id="L112">	protected int sample = 10; // default sample interval for quantizer</span>
+<span class="nc" id="L114">	protected int sample = 10; // default sample interval for quantizer</span>
 
 	/**
 	 * Sets the delay time between each frame, or changes it for subsequent frames
@@ -118,8 +120,8 @@ import java.io.OutputStream;
 	 * @param ms int delay time in milliseconds
 	 */
 	public void setDelay(int ms) {
-<span class="nc" id="L121">		delay = Math.round(ms / 10.0f);</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L123">		delay = Math.round(ms / 10.0f);</span>
+<span class="nc" id="L124">	}</span>
 
 	/**
 	 * Sets the GIF frame disposal code for the last added frame and any subsequent
@@ -128,10 +130,10 @@ import java.io.OutputStream;
 	 * @param code int disposal code.
 	 */
 	public void setDispose(int code) {
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (code &gt;= 0) {</span>
-<span class="nc" id="L132">			dispose = code;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (code &gt;= 0) {</span>
+<span class="nc" id="L134">			dispose = code;</span>
 		}
-<span class="nc" id="L134">	}</span>
+<span class="nc" id="L136">	}</span>
 
 	/**
 	 * Sets the number of times the set of GIF frames should be played. Default is
@@ -141,10 +143,10 @@ import java.io.OutputStream;
 	 * @param iter int number of iterations.
 	 */
 	public void setRepeat(int iter) {
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (iter &gt;= 0) {</span>
-<span class="nc" id="L145">			repeat = iter;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (iter &gt;= 0) {</span>
+<span class="nc" id="L147">			repeat = iter;</span>
 		}
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L149">	}</span>
 
 	/**
 	 * Sets the transparent color for the last added frame and any subsequent
@@ -155,9 +157,9 @@ import java.io.OutputStream;
 	 * 
 	 * @param c Color to be treated as transparent on display.
 	 */
-	public void setTransparent(Color c) {
-<span class="nc" id="L159">		transparent = c;</span>
-<span class="nc" id="L160">	}</span>
+	public void setTransparent(XColor c) {
+<span class="nc" id="L161">		transparent = c;</span>
+<span class="nc" id="L162">	}</span>
 
 	/**
 	 * Adds next GIF frame. The frame is not written immediately, but is actually
@@ -170,38 +172,38 @@ import java.io.OutputStream;
 	 * @return true if successful.
 	 */
 	public boolean addFrame(BufferedImage im) {
-<span class="nc bnc" id="L173" title="All 4 branches missed.">		if ((im == null) || !started) {</span>
-<span class="nc" id="L174">			return false;</span>
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		if ((im == null) || !started) {</span>
+<span class="nc" id="L176">			return false;</span>
 		}
-<span class="nc" id="L176">		boolean ok = true;</span>
+<span class="nc" id="L178">		boolean ok = true;</span>
 		try {
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (!sizeSet) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (!sizeSet) {</span>
 				// use first frame's size
-<span class="nc" id="L180">				setSize(im.getWidth(), im.getHeight());</span>
+<span class="nc" id="L182">				setSize(im.getWidth(), im.getHeight());</span>
 			}
-<span class="nc" id="L182">			image = im;</span>
-<span class="nc" id="L183">			getImagePixels(); // convert to correct format if necessary</span>
-<span class="nc" id="L184">			analyzePixels(); // build color table &amp; map pixels</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (firstFrame) {</span>
-<span class="nc" id="L186">				writeLSD(); // logical screen descriptior</span>
-<span class="nc" id="L187">				writePalette(); // global color table</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">				if (repeat &gt;= 0) {</span>
+<span class="nc" id="L184">			image = im;</span>
+<span class="nc" id="L185">			getImagePixels(); // convert to correct format if necessary</span>
+<span class="nc" id="L186">			analyzePixels(); // build color table &amp; map pixels</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (firstFrame) {</span>
+<span class="nc" id="L188">				writeLSD(); // logical screen descriptior</span>
+<span class="nc" id="L189">				writePalette(); // global color table</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (repeat &gt;= 0) {</span>
 					// use NS app extension to indicate reps
-<span class="nc" id="L190">					writeNetscapeExt();</span>
+<span class="nc" id="L192">					writeNetscapeExt();</span>
 				}
 			}
-<span class="nc" id="L193">			writeGraphicCtrlExt(); // write graphic control extension</span>
-<span class="nc" id="L194">			writeImageDesc(); // image descriptor</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (!firstFrame) {</span>
-<span class="nc" id="L196">				writePalette(); // local color table</span>
+<span class="nc" id="L195">			writeGraphicCtrlExt(); // write graphic control extension</span>
+<span class="nc" id="L196">			writeImageDesc(); // image descriptor</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (!firstFrame) {</span>
+<span class="nc" id="L198">				writePalette(); // local color table</span>
 			}
-<span class="nc" id="L198">			writePixels(); // encode and write pixel data</span>
-<span class="nc" id="L199">			firstFrame = false;</span>
-<span class="nc" id="L200">		} catch (IOException e) {</span>
-<span class="nc" id="L201">			ok = false;</span>
-<span class="nc" id="L202">		}</span>
+<span class="nc" id="L200">			writePixels(); // encode and write pixel data</span>
+<span class="nc" id="L201">			firstFrame = false;</span>
+<span class="nc" id="L202">		} catch (IOException e) {</span>
+<span class="nc" id="L203">			ok = false;</span>
+<span class="nc" id="L204">		}</span>
 
-<span class="nc" id="L204">		return ok;</span>
+<span class="nc" id="L206">		return ok;</span>
 	}
 
 	/**
@@ -209,31 +211,31 @@ import java.io.OutputStream;
 	 * OutputStream, the stream is not closed.
 	 */
 	public boolean finish() {
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (!started)</span>
-<span class="nc" id="L213">			return false;</span>
-<span class="nc" id="L214">		boolean ok = true;</span>
-<span class="nc" id="L215">		started = false;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (!started)</span>
+<span class="nc" id="L215">			return false;</span>
+<span class="nc" id="L216">		boolean ok = true;</span>
+<span class="nc" id="L217">		started = false;</span>
 		try {
-<span class="nc" id="L217">			out.write(0x3b); // gif trailer</span>
-<span class="nc" id="L218">			out.flush();</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">			if (closeStream) {</span>
-<span class="nc" id="L220">				out.close();</span>
+<span class="nc" id="L219">			out.write(0x3b); // gif trailer</span>
+<span class="nc" id="L220">			out.flush();</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			if (closeStream) {</span>
+<span class="nc" id="L222">				out.close();</span>
 			}
-<span class="nc" id="L222">		} catch (IOException e) {</span>
-<span class="nc" id="L223">			ok = false;</span>
-<span class="nc" id="L224">		}</span>
+<span class="nc" id="L224">		} catch (IOException e) {</span>
+<span class="nc" id="L225">			ok = false;</span>
+<span class="nc" id="L226">		}</span>
 
 		// reset for subsequent use
-<span class="nc" id="L227">		transIndex = 0;</span>
-<span class="nc" id="L228">		out = null;</span>
-<span class="nc" id="L229">		image = null;</span>
-<span class="nc" id="L230">		pixels = null;</span>
-<span class="nc" id="L231">		indexedPixels = null;</span>
-<span class="nc" id="L232">		colorTab = null;</span>
-<span class="nc" id="L233">		closeStream = false;</span>
-<span class="nc" id="L234">		firstFrame = true;</span>
+<span class="nc" id="L229">		transIndex = 0;</span>
+<span class="nc" id="L230">		out = null;</span>
+<span class="nc" id="L231">		image = null;</span>
+<span class="nc" id="L232">		pixels = null;</span>
+<span class="nc" id="L233">		indexedPixels = null;</span>
+<span class="nc" id="L234">		colorTab = null;</span>
+<span class="nc" id="L235">		closeStream = false;</span>
+<span class="nc" id="L236">		firstFrame = true;</span>
 
-<span class="nc" id="L236">		return ok;</span>
+<span class="nc" id="L238">		return ok;</span>
 	}
 
 	/**
@@ -243,10 +245,10 @@ import java.io.OutputStream;
 	 * @param fps float frame rate (frames per second)
 	 */
 	public void setFrameRate(float fps) {
-<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (fps != 0f) {</span>
-<span class="nc" id="L247">			delay = Math.round(100f / fps);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (fps != 0f) {</span>
+<span class="nc" id="L249">			delay = Math.round(100f / fps);</span>
 		}
-<span class="nc" id="L249">	}</span>
+<span class="nc" id="L251">	}</span>
 
 	/**
 	 * Sets quality of color quantization (conversion of images to the maximum 256
@@ -258,10 +260,10 @@ import java.io.OutputStream;
 	 * @param quality int greater than 0.
 	 */
 	public void setQuality(int quality) {
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (quality &lt; 1)</span>
-<span class="nc" id="L262">			quality = 1;</span>
-<span class="nc" id="L263">		sample = quality;</span>
-<span class="nc" id="L264">	}</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (quality &lt; 1)</span>
+<span class="nc" id="L264">			quality = 1;</span>
+<span class="nc" id="L265">		sample = quality;</span>
+<span class="nc" id="L266">	}</span>
 
 	/**
 	 * Sets the GIF frame size. The default size is the size of the first frame
@@ -271,16 +273,16 @@ import java.io.OutputStream;
 	 * @param h int frame width.
 	 */
 	public void setSize(int w, int h) {
-<span class="nc bnc" id="L274" title="All 4 branches missed.">		if (started &amp;&amp; !firstFrame)</span>
-<span class="nc" id="L275">			return;</span>
-<span class="nc" id="L276">		width = w;</span>
-<span class="nc" id="L277">		height = h;</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">		if (width &lt; 1)</span>
-<span class="nc" id="L279">			width = 320;</span>
-<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (height &lt; 1)</span>
-<span class="nc" id="L281">			height = 240;</span>
-<span class="nc" id="L282">		sizeSet = true;</span>
-<span class="nc" id="L283">	}</span>
+<span class="nc bnc" id="L276" title="All 4 branches missed.">		if (started &amp;&amp; !firstFrame)</span>
+<span class="nc" id="L277">			return;</span>
+<span class="nc" id="L278">		width = w;</span>
+<span class="nc" id="L279">		height = h;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (width &lt; 1)</span>
+<span class="nc" id="L281">			width = 320;</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">		if (height &lt; 1)</span>
+<span class="nc" id="L283">			height = 240;</span>
+<span class="nc" id="L284">		sizeSet = true;</span>
+<span class="nc" id="L285">	}</span>
 
 	/**
 	 * Initiates GIF file creation on the given stream. The stream is not closed
@@ -290,17 +292,17 @@ import java.io.OutputStream;
 	 * @return false if initial write failed.
 	 */
 	public boolean start(OutputStream os) {
-<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (os == null)</span>
-<span class="nc" id="L294">			return false;</span>
-<span class="nc" id="L295">		boolean ok = true;</span>
-<span class="nc" id="L296">		closeStream = false;</span>
-<span class="nc" id="L297">		out = os;</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">		if (os == null)</span>
+<span class="nc" id="L296">			return false;</span>
+<span class="nc" id="L297">		boolean ok = true;</span>
+<span class="nc" id="L298">		closeStream = false;</span>
+<span class="nc" id="L299">		out = os;</span>
 		try {
-<span class="nc" id="L299">			writeString(&quot;GIF89a&quot;); // header</span>
-<span class="nc" id="L300">		} catch (IOException e) {</span>
-<span class="nc" id="L301">			ok = false;</span>
-<span class="nc" id="L302">		}</span>
-<span class="nc" id="L303">		return started = ok;</span>
+<span class="nc" id="L301">			writeString(&quot;GIF89a&quot;); // header</span>
+<span class="nc" id="L302">		} catch (IOException e) {</span>
+<span class="nc" id="L303">			ok = false;</span>
+<span class="nc" id="L304">		}</span>
+<span class="nc" id="L305">		return started = ok;</span>
 	}
 
 //	/**
@@ -325,200 +327,200 @@ import java.io.OutputStream;
 	 * Analyzes image colors and creates color map.
 	 */
 	protected void analyzePixels() {
-<span class="nc" id="L328">		int len = pixels.length;</span>
-<span class="nc" id="L329">		int nPix = len / 3;</span>
-<span class="nc" id="L330">		indexedPixels = new byte[nPix];</span>
-<span class="nc" id="L331">		NeuQuant nq = new NeuQuant(pixels, len, sample);</span>
+<span class="nc" id="L330">		int len = pixels.length;</span>
+<span class="nc" id="L331">		int nPix = len / 3;</span>
+<span class="nc" id="L332">		indexedPixels = new byte[nPix];</span>
+<span class="nc" id="L333">		NeuQuant nq = new NeuQuant(pixels, len, sample);</span>
 		// initialize quantizer
-<span class="nc" id="L333">		colorTab = nq.process(); // create reduced palette</span>
+<span class="nc" id="L335">		colorTab = nq.process(); // create reduced palette</span>
 		// convert map from BGR to RGB
-<span class="nc bnc" id="L335" title="All 2 branches missed.">		for (int i = 0; i &lt; colorTab.length; i += 3) {</span>
-<span class="nc" id="L336">			byte temp = colorTab[i];</span>
-<span class="nc" id="L337">			colorTab[i] = colorTab[i + 2];</span>
-<span class="nc" id="L338">			colorTab[i + 2] = temp;</span>
-<span class="nc" id="L339">			usedEntry[i / 3] = false;</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		for (int i = 0; i &lt; colorTab.length; i += 3) {</span>
+<span class="nc" id="L338">			byte temp = colorTab[i];</span>
+<span class="nc" id="L339">			colorTab[i] = colorTab[i + 2];</span>
+<span class="nc" id="L340">			colorTab[i + 2] = temp;</span>
+<span class="nc" id="L341">			usedEntry[i / 3] = false;</span>
 		}
 		// map image pixels to new palette
-<span class="nc" id="L342">		int k = 0;</span>
-<span class="nc bnc" id="L343" title="All 2 branches missed.">		for (int i = 0; i &lt; nPix; i++) {</span>
-<span class="nc" id="L344">			int index = nq.map(pixels[k++] &amp; 0xff, pixels[k++] &amp; 0xff, pixels[k++] &amp; 0xff);</span>
-<span class="nc" id="L345">			usedEntry[index] = true;</span>
-<span class="nc" id="L346">			indexedPixels[i] = (byte) index;</span>
+<span class="nc" id="L344">		int k = 0;</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		for (int i = 0; i &lt; nPix; i++) {</span>
+<span class="nc" id="L346">			int index = nq.map(pixels[k++] &amp; 0xff, pixels[k++] &amp; 0xff, pixels[k++] &amp; 0xff);</span>
+<span class="nc" id="L347">			usedEntry[index] = true;</span>
+<span class="nc" id="L348">			indexedPixels[i] = (byte) index;</span>
 		}
-<span class="nc" id="L348">		pixels = null;</span>
-<span class="nc" id="L349">		colorDepth = 8;</span>
-<span class="nc" id="L350">		palSize = 7;</span>
+<span class="nc" id="L350">		pixels = null;</span>
+<span class="nc" id="L351">		colorDepth = 8;</span>
+<span class="nc" id="L352">		palSize = 7;</span>
 		// get closest match to transparent color if specified
-<span class="nc bnc" id="L352" title="All 2 branches missed.">		if (transparent != null) {</span>
-<span class="nc" id="L353">			transIndex = findClosest(transparent);</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		if (transparent != null) {</span>
+<span class="nc" id="L355">			transIndex = findClosest(transparent);</span>
 		}
-<span class="nc" id="L355">	}</span>
+<span class="nc" id="L357">	}</span>
 
 	/**
 	 * Returns index of palette color closest to c
 	 * 
 	 */
-	protected int findClosest(Color c) {
-<span class="nc bnc" id="L362" title="All 2 branches missed.">		if (colorTab == null)</span>
-<span class="nc" id="L363">			return -1;</span>
-<span class="nc" id="L364">		int r = c.getRed();</span>
-<span class="nc" id="L365">		int g = c.getGreen();</span>
-<span class="nc" id="L366">		int b = c.getBlue();</span>
-<span class="nc" id="L367">		int minpos = 0;</span>
-<span class="nc" id="L368">		int dmin = 256 * 256 * 256;</span>
-<span class="nc" id="L369">		int len = colorTab.length;</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">		for (int i = 0; i &lt; len;) {</span>
-<span class="nc" id="L371">			int dr = r - (colorTab[i++] &amp; 0xff);</span>
-<span class="nc" id="L372">			int dg = g - (colorTab[i++] &amp; 0xff);</span>
-<span class="nc" id="L373">			int db = b - (colorTab[i] &amp; 0xff);</span>
-<span class="nc" id="L374">			int d = dr * dr + dg * dg + db * db;</span>
-<span class="nc" id="L375">			int index = i / 3;</span>
-<span class="nc bnc" id="L376" title="All 4 branches missed.">			if (usedEntry[index] &amp;&amp; (d &lt; dmin)) {</span>
-<span class="nc" id="L377">				dmin = d;</span>
-<span class="nc" id="L378">				minpos = index;</span>
+	protected int findClosest(XColor c) {
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		if (colorTab == null)</span>
+<span class="nc" id="L365">			return -1;</span>
+<span class="nc" id="L366">		int r = c.getRed();</span>
+<span class="nc" id="L367">		int g = c.getGreen();</span>
+<span class="nc" id="L368">		int b = c.getBlue();</span>
+<span class="nc" id="L369">		int minpos = 0;</span>
+<span class="nc" id="L370">		int dmin = 256 * 256 * 256;</span>
+<span class="nc" id="L371">		int len = colorTab.length;</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">		for (int i = 0; i &lt; len;) {</span>
+<span class="nc" id="L373">			int dr = r - (colorTab[i++] &amp; 0xff);</span>
+<span class="nc" id="L374">			int dg = g - (colorTab[i++] &amp; 0xff);</span>
+<span class="nc" id="L375">			int db = b - (colorTab[i] &amp; 0xff);</span>
+<span class="nc" id="L376">			int d = dr * dr + dg * dg + db * db;</span>
+<span class="nc" id="L377">			int index = i / 3;</span>
+<span class="nc bnc" id="L378" title="All 4 branches missed.">			if (usedEntry[index] &amp;&amp; (d &lt; dmin)) {</span>
+<span class="nc" id="L379">				dmin = d;</span>
+<span class="nc" id="L380">				minpos = index;</span>
 			}
-<span class="nc" id="L380">			i++;</span>
-<span class="nc" id="L381">		}</span>
-<span class="nc" id="L382">		return minpos;</span>
+<span class="nc" id="L382">			i++;</span>
+<span class="nc" id="L383">		}</span>
+<span class="nc" id="L384">		return minpos;</span>
 	}
 
 	/**
 	 * Extracts image pixels into byte array &quot;pixels&quot;
 	 */
 	protected void getImagePixels() {
-<span class="nc" id="L389">		int w = image.getWidth();</span>
-<span class="nc" id="L390">		int h = image.getHeight();</span>
-<span class="nc" id="L391">		int type = image.getType();</span>
-<span class="nc bnc" id="L392" title="All 6 branches missed.">		if ((w != width) || (h != height) || (type != BufferedImage.TYPE_3BYTE_BGR)) {</span>
+<span class="nc" id="L391">		int w = image.getWidth();</span>
+<span class="nc" id="L392">		int h = image.getHeight();</span>
+<span class="nc" id="L393">		int type = image.getType();</span>
+<span class="nc bnc" id="L394" title="All 6 branches missed.">		if ((w != width) || (h != height) || (type != BufferedImage.TYPE_3BYTE_BGR)) {</span>
 			// create new image with right size/format
-<span class="nc" id="L394">			BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);</span>
-<span class="nc" id="L395">			Graphics2D g = temp.createGraphics();</span>
-<span class="nc" id="L396">			g.drawImage(image, 0, 0, null);</span>
-<span class="nc" id="L397">			image = temp;</span>
+<span class="nc" id="L396">			BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);</span>
+<span class="nc" id="L397">			Graphics2D g = temp.createGraphics();</span>
+<span class="nc" id="L398">			g.drawImage(image, 0, 0, null);</span>
+<span class="nc" id="L399">			image = temp;</span>
 		}
-<span class="nc" id="L399">		pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();</span>
-<span class="nc" id="L400">	}</span>
+<span class="nc" id="L401">		pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();</span>
+<span class="nc" id="L402">	}</span>
 
 	/**
 	 * Writes Graphic Control Extension
 	 */
 	protected void writeGraphicCtrlExt() throws IOException {
-<span class="nc" id="L406">		out.write(0x21); // extension introducer</span>
-<span class="nc" id="L407">		out.write(0xf9); // GCE label</span>
-<span class="nc" id="L408">		out.write(4); // data block size</span>
+<span class="nc" id="L408">		out.write(0x21); // extension introducer</span>
+<span class="nc" id="L409">		out.write(0xf9); // GCE label</span>
+<span class="nc" id="L410">		out.write(4); // data block size</span>
 		int transp, disp;
-<span class="nc bnc" id="L410" title="All 2 branches missed.">		if (transparent == null) {</span>
-<span class="nc" id="L411">			transp = 0;</span>
-<span class="nc" id="L412">			disp = 0; // dispose = no action</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">		if (transparent == null) {</span>
+<span class="nc" id="L413">			transp = 0;</span>
+<span class="nc" id="L414">			disp = 0; // dispose = no action</span>
 		} else {
-<span class="nc" id="L414">			transp = 1;</span>
-<span class="nc" id="L415">			disp = 2; // force clear if using transparent color</span>
+<span class="nc" id="L416">			transp = 1;</span>
+<span class="nc" id="L417">			disp = 2; // force clear if using transparent color</span>
 		}
-<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (dispose &gt;= 0) {</span>
-<span class="nc" id="L418">			disp = dispose &amp; 7; // user override</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">		if (dispose &gt;= 0) {</span>
+<span class="nc" id="L420">			disp = dispose &amp; 7; // user override</span>
 		}
-<span class="nc" id="L420">		disp &lt;&lt;= 2;</span>
+<span class="nc" id="L422">		disp &lt;&lt;= 2;</span>
 
 		// packed fields
-<span class="nc" id="L423">		out.write(0 | // 1:3 reserved</span>
+<span class="nc" id="L425">		out.write(0 | // 1:3 reserved</span>
 				disp | // 4:6 disposal
 				0 | // 7 user input - 0 = none
 				transp); // 8 transparency flag
 
-<span class="nc" id="L428">		writeShort(delay); // delay x 1/100 sec</span>
-<span class="nc" id="L429">		out.write(transIndex); // transparent color index</span>
-<span class="nc" id="L430">		out.write(0); // block terminator</span>
-<span class="nc" id="L431">	}</span>
+<span class="nc" id="L430">		writeShort(delay); // delay x 1/100 sec</span>
+<span class="nc" id="L431">		out.write(transIndex); // transparent color index</span>
+<span class="nc" id="L432">		out.write(0); // block terminator</span>
+<span class="nc" id="L433">	}</span>
 
 	/**
 	 * Writes Image Descriptor
 	 */
 	protected void writeImageDesc() throws IOException {
-<span class="nc" id="L437">		out.write(0x2c); // image separator</span>
-<span class="nc" id="L438">		writeShort(0); // image position x,y = 0,0</span>
-<span class="nc" id="L439">		writeShort(0);</span>
-<span class="nc" id="L440">		writeShort(width); // image size</span>
-<span class="nc" id="L441">		writeShort(height);</span>
+<span class="nc" id="L439">		out.write(0x2c); // image separator</span>
+<span class="nc" id="L440">		writeShort(0); // image position x,y = 0,0</span>
+<span class="nc" id="L441">		writeShort(0);</span>
+<span class="nc" id="L442">		writeShort(width); // image size</span>
+<span class="nc" id="L443">		writeShort(height);</span>
 		// packed fields
-<span class="nc bnc" id="L443" title="All 2 branches missed.">		if (firstFrame) {</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">		if (firstFrame) {</span>
 			// no LCT - GCT is used for first (or only) frame
-<span class="nc" id="L445">			out.write(0);</span>
+<span class="nc" id="L447">			out.write(0);</span>
 		} else {
 			// specify normal LCT
-<span class="nc" id="L448">			out.write(0x80 | // 1 local color table 1=yes</span>
+<span class="nc" id="L450">			out.write(0x80 | // 1 local color table 1=yes</span>
 					0 | // 2 interlace - 0=no
 					0 | // 3 sorted - 0=no
 					0 | // 4-5 reserved
 					palSize); // 6-8 size of color table
 		}
-<span class="nc" id="L454">	}</span>
+<span class="nc" id="L456">	}</span>
 
 	/**
 	 * Writes Logical Screen Descriptor
 	 */
 	protected void writeLSD() throws IOException {
 		// logical screen size
-<span class="nc" id="L461">		writeShort(width);</span>
-<span class="nc" id="L462">		writeShort(height);</span>
+<span class="nc" id="L463">		writeShort(width);</span>
+<span class="nc" id="L464">		writeShort(height);</span>
 		// packed fields
-<span class="nc" id="L464">		out.write((0x80 | // 1 : global color table flag = 1 (gct used)</span>
+<span class="nc" id="L466">		out.write((0x80 | // 1 : global color table flag = 1 (gct used)</span>
 				0x70 | // 2-4 : color resolution = 7
 				0x00 | // 5 : gct sort flag = 0
 				palSize)); // 6-8 : gct size
 
-<span class="nc" id="L469">		out.write(0); // background color index</span>
-<span class="nc" id="L470">		out.write(0); // pixel aspect ratio - assume 1:1</span>
-<span class="nc" id="L471">	}</span>
+<span class="nc" id="L471">		out.write(0); // background color index</span>
+<span class="nc" id="L472">		out.write(0); // pixel aspect ratio - assume 1:1</span>
+<span class="nc" id="L473">	}</span>
 
 	/**
 	 * Writes Netscape application extension to define repeat count.
 	 */
 	protected void writeNetscapeExt() throws IOException {
-<span class="nc" id="L477">		out.write(0x21); // extension introducer</span>
-<span class="nc" id="L478">		out.write(0xff); // app extension label</span>
-<span class="nc" id="L479">		out.write(11); // block size</span>
-<span class="nc" id="L480">		writeString(&quot;NETSCAPE&quot; + &quot;2.0&quot;); // app id + auth code</span>
-<span class="nc" id="L481">		out.write(3); // sub-block size</span>
-<span class="nc" id="L482">		out.write(1); // loop sub-block id</span>
-<span class="nc" id="L483">		writeShort(repeat); // loop count (extra iterations, 0=repeat forever)</span>
-<span class="nc" id="L484">		out.write(0); // block terminator</span>
-<span class="nc" id="L485">	}</span>
+<span class="nc" id="L479">		out.write(0x21); // extension introducer</span>
+<span class="nc" id="L480">		out.write(0xff); // app extension label</span>
+<span class="nc" id="L481">		out.write(11); // block size</span>
+<span class="nc" id="L482">		writeString(&quot;NETSCAPE&quot; + &quot;2.0&quot;); // app id + auth code</span>
+<span class="nc" id="L483">		out.write(3); // sub-block size</span>
+<span class="nc" id="L484">		out.write(1); // loop sub-block id</span>
+<span class="nc" id="L485">		writeShort(repeat); // loop count (extra iterations, 0=repeat forever)</span>
+<span class="nc" id="L486">		out.write(0); // block terminator</span>
+<span class="nc" id="L487">	}</span>
 
 	/**
 	 * Writes color table
 	 */
 	protected void writePalette() throws IOException {
-<span class="nc" id="L491">		out.write(colorTab, 0, colorTab.length);</span>
-<span class="nc" id="L492">		int n = (3 * 256) - colorTab.length;</span>
-<span class="nc bnc" id="L493" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
-<span class="nc" id="L494">			out.write(0);</span>
+<span class="nc" id="L493">		out.write(colorTab, 0, colorTab.length);</span>
+<span class="nc" id="L494">		int n = (3 * 256) - colorTab.length;</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L496">			out.write(0);</span>
 		}
-<span class="nc" id="L496">	}</span>
+<span class="nc" id="L498">	}</span>
 
 	/**
 	 * Encodes and writes pixel data
 	 */
 	protected void writePixels() throws IOException {
-<span class="nc" id="L502">		LZWEncoder encoder = new LZWEncoder(width, height, indexedPixels, colorDepth);</span>
-<span class="nc" id="L503">		encoder.encode(out);</span>
-<span class="nc" id="L504">	}</span>
+<span class="nc" id="L504">		LZWEncoder encoder = new LZWEncoder(width, height, indexedPixels, colorDepth);</span>
+<span class="nc" id="L505">		encoder.encode(out);</span>
+<span class="nc" id="L506">	}</span>
 
 	/**
 	 * Write 16-bit value to output stream, LSB first
 	 */
 	protected void writeShort(int value) throws IOException {
-<span class="nc" id="L510">		out.write(value &amp; 0xff);</span>
-<span class="nc" id="L511">		out.write((value &gt;&gt; 8) &amp; 0xff);</span>
-<span class="nc" id="L512">	}</span>
+<span class="nc" id="L512">		out.write(value &amp; 0xff);</span>
+<span class="nc" id="L513">		out.write((value &gt;&gt; 8) &amp; 0xff);</span>
+<span class="nc" id="L514">	}</span>
 
 	/**
 	 * Writes string to output stream
 	 */
 	protected void writeString(String s) throws IOException {
-<span class="nc bnc" id="L518" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="nc" id="L519">			out.write((byte) s.charAt(i));</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L521">			out.write((byte) s.charAt(i));</span>
 		}
-<span class="nc" id="L521">	}</span>
+<span class="nc" id="L523">	}</span>
 }
 
 /*
@@ -638,16 +640,16 @@ class NeuQuant {
 	// typedef int pixel[4]; /* BGRc */
 	protected int[][] network; /* the network itself - [netsize][4] */
 
-<span class="nc" id="L641">	protected int[] netindex = new int[256];</span>
+<span class="nc" id="L643">	protected int[] netindex = new int[256];</span>
 
 	/* for network lookup - really 256 */
 
-<span class="nc" id="L645">	protected int[] bias = new int[netsize];</span>
+<span class="nc" id="L647">	protected int[] bias = new int[netsize];</span>
 
 	/* bias and freq arrays for learning */
-<span class="nc" id="L648">	protected int[] freq = new int[netsize];</span>
+<span class="nc" id="L650">	protected int[] freq = new int[netsize];</span>
 
-<span class="nc" id="L650">	protected int[] radpower = new int[initrad];</span>
+<span class="nc" id="L652">	protected int[] radpower = new int[initrad];</span>
 
 	/* radpower for precomputation */
 
@@ -655,38 +657,38 @@ class NeuQuant {
 	 * Initialise network in range (0,0,0) to (255,255,255) and set parameters
 	 * -----------------------------------------------------------------------
 	 */
-<span class="nc" id="L658">	public NeuQuant(byte[] thepic, int len, int sample) {</span>
+<span class="nc" id="L660">	public NeuQuant(byte[] thepic, int len, int sample) {</span>
 
 		int i;
 		int[] p;
 
-<span class="nc" id="L663">		thepicture = thepic;</span>
-<span class="nc" id="L664">		lengthcount = len;</span>
-<span class="nc" id="L665">		samplefac = sample;</span>
+<span class="nc" id="L665">		thepicture = thepic;</span>
+<span class="nc" id="L666">		lengthcount = len;</span>
+<span class="nc" id="L667">		samplefac = sample;</span>
 
-<span class="nc" id="L667">		network = new int[netsize][];</span>
-<span class="nc bnc" id="L668" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
-<span class="nc" id="L669">			network[i] = new int[4];</span>
-<span class="nc" id="L670">			p = network[i];</span>
-<span class="nc" id="L671">			p[0] = p[1] = p[2] = (i &lt;&lt; (netbiasshift + 8)) / netsize;</span>
-<span class="nc" id="L672">			freq[i] = intbias / netsize; /* 1/netsize */</span>
-<span class="nc" id="L673">			bias[i] = 0;</span>
+<span class="nc" id="L669">		network = new int[netsize][];</span>
+<span class="nc bnc" id="L670" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L671">			network[i] = new int[4];</span>
+<span class="nc" id="L672">			p = network[i];</span>
+<span class="nc" id="L673">			p[0] = p[1] = p[2] = (i &lt;&lt; (netbiasshift + 8)) / netsize;</span>
+<span class="nc" id="L674">			freq[i] = intbias / netsize; /* 1/netsize */</span>
+<span class="nc" id="L675">			bias[i] = 0;</span>
 		}
-<span class="nc" id="L675">	}</span>
+<span class="nc" id="L677">	}</span>
 
 	public byte[] colorMap() {
-<span class="nc" id="L678">		byte[] map = new byte[3 * netsize];</span>
-<span class="nc" id="L679">		int[] index = new int[netsize];</span>
-<span class="nc bnc" id="L680" title="All 2 branches missed.">		for (int i = 0; i &lt; netsize; i++)</span>
-<span class="nc" id="L681">			index[network[i][3]] = i;</span>
-<span class="nc" id="L682">		int k = 0;</span>
-<span class="nc bnc" id="L683" title="All 2 branches missed.">		for (int i = 0; i &lt; netsize; i++) {</span>
-<span class="nc" id="L684">			int j = index[i];</span>
-<span class="nc" id="L685">			map[k++] = (byte) (network[j][0]);</span>
-<span class="nc" id="L686">			map[k++] = (byte) (network[j][1]);</span>
-<span class="nc" id="L687">			map[k++] = (byte) (network[j][2]);</span>
+<span class="nc" id="L680">		byte[] map = new byte[3 * netsize];</span>
+<span class="nc" id="L681">		int[] index = new int[netsize];</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">		for (int i = 0; i &lt; netsize; i++)</span>
+<span class="nc" id="L683">			index[network[i][3]] = i;</span>
+<span class="nc" id="L684">		int k = 0;</span>
+<span class="nc bnc" id="L685" title="All 2 branches missed.">		for (int i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L686">			int j = index[i];</span>
+<span class="nc" id="L687">			map[k++] = (byte) (network[j][0]);</span>
+<span class="nc" id="L688">			map[k++] = (byte) (network[j][1]);</span>
+<span class="nc" id="L689">			map[k++] = (byte) (network[j][2]);</span>
 		}
-<span class="nc" id="L689">		return map;</span>
+<span class="nc" id="L691">		return map;</span>
 	}
 
 	/*
@@ -702,49 +704,49 @@ class NeuQuant {
 		int[] q;
 		int previouscol, startpos;
 
-<span class="nc" id="L705">		previouscol = 0;</span>
-<span class="nc" id="L706">		startpos = 0;</span>
-<span class="nc bnc" id="L707" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
-<span class="nc" id="L708">			p = network[i];</span>
-<span class="nc" id="L709">			smallpos = i;</span>
-<span class="nc" id="L710">			smallval = p[1]; /* index on g */</span>
+<span class="nc" id="L707">		previouscol = 0;</span>
+<span class="nc" id="L708">		startpos = 0;</span>
+<span class="nc bnc" id="L709" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L710">			p = network[i];</span>
+<span class="nc" id="L711">			smallpos = i;</span>
+<span class="nc" id="L712">			smallval = p[1]; /* index on g */</span>
 			/* find smallest in i..netsize-1 */
-<span class="nc bnc" id="L712" title="All 2 branches missed.">			for (j = i + 1; j &lt; netsize; j++) {</span>
-<span class="nc" id="L713">				q = network[j];</span>
-<span class="nc bnc" id="L714" title="All 2 branches missed.">				if (q[1] &lt; smallval) { /* index on g */</span>
-<span class="nc" id="L715">					smallpos = j;</span>
-<span class="nc" id="L716">					smallval = q[1]; /* index on g */</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">			for (j = i + 1; j &lt; netsize; j++) {</span>
+<span class="nc" id="L715">				q = network[j];</span>
+<span class="nc bnc" id="L716" title="All 2 branches missed.">				if (q[1] &lt; smallval) { /* index on g */</span>
+<span class="nc" id="L717">					smallpos = j;</span>
+<span class="nc" id="L718">					smallval = q[1]; /* index on g */</span>
 				}
 			}
-<span class="nc" id="L719">			q = network[smallpos];</span>
+<span class="nc" id="L721">			q = network[smallpos];</span>
 			/* swap p (i) and q (smallpos) entries */
-<span class="nc bnc" id="L721" title="All 2 branches missed.">			if (i != smallpos) {</span>
-<span class="nc" id="L722">				j = q[0];</span>
-<span class="nc" id="L723">				q[0] = p[0];</span>
-<span class="nc" id="L724">				p[0] = j;</span>
-<span class="nc" id="L725">				j = q[1];</span>
-<span class="nc" id="L726">				q[1] = p[1];</span>
-<span class="nc" id="L727">				p[1] = j;</span>
-<span class="nc" id="L728">				j = q[2];</span>
-<span class="nc" id="L729">				q[2] = p[2];</span>
-<span class="nc" id="L730">				p[2] = j;</span>
-<span class="nc" id="L731">				j = q[3];</span>
-<span class="nc" id="L732">				q[3] = p[3];</span>
-<span class="nc" id="L733">				p[3] = j;</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">			if (i != smallpos) {</span>
+<span class="nc" id="L724">				j = q[0];</span>
+<span class="nc" id="L725">				q[0] = p[0];</span>
+<span class="nc" id="L726">				p[0] = j;</span>
+<span class="nc" id="L727">				j = q[1];</span>
+<span class="nc" id="L728">				q[1] = p[1];</span>
+<span class="nc" id="L729">				p[1] = j;</span>
+<span class="nc" id="L730">				j = q[2];</span>
+<span class="nc" id="L731">				q[2] = p[2];</span>
+<span class="nc" id="L732">				p[2] = j;</span>
+<span class="nc" id="L733">				j = q[3];</span>
+<span class="nc" id="L734">				q[3] = p[3];</span>
+<span class="nc" id="L735">				p[3] = j;</span>
 			}
 			/* smallval entry is now in position i */
-<span class="nc bnc" id="L736" title="All 2 branches missed.">			if (smallval != previouscol) {</span>
-<span class="nc" id="L737">				netindex[previouscol] = (startpos + i) &gt;&gt; 1;</span>
-<span class="nc bnc" id="L738" title="All 2 branches missed.">				for (j = previouscol + 1; j &lt; smallval; j++)</span>
-<span class="nc" id="L739">					netindex[j] = i;</span>
-<span class="nc" id="L740">				previouscol = smallval;</span>
-<span class="nc" id="L741">				startpos = i;</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">			if (smallval != previouscol) {</span>
+<span class="nc" id="L739">				netindex[previouscol] = (startpos + i) &gt;&gt; 1;</span>
+<span class="nc bnc" id="L740" title="All 2 branches missed.">				for (j = previouscol + 1; j &lt; smallval; j++)</span>
+<span class="nc" id="L741">					netindex[j] = i;</span>
+<span class="nc" id="L742">				previouscol = smallval;</span>
+<span class="nc" id="L743">				startpos = i;</span>
 			}
 		}
-<span class="nc" id="L744">		netindex[previouscol] = (startpos + maxnetpos) &gt;&gt; 1;</span>
-<span class="nc bnc" id="L745" title="All 2 branches missed.">		for (j = previouscol + 1; j &lt; 256; j++)</span>
-<span class="nc" id="L746">			netindex[j] = maxnetpos; /* really 256 */</span>
-<span class="nc" id="L747">	}</span>
+<span class="nc" id="L746">		netindex[previouscol] = (startpos + maxnetpos) &gt;&gt; 1;</span>
+<span class="nc bnc" id="L747" title="All 2 branches missed.">		for (j = previouscol + 1; j &lt; 256; j++)</span>
+<span class="nc" id="L748">			netindex[j] = maxnetpos; /* really 256 */</span>
+<span class="nc" id="L749">	}</span>
 
 	/*
 	 * Main Learning Loop ------------------
@@ -756,71 +758,71 @@ class NeuQuant {
 		byte[] p;
 		int pix, lim;
 
-<span class="nc bnc" id="L759" title="All 2 branches missed.">		if (lengthcount &lt; minpicturebytes)</span>
-<span class="nc" id="L760">			samplefac = 1;</span>
-<span class="nc" id="L761">		alphadec = 30 + ((samplefac - 1) / 3);</span>
-<span class="nc" id="L762">		p = thepicture;</span>
-<span class="nc" id="L763">		pix = 0;</span>
-<span class="nc" id="L764">		lim = lengthcount;</span>
-<span class="nc" id="L765">		samplepixels = lengthcount / (3 * samplefac);</span>
-<span class="nc" id="L766">		delta = samplepixels / ncycles;</span>
-<span class="nc" id="L767">		alpha = initalpha;</span>
-<span class="nc" id="L768">		radius = initradius;</span>
+<span class="nc bnc" id="L761" title="All 2 branches missed.">		if (lengthcount &lt; minpicturebytes)</span>
+<span class="nc" id="L762">			samplefac = 1;</span>
+<span class="nc" id="L763">		alphadec = 30 + ((samplefac - 1) / 3);</span>
+<span class="nc" id="L764">		p = thepicture;</span>
+<span class="nc" id="L765">		pix = 0;</span>
+<span class="nc" id="L766">		lim = lengthcount;</span>
+<span class="nc" id="L767">		samplepixels = lengthcount / (3 * samplefac);</span>
+<span class="nc" id="L768">		delta = samplepixels / ncycles;</span>
+<span class="nc" id="L769">		alpha = initalpha;</span>
+<span class="nc" id="L770">		radius = initradius;</span>
 
-<span class="nc" id="L770">		rad = radius &gt;&gt; radiusbiasshift;</span>
-<span class="nc bnc" id="L771" title="All 2 branches missed.">		if (rad &lt;= 1)</span>
-<span class="nc" id="L772">			rad = 0;</span>
-<span class="nc bnc" id="L773" title="All 2 branches missed.">		for (i = 0; i &lt; rad; i++)</span>
-<span class="nc" id="L774">			radpower[i] = alpha * (((rad * rad - i * i) * radbias) / (rad * rad));</span>
+<span class="nc" id="L772">		rad = radius &gt;&gt; radiusbiasshift;</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">		if (rad &lt;= 1)</span>
+<span class="nc" id="L774">			rad = 0;</span>
+<span class="nc bnc" id="L775" title="All 2 branches missed.">		for (i = 0; i &lt; rad; i++)</span>
+<span class="nc" id="L776">			radpower[i] = alpha * (((rad * rad - i * i) * radbias) / (rad * rad));</span>
 
 		// fprintf(stderr,&quot;beginning 1D learning: initial radius=%d\n&quot;, rad);
 
-<span class="nc bnc" id="L778" title="All 2 branches missed.">		if (lengthcount &lt; minpicturebytes)</span>
-<span class="nc" id="L779">			step = 3;</span>
-<span class="nc bnc" id="L780" title="All 2 branches missed.">		else if ((lengthcount % prime1) != 0)</span>
-<span class="nc" id="L781">			step = 3 * prime1;</span>
+<span class="nc bnc" id="L780" title="All 2 branches missed.">		if (lengthcount &lt; minpicturebytes)</span>
+<span class="nc" id="L781">			step = 3;</span>
+<span class="nc bnc" id="L782" title="All 2 branches missed.">		else if ((lengthcount % prime1) != 0)</span>
+<span class="nc" id="L783">			step = 3 * prime1;</span>
 		else {
-<span class="nc bnc" id="L783" title="All 2 branches missed.">			if ((lengthcount % prime2) != 0)</span>
-<span class="nc" id="L784">				step = 3 * prime2;</span>
+<span class="nc bnc" id="L785" title="All 2 branches missed.">			if ((lengthcount % prime2) != 0)</span>
+<span class="nc" id="L786">				step = 3 * prime2;</span>
 			else {
-<span class="nc bnc" id="L786" title="All 2 branches missed.">				if ((lengthcount % prime3) != 0)</span>
-<span class="nc" id="L787">					step = 3 * prime3;</span>
+<span class="nc bnc" id="L788" title="All 2 branches missed.">				if ((lengthcount % prime3) != 0)</span>
+<span class="nc" id="L789">					step = 3 * prime3;</span>
 				else
-<span class="nc" id="L789">					step = 3 * prime4;</span>
+<span class="nc" id="L791">					step = 3 * prime4;</span>
 			}
 		}
 
-<span class="nc" id="L793">		i = 0;</span>
-<span class="nc bnc" id="L794" title="All 2 branches missed.">		while (i &lt; samplepixels) {</span>
-<span class="nc" id="L795">			b = (p[pix + 0] &amp; 0xff) &lt;&lt; netbiasshift;</span>
-<span class="nc" id="L796">			g = (p[pix + 1] &amp; 0xff) &lt;&lt; netbiasshift;</span>
-<span class="nc" id="L797">			r = (p[pix + 2] &amp; 0xff) &lt;&lt; netbiasshift;</span>
-<span class="nc" id="L798">			j = contest(b, g, r);</span>
+<span class="nc" id="L795">		i = 0;</span>
+<span class="nc bnc" id="L796" title="All 2 branches missed.">		while (i &lt; samplepixels) {</span>
+<span class="nc" id="L797">			b = (p[pix + 0] &amp; 0xff) &lt;&lt; netbiasshift;</span>
+<span class="nc" id="L798">			g = (p[pix + 1] &amp; 0xff) &lt;&lt; netbiasshift;</span>
+<span class="nc" id="L799">			r = (p[pix + 2] &amp; 0xff) &lt;&lt; netbiasshift;</span>
+<span class="nc" id="L800">			j = contest(b, g, r);</span>
 
-<span class="nc" id="L800">			altersingle(alpha, j, b, g, r);</span>
-<span class="nc bnc" id="L801" title="All 2 branches missed.">			if (rad != 0)</span>
-<span class="nc" id="L802">				alterneigh(rad, j, b, g, r); /* alter neighbours */</span>
+<span class="nc" id="L802">			altersingle(alpha, j, b, g, r);</span>
+<span class="nc bnc" id="L803" title="All 2 branches missed.">			if (rad != 0)</span>
+<span class="nc" id="L804">				alterneigh(rad, j, b, g, r); /* alter neighbours */</span>
 
-<span class="nc" id="L804">			pix += step;</span>
-<span class="nc bnc" id="L805" title="All 2 branches missed.">			if (pix &gt;= lim)</span>
-<span class="nc" id="L806">				pix -= lengthcount;</span>
+<span class="nc" id="L806">			pix += step;</span>
+<span class="nc bnc" id="L807" title="All 2 branches missed.">			if (pix &gt;= lim)</span>
+<span class="nc" id="L808">				pix -= lengthcount;</span>
 
-<span class="nc" id="L808">			i++;</span>
-<span class="nc bnc" id="L809" title="All 2 branches missed.">			if (delta == 0)</span>
-<span class="nc" id="L810">				delta = 1;</span>
-<span class="nc bnc" id="L811" title="All 2 branches missed.">			if (i % delta == 0) {</span>
-<span class="nc" id="L812">				alpha -= alpha / alphadec;</span>
-<span class="nc" id="L813">				radius -= radius / radiusdec;</span>
-<span class="nc" id="L814">				rad = radius &gt;&gt; radiusbiasshift;</span>
-<span class="nc bnc" id="L815" title="All 2 branches missed.">				if (rad &lt;= 1)</span>
-<span class="nc" id="L816">					rad = 0;</span>
-<span class="nc bnc" id="L817" title="All 2 branches missed.">				for (j = 0; j &lt; rad; j++)</span>
-<span class="nc" id="L818">					radpower[j] = alpha * (((rad * rad - j * j) * radbias) / (rad * rad));</span>
+<span class="nc" id="L810">			i++;</span>
+<span class="nc bnc" id="L811" title="All 2 branches missed.">			if (delta == 0)</span>
+<span class="nc" id="L812">				delta = 1;</span>
+<span class="nc bnc" id="L813" title="All 2 branches missed.">			if (i % delta == 0) {</span>
+<span class="nc" id="L814">				alpha -= alpha / alphadec;</span>
+<span class="nc" id="L815">				radius -= radius / radiusdec;</span>
+<span class="nc" id="L816">				rad = radius &gt;&gt; radiusbiasshift;</span>
+<span class="nc bnc" id="L817" title="All 2 branches missed.">				if (rad &lt;= 1)</span>
+<span class="nc" id="L818">					rad = 0;</span>
+<span class="nc bnc" id="L819" title="All 2 branches missed.">				for (j = 0; j &lt; rad; j++)</span>
+<span class="nc" id="L820">					radpower[j] = alpha * (((rad * rad - j * j) * radbias) / (rad * rad));</span>
 			}
 		}
 		// fprintf(stderr,&quot;finished 1D learning: final alpha=%f
 		// !\n&quot;,((float)alpha)/initalpha);
-<span class="nc" id="L823">	}</span>
+<span class="nc" id="L825">	}</span>
 
 	/*
 	 * Search for BGR values 0..255 (after net is unbiased) and return colour index
@@ -832,71 +834,71 @@ class NeuQuant {
 		int[] p;
 		int best;
 
-<span class="nc" id="L835">		bestd = 1000; /* biggest possible dist is 256*3 */</span>
-<span class="nc" id="L836">		best = -1;</span>
-<span class="nc" id="L837">		i = netindex[g]; /* index on g */</span>
-<span class="nc" id="L838">		j = i - 1; /* start at netindex[g] and work outwards */</span>
+<span class="nc" id="L837">		bestd = 1000; /* biggest possible dist is 256*3 */</span>
+<span class="nc" id="L838">		best = -1;</span>
+<span class="nc" id="L839">		i = netindex[g]; /* index on g */</span>
+<span class="nc" id="L840">		j = i - 1; /* start at netindex[g] and work outwards */</span>
 
-<span class="nc bnc" id="L840" title="All 4 branches missed.">		while ((i &lt; netsize) || (j &gt;= 0)) {</span>
-<span class="nc bnc" id="L841" title="All 2 branches missed.">			if (i &lt; netsize) {</span>
-<span class="nc" id="L842">				p = network[i];</span>
-<span class="nc" id="L843">				dist = p[1] - g; /* inx key */</span>
-<span class="nc bnc" id="L844" title="All 2 branches missed.">				if (dist &gt;= bestd)</span>
-<span class="nc" id="L845">					i = netsize; /* stop iter */</span>
+<span class="nc bnc" id="L842" title="All 4 branches missed.">		while ((i &lt; netsize) || (j &gt;= 0)) {</span>
+<span class="nc bnc" id="L843" title="All 2 branches missed.">			if (i &lt; netsize) {</span>
+<span class="nc" id="L844">				p = network[i];</span>
+<span class="nc" id="L845">				dist = p[1] - g; /* inx key */</span>
+<span class="nc bnc" id="L846" title="All 2 branches missed.">				if (dist &gt;= bestd)</span>
+<span class="nc" id="L847">					i = netsize; /* stop iter */</span>
 				else {
-<span class="nc" id="L847">					i++;</span>
-<span class="nc bnc" id="L848" title="All 2 branches missed.">					if (dist &lt; 0)</span>
-<span class="nc" id="L849">						dist = -dist;</span>
-<span class="nc" id="L850">					a = p[0] - b;</span>
-<span class="nc bnc" id="L851" title="All 2 branches missed.">					if (a &lt; 0)</span>
-<span class="nc" id="L852">						a = -a;</span>
-<span class="nc" id="L853">					dist += a;</span>
-<span class="nc bnc" id="L854" title="All 2 branches missed.">					if (dist &lt; bestd) {</span>
-<span class="nc" id="L855">						a = p[2] - r;</span>
-<span class="nc bnc" id="L856" title="All 2 branches missed.">						if (a &lt; 0)</span>
-<span class="nc" id="L857">							a = -a;</span>
-<span class="nc" id="L858">						dist += a;</span>
-<span class="nc bnc" id="L859" title="All 2 branches missed.">						if (dist &lt; bestd) {</span>
-<span class="nc" id="L860">							bestd = dist;</span>
-<span class="nc" id="L861">							best = p[3];</span>
+<span class="nc" id="L849">					i++;</span>
+<span class="nc bnc" id="L850" title="All 2 branches missed.">					if (dist &lt; 0)</span>
+<span class="nc" id="L851">						dist = -dist;</span>
+<span class="nc" id="L852">					a = p[0] - b;</span>
+<span class="nc bnc" id="L853" title="All 2 branches missed.">					if (a &lt; 0)</span>
+<span class="nc" id="L854">						a = -a;</span>
+<span class="nc" id="L855">					dist += a;</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">					if (dist &lt; bestd) {</span>
+<span class="nc" id="L857">						a = p[2] - r;</span>
+<span class="nc bnc" id="L858" title="All 2 branches missed.">						if (a &lt; 0)</span>
+<span class="nc" id="L859">							a = -a;</span>
+<span class="nc" id="L860">						dist += a;</span>
+<span class="nc bnc" id="L861" title="All 2 branches missed.">						if (dist &lt; bestd) {</span>
+<span class="nc" id="L862">							bestd = dist;</span>
+<span class="nc" id="L863">							best = p[3];</span>
 						}
 					}
 				}
 			}
-<span class="nc bnc" id="L866" title="All 2 branches missed.">			if (j &gt;= 0) {</span>
-<span class="nc" id="L867">				p = network[j];</span>
-<span class="nc" id="L868">				dist = g - p[1]; /* inx key - reverse dif */</span>
-<span class="nc bnc" id="L869" title="All 2 branches missed.">				if (dist &gt;= bestd)</span>
-<span class="nc" id="L870">					j = -1; /* stop iter */</span>
+<span class="nc bnc" id="L868" title="All 2 branches missed.">			if (j &gt;= 0) {</span>
+<span class="nc" id="L869">				p = network[j];</span>
+<span class="nc" id="L870">				dist = g - p[1]; /* inx key - reverse dif */</span>
+<span class="nc bnc" id="L871" title="All 2 branches missed.">				if (dist &gt;= bestd)</span>
+<span class="nc" id="L872">					j = -1; /* stop iter */</span>
 				else {
-<span class="nc" id="L872">					j--;</span>
-<span class="nc bnc" id="L873" title="All 2 branches missed.">					if (dist &lt; 0)</span>
-<span class="nc" id="L874">						dist = -dist;</span>
-<span class="nc" id="L875">					a = p[0] - b;</span>
-<span class="nc bnc" id="L876" title="All 2 branches missed.">					if (a &lt; 0)</span>
-<span class="nc" id="L877">						a = -a;</span>
-<span class="nc" id="L878">					dist += a;</span>
-<span class="nc bnc" id="L879" title="All 2 branches missed.">					if (dist &lt; bestd) {</span>
-<span class="nc" id="L880">						a = p[2] - r;</span>
-<span class="nc bnc" id="L881" title="All 2 branches missed.">						if (a &lt; 0)</span>
-<span class="nc" id="L882">							a = -a;</span>
-<span class="nc" id="L883">						dist += a;</span>
-<span class="nc bnc" id="L884" title="All 2 branches missed.">						if (dist &lt; bestd) {</span>
-<span class="nc" id="L885">							bestd = dist;</span>
-<span class="nc" id="L886">							best = p[3];</span>
+<span class="nc" id="L874">					j--;</span>
+<span class="nc bnc" id="L875" title="All 2 branches missed.">					if (dist &lt; 0)</span>
+<span class="nc" id="L876">						dist = -dist;</span>
+<span class="nc" id="L877">					a = p[0] - b;</span>
+<span class="nc bnc" id="L878" title="All 2 branches missed.">					if (a &lt; 0)</span>
+<span class="nc" id="L879">						a = -a;</span>
+<span class="nc" id="L880">					dist += a;</span>
+<span class="nc bnc" id="L881" title="All 2 branches missed.">					if (dist &lt; bestd) {</span>
+<span class="nc" id="L882">						a = p[2] - r;</span>
+<span class="nc bnc" id="L883" title="All 2 branches missed.">						if (a &lt; 0)</span>
+<span class="nc" id="L884">							a = -a;</span>
+<span class="nc" id="L885">						dist += a;</span>
+<span class="nc bnc" id="L886" title="All 2 branches missed.">						if (dist &lt; bestd) {</span>
+<span class="nc" id="L887">							bestd = dist;</span>
+<span class="nc" id="L888">							best = p[3];</span>
 						}
 					}
 				}
 			}
 		}
-<span class="nc" id="L892">		return (best);</span>
+<span class="nc" id="L894">		return (best);</span>
 	}
 
 	public byte[] process() {
-<span class="nc" id="L896">		learn();</span>
-<span class="nc" id="L897">		unbiasnet();</span>
-<span class="nc" id="L898">		inxbuild();</span>
-<span class="nc" id="L899">		return colorMap();</span>
+<span class="nc" id="L898">		learn();</span>
+<span class="nc" id="L899">		unbiasnet();</span>
+<span class="nc" id="L900">		inxbuild();</span>
+<span class="nc" id="L901">		return colorMap();</span>
 	}
 
 	/*
@@ -909,13 +911,13 @@ class NeuQuant {
 
 		int i, j;
 
-<span class="nc bnc" id="L912" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
-<span class="nc" id="L913">			network[i][0] &gt;&gt;= netbiasshift;</span>
-<span class="nc" id="L914">			network[i][1] &gt;&gt;= netbiasshift;</span>
-<span class="nc" id="L915">			network[i][2] &gt;&gt;= netbiasshift;</span>
-<span class="nc" id="L916">			network[i][3] = i; /* record colour no */</span>
+<span class="nc bnc" id="L914" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L915">			network[i][0] &gt;&gt;= netbiasshift;</span>
+<span class="nc" id="L916">			network[i][1] &gt;&gt;= netbiasshift;</span>
+<span class="nc" id="L917">			network[i][2] &gt;&gt;= netbiasshift;</span>
+<span class="nc" id="L918">			network[i][3] = i; /* record colour no */</span>
 		}
-<span class="nc" id="L918">	}</span>
+<span class="nc" id="L920">	}</span>
 
 	/*
 	 * Move adjacent neurons by precomputed alpha*(1-((i-j)^2/[r]^2)) in
@@ -928,38 +930,38 @@ class NeuQuant {
 		int j, k, lo, hi, a, m;
 		int[] p;
 
-<span class="nc" id="L931">		lo = i - rad;</span>
-<span class="nc bnc" id="L932" title="All 2 branches missed.">		if (lo &lt; -1)</span>
-<span class="nc" id="L933">			lo = -1;</span>
-<span class="nc" id="L934">		hi = i + rad;</span>
-<span class="nc bnc" id="L935" title="All 2 branches missed.">		if (hi &gt; netsize)</span>
-<span class="nc" id="L936">			hi = netsize;</span>
+<span class="nc" id="L933">		lo = i - rad;</span>
+<span class="nc bnc" id="L934" title="All 2 branches missed.">		if (lo &lt; -1)</span>
+<span class="nc" id="L935">			lo = -1;</span>
+<span class="nc" id="L936">		hi = i + rad;</span>
+<span class="nc bnc" id="L937" title="All 2 branches missed.">		if (hi &gt; netsize)</span>
+<span class="nc" id="L938">			hi = netsize;</span>
 
-<span class="nc" id="L938">		j = i + 1;</span>
-<span class="nc" id="L939">		k = i - 1;</span>
-<span class="nc" id="L940">		m = 1;</span>
-<span class="nc bnc" id="L941" title="All 4 branches missed.">		while ((j &lt; hi) || (k &gt; lo)) {</span>
-<span class="nc" id="L942">			a = radpower[m++];</span>
-<span class="nc bnc" id="L943" title="All 2 branches missed.">			if (j &lt; hi) {</span>
-<span class="nc" id="L944">				p = network[j++];</span>
+<span class="nc" id="L940">		j = i + 1;</span>
+<span class="nc" id="L941">		k = i - 1;</span>
+<span class="nc" id="L942">		m = 1;</span>
+<span class="nc bnc" id="L943" title="All 4 branches missed.">		while ((j &lt; hi) || (k &gt; lo)) {</span>
+<span class="nc" id="L944">			a = radpower[m++];</span>
+<span class="nc bnc" id="L945" title="All 2 branches missed.">			if (j &lt; hi) {</span>
+<span class="nc" id="L946">				p = network[j++];</span>
 				try {
-<span class="nc" id="L946">					p[0] -= (a * (p[0] - b)) / alpharadbias;</span>
-<span class="nc" id="L947">					p[1] -= (a * (p[1] - g)) / alpharadbias;</span>
-<span class="nc" id="L948">					p[2] -= (a * (p[2] - r)) / alpharadbias;</span>
-<span class="nc" id="L949">				} catch (Exception e) {</span>
-<span class="nc" id="L950">				} // prevents 1.3 miscompilation</span>
+<span class="nc" id="L948">					p[0] -= (a * (p[0] - b)) / alpharadbias;</span>
+<span class="nc" id="L949">					p[1] -= (a * (p[1] - g)) / alpharadbias;</span>
+<span class="nc" id="L950">					p[2] -= (a * (p[2] - r)) / alpharadbias;</span>
+<span class="nc" id="L951">				} catch (Exception e) {</span>
+<span class="nc" id="L952">				} // prevents 1.3 miscompilation</span>
 			}
-<span class="nc bnc" id="L952" title="All 2 branches missed.">			if (k &gt; lo) {</span>
-<span class="nc" id="L953">				p = network[k--];</span>
+<span class="nc bnc" id="L954" title="All 2 branches missed.">			if (k &gt; lo) {</span>
+<span class="nc" id="L955">				p = network[k--];</span>
 				try {
-<span class="nc" id="L955">					p[0] -= (a * (p[0] - b)) / alpharadbias;</span>
-<span class="nc" id="L956">					p[1] -= (a * (p[1] - g)) / alpharadbias;</span>
-<span class="nc" id="L957">					p[2] -= (a * (p[2] - r)) / alpharadbias;</span>
-<span class="nc" id="L958">				} catch (Exception e) {</span>
-<span class="nc" id="L959">				}</span>
+<span class="nc" id="L957">					p[0] -= (a * (p[0] - b)) / alpharadbias;</span>
+<span class="nc" id="L958">					p[1] -= (a * (p[1] - g)) / alpharadbias;</span>
+<span class="nc" id="L959">					p[2] -= (a * (p[2] - r)) / alpharadbias;</span>
+<span class="nc" id="L960">				} catch (Exception e) {</span>
+<span class="nc" id="L961">				}</span>
 			}
 		}
-<span class="nc" id="L962">	}</span>
+<span class="nc" id="L964">	}</span>
 
 	/*
 	 * Move neuron i towards biased (b,g,r) by factor alpha
@@ -968,11 +970,11 @@ class NeuQuant {
 	protected void altersingle(int alpha, int i, int b, int g, int r) {
 
 		/* alter hit neuron */
-<span class="nc" id="L971">		int[] n = network[i];</span>
-<span class="nc" id="L972">		n[0] -= (alpha * (n[0] - b)) / initalpha;</span>
-<span class="nc" id="L973">		n[1] -= (alpha * (n[1] - g)) / initalpha;</span>
-<span class="nc" id="L974">		n[2] -= (alpha * (n[2] - r)) / initalpha;</span>
-<span class="nc" id="L975">	}</span>
+<span class="nc" id="L973">		int[] n = network[i];</span>
+<span class="nc" id="L974">		n[0] -= (alpha * (n[0] - b)) / initalpha;</span>
+<span class="nc" id="L975">		n[1] -= (alpha * (n[1] - g)) / initalpha;</span>
+<span class="nc" id="L976">		n[2] -= (alpha * (n[2] - r)) / initalpha;</span>
+<span class="nc" id="L977">	}</span>
 
 	/*
 	 * Search for biased BGR values ----------------------------
@@ -990,40 +992,40 @@ class NeuQuant {
 		int bestpos, bestbiaspos, bestd, bestbiasd;
 		int[] n;
 
-<span class="nc" id="L993">		bestd = ~(((int) 1) &lt;&lt; 31);</span>
-<span class="nc" id="L994">		bestbiasd = bestd;</span>
-<span class="nc" id="L995">		bestpos = -1;</span>
-<span class="nc" id="L996">		bestbiaspos = bestpos;</span>
+<span class="nc" id="L995">		bestd = ~(((int) 1) &lt;&lt; 31);</span>
+<span class="nc" id="L996">		bestbiasd = bestd;</span>
+<span class="nc" id="L997">		bestpos = -1;</span>
+<span class="nc" id="L998">		bestbiaspos = bestpos;</span>
 
-<span class="nc bnc" id="L998" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
-<span class="nc" id="L999">			n = network[i];</span>
-<span class="nc" id="L1000">			dist = n[0] - b;</span>
-<span class="nc bnc" id="L1001" title="All 2 branches missed.">			if (dist &lt; 0)</span>
-<span class="nc" id="L1002">				dist = -dist;</span>
-<span class="nc" id="L1003">			a = n[1] - g;</span>
-<span class="nc bnc" id="L1004" title="All 2 branches missed.">			if (a &lt; 0)</span>
-<span class="nc" id="L1005">				a = -a;</span>
-<span class="nc" id="L1006">			dist += a;</span>
-<span class="nc" id="L1007">			a = n[2] - r;</span>
-<span class="nc bnc" id="L1008" title="All 2 branches missed.">			if (a &lt; 0)</span>
-<span class="nc" id="L1009">				a = -a;</span>
-<span class="nc" id="L1010">			dist += a;</span>
-<span class="nc bnc" id="L1011" title="All 2 branches missed.">			if (dist &lt; bestd) {</span>
-<span class="nc" id="L1012">				bestd = dist;</span>
-<span class="nc" id="L1013">				bestpos = i;</span>
+<span class="nc bnc" id="L1000" title="All 2 branches missed.">		for (i = 0; i &lt; netsize; i++) {</span>
+<span class="nc" id="L1001">			n = network[i];</span>
+<span class="nc" id="L1002">			dist = n[0] - b;</span>
+<span class="nc bnc" id="L1003" title="All 2 branches missed.">			if (dist &lt; 0)</span>
+<span class="nc" id="L1004">				dist = -dist;</span>
+<span class="nc" id="L1005">			a = n[1] - g;</span>
+<span class="nc bnc" id="L1006" title="All 2 branches missed.">			if (a &lt; 0)</span>
+<span class="nc" id="L1007">				a = -a;</span>
+<span class="nc" id="L1008">			dist += a;</span>
+<span class="nc" id="L1009">			a = n[2] - r;</span>
+<span class="nc bnc" id="L1010" title="All 2 branches missed.">			if (a &lt; 0)</span>
+<span class="nc" id="L1011">				a = -a;</span>
+<span class="nc" id="L1012">			dist += a;</span>
+<span class="nc bnc" id="L1013" title="All 2 branches missed.">			if (dist &lt; bestd) {</span>
+<span class="nc" id="L1014">				bestd = dist;</span>
+<span class="nc" id="L1015">				bestpos = i;</span>
 			}
-<span class="nc" id="L1015">			biasdist = dist - ((bias[i]) &gt;&gt; (intbiasshift - netbiasshift));</span>
-<span class="nc bnc" id="L1016" title="All 2 branches missed.">			if (biasdist &lt; bestbiasd) {</span>
-<span class="nc" id="L1017">				bestbiasd = biasdist;</span>
-<span class="nc" id="L1018">				bestbiaspos = i;</span>
+<span class="nc" id="L1017">			biasdist = dist - ((bias[i]) &gt;&gt; (intbiasshift - netbiasshift));</span>
+<span class="nc bnc" id="L1018" title="All 2 branches missed.">			if (biasdist &lt; bestbiasd) {</span>
+<span class="nc" id="L1019">				bestbiasd = biasdist;</span>
+<span class="nc" id="L1020">				bestbiaspos = i;</span>
 			}
-<span class="nc" id="L1020">			betafreq = (freq[i] &gt;&gt; betashift);</span>
-<span class="nc" id="L1021">			freq[i] -= betafreq;</span>
-<span class="nc" id="L1022">			bias[i] += (betafreq &lt;&lt; gammashift);</span>
+<span class="nc" id="L1022">			betafreq = (freq[i] &gt;&gt; betashift);</span>
+<span class="nc" id="L1023">			freq[i] -= betafreq;</span>
+<span class="nc" id="L1024">			bias[i] += (betafreq &lt;&lt; gammashift);</span>
 		}
-<span class="nc" id="L1024">		freq[bestpos] += beta;</span>
-<span class="nc" id="L1025">		bias[bestpos] -= betagamma;</span>
-<span class="nc" id="L1026">		return (bestbiaspos);</span>
+<span class="nc" id="L1026">		freq[bestpos] += beta;</span>
+<span class="nc" id="L1027">		bias[bestpos] -= betagamma;</span>
+<span class="nc" id="L1028">		return (bestbiaspos);</span>
 	}
 }
 
@@ -1069,23 +1071,23 @@ class LZWEncoder {
 
 	int n_bits; // number of bits/code
 
-<span class="nc" id="L1072">	int maxbits = BITS; // user settable max # bits/code</span>
+<span class="nc" id="L1074">	int maxbits = BITS; // user settable max # bits/code</span>
 
 	int maxcode; // maximum code, given n_bits
 
-<span class="nc" id="L1076">	int maxmaxcode = 1 &lt;&lt; BITS; // should NEVER generate this code</span>
+<span class="nc" id="L1078">	int maxmaxcode = 1 &lt;&lt; BITS; // should NEVER generate this code</span>
 
-<span class="nc" id="L1078">	int[] htab = new int[HSIZE];</span>
+<span class="nc" id="L1080">	int[] htab = new int[HSIZE];</span>
 
-<span class="nc" id="L1080">	int[] codetab = new int[HSIZE];</span>
+<span class="nc" id="L1082">	int[] codetab = new int[HSIZE];</span>
 
-<span class="nc" id="L1082">	int hsize = HSIZE; // for dynamic table sizing</span>
+<span class="nc" id="L1084">	int hsize = HSIZE; // for dynamic table sizing</span>
 
-<span class="nc" id="L1084">	int free_ent = 0; // first unused entry</span>
+<span class="nc" id="L1086">	int free_ent = 0; // first unused entry</span>
 
 	// block compression parameters -- after all codes are used up,
 	// and compression rate changes, start over.
-<span class="nc" id="L1088">	boolean clear_flg = false;</span>
+<span class="nc" id="L1090">	boolean clear_flg = false;</span>
 
 	// Algorithm: use open addressing double hashing (no chaining) on the
 	// prefix code / next character combination. We do a variant of Knuth's
@@ -1120,51 +1122,51 @@ class LZWEncoder {
 	// fit in it exactly). Use the VAX insv instruction to insert each
 	// code in turn. When the buffer fills up empty it and start over.
 
-<span class="nc" id="L1123">	int cur_accum = 0;</span>
+<span class="nc" id="L1125">	int cur_accum = 0;</span>
 
-<span class="nc" id="L1125">	int cur_bits = 0;</span>
+<span class="nc" id="L1127">	int cur_bits = 0;</span>
 
-<span class="nc" id="L1127">	int masks[] = { 0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F, 0x003F, 0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF,</span>
+<span class="nc" id="L1129">	int masks[] = { 0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F, 0x003F, 0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF,</span>
 			0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF };
 
 	// Number of characters so far in this 'packet'
 	int a_count;
 
 	// Define the storage for the packet accumulator
-<span class="nc" id="L1134">	byte[] accum = new byte[256];</span>
+<span class="nc" id="L1136">	byte[] accum = new byte[256];</span>
 
 	// ----------------------------------------------------------------------------
-<span class="nc" id="L1137">	LZWEncoder(int width, int height, byte[] pixels, int color_depth) {</span>
-<span class="nc" id="L1138">		imgW = width;</span>
-<span class="nc" id="L1139">		imgH = height;</span>
-<span class="nc" id="L1140">		pixAry = pixels;</span>
-<span class="nc" id="L1141">		initCodeSize = Math.max(2, color_depth);</span>
-<span class="nc" id="L1142">	}</span>
+<span class="nc" id="L1139">	LZWEncoder(int width, int height, byte[] pixels, int color_depth) {</span>
+<span class="nc" id="L1140">		imgW = width;</span>
+<span class="nc" id="L1141">		imgH = height;</span>
+<span class="nc" id="L1142">		pixAry = pixels;</span>
+<span class="nc" id="L1143">		initCodeSize = Math.max(2, color_depth);</span>
+<span class="nc" id="L1144">	}</span>
 
 	// Add a character to the end of the current packet, and if it is 254
 	// characters, flush the packet to disk.
 	void char_out(byte c, OutputStream outs) throws IOException {
-<span class="nc" id="L1147">		accum[a_count++] = c;</span>
-<span class="nc bnc" id="L1148" title="All 2 branches missed.">		if (a_count &gt;= 254)</span>
-<span class="nc" id="L1149">			flush_char(outs);</span>
-<span class="nc" id="L1150">	}</span>
+<span class="nc" id="L1149">		accum[a_count++] = c;</span>
+<span class="nc bnc" id="L1150" title="All 2 branches missed.">		if (a_count &gt;= 254)</span>
+<span class="nc" id="L1151">			flush_char(outs);</span>
+<span class="nc" id="L1152">	}</span>
 
 	// Clear out the hash table
 
 	// table clear for block compress
 	void cl_block(OutputStream outs) throws IOException {
-<span class="nc" id="L1156">		cl_hash(hsize);</span>
-<span class="nc" id="L1157">		free_ent = ClearCode + 2;</span>
-<span class="nc" id="L1158">		clear_flg = true;</span>
+<span class="nc" id="L1158">		cl_hash(hsize);</span>
+<span class="nc" id="L1159">		free_ent = ClearCode + 2;</span>
+<span class="nc" id="L1160">		clear_flg = true;</span>
 
-<span class="nc" id="L1160">		output(ClearCode, outs);</span>
-<span class="nc" id="L1161">	}</span>
+<span class="nc" id="L1162">		output(ClearCode, outs);</span>
+<span class="nc" id="L1163">	}</span>
 
 	// reset code table
 	void cl_hash(int hsize) {
-<span class="nc bnc" id="L1165" title="All 2 branches missed.">		for (int i = 0; i &lt; hsize; ++i)</span>
-<span class="nc" id="L1166">			htab[i] = -1;</span>
-<span class="nc" id="L1167">	}</span>
+<span class="nc bnc" id="L1167" title="All 2 branches missed.">		for (int i = 0; i &lt; hsize; ++i)</span>
+<span class="nc" id="L1168">			htab[i] = -1;</span>
+<span class="nc" id="L1169">	}</span>
 
 	void compress(int init_bits, OutputStream outs) throws IOException {
 		int fcode;
@@ -1176,146 +1178,146 @@ class LZWEncoder {
 		int hshift;
 
 		// Set up the globals: g_init_bits - initial number of bits
-<span class="nc" id="L1179">		g_init_bits = init_bits;</span>
+<span class="nc" id="L1181">		g_init_bits = init_bits;</span>
 
 		// Set up the necessary values
-<span class="nc" id="L1182">		clear_flg = false;</span>
-<span class="nc" id="L1183">		n_bits = g_init_bits;</span>
-<span class="nc" id="L1184">		maxcode = MAXCODE(n_bits);</span>
+<span class="nc" id="L1184">		clear_flg = false;</span>
+<span class="nc" id="L1185">		n_bits = g_init_bits;</span>
+<span class="nc" id="L1186">		maxcode = MAXCODE(n_bits);</span>
 
-<span class="nc" id="L1186">		ClearCode = 1 &lt;&lt; (init_bits - 1);</span>
-<span class="nc" id="L1187">		EOFCode = ClearCode + 1;</span>
-<span class="nc" id="L1188">		free_ent = ClearCode + 2;</span>
+<span class="nc" id="L1188">		ClearCode = 1 &lt;&lt; (init_bits - 1);</span>
+<span class="nc" id="L1189">		EOFCode = ClearCode + 1;</span>
+<span class="nc" id="L1190">		free_ent = ClearCode + 2;</span>
 
-<span class="nc" id="L1190">		a_count = 0; // clear packet</span>
+<span class="nc" id="L1192">		a_count = 0; // clear packet</span>
 
-<span class="nc" id="L1192">		ent = nextPixel();</span>
+<span class="nc" id="L1194">		ent = nextPixel();</span>
 
-<span class="nc" id="L1194">		hshift = 0;</span>
-<span class="nc bnc" id="L1195" title="All 2 branches missed.">		for (fcode = hsize; fcode &lt; 65536; fcode *= 2)</span>
-<span class="nc" id="L1196">			++hshift;</span>
-<span class="nc" id="L1197">		hshift = 8 - hshift; // set hash code range bound</span>
+<span class="nc" id="L1196">		hshift = 0;</span>
+<span class="nc bnc" id="L1197" title="All 2 branches missed.">		for (fcode = hsize; fcode &lt; 65536; fcode *= 2)</span>
+<span class="nc" id="L1198">			++hshift;</span>
+<span class="nc" id="L1199">		hshift = 8 - hshift; // set hash code range bound</span>
 
-<span class="nc" id="L1199">		hsize_reg = hsize;</span>
-<span class="nc" id="L1200">		cl_hash(hsize_reg); // clear hash table</span>
+<span class="nc" id="L1201">		hsize_reg = hsize;</span>
+<span class="nc" id="L1202">		cl_hash(hsize_reg); // clear hash table</span>
 
-<span class="nc" id="L1202">		output(ClearCode, outs);</span>
+<span class="nc" id="L1204">		output(ClearCode, outs);</span>
 
-<span class="nc bnc" id="L1204" title="All 2 branches missed.">		outer_loop: while ((c = nextPixel()) != EOF) {</span>
-<span class="nc" id="L1205">			fcode = (c &lt;&lt; maxbits) + ent;</span>
-<span class="nc" id="L1206">			i = (c &lt;&lt; hshift) ^ ent; // xor hashing</span>
+<span class="nc bnc" id="L1206" title="All 2 branches missed.">		outer_loop: while ((c = nextPixel()) != EOF) {</span>
+<span class="nc" id="L1207">			fcode = (c &lt;&lt; maxbits) + ent;</span>
+<span class="nc" id="L1208">			i = (c &lt;&lt; hshift) ^ ent; // xor hashing</span>
 
-<span class="nc bnc" id="L1208" title="All 2 branches missed.">			if (htab[i] == fcode) {</span>
-<span class="nc" id="L1209">				ent = codetab[i];</span>
-<span class="nc" id="L1210">				continue;</span>
-<span class="nc bnc" id="L1211" title="All 2 branches missed.">			} else if (htab[i] &gt;= 0) // non-empty slot</span>
+<span class="nc bnc" id="L1210" title="All 2 branches missed.">			if (htab[i] == fcode) {</span>
+<span class="nc" id="L1211">				ent = codetab[i];</span>
+<span class="nc" id="L1212">				continue;</span>
+<span class="nc bnc" id="L1213" title="All 2 branches missed.">			} else if (htab[i] &gt;= 0) // non-empty slot</span>
 			{
-<span class="nc" id="L1213">				disp = hsize_reg - i; // secondary hash (after G. Knott)</span>
-<span class="nc bnc" id="L1214" title="All 2 branches missed.">				if (i == 0)</span>
-<span class="nc" id="L1215">					disp = 1;</span>
+<span class="nc" id="L1215">				disp = hsize_reg - i; // secondary hash (after G. Knott)</span>
+<span class="nc bnc" id="L1216" title="All 2 branches missed.">				if (i == 0)</span>
+<span class="nc" id="L1217">					disp = 1;</span>
 				do {
-<span class="nc bnc" id="L1217" title="All 2 branches missed.">					if ((i -= disp) &lt; 0)</span>
-<span class="nc" id="L1218">						i += hsize_reg;</span>
+<span class="nc bnc" id="L1219" title="All 2 branches missed.">					if ((i -= disp) &lt; 0)</span>
+<span class="nc" id="L1220">						i += hsize_reg;</span>
 
-<span class="nc bnc" id="L1220" title="All 2 branches missed.">					if (htab[i] == fcode) {</span>
-<span class="nc" id="L1221">						ent = codetab[i];</span>
-<span class="nc" id="L1222">						continue outer_loop;</span>
+<span class="nc bnc" id="L1222" title="All 2 branches missed.">					if (htab[i] == fcode) {</span>
+<span class="nc" id="L1223">						ent = codetab[i];</span>
+<span class="nc" id="L1224">						continue outer_loop;</span>
 					}
-<span class="nc bnc" id="L1224" title="All 2 branches missed.">				} while (htab[i] &gt;= 0);</span>
+<span class="nc bnc" id="L1226" title="All 2 branches missed.">				} while (htab[i] &gt;= 0);</span>
 			}
-<span class="nc" id="L1226">			output(ent, outs);</span>
-<span class="nc" id="L1227">			ent = c;</span>
-<span class="nc bnc" id="L1228" title="All 2 branches missed.">			if (free_ent &lt; maxmaxcode) {</span>
-<span class="nc" id="L1229">				codetab[i] = free_ent++; // code -&gt; hashtable</span>
-<span class="nc" id="L1230">				htab[i] = fcode;</span>
+<span class="nc" id="L1228">			output(ent, outs);</span>
+<span class="nc" id="L1229">			ent = c;</span>
+<span class="nc bnc" id="L1230" title="All 2 branches missed.">			if (free_ent &lt; maxmaxcode) {</span>
+<span class="nc" id="L1231">				codetab[i] = free_ent++; // code -&gt; hashtable</span>
+<span class="nc" id="L1232">				htab[i] = fcode;</span>
 			} else
-<span class="nc" id="L1232">				cl_block(outs);</span>
+<span class="nc" id="L1234">				cl_block(outs);</span>
 		}
 		// Put out the final code.
-<span class="nc" id="L1235">		output(ent, outs);</span>
-<span class="nc" id="L1236">		output(EOFCode, outs);</span>
-<span class="nc" id="L1237">	}</span>
+<span class="nc" id="L1237">		output(ent, outs);</span>
+<span class="nc" id="L1238">		output(EOFCode, outs);</span>
+<span class="nc" id="L1239">	}</span>
 
 	// ----------------------------------------------------------------------------
 	void encode(OutputStream os) throws IOException {
-<span class="nc" id="L1241">		os.write(initCodeSize); // write &quot;initial code size&quot; byte</span>
+<span class="nc" id="L1243">		os.write(initCodeSize); // write &quot;initial code size&quot; byte</span>
 
-<span class="nc" id="L1243">		remaining = imgW * imgH; // reset navigation variables</span>
-<span class="nc" id="L1244">		curPixel = 0;</span>
+<span class="nc" id="L1245">		remaining = imgW * imgH; // reset navigation variables</span>
+<span class="nc" id="L1246">		curPixel = 0;</span>
 
-<span class="nc" id="L1246">		compress(initCodeSize + 1, os); // compress and write the pixel data</span>
+<span class="nc" id="L1248">		compress(initCodeSize + 1, os); // compress and write the pixel data</span>
 
-<span class="nc" id="L1248">		os.write(0); // write block terminator</span>
-<span class="nc" id="L1249">	}</span>
+<span class="nc" id="L1250">		os.write(0); // write block terminator</span>
+<span class="nc" id="L1251">	}</span>
 
 	// Flush the packet to disk, and reset the accumulator
 	void flush_char(OutputStream outs) throws IOException {
-<span class="nc bnc" id="L1253" title="All 2 branches missed.">		if (a_count &gt; 0) {</span>
-<span class="nc" id="L1254">			outs.write(a_count);</span>
-<span class="nc" id="L1255">			outs.write(accum, 0, a_count);</span>
-<span class="nc" id="L1256">			a_count = 0;</span>
+<span class="nc bnc" id="L1255" title="All 2 branches missed.">		if (a_count &gt; 0) {</span>
+<span class="nc" id="L1256">			outs.write(a_count);</span>
+<span class="nc" id="L1257">			outs.write(accum, 0, a_count);</span>
+<span class="nc" id="L1258">			a_count = 0;</span>
 		}
-<span class="nc" id="L1258">	}</span>
+<span class="nc" id="L1260">	}</span>
 
 	final int MAXCODE(int n_bits) {
-<span class="nc" id="L1261">		return (1 &lt;&lt; n_bits) - 1;</span>
+<span class="nc" id="L1263">		return (1 &lt;&lt; n_bits) - 1;</span>
 	}
 
 	// ----------------------------------------------------------------------------
 	// Return the next pixel from the image
 	// ----------------------------------------------------------------------------
 	private int nextPixel() {
-<span class="nc bnc" id="L1268" title="All 2 branches missed.">		if (remaining == 0)</span>
-<span class="nc" id="L1269">			return EOF;</span>
+<span class="nc bnc" id="L1270" title="All 2 branches missed.">		if (remaining == 0)</span>
+<span class="nc" id="L1271">			return EOF;</span>
 
-<span class="nc" id="L1271">		--remaining;</span>
+<span class="nc" id="L1273">		--remaining;</span>
 
-<span class="nc" id="L1273">		byte pix = pixAry[curPixel++];</span>
+<span class="nc" id="L1275">		byte pix = pixAry[curPixel++];</span>
 
-<span class="nc" id="L1275">		return pix &amp; 0xff;</span>
+<span class="nc" id="L1277">		return pix &amp; 0xff;</span>
 	}
 
 	void output(int code, OutputStream outs) throws IOException {
-<span class="nc" id="L1279">		cur_accum &amp;= masks[cur_bits];</span>
+<span class="nc" id="L1281">		cur_accum &amp;= masks[cur_bits];</span>
 
-<span class="nc bnc" id="L1281" title="All 2 branches missed.">		if (cur_bits &gt; 0)</span>
-<span class="nc" id="L1282">			cur_accum |= (code &lt;&lt; cur_bits);</span>
+<span class="nc bnc" id="L1283" title="All 2 branches missed.">		if (cur_bits &gt; 0)</span>
+<span class="nc" id="L1284">			cur_accum |= (code &lt;&lt; cur_bits);</span>
 		else
-<span class="nc" id="L1284">			cur_accum = code;</span>
+<span class="nc" id="L1286">			cur_accum = code;</span>
 
-<span class="nc" id="L1286">		cur_bits += n_bits;</span>
+<span class="nc" id="L1288">		cur_bits += n_bits;</span>
 
-<span class="nc bnc" id="L1288" title="All 2 branches missed.">		while (cur_bits &gt;= 8) {</span>
-<span class="nc" id="L1289">			char_out((byte) (cur_accum &amp; 0xff), outs);</span>
-<span class="nc" id="L1290">			cur_accum &gt;&gt;= 8;</span>
-<span class="nc" id="L1291">			cur_bits -= 8;</span>
+<span class="nc bnc" id="L1290" title="All 2 branches missed.">		while (cur_bits &gt;= 8) {</span>
+<span class="nc" id="L1291">			char_out((byte) (cur_accum &amp; 0xff), outs);</span>
+<span class="nc" id="L1292">			cur_accum &gt;&gt;= 8;</span>
+<span class="nc" id="L1293">			cur_bits -= 8;</span>
 		}
 
 		// If the next entry is going to be too big for the code size,
 		// then increase it, if possible.
-<span class="nc bnc" id="L1296" title="All 4 branches missed.">		if (free_ent &gt; maxcode || clear_flg) {</span>
-<span class="nc bnc" id="L1297" title="All 2 branches missed.">			if (clear_flg) {</span>
-<span class="nc" id="L1298">				maxcode = MAXCODE(n_bits = g_init_bits);</span>
-<span class="nc" id="L1299">				clear_flg = false;</span>
+<span class="nc bnc" id="L1298" title="All 4 branches missed.">		if (free_ent &gt; maxcode || clear_flg) {</span>
+<span class="nc bnc" id="L1299" title="All 2 branches missed.">			if (clear_flg) {</span>
+<span class="nc" id="L1300">				maxcode = MAXCODE(n_bits = g_init_bits);</span>
+<span class="nc" id="L1301">				clear_flg = false;</span>
 			} else {
-<span class="nc" id="L1301">				++n_bits;</span>
-<span class="nc bnc" id="L1302" title="All 2 branches missed.">				if (n_bits == maxbits)</span>
-<span class="nc" id="L1303">					maxcode = maxmaxcode;</span>
+<span class="nc" id="L1303">				++n_bits;</span>
+<span class="nc bnc" id="L1304" title="All 2 branches missed.">				if (n_bits == maxbits)</span>
+<span class="nc" id="L1305">					maxcode = maxmaxcode;</span>
 				else
-<span class="nc" id="L1305">					maxcode = MAXCODE(n_bits);</span>
+<span class="nc" id="L1307">					maxcode = MAXCODE(n_bits);</span>
 			}
 		}
 
-<span class="nc bnc" id="L1309" title="All 2 branches missed.">		if (code == EOFCode) {</span>
+<span class="nc bnc" id="L1311" title="All 2 branches missed.">		if (code == EOFCode) {</span>
 			// At EOF, write the rest of the buffer.
-<span class="nc bnc" id="L1311" title="All 2 branches missed.">			while (cur_bits &gt; 0) {</span>
-<span class="nc" id="L1312">				char_out((byte) (cur_accum &amp; 0xff), outs);</span>
-<span class="nc" id="L1313">				cur_accum &gt;&gt;= 8;</span>
-<span class="nc" id="L1314">				cur_bits -= 8;</span>
+<span class="nc bnc" id="L1313" title="All 2 branches missed.">			while (cur_bits &gt; 0) {</span>
+<span class="nc" id="L1314">				char_out((byte) (cur_accum &amp; 0xff), outs);</span>
+<span class="nc" id="L1315">				cur_accum &gt;&gt;= 8;</span>
+<span class="nc" id="L1316">				cur_bits -= 8;</span>
 			}
 
-<span class="nc" id="L1317">			flush_char(outs);</span>
+<span class="nc" id="L1319">			flush_char(outs);</span>
 		}
-<span class="nc" id="L1319">	}</span>
+<span class="nc" id="L1321">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

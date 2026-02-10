@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -67,83 +68,83 @@ public class PSystemKeycheck extends PlainDiagram {
 	final private String sig;
 
 	public PSystemKeycheck(UmlSource source, String sig, String key, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L70">		super(source, preprocessing);</span>
-<span class="nc" id="L71">		this.sig = sig;</span>
-<span class="nc" id="L72">		this.key = key;</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L71">		super(source, preprocessing);</span>
+<span class="nc" id="L72">		this.sig = sig;</span>
+<span class="nc" id="L73">		this.key = key;</span>
+<span class="nc" id="L74">	}</span>
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L77">		return new UDrawable() {</span>
+<span class="nc" id="L78">		return new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
 				try {
-<span class="nc" id="L80">					drawInternal(ug);</span>
-<span class="nc" id="L81">				} catch (Exception e) {</span>
-<span class="nc" id="L82">					Logme.error(e);</span>
-<span class="nc" id="L83">				}</span>
-<span class="nc" id="L84">			}</span>
+<span class="nc" id="L81">					drawInternal(ug);</span>
+<span class="nc" id="L82">				} catch (Exception e) {</span>
+<span class="nc" id="L83">					Logme.error(e);</span>
+<span class="nc" id="L84">				}</span>
+<span class="nc" id="L85">			}</span>
 		};
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L89">		return new DiagramDescription(&quot;(Key)&quot;);</span>
+<span class="nc" id="L90">		return new DiagramDescription(&quot;(Key)&quot;);</span>
 	}
 
 	private void drawInternal(UGraphic ug) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-<span class="nc" id="L93">		final List&lt;String&gt; strings = header();</span>
+<span class="nc" id="L94">		final List&lt;String&gt; strings = header();</span>
 		try {
-<span class="nc" id="L95">			final LicenseInfo info = PLSSignature.retrieveNamed(sig, key, false);</span>
-<span class="nc" id="L96">			strings.add(&quot;&lt;u&gt;Provided license information&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L97">			License.addLicenseInfo(strings, info);</span>
-<span class="nc" id="L98">			strings.add(&quot; &quot;);</span>
-<span class="nc" id="L99">		} catch (Exception e) {</span>
-<span class="nc" id="L100">			Logme.error(e);</span>
-<span class="nc" id="L101">			strings.add(&quot;&lt;i&gt;Error:&lt;/i&gt; &quot; + e);</span>
-<span class="nc" id="L102">		}</span>
+<span class="nc" id="L96">			final LicenseInfo info = PLSSignature.retrieveNamed(sig, key, false);</span>
+<span class="nc" id="L97">			strings.add(&quot;&lt;u&gt;Provided license information&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L98">			License.addLicenseInfo(strings, info);</span>
+<span class="nc" id="L99">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L100">		} catch (Exception e) {</span>
+<span class="nc" id="L101">			Logme.error(e);</span>
+<span class="nc" id="L102">			strings.add(&quot;&lt;i&gt;Error:&lt;/i&gt; &quot; + e);</span>
+<span class="nc" id="L103">		}</span>
 
-<span class="nc" id="L104">		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L105">		disp.drawU(ug);</span>
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L105">		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L106">		disp.drawU(ug);</span>
+<span class="nc" id="L107">	}</span>
 
 	private ArrayList&lt;String&gt; header() {
-<span class="nc" id="L109">		final ArrayList&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L110">		strings.add(&quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;);</span>
-<span class="nc" id="L111">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc" id="L110">		final ArrayList&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L111">		strings.add(&quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;);</span>
+<span class="nc" id="L112">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
 //		if (OptionFlags.ALLOW_INCLUDE) {
 //			strings.add(&quot;Loaded from &quot; + Version.getJarPath());
 //		}
-<span class="nc" id="L115">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L116">		return strings;</span>
+<span class="nc" id="L116">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L117">		return strings;</span>
 	}
 
 	private void drawFlash(UGraphic ug, LicenseInfo info) throws IOException {
-<span class="nc" id="L120">		final List&lt;String&gt; strings = header();</span>
-<span class="nc" id="L121">		strings.add(&quot;To get your &lt;i&gt;Professional Edition License&lt;/i&gt;,&quot;);</span>
-<span class="nc" id="L122">		strings.add(&quot;please send this qrcode to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; :&quot;);</span>
+<span class="nc" id="L121">		final List&lt;String&gt; strings = header();</span>
+<span class="nc" id="L122">		strings.add(&quot;To get your &lt;i&gt;Professional Edition License&lt;/i&gt;,&quot;);</span>
+<span class="nc" id="L123">		strings.add(&quot;please send this qrcode to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; :&quot;);</span>
 
-<span class="nc" id="L124">		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L125">		disp.drawU(ug);</span>
+<span class="nc" id="L125">		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L126">		disp.drawU(ug);</span>
 
-<span class="nc" id="L127">		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));</span>
-<span class="nc" id="L128">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
-<span class="nc" id="L129">		final PortableImage im = utils.exportFlashcode(</span>
-<span class="nc" id="L130">				Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK,</span>
-				Color.WHITE);
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (im != null) {</span>
-<span class="nc" id="L133">			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);</span>
-<span class="nc" id="L134">			ug.draw(flash);</span>
-<span class="nc" id="L135">			ug = ug.apply(UTranslate.dy(flash.getHeight()));</span>
+<span class="nc" id="L128">		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));</span>
+<span class="nc" id="L129">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
+<span class="nc" id="L130">		final PortableImage im = utils.exportFlashcode(</span>
+<span class="nc" id="L131">				Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,</span>
+				XColor.WHITE);
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (im != null) {</span>
+<span class="nc" id="L134">			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);</span>
+<span class="nc" id="L135">			ug.draw(flash);</span>
+<span class="nc" id="L136">			ug = ug.apply(UTranslate.dy(flash.getHeight()));</span>
 		}
 
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (info.isNone() == false) {</span>
-<span class="nc" id="L139">			strings.clear();</span>
-<span class="nc" id="L140">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L141">			License.addLicenseInfo(strings, info);</span>
-<span class="nc" id="L142">			strings.add(&quot; &quot;);</span>
-<span class="nc" id="L143">			disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L144">			disp.drawU(ug);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (info.isNone() == false) {</span>
+<span class="nc" id="L140">			strings.clear();</span>
+<span class="nc" id="L141">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L142">			License.addLicenseInfo(strings, info);</span>
+<span class="nc" id="L143">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L144">			disp = GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L145">			disp.drawU(ug);</span>
 		}
 
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L148">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

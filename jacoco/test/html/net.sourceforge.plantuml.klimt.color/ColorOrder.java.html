@@ -35,37 +35,37 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 <span class="fc" id="L40">public enum ColorOrder {</span>
 	// ::remove file when __HAXE__
 <span class="fc" id="L42">	RGB, RBG, GRB, GBR, BRG, BGR;</span>
 
-	public Color getColor(Color color) {
+	public XColor getColor(XColor color) {
 <span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (this == RGB)</span>
-<span class="fc" id="L46">			return new Color(color.getRed(), color.getGreen(), color.getBlue());</span>
+<span class="fc" id="L46">			return new XColor(color.getRed(), color.getGreen(), color.getBlue());</span>
 
 <span class="nc bnc" id="L48" title="All 2 branches missed.">		if (this == RBG)</span>
-<span class="nc" id="L49">			return new Color(color.getRed(), color.getBlue(), color.getGreen());</span>
+<span class="nc" id="L49">			return new XColor(color.getRed(), color.getBlue(), color.getGreen());</span>
 
 <span class="nc bnc" id="L51" title="All 2 branches missed.">		if (this == GRB)</span>
-<span class="nc" id="L52">			return new Color(color.getGreen(), color.getRed(), color.getBlue());</span>
+<span class="nc" id="L52">			return new XColor(color.getGreen(), color.getRed(), color.getBlue());</span>
 
 <span class="nc bnc" id="L54" title="All 2 branches missed.">		if (this == GBR)</span>
-<span class="nc" id="L55">			return new Color(color.getGreen(), color.getBlue(), color.getRed());</span>
+<span class="nc" id="L55">			return new XColor(color.getGreen(), color.getBlue(), color.getRed());</span>
 
 <span class="nc bnc" id="L57" title="All 2 branches missed.">		if (this == BRG)</span>
-<span class="nc" id="L58">			return new Color(color.getBlue(), color.getRed(), color.getGreen());</span>
+<span class="nc" id="L58">			return new XColor(color.getBlue(), color.getRed(), color.getGreen());</span>
 
 <span class="nc bnc" id="L60" title="All 2 branches missed.">		if (this == BGR)</span>
-<span class="nc" id="L61">			return new Color(color.getBlue(), color.getGreen(), color.getRed());</span>
+<span class="nc" id="L61">			return new XColor(color.getBlue(), color.getGreen(), color.getRed());</span>
 
 <span class="nc" id="L63">		throw new IllegalStateException();</span>
 	}
 
-	public Color getReverse(Color color) {
+	public XColor getReverse(XColor color) {
 <span class="fc" id="L67">		color = this.getColor(color);</span>
-<span class="fc" id="L68">		return new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());</span>
+<span class="fc" id="L68">		return new XColor(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());</span>
 	}
 
 	public static ColorOrder fromString(String order) {

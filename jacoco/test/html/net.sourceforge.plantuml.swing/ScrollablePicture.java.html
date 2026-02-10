@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -46,87 +46,89 @@ import javax.swing.JLabel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
+
 class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListener {
 
-<span class="nc" id="L51">	private int maxUnitIncrement = 1;</span>
-<span class="nc" id="L52">	private boolean missingPicture = false;</span>
+<span class="nc" id="L53">	private int maxUnitIncrement = 1;</span>
+<span class="nc" id="L54">	private boolean missingPicture = false;</span>
 
 	public ScrollablePicture(ImageIcon i, int m) {
-<span class="nc" id="L55">		super(i);</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (i == null) {</span>
-<span class="nc" id="L57">			missingPicture = true;</span>
-<span class="nc" id="L58">			setText(&quot;No picture found.&quot;);</span>
-<span class="nc" id="L59">			setHorizontalAlignment(CENTER);</span>
-<span class="nc" id="L60">			setOpaque(true);</span>
-<span class="nc" id="L61">			setBackground(Color.white);</span>
+<span class="nc" id="L57">		super(i);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (i == null) {</span>
+<span class="nc" id="L59">			missingPicture = true;</span>
+<span class="nc" id="L60">			setText(&quot;No picture found.&quot;);</span>
+<span class="nc" id="L61">			setHorizontalAlignment(CENTER);</span>
+<span class="nc" id="L62">			setOpaque(true);</span>
+<span class="nc" id="L63">			setBackground(XColor.WHITE.toAwtColor());</span>
 		}
-<span class="nc" id="L63">		maxUnitIncrement = m;</span>
+<span class="nc" id="L65">		maxUnitIncrement = m;</span>
 
 		// Let the user scroll by dragging to outside the window.
-<span class="nc" id="L66">		setAutoscrolls(true); // enable synthetic drag events</span>
-<span class="nc" id="L67">		addMouseMotionListener(this); // handle mouse drags</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L68">		setAutoscrolls(true); // enable synthetic drag events</span>
+<span class="nc" id="L69">		addMouseMotionListener(this); // handle mouse drags</span>
+<span class="nc" id="L70">	}</span>
 
 	// Methods required by the MouseMotionListener interface:
 	public void mouseMoved(MouseEvent e) {
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L74">	}</span>
 
 	public void mouseDragged(MouseEvent e) {
 		// The user is dragging us, so scroll!
-<span class="nc" id="L76">		Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);</span>
-<span class="nc" id="L77">		scrollRectToVisible(r);</span>
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L78">		Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);</span>
+<span class="nc" id="L79">		scrollRectToVisible(r);</span>
+<span class="nc" id="L80">	}</span>
 
 	@Override
 	public Dimension getPreferredSize() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (missingPicture) {</span>
-<span class="nc" id="L83">			return new Dimension(320, 480);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (missingPicture) {</span>
+<span class="nc" id="L85">			return new Dimension(320, 480);</span>
 		} else {
-<span class="nc" id="L85">			return super.getPreferredSize();</span>
+<span class="nc" id="L87">			return super.getPreferredSize();</span>
 		}
 	}
 
 	public Dimension getPreferredScrollableViewportSize() {
-<span class="nc" id="L90">		return getPreferredSize();</span>
+<span class="nc" id="L92">		return getPreferredSize();</span>
 	}
 
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 		// Get the current position.
-<span class="nc" id="L95">		int currentPosition = 0;</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (orientation == SwingConstants.HORIZONTAL) {</span>
-<span class="nc" id="L97">			currentPosition = visibleRect.x;</span>
+<span class="nc" id="L97">		int currentPosition = 0;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (orientation == SwingConstants.HORIZONTAL) {</span>
+<span class="nc" id="L99">			currentPosition = visibleRect.x;</span>
 		} else {
-<span class="nc" id="L99">			currentPosition = visibleRect.y;</span>
+<span class="nc" id="L101">			currentPosition = visibleRect.y;</span>
 		}
 
 		// Return the number of pixels between currentPosition
 		// and the nearest tick mark in the indicated direction.
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (direction &lt; 0) {</span>
-<span class="nc" id="L105">			int newPosition = currentPosition - (currentPosition / maxUnitIncrement) * maxUnitIncrement;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			return (newPosition == 0) ? maxUnitIncrement : newPosition;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (direction &lt; 0) {</span>
+<span class="nc" id="L107">			int newPosition = currentPosition - (currentPosition / maxUnitIncrement) * maxUnitIncrement;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			return (newPosition == 0) ? maxUnitIncrement : newPosition;</span>
 		} else {
-<span class="nc" id="L108">			return ((currentPosition / maxUnitIncrement) + 1) * maxUnitIncrement - currentPosition;</span>
+<span class="nc" id="L110">			return ((currentPosition / maxUnitIncrement) + 1) * maxUnitIncrement - currentPosition;</span>
 		}
 	}
 
 	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (orientation == SwingConstants.HORIZONTAL) {</span>
-<span class="nc" id="L114">			return visibleRect.width - maxUnitIncrement;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (orientation == SwingConstants.HORIZONTAL) {</span>
+<span class="nc" id="L116">			return visibleRect.width - maxUnitIncrement;</span>
 		} else {
-<span class="nc" id="L116">			return visibleRect.height - maxUnitIncrement;</span>
+<span class="nc" id="L118">			return visibleRect.height - maxUnitIncrement;</span>
 		}
 	}
 
 	public boolean getScrollableTracksViewportWidth() {
-<span class="nc" id="L121">		return false;</span>
+<span class="nc" id="L123">		return false;</span>
 	}
 
 	public boolean getScrollableTracksViewportHeight() {
-<span class="nc" id="L125">		return false;</span>
+<span class="nc" id="L127">		return false;</span>
 	}
 
 	public void setMaxUnitIncrement(int pixels) {
-<span class="nc" id="L129">		maxUnitIncrement = pixels;</span>
-<span class="nc" id="L130">	}</span>
+<span class="nc" id="L131">		maxUnitIncrement = pixels;</span>
+<span class="nc" id="L132">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

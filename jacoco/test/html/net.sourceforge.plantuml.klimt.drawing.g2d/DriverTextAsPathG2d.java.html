@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.g2d;
 import static java.lang.Math.max;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
@@ -46,6 +45,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -93,10 +93,10 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L93">		final double width = dim.getWidth();</span>
 
 <span class="nc bnc" id="L95" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
-<span class="nc" id="L96">			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);</span>
+<span class="nc" id="L96">			final XColor extended = fontConfiguration.getExtendedColor().toColor(mapper);</span>
 <span class="nc bnc" id="L97" title="All 2 branches missed.">			if (extended != null) {</span>
-<span class="nc" id="L98">				g2d.setColor(extended);</span>
-<span class="nc" id="L99">				g2d.setBackground(extended);</span>
+<span class="nc" id="L98">				g2d.setColor(extended.toAwtColor());</span>
+<span class="nc" id="L99">				g2d.setBackground(extended.toAwtColor());</span>
 <span class="nc" id="L100">				g2d.fill(new Rectangle2D.Double(x, y - height + 1.5, width, height));</span>
 			}
 		}
@@ -104,7 +104,7 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L104">		visible.ensureVisible(x + width, y + 1.5);</span>
 
 <span class="nc" id="L106">		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));</span>
-<span class="nc" id="L107">		g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="nc" id="L107">		g2d.setColor(fontConfiguration.getColor().toColor(mapper).toAwtColor());</span>
 <span class="nc" id="L108">		final TextLayout t = UFontContext.G2D.createTextLayout(font, text);</span>
 <span class="nc" id="L109">		g2d.translate(x, y);</span>
 <span class="nc" id="L110">		g2d.fill(t.getOutline(null));</span>
@@ -113,7 +113,7 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc bnc" id="L113" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
 <span class="nc" id="L114">			final HColor extended = fontConfiguration.getExtendedColor();</span>
 <span class="nc bnc" id="L115" title="All 2 branches missed.">			if (extended != null)</span>
-<span class="nc" id="L116">				g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc" id="L116">				g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
 <span class="nc" id="L118">			final int ypos = (int) (y + 2.5);</span>
 <span class="nc" id="L119">			g2d.setStroke(new BasicStroke((float) 1));</span>
@@ -124,7 +124,7 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L124">			final int ypos = (int) (y + 2.5) - 1;</span>
 <span class="nc" id="L125">			final HColor extended = fontConfiguration.getExtendedColor();</span>
 <span class="nc bnc" id="L126" title="All 2 branches missed.">			if (extended != null)</span>
-<span class="nc" id="L127">				g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc" id="L127">				g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
 <span class="nc bnc" id="L129" title="All 2 branches missed.">			for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
 <span class="nc" id="L130">				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
@@ -136,7 +136,7 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L136">			final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
 <span class="nc" id="L137">			final HColor extended = fontConfiguration.getExtendedColor();</span>
 <span class="nc bnc" id="L138" title="All 2 branches missed.">			if (extended != null)</span>
-<span class="nc" id="L139">				g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc" id="L139">				g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
 <span class="nc" id="L141">			g2d.setStroke(new BasicStroke((float) 1.5));</span>
 <span class="nc" id="L142">			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>

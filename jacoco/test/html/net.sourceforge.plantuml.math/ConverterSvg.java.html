@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.CharArrayWriter;
@@ -49,6 +49,7 @@ import javax.swing.Icon;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 
@@ -56,73 +57,73 @@ public class ConverterSvg {
 
 	private final Icon icon;
 
-<span class="nc" id="L59">	public ConverterSvg(Icon icon) {</span>
-<span class="nc" id="L60">		this.icon = icon;</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L60">	public ConverterSvg(Icon icon) {</span>
+<span class="nc" id="L61">		this.icon = icon;</span>
+<span class="nc" id="L62">	}</span>
 
 	static {
 		try {
 			// DefaultTeXFont.registerAlphabet(new CyrillicRegistration());
 			// DefaultTeXFont.registerAlphabet(new GreekRegistration());
-<span class="nc" id="L67">			final Class&lt;?&gt; clDefaultTeXFont = Class.forName(&quot;org.scilab.forge.jlatexmath.DefaultTeXFont&quot;);</span>
-<span class="nc" id="L68">			final Class&lt;?&gt; clAlphabetRegistration = Class.forName(&quot;org.scilab.forge.jlatexmath.AlphabetRegistration&quot;);</span>
-<span class="nc" id="L69">			final Method registerAlphabet = clDefaultTeXFont.getMethod(&quot;registerAlphabet&quot;, clAlphabetRegistration);</span>
-<span class="nc" id="L70">			registerAlphabet.invoke(null,</span>
-<span class="nc" id="L71">					Class.forName(&quot;org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration&quot;).newInstance());</span>
-<span class="nc" id="L72">			registerAlphabet.invoke(null,</span>
-<span class="nc" id="L73">					Class.forName(&quot;org.scilab.forge.jlatexmath.greek.GreekRegistration&quot;).newInstance());</span>
+<span class="nc" id="L68">			final Class&lt;?&gt; clDefaultTeXFont = Class.forName(&quot;org.scilab.forge.jlatexmath.DefaultTeXFont&quot;);</span>
+<span class="nc" id="L69">			final Class&lt;?&gt; clAlphabetRegistration = Class.forName(&quot;org.scilab.forge.jlatexmath.AlphabetRegistration&quot;);</span>
+<span class="nc" id="L70">			final Method registerAlphabet = clDefaultTeXFont.getMethod(&quot;registerAlphabet&quot;, clAlphabetRegistration);</span>
+<span class="nc" id="L71">			registerAlphabet.invoke(null,</span>
+<span class="nc" id="L72">					Class.forName(&quot;org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration&quot;).newInstance());</span>
+<span class="nc" id="L73">			registerAlphabet.invoke(null,</span>
+<span class="nc" id="L74">					Class.forName(&quot;org.scilab.forge.jlatexmath.greek.GreekRegistration&quot;).newInstance());</span>
 
-<span class="nc" id="L75">		} catch (Exception e) {</span>
-<span class="nc" id="L76">			Logme.error(e);</span>
-<span class="nc" id="L77">		}</span>
+<span class="nc" id="L76">		} catch (Exception e) {</span>
+<span class="nc" id="L77">			Logme.error(e);</span>
+<span class="nc" id="L78">		}</span>
 
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L80">	}</span>
 
 	private Dimension dimension;
 
-	public String getSvg(double scale, boolean fontAsShapes, Color backgroundColor)
+	public String getSvg(double scale, boolean fontAsShapes, XColor backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		// DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
-<span class="nc" id="L87">		final Class&lt;?&gt; clGenericDOMImplementation = Class.forName(&quot;org.apache.batik.dom.GenericDOMImplementation&quot;);</span>
-<span class="nc" id="L88">		final DOMImplementation domImpl = (DOMImplementation) clGenericDOMImplementation</span>
-<span class="nc" id="L89">				.getMethod(&quot;getDOMImplementation&quot;).invoke(null);</span>
-<span class="nc" id="L90">		final String svgNS = &quot;http://www.w3.org/2000/svg&quot;;</span>
-<span class="nc" id="L91">		final Document document = domImpl.createDocument(svgNS, &quot;svg&quot;, null);</span>
+<span class="nc" id="L88">		final Class&lt;?&gt; clGenericDOMImplementation = Class.forName(&quot;org.apache.batik.dom.GenericDOMImplementation&quot;);</span>
+<span class="nc" id="L89">		final DOMImplementation domImpl = (DOMImplementation) clGenericDOMImplementation</span>
+<span class="nc" id="L90">				.getMethod(&quot;getDOMImplementation&quot;).invoke(null);</span>
+<span class="nc" id="L91">		final String svgNS = &quot;http://www.w3.org/2000/svg&quot;;</span>
+<span class="nc" id="L92">		final Document document = domImpl.createDocument(svgNS, &quot;svg&quot;, null);</span>
 
 		// SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(document);
-<span class="nc" id="L94">		final Class&lt;?&gt; clSVGGeneratorContext = Class.forName(&quot;org.apache.batik.svggen.SVGGeneratorContext&quot;);</span>
-<span class="nc" id="L95">		final Object ctx = clSVGGeneratorContext.getMethod(&quot;createDefault&quot;, Document.class).invoke(null, document);</span>
+<span class="nc" id="L95">		final Class&lt;?&gt; clSVGGeneratorContext = Class.forName(&quot;org.apache.batik.svggen.SVGGeneratorContext&quot;);</span>
+<span class="nc" id="L96">		final Object ctx = clSVGGeneratorContext.getMethod(&quot;createDefault&quot;, Document.class).invoke(null, document);</span>
 
 		// SVGGraphics2D g2 = new SVGGraphics2D(ctx, fontAsShapes);
-<span class="nc" id="L98">		final Class&lt;?&gt; clSVGGraphics2D = Class.forName(&quot;org.apache.batik.svggen.SVGGraphics2D&quot;);</span>
-<span class="nc" id="L99">		final Graphics g2 = (Graphics) clSVGGraphics2D.getConstructor(clSVGGeneratorContext, boolean.class)</span>
-<span class="nc" id="L100">				.newInstance(ctx, fontAsShapes);</span>
+<span class="nc" id="L99">		final Class&lt;?&gt; clSVGGraphics2D = Class.forName(&quot;org.apache.batik.svggen.SVGGraphics2D&quot;);</span>
+<span class="nc" id="L100">		final Graphics g2 = (Graphics) clSVGGraphics2D.getConstructor(clSVGGeneratorContext, boolean.class)</span>
+<span class="nc" id="L101">				.newInstance(ctx, fontAsShapes);</span>
 
-<span class="nc" id="L102">		dimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());</span>
+<span class="nc" id="L103">		dimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());</span>
 		// g2.setSVGCanvasSize(dimension);
-<span class="nc" id="L104">		g2.getClass().getMethod(&quot;setSVGCanvasSize&quot;, Dimension.class).invoke(g2, dimension);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (backgroundColor != null) {</span>
-<span class="nc" id="L106">			g2.setColor(backgroundColor);</span>
-<span class="nc" id="L107">			g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());</span>
+<span class="nc" id="L105">		g2.getClass().getMethod(&quot;setSVGCanvasSize&quot;, Dimension.class).invoke(g2, dimension);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (backgroundColor != null) {</span>
+<span class="nc" id="L107">			g2.setColor(backgroundColor.toAwtColor());</span>
+<span class="nc" id="L108">			g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());</span>
 		}
 
-<span class="nc" id="L110">		icon.paintIcon(null, g2, 0, 0);</span>
+<span class="nc" id="L111">		icon.paintIcon(null, g2, 0, 0);</span>
 
-<span class="nc" id="L112">		final Writer out = new CharArrayWriter();</span>
+<span class="nc" id="L113">		final Writer out = new CharArrayWriter();</span>
 
-<span class="nc" id="L114">		final boolean useCSS = true;</span>
+<span class="nc" id="L115">		final boolean useCSS = true;</span>
 		// g2.stream(out, useCSS);
-<span class="nc" id="L116">		g2.getClass().getMethod(&quot;stream&quot;, Writer.class, boolean.class).invoke(g2, out, useCSS);</span>
+<span class="nc" id="L117">		g2.getClass().getMethod(&quot;stream&quot;, Writer.class, boolean.class).invoke(g2, out, useCSS);</span>
 
-<span class="nc" id="L118">		out.flush();</span>
-<span class="nc" id="L119">		out.close();</span>
+<span class="nc" id="L119">		out.flush();</span>
+<span class="nc" id="L120">		out.close();</span>
 
-<span class="nc" id="L121">		return out.toString();</span>
+<span class="nc" id="L122">		return out.toString();</span>
 	}
 
 	public XDimension2D getDimension() {
-<span class="nc" id="L125">		return XDimension2D.fromDimension(dimension);</span>
+<span class="nc" id="L126">		return XDimension2D.fromDimension(dimension);</span>
 	}
 
 }

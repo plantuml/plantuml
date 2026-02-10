@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UMotif;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
@@ -59,30 +60,30 @@ public class GraphicsPath {
 	private final String path;
 	private final ColorMapper colorMapper;
 
-<span class="nc" id="L62">	public GraphicsPath(ColorMapper colorMapper, String path) {</span>
-<span class="nc" id="L63">		this.path = path;</span>
-<span class="nc" id="L64">		this.colorMapper = colorMapper;</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L63">	public GraphicsPath(ColorMapper colorMapper, String path) {</span>
+<span class="nc" id="L64">		this.path = path;</span>
+<span class="nc" id="L65">		this.colorMapper = colorMapper;</span>
+<span class="nc" id="L66">	}</span>
 
 	public ImageData writeImage(OutputStream os) throws IOException {
-<span class="nc" id="L68">		final PortableImage im = createImage();</span>
-<span class="nc" id="L69">		PngIO.write(im, colorMapper, os, null, 96);</span>
-<span class="nc" id="L70">		return new ImageDataSimple(im.getWidth(), im.getHeight());</span>
+<span class="nc" id="L69">		final PortableImage im = createImage();</span>
+<span class="nc" id="L70">		PngIO.write(im, colorMapper, os, null, 96);</span>
+<span class="nc" id="L71">		return new ImageDataSimple(im.getWidth(), im.getHeight());</span>
 	}
 
 	private PortableImage createImage() {
-<span class="nc" id="L74">		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
-<span class="nc" id="L75">		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 50, 50, Color.WHITE, stringBounder);</span>
-<span class="nc" id="L76">		final PortableImage im = builder.getPortableImage();</span>
-<span class="nc" id="L77">		final Graphics2D g2d = builder.getGraphics2D();</span>
+<span class="nc" id="L75">		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
+<span class="nc" id="L76">		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 50, 50, XColor.WHITE, stringBounder);</span>
+<span class="nc" id="L77">		final PortableImage im = builder.getPortableImage();</span>
+<span class="nc" id="L78">		final Graphics2D g2d = builder.getGraphics2D();</span>
 
-<span class="nc" id="L79">		final UGraphicG2d ug = new UGraphicG2d(HColors.WHITE, colorMapper, stringBounder, g2d, 1.0, FileFormat.PNG);</span>
-<span class="nc" id="L80">		ug.setPortableImage(im);</span>
-<span class="nc" id="L81">		final UMotif motif = new UMotif(path);</span>
-<span class="nc" id="L82">		motif.drawHorizontal(ug.apply((UChange) HColors.BLACK), 20, 20, 1);</span>
+<span class="nc" id="L80">		final UGraphicG2d ug = new UGraphicG2d(HColors.WHITE, colorMapper, stringBounder, g2d, 1.0, FileFormat.PNG);</span>
+<span class="nc" id="L81">		ug.setPortableImage(im);</span>
+<span class="nc" id="L82">		final UMotif motif = new UMotif(path);</span>
+<span class="nc" id="L83">		motif.drawHorizontal(ug.apply((UChange) HColors.BLACK), 20, 20, 1);</span>
 
-<span class="nc" id="L84">		g2d.dispose();</span>
-<span class="nc" id="L85">		return im;</span>
+<span class="nc" id="L85">		g2d.dispose();</span>
+<span class="nc" id="L86">		return im;</span>
 	}
 
 }

@@ -100,7 +100,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver&lt;
 <span class="nc" id="L100">			drawBorder(param, color, mapper, rect, shape, g2d, x, y);</span>
 <span class="nc" id="L101">		} else {</span>
 <span class="fc bfc" id="L102" title="All 2 branches covered.">			if (param.getBackcolor().isTransparent() == false) {</span>
-<span class="fc" id="L103">				g2d.setColor(param.getBackcolor().toColor(mapper));</span>
+<span class="fc" id="L103">				g2d.setColor(param.getBackcolor().toColor(mapper).toAwtColor());</span>
 <span class="fc" id="L104">				DriverLineG2d.manageStroke(param, g2d);</span>
 <span class="fc" id="L105">				managePattern(param, g2d);</span>
 <span class="fc" id="L106">				g2d.fill(shape);</span>
@@ -120,7 +120,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver&lt;
 <span class="nc" id="L120">			final GradientPaint paint = getPaintGradient(x, y, mapper, sized.getWidth(), sized.getHeight(), color);</span>
 <span class="nc" id="L121">			g2d.setPaint(paint);</span>
 <span class="nc" id="L122">		} else {</span>
-<span class="fc" id="L123">			g2d.setColor(color.toColor(mapper));</span>
+<span class="fc" id="L123">			g2d.setColor(color.toColor(mapper).toAwtColor());</span>
 		}
 <span class="fc" id="L125">		DriverLineG2d.manageStroke(param, g2d);</span>
 <span class="fc" id="L126">		g2d.draw(shape);</span>
@@ -132,18 +132,18 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver&lt;
 <span class="nc" id="L132">		final char policy = gr.getPolicy();</span>
 		final GradientPaint paint;
 <span class="nc bnc" id="L134" title="All 2 branches missed.">		if (policy == '|')</span>
-<span class="nc" id="L135">			paint = new GradientPaint((float) x, (float) (y + height) / 2, gr.getColor1().toColor(mapper),</span>
-<span class="nc" id="L136">					(float) (x + width), (float) (y + height) / 2, gr.getColor2().toColor(mapper));</span>
+<span class="nc" id="L135">			paint = new GradientPaint((float) x, (float) (y + height) / 2, gr.getColor1().toColor(mapper).toAwtColor(),</span>
+<span class="nc" id="L136">					(float) (x + width), (float) (y + height) / 2, gr.getColor2().toColor(mapper).toAwtColor());</span>
 <span class="nc bnc" id="L137" title="All 2 branches missed.">		else if (policy == '\\')</span>
-<span class="nc" id="L138">			paint = new GradientPaint((float) x, (float) (y + height), gr.getColor1().toColor(mapper),</span>
-<span class="nc" id="L139">					(float) (x + width), (float) y, gr.getColor2().toColor(mapper));</span>
+<span class="nc" id="L138">			paint = new GradientPaint((float) x, (float) (y + height), gr.getColor1().toColor(mapper).toAwtColor(),</span>
+<span class="nc" id="L139">					(float) (x + width), (float) y, gr.getColor2().toColor(mapper).toAwtColor());</span>
 <span class="nc bnc" id="L140" title="All 2 branches missed.">		else if (policy == '-')</span>
-<span class="nc" id="L141">			paint = new GradientPaint((float) (x + width) / 2, (float) y, gr.getColor1().toColor(mapper),</span>
-<span class="nc" id="L142">					(float) (x + width) / 2, (float) (y + height), gr.getColor2().toColor(mapper));</span>
+<span class="nc" id="L141">			paint = new GradientPaint((float) (x + width) / 2, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),</span>
+<span class="nc" id="L142">					(float) (x + width) / 2, (float) (y + height), gr.getColor2().toColor(mapper).toAwtColor());</span>
 		else
 			// for /
-<span class="nc" id="L145">			paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper), (float) (x + width),</span>
-<span class="nc" id="L146">					(float) (y + height), gr.getColor2().toColor(mapper));</span>
+<span class="nc" id="L145">			paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(), (float) (x + width),</span>
+<span class="nc" id="L146">					(float) (y + height), gr.getColor2().toColor(mapper).toAwtColor());</span>
 
 <span class="nc" id="L148">		return paint;</span>
 	}

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -46,150 +46,151 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="fc" id="L51">public class DriverShadowedG2d {</span>
+<span class="fc" id="L52">public class DriverShadowedG2d {</span>
 
 	private ConvolveOp getConvolveOp(int blurRadius, double dpiFactor) {
-<span class="nc" id="L54">		final float[] elements = new float[(int) (blurRadius * blurRadius * dpiFactor)];</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (int k = 0; k &lt; elements.length; k++) {</span>
-<span class="nc" id="L56">			elements[k] = (float) (1.0 / elements.length);</span>
+<span class="nc" id="L55">		final float[] elements = new float[(int) (blurRadius * blurRadius * dpiFactor)];</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (int k = 0; k &lt; elements.length; k++) {</span>
+<span class="nc" id="L57">			elements[k] = (float) (1.0 / elements.length);</span>
 		}
-<span class="nc" id="L58">		final Kernel myKernel = new Kernel((int) (blurRadius * Math.sqrt(dpiFactor)),</span>
-<span class="nc" id="L59">				(int) (blurRadius * Math.sqrt(dpiFactor)), elements);</span>
+<span class="nc" id="L59">		final Kernel myKernel = new Kernel((int) (blurRadius * Math.sqrt(dpiFactor)),</span>
+<span class="nc" id="L60">				(int) (blurRadius * Math.sqrt(dpiFactor)), elements);</span>
 
 		// if EDGE_NO_OP is not selected, EDGE_ZERO_FILL is the default which
 		// creates a black border
-<span class="nc" id="L63">		return new ConvolveOp(myKernel, ConvolveOp.EDGE_NO_OP, null);</span>
+<span class="nc" id="L64">		return new ConvolveOp(myKernel, ConvolveOp.EDGE_NO_OP, null);</span>
 	}
 
-<span class="fc" id="L66">	private final Color color = new Color(170, 170, 170);</span>
-<span class="fc" id="L67">	private final Color colorLine = new Color(30, 30, 30);</span>
+<span class="fc" id="L67">	private final XColor color = new XColor(170, 170, 170);</span>
+<span class="fc" id="L68">	private final XColor colorLine = new XColor(30, 30, 30);</span>
 
 	protected void drawShadow(Graphics2D g2d, Shape shape, double deltaShadow, double dpiFactor) {
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (dpiFactor &lt; 1) {</span>
-<span class="nc" id="L71">			dpiFactor = 1;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (dpiFactor &lt; 1) {</span>
+<span class="nc" id="L72">			dpiFactor = 1;</span>
 		}
-<span class="nc" id="L73">		final Rectangle2D bounds = shape.getBounds2D();</span>
-<span class="nc" id="L74">		final double ww = bounds.getMaxX() - bounds.getMinX();</span>
-<span class="nc" id="L75">		final double hh = bounds.getMaxY() - bounds.getMinY();</span>
+<span class="nc" id="L74">		final Rectangle2D bounds = shape.getBounds2D();</span>
+<span class="nc" id="L75">		final double ww = bounds.getMaxX() - bounds.getMinX();</span>
+<span class="nc" id="L76">		final double hh = bounds.getMaxY() - bounds.getMinY();</span>
 
-<span class="nc" id="L77">		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;</span>
-<span class="nc" id="L78">		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;</span>
-<span class="nc" id="L79">		BufferedImage destination = null;</span>
+<span class="nc" id="L78">		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;</span>
+<span class="nc" id="L79">		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;</span>
+<span class="nc" id="L80">		BufferedImage destination = null;</span>
 		try {
-<span class="nc" id="L81">			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);</span>
-<span class="nc" id="L82">			final Graphics2D gg = destination.createGraphics();</span>
-<span class="nc" id="L83">			gg.scale(dpiFactor, dpiFactor);</span>
-<span class="nc" id="L84">			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());</span>
-<span class="nc" id="L85">			final boolean isLine = shape instanceof Line2D.Double;</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (isLine) {</span>
-<span class="nc" id="L87">				gg.setColor(colorLine);</span>
-<span class="nc" id="L88">				gg.draw(shape);</span>
+<span class="nc" id="L82">			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L83">			final Graphics2D gg = destination.createGraphics();</span>
+<span class="nc" id="L84">			gg.scale(dpiFactor, dpiFactor);</span>
+<span class="nc" id="L85">			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());</span>
+<span class="nc" id="L86">			final boolean isLine = shape instanceof Line2D.Double;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (isLine) {</span>
+<span class="nc" id="L88">				gg.setColor(colorLine.toAwtColor());</span>
+<span class="nc" id="L89">				gg.draw(shape);</span>
 			} else {
-<span class="nc" id="L90">				gg.setColor(color);</span>
-<span class="nc" id="L91">				gg.fill(shape);</span>
+<span class="nc" id="L91">				gg.setColor(color.toAwtColor());</span>
+<span class="nc" id="L92">				gg.fill(shape);</span>
 			}
-<span class="nc" id="L93">			gg.dispose();</span>
+<span class="nc" id="L94">			gg.dispose();</span>
 
-<span class="nc" id="L95">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
-<span class="nc" id="L96">			destination = simpleBlur.filter(destination, null);</span>
-<span class="nc" id="L97">		} catch (OutOfMemoryError error) {</span>
-<span class="nc" id="L98">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
-<span class="nc" id="L99">		} catch (Exception e) {</span>
-<span class="nc" id="L100">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
-<span class="nc" id="L101">		}</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (destination != null) {</span>
-<span class="nc" id="L103">			final AffineTransform at = g2d.getTransform();</span>
-<span class="nc" id="L104">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
-<span class="nc" id="L105">			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),</span>
+<span class="nc" id="L96">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
+<span class="nc" id="L97">			destination = simpleBlur.filter(destination, null);</span>
+<span class="nc" id="L98">		} catch (OutOfMemoryError error) {</span>
+<span class="nc" id="L99">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
+<span class="nc" id="L100">		} catch (Exception e) {</span>
+<span class="nc" id="L101">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
+<span class="nc" id="L102">		}</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (destination != null) {</span>
+<span class="nc" id="L104">			final AffineTransform at = g2d.getTransform();</span>
+<span class="nc" id="L105">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
+<span class="nc" id="L106">			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),</span>
 					null);
-<span class="nc" id="L107">			g2d.setTransform(at);</span>
+<span class="nc" id="L108">			g2d.setTransform(at);</span>
 		}
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L110">	}</span>
 
 	protected void drawOnlyLineShadow(Graphics2D g2d, Shape shape, double deltaShadow, double dpiFactor) {
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (dpiFactor &lt; 1) {</span>
-<span class="nc" id="L113">			dpiFactor = 1;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (dpiFactor &lt; 1) {</span>
+<span class="nc" id="L114">			dpiFactor = 1;</span>
 		}
-<span class="nc" id="L115">		final Rectangle2D bounds = shape.getBounds2D();</span>
-<span class="nc" id="L116">		final double ww = bounds.getMaxX() - bounds.getMinX();</span>
-<span class="nc" id="L117">		final double hh = bounds.getMaxY() - bounds.getMinY();</span>
+<span class="nc" id="L116">		final Rectangle2D bounds = shape.getBounds2D();</span>
+<span class="nc" id="L117">		final double ww = bounds.getMaxX() - bounds.getMinX();</span>
+<span class="nc" id="L118">		final double hh = bounds.getMaxY() - bounds.getMinY();</span>
 
-<span class="nc" id="L119">		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;</span>
-<span class="nc" id="L120">		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;</span>
-<span class="nc" id="L121">		BufferedImage destination = null;</span>
+<span class="nc" id="L120">		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;</span>
+<span class="nc" id="L121">		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;</span>
+<span class="nc" id="L122">		BufferedImage destination = null;</span>
 		try {
-<span class="nc" id="L123">			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);</span>
-<span class="nc" id="L124">			final Graphics2D gg = destination.createGraphics();</span>
-<span class="nc" id="L125">			gg.scale(dpiFactor, dpiFactor);</span>
-<span class="nc" id="L126">			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());</span>
-<span class="nc" id="L127">			gg.draw(shape);</span>
-<span class="nc" id="L128">			gg.dispose();</span>
+<span class="nc" id="L124">			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L125">			final Graphics2D gg = destination.createGraphics();</span>
+<span class="nc" id="L126">			gg.scale(dpiFactor, dpiFactor);</span>
+<span class="nc" id="L127">			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());</span>
+<span class="nc" id="L128">			gg.draw(shape);</span>
+<span class="nc" id="L129">			gg.dispose();</span>
 
-<span class="nc" id="L130">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
-<span class="nc" id="L131">			destination = simpleBlur.filter(destination, null);</span>
-<span class="nc" id="L132">		} catch (OutOfMemoryError error) {</span>
-<span class="nc" id="L133">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
-<span class="nc" id="L134">		} catch (Exception e) {</span>
-<span class="nc" id="L135">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
-<span class="nc" id="L136">		}</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (destination != null) {</span>
-<span class="nc" id="L138">			final AffineTransform at = g2d.getTransform();</span>
-<span class="nc" id="L139">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
-<span class="nc" id="L140">			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),</span>
+<span class="nc" id="L131">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
+<span class="nc" id="L132">			destination = simpleBlur.filter(destination, null);</span>
+<span class="nc" id="L133">		} catch (OutOfMemoryError error) {</span>
+<span class="nc" id="L134">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
+<span class="nc" id="L135">		} catch (Exception e) {</span>
+<span class="nc" id="L136">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
+<span class="nc" id="L137">		}</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (destination != null) {</span>
+<span class="nc" id="L139">			final AffineTransform at = g2d.getTransform();</span>
+<span class="nc" id="L140">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
+<span class="nc" id="L141">			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),</span>
 					null);
-<span class="nc" id="L142">			g2d.setTransform(at);</span>
+<span class="nc" id="L143">			g2d.setTransform(at);</span>
 		}
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L145">	}</span>
 
 	protected void drawOnlyLineShadowSpecial(Graphics2D g2d, Shape shape, double deltaShadow, double dpiFactor) {
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (dpiFactor &lt; 1) {</span>
-<span class="nc" id="L148">			dpiFactor = 1;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (dpiFactor &lt; 1) {</span>
+<span class="nc" id="L149">			dpiFactor = 1;</span>
 		}
-<span class="nc" id="L150">		final Rectangle2D bounds = shape.getBounds2D();</span>
-<span class="nc" id="L151">		final double ww = bounds.getMaxX() - bounds.getMinX();</span>
-<span class="nc" id="L152">		final double hh = bounds.getMaxY() - bounds.getMinY();</span>
+<span class="nc" id="L151">		final Rectangle2D bounds = shape.getBounds2D();</span>
+<span class="nc" id="L152">		final double ww = bounds.getMaxX() - bounds.getMinX();</span>
+<span class="nc" id="L153">		final double hh = bounds.getMaxY() - bounds.getMinY();</span>
 
-<span class="nc" id="L154">		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;</span>
-<span class="nc" id="L155">		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;</span>
-<span class="nc" id="L156">		BufferedImage destination = null;</span>
+<span class="nc" id="L155">		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;</span>
+<span class="nc" id="L156">		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;</span>
+<span class="nc" id="L157">		BufferedImage destination = null;</span>
 		try {
-<span class="nc" id="L158">			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);</span>
-<span class="nc" id="L159">			final Graphics2D gg = destination.createGraphics();</span>
-<span class="nc" id="L160">			gg.scale(dpiFactor, dpiFactor);</span>
-<span class="nc" id="L161">			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());</span>
-<span class="nc" id="L162">			gg.draw(shape);</span>
-<span class="nc" id="L163">			gg.dispose();</span>
+<span class="nc" id="L159">			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L160">			final Graphics2D gg = destination.createGraphics();</span>
+<span class="nc" id="L161">			gg.scale(dpiFactor, dpiFactor);</span>
+<span class="nc" id="L162">			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());</span>
+<span class="nc" id="L163">			gg.draw(shape);</span>
+<span class="nc" id="L164">			gg.dispose();</span>
 
-<span class="nc" id="L165">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
-<span class="nc" id="L166">			destination = simpleBlur.filter(destination, null);</span>
-<span class="nc" id="L167">		} catch (OutOfMemoryError error) {</span>
-<span class="nc" id="L168">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
-<span class="nc" id="L169">		} catch (Exception e) {</span>
-<span class="nc" id="L170">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
-<span class="nc" id="L171">		}</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (destination != null) {</span>
-<span class="nc" id="L173">			final AffineTransform at = g2d.getTransform();</span>
-<span class="nc" id="L174">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
-<span class="nc" id="L175">			final Shape sav = g2d.getClip();</span>
+<span class="nc" id="L166">			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);</span>
+<span class="nc" id="L167">			destination = simpleBlur.filter(destination, null);</span>
+<span class="nc" id="L168">		} catch (OutOfMemoryError error) {</span>
+<span class="nc" id="L169">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow, image too big.&quot;);</span>
+<span class="nc" id="L170">		} catch (Exception e) {</span>
+<span class="nc" id="L171">			Log.info(() -&gt; &quot;Warning: Cannot draw shadow: &quot; + e);</span>
+<span class="nc" id="L172">		}</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (destination != null) {</span>
+<span class="nc" id="L174">			final AffineTransform at = g2d.getTransform();</span>
+<span class="nc" id="L175">			g2d.scale(1 / dpiFactor, 1 / dpiFactor);</span>
+<span class="nc" id="L176">			final Shape sav = g2d.getClip();</span>
 
-<span class="nc" id="L177">			final Area full = new Area(</span>
-<span class="nc" id="L178">					new Rectangle2D.Double(0, 0, (bounds.getMaxX() + deltaShadow * 2 + 6) * dpiFactor,</span>
-<span class="nc" id="L179">							(bounds.getMaxY() + deltaShadow * 2 + 6) * dpiFactor));</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (dpiFactor == 1) {</span>
-<span class="nc" id="L181">				full.subtract(new Area(shape));</span>
+<span class="nc" id="L178">			final Area full = new Area(</span>
+<span class="nc" id="L179">					new Rectangle2D.Double(0, 0, (bounds.getMaxX() + deltaShadow * 2 + 6) * dpiFactor,</span>
+<span class="nc" id="L180">							(bounds.getMaxY() + deltaShadow * 2 + 6) * dpiFactor));</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (dpiFactor == 1) {</span>
+<span class="nc" id="L182">				full.subtract(new Area(shape));</span>
 			} else {
-<span class="nc" id="L183">				full.subtract(</span>
-<span class="nc" id="L184">						new Area(shape).createTransformedArea(AffineTransform.getScaleInstance(dpiFactor, dpiFactor)));</span>
+<span class="nc" id="L184">				full.subtract(</span>
+<span class="nc" id="L185">						new Area(shape).createTransformedArea(AffineTransform.getScaleInstance(dpiFactor, dpiFactor)));</span>
 			}
-<span class="nc" id="L186">			g2d.setClip(full);</span>
+<span class="nc" id="L187">			g2d.setClip(full);</span>
 
-<span class="nc" id="L188">			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),</span>
+<span class="nc" id="L189">			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),</span>
 					null);
-<span class="nc" id="L190">			g2d.setClip(sav);</span>
-<span class="nc" id="L191">			g2d.setTransform(at);</span>
+<span class="nc" id="L191">			g2d.setClip(sav);</span>
+<span class="nc" id="L192">			g2d.setTransform(at);</span>
 		}
-<span class="nc" id="L193">	}</span>
+<span class="nc" id="L194">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

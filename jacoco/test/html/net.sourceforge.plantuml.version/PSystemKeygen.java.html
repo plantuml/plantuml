@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -66,106 +67,106 @@ public class PSystemKeygen extends PlainDiagram {
 	final private String key;
 
 	public PSystemKeygen(UmlSource source, String key, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L69">		super(source, preprocessing);</span>
-<span class="nc" id="L70">		this.key = key;</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L70">		super(source, preprocessing);</span>
+<span class="nc" id="L71">		this.key = key;</span>
+<span class="nc" id="L72">	}</span>
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L75">		return new UDrawable() {</span>
+<span class="nc" id="L76">		return new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
 				try {
-<span class="nc" id="L78">					drawInternal(ug);</span>
-<span class="nc" id="L79">				} catch (IOException e) {</span>
-<span class="nc" id="L80">					Logme.error(e);</span>
-<span class="nc" id="L81">				}</span>
-<span class="nc" id="L82">			}</span>
+<span class="nc" id="L79">					drawInternal(ug);</span>
+<span class="nc" id="L80">				} catch (IOException e) {</span>
+<span class="nc" id="L81">					Logme.error(e);</span>
+<span class="nc" id="L82">				}</span>
+<span class="nc" id="L83">			}</span>
 		};
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L87">		return new DiagramDescription(&quot;(Key)&quot;);</span>
+<span class="nc" id="L88">		return new DiagramDescription(&quot;(Key)&quot;);</span>
 	}
 
 	private void drawInternal(UGraphic ug) throws IOException {
-<span class="nc" id="L91">		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (key.length() == 0) {</span>
-<span class="nc" id="L93">			drawFlash(ug, installed);</span>
-<span class="nc" id="L94">			return;</span>
+<span class="nc" id="L92">		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (key.length() == 0) {</span>
+<span class="nc" id="L94">			drawFlash(ug, installed);</span>
+<span class="nc" id="L95">			return;</span>
 		}
-<span class="nc" id="L96">		final LicenseInfo info = LicenseInfo.retrieveNamed(key);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (info.isNone()) {</span>
-<span class="nc" id="L98">			drawFlash(ug, installed);</span>
-<span class="nc" id="L99">			return;</span>
+<span class="nc" id="L97">		final LicenseInfo info = LicenseInfo.retrieveNamed(key);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (info.isNone()) {</span>
+<span class="nc" id="L99">			drawFlash(ug, installed);</span>
+<span class="nc" id="L100">			return;</span>
 		}
-<span class="nc" id="L101">		final List&lt;String&gt; strings = header();</span>
-<span class="nc" id="L102">		strings.add(&quot;&lt;u&gt;Provided license information&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L103">		License.addLicenseInfo(strings, info);</span>
-<span class="nc" id="L104">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L105">		strings.add(&quot;========================================================================&quot;);</span>
+<span class="nc" id="L102">		final List&lt;String&gt; strings = header();</span>
+<span class="nc" id="L103">		strings.add(&quot;&lt;u&gt;Provided license information&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L104">		License.addLicenseInfo(strings, info);</span>
+<span class="nc" id="L105">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L106">		strings.add(&quot;========================================================================&quot;);</span>
 		try {
-<span class="nc" id="L107">			LicenseInfo.persistMe(key);</span>
-<span class="nc" id="L108">		} catch (BackingStoreException e) {</span>
-<span class="nc" id="L109">			strings.add(&quot;&lt;i&gt;Error: Cannot store license key.&lt;/i&gt;&quot;);</span>
-<span class="nc" id="L110">		}</span>
+<span class="nc" id="L108">			LicenseInfo.persistMe(key);</span>
+<span class="nc" id="L109">		} catch (BackingStoreException e) {</span>
+<span class="nc" id="L110">			strings.add(&quot;&lt;i&gt;Error: Cannot store license key.&lt;/i&gt;&quot;);</span>
+<span class="nc" id="L111">		}</span>
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (installed.isNone()) {</span>
-<span class="nc" id="L113">			strings.add(&quot;No license currently installed.&quot;);</span>
-<span class="nc" id="L114">			strings.add(&quot; &quot;);</span>
-<span class="nc" id="L115">			strings.add(&quot;&lt;b&gt;Please copy license.txt to one of those files&lt;/b&gt;:&quot;);</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">			for (SFile f : LicenseInfo.fileCandidates()) {</span>
-<span class="nc" id="L117">				strings.add(f.getAbsolutePath());</span>
-<span class="nc" id="L118">			}</span>
-<span class="nc" id="L119">			strings.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (installed.isNone()) {</span>
+<span class="nc" id="L114">			strings.add(&quot;No license currently installed.&quot;);</span>
+<span class="nc" id="L115">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L116">			strings.add(&quot;&lt;b&gt;Please copy license.txt to one of those files&lt;/b&gt;:&quot;);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			for (SFile f : LicenseInfo.fileCandidates()) {</span>
+<span class="nc" id="L118">				strings.add(f.getAbsolutePath());</span>
+<span class="nc" id="L119">			}</span>
+<span class="nc" id="L120">			strings.add(&quot; &quot;);</span>
 		} else {
-<span class="nc" id="L121">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L122">			License.addLicenseInfo(strings, installed);</span>
-<span class="nc" id="L123">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L122">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L123">			License.addLicenseInfo(strings, installed);</span>
+<span class="nc" id="L124">			strings.add(&quot; &quot;);</span>
 		}
 
-<span class="nc" id="L126">		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L127">		disp.drawU(ug);</span>
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L127">		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L128">		disp.drawU(ug);</span>
+<span class="nc" id="L129">	}</span>
 
 	private ArrayList&lt;String&gt; header() {
-<span class="nc" id="L131">		final ArrayList&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L132">		strings.add(&quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;);</span>
-<span class="nc" id="L133">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc" id="L132">		final ArrayList&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L133">		strings.add(&quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;);</span>
+<span class="nc" id="L134">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
 //		if (OptionFlags.ALLOW_INCLUDE) {
 //			strings.add(&quot;Loaded from &quot; + Version.getJarPath());
 //		}
-<span class="nc" id="L137">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L138">		return strings;</span>
+<span class="nc" id="L138">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L139">		return strings;</span>
 	}
 
 	private void drawFlash(UGraphic ug, LicenseInfo info) throws IOException {
-<span class="nc" id="L142">		final List&lt;String&gt; strings = header();</span>
-<span class="nc" id="L143">		strings.add(&quot;To get your &lt;i&gt;Professional Edition License&lt;/i&gt;,&quot;);</span>
-<span class="nc" id="L144">		strings.add(&quot;please send this qrcode to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; :&quot;);</span>
+<span class="nc" id="L143">		final List&lt;String&gt; strings = header();</span>
+<span class="nc" id="L144">		strings.add(&quot;To get your &lt;i&gt;Professional Edition License&lt;/i&gt;,&quot;);</span>
+<span class="nc" id="L145">		strings.add(&quot;please send this qrcode to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; :&quot;);</span>
 
-<span class="nc" id="L146">		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L147">		disp.drawU(ug);</span>
+<span class="nc" id="L147">		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L148">		disp.drawU(ug);</span>
 
-<span class="nc" id="L149">		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));</span>
-<span class="nc" id="L150">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
-<span class="nc" id="L151">		final PortableImage im = utils.exportFlashcode(</span>
-<span class="nc" id="L152">				Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK,</span>
-				Color.WHITE);
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (im != null) {</span>
-<span class="nc" id="L155">			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);</span>
-<span class="nc" id="L156">			ug.draw(flash);</span>
-<span class="nc" id="L157">			ug = ug.apply(UTranslate.dy(flash.getHeight()));</span>
+<span class="nc" id="L150">		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));</span>
+<span class="nc" id="L151">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
+<span class="nc" id="L152">		final PortableImage im = utils.exportFlashcode(</span>
+<span class="nc" id="L153">				Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,</span>
+				XColor.WHITE);
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (im != null) {</span>
+<span class="nc" id="L156">			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);</span>
+<span class="nc" id="L157">			ug.draw(flash);</span>
+<span class="nc" id="L158">			ug = ug.apply(UTranslate.dy(flash.getHeight()));</span>
 		}
 
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (info.isNone() == false) {</span>
-<span class="nc" id="L161">			strings.clear();</span>
-<span class="nc" id="L162">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L163">			License.addLicenseInfo(strings, info);</span>
-<span class="nc" id="L164">			strings.add(&quot; &quot;);</span>
-<span class="nc" id="L165">			disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L166">			disp.drawU(ug);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (info.isNone() == false) {</span>
+<span class="nc" id="L162">			strings.clear();</span>
+<span class="nc" id="L163">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L164">			License.addLicenseInfo(strings, info);</span>
+<span class="nc" id="L165">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L166">			disp = GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L167">			disp.drawU(ug);</span>
 		}
 
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L170">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

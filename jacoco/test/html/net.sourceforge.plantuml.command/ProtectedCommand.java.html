@@ -57,27 +57,29 @@ public class ProtectedCommand&lt;S extends Diagram&gt; implements Command&lt;S&g
 <span class="fc" id="L57">			final CommandExecutionResult result = cmd.execute(system, lines, currentPass);</span>
 			// if (result.isOk()) {
 			// // TRACECOMMAND
+			// ::uncomment when __TEAVM__
 			// System.err.println(&quot;CMD = &quot; + cmd.getClass() + &quot; &quot; + currentPass);
+			// ::done
 			// }
-<span class="fc" id="L62">			return result;</span>
-<span class="nc" id="L63">		} catch (Throwable t) {</span>
-<span class="nc" id="L64">			Log.error(&quot;Error &quot; + t);</span>
-<span class="nc" id="L65">			Logme.error(t);</span>
-<span class="nc" id="L66">			String msg = &quot;You should send a mail to plantuml@gmail.com or post to https://plantuml.com/qa with this log (V&quot;</span>
-<span class="nc" id="L67">					+ Version.versionString() + &quot;)&quot;;</span>
-<span class="nc" id="L68">			Log.error(msg);</span>
-<span class="nc" id="L69">			msg += &quot; &quot; + t.toString();</span>
-<span class="nc" id="L70">			return CommandExecutionResult.error(msg, t);</span>
+<span class="fc" id="L64">			return result;</span>
+<span class="nc" id="L65">		} catch (Throwable t) {</span>
+<span class="nc" id="L66">			Log.error(&quot;Error &quot; + t);</span>
+<span class="nc" id="L67">			Logme.error(t);</span>
+<span class="nc" id="L68">			String msg = &quot;You should send a mail to plantuml@gmail.com or post to https://plantuml.com/qa with this log (V&quot;</span>
+<span class="nc" id="L69">					+ Version.versionString() + &quot;)&quot;;</span>
+<span class="nc" id="L70">			Log.error(msg);</span>
+<span class="nc" id="L71">			msg += &quot; &quot; + t.toString();</span>
+<span class="nc" id="L72">			return CommandExecutionResult.error(msg, t);</span>
 		}
 	}
 
 	public CommandControl isValid(BlocLines lines) {
-<span class="nc" id="L75">		return cmd.isValid(lines);</span>
+<span class="nc" id="L77">		return cmd.isValid(lines);</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc" id="L80">		return cmd.isEligibleFor(pass);</span>
+<span class="nc" id="L82">		return cmd.isEligibleFor(pass);</span>
 	}
 
 }

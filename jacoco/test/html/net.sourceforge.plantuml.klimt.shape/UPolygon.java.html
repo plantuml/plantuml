@@ -111,74 +111,76 @@ public class UPolygon extends AbstractShadowable {
 	}
 
 	public void rotate(double theta) {
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (theta == 0)</span>
-<span class="fc" id="L115">			return;</span>
-<span class="fc" id="L116">		affine(AffineTransform.getRotateInstance(theta));</span>
-<span class="fc" id="L117">	}</span>
+	    // ::comment when __TEAVM__
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (theta == 0)</span>
+<span class="fc" id="L116">			return;</span>
+<span class="fc" id="L117">		affine(AffineTransform.getRotateInstance(theta));</span>
+	    // ::done
+<span class="fc" id="L119">	}</span>
 
 	public void affine(AffineTransform rotate) {
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i++)</span>
-<span class="fc" id="L121">			all.set(i, all.get(i).transform(rotate));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i++)</span>
+<span class="fc" id="L123">			all.set(i, all.get(i).transform(rotate));</span>
 
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L125">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (name != null)</span>
-<span class="nc" id="L128">			return name;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (name != null)</span>
+<span class="nc" id="L130">			return name;</span>
 
-<span class="nc" id="L130">		return super.toString() + &quot; &quot; + all;</span>
+<span class="nc" id="L132">		return super.toString() + &quot; &quot; + all;</span>
 	}
 
 	public double getHeight() {
-<span class="nc" id="L134">		return minmax.getHeight();</span>
+<span class="nc" id="L136">		return minmax.getHeight();</span>
 	}
 
 	public double getWidth() {
-<span class="nc" id="L138">		return minmax.getWidth();</span>
+<span class="nc" id="L140">		return minmax.getWidth();</span>
 	}
 
 	public double getMinX() {
-<span class="fc" id="L142">		return minmax.getMinX();</span>
+<span class="fc" id="L144">		return minmax.getMinX();</span>
 	}
 
 	public double getMinY() {
-<span class="fc" id="L146">		return minmax.getMinY();</span>
+<span class="fc" id="L148">		return minmax.getMinY();</span>
 	}
 
 	public double getMaxX() {
-<span class="fc" id="L150">		return minmax.getMaxX();</span>
+<span class="fc" id="L152">		return minmax.getMaxX();</span>
 
 	}
 
 	public double getMaxY() {
-<span class="fc" id="L155">		return minmax.getMaxY();</span>
+<span class="fc" id="L157">		return minmax.getMaxY();</span>
 	}
 
 	public MinMax getMinMax() {
-<span class="nc" id="L159">		return minmax;</span>
+<span class="nc" id="L161">		return minmax;</span>
 	}
 
 	public double[] getPointArray(double x, double y) {
-<span class="fc" id="L163">		final double points[] = new double[getPoints().size() * 2];</span>
-<span class="fc" id="L164">		int i = 0;</span>
+<span class="fc" id="L165">		final double points[] = new double[getPoints().size() * 2];</span>
+<span class="fc" id="L166">		int i = 0;</span>
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (XPoint2D pt : getPoints()) {</span>
-<span class="fc" id="L167">			points[i++] = pt.getX() + x;</span>
-<span class="fc" id="L168">			points[i++] = pt.getY() + y;</span>
-<span class="fc" id="L169">		}</span>
-<span class="fc" id="L170">		return points;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		for (XPoint2D pt : getPoints()) {</span>
+<span class="fc" id="L169">			points[i++] = pt.getX() + x;</span>
+<span class="fc" id="L170">			points[i++] = pt.getY() + y;</span>
+<span class="fc" id="L171">		}</span>
+<span class="fc" id="L172">		return points;</span>
 	}
 
 	private CompressionMode compressionMode;
 
 	public final CompressionMode getCompressionMode() {
-<span class="fc" id="L176">		return compressionMode;</span>
+<span class="fc" id="L178">		return compressionMode;</span>
 	}
 
 	public final void setCompressionMode(CompressionMode compressionMode) {
-<span class="nc" id="L180">		this.compressionMode = compressionMode;</span>
-<span class="nc" id="L181">	}</span>
+<span class="nc" id="L182">		this.compressionMode = compressionMode;</span>
+<span class="nc" id="L183">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

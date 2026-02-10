@@ -2045,10 +2045,10 @@
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>6</Ce>
+                <Ce>7</Ce>
                 <A>0.23</A>
-                <I>0.5</I>
-                <D>0.27</D>
+                <I>0.54</I>
+                <D>0.23</D>
                 <V>1</V>
             </Stats>
 
@@ -2103,6 +2103,7 @@
                 <Package>java.lang</Package>
                 <Package>java.lang.reflect</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
             </DependsUpon>
 
@@ -6973,10 +6974,10 @@
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>10</Ca>
-                <Ce>24</Ce>
+                <Ce>23</Ce>
                 <A>0</A>
-                <I>0.71</I>
-                <D>0.29</D>
+                <I>0.7</I>
+                <D>0.3</D>
                 <V>1</V>
             </Stats>
 
@@ -6999,7 +7000,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
@@ -9018,9 +9018,9 @@
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>8</Ca>
-                <Ce>28</Ce>
+                <Ce>27</Ce>
                 <A>0.12</A>
-                <I>0.78</I>
+                <I>0.77</I>
                 <D>0.1</D>
                 <V>1</V>
             </Stats>
@@ -9056,7 +9056,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
@@ -9211,10 +9210,10 @@
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>3</Ce>
+                <Ce>2</Ce>
                 <A>0.33</A>
-                <I>0.43</I>
-                <D>0.24</D>
+                <I>0.33</I>
+                <D>0.33</D>
                 <V>1</V>
             </Stats>
 
@@ -9234,7 +9233,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.lang</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
             </DependsUpon>
@@ -10338,11 +10336,11 @@
                 <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>28</Ca>
+                <Ca>35</Ca>
                 <Ce>3</Ce>
                 <A>0</A>
-                <I>0.1</I>
-                <D>0.9</D>
+                <I>0.08</I>
+                <D>0.92</D>
                 <V>1</V>
             </Stats>
 
@@ -10366,6 +10364,7 @@
 
             <UsedBy>
                 <Package>com.plantuml.api.cheerpj.v1</Package>
+                <Package>jcckit.util</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api.v2</Package>
@@ -10380,32 +10379,38 @@
                 <Package>net.sourceforge.plantuml.fun</Package>
                 <Package>net.sourceforge.plantuml.jcckit</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.debug</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.eps</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
+                <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
+                <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.sudoku</Package>
+                <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
+                <Package>net.sourceforge.plantuml.tikz</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
             </UsedBy>
         </Package>
 
         <Package name="net.sourceforge.plantuml.klimt.color">
             <Stats>
-                <TotalClasses>31</TotalClasses>
-                <ConcreteClasses>29</ConcreteClasses>
+                <TotalClasses>32</TotalClasses>
+                <ConcreteClasses>30</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>105</Ca>
-                <Ce>13</Ce>
+                <Ce>14</Ce>
                 <A>0.06</A>
-                <I>0.11</I>
-                <D>0.83</D>
+                <I>0.12</I>
+                <D>0.82</D>
                 <V>1</V>
             </Stats>
 
@@ -10442,6 +10447,9 @@
                 </Class>
                 <Class sourceFile="ColorMapper.java">
                     net.sourceforge.plantuml.klimt.color.ColorMapper$6
+                </Class>
+                <Class sourceFile="ColorMapper.java">
+                    net.sourceforge.plantuml.klimt.color.ColorMapper$7
                 </Class>
                 <Class sourceFile="ColorOrder.java">
                     net.sourceforge.plantuml.klimt.color.ColorOrder
@@ -10516,6 +10524,7 @@
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.decoration</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
@@ -10925,7 +10934,7 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>28</Ce>
+                <Ce>27</Ce>
                 <A>0.12</A>
                 <I>0.9</I>
                 <D>0.02</D>
@@ -10990,7 +10999,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.nio.charset</Package>
@@ -11449,10 +11457,10 @@
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>12</Ce>
+                <Ce>13</Ce>
                 <A>0</A>
-                <I>0.75</I>
-                <D>0.25</D>
+                <I>0.76</I>
+                <D>0.24</D>
                 <V>1</V>
             </Stats>
 
@@ -11476,6 +11484,7 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -12841,10 +12850,10 @@
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>24</Ca>
-                <Ce>32</Ce>
+                <Ce>31</Ce>
                 <A>0.07</A>
-                <I>0.57</I>
-                <D>0.35</D>
+                <I>0.56</I>
+                <D>0.36</D>
                 <V>1</V>
             </Stats>
 
@@ -12936,7 +12945,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.net</Package>
@@ -14160,10 +14168,10 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>18</Ce>
+                <Ce>19</Ce>
                 <A>0</A>
-                <I>0.75</I>
-                <D>0.25</D>
+                <I>0.76</I>
+                <D>0.24</D>
                 <V>1</V>
             </Stats>
 
@@ -14199,6 +14207,7 @@
                 <Package>javax.imageio.stream</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -17686,9 +17695,9 @@
                 <ConcreteClasses>42</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>81</Ca>
-                <Ce>33</Ce>
+                <Ce>34</Ce>
                 <A>0.11</A>
-                <I>0.29</I>
+                <I>0.3</I>
                 <D>0.6</D>
                 <V>1</V>
             </Stats>
@@ -17853,6 +17862,7 @@
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
@@ -18866,10 +18876,10 @@
                 <ConcreteClasses>72</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
                 <Ca>25</Ca>
-                <Ce>39</Ce>
+                <Ce>40</Ce>
                 <A>0.12</A>
-                <I>0.61</I>
-                <D>0.27</D>
+                <I>0.62</I>
+                <D>0.26</D>
                 <V>1</V>
             </Stats>
 
@@ -19146,6 +19156,7 @@
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
@@ -20072,7 +20083,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.awt.geom</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
@@ -20080,6 +20090,7 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.eps</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
@@ -21413,10 +21424,10 @@
                 <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>17</Ca>
-                <Ce>35</Ce>
+                <Ce>34</Ce>
                 <A>0.07</A>
                 <I>0.67</I>
-                <D>0.26</D>
+                <D>0.27</D>
                 <V>1</V>
             </Stats>
 
@@ -21472,7 +21483,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.awt.image</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>

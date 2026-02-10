@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.asciiart.Wcwidth;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -50,51 +51,51 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
 
 // Do not move
-<span class="nc" id="L53">public class StringUtils {</span>
+<span class="nc" id="L54">public class StringUtils {</span>
 
 	public static String goUpperCase(String s) {
 		// ::revert when __HAXE__
-<span class="fc" id="L57">		return s.toUpperCase(Locale.ENGLISH);</span>
+<span class="fc" id="L58">		return s.toUpperCase(Locale.ENGLISH);</span>
 		// return s.toUpperCase();
 		// ::done
 	}
 
 	public static String goLowerCase(String s) {
 		// ::revert when __HAXE__
-<span class="fc" id="L64">		return s.toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L65">		return s.toLowerCase(Locale.ENGLISH);</span>
 		// return s.toLowerCase();
 		// ::done
 	}
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (s == null)</span>
-<span class="nc" id="L71">			return null;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L72">			return null;</span>
 
-<span class="pc bpc" id="L73" title="1 of 6 branches missed.">		if (format.contains(&quot;\&quot;&quot;) &amp;&amp; s.length() &gt; 1 &amp;&amp; isDoubleQuote(s.charAt(0))</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">				&amp;&amp; isDoubleQuote(s.charAt(s.length() - 1)))</span>
-<span class="fc" id="L75">			return s.substring(1, s.length() - 1);</span>
+<span class="pc bpc" id="L74" title="1 of 6 branches missed.">		if (format.contains(&quot;\&quot;&quot;) &amp;&amp; s.length() &gt; 1 &amp;&amp; isDoubleQuote(s.charAt(0))</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">				&amp;&amp; isDoubleQuote(s.charAt(s.length() - 1)))</span>
+<span class="fc" id="L76">			return s.substring(1, s.length() - 1);</span>
 
-<span class="pc bpc" id="L77" title="3 of 6 branches missed.">		if (format.contains(&quot;(&quot;) &amp;&amp; s.startsWith(&quot;(&quot;) &amp;&amp; s.endsWith(&quot;)&quot;))</span>
-<span class="nc" id="L78">			return s.substring(1, s.length() - 1);</span>
+<span class="pc bpc" id="L78" title="3 of 6 branches missed.">		if (format.contains(&quot;(&quot;) &amp;&amp; s.startsWith(&quot;(&quot;) &amp;&amp; s.endsWith(&quot;)&quot;))</span>
+<span class="nc" id="L79">			return s.substring(1, s.length() - 1);</span>
 
-<span class="pc bpc" id="L80" title="3 of 6 branches missed.">		if (format.contains(&quot;[&quot;) &amp;&amp; s.startsWith(&quot;[&quot;) &amp;&amp; s.endsWith(&quot;]&quot;))</span>
-<span class="nc" id="L81">			return s.substring(1, s.length() - 1);</span>
+<span class="pc bpc" id="L81" title="3 of 6 branches missed.">		if (format.contains(&quot;[&quot;) &amp;&amp; s.startsWith(&quot;[&quot;) &amp;&amp; s.endsWith(&quot;]&quot;))</span>
+<span class="nc" id="L82">			return s.substring(1, s.length() - 1);</span>
 
-<span class="pc bpc" id="L83" title="1 of 6 branches missed.">		if (format.contains(&quot;:&quot;) &amp;&amp; s.startsWith(&quot;:&quot;) &amp;&amp; s.endsWith(&quot;:&quot;))</span>
-<span class="fc" id="L84">			return s.substring(1, s.length() - 1);</span>
+<span class="pc bpc" id="L84" title="1 of 6 branches missed.">		if (format.contains(&quot;:&quot;) &amp;&amp; s.startsWith(&quot;:&quot;) &amp;&amp; s.endsWith(&quot;:&quot;))</span>
+<span class="fc" id="L85">			return s.substring(1, s.length() - 1);</span>
 
-<span class="fc" id="L86">		return s;</span>
+<span class="fc" id="L87">		return s;</span>
 	}
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (s == null)</span>
-<span class="fc" id="L91">			return s;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L92">			return s;</span>
 
-<span class="fc" id="L93">		return eventuallyRemoveStartingAndEndingDoubleQuote(s, &quot;\&quot;([:&quot;);</span>
+<span class="fc" id="L94">		return eventuallyRemoveStartingAndEndingDoubleQuote(s, &quot;\&quot;([:&quot;);</span>
 	}
 
 	private static boolean isDoubleQuote(char c) {
-<span class="pc bpc" id="L97" title="4 of 10 branches missed.">		return c == '\&quot;' || c == '\u201c' || c == '\u201d' || c == '\u00ab' || c == '\u00bb';</span>
+<span class="pc bpc" id="L98" title="4 of 10 branches missed.">		return c == '\&quot;' || c == '\u201c' || c == '\u201d' || c == '\u00ab' || c == '\u00bb';</span>
 	}
 
 	// ::comment when __HAXE__
@@ -126,199 +127,199 @@ import net.sourceforge.plantuml.utils.Log;
 	public static final char INTERNAL_BOLD = '\uE100';
 
 	public static String toInternalBoldNumber(String s) {
-<span class="fc" id="L129">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L131">			final char c = s.charAt(i);</span>
-<span class="fc bfc" id="L132" title="All 4 branches covered.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
-<span class="fc" id="L133">				sb.append(Character.toChars('\uE100' + c - '0'));</span>
+<span class="fc" id="L130">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L132">			final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L134">				sb.append(Character.toChars('\uE100' + c - '0'));</span>
 			else
-<span class="fc" id="L135">				sb.append(c);</span>
+<span class="fc" id="L136">				sb.append(c);</span>
 
 		}
-<span class="fc" id="L138">		return sb.toString();</span>
+<span class="fc" id="L139">		return sb.toString();</span>
 	}
 
 	public static void appendInternalToRealBoldNumber(StringBuilder sb, char c) {
-<span class="pc bpc" id="L142" title="3 of 4 branches missed.">		if (c &gt;= '\uE100' &amp;&amp; c &lt;= ('\uE100' + 9))</span>
-<span class="nc" id="L143">			sb.append(Character.toChars(0x1d7ce + c - '\uE100'));</span>
+<span class="pc bpc" id="L143" title="3 of 4 branches missed.">		if (c &gt;= '\uE100' &amp;&amp; c &lt;= ('\uE100' + 9))</span>
+<span class="nc" id="L144">			sb.append(Character.toChars(0x1d7ce + c - '\uE100'));</span>
 		else
-<span class="fc" id="L145">			sb.append(c);</span>
+<span class="fc" id="L146">			sb.append(c);</span>
 
-<span class="fc" id="L147">	}</span>
+<span class="fc" id="L148">	}</span>
 
 	public static void appendInternalToPlainNumber(StringBuilder sb, char c) {
-<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (c &gt;= '\uE100' &amp;&amp; c &lt;= ('\uE100' + 9))</span>
-<span class="nc" id="L151">			sb.append(Character.toChars('0' + c - '\uE100'));</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">		if (c &gt;= '\uE100' &amp;&amp; c &lt;= ('\uE100' + 9))</span>
+<span class="nc" id="L152">			sb.append(Character.toChars('0' + c - '\uE100'));</span>
 		else
-<span class="nc" id="L153">			sb.append(c);</span>
+<span class="nc" id="L154">			sb.append(c);</span>
 
-<span class="nc" id="L155">	}</span>
+<span class="nc" id="L156">	}</span>
 
 	final static public List&lt;String&gt; getSplit(Pattern2 pattern, String line) {
-<span class="fc" id="L158">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L160">			return null;</span>
+<span class="fc" id="L159">		final Matcher2 m = pattern.matcher(line);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L161">			return null;</span>
 
-<span class="fc" id="L162">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (int i = 1; i &lt;= m.groupCount(); i++)</span>
-<span class="fc" id="L164">			result.add(m.group(i));</span>
+<span class="fc" id="L163">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (int i = 1; i &lt;= m.groupCount(); i++)</span>
+<span class="fc" id="L165">			result.add(m.group(i));</span>
 
-<span class="fc" id="L166">		return result;</span>
+<span class="fc" id="L167">		return result;</span>
 	}
 
 	public static boolean isNotEmpty(CharSequence s) {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		return !isEmpty(s);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		return !isEmpty(s);</span>
 	}
 
 	public static boolean isNotEmpty(List&lt;? extends CharSequence&gt; input) {
-<span class="nc bnc" id="L174" title="All 4 branches missed.">		return input != null &amp;&amp; input.size() &gt; 0;</span>
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		return input != null &amp;&amp; input.size() &gt; 0;</span>
 	}
 
 	public static boolean isEmpty(CharSequence s) {
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (s == null)</span>
-<span class="fc" id="L179">			return true;</span>
-<span class="fc" id="L180">		final int length = s.length();</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (length == 0)</span>
-<span class="fc" id="L182">			return true;</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">		for (int i = 0; i &lt; length; i++) {</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">			if (!isSpaceOrTabOrNull(s.charAt(i)))</span>
-<span class="fc" id="L185">				return false;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L180">			return true;</span>
+<span class="fc" id="L181">		final int length = s.length();</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (length == 0)</span>
+<span class="fc" id="L183">			return true;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (!isSpaceOrTabOrNull(s.charAt(i)))</span>
+<span class="fc" id="L186">				return false;</span>
 		}
-<span class="fc" id="L187">		return true;</span>
+<span class="fc" id="L188">		return true;</span>
 	}
 
 	public static String manageHtml(String s) {
-<span class="nc" id="L191">		s = s.replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;);</span>
-<span class="nc" id="L192">		s = s.replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;);</span>
-<span class="nc" id="L193">		return s;</span>
+<span class="nc" id="L192">		s = s.replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;);</span>
+<span class="nc" id="L193">		s = s.replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;);</span>
+<span class="nc" id="L194">		return s;</span>
 	}
 
 	public static String unicode(String s) {
-<span class="nc" id="L197">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		for (char c : s.toCharArray())</span>
-<span class="nc bnc" id="L199" title="All 6 branches missed.">			if (c &gt; 127 || c == '&amp;' || c == '|') {</span>
-<span class="nc" id="L200">				final int i = c;</span>
-<span class="nc" id="L201">				result.append(&quot;&amp;#&quot; + i + &quot;;&quot;);</span>
-<span class="nc" id="L202">			} else {</span>
-<span class="nc" id="L203">				result.append(c);</span>
+<span class="nc" id="L198">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (char c : s.toCharArray())</span>
+<span class="nc bnc" id="L200" title="All 6 branches missed.">			if (c &gt; 127 || c == '&amp;' || c == '|') {</span>
+<span class="nc" id="L201">				final int i = c;</span>
+<span class="nc" id="L202">				result.append(&quot;&amp;#&quot; + i + &quot;;&quot;);</span>
+<span class="nc" id="L203">			} else {</span>
+<span class="nc" id="L204">				result.append(c);</span>
 			}
 
-<span class="nc" id="L206">		return result.toString();</span>
+<span class="nc" id="L207">		return result.toString();</span>
 	}
 
 	public static String unicodeForHtml(String s) {
-<span class="fc" id="L210">		final StringBuilder result = new StringBuilder();</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
-<span class="pc bpc" id="L212" title="5 of 10 branches missed.">			if (c &gt; 127 || c == '&amp;' || c == '|' || c == '&lt;' || c == '&gt;') {</span>
-<span class="nc" id="L213">				final int i = c;</span>
-<span class="nc" id="L214">				result.append(&quot;&amp;#&quot; + i + &quot;;&quot;);</span>
-<span class="nc" id="L215">			} else {</span>
-<span class="fc" id="L216">				result.append(c);</span>
+<span class="fc" id="L211">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
+<span class="pc bpc" id="L213" title="5 of 10 branches missed.">			if (c &gt; 127 || c == '&amp;' || c == '|' || c == '&lt;' || c == '&gt;') {</span>
+<span class="nc" id="L214">				final int i = c;</span>
+<span class="nc" id="L215">				result.append(&quot;&amp;#&quot; + i + &quot;;&quot;);</span>
+<span class="nc" id="L216">			} else {</span>
+<span class="fc" id="L217">				result.append(c);</span>
 			}
 
-<span class="fc" id="L219">		return result.toString();</span>
+<span class="fc" id="L220">		return result.toString();</span>
 	}
 
 	public static String unicodeForHtml(Display display) {
-<span class="nc" id="L223">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		for (int i = 0; i &lt; display.size(); i++) {</span>
-<span class="nc" id="L225">			result.append(unicodeForHtml(display.get(i).toString()));</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (i &lt; display.size() - 1)</span>
-<span class="nc" id="L227">				result.append(&quot;&lt;br&gt;&quot;);</span>
+<span class="nc" id="L224">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		for (int i = 0; i &lt; display.size(); i++) {</span>
+<span class="nc" id="L226">			result.append(unicodeForHtml(display.get(i).toString()));</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (i &lt; display.size() - 1)</span>
+<span class="nc" id="L228">				result.append(&quot;&lt;br&gt;&quot;);</span>
 
 		}
-<span class="nc" id="L230">		return result.toString();</span>
+<span class="nc" id="L231">		return result.toString();</span>
 	}
 
 	public static String manageArrowForSequence(String s) {
-<span class="nc" id="L234">		s = s.replace('=', '-').toLowerCase();</span>
-<span class="nc" id="L235">		return s;</span>
+<span class="nc" id="L235">		s = s.replace('=', '-').toLowerCase();</span>
+<span class="nc" id="L236">		return s;</span>
 	}
 
 	public static String capitalize(String s) {
-<span class="fc" id="L239">		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();</span>
+<span class="fc" id="L240">		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();</span>
 	}
 
 	public static char goUpperCase(char c) {
-<span class="fc" id="L243">		return goUpperCase(&quot;&quot; + c).charAt(0);</span>
+<span class="fc" id="L244">		return goUpperCase(&quot;&quot; + c).charAt(0);</span>
 	}
 
 	public static char goLowerCase(char c) {
-<span class="fc" id="L247">		return goLowerCase(&quot;&quot; + c).charAt(0);</span>
+<span class="fc" id="L248">		return goLowerCase(&quot;&quot; + c).charAt(0);</span>
 	}
 
 	public static String manageArrowForCuca(String s) {
-<span class="fc" id="L251">		final Direction dir = getArrowDirection(s);</span>
-<span class="fc" id="L252">		s = s.replace('=', '-');</span>
-<span class="fc" id="L253">		s = s.replaceAll(&quot;\\w*&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L254" title="1 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
-<span class="fc" id="L255">			s = s.replaceAll(&quot;-+&quot;, &quot;-&quot;);</span>
+<span class="fc" id="L252">		final Direction dir = getArrowDirection(s);</span>
+<span class="fc" id="L253">		s = s.replace('=', '-');</span>
+<span class="fc" id="L254">		s = s.replaceAll(&quot;\\w*&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L255" title="1 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="fc" id="L256">			s = s.replaceAll(&quot;-+&quot;, &quot;-&quot;);</span>
 
-<span class="pc bpc" id="L257" title="2 of 6 branches missed.">		if (s.length() == 2 &amp;&amp; (dir == Direction.UP || dir == Direction.DOWN))</span>
-<span class="nc" id="L258">			s = s.replaceFirst(&quot;-&quot;, &quot;--&quot;);</span>
+<span class="pc bpc" id="L258" title="2 of 6 branches missed.">		if (s.length() == 2 &amp;&amp; (dir == Direction.UP || dir == Direction.DOWN))</span>
+<span class="nc" id="L259">			s = s.replaceFirst(&quot;-&quot;, &quot;--&quot;);</span>
 
-<span class="fc" id="L260">		return s;</span>
+<span class="fc" id="L261">		return s;</span>
 	}
 
 	public static String manageQueueForCuca(String s) {
-<span class="nc" id="L264">		final Direction dir = getQueueDirection(s);</span>
-<span class="nc" id="L265">		s = s.replace('=', '-');</span>
-<span class="nc" id="L266">		s = s.replaceAll(&quot;\\w*&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L267" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
-<span class="nc" id="L268">			s = s.replaceAll(&quot;-+&quot;, &quot;-&quot;);</span>
+<span class="nc" id="L265">		final Direction dir = getQueueDirection(s);</span>
+<span class="nc" id="L266">		s = s.replace('=', '-');</span>
+<span class="nc" id="L267">		s = s.replaceAll(&quot;\\w*&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L268" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="nc" id="L269">			s = s.replaceAll(&quot;-+&quot;, &quot;-&quot;);</span>
 
-<span class="nc bnc" id="L270" title="All 6 branches missed.">		if (s.length() == 1 &amp;&amp; (dir == Direction.UP || dir == Direction.DOWN))</span>
-<span class="nc" id="L271">			s = s.replaceFirst(&quot;-&quot;, &quot;--&quot;);</span>
+<span class="nc bnc" id="L271" title="All 6 branches missed.">		if (s.length() == 1 &amp;&amp; (dir == Direction.UP || dir == Direction.DOWN))</span>
+<span class="nc" id="L272">			s = s.replaceFirst(&quot;-&quot;, &quot;--&quot;);</span>
 
-<span class="nc" id="L273">		return s;</span>
+<span class="nc" id="L274">		return s;</span>
 	}
 
 	public static Direction getArrowDirection(String s) {
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (s.endsWith(&quot;&gt;&quot;))</span>
-<span class="fc" id="L278">			return getQueueDirection(s.substring(0, s.length() - 1));</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (s.endsWith(&quot;&gt;&quot;))</span>
+<span class="fc" id="L279">			return getQueueDirection(s.substring(0, s.length() - 1));</span>
 
-<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (s.startsWith(&quot;&lt;&quot;)) {</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">			if (s.length() == 2)</span>
-<span class="nc" id="L282">				return Direction.LEFT;</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (s.startsWith(&quot;&lt;&quot;)) {</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">			if (s.length() == 2)</span>
+<span class="nc" id="L283">				return Direction.LEFT;</span>
 
-<span class="nc" id="L284">			return Direction.UP;</span>
+<span class="nc" id="L285">			return Direction.UP;</span>
 		}
-<span class="nc" id="L286">		throw new IllegalArgumentException(s);</span>
+<span class="nc" id="L287">		throw new IllegalArgumentException(s);</span>
 	}
 
 	public static Direction getQueueDirection(String s) {
-<span class="pc bpc" id="L290" title="2 of 4 branches missed.">		if (s.indexOf('&lt;') != -1 || s.indexOf('&gt;') != -1)</span>
-<span class="nc" id="L291">			throw new IllegalArgumentException(s);</span>
+<span class="pc bpc" id="L291" title="2 of 4 branches missed.">		if (s.indexOf('&lt;') != -1 || s.indexOf('&gt;') != -1)</span>
+<span class="nc" id="L292">			throw new IllegalArgumentException(s);</span>
 
-<span class="fc" id="L293">		s = s.toLowerCase();</span>
-<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (s.contains(&quot;left&quot;))</span>
-<span class="fc" id="L295">			return Direction.LEFT;</span>
+<span class="fc" id="L294">		s = s.toLowerCase();</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (s.contains(&quot;left&quot;))</span>
+<span class="fc" id="L296">			return Direction.LEFT;</span>
 
-<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (s.contains(&quot;right&quot;))</span>
-<span class="fc" id="L298">			return Direction.RIGHT;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (s.contains(&quot;right&quot;))</span>
+<span class="fc" id="L299">			return Direction.RIGHT;</span>
 
-<span class="fc bfc" id="L300" title="All 2 branches covered.">		if (s.contains(&quot;up&quot;))</span>
-<span class="fc" id="L301">			return Direction.UP;</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (s.contains(&quot;up&quot;))</span>
+<span class="fc" id="L302">			return Direction.UP;</span>
 
-<span class="fc bfc" id="L303" title="All 2 branches covered.">		if (s.contains(&quot;down&quot;)) {</span>
-<span class="fc" id="L304">			return Direction.DOWN;</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (s.contains(&quot;down&quot;)) {</span>
+<span class="fc" id="L305">			return Direction.DOWN;</span>
 		}
-<span class="fc bfc" id="L306" title="All 2 branches covered.">		if (s.contains(&quot;l&quot;))</span>
-<span class="fc" id="L307">			return Direction.LEFT;</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">		if (s.contains(&quot;l&quot;))</span>
+<span class="fc" id="L308">			return Direction.LEFT;</span>
 
-<span class="fc bfc" id="L309" title="All 2 branches covered.">		if (s.contains(&quot;r&quot;))</span>
-<span class="fc" id="L310">			return Direction.RIGHT;</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		if (s.contains(&quot;r&quot;))</span>
+<span class="fc" id="L311">			return Direction.RIGHT;</span>
 
-<span class="fc bfc" id="L312" title="All 2 branches covered.">		if (s.contains(&quot;u&quot;))</span>
-<span class="fc" id="L313">			return Direction.UP;</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">		if (s.contains(&quot;u&quot;))</span>
+<span class="fc" id="L314">			return Direction.UP;</span>
 
-<span class="fc bfc" id="L315" title="All 2 branches covered.">		if (s.contains(&quot;d&quot;))</span>
-<span class="fc" id="L316">			return Direction.DOWN;</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">		if (s.contains(&quot;d&quot;))</span>
+<span class="fc" id="L317">			return Direction.DOWN;</span>
 
-<span class="fc bfc" id="L318" title="All 2 branches covered.">		if (s.length() == 1)</span>
-<span class="fc" id="L319">			return Direction.RIGHT;</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		if (s.length() == 1)</span>
+<span class="fc" id="L320">			return Direction.RIGHT;</span>
 
-<span class="fc" id="L321">		return Direction.DOWN;</span>
+<span class="fc" id="L322">		return Direction.DOWN;</span>
 	}
 
 	// public static Code eventuallyRemoveStartingAndEndingDoubleQuote(Code s) {
@@ -326,29 +327,29 @@ import net.sourceforge.plantuml.utils.Log;
 	// }
 
 	public static boolean isCJK(char c) {
-<span class="nc" id="L329">		final Character.UnicodeBlock block = Character.UnicodeBlock.of(c);</span>
-<span class="nc" id="L330">		Log.println(&quot;block=&quot; + block);</span>
-<span class="nc" id="L331">		return false;</span>
+<span class="nc" id="L330">		final Character.UnicodeBlock block = Character.UnicodeBlock.of(c);</span>
+<span class="nc" id="L331">		Log.println(&quot;block=&quot; + block);</span>
+<span class="nc" id="L332">		return false;</span>
 	}
 
 	public static char hiddenLesserThan() {
-<span class="fc" id="L335">		return '\u0005';</span>
+<span class="fc" id="L336">		return '\u0005';</span>
 	}
 
 	public static char hiddenBiggerThan() {
-<span class="fc" id="L339">		return '\u0006';</span>
+<span class="fc" id="L340">		return '\u0006';</span>
 	}
 
 	public static String hideComparatorCharacters(String s) {
-<span class="nc" id="L343">		s = s.replace('&lt;', hiddenLesserThan());</span>
-<span class="nc" id="L344">		s = s.replace('&gt;', hiddenBiggerThan());</span>
-<span class="nc" id="L345">		return s;</span>
+<span class="nc" id="L344">		s = s.replace('&lt;', hiddenLesserThan());</span>
+<span class="nc" id="L345">		s = s.replace('&gt;', hiddenBiggerThan());</span>
+<span class="nc" id="L346">		return s;</span>
 	}
 
 	public static String showComparatorCharacters(String s) {
-<span class="fc" id="L349">		s = s.replace(hiddenLesserThan(), '&lt;');</span>
-<span class="fc" id="L350">		s = s.replace(hiddenBiggerThan(), '&gt;');</span>
-<span class="fc" id="L351">		return s;</span>
+<span class="fc" id="L350">		s = s.replace(hiddenLesserThan(), '&lt;');</span>
+<span class="fc" id="L351">		s = s.replace(hiddenBiggerThan(), '&gt;');</span>
+<span class="fc" id="L352">		return s;</span>
 	}
 
 //	private static int getWidth(Display stringsToDisplay) {
@@ -361,16 +362,16 @@ import net.sourceforge.plantuml.utils.Log;
 //	}
 
 	public static int getHeight(List&lt;? extends CharSequence&gt; stringsToDisplay) {
-<span class="nc" id="L364">		return stringsToDisplay.size();</span>
+<span class="nc" id="L365">		return stringsToDisplay.size();</span>
 	}
 
 	public static int getHeight(Display stringsToDisplay) {
-<span class="fc" id="L368">		return stringsToDisplay.size();</span>
+<span class="fc" id="L369">		return stringsToDisplay.size();</span>
 	}
 
 	public static boolean isDiagramCacheable(String uml) {
-<span class="nc bnc" id="L372" title="All 2 branches missed.">		if (uml.length() &lt; 35)</span>
-<span class="nc" id="L373">			return false;</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (uml.length() &lt; 35)</span>
+<span class="nc" id="L374">			return false;</span>
 
 //		uml = uml.toLowerCase();
 //		if (uml.startsWith(&quot;@startuml\nversion\n&quot;)) {
@@ -400,177 +401,170 @@ import net.sourceforge.plantuml.utils.Log;
 //		if (uml.startsWith(&quot;@startuml\nstdlib\n&quot;)) {
 //			return false;
 //		}
-<span class="nc" id="L403">		return true;</span>
+<span class="nc" id="L404">		return true;</span>
 	}
 
 	public static int getPragmaRevision(String uml) {
-<span class="nc" id="L407">		uml = uml.toLowerCase();</span>
-<span class="nc" id="L408">		final String header = &quot;@startuml\n!pragma revision &quot;;</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (uml.startsWith(header) == false)</span>
-<span class="nc" id="L410">			return -1;</span>
+<span class="nc" id="L408">		uml = uml.toLowerCase();</span>
+<span class="nc" id="L409">		final String header = &quot;@startuml\n!pragma revision &quot;;</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">		if (uml.startsWith(header) == false)</span>
+<span class="nc" id="L411">			return -1;</span>
 
-<span class="nc" id="L412">		int x1 = header.length();</span>
-<span class="nc" id="L413">		int x2 = x1;</span>
-<span class="nc bnc" id="L414" title="All 4 branches missed.">		while (x2 &lt; uml.length() &amp;&amp; Character.isDigit(uml.charAt(x2)))</span>
-<span class="nc" id="L415">			x2++;</span>
+<span class="nc" id="L413">		int x1 = header.length();</span>
+<span class="nc" id="L414">		int x2 = x1;</span>
+<span class="nc bnc" id="L415" title="All 4 branches missed.">		while (x2 &lt; uml.length() &amp;&amp; Character.isDigit(uml.charAt(x2)))</span>
+<span class="nc" id="L416">			x2++;</span>
 
-<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (x1 == x2)</span>
-<span class="nc" id="L418">			return -1;</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (x1 == x2)</span>
+<span class="nc" id="L419">			return -1;</span>
 
-<span class="nc" id="L420">		return Integer.parseInt(uml.substring(x1, x2));</span>
+<span class="nc" id="L421">		return Integer.parseInt(uml.substring(x1, x2));</span>
 	}
 
-<span class="fc" id="L423">	private final static Pattern2 SPLIT_COMMA = Pattern2.cmpile(&quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;);</span>
+<span class="fc" id="L424">	private final static Pattern2 SPLIT_COMMA = Pattern2.cmpile(&quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;);</span>
 
 	public static List&lt;String&gt; splitComma(String s) {
-<span class="nc" id="L426">		s = trin(s);</span>
-<span class="nc" id="L427">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L428">		final Matcher2 m = SPLIT_COMMA.matcher(s);</span>
-<span class="nc bnc" id="L429" title="All 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L430">			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));</span>
+<span class="nc" id="L427">		s = trin(s);</span>
+<span class="nc" id="L428">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L429">		final Matcher2 m = SPLIT_COMMA.matcher(s);</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L431">			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));</span>
 
-<span class="nc" id="L432">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L433">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public static String getUid(String uid1, int uid2) {
-<span class="fc" id="L436">		return uid1 + String.format(&quot;%04d&quot;, uid2);</span>
+<span class="fc" id="L437">		return uid1 + String.format(&quot;%04d&quot;, uid2);</span>
 	}
 
 	public static &lt;O&gt; List&lt;O&gt; merge(List&lt;O&gt; l1, List&lt;O&gt; l2) {
-<span class="nc" id="L440">		final List&lt;O&gt; result = new ArrayList&lt;&gt;(l1);</span>
-<span class="nc" id="L441">		result.addAll(l2);</span>
-<span class="nc" id="L442">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L441">		final List&lt;O&gt; result = new ArrayList&lt;&gt;(l1);</span>
+<span class="nc" id="L442">		result.addAll(l2);</span>
+<span class="nc" id="L443">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public static boolean endsWithBackslash(final String s) {
-<span class="pc bpc" id="L446" title="1 of 4 branches missed.">		return s.endsWith(&quot;\\&quot;) &amp;&amp; s.endsWith(&quot;\\\\&quot;) == false;</span>
+<span class="pc bpc" id="L447" title="1 of 4 branches missed.">		return s.endsWith(&quot;\\&quot;) &amp;&amp; s.endsWith(&quot;\\\\&quot;) == false;</span>
 	}
 
 	public static String rot(String s) {
-<span class="fc" id="L450">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L451" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L452">			char c = s.charAt(i);</span>
-<span class="fc bfc" id="L453" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
-<span class="fc" id="L454">				c += 13;</span>
-<span class="pc bpc" id="L455" title="2 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
-<span class="fc" id="L456">				c -= 13;</span>
-<span class="pc bpc" id="L457" title="1 of 2 branches missed.">			else if (c &gt; 126)</span>
-<span class="nc" id="L458">				throw new IllegalArgumentException(s);</span>
+<span class="fc" id="L451">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L453">			char c = s.charAt(i);</span>
+<span class="fc bfc" id="L454" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
+<span class="fc" id="L455">				c += 13;</span>
+<span class="pc bpc" id="L456" title="2 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
+<span class="fc" id="L457">				c -= 13;</span>
+<span class="pc bpc" id="L458" title="1 of 2 branches missed.">			else if (c &gt; 126)</span>
+<span class="nc" id="L459">				throw new IllegalArgumentException(s);</span>
 
-<span class="fc" id="L460">			sb.append(c);</span>
+<span class="fc" id="L461">			sb.append(c);</span>
 		}
-<span class="fc" id="L462">		return sb.toString();</span>
+<span class="fc" id="L463">		return sb.toString();</span>
 	}
 
-<span class="fc" id="L465">	private static final Pattern UNICODE = Pattern.compile(&quot;\\&lt;U\\+([0-9a-fA-F]{4,5})\\&gt;&quot;);</span>
+<span class="fc" id="L466">	private static final Pattern UNICODE = Pattern.compile(&quot;\\&lt;U\\+([0-9a-fA-F]{4,5})\\&gt;&quot;);</span>
 
 	public static String manageUnicodeNotationUplus(String s) {
-<span class="fc" id="L468">		final Matcher matcher = UNICODE.matcher(s);</span>
-<span class="fc" id="L469">		final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
-<span class="fc bfc" id="L470" title="All 2 branches covered.">		while (matcher.find()) {</span>
-<span class="fc" id="L471">			final String num = matcher.group(1);</span>
-<span class="fc" id="L472">			final int value = Integer.parseInt(num, 16);</span>
-<span class="fc" id="L473">			final String replace = new String(Character.toChars(value));</span>
-<span class="fc" id="L474">			matcher.appendReplacement(result, Matcher.quoteReplacement(replace));</span>
-<span class="fc" id="L475">		}</span>
-<span class="fc" id="L476">		matcher.appendTail(result);</span>
-<span class="fc" id="L477">		return result.toString();</span>
+<span class="fc" id="L469">		final Matcher matcher = UNICODE.matcher(s);</span>
+<span class="fc" id="L470">		final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
+<span class="fc bfc" id="L471" title="All 2 branches covered.">		while (matcher.find()) {</span>
+<span class="fc" id="L472">			final String num = matcher.group(1);</span>
+<span class="fc" id="L473">			final int value = Integer.parseInt(num, 16);</span>
+<span class="fc" id="L474">			final String replace = new String(Character.toChars(value));</span>
+<span class="fc" id="L475">			matcher.appendReplacement(result, Matcher.quoteReplacement(replace));</span>
+<span class="fc" id="L476">		}</span>
+<span class="fc" id="L477">		matcher.appendTail(result);</span>
+<span class="fc" id="L478">		return result.toString();</span>
 	}
 
-<span class="fc" id="L480">	private static final Pattern AMP_HASH = Pattern.compile(&quot;\\&amp;#([0-9]+);&quot;);</span>
+<span class="fc" id="L481">	private static final Pattern AMP_HASH = Pattern.compile(&quot;\\&amp;#([0-9]+);&quot;);</span>
 
 	public static String manageAmpDiese(String s) {
-<span class="fc" id="L483">		final Matcher matcher = AMP_HASH.matcher(s);</span>
-<span class="fc" id="L484">		final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		while (matcher.find()) {</span>
-<span class="nc" id="L486">			final int codePoint = Integer.parseInt(matcher.group(1));</span>
-<span class="nc" id="L487">			final String unicode = new String(Character.toChars(codePoint));</span>
-<span class="nc" id="L488">			matcher.appendReplacement(result, unicode);</span>
-<span class="nc" id="L489">		}</span>
-<span class="fc" id="L490">		matcher.appendTail(result);</span>
-<span class="fc" id="L491">		return result.toString();</span>
+<span class="fc" id="L484">		final Matcher matcher = AMP_HASH.matcher(s);</span>
+<span class="fc" id="L485">		final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">		while (matcher.find()) {</span>
+<span class="nc" id="L487">			final int codePoint = Integer.parseInt(matcher.group(1));</span>
+<span class="nc" id="L488">			final String unicode = new String(Character.toChars(codePoint));</span>
+<span class="nc" id="L489">			matcher.appendReplacement(result, unicode);</span>
+<span class="nc" id="L490">		}</span>
+<span class="fc" id="L491">		matcher.appendTail(result);</span>
+<span class="fc" id="L492">		return result.toString();</span>
 	}
 
 	public static String manageTildeArobaseStart(String s) {
-<span class="fc" id="L495">		s = s.replaceAll(&quot;~@start&quot;, &quot;@start&quot;);</span>
-<span class="fc" id="L496">		return s;</span>
+<span class="fc" id="L496">		s = s.replaceAll(&quot;~@start&quot;, &quot;@start&quot;);</span>
+<span class="fc" id="L497">		return s;</span>
 	}
 
 	public static String trinNoTrace(CharSequence s) {
-<span class="fc" id="L500">		return s.toString().trim();</span>
+<span class="fc" id="L501">		return s.toString().trim();</span>
 	}
 
 	public static String manageEscapedTabs(String s) {
-<span class="fc" id="L504">		return s.replace(&quot;\\t&quot;, &quot;\t&quot;);</span>
+<span class="fc" id="L505">		return s.replace(&quot;\\t&quot;, &quot;\t&quot;);</span>
 	}
 
 	public static long seed(String string) {
-<span class="fc" id="L508">		long h = 1125899906842597L; // prime</span>
-<span class="fc" id="L509">		final int len = string.length();</span>
+<span class="fc" id="L509">		long h = 1125899906842597L; // prime</span>
+<span class="fc" id="L510">		final int len = string.length();</span>
 
-<span class="fc bfc" id="L511" title="All 2 branches covered.">		for (int i = 0; i &lt; len; i++)</span>
-<span class="fc" id="L512">			h = 31 * h + string.charAt(i);</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">		for (int i = 0; i &lt; len; i++)</span>
+<span class="fc" id="L513">			h = 31 * h + string.charAt(i);</span>
 
-<span class="fc" id="L514">		return h;</span>
+<span class="fc" id="L515">		return h;</span>
 	}
 
 	public static String trin(String arg) {
-<span class="fc bfc" id="L518" title="All 2 branches covered.">		if (arg.length() == 0)</span>
-<span class="fc" id="L519">			return arg;</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">		if (arg.length() == 0)</span>
+<span class="fc" id="L520">			return arg;</span>
 
-<span class="fc" id="L521">		return trinEndingInternal(arg, getPositionStartNonSpace(arg));</span>
+<span class="fc" id="L522">		return trinEndingInternal(arg, getPositionStartNonSpace(arg));</span>
 	}
 
 	private static int getPositionStartNonSpace(String arg) {
-<span class="fc" id="L525">		int i = 0;</span>
-<span class="fc bfc" id="L526" title="All 4 branches covered.">		while (i &lt; arg.length() &amp;&amp; isSpaceOrTabOrNull(arg.charAt(i)))</span>
-<span class="fc" id="L527">			i++;</span>
+<span class="fc" id="L526">		int i = 0;</span>
+<span class="fc bfc" id="L527" title="All 4 branches covered.">		while (i &lt; arg.length() &amp;&amp; isSpaceOrTabOrNull(arg.charAt(i)))</span>
+<span class="fc" id="L528">			i++;</span>
 
-<span class="fc" id="L529">		return i;</span>
+<span class="fc" id="L530">		return i;</span>
 	}
 
 	private static String trinEnding(String arg) {
-<span class="nc bnc" id="L533" title="All 2 branches missed.">		if (arg.length() == 0)</span>
-<span class="nc" id="L534">			return arg;</span>
+<span class="nc bnc" id="L534" title="All 2 branches missed.">		if (arg.length() == 0)</span>
+<span class="nc" id="L535">			return arg;</span>
 
-<span class="nc" id="L536">		return trinEndingInternal(arg, 0);</span>
+<span class="nc" id="L537">		return trinEndingInternal(arg, 0);</span>
 	}
 
 	private static String trinEndingInternal(String arg, int from) {
-<span class="fc" id="L540">		int j = arg.length() - 1;</span>
-<span class="fc bfc" id="L541" title="All 4 branches covered.">		while (j &gt;= from &amp;&amp; isSpaceOrTabOrNull(arg.charAt(j)))</span>
-<span class="fc" id="L542">			j--;</span>
+<span class="fc" id="L541">		int j = arg.length() - 1;</span>
+<span class="fc bfc" id="L542" title="All 4 branches covered.">		while (j &gt;= from &amp;&amp; isSpaceOrTabOrNull(arg.charAt(j)))</span>
+<span class="fc" id="L543">			j--;</span>
 
-<span class="fc bfc" id="L544" title="All 4 branches covered.">		if (from == 0 &amp;&amp; j == arg.length() - 1)</span>
-<span class="fc" id="L545">			return arg;</span>
+<span class="fc bfc" id="L545" title="All 4 branches covered.">		if (from == 0 &amp;&amp; j == arg.length() - 1)</span>
+<span class="fc" id="L546">			return arg;</span>
 
-<span class="fc" id="L547">		return arg.substring(from, j + 1);</span>
+<span class="fc" id="L548">		return arg.substring(from, j + 1);</span>
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {
-<span class="fc bfc" id="L551" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
-	}
-
-	public static String sharp000000(int color) {
-<span class="fc" id="L555">		final int v = 0xFFFFFF &amp; color;</span>
-<span class="fc" id="L556">		String s = &quot;000000&quot; + Integer.toHexString(v).toUpperCase();</span>
-<span class="fc" id="L557">		s = s.substring(s.length() - 6);</span>
-<span class="fc" id="L558">		return &quot;#&quot; + s;</span>
+<span class="fc bfc" id="L552" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
 	}
 
 	// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
-<span class="fc" id="L563">		int result = 1;</span>
-<span class="fc bfc" id="L564" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
-<span class="pc bpc" id="L565" title="1 of 2 branches missed.">			if (s == null)</span>
-<span class="nc" id="L566">				continue;</span>
+<span class="fc" id="L557">		int result = 1;</span>
+<span class="fc bfc" id="L558" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">			if (s == null)</span>
+<span class="nc" id="L560">				continue;</span>
 
-<span class="fc" id="L568">			final int length = Wcwidth.length(s);</span>
-<span class="fc bfc" id="L569" title="All 2 branches covered.">			if (result &lt; length)</span>
-<span class="fc" id="L570">				result = length;</span>
+<span class="fc" id="L562">			final int length = Wcwidth.length(s);</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">			if (result &lt; length)</span>
+<span class="fc" id="L564">				result = length;</span>
 
-<span class="fc" id="L572">		}</span>
-<span class="fc" id="L573">		return result;</span>
+<span class="fc" id="L566">		}</span>
+<span class="fc" id="L567">		return result;</span>
 	}
 	// ::done
 

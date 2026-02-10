@@ -35,147 +35,148 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+
 import java.util.Collection;
 import java.util.Collections;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
+
 public class HColorSet {
 
-<span class="fc" id="L44">	private final static HColorSet singleton = new HColorSet();</span>
+<span class="fc" id="L46">	private final static HColorSet singleton = new HColorSet();</span>
 
 	public static HColorSet instance() {
-<span class="fc" id="L47">		return singleton;</span>
+<span class="fc" id="L49">		return singleton;</span>
 	}
 
 	public Collection&lt;String&gt; names() {
-<span class="fc" id="L51">		return Collections.unmodifiableCollection(ColorTrieNode.NAMES);</span>
+<span class="fc" id="L53">		return Collections.unmodifiableCollection(ColorTrieNode.NAMES);</span>
 	}
 
 	private HColorSet() {
 	}
 
 	public HColor getColorOrWhite(String s) {
-<span class="fc" id="L58">		final HColor result = parseColor(s);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L60">			return HColors.WHITE;</span>
-<span class="fc" id="L61">		return result;</span>
+<span class="fc" id="L60">		final HColor result = parseColor(s);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L62">			return HColors.WHITE;</span>
+<span class="fc" id="L63">		return result;</span>
 	}
 
 	public HColor getColor(String s) throws NoSuchColorException {
-<span class="fc" id="L65">		final HColor result = parseColor(s);</span>
+<span class="fc" id="L67">		final HColor result = parseColor(s);</span>
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L68">			throw new NoSuchColorException();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L70">			throw new NoSuchColorException();</span>
 
-<span class="fc" id="L70">		return result;</span>
+<span class="fc" id="L72">		return result;</span>
 	}
 
 	private HColor parseColor(String s) {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (s.startsWith(&quot;#&quot;))</span>
-<span class="fc" id="L75">			s = s.substring(1);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (s.startsWith(&quot;#&quot;))</span>
+<span class="fc" id="L77">			s = s.substring(1);</span>
 
-<span class="pc bpc" id="L77" title="2 of 4 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;) || s.equalsIgnoreCase(&quot;background&quot;))</span>
-<span class="nc" id="L78">			return HColors.none();</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;) || s.equalsIgnoreCase(&quot;background&quot;))</span>
+<span class="nc" id="L80">			return HColors.none();</span>
 
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;automatic&quot;))</span>
-<span class="nc" id="L81">			return new HColorAutomagic();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;automatic&quot;))</span>
+<span class="nc" id="L83">			return new HColorAutomagic();</span>
 
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;))</span>
-<span class="nc" id="L84">			return HColors.simple(new Color(0, 0, 0, 0));</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;transparent&quot;))</span>
+<span class="nc" id="L86">			return HColors.simple(new XColor(0, 0, 0, 0));</span>
 
-<span class="fc" id="L86">		final Color result = parseSimpleColor(s);</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="fc" id="L88">			return HColors.simple(result);</span>
+<span class="fc" id="L88">		final XColor result = parseSimpleColor(s);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="fc" id="L90">			return HColors.simple(result);</span>
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (s.startsWith(&quot;?&quot;)) {</span>
-<span class="nc" id="L91">			final String[] colors = s.substring(1).split(&quot;:&quot;);</span>
-<span class="nc bnc" id="L92" title="All 4 branches missed.">			if (colors.length == 2 || colors.length == 3) {</span>
-<span class="nc" id="L93">				final Color col0 = parseSimpleColor(colors[0]);</span>
-<span class="nc" id="L94">				final Color col1 = parseSimpleColor(colors[1]);</span>
-<span class="nc bnc" id="L95" title="All 6 branches missed.">				if (colors.length == 2 &amp;&amp; col0 != null &amp;&amp; col1 != null)</span>
-<span class="nc" id="L96">					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), null);</span>
-<span class="nc" id="L97">				final Color col2 = parseSimpleColor(colors[2]);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">				if (col2 != null)</span>
-<span class="nc" id="L99">					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), HColors.simple(col2));</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (s.startsWith(&quot;?&quot;)) {</span>
+<span class="nc" id="L93">			final String[] colors = s.substring(1).split(&quot;:&quot;);</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">			if (colors.length == 2 || colors.length == 3) {</span>
+<span class="nc" id="L95">				final XColor col0 = parseSimpleColor(colors[0]);</span>
+<span class="nc" id="L96">				final XColor col1 = parseSimpleColor(colors[1]);</span>
+<span class="nc bnc" id="L97" title="All 6 branches missed.">				if (colors.length == 2 &amp;&amp; col0 != null &amp;&amp; col1 != null)</span>
+<span class="nc" id="L98">					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), null);</span>
+<span class="nc" id="L99">				final XColor col2 = parseSimpleColor(colors[2]);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (col2 != null)</span>
+<span class="nc" id="L101">					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), HColors.simple(col2));</span>
 
 			}
 		}
 
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="nc" id="L105">			final char c = s.charAt(i);</span>
-<span class="nc bnc" id="L106" title="All 8 branches missed.">			if (c == '-' || c == '\\' || c == '|' || c == '/') {</span>
-<span class="nc" id="L107">				final Color col0 = parseSimpleColor(s.substring(0, i));</span>
-<span class="nc" id="L108">				final Color col1 = parseSimpleColor(s.substring(i + 1));</span>
-<span class="nc bnc" id="L109" title="All 4 branches missed.">				if (col0 != null &amp;&amp; col1 != null)</span>
-<span class="nc" id="L110">					return HColors.gradient(HColors.simple(col0), HColors.simple(col1), c);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L107">			final char c = s.charAt(i);</span>
+<span class="nc bnc" id="L108" title="All 8 branches missed.">			if (c == '-' || c == '\\' || c == '|' || c == '/') {</span>
+<span class="nc" id="L109">				final XColor col0 = parseSimpleColor(s.substring(0, i));</span>
+<span class="nc" id="L110">				final XColor col1 = parseSimpleColor(s.substring(i + 1));</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">				if (col0 != null &amp;&amp; col1 != null)</span>
+<span class="nc" id="L112">					return HColors.gradient(HColors.simple(col0), HColors.simple(col1), c);</span>
 			}
 		}
 
-<span class="nc" id="L114">		return null;</span>
+<span class="nc" id="L116">		return null;</span>
 	}
 
-	private Color parseSimpleColor(String s) {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (s.startsWith(&quot;#&quot;))</span>
-<span class="nc" id="L119">			s = s.substring(1);</span>
-<span class="fc" id="L120">		final int len = s.length();</span>
+	private XColor parseSimpleColor(String s) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (s.startsWith(&quot;#&quot;))</span>
+<span class="nc" id="L121">			s = s.substring(1);</span>
+<span class="fc" id="L122">		final int len = s.length();</span>
 
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (len == 1) {</span>
-<span class="fc" id="L123">			final int d = hexNibble(s.charAt(0));</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (d &gt;= 0) {</span>
-<span class="fc" id="L125">				final int v = (d &lt;&lt; 4) | d;</span>
-<span class="fc" id="L126">				final int rgb = (v &lt;&lt; 16) | (v &lt;&lt; 8) | v;</span>
-<span class="fc" id="L127">				return new Color(rgb);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (len == 1) {</span>
+<span class="fc" id="L125">			final int d = hexNibble(s.charAt(0));</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (d &gt;= 0) {</span>
+<span class="fc" id="L127">				final int v = (d &lt;&lt; 4) | d;</span>
+<span class="fc" id="L128">				final int rgb = (v &lt;&lt; 16) | (v &lt;&lt; 8) | v;</span>
+<span class="fc" id="L129">				return XColor.from(rgb);</span>
 			}
-<span class="pc bfc" id="L129" title="All 2 branches covered.">		} else if (len == 3) {</span>
-<span class="fc" id="L130">			final int r = hexNibble(s.charAt(0));</span>
-<span class="fc" id="L131">			final int g = hexNibble(s.charAt(1));</span>
-<span class="fc" id="L132">			final int b = hexNibble(s.charAt(2));</span>
-<span class="pc bpc" id="L133" title="2 of 6 branches missed.">			if (r &gt;= 0 &amp;&amp; g &gt;= 0 &amp;&amp; b &gt;= 0) {</span>
-<span class="fc" id="L134">				final int rr = (r &lt;&lt; 4) | r;</span>
-<span class="fc" id="L135">				final int gg = (g &lt;&lt; 4) | g;</span>
-<span class="fc" id="L136">				final int bb = (b &lt;&lt; 4) | b;</span>
-<span class="fc" id="L137">				final int rgb = (rr &lt;&lt; 16) | (gg &lt;&lt; 8) | bb;</span>
-<span class="fc" id="L138">				return new Color(rgb);</span>
+<span class="pc bfc" id="L131" title="All 2 branches covered.">		} else if (len == 3) {</span>
+<span class="fc" id="L132">			final int r = hexNibble(s.charAt(0));</span>
+<span class="fc" id="L133">			final int g = hexNibble(s.charAt(1));</span>
+<span class="fc" id="L134">			final int b = hexNibble(s.charAt(2));</span>
+<span class="pc bpc" id="L135" title="2 of 6 branches missed.">			if (r &gt;= 0 &amp;&amp; g &gt;= 0 &amp;&amp; b &gt;= 0) {</span>
+<span class="fc" id="L136">				final int rr = (r &lt;&lt; 4) | r;</span>
+<span class="fc" id="L137">				final int gg = (g &lt;&lt; 4) | g;</span>
+<span class="fc" id="L138">				final int bb = (b &lt;&lt; 4) | b;</span>
+<span class="fc" id="L139">				return new XColor(rr, gg, bb);</span>
 			}
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		} else if (len == 6) {</span>
-<span class="fc" id="L141">			final int rgb = parseHex24(s, 0);</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (rgb &gt;= 0)</span>
-<span class="fc" id="L143">				return new Color(0xFF000000 | rgb);</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		} else if (len == 8) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		} else if (len == 6) {</span>
+<span class="fc" id="L142">			final int rgb = parseHex24(s, 0);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			if (rgb &gt;= 0)</span>
+<span class="fc" id="L144">				return XColor.from(0xFF000000 | rgb);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		} else if (len == 8) {</span>
 			// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
-<span class="fc" id="L146">			final int r = parseHexByte(s, 0);</span>
-<span class="fc" id="L147">			final int g = parseHexByte(s, 2);</span>
-<span class="fc" id="L148">			final int b = parseHexByte(s, 4);</span>
-<span class="fc" id="L149">			final int a = parseHexByte(s, 6);</span>
-<span class="pc bpc" id="L150" title="7 of 8 branches missed.">			if (r &gt;= 0 &amp;&amp; g &gt;= 0 &amp;&amp; b &gt;= 0 &amp;&amp; a &gt;= 0)</span>
-<span class="nc" id="L151">				return new Color(r, g, b, a);</span>
+<span class="fc" id="L147">			final int r = parseHexByte(s, 0);</span>
+<span class="fc" id="L148">			final int g = parseHexByte(s, 2);</span>
+<span class="fc" id="L149">			final int b = parseHexByte(s, 4);</span>
+<span class="fc" id="L150">			final int a = parseHexByte(s, 6);</span>
+<span class="pc bpc" id="L151" title="7 of 8 branches missed.">			if (r &gt;= 0 &amp;&amp; g &gt;= 0 &amp;&amp; b &gt;= 0 &amp;&amp; a &gt;= 0)</span>
+<span class="nc" id="L152">				return new XColor(r, g, b, a);</span>
 		}
-<span class="fc" id="L153">		return ColorTrieNode.INSTANCE.getColor(s);</span>
+<span class="fc" id="L154">		return ColorTrieNode.INSTANCE.getColor(s);</span>
 	}
 
 	private static int hexNibble(char c) {
-<span class="pc bpc" id="L157" title="1 of 4 branches missed.">		if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
-<span class="fc" id="L158">			return c - '0';</span>
-<span class="fc bfc" id="L159" title="All 4 branches covered.">		else if (c &gt;= 'a' &amp;&amp; c &lt;= 'f')</span>
-<span class="fc" id="L160">			return c - 'a' + 10;</span>
-<span class="pc bpc" id="L161" title="1 of 4 branches missed.">		else if (c &gt;= 'A' &amp;&amp; c &lt;= 'F')</span>
-<span class="fc" id="L162">			return c - 'A' + 10;</span>
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">		if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L159">			return c - '0';</span>
+<span class="fc bfc" id="L160" title="All 4 branches covered.">		else if (c &gt;= 'a' &amp;&amp; c &lt;= 'f')</span>
+<span class="fc" id="L161">			return c - 'a' + 10;</span>
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">		else if (c &gt;= 'A' &amp;&amp; c &lt;= 'F')</span>
+<span class="fc" id="L163">			return c - 'A' + 10;</span>
 		else
-<span class="fc" id="L164">			return -1;</span>
+<span class="fc" id="L165">			return -1;</span>
 
 	}
 
 	private static int parseHexByte(CharSequence s, int off) {
-<span class="fc" id="L169">		final int hi = hexNibble(s.charAt(off));</span>
-<span class="fc" id="L170">		final int lo = hexNibble(s.charAt(off + 1));</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		return (hi | lo) &lt; 0 ? -1 : ((hi &lt;&lt; 4) | lo);</span>
+<span class="fc" id="L170">		final int hi = hexNibble(s.charAt(off));</span>
+<span class="fc" id="L171">		final int lo = hexNibble(s.charAt(off + 1));</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		return (hi | lo) &lt; 0 ? -1 : ((hi &lt;&lt; 4) | lo);</span>
 	}
 
 	private static int parseHex24(CharSequence s, int off) {
-<span class="fc" id="L175">		final int r = parseHexByte(s, off);</span>
-<span class="fc" id="L176">		final int g = parseHexByte(s, off + 2);</span>
-<span class="fc" id="L177">		final int b = parseHexByte(s, off + 4);</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		return (r | g | b) &lt; 0 ? -1 : ((r &lt;&lt; 16) | (g &lt;&lt; 8) | b);</span>
+<span class="fc" id="L176">		final int r = parseHexByte(s, off);</span>
+<span class="fc" id="L177">		final int g = parseHexByte(s, off + 2);</span>
+<span class="fc" id="L178">		final int b = parseHexByte(s, off + 4);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		return (r | g | b) &lt; 0 ? -1 : ((r &lt;&lt; 16) | (g &lt;&lt; 8) | b);</span>
 	}
 
 }

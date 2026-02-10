@@ -83,7 +83,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver&lt;UE
 <span class="nc" id="L83">				DriverRectangleG2d.drawBorder(param, color, mapper, ellipse, shape, g2d, x, y);</span>
 <span class="nc" id="L84">			} else {</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">				if (back.isTransparent() == false) {</span>
-<span class="fc" id="L86">					g2d.setColor(param.getBackcolor().toColor(mapper));</span>
+<span class="fc" id="L86">					g2d.setColor(param.getBackcolor().toColor(mapper).toAwtColor());</span>
 <span class="fc" id="L87">					DriverRectangleG2d.managePattern(param, g2d);</span>
 <span class="fc" id="L88">					g2d.fill(shape);</span>
 				}
@@ -95,7 +95,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver&lt;UE
 <span class="nc" id="L95">			final Shape arc = new Arc2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight(), round(ellipse.getStart()),</span>
 <span class="nc" id="L96">					round(ellipse.getExtend()), Arc2D.OPEN);</span>
 <span class="nc bnc" id="L97" title="All 2 branches missed.">			if (color.isTransparent() == false) {</span>
-<span class="nc" id="L98">				g2d.setColor(color.toColor(mapper));</span>
+<span class="nc" id="L98">				g2d.setColor(color.toColor(mapper).toAwtColor());</span>
 <span class="nc" id="L99">				g2d.draw(arc);</span>
 			}
 		}

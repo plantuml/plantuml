@@ -50,34 +50,35 @@ import net.sourceforge.plantuml.core.Diagram;
 
 public class MDADiagramImpl implements MDADiagram {
 	// ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 	public static MDADiagram create(String uml) {
-<span class="nc" id="L54">		List&lt;BlockUml&gt; blocks = new SourceStringReader(uml).getBlocks();</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (blocks.size() == 0) {</span>
-<span class="nc" id="L56">			uml = &quot;@startuml\n&quot; + uml + &quot;\n@enduml&quot;;</span>
-<span class="nc" id="L57">			blocks = new SourceStringReader(uml).getBlocks();</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">			if (blocks.size() == 0)</span>
-<span class="nc" id="L59">				return null;</span>
+<span class="nc" id="L55">		List&lt;BlockUml&gt; blocks = new SourceStringReader(uml).getBlocks();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (blocks.size() == 0) {</span>
+<span class="nc" id="L57">			uml = &quot;@startuml\n&quot; + uml + &quot;\n@enduml&quot;;</span>
+<span class="nc" id="L58">			blocks = new SourceStringReader(uml).getBlocks();</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (blocks.size() == 0)</span>
+<span class="nc" id="L60">				return null;</span>
 
 		}
-<span class="nc" id="L62">		final BlockUml block = blocks.get(0);</span>
-<span class="nc" id="L63">		final Diagram diagram = block.getDiagram();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (diagram instanceof ClassDiagram)</span>
-<span class="nc" id="L65">			return new MDADiagramImpl((ClassDiagram) diagram);</span>
+<span class="nc" id="L63">		final BlockUml block = blocks.get(0);</span>
+<span class="nc" id="L64">		final Diagram diagram = block.getDiagram();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (diagram instanceof ClassDiagram)</span>
+<span class="nc" id="L66">			return new MDADiagramImpl((ClassDiagram) diagram);</span>
 
-<span class="nc" id="L67">		return null;</span>
+<span class="nc" id="L68">		return null;</span>
 	}
 
-<span class="nc" id="L70">	private final Collection&lt;MDAPackage&gt; packages = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L71">	private final Collection&lt;MDAPackage&gt; packages = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L72">	private MDADiagramImpl(ClassDiagram classDiagram) {</span>
-<span class="nc" id="L73">		packages.add(new MDAPackageImpl(classDiagram.getRootGroup()));</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		for (Entity group : classDiagram.groups())</span>
-<span class="nc" id="L75">			packages.add(new MDAPackageImpl(group));</span>
+<span class="nc" id="L73">	private MDADiagramImpl(ClassDiagram classDiagram) {</span>
+<span class="nc" id="L74">		packages.add(new MDAPackageImpl(classDiagram.getRootGroup()));</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (Entity group : classDiagram.groups())</span>
+<span class="nc" id="L76">			packages.add(new MDAPackageImpl(group));</span>
 
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L78">	}</span>
 
 	public Collection&lt;MDAPackage&gt; getPackages() {
-<span class="nc" id="L80">		return Collections.unmodifiableCollection(packages);</span>
+<span class="nc" id="L81">		return Collections.unmodifiableCollection(packages);</span>
 	}
 
 }

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.g2d;
 import static java.lang.Math.max;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
@@ -49,6 +48,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -143,10 +143,10 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L143">					g2d.setPaint(paint);</span>
 <span class="nc" id="L144">					g2d.fill(area);</span>
 <span class="nc" id="L145">				} else {</span>
-<span class="nc" id="L146">					final Color backColor = extended.toColor(mapper);</span>
+<span class="nc" id="L146">					final XColor backColor = extended.toColor(mapper);</span>
 <span class="nc bnc" id="L147" title="All 2 branches missed.">					if (backColor != null) {</span>
-<span class="nc" id="L148">						g2d.setColor(backColor);</span>
-<span class="nc" id="L149">						g2d.setBackground(backColor);</span>
+<span class="nc" id="L148">						g2d.setColor(backColor.toAwtColor());</span>
+<span class="nc" id="L149">						g2d.setBackground(backColor.toAwtColor());</span>
 <span class="nc" id="L150">						g2d.fill(area);</span>
 					}
 				}
@@ -154,12 +154,12 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="fc" id="L154">			visible.ensureVisible(x, y - height + 1.5);</span>
 <span class="fc" id="L155">			visible.ensureVisible(x + width, y + 1.5);</span>
 
-<span class="fc" id="L157">			g2d.setColor(fontConfiguration.getColor().toColor(mapper));</span>
+<span class="fc" id="L157">			g2d.setColor(fontConfiguration.getColor().toColor(mapper).toAwtColor());</span>
 <span class="fc" id="L158">			g2d.drawString(text, (float) x, (float) y);</span>
 
 <span class="fc bfc" id="L160" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {</span>
 <span class="fc bfc" id="L161" title="All 2 branches covered.">				if (extended != null)</span>
-<span class="fc" id="L162">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="fc" id="L162">					g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
 <span class="fc" id="L164">				final UStroke stroke = fontConfiguration.getUnderlineStroke();</span>
 <span class="pc bpc" id="L165" title="1 of 2 branches missed.">				if (stroke.getThickness() &gt; 0) {</span>
@@ -172,7 +172,7 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="fc bfc" id="L172" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
 <span class="fc" id="L173">				final int ypos = (int) (y + 2.5) - 1;</span>
 <span class="pc bpc" id="L174" title="1 of 2 branches missed.">				if (extended != null)</span>
-<span class="fc" id="L175">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="fc" id="L175">					g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
 <span class="fc bfc" id="L177" title="All 2 branches covered.">				for (int i = (int) x; i &lt; x + width - 5; i += 6) {</span>
 <span class="fc" id="L178">					g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);</span>
@@ -183,7 +183,7 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L183">				final FontMetrics fm = g2d.getFontMetrics(UFontImpl.getUnderlayingFont(font, text));</span>
 <span class="nc" id="L184">				final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
 <span class="nc bnc" id="L185" title="All 2 branches missed.">				if (extended != null)</span>
-<span class="nc" id="L186">					g2d.setColor(extended.toColor(mapper));</span>
+<span class="nc" id="L186">					g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
 <span class="nc" id="L188">				g2d.setStroke(new BasicStroke((float) 1.5));</span>
 <span class="nc" id="L189">				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>

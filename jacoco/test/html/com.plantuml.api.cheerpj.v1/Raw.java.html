@@ -37,7 +37,6 @@ package com.plantuml.api.cheerpj.v1;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -104,7 +104,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 <span class="nc" id="L104">			final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
 
 <span class="nc bnc" id="L106" title="All 2 branches missed.">			if (im == null) {</span>
-<span class="nc" id="L107">				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,</span>
+<span class="nc" id="L107">				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, XColor.WHITE,</span>
 						stringBounder);
 <span class="nc" id="L109">				im = imageBuilder.getPortableImage();</span>
 <span class="nc" id="L110">				g2d = im.createGraphics();</span>
@@ -113,10 +113,10 @@ import net.sourceforge.plantuml.preproc.Defines;
 			final HColor back;
 			final ColorMapper mapper;
 <span class="nc bnc" id="L115" title="All 2 branches missed.">			if (dark) {</span>
-<span class="nc" id="L116">				back = HColors.simple(Color.BLACK);</span>
+<span class="nc" id="L116">				back = HColors.simple(XColor.BLACK);</span>
 <span class="nc" id="L117">				mapper = ColorMapper.DARK_MODE;</span>
 			} else {
-<span class="nc" id="L119">				back = HColors.simple(Color.WHITE);</span>
+<span class="nc" id="L119">				back = HColors.simple(XColor.WHITE);</span>
 <span class="nc" id="L120">				mapper = ColorMapper.IDENTITY;</span>
 			}
 <span class="nc" id="L122">			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);</span>
@@ -188,7 +188,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 <span class="nc" id="L188">			final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
 
 <span class="nc bnc" id="L190" title="All 2 branches missed.">			if (im == null) {</span>
-<span class="nc" id="L191">				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,</span>
+<span class="nc" id="L191">				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, XColor.WHITE,</span>
 						stringBounder);
 <span class="nc" id="L193">				im = imageBuilder.getPortableImage();</span>
 <span class="nc" id="L194">				g2d = im.createGraphics();</span>
@@ -197,10 +197,10 @@ import net.sourceforge.plantuml.preproc.Defines;
 			final HColor back;
 			final ColorMapper mapper;
 <span class="nc bnc" id="L199" title="All 2 branches missed.">			if (dark) {</span>
-<span class="nc" id="L200">				back = HColors.simple(Color.BLACK);</span>
+<span class="nc" id="L200">				back = HColors.simple(XColor.BLACK);</span>
 <span class="nc" id="L201">				mapper = ColorMapper.DARK_MODE;</span>
 			} else {
-<span class="nc" id="L203">				back = HColors.simple(Color.WHITE);</span>
+<span class="nc" id="L203">				back = HColors.simple(XColor.WHITE);</span>
 <span class="nc" id="L204">				mapper = ColorMapper.IDENTITY;</span>
 			}
 <span class="nc" id="L206">			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);</span>

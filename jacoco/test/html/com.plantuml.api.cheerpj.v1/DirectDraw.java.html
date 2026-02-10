@@ -37,7 +37,6 @@ package com.plantuml.api.cheerpj.v1;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.io.StringReader;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -116,7 +116,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 
 <span class="nc" id="L117">			WasmLog.log(&quot;...processing...&quot;);</span>
 
-<span class="nc" id="L119">			final HColor back = HColors.simple(Color.WHITE);</span>
+<span class="nc" id="L119">			final HColor back = HColors.simple(XColor.WHITE);</span>
 <span class="nc" id="L120">			final StringBounder stringBounder = new StringBounderCanvas(g2d);</span>
 <span class="nc" id="L121">			final UGraphicG2d ug = new UGraphicG2d(back, ColorMapper.IDENTITY, stringBounder, g2d, 1.0, FileFormat.PNG);</span>
 <span class="nc" id="L122">			WasmLog.log(&quot;...cleaning...&quot;);</span>

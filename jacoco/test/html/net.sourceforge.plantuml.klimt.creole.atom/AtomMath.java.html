@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.creole.atom;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -56,61 +57,61 @@ public class AtomMath extends AbstractAtom implements Atom {
 	private final HColor foreground;
 	private final HColor background;
 
-<span class="nc" id="L59">	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background) {</span>
-<span class="nc" id="L60">		this.math = math;</span>
-<span class="nc" id="L61">		this.foreground = foreground;</span>
-<span class="nc" id="L62">		this.background = background;</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L60">	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background) {</span>
+<span class="nc" id="L61">		this.math = math;</span>
+<span class="nc" id="L62">		this.foreground = foreground;</span>
+<span class="nc" id="L63">		this.background = background;</span>
+<span class="nc" id="L64">	}</span>
 
 	private XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L67">			return stringBounder.calculateDimension(null, math.getSource());</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L68">			return stringBounder.calculateDimension(null, math.getSource());</span>
 		}
-<span class="nc" id="L69">		final PortableImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();</span>
-<span class="nc" id="L70">		return new XDimension2D(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L70">		final PortableImage image = math.getImage(XColor.BLACK, XColor.WHITE).withScale(1).getImage();</span>
+<span class="nc" id="L71">		return new XDimension2D(image.getWidth(), image.getHeight());</span>
 	}
 
 	private XDimension2D dim;
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (stringBounder instanceof StringBounderDebug) {</span>
-<span class="nc" id="L77">			return calculateDimensionSlow(stringBounder);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (stringBounder instanceof StringBounderDebug) {</span>
+<span class="nc" id="L78">			return calculateDimensionSlow(stringBounder);</span>
 		}
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (dim == null) {</span>
-<span class="nc" id="L80">			dim = calculateDimensionSlow(stringBounder);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (dim == null) {</span>
+<span class="nc" id="L81">			dim = calculateDimensionSlow(stringBounder);</span>
 		}
-<span class="nc" id="L82">		return dim;</span>
+<span class="nc" id="L83">		return dim;</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L86">		return 0;</span>
+<span class="nc" id="L87">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L90">		final ColorMapper colorMapper = ug.getColorMapper();</span>
-<span class="nc" id="L91">		final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-		final Color back;
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (background == null)</span>
-<span class="nc" id="L94">			back = null;</span>
+<span class="nc" id="L91">		final ColorMapper colorMapper = ug.getColorMapper();</span>
+<span class="nc" id="L92">		final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
+		final XColor back;
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (background == null)</span>
+<span class="nc" id="L95">			back = null;</span>
 		else
-<span class="nc" id="L96">			back = getColor(colorMapper, background, Color.WHITE);</span>
+<span class="nc" id="L97">			back = getColor(colorMapper, background, XColor.WHITE);</span>
 
-<span class="nc" id="L98">		final Color fore = getColor(colorMapper, foreground, Color.BLACK);</span>
+<span class="nc" id="L99">		final XColor fore = getColor(colorMapper, foreground, XColor.BLACK);</span>
 		// final double dpiFactor = ug.dpiFactor();
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (isSvg) {</span>
-<span class="nc" id="L101">			final UImageSvg svg = math.getSvg(1, fore, back);</span>
-<span class="nc" id="L102">			ug.draw(svg);</span>
-<span class="nc" id="L103">		} else {</span>
-<span class="nc" id="L104">			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());</span>
-<span class="nc" id="L105">			ug.draw(image);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (isSvg) {</span>
+<span class="nc" id="L102">			final UImageSvg svg = math.getSvg(1, fore, back);</span>
+<span class="nc" id="L103">			ug.draw(svg);</span>
+<span class="nc" id="L104">		} else {</span>
+<span class="nc" id="L105">			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());</span>
+<span class="nc" id="L106">			ug.draw(image);</span>
 		}
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L108">	}</span>
 
-	private Color getColor(ColorMapper colorMapper, HColor color, Color defaultValue) {
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (color instanceof HColorSimple)</span>
-<span class="nc" id="L111">			return color.toColor(colorMapper);</span>
+	private XColor getColor(ColorMapper colorMapper, HColor color, XColor defaultValue) {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (color instanceof HColorSimple)</span>
+<span class="nc" id="L112">			return color.toColor(colorMapper);</span>
 
-<span class="nc" id="L113">		return defaultValue;</span>
+<span class="nc" id="L114">		return defaultValue;</span>
 
 	}
 }

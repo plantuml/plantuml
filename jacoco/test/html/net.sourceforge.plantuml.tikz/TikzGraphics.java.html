@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.tikz;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.awt.geom.PathIterator;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,6 +50,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.LatexManager;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.version.Version;
 	private final ColorMapper mapper;
 	private final String preamble;
 
-<span class="nc" id="L86">	private final Map&lt;Color, String&gt; colornames = new LinkedHashMap&lt;Color, String&gt;();</span>
+<span class="nc" id="L86">	private final Map&lt;XColor, String&gt; colornames = new LinkedHashMap&lt;XColor, String&gt;();</span>
 
 <span class="nc" id="L88">	public TikzGraphics(double scale, boolean withPreamble, ColorMapper mapper, Pragma pragma) {</span>
 <span class="nc" id="L89">		this.withPreamble = withPreamble;</span>
@@ -116,11 +116,11 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L116">	}</span>
 
 	private String getColorName(HColor hcolor) {
-<span class="nc" id="L119">		final Color color = hcolor.toColor(mapper);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (color.equals(Color.WHITE))</span>
+<span class="nc" id="L119">		final XColor color = hcolor.toColor(mapper);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (color.equals(XColor.WHITE))</span>
 <span class="nc" id="L121">			return &quot;white&quot;;</span>
 
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (color.equals(Color.BLACK))</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (color.equals(XColor.BLACK))</span>
 <span class="nc" id="L124">			return &quot;black&quot;;</span>
 
 <span class="nc" id="L126">		final String result = colornames.get(color);</span>
@@ -201,7 +201,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L201">			out(os, &quot;    }&quot;);</span>
 <span class="nc" id="L202">			out(os, &quot;}&quot;);</span>
 		}
-<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (Map.Entry&lt;Color, String&gt; ent : colornames.entrySet())</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (Map.Entry&lt;XColor, String&gt; ent : colornames.entrySet())</span>
 <span class="nc" id="L205">			out(os, definecolor(ent.getValue(), ent.getKey()));</span>
 
 <span class="nc bnc" id="L207" title="All 2 branches missed.">		if (scale != 1)</span>
@@ -250,9 +250,9 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L250">		}</span>
 <span class="nc" id="L251">	}</span>
 
-	private String definecolor(String name, Color color) {
+	private String definecolor(String name, XColor color) {
 <span class="nc bnc" id="L254" title="All 2 branches missed.">		if (color.getAlpha() == 0)</span>
-<span class="nc" id="L255">			color = Color.WHITE;</span>
+<span class="nc" id="L255">			color = XColor.WHITE;</span>
 <span class="nc" id="L256">		return &quot;\\definecolor{&quot; + name + &quot;}{RGB}{&quot; + color.getRed() + &quot;,&quot; + color.getGreen() + &quot;,&quot; + color.getBlue()</span>
 				+ &quot;}&quot;;
 	}
@@ -677,7 +677,7 @@ import net.sourceforge.plantuml.version.Version;
 	private void addColor(HColor hcolor) {
 <span class="nc bnc" id="L678" title="All 2 branches missed.">		if (hcolor == null)</span>
 <span class="nc" id="L679">			return;</span>
-<span class="nc" id="L680">		final Color color = hcolor.toColor(mapper);</span>
+<span class="nc" id="L680">		final XColor color = hcolor.toColor(mapper);</span>
 <span class="nc bnc" id="L681" title="All 2 branches missed.">		if (color == null)</span>
 <span class="nc" id="L682">			return;</span>
 

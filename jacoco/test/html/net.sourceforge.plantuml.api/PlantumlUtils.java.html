@@ -42,19 +42,20 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
 
 <span class="nc" id="L44">public class PlantumlUtils {</span>
+	// ::remove file when __TEAVM__
 
 	public static boolean hasCMapData(String uml) {
-<span class="nc" id="L47">		List&lt;BlockUml&gt; blocks = new SourceStringReader(uml).getBlocks();</span>
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (blocks.size() == 0) {</span>
-<span class="nc" id="L49">			uml = &quot;@startuml\n&quot; + uml + &quot;\n@enduml&quot;;</span>
-<span class="nc" id="L50">			blocks = new SourceStringReader(uml).getBlocks();</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">			if (blocks.size() == 0) {</span>
-<span class="nc" id="L52">				return false;</span>
+<span class="nc" id="L48">		List&lt;BlockUml&gt; blocks = new SourceStringReader(uml).getBlocks();</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (blocks.size() == 0) {</span>
+<span class="nc" id="L50">			uml = &quot;@startuml\n&quot; + uml + &quot;\n@enduml&quot;;</span>
+<span class="nc" id="L51">			blocks = new SourceStringReader(uml).getBlocks();</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">			if (blocks.size() == 0) {</span>
+<span class="nc" id="L53">				return false;</span>
 			}
 		}
-<span class="nc" id="L55">		final BlockUml block = blocks.get(0);</span>
-<span class="nc" id="L56">		final Diagram diagram = block.getDiagram();</span>
-<span class="nc" id="L57">		return diagram.hasUrl();</span>
+<span class="nc" id="L56">		final BlockUml block = blocks.get(0);</span>
+<span class="nc" id="L57">		final Diagram diagram = block.getDiagram();</span>
+<span class="nc" id="L58">		return diagram.hasUrl();</span>
 	}
 
 }
