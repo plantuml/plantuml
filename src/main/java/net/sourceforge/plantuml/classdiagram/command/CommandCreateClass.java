@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
@@ -78,6 +79,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf(1, "VISIBILITY",
+						"(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, //
 						"TYPE", "(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype|dataclass|record)"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -115,6 +119,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String typeString = StringUtils.goUpperCase(arg.get("TYPE", 0));
 		final LeafType type = LeafType.getLeafType(typeString);
+		final String visibilityString = arg.get("VISIBILITY", 0);
+		VisibilityModifier visibilityModifier = null;
+		if (visibilityString != null)
+			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + "FOO", false);
+
 		final String idShort = diagram.cleanId(arg.getLazzy("CODE", 0));
 		final String displayString = arg.getLazzy("DISPLAY", 0);
 		final String genericOption = arg.getLazzy("DISPLAY", 1);
@@ -143,6 +152,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			return check1;
 
 		diagram.setLastEntity(entity);
+		entity.setVisibilityModifier(visibilityModifier);
 		if (stereo != null) {
 			final Stereotype stereotype = Stereotype.build(stereo, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
