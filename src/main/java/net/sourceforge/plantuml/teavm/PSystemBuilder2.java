@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
+import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -63,6 +64,7 @@ public class PSystemBuilder2 {
 	public PSystemBuilder2() {
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
+		factories.add(new ClassDiagramFactory());
 		// factories.add(new PSystemVersionFactory());
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
@@ -120,7 +122,7 @@ public class PSystemBuilder2 {
 	public static void main(String[] args) {
 		System.err.println("Hello!");
 
-		final String source[] = new String[] { "@startuml", "Alice->Bob: hello", "@enduml" };
+		final String source[] = new String[] { "@startuml", "class A", "class B extends A", "@enduml" };
 
 		final Diagram diagram = new PSystemBuilder2().createDiagram(source);
 
