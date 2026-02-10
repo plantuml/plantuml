@@ -7,11 +7,13 @@
 
 import java.time.LocalDateTime
 import java.util.jar.JarFile
+import java.util.Base64
+import org.gradle.api.tasks.Sync
 
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
 
 plugins {
 	java
@@ -33,7 +35,20 @@ java {
 	}
 }
 
+sourceSets {
+	create("teavm") {
+		java.srcDir(layout.buildDirectory.dir("generated/teavm-sjpp"))
+		// If resources are needed at TeaVM runtime, you can also add them:
+		resources.srcDir("src/main/resources")
+		compileClasspath += sourceSets.main.get().compileClasspath
+		runtimeClasspath += sourceSets.main.get().runtimeClasspath
+	}
+}
+
 val jdependConfig by configurations.creating
+val teavmConfig by configurations.creating
+val teavmVersion = "0.13.0"
+
 
 dependencies {
 	compileOnly(libs.ant)
@@ -60,6 +75,12 @@ dependencies {
 	// JDepend for package metrics
 	jdependConfig(libs.jdepend)
 
+	// TeaVM CLI for compilation (contains the main class)
+    teavmConfig("org.teavm:teavm-cli:$teavmVersion")
+	
+	// TeaVM dependencies for Java to JavaScript compilation
+    compileOnly("org.teavm:teavm-jso-apis:$teavmVersion")
+    compileOnly("org.teavm:teavm-jso:$teavmVersion")
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -74,11 +95,12 @@ repositories {
 }
 
 tasks.compileJava {
-	if (JavaVersion.current().isJava8) {
-		java.targetCompatibility = JavaVersion.VERSION_1_8
-	} else {
-		options.release.set(Integer.parseInt(javacRelease))
-	}
+	options.release.set(Integer.parseInt(javacRelease))
+}
+
+tasks.named<JavaCompile>("compileTeavmJava") {
+	options.release.set(Integer.parseInt(javacRelease))
+	dependsOn("preprocessForTeaVM")
 }
 
 tasks.withType<Jar>().configureEach {
@@ -419,5 +441,151 @@ tasks.register("site") {
 		println("  - Code Coverage Report (JaCoCo)")
 		println("  - Package Dependencies (JDepend)")
 		println("========================================")
+	}
+}
+
+// ============================================
+// TeaVM Configuration - Java to JavaScript
+// ============================================
+
+// Sync sources for TeaVM preprocessing
+val syncSourcesForTeaVM by tasks.registering(Sync::class) {
+	from(rootProject.layout.projectDirectory.dir("src/main/java"))
+	into(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
+}
+
+// Preprocess sources with SJPP for TeaVM
+val preprocessForTeaVM by tasks.registering {
+	dependsOn(syncSourcesForTeaVM)
+
+	inputs.dir(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
+	outputs.dir(layout.buildDirectory.dir("generated/teavm-sjpp"))
+
+	doLast {
+		ant.withGroovyBuilder {
+			"taskdef"(
+				"name" to "sjpp",
+				"classname" to "sjpp.SjppAntTask",
+				"classpath" to rootProject.layout.projectDirectory.files("sjpp.jar").asPath
+			)
+			"sjpp"(
+				"src" to layout.buildDirectory.dir("sources/teavm-sjpp/java").get().asFile.absolutePath,
+				"dest" to layout.buildDirectory.dir("generated/teavm-sjpp").get().asFile.absolutePath,
+				"define" to "__TEAVM__"
+			)
+		}
+	}
+}
+
+// Generate embedded resources for TeaVM (Base64 encoded)
+val generateTeavmEmbeddedResources by tasks.registering {
+	dependsOn(preprocessForTeaVM)
+
+	val outDir = layout.buildDirectory.dir("generated/teavm-sjpp/net/sourceforge/plantuml/teavm")
+	inputs.file("src/main/resources/skin/plantuml.skin")
+	outputs.dir(outDir)
+
+	doLast {
+		val skinFile = file("src/main/resources/skin/plantuml.skin")
+		val bytes = skinFile.readBytes()
+		val b64 = Base64.getEncoder().encodeToString(bytes)
+
+		// Split into lines to avoid a giant single line
+		val chunks = b64.chunked(120).joinToString(separator = "\" +\n            \"", prefix = "\"", postfix = "\"")
+
+		val target = outDir.get().file("EmbeddedResources.java").asFile
+		target.parentFile.mkdirs()
+		target.writeText(
+			"""
+			package net.sourceforge.plantuml.teavm;
+
+			import java.io.ByteArrayInputStream;
+			import java.io.InputStream;
+			import java.util.Base64;
+
+			public final class EmbeddedResources {
+				private EmbeddedResources() {
+				}
+
+				private static final String PLANTUML_SKIN_B64 =
+						$chunks;
+
+				public static InputStream openPlantumlSkin() {
+					byte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);
+					return new ByteArrayInputStream(data);
+				}
+			}
+			""".trimIndent(),
+			Charsets.UTF_8
+		)
+	}
+}
+
+tasks.named<JavaCompile>("compileTeavmJava") {
+	dependsOn(generateTeavmEmbeddedResources)
+}
+
+// Task to compile Java to JavaScript using TeaVM
+tasks.register<JavaExec>("generateJavaScript") {
+	description = "Compiles Java to JavaScript using TeaVM"
+	group = "teavm"
+	
+	// 1) preprocess -> 2) compile the preprocessed sources -> 3) TeaVM
+	dependsOn(preprocessForTeaVM)
+	dependsOn(tasks.named("compileTeavmJava"))
+	
+	mainClass.set("org.teavm.cli.TeaVMRunner")
+	
+	// TeaVMRunner + compiled classes from the teavm sourceSet
+	classpath = teavmConfig + sourceSets["teavm"].output
+	
+	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
+	
+	args(
+		"-d", outputDir.absolutePath,
+		"-t", "javascript",
+		"-G",  // Generate source maps
+		"-g",  // Generate debug information
+		"net.sourceforge.plantuml.teavm.demo.Demo4"  // Main class as positional argument
+	)
+	
+	doFirst {
+		outputDir.mkdirs()
+		println("Compiling Java to JavaScript with TeaVM (preprocessed __TEAVM__) ...")
+		println("Output directory: ${outputDir.absolutePath}")
+	}
+	
+	doLast {
+		println("JavaScript generation complete!")
+	}
+}
+
+// Custom task to prepare TeaVM demo with HTML file
+tasks.register<Copy>("prepareTeaVMDemo") {
+	description = "Prepares TeaVM Hello World demo with HTML file"
+	group = "teavm"
+	
+	dependsOn("generateJavaScript")
+	
+	// Copy the HTML template
+	from("src/main/teavm/index.html")
+	into(layout.buildDirectory.dir("teavm/js"))
+	
+	doLast {
+		val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
+		println("")
+		println("========================================")
+		println("TeaVM Hello World Demo Ready!")
+		println("========================================")
+		println("Location: ${outputDir.absolutePath}")
+		println("")
+		println("To view the demo:")
+		println("  1. Open: ${outputDir.absolutePath}/index.html")
+		println("  2. Or run a local server:")
+		println("     cd ${outputDir.absolutePath}")
+		println("     python -m http.server 8000")
+		println("     Then open: http://localhost:8000")
+		println("========================================")
+		println("")
 	}
 }
