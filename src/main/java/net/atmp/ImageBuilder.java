@@ -35,7 +35,7 @@
  */
 package net.atmp;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -351,7 +352,7 @@ public class ImageBuilder {
 		final int red = rnd.nextInt(40);
 		final int green = rnd.nextInt(40);
 		final int blue = rnd.nextInt(40);
-		final Color c = new Color(red, green, blue);
+		final XColor c = new XColor(red, green, blue);
 		final HColor color = HColors.simple(c);
 		ug2.apply(color).apply(color.bg()).draw(URectangle.build(1, 1));
 	}
@@ -451,14 +452,14 @@ public class ImageBuilder {
 
 	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, String watermark,
 			FileFormat format) {
-		Color pngBackColor = new Color(0, 0, 0, 0);
+		XColor pngBackColor = new XColor(0, 0, 0, 0);
 
 		if (this.backcolor instanceof HColorSimple)
 			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());
 
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT)
-				&& (Color.WHITE.equals(pngBackColor) || Color.BLACK.equals(pngBackColor)))
-			pngBackColor = new Color(0, 0, 0, 0);
+				&& (XColor.WHITE.equals(pngBackColor) || XColor.BLACK.equals(pngBackColor)))
+			pngBackColor = new XColor(0, 0, 0, 0);
 
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
 				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);

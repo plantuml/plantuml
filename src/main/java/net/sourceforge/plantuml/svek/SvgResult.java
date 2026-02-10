@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
@@ -76,17 +77,17 @@ public class SvgResult {
 	}
 
 	public int getIndexFromColor(int color) {
-		String s = "stroke=\"" + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + "\"";
+		String s = "stroke=\"" + StringUtils.goLowerCase(XColor.toHexRGBColor(color)) + "\"";
 		int idx = svg.indexOf(s);
 		if (idx != -1)
 			return idx;
 
-		s = ";stroke:" + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + ";";
+		s = ";stroke:" + StringUtils.goLowerCase(XColor.toHexRGBColor(color)) + ";";
 		idx = svg.indexOf(s);
 		if (idx != -1)
 			return idx;
 
-		s = "fill=\"" + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + "\"";
+		s = "fill=\"" + StringUtils.goLowerCase(XColor.toHexRGBColor(color)) + "\"";
 		idx = svg.indexOf(s);
 		if (idx != -1)
 			return idx;

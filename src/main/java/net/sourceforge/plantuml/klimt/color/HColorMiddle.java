@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class HColorMiddle extends HColor {
 	// ::remove file when __HAXE__
@@ -57,9 +57,9 @@ public class HColorMiddle extends HColor {
 	}
 
 	@Override
-	public Color toColor(ColorMapper mapper) {
-		final Color cc1 = color1.toColor(mapper);
-		final Color cc2 = color2.toColor(mapper);
+	public XColor toColor(ColorMapper mapper) {
+		final XColor cc1 = color1.toColor(mapper);
+		final XColor cc2 = color2.toColor(mapper);
 		final int r1 = cc1.getRed();
 		final int g1 = cc1.getGreen();
 		final int b1 = cc1.getBlue();
@@ -70,7 +70,7 @@ public class HColorMiddle extends HColor {
 		final int r = (r1 + r2) / 2;
 		final int g = (g1 + g2) / 2;
 		final int b = (b1 + b2) / 2;
-		return new Color(r, g, b);
+		return new XColor(r, g, b);
 	}
 
 }

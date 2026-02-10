@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -45,6 +45,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListener {
 
@@ -58,7 +60,7 @@ class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListene
 			setText("No picture found.");
 			setHorizontalAlignment(CENTER);
 			setOpaque(true);
-			setBackground(Color.white);
+			setBackground(XColor.WHITE.toAwtColor());
 		}
 		maxUnitIncrement = m;
 

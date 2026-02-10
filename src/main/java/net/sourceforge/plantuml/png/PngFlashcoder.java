@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.png;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class PngFlashcoder {
 	// ::remove file when __CORE__ or __TEAVM__
@@ -51,7 +52,7 @@ public class PngFlashcoder {
 		this.flashcodes = flashcodes;
 	}
 
-	public BufferedImage processImage(BufferedImage im, Color background) {
+	public BufferedImage processImage(BufferedImage im, XColor background) {
 		if (flashcodes != null) {
 			im = addImage(im, background);
 		}
@@ -59,7 +60,7 @@ public class PngFlashcoder {
 
 	}
 
-	private BufferedImage addImage(BufferedImage im, Color background) {
+	private BufferedImage addImage(BufferedImage im, XColor background) {
 
 		final double width = Math.max(im.getWidth(), getWidth(flashcodes));
 		final double height = im.getHeight() + getHeight(flashcodes);
@@ -68,7 +69,7 @@ public class PngFlashcoder {
 		final Graphics2D g2d = newIm.createGraphics();
 
 		UAntiAliasing.ANTI_ALIASING_OFF.apply(g2d);
-		g2d.setColor(background);
+		g2d.setColor(background.toAwtColor());
 		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());
 		g2d.drawImage(im, null, 0, 0);
 		int x = 0;

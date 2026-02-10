@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
 
 public class PlantumlUtils {
+	// ::remove file when __TEAVM__
 
 	public static boolean hasCMapData(String uml) {
 		List<BlockUml> blocks = new SourceStringReader(uml).getBlocks();

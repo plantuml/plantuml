@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -56,8 +57,8 @@ public class PSystemMath extends AbstractPSystem {
 
 	private String math = "";
 	private float scale = 1;
-	private Color color = Color.BLACK;
-	private Color backColor = Color.WHITE;
+	private XColor color = XColor.BLACK;
+	private XColor backColor = XColor.WHITE;
 
 	public PSystemMath(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
@@ -79,12 +80,12 @@ public class PSystemMath extends AbstractPSystem {
 		final String colorParam = "color ";
 		final String backParam = "backgroundcolor ";
 		if (lineLower.startsWith(colorParam)) {
-			final Color col3 = getColor(line.substring(colorParam.length()));
+			final XColor col3 = getColor(line.substring(colorParam.length()));
 			if (col3 != null) {
 				color = col3;
 			}
 		} else if (lineLower.startsWith(backParam)) {
-			final Color col3 = getColor(line.substring(backParam.length()));
+			final XColor col3 = getColor(line.substring(backParam.length()));
 			if (col3 != null) {
 				backColor = col3;
 			}
@@ -114,9 +115,9 @@ public class PSystemMath extends AbstractPSystem {
 		}
 	}
 
-	private Color getColor(final String col) {
+	private XColor getColor(final String col) {
 		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);
-		final Color col3 = col2.toColor(ColorMapper.IDENTITY);
+		final XColor col3 = col2.toColor(ColorMapper.IDENTITY);
 		return col3;
 	}
 

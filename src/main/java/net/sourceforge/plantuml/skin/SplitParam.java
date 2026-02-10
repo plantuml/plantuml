@@ -35,8 +35,9 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Color;
 
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 
@@ -67,14 +68,14 @@ public class SplitParam {
 		return externalMargin;
 	}
 
-	public Color getBorderColor() {
+	public XColor getBorderColor() {
 		if (borderColor == null)
 			return null;
 
 		return ((HColorSimple) borderColor).getAwtColor();
 	}
 
-	public Color getExternalColor() {
+	public XColor getExternalColor() {
 		if (externalColor == null)
 			return null;
 

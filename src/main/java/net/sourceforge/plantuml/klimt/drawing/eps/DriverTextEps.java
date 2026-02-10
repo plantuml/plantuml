@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import java.awt.Color;
+
 import java.awt.Shape;
 import java.awt.font.TextLayout;
 import java.awt.geom.PathIterator;
@@ -44,6 +44,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -82,7 +83,7 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		MinMax dim = null;
 
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);
+			final XColor extended = fontConfiguration.getExtendedColor().toColor(mapper);
 			if (extended != null) {
 				eps.setStrokeColor(extended);
 				eps.setFillColor(extended);

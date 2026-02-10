@@ -97,30 +97,30 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 			final GradientPaint paint;
 			if (policy == '|') {
 				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
-						gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
-						gr.getColor2().toColor(mapper));
+						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
+						gr.getColor2().toColor(mapper).toAwtColor());
 			} else if (policy == '\\') {
 				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),
-						gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMinY(),
-						gr.getColor2().toColor(mapper));
+						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMinY(),
+						gr.getColor2().toColor(mapper).toAwtColor());
 			} else if (policy == '-') {
 				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
-						gr.getColor1().toColor(mapper), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
-						gr.getColor2().toColor(mapper));
+						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
+						gr.getColor2().toColor(mapper).toAwtColor());
 			} else {
 				// for /
-				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper),
-						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper));
+				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),
+						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper).toAwtColor());
 			}
 			g2d.setPaint(paint);
 			g2d.fill(p);
 		} else if (back.isTransparent() == false) {
-			g2d.setColor(back.toColor(mapper));
+			g2d.setColor(back.toColor(mapper).toAwtColor());
 			g2d.fill(p);
 		}
 
 		if (color.isTransparent() == false && color.equals(back) == false) {
-			g2d.setColor(color.toColor(mapper));
+			g2d.setColor(color.toColor(mapper).toAwtColor());
 			g2d.draw(p);
 		}
 	}

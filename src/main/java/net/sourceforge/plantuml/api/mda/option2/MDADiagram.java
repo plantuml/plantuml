@@ -39,6 +39,6 @@ import java.util.Collection;
 
 public interface MDADiagram {
     // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 	public Collection<MDAPackage> getPackages();
 }

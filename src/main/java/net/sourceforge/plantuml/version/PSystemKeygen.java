@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -149,8 +150,8 @@ public class PSystemKeygen extends PlainDiagram {
 		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final PortableImage im = utils.exportFlashcode(
-				Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK,
-				Color.WHITE);
+				Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,
+				XColor.WHITE);
 		if (im != null) {
 			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);
 			ug.draw(flash);

@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.klimt.drawing.debug;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -48,6 +47,7 @@ import java.util.Locale;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorMiddle;
@@ -263,7 +263,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 		if (color instanceof HColorSimple) {
 			final HColorSimple simple = (HColorSimple) color;
-			final Color internal = simple.getAwtColor();
+			final XColor internal = simple.getAwtColor();
 
 			return Integer.toHexString(internal.getRGB());
 		}

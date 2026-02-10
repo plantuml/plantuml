@@ -35,13 +35,14 @@
  */
 package net.sourceforge.plantuml.flashcode;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class FlashCodeUtilsNone implements FlashCodeUtils {
 
-	public PortableImage exportFlashcode(String s, Color fore, Color back) {
+	public PortableImage exportFlashcode(String s, XColor fore, XColor back) {
 		return null;
 	}
 

@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
@@ -86,10 +87,10 @@ public final class DotStringFactory implements Moveable {
 
 	// ::uncomment when __TEAVM__
 //	public GraphvizVersion getGraphvizVersion() {
-//		throw new UnsupportedOperationException("TEAVM");
+//		throw new UnsupportedOperationException("TEAVM3");
 //	}
 //	public void moveDelta(double deltaX, double deltaY) {
-//	throw new UnsupportedOperationException("TEAVM");
+//	throw new UnsupportedOperationException("TEAVM4");
 //}
 	// ::done
 
@@ -608,7 +609,7 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	private int getClusterIndex(final String svg, int colorInt) {
-		final String colorString = StringUtils.goLowerCase(StringUtils.sharp000000(colorInt));
+		final String colorString = StringUtils.goLowerCase(XColor.toHexRGBColor(colorInt));
 		final String keyTitle1 = "=\"" + colorString + "\"";
 		int idx = svg.indexOf(keyTitle1);
 		if (idx == -1) {

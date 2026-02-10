@@ -25,11 +25,24 @@ public class XColor {
 		this.alpha = a & 0xFF;
 	}
 
-	public XColor(int rgb) {
-		this.alpha = (rgb >> 24) & 0xFF;
-		this.red = (rgb >> 16) & 0xFF;
-		this.green = (rgb >> 8) & 0xFF;
-		this.blue = rgb & 0xFF;
+	public static XColor from(int rgb) {
+		final int alpha = 255;
+		final int red = (rgb >> 16) & 0xFF;
+		final int green = (rgb >> 8) & 0xFF;
+		final int blue = rgb & 0xFF;
+		return new XColor(red, green, blue, alpha);
+	}
+
+	public static XColor fromFloat(float r, float g, float b, float a) {
+		if (!Float.isFinite(r) || !Float.isFinite(g) || !Float.isFinite(b) || !Float.isFinite(a) || r < 0.0f || r > 1.0f
+				|| g < 0.0f || g > 1.0f || b < 0.0f || b > 1.0f || a < 0.0f || a > 1.0f) {
+			throw new IllegalArgumentException();
+		}
+		final int red = Math.round(r * 255.0f) & 0xFF;
+		final int green = Math.round(g * 255.0f) & 0xFF;
+		final int blue = Math.round(b * 255.0f) & 0xFF;
+		final int alpha = Math.round(a * 255.0f) & 0xFF;
+		return new XColor(red, green, blue, alpha);
 	}
 
 	public int getAlpha() {
@@ -87,6 +100,20 @@ public class XColor {
 	@Override
 	public String toString() {
 		return "[r=" + red + ",g=" + green + ",b=" + blue + ",a=" + alpha + "]";
+	}
+
+	public String toSvg() {
+		if (alpha == 0)
+			return "#00000000";
+
+		if (alpha == 255)
+			return String.format("#%02X%02X%02X", red, green, blue);
+
+		return String.format("#%02X%02X%02X%02X", red, green, blue, alpha);
+	}
+
+	public static String toHexRGBColor(int rgb) {
+		return String.format("#%06X", rgb & 0xFFFFFF);
 	}
 
 }

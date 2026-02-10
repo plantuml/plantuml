@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -398,7 +399,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			sb.append("minlen=" + (length - 1));
 			sb.append(",");
 		}
-		sb.append("color=\"" + StringUtils.sharp000000(lineColor) + "\"");
+		sb.append("color=\"" + XColor.toHexRGBColor(lineColor) + "\"");
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
 			sb.append(",");
 			if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL
@@ -469,7 +470,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	public static void appendTable(StringBuilder sb, int w, int h, int col) {
 		sb.append("<TABLE ");
-		sb.append("BGCOLOR=\"" + StringUtils.sharp000000(col) + "\" ");
+		sb.append("BGCOLOR=\"" + XColor.toHexRGBColor(col) + "\" ");
 		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">");
 		sb.append("<TR");
 		sb.append(">");

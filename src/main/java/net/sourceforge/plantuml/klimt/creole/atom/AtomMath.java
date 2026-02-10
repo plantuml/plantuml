@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.creole.atom;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -66,7 +67,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 		if (stringBounder.matchesProperty("TIKZ")) {
 			return stringBounder.calculateDimension(null, math.getSource());
 		}
-		final PortableImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();
+		final PortableImage image = math.getImage(XColor.BLACK, XColor.WHITE).withScale(1).getImage();
 		return new XDimension2D(image.getWidth(), image.getHeight());
 	}
 
@@ -89,13 +90,13 @@ public class AtomMath extends AbstractAtom implements Atom {
 	public void drawU(UGraphic ug) {
 		final ColorMapper colorMapper = ug.getColorMapper();
 		final boolean isSvg = ug.matchesProperty("SVG");
-		final Color back;
+		final XColor back;
 		if (background == null)
 			back = null;
 		else
-			back = getColor(colorMapper, background, Color.WHITE);
+			back = getColor(colorMapper, background, XColor.WHITE);
 
-		final Color fore = getColor(colorMapper, foreground, Color.BLACK);
+		final XColor fore = getColor(colorMapper, foreground, XColor.BLACK);
 		// final double dpiFactor = ug.dpiFactor();
 		if (isSvg) {
 			final UImageSvg svg = math.getSvg(1, fore, back);
@@ -106,7 +107,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 		}
 	}
 
-	private Color getColor(ColorMapper colorMapper, HColor color, Color defaultValue) {
+	private XColor getColor(ColorMapper colorMapper, HColor color, XColor defaultValue) {
 		if (color instanceof HColorSimple)
 			return color.toColor(colorMapper);
 

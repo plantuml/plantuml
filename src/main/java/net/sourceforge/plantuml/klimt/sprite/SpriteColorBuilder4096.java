@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.Color;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class SpriteColorBuilder4096 {
 
@@ -55,7 +56,7 @@ public class SpriteColorBuilder4096 {
 					continue;
 				}
 				final String encodedColor = strings.get(line).toString().substring(col * 2, col * 2 + 2);
-				final Color rgb = COLOR_PALETTE.getColorFor(encodedColor);
+				final XColor rgb = COLOR_PALETTE.getColorFor(encodedColor);
 				result.setColor(col, line, rgb.getRGB() & 0xFFFFFF);
 			}
 		}
@@ -73,7 +74,7 @@ public class SpriteColorBuilder4096 {
 			final StringBuilder sb = new StringBuilder();
 			for (int x = 0; x < width; x++) {
 				final int rgb = (img.getRGB(x, y) & 0xFFFFFF);
-				final String encodedColor = COLOR_PALETTE.getStringFor(new Color(rgb));
+				final String encodedColor = COLOR_PALETTE.getStringFor(XColor.from(rgb));
 				sb.append(encodedColor);
 			}
 			result.add(sb.toString());

@@ -391,8 +391,8 @@ class SkinParamTest {
 				"pageMargin", "123");
 
 		final SplitParam splitParam = skinParam.getSplitParam();
-		assertThat(splitParam.getBorderColor()).isEqualTo(Color.RED);
-		assertThat(splitParam.getExternalColor()).isEqualTo(Color.YELLOW);
+		assertThat(splitParam.getBorderColor().toAwtColor()).isEqualTo(Color.RED);
+		assertThat(splitParam.getExternalColor().toAwtColor()).isEqualTo(Color.YELLOW);
 		assertThat(splitParam.getExternalMargin()).isEqualTo(123);
 	}
 

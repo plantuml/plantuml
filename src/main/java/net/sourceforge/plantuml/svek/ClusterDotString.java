@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.AlignmentParam;
@@ -114,7 +115,7 @@ public class ClusterDotString {
 
 		sb.append("subgraph " + cluster.getClusterId() + " {");
 		sb.append("style=solid;");
-		sb.append("color=\"" + StringUtils.sharp000000(cluster.getColor()) + "\";");
+		sb.append("color=\"" + XColor.toHexRGBColor(cluster.getColor()) + "\";");
 
 		final String label;
 		if (cluster.isLabel()) {

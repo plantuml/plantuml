@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.crash;
 
-import java.awt.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -76,7 +77,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		this.flash = flash;
 		// ::comment when __CORE__ or __TEAVM__
 		this.graphviz244onWindows = graphviz244onWindows;
-		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
+		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
 		// ::done
 		final ReportLog strings = new ReportLog();
 		init(strings, rootCause);

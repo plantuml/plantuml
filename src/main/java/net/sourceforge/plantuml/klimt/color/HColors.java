@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
@@ -119,7 +120,7 @@ public class HColors {
 
 	}
 
-	private static final HColorSimple TRANSPARENT = HColorSimple.create(new Color(0, 0, 0, 0));
+	private static final HColorSimple TRANSPARENT = HColorSimple.create(new XColor(0, 0, 0, 0));
 
 	public static HColor transparent() {
 		return TRANSPARENT;
@@ -172,7 +173,7 @@ public class HColors {
 		return new HColorGradient(color1, color2, policy);
 	}
 
-	public static HColor simple(Color c) {
+	public static HColor simple(XColor c) {
 		return HColorSimple.create(c);
 	}
 

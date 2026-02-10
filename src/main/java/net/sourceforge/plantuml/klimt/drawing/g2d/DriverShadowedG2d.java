@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -46,6 +46,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 
 public class DriverShadowedG2d {
@@ -63,8 +64,8 @@ public class DriverShadowedG2d {
 		return new ConvolveOp(myKernel, ConvolveOp.EDGE_NO_OP, null);
 	}
 
-	private final Color color = new Color(170, 170, 170);
-	private final Color colorLine = new Color(30, 30, 30);
+	private final XColor color = new XColor(170, 170, 170);
+	private final XColor colorLine = new XColor(30, 30, 30);
 
 	protected void drawShadow(Graphics2D g2d, Shape shape, double deltaShadow, double dpiFactor) {
 		if (dpiFactor < 1) {
@@ -84,10 +85,10 @@ public class DriverShadowedG2d {
 			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());
 			final boolean isLine = shape instanceof Line2D.Double;
 			if (isLine) {
-				gg.setColor(colorLine);
+				gg.setColor(colorLine.toAwtColor());
 				gg.draw(shape);
 			} else {
-				gg.setColor(color);
+				gg.setColor(color.toAwtColor());
 				gg.fill(shape);
 			}
 			gg.dispose();

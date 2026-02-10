@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.asciiart.Wcwidth;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -549,13 +550,6 @@ public class StringUtils {
 
 	private static boolean isSpaceOrTabOrNull(char c) {
 		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';
-	}
-
-	public static String sharp000000(int color) {
-		final int v = 0xFFFFFF & color;
-		String s = "000000" + Integer.toHexString(v).toUpperCase();
-		s = s.substring(s.length() - 6);
-		return "#" + s;
 	}
 
 	// ::comment when __CORE__ or __HAXE__ or __TEAVM__

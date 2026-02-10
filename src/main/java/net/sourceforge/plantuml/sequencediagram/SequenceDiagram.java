@@ -281,7 +281,6 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
-
 		// We reset the counter for messages
 		this.cpt.set(1);
 
@@ -494,17 +493,6 @@ public class SequenceDiagram extends UmlDiagram {
 	@Override
 	public int getNbImages() {
 		return countNewpage + 1;
-//		// ::comment when __CORE__
-//		try {
-//			// The DEBUG StringBounder is ok just to compute the number of pages here.
-//			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
-//		} catch (Throwable t) {
-//			Logme.error(t);
-//			// ::done
-//		return 1;
-//			// ::comment when __CORE__
-//		}
-//		// ::done
 	}
 
 	public void removeHiddenParticipants() {

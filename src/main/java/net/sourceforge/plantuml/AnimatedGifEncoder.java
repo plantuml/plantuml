@@ -35,12 +35,14 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 /**
  * Class AnimatedGifEncoder - Encodes a GIF file consisting of one or more
@@ -74,7 +76,7 @@ public class AnimatedGifEncoder {
 
 	protected int height;
 
-	protected Color transparent = null; // transparent color if given
+	protected XColor transparent = null; // transparent color if given
 
 	protected int transIndex; // transparent index in color table
 
@@ -155,7 +157,7 @@ public class AnimatedGifEncoder {
 	 * 
 	 * @param c Color to be treated as transparent on display.
 	 */
-	public void setTransparent(Color c) {
+	public void setTransparent(XColor c) {
 		transparent = c;
 	}
 
@@ -358,7 +360,7 @@ public class AnimatedGifEncoder {
 	 * Returns index of palette color closest to c
 	 * 
 	 */
-	protected int findClosest(Color c) {
+	protected int findClosest(XColor c) {
 		if (colorTab == null)
 			return -1;
 		int r = c.getRed();

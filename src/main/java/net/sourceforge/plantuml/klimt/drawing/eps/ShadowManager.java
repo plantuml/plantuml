@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class ShadowManager {
 
@@ -72,9 +72,9 @@ public class ShadowManager {
 		return result;
 	}
 
-	public Color getColor(double delta, double total) {
+	public XColor getColor(double delta, double total) {
 		final int c = (int) (c2 + 1.0 * delta / total * (c1 - c2));
-		return new Color(c, c, c);
+		return new XColor(c, c, c);
 	}
 
 }

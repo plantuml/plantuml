@@ -70,7 +70,7 @@ public class PSystemSudoku extends AbstractPSystem {
 		// ::done
 
 		// ::uncomment when __TEAVM__
-		// throw new UnsupportedOperationException("TEAVM");
+		// throw new UnsupportedOperationException("TEAVM2");
 		// ::done
 
 	}

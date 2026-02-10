@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.flashcode;
 
-import java.awt.Color;
+
 import java.util.Hashtable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 import zext.plantuml.com.google.zxing.BarcodeFormat;
 import zext.plantuml.com.google.zxing.EncodeHintType;
@@ -54,7 +55,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 	// ::remove file when __TEAVM__
 	private static final Lock lock = new ReentrantLock();
 
-	public PortableImage exportFlashcode(String s, Color fore, Color back) {
+	public PortableImage exportFlashcode(String s, XColor fore, XColor back) {
 		if (lock.tryLock())
 			try {
 				final QRCodeWriter writer = new QRCodeWriter();

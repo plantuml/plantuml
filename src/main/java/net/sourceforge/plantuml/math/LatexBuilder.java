@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -44,6 +44,7 @@ import javax.swing.Icon;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
@@ -61,13 +62,13 @@ public class LatexBuilder implements ScientificEquation {
 		return dimension;
 	}
 
-	private Icon buildIcon(Color foregroundColor)
+	private Icon buildIcon(XColor foregroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		return new TeXIconBuilder(tex, foregroundColor).getIcon();
 	}
 
-	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor)
+	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		final Icon icon = buildIcon(foregroundColor);
@@ -77,7 +78,7 @@ public class LatexBuilder implements ScientificEquation {
 		return new UImageSvg(svg, scale);
 	}
 
-	public MutableImage getImage(Color foregroundColor, Color backgroundColor)
+	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		final Icon icon = buildIcon(foregroundColor);
@@ -88,11 +89,11 @@ public class LatexBuilder implements ScientificEquation {
 
 		private final double scale;
 		private final Icon icon;
-		private final Color foregroundColor;
-		private final Color backgroundColor;
+		private final XColor foregroundColor;
+		private final XColor backgroundColor;
 		private PortableImage cache = null;
 
-		public LatexImage(Icon icon, double scale, Color foregroundColor, Color backgroundColor) {
+		public LatexImage(Icon icon, double scale, XColor foregroundColor, XColor backgroundColor) {
 			this.scale = scale;
 			this.foregroundColor = foregroundColor;
 			this.backgroundColor = backgroundColor;
@@ -107,7 +108,7 @@ public class LatexBuilder implements ScientificEquation {
 				final Graphics2D g2 = cache.createGraphics();
 				g2.scale(scale, scale);
 				if (backgroundColor != null) {
-					g2.setColor(backgroundColor);
+					g2.setColor(backgroundColor.toAwtColor());
 					g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
 				}
 				icon.paintIcon(null, g2, 0, 0);
@@ -120,12 +121,12 @@ public class LatexBuilder implements ScientificEquation {
 		}
 
 		@Override
-		public MutableImage muteColor(Color newColor) {
+		public MutableImage muteColor(XColor newColor) {
 			return this;
 		}
 
 		@Override
-		public MutableImage muteTransparentColor(Color newColor) {
+		public MutableImage muteTransparentColor(XColor newColor) {
 			return this;
 		}
 

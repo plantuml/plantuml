@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+
 import java.util.Collection;
 import java.util.Collections;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class HColorSet {
 
@@ -81,20 +83,20 @@ public class HColorSet {
 			return new HColorAutomagic();
 
 		if (s.equalsIgnoreCase("transparent"))
-			return HColors.simple(new Color(0, 0, 0, 0));
+			return HColors.simple(new XColor(0, 0, 0, 0));
 
-		final Color result = parseSimpleColor(s);
+		final XColor result = parseSimpleColor(s);
 		if (result != null)
 			return HColors.simple(result);
 
 		if (s.startsWith("?")) {
 			final String[] colors = s.substring(1).split(":");
 			if (colors.length == 2 || colors.length == 3) {
-				final Color col0 = parseSimpleColor(colors[0]);
-				final Color col1 = parseSimpleColor(colors[1]);
+				final XColor col0 = parseSimpleColor(colors[0]);
+				final XColor col1 = parseSimpleColor(colors[1]);
 				if (colors.length == 2 && col0 != null && col1 != null)
 					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), null);
-				final Color col2 = parseSimpleColor(colors[2]);
+				final XColor col2 = parseSimpleColor(colors[2]);
 				if (col2 != null)
 					return new HColorScheme(HColors.simple(col0), HColors.simple(col1), HColors.simple(col2));
 
@@ -104,8 +106,8 @@ public class HColorSet {
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
 			if (c == '-' || c == '\\' || c == '|' || c == '/') {
-				final Color col0 = parseSimpleColor(s.substring(0, i));
-				final Color col1 = parseSimpleColor(s.substring(i + 1));
+				final XColor col0 = parseSimpleColor(s.substring(0, i));
+				final XColor col1 = parseSimpleColor(s.substring(i + 1));
 				if (col0 != null && col1 != null)
 					return HColors.gradient(HColors.simple(col0), HColors.simple(col1), c);
 			}
@@ -114,7 +116,7 @@ public class HColorSet {
 		return null;
 	}
 
-	private Color parseSimpleColor(String s) {
+	private XColor parseSimpleColor(String s) {
 		if (s.startsWith("#"))
 			s = s.substring(1);
 		final int len = s.length();
@@ -124,7 +126,7 @@ public class HColorSet {
 			if (d >= 0) {
 				final int v = (d << 4) | d;
 				final int rgb = (v << 16) | (v << 8) | v;
-				return new Color(rgb);
+				return XColor.from(rgb);
 			}
 		} else if (len == 3) {
 			final int r = hexNibble(s.charAt(0));
@@ -134,13 +136,12 @@ public class HColorSet {
 				final int rr = (r << 4) | r;
 				final int gg = (g << 4) | g;
 				final int bb = (b << 4) | b;
-				final int rgb = (rr << 16) | (gg << 8) | bb;
-				return new Color(rgb);
+				return new XColor(rr, gg, bb);
 			}
 		} else if (len == 6) {
 			final int rgb = parseHex24(s, 0);
 			if (rgb >= 0)
-				return new Color(0xFF000000 | rgb);
+				return XColor.from(0xFF000000 | rgb);
 		} else if (len == 8) {
 			// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
 			final int r = parseHexByte(s, 0);
@@ -148,7 +149,7 @@ public class HColorSet {
 			final int b = parseHexByte(s, 4);
 			final int a = parseHexByte(s, 6);
 			if (r >= 0 && g >= 0 && b >= 0 && a >= 0)
-				return new Color(r, g, b, a);
+				return new XColor(r, g, b, a);
 		}
 		return ColorTrieNode.INSTANCE.getColor(s);
 	}

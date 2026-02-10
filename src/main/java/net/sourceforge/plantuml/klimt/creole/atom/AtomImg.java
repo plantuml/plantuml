@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.creole.atom;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.io.IOException;
 
 import net.atmp.PixelImage;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -86,7 +86,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 	public static Atom createQrcode(String flash, double scale) {
 		PortableImage im = null;
 		// :: comment when __CORE__ or __TEAVM__
-		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
+		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
 		if (im == null)
 			// ::done
 			im = new PortableImage(10, 10, PortableImage.TYPE_INT_RGB);
