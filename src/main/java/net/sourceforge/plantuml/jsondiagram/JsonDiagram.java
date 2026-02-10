@@ -52,13 +52,12 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -124,7 +123,7 @@ public class JsonDiagram extends TitledDiagram {
 		if (root == null) {
 			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),
 					"Your data does not sound like " + getUmlDiagramType() + " data");
-			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
+			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));
 			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());
 			result = TextBlockUtils.withMargin(result, 5, 2);
 			result.drawU(ug);

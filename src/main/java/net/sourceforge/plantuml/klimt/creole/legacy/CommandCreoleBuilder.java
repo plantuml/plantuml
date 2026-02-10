@@ -106,7 +106,7 @@ public class CommandCreoleBuilder {
 		addCommand(CommandCreoleQrcode.create());
 		addCommand(CommandCreoleOpenIcon.create());
 		addCommand(CommandCreoleEmoji.create());
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		addCommand(CommandCreoleMath.create());
 		addCommand(CommandCreoleLatex.create());
 		// ::done
@@ -116,7 +116,7 @@ public class CommandCreoleBuilder {
 		addCommand(CommandCreoleFontFamilyChange.createEol());
 		addCommand(CommandCreoleMonospaced.create());
 		addCommand(CommandCreoleUrl.create());
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (SecurityUtils.allowSvgText())
 			addCommand(CommandCreoleSvgAttributeChange.create());
 		// ::done

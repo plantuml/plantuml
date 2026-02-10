@@ -52,18 +52,27 @@ import net.sourceforge.plantuml.security.SURL;
 public class PathSystem {
 
 	public static PathSystem fetch() {
+		// ::revert when __TEAVM__
 		return new PathSystem(new NFolderRegular(Paths.get("")));
+		// return new PathSystem();
+		// ::done
 	}
 
+	// ::uncomment when __TEAVM__
+//	public PathSystem changeCurrentDirectory(Object... foo) {
+//		return this;
+//	}
+//	public PathSystem withCurrentDir(Object... foo) {
+//		return this;
+//	}
+	// ::done
+
+	// ::comment when __TEAVM__
 	private final NFolder currentFolder;
 
 	private PathSystem(NFolder currentFolder) {
 		this.currentFolder = Objects.requireNonNull(currentFolder);
 	}
-
-//	public Path asPath() {
-//		return currentFolder;
-//	}
 
 	public PathSystem changeCurrentDirectory(Path newCurrentDir) throws IOException {
 		if (newCurrentDir == null)
@@ -147,5 +156,6 @@ public class PathSystem {
 		// Nothing right now
 
 	}
+	// ::done
 
 }

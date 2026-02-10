@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 
 public class Colors {
 	// ::remove file when __HAXE__
@@ -73,6 +75,18 @@ public class Colors {
 		final Colors result = new Colors();
 		result.map.putAll(this.map);
 		result.lineStyle = this.lineStyle;
+		return result;
+	}
+
+	public Colors mergeWith(Colors other) {
+		if (other == null)
+			return this;
+
+		final Colors result = copy();
+		result.map.putAll(other.map);
+		if (other.lineStyle != null)
+			result.lineStyle = other.lineStyle;
+
 		return result;
 	}
 
@@ -203,6 +217,21 @@ public class Colors {
 			return stroke;
 
 		return lineStyle.muteStroke(stroke);
+	}
+
+	public HColor getColor(Style style, PName name, HColorSet colorSet) {
+		if (name == PName.BackGroundColor) {
+			final HColor color = map.get(ColorType.BACK);
+			if (color != null)
+				return color;
+		}
+		if (name == PName.LineColor) {
+			final HColor color = map.get(ColorType.LINE);
+			if (color != null)
+				return color;
+		}
+		return style.value(name).asColor(colorSet);
+
 	}
 
 }

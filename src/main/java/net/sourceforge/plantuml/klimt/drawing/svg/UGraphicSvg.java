@@ -36,13 +36,12 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
 import javax.xml.transform.TransformerException;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UGroup;
-import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;

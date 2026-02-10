@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.png.MetadataTag;
@@ -69,7 +70,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
  */
 public enum FileFormat {
 	// ::remove file when __HAXE__
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	EPS("eps", "application/postscript"), //
 	EPS_TEXT("eps-text", "application/postscript"), //
 	ATXT("txt", "text/plain"), //
@@ -89,10 +90,10 @@ public enum FileFormat {
 	LATEX_NO_PREAMBLE("eps-no-preamble", "application/x-latex"), //
 	BASE64("base64", "text/plain; charset=x-user-defined"), //
 	BRAILLE_PNG("braille-png", "image/png"), //
-	PREPROC("preproc", "text/plain"), //
 	OBFUSCATE("obfuscate", "text/plain"), //
 	DEBUG("debug", "text/plain"), //
 	// ::done
+	PREPROC("preproc", "text/plain"), //
 	PNG("png", "image/png"), //
 	PNG_EMPTY("png-empty", "image/png"), //
 	RAW("raw", "image/raw"), //
@@ -127,7 +128,7 @@ public enum FileFormat {
 	 * @return a string starting by a point.
 	 */
 	public String getFileSuffix() {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (name().startsWith("XMI_CUSTOM"))
 			return ".xmi_custom";
 
@@ -147,19 +148,21 @@ public enum FileFormat {
 		return "." + StringUtils.goLowerCase(name());
 	}
 
+	// ::comment when __TEAVM__
 	final static private BufferedImage imDummy = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 	final static public Graphics2D gg = imDummy.createGraphics();
 	static {
 		gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		gg.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 	}
+	// ::done
 
 	public StringBounder getDefaultStringBounder() {
 		return getDefaultStringBounder(TikzFontDistortion.getDefault(), SvgCharSizeHack.NO_HACK);
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (this == LATEX || this == LATEX_NO_PREAMBLE)
 			return getTikzStringBounder(tikzFontDistortion);
 
@@ -168,12 +171,70 @@ public enum FileFormat {
 
 		if (this == DEBUG)
 			return new StringBounderDebug();
-		// ::done
 
 		if (this == SVG)
 			return getSvgStringBounder(charSizeHack);
+		// ::done
 
 		return getNormalStringBounder();
+	}
+
+	// ::uncomment when __TEAVM__
+//	private StringBounder getNormalStringBounder() {
+//		throw new UnsupportedOperationException("TEAVM");
+//	}
+	// ::done
+
+	private static final int CACHE_SIZE = 10_000;
+
+	private static final Map<FontTextKey, XDimension2D> DIMENSION_CACHE = new LinkedHashMap<FontTextKey, XDimension2D>(
+			CACHE_SIZE, 0.75f, true) {
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<FontTextKey, XDimension2D> eldest) {
+			return size() > CACHE_SIZE;
+		}
+	};
+
+	private static class FontTextKey {
+		private final UFont font;
+		private final String text;
+
+		FontTextKey(UFont font, String text) {
+			this.font = font;
+			this.text = text;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			final FontTextKey other = (FontTextKey) obj;
+			return font.equals(other.font) && text.equals(other.text);
+		}
+
+		@Override
+		public int hashCode() {
+			return font.hashCode() * 31 + text.hashCode();
+		}
+	}
+
+	// ::comment when __CORE__ or __TEAVM__
+	static private XDimension2D getJavaDimension(UFont font, String text) {
+		if (text.length() == 0)
+			return new XDimension2D(0, 0);
+
+		final FontTextKey key = new FontTextKey(font, text);
+
+		synchronized (DIMENSION_CACHE) {
+			XDimension2D cached = DIMENSION_CACHE.get(key);
+			if (cached != null)
+				return cached;
+
+			final Font javaFont = UFontImpl.getUnderlayingFont(font, text);
+			final FontMetrics fm = gg.getFontMetrics(javaFont);
+			final Rectangle2D rect = fm.getStringBounds(text, gg);
+			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());
+			DIMENSION_CACHE.put(key, result);
+			return result;
+		}
 	}
 
 	private StringBounder getSvgStringBounder(final SvgCharSizeHack charSizeHack) {
@@ -211,58 +272,6 @@ public enum FileFormat {
 		};
 	}
 
-	private static final int CACHE_SIZE = 10_000;
-
-	private static final Map<FontTextKey, XDimension2D> DIMENSION_CACHE = new LinkedHashMap<FontTextKey, XDimension2D>(
-			CACHE_SIZE, 0.75f, true) {
-		@Override
-		protected boolean removeEldestEntry(Map.Entry<FontTextKey, XDimension2D> eldest) {
-			return size() > CACHE_SIZE;
-		}
-	};
-
-	private static class FontTextKey {
-		private final UFont font;
-		private final String text;
-
-		FontTextKey(UFont font, String text) {
-			this.font = font;
-			this.text = text;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			final FontTextKey other = (FontTextKey) obj;
-			return font.equals(other.font) && text.equals(other.text);
-		}
-
-		@Override
-		public int hashCode() {
-			return font.hashCode() * 31 + text.hashCode();
-		}
-	}
-
-	static private XDimension2D getJavaDimension(UFont font, String text) {
-		if (text.length() == 0)
-			return new XDimension2D(0, 0);
-
-		final FontTextKey key = new FontTextKey(font, text);
-
-		synchronized (DIMENSION_CACHE) {
-			XDimension2D cached = DIMENSION_CACHE.get(key);
-			if (cached != null)
-				return cached;
-
-			final Font javaFont = font.getUnderlayingFont(text);
-			final FontMetrics fm = gg.getFontMetrics(javaFont);
-			final Rectangle2D rect = fm.getStringBounds(text, gg);
-			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());
-			DIMENSION_CACHE.put(key, result);
-			return result;
-		}
-	}
-
-	// ::comment when __CORE__
 	private StringBounder getBrailleStringBounder() {
 		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {
@@ -367,14 +376,6 @@ public enum FileFormat {
 				+ String.format("%03d", cpt) + getFileSuffix());
 	}
 
-//	private SFile computeFilename(SFile pngFile, int i) {
-//		if (i == 0)
-//			return pngFile;
-//
-//		final SFile dir = pngFile.getParentFile();
-//		return dir.file(computeFilenameInternal(pngFile.getName(), i));
-//	}
-
 	private String changeName(String fileName, String replacement) {
 		String result = fileName.replaceAll("\\.\\w+$", replacement);
 		if (result.equals(fileName))
@@ -382,14 +383,6 @@ public enum FileFormat {
 
 		return result;
 	}
-
-//	private String computeFilenameInternal(String name, int i) {
-//		if (i == 0)
-//			return name;
-//
-//		return name.replaceAll("\\" + getFileSuffix() + "$",
-//				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", i) + getFileSuffix());
-//	}
 
 	public boolean doesSupportMetadata() {
 		return this == PNG || this == SVG;

@@ -42,7 +42,7 @@ class RunSyntaxErrorTest extends AbstractCliTest {
 	void testSvg(StdErr err) throws Exception {
 		Path file = syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-svg", file.toAbsolutePath().toString() });
 		});
 		assertTrue(err.capturedString().contains("Error line 2 in file"));

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -53,7 +55,7 @@ import net.sourceforge.plantuml.project.core.GArrowType;
 import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -70,23 +72,23 @@ public class TaskDrawSeparator implements TaskDraw {
 
 	private final TimeScale timeScale;
 	private Real y;
-	private final Day min;
-	private final Day max;
+	private final LocalDate minDay;
+	private final LocalDate maxDay;
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
 	private final ISkinParam skinParam;
 
-	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, Day min, Day max, StyleBuilder styleBuilder,
-			ISkinParam skinParam) {
+	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, LocalDate minDay, LocalDate maxDay,
+			StyleBuilder styleBuilder, ISkinParam skinParam) {
 		this.styleBuilder = styleBuilder;
 		this.skinParam = skinParam;
 		this.colorSet = skinParam.getIHtmlColorSet();
 		this.name = name;
 		this.y = y;
 		this.timeScale = timeScale;
-		this.min = min;
-		this.max = max;
+		this.minDay = minDay;
+		this.maxDay = maxDay;
 	}
 
 	@Override
@@ -134,9 +136,9 @@ public class TaskDrawSeparator implements TaskDraw {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();
-		final double start = timeScale.getStartingPosition(min);
+		final double start = timeScale.getPosition(TimePoint.ofStartOfDay(minDay));
 		// final double start2 = start1 + widthTitle;
-		final double end = timeScale.getEndingPosition(max);
+		final double end = timeScale.getPosition(TimePoint.ofStartOfDay(maxDay.plusDays(1)));
 
 		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
 		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
@@ -174,7 +176,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
-		final double end = timeScale.getEndingPosition(max);
+		final double end = timeScale.getPosition(TimePoint.ofStartOfDay(maxDay.plusDays(1)));
 		return new FingerPrint(0, getY(stringBounder).getCurrentValue(), end,
 				getY(stringBounder).getCurrentValue() + h);
 	}

@@ -172,7 +172,7 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
 
-		final String urlString = arg.get("URL", 0);
+		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);

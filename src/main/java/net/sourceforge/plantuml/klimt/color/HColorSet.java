@@ -140,7 +140,7 @@ public class HColorSet {
 		} else if (len == 6) {
 			final int rgb = parseHex24(s, 0);
 			if (rgb >= 0)
-				return new Color(rgb);
+				return new Color(0xFF000000 | rgb);
 		} else if (len == 8) {
 			// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
 			final int r = parseHexByte(s, 0);

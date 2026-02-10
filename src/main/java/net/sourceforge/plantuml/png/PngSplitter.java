@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.file.SuggestedFile;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -50,7 +51,7 @@ import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSplitter {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final List<SFile> files = new ArrayList<>();
 
@@ -74,7 +75,7 @@ public class PngSplitter {
 		}
 
 		// Thread.yield();
-		final BufferedImage im = SImageIO.read(full);
+		final PortableImage im = SImageIO.read(full);
 		// Thread.yield();
 		final PngSegment horizontalSegment = new PngSegment(im.getWidth(), horizontalPages);
 		final PngSegment verticalSegment = new PngSegment(im.getHeight(), verticalPages);
@@ -86,17 +87,18 @@ public class PngSplitter {
 				this.files.add(f);
 				final int width = horizontalSegment.getLen(i);
 				final int height = verticalSegment.getLen(j);
-				BufferedImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,
+				PortableImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,
 						height);
 				if (splitParam.isSet()) {
-					BufferedImage withMargin = new BufferedImage(width + 2 * splitParam.getExternalMargin(),
+					PortableImage withMargin = new PortableImage(width + 2 * splitParam.getExternalMargin(),
 							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);
 					final Graphics2D g2d = withMargin.createGraphics();
 					if (splitParam.getExternalColor() != null) {
 						g2d.setColor(splitParam.getExternalColor());
 						g2d.fillRect(0, 0, withMargin.getWidth(), withMargin.getHeight());
 					}
-					g2d.drawImage(piece, splitParam.getExternalMargin(), splitParam.getExternalMargin(), null);
+					g2d.drawImage(piece.getBufferedImage(), splitParam.getExternalMargin(),
+							splitParam.getExternalMargin(), null);
 
 					if (splitParam.getBorderColor() != null) {
 						g2d.setColor(splitParam.getBorderColor());

@@ -189,6 +189,7 @@ public class SvgPath {
 		return result;
 	}
 
+	// ::comment when __TEAVM__
 	private UPath toUPath(AffineTransform at) {
 		UPath result = UPath.none();
 		Movement previous = null;
@@ -241,13 +242,16 @@ public class SvgPath {
 		return result;
 	}
 
+	public void drawMe(UGraphic ug, AffineTransform at) {
+		final UPath path = toUPath(at);
+		ug.draw(path);
+	}
+
+	// ::done
+
 	public void drawMe(UGraphic ug, double factor) {
 		final UPath path = toUPath(factor, factor);
 		ug.draw(path);
 	}
 
-	public void drawMe(UGraphic ug, AffineTransform at) {
-		final UPath path = toUPath(at);
-		ug.draw(path);
-	}
 }

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.security;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -70,11 +69,12 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-//::uncomment when __CORE__
+//::uncomment when __CORE__ or __TEAVM__
 //import net.sourceforge.plantuml.FileUtils;
 //::done
 
@@ -164,7 +164,7 @@ public class SURL {
 		if (url == null)
 			throw new MalformedURLException("URL cannot be null");
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		final String credentialId = url.getUserInfo();
 
 		if (credentialId == null || credentialId.indexOf(':') > 0)
@@ -179,7 +179,7 @@ public class SURL {
 			return new SURL(url, WITHOUT_AUTHENTICATION);
 	}
 
-	// ::uncomment when __CORE__
+	// ::uncomment when __CORE__ or __TEAVM__
 //	public InputStream openStream() {
 //	try {
 //		return internal.openStream();
@@ -202,7 +202,7 @@ public class SURL {
 //}
 	// ::done
 
-	public BufferedImage readRasterImageFromURL() {
+	public PortableImage readRasterImageFromURL() {
 		if (isUrlOk())
 			try {
 				final byte[] bytes = getBytes();
@@ -220,7 +220,7 @@ public class SURL {
 	 * Check SecurityProfile to see if this URL can be opened.
 	 */
 	public boolean isUrlOk() {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any URL
 			return false;
@@ -228,7 +228,7 @@ public class SURL {
 		if (isInUrlAllowList())
 			// ::done
 			return true;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {
 			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))
@@ -252,7 +252,7 @@ public class SURL {
 		// ::done
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */

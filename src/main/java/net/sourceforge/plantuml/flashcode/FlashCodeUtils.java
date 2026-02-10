@@ -36,11 +36,12 @@
 package net.sourceforge.plantuml.flashcode;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
+
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public interface FlashCodeUtils {
     // ::remove folder when __HAXE__
 
-	public BufferedImage exportFlashcode(String s, Color fore, Color back);
+	public PortableImage exportFlashcode(String s, Color fore, Color back);
 
 }

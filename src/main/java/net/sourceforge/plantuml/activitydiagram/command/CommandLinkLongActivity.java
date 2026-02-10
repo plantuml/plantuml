@@ -221,9 +221,9 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		if (direction == Direction.LEFT || direction == Direction.UP)
 			link = link.getInv();
 
-		if (line0.get("URL", 0) != null) {
+		if (line0.get(UrlBuilder.URL_KEY, 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			final Url urlLink = urlBuilder.getUrl(line0.get("URL", 0));
+			final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));
 			link.setUrl(urlLink);
 		}
 

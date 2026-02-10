@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemOpenIconicFactory extends PSystemSingleLineFactory {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

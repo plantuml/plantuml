@@ -70,7 +70,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 			RegexLeaf.spaceOneOrMore(), //
 			new RegexLeaf(1, "PARTS", "((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 			RegexLeaf.spaceZeroOrMore(), //
-			new RegexOptional(new RegexLeaf(1, "URL", "(\\[\\[.*?\\]\\])")), //
+			new RegexOptional(new RegexLeaf(1, UrlBuilder.URL_KEY, "(\\[\\[.*?\\]\\])")), //
 			RegexLeaf.spaceZeroOrMore(), //
 			new RegexLeaf(1, "UNUSED", "(#\\w+)?"), //
 			RegexLeaf.end());
@@ -102,7 +102,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 
-		final String url = arg.get("URL", 0);
+		final String url = arg.get(UrlBuilder.URL_KEY, 0);
 		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;
 		if (url != null)

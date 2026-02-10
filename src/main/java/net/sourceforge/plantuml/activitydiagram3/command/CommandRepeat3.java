@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -51,10 +50,10 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -64,14 +63,16 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //
-				StereotypePattern.optional("STEREO1"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(1, "LABEL", ":(.*?)")), //
-				StereotypePattern.optional("STEREO2"), //
-				new RegexOptional(new RegexLeaf(2, "STYLE", CommandActivity3.endingGroup())), //
-				// new RegexLeaf(";?"), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(":"), //
+						new RegexLeaf(1, "LABEL", "(.*?)"), //
+						new RegexLeaf(";"), //
+						RegexLeaf.spaceZeroOrMore() //
+				)), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 
@@ -80,31 +81,20 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-		final String s = arg.get("COLOR", 0);
-		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		final BoxStyle boxStyle;
-		final String styleString = arg.get("STYLE", 0);
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final BoxStyle boxStyle = stereogroup.getBoxStyle();
 
-		if (styleString == null)
-			boxStyle = BoxStyle.PLAIN;
-		else
-			boxStyle = BoxStyle.fromString(styleString);
-		BoxStyle.checkDeprecatedWarning(diagram, styleString);
+		final Stereotype stereotype = stereogroup.buildStereotype();
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		String stereo = arg.getLazzy("STEREO", 0);
-		if (stereo == null)
-			stereo = arg.get("STYLE", 1);
-		Stereotype stereotype = null;
-		if (stereo != null) {
-			stereotype = Stereotype.build(stereo);
-			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
-		}
+		if (arg.get("COLOR", 0) != null)
+			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + arg.get("COLOR", 0)
+					+ ">> at the end of the line, after the ';'"));
 
-		diagram.startRepeat(color, label, boxStyle, colors, stereotype);
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		diagram.startRepeat(label, boxStyle, colors, stereotype);
 
 		return CommandExecutionResult.ok();
 	}

@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemEgg extends PlainStringsDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	PSystemEgg(UmlSource source, String sentence, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

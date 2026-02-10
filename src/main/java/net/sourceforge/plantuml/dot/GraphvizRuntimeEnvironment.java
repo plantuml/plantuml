@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
 
 public class GraphvizRuntimeEnvironment {
+	// ::remove file when __TEAVM__
 
 	public static final String VIZJS = "vizjs";
 

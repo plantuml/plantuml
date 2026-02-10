@@ -41,7 +41,7 @@ import java.io.PrintWriter;
 import net.sourceforge.plantuml.security.SFile;
 
 public class DebugTrace {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private static final SFile out = new SFile("debug" + System.currentTimeMillis() + ".txt");
 

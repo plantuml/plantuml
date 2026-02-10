@@ -47,15 +47,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class Splash extends Window implements MouseListener, MouseMotionListener {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private static final Color LINK_NORMAL = Color.BLUE;
@@ -65,7 +65,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 
 	private final int width = 280;
 	private final int height = 80;
-	private final BufferedImage logo;
+	private final PortableImage logo;
 	private final AtomicInteger total = new AtomicInteger();
 	private final AtomicInteger done = new AtomicInteger();
 	private final AtomicInteger errors = new AtomicInteger();
@@ -186,7 +186,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 		// g.setColor(Color.RED);
 		// final String status = done + "/" + total;
 		// g.drawString(status, width / 2, height / 2);
-		g.drawImage(logo, width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);
+		g.drawImage(logo.getBufferedImage(), width - logo.getWidth() - 4, height - logo.getHeight() - 4, null);
 		drawProgessBar(g, done.intValue(), total.intValue());
 		final int nbErrors = errors.get();
 		if (nbErrors > 0) {

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.security;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,6 +59,7 @@ import javax.swing.ImageIcon;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
@@ -78,14 +78,14 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SecurityUtils {
 
-	// ::uncomment when __CORE__
+	// ::uncomment when __CORE__ or __TEAVM__
 //	public static SecurityProfile getSecurityProfile() {
 //		return SecurityProfile.UNSECURE;
 //	}
 	// ::done
 
 	public static boolean ignoreThisLink(String url) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (allowJavascriptInLink() == false && isJavascriptLink(url))
 			return true;
 		// ::done
@@ -97,19 +97,23 @@ public class SecurityUtils {
 	 */
 	public static final String NO_CREDENTIALS = "<none>";
 
-	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
+	public synchronized static PortableImage readRasterImage(final ImageIcon imageIcon) {
+		// ::comment when __TEAVM__
 		final Image tmpImage = imageIcon.getImage();
 		if (imageIcon.getIconWidth() == -1)
+			// ::done
 			return null;
 
-		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
+		// ::comment when __TEAVM__
+		final PortableImage image = new PortableImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
+				PortableImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(tmpImage, 0, 0, null);
 		tmpImage.flush();
 		return image;
+		// ::done
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	/**
 	 * Java class paths to import files from.
 	 */

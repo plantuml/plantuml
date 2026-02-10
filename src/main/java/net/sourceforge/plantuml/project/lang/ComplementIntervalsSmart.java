@@ -35,12 +35,15 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -79,14 +82,20 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final Day d1 = new DayPattern("1").getDay(arg);
+		final LocalDate d1 = new DayPattern("1").getDay(arg);
 
 		final Failable<TaskInstant> i2 = getComplementTaskInstant(system, arg, suffix);
 
 		if (i2.isFail())
 			return Failable.error(i2.getError());
 
-		return Failable.ok(new DaysAsDates(d1, i2.get().getInstantTheorical()));
+		final TaskInstant end = i2.get();
+		TimePoint precise = end.getInstantPrecise();
+		if (end.getAttribute() == TaskAttribute.END)
+			precise = precise.decrement();
+
+		final DaysAsDates days = new DaysAsDates(d1, precise.toDay());
+		return Failable.ok(days);
 
 	}
 

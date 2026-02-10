@@ -45,7 +45,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;

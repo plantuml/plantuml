@@ -224,7 +224,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			FontConfiguration cardinalityFont, Bibliotekon bibliotekon, Pragma pragma,
 			GraphvizVersion graphvizVersion) {
 		super(link, skinParam, bibliotekon);
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
 			link.getEntity1().ensureMargins(Margins.uniform(16));
 
@@ -363,7 +363,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return link.getLinkArrow();
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode, DotSplines dotSplines) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {

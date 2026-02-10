@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 
 public class Dedications {
@@ -88,12 +88,12 @@ public class Dedications {
 	private Dedications() {
 	}
 
-	public static BufferedImage get(String line) {
+	public static PortableImage get(String line) {
 		if (line.length() > 25) {
 			final TinyHashableString sentence = new TinyHashableString(line);
 			synchronized (Dedications.class) {
 				for (Dedication dedication : all) {
-					final BufferedImage image = dedication.getImage(sentence);
+					final PortableImage image = dedication.getImage(sentence);
 					if (image != null)
 						return image;
 				}

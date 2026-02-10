@@ -41,8 +41,10 @@ public class CliParsingException extends Exception {
 		super(description);
 	}
 
+	// ::comment when __TEAVM__
 	public CliParsingException(CliFlag flag, String description) {
 		super(flag.getFlag() + " [" + flag.name() + "]: " + description);
 	}
+	// ::done
 
 }

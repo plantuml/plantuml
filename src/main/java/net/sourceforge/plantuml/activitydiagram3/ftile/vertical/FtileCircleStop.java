@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.CircleEnd;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileCircleStop extends AbstractFtile {
 
@@ -62,16 +63,16 @@ public class FtileCircleStop extends AbstractFtile {
 		return Collections.emptyList();
 	}
 
-	public FtileCircleStop(ISkinParam skinParam, Swimlane swimlane, Style style) {
+	public FtileCircleStop(ISkinParam skinParam, Swimlane swimlane, Style style, Colors colors) {
 		super(skinParam);
 		this.swimlane = swimlane;
-		this.circle = new CircleEnd(skinParam, style, Colors.empty());
+		this.circle = new CircleEnd(skinParam, style, colors);
 
 	}
 
 	public Set<Swimlane> getSwimlanes() {
 		if (swimlane == null)
-			return Collections.emptySet();
+			return PatchUtils.emptySet();
 
 		return Collections.singleton(swimlane);
 	}

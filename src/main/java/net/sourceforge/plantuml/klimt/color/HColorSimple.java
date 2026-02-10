@@ -71,10 +71,15 @@ public class HColorSimple extends HColor {
 		if (isTransparent())
 			return "transparent";
 
-		if (color.getAlpha() == 255)
-			return StringUtils.sharp000000(color.getRGB());
+		final int red = color.getRed();
+		final int green = color.getGreen();
+		final int blue = color.getBlue();
+		final int alpha = color.getAlpha();
 
-		return "#" + Integer.toHexString(color.getRGB());
+		if (alpha == 255)
+			return String.format("#%02X%02X%02X", red, green, blue);
+
+		return String.format("#%02x%02x%02x%02x", alpha, red, green, blue);
 	}
 
 	@Override
@@ -92,16 +97,22 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public HColor lighten(int ratio) {
+		// ::revert when __TEAVM__
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] += hsl[2] * (ratio / 100.0);
 		return HColorSimple.create(new HSLColor(hsl).getRGB());
+		// return this;
+		// ::done
 	}
 
 	@Override
 	public HColor darken(int ratio) {
+		// ::revert when __TEAVM__
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] -= hsl[2] * (ratio / 100.0);
 		return HColorSimple.create(new HSLColor(hsl).getRGB());
+		// return this;
+		// ::done
 	}
 
 	@Override

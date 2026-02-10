@@ -43,6 +43,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
 public final class NFolderStdlib implements NFolder {
+	// ::remove file when __TEAVM__
 
 	private final Stdlib stdlib;
 	private final Path pathInsideStdlib;

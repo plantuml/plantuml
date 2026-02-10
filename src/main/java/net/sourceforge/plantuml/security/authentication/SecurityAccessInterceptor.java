@@ -47,6 +47,7 @@ import java.net.URLConnection;
 public interface SecurityAccessInterceptor {
     // ::remove folder when __HAXE__
     // ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 	/**
 	 * Applies to a connection the authentication information.
 	 *

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.api.v2;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 
@@ -101,7 +101,7 @@ public abstract class DiagramUtils {
 			}
 
 			@Override
-			public BufferedImage asImage() throws IOException {
+			public PortableImage asImage() throws IOException {
 				try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 					final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
 					final ImageData imageData = diagram.exportDiagram(os, 0, fileFormatOption);

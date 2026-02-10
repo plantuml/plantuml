@@ -44,6 +44,10 @@ import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -78,28 +82,19 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 	private static final Pattern2 IS_OR_EQUALS = Pattern2.cmpile("\\)[%s]*(is|equals?)[%s]*\\(");
 
 	@Override
-	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.trim();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst().getString()));
 		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
 
-		// System.err.println("line0=" + line0);
-		// System.err.println("linesLast=" + lineLast);
-
-		//
-		// final HtmlColor color =
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
-		// 0));
-
 		final String test = line0.get("TEST1", 0);
 		Display testDisplay = Display.getWithNewlines(diagram.getPragma(), test);
-		for (StringLocated s : lines.subExtract(1, 1)) {
+		for (StringLocated s : lines.subExtract(1, 1))
 			testDisplay = testDisplay.add(s.getString());
-		}
+
 		final String trailTest = lineLast.get("TEST1", 0);
-		if (StringUtils.isEmpty(trailTest) == false) {
+		if (StringUtils.isEmpty(trailTest) == false)
 			testDisplay = testDisplay.add(trailTest);
-		}
 
 		Display yes = Display.NULL;// Display.getWithNewlines("arg.getLazzy(\"WHEN\", 0)");
 		final Display out = Display.NULL; // Display.getWithNewlines("arg.getLazzy(\"OUT\", 0)");
@@ -110,10 +105,9 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		if (splitted.size() == 2) {
 			testDisplay = splitted.get(0);
 			yes = splitted.get(1);
-
 		}
 
-		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor);
+		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, null, null);
 	}
 
 }

@@ -76,7 +76,7 @@ class ApiV2Test {
 
 	@Test
 	public void testError2() throws IOException {
-		final DiagramReturn result = DiagramUtils.exportDiagram("@startuml", "start", "#zzblue:toto;", "@enduml");
+		final DiagramReturn result = DiagramUtils.exportDiagram("@startuml", "start", ":toto;<<#zzblue>>", "@enduml");
 		final Diagram diagram = result.getDiagram();
 		assertEquals("No such color (Assumed diagram type: activity)", result.error());
 		assertNotNull(diagram);

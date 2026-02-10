@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt.factory;
 
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -58,7 +59,7 @@ public class ElementFactoryTextField implements ElementFactory {
 		}
 		final Terminated<String> next = dataSource.next();
 		final String text = next.getElement();
-		final UFont font = UFont.byDefault(12);
+		final UFont font = UFontFactory.byDefault(12);
 		return new Terminated<Element>(
 				new ElementTextField(text.substring(1, text.length() - 1), font, spriteContainer),
 				next.getTerminator());

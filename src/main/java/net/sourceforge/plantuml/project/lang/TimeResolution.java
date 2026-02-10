@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.project.time.Month;
+import net.sourceforge.plantuml.project.time.MonthUtils;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -46,7 +46,7 @@ public abstract class TimeResolution {
 		return new RegexConcat( //
 				new RegexLeaf(1, day, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(1, month, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, month, "(" + MonthUtils.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
 				new RegexLeaf(1, year, "([\\d]{1,4})"));
 	}
@@ -62,7 +62,7 @@ public abstract class TimeResolution {
 
 	public static IRegex toRegexC_MONTH_DD_YYYY(String year, String month, String day) {
 		return new RegexConcat( //
-				new RegexLeaf(1, month, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf(1, month, "(" + MonthUtils.getRegexString() + ")"), //
 				new RegexLeaf("[\\w, ]*?"), //
 				new RegexLeaf(1, day, "([\\d]{1,2})"), //
 				new RegexLeaf("[\\w, ]*?"), //

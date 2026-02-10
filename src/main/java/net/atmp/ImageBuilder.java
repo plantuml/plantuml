@@ -37,7 +37,6 @@ package net.atmp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -77,14 +77,13 @@ import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.drawing.html5.UGraphicHtml5;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.drawing.visio.UGraphicVdx;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -277,6 +276,7 @@ public class ImageBuilder {
 		ug.writeToStream(os, metadata, 96);
 		os.flush();
 
+		// ::comment when __TEAVM__
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
@@ -284,10 +284,11 @@ public class ImageBuilder {
 				return new ImageDataComplex(dim, cmap, warningOrError, status);
 			}
 		}
+		// ::done
 		return createImageData(dim);
 	}
 
-	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.monospaced(10));
+	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));
 
 	private void drawWarning(XDimension2D dimWarning, UGraphic ug, double fullWidth) {
 
@@ -375,6 +376,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
+		// ::comment when __TEAVM__
 		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
@@ -384,7 +386,6 @@ public class ImageBuilder {
 					fileFormatOption.getFileFormat());
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim, pragma);
-		// ::comment when __CORE__
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -405,12 +406,15 @@ public class ImageBuilder {
 		case DEBUG:
 			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,
 					getPreserveAspectRatio());
-		// ::done
 		default:
+			// ::done
 			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());
+		// ::comment when __TEAVM__
 		}
+		// ::done
 	}
 
+	// ::comment when __TEAVM__
 	private UGraphic createUGraphicSVG(double scaleFactor, XDimension2D dim, Pragma pragma) {
 		SvgOption option = SvgOption.basic().withPreserveAspectRatio(getPreserveAspectRatio());
 		option = option.withHoverPathColorRGB(getHoverPathColorRGB());
@@ -463,17 +467,13 @@ public class ImageBuilder {
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
 				scaleFactor, format);
 
-		ug.setBufferedImage(builder.getBufferedImage());
-		final BufferedImage im = ug.getBufferedImage();
+		ug.setPortableImage(builder.getPortableImage());
+		final PortableImage im = ug.getPortableImage();
 		if (this.backcolor instanceof HColorGradient)
 			ug.apply(this.backcolor.bg())
 					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
 
 		return ug;
-	}
-
-	static private HColor getDefaultHBackColor() {
-		return HColors.WHITE.withDark(HColors.BLACK);
 	}
 
 	private String getHoverPathColorRGB() {
@@ -487,6 +487,7 @@ public class ImageBuilder {
 		}
 		return null;
 	}
+	// ::done
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
@@ -509,6 +510,10 @@ public class ImageBuilder {
 
 	private ImageDataSimple createImageData(XDimension2D dim) {
 		return new ImageDataSimple(dim, status);
+	}
+
+	static private HColor getDefaultHBackColor() {
+		return HColors.WHITE.withDark(HColors.BLACK);
 	}
 
 }

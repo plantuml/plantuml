@@ -92,11 +92,14 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	private final Colors colors;
 	private final StyleBuilder currentStyleBuilder;
 
+	private Colors colors2;
+	private Stereotype stereotype2;
+
 	public boolean containsBreak() {
 		return repeatList.containsBreak();
 	}
 
-	public InstructionRepeat(Swimlanes swimlanes, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
+	public InstructionRepeat(Swimlanes swimlanes, Instruction parent, LinkRendering nextLinkRenderer,
 			Display startLabel, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
 		this.currentStyleBuilder = swimlanes.getCurrentStyleBuilder();
 		this.swimlanes = swimlanes;
@@ -164,8 +167,9 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		tmp = factory.decorateOut(tmp, endRepeatLinkRendering);
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
-		tmp = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, tmp, test,
-				yes, out, colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
+		tmp = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, tmp, test, yes, out, colors,
+				back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder, colors.mergeWith(colors2),
+				stereotype2);
 		tmp = FtileUtils.withSwimlaneIn(tmp, swimlane);
 		if (killed)
 			return new FtileKilled(tmp);
@@ -189,7 +193,9 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	}
 
 	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
-			LinkRendering back, Swimlane swimlaneOut) {
+			LinkRendering back, Swimlane swimlaneOut, Colors colors2, Stereotype stereotype2) {
+		this.colors2 = colors2;
+		this.stereotype2 = stereotype2;
 		this.swimlaneOut = swimlaneOut;
 		this.test = Objects.requireNonNull(test);
 		this.yes = Objects.requireNonNull(yes);
@@ -214,7 +220,8 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		if (Display.isNull(backward))
 			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);
 

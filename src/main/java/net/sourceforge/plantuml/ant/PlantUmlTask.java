@@ -80,7 +80,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 // Carriage Return in UTF-8 XML: &#13;
 // Line Feed in UTF-8 XML: &#10;
 public class PlantUmlTask extends Task {
-	// ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__ or __TEAVM__
 
 	private String dir = null;
 	private final CliOptions option = new CliOptions();
@@ -195,7 +195,7 @@ public class PlantUmlTask extends Task {
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 			this.log("Processing " + f.getAbsolutePath());
 		}
-		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+		final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,
 				option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 				option.getFileFormatOption());
 

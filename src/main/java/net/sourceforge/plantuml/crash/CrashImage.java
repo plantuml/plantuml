@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.crash;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class CrashImage implements UDrawable {
 
-	private final BufferedImage flashcodeImage;
+	private final PortableImage flashcodeImage;
 	private final TextBlock graphicStrings;
 
 	public CrashImage(Throwable exception, String flash, ReportLog strings) {
@@ -81,12 +81,12 @@ public class CrashImage implements UDrawable {
 
 	}
 
-	private BufferedImage generateFlashcodeImage(String flash, ReportLog strings) {
+	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
 		assert flash != null;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		try {
-			final BufferedImage flashcodeImage = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
+			final PortableImage flashcodeImage = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
 			if (flashcodeImage != null)
 				strings.addDecodeHint();
 			return flashcodeImage;

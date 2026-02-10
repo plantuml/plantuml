@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.crash;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -67,14 +67,14 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private final TextBlock text1;
 	private final String flash;
-	// ::comment when __CORE__
-	private final BufferedImage flashCode;
+	// ::comment when __CORE__ or __TEAVM__
+	private final PortableImage flashCode;
 	private final boolean graphviz244onWindows;
 	// ::done
 
 	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {
 		this.flash = flash;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		this.graphviz244onWindows = graphviz244onWindows;
 		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		// ::done
@@ -99,7 +99,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.addEmptyLine();
 		strings.addProperties();
 		strings.addEmptyLine();
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		try {
 			final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();
 			strings.add("Default dot version: " + dotVersion);
@@ -109,7 +109,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		// ::done
 		strings.pleaseCheckYourGraphVizVersion();
 		strings.youShouldSendThisDiagram();
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (flashCode != null)
 			strings.addDecodeHint();
 		// ::done
@@ -150,7 +150,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private TextBlock getMain() {
 		TextBlock result = text1;
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (flashCode != null) {
 			final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 					.scale(3);

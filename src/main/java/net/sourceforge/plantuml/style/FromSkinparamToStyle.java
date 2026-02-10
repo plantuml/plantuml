@@ -43,8 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.stereo.StereotypeDecoration;
-
 public class FromSkinparamToStyle {
 	// ::remove file when __HAXE__
 

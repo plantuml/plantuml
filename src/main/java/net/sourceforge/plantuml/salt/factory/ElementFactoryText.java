@@ -39,6 +39,7 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -61,7 +62,7 @@ public class ElementFactoryText implements ElementFactory {
 		}
 		final Terminated<String> next = dataSource.next();
 		final String text = next.getElement();
-		final UFont font = UFont.byDefault(12);
+		final UFont font = UFontFactory.byDefault(12);
 		return new Terminated<Element>(new ElementText(Arrays.asList(text), font, spriteContainer),
 				next.getTerminator());
 	}

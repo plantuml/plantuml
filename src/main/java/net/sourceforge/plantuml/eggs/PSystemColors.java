@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -72,7 +73,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 
 // http://www.redblobgames.com/grids/hexagons/
 public class PSystemColors extends PlainDiagram implements UDrawable {
-
+	// ::remove file when __TEAVM__
 	private final double rectangleHeight = 28;
 	private final double rectangleWidth = 175;
 	private final HColorSet colors = HColorSet.instance();
@@ -153,7 +154,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 		ug = ug.apply(UTranslate.point(centerHexa(i, j)));
 		ug.draw(hexa);
 
-		final UFont font = UFont.sansSerif(14).bold();
+		final UFont font = UFontFactory.sansSerif(14).bold();
 
 		TextBlock tt = getTextName(font, colorName, color);
 		XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());
@@ -240,7 +241,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	}
 
 	private void drawFull(UGraphic ug) {
-		final UFont font = UFont.sansSerif(14).bold();
+		final UFont font = UFontFactory.sansSerif(14).bold();
 
 		ug = ug.apply(HColors.BLACK);
 		int i = 0;

@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.version;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class PSystemKeygen extends PlainDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	final private String key;
 
@@ -148,7 +148,7 @@ public class PSystemKeygen extends PlainDiagram {
 
 		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage im = utils.exportFlashcode(
+		final PortableImage im = utils.exportFlashcode(
 				Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK,
 				Color.WHITE);
 		if (im != null) {

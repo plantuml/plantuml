@@ -84,7 +84,7 @@ public class DirWatcher {
 				final FileWatcher watcher = modifieds.get(f);
 
 				if (watcher == null || watcher.hasChanged()) {
-					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+					final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,
 							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
 					final Set<File> files = sourceFileReader.getIncludedFiles();
@@ -114,7 +114,7 @@ public class DirWatcher {
 				final FileWatcher watcher = modifieds.get(f);
 
 				if (watcher == null || watcher.hasChanged()) {
-					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+					final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), Defines.createWithFileName(f), f,
 							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
 					if (sourceFileReader.hasError())

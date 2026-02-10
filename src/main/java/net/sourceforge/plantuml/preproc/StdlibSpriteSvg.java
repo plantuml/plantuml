@@ -45,7 +45,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
 public class StdlibSpriteSvg implements Sprite {
-
+	// ::remove file when __TEAVM__
+	
 	final private Lazy<Sprite> sprite;
 
 	public StdlibSpriteSvg(Stdlib lib, String name) {

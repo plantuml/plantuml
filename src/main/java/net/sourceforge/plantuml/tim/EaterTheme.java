@@ -34,36 +34,27 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.IOException;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.PathSystem;
-import net.sourceforge.plantuml.preproc.ReadLineReader;
-import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
-import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.theme.Theme;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 
 public class EaterTheme extends Eater {
 	// ::remove folder when __HAXE__
-
+	// ::remove file when __TEAVM__
+	
 	private String realName;
 	private String name;
 	private String from;
 	private TContext context;
-	private final PathSystem importedFiles;
-	private PathSystem newImportedFiles;
+	private final PathSystem pathSystem;
 
-	public EaterTheme(StringLocated s, PathSystem importedFiles) {
+	public EaterTheme(StringLocated s, PathSystem pathSystem) {
 		super(s);
-		this.importedFiles = importedFiles;
-		this.newImportedFiles = importedFiles;
+		this.pathSystem = pathSystem;
 	}
 
 	@Override
@@ -86,60 +77,17 @@ public class EaterTheme extends Eater {
 	}
 
 	public final Theme getTheme() throws EaterException {
-		if (from == null) {
-			try {
-				final Theme theme = ThemeUtils.getReaderTheme(realName);
-				if (theme != null)
-					return theme;
-
-				final InputFile localFile = importedFiles.getInputFile(ThemeUtils.getFilename(realName));
-				if (localFile != null) {
-					final Reader br = localFile.getReader(UTF_8);
-					if (br != null)
-						return new Theme(ReadLineReader.create(br, "theme " + realName));
-				}
-			} catch (IOException e) {
-				Logme.error(e);
-			}
-			throw new EaterException("Cannot load " + realName, getStringLocated());
-		}
-
-		if (from.startsWith("<") && from.endsWith(">")) {
-			final Theme theme = ThemeUtils.getReaderTheme(realName, from);
-			if (theme == null)
-				throw new EaterException("No such theme " + realName + " in " + from, getStringLocated());
-			return theme;
-		} else if (from.startsWith("http://") || from.startsWith("https://")) {
-			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));
-			if (url == null)
-				throw new EaterException("Cannot open URL", getStringLocated());
-
-			try {
-				return new Theme(PreprocessorUtils.getReaderInclude(url, getStringLocated(), UTF_8));
-			} catch (UnsupportedEncodingException e) {
-				Logme.error(e);
-				throw new EaterException("Cannot decode charset", getStringLocated());
-			}
-		}
-
 		try {
-			throw new IOException("To be finished");
-//			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
-//			final Reader tmp = file.getReader(UTF_8);
-//			if (tmp == null)
-//				throw new EaterException("No such theme " + realName, getStringLocated());
-//
-//			final AFile fromDir = importedFiles.getAFile(from);
-//			final AParentFolder parent = new AParentFolderRegular(fromDir.getUnderlyingFile());
-//			
-//			newImportedFiles = importedFiles.changeCurrentDirectory(from);
-//
-//			return new Theme(ReadLineReader.create(tmp, "theme " + realName));
+			final Theme theme = ThemeUtils.loadTheme(pathSystem, realName, from, getStringLocated());
+			if (theme == null) {
+				final String location = (from == null) ? "" : " in " + from;
+				throw new EaterException("Cannot load theme " + realName + location, getStringLocated());
+			}
+			return theme;
 		} catch (IOException e) {
 			Logme.error(e);
-			throw new EaterException("Cannot load " + realName, getStringLocated());
+			throw new EaterException("Cannot load theme " + realName, getStringLocated());
 		}
-
 	}
 
 	public String getName() {
@@ -147,7 +95,7 @@ public class EaterTheme extends Eater {
 	}
 
 	public PathSystem getNewImportedFiles() {
-		return newImportedFiles;
+		return pathSystem;
 	}
 
 }

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +45,7 @@ import java.util.TreeSet;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -53,7 +53,8 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class LicenseInfo {
-
+	// ::remove file when __TEAVM__
+	
 	public static synchronized LicenseInfo retrieveQuick() {
 		// ::revert when __CORE__
 		if (cache == null)
@@ -150,7 +151,7 @@ public class LicenseInfo {
 		return LicenseInfo.NONE;
 	}
 
-	public static BufferedImage retrieveDistributorImage(LicenseInfo licenseInfo) {
+	public static PortableImage retrieveDistributorImage(LicenseInfo licenseInfo) {
 		if (licenseInfo.getLicenseType() != LicenseType.DISTRIBUTOR) {
 			return null;
 		}
@@ -164,7 +165,7 @@ public class LicenseInfo {
 				return null;
 
 			try {
-				final BufferedImage result = SImageIO.read(dis);
+				final PortableImage result = SImageIO.read(dis);
 				return result;
 			} finally {
 				dis.close();

@@ -38,20 +38,20 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.error.PSystemError;
 
 public class StdrptV2 implements Stdrpt {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public void finalMessage() {
 	}
 
-	public void finalMessage(ErrorStatus error) {
+	public void finalMessage(ExitStatus error) {
 	}
 
 	public void errorLine(int lineError, File file) {

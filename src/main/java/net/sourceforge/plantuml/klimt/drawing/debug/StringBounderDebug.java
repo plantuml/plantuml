@@ -43,11 +43,14 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderDebug extends StringBounderRaw {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
 
 	public StringBounderDebug() {
+		// ::revert when __TEAVM__
 		super(FileFormat.gg.getFontRenderContext());
+		// super(null);
+		// ::done
 	}
 
 	@Override

@@ -8,6 +8,8 @@ import java.util.Locale;
  */
 public class ColorHSB extends Color {
 	// ::remove file when __HAXE__
+	// ::remove file when __TEAVM__
+	
 	private final float hue;
 	private final float saturation;
 	private final float brightness;

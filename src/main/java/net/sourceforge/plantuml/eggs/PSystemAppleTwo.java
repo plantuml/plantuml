@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemAppleTwo extends PlainStringsDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public PSystemAppleTwo(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 		super(source, preprocessing);

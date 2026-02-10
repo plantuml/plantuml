@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.klimt.creole.atom;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 
 public class AtomMath extends AbstractAtom implements Atom {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final ScientificEquationSafe math;
 	private final HColor foreground;
@@ -66,7 +66,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 		if (stringBounder.matchesProperty("TIKZ")) {
 			return stringBounder.calculateDimension(null, math.getSource());
 		}
-		final BufferedImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();
+		final PortableImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();
 		return new XDimension2D(image.getWidth(), image.getHeight());
 	}
 

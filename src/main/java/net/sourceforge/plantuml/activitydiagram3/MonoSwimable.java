@@ -40,6 +40,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 abstract class MonoSwimable extends WithNote implements Swimable {
 
@@ -51,7 +52,7 @@ abstract class MonoSwimable extends WithNote implements Swimable {
 
 	final public Set<Swimlane> getSwimlanes() {
 		if (swimlane == null)
-			return Collections.emptySet();
+			return PatchUtils.emptySet();
 		return Collections.<Swimlane>singleton(swimlane);
 	}
 

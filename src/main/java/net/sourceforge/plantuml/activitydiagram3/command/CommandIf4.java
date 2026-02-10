@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
@@ -73,6 +74,8 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(";?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 

@@ -47,6 +47,19 @@ import net.sourceforge.plantuml.jaws.Jaws;
 
 public class Pattern2 {
 
+	private static final Map<String, String> QUOTED_REPLACEMENTS = new HashMap<>();
+	static {
+		// ::revert when __TEAVM__
+		QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}\\p{N}")); // Unicode Letter or digit
+		// QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}[0-9]")); // Unicode Letter or digit
+		// ::done
+		QUOTED_REPLACEMENTS.put("%s", Matcher.quoteReplacement("\\s\u00A0")); // normal or non-breaking space
+		QUOTED_REPLACEMENTS.put("%q", Matcher.quoteReplacement("'\u2018\u2019")); // single quotes
+		QUOTED_REPLACEMENTS.put("%g", Matcher.quoteReplacement("\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE));
+	}
+
+	private static final Pattern TRANSFORM_PATTERN = Pattern.compile("%(pLN|s|q|g)");
+
 	private static final ConcurrentHashMap<String, AtomicInteger> COUNT = new ConcurrentHashMap<>();
 
 	private static final Pattern2 EMPTY = new Pattern2("");
@@ -56,6 +69,13 @@ public class Pattern2 {
 
 	private Pattern2(String s) {
 		this.patternString = s;
+		// ::uncomment when __TEAVM__
+		// //System.out.println("=====================");
+		// //System.out.println("Pattern2 begin " + s);
+		// //System.out.println("Pattern2 test " + compileInternal(s));
+		// //System.out.println("Pattern2 ok " + s);
+		// //System.out.println("=====================");
+		// ::done
 		this.pattern = new Lazy<>(() -> compileInternal(patternString));
 
 	}
@@ -84,30 +104,25 @@ public class Pattern2 {
 	}
 
 	public static Pattern compileInternal(String patternString) {
-		return Pattern.compile(transform(patternString), Pattern.CASE_INSENSITIVE);
+		// ::revert when __TEAVM__
+		final String regex = transform(patternString);
+		// final String regex = transform(patternString) + "";
+		// ::done
+		
+		// ::uncomment when __TEAVM__
+		// //System.out.println("compileInternal in "+regex);
+		// ::done
+		final Pattern result = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		// ::uncomment when __TEAVM__
+		// //System.out.println("compileInternal ok "+result);
+		// ::done
+		return result;
 	}
-
-	private static String transformOld(String p) {
-		// Replace ReadLineReader.java
-		p = p.replace("%pLN", "\\p{L}\\p{N}"); // Unicode Letter, digit
-		p = p.replace("%s", "\\s\u00A0"); // space
-		p = p.replace("%q", "'\u2018\u2019"); // quote
-		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
-		return p;
-	}
-
-	private static final Map<String, String> QUOTED_REPLACEMENTS = new HashMap<>();
-	static {
-		QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}\\p{N}")); // Unicode Letter or digit
-		QUOTED_REPLACEMENTS.put("%s", Matcher.quoteReplacement("\\s\u00A0")); // normal or non-breaking space
-		QUOTED_REPLACEMENTS.put("%q", Matcher.quoteReplacement("'\u2018\u2019")); // single quotes
-		QUOTED_REPLACEMENTS.put("%g", Matcher.quoteReplacement("\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE));
-	}
-
-	// private static final Pattern TRANSFORM_PATTERN = Pattern.compile("%pLN|%s|%q|%g");
-	private static final Pattern TRANSFORM_PATTERN = Pattern.compile("%(pLN|s|q|g)");
 
 	public static String transform(String input) {
+		// ::uncomment when __TEAVM__
+		// //System.out.println("transform10 "+input);
+		// ::done
 		final Matcher m = TRANSFORM_PATTERN.matcher(input);
 		final StringBuffer sb = new StringBuffer(input.length());
 		while (m.find()) {
@@ -115,6 +130,9 @@ public class Pattern2 {
 			m.appendReplacement(sb, replacement);
 		}
 		m.appendTail(sb);
+		// ::uncomment when __TEAVM__
+		// //System.out.println("transform80 "+sb);
+		// ::done
 		return sb.toString();
 	}
 

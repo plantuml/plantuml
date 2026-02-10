@@ -59,6 +59,7 @@ import java.util.List;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.NFolder;
@@ -161,10 +162,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return this.internal.compareTo(other.internal);
 	}
 
-//	public String getPath() {
-//		return internal.getPath();
-//	}
-
 	public long length() {
 		return internal.length();
 	}
@@ -180,18 +177,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 	public void delete() {
 		internal.delete();
 	}
-
-//	public Collection<SFile> listFiles() {
-//		final File[] tmp = internal.listFiles();
-//		if (tmp == null)
-//			return Collections.emptyList();
-//
-//		final List<SFile> result = new ArrayList<>(tmp.length);
-//		for (File f : tmp)
-//			result.add(new SFile(f));
-//
-//		return Collections.unmodifiableCollection(result);
-//	}
 
 	public String[] list() {
 		return internal.list();
@@ -260,7 +245,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * Check SecurityProfile to see if this file can be open.
 	 */
 	public boolean isFileOk() {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any files
 			return false;
@@ -318,7 +303,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * @throws IOException If an I/O error occurs, which is possible because the
 	 *                     check the pathname may require filesystem queries
 	 */
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private boolean isDenied() throws IOException {
 		final SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
@@ -351,12 +336,12 @@ public class SFile implements Comparable<SFile>, InputFile {
 
 	// Reading
 	// http://forum.plantuml.net/9048/img-tag-for-sequence-diagram-participants-does-always-render
-	public BufferedImage readRasterImageFromFile() {
+	public PortableImage readRasterImageFromFile() {
 		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 		if (isFileOk())
 			try {
-				// ::comment when __CORE__
+				// ::comment when __CORE__ or __TEAVM__
 				if (internal.getName().endsWith(".webp"))
 					return readWebp();
 				else
@@ -368,8 +353,8 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return null;
 	}
 
-	// ::comment when __CORE__
-	private BufferedImage readWebp() throws IOException {
+	// ::comment when __CORE__ or __TEAVM__
+	private PortableImage readWebp() throws IOException {
 		try (InputStream is = openFile()) {
 			final int riff = read32(is);
 			if (riff != 0x46464952)
@@ -385,7 +370,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 			if (len1 != len2 + 12)
 				return null;
 
-			return getBufferedImageFromWebpButHeader(is);
+			return getImageFromWebpButHeader(is);
 		}
 	}
 
@@ -393,7 +378,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return (is.read() << 0) + (is.read() << 8) + (is.read() << 16) + (is.read() << 24);
 	}
 
-	public static BufferedImage getBufferedImageFromWebpButHeader(InputStream is) {
+	public static PortableImage getImageFromWebpButHeader(InputStream is) {
 		if (is == null)
 			return null;
 		try {
@@ -406,7 +391,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 			// vp8Decoder.decodeFrame(iis);
 			iis.close();
 			final Object frame = clVP8Decoder.getMethod("getFrame").invoke(vp8Decoder);
-			return (BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame);
+			return new PortableImage((BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame));
 			// final VP8Frame frame = vp8Decoder.getFrame();
 			// return frame.getBufferedImage();
 		} catch (Exception e) {
@@ -441,7 +426,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return null;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	// Writing
 	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
 		return new BufferedOutputStream(new FileOutputStream(internal));

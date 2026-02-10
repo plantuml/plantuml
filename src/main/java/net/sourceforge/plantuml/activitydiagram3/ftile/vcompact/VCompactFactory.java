@@ -109,15 +109,15 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile start(Swimlane swimlane) {
+	public Ftile start(Swimlane swimlane, Colors colors) {
 		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new FtileCircleStart(skinParam(), swimlane, style);
+		return new FtileCircleStart(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
-	public Ftile stop(Swimlane swimlane) {
+	public Ftile stop(Swimlane swimlane, Colors colors) {
 		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new FtileCircleStop(skinParam(), swimlane, style);
+		return new FtileCircleStop(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
@@ -128,9 +128,9 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile end(Swimlane swimlane) {
+	public Ftile end(Swimlane swimlane, Colors colors) {
 		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new FtileCircleEndCross(skinParam(), swimlane, style);
+		return new FtileCircleEndCross(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
@@ -161,7 +161,8 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
 			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
-			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2) {
 		return repeat;
 	}
 
@@ -186,7 +187,7 @@ public class VCompactFactory implements FtileFactory {
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest) {
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
 		final List<Ftile> ftiles = new ArrayList<>();
 		for (Branch branch : branches)
 			ftiles.add(branch.getFtile());
@@ -195,7 +196,7 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	@Override
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out, Colors colors) {
 		return new FtileForkInner(all);
 	}
 

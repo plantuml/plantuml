@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class FileGroup {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final List<File> result = new ArrayList<>();
 	private final String pattern;

@@ -57,8 +57,10 @@ public class PSystemUnsupported extends PlainDiagram {
 	public PSystemUnsupported(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		strings.add("<b>Diagram not supported by this release of PlantUML");
+		// ::comment when __TEAVM__
 		strings.add(Version.fullDescription());
 		strings.add("License " + new License().toString());
+		// ::done
 	}
 
 	@Override

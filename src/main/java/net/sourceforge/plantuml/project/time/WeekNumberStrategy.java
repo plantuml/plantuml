@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.time;
 
+import java.time.DayOfWeek;
+
 public class WeekNumberStrategy {
 
 	private final DayOfWeek firstDayOfWeek;
@@ -46,9 +48,10 @@ public class WeekNumberStrategy {
 
 	}
 
-	public final int getFirstDayOfWeekAsLegacyInt() {
-		return firstDayOfWeek.getLegacyJavaValue();
-	}
+//	public final int getFirstDayOfWeekAsLegacyInt() {
+//	    int dow = firstDayOfWeek.getValue();
+//	    return (dow == 7) ? 1 : dow + 1;
+//	}
 
 	public final int getMinimalDaysInFirstWeek() {
 		return minimalDaysInFirstWeek;

@@ -35,10 +35,12 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
-import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 
 public class Resource {
 
@@ -79,15 +81,15 @@ public class Resource {
 		this.draw = draw;
 	}
 
-	public boolean isClosedAt(Day day) {
+	public boolean isClosedAt(LocalDate day) {
 		return openClose.isClosed(day);
 	}
 
-	public void addCloseDay(Day day) {
+	public void addCloseDay(LocalDate day) {
 		openClose.close(day);
 	}
-
-	public void addForceOnDay(Day day) {
+	
+	public void addForceOnDay(LocalDate day) {
 		openClose.open(day);
 	}
 
@@ -95,16 +97,20 @@ public class Resource {
 		openClose.close(day);
 	}
 
-	public void setOffBeforeDate(Day day) {
+	public void setOffBeforeDate(LocalDate day) {
 		openClose.setOffBeforeDate(day);
 	}
 
-	public void setOffAfterDate(Day day) {
+	public void setOffAfterDate(LocalDate day) {
 		openClose.setOffAfterDate(day);
 	}
 
-	public Day getLastDayIfAny() {
+	public LocalDate getLastDayIfAny() {
 		return openClose.getLastDayIfAny();
+	}
+
+	public PiecewiseConstant asPiecewiseConstant() {
+		return openClose.asPiecewiseConstant();
 	}
 
 }

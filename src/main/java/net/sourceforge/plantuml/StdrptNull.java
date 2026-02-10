@@ -38,22 +38,22 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.cli.ErrorStatus;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptNull implements Stdrpt {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public void printInfo(final PrintStream output, final Diagram sys) {
 	}
 
-	public void finalMessage(ErrorStatus error) {
-		if (error.hasError())
+	public void finalMessage(ExitStatus error) {
+		if (error.hasErrors())
 			Log.error("Some diagram description contains errors");
 
-		if (error.isEmpty())
+		if (error.noDiagramFound())
 			Log.error("No diagram found");
 
 	}

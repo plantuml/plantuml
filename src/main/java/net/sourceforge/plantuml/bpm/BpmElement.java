@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -46,6 +47,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -148,7 +151,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {
 		if (type == BpmElementType.START) {
-			return new FtileCircleStart(skinParam, null, getStyle(skinParam));
+			return new FtileCircleStart(skinParam, null, getStyle(skinParam), Colors.empty());
 		}
 		if (type == BpmElementType.MERGE) {
 			final HColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);
@@ -156,10 +159,10 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 			return new FtileDiamond(skinParam, backColor, borderColor, null);
 		}
 		if (type == BpmElementType.DOCKED_EVENT) {
-			final UFont font = UFont.serif(14);
+			final UFont font = UFontFactory.serif(14);
 			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN, null, null);
 		}
-		final UFont font = UFont.serif(14);
+		final UFont font = UFontFactory.serif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, null);
 		if (Display.isNull(display)) {
 			return Display.getWithNewlines(skinParam.getPragma(), type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);

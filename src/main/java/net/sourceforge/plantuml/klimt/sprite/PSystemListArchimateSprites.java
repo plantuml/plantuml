@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListArchimateSprites extends PlainDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public PSystemListArchimateSprites(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

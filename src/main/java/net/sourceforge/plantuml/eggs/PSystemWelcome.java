@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemWelcome extends PlainDiagram {
-
+	// ::remove file when __TEAVM__
 	private final List<String> strings = new ArrayList<>();
 	private final GraphicPosition position;
 

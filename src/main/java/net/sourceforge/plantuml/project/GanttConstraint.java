@@ -44,7 +44,8 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -97,14 +98,14 @@ public class GanttConstraint extends WithLinkType {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
 	}
 
-	public UDrawable getUDrawable(TimeScale timeScale, ToTaskDraw toTaskDraw) {
+	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {
 		Style style = getStyleSignature().getMergedStyle(styleBuilder).eventuallyOverride(PName.LineColor,
 				getSpecificColor());
 		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));
 		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);
 	}
 
-	public boolean isHidden(Day min, Day max) {
+	public boolean isHidden(TimePoint min, TimePoint max) {
 		if (isHidden(source.getInstantPrecise(), min, max))
 			return true;
 
@@ -114,7 +115,7 @@ public class GanttConstraint extends WithLinkType {
 		return false;
 	}
 
-	private boolean isHidden(Day now, Day min, Day max) {
+	private boolean isHidden(TimePoint now, TimePoint min, TimePoint max) {
 		if (now.compareTo(min) < 0)
 			return true;
 

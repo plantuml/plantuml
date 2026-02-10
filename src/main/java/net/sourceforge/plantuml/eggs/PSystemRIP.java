@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemRIP extends PlainStringsDiagram {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public PSystemRIP(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 		super(source, preprocessing);

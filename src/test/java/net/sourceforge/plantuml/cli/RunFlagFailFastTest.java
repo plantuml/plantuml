@@ -22,7 +22,7 @@ class RunFlagFailFastTest extends AbstractCliTest {
 	void test1(StdErr err) throws Exception {
 		syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-failfast", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 		assertTrue(err.capturedString().contains("Error line 2 in file"));
@@ -52,7 +52,7 @@ class RunFlagFailFastTest extends AbstractCliTest {
 				.collect(Collectors.toCollection(TreeSet::new));
 		assertEquals(101, files0.size());
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-failfast", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 		assertTrue(err.capturedString().contains("Error line 2 in file"));

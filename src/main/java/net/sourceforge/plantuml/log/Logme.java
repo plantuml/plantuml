@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 
 public class Logme {
 
+	// ::comment when __TEAVM__
 	private static final Logger logger;
 
 	static {
@@ -50,9 +51,12 @@ public class Logme {
 		handler.setFormatter(new SimpleFormatter());
 		logger.addHandler(handler);
 	}
+	// ::done
 
 	public static void error(Throwable thrown) {
+		// ::comment when __TEAVM__
 		logger.log(Level.SEVERE, "", thrown);
+		// ::done
 	}
 
 	// Unused right now

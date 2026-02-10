@@ -122,18 +122,18 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	@Override
-	public Ftile start(Swimlane swimlane) {
-		return factory.start(swimlane);
+	public Ftile start(Swimlane swimlane, Colors colors) {
+		return factory.start(swimlane, colors);
 	}
 
 	@Override
-	public Ftile end(Swimlane swimlane) {
-		return factory.end(swimlane);
+	public Ftile end(Swimlane swimlane, Colors colors) {
+		return factory.end(swimlane, colors);
 	}
 
 	@Override
-	public Ftile stop(Swimlane swimlane) {
-		return factory.stop(swimlane);
+	public Ftile stop(Swimlane swimlane, Colors colors) {
+		return factory.stop(swimlane, colors);
 	}
 
 	@Override
@@ -142,7 +142,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	@Override
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder) {
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype,
+			StyleBuilder styleBuilder) {
 		return factory.activity(label, swimlane, style, colors, stereotype, styleBuilder);
 	}
 
@@ -173,11 +174,12 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	@Override
-	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
-			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
-		return factory.repeat(boxStyleIn, stereotype, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors, backward,
-				noOut, incoming1, incoming2, currentStyleBuilder);
+	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
+			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2) {
+		return factory.repeat(boxStyleIn, stereotype, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors,
+				backward, noOut, incoming1, incoming2, currentStyleBuilder, colors2, stereotype2);
 	}
 
 	@Override
@@ -198,13 +200,14 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest) {
-		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
+		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest, colors,
+				endColors);
 	}
 
 	@Override
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
-		return factory.createParallel(all, style, label, in, out);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out, Colors colors) {
+		return factory.createParallel(all, style, label, in, out, colors);
 	}
 
 	@Override

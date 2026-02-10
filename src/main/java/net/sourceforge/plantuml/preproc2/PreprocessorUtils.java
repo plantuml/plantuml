@@ -36,7 +36,6 @@
  */
 package net.sourceforge.plantuml.preproc2;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,10 +46,10 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.DiagramDetector;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineSimple;
-import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -89,7 +88,7 @@ public class PreprocessorUtils {
 		return null;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 		if (filename.endsWith(".puml") == false)
 			filename = filename + ".puml";
@@ -105,7 +104,6 @@ public class PreprocessorUtils {
 		final String description = "[" + filename + "]";
 		return ReadLineReader.create(new InputStreamReader(is), description);
 	}
-	// ::done
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
 		Log.info(() -> "Loading sdlib " + filename);
@@ -115,8 +113,9 @@ public class PreprocessorUtils {
 
 		final String description = "<" + filename + ">";
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(new ByteArrayInputStream(puml), description))
-				return StartDiagramExtractReader.build(new ByteArrayInputStream(puml), description);
+			final ReadLine tmp = DiagramDetector.extractFromBytes(puml, description);
+			if (tmp != null)
+				return tmp;
 
 			return ReadLineReader.create(puml, description);
 		} catch (IOException e) {
@@ -141,8 +140,9 @@ public class PreprocessorUtils {
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
 			throws EaterException {
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset))
-				return StartDiagramExtractReader.build(url, s, suf, charset);
+			final ReadLine tmp = DiagramDetector.extractFromUrl(url, s, suf, charset);
+			if (tmp != null)
+				return tmp;
 
 			return getReaderInclude(url, s, charset);
 		} catch (IOException e) {
@@ -160,5 +160,6 @@ public class PreprocessorUtils {
 
 		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 	}
+	// ::done
 
 }

@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.project.lang.Words;
 
 public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 	// ::remove file when __HAXE__

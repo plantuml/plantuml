@@ -36,10 +36,11 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public class SpriteColorBuilder {
     // ::remove folder when __HAXE__
@@ -66,7 +67,7 @@ public class SpriteColorBuilder {
 		return result;
 	}
 
-	static public List<String> encodeColor(BufferedImage img) {
+	static public List<String> encodeColor(PortableImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
 

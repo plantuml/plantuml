@@ -39,7 +39,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.StringReader;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 public class Raw {
 
 	private static final int MAX = 2000;
-	static private BufferedImage im;
+	static private PortableImage im;
 	static private Graphics2D g2d;
 
 	public static Object convertToBlob(String mode, String text, String pathOut) {
@@ -106,7 +106,7 @@ public class Raw {
 			if (im == null) {
 				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,
 						stringBounder);
-				im = imageBuilder.getBufferedImage();
+				im = imageBuilder.getPortableImage();
 				g2d = im.createGraphics();
 			}
 
@@ -190,7 +190,7 @@ public class Raw {
 			if (im == null) {
 				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,
 						stringBounder);
-				im = imageBuilder.getBufferedImage();
+				im = imageBuilder.getPortableImage();
 				g2d = im.createGraphics();
 			}
 

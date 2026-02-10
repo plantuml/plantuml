@@ -42,7 +42,7 @@ public class jaws11 {
 		final File outputDirectory = new File("outputdev").getAbsoluteFile();
 		outputDirectory.mkdirs();
 
-		final SourceFileReader reader = new SourceFileReader(Defines.createWithFileName(file), file, outputDirectory,
+		final SourceFileReader reader = new SourceFileReader(false, Defines.createWithFileName(file), file, outputDirectory,
 				Arrays.asList("!pragma layout smetana"), "UTF-8", options);
 		final List<GeneratedImage> list = reader.getGeneratedImages();
 

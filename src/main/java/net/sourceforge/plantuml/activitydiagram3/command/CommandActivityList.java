@@ -81,11 +81,11 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 		}
 		
 		final Url url;
-		if (arg.get("URL", 0) == null) {
+		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {
 			url = null;
 		} else {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			url = urlBuilder.getUrl(arg.get("URL", 0));
+			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));
 		}
 		
 		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN, url, Colors.empty(),

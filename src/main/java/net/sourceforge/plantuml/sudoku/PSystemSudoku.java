@@ -55,19 +55,24 @@ public class PSystemSudoku extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (fileFormat.getFileFormat() == FileFormat.EPS)
 			return sud.writeImageEps(os);
 
 		if (fileFormat.getFileFormat() == FileFormat.LATEX
 				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE)
 			return sud.writeImageLatex(os, fileFormat.getFileFormat());
-		// ::done
 
 		if (fileFormat.getFileFormat() == FileFormat.SVG)
 			return sud.writeImageSvg(os);
 
 		return sud.writeImagePng(os);
+		// ::done
+
+		// ::uncomment when __TEAVM__
+		// throw new UnsupportedOperationException("TEAVM");
+		// ::done
+
 	}
 
 	@Override

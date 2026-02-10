@@ -313,7 +313,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final Message msg = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), p1, p2,
 				diagram.manageVariable(labels), config, messageNumber);
 		msg.setMulticast(getMulticasts(location, diagram, arg));
-		final String url = arg.get("URL", 0);
+		final String url = arg.get(UrlBuilder.URL_KEY, 0);
 		if (url != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url urlLink = urlBuilder.getUrl(url);

@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.error;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
@@ -232,7 +233,7 @@ public abstract class PSystemError extends PlainDiagram {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
@@ -249,14 +250,12 @@ public abstract class PSystemError extends PlainDiagram {
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
 		final TextBlock result = getGraphicalFormatted();
 
-		TextBlock udrawable;
-		if (getSource().getTotalLineCountLessThan5()) {
-			udrawable = addWelcome(result);
-		} else {
-			udrawable = result;
-		}
+		TextBlock udrawable = result;
+		// ::comment when __TEAVM__
+		if (getSource().getTotalLineCountLessThan5())
+			udrawable = addWelcome(udrawable);
+
 		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
-		// udrawable = addMessageAdopt(udrawable);
 		if (disableTimeBasedErrorDecorations) {
 			// do nothing
 		} else if (min == 1 || min == 8 || min == 13 || min == 55) {
@@ -265,18 +264,17 @@ public abstract class PSystemError extends PlainDiagram {
 			udrawable = addMessageLiberapay(udrawable);
 		} else if (min == 30 || min == 39 || min == 48) {
 			udrawable = addMessageDedication(udrawable);
-			// ::comment when __CORE__
 		} else if (getSource().containsIgnoreCase("arecibo")) {
 			udrawable = addMessageArecibo(udrawable);
-			// ::done
 		}
+		// ::done
 		return udrawable;
 	}
 
 	private void append(List<String> result, LineLocation lineLocation) {
-		if (lineLocation.getDescription() != null) {
+		if (lineLocation.getDescription() != null)
 			result.add("[From " + lineLocation.getDescription() + " (line " + (lineLocation.getPosition() + 1) + ") ]");
-		}
+
 	}
 
 	final public DiagramDescription getDescription() {
@@ -291,6 +289,7 @@ public abstract class PSystemError extends PlainDiagram {
 		return full.subList(full.size() - 1, full.size());
 	}
 
+	// ::comment when __TEAVM__
 	private TextBlock getWelcome() throws IOException {
 		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())
 				.getGraphicStrings();
@@ -302,10 +301,8 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
-		// ::comment when __CORE__
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		// ::done
 
 		final TextBlock message = getMessageLiberapay();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
@@ -314,10 +311,8 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
-		// ::comment when __CORE__
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		// ::done
 
 		final TextBlock message = getMessagePatreon();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
@@ -326,17 +321,14 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-		// ::comment when __CORE__
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		// ::done
 
 		final TextBlock message = getMessageDedication();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		return result;
 	}
 
-	// ::comment when __CORE__
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
 			return source;
@@ -352,33 +344,26 @@ public abstract class PSystemError extends PlainDiagram {
 		TextBlock result = TextBlockUtils.mergeLR(source, TextBlockUtils.fromUImage(message), VerticalAlignment.TOP);
 		return result;
 	}
-	// ::done
 
 	private TextBlock getMessageDedication() {
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
-		// ::comment when __CORE__
-		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
-		// ::done
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
 				"Details on <i>[[https://plantuml.com/dedication]]");
 
-		final UFont font = UFont.sansSerif(14);
+		final UFont font = UFontFactory.sansSerif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
 		final TextBlock text = TextBlockUtils
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
-		// ::comment when __CORE__
 		if (qrcode == null) {
-			// ::done
 			result = text;
-			// ::comment when __CORE__
 		} else {
 			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);
 			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
 		}
-		// ::done
 		return TextBlockUtils.addBackcolor(result, backColor);
 
 	}
@@ -389,7 +374,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final Display disp = Display.create("<b>Adopt-a-Word and put your message here!", " ",
 				"Details on <i>[[https://plantuml.com/adopt]]", " ");
 
-		final UFont font = UFont.sansSerif(14);
+		final UFont font = UFontFactory.sansSerif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
 		final TextBlock text = TextBlockUtils
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
@@ -405,41 +390,31 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		// ::comment when __CORE__
-		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/patreon", Color.BLACK, Color.WHITE));
-		// ::done
 
 		final int scale = 2;
 
 		final double imWidth;
 		final double imHeight;
-		// ::comment when __CORE__
 		if (qrcode == null) {
-			// ::done
 			imWidth = message.getWidth();
 			imHeight = message.getHeight();
-			// ::comment when __CORE__
 		} else {
 			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
-		// ::done
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				// ::comment when __CORE__
 				if (qrcode == null) {
-					// ::done
 					ug.apply(new UTranslate(1, 1)).draw(message);
-					// ::comment when __CORE__
 				} else {
 					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 							.scale(scale);
 					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
-				// ::done
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -463,42 +438,32 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		// ::comment when __CORE__
-		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/lp", Color.BLACK, Color.WHITE));
-		// ::done
 
 		final int scale = 2;
 
 		final double imWidth;
 		final double imHeight;
-		// ::comment when __CORE__
 		if (qrcode == null) {
-			// ::done
 			imWidth = message.getWidth();
 			imHeight = message.getHeight();
-			// ::comment when __CORE__
 		} else {
 			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
-		// ::done
 
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				// ::comment when __CORE__
 				if (qrcode == null) {
-					// ::done
 					ug.apply(new UTranslate(1, 1)).draw(message);
-					// ::comment when __CORE__
 				} else {
 					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 							.scale(scale);
 					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
-				// ::done
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -516,17 +481,19 @@ public abstract class PSystemError extends PlainDiagram {
 
 	}
 
+	private PortableImage smaller(PortableImage im) {
+		if (im == null)
+			return null;
+
+		final int nb = 1;
+		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);
+	}
+
+	// ::done
+
 	public int score() {
 		final int result = trace.size() * 10 + singleError.score();
 		return result;
-	}
-
-	private BufferedImage smaller(BufferedImage im) {
-		if (im == null) {
-			return null;
-		}
-		final int nb = 1;
-		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);
 	}
 
 }

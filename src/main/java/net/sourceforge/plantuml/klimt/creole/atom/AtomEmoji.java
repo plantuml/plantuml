@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class AtomEmoji extends AbstractAtom implements Atom {
+	// ::remove file when __TEAVM__
 
 	private static final double MAGIC = 24.0;
 	private final Emoji emoji;

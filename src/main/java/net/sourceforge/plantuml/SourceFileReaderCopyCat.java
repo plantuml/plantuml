@@ -41,16 +41,17 @@ import java.util.List;
 
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private final File outputDirectory;
 
-	public SourceFileReaderCopyCat(Defines defines, final File file, File outputDirectory, List<String> config,
-			String charset, FileFormatOption fileFormatOption) throws IOException {
-		super(file, fileFormatOption, defines, config, charset);
+	public SourceFileReaderCopyCat(boolean ignoreSuggestedName, Defines defines, final File file, File outputDirectory,
+			List<String> config, String charset, FileFormatOption fileFormatOption) throws IOException {
+		super(ignoreSuggestedName, file, fileFormatOption, defines, config, charset);
 		final String path = file.getParentFile().getPath();
 		this.outputDirectory = new File(outputDirectory, path).getAbsoluteFile();
 		if (outputDirectory.exists() == false)
@@ -59,10 +60,13 @@ public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements
 
 	@Override
 	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
-		String newName = blockUml.getFileOrDirname();
+		String newName = ignoreSuggestedName ? null : blockUml.getFileOrDirname();
 		if (newName == null)
 			newName = getFileName();
 		final SuggestedFile suggested = getSuggestedFile(outputDirectory, newName);
+		
+		Log.info(() -> "We are going to put data in " + suggested);
+		
 		suggested.getParentFile().mkdirs();
 		return suggested;
 	}

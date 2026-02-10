@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileWithUrl;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxEmoji;
 import net.sourceforge.plantuml.url.Url;
 
 public class FtileFactoryDelegatorAddUrl extends FtileFactoryDelegator {
@@ -50,9 +51,8 @@ public class FtileFactoryDelegatorAddUrl extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile addUrl(Ftile ftile, Url url) {
-		if (ftile instanceof FtileBox) {
+		if (ftile instanceof FtileBox || ftile instanceof FtileBoxEmoji)
 			return new FtileWithUrl(ftile, url);
-		}
 		return ftile;
 	}
 }

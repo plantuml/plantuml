@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -72,7 +72,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final List<String> strings;
 
-	private final BufferedImage image;
+	private final PortableImage image;
 	private final double imagePadding = 30;
 
 	private final GraphicPosition position;
@@ -111,21 +111,21 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);
 	}
 
-	public static TextBlock createBlackOnWhite(List<String> strings, BufferedImage image, GraphicPosition position) {
+	public static TextBlock createBlackOnWhite(List<String> strings, PortableImage image, GraphicPosition position) {
 		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, image, position,
 				CreoleMode.FULL_BUT_UNDERSCORE, false);
 	}
 
 	public static FontConfiguration sansSerif12(HColor color) {
-		return FontConfiguration.create(UFont.sansSerif(12), color, hyperlinkColor, useUnderlineForHyperlink);
+		return FontConfiguration.create(UFontFactory.sansSerif(12), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
 	public static FontConfiguration sansSerif14(HColor color) {
-		return FontConfiguration.create(UFont.sansSerif(14), color, hyperlinkColor, useUnderlineForHyperlink);
+		return FontConfiguration.create(UFontFactory.sansSerif(14), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
 	private static FontConfiguration monospaced14(HColor color) {
-		return FontConfiguration.create(UFont.monospaced(14), color, hyperlinkColor, useUnderlineForHyperlink);
+		return FontConfiguration.create(UFontFactory.monospaced(14), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
 	private final CreoleMode mode;
@@ -133,7 +133,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final boolean isCrash;
 
 	private GraphicStrings(List<String> strings, FontConfiguration fontConfiguration, HColor background,
-			BufferedImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {
+			PortableImage image, GraphicPosition position, CreoleMode mode, boolean isCrash) {
 		this.strings = strings;
 		this.background = background;
 		this.image = image;

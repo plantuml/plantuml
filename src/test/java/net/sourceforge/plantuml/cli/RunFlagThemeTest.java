@@ -15,7 +15,7 @@ class RunFlagThemeTest extends AbstractCliTest {
 	void testThemeFoo() throws Exception {
 		aliceBob_hello(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-svg", "-theme", "foo", tempDir.toAbsolutePath().toString() });
 		});
 
@@ -27,7 +27,7 @@ class RunFlagThemeTest extends AbstractCliTest {
 		final String content = new String(Files.readAllBytes(svgFile), java.nio.charset.StandardCharsets.UTF_8);
 
 		assertTrue(content.contains("<svg"));
-		assertTrue(content.contains("Cannot load foo"));
+		assertTrue(content.contains("Cannot load theme foo"));
 		assertTrue(content.contains("!theme foo"));
 	}
 

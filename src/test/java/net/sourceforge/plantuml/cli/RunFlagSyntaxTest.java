@@ -11,7 +11,7 @@ class RunFlagSyntaxTest extends AbstractCliTest {
 	@StdIo({ "Hello", "World" })
 	@Test
 	void test1(StdOut out) throws Exception {
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-syntax" });
 		});
 

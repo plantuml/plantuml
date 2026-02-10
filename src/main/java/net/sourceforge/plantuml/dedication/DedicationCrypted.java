@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.dedication;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.MTRandom;
@@ -62,7 +62,7 @@ public class DedicationCrypted implements Dedication {
 		this.tinyHash = tinyHash;
 	}
 
-	public synchronized BufferedImage getImage(final TinyHashableString sentence) {
+	public synchronized PortableImage getImage(final TinyHashableString sentence) {
 		final String line = sentence.getSentence();
 
 		if (line.length() < 40)
@@ -110,7 +110,7 @@ public class DedicationCrypted implements Dedication {
 			Noise.shuffle(current, rndMT);
 			current = Noise.reverse(current, rndMT.nextInt());
 
-			final BufferedImage img = SFile.getBufferedImageFromWebpButHeader(new ByteArrayInputStream(current));
+			final PortableImage img = SFile.getImageFromWebpButHeader(new ByteArrayInputStream(current));
 			this.solution = line;
 			return img;
 		} catch (Throwable t) {

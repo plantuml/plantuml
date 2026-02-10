@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDonorsFactory extends PSystemSingleLineFactory {
     // ::remove folder when __HAXE__
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

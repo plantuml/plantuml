@@ -21,7 +21,7 @@ class RunFlagFailFast2Test extends AbstractCliTest {
 	void test1(StdErr err) throws Exception {
 		syntax_error(tempDir, "test.txt");
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-failfast2", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 		assertTrue(err.capturedString().contains("Some diagram description contains errors"));
@@ -41,7 +41,7 @@ class RunFlagFailFast2Test extends AbstractCliTest {
 				.collect(Collectors.toCollection(TreeSet::new));
 		assertEquals(101, files0.size());
 
-		assertExit(200, () -> {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-failfast2", "-svg", tempDir.toAbsolutePath().toString() });
 		});
 		assertTrue(err.capturedString().contains("Some diagram description contains errors"));

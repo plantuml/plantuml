@@ -80,6 +80,22 @@ public final class DotStringFactory implements Moveable {
 		this.root = root;
 	}
 
+	public Bibliotekon getBibliotekon() {
+		return bibliotekon;
+	}
+
+	// ::uncomment when __TEAVM__
+//	public GraphvizVersion getGraphvizVersion() {
+//		throw new UnsupportedOperationException("TEAVM");
+//	}
+//	public void moveDelta(double deltaX, double deltaY) {
+//	throw new UnsupportedOperationException("TEAVM");
+//}
+	// ::done
+
+
+	// ::comment when __TEAVM__
+
 	private double getHorizontalDzeta(StringBounder stringBounder) {
 		double max = 0;
 		for (SvekEdge l : getBibliotekon().allLines()) {
@@ -89,10 +105,6 @@ public final class DotStringFactory implements Moveable {
 
 		}
 		return max / 10;
-	}
-
-	public Bibliotekon getBibliotekon() {
-		return bibliotekon;
 	}
 
 	private double getVerticalDzeta(StringBounder stringBounder) {
@@ -108,7 +120,6 @@ public final class DotStringFactory implements Moveable {
 		return max / 10;
 	}
 
-	// ::comment when __CORE__
 	private String createDotString(StringBounder stringBounder, DotMode dotMode, String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -199,7 +210,6 @@ public final class DotStringFactory implements Moveable {
 
 		return sb.toString();
 	}
-	// ::done
 
 	private void manageMinMaxCluster(final StringBuilder sb) {
 		final List<String> minPointCluster = new ArrayList<>();
@@ -254,12 +264,6 @@ public final class DotStringFactory implements Moveable {
 		return 35;
 	}
 
-	// ::uncomment when __CORE__
-	// public GraphvizVersion getGraphvizVersion() {
-	// return null;
-	// }
-	// ::done
-	// ::comment when __CORE__
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {
@@ -435,8 +439,9 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	/**
-	 * Insert horizontal corners in orthogonal edges to align them through label node centers.
-	 * This handles the case where edges entering and leaving a label node are horizontally misaligned.
+	 * Insert horizontal corners in orthogonal edges to align them through label
+	 * node centers. This handles the case where edges entering and leaving a label
+	 * node are horizontally misaligned.
 	 */
 	private void alignEdgesAtLabelNodes() {
 		// Find all nodes that are edge labels (typically named "transition_...")
@@ -482,7 +487,8 @@ public final class DotStringFactory implements Moveable {
 		final double edge0StartY = edge0.getDotPath().getStartPoint().getY();
 
 		SvekEdge edgeIn, edgeOut;
-		// If edge0 ends near the label (incoming to label), then edge1 starts from label (outgoing)
+		// If edge0 ends near the label (incoming to label), then edge1 starts from
+		// label (outgoing)
 		if (Math.abs(edge0EndY - labelCenterY) < Math.abs(edge0StartY - labelCenterY)) {
 			edgeIn = edge0;
 			edgeOut = edge1;
@@ -526,29 +532,28 @@ public final class DotStringFactory implements Moveable {
 			return;
 
 		// Rebuild incoming edge with corner to align at label center
-		final net.sourceforge.plantuml.klimt.shape.DotPath newPathIn = rebuildPathWithCorner(
-			inStart, inEnd, labelCenterX, labelCenterY, true
-		);
+		final net.sourceforge.plantuml.klimt.shape.DotPath newPathIn = rebuildPathWithCorner(inStart, inEnd,
+				labelCenterX, labelCenterY, true);
 		if (newPathIn != null) {
 			edgeIn.replaceDotPath(newPathIn);
 		}
 
 		// Rebuild outgoing edge with corner to align at label center
-		final net.sourceforge.plantuml.klimt.shape.DotPath newPathOut = rebuildPathWithCorner(
-			outStart, outEnd, labelCenterX, labelCenterY, false
-		);
+		final net.sourceforge.plantuml.klimt.shape.DotPath newPathOut = rebuildPathWithCorner(outStart, outEnd,
+				labelCenterX, labelCenterY, false);
 		if (newPathOut != null) {
 			edgeOut.replaceDotPath(newPathOut);
 		}
 	}
 
 	/**
-	 * Rebuild a path with a horizontal corner to route through the target X coordinate.
-	 * Creates straight line segments: start -> corner1 -> corner2 -> end
-	 * The horizontal segment is placed at the start/end Y coordinate to avoid obscuring the label.
+	 * Rebuild a path with a horizontal corner to route through the target X
+	 * coordinate. Creates straight line segments: start -> corner1 -> corner2 ->
+	 * end The horizontal segment is placed at the start/end Y coordinate to avoid
+	 * obscuring the label.
 	 */
-	private net.sourceforge.plantuml.klimt.shape.DotPath rebuildPathWithCorner(
-			XPoint2D start, XPoint2D end, double targetX, double targetY, boolean isIncoming) {
+	private net.sourceforge.plantuml.klimt.shape.DotPath rebuildPathWithCorner(XPoint2D start, XPoint2D end,
+			double targetX, double targetY, boolean isIncoming) {
 
 		final double startX = start.getX();
 		final double startY = start.getY();
@@ -561,8 +566,10 @@ public final class DotStringFactory implements Moveable {
 		}
 
 		// Create path with vertical alignment at targetX
-		// Pattern for incoming: start → vertical → horizontal → vertical (aligned at targetX) → end
-		// Pattern for outgoing: start → vertical (aligned at targetX) → horizontal → vertical → end
+		// Pattern for incoming: start → vertical → horizontal → vertical (aligned at
+		// targetX) → end
+		// Pattern for outgoing: start → vertical (aligned at targetX) → horizontal →
+		// vertical → end
 		final List<XCubicCurve2D> beziers = new ArrayList<>();
 
 		if (isIncoming) {
@@ -570,44 +577,31 @@ public final class DotStringFactory implements Moveable {
 			final double horizontalY = endY - 20;
 
 			// Segment 1: vertical from start down to horizontal routing level
-			beziers.add(new XCubicCurve2D(
-				startX, startY, startX, startY,
-				startX, horizontalY, startX, horizontalY
-			));
+			beziers.add(new XCubicCurve2D(startX, startY, startX, startY, startX, horizontalY, startX, horizontalY));
 
 			// Segment 2: horizontal jog from startX to targetX
-			beziers.add(new XCubicCurve2D(
-				startX, horizontalY, startX, horizontalY,
-				targetX, horizontalY, targetX, horizontalY
-			));
+			beziers.add(new XCubicCurve2D(startX, horizontalY, startX, horizontalY, targetX, horizontalY, targetX,
+					horizontalY));
 
-			// Segment 3: vertical aligned segment at targetX down to endY (path ends at targetX)
-			beziers.add(new XCubicCurve2D(
-				targetX, horizontalY, targetX, horizontalY,
-				targetX, endY, targetX, endY
-			));
+			// Segment 3: vertical aligned segment at targetX down to endY (path ends at
+			// targetX)
+			beziers.add(new XCubicCurve2D(targetX, horizontalY, targetX, horizontalY, targetX, endY, targetX, endY));
 
 		} else {
 			// Outgoing edge: vertical (aligned at targetX) → horizontal → vertical
 			final double horizontalY = startY + 20;
 
-			// Segment 1: vertical aligned segment at targetX from startY (path starts at targetX)
-			beziers.add(new XCubicCurve2D(
-				targetX, startY, targetX, startY,
-				targetX, horizontalY, targetX, horizontalY
-			));
+			// Segment 1: vertical aligned segment at targetX from startY (path starts at
+			// targetX)
+			beziers.add(
+					new XCubicCurve2D(targetX, startY, targetX, startY, targetX, horizontalY, targetX, horizontalY));
 
 			// Segment 2: horizontal jog from targetX to endX
-			beziers.add(new XCubicCurve2D(
-				targetX, horizontalY, targetX, horizontalY,
-				endX, horizontalY, endX, horizontalY
-			));
+			beziers.add(new XCubicCurve2D(targetX, horizontalY, targetX, horizontalY, endX, horizontalY, endX,
+					horizontalY));
 
 			// Segment 3: vertical down to actual end point
-			beziers.add(new XCubicCurve2D(
-				endX, horizontalY, endX, horizontalY,
-				endX, endY, endX, endY
-			));
+			beziers.add(new XCubicCurve2D(endX, horizontalY, endX, horizontalY, endX, endY, endX, endY));
 		}
 
 		return net.sourceforge.plantuml.klimt.shape.DotPath.fromBeziers(beziers);
@@ -626,7 +620,6 @@ public final class DotStringFactory implements Moveable {
 
 		return idx;
 	}
-	// ::done
 
 	public void moveDelta(double deltaX, double deltaY) {
 		for (SvekNode sh : getBibliotekon().allNodes())
@@ -639,5 +632,6 @@ public final class DotStringFactory implements Moveable {
 			cl.moveDelta(deltaX, deltaY);
 
 	}
+	// ::done
 
 }

@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
@@ -68,7 +69,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	final private File file;
@@ -82,22 +83,37 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	private final BlockUmlBuilder builder;
 	private int cpt;
 
+	protected final boolean ignoreSuggestedName;
+
 	protected final SuggestedFile getSuggestedFile(File outputDirectory, String newName) {
 		final File outFile = new File(outputDirectory, newName);
 		return SuggestedFile.fromOutputFile(outFile, getFileFormatOption().getFileFormat(), cpt++);
 	}
 
-	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List<String> config,
-			String charsetName) throws IOException {
+	public SourceFileReaderAbstract(boolean ignoreSuggestedName, File file, FileFormatOption fileFormatOption,
+			Defines defines, List<String> config, String charsetName) throws IOException {
 
 		if (file.exists() == false)
 			throw new IllegalArgumentException();
 
+		this.ignoreSuggestedName = ignoreSuggestedName;
 		this.file = file;
 		this.charset = charsetOrDefault(charsetName);
 		this.fileFormatOption = fileFormatOption;
 		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
 				SFile.fromFile(file.getAbsoluteFile().getParentFile()), file.getName());
+	}
+
+	@Override
+	final public void updateStatus(ExitStatus errorStatus) {
+		errorStatus.goesHasFiles();
+		for (BlockUml blockUml : builder.getBlockUmls()) {
+			errorStatus.goesHasBlocks();
+			final Diagram system = blockUml.getDiagram();
+			if (system instanceof PSystemError)
+				errorStatus.goesHasErrors();
+		}
+
 	}
 
 	protected final FileFormatOption getFileFormatOption() {
@@ -175,6 +191,31 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 			final Diagram system;
 			try {
 				system = blockUml.getDiagram();
+
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
+						&& system instanceof PSystemError)
+					continue;
+
+				// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
+				final List<FileImageData> exportDiagrams;
+				if (noErrorImage && system instanceof PSystemError) {
+					exportDiagrams = new ArrayList<FileImageData>();
+					exportDiagrams.add(
+							new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
+				} else
+					exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
+
+				if (exportDiagrams.size() > 1)
+					cpt += exportDiagrams.size() - 1;
+
+				for (FileImageData fdata : exportDiagrams) {
+					final String desc = "[" + file.getName() + "] " + system.getDescription();
+					final SFile f = fdata.getFile();
+					exportWarnOrErrIfWord(f, system);
+					final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());
+					result.add(generatedImage);
+				}
+
 			} catch (Throwable t) {
 				Logme.error(t);
 				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
@@ -182,30 +223,6 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 					continue;
 
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
-			}
-
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SILENTLY_COMPLETELY_IGNORE_ERRORS)
-					&& system instanceof PSystemError)
-				continue;
-
-			// GlobalConfig.getInstance().logData(SFile.fromFile(file), system);
-			final List<FileImageData> exportDiagrams;
-			if (noErrorImage && system instanceof PSystemError) {
-				exportDiagrams = new ArrayList<FileImageData>();
-				exportDiagrams
-						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
-			} else
-				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
-
-			if (exportDiagrams.size() > 1)
-				cpt += exportDiagrams.size() - 1;
-
-			for (FileImageData fdata : exportDiagrams) {
-				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final SFile f = fdata.getFile();
-				exportWarnOrErrIfWord(f, system);
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());
-				result.add(generatedImage);
 			}
 
 		}

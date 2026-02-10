@@ -35,7 +35,7 @@
 package net.sourceforge.plantuml.version;
 
 public enum LicenseType {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	NONE, NAMED, DISTRIBUTOR, UNKNOWN;
 

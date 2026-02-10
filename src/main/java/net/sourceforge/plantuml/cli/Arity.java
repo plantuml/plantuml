@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cli;
 
 public enum Arity {
+	// ::remove file when __TEAVM__
 
 	/** Option without any value, e.g. -verbose */
 	UNARY_BOOLEAN,

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemAppleTwoFactory extends PSystemSingleLineFactory {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

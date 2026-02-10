@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.api.v2;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Optional;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 /**
  * Provides an interface to retrieve the results of a diagram processing
@@ -85,7 +85,7 @@ public interface DiagramReturn {
 	 * @throws IOException if there is an error during the image generation process, such as an issue
 	 *         writing to a file or generating the image from the diagram.
 	 */
-	public BufferedImage asImage() throws IOException;
+	public PortableImage asImage() throws IOException;
 
 	/**
 	 * Retrieves the root cause of the error occurred during the diagram processing operation.

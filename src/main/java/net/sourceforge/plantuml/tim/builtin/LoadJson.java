@@ -95,7 +95,8 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * @author Aljoscha Rittner
  */
 public class LoadJson extends SimpleReturnFunction {
-
+	// ::remove file when __TEAVM__
+	
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%load_json", 3);
 
 	private static final String VALUE_CHARSET_DEFAULT = "UTF-8";

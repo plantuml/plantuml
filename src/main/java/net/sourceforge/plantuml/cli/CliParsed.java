@@ -48,7 +48,8 @@ import net.sourceforge.plantuml.utils.Peeker;
 import net.sourceforge.plantuml.utils.PeekerUtils;
 
 public class CliParsed {
-
+	// ::remove file when __TEAVM__
+	
 	private final Map<CliFlag, List<Object>> lists = new EnumMap<>(CliFlag.class);
 	private final Map<CliFlag, Map<String, String>> maps = new EnumMap<>(CliFlag.class);
 	private final List<String> args = new ArrayList<>();

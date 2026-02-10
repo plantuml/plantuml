@@ -35,10 +35,12 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class SentenceTaskStartsOnlyRelative extends SentenceSimple<GanttDiagram> {
 
@@ -50,9 +52,9 @@ public class SentenceTaskStartsOnlyRelative extends SentenceSimple<GanttDiagram>
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		final Day start = (Day) complement;
+		final LocalDate start = (LocalDate) complement;
 
-		task.setStart(start);
+		task.setStart(TimePoint.ofStartOfDay(start));
 		return CommandExecutionResult.ok();
 	}
 

@@ -243,7 +243,8 @@ public class ConditionalBuilder {
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
 
-		final UStroke thickness = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()).getStroke();
+		final UStroke thickness = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder())
+				.getStroke();
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);
 
 		final Ftile shape1;
@@ -296,7 +297,8 @@ public class ConditionalBuilder {
 			final TextBlock tbout2 = out2 == null ? null
 					: out2.create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
 							CreoleMode.SIMPLE_LINE);
-			FtileDiamond tmp = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane);
+			final HColor color = branch2.getColor() == null ? backColor : branch2.getColor();
+			FtileDiamond tmp = new FtileDiamond(tile1.skinParam(), color, borderColor, swimlane);
 			tmp = useNorth ? tmp.withNorth(tbout1) : tmp.withWest(tbout1);
 			tmp = tmp.withEast(tbout2);
 			shape2 = tmp;

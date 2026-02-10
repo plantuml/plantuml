@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chronology;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -61,17 +62,12 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
-import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
-import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskGroup;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
-import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
-import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealOrigin;
@@ -81,12 +77,12 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
+public class ChronologyDiagram extends TitledDiagram implements WithSprite, GanttStyle {
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
 
-	//	private final List<GanttConstraint> constraints = new ArrayList<>();
+	// private final List<GanttConstraint> constraints = new ArrayList<>();
 	private final HColorSet colorSet = HColorSet.instance();
 //
 //	private final OpenClose openClose = new OpenClose();
@@ -107,8 +103,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	private Day today;
 //	private double totalHeightWithoutFooter;
-	private Day min;
-	private Day max;
+	private LocalDate min;
+	private LocalDate max;
 	private TimeScaleChronology timeScale;
 //
 //	private Day printStart;
@@ -188,7 +184,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		initMinMax();
 
-		final TimeHeader timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,
+		final TimeHeader2 timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,
 				this.timeScale);
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
 				stringBounder);
@@ -255,8 +251,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //
 //	}
 
-	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
+	private TimeHeaderParameters2 thParam() {
+		return new TimeHeaderParameters2(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);
 	}
 
 //	private Map<Day, HColor> colorDays() {
@@ -371,9 +367,10 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			final String disp = task.getCode().getDisplay();
-			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(), getSkinParam());
-			final double height = draw.getFullHeightTask(stringBounder);
-			y = y.addAtLeast(height);
+//			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(),
+//					getSkinParam());
+//			final double height = draw.getFullHeightTask(stringBounder);
+//			y = y.addAtLeast(height);
 //			if (task instanceof TaskSeparator) {
 //				final TaskSeparator taskSeparator = (TaskSeparator) task;
 //				draw = new TaskDrawSeparator(taskSeparator.getName(), timeScale, y, min, max, task.getStyleBuilder(),
@@ -398,7 +395,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //			if (task.getRow() == null)
 //				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
 //
-			draws.put(task, draw);
+//			draws.put(task, draw);
 		}
 //		origin.compileNow();
 //		magicPush(stringBounder);
@@ -484,23 +481,20 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		}
 		for (Task task : tasks.values()) {
 			if (this.min == null || this.max == null) {
-				this.min = task.getStart();
-				this.max = task.getEnd();
+				this.min = task.getStart().toDay();
+				this.max = task.getEnd().toDay();
 				continue;
 
 			}
-			if (this.min.compareTo(task.getStart()) > 0)
-				this.min = task.getStart();
-			if (this.max.compareTo(task.getEnd()) < 0)
-				this.max = task.getEnd();
+			if (this.min.compareTo(task.getStart().toDay()) > 0)
+				this.min = task.getStart().toDay();
+			if (this.max.compareTo(task.getEnd().toDay()) < 0)
+				this.max = task.getEnd().toDay();
 		}
 
-		this.min = this.min.roundDayDown();
-		this.max = this.max.roundDayUp();
-
 		this.timeScale = new TimeScaleChronology(1000);
-		this.timeScale.setMin(this.min.getMillis());
-		this.timeScale.setMax(this.max.getMillis());
+		this.timeScale.setMin(this.min.toEpochDay());
+		this.timeScale.setMax(this.max.toEpochDay());
 	}
 
 //	public Day getThenDate() {
@@ -751,17 +745,18 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //		return CommandExecutionResult.ok();
 //	}
 
-	public LoadPlanable getDefaultPlan() {
+	// @Override
+	public PiecewiseConstant getDefaultPlan() {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+	// @Override
 	public TaskDraw getTaskDraw(Task task) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	// @Override
 	public HColorSet getIHtmlColorSet() {
 		return colorSet;
 	}

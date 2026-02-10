@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.eggs;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class SentenceProducer {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final String secret;
 

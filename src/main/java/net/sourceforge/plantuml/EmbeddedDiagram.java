@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -78,55 +78,42 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		if (s.startsWith(EMBEDDED_START) == false)
 			return null;
 
-		if (s.equals(EMBEDDED_START))
-			return "uml";
-
-		if (s.equals(EMBEDDED_START + "ditaa"))
-			return "ditaa";
-
-		if (s.equals(EMBEDDED_START + "uml"))
-			return "uml";
-
-		if (s.equals(EMBEDDED_START + "wbs"))
-			return "wbs";
-
-		if (s.equals(EMBEDDED_START + "mindmap"))
-			return "mindmap";
-
-		if (s.equals(EMBEDDED_START + "gantt"))
-			return "gantt";
-
-		if (s.equals(EMBEDDED_START + "json"))
-			return "json";
-
-		if (s.equals(EMBEDDED_START + "yaml"))
-			return "yaml";
-
-		if (s.equals(EMBEDDED_START + "wire"))
-			return "wire";
-
-		if (s.equals(EMBEDDED_START + "creole"))
-			return "creole";
-
-		if (s.equals(EMBEDDED_START + "board"))
-			return "board";
-
-		if (s.equals(EMBEDDED_START + "ebnf"))
-			return "ebnf";
-
-		if (s.equals(EMBEDDED_START + "regex"))
-			return "regex";
-
-		if (s.equals(EMBEDDED_START + "files"))
-			return "files";
-
-		if (s.equals(EMBEDDED_START + "chronology"))
-			return "chronology";
-
-		if (s.equals(EMBEDDED_START + "chen"))
-			return "chen";
-
-		return null;
+		switch (s) {
+			case EMBEDDED_START:
+				return "uml";
+			case EMBEDDED_START + "ditaa":
+				return "ditaa";
+			case EMBEDDED_START + "uml":
+				return "uml";
+			case EMBEDDED_START + "wbs":
+				return "wbs";
+			case EMBEDDED_START + "mindmap":
+				return "mindmap";
+			case EMBEDDED_START + "gantt":
+				return "gantt";
+			case EMBEDDED_START + "json":
+				return "json";
+			case EMBEDDED_START + "yaml":
+				return "yaml";
+			case EMBEDDED_START + "wire":
+				return "wire";
+			case EMBEDDED_START + "creole":
+				return "creole";
+			case EMBEDDED_START + "board":
+				return "board";
+			case EMBEDDED_START + "ebnf":
+				return "ebnf";
+			case EMBEDDED_START + "regex":
+				return "regex";
+			case EMBEDDED_START + "files":
+				return "files";
+			case EMBEDDED_START + "chronology":
+				return "chronology";
+			case EMBEDDED_START + "chen":
+				return "chen";
+			default:
+				return null;
+		}
 	}
 
 	public static EmbeddedDiagram createAndSkip(String type, Iterator<CharSequence> it, ISkinSimple skinParam) {
@@ -152,7 +139,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
 	private final List<StringLocated> list;
 	private final ISkinSimple skinParam;
-	private BufferedImage image;
+	private PortableImage image;
 	private String svg;
 
 	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> system) {
@@ -175,7 +162,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 				final UImageSvg svg = new UImageSvg(imageSvg, 1);
 				return new XDimension2D(svg.getWidth(), svg.getHeight());
 			}
-			final BufferedImage im = getImage();
+			final PortableImage im = getImage();
 			return new XDimension2D(im.getWidth(), im.getHeight());
 		} catch (IOException e) {
 			Logme.error(e);
@@ -194,7 +181,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 				ug.draw(svg);
 				return;
 			}
-			final BufferedImage im = getImage();
+			final PortableImage im = getImage();
 			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 			ug.draw(image);
 		} catch (IOException e) {
@@ -207,7 +194,8 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
 	private String getImageSvg() throws IOException, InterruptedException {
 		if (svg == null)
-			svg = getImageSvgSlow();
+			svg = getImageSvgSlow().replaceAll("<\\?plantuml.+?\\?>", "");
+
 		return svg;
 
 	}
@@ -220,13 +208,13 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		return new String(os.toByteArray());
 	}
 
-	private BufferedImage getImage() throws IOException, InterruptedException {
+	private PortableImage getImage() throws IOException, InterruptedException {
 		if (image == null)
 			image = getImageSlow();
 		return image;
 	}
 
-	private BufferedImage getImageSlow() throws IOException, InterruptedException {
+	private PortableImage getImageSlow() throws IOException, InterruptedException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
@@ -239,8 +227,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final Previous previous = skinParam == null ? Previous.createEmpty()
-				: Previous.createFrom(skinParam.values());
+		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());
 		final BlockUml blockUml = new BlockUml(PathSystem.fetch(), list, Defines.createEmpty(), previous, null, null);
 		return blockUml.getDiagram();
 

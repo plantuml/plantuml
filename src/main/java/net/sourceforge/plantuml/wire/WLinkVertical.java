@@ -42,7 +42,8 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -78,7 +79,7 @@ public class WLinkVertical {
 	}
 
 	private TextBlock getTextBlock() {
-		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.sansSerif(10))
+		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(10))
 				.changeColor(color);
 		return label.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}

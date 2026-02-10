@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.version.Version;
 
 public class TikzGraphics {
     // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	// https://www.sharelatex.com/blog/2013/08/27/tikz-series-pt1.html
 	// http://cremeronline.com/LaTeX/minimaltikz.pdf

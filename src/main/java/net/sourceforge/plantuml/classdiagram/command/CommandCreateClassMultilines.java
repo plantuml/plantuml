@@ -189,7 +189,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			entity.setStereostyle(stereotype);
 		}
 
-		final String urlString = line0.get("URL", 0);
+		final String urlString = line0.get(UrlBuilder.URL_KEY, 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);
@@ -337,7 +337,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			entity.setStereostyle(stereotype);
 		}
 
-		final String urlString = line0.get("URL", 0);
+		final String urlString = line0.get(UrlBuilder.URL_KEY, 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);

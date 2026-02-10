@@ -3,7 +3,7 @@ package net.sourceforge.plantuml.dedication;
 import java.math.BigInteger;
 
 public class BlumBlumShub {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private static final BigInteger two = BigInteger.valueOf(2L);
 

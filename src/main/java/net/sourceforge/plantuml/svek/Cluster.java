@@ -149,10 +149,11 @@ public class Cluster implements Moveable {
 		this(location, diagram, null, colorSequence, root);
 	}
 
-	private Cluster(LineLocation location, CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, Entity group) {
+	private Cluster(LineLocation location, CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence,
+			Entity group) {
 		if (group == null)
 			throw new IllegalStateException();
-		
+
 		this.location = location;
 		this.parentCluster = parentCluster;
 		this.group = group;
@@ -241,7 +242,8 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableList(children);
 	}
 
-	public Cluster createChild(LineLocation location, ClusterHeader clusterHeader, ColorSequence colorSequence, Entity g) {
+	public Cluster createChild(LineLocation location, ClusterHeader clusterHeader, ColorSequence colorSequence,
+			Entity g) {
 		final Cluster child = new Cluster(location, diagram, this, colorSequence, g);
 		child.clusterHeader = clusterHeader;
 		this.children.add(child);
@@ -323,8 +325,9 @@ public class Cluster implements Moveable {
 
 		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 
-		// ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
-		
+		// ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" +
+		// fullName));
+
 		final UGroup uGroup = new UGroup(group.getLocation());
 		uGroup.put(UGroupType.CLASS, "cluster");
 		uGroup.put(UGroupType.ID, "cluster_" + fullName);
@@ -332,7 +335,6 @@ public class Cluster implements Moveable {
 		uGroup.put(UGroupType.DATA_UID, group.getUid());
 		uGroup.put(UGroupType.DATA_QUALIFIED_NAME, group.getQuark().getQualifiedName());
 		ug.startGroup(uGroup);
-		
 
 		final Url url = group.getUrl99();
 		if (url != null)
@@ -498,7 +500,7 @@ public class Cluster implements Moveable {
 		this.rectangleArea = RectangleArea.build(min, max);
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public boolean printCluster1(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder) {
 		final List<SvekNode> tmp = getNodesOrderedTop(lines);
 		if (tmp.size() == 0)
@@ -697,19 +699,6 @@ public class Cluster implements Moveable {
 		return backColor;
 	}
 
-//	double checkFolderPosition(XPoint2D pt, StringBounder stringBounder) {
-//		if (getClusterPosition().isPointJustUpper(pt)) {
-//
-//			final XDimension2D dimTitle = clusterHeader.getTitle().calculateDimension(stringBounder);
-//
-//			if (pt.getX() < getClusterPosition().getMinX() + dimTitle.getWidth())
-//				return 0;
-//
-//			return getClusterPosition().getMinY() - pt.getY() + dimTitle.getHeight();
-//		}
-//		return 0;
-//	}
-
 	public final int getColorNoteTop() {
 		return colorNoteTop;
 	}
@@ -755,25 +744,5 @@ public class Cluster implements Moveable {
 			}
 		};
 	}
-
-	// public XPoint2D projection(double x, double y) {
-	// final double v1 = Math.abs(minX - x);
-	// final double v2 = Math.abs(maxX - x);
-	// final double v3 = Math.abs(minY - y);
-	// final double v4 = Math.abs(maxY - y);
-	// if (v1 <= v2 && v1 <= v3 && v1 <= v4) {
-	// return new XPoint2D(minX, y);
-	// }
-	// if (v2 <= v1 && v2 <= v3 && v2 <= v4) {
-	// return new XPoint2D(maxX, y);
-	// }
-	// if (v3 <= v1 && v3 <= v2 && v3 <= v4) {
-	// return new XPoint2D(x, minY);
-	// }
-	// if (v4 <= v1 && v4 <= v1 && v4 <= v3) {
-	// return new XPoint2D(x, maxY);
-	// }
-	// throw new IllegalStateException();
-	// }
 
 }

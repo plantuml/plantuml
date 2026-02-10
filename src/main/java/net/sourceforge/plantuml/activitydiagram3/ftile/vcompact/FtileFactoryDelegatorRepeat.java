@@ -76,15 +76,20 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
 			Display startLabel, final Ftile repeat, Display test, Display yes, Display out, Colors colors,
 			Ftile backward, boolean noOut, LinkRendering incoming1, LinkRendering incoming2,
-			StyleBuilder currentStyleBuilder) {
-
+			StyleBuilder currentStyleBuilder, Colors colors2, Stereotype stereotype2) {
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
 		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype)
 				.getMergedStyle(currentStyleBuilder);
+		final Style styleDiamond2 = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype2)
+				.getMergedStyle(currentStyleBuilder);
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
-		final HColor diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
+		final HColor diamondColor1 = colors.getColor(styleDiamond, PName.BackGroundColor,
+				skinParam().getIHtmlColorSet());
+		final HColor diamondColor2 = colors2.isEmpty() ? diamondColor1
+				: colors2.getColor(styleDiamond2, PName.BackGroundColor, skinParam().getIHtmlColorSet());
+
 		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
 		final FontConfiguration fcDiamond = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
 		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
@@ -95,13 +100,13 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final Ftile entry = getEntry(swimlane, startLabel, colors, boxStyleIn, stereotype);
 
 		Ftile result = FtileRepeat.create(swimlane, swimlaneOut, entry, repeat, test, yes, out, borderColor,
-				diamondColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond, fcArrow,
-				backward, noOut, incoming1, incoming2);
+				diamondColor1, diamondColor2, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(),
+				fcDiamond, fcArrow, backward, noOut, incoming1, incoming2);
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
 
-			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane);
+			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane);
 			result = assembly(FtileUtils.addHorizontalMargin(result, 10, 0), diamondBreak);
 			final Genealogy genealogy = new Genealogy(result);
 

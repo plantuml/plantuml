@@ -106,6 +106,7 @@ public class ReportLog implements Iterable<String> {
 			add("An error has occured!");
 		else
 			add("An error has occured : " + exception);
+		// ::comment when __TEAVM__
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		add("<i>" + quote);
 		addEmptyLine();
@@ -115,6 +116,7 @@ public class ReportLog implements Iterable<String> {
 		checkOldVersionWarning();
 		add("Diagram size: " + lines(fullDiagramText) + " lines / " + fullDiagramText.length() + " characters.");
 		addEmptyLine();
+		// ::done
 	}
 
 	private int lines(String text) {
@@ -144,7 +146,7 @@ public class ReportLog implements Iterable<String> {
 	}
 
 	public void addProperties() {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		addAll(OptionPrint.interestingProperties());
 		addAll(OptionPrint.interestingValues());
 		// ::done

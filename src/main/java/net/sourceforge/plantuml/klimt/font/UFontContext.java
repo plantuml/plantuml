@@ -44,13 +44,13 @@ public enum UFontContext {
 
 	EPS, SVG, G2D, TIKZ;
 
-	// ::comment when __HAXE__
+	// ::comment when __HAXE__ or __TEAVM__
 	public TextLayout createTextLayout(UText shape) {
 		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
 	}
 
 	public TextLayout createTextLayout(UFont font, String text) {
-		return new TextLayout(text, font.getUnderlayingFont(text), FileFormat.gg.getFontRenderContext());
+		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());
 	}
 	// ::done
 }

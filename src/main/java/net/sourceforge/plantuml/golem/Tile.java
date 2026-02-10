@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -59,7 +61,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 	private static double SIZE = 40;
 	private final int num;
 
-	private final UFont numberFont = UFont.monospaced(11);
+	private final UFont numberFont = UFontFactory.monospaced(11);
 	private final FontConfiguration fc = FontConfiguration.blackBlueTrue(numberFont);
 	private final Map<TileGeometry, TileArea> geometries;
 

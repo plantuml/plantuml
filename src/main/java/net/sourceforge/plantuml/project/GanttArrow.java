@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.data.TaskDrawRegistryData;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
@@ -62,11 +63,11 @@ public class GanttArrow implements UDrawable {
 
 	private final HColorSet colorSet;
 	private final Style style;
-	private final ToTaskDraw toTaskDraw;
+	private final TaskDrawRegistryData toTaskDraw;
 	private final StyleBuilder styleBuilder;
 
 	public GanttArrow(HColorSet colorSet, Style style, TimeScale timeScale, TaskInstant source, TaskInstant dest,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
+			TaskDrawRegistryData toTaskDraw, StyleBuilder styleBuilder) {
 		this.styleBuilder = styleBuilder;
 		this.toTaskDraw = toTaskDraw;
 		this.style = style;

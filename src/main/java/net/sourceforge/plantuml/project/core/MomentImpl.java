@@ -35,23 +35,24 @@
  */
 package net.sourceforge.plantuml.project.core;
 
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
 public class MomentImpl implements Moment {
 
-	private final Day start;
-	private final Day end;
+	private final TimePoint start;
+	private final TimePoint end;
 
-	public MomentImpl(Day start, Day end) {
+	public MomentImpl(TimePoint start, TimePoint end) {
 		this.start = start;
 		this.end = end;
 	}
 
-	public Day getStart() {
+	public TimePoint getStart() {
 		return start;
 	}
-
-	public Day getEnd() {
+	
+	@Override
+	public TimePoint getEnd() {
 		return end;
 	}
 

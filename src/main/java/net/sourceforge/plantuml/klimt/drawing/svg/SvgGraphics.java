@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
 
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,10 +67,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -83,6 +84,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
@@ -911,7 +913,7 @@ public class SvgGraphics {
 
 	}
 
-	public void svgImage(BufferedImage image, double x, double y) throws IOException {
+	public void svgImage(PortableImage image, double x, double y) throws IOException {
 		if (hidden == false) {
 			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
@@ -996,7 +998,7 @@ public class SvgGraphics {
 		return svg;
 	}
 
-	private String toBase64(BufferedImage image) throws IOException {
+	private String toBase64(PortableImage image) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		SImageIO.write(image, "png", baos);
 		final byte data[] = baos.toByteArray();

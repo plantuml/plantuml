@@ -44,7 +44,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.cli.OptionPrint;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -62,6 +62,8 @@ import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class PSystemVersion extends PlainStringsDiagram {
+	// ::remove file when __TEAVM__
+
 
 	PSystemVersion(UmlSource source, boolean withImage, List<String> args, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
@@ -76,71 +78,71 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 	}
 
-	private PSystemVersion(UmlSource source, List<String> args, BufferedImage image, PreprocessingArtifact preprocessing) {
+	private PSystemVersion(UmlSource source, List<String> args, PortableImage image, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		this.strings.addAll(args);
 		this.image = image;
 		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
 	}
 
-	public static BufferedImage getPlantumlImage() {
+	public static PortableImage getPlantumlImage() {
 		return getImage("logo.png");
 	}
 
-	public static BufferedImage getTime01() {
+	public static PortableImage getTime01() {
 		return getImage("time01.png");
 	}
 
-	public static BufferedImage getTime15() {
+	public static PortableImage getTime15() {
 		return getImage("time15.png");
 	}
 
-	public static BufferedImage getCharlieImage() {
+	public static PortableImage getCharlieImage() {
 		return getImage("charlie.png");
 	}
 
-	public static BufferedImage getPlantumlSmallIcon() {
+	public static PortableImage getPlantumlSmallIcon() {
 		return getImage("favicon.png");
 	}
 
 	// ::comment when __CORE__
-	public static BufferedImage getArecibo() {
+	public static PortableImage getArecibo() {
 		return getImage("arecibo.png");
 	}
 
-	public static BufferedImage getDotc() {
+	public static PortableImage getDotc() {
 		return getImage("dotc.png");
 	}
 
-	public static BufferedImage getDotd() {
+	public static PortableImage getDotd() {
 		return getImage("dotd.png");
 	}
 
-	public static BufferedImage getApple2Image() {
+	public static PortableImage getApple2Image() {
 		return getImageWebp("apple2.png");
 	}
 	// ::done
 
-	private static BufferedImage getImage(final String name) {
+	private static PortableImage getImage(final String name) {
 		try {
 			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
-			final BufferedImage image = SImageIO.read(is);
+			final PortableImage image = SImageIO.read(is);
 			is.close();
 			return image;
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	// ::comment when __CORE__
-	private static BufferedImage getImageWebp(final String name) {
+	private static PortableImage getImageWebp(final String name) {
 		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
-			return SFile.getBufferedImageFromWebpButHeader(is);
+			return SFile.getImageFromWebpButHeader(is);
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 	// ::done
 
@@ -150,7 +152,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		if (transparentIcon != null) {
 			return transparentIcon;
 		}
-		final BufferedImage ico = getPlantumlSmallIcon();
+		final PortableImage ico = getPlantumlSmallIcon();
 		if (ico == null) {
 			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 		}
@@ -274,7 +276,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	// ::comment when __CORE__
 	public static PSystemVersion createKeyDistributor(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
-		BufferedImage im = null;
+		PortableImage im = null;
 		final List<String> strings = new ArrayList<>();
 		if (license == null) {
 			strings.add("No license found");

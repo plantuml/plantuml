@@ -39,10 +39,13 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStop3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -55,12 +58,18 @@ public class CommandStop3 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandStop3.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("stop"), //
 				new RegexLeaf(";?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		diagram.stop();
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		
+		diagram.stop(colors);
 		return CommandExecutionResult.ok();
 	}
 

@@ -92,7 +92,7 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 		final String code = arg.get("CODE", 0);
 		String full = arg.get("FULL", 0);
 		if (full == null)
-			full = code;
+			full = "";
 
 		Stereotype stereotype = null;
 		if (arg.get("STEREOTYPE", 0) != null)

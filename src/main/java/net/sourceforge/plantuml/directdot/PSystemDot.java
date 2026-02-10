@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDot extends AbstractPSystem {
-	// ::remove folder when __CORE__
+	// ::remove folder when __CORE__ or __TEAVM__
 
 	private final String data;
 
@@ -74,8 +74,16 @@ public class PSystemDot extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 
-		if (fileFormat.getFileFormat() == FileFormat.SVG)
+		if (fileFormat.getFileFormat() == FileFormat.SVG) {
+			final String svg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+					+ "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+					+ "<a xlink:href=\"https://github.com/plantuml/plantuml/issues/2495\">\n"
+					+ "<text x=\"10\" y=\"30\" font-family=\"sans-serif\" font-size=\"14\" fill=\"blue\" text-decoration=\"underline\">This feature has been suppressed</text>\n"
+					+ "</a>\n"
+					+ "</svg>";
+			os.write(svg.getBytes("UTF-8"));
 			return ImageDataSimple.ok();
+		}
 
 		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,
 				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));

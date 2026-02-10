@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt.factory;
 
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -56,7 +57,7 @@ public class ElementFactoryTab extends AbstractElementFactoryComplex {
 		final String header = getDataSource().next().getElement();
 		assert header.startsWith("{/");
 
-		final UFont font = UFont.byDefault(12);
+		final UFont font = UFontFactory.byDefault(12);
 		final ElementTabBar result = new ElementTabBar(font, getDictionary());
 
 		while (getDataSource().peek(0).getElement().equals("}") == false) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class Base64OutputStream extends OutputStream {
+	// ::remove file when __TEAVM__
 
 	private final StringBuilder sb = new StringBuilder(2048);
 

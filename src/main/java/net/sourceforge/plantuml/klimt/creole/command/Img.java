@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TileImage;
@@ -105,7 +105,7 @@ public class Img implements HtmlCommand {
 					if (tmp == null)
 						return new PlainText("(Cannot decode: " + src + ")");
 
-					final BufferedImage read = tmp.readRasterImageFromURL();
+					final PortableImage read = tmp.readRasterImageFromURL();
 					if (read == null)
 						return new PlainText("(Cannot decode: " + src + ")");
 
@@ -120,7 +120,7 @@ public class Img implements HtmlCommand {
 
 				return new Img(new TileImageSvg(tmp, 1));
 			}
-			final BufferedImage read = f.readRasterImageFromFile();
+			final PortableImage read = f.readRasterImageFromFile();
 			if (read == null)
 				return new PlainText("(Cannot decode: " + f + ")");
 

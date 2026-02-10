@@ -98,14 +98,16 @@ public final class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
-		// ::uncomment when __CORE__
-//		final String res = "/skin/" + filename;
-//		final InputStream is = StyleLoader.class.getResourceAsStream(res);
-//		return is;
+		InputStream is = null;
+		
+		// ::uncomment when __TEAVM__
+		// System.out.println("StyleLoader! "+filename);
+		// is = net.sourceforge.plantuml.teavm.EmbeddedResources.openPlantumlSkin();
+		// System.out.println("is="+is);
 		// ::done
+		
 
-		// ::comment when __CORE__
-		InputStream internalIs = null;
+		// ::comment when __TEAVM__
 		SFile localFile = new SFile(filename);
 		Log.info(() -> "Trying to load style " + filename);
 		try {
@@ -118,18 +120,19 @@ public final class StyleLoader {
 		final SFile localFile2 = localFile;
 		if (localFile.exists()) {
 			Log.info(() -> "File found : " + localFile2.getPrintablePath());
-			internalIs = localFile.openFile();
+			is = localFile.openFile();
 		} else {
 			Log.info(() -> "File not found : " + localFile2.getPrintablePath());
 			final String res = "/skin/" + filename;
-			internalIs = StyleLoader.class.getResourceAsStream(res);
-			if (internalIs != null)
+			is = StyleLoader.class.getResourceAsStream(res);
+			if (is != null)
 				Log.info(() -> "... but " + filename + " found inside the .jar");
 
 		}
-		return internalIs;
 		// ::done
+		return is;
 	}
+
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 

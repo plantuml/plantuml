@@ -71,13 +71,13 @@ public class CircleEnd implements UDrawable {
 	final public void drawU(UGraphic ug) {
 		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
-		HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor backColor = colors.getColor(style, PName.BackGroundColor, skinParam.getIHtmlColorSet());
+		final HColor lineColor = colors.getColor(style, PName.LineColor, skinParam.getIHtmlColorSet());
 
-		if (colors.getColor(ColorType.BACK) != null) {
-			lineColor = colors.getColor(ColorType.BACK);
-			backColor = colors.getColor(ColorType.BACK);
-		}
+//		if (colors.getColor(ColorType.BACK) != null) {
+//			lineColor = colors.getColor(ColorType.BACK);
+//			backColor = colors.getColor(ColorType.BACK);
+//		}
 
 		final double shadowing = style.getShadowing();
 

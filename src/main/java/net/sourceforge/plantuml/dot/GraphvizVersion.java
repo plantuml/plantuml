@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.dot;
 
 public interface GraphvizVersion {
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public boolean useShieldForQuantifier();
 
 	public boolean useProtectionWhenThereALinkFromOrToGroup();

@@ -42,7 +42,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.security.SFile;
 
 public class NamedOutputStream extends OutputStream {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private final OutputStream os;
 	private final BaseFile basefile;

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.code;
 import java.io.IOException;
 
 public class TranscoderSmartProtected implements Transcoder {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	// Legacy encoder
 	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),

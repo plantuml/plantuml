@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.klimt.drawing.eps;
 
 import java.awt.Color;
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
 import net.sourceforge.plantuml.klimt.geom.USegment;
@@ -693,7 +693,7 @@ public class EpsGraphics {
 
 	}
 
-	final public void drawImage(BufferedImage image, double x, double y) {
+	final public void drawImage(PortableImage image, double x, double y) {
 		final int width = image.getWidth();
 		final int height = image.getHeight();
 		append("gsave", true);

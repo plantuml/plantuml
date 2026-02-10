@@ -42,7 +42,7 @@ import java.util.TimeZone;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.lang.Something;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -69,12 +69,11 @@ public class ComplementHour implements Something<ChronologyDiagram> {
 		); //
 	}
 
-	public Failable<Day> getMe(ChronologyDiagram system, RegexResult arg, String suffix) {
+	public Failable<TimePoint> getMe(ChronologyDiagram system, RegexResult arg, String suffix) {
 		final String value = arg.get("TIME", 0);
-		System.err.println("value=" + value);
 		try {
 			final Date date = inputFormat.parse(value);
-			return Failable.ok(Day.create(date.getTime()));
+			return Failable.ok(TimePoint.create(date.getTime()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

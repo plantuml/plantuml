@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;

@@ -1283,17 +1283,6 @@ public class TextGrid {
 		}
 	}
 
-	/**
-	 * 
-	 * Fills the continuous area with if c1 characters with c2,
-	 * flooding from cell x, y
-	 * 
-	 * @param x
-	 * @param y
-	 * @param c1 the character to replace
-	 * @param c2 the character to replace c1 with
-	 * @return the list of cells filled
-	 */
 //	public CellSet fillContinuousArea(int x, int y, char c1, char c2){
 //		CellSet cells = new CellSet();
 //		//fillContinuousArea_internal(x, y, c1, c2, cells);

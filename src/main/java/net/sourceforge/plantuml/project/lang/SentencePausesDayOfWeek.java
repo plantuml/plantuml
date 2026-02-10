@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.DayOfWeek;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 
 public class SentencePausesDayOfWeek extends SentenceSimple<GanttDiagram> {
 

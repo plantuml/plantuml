@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.style;
 
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__
@@ -63,7 +63,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public static StyleSignatureBasic empty() {
-		return new StyleSignatureBasic(StyleKey.empty(), Collections.emptySet());
+		return new StyleSignatureBasic(StyleKey.empty(), PatchUtils.emptySet());
 	}
 
 	private StyleSignatureBasic(StyleKey key, Set<String> stereotypes) {
@@ -221,7 +221,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public static StyleSignatureBasic of(SName... names) {
-		return new StyleSignatureBasic(StyleKey.of(names), Collections.emptySet());
+		return new StyleSignatureBasic(StyleKey.of(names), PatchUtils.emptySet());
 	}
 
 	private String clean(String name) {

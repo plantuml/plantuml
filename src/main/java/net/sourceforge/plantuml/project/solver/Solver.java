@@ -35,13 +35,85 @@
  */
 package net.sourceforge.plantuml.project.solver;
 
-import net.sourceforge.plantuml.project.Value;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.project.Load;
+import net.sourceforge.plantuml.project.PValue;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.ngm.NGMAllocation;
+import net.sourceforge.plantuml.project.ngm.NGMTask;
+import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
+import net.sourceforge.plantuml.project.time.TimePoint;
 
-public interface Solver {
+public class Solver {
+	// ::remove folder when __HAXE__
 
-	public Value getData(TaskAttribute attribute);
+	private final Map<TaskAttribute, PValue> values = new LinkedHashMap<TaskAttribute, PValue>();
 
-	public void setData(TaskAttribute attribute, Value value);
+//	public Solver(NGMAllocation allocation) {
+//		this.allocation = allocation;
+//	}
+
+	public final void setData(TaskAttribute attribute, PValue value) {
+		if (value instanceof TimePoint) {
+			if (value.toString().endsWith("T00:00") == false)
+				throw new IllegalArgumentException(value.toString());
+		}
+		final PValue previous = values.remove(attribute);
+		if (previous != null && attribute == TaskAttribute.START) {
+			final TimePoint previousInstant = (TimePoint) previous;
+			if (previousInstant.compareTo((TimePoint) value) > 0)
+				value = previous;
+
+		}
+		values.put(attribute, value);
+		if (values.size() > 2)
+			removeFirstElement();
+
+		assert values.size() <= 2;
+
+	}
+
+	private void removeFirstElement() {
+		final Iterator<Entry<TaskAttribute, PValue>> it = values.entrySet().iterator();
+		it.next();
+		it.remove();
+	}
+
+	public final PValue getData(NGMAllocation allocation, TaskAttribute attribute) {
+		PValue result = values.get(attribute);
+		if (result == null) {
+			if (attribute == TaskAttribute.END)
+				return computeEnd(allocation);
+
+			if (attribute == TaskAttribute.START)
+				return computeStart(allocation);
+
+			return Load.ofDays(1);
+			// throw new UnsupportedOperationException(attribute.toString());
+		}
+		return result;
+	}
+
+	private TimePoint computeEnd(NGMAllocation allocation) {
+		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);
+		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();
+		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);
+		final LocalDateTime result = task.getEnd();
+		return TimePoint.of(result);
+	}
+
+	private TimePoint computeStart(NGMAllocation allocation) {
+		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);
+		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();
+		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);
+		task.setEnd(end.toLocalDateTime());
+		final LocalDateTime result = task.getStart();
+		return TimePoint.of(result);
+	}
 
 }

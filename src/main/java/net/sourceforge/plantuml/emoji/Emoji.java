@@ -61,6 +61,8 @@ import net.sourceforge.plantuml.log.Logme;
 
 public class Emoji {
 	// ::remove folder when __HAXE__
+	// ::remove file when __TEAVM__
+	
 	private final static Map<String, Emoji> ALL = new HashMap<>();
 
 	static {

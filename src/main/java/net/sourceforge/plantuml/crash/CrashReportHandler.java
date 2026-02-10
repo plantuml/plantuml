@@ -58,7 +58,7 @@ public class CrashReportHandler extends ReportLog {
 
 	public void exportDiagramError(FileFormatOption fileFormat, long seed, OutputStream os) throws IOException {
 
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __TEAVM__
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			exportDiagramErrorText(os, exception);
 			return;
@@ -70,7 +70,7 @@ public class CrashReportHandler extends ReportLog {
 		ImageBuilder.create(fileFormat, image).metadata(metadata).seed(seed).write(os);
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private void exportDiagramErrorText(OutputStream os, Throwable exception) {
 		final PrintWriter pw = SecurityUtils.createPrintWriter(os);
 		exception.printStackTrace(pw);

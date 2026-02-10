@@ -101,7 +101,7 @@ public class CreoleParser implements SheetBuilder {
 			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));
 		} else if (Parser.isCodeStart(line)) {
 			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));
-			// ::comment when __CORE__
+			// ::comment when __CORE__ or __TEAVM__
 		} else if (Parser.isLatexStart(line)) {
 			return Arrays.asList(new StripeLatex(fontConfiguration));
 			// ::done
@@ -180,7 +180,7 @@ public class CreoleParser implements SheetBuilder {
 	}
 
 //	public static void checkColor(Display result) throws NoSuchColorException {
-//		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
+//		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontImpl.byDefault(10));
 //		try {
 //			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)
 //					.createSheetSlow(result, true);

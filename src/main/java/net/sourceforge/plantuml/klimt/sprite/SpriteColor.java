@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -99,7 +97,7 @@ public class SpriteColor implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor forecolor) {
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		final PortableImage im = new PortableImage(width, height, PortableImage.TYPE_INT_RGB);
 
 		if (backcolor == null)
 			backcolor = HColors.WHITE;
@@ -113,8 +111,7 @@ public class SpriteColor implements Sprite {
 				final int localColor = color[line][col];
 				if (localColor == -1) {
 					final double coef = 1.0 * gray[line][col] / (16 - 1);
-					final Color c = gradient.getColor(colorMapper, coef, 255);
-					im.setRGB(col, line, c.getRGB());
+					im.setRGB(col, line, gradient.getRGB(colorMapper, coef, 255));
 				} else {
 					im.setRGB(col, line, localColor);
 				}

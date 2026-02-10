@@ -37,17 +37,18 @@ package net.sourceforge.plantuml.sudoku;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.atmp.SvgOption;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,12 +56,12 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy;
 import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
-import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -68,17 +69,23 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.png.PngIO;
 
 public class GraphicsSudoku {
-    // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	private final ISudoku sudoku;
-	private final UFont numberFont = UFont.sansSerif(20).bold();
-	private final UFont font = UFont.sansSerif(11);
+	private final UFont numberFont = UFontFactory.sansSerif(20).bold();
+	private final UFont font = UFontFactory.sansSerif(11);
 
 	public GraphicsSudoku(ISudoku sudoku) {
 		this.sudoku = sudoku;
 	}
 
-	// ::comment when __CORE__
+	// ::uncomment when __TEAVM__
+//	public ImageData writeImageSvg(OutputStream os) throws IOException {
+//		throw new UnsupportedOperationException("TEAVM");
+//	}
+	// ::done
+
+	// ::comment when __CORE__ or __TEAVM__
 	public ImageData writeImageEps(OutputStream os) throws IOException {
 		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
@@ -94,7 +101,6 @@ public class GraphicsSudoku {
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
 	}
-	// ::done
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);
@@ -109,7 +115,7 @@ public class GraphicsSudoku {
 	public ImageData writeImagePng(OutputStream os) throws IOException {
 		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
 				Color.WHITE, stringBounder);
-		final BufferedImage im = builder.getBufferedImage();
+		final PortableImage im = builder.getPortableImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
 		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0,
@@ -120,6 +126,7 @@ public class GraphicsSudoku {
 		PngIO.write(im, ColorMapper.IDENTITY, os, null, 96);
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
+	// ::done
 
 	final private int xOffset = 5;
 	final private int yOffset = 5;

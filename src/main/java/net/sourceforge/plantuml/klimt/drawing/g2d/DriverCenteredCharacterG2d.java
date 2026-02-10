@@ -41,11 +41,12 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 public class DriverCenteredCharacterG2d implements UDriver<UCenteredCharacter, Graphics2D> {
+	// ::remove folder when __TEAVM__
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			Graphics2D g2d) {
@@ -58,7 +59,7 @@ public class DriverCenteredCharacterG2d implements UDriver<UCenteredCharacter, G
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
 		final String text = "" + c;
-		g2d.setFont(font.getUnderlayingFont(text));
+		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));
 		g2d.drawString(text, (float) xpos, (float) ypos);
 	}
 

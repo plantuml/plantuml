@@ -60,8 +60,8 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.CliParser;
 import net.sourceforge.plantuml.cli.CliParsingException;
-import net.sourceforge.plantuml.cli.ErrorStatus;
 import net.sourceforge.plantuml.cli.Exit;
+import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.ftp.FtpServer;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
@@ -82,12 +83,12 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
-import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	public static void main(String[] argsArray)
@@ -119,7 +120,7 @@ public class Run {
 		else
 			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
 
-		final ErrorStatus errorStatus = ErrorStatus.init();
+		final ExitStatus exit = ExitStatus.init();
 		CliOptions option = null;
 
 		try {
@@ -179,9 +180,8 @@ public class Run {
 			}
 
 			if (option.isTrue(CliFlag.PIPE) || option.isTrue(CliFlag.PIPEMAP) || option.isTrue(CliFlag.SYNTAX)) {
-				new Pipe(option, System.out, System.in, charset).managePipe(errorStatus);
-				if (errorStatus.hasError())
-					Exit.exit(errorStatus.getExitCode());
+				new Pipe(option, System.out, System.in, charset).managePipe(exit);
+				exit.eventuallyExit();
 				return;
 			}
 
@@ -210,14 +210,21 @@ public class Run {
 			if (option.isTrue(CliFlag.SPLASH))
 				Splash.createSplash();
 
-			final Run runner = new Run(option, errorStatus, charset);
+			final Run runner = new Run(option, exit, charset);
+
+			if (runner.size() == 0) {
+				Log.error("No file found");
+				Exit.exit(ExitStatus.ERROR_50_NO_FILE_FOUND);
+			}
+
 			incTotal(runner.size());
 
-			if (option.isTrue(CliFlag.COMPUTE_URL))
+			if (option.isTrue(CliFlag.COMPUTE_URL)) {
 				runner.computeUrl();
-			else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError())
-				errorStatus.incError();
-			else
+				return;
+			} else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError()) {
+				// There are some errors, we won't do processInputsInParallel()
+			} else
 				runner.processInputsInParallel();
 
 		} catch (CliParsingException e) {
@@ -230,21 +237,21 @@ public class Run {
 			}
 		}
 
-		if (option != null && (errorStatus.hasError() || errorStatus.isEmpty()))
-			option.getStdrpt().finalMessage(errorStatus);
+		if (option != null)
+			option.getStdrpt().finalMessage(exit);
 
-		if (errorStatus.hasError())
-			Exit.exit(errorStatus.getExitCode());
+		exit.eventuallyExit();
+
 	}
 
 	private final CliOptions option;
-	private final ErrorStatus errorStatus;
+	private final ExitStatus exitStatus;
 	private final String charset;
 	private final List<File> files = new ArrayList<>();
 
-	public Run(CliOptions option, ErrorStatus errorStatus, String charset) {
+	public Run(CliOptions option, ExitStatus exitStatus, String charset) {
 		this.option = option;
-		this.errorStatus = errorStatus;
+		this.exitStatus = exitStatus;
 		this.charset = charset;
 
 		for (String s : option.getRemainingArgs()) {
@@ -272,9 +279,10 @@ public class Run {
 			if (hasError.get())
 				return;
 			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);
+			exitStatus.goesHasFiles();
 			if (sourceFileReader.hasError()) {
 				hasError.set(true);
-				errorStatus.incError();
+				exitStatus.goesHasErrors();
 			}
 		});
 
@@ -300,11 +308,12 @@ public class Run {
 				lockFile = dir.file("javaumllock.tmp");
 			}
 			processInParallel(file -> {
-				if (errorStatus.hasError() && option.isFailfastOrFailfast2())
+				exitStatus.goesHasFiles();
+				if (exitStatus.hasErrors() && option.isFailfastOrFailfast2())
 					return;
 
 				manageFileInternal(file);
-				incDone(errorStatus.hasError());
+				incDone(exitStatus.hasErrors());
 			});
 		} finally {
 			if (lockFile != null)
@@ -332,11 +341,7 @@ public class Run {
 	private void manageFileInternal(File f) throws IOException, InterruptedException {
 		Log.info(() -> "Working on " + f.getPath());
 		final ISourceFileReader sourceFileReader = getSourceFileReader(f, option, charset);
-
-		if (sourceFileReader.hasError())
-			errorStatus.incError();
-		else
-			errorStatus.incOk();
+		sourceFileReader.updateStatus(exitStatus);
 
 		if (option.isTrue(CliFlag.CHECK_ONLY))
 			return;
@@ -356,17 +361,14 @@ public class Run {
 		for (BlockUml s : sourceFileReader.getBlocks())
 			rpt.printInfo(System.err, s.getDiagram());
 
-		if (result.size() != 0) {
+		if (result.size() != 0)
 			for (GeneratedImage image : result) {
 				final int lineError = image.lineErrorRaw();
 				if (lineError != -1) {
 					rpt.errorLine(lineError, f);
-					errorStatus.incError();
 					return;
 				}
 			}
-			errorStatus.incOk();
-		}
 	}
 
 	private static void runGui(final CliOptions option) {
@@ -449,7 +451,7 @@ public class Run {
 		if (source == null)
 			return;
 
-		final BufferedImage im;
+		final PortableImage im;
 		try (InputStream stream = source.openStream()) {
 			im = SImageIO.read(stream);
 		}
@@ -520,11 +522,11 @@ public class Run {
 		if (outputDir != null && outputDir.getPath().endsWith("$")) {
 			final String path = outputDir.getPath();
 			outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
-			sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,
-					option.getConfig(), charset, fileFormatOption);
+			sourceFileReader = new SourceFileReaderCopyCat(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME),
+					option.getDefaultDefines(f), f, outputDir, option.getConfig(), charset, fileFormatOption);
 		} else {
-			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
-					charset, fileFormatOption);
+			sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME),
+					option.getDefaultDefines(f), f, outputDir, option.getConfig(), charset, fileFormatOption);
 		}
 
 		sourceFileReader.setCheckMetadata(option.isTrue(CliFlag.CHECK_METADATA));

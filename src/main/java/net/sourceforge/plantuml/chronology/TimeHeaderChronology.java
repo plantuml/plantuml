@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.chronology;
 
+import java.time.LocalDate;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -46,15 +48,13 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.draw.TimeHeader;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
-public class TimeHeaderChronology extends TimeHeader {
+public class TimeHeaderChronology extends TimeHeader2 {
 
 	private final PrintScale printScale;
 
@@ -79,7 +79,7 @@ public class TimeHeaderChronology extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderChronology(StringBounder stringBounder, TimeHeaderParameters thParam, PrintScale printScale,
+	public TimeHeaderChronology(StringBounder stringBounder, TimeHeaderParameters2 thParam, PrintScale printScale,
 			TimeScaleChronology timeScale) {
 		super(thParam, timeScale);
 		this.printScale = printScale;
@@ -89,57 +89,51 @@ public class TimeHeaderChronology extends TimeHeader {
 		ug = ug.apply(getLineColor());
 		ug = ug.apply(UTranslate.dy(6));
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
-		for (Day i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
-			final double x1 = timeScale.getStartingPosition(i);
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+			final double x1 = timeScale.getPosition(wink);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug, TimeScale timeScale) {
-		for (Day i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) < 0; day = increment(day, printScale)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
-			final TextBlock num = Display.getWithNewlines(getPragma(), i.toStringShort(thParam.getLocale()))
+			final TextBlock num = Display.getWithNewlines(getPragma(), wink.toStringShort(thParam.getLocale()))
 					.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-			final double x1 = timeScale.getStartingPosition(i);
+			final double x1 = timeScale.getPosition(wink);
 			final double x2;
 			if (printScale == PrintScale.WEEKLY)
-				x2 = timeScale.getEndingPosition(i.addDays(6));
+				x2 = timeScale.getPosition(wink.addDays(6));
 			else
-				x2 = timeScale.getEndingPosition(i);
+				x2 = timeScale.getPosition(wink);
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (i.compareTo(getMax().increment()) < 0)
+			if (wink.compareTo(TimePoint.ofStartOfDay(getMaxDay().plusDays(1))) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
 
 		}
 	}
 
+	private LocalDate increment(LocalDate day, PrintScale printScale) {
+		if (printScale == PrintScale.WEEKLY)
+			return day.plusDays(7);
+		return day.plusDays(1);
+	}
+
 	@Override
 	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
-		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter +
-		// 6);
-		final double xmin = getTimeScale().getStartingPosition(getMin());
-		final double xmax = getTimeScale().getEndingPosition(getMax());
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
-		// printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
-		// ug = ug.apply(getLineColor());
-		// ug.draw(ULine.hline(xmax - xmin));
-		// ug.apply(UTranslate.dy(getFullHeaderHeight(ug.getStringBounder()) -
-		// 3)).draw(ULine.hline(xmax - xmin));
 
 	}
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double xmin = getTimeScale().getStartingPosition(getMin());
-		final double xmax = getTimeScale().getEndingPosition(getMax());
 		ug = ug.apply(UTranslate.dy(3));
-		// drawSmallVlinesDay(ug, getTimeScale(),
-		// getTimeFooterHeight(ug.getStringBounder()) - 3);
 		drawSimpleDayCounter(ug, getTimeScale());
-		// ug.apply(getLineColor()).draw(ULine.hline(xmax - xmin));
 	}
 
 	// Duplicate in TimeHeaderDaily
@@ -164,9 +158,10 @@ public class TimeHeaderChronology extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+			final double x1 = getTimeScale().getPosition(wink);
+			final double x2 = getTimeScale().getPosition(wink);
 			HColor back = thParam.getColor(wink);
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());

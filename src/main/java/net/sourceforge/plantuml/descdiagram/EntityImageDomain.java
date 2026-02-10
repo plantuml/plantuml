@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2;
 import net.sourceforge.plantuml.klimt.geom.ULayoutGroup;
@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -82,7 +81,7 @@ public class EntityImageDomain extends AbstractEntityImage {
 					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, getSkinParam());
 		}
-		this.tag = new BoxedCharacter(typeLetter, 8, UFont.byDefault(8), stereotype.getHtmlColor(), null,
+		this.tag = new BoxedCharacter(typeLetter, 8, UFontFactory.byDefault(8), stereotype.getHtmlColor(), null,
 				fc.getColor());
 
 		this.url = entity.getUrl99();

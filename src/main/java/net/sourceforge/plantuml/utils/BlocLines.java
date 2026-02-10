@@ -268,8 +268,10 @@ public class BlocLines implements Iterable<StringLocated> {
 		final List<StringLocated> copy = new ArrayList<>(lines);
 		copy.set(0, new StringLocated(data, null));
 		final int n = copy.size() - 1;
-		final StringLocated s = copy.get(n);
-		copy.set(n, s.substring(0, s.getString().length() - removeAtEnd));
+		if (removeAtEnd > 0) {
+			final StringLocated s = copy.get(n);
+			copy.set(n, s.substring(0, s.getString().length() - removeAtEnd));
+		}
 		return new BlocLines(copy);
 	}
 

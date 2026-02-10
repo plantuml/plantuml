@@ -147,7 +147,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	}
 
 	public final Set<File> getIncludedFiles() {
-		return Collections.unmodifiableSet(usedFiles);
+		return usedFiles;
 	}
 
 	public List<String> getDefinition(String name) {

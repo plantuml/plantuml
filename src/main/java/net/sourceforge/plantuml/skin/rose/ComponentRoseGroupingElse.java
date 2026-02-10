@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {

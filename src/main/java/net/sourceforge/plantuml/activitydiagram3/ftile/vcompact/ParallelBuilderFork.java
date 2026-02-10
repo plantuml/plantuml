@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -63,10 +64,10 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 	private final String label;
 	private final Swimlane in;
 	private final Swimlane out;
-
+	
 	public ParallelBuilderFork(ISkinParam skinParam, StringBounder stringBounder, String label, Swimlane in,
-			Swimlane out, List<Ftile> all) {
-		super(skinParam, stringBounder, all);
+			Swimlane out, List<Ftile> all, Colors colors) {
+		super(skinParam, stringBounder, all, colors);
 		this.label = label;
 		this.in = in;
 		this.out = out;
@@ -83,7 +84,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		final List<Connection> conns = new ArrayList<>();
 		final Swimlane swimlaneBlack = in;
 		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final Ftile black = new FtileBlackBlock(skinParam(), swimlaneBlack);
+		final Ftile black = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
@@ -107,7 +108,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep2(Ftile middle, Ftile result) {
 		final Swimlane swimlaneBlack = out;
-		final Ftile out = new FtileBlackBlock(skinParam(), swimlaneBlack);
+		final Ftile out = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);
 		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
 				barHeight);	
 		if (label != null)

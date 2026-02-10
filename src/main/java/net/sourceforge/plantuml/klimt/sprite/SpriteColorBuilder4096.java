@@ -36,10 +36,11 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 
 public class SpriteColorBuilder4096 {
 
@@ -47,6 +48,7 @@ public class SpriteColorBuilder4096 {
 
 	public static Sprite buildSprite(List<String> strings) {
 		final SpriteColor result = new SpriteColor(strings.get(0).length() / 2, strings.size());
+		// ::comment when __TEAVM__
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < result.getHeight(); line++) {
 				if (col * 2 >= strings.get(line).length()) {
@@ -57,10 +59,11 @@ public class SpriteColorBuilder4096 {
 				result.setColor(col, line, rgb.getRGB() & 0xFFFFFF);
 			}
 		}
+		// ::done
 		return result;
 	}
 
-	static public List<String> encodeImage(BufferedImage img) {
+	static public List<String> encodeImage(PortableImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
 

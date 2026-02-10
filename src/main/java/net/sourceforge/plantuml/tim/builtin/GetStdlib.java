@@ -52,7 +52,8 @@ import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class GetStdlib extends SimpleReturnFunction {
-
+	// ::remove file when __TEAVM__
+	
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%get_stdlib", 1);
 
 	public TFunctionSignature getSignature() {

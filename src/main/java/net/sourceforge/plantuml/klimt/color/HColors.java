@@ -82,8 +82,8 @@ public class HColors {
 
 		final HColorSet set = HColorSet.instance();
 
-		BLACK = (HColorSimple) set.getColorOrWhite("black");
-		WHITE = (HColorSimple) set.getColorOrWhite("white");
+		BLACK = (HColorSimple) set.getColorOrWhite("#000000");
+		WHITE = (HColorSimple) set.getColorOrWhite("#FFFFFF");
 		RED_LIGHT = set.getColorOrWhite("#FEF6F3");
 		RED_DARK = set.getColorOrWhite("#CD0A0A");
 		RED = set.getColorOrWhite("#FF0000");

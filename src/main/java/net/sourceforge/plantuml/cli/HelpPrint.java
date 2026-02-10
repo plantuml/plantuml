@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HelpPrint {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	private static void printHeader() {
@@ -100,8 +100,7 @@ public class HelpPrint {
 		System.out.println("  java -jar plantuml.jar --format svg --output-dir out diagrams/");
 		System.out.println();
 		System.out.println("Exit codes:");
-		System.out.println("  0   Success");
-		System.out.println("  >0  Error (syntax error or processing failure)");
+		ExitStatus.printExitCodes();
 		System.out.println();
 		System.out.println("See also:");
 		System.out.println("  java -jar plantuml.jar --help-more");

@@ -88,7 +88,7 @@ public class DirWatcher2 {
 				final FileWatcher watcher = modifieds.get(f);
 
 				if (watcher == null || watcher.hasChanged()) {
-					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,
+					final SourceFileReader sourceFileReader = new SourceFileReader(option.isTrue(CliFlag.IGNORE_STARTUML_FILENAME), option.getDefaultDefines(f), f,
 							option.getOutputDir(), option.getConfig(), option.getString(CliFlag.CHARSET),
 							option.getFileFormatOption());
 					modifieds.put(f, new FileWatcher(Collections.singleton(f)));

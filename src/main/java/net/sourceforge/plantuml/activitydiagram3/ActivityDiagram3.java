@@ -149,24 +149,24 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void start() {
+	public void start(Colors colors) {
 		manageSwimlaneStrategy();
-		current().add(new InstructionStart(swimlanes.getCurrentSwimlane(), nextLinkRenderer()));
+		current().add(new InstructionStart(colors, swimlanes.getCurrentSwimlane(), nextLinkRenderer()));
 		setNextLinkRendererInternal(LinkRendering.none());
 	}
 
-	public void stop() {
+	public void stop(Colors colors) {
 		manageSwimlaneStrategy();
-		final InstructionStop ins = new InstructionStop(swimlanes.getCurrentSwimlane(), nextLinkRenderer());
+		final InstructionStop ins = new InstructionStop(colors, swimlanes.getCurrentSwimlane(), nextLinkRenderer());
 		if (manageSpecialStopEndAfterEndWhile(ins))
 			return;
 
 		current().add(ins);
 	}
 
-	public void end() {
+	public void end(Colors colors) {
 		manageSwimlaneStrategy();
-		final InstructionEnd ins = new InstructionEnd(swimlanes.getCurrentSwimlane(), nextLinkRenderer());
+		final InstructionEnd ins = new InstructionEnd(colors, swimlanes.getCurrentSwimlane(), nextLinkRenderer());
 		if (manageSpecialStopEndAfterEndWhile(ins))
 			return;
 
@@ -226,10 +226,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return result;
 	}
 
-	public void fork() {
+	public void fork(Colors colors) {
 		manageSwimlaneStrategy();
-		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(), getSkinParam(),
-				swimlanes.getCurrentSwimlane());
+		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(),
+				swimlanes.getCurrentSwimlane(), colors);
 		current().add(instructionFork);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionFork);
@@ -260,7 +260,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void split() {
 		final InstructionSplit instructionSplit = new InstructionSplit(current(), nextLinkRenderer(),
-				swimlanes.getCurrentSwimlane());
+				swimlanes.getCurrentSwimlane(), null);
 		setNextLinkRendererInternal(LinkRendering.none());
 		current().add(instructionSplit);
 		setCurrent(instructionSplit);
@@ -285,10 +285,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find split");
 	}
 
-	public void startSwitch(Display test, HColor color) {
+	public void startSwitch(Display test, Colors colors) {
 		manageSwimlaneStrategy();
 		final InstructionSwitch instructionSwitch = new InstructionSwitch(swimlanes.getCurrentSwimlane(), current(),
-				test, nextLinkRenderer(), color, getSkinParam());
+				test, nextLinkRenderer(), colors);
 		current().add(instructionSwitch);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionSwitch);
@@ -307,9 +307,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find switch");
 	}
 
-	public CommandExecutionResult endSwitch() {
+	public CommandExecutionResult endSwitch(Colors colors) {
 		if (current() instanceof InstructionSwitch) {
-			((InstructionSwitch) current()).endSwitch(nextLinkRenderer());
+			((InstructionSwitch) current()).endSwitch(nextLinkRenderer(), colors);
 			setNextLinkRendererInternal(LinkRendering.none());
 			setCurrent(((InstructionSwitch) current()).getParent());
 			return CommandExecutionResult.ok();
@@ -340,7 +340,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public CommandExecutionResult else2(LinkRendering whenElse) {
 		if (current() instanceof InstructionIf) {
-			final boolean result = ((InstructionIf) current()).swithToElse2(whenElse, nextLinkRenderer());
+			final boolean result = ((InstructionIf) current()).switchToElse2(whenElse, nextLinkRenderer());
 			if (result == false)
 				return CommandExecutionResult.error("Cannot find if");
 
@@ -350,10 +350,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find if");
 	}
 
-	public CommandExecutionResult endif() {
+	public CommandExecutionResult endif(Colors colors) {
 		// System.err.println("Activity3::endif");
 		if (current() instanceof InstructionIf) {
-			((InstructionIf) current()).endif(nextLinkRenderer());
+			((InstructionIf) current()).endif(nextLinkRenderer(), colors);
 			setNextLinkRendererInternal(LinkRendering.none());
 			setCurrent(((InstructionIf) current()).getParent());
 			return CommandExecutionResult.ok();
@@ -361,10 +361,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find if");
 	}
 
-	public void startRepeat(HColor color, Display label, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
+	public void startRepeat(Display label, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		final InstructionRepeat instructionRepeat = new InstructionRepeat(swimlanes, current(), nextLinkRenderer(),
-				color, label, boxStyleIn, colors, stereotype);
+				label, boxStyleIn, colors, stereotype);
 		current().add(instructionRepeat);
 		setCurrent(instructionRepeat);
 		setNextLinkRendererInternal(LinkRendering.none());
@@ -372,12 +372,13 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public CommandExecutionResult repeatWhile(Display label, Display yes, Display out, Display linkLabel,
-			Rainbow linkColor) {
+			Rainbow linkColor, Colors color, Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
 			final LinkRendering back = LinkRendering.create(linkColor).withDisplay(linkLabel);
-			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swimlanes.getCurrentSwimlane());
+			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swimlanes.getCurrentSwimlane(), color,
+					stereotype);
 			setCurrent(instructionRepeat.getParent());
 			this.setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();

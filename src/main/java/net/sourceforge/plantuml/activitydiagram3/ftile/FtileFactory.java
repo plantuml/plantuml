@@ -61,15 +61,16 @@ public interface FtileFactory {
 
 	public ISkinParam skinParam();
 
-	public Ftile start(Swimlane swimlane);
+	public Ftile start(Swimlane swimlane, Colors colors);
 
-	public Ftile stop(Swimlane swimlane);
+	public Ftile stop(Swimlane swimlane, Colors colors);
 
-	public Ftile end(Swimlane swimlane);
+	public Ftile end(Swimlane swimlane, Colors colors);
 
 	public Ftile spot(Swimlane swimlane, String spot, HColor color);
 
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype, StyleBuilder styleBuilder);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype,
+			StyleBuilder styleBuilder);
 
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
 			VerticalAlignment verticalAlignment);
@@ -82,9 +83,10 @@ public interface FtileFactory {
 
 	public Ftile assembly(Ftile tile1, Ftile tile2);
 
-	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
-			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder);
+	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
+			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
+			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
+			Colors colors2, Stereotype stereotype2);
 
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
 			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2,
@@ -95,9 +97,10 @@ public interface FtileFactory {
 			StyleBuilder currentStyleBuilder);
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Display labelTest);
+			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors);
 
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out,
+			Colors colors);
 
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style);

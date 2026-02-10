@@ -48,7 +48,8 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class FutureVersion {
 	// ::remove folder when __HAXE__
-
+	// ::remove file when __TEAVM__
+	
 	public static String versionString() {
 		readVersionTxtIfNeeded();
 		return versionCache.get(0);

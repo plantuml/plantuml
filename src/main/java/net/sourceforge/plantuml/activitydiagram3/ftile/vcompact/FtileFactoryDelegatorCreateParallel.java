@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.color.Colors;
 
 public final class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 
@@ -50,19 +51,19 @@ public final class FtileFactoryDelegatorCreateParallel extends FtileFactoryDeleg
 	}
 
 	@Override
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out, Colors colors) {
 
 		AbstractParallelFtilesBuilder builder;
 		if (style == ForkStyle.SPLIT)
-			builder = new ParallelBuilderSplit(skinParam(), getStringBounder(), all);
+			builder = new ParallelBuilderSplit(skinParam(), getStringBounder(), all, colors);
 		else if (style == ForkStyle.MERGE)
-			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), all);
+			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), all, colors);
 		else if (style == ForkStyle.FORK)
-			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), label, in, out, all);
+			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), label, in, out, all, colors);
 		else
 			throw new IllegalStateException();
 
-		final Ftile inner = super.createParallel(builder.list99, style, label, in, out);
+		final Ftile inner = super.createParallel(builder.list99, style, label, in, out, colors);
 		return builder.build(inner);
 	}
 

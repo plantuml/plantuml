@@ -174,9 +174,9 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			}
 			note.setColors(colors);
 			note.setNoteStyle(NoteStyle.getNoteStyle(line0.get("STYLE", 0)));
-			if (line0.get("URL", 0) != null) {
+			if (line0.get(UrlBuilder.URL_KEY, 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-				final Url urlLink = urlBuilder.getUrl(line0.get("URL", 0));
+				final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));
 				note.setUrl(urlLink);
 			}
 			if (parallel)

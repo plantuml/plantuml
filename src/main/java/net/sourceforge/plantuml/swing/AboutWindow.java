@@ -62,8 +62,6 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 class AboutWindow extends JFrame {
-	// ::remove folder when __CORE__
-
 	public AboutWindow() {
 		super();
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
@@ -91,7 +89,7 @@ class AboutWindow extends JFrame {
 		final JPanel ptext = new JPanel();
 		ptext.add(text);
 
-		final JLabel icon = new JLabel(new ImageIcon(PSystemVersion.getPlantumlImage()));
+		final JLabel icon = new JLabel(new ImageIcon(PSystemVersion.getPlantumlImage().getBufferedImage()));
 
 		final JPanel result = new JPanel(new BorderLayout());
 		result.add(ptext, BorderLayout.CENTER);

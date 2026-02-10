@@ -43,7 +43,8 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 public class License {
-
+	// ::remove file when __TEAVM__
+	
 	public static void main(String[] args) {
 		List<String> lines = License.getCurrent().getTextFull();
 		for (int line = 0; line < lines.size(); line++) {

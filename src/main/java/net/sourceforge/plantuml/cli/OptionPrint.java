@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 public class OptionPrint {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 	// ::remove file when __HAXE__
 
 	static public void printCheckGraphviz() {

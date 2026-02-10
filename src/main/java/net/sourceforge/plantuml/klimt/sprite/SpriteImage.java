@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.Objects;
 
@@ -43,6 +42,7 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -59,7 +59,7 @@ public class SpriteImage implements Sprite {
 
 	private final UImage img;
 
-	public SpriteImage(BufferedImage img) {
+	public SpriteImage(PortableImage img) {
 		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));
 	}
 
@@ -86,6 +86,7 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
+		// ::revert when __TEAVM__
 		if (name.endsWith(".png") || name.endsWith(".svg"))
 			throw new IllegalArgumentException();
 
@@ -102,7 +103,8 @@ public class SpriteImage implements Sprite {
 			Logme.error(e);
 			return null;
 		}
-
+		// return null;
+		// ::done
 	}
 
 	private static InputStream getInternalSprite(final String inner) {

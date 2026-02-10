@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -54,7 +54,8 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
-
+	// ::remove file when __TEAVM__
+	
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
 		return this;
@@ -86,7 +87,7 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
 		// ::comment when __CORE__
-		final BufferedImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
+		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
 
 		if (logo == null) {
 			// ::done

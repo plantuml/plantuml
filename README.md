@@ -20,7 +20,10 @@ Generate UML diagrams from textual descriptions.
 [![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/commits/)
 [![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 [![snapshot javadoc](https://img.shields.io/badge/javadoc-snapshot-chocolate.svg?logo=github)](https://plantuml.github.io/plantuml/javadoc)
-[![snapshot jacoco](https://img.shields.io/badge/code_coverage%3A_jacoco-snapshot-chocolate?logo=github)](https://plantuml.github.io/plantuml/jacoco)
+[![snapshot jacoco](https://img.shields.io/badge/code_coverage%3A_jacoco-snapshot-chocolate?logo=github)](https://plantuml.github.io/plantuml/jacoco/test/html/index.html)
+
+[![Dev Project Pages index](https://img.shields.io/badge/dev_project-pages-764ba2?logo=github)](https://plantuml.github.io/plantuml/)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/plantuml/plantuml)
 
 ## ℹ️ About
 
