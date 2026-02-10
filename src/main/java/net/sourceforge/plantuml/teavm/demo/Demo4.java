@@ -15,6 +15,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
@@ -28,6 +29,9 @@ public class Demo4 {
 	private final static PSystemBuilder2 BUILDER = new PSystemBuilder2();
 
 	public static void main(String[] args) {
+		// Test GraphVizjsTeaVMEngine
+		testGraphViz();
+
 		HTMLDocument doc = HTMLDocument.current();
 
 		HTMLTextAreaElement textarea = (HTMLTextAreaElement) doc.getElementById("src");
@@ -40,6 +44,16 @@ public class Demo4 {
 		textarea.addEventListener("input",
 				(EventListener<Event>) evt -> render(out, textarea.getValue()));
 	}
+
+	private static void testGraphViz() {
+		String dot = "digraph G { rankdir=LR; A -> B; B -> C; A -> C [label=\"direct\"]; }";
+		String svg = GraphVizjsTeaVMEngine.renderDotToSvg(dot);
+		consoleLog("=== GraphViz Test ===");
+		consoleLog(svg);
+	}
+
+	@JSBody(params = "msg", script = "console.log(msg);")
+	private static native void consoleLog(String msg);
 
 	private static void render(HTMLElement out, String text) {
 		try {

@@ -567,8 +567,9 @@ tasks.register<Copy>("prepareTeaVMDemo") {
 	
 	dependsOn("generateJavaScript")
 	
-	// Copy the HTML template
+	// Copy the HTML template and Viz.js library
 	from("src/main/teavm/index.html")
+	from("vizjs/viz-global.js")
 	into(layout.buildDirectory.dir("teavm/js"))
 	
 	doLast {
