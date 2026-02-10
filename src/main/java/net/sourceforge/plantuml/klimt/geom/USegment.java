@@ -82,8 +82,8 @@ public class USegment {
 		return new USegment(new double[] { coord[0] + dx, coord[1] + dy }, pathType);
 	}
 
-	// ::comment when __HAXE__
 	public USegment rotate(double theta) {
+		// ::revert when __TEAVM__
 		if (coord.length != 2)
 			throw new UnsupportedOperationException();
 
@@ -92,6 +92,8 @@ public class USegment {
 		p1 = p1.transform(rotate);
 
 		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
+		// return this;
+		// ::done
 	}
 
 	public USegment affine(AffineTransform transform, double angle, double scale) {

@@ -60,6 +60,7 @@ class ExtremityCircleCrowfoot extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
+		// ::comment when __TEAVM__
 		final int xWing = 8;
 		final int yAperture = 6;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
@@ -79,6 +80,7 @@ class ExtremityCircleCrowfoot extends Extremity {
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
 		ug.apply(new UTranslate(contact.getX() + circleBase.getX() - radius,
 				contact.getY() + circleBase.getY() - radius)).draw(UEllipse.build(2 * radius, 2 * radius));
+		// ::done
 	}
 
 	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {

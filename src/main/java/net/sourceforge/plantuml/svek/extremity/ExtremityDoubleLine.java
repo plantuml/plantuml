@@ -59,6 +59,7 @@ class ExtremityDoubleLine extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
+		// ::comment when __TEAVM__
 		final int xWing = 4;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
 		XPoint2D firstLineTop = new XPoint2D(-xWing, -lineHeight);
@@ -79,6 +80,7 @@ class ExtremityDoubleLine extends Extremity {
 		drawLine(ug, contact.getX(), contact.getY(), firstLineTop, firstLineBottom);
 		drawLine(ug, contact.getX(), contact.getY(), secondLineTop, secondLineBottom);
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
+		// ::done
 	}
 	
 	@Override

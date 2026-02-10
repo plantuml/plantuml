@@ -60,6 +60,7 @@ class ExtremityLineCrowfoot extends Extremity {
 
 	public void drawU(UGraphic ug) {
 
+		// ::comment when __TEAVM__
 		final int xWing = 8;
 		final int yAperture = 6;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
@@ -80,6 +81,7 @@ class ExtremityLineCrowfoot extends Extremity {
 		drawLine(ug, contact.getX(), contact.getY(), base, right);
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
 		drawLine(ug, contact.getX(), contact.getY(), lineTop, lineBottom);
+		// ::done
 	}
 
 	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {

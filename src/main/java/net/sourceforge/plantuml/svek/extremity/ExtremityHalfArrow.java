@@ -56,11 +56,14 @@ class ExtremityHalfArrow extends Extremity {
 
 	public ExtremityHalfArrow(XPoint2D p1, double angle, XPoint2D center, int direction) {
 		angle = manageround(angle);
-		final AffineTransform rotate = AffineTransform.getRotateInstance(angle + Math.PI / 2);
 		final int xWing = 9;
 		final int yAperture = 4 * direction;
 		XPoint2D other = new XPoint2D(-xWing, -yAperture);
+		
+		// ::comment when __TEAVM__
+		final AffineTransform rotate = AffineTransform.getRotateInstance(angle + Math.PI / 2);
 		other = other.transform(rotate);
+		// ::done
 
 		this.contact = p1;
 		this.line = new ULine(center.getX() - contact.getX(), center.getY() - contact.getY());
@@ -74,8 +77,12 @@ class ExtremityHalfArrow extends Extremity {
 
 		this.contact = p0;
 
+		// ::revert when __TEAVM__
 		final XPoint2D other = new XPoint2D(-xWing, -yAperture).transform(AffineTransform.getRotateInstance(angle));
 		final XPoint2D other2 = new XPoint2D(-8, 0).transform(AffineTransform.getRotateInstance(angle));
+		// final XPoint2D other = new XPoint2D(-xWing, -yAperture);
+		// final XPoint2D other2 = new XPoint2D(-8, 0);
+		// ::done
 
 		this.line = new ULine(other.getX(), other.getY());
 		this.otherLine = new ULine(other2.getX(), other2.getY());

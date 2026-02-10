@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.klimt.shape;
 import java.awt.Graphics2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.klimt.geom.PointAndAngle;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class DotPath implements UShape, Moveable {
@@ -278,7 +279,7 @@ public class DotPath implements UShape, Moveable {
 
 	}
 
-	public Line2D getEndTangeante() {
+	private XLine2D getEndTangeante() {
 		final XCubicCurve2D last = beziers.get(beziers.size() - 1);
 		double dx = last.x2 - last.ctrlx2;
 		double dy = last.y2 - last.ctrly2;
@@ -286,22 +287,22 @@ public class DotPath implements UShape, Moveable {
 			dx = last.x2 - last.x1;
 			dy = last.y2 - last.y1;
 		}
-		return new Line2D.Double(last.x2, last.y2, last.x2 + dx, last.y2 + dy);
+		return new XLine2D(last.x2, last.y2, last.x2 + dx, last.y2 + dy);
 	}
 
 	public double getEndAngle() {
-		final Line2D tan = getEndTangeante();
+		final XLine2D tan = getEndTangeante();
 		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
 		return theta1;
 	}
 
 	public double getStartAngle() {
-		final Line2D tan = getStartTangeante();
+		final XLine2D tan = getStartTangeante();
 		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
 		return theta1;
 	}
 
-	public Line2D getStartTangeante() {
+	private XLine2D getStartTangeante() {
 		final XCubicCurve2D first = beziers.get(0);
 		double dx = first.ctrlx1 - first.x1;
 		double dy = first.ctrly1 - first.y1;
@@ -309,7 +310,7 @@ public class DotPath implements UShape, Moveable {
 			dx = first.x2 - first.x1;
 			dy = first.y2 - first.y1;
 		}
-		return new Line2D.Double(first.x1, first.y1, first.x1 + dx, first.y1 + dy);
+		return new XLine2D(first.x1, first.y1, first.x1 + dx, first.y1 + dy);
 	}
 
 	public DotPath addBefore(XCubicCurve2D before) {

@@ -60,6 +60,7 @@ class ExtremityCircleLine extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
+		// ::comment when __TEAVM__
 		final double thickness = ug.getParam().getStroke().getThickness();
 		final double radius = 4 + thickness - 1;
 		final double lineHeight = 4 + thickness - 1;
@@ -82,6 +83,7 @@ class ExtremityCircleLine extends Extremity {
 		ug.apply(new UTranslate(contact.getX() + circleBase.getX() - radius,
 				contact.getY() + circleBase.getY() - radius)).apply(stroke).draw(UEllipse.build(2 * radius, 2 * radius));
 		drawLine(ug.apply(stroke), contact.getX(), contact.getY(), lineTop, lineBottom);
+		// ::done
 	}
 
 	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
