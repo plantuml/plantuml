@@ -1,0 +1,32 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>viz.js poc</title>
+
+  <script src="viz-global.js"></script>
+</head>
+<body>
+  <pre id="out"></pre>
+
+<script>
+  const dot = `
+    digraph G {
+      rankdir=LR;
+      A -> B;
+      B -> C;
+      A -> C [label="direct"];
+    }
+  `;
+
+  Viz.instance().then(viz => {
+    const svg = viz.renderString(dot, { format: "svg", engine: "dot" });
+
+    document.getElementById("out").textContent = svg;
+  }).catch(err => {
+    console.error(err);
+  });
+</script>
+
+
+</body>
+</html>
