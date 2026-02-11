@@ -1,11 +1,10 @@
 package net.sourceforge.plantuml.teavm.demo;
 
 import org.teavm.jso.JSBody;
-import org.teavm.jso.dom.events.Event;
-import org.teavm.jso.dom.events.EventListener;
+import org.teavm.jso.JSFunctor;
+import org.teavm.jso.JSObject;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
-import org.teavm.jso.dom.html.HTMLTextAreaElement;
 import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.FileFormat;
@@ -20,6 +19,18 @@ import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 
+/**
+ * PlantUML TeaVM API - exports functions callable from JavaScript.
+ * 
+ * JavaScript handles all UI and scheduling (debounce, etc.).
+ * Java provides the render worker that runs in TeaVM coroutine context
+ * (required for GraphViz async).
+ * 
+ * Architecture:
+ * 1. JS calls plantumlRequestRender(source, elementId) to request a render
+ * 2. Java worker thread wakes up and performs the render
+ * 3. Debouncing/throttling is done in JS, not Java
+ */
 public class Demo4 {
 
     private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();
@@ -27,117 +38,106 @@ public class Demo4 {
     private static final HColor BACK = HColors.WHITE;
     private static final PSystemBuilder2 BUILDER = new PSystemBuilder2();
 
-    // Debounce / scheduler state (no JS timer)
+    // Render request state
     private static final Object LOCK = new Object();
     private static volatile boolean workerStarted;
-    private static volatile boolean dirty;
     private static volatile String pendingText;
+    private static volatile String pendingElementId;
+    private static volatile boolean hasRequest;
 
+    /**
+     * Main entry point - starts worker and registers JS API.
+     */
     public static void main(String[] args) {
-        HTMLDocument doc = HTMLDocument.current();
+        // Start render worker thread (runs in TeaVM coroutine context)
+        startWorker();
 
-        HTMLTextAreaElement textarea = (HTMLTextAreaElement) doc.getElementById("src");
-        HTMLElement out = doc.getElementById("out");
+        // Register JS API
+        registerRequestRender(Demo4::requestRender);
 
-        textarea.setValue(defaultSource());
-
-        // first render: OK from main
-        render(out, textarea.getValue());
-
-        // event: DO NOT call render here, just enqueue
-        textarea.addEventListener("input", (EventListener<Event>) evt -> {
-            enqueueRender(out, textarea.getValue());
-        });
+        consoleLog("PlantUML TeaVM loaded. Call plantumlRequestRender(source, elementId).");
     }
 
-    private static void enqueueRender(HTMLElement out, String text) {
-        pendingText = text;
-        dirty = true;
+    @JSBody(params = "callback", script = "window.plantumlRequestRender = callback;")
+    private static native void registerRequestRender(RequestRenderCallback callback);
 
-        startWorkerIfNeeded(out);
+    @JSFunctor
+    public interface RequestRenderCallback extends JSObject {
+        void request(String source, String elementId);
+    }
+
+    /**
+     * Called from JavaScript to request a render.
+     * JS is responsible for debouncing - this just queues the request.
+     */
+    private static void requestRender(String source, String elementId) {
+        pendingText = source;
+        pendingElementId = elementId;
+        hasRequest = true;
 
         synchronized (LOCK) {
             LOCK.notifyAll();
         }
     }
 
-    private static void startWorkerIfNeeded(HTMLElement out) {
-        if (workerStarted) {
+    private static void startWorker() {
+        if (workerStarted)
             return;
-        }
         workerStarted = true;
-
-        new Thread(() -> renderLoop(out), "plantuml-render-loop").start();
+        new Thread(Demo4::renderLoop, "plantuml-render").start();
     }
 
-    private static void renderLoop(HTMLElement out) {
-        String lastRendered = null;
-
+    private static void renderLoop() {
         while (true) {
-            // Wait until there is work
+            // Wait for a render request
             synchronized (LOCK) {
-                while (!dirty) {
+                while (!hasRequest) {
                     try {
                         LOCK.wait();
                     } catch (InterruptedException e) {
                         // ignore
                     }
                 }
-            }
-
-            // Debounce: wait for typing to stabilize
-            while (true) {
-                dirty = false;
-                try {
-                    Thread.sleep(150); // tune as you like
-                } catch (InterruptedException e) {
-                    // ignore
-                }
-                if (!dirty) {
-                    break; // stable
-                }
+                hasRequest = false;
             }
 
             final String text = pendingText;
-            if (text == null || text.equals(lastRendered)) {
+            final String elementId = pendingElementId;
+            if (text == null || elementId == null)
                 continue;
-            }
 
-            // IMPORTANT: this runs inside TeaVM Thread/coroutine context
-            render(out, text);
-            lastRendered = text;
+            // Render in TeaVM coroutine context (required for GraphViz async)
+            doRender(elementId, text);
         }
     }
 
-    // GraphViz async happens here -> must be called from TeaVM threading/coroutine context
-    private static void render(HTMLElement out, String text) {
+    private static void doRender(String elementId, String text) {
+        HTMLDocument doc = HTMLDocument.current();
+        HTMLElement out = doc.getElementById(elementId);
+        if (out == null) {
+            consoleLog("PlantUML: element not found: " + elementId);
+            return;
+        }
+
         try {
             removeAllChildren(out);
 
             SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);
             UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);
 
-            String[] split = splitLines(text);
+            String[] lines = splitLines(text);
 
-            Diagram diagram = BUILDER.createDiagram(split);
+            Diagram diagram = BUILDER.createDiagram(lines);
             diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));
 
             appendSvgElement(out, svg.getSvgRoot());
         } catch (Exception e) {
-            out.setTextContent(e.toString());
+            out.setTextContent(String.valueOf(e));
         }
     }
 
-    private static String defaultSource() {
-        return ""
-                + "@startuml\n"
-                + "class a\n"
-                + "class b\n"
-                + "class c\n"
-                + "a --> b\n"
-                + "a --> c\n"
-                + "@enduml\n";
-    }
+    @JSBody(params = "msg", script = "console.log(msg);")
+    private static native void consoleLog(String msg);
 
     @JSBody(params = "s", script = "return s.split(/\\r\\n|\\r|\\n/);")
     private static native String[] splitLines(String s);

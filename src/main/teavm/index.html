@@ -6,13 +6,56 @@
     <title>PlantUML TeaVM demo</title>
   </head>
   <body>
-    <textarea id="src" rows="16" cols="80"></textarea>
+    <textarea id="src" rows="16" cols="80">@startuml
+class a
+class b
+class c
+a --> b
+a --> c
+@enduml</textarea>
     <div id="out"></div>
 
     <script src="viz-global.js"></script>
     <script src="classes.js"></script>
     <script>
+      // Initialize PlantUML TeaVM
       main();
+
+      // ============================================
+      // All UI logic is now in JavaScript
+      // ============================================
+
+      const textarea = document.getElementById("src");
+      const DEBOUNCE_MS = 150;
+
+      let debounceTimer = null;
+      let lastRendered = null;
+
+      function render() {
+        const source = textarea.value;
+
+        // Skip if unchanged
+        if (source === lastRendered) {
+          return;
+        }
+        lastRendered = source;
+
+        // Request render from Java (runs in TeaVM coroutine context)
+        plantumlRequestRender(source, "out");
+      }
+
+      function onInput() {
+        // Debounce: wait for typing to stabilize
+        if (debounceTimer) {
+          clearTimeout(debounceTimer);
+        }
+        debounceTimer = setTimeout(render, DEBOUNCE_MS);
+      }
+
+      textarea.addEventListener("input", onInput);
+
+      // Initial render
+      render();
     </script>
   </body>
 </html>
