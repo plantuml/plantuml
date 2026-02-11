@@ -18,12 +18,7 @@ a --> c
     <script src="viz-global.js"></script>
     <script src="classes.js"></script>
     <script>
-      // Initialize PlantUML TeaVM
       main();
-
-      // ============================================
-      // All UI logic is in JavaScript
-      // ============================================
 
       const textarea = document.getElementById("src");
       const DEBOUNCE_MS = 150;
@@ -31,35 +26,21 @@ a --> c
       let debounceTimer = null;
       let lastRendered = null;
 
-      function splitLines(text) {
-        return text.split(/\r\n|\r|\n/);
-      }
-
       function render() {
         const source = textarea.value;
-
-        // Skip if unchanged
-        if (source === lastRendered) {
-          return;
-        }
+        if (source === lastRendered) return;
         lastRendered = source;
 
-        // Split lines in JS, pass array to Java
-        const lines = splitLines(source);
-        plantumlRequestRender(lines, "out");
+        const lines = source.split(/\r\n|\r|\n/);
+        plantumlRender(lines, "out");
       }
 
       function onInput() {
-        // Debounce: wait for typing to stabilize
-        if (debounceTimer) {
-          clearTimeout(debounceTimer);
-        }
+        if (debounceTimer) clearTimeout(debounceTimer);
         debounceTimer = setTimeout(render, DEBOUNCE_MS);
       }
 
       textarea.addEventListener("input", onInput);
-
-      // Initial render
       render();
     </script>
   </body>
