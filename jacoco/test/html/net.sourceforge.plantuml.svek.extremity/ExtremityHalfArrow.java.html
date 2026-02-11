@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -56,7 +56,7 @@ class ExtremityHalfArrow extends Extremity {
 
 <span class="nc" id="L57">	public ExtremityHalfArrow(XPoint2D p1, double angle, XPoint2D center, int direction) {</span>
 <span class="nc" id="L58">		angle = manageround(angle);</span>
-<span class="nc" id="L59">		final AffineTransform rotate = AffineTransform.getRotateInstance(angle + Math.PI / 2);</span>
+<span class="nc" id="L59">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(angle + Math.PI / 2);</span>
 <span class="nc" id="L60">		final int xWing = 9;</span>
 <span class="nc" id="L61">		final int yAperture = 4 * direction;</span>
 <span class="nc" id="L62">		XPoint2D other = new XPoint2D(-xWing, -yAperture);</span>
@@ -74,8 +74,8 @@ class ExtremityHalfArrow extends Extremity {
 
 <span class="nc" id="L75">		this.contact = p0;</span>
 
-<span class="nc" id="L77">		final XPoint2D other = new XPoint2D(-xWing, -yAperture).transform(AffineTransform.getRotateInstance(angle));</span>
-<span class="nc" id="L78">		final XPoint2D other2 = new XPoint2D(-8, 0).transform(AffineTransform.getRotateInstance(angle));</span>
+<span class="nc" id="L77">		final XPoint2D other = new XPoint2D(-xWing, -yAperture).transform(XAffineTransform.getRotateInstance(angle));</span>
+<span class="nc" id="L78">		final XPoint2D other2 = new XPoint2D(-8, 0).transform(XAffineTransform.getRotateInstance(angle));</span>
 
 <span class="nc" id="L80">		this.line = new ULine(other.getX(), other.getY());</span>
 <span class="nc" id="L81">		this.otherLine = new ULine(other2.getX(), other2.getY());</span>

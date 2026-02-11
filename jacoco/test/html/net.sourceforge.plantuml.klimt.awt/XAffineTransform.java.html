@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XAffineTransform.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.awt</a> &gt; <span class="el_source">XAffineTransform.java</span></div><h1>XAffineTransform.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.awt;
+
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+
+/**
+ * Thin wrapper around {@link java.awt.geom.AffineTransform}. Delegates all
+ * operations to an internal AffineTransform instance.
+ */
+public class XAffineTransform {
+
+	// ::comment when __TEAVM__
+	private final AffineTransform delegate;
+	// ::done
+
+	// ------------------------------------------------------------------------
+	// Constructors (aligned with java.awt.geom.AffineTransform)
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Creates a transform from the 6 specified values.
+	 *
+	 * In {@link AffineTransform}: (m00, m10, m01, m11, m02, m12)
+	 */
+<span class="nc" id="L27">	public XAffineTransform(double m00, double m10, double m01, double m11, double m02, double m12) {</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L29">		this.delegate = new AffineTransform(m00, m10, m01, m11, m02, m12);</span>
+		// ::done
+<span class="nc" id="L31">	}</span>
+
+	/** Copy constructor. */
+<span class="nc" id="L34">	public XAffineTransform(XAffineTransform other) {</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L36">		this.delegate = new AffineTransform(other.delegate);</span>
+		// ::done
+<span class="nc" id="L38">	}</span>
+
+	/**
+	 * Creates a transform from a 6-element array (m00, m10, m01, m11, m02, m12).
+	 */
+<span class="nc" id="L43">	public XAffineTransform(double[] flatMatrix) {</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L45">		this.delegate = new AffineTransform(flatMatrix);</span>
+		// ::done
+<span class="nc" id="L47">	}</span>
+
+	/** Creates an identity transform. */
+<span class="fc" id="L50">	public XAffineTransform() {</span>
+		// ::comment when __TEAVM__
+<span class="fc" id="L52">		this.delegate = new AffineTransform();</span>
+		// ::done
+<span class="fc" id="L54">	}</span>
+
+	// ------------------------------------------------------------------------
+	// Factory methods
+	// ------------------------------------------------------------------------
+
+	public static XAffineTransform getRotateInstance(double thetaRadians) {
+		// ::revert when __TEAVM__
+<span class="fc" id="L62">		final XAffineTransform result = new XAffineTransform();</span>
+<span class="fc" id="L63">		result.delegate.setToRotation(thetaRadians);</span>
+<span class="fc" id="L64">		return result;</span>
+		// return new XAffineTransform();
+		// ::done
+	}
+
+	public static XAffineTransform getTranslateInstance(double tx, double ty) {
+		// ::revert when __TEAVM__
+<span class="nc" id="L71">		final XAffineTransform result = new XAffineTransform();</span>
+<span class="nc" id="L72">		result.delegate.setToTranslation(tx, ty);</span>
+<span class="nc" id="L73">		return result;</span>
+		// return new XAffineTransform();
+		// ::done
+	}
+
+	public static XAffineTransform getScaleInstance(double sx, double sy) {
+		// ::revert when __TEAVM__
+<span class="nc" id="L80">		final XAffineTransform result = new XAffineTransform();</span>
+<span class="nc" id="L81">		result.delegate.setToScale(sx, sy);</span>
+<span class="nc" id="L82">		return result;</span>
+		// return new XAffineTransform();
+		// ::done
+	}
+
+	// ------------------------------------------------------------------------
+	// Accessors
+	// ------------------------------------------------------------------------
+
+	public double getScaleX() {
+		// ::revert when __TEAVM__
+<span class="nc" id="L93">		return delegate.getScaleX();</span>
+		// return 0;
+		// ::done
+	}
+
+	public double getScaleY() {
+		// ::revert when __TEAVM__
+<span class="nc" id="L100">		return delegate.getScaleY();</span>
+		// return 0;
+		// ::done
+	}
+
+	public double getTranslateX() {
+		// ::revert when __TEAVM__
+<span class="nc" id="L107">		return delegate.getTranslateX();</span>
+		// return 0;
+		// ::done
+	}
+
+	public double getTranslateY() {
+		// ::revert when __TEAVM__
+<span class="nc" id="L114">		return delegate.getTranslateY();</span>
+		// return 0;
+		// ::done
+	}
+
+	// ------------------------------------------------------------------------
+	// Mutators / operations
+	// ------------------------------------------------------------------------
+
+	public void scale(double sx, double sy) {
+		// ::comment when __TEAVM__
+<span class="nc" id="L125">		delegate.scale(sx, sy);</span>
+		// ::done
+<span class="nc" id="L127">	}</span>
+
+	public XPoint2D transform(XPoint2D src) {
+		// ::revert when __TEAVM__
+<span class="fc" id="L131">		final Point2D dst = delegate.transform(new Point2D.Double(src.x, src.y), null);</span>
+<span class="fc" id="L132">		return new XPoint2D(dst.getX(), dst.getY());</span>
+		// return src;
+		// ::done
+	}
+
+	public void concatenate(XAffineTransform other) {
+		// ::comment when __TEAVM__
+<span class="nc" id="L139">		delegate.concatenate(other.delegate);</span>
+		// ::done
+<span class="nc" id="L141">	}</span>
+
+	public void translate(double tx, double ty) {
+		// ::comment when __TEAVM__
+<span class="nc" id="L145">		delegate.translate(tx, ty);</span>
+		// ::done
+<span class="nc" id="L147">	}</span>
+
+	public void rotate(double thetaRadians, double anchorX, double anchorY) {
+		// ::comment when __TEAVM__
+<span class="nc" id="L151">		delegate.rotate(thetaRadians, anchorX, anchorY);</span>
+		// ::done
+<span class="nc" id="L153">	}</span>
+
+	// ------------------------------------------------------------------------
+	// Optional: expose the delegate when needed internally
+	// ------------------------------------------------------------------------
+
+	// ::comment when __TEAVM__
+	public AffineTransform toAffineTransform() {
+<span class="nc" id="L161">		return new AffineTransform(delegate);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L166">		return delegate.toString();</span>
+	}
+	// ::done
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

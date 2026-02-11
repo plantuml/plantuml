@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -60,7 +60,7 @@ class ExtremityDoubleLine extends Extremity {
 
 	public void drawU(UGraphic ug) {
 <span class="nc" id="L62">		final int xWing = 4;</span>
-<span class="nc" id="L63">		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);</span>
+<span class="nc" id="L63">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(this.angle);</span>
 <span class="nc" id="L64">		XPoint2D firstLineTop = new XPoint2D(-xWing, -lineHeight);</span>
 <span class="nc" id="L65">		XPoint2D firstLineBottom = new XPoint2D(-xWing, lineHeight);</span>
 <span class="nc" id="L66">		XPoint2D secondLineTop = new XPoint2D(-xWing - 3, -lineHeight);</span>

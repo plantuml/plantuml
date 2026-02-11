@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
@@ -92,7 +92,7 @@ public class SvgPosition {
 <span class="nc" id="L92">		return new SvgPosition(x, y);</span>
 	}
 
-	public XPoint2D affine(AffineTransform at) {
+	public XPoint2D affine(XAffineTransform at) {
 <span class="nc" id="L96">		final XPoint2D tmp = new XPoint2D(getXDouble(), getYDouble()).transform(at);</span>
 <span class="nc" id="L97">		return tmp;</span>
 	}

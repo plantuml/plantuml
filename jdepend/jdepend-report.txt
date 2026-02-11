@@ -5806,7 +5806,7 @@ Stats:
     Abstract Classes: 1
 
     Ca: 3
-    Ce: 22
+    Ce: 21
 
     A: 0.09
     I: 0.88
@@ -5829,7 +5829,6 @@ Concrete Classes:
 
 Depends Upon:
     java.awt
-    java.awt.geom
     java.io
     java.lang
     java.util
@@ -6898,27 +6897,30 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 2
-    Concrete Classes: 2
+    Total Classes: 3
+    Concrete Classes: 3
     Abstract Classes: 0
 
-    Ca: 35
-    Ce: 3
+    Ca: 38
+    Ce: 5
 
     A: 0
-    I: 0.08
-    D: 0.92
+    I: 0.12
+    D: 0.88
 
 Abstract Classes:
 
 Concrete Classes:
     net.sourceforge.plantuml.klimt.awt.PortableImage
+    net.sourceforge.plantuml.klimt.awt.XAffineTransform
     net.sourceforge.plantuml.klimt.awt.XColor
 
 Depends Upon:
     java.awt
+    java.awt.geom
     java.awt.image
     java.lang
+    net.sourceforge.plantuml.klimt.geom
 
 Used By:
     com.plantuml.api.cheerpj.v1
@@ -6944,15 +6946,18 @@ Used By:
     net.sourceforge.plantuml.klimt.drawing.eps
     net.sourceforge.plantuml.klimt.drawing.g2d
     net.sourceforge.plantuml.klimt.font
+    net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.math
+    net.sourceforge.plantuml.openiconic
     net.sourceforge.plantuml.png
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.security
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.sudoku
     net.sourceforge.plantuml.svek
+    net.sourceforge.plantuml.svek.extremity
     net.sourceforge.plantuml.swing
     net.sourceforge.plantuml.tikz
     net.sourceforge.plantuml.version
@@ -8322,8 +8327,8 @@ Stats:
     Concrete Classes: 37
     Abstract Classes: 6
 
-    Ca: 93
-    Ce: 11
+    Ca: 94
+    Ce: 12
 
     A: 0.14
     I: 0.11
@@ -8383,6 +8388,7 @@ Depends Upon:
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
@@ -8430,6 +8436,7 @@ Used By:
     net.sourceforge.plantuml.help
     net.sourceforge.plantuml.jsondiagram
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.compress
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.creole.atom
@@ -9421,7 +9428,6 @@ Concrete Classes:
 
 Depends Upon:
     com.plantuml.ubrex
-    java.awt.geom
     java.io
     java.lang
     java.util
@@ -9431,6 +9437,7 @@ Depends Upon:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.donors
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
@@ -12760,11 +12767,11 @@ Stats:
     Abstract Classes: 10
 
     Ca: 25
-    Ce: 40
+    Ce: 39
 
     A: 0.12
-    I: 0.62
-    D: 0.26
+    I: 0.61
+    D: 0.27
 
 Abstract Classes:
     net.sourceforge.plantuml.svek.AbstractEntityImage
@@ -12853,7 +12860,6 @@ Concrete Classes:
     net.sourceforge.plantuml.svek.YDelta
 
 Depends Upon:
-    java.awt.geom
     java.io
     java.lang
     java.nio.charset
@@ -12998,11 +13004,11 @@ Concrete Classes:
     net.sourceforge.plantuml.svek.extremity.MiddleSubset
 
 Depends Upon:
-    java.awt.geom
     java.lang
     java.util
     net.sourceforge.plantuml.cli
     net.sourceforge.plantuml.klimt
+    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.geom
@@ -15592,59 +15598,66 @@ jcckit
     |
     |   jcckit.plot
     |   jcckit.util
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 jcckit.data
     |
     |   jcckit.util
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 jcckit.graphic
     |
     |   jcckit.util
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 jcckit.plot
     |
     |   jcckit.util
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 jcckit.renderer
     |
     |   jcckit.graphic
     |   jcckit.util
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 jcckit.transformation
     |
     |   jcckit.data
     |   jcckit.util
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 jcckit.util
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.atmp
     |
@@ -15665,17 +15678,21 @@ net.sourceforge.plantuml
 net.sourceforge.plantuml.abel
     |
     |   net.sourceforge.plantuml.stereo
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.activitydiagram
     |
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.utils
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.activitydiagram.command
     |
@@ -15810,17 +15827,19 @@ net.sourceforge.plantuml.bpm
 
 net.sourceforge.plantuml.braille
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.chart
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.chart.command
     |
@@ -15850,10 +15869,11 @@ net.sourceforge.plantuml.cheneer.command
 net.sourceforge.plantuml.chronology
     |
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.classdiagram
     |
@@ -15872,8 +15892,10 @@ net.sourceforge.plantuml.classdiagram.command
 net.sourceforge.plantuml.cli
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.cli
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.code
     |
@@ -15941,10 +15963,11 @@ net.sourceforge.plantuml.cruise
     |
     |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.stereo
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.cucadiagram
     |
@@ -15970,10 +15993,13 @@ net.sourceforge.plantuml.decoration.symbol
 
 net.sourceforge.plantuml.dedication
     |
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.utils
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.definition
     |
@@ -16065,10 +16091,12 @@ net.sourceforge.plantuml.error
 
 net.sourceforge.plantuml.file
     |
-    |-> net.sourceforge.plantuml.cli
+    |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.cli
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.filesdiagram
     |
@@ -16077,6 +16105,13 @@ net.sourceforge.plantuml.filesdiagram
     |-> net.sourceforge.plantuml.klimt
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt
+
+net.sourceforge.plantuml.flashcode
+    |
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.flowdiagram
     |
@@ -16104,14 +16139,10 @@ net.sourceforge.plantuml.ftp
 
 net.sourceforge.plantuml.fun
     |
-    |   net.sourceforge.plantuml.security
-    |   net.sourceforge.plantuml.security.authentication
-    |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.gitlog
     |
@@ -16184,11 +16215,18 @@ net.sourceforge.plantuml.klimt
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt
 
+net.sourceforge.plantuml.klimt.awt
+    |
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
+
 net.sourceforge.plantuml.klimt.color
     |
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.compress
     |
@@ -16239,10 +16277,11 @@ net.sourceforge.plantuml.klimt.drawing.debug
 
 net.sourceforge.plantuml.klimt.drawing.eps
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.drawing.g2d
     |
@@ -16259,24 +16298,27 @@ net.sourceforge.plantuml.klimt.drawing.hand
 
 net.sourceforge.plantuml.klimt.drawing.html5
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.drawing.svg
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.drawing.tikz
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.drawing.txt
     |
@@ -16288,10 +16330,11 @@ net.sourceforge.plantuml.klimt.drawing.txt
 
 net.sourceforge.plantuml.klimt.drawing.visio
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.font
     |
@@ -16313,10 +16356,11 @@ net.sourceforge.plantuml.klimt.shape
 
 net.sourceforge.plantuml.klimt.sprite
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.math
     |
@@ -16356,10 +16400,11 @@ net.sourceforge.plantuml.nwdiag
 
 net.sourceforge.plantuml.nwdiag.core
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.nwdiag.next
     |
@@ -16445,10 +16490,11 @@ net.sourceforge.plantuml.project
     |   net.sourceforge.plantuml.project.core
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.project.command
     |
@@ -16462,28 +16508,31 @@ net.sourceforge.plantuml.project.core
     |
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.project.data
     |
     |   net.sourceforge.plantuml.project.core
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.project.draw
     |
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.project.draw.header
     |
@@ -16522,10 +16571,11 @@ net.sourceforge.plantuml.project.time
     |   net.sourceforge.plantuml.project.core
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.project.timescale
     |
@@ -16535,10 +16585,11 @@ net.sourceforge.plantuml.project.timescale
     |   net.sourceforge.plantuml.project.core
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.regex
     |
@@ -16700,10 +16751,11 @@ net.sourceforge.plantuml.stats
 
 net.sourceforge.plantuml.stereo
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.style
     |
@@ -16737,10 +16789,11 @@ net.sourceforge.plantuml.svek
 
 net.sourceforge.plantuml.svek.extremity
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |-> net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.svek.image
     |
@@ -16752,10 +16805,13 @@ net.sourceforge.plantuml.svek.image
 net.sourceforge.plantuml.swing
     |
     |   net.sourceforge.plantuml.version
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.utils
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.syntax
     |
@@ -16767,10 +16823,13 @@ net.sourceforge.plantuml.syntax
 
 net.sourceforge.plantuml.telnet
     |
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.utils
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.text
     |
@@ -16848,14 +16907,20 @@ net.sourceforge.plantuml.utils
     |
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.version
     |
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.utils
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.vizjs
     |
@@ -16909,10 +16974,13 @@ net.sourceforge.plantuml.yaml
 
 net.sourceforge.plantuml.yaml.parser
     |
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.utils
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.utils
+    |   net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.klimt.geom
 
 org.stathissideris.ascii2image.core
     |
@@ -17007,7 +17075,7 @@ java.awt,0,0,35,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,2,0,0,0,1,1
 java.awt.font,0,0,7,0,0,0,1,1
-java.awt.geom,0,0,20,0,0,0,1,1
+java.awt.geom,0,0,17,0,0,0,1,1
 java.awt.image,0,0,17,0,0,0,1,1
 java.io,0,0,124,0,0,0,1,1
 java.lang,0,0,235,0,0,0,1,1
@@ -17123,7 +17191,7 @@ net.sourceforge.plantuml.elk.proxy.core.options,6,0,1,2,0,0.67,0.33,1
 net.sourceforge.plantuml.elk.proxy.core.util,1,0,2,2,0,0.5,0.5,1
 net.sourceforge.plantuml.elk.proxy.graph,6,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.elk.proxy.graph.util,1,0,1,3,0,0.75,0.25,1
-net.sourceforge.plantuml.emoji,11,1,3,22,0.09,0.88,0.03,1
+net.sourceforge.plantuml.emoji,11,1,3,21,0.09,0.88,0.03,1
 net.sourceforge.plantuml.emoji.data,1,0,1,1,0,0.5,0.5,1
 net.sourceforge.plantuml.error,8,1,8,27,0.12,0.77,0.1,1
 net.sourceforge.plantuml.file,3,0,3,7,0,0.7,0.3,1
@@ -17144,7 +17212,7 @@ net.sourceforge.plantuml.jcckit,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,5,30,0,0.86,0.14,1
 net.sourceforge.plantuml.klimt,26,10,83,15,0.38,0.15,0.46,1
-net.sourceforge.plantuml.klimt.awt,2,0,35,3,0,0.08,0.92,1
+net.sourceforge.plantuml.klimt.awt,3,0,38,5,0,0.12,0.88,1
 net.sourceforge.plantuml.klimt.color,32,2,105,14,0.06,0.12,0.82,1
 net.sourceforge.plantuml.klimt.compress,14,2,5,10,0.14,0.67,0.19,1
 net.sourceforge.plantuml.klimt.creole,23,4,84,24,0.17,0.22,0.6,1
@@ -17162,7 +17230,7 @@ net.sourceforge.plantuml.klimt.drawing.tikz,12,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,5,12,0,0.71,0.29,1
 net.sourceforge.plantuml.klimt.drawing.visio,12,1,1,13,0.08,0.93,0.01,1
 net.sourceforge.plantuml.klimt.font,14,4,90,14,0.29,0.13,0.58,1
-net.sourceforge.plantuml.klimt.geom,43,6,93,11,0.14,0.11,0.75,1
+net.sourceforge.plantuml.klimt.geom,43,6,94,12,0.14,0.11,0.75,1
 net.sourceforge.plantuml.klimt.shape,51,4,90,21,0.08,0.19,0.73,1
 net.sourceforge.plantuml.klimt.sprite,27,2,24,31,0.07,0.56,0.36,1
 net.sourceforge.plantuml.licensing,8,0,0,5,0,1,0,1
@@ -17228,7 +17296,7 @@ net.sourceforge.plantuml.stereo,6,0,47,14,0,0.23,0.77,1
 net.sourceforge.plantuml.style,31,8,80,28,0.26,0.26,0.48,1
 net.sourceforge.plantuml.style.parser,6,0,6,5,0,0.45,0.55,1
 net.sourceforge.plantuml.sudoku,8,1,0,26,0.12,1,0.12,1
-net.sourceforge.plantuml.svek,82,10,25,40,0.12,0.62,0.26,1
+net.sourceforge.plantuml.svek,82,10,25,39,0.12,0.61,0.27,1
 net.sourceforge.plantuml.svek.extremity,56,4,5,11,0.07,0.69,0.24,1
 net.sourceforge.plantuml.svek.image,52,2,16,25,0.04,0.61,0.35,1
 net.sourceforge.plantuml.swing,42,0,0,30,0,1,0,1
