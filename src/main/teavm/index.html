@@ -4,14 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PlantUML TeaVM demo</title>
+    <style>
+      textarea { width: 100%; box-sizing: border-box; }
+    </style>
   </head>
   <body>
-    <textarea id="src" rows="16" cols="80">@startuml
-class a
-class b
-class c
-a --> b
-a --> c
+    <p><strong>Beta</strong> – Powered by
+      <a href="https://github.com/plantuml/plantuml">PlantUML</a>,
+      <a href="https://github.com/konsoletyper/teavm">TeaVM</a> &amp;
+      <a href="https://github.com/mdaines/viz-js">Viz.js</a>
+    </p>
+    <textarea id="src" rows="10">@startuml
+Alice->Bob
 @enduml</textarea>
     <div id="out"></div>
 
@@ -19,16 +23,12 @@ a --> c
     <script src="classes.js"></script>
     <script>
       main();
-
       const textarea = document.getElementById("src");
-
-      function render() {
-        const lines = textarea.value.split(/\r\n|\r|\n/);
-        plantumlRender(lines, "out");
+      function renderNow() {
+        plantumlRender(textarea.value.split(/\r\n|\r|\n/), "out");
       }
-
-      textarea.addEventListener("input", render);
-      render();
+      textarea.addEventListener("input", renderNow);
+      renderNow();
     </script>
   </body>
 </html>
