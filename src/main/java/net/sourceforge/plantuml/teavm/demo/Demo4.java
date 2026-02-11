@@ -27,7 +27,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * (required for GraphViz async).
  * 
  * Architecture:
- * 1. JS calls plantumlRequestRender(source, elementId) to request a render
+ * 1. JS calls plantumlRequestRender(lines, elementId) to request a render
  * 2. Java worker thread wakes up and performs the render
  * 3. Debouncing/throttling is done in JS, not Java
  */
@@ -41,7 +41,7 @@ public class Demo4 {
     // Render request state
     private static final Object LOCK = new Object();
     private static volatile boolean workerStarted;
-    private static volatile String pendingText;
+    private static volatile String[] pendingLines;
     private static volatile String pendingElementId;
     private static volatile boolean hasRequest;
 
@@ -49,13 +49,9 @@ public class Demo4 {
      * Main entry point - starts worker and registers JS API.
      */
     public static void main(String[] args) {
-        // Start render worker thread (runs in TeaVM coroutine context)
         startWorker();
-
-        // Register JS API
         registerRequestRender(Demo4::requestRender);
-
-        consoleLog("PlantUML TeaVM loaded. Call plantumlRequestRender(source, elementId).");
+        consoleLog("PlantUML TeaVM loaded. Call plantumlRequestRender(linesArray, elementId).");
     }
 
     @JSBody(params = "callback", script = "window.plantumlRequestRender = callback;")
@@ -63,15 +59,15 @@ public class Demo4 {
 
     @JSFunctor
     public interface RequestRenderCallback extends JSObject {
-        void request(String source, String elementId);
+        void request(String[] lines, String elementId);
     }
 
     /**
      * Called from JavaScript to request a render.
-     * JS is responsible for debouncing - this just queues the request.
+     * JS is responsible for debouncing and splitting lines.
      */
-    private static void requestRender(String source, String elementId) {
-        pendingText = source;
+    private static void requestRender(String[] lines, String elementId) {
+        pendingLines = lines;
         pendingElementId = elementId;
         hasRequest = true;
 
@@ -89,7 +85,6 @@ public class Demo4 {
 
     private static void renderLoop() {
         while (true) {
-            // Wait for a render request
             synchronized (LOCK) {
                 while (!hasRequest) {
                     try {
@@ -101,17 +96,16 @@ public class Demo4 {
                 hasRequest = false;
             }
 
-            final String text = pendingText;
+            final String[] lines = pendingLines;
             final String elementId = pendingElementId;
-            if (text == null || elementId == null)
+            if (lines == null || elementId == null)
                 continue;
 
-            // Render in TeaVM coroutine context (required for GraphViz async)
-            doRender(elementId, text);
+            doRender(elementId, lines);
         }
     }
 
-    private static void doRender(String elementId, String text) {
+    private static void doRender(String elementId, String[] lines) {
         HTMLDocument doc = HTMLDocument.current();
         HTMLElement out = doc.getElementById(elementId);
         if (out == null) {
@@ -125,8 +119,6 @@ public class Demo4 {
             SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);
             UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);
 
-            String[] lines = splitLines(text);
-
             Diagram diagram = BUILDER.createDiagram(lines);
             diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));
 
@@ -138,9 +130,6 @@ public class Demo4 {
 
     @JSBody(params = "msg", script = "console.log(msg);")
     private static native void consoleLog(String msg);
-
-    @JSBody(params = "s", script = "return s.split(/\\r\\n|\\r|\\n/);")
-    private static native String[] splitLines(String s);
 
     @JSBody(params = { "parent", "svg" }, script = "parent.appendChild(svg);")
     private static native void appendSvgElement(HTMLElement parent, Element svg);

@@ -22,7 +22,7 @@ a --> c
       main();
 
       // ============================================
-      // All UI logic is now in JavaScript
+      // All UI logic is in JavaScript
       // ============================================
 
       const textarea = document.getElementById("src");
@@ -30,6 +30,10 @@ a --> c
 
       let debounceTimer = null;
       let lastRendered = null;
+
+      function splitLines(text) {
+        return text.split(/\r\n|\r|\n/);
+      }
 
       function render() {
         const source = textarea.value;
@@ -40,8 +44,9 @@ a --> c
         }
         lastRendered = source;
 
-        // Request render from Java (runs in TeaVM coroutine context)
-        plantumlRequestRender(source, "out");
+        // Split lines in JS, pass array to Java
+        const lines = splitLines(source);
+        plantumlRequestRender(lines, "out");
       }
 
       function onInput() {
