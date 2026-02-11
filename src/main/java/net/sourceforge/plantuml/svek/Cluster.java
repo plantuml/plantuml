@@ -500,7 +500,7 @@ public class Cluster implements Moveable {
 		this.rectangleArea = RectangleArea.build(min, max);
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __CORE__
 	public boolean printCluster1(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder) {
 		final List<SvekNode> tmp = getNodesOrderedTop(lines);
 		if (tmp.size() == 0)
@@ -560,9 +560,11 @@ public class Cluster implements Moveable {
 				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,
 						graphvizVersion, type);
 
+		// ::comment when __TEAVM__
 		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
 				&& graphvizVersion.ignoreHorizontalLinks() == false)
 			appendRankSame(sb, lines);
+		// ::done
 
 		for (Cluster child : children)
 			if (child.group.getTogether() == null)

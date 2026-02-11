@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -190,7 +190,7 @@ public class SvgPath {
 	}
 
 	// ::comment when __TEAVM__
-	private UPath toUPath(AffineTransform at) {
+	private UPath toUPath(XAffineTransform at) {
 		UPath result = UPath.none();
 		Movement previous = null;
 		for (Movement move : movements) {
@@ -242,7 +242,7 @@ public class SvgPath {
 		return result;
 	}
 
-	public void drawMe(UGraphic ug, AffineTransform at) {
+	public void drawMe(UGraphic ug, XAffineTransform at) {
 		final UPath path = toUPath(at);
 		ug.draw(path);
 	}

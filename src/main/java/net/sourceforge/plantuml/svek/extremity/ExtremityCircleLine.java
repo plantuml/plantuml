@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -64,7 +64,7 @@ class ExtremityCircleLine extends Extremity {
 		final double radius = 4 + thickness - 1;
 		final double lineHeight = 4 + thickness - 1;
 		final int xWing = 4;
-		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
+		final XAffineTransform rotate = XAffineTransform.getRotateInstance(this.angle);
 		XPoint2D middle = new XPoint2D(0, 0);
 		XPoint2D base = new XPoint2D(-xWing - radius - 3, 0);
 		XPoint2D circleBase = new XPoint2D(-xWing - radius - 3, 0);

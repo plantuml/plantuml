@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.decoration.symbol.USymbolHexagon;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.dot.ExeState;
-import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.UnparsableGraphvizException;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -205,7 +204,6 @@ public final class GraphvizImageBuilder {
 
 	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
 			boolean fileFormatOptionIsDebugSvek) {
-		// ::comment when __CORE__ or __TEAVM__
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 
@@ -260,8 +258,10 @@ public final class GraphvizImageBuilder {
 			}
 		}
 
+		// ::comment when __TEAVM__
 		if (dotStringFactory.illegalDotExe())
 			return error(dotStringFactory.getDotExe());
+		// ::done
 
 		if (basefile == null && (fileFormatOptionIsDebugSvek || isSvekTrace())
 				&& (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE
@@ -273,12 +273,11 @@ public final class GraphvizImageBuilder {
 		try {
 			svg = dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
 		} catch (IOException e) {
-			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
-					GraphvizRuntimeEnvironment.getInstance().graphviz244onWindows(), e);
+			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()), false, e);
 		}
 		if (svg.length() == 0)
-			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
-					GraphvizRuntimeEnvironment.getInstance().graphviz244onWindows(), new EmptySvgException());
+			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()), false,
+					new EmptySvgException());
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
@@ -291,10 +290,6 @@ public final class GraphvizImageBuilder {
 			throw new UnparsableGraphvizException(e, graphvizVersion, svg,
 					source.getPlainString(BackSlash.lineSeparator()));
 		}
-		// ::done
-		// ::uncomment when __CORE__ or __TEAVM__
-		// return null;
-		// ::done
 
 	}
 

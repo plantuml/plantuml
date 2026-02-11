@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.emoji;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
@@ -45,13 +45,13 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 public class UGraphicWithScale {
 
 	final private UGraphic ug;
-	final private AffineTransform at;
+	final private XAffineTransform at;
 	final private double angle;
 	final private double scale;
 	final private ColorResolver colorResolver;
 
 	public UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, double scale) {
-		this(updateColor(ug, colorResolver), colorResolver, AffineTransform.getScaleInstance(scale, scale), 0, scale);
+		this(updateColor(ug, colorResolver), colorResolver, XAffineTransform.getScaleInstance(scale, scale), 0, scale);
 	}
 
 	private static UGraphic updateColor(UGraphic ug, ColorResolver colorResolver) {
@@ -59,7 +59,7 @@ public class UGraphicWithScale {
 		return ug.apply(color).apply(color.bg());
 	}
 
-	private UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, AffineTransform at, double angle,
+	private UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, XAffineTransform at, double angle,
 			double scale) {
 		this.ug = ug;
 		this.colorResolver = colorResolver;
@@ -87,7 +87,7 @@ public class UGraphicWithScale {
 	public UGraphicWithScale applyScale(double changex, double changey) {
 		if (changex != changey)
 			throw new IllegalArgumentException();
-		final AffineTransform copy = new AffineTransform(at);
+		final XAffineTransform copy = new XAffineTransform(at);
 		copy.scale(changex, changey);
 		return new UGraphicWithScale(ug, colorResolver, copy, angle, 1 * changex);
 	}
@@ -97,24 +97,24 @@ public class UGraphicWithScale {
 	}
 
 	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
-		final AffineTransform copy = new AffineTransform(at);
+		final XAffineTransform copy = new XAffineTransform(at);
 		copy.rotate(delta_angle * Math.PI / 180, x, y);
 		return new UGraphicWithScale(ug, colorResolver, copy, this.angle + delta_angle, this.scale);
 	}
 
 	public UGraphicWithScale applyTranslate(double x, double y) {
-		final AffineTransform copy = new AffineTransform(at);
+		final XAffineTransform copy = new XAffineTransform(at);
 		copy.translate(x, y);
 		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);
 	}
 
-	public AffineTransform getAffineTransform() {
+	public XAffineTransform getAffineTransform() {
 		return at;
 	}
 
 	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
-		final AffineTransform copy = new AffineTransform(at);
-		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));
+		final XAffineTransform copy = new XAffineTransform(at);
+		copy.concatenate(new XAffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));
 		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);
 	}
 

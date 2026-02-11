@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -62,7 +62,7 @@ class ExtremityCircleCrowfoot extends Extremity {
 	public void drawU(UGraphic ug) {
 		final int xWing = 8;
 		final int yAperture = 6;
-		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
+		final XAffineTransform rotate = XAffineTransform.getRotateInstance(this.angle);
 		XPoint2D middle = new XPoint2D(0, 0);
 		XPoint2D left = new XPoint2D(0, -yAperture);
 		XPoint2D base = new XPoint2D(-xWing, 0);

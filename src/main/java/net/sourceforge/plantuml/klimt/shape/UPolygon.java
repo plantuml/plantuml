@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,11 +114,11 @@ public class UPolygon extends AbstractShadowable {
 	    // ::comment when __TEAVM__
 		if (theta == 0)
 			return;
-		affine(AffineTransform.getRotateInstance(theta));
+		affine(XAffineTransform.getRotateInstance(theta));
 	    // ::done
 	}
 
-	public void affine(AffineTransform rotate) {
+	public void affine(XAffineTransform rotate) {
 		for (int i = 0; i < all.size(); i++)
 			all.set(i, all.get(i).transform(rotate));
 

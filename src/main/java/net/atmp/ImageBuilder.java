@@ -117,7 +117,10 @@ public class ImageBuilder {
 
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
+	// ::revert when __TEAVM__
 	private UDrawable udrawable;
+	// public UDrawable udrawable;
+	// ::done
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
 	private long seed = 42;

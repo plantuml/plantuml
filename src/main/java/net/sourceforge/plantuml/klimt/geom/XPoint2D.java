@@ -1,8 +1,7 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 // ::comment when __HAXE__
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 // ::done
 
 public class XPoint2D {
@@ -32,15 +31,9 @@ public class XPoint2D {
 		return Double.valueOf(x).hashCode() + Double.valueOf(y).hashCode();
 	}
 
-	// ::revert when __TEAVM__
-	public XPoint2D transform(AffineTransform rotate) {
-		final Point2D.Double tmp = new Point2D.Double(x, y);
-		rotate.transform(tmp, tmp);
-		return new XPoint2D(tmp.x, tmp.y);
+	public XPoint2D transform(XAffineTransform rotate) {
+		return rotate.transform(this);
 	}
-//	public XPoint2D transform(Object... foo) {
-//	return this;
-//}
 	// ::done
 
 	public final double getX() {

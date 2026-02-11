@@ -434,7 +434,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	@Override
 	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+		// ::revert when __TEAVM__
 		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this);
+		// final CucaDiagramFileMaker maker = new net.sourceforge.plantuml.svek.CucaDiagramFileMakerTeaVM(this);
+		// ::done
 		maker.createOneGraphic(ug);
 	}
 
@@ -475,15 +478,14 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		this.eventuallyBuildPhantomGroups(null);
 		final CucaDiagramFileMaker maker;
-		// ::comment when __CORE__ or __TEAVM__
+		// ::revert when __CORE__ or __TEAVM__
 		if (this.isUseElk())
 			maker = new CucaDiagramFileMakerElk(this);
 		else if (this.isUseSmetana())
-			// ::done
 			maker = new CucaDiagramFileMakerSmetana(this);
-		// ::comment when __CORE__ or __TEAVM__
 		else
 			maker = new CucaDiagramFileMakerSvek(this);
+		// maker = null;
 		// ::done
 
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);

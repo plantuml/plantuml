@@ -317,8 +317,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (link.getQuantifier1() == null)
 			startTailText = null;
 		else
-			startTailText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier1()).create(cardinalityFont,
-					HorizontalAlignment.CENTER, skinParam);
+			startTailText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier1())
+					.create(cardinalityFont, HorizontalAlignment.CENTER, skinParam);
 
 		if (link.getQuantifier2() == null)
 			endHeadText = null;
@@ -364,7 +364,6 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return link.getLinkArrow();
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
 	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode, DotSplines dotSplines) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {
@@ -385,11 +384,14 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		sb.append(decoration);
 
 		int length = link.getLength();
+		// ::comment when __TEAVM__
 		if (graphvizVersion.ignoreHorizontalLinks() && length == 1)
 			length = 2;
+		// ::done
 
 		if (useRankSame) {
-			if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) || link.isInvis() || length != 1) {
+			if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) || link.isInvis()
+					|| length != 1) {
 				// if (graphvizVersion.isJs() == false) {
 				sb.append("minlen=" + (length - 1));
 				sb.append(",");
@@ -402,12 +404,15 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		sb.append("color=\"" + XColor.toHexRGBColor(lineColor) + "\"");
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
 			sb.append(",");
+			// ::revert when __TEAVM__
 			if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL
 					|| dotSplines == DotSplines.ORTHO) {
 				sb.append("xlabel=<");
 			} else {
 				sb.append("label=<");
 			}
+			// sb.append("label=<");
+			// ::done
 			XDimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
 			dimNote = dimNote.delta(2 * labelShield);
 
@@ -442,7 +447,6 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
-	// ::done
 
 	private XDimension2D eventuallyDivideByTwo(XDimension2D dim) {
 		if (divideLabelWidthByTwo)
@@ -455,7 +459,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		// if (graphvizVersion == GraphvizVersion.V2_34_0) {
 		// return null;
 		// }
-		if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) == false && link.getLength() == 1
+		if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) == false
+				&& link.getLength() == 1
 		/* && graphvizVersion.isJs() == false */) {
 			return "{rank=same; " + getStartUidPrefix() + "; " + getEndUidPrefix() + "}";
 		}

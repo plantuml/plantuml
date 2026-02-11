@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -161,7 +161,7 @@ public final class FileFormatOption implements Serializable {
 	}
 
 	@Deprecated
-	public AffineTransform getAffineTransform() {
+	public XAffineTransform getAffineTransform() {
 		return null;
 	}
 

@@ -203,6 +203,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 		final UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());
 		if (opaleLink != null) {
+			// ::comment when __TEAVM__
 			final StringBounder stringBounder = ug.getStringBounder();
 
 			final SmetanaEdge smetanaEdged = smetanaPathes.get(opaleLink);
@@ -231,7 +232,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			opale.setOpale(strategy, pp2, pp1);
 			final UGraphic stroked = applyStroke(ug2);
 			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));
-
+			// ::done
 		} else if (opaleLine == null || opaleLine.isOpale() == false) {
 			drawNormal(ug2);
 		} else {
@@ -340,7 +341,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private Link opaleLink;
 	private SvekNode node;
 	private SvekNode other;
+	// ::comment when __TEAVM__
 	private Map<Link, SmetanaEdge> smetanaPathes;
+	// ::done
 
 	public void setOpaleLine(SvekEdge line, SvekNode node, SvekNode other) {
 		this.opaleLine = line;
@@ -348,12 +351,14 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		this.other = Objects.requireNonNull(other);
 	}
 
+	// ::comment when __TEAVM__
 	public void setOpaleLink(Link link, SvekNode node, SvekNode other, Map<Link, SmetanaEdge> edges) {
 		this.opaleLink = link;
 		this.node = node;
 		this.other = Objects.requireNonNull(other);
 		this.smetanaPathes = edges;
 	}
+	// ::done
 
 	public double getStartingX(StringBounder stringBounder, double y) {
 		return 0;

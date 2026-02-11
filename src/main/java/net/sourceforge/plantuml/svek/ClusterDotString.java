@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class ClusterDotString {
-	// ::remove file when __CORE__ or __TEAVM__
+	// ::remove file when __CORE__
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;
@@ -74,11 +74,13 @@ public class ClusterDotString {
 
 	void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
+		// ::comment when __TEAVM__
 		if (cluster.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
 					graphvizVersion, type);
 			return;
 		}
+		// ::done
 		final boolean packed = isPacked();
 
 		if (packed) {
@@ -89,8 +91,11 @@ public class ClusterDotString {
 		}
 		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);
 		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;
+		// ::revert when __TEAVM__
 		final boolean useProtectionWhenThereALinkFromOrToGroup = graphvizVersion
 				.useProtectionWhenThereALinkFromOrToGroup();
+		// final boolean useProtectionWhenThereALinkFromOrToGroup = false;
+		// ::done
 		if (useProtectionWhenThereALinkFromOrToGroup == false)
 			thereALinkFromOrToGroup1 = false;
 

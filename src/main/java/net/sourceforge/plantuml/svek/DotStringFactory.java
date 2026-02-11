@@ -46,12 +46,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.dot.ProcessState;
-import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
@@ -84,18 +84,6 @@ public final class DotStringFactory implements Moveable {
 	public Bibliotekon getBibliotekon() {
 		return bibliotekon;
 	}
-
-	// ::uncomment when __TEAVM__
-//	public GraphvizVersion getGraphvizVersion() {
-//		throw new UnsupportedOperationException("TEAVM3");
-//	}
-//	public void moveDelta(double deltaX, double deltaY) {
-//	throw new UnsupportedOperationException("TEAVM4");
-//}
-	// ::done
-
-
-	// ::comment when __TEAVM__
 
 	private double getHorizontalDzeta(StringBounder stringBounder) {
 		double max = 0;
@@ -268,25 +256,38 @@ public final class DotStringFactory implements Moveable {
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {
+		// ::comment when __TEAVM__
 		if (graphvizVersion == null)
 			graphvizVersion = getGraphvizVersionInternal();
+		// ::done
 
 		return graphvizVersion;
 	}
 
 	private GraphvizVersion getGraphvizVersionInternal() {
+		// ::revert when __TEAVM__
 		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, "foo;", "svg");
 		if (graphviz instanceof GraphvizJs)
 			return GraphvizJs.getGraphvizVersion(false);
 
 		final File f = graphviz.getDotExe();
 		return GraphvizRuntimeEnvironment.getInstance().getVersion(f);
+		// return null;
+		// ::done
 	}
 
 	public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotOptions)
 			throws IOException {
 		String dotString = createDotString(stringBounder, dotMode, dotOptions);
 
+		// ::uncomment when __TEAVM__
+		// System.err.println("dotString=" + dotString);
+		// String svg = net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.renderDotToSvg(dotString);
+		// System.err.println("svg=" + svg);
+		// return svg;
+		// ::done
+
+		// ::comment when __TEAVM__
 		if (basefile != null) {
 			final SFile f = basefile.getTraceFile("svek.dot");
 			SvekUtils.traceString(f, dotString);
@@ -321,21 +322,27 @@ public final class DotStringFactory implements Moveable {
 		}
 
 		return s;
+		// ::done
 	}
 
 	public boolean illegalDotExe() {
+		// ::revert when __TEAVM__
 		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, "svg");
 		if (graphviz instanceof GraphvizJs)
 			return false;
 
 		final File dotExe = graphviz.getDotExe();
 		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
+		// return false;
+		// ::done
 	}
 
+	// ::comment when __TEAVM__
 	public File getDotExe() {
 		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, "svg");
 		return graphviz.getDotExe();
 	}
+	// ::done
 
 	private static final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 
@@ -633,6 +640,5 @@ public final class DotStringFactory implements Moveable {
 			cl.moveDelta(deltaX, deltaY);
 
 	}
-	// ::done
 
 }

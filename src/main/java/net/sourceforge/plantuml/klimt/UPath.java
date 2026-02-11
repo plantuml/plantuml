@@ -36,7 +36,7 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -113,7 +113,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return result;
 	}
 
-	public UPath affine(AffineTransform transform, double angle, double scale) {
+	public UPath affine(XAffineTransform transform, double angle, double scale) {
 		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments)
 			result.addInternal(seg.affine(transform, angle, scale));

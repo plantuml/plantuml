@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.AffineTransform;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -56,7 +56,7 @@ class ExtremityHalfArrow extends Extremity {
 
 	public ExtremityHalfArrow(XPoint2D p1, double angle, XPoint2D center, int direction) {
 		angle = manageround(angle);
-		final AffineTransform rotate = AffineTransform.getRotateInstance(angle + Math.PI / 2);
+		final XAffineTransform rotate = XAffineTransform.getRotateInstance(angle + Math.PI / 2);
 		final int xWing = 9;
 		final int yAperture = 4 * direction;
 		XPoint2D other = new XPoint2D(-xWing, -yAperture);
@@ -74,8 +74,8 @@ class ExtremityHalfArrow extends Extremity {
 
 		this.contact = p0;
 
-		final XPoint2D other = new XPoint2D(-xWing, -yAperture).transform(AffineTransform.getRotateInstance(angle));
-		final XPoint2D other2 = new XPoint2D(-8, 0).transform(AffineTransform.getRotateInstance(angle));
+		final XPoint2D other = new XPoint2D(-xWing, -yAperture).transform(XAffineTransform.getRotateInstance(angle));
+		final XPoint2D other2 = new XPoint2D(-8, 0).transform(XAffineTransform.getRotateInstance(angle));
 
 		this.line = new ULine(other.getX(), other.getY());
 		this.otherLine = new ULine(other2.getX(), other2.getY());
