@@ -21,26 +21,13 @@ a --> c
       main();
 
       const textarea = document.getElementById("src");
-      const DEBOUNCE_MS = 150;
-
-      let debounceTimer = null;
-      let lastRendered = null;
 
       function render() {
-        const source = textarea.value;
-        if (source === lastRendered) return;
-        lastRendered = source;
-
-        const lines = source.split(/\r\n|\r|\n/);
+        const lines = textarea.value.split(/\r\n|\r|\n/);
         plantumlRender(lines, "out");
       }
 
-      function onInput() {
-        if (debounceTimer) clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(render, DEBOUNCE_MS);
-      }
-
-      textarea.addEventListener("input", onInput);
+      textarea.addEventListener("input", render);
       render();
     </script>
   </body>
