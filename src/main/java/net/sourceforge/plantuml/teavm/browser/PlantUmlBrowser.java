@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.teavm.demo;
+package net.sourceforge.plantuml.teavm.browser;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSFunctor;
@@ -25,7 +25,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * GraphViz async requires TeaVM coroutine context, so we use a worker thread.
  * JS handles UI/debouncing, Java handles rendering.
  */
-public class Demo4 {
+public class PlantUmlBrowser {
 
     private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();
     private static final ColorMapper COLOR_MAPPER = ColorMapper.TEAVM;
@@ -37,8 +37,8 @@ public class Demo4 {
     private static volatile String pendingElementId;
 
     public static void main(String[] args) {
-        new Thread(Demo4::workerLoop, "plantuml-render").start();
-        registerRender(Demo4::requestRender);
+        new Thread(PlantUmlBrowser::workerLoop, "plantuml-render").start();
+        registerRender(PlantUmlBrowser::requestRender);
         consoleLog("PlantUML TeaVM loaded.");
     }
 
