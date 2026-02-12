@@ -5,6 +5,7 @@
 // gradle clean build -x javaDoc -x test
 // gradle test
 
+import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.jar.JarFile
 import java.util.Base64
@@ -267,7 +268,18 @@ tasks.register<JavaExec>("jdepend") {
         sourceSets.main.get().output.classesDirs.asPath
     )
     
+    // Filter noisy stderr from old JDepend ("Unknown constant: 18" warnings)
+    val rawErr = ByteArrayOutputStream()
+    errorOutput = rawErr
+    
     doLast {
+        val filtered = rawErr.toString(Charsets.UTF_8).lineSequence()
+            .filterNot { it.trim().startsWith("Unknown constant:") }
+            .joinToString("\n")
+            .trim()
+        if (filtered.isNotEmpty()) {
+            logger.warn(filtered)
+        }
         println("JDepend reports generated:")
         println("  Text: ${textReport.absolutePath}")
     }
@@ -296,11 +308,20 @@ abstract class JdependHtmlTask @Inject constructor(
     fun generate() {
         htmlReport.get().asFile.parentFile.mkdirs()
         
-        // Generate XML report
+        // Generate XML report (with stderr filtering for "Unknown constant:" warnings)
+        val rawErr = ByteArrayOutputStream()
         execOperations.javaexec {
             mainClass.set("jdepend.xmlui.JDepend")
             classpath = jdependClasspath
             args("-file", xmlReport.get().asFile.absolutePath, classesDir.asPath)
+            errorOutput = rawErr
+        }
+        val filtered = rawErr.toString(Charsets.UTF_8).lineSequence()
+            .filterNot { it.trim().startsWith("Unknown constant:") }
+            .joinToString("\n")
+            .trim()
+        if (filtered.isNotEmpty()) {
+            logger.warn(filtered)
         }
         
         // Convert XML to HTML using XSLT
