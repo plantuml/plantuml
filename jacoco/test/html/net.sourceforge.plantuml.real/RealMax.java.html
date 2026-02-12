@@ -65,10 +65,10 @@ class RealMax extends AbstractReal implements Real {
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
-<span class="fc" id="L69">			return cache;</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (cache != Double.MAX_VALUE)</span>
+<span class="nc" id="L69">			return cache;</span>
 <span class="fc" id="L70">		double result = all.get(0).getCurrentValue();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		for (int i = 1; i &lt; all.size(); i++) {</span>
 <span class="fc" id="L72">			Throwable t = new Throwable();</span>
 <span class="fc" id="L73">			t.fillInStackTrace();</span>
 <span class="fc" id="L74">			final int stackLength = t.getStackTrace().length;</span>
@@ -83,8 +83,8 @@ class RealMax extends AbstractReal implements Real {
 <span class="fc" id="L83">				result = v;</span>
 
 		}
-<span class="fc" id="L86">		cache = result;</span>
-<span class="fc" id="L87">		return result;</span>
+<span class="nc" id="L86">		cache = result;</span>
+<span class="nc" id="L87">		return result;</span>
 	}
 
 	public Real addFixed(double delta) {
