@@ -60,7 +60,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 
 public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
-
+	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
+	
 	public CucaDiagramFileMakerTeaVM(CucaDiagram diagram) {
 		super(diagram);
 

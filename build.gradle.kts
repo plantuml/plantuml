@@ -544,8 +544,8 @@ tasks.register<JavaExec>("generateJavaScript") {
 	args(
 		"-d", outputDir.absolutePath,
 		"-t", "javascript",
-		"-G",  // Generate source maps
-		"-g",  // Generate debug information
+//		"-G",  // Generate source maps
+//		"-g",  // Generate debug information
 		"net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser"  // Main class as positional argument
 	)
 	
