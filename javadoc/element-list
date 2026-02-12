@@ -197,6 +197,8 @@ net.sourceforge.plantuml.svek.extremity
 net.sourceforge.plantuml.svek.image
 net.sourceforge.plantuml.swing
 net.sourceforge.plantuml.syntax
+net.sourceforge.plantuml.teavm
+net.sourceforge.plantuml.teavm.browser
 net.sourceforge.plantuml.telnet
 net.sourceforge.plantuml.text
 net.sourceforge.plantuml.theme

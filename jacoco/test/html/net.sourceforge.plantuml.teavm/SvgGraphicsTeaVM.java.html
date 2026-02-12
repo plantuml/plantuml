@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvgGraphicsTeaVM.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm</a> &gt; <span class="el_source">SvgGraphicsTeaVM.java</span></div><h1>SvgGraphicsTeaVM.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.teavm;
+
+// ::uncomment when __TEAVM__
+//import org.teavm.jso.JSBody;
+//import org.teavm.jso.dom.html.HTMLDocument;
+//import org.teavm.jso.dom.xml.Element;
+//import org.teavm.jso.dom.xml.Document;
+// ::done
+
+/**
+ * SVG Graphics implementation for TeaVM. Uses browser's native DOM API instead
+ * of javax.xml.
+ */
+<span class="nc" id="L48">public class SvgGraphicsTeaVM {</span>
+
+	// ::uncomment when __TEAVM__
+	
+//	private static final String SVG_NS = &quot;http://www.w3.org/2000/svg&quot;;
+//
+//	private final Element svgRoot;
+//	private final Element defs;
+//	private final Element mainGroup;
+//	private final Document document;
+//
+//	private String fillColor = &quot;#000000&quot;;
+//	private String strokeColor = &quot;#000000&quot;;
+//	private double strokeWidth = 1.0;
+//
+//	public SvgGraphicsTeaVM(int width, int height) {
+//		this.document = HTMLDocument.current();
+//
+//		// Create SVG root element
+//		this.svgRoot = createSvgElement(&quot;svg&quot;);
+//		svgRoot.setAttribute(&quot;xmlns&quot;, SVG_NS);
+//		svgRoot.setAttribute(&quot;version&quot;, &quot;1.1&quot;);
+//		svgRoot.setAttribute(&quot;width&quot;, String.valueOf(width));
+//		svgRoot.setAttribute(&quot;height&quot;, String.valueOf(height));
+//		svgRoot.setAttribute(&quot;viewBox&quot;, &quot;0 0 &quot; + width + &quot; &quot; + height);
+//
+//		// Create defs for gradients, filters, etc.
+//		this.defs = createSvgElement(&quot;defs&quot;);
+//		svgRoot.appendChild(defs);
+//
+//		// Create main group for all drawings
+//		this.mainGroup = createSvgElement(&quot;g&quot;);
+//		svgRoot.appendChild(mainGroup);
+//	}
+//
+//	@JSBody(params = { &quot;tagName&quot; }, script = &quot;return document.createElementNS('http://www.w3.org/2000/svg', tagName);&quot;)
+//	private static native Element createSvgElement(String tagName);
+//
+//	public Element getSvgRoot() {
+//		return svgRoot;
+//	}
+//
+//	public void setFillColor(String color) {
+//		this.fillColor = color != null ? color : &quot;none&quot;;
+//	}
+//
+//	public void setStrokeColor(String color) {
+//		this.strokeColor = color != null ? color : &quot;none&quot;;
+//	}
+//
+//	public void setStrokeWidth(double width) {
+//		this.strokeWidth = width;
+//	}
+//
+//	public void drawRectangle(double x, double y, double width, double height) {
+//		drawRectangle(x, y, width, height, 0, 0);
+//	}
+//
+//	public void drawRectangle(double x, double y, double width, double height, double rx, double ry) {
+//		Element rect = createSvgElement(&quot;rect&quot;);
+//		rect.setAttribute(&quot;x&quot;, format(x));
+//		rect.setAttribute(&quot;y&quot;, format(y));
+//		rect.setAttribute(&quot;width&quot;, format(width));
+//		rect.setAttribute(&quot;height&quot;, format(height));
+//		if (rx &gt; 0)
+//			rect.setAttribute(&quot;rx&quot;, format(rx));
+//		if (ry &gt; 0)
+//			rect.setAttribute(&quot;ry&quot;, format(ry));
+//		applyStyles(rect);
+//		mainGroup.appendChild(rect);
+//	}
+//
+//	public void drawCircle(double cx, double cy, double r) {
+//		Element circle = createSvgElement(&quot;circle&quot;);
+//		circle.setAttribute(&quot;cx&quot;, format(cx));
+//		circle.setAttribute(&quot;cy&quot;, format(cy));
+//		circle.setAttribute(&quot;r&quot;, format(r));
+//		applyStyles(circle);
+//		mainGroup.appendChild(circle);
+//	}
+//
+//	public void drawEllipse(double cx, double cy, double rx, double ry) {
+//		Element ellipse = createSvgElement(&quot;ellipse&quot;);
+//		ellipse.setAttribute(&quot;cx&quot;, format(cx));
+//		ellipse.setAttribute(&quot;cy&quot;, format(cy));
+//		ellipse.setAttribute(&quot;rx&quot;, format(rx));
+//		ellipse.setAttribute(&quot;ry&quot;, format(ry));
+//		applyStyles(ellipse);
+//		mainGroup.appendChild(ellipse);
+//	}
+//
+//	public void drawLine(double x1, double y1, double x2, double y2) {
+//		Element line = createSvgElement(&quot;line&quot;);
+//		line.setAttribute(&quot;x1&quot;, format(x1));
+//		line.setAttribute(&quot;y1&quot;, format(y1));
+//		line.setAttribute(&quot;x2&quot;, format(x2));
+//		line.setAttribute(&quot;y2&quot;, format(y2));
+//		applyStrokeStyle(line);
+//		mainGroup.appendChild(line);
+//	}
+//
+//	public void drawPolyline(double... points) {
+//		Element polyline = createSvgElement(&quot;polyline&quot;);
+//		polyline.setAttribute(&quot;points&quot;, formatPoints(points));
+//		polyline.setAttribute(&quot;fill&quot;, &quot;none&quot;);
+//		applyStrokeStyle(polyline);
+//		mainGroup.appendChild(polyline);
+//	}
+//
+//	public void drawPolygon(double... points) {
+//		Element polygon = createSvgElement(&quot;polygon&quot;);
+//		polygon.setAttribute(&quot;points&quot;, formatPoints(points));
+//		applyStyles(polygon);
+//		mainGroup.appendChild(polygon);
+//	}
+//
+//	public void drawPath(String pathData) {
+//		Element path = createSvgElement(&quot;path&quot;);
+//		path.setAttribute(&quot;d&quot;, pathData);
+//		applyStyles(path);
+//		mainGroup.appendChild(path);
+//	}
+//
+//	public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
+//		drawText(text, x, y, fontFamily, fontSize, &quot;normal&quot;, &quot;normal&quot;);
+//	}
+//
+//	public void drawText(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
+//			String fontStyle) {
+//		Element textElem = createSvgElement(&quot;text&quot;);
+//		textElem.setAttribute(&quot;x&quot;, format(x));
+//		textElem.setAttribute(&quot;y&quot;, format(y));
+//		textElem.setAttribute(&quot;font-family&quot;, fontFamily);
+//		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));
+//		textElem.setAttribute(&quot;fill&quot;, fillColor);
+//		if (!&quot;normal&quot;.equals(fontWeight)) {
+//			textElem.setAttribute(&quot;font-weight&quot;, fontWeight);
+//		}
+//		if (!&quot;normal&quot;.equals(fontStyle)) {
+//			textElem.setAttribute(&quot;font-style&quot;, fontStyle);
+//		}
+//		textElem.setTextContent(text);
+//		mainGroup.appendChild(textElem);
+//	}
+//
+//	public Element createGroup() {
+//		Element group = createSvgElement(&quot;g&quot;);
+//		mainGroup.appendChild(group);
+//		return group;
+//	}
+//
+//	public String createLinearGradient(String id, String color1, String color2, boolean horizontal) {
+//		Element gradient = createSvgElement(&quot;linearGradient&quot;);
+//		gradient.setAttribute(&quot;id&quot;, id);
+//		if (horizontal) {
+//			gradient.setAttribute(&quot;x1&quot;, &quot;0%&quot;);
+//			gradient.setAttribute(&quot;y1&quot;, &quot;0%&quot;);
+//			gradient.setAttribute(&quot;x2&quot;, &quot;100%&quot;);
+//			gradient.setAttribute(&quot;y2&quot;, &quot;0%&quot;);
+//		} else {
+//			gradient.setAttribute(&quot;x1&quot;, &quot;0%&quot;);
+//			gradient.setAttribute(&quot;y1&quot;, &quot;0%&quot;);
+//			gradient.setAttribute(&quot;x2&quot;, &quot;0%&quot;);
+//			gradient.setAttribute(&quot;y2&quot;, &quot;100%&quot;);
+//		}
+//
+//		Element stop1 = createSvgElement(&quot;stop&quot;);
+//		stop1.setAttribute(&quot;offset&quot;, &quot;0%&quot;);
+//		stop1.setAttribute(&quot;stop-color&quot;, color1);
+//		gradient.appendChild(stop1);
+//
+//		Element stop2 = createSvgElement(&quot;stop&quot;);
+//		stop2.setAttribute(&quot;offset&quot;, &quot;100%&quot;);
+//		stop2.setAttribute(&quot;stop-color&quot;, color2);
+//		gradient.appendChild(stop2);
+//
+//		defs.appendChild(gradient);
+//		return &quot;url(#&quot; + id + &quot;)&quot;;
+//	}
+//
+//	private void applyStyles(Element element) {
+//		element.setAttribute(&quot;fill&quot;, fillColor);
+//		applyStrokeStyle(element);
+//	}
+//
+//	private void applyStrokeStyle(Element element) {
+//		element.setAttribute(&quot;stroke&quot;, strokeColor);
+//		element.setAttribute(&quot;stroke-width&quot;, format(strokeWidth));
+//	}
+//
+//	private String format(double value) {
+//		if (value == (int) value) {
+//			return String.valueOf((int) value);
+//		}
+//		return String.format(&quot;%.2f&quot;, value).replace(',', '.');
+//	}
+//
+//	private String formatPoints(double... points) {
+//		StringBuilder sb = new StringBuilder();
+//		for (int i = 0; i &lt; points.length; i += 2) {
+//			if (sb.length() &gt; 0)
+//				sb.append(&quot; &quot;);
+//			sb.append(format(points[i])).append(&quot;,&quot;).append(format(points[i + 1]));
+//		}
+//		return sb.toString();
+//	}
+//
+//	/**
+//	 * Returns the SVG as a string (serialized XML).
+//	 */
+//	@JSBody(params = { &quot;element&quot; }, script = &quot;return new XMLSerializer().serializeToString(element);&quot;)
+//	public static native String serializeToString(Element element);
+//
+//	public String toSvgString() {
+//		return serializeToString(svgRoot);
+//	}
+//
+//	// ========================================================================
+//	// Text measurement methods
+//	// ========================================================================
+//
+//	/**
+//	 * Initializes the shared canvas for text measurement. Call once at startup for
+//	 * best performance.
+//	 */
+//	@JSBody(script = &quot;if (!window._measureCanvas) {&quot; + &quot;  window._measureCanvas = document.createElement('canvas');&quot;
+//			+ &quot;  window._measureCtx = window._measureCanvas.getContext('2d');&quot; + &quot;}&quot;)
+//	public static native void initMeasureCanvas();
+//
+//	/**
+//	 * Measures text dimensions using Canvas API (optimized with shared canvas).
+//	 * 
+//	 * @param text       The text to measure
+//	 * @param fontFamily Font family (e.g., &quot;Arial&quot;)
+//	 * @param fontSize   Font size in pixels
+//	 * @param fontWeight Font weight (e.g., &quot;normal&quot;, &quot;bold&quot;)
+//	 * @return Array with [width, height]
+//	 */
+//	@JSBody(params = { &quot;text&quot;, &quot;fontFamily&quot;, &quot;fontSize&quot;, &quot;fontWeight&quot; }, script = &quot;if (!window._measureCtx) {&quot;
+//			+ &quot;  window._measureCanvas = document.createElement('canvas');&quot;
+//			+ &quot;  window._measureCtx = window._measureCanvas.getContext('2d');&quot; + &quot;}&quot; + &quot;var ctx = window._measureCtx;&quot;
+//			+ &quot;ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;&quot; + &quot;var metrics = ctx.measureText(text);&quot;
+//			+ &quot;var width = metrics.width;&quot;
+//			+ &quot;var height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;&quot;
+//			+ &quot;if (!height) height = fontSize * 1.2;&quot; + &quot;return [width, height];&quot;)
+//	public static native double[] measureTextCanvas(String text, String fontFamily, int fontSize, String fontWeight);
+//
+//	/**
+//	 * Measures text dimensions using Canvas API (creates new canvas each time). Use
+//	 * measureTextCanvas() instead for better performance.
+//	 */
+//	@JSBody(params = { &quot;text&quot;, &quot;fontFamily&quot;, &quot;fontSize&quot;,
+//			&quot;fontWeight&quot; }, script = &quot;var canvas = document.createElement('canvas');&quot;
+//					+ &quot;var ctx = canvas.getContext('2d');&quot;
+//					+ &quot;ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;&quot;
+//					+ &quot;var metrics = ctx.measureText(text);&quot; + &quot;var width = metrics.width;&quot;
+//					+ &quot;var height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;&quot;
+//					+ &quot;if (!height) height = fontSize * 1.2;&quot; + &quot;return [width, height];&quot;)
+//	public static native double[] measureTextCanvasNoCache(String text, String fontFamily, int fontSize,
+//			String fontWeight);
+//
+//	/**
+//	 * Measures text using Canvas with normal weight.
+//	 */
+//	public static double[] measureText(String text, String fontFamily, int fontSize) {
+//		return measureTextCanvas(text, fontFamily, fontSize, &quot;normal&quot;);
+//	}
+//
+//	/**
+//	 * Gets text width only.
+//	 */
+//	public static double getTextWidth(String text, String fontFamily, int fontSize) {
+//		return measureText(text, fontFamily, fontSize)[0];
+//	}
+//
+//	/**
+//	 * Gets text height only.
+//	 */
+//	public static double getTextHeight(String text, String fontFamily, int fontSize) {
+//		return measureText(text, fontFamily, fontSize)[1];
+//	}
+//
+//	/**
+//	 * Measures text using SVG getBBox() method. More accurate but requires the SVG
+//	 * to be in the DOM.
+//	 * 
+//	 * @param text       The text to measure
+//	 * @param fontFamily Font family
+//	 * @param fontSize   Font size in pixels
+//	 * @return Array with [width, height, x, y] from bounding box
+//	 */
+//	@JSBody(params = { &quot;text&quot;, &quot;fontFamily&quot;,
+//			&quot;fontSize&quot; }, script = &quot;var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');&quot;
+//					+ &quot;svg.style.position = 'absolute';&quot; + &quot;svg.style.visibility = 'hidden';&quot;
+//					+ &quot;document.body.appendChild(svg);&quot;
+//					+ &quot;var textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');&quot;
+//					+ &quot;textEl.setAttribute('font-family', fontFamily);&quot; + &quot;textEl.setAttribute('font-size', fontSize);&quot;
+//					+ &quot;textEl.textContent = text;&quot; + &quot;svg.appendChild(textEl);&quot; + &quot;var bbox = textEl.getBBox();&quot;
+//					+ &quot;var result = [bbox.width, bbox.height, bbox.x, bbox.y];&quot; + &quot;document.body.removeChild(svg);&quot;
+//					+ &quot;return result;&quot;)
+//	public static native double[] measureTextSvgBBox(String text, String fontFamily, int fontSize);
+//
+//	/**
+//	 * Detailed text metrics using Canvas API. Returns more information about text
+//	 * positioning.
+//	 * 
+//	 * @return Array with [width, actualBoundingBoxAscent, actualBoundingBoxDescent,
+//	 *         fontBoundingBoxAscent, fontBoundingBoxDescent]
+//	 */
+//	@JSBody(params = { &quot;text&quot;, &quot;fontFamily&quot;, &quot;fontSize&quot;,
+//			&quot;fontWeight&quot; }, script = &quot;var canvas = document.createElement('canvas');&quot;
+//					+ &quot;var ctx = canvas.getContext('2d');&quot;
+//					+ &quot;ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;&quot; + &quot;var m = ctx.measureText(text);&quot;
+//					+ &quot;return [&quot; + &quot;  m.width,&quot; + &quot;  m.actualBoundingBoxAscent || fontSize * 0.8,&quot;
+//					+ &quot;  m.actualBoundingBoxDescent || fontSize * 0.2,&quot; + &quot;  m.fontBoundingBoxAscent || fontSize * 0.8,&quot;
+//					+ &quot;  m.fontBoundingBoxDescent || fontSize * 0.2&quot; + &quot;];&quot;)
+//	public static native double[] getDetailedTextMetrics(String text, String fontFamily, int fontSize,
+//			String fontWeight);
+	
+	// ::done
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

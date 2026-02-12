@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicTeaVM.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm</a> &gt; <span class="el_source">UGraphicTeaVM.java</span></div><h1>UGraphicTeaVM.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.teavm;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPixel;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.url.Url;
+
+public class UGraphicTeaVM extends AbstractUGraphic&lt;SvgGraphicsTeaVM&gt; implements ClipContainer {
+
+	private UGraphicTeaVM(StringBounder stringBounder) {
+<span class="nc" id="L64">		super(stringBounder);</span>
+<span class="nc" id="L65">		register();</span>
+<span class="nc" id="L66">	}</span>
+
+	public static UGraphicTeaVM build(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
+			SvgGraphicsTeaVM svg) {
+<span class="nc" id="L70">		final UGraphicTeaVM result = new UGraphicTeaVM(stringBounder);</span>
+<span class="nc" id="L71">		result.copy(defaultBackground, colorMapper, svg);</span>
+<span class="nc" id="L72">		return result;</span>
+	}
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="nc" id="L77">		final UGraphicTeaVM result = new UGraphicTeaVM(getStringBounder());</span>
+<span class="nc" id="L78">		result.copy(this);</span>
+<span class="nc" id="L79">		return result;</span>
+	}
+
+	private void register() {
+<span class="nc" id="L83">		registerDriver(URectangle.class, new DriverRectangleTeaVM(this));</span>
+<span class="nc" id="L84">		registerDriver(ULine.class, new DriverLineTeaVM(this));</span>
+<span class="nc" id="L85">		registerDriver(UPolygon.class, new DriverPolygonTeaVM(this));</span>
+<span class="nc" id="L86">		registerDriver(UEllipse.class, new DriverEllipseTeaVM(this));</span>
+<span class="nc" id="L87">		registerDriver(UText.class, new DriverTextTeaVM(this));</span>
+<span class="nc" id="L88">		registerDriver(UPath.class, new DriverPathTeaVM(this));</span>
+
+		// NOP drivers for shapes not yet implemented
+<span class="nc" id="L91">		ignoreShape(DotPath.class);</span>
+<span class="nc" id="L92">		ignoreShape(UImage.class);</span>
+<span class="nc" id="L93">		ignoreShape(UImageSvg.class);</span>
+<span class="nc" id="L94">		ignoreShape(UCenteredCharacter.class);</span>
+<span class="nc" id="L95">		ignoreShape(UPixel.class);</span>
+<span class="nc" id="L96">	}</span>
+
+	public SvgGraphicsTeaVM getSvgGraphics() {
+<span class="nc" id="L99">		return getGraphicObject();</span>
+	}
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="nc" id="L104">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
+	}
+
+	@Override
+	public void startGroup(UGroup group) {
+		// TODO: implement group support
+<span class="nc" id="L110">	}</span>
+
+	@Override
+	public void closeGroup() {
+		// TODO: implement group support
+<span class="nc" id="L115">	}</span>
+
+	@Override
+	public void startUrl(Url url) {
+		// TODO: implement URL/link support
+<span class="nc" id="L120">	}</span>
+
+	@Override
+	public void closeUrl() {
+		// TODO: implement URL/link support
+<span class="nc" id="L125">	}</span>
+
+	@Override
+	protected void drawComment(UComment comment) {
+		// TODO: implement comment support
+<span class="nc" id="L130">	}</span>
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
+<span class="nc" id="L135">			return true;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
+<span class="nc" id="L137">			return true;</span>
+<span class="nc" id="L138">		return super.matchesProperty(propertyName);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
