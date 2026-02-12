@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.api.parallel.Isolated;
+import org.junitpioneer.jupiter.StdErr;
+import org.junitpioneer.jupiter.StdIo;
 
 import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
@@ -39,27 +41,27 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 		GlobalConfig.getInstance().put(GlobalConfigKey.OVERWRITE, false);
 	}
 
-//	@Test
-//	void testNormal() throws IOException, InterruptedException {
-//
-//		alice_bob_hello1();
-//		runSvg();
-//
-//		assertLs("[test.svg, test.txt]", tempDir);
-//
-//		assertTrue(containsHello1(ofileSvg));
-//		assertFalse(containsHello2(ofileSvg));
-//
-//		alice_bob_hello2();
-//		runSvg();
-//		// After regeneration, hello1 should be replaced by hello2
-//		assertFalse(containsHello1(ofileSvg));
-//		assertTrue(containsHello2(ofileSvg));
-//
-//	}
+	void testNormal() throws IOException, InterruptedException {
 
+		alice_bob_hello1();
+		runSvg();
+
+		assertLs("[test.svg, test.txt]", tempDir);
+
+		assertTrue(containsHello1(ofileSvg));
+		assertFalse(containsHello2(ofileSvg));
+
+		alice_bob_hello2();
+		runSvg();
+		// After regeneration, hello1 should be replaced by hello2
+		assertFalse(containsHello1(ofileSvg));
+		assertTrue(containsHello2(ofileSvg));
+
+	}
+
+	@StdIo
 	@Test
-	void testReadOnly() throws Exception {
+	void testReadOnly(StdErr err) throws Exception {
 
 		alice_bob_hello1();
 		runSvg();
@@ -79,26 +81,26 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 
 	}
 
-//	@Test
-//	void testReadOnlyAndOverwrite() throws IOException, InterruptedException {
-//
-//		alice_bob_hello1();
-//		runSvg();
-//
-//		assertLs("[test.svg, test.txt]", tempDir);
-//
-//		assertTrue(containsHello1(ofileSvg));
-//		assertFalse(containsHello2(ofileSvg));
-//
-//		ofileSvg.toFile().setWritable(false);
-//
-//		alice_bob_hello2();
-//		runSvgOverwrite();
-//		// Second run with -overwrite: should force overwrite even if file is read-only
-//		assertFalse(containsHello1(ofileSvg));
-//		assertTrue(containsHello2(ofileSvg));
-//
-//	}
+	@Test
+	void testReadOnlyAndOverwrite() throws IOException, InterruptedException {
+
+		alice_bob_hello1();
+		runSvg();
+
+		assertLs("[test.svg, test.txt]", tempDir);
+
+		assertTrue(containsHello1(ofileSvg));
+		assertFalse(containsHello2(ofileSvg));
+
+		ofileSvg.toFile().setWritable(false);
+
+		alice_bob_hello2();
+		runSvgOverwrite();
+		// Second run with -overwrite: should force overwrite even if file is read-only
+		assertFalse(containsHello1(ofileSvg));
+		assertTrue(containsHello2(ofileSvg));
+
+	}
 
 	private void alice_bob_hello1() throws IOException {
 		Files.writeString(file, String.join(System.lineSeparator(), "@startuml", "alice->bob : hello1", "@enduml"));

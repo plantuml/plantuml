@@ -81,7 +81,7 @@ public interface DiagramReturn {
 	 * Converts the generated diagram to an image representation. This can be useful for displaying
 	 * the diagram in graphical user interfaces or for saving it as a file.
 	 *
-	 * @return a {@link BufferedImage} representing the diagram.
+	 * @return a {@link PortableImage} representing the diagram.
 	 * @throws IOException if there is an error during the image generation process, such as an issue
 	 *         writing to a file or generating the image from the diagram.
 	 */

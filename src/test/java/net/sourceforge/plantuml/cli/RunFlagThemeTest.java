@@ -6,13 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.StdErr;
+import org.junitpioneer.jupiter.StdIo;
 
 import net.sourceforge.plantuml.Run;
 
 class RunFlagThemeTest extends AbstractCliTest {
 
+	@StdIo
 	@Test
-	void testThemeFoo() throws Exception {
+	void testThemeFoo(StdErr err) throws Exception {
 		aliceBob_hello(tempDir, "test.txt");
 
 		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
@@ -29,6 +32,7 @@ class RunFlagThemeTest extends AbstractCliTest {
 		assertTrue(content.contains("<svg"));
 		assertTrue(content.contains("Cannot load theme foo"));
 		assertTrue(content.contains("!theme foo"));
+
 	}
 
 	@Test
