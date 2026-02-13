@@ -25,6 +25,8 @@ Generate UML diagrams from textual descriptions.
 [![Dev Project Pages index](https://img.shields.io/badge/dev_project-pages-764ba2?logo=github)](https://plantuml.github.io/plantuml/)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/plantuml/plantuml)
 
+[![JavaScript Demo](https://img.shields.io/badge/JavaScript_PlantUML_Demo-F7DF1E?logo=javascript&logoColor=000)](https://plantuml.github.io/plantuml/js-plantuml)
+
 ## ℹ️ About
 
 PlantUML is a component that allows you to create various UML diagrams through simple textual descriptions. From sequence diagrams to deployment diagrams and beyond, PlantUML provides an easy way to create visual representations of complex systems.
