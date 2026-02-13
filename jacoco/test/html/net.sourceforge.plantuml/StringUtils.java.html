@@ -292,29 +292,29 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L292">			throw new IllegalArgumentException(s);</span>
 
 <span class="fc" id="L294">		s = s.toLowerCase();</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (s.contains(&quot;left&quot;))</span>
-<span class="fc" id="L296">			return Direction.LEFT;</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (s.contains(&quot;left&quot;))</span>
+<span class="nc" id="L296">			return Direction.LEFT;</span>
 
-<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (s.contains(&quot;right&quot;))</span>
-<span class="fc" id="L299">			return Direction.RIGHT;</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		if (s.contains(&quot;right&quot;))</span>
+<span class="nc" id="L299">			return Direction.RIGHT;</span>
 
-<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (s.contains(&quot;up&quot;))</span>
-<span class="fc" id="L302">			return Direction.UP;</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">		if (s.contains(&quot;up&quot;))</span>
+<span class="nc" id="L302">			return Direction.UP;</span>
 
-<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (s.contains(&quot;down&quot;)) {</span>
-<span class="fc" id="L305">			return Direction.DOWN;</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (s.contains(&quot;down&quot;)) {</span>
+<span class="nc" id="L305">			return Direction.DOWN;</span>
 		}
-<span class="fc bfc" id="L307" title="All 2 branches covered.">		if (s.contains(&quot;l&quot;))</span>
-<span class="fc" id="L308">			return Direction.LEFT;</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">		if (s.contains(&quot;l&quot;))</span>
+<span class="nc" id="L308">			return Direction.LEFT;</span>
 
-<span class="fc bfc" id="L310" title="All 2 branches covered.">		if (s.contains(&quot;r&quot;))</span>
-<span class="fc" id="L311">			return Direction.RIGHT;</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">		if (s.contains(&quot;r&quot;))</span>
+<span class="nc" id="L311">			return Direction.RIGHT;</span>
 
-<span class="fc bfc" id="L313" title="All 2 branches covered.">		if (s.contains(&quot;u&quot;))</span>
-<span class="fc" id="L314">			return Direction.UP;</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		if (s.contains(&quot;u&quot;))</span>
+<span class="nc" id="L314">			return Direction.UP;</span>
 
-<span class="fc bfc" id="L316" title="All 2 branches covered.">		if (s.contains(&quot;d&quot;))</span>
-<span class="fc" id="L317">			return Direction.DOWN;</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">		if (s.contains(&quot;d&quot;))</span>
+<span class="nc" id="L317">			return Direction.DOWN;</span>
 
 <span class="fc bfc" id="L319" title="All 2 branches covered.">		if (s.length() == 1)</span>
 <span class="fc" id="L320">			return Direction.RIGHT;</span>
@@ -453,7 +453,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L453">			char c = s.charAt(i);</span>
 <span class="fc bfc" id="L454" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
 <span class="fc" id="L455">				c += 13;</span>
-<span class="pc bpc" id="L456" title="2 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
+<span class="fc bfc" id="L456" title="All 8 branches covered.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
 <span class="fc" id="L457">				c -= 13;</span>
 <span class="pc bpc" id="L458" title="1 of 2 branches missed.">			else if (c &gt; 126)</span>
 <span class="nc" id="L459">				throw new IllegalArgumentException(s);</span>

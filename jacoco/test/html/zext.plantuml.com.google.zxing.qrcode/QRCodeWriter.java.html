@@ -33,7 +33,7 @@ import zext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
  * 
  * @author dswitkin@google.com (Daniel Switkin)
  */
-<span class="fc" id="L36">public final class QRCodeWriter implements Writer {</span>
+<span class="nc" id="L36">public final class QRCodeWriter implements Writer {</span>
 
 	private static final int QUIET_ZONE_SIZE = 4;
 
@@ -44,36 +44,36 @@ import zext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
 
 	public BitMatrix encode(String contents, BarcodeFormat format, int multiple, Hashtable hints) throws WriterException {
 
-<span class="pc bpc" id="L47" title="2 of 4 branches missed.">		if (contents == null || contents.length() == 0) {</span>
+<span class="nc bnc" id="L47" title="All 4 branches missed.">		if (contents == null || contents.length() == 0) {</span>
 <span class="nc" id="L48">			throw new IllegalArgumentException(&quot;Found empty contents&quot;);</span>
 		}
 
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (format != BarcodeFormat.QR_CODE) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (format != BarcodeFormat.QR_CODE) {</span>
 <span class="nc" id="L52">			throw new IllegalArgumentException(&quot;Can only encode QR_CODE, but got &quot; + format);</span>
 		}
 
-<span class="fc" id="L55">		ErrorCorrectionLevel errorCorrectionLevel = ErrorCorrectionLevel.L;</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (hints != null) {</span>
-<span class="fc" id="L57">			ErrorCorrectionLevel requestedECLevel = (ErrorCorrectionLevel) hints.get(EncodeHintType.ERROR_CORRECTION);</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (requestedECLevel != null) {</span>
-<span class="fc" id="L59">				errorCorrectionLevel = requestedECLevel;</span>
+<span class="nc" id="L55">		ErrorCorrectionLevel errorCorrectionLevel = ErrorCorrectionLevel.L;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (hints != null) {</span>
+<span class="nc" id="L57">			ErrorCorrectionLevel requestedECLevel = (ErrorCorrectionLevel) hints.get(EncodeHintType.ERROR_CORRECTION);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">			if (requestedECLevel != null) {</span>
+<span class="nc" id="L59">				errorCorrectionLevel = requestedECLevel;</span>
 			}
 		}
 
-<span class="fc" id="L63">		QRCode code = new QRCode();</span>
-<span class="fc" id="L64">		Encoder.encode(contents, errorCorrectionLevel, hints, code);</span>
-<span class="fc" id="L65">		return renderResult(code, multiple);</span>
+<span class="nc" id="L63">		QRCode code = new QRCode();</span>
+<span class="nc" id="L64">		Encoder.encode(contents, errorCorrectionLevel, hints, code);</span>
+<span class="nc" id="L65">		return renderResult(code, multiple);</span>
 	}
 
 	// Note that the input matrix uses 0 == white, 1 == black, while the output
 	// matrix uses
 	// 0 == black, 255 == white (i.e. an 8 bit greyscale bitmap).
 	private static BitMatrix renderResult(QRCode code, int multiple) {
-<span class="fc" id="L72">		ByteMatrix input = code.getMatrix();</span>
-<span class="fc" id="L73">		int inputWidth = input.getWidth();</span>
-<span class="fc" id="L74">		int inputHeight = input.getHeight();</span>
-<span class="fc" id="L75">		int qrWidth = inputWidth + (QUIET_ZONE_SIZE &lt;&lt; 1);</span>
-<span class="fc" id="L76">		int qrHeight = inputHeight + (QUIET_ZONE_SIZE &lt;&lt; 1);</span>
+<span class="nc" id="L72">		ByteMatrix input = code.getMatrix();</span>
+<span class="nc" id="L73">		int inputWidth = input.getWidth();</span>
+<span class="nc" id="L74">		int inputHeight = input.getHeight();</span>
+<span class="nc" id="L75">		int qrWidth = inputWidth + (QUIET_ZONE_SIZE &lt;&lt; 1);</span>
+<span class="nc" id="L76">		int qrHeight = inputHeight + (QUIET_ZONE_SIZE &lt;&lt; 1);</span>
 		// int outputWidth = Math.max(width, qrWidth);
 		// int outputHeight = Math.max(height, qrHeight);
 
@@ -86,21 +86,21 @@ import zext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
 		// If the requested size is 200x160, the multiple will be 4, for a QR of
 		// 132x132. These will
 		// handle all the padding from 100x100 (the actual QR) up to 200x160.
-<span class="fc" id="L89">		int leftPadding = QUIET_ZONE_SIZE * multiple;</span>
-<span class="fc" id="L90">		int topPadding = QUIET_ZONE_SIZE * multiple;</span>
+<span class="nc" id="L89">		int leftPadding = QUIET_ZONE_SIZE * multiple;</span>
+<span class="nc" id="L90">		int topPadding = QUIET_ZONE_SIZE * multiple;</span>
 
-<span class="fc" id="L92">		BitMatrix output = new BitMatrix(qrWidth * multiple, qrHeight * multiple);</span>
+<span class="nc" id="L92">		BitMatrix output = new BitMatrix(qrWidth * multiple, qrHeight * multiple);</span>
 
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (int inputY = 0, outputY = topPadding; inputY &lt; inputHeight; inputY++, outputY += multiple) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (int inputY = 0, outputY = topPadding; inputY &lt; inputHeight; inputY++, outputY += multiple) {</span>
 			// Write the contents of this row of the barcode
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			for (int inputX = 0, outputX = leftPadding; inputX &lt; inputWidth; inputX++, outputX += multiple) {</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (input.get(inputX, inputY) == 1) {</span>
-<span class="fc" id="L98">					output.setRegion(outputX, outputY, multiple, multiple);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			for (int inputX = 0, outputX = leftPadding; inputX &lt; inputWidth; inputX++, outputX += multiple) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (input.get(inputX, inputY) == 1) {</span>
+<span class="nc" id="L98">					output.setRegion(outputX, outputY, multiple, multiple);</span>
 				}
 			}
 		}
 
-<span class="fc" id="L103">		return output;</span>
+<span class="nc" id="L103">		return output;</span>
 	}
 
 }

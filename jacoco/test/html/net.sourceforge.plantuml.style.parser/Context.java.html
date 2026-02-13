@@ -79,8 +79,8 @@ class Context {
 
 <span class="fc bfc" id="L80" title="All 2 branches covered.">		for (String s : newString.split(&quot;,&quot;))</span>
 <span class="fc bfc" id="L81" title="All 2 branches covered.">			for (StyleSignatureBasic ssb : this.signatures) {</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">				if (s.startsWith(&quot;.&quot;)) {</span>
-<span class="fc" id="L83">					ssb = ssb.addStereotype(s);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">				if (s.startsWith(&quot;.&quot;)) {</span>
+<span class="nc" id="L83">					ssb = ssb.addStereotype(s);</span>
 <span class="pc bpc" id="L84" title="1 of 2 branches missed.">				} else if (s.startsWith(&quot;depth(&quot;)) {</span>
 <span class="nc" id="L85">					ssb = ssb.addLevel(Integer.parseInt(s.replaceAll(&quot;\\D&quot;, &quot;&quot;)));</span>
 				} else {
@@ -128,8 +128,8 @@ class Context {
 <span class="fc" id="L128">		final Collection&lt;StyleSignatureBasic&gt; signatures = toSignatures();</span>
 <span class="fc bfc" id="L129" title="All 2 branches covered.">		for (StyleSignatureBasic signature : signatures) {</span>
 <span class="fc" id="L130">			Map&lt;PName, Value&gt; tmp = map;</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (signature.isWithDot())</span>
-<span class="fc" id="L132">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			if (signature.isWithDot())</span>
+<span class="nc" id="L132">				tmp = StyleLoader.addPriorityForStereotype(tmp);</span>
 <span class="fc bfc" id="L133" title="All 2 branches covered.">			if (tmp.size() &gt; 0)</span>
 <span class="fc" id="L134">				result.add(new Style(signature, tmp));</span>
 

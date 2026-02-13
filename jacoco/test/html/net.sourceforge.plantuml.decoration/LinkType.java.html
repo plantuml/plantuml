@@ -129,7 +129,7 @@ public class LinkType {
 	}
 
 	public LinkType getInversed() {
-<span class="fc" id="L132">		return new LinkType(decor2, decor1, middleDecor.getInversed(), linkStyle);</span>
+<span class="nc" id="L132">		return new LinkType(decor2, decor1, middleDecor.getInversed(), linkStyle);</span>
 	}
 
 	public LinkType withMiddleCircle() {
@@ -274,14 +274,14 @@ public class LinkType {
 	 * @return the semantic type name, or null if no specific type can be determined
 	 */
 	public String getLinkTypeName() {
-<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (has(LinkDecor.COMPOSITION))</span>
-<span class="fc" id="L278">			return &quot;composition&quot;;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (has(LinkDecor.COMPOSITION))</span>
+<span class="nc" id="L278">			return &quot;composition&quot;;</span>
 		
 <span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (has(LinkDecor.AGREGATION))</span>
 <span class="nc" id="L281">			return &quot;aggregation&quot;;</span>
 		
-<span class="fc bfc" id="L283" title="All 2 branches covered.">		if (has(LinkDecor.EXTENDS))</span>
-<span class="fc" id="L284">			return &quot;extension&quot;;</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (has(LinkDecor.EXTENDS))</span>
+<span class="nc" id="L284">			return &quot;extension&quot;;</span>
 		
 <span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (has(LinkDecor.REDEFINES))</span>
 <span class="nc" id="L287">			return &quot;redefines&quot;;</span>
@@ -308,7 +308,7 @@ public class LinkType {
 	}
 
 	private boolean has(LinkDecor decor) {
-<span class="fc bfc" id="L311" title="All 4 branches covered.">		return decor1 == decor || decor2 == decor;</span>
+<span class="pc bpc" id="L311" title="1 of 4 branches missed.">		return decor1 == decor || decor2 == decor;</span>
 	}
 
 	private boolean hasAny(LinkDecor... decors) {
