@@ -363,6 +363,35 @@ public class SvgGraphicsTeaVM {
 //					+ "  m.fontBoundingBoxDescent || fontSize * 0.2" + "];")
 //	public static native double[] getDetailedTextMetrics(String text, String fontFamily, int fontSize,
 //			String fontWeight);
+//
+//	// ========================================================================
+//	// Centered character drawing
+//	// ========================================================================
+//
+//	/**
+//	 * Draws a single character centered at the specified position.
+//	 * Uses SVG text-anchor and dominant-baseline for centering.
+//	 * 
+//	 * @param c          The character to draw
+//	 * @param x          Center X position
+//	 * @param y          Center Y position
+//	 * @param fontFamily Font family
+//	 * @param fontSize   Font size in pixels
+//	 */
+//	public void drawCenteredCharacter(char c, double x, double y, String fontFamily, int fontSize) {
+//		Element textElem = createSvgElement("text");
+//		textElem.setAttribute("x", format(x));
+//		textElem.setAttribute("y", format(y));
+//		textElem.setAttribute("font-family", fontFamily);
+//		textElem.setAttribute("font-size", String.valueOf(fontSize));
+//		textElem.setAttribute("fill", fillColor);
+//		// Center horizontally
+//		textElem.setAttribute("text-anchor", "middle");
+//		// Center vertically (dominant-baseline: central centers on x-height)
+//		textElem.setAttribute("dominant-baseline", "central");
+//		textElem.setTextContent(String.valueOf(c));
+//		mainGroup.appendChild(textElem);
+//	}
 	
 	// ::done
 

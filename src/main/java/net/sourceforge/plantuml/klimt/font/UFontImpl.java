@@ -95,18 +95,24 @@ public final class UFontImpl implements UFont {
 	}
 
 	public String getFamily(String text, UFontContext context) {
+		// ::uncomment when __TEAVM__
+		// throw new UnsupportedOperationException("TEAVM1254");
+		// // return fontStack.getFullDefinition().replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
+		// ::done
+		// ::comment when __TEAVM__
 		if (context == UFontContext.EPS) {
 //			if (fontStack.getFamily() == null)
 //				return "Times-Roman";
 			return getUnderlayingFont(text).getPSName();
 		}
 		if (context == UFontContext.SVG) {
-			String result = fontStack.getFullDefinition().replace('\"', '\'');
+			String result = fontStack.getFullDefinition().replace('"', '\'');
 			result = result.replaceAll("(?i)sansserif", "sans-serif");
 
 			return result;
 		}
 		throw new IllegalArgumentException();
+		// ::done
 	}
 
 	// Kludge for testing because font names on some machines (only macOS?) do not

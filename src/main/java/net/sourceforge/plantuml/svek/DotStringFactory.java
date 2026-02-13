@@ -281,9 +281,9 @@ public final class DotStringFactory implements Moveable {
 		String dotString = createDotString(stringBounder, dotMode, dotOptions);
 
 		// ::uncomment when __TEAVM__
-		// System.err.println("dotString=" + dotString);
+		// // System.err.println("dotString=" + dotString);
 		// String svg = net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.renderDotToSvg(dotString);
-		// System.err.println("svg=" + svg);
+		// // System.err.println("svg=" + svg);
 		// return svg;
 		// ::done
 
