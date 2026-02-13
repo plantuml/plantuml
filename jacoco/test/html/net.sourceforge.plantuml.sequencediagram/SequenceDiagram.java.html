@@ -293,8 +293,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L293">			return new SequenceDiagramXmiMaker(this, fileFormat);</span>
 		// ::done
 
-<span class="pc bpc" id="L296" title="1 of 2 branches missed.">		if (modeTeoz())</span>
-<span class="nc" id="L297">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (modeTeoz())</span>
+<span class="fc" id="L297">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
 
 <span class="fc" id="L299">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
 	}
@@ -596,13 +596,13 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public List&lt;LinkAnchor&gt; getLinkAnchors() {
-<span class="nc" id="L599">		return Collections.unmodifiableList(linkAnchors);</span>
+<span class="fc" id="L599">		return Collections.unmodifiableList(linkAnchors);</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="pc bpc" id="L604" title="1 of 2 branches missed.">		return modeTeoz() // this is for backward compatibility</span>
-<span class="nc" id="L605">				? ClockwiseTopRightBottomLeft.same(5)</span>
+<span class="fc bfc" id="L604" title="All 2 branches covered.">		return modeTeoz() // this is for backward compatibility</span>
+<span class="fc" id="L605">				? ClockwiseTopRightBottomLeft.same(5)</span>
 <span class="fc" id="L606">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
 	}
 }
