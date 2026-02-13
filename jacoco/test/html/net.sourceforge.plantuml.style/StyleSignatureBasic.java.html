@@ -228,7 +228,7 @@ public class StyleSignatureBasic implements StyleSignature {
 <span class="fc" id="L228">		final StringBuilder sb = new StringBuilder(name.length());</span>
 <span class="fc bfc" id="L229" title="All 2 branches covered.">		for (int i = 0; i &lt; name.length(); i++) {</span>
 <span class="fc" id="L230">			final char c = name.charAt(i);</span>
-<span class="pc bpc" id="L231" title="1 of 4 branches missed.">			if (c != '_' &amp;&amp; c != '.')</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">			if (c != '_' &amp;&amp; c != '.')</span>
 <span class="fc" id="L232">				sb.append(Character.toLowerCase(c));</span>
 
 		}
@@ -260,7 +260,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public final boolean isWithDot() {
-<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		return stereotypes.size() &gt; 0;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		return stereotypes.size() &gt; 0;</span>
 	}
 
 	// Frequent use

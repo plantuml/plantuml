@@ -109,11 +109,11 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 		private final EntityPortion portion;
 		private final boolean show;
 
-<span class="nc" id="L112">		EntityHideOrShow(EntityGender gender, EntityPortion portion, boolean show) {</span>
-<span class="nc" id="L113">			this.gender = gender;</span>
-<span class="nc" id="L114">			this.portion = portion;</span>
-<span class="nc" id="L115">			this.show = show;</span>
-<span class="nc" id="L116">		}</span>
+<span class="fc" id="L112">		EntityHideOrShow(EntityGender gender, EntityPortion portion, boolean show) {</span>
+<span class="fc" id="L113">			this.gender = gender;</span>
+<span class="fc" id="L114">			this.portion = portion;</span>
+<span class="fc" id="L115">			this.show = show;</span>
+<span class="fc" id="L116">		}</span>
 	}
 
 <span class="fc" id="L119">	private final List&lt;EntityHideOrShow&gt; hideOrShows = new ArrayList&lt;&gt;();</span>
@@ -320,16 +320,16 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 	private void eventuallyBuildPhantomGroups(LineLocation location) {
 <span class="fc bfc" id="L322" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : this.quarks()) {</span>
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">			if (quark.getData() != null)</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">			if (quark.getData() != null)</span>
 <span class="fc" id="L324">				continue;</span>
-<span class="nc" id="L325">			int countChildren = quark.countChildren();</span>
-<span class="nc bnc" id="L326" title="All 2 branches missed.">			if (countChildren &gt; 0) {</span>
+<span class="fc" id="L325">			int countChildren = quark.countChildren();</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">			if (countChildren &gt; 0) {</span>
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
 <span class="nc" id="L328">				final Display display = Display.getWithNewlines(getPragma(), quark.getName());</span>
 <span class="nc" id="L329">				final Entity result = this.createGroup(location, quark, GroupType.PACKAGE);</span>
 <span class="nc" id="L330">				result.setDisplay(display);</span>
 			}
-<span class="nc" id="L332">		}</span>
+<span class="fc" id="L332">		}</span>
 <span class="fc" id="L333">	}</span>
 
 	final public CommandExecutionResult gotoTogether() {
@@ -570,9 +570,9 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 <span class="nc" id="L570">			return false;</span>
 
 <span class="fc" id="L572">		boolean result = true;</span>
-<span class="pc bpc" id="L573" title="1 of 2 branches missed.">		for (EntityHideOrShow cmd : hideOrShows)</span>
-<span class="nc bnc" id="L574" title="All 4 branches missed.">			if (cmd.portion == portion &amp;&amp; cmd.gender.contains(entity))</span>
-<span class="nc" id="L575">				result = cmd.show;</span>
+<span class="fc bfc" id="L573" title="All 2 branches covered.">		for (EntityHideOrShow cmd : hideOrShows)</span>
+<span class="fc bfc" id="L574" title="All 4 branches covered.">			if (cmd.portion == portion &amp;&amp; cmd.gender.contains(entity))</span>
+<span class="fc" id="L575">				result = cmd.show;</span>
 
 <span class="fc" id="L577">		return result;</span>
 	}
@@ -593,7 +593,7 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 <span class="fc" id="L594">		final List&lt;String&gt; visibleStereotypeLabels = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L595" title="All 2 branches covered.">		for (String stereoTypeLabel : entity.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR))</span>
-<span class="pc bpc" id="L596" title="1 of 2 branches missed.">			if (isStereotypeLabelShown(stereoTypeLabel))</span>
+<span class="fc bfc" id="L596" title="All 2 branches covered.">			if (isStereotypeLabelShown(stereoTypeLabel))</span>
 <span class="fc" id="L597">				visibleStereotypeLabels.add(stereoTypeLabel);</span>
 
 <span class="fc" id="L599">		return visibleStereotypeLabels;</span>
@@ -601,21 +601,21 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 	private boolean isStereotypeLabelShown(String stereoTypeLabel) {
 <span class="fc" id="L603">		boolean result = true;</span>
-<span class="pc bpc" id="L604" title="1 of 2 branches missed.">		for (EntityHideOrShow cmd : hideOrShows) {</span>
-<span class="nc bnc" id="L605" title="All 2 branches missed.">			if (cmd.portion != EntityPortion.STEREOTYPE)</span>
+<span class="fc bfc" id="L604" title="All 2 branches covered.">		for (EntityHideOrShow cmd : hideOrShows) {</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">			if (cmd.portion != EntityPortion.STEREOTYPE)</span>
 <span class="nc" id="L606">				continue;</span>
-<span class="nc" id="L607">			final String gender = cmd.gender.getGender();</span>
-<span class="nc bnc" id="L608" title="All 4 branches missed.">			if (gender == null || gender.equals(stereoTypeLabel))</span>
-<span class="nc" id="L609">				result = cmd.show;</span>
-<span class="nc" id="L610">		}</span>
+<span class="fc" id="L607">			final String gender = cmd.gender.getGender();</span>
+<span class="fc bfc" id="L608" title="All 4 branches covered.">			if (gender == null || gender.equals(stereoTypeLabel))</span>
+<span class="fc" id="L609">				result = cmd.show;</span>
+<span class="fc" id="L610">		}</span>
 <span class="fc" id="L611">		return result;</span>
 	}
 
 	public final void hideOrShow(EntityGender gender, EntityPortion portions, boolean show) {
-<span class="nc bnc" id="L615" title="All 2 branches missed.">		for (EntityPortion portion : portions.asSet())</span>
-<span class="nc" id="L616">			this.hideOrShows.add(new EntityHideOrShow(gender, portion, show));</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">		for (EntityPortion portion : portions.asSet())</span>
+<span class="fc" id="L616">			this.hideOrShows.add(new EntityHideOrShow(gender, portion, show));</span>
 
-<span class="nc" id="L618">	}</span>
+<span class="fc" id="L618">	}</span>
 
 	public void hideOrShow2(String what, boolean show) {
 <span class="nc" id="L621">		what = fixWhat(what);</span>

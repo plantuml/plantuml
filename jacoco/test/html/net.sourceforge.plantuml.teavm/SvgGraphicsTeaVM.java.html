@@ -363,6 +363,35 @@ package net.sourceforge.plantuml.teavm;
 //					+ &quot;  m.fontBoundingBoxDescent || fontSize * 0.2&quot; + &quot;];&quot;)
 //	public static native double[] getDetailedTextMetrics(String text, String fontFamily, int fontSize,
 //			String fontWeight);
+//
+//	// ========================================================================
+//	// Centered character drawing
+//	// ========================================================================
+//
+//	/**
+//	 * Draws a single character centered at the specified position.
+//	 * Uses SVG text-anchor and dominant-baseline for centering.
+//	 * 
+//	 * @param c          The character to draw
+//	 * @param x          Center X position
+//	 * @param y          Center Y position
+//	 * @param fontFamily Font family
+//	 * @param fontSize   Font size in pixels
+//	 */
+//	public void drawCenteredCharacter(char c, double x, double y, String fontFamily, int fontSize) {
+//		Element textElem = createSvgElement(&quot;text&quot;);
+//		textElem.setAttribute(&quot;x&quot;, format(x));
+//		textElem.setAttribute(&quot;y&quot;, format(y));
+//		textElem.setAttribute(&quot;font-family&quot;, fontFamily);
+//		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));
+//		textElem.setAttribute(&quot;fill&quot;, fillColor);
+//		// Center horizontally
+//		textElem.setAttribute(&quot;text-anchor&quot;, &quot;middle&quot;);
+//		// Center vertically (dominant-baseline: central centers on x-height)
+//		textElem.setAttribute(&quot;dominant-baseline&quot;, &quot;central&quot;);
+//		textElem.setTextContent(String.valueOf(c));
+//		mainGroup.appendChild(textElem);
+//	}
 	
 	// ::done
 

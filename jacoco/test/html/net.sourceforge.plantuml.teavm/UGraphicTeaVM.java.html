@@ -89,54 +89,55 @@ public class UGraphicTeaVM extends AbstractUGraphic&lt;SvgGraphicsTeaVM&gt; impl
 
 <span class="nc" id="L90">		registerDriver(DotPath.class, new DriverDotPathTeaVM());</span>
 
+<span class="nc" id="L92">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
+
 		// NOP drivers for shapes not yet implemented
-<span class="nc" id="L93">		ignoreShape(UImage.class);</span>
-<span class="nc" id="L94">		ignoreShape(UImageSvg.class);</span>
-<span class="nc" id="L95">		ignoreShape(UCenteredCharacter.class);</span>
-<span class="nc" id="L96">		ignoreShape(UPixel.class);</span>
-<span class="nc" id="L97">	}</span>
+<span class="nc" id="L95">		ignoreShape(UImage.class);</span>
+<span class="nc" id="L96">		ignoreShape(UImageSvg.class);</span>
+<span class="nc" id="L97">		ignoreShape(UPixel.class);</span>
+<span class="nc" id="L98">	}</span>
 
 	public SvgGraphicsTeaVM getSvgGraphics() {
-<span class="nc" id="L100">		return getGraphicObject();</span>
+<span class="nc" id="L101">		return getGraphicObject();</span>
 	}
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L105">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
+<span class="nc" id="L106">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
 	}
 
 	@Override
 	public void startGroup(UGroup group) {
 		// TODO: implement group support
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L112">	}</span>
 
 	@Override
 	public void closeGroup() {
 		// TODO: implement group support
-<span class="nc" id="L116">	}</span>
+<span class="nc" id="L117">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
 		// TODO: implement URL/link support
-<span class="nc" id="L121">	}</span>
+<span class="nc" id="L122">	}</span>
 
 	@Override
 	public void closeUrl() {
 		// TODO: implement URL/link support
-<span class="nc" id="L126">	}</span>
+<span class="nc" id="L127">	}</span>
 
 	@Override
 	protected void drawComment(UComment comment) {
 		// TODO: implement comment support
-<span class="nc" id="L131">	}</span>
+<span class="nc" id="L132">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
-<span class="nc" id="L136">			return true;</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
-<span class="nc" id="L138">			return true;</span>
-<span class="nc" id="L139">		return super.matchesProperty(propertyName);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
+<span class="nc" id="L137">			return true;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
+<span class="nc" id="L139">			return true;</span>
+<span class="nc" id="L140">		return super.matchesProperty(propertyName);</span>
 	}
 
 }

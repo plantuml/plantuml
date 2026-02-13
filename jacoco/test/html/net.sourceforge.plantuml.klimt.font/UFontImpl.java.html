@@ -95,60 +95,66 @@ public final class UFontImpl implements UFont {
 	}
 
 	public String getFamily(String text, UFontContext context) {
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (context == UFontContext.EPS) {</span>
+		// ::uncomment when __TEAVM__
+		// throw new UnsupportedOperationException(&quot;TEAVM1254&quot;);
+		// // return fontStack.getFullDefinition().replace('&quot;', '\'').replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);
+		// ::done
+		// ::comment when __TEAVM__
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (context == UFontContext.EPS) {</span>
 //			if (fontStack.getFamily() == null)
 //				return &quot;Times-Roman&quot;;
-<span class="fc" id="L101">			return getUnderlayingFont(text).getPSName();</span>
+<span class="fc" id="L106">			return getUnderlayingFont(text).getPSName();</span>
 		}
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (context == UFontContext.SVG) {</span>
-<span class="fc" id="L104">			String result = fontStack.getFullDefinition().replace('\&quot;', '\'');</span>
-<span class="fc" id="L105">			result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (context == UFontContext.SVG) {</span>
+<span class="fc" id="L109">			String result = fontStack.getFullDefinition().replace('&quot;', '\'');</span>
+<span class="fc" id="L110">			result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
 
-<span class="fc" id="L107">			return result;</span>
+<span class="fc" id="L112">			return result;</span>
 		}
-<span class="nc" id="L109">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L114">		throw new IllegalArgumentException();</span>
+		// ::done
 	}
 
 	// Kludge for testing because font names on some machines (only macOS?) do not
 	// end with &lt;DOT&gt;&lt;STYLE&gt;
 	// See https://github.com/plantuml/plantuml/issues/720
 	private String getPortableFontName() {
-<span class="fc" id="L116">		final Font font = getUnderlayingFont(null);</span>
-<span class="fc" id="L117">		final String name = font.getFontName();</span>
-<span class="pc bpc" id="L118" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		else if (font.isBold())</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		else if (font.isItalic())</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
+<span class="fc" id="L122">		final Font font = getUnderlayingFont(null);</span>
+<span class="fc" id="L123">		final String name = font.getFontName();</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		else if (font.isBold())</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		else if (font.isItalic())</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
 		else
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L130">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L131">		sb.append(getPortableFontName());</span>
-<span class="fc" id="L132">		sb.append(&quot;/&quot;);</span>
-<span class="fc" id="L133">		sb.append(getSize());</span>
-<span class="fc" id="L134">		return sb.toString();</span>
+<span class="fc" id="L136">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L137">		sb.append(getPortableFontName());</span>
+<span class="fc" id="L138">		sb.append(&quot;/&quot;);</span>
+<span class="fc" id="L139">		sb.append(getSize());</span>
+<span class="fc" id="L140">		return sb.toString();</span>
 	}
 
 	// ::comment when __HAXE__
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L141">		return Objects.hash(fontStack, style, size);</span>
+<span class="fc" id="L147">		return Objects.hash(fontStack, style, size);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (this == obj)</span>
-<span class="fc" id="L147">			return true;</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (!(obj instanceof UFontImpl))</span>
-<span class="nc" id="L149">			return false;</span>
-<span class="fc" id="L150">		UFontImpl other = (UFontImpl) obj;</span>
-<span class="pc bpc" id="L151" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; style == other.style &amp;&amp; size == other.size;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L153">			return true;</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (!(obj instanceof UFontImpl))</span>
+<span class="nc" id="L155">			return false;</span>
+<span class="fc" id="L156">		UFontImpl other = (UFontImpl) obj;</span>
+<span class="pc bpc" id="L157" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; style == other.style &amp;&amp; size == other.size;</span>
 	}
 
 	// ::done
