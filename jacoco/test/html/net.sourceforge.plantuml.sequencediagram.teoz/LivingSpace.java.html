@@ -63,7 +63,7 @@ public class LivingSpace {
 	private final ComponentType headType;
 	private final ComponentType tailType;
 	private final MutingLine mutingLine;
-<span class="fc" id="L66">	private final Rose rose = new Rose();</span>
+<span class="nc" id="L66">	private final Rose rose = new Rose();</span>
 	private final LiveBoxes liveboxes;
 
 	// private final Rose skin;
@@ -75,14 +75,14 @@ public class LivingSpace {
 	private Real posC;
 	private Real posD;
 
-<span class="fc" id="L78">	private boolean create = false;</span>
-<span class="fc" id="L79">	private double createY = 0;</span>
+<span class="nc" id="L78">	private boolean create = false;</span>
+<span class="nc" id="L79">	private double createY = 0;</span>
 
 	private final ParticipantEnglober englober;
 
 	public int getLevelAt(Tile tile, EventsHistoryMode mode) {
 		// assert mode == EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE;
-<span class="fc" id="L85">		return liveboxes.getLevelAt(tile.getEvent(), mode);</span>
+<span class="nc" id="L85">		return liveboxes.getLevelAt(tile.getEvent(), mode);</span>
 	}
 
 	public void addStepForLivebox(Event event, double y) {
@@ -102,15 +102,15 @@ public class LivingSpace {
 	}
 
 	public LivingSpace(Participant p, ParticipantEnglober englober, Rose skin, ISkinParam skinParam, Real position,
-<span class="fc" id="L105">			List&lt;Event&gt; events) {</span>
-<span class="fc" id="L106">		this.p = p;</span>
+<span class="nc" id="L105">			List&lt;Event&gt; events) {</span>
+<span class="nc" id="L106">		this.p = p;</span>
 		// this.skin = skin;
-<span class="fc" id="L108">		this.skinParam = skinParam;</span>
-<span class="fc" id="L109">		this.englober = englober;</span>
-<span class="fc" id="L110">		this.posB = position;</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
-<span class="fc" id="L112">			headType = ComponentType.PARTICIPANT_HEAD;</span>
-<span class="fc" id="L113">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
+<span class="nc" id="L108">		this.skinParam = skinParam;</span>
+<span class="nc" id="L109">		this.englober = englober;</span>
+<span class="nc" id="L110">		this.posB = position;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
+<span class="nc" id="L112">			headType = ComponentType.PARTICIPANT_HEAD;</span>
+<span class="nc" id="L113">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
 <span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
 <span class="nc" id="L115">			headType = ComponentType.ACTOR_HEAD;</span>
 <span class="nc" id="L116">			tailType = ComponentType.ACTOR_TAIL;</span>
@@ -138,9 +138,9 @@ public class LivingSpace {
 		// this.stairs2.addStep2(0, p.getInitialLife());
 		// this.stairs2.addStep2(0, 0);
 		// this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
-<span class="fc" id="L141">		this.mutingLine = new MutingLine(skin, skinParam, events, p);</span>
-<span class="fc" id="L142">		this.liveboxes = new LiveBoxes(p, events, skin, skinParam);</span>
-<span class="fc" id="L143">	}</span>
+<span class="nc" id="L141">		this.mutingLine = new MutingLine(skin, skinParam, events, p);</span>
+<span class="nc" id="L142">		this.liveboxes = new LiveBoxes(p, events, skin, skinParam);</span>
+<span class="nc" id="L143">	}</span>
 
 	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
 <span class="nc" id="L146">		mutingLine.drawLine(ug, context, createY, height);</span>
@@ -177,34 +177,34 @@ public class LivingSpace {
 <span class="nc" id="L177">	}</span>
 
 	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-<span class="fc" id="L180">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
-<span class="fc" id="L181">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L182">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L183">		return dim;</span>
+<span class="nc" id="L180">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
+<span class="nc" id="L181">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="nc" id="L182">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L183">		return dim;</span>
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L187">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L187">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
 	}
 
 	public Real getPosC(StringBounder stringBounder) {
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (posC == null) {</span>
-<span class="fc" id="L192">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (posC == null) {</span>
+<span class="nc" id="L192">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
 		}
-<span class="fc" id="L194">		return posC;</span>
+<span class="nc" id="L194">		return posC;</span>
 	}
 
 	public Real getPosC2(StringBounder stringBounder) {
-<span class="fc" id="L198">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
-<span class="fc" id="L199">		return getPosC(stringBounder).addFixed(delta);</span>
+<span class="nc" id="L198">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
+<span class="nc" id="L199">		return getPosC(stringBounder).addFixed(delta);</span>
 	}
 
 	public Real getPosD(StringBounder stringBounder) {
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (posD == null) {</span>
-<span class="fc" id="L204">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (posD == null) {</span>
+<span class="nc" id="L204">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
 		}
 		// System.err.println(&quot;LivingSpace::getPosD &quot;+posD.getCurrentValue());
-<span class="fc" id="L207">		return posD;</span>
+<span class="nc" id="L207">		return posD;</span>
 	}
 
 	public Real getPosB(StringBounder stringBounder) {
@@ -230,7 +230,7 @@ public class LivingSpace {
 <span class="nc" id="L230">	}</span>
 
 	public ParticipantEnglober getEnglober() {
-<span class="fc" id="L233">		return englober;</span>
+<span class="nc" id="L233">		return englober;</span>
 	}
 
 	private double marginBefore;

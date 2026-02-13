@@ -28,8 +28,8 @@ package zext.plantuml.com.google.zxing.common.reedsolomon;
  */
 public final class GF256 {
 
-<span class="nc" id="L31">  public static final GF256 QR_CODE_FIELD = new GF256(0x011D); // x^8 + x^4 + x^3 + x^2 + 1</span>
-<span class="nc" id="L32">  public static final GF256 DATA_MATRIX_FIELD = new GF256(0x012D); // x^8 + x^5 + x^3 + x^2 + 1</span>
+<span class="fc" id="L31">  public static final GF256 QR_CODE_FIELD = new GF256(0x011D); // x^8 + x^4 + x^3 + x^2 + 1</span>
+<span class="fc" id="L32">  public static final GF256 DATA_MATRIX_FIELD = new GF256(0x012D); // x^8 + x^5 + x^3 + x^2 + 1</span>
 
   private final int[] expTable;
   private final int[] logTable;
@@ -43,27 +43,27 @@ public final class GF256 {
    *  the bits of an int, where the least-significant bit represents the constant
    *  coefficient
    */
-<span class="nc" id="L46">  private GF256(int primitive) {</span>
-<span class="nc" id="L47">    expTable = new int[256];</span>
-<span class="nc" id="L48">    logTable = new int[256];</span>
-<span class="nc" id="L49">    int x = 1;</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">    for (int i = 0; i &lt; 256; i++) {</span>
-<span class="nc" id="L51">      expTable[i] = x;</span>
-<span class="nc" id="L52">      x &lt;&lt;= 1; // x = x * 2; we're assuming the generator alpha is 2</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">      if (x &gt;= 0x100) {</span>
-<span class="nc" id="L54">        x ^= primitive;</span>
+<span class="fc" id="L46">  private GF256(int primitive) {</span>
+<span class="fc" id="L47">    expTable = new int[256];</span>
+<span class="fc" id="L48">    logTable = new int[256];</span>
+<span class="fc" id="L49">    int x = 1;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">    for (int i = 0; i &lt; 256; i++) {</span>
+<span class="fc" id="L51">      expTable[i] = x;</span>
+<span class="fc" id="L52">      x &lt;&lt;= 1; // x = x * 2; we're assuming the generator alpha is 2</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">      if (x &gt;= 0x100) {</span>
+<span class="fc" id="L54">        x ^= primitive;</span>
       }
     }
-<span class="nc bnc" id="L57" title="All 2 branches missed.">    for (int i = 0; i &lt; 255; i++) {</span>
-<span class="nc" id="L58">      logTable[expTable[i]] = i;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">    for (int i = 0; i &lt; 255; i++) {</span>
+<span class="fc" id="L58">      logTable[expTable[i]] = i;</span>
     }
     // logTable[0] == 0 but this should never be used
-<span class="nc" id="L61">    zero = new GF256Poly(this, new int[]{0});</span>
-<span class="nc" id="L62">    one = new GF256Poly(this, new int[]{1});</span>
-<span class="nc" id="L63">  }</span>
+<span class="fc" id="L61">    zero = new GF256Poly(this, new int[]{0});</span>
+<span class="fc" id="L62">    one = new GF256Poly(this, new int[]{1});</span>
+<span class="fc" id="L63">  }</span>
 
   GF256Poly getZero() {
-<span class="nc" id="L66">    return zero;</span>
+<span class="fc" id="L66">    return zero;</span>
   }
 
   GF256Poly getOne() {
@@ -74,15 +74,15 @@ public final class GF256 {
    * @return the monomial representing coefficient * x^degree
    */
   GF256Poly buildMonomial(int degree, int coefficient) {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">    if (degree &lt; 0) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">    if (degree &lt; 0) {</span>
 <span class="nc" id="L78">      throw new IllegalArgumentException();</span>
     }
-<span class="nc bnc" id="L80" title="All 2 branches missed.">    if (coefficient == 0) {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">    if (coefficient == 0) {</span>
 <span class="nc" id="L81">      return zero;</span>
     }
-<span class="nc" id="L83">    int[] coefficients = new int[degree + 1];</span>
-<span class="nc" id="L84">    coefficients[0] = coefficient;</span>
-<span class="nc" id="L85">    return new GF256Poly(this, coefficients);</span>
+<span class="fc" id="L83">    int[] coefficients = new int[degree + 1];</span>
+<span class="fc" id="L84">    coefficients[0] = coefficient;</span>
+<span class="fc" id="L85">    return new GF256Poly(this, coefficients);</span>
   }
 
   /**
@@ -91,14 +91,14 @@ public final class GF256 {
    * @return sum/difference of a and b
    */
   static int addOrSubtract(int a, int b) {
-<span class="nc" id="L94">    return a ^ b;</span>
+<span class="fc" id="L94">    return a ^ b;</span>
   }
 
   /**
    * @return 2 to the power of a in GF(256)
    */
   int exp(int a) {
-<span class="nc" id="L101">    return expTable[a];</span>
+<span class="fc" id="L101">    return expTable[a];</span>
   }
 
   /**
@@ -115,10 +115,10 @@ public final class GF256 {
    * @return multiplicative inverse of a
    */
   int inverse(int a) {
-<span class="nc bnc" id="L118" title="All 2 branches missed.">    if (a == 0) {</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">    if (a == 0) {</span>
 <span class="nc" id="L119">      throw new ArithmeticException();</span>
     }
-<span class="nc" id="L121">    return expTable[255 - logTable[a]];</span>
+<span class="fc" id="L121">    return expTable[255 - logTable[a]];</span>
   }
 
   /**
@@ -127,13 +127,13 @@ public final class GF256 {
    * @return product of a and b in GF(256)
    */
   int multiply(int a, int b) {
-<span class="nc bnc" id="L130" title="All 4 branches missed.">    if (a == 0 || b == 0) {</span>
-<span class="nc" id="L131">      return 0;</span>
+<span class="pc bpc" id="L130" title="1 of 4 branches missed.">    if (a == 0 || b == 0) {</span>
+<span class="fc" id="L131">      return 0;</span>
     }
-<span class="nc" id="L133">    int logSum = logTable[a] + logTable[b];</span>
+<span class="fc" id="L133">    int logSum = logTable[a] + logTable[b];</span>
     // index is a sped-up alternative to logSum % 255 since sum
     // is in [0,510]. Thanks to jmsachs for the idea
-<span class="nc" id="L136">    return expTable[(logSum &amp; 0xFF) + (logSum &gt;&gt;&gt; 8)];</span>
+<span class="fc" id="L136">    return expTable[(logSum &amp; 0xFF) + (logSum &gt;&gt;&gt; 8)];</span>
   }
 
 }
