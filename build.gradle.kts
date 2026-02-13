@@ -402,8 +402,21 @@ tasks.register("site") {
 		"teavm"
 	)
 	
-	doFirst {
+	doLast {
+		println("[SITE] Starting site generation...")
+		println("[SITE] siteDir = ${siteDir.absolutePath}")
 		siteDir.mkdirs()
+
+		// Check TeaVM output
+		val teavmDir = layout.buildDirectory.dir("teavm/js").get().asFile
+		println("[SITE] teavmDir = ${teavmDir.absolutePath}")
+		println("[SITE] teavmDir.exists() = ${teavmDir.exists()}")
+		if (teavmDir.exists()) {
+			println("[SITE] teavmDir contents:")
+			teavmDir.listFiles()?.forEach { println("[SITE]   - ${it.name} (${it.length()} bytes)") }
+		} else {
+			println("[SITE] WARNING: teavmDir does not exist!")
+		}
 
 		// Generate timestamp
 		val timestamp = LocalDateTime.now().toString().replace('T', ' ').substring(0, 19)
@@ -451,14 +464,27 @@ tasks.register("site") {
 			into("$siteDir/jdepend")
 		}
 
+		println("[SITE] Copying teavm/js to js-plantuml...")
 		copy {
 			from(layout.buildDirectory.dir("teavm/js"))
 			into("$siteDir/js-plantuml")
 		}
-
-	}
+		
+		// Verify copy result
+		val jsPlantUmlDir = file("$siteDir/js-plantuml")
+		println("[SITE] js-plantuml dir exists: ${jsPlantUmlDir.exists()}")
+		if (jsPlantUmlDir.exists()) {
+			println("[SITE] js-plantuml contents:")
+			jsPlantUmlDir.listFiles()?.forEach { println("[SITE]   - ${it.name} (${it.length()} bytes)") }
+		}
+		
+		// Check for classes.js specifically
+		val classesJs = file("$siteDir/js-plantuml/classes.js")
+		println("[SITE] classes.js exists: ${classesJs.exists()}")
+		if (classesJs.exists()) {
+			println("[SITE] classes.js size: ${classesJs.length()} bytes")
+		}
 	
-	doLast {
 		println("========================================")
 		println("Project site generated successfully!")
 		println("========================================")
@@ -587,24 +613,38 @@ tasks.register<JavaExec>("generateJavaScript") {
 	}
 	
 	doLast {
-		println("JavaScript generation complete!")
+		println("[TEAVM] JavaScript generation complete!")
+		println("[TEAVM] Checking output directory: ${outputDir.absolutePath}")
+		println("[TEAVM] outputDir.exists() = ${outputDir.exists()}")
+		if (outputDir.exists()) {
+			println("[TEAVM] outputDir contents:")
+			outputDir.listFiles()?.forEach { println("[TEAVM]   - ${it.name} (${it.length()} bytes)") }
+		}
+		val classesJs = file("${outputDir.absolutePath}/classes.js")
+		println("[TEAVM] classes.js exists: ${classesJs.exists()}")
+		if (!classesJs.exists()) {
+			println("[TEAVM] WARNING: classes.js was NOT generated!")
+		}
 	}
 }
 
 // Custom task to build TeaVM JS version with HTML file
-tasks.register<Copy>("teavm") {
+tasks.register("teavm") {
 	description = "Prepares TeaVM JS version with HTML file"
 	group = "teavm"
 	
 	dependsOn("generateJavaScript")
 	
-	// Copy the HTML template and Viz.js library
-	from("src/main/resources/teavm/index.html")
-	from("src/main/resources/teavm/viz-global.js")
-	into(layout.buildDirectory.dir("teavm/js"))
+	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
 	
 	doLast {
-		val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
+		// Copy the HTML template and Viz.js library (without erasing existing files)
+		copy {
+			from("src/main/resources/teavm/index.html")
+			from("src/main/resources/teavm/viz-global.js")
+			into(outputDir)
+		}
+		
 		println("")
 		println("======================")
 		println("TeaVM Ready!  --> ${outputDir.absolutePath}/index.html")
