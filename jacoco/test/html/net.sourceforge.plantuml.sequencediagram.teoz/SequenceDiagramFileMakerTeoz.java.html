@@ -86,32 +86,32 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 <span class="fc" id="L86">		this.diagram = diagram;</span>
 <span class="fc" id="L87">		this.fileFormatOption = fileFormatOption;</span>
 <span class="fc" id="L88">		this.skin = skin;</span>
-<span class="nc" id="L89">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
-<span class="nc" id="L90">		this.footer = getFooterOrHeader(FontParam.FOOTER);</span>
-<span class="nc" id="L91">		this.header = getFooterOrHeader(FontParam.HEADER);</span>
-<span class="nc" id="L92">		this.annotatedBuilder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
+<span class="fc" id="L89">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
+<span class="fc" id="L90">		this.footer = getFooterOrHeader(FontParam.FOOTER);</span>
+<span class="fc" id="L91">		this.header = getFooterOrHeader(FontParam.HEADER);</span>
+<span class="fc" id="L92">		this.annotatedBuilder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
 
-<span class="nc" id="L94">		this.min1 = body.getMinX(stringBounder);</span>
+<span class="fc" id="L94">		this.min1 = body.getMinX(stringBounder);</span>
 
-<span class="nc" id="L96">		this.title = getTitle();</span>
-<span class="nc" id="L97">		this.legend = getLegend();</span>
-<span class="nc" id="L98">		this.caption = annotatedBuilder.getCaption();</span>
+<span class="fc" id="L96">		this.title = getTitle();</span>
+<span class="fc" id="L97">		this.legend = getLegend();</span>
+<span class="fc" id="L98">		this.caption = annotatedBuilder.getCaption();</span>
 
-<span class="nc" id="L100">		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
+<span class="fc" id="L100">		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
 
-<span class="nc" id="L103">		final double totalWidth = MathUtils.max(body.calculateDimension(stringBounder).getWidth(),</span>
-<span class="nc" id="L104">				title.calculateDimension(stringBounder).getWidth(), footer.calculateDimension(stringBounder).getWidth(),</span>
-<span class="nc" id="L105">				header.calculateDimension(stringBounder).getWidth(),</span>
-<span class="nc" id="L106">				legend.calculateDimension(stringBounder).getWidth());</span>
-<span class="nc" id="L107">		final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
-<span class="nc" id="L108">				+ heightEnglober2 + title.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc" id="L109">				+ header.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc" id="L110">				+ legend.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc" id="L111">				+ caption.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedBuilder.hasMainFrame() ? 10 : 0);</span>
-<span class="nc" id="L113">		this.dimTotal = new XDimension2D(totalWidth, totalHeight);</span>
-<span class="nc" id="L114">	}</span>
+<span class="fc" id="L103">		final double totalWidth = MathUtils.max(body.calculateDimension(stringBounder).getWidth(),</span>
+<span class="fc" id="L104">				title.calculateDimension(stringBounder).getWidth(), footer.calculateDimension(stringBounder).getWidth(),</span>
+<span class="fc" id="L105">				header.calculateDimension(stringBounder).getWidth(),</span>
+<span class="fc" id="L106">				legend.calculateDimension(stringBounder).getWidth());</span>
+<span class="fc" id="L107">		final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
+<span class="fc" id="L108">				+ heightEnglober2 + title.calculateDimension(stringBounder).getHeight()</span>
+<span class="fc" id="L109">				+ header.calculateDimension(stringBounder).getHeight()</span>
+<span class="fc" id="L110">				+ legend.calculateDimension(stringBounder).getHeight()</span>
+<span class="fc" id="L111">				+ caption.calculateDimension(stringBounder).getHeight()</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedBuilder.hasMainFrame() ? 10 : 0);</span>
+<span class="fc" id="L113">		this.dimTotal = new XDimension2D(totalWidth, totalHeight);</span>
+<span class="fc" id="L114">	}</span>
 
 	private Dolls dolls;
 	private final StringBounder stringBounder;
@@ -142,39 +142,39 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 		private final int index;
 
-<span class="nc" id="L145">		Foo(int index) {</span>
-<span class="nc" id="L146">			this.index = index;</span>
-<span class="nc" id="L147">		}</span>
+<span class="fc" id="L145">		Foo(int index) {</span>
+<span class="fc" id="L146">			this.index = index;</span>
+<span class="fc" id="L147">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L150">			drawInternal(ug, index);</span>
-<span class="nc" id="L151">		}</span>
+<span class="fc" id="L150">			drawInternal(ug, index);</span>
+<span class="fc" id="L151">		}</span>
 
 	}
 
 	private UGraphic goDownAndCenterForEnglobers(UGraphic ug) {
-<span class="nc" id="L156">		ug = goDown(ug, title);</span>
-<span class="nc" id="L157">		ug = goDown(ug, header);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP)</span>
+<span class="fc" id="L156">		ug = goDown(ug, title);</span>
+<span class="fc" id="L157">		ug = goDown(ug, header);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP)</span>
 <span class="nc" id="L159">			ug = goDown(ug, legend);</span>
 
-<span class="nc" id="L161">		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;</span>
-<span class="nc" id="L162">		return ug.apply(UTranslate.dx(dx));</span>
+<span class="fc" id="L161">		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="fc" id="L162">		return ug.apply(UTranslate.dx(dx));</span>
 	}
 
 	private UGraphic goDown(UGraphic ug, TextBlock size) {
-<span class="nc" id="L166">		return ug.apply(UTranslate.dy(size.calculateDimension(stringBounder).getHeight()));</span>
+<span class="fc" id="L166">		return ug.apply(UTranslate.dy(size.calculateDimension(stringBounder).getHeight()));</span>
 	}
 
 	public void printAligned(UGraphic ug, HorizontalAlignment align, final TextBlock layer) {
-<span class="nc" id="L170">		double dx = 0;</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L170">		double dx = 0;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
 <span class="nc" id="L172">			dx = dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		else if (align == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L174">			dx = (dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		else if (align == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L174">			dx = (dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth()) / 2;</span>
 
-<span class="nc" id="L176">		layer.drawU(ug.apply(UTranslate.dx(dx)));</span>
-<span class="nc" id="L177">	}</span>
+<span class="fc" id="L176">		layer.drawU(ug.apply(UTranslate.dx(dx)));</span>
+<span class="fc" id="L177">	}</span>
 
 	private PlayingSpace createMainTile() {
 <span class="fc" id="L180">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
@@ -191,16 +191,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				xorigin, yorigin);
 
 <span class="fc" id="L193">		this.dolls = new Dolls(tileArguments);</span>
-<span class="nc" id="L194">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
-<span class="nc" id="L195">		this.livingSpaces.addConstraints(stringBounder);</span>
-<span class="nc" id="L196">		mainTile.addConstraints();</span>
-<span class="nc" id="L197">		this.dolls.addConstraints(stringBounder);</span>
-<span class="nc" id="L198">		xorigin.compileNow();</span>
+<span class="fc" id="L194">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
+<span class="fc" id="L195">		this.livingSpaces.addConstraints(stringBounder);</span>
+<span class="fc" id="L196">		mainTile.addConstraints();</span>
+<span class="fc" id="L197">		this.dolls.addConstraints(stringBounder);</span>
+<span class="fc" id="L198">		xorigin.compileNow();</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;COMPILING Y&quot;);
-<span class="nc" id="L201">		yorigin.compileNow();</span>
-<span class="nc" id="L202">		tileArguments.setBordered(mainTile);</span>
-<span class="nc" id="L203">		return mainTile;</span>
+<span class="fc" id="L201">		yorigin.compileNow();</span>
+<span class="fc" id="L202">		tileArguments.setBordered(mainTile);</span>
+<span class="fc" id="L203">		return mainTile;</span>
 	}
 
 	public ISkinParam getSkinParam() {
@@ -208,8 +208,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private TextBlock getTitle() {
-<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (diagram.getTitle().isNull())</span>
-<span class="nc" id="L212">			return new ComponentAdapter(null);</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (diagram.getTitle().isNull())</span>
+<span class="fc" id="L212">			return new ComponentAdapter(null);</span>
 
 <span class="nc" id="L214">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
 <span class="nc" id="L215">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
@@ -221,16 +221,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private TextBlock getLegend() {
-<span class="nc" id="L224">		final Display legend = diagram.getLegend().getDisplay();</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (Display.isNull(legend))</span>
-<span class="nc" id="L226">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L224">		final Display legend = diagram.getLegend().getDisplay();</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">		if (Display.isNull(legend))</span>
+<span class="fc" id="L226">			return TextBlockUtils.empty(0, 0);</span>
 
 <span class="nc" id="L228">		return EntityImageLegend.create(legend, diagram.getSkinParam());</span>
 	}
 
 	public TextBlock getFooterOrHeader(final FontParam param) {
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (diagram.getFooterOrHeaderTeoz(param).isNull())</span>
-<span class="nc" id="L233">			return new TeozLayer(null, stringBounder, param);</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (diagram.getFooterOrHeaderTeoz(param).isNull())</span>
+<span class="fc" id="L233">			return new TeozLayer(null, stringBounder, param);</span>
 
 <span class="nc" id="L235">		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(param).withPage(index + 1, getNbPages());</span>
 <span class="nc" id="L236">		final ISkinParam skinParam = diagram.getSkinParam();</span>
@@ -247,45 +247,45 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private void drawInternal(UGraphic ug, int index) {
-<span class="nc" id="L250">		body.setIndex(index);</span>
-<span class="nc" id="L251">		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="nc" id="L252">		ug = ug.apply(min1translate);</span>
+<span class="fc" id="L250">		body.setIndex(index);</span>
+<span class="fc" id="L251">		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="fc" id="L252">		ug = ug.apply(min1translate);</span>
 
-<span class="nc" id="L254">		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
-<span class="nc" id="L255">				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="fc" id="L254">		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
+<span class="fc" id="L255">				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 				new SimpleContext2D(true));
 
-<span class="nc" id="L258">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);</span>
-<span class="nc" id="L259">		ug = goDown(ug, header);</span>
+<span class="fc" id="L258">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);</span>
+<span class="fc" id="L259">		ug = goDown(ug, header);</span>
 
-<span class="nc" id="L261">		final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);</span>
-<span class="nc" id="L262">		final HorizontalAlignment titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())</span>
-<span class="nc" id="L263">				.getHorizontalAlignment();</span>
+<span class="fc" id="L261">		final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);</span>
+<span class="fc" id="L262">		final HorizontalAlignment titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())</span>
+<span class="fc" id="L263">				.getHorizontalAlignment();</span>
 
-<span class="nc" id="L265">		printAligned(ug, titleAlignment, title);</span>
-<span class="nc" id="L266">		ug = goDown(ug, title);</span>
+<span class="fc" id="L265">		printAligned(ug, titleAlignment, title);</span>
+<span class="fc" id="L266">		ug = goDown(ug, title);</span>
 
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {</span>
 <span class="nc" id="L269">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
 <span class="nc" id="L270">			ug = goDown(ug, legend);</span>
 		}
 
-<span class="nc" id="L273">		ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="nc" id="L274">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
-<span class="nc bnc" id="L275" title="All 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
+<span class="fc" id="L273">		ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="fc" id="L274">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
 				bodyFramed);
-<span class="nc" id="L277">		ug = goDown(ug, bodyFramed);</span>
-<span class="nc" id="L278">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="fc" id="L277">		ug = goDown(ug, bodyFramed);</span>
+<span class="fc" id="L278">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
 
-<span class="nc bnc" id="L280" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {</span>
-<span class="nc" id="L281">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
-<span class="nc" id="L282">			ug = goDown(ug, legend);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {</span>
+<span class="fc" id="L281">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
+<span class="fc" id="L282">			ug = goDown(ug, legend);</span>
 		}
-<span class="nc" id="L284">		printAligned(ug, HorizontalAlignment.CENTER, caption);</span>
-<span class="nc" id="L285">		ug = goDown(ug, caption);</span>
+<span class="fc" id="L284">		printAligned(ug, HorizontalAlignment.CENTER, caption);</span>
+<span class="fc" id="L285">		ug = goDown(ug, caption);</span>
 
-<span class="nc" id="L287">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);</span>
-<span class="nc" id="L288">	}</span>
+<span class="fc" id="L287">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);</span>
+<span class="fc" id="L288">	}</span>
 
 	@Override
 	public void createOneGraphic(UGraphic ug) {
