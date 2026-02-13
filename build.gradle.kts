@@ -14,7 +14,7 @@ import org.gradle.api.tasks.Sync
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
 plugins {
 	java
@@ -41,14 +41,21 @@ sourceSets {
 		java.srcDir(layout.buildDirectory.dir("generated/teavm-sjpp"))
 		// If resources are needed at TeaVM runtime, you can also add them:
 		resources.srcDir("src/main/resources")
-		compileClasspath += sourceSets.main.get().compileClasspath
-		runtimeClasspath += sourceSets.main.get().runtimeClasspath
+		// Note: compileClasspath will be configured after dependencies are declared
 	}
 }
 
 val jdependConfig by configurations.creating
 val teavmConfig by configurations.creating
 val teavmVersion = "0.13.0"
+
+// Separate configuration for TeaVM compile dependencies (requires Java 11+)
+val teavmCompileConfig by configurations.creating {
+	attributes {
+		// Force Java 11 compatibility for TeaVM dependencies
+		attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 11)
+	}
+}
 
 
 dependencies {
@@ -79,9 +86,9 @@ dependencies {
 	// TeaVM CLI for compilation (contains the main class)
     teavmConfig("org.teavm:teavm-cli:$teavmVersion")
 	
-	// TeaVM dependencies for Java to JavaScript compilation
-    compileOnly("org.teavm:teavm-jso-apis:$teavmVersion")
-    compileOnly("org.teavm:teavm-jso:$teavmVersion")
+	// TeaVM dependencies for Java to JavaScript compilation (Java 11+ only)
+	teavmCompileConfig("org.teavm:teavm-jso-apis:$teavmVersion")
+	teavmCompileConfig("org.teavm:teavm-jso:$teavmVersion")
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -95,12 +102,23 @@ repositories {
 	mavenCentral()
 }
 
+// Configure teavm sourceSet classpath after dependencies are declared
+sourceSets["teavm"].apply {
+	compileClasspath = teavmCompileConfig + sourceSets.main.get().output
+	runtimeClasspath = teavmCompileConfig + sourceSets.main.get().output
+}
+
 tasks.compileJava {
-	options.release.set(Integer.parseInt(javacRelease))
+	if (JavaVersion.current().isJava8) {
+		java.targetCompatibility = JavaVersion.VERSION_1_8
+	} else {
+		options.release.set(Integer.parseInt(javacRelease))
+	}
 }
 
 tasks.named<JavaCompile>("compileTeavmJava") {
-	options.release.set(Integer.parseInt(javacRelease))
+	// TeaVM requires Java 11 minimum, regardless of the main javacRelease setting
+	options.release.set(11)
 	dependsOn("preprocessForTeaVM")
 }
 
