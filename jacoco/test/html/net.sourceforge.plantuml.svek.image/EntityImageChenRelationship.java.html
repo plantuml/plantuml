@@ -151,12 +151,12 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 <span class="fc" id="L151">		Colors colors = getEntity().getColors();</span>
 
 <span class="fc" id="L153">		HColor border = colors.getColor(ColorType.LINE);</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (border == null)</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (border == null)</span>
 <span class="fc" id="L155">			border = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L156">		ug = ug.apply(border);</span>
 
 <span class="fc" id="L158">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (backcolor == null)</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (backcolor == null)</span>
 <span class="fc" id="L160">			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L161">		ug = ug.apply(backcolor.bg());</span>
 

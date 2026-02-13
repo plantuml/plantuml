@@ -196,24 +196,24 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 //	}
 
 	public void moveStartPoint(UTranslate move) {
-<span class="fc" id="L199">		moveStartPoint(move.getDx(), move.getDy());</span>
-<span class="fc" id="L200">	}</span>
+<span class="nc" id="L199">		moveStartPoint(move.getDx(), move.getDy());</span>
+<span class="nc" id="L200">	}</span>
 
 	public void moveEndPoint(UTranslate move) {
 <span class="fc" id="L203">		moveEndPoint(move.getDx(), move.getDy());</span>
 <span class="fc" id="L204">	}</span>
 
 	public void moveStartPoint(double dx, double dy) {
-<span class="pc bpc" id="L207" title="1 of 4 branches missed.">		if (beziers.size() &gt; 1 &amp;&amp; Math.sqrt(dx * dx + dy * dy) &gt;= beziers.get(0).getLength()) {</span>
+<span class="nc bnc" id="L207" title="All 4 branches missed.">		if (beziers.size() &gt; 1 &amp;&amp; Math.sqrt(dx * dx + dy * dy) &gt;= beziers.get(0).getLength()) {</span>
 <span class="nc" id="L208">			dx -= beziers.get(1).x1 - beziers.get(0).x1;</span>
 <span class="nc" id="L209">			dy -= beziers.get(1).y1 - beziers.get(0).y1;</span>
 <span class="nc" id="L210">			beziers.remove(0);</span>
 		}
-<span class="fc" id="L212">		beziers.get(0).x1 += dx;</span>
-<span class="fc" id="L213">		beziers.get(0).y1 += dy;</span>
-<span class="fc" id="L214">		beziers.get(0).ctrlx1 += dx;</span>
-<span class="fc" id="L215">		beziers.get(0).ctrly1 += dy;</span>
-<span class="fc" id="L216">	}</span>
+<span class="nc" id="L212">		beziers.get(0).x1 += dx;</span>
+<span class="nc" id="L213">		beziers.get(0).y1 += dy;</span>
+<span class="nc" id="L214">		beziers.get(0).ctrlx1 += dx;</span>
+<span class="nc" id="L215">		beziers.get(0).ctrly1 += dy;</span>
+<span class="nc" id="L216">	}</span>
 
 	public XPoint2D getEndPoint() {
 <span class="fc" id="L219">		return beziers.get(beziers.size() - 1).getP2();</span>
@@ -297,20 +297,20 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 	}
 
 	public double getStartAngle() {
-<span class="fc" id="L300">		final XLine2D tan = getStartTangeante();</span>
-<span class="fc" id="L301">		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());</span>
-<span class="fc" id="L302">		return theta1;</span>
+<span class="nc" id="L300">		final XLine2D tan = getStartTangeante();</span>
+<span class="nc" id="L301">		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());</span>
+<span class="nc" id="L302">		return theta1;</span>
 	}
 
 	private XLine2D getStartTangeante() {
-<span class="fc" id="L306">		final XCubicCurve2D first = beziers.get(0);</span>
-<span class="fc" id="L307">		double dx = first.ctrlx1 - first.x1;</span>
-<span class="fc" id="L308">		double dy = first.ctrly1 - first.y1;</span>
-<span class="pc bpc" id="L309" title="1 of 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0) {</span>
+<span class="nc" id="L306">		final XCubicCurve2D first = beziers.get(0);</span>
+<span class="nc" id="L307">		double dx = first.ctrlx1 - first.x1;</span>
+<span class="nc" id="L308">		double dy = first.ctrly1 - first.y1;</span>
+<span class="nc bnc" id="L309" title="All 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0) {</span>
 <span class="nc" id="L310">			dx = first.x2 - first.x1;</span>
 <span class="nc" id="L311">			dy = first.y2 - first.y1;</span>
 		}
-<span class="fc" id="L313">		return new XLine2D(first.x1, first.y1, first.x1 + dx, first.y1 + dy);</span>
+<span class="nc" id="L313">		return new XLine2D(first.x1, first.y1, first.x1 + dx, first.y1 + dy);</span>
 	}
 
 	public DotPath addBefore(XCubicCurve2D before) {
