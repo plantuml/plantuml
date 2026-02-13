@@ -191,16 +191,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				xorigin, yorigin);
 
 <span class="fc" id="L193">		this.dolls = new Dolls(tileArguments);</span>
-<span class="fc" id="L194">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
-<span class="fc" id="L195">		this.livingSpaces.addConstraints(stringBounder);</span>
-<span class="fc" id="L196">		mainTile.addConstraints();</span>
-<span class="fc" id="L197">		this.dolls.addConstraints(stringBounder);</span>
-<span class="fc" id="L198">		xorigin.compileNow();</span>
+<span class="nc" id="L194">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
+<span class="nc" id="L195">		this.livingSpaces.addConstraints(stringBounder);</span>
+<span class="nc" id="L196">		mainTile.addConstraints();</span>
+<span class="nc" id="L197">		this.dolls.addConstraints(stringBounder);</span>
+<span class="nc" id="L198">		xorigin.compileNow();</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;COMPILING Y&quot;);
-<span class="fc" id="L201">		yorigin.compileNow();</span>
-<span class="fc" id="L202">		tileArguments.setBordered(mainTile);</span>
-<span class="fc" id="L203">		return mainTile;</span>
+<span class="nc" id="L201">		yorigin.compileNow();</span>
+<span class="nc" id="L202">		tileArguments.setBordered(mainTile);</span>
+<span class="nc" id="L203">		return mainTile;</span>
 	}
 
 	public ISkinParam getSkinParam() {

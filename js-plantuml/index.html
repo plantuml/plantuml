@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>js-PlantUML</title>
+    <style>
+      textarea { width: 100%; box-sizing: border-box; }
+    </style>
+  </head>
+  <body>
+    <p><strong>Beta</strong> – Powered by
+      <a href="https://github.com/plantuml/plantuml">PlantUML</a>,
+      <a href="https://github.com/konsoletyper/teavm">TeaVM</a> &amp;
+      <a href="https://github.com/mdaines/viz-js">Viz.js</a>
+    </p>
+    <textarea id="src" rows="10">@startuml
+Alice->Bob
+@enduml</textarea>
+    <div id="out"></div>
+
+    <script src="viz-global.js"></script>
+    <script src="classes.js"></script>
+    <script>
+      main();
+      const textarea = document.getElementById("src");
+      function renderNow() {
+        plantumlRender(textarea.value.split(/\r\n|\r|\n/), "out");
+      }
+      textarea.addEventListener("input", renderNow);
+      renderNow();
+    </script>
+  </body>
+</html>
