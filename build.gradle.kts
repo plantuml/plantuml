@@ -652,3 +652,28 @@ tasks.register("teavm") {
 		println("")
 	}
 }
+
+// Task to create a ZIP archive of the TeaVM JS version
+tasks.register<Zip>("teavmZip") {
+	description = "Creates a ZIP archive of the TeaVM JS version"
+	group = "teavm"
+	
+	dependsOn("teavm")
+	
+	// Use lazy evaluation to ensure files are read after teavm task completes
+	from(layout.buildDirectory.dir("teavm/js")) {
+		include("classes.js", "index.html", "viz-global.js")
+	}
+	
+	destinationDirectory.set(layout.buildDirectory.dir("libs"))
+	archiveBaseName.set("js-plantuml")
+	archiveVersion.set(project.version.toString())
+	
+	doLast {
+		println("")
+		println("======================")
+		println("TeaVM ZIP created: ${archiveFile.get().asFile.absolutePath}")
+		println("======================")
+		println("")
+	}
+}

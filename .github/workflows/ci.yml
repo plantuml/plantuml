@@ -203,6 +203,7 @@ jobs:
           cat gradle.properties
           gradle clean build \
             pdfJar \
+            teavmZip \
             generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
             -x test
           find . -name "*.jar"

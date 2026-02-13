@@ -21,6 +21,7 @@ cp "build/libs/plantuml-${RELEASE_VERSION}.jar" "github_release/plantuml-SNAPSHO
 cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-SNAPSHOT-javadoc.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-SNAPSHOT-sources.jar"
 cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar" "github_release/plantuml-pdf-SNAPSHOT.jar"
+cp "build/libs/js-plantuml-${RELEASE_VERSION}.zip" "github_release/js-plantuml-SNAPSHOT.zip"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar" "github_release/plantuml-asl-SNAPSHOT.jar"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-asl-SNAPSHOT-javadoc.jar"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-asl-SNAPSHOT-sources.jar"
@@ -48,6 +49,9 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-SNAPSHOT-javadoc.jar.asc"
   cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-SNAPSHOT-sources.jar.asc"
   cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-pdf-SNAPSHOT.jar.asc"
+  if [[ -e "build/libs/js-plantuml-${RELEASE_VERSION}.zip.asc" ]]; then
+    cp "build/libs/js-plantuml-${RELEASE_VERSION}.zip.asc" "github_release/js-plantuml-SNAPSHOT.zip.asc"
+  fi
   cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-asl-SNAPSHOT.jar.asc"
   cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-asl-SNAPSHOT-javadoc.jar.asc"
   cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-asl-SNAPSHOT-sources.jar.asc"
