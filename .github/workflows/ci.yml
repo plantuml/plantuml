@@ -400,11 +400,11 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
 
-  create_native_image_snapshot:
-    needs: [ workflow_config, jdk8 ]
-    if: needs.workflow_config.outputs.do_snapshot_release == 'true'
-    uses: ./.github/workflows/native-image-snapshot.yml
-    secrets: inherit
+#  create_native_image_snapshot:
+#    needs: [ workflow_config, jdk8 ]
+#    if: needs.workflow_config.outputs.do_snapshot_release == 'true'
+#    uses: ./.github/workflows/native-image-snapshot.yml
+#    secrets: inherit
 
   create_native_image_release:
     needs: [ workflow_config, upload ]
