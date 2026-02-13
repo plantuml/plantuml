@@ -19900,8 +19900,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>24</Ce>
@@ -19915,6 +19915,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="DriverDotPathTeaVM.java">
+                    net.sourceforge.plantuml.teavm.DriverDotPathTeaVM
+                </Class>
                 <Class sourceFile="DriverEllipseTeaVM.java">
                     net.sourceforge.plantuml.teavm.DriverEllipseTeaVM
                 </Class>

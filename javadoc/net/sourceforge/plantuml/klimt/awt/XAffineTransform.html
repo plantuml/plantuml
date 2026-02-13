@@ -79,8 +79,27 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">XAffineTransform</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Thin wrapper around <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/geom/AffineTransform.html" title="class or interface in java.awt.geom" class="external-link"><code>AffineTransform</code></a>. Delegates all
- operations to an internal AffineTransform instance.</div>
+<div class="block">Affine transformation matrix implementation compatible with both standard JVM
+ and TeaVM environments.
+ 
+ <p>
+ The transformation matrix is represented as:
+ </p>
+ 
+ <pre>
+ [ m00  m01  m02 ]   [ x ]   [ m00*x + m01*y + m02 ]
+ [ m10  m11  m12 ] * [ y ] = [ m10*x + m11*y + m12 ]
+ [  0    0    1  ]   [ 1 ]   [          1          ]
+ </pre>
+ 
+ <p>
+ Where:
+ </p>
+ <ul>
+ <li>m00, m11 = scale factors (scaleX, scaleY)</li>
+ <li>m01, m10 = shear/rotation factors</li>
+ <li>m02, m12 = translation factors (translateX, translateY)</li>
+ </ul></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -98,7 +117,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(double%5B%5D)" class="member-name-link">XAffineTransform</a><wbr>(double[]&nbsp;flatMatrix)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a transform from a 6-element array (m00, m10, m01, m11, m02, m12).</div>
+<div class="block">Creates a transform from a 6-element array.</div>
 </div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(double,double,double,double,double,double)" class="member-name-link">XAffineTransform</a><wbr>(double&nbsp;m00,
  double&nbsp;m10,
@@ -129,52 +148,79 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#concatenate(net.sourceforge.plantuml.klimt.awt.XAffineTransform)" class="member-name-link">concatenate</a><wbr>(<a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a>&nbsp;other)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Concatenates another transform to this transform.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRotateInstance(double)" class="member-name-link">getRotateInstance</a><wbr>(double&nbsp;thetaRadians)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a rotation transform.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getScaleInstance(double,double)" class="member-name-link">getScaleInstance</a><wbr>(double&nbsp;sx,
  double&nbsp;sy)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a scaling transform.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScaleX()" class="member-name-link">getScaleX</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the X coordinate scaling element (m00).</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScaleY()" class="member-name-link">getScaleY</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the Y coordinate scaling element (m11).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateInstance(double,double)" class="member-name-link">getTranslateInstance</a><wbr>(double&nbsp;tx,
  double&nbsp;ty)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a translation transform.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTranslateX()" class="member-name-link">getTranslateX</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the X coordinate translation element (m02).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTranslateY()" class="member-name-link">getTranslateY</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the Y coordinate translation element (m12).</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rotate(double,double,double)" class="member-name-link">rotate</a><wbr>(double&nbsp;thetaRadians,
  double&nbsp;anchorX,
  double&nbsp;anchorY)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Concatenates a rotation transformation around the specified anchor point.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scale(double,double)" class="member-name-link">scale</a><wbr>(double&nbsp;sx,
  double&nbsp;sy)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Concatenates a scaling transformation to this transform.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/geom/AffineTransform.html" title="class or interface in java.awt.geom" class="external-link">AffineTransform</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toAffineTransform()" class="member-name-link">toAffineTransform</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/geom/AffineTransform.html" title="class or interface in java.awt.geom" class="external-link"><code>AffineTransform</code></a> with the same matrix
+ values.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#transform(net.sourceforge.plantuml.klimt.geom.XPoint2D)" class="member-name-link">transform</a><wbr>(<a href="../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;src)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Transforms the specified point.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#translate(double,double)" class="member-name-link">translate</a><wbr>(double&nbsp;tx,
  double&nbsp;ty)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Concatenates a translation transformation to this transform.</div>
+</div>
 </div>
 </div>
 </div>
@@ -201,9 +247,16 @@ loadScripts(document, 'script');</script>
  double&nbsp;m11,
  double&nbsp;m02,
  double&nbsp;m12)</span></div>
-<div class="block">Creates a transform from the 6 specified values.
-
- In <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/geom/AffineTransform.html" title="class or interface in java.awt.geom" class="external-link"><code>AffineTransform</code></a>: (m00, m10, m01, m11, m02, m12)</div>
+<div class="block">Creates a transform from the 6 specified values.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>m00</code> - the X coordinate scaling element</dd>
+<dd><code>m10</code> - the Y coordinate shearing element</dd>
+<dd><code>m01</code> - the X coordinate shearing element</dd>
+<dd><code>m11</code> - the Y coordinate scaling element</dd>
+<dd><code>m02</code> - the X coordinate translation element</dd>
+<dd><code>m12</code> - the Y coordinate translation element</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -211,13 +264,21 @@ loadScripts(document, 'script');</script>
 <h3>XAffineTransform</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">XAffineTransform</span><wbr><span class="parameters">(<a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a>&nbsp;other)</span></div>
 <div class="block">Copy constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>other</code> - the transform to copy</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(double[])">
 <h3>XAffineTransform</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">XAffineTransform</span><wbr><span class="parameters">(double[]&nbsp;flatMatrix)</span></div>
-<div class="block">Creates a transform from a 6-element array (m00, m10, m01, m11, m02, m12).</div>
+<div class="block">Creates a transform from a 6-element array.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>flatMatrix</code> - array containing [m00, m10, m01, m11, m02, m12]</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -239,6 +300,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getRotateInstance(double)">
 <h3>getRotateInstance</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a></span>&nbsp;<span class="element-name">getRotateInstance</span><wbr><span class="parameters">(double&nbsp;thetaRadians)</span></div>
+<div class="block">Creates a rotation transform.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>thetaRadians</code> - the angle of rotation in radians</dd>
+<dt>Returns:</dt>
+<dd>a new rotation transform</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -246,6 +314,14 @@ loadScripts(document, 'script');</script>
 <h3>getTranslateInstance</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a></span>&nbsp;<span class="element-name">getTranslateInstance</span><wbr><span class="parameters">(double&nbsp;tx,
  double&nbsp;ty)</span></div>
+<div class="block">Creates a translation transform.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>tx</code> - the X translation</dd>
+<dd><code>ty</code> - the Y translation</dd>
+<dt>Returns:</dt>
+<dd>a new translation transform</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -253,30 +329,58 @@ loadScripts(document, 'script');</script>
 <h3>getScaleInstance</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a></span>&nbsp;<span class="element-name">getScaleInstance</span><wbr><span class="parameters">(double&nbsp;sx,
  double&nbsp;sy)</span></div>
+<div class="block">Creates a scaling transform.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sx</code> - the X scale factor</dd>
+<dd><code>sy</code> - the Y scale factor</dd>
+<dt>Returns:</dt>
+<dd>a new scaling transform</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getScaleX()">
 <h3>getScaleX</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getScaleX</span>()</div>
+<div class="block">Returns the X coordinate scaling element (m00).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the X scaling factor</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getScaleY()">
 <h3>getScaleY</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getScaleY</span>()</div>
+<div class="block">Returns the Y coordinate scaling element (m11).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the Y scaling factor</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTranslateX()">
 <h3>getTranslateX</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTranslateX</span>()</div>
+<div class="block">Returns the X coordinate translation element (m02).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the X translation</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTranslateY()">
 <h3>getTranslateY</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTranslateY</span>()</div>
+<div class="block">Returns the Y coordinate translation element (m12).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the Y translation</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -284,18 +388,39 @@ loadScripts(document, 'script');</script>
 <h3>scale</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">scale</span><wbr><span class="parameters">(double&nbsp;sx,
  double&nbsp;sy)</span></div>
+<div class="block">Concatenates a scaling transformation to this transform.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sx</code> - the X scale factor</dd>
+<dd><code>sy</code> - the Y scale factor</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="transform(net.sourceforge.plantuml.klimt.geom.XPoint2D)">
 <h3>transform</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></span>&nbsp;<span class="element-name">transform</span><wbr><span class="parameters">(<a href="../geom/XPoint2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a>&nbsp;src)</span></div>
+<div class="block">Transforms the specified point.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>src</code> - the source point</dd>
+<dt>Returns:</dt>
+<dd>the transformed point</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="concatenate(net.sourceforge.plantuml.klimt.awt.XAffineTransform)">
 <h3>concatenate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">concatenate</span><wbr><span class="parameters">(<a href="XAffineTransform.html" title="class in net.sourceforge.plantuml.klimt.awt">XAffineTransform</a>&nbsp;other)</span></div>
+<div class="block">Concatenates another transform to this transform.
+ <p>
+ This is equivalent to: [this] = [this] * [other]
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>other</code> - the transform to concatenate</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -303,6 +428,12 @@ loadScripts(document, 'script');</script>
 <h3>translate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">translate</span><wbr><span class="parameters">(double&nbsp;tx,
  double&nbsp;ty)</span></div>
+<div class="block">Concatenates a translation transformation to this transform.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>tx</code> - the X translation</dd>
+<dd><code>ty</code> - the Y translation</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -311,12 +442,25 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">rotate</span><wbr><span class="parameters">(double&nbsp;thetaRadians,
  double&nbsp;anchorX,
  double&nbsp;anchorY)</span></div>
+<div class="block">Concatenates a rotation transformation around the specified anchor point.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>thetaRadians</code> - the angle of rotation in radians</dd>
+<dd><code>anchorX</code> - the X coordinate of the rotation anchor</dd>
+<dd><code>anchorY</code> - the Y coordinate of the rotation anchor</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="toAffineTransform()">
 <h3>toAffineTransform</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/geom/AffineTransform.html" title="class or interface in java.awt.geom" class="external-link">AffineTransform</a></span>&nbsp;<span class="element-name">toAffineTransform</span>()</div>
+<div class="block">Creates a new <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/geom/AffineTransform.html" title="class or interface in java.awt.geom" class="external-link"><code>AffineTransform</code></a> with the same matrix
+ values.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a new AffineTransform instance</dd>
+</dl>
 </section>
 </li>
 <li>

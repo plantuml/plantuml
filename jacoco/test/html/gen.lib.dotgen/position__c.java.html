@@ -813,7 +813,7 @@ try {
 <span class="fc bfc" id="L813" title="All 2 branches covered.">	for (j = 0; j &lt; rank.get__(i).n; j++) {</span>
 <span class="fc" id="L814">	    u = rank.get__(i).v.get_(j);</span>
 <span class="fc" id="L815">	    ND_mval(u, ND_rw(u));	/* keep it somewhere safe */</span>
-<span class="pc bpc" id="L816" title="1 of 2 branches missed.">	    if (ND_other(u).size &gt; 0) {	/* compute self size */</span>
+<span class="fc bfc" id="L816" title="All 2 branches covered.">	    if (ND_other(u).size &gt; 0) {	/* compute self size */</span>
 		/* FIX: dot assumes all self-edges go to the right. This
                  * is no longer true, though makeSelfEdge still attempts to
                  * put as many as reasonable on the right. The dot code
@@ -822,13 +822,13 @@ try {
                  * Note that this would not only affect left and right
                  * positioning but may also affect interrank spacing.
                  */
-<span class="nc" id="L825">		sw = 0;</span>
-<span class="nc bnc" id="L826" title="All 2 branches missed.">		for (k = 0; (e = (ST_Agedge_s) ND_other(u).list.get_(k))!=null; k++) {</span>
-<span class="nc bnc" id="L827" title="All 2 branches missed.">		    if (agtail(e) == aghead(e)) {</span>
+<span class="fc" id="L825">		sw = 0;</span>
+<span class="fc bfc" id="L826" title="All 2 branches covered.">		for (k = 0; (e = (ST_Agedge_s) ND_other(u).list.get_(k))!=null; k++) {</span>
+<span class="pc bpc" id="L827" title="1 of 2 branches missed.">		    if (agtail(e) == aghead(e)) {</span>
 <span class="nc" id="L828">			sw += selfRightSpace (e);</span>
 		    }
 		}
-<span class="nc" id="L831">		ND_rw(u, ND_rw(u) + sw);	/* increment to include self edges */</span>
+<span class="fc" id="L831">		ND_rw(u, ND_rw(u) + sw);	/* increment to include self edges */</span>
 	    }
 <span class="fc" id="L833">	    v = rank.get__(i).v.get_(j + 1);</span>
 <span class="fc bfc" id="L834" title="All 2 branches covered.">	    if (v!=null) {</span>
@@ -1448,8 +1448,8 @@ try {
 	    
 	    /* have to look for high self-edge labels, too */
 <span class="fc bfc" id="L1450" title="All 2 branches covered.">	    if (ND_other(n).list!=null)</span>
-<span class="pc bpc" id="L1451" title="1 of 2 branches missed.">		for (j = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(j))!=null; j++) {</span>
-<span class="nc bnc" id="L1452" title="All 2 branches missed.">		    if (agtail(e) == aghead(e)) {</span>
+<span class="fc bfc" id="L1451" title="All 2 branches covered.">		for (j = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(j))!=null; j++) {</span>
+<span class="pc bpc" id="L1452" title="1 of 2 branches missed.">		    if (agtail(e) == aghead(e)) {</span>
 <span class="nc bnc" id="L1453" title="All 2 branches missed.">			if (ED_label(e)!=null)</span>
 <span class="nc" id="L1454">			    ht2 = Math.max(ht2, ED_label(e).dimen.y / 2);</span>
 		    }
@@ -1867,9 +1867,9 @@ try {
 <span class="pc bpc" id="L1867" title="1 of 2 branches missed.">	if (ND_outleaf(n)!=null)</span>
 <span class="nc" id="L1868">	    do_leaves(g, ND_outleaf(n));</span>
 <span class="fc bfc" id="L1869" title="All 2 branches covered.">	if (ND_other(n).list!=null)</span>
-<span class="pc bpc" id="L1870" title="1 of 2 branches missed.">	    for (i = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(i))!=null; i++) {</span>
-<span class="nc bnc" id="L1871" title="All 2 branches missed.">		if ((d = ND_rank(aghead(e)) - ND_rank(aghead(e))) == 0)</span>
-<span class="nc" id="L1872">		    continue;</span>
+<span class="fc bfc" id="L1870" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(i))!=null; i++) {</span>
+<span class="pc bpc" id="L1871" title="1 of 2 branches missed.">		if ((d = ND_rank(aghead(e)) - ND_rank(aghead(e))) == 0)</span>
+<span class="fc" id="L1872">		    continue;</span>
 <span class="nc" id="L1873">		f = ED_to_orig(e);</span>
 <span class="nc bnc" id="L1874" title="All 2 branches missed.">		if (ports_eq(e, f) == false) {</span>
 <span class="nc" id="L1875">			UNSURE_ABOUT(&quot;zapinlist(&amp;(ND_other(n)), e);&quot;);</span>

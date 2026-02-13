@@ -407,13 +407,13 @@ try {
 <span class="fc" id="L407">		continue;</span>
 	    }
 	    /* merge multi-edges */
-<span class="pc bpc" id="L410" title="2 of 6 branches missed.">	    if (prev!=null &amp;&amp; agtail(e) == agtail(prev) &amp;&amp; aghead(e) == aghead(prev)) {</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">		if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
-<span class="nc" id="L412">		    merge_oneway(e, prev);</span>
-<span class="nc" id="L413">		    other_edge(e);</span>
-<span class="nc" id="L414">		    continue;</span>
+<span class="pc bpc" id="L410" title="1 of 6 branches missed.">	    if (prev!=null &amp;&amp; agtail(e) == agtail(prev) &amp;&amp; aghead(e) == aghead(prev)) {</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
+<span class="fc" id="L412">		    merge_oneway(e, prev);</span>
+<span class="fc" id="L413">		    other_edge(e);</span>
+<span class="fc" id="L414">		    continue;</span>
 		}
-<span class="nc bnc" id="L416" title="All 4 branches missed.">		if ((ED_label(e) == null) &amp;&amp; (ED_label(prev) == null)</span>
+<span class="pc bpc" id="L416" title="3 of 4 branches missed.">		if ((ED_label(e) == null) &amp;&amp; (ED_label(prev) == null)</span>
 <span class="nc bnc" id="L417" title="All 2 branches missed.">		    &amp;&amp; ports_eq(e, prev)) {</span>
 <span class="nc bnc" id="L418" title="All 2 branches missed.">		    if (zz.Concentrate)</span>
 <span class="nc" id="L419">			ED_edge_type(e, IGNORED);</span>

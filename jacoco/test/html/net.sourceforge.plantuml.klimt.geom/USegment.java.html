@@ -83,37 +83,34 @@ public class USegment {
 	}
 
 	public USegment rotate(double theta) {
-		// ::revert when __TEAVM__
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (coord.length != 2)</span>
-<span class="nc" id="L88">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (coord.length != 2)</span>
+<span class="nc" id="L87">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L90">		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);</span>
-<span class="nc" id="L91">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(theta);</span>
-<span class="nc" id="L92">		p1 = p1.transform(rotate);</span>
+<span class="nc" id="L89">		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);</span>
+<span class="nc" id="L90">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(theta);</span>
+<span class="nc" id="L91">		p1 = p1.transform(rotate);</span>
 
-<span class="nc" id="L94">		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);</span>
-		// return this;
-		// ::done
+<span class="nc" id="L93">		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);</span>
 	}
 
 	public USegment affine(XAffineTransform transform, double angle, double scale) {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (pathType == USegmentType.SEG_ARCTO) {</span>
-<span class="nc" id="L101">			XPoint2D p1 = new XPoint2D(coord[5], coord[6]);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (pathType == USegmentType.SEG_ARCTO) {</span>
+<span class="nc" id="L98">			XPoint2D p1 = new XPoint2D(coord[5], coord[6]);</span>
 
-<span class="nc" id="L103">			p1 = p1.transform(transform);</span>
+<span class="nc" id="L100">			p1 = p1.transform(transform);</span>
 
-<span class="nc" id="L105">			final double large_arc_flag = coord[3];</span>
-<span class="nc" id="L106">			final double sweep_flag = coord[4];</span>
-<span class="nc" id="L107">			return new USegment(new double[] { coord[0] * scale, coord[1] * scale, coord[2] + angle, large_arc_flag,</span>
-<span class="nc" id="L108">					sweep_flag, p1.getX(), p1.getY() }, pathType);</span>
+<span class="nc" id="L102">			final double large_arc_flag = coord[3];</span>
+<span class="nc" id="L103">			final double sweep_flag = coord[4];</span>
+<span class="nc" id="L104">			return new USegment(new double[] { coord[0] * scale, coord[1] * scale, coord[2] + angle, large_arc_flag,</span>
+<span class="nc" id="L105">					sweep_flag, p1.getX(), p1.getY() }, pathType);</span>
 		}
 
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (coord.length != 2)</span>
-<span class="nc" id="L112">			throw new UnsupportedOperationException();</span>
-<span class="nc" id="L113">		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);</span>
-<span class="nc" id="L114">		p1 = p1.transform(transform);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (coord.length != 2)</span>
+<span class="nc" id="L109">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L110">		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);</span>
+<span class="nc" id="L111">		p1 = p1.transform(transform);</span>
 
-<span class="nc" id="L116">		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);</span>
+<span class="nc" id="L113">		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);</span>
 	}
 	// ::done
 
