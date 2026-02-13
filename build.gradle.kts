@@ -386,17 +386,20 @@ signing {
 
 // Site generation task - creates a comprehensive project site
 tasks.register("site") {
-	description = "Generates project site with documentation, reports, and test results"
+	description = "Generates project site with documentation, reports, test results and demo."
 	group = "documentation"
 	
 	val siteDir = layout.buildDirectory.dir("site").get().asFile
 	
 	dependsOn(
+		// Doc.
 		tasks.javadoc,
 		tasks.test,
 		tasks.jacocoTestReport,
 		"jdepend",
-		"jdependHtml"
+		"jdependHtml",
+		// Demo.
+		"teavm"
 	)
 	
 	doFirst {
@@ -447,6 +450,12 @@ tasks.register("site") {
 			from(layout.buildDirectory.dir("reports/jdepend"))
 			into("$siteDir/jdepend")
 		}
+
+		copy {
+			from(layout.buildDirectory.dir("teavm/js"))
+			into("$siteDir/js-plantuml")
+		}
+
 	}
 	
 	doLast {
@@ -461,6 +470,7 @@ tasks.register("site") {
 		println("  - Test Results Report")
 		println("  - Code Coverage Report (JaCoCo)")
 		println("  - Package Dependencies (JDepend)")
+		println("  - JavaScript Demo (js-plantuml)")
 		println("========================================")
 	}
 }
