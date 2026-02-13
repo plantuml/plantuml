@@ -86,16 +86,16 @@ public class PlayingSpace implements Bordered {
 <span class="fc" id="L86">			max2.add(tile.getMaxX());</span>
 <span class="fc" id="L87">		}</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (LivingSpace livingSpace : livingSpaces.values()) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		for (LivingSpace livingSpace : livingSpaces.values()) {</span>
 <span class="fc" id="L90">			max2.add(livingSpace.getPosD(tileArguments.getStringBounder()));</span>
 <span class="fc" id="L91">			max2.add(livingSpace.getPosC2(tileArguments.getStringBounder()));</span>
 <span class="fc" id="L92">		}</span>
 
-<span class="fc" id="L94">		this.min = RealUtils.min(min2);</span>
-<span class="fc" id="L95">		this.max = RealUtils.max(max2);</span>
+<span class="nc" id="L94">		this.min = RealUtils.min(min2);</span>
+<span class="nc" id="L95">		this.max = RealUtils.max(max2);</span>
 
-<span class="fc" id="L97">		this.isShowFootbox = diagram.isShowFootbox();</span>
-<span class="fc" id="L98">	}</span>
+<span class="nc" id="L97">		this.isShowFootbox = diagram.isShowFootbox();</span>
+<span class="nc" id="L98">	}</span>
 
 	public void drawBackground(UGraphic ug) {
 <span class="nc" id="L101">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
@@ -149,10 +149,10 @@ public class PlayingSpace implements Bordered {
 	}
 
 	public void addConstraints() {
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc" id="L153">			tile.addConstraints();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (Tile tile : tiles)</span>
+<span class="nc" id="L153">			tile.addConstraints();</span>
 
-<span class="fc" id="L155">	}</span>
+<span class="nc" id="L155">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
 <span class="nc" id="L158">		return min;</span>

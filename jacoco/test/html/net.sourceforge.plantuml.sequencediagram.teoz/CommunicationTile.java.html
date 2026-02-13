@@ -68,7 +68,7 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="fc" id="L71">		return message;</span>
+<span class="nc" id="L71">		return message;</span>
 	}
 
 	@Override
@@ -247,31 +247,31 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	}
 
 	public void addConstraints() {
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (sequenceMessageSpan())</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (sequenceMessageSpan())</span>
 <span class="nc" id="L251">			return;</span>
 
-<span class="fc" id="L253">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L254">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L255">		final double width = dim.getWidth();</span>
+<span class="nc" id="L253">		final Component comp = getComponent(getStringBounder());</span>
+<span class="nc" id="L254">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L255">		final double width = dim.getWidth();</span>
 
-<span class="fc" id="L257">		Real point1 = getPoint1(getStringBounder());</span>
-<span class="fc" id="L258">		Real point2 = getPoint2(getStringBounder());</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (isReverse(getStringBounder())) {</span>
-<span class="fc" id="L260">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L261">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="pc bpc" id="L262" title="1 of 2 branches missed.">			if (level1 &gt; 0)</span>
+<span class="nc" id="L257">		Real point1 = getPoint1(getStringBounder());</span>
+<span class="nc" id="L258">		Real point2 = getPoint2(getStringBounder());</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		if (isReverse(getStringBounder())) {</span>
+<span class="nc" id="L260">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="nc" id="L261">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">			if (level1 &gt; 0)</span>
 <span class="nc" id="L263">				point1 = point1.addFixed(-LIVE_DELTA_SIZE);</span>
 
-<span class="fc" id="L265">			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);</span>
-<span class="fc" id="L266">			point1.ensureBiggerThan(point2.addFixed(width));</span>
-<span class="fc" id="L267">		} else {</span>
-<span class="fc" id="L268">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">			if (level2 &gt; 0)</span>
+<span class="nc" id="L265">			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);</span>
+<span class="nc" id="L266">			point1.ensureBiggerThan(point2.addFixed(width));</span>
+<span class="nc" id="L267">		} else {</span>
+<span class="nc" id="L268">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">			if (level2 &gt; 0)</span>
 <span class="nc" id="L270">				point2 = point2.addFixed(-LIVE_DELTA_SIZE);</span>
 
-<span class="fc" id="L272">			point2.ensureBiggerThan(point1.addFixed(width));</span>
+<span class="nc" id="L272">			point2.ensureBiggerThan(point1.addFixed(width));</span>
 		}
-<span class="fc" id="L274">	}</span>
+<span class="nc" id="L274">	}</span>
 
 	private Real getPoint1(final StringBounder stringBounder) {
 <span class="fc" id="L277">		return livingSpace1.getPosC(stringBounder);</span>
