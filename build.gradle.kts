@@ -558,8 +558,8 @@ val filterSourcesWithBuildInfo by tasks.registering {
 		// 1) Read git.properties
 		val propsFile = layout.buildDirectory.file("resources/main/git.properties").get().asFile
 		val props = Properties().apply { propsFile.inputStream().use { load(it) } }
-		val commitId = props.getProperty("git.commit.id")
-			?: error("git.commit.id not found in ${propsFile.absolutePath}")
+		val commitId = props.getProperty("git.commit.id.abbrev")
+			?: error("git.commit.id.abbrev not found in ${propsFile.absolutePath}")
 
 		// 2) Compute compile timestamp (epoch millis)
 		val compileTs = System.currentTimeMillis().toString()
