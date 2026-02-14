@@ -102,7 +102,7 @@ to display the exact build details.
 package net.sourceforge.plantuml.version;
 
 public class CompilationInfo {
-    public static final String VERSION = "0.0.0";
+    public static final String VERSION = "$version$";
     public static final String COMMIT = "$git.commit.id$";
     public static final long COMPILE_TIMESTAMP = 000L;
 }
@@ -132,6 +132,7 @@ public class CompilationInfo {
 │   │     build/generated/sources/git-filtered/                                  │
 │   │                             │                                               │
 │   │  2. Replace placeholders:  │                                               │
+│   │     • $version$            │  → version from gradle.properties             │
 │   │     • $git.commit.id$      │  → actual commit hash (abbrev)                │
 │   │     • COMPILE_TIMESTAMP = 000L → current epoch millis                      │
 │   │                             │                                               │
@@ -154,9 +155,9 @@ After compilation, running `java -jar plantuml.jar -version` displays:
 PlantUML version 1.2024.8 (Mon Jan 15 14:30:00 CET 2024)
 (GPL source distribution)
 
-Build Version: 1.2024.8
-Git Commit: a1b2c3d
-Compile Time: Mon Jan 15 14:30:00 CET 2024
+Build Version: 1.2024.8       ← from gradle.properties
+Git Commit: a1b2c3d           ← from git rev-parse --short HEAD
+Compile Time: Mon Jan 15 ...  ← from System.currentTimeMillis()
 
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM

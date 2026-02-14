@@ -44,12 +44,8 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 public class Version {
 	// ::remove folder when __HAXE__
 
-	// Warning, "version" should be the same in gradle.properties and Version.java
-	// Any idea anyone how to magically synchronize those :-) ?
-	private static final String version = "1.2026.2beta3";
-
 	public static String versionString() {
-		return version;
+		return CompilationInfo.VERSION;
 	}
 
 	public static String fullDescription() {
@@ -65,14 +61,14 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int x = version.indexOf("beta");
+		final int x = CompilationInfo.VERSION.indexOf("beta");
 		if (x == -1)
 			return 0;
-		return Integer.parseInt(version.substring(x + "beta".length()));
+		return Integer.parseInt(CompilationInfo.VERSION.substring(x + "beta".length()));
 	}
 
 	public static String etag() {
-		return SignatureUtils.getMD5Hex(version);
+		return SignatureUtils.getMD5Hex(CompilationInfo.VERSION);
 	}
 
 	public static String turningId() {
@@ -84,10 +80,10 @@ public class Version {
 	}
 
 	public static String compileTimeString() {
-		if (version.contains("beta"))
+		if (CompilationInfo.COMPILE_TIMESTAMP == 0L)
 			return "Unknown compile time";
 
-		return new Date(Version.compileTime()).toString();
+		return new Date(CompilationInfo.COMPILE_TIMESTAMP).toString();
 	}
 
 	// ::comment when __CORE__
@@ -108,12 +104,6 @@ public class Version {
 			Logme.error(t);
 			return t.toString();
 		}
-	}
-
-	public static void main(String[] args) {
-		final String s = "return " + System.currentTimeMillis() + "L;";
-		System.out.print(s);
-
 	}
 	// ::done
 
