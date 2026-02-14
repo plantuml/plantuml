@@ -83,7 +83,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UElli
 				DriverRectangleG2d.drawBorder(param, color, mapper, ellipse, shape, g2d, x, y);
 			} else {
 				if (back.isTransparent() == false) {
-					g2d.setColor(param.getBackcolor().toColor(mapper));
+					g2d.setColor(param.getBackcolor().toColor(mapper).toAwtColor());
 					DriverRectangleG2d.managePattern(param, g2d);
 					g2d.fill(shape);
 				}
@@ -95,7 +95,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UElli
 			final Shape arc = new Arc2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight(), round(ellipse.getStart()),
 					round(ellipse.getExtend()), Arc2D.OPEN);
 			if (color.isTransparent() == false) {
-				g2d.setColor(color.toColor(mapper));
+				g2d.setColor(color.toColor(mapper).toAwtColor());
 				g2d.draw(arc);
 			}
 		}

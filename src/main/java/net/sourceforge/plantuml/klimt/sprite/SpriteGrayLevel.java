@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.Color;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.PairInt;
 import net.sourceforge.plantuml.code.SpiralOnRectangle;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 import net.sourceforge.plantuml.log.Logme;
 
@@ -166,7 +167,7 @@ public enum SpriteGrayLevel {
 		if (y >= img.getHeight()) {
 			return 0;
 		}
-		final Color g = ColorUtils.getGrayScaleColor(new Color(img.getRGB(x, y)));
+		final XColor g = ColorUtils.getGrayScaleColor(XColor.from(img.getRGB(x, y)));
 		final int gray = 255 - g.getRed();
 		return gray / 16;
 	}

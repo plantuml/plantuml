@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.CharArrayWriter;
@@ -49,6 +49,7 @@ import javax.swing.Icon;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 
@@ -80,7 +81,7 @@ public class ConverterSvg {
 
 	private Dimension dimension;
 
-	public String getSvg(double scale, boolean fontAsShapes, Color backgroundColor)
+	public String getSvg(double scale, boolean fontAsShapes, XColor backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		// DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -103,7 +104,7 @@ public class ConverterSvg {
 		// g2.setSVGCanvasSize(dimension);
 		g2.getClass().getMethod("setSVGCanvasSize", Dimension.class).invoke(g2, dimension);
 		if (backgroundColor != null) {
-			g2.setColor(backgroundColor);
+			g2.setColor(backgroundColor.toAwtColor());
 			g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
 		}
 

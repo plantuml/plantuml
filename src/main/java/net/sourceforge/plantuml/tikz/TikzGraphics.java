@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.tikz;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.awt.geom.PathIterator;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,6 +50,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.LatexManager;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -83,7 +83,7 @@ public class TikzGraphics {
 	private final ColorMapper mapper;
 	private final String preamble;
 
-	private final Map<Color, String> colornames = new LinkedHashMap<Color, String>();
+	private final Map<XColor, String> colornames = new LinkedHashMap<XColor, String>();
 
 	public TikzGraphics(double scale, boolean withPreamble, ColorMapper mapper, Pragma pragma) {
 		this.withPreamble = withPreamble;
@@ -116,11 +116,11 @@ public class TikzGraphics {
 	}
 
 	private String getColorName(HColor hcolor) {
-		final Color color = hcolor.toColor(mapper);
-		if (color.equals(Color.WHITE))
+		final XColor color = hcolor.toColor(mapper);
+		if (color.equals(XColor.WHITE))
 			return "white";
 
-		if (color.equals(Color.BLACK))
+		if (color.equals(XColor.BLACK))
 			return "black";
 
 		final String result = colornames.get(color);
@@ -201,7 +201,7 @@ public class TikzGraphics {
 			out(os, "    }");
 			out(os, "}");
 		}
-		for (Map.Entry<Color, String> ent : colornames.entrySet())
+		for (Map.Entry<XColor, String> ent : colornames.entrySet())
 			out(os, definecolor(ent.getValue(), ent.getKey()));
 
 		if (scale != 1)
@@ -250,9 +250,9 @@ public class TikzGraphics {
 		}
 	}
 
-	private String definecolor(String name, Color color) {
+	private String definecolor(String name, XColor color) {
 		if (color.getAlpha() == 0)
-			color = Color.WHITE;
+			color = XColor.WHITE;
 		return "\\definecolor{" + name + "}{RGB}{" + color.getRed() + "," + color.getGreen() + "," + color.getBlue()
 				+ "}";
 	}
@@ -677,7 +677,7 @@ public class TikzGraphics {
 	private void addColor(HColor hcolor) {
 		if (hcolor == null)
 			return;
-		final Color color = hcolor.toColor(mapper);
+		final XColor color = hcolor.toColor(mapper);
 		if (color == null)
 			return;
 

@@ -37,7 +37,6 @@ package com.plantuml.api.cheerpj.v1;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -104,7 +104,7 @@ public class Raw {
 			final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 
 			if (im == null) {
-				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,
+				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, XColor.WHITE,
 						stringBounder);
 				im = imageBuilder.getPortableImage();
 				g2d = im.createGraphics();
@@ -113,10 +113,10 @@ public class Raw {
 			final HColor back;
 			final ColorMapper mapper;
 			if (dark) {
-				back = HColors.simple(Color.BLACK);
+				back = HColors.simple(XColor.BLACK);
 				mapper = ColorMapper.DARK_MODE;
 			} else {
-				back = HColors.simple(Color.WHITE);
+				back = HColors.simple(XColor.WHITE);
 				mapper = ColorMapper.IDENTITY;
 			}
 			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);
@@ -188,7 +188,7 @@ public class Raw {
 			final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 
 			if (im == null) {
-				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, Color.WHITE,
+				final EmptyImageBuilder imageBuilder = new EmptyImageBuilder(null, MAX, MAX, XColor.WHITE,
 						stringBounder);
 				im = imageBuilder.getPortableImage();
 				g2d = im.createGraphics();
@@ -197,10 +197,10 @@ public class Raw {
 			final HColor back;
 			final ColorMapper mapper;
 			if (dark) {
-				back = HColors.simple(Color.BLACK);
+				back = HColors.simple(XColor.BLACK);
 				mapper = ColorMapper.DARK_MODE;
 			} else {
-				back = HColors.simple(Color.WHITE);
+				back = HColors.simple(XColor.WHITE);
 				mapper = ColorMapper.IDENTITY;
 			}
 			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);

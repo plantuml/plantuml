@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.png;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSizer {
@@ -61,7 +62,7 @@ public class PngSizer {
 
 		final BufferedImage newIm = new BufferedImage(minsize, im.getHeight(), BufferedImage.TYPE_INT_RGB);
 		final Graphics2D g2d = newIm.createGraphics();
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(XColor.WHITE.toAwtColor());
 		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());
 		final int delta = (minsize - im.getWidth()) / 2;
 		g2d.drawImage(im, delta, 0, null);

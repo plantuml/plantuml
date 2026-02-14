@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.error;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
@@ -349,7 +350,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
 		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
-				.exportFlashcode("https://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
+				.exportFlashcode("https://plantuml.com/dedication", XColor.BLACK, backColor.getAwtColor()));
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
 				"Details on <i>[[https://plantuml.com/dedication]]");
 
@@ -387,11 +388,11 @@ public abstract class PSystemError extends PlainDiagram {
 	private TextBlock getMessagePatreon() {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));
-		final Color back = new Color(message.getImage(1).getRGB(0, 0));
+		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
 		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
-				.exportFlashcode("https://plantuml.com/patreon", Color.BLACK, Color.WHITE));
+				.exportFlashcode("https://plantuml.com/patreon", XColor.BLACK, XColor.WHITE));
 
 		final int scale = 2;
 
@@ -435,11 +436,11 @@ public abstract class PSystemError extends PlainDiagram {
 	private TextBlock getMessageLiberapay() {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));
-		final Color back = new Color(message.getImage(1).getRGB(0, 0));
+		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
 		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
-				.exportFlashcode("https://plantuml.com/lp", Color.BLACK, Color.WHITE));
+				.exportFlashcode("https://plantuml.com/lp", XColor.BLACK, XColor.WHITE));
 
 		final int scale = 2;
 

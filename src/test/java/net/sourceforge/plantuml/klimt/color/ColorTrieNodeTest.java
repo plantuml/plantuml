@@ -16,7 +16,7 @@ class ColorTrieNodeTest {
 
 		assertNull(root.getColor("dark-blue"));
 		assertNotNull(root.getColor("darkblue"));
-		assertEquals(new Color(0x00008B), root.getColor("darkblue"));
+		assertEquals(new Color(0x00008B), root.getColor("darkblue").toAwtColor());
 	}
 
 }

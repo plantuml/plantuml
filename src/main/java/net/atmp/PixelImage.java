@@ -35,7 +35,7 @@
  */
 package net.atmp;
 
-import java.awt.Color;
+
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -44,6 +44,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 
 public class PixelImage implements MutableImage {
@@ -104,7 +105,7 @@ public class PixelImage implements MutableImage {
 	}
 
 	@Override
-	public MutableImage muteColor(Color newColor) {
+	public MutableImage muteColor(XColor newColor) {
 		if (newColor == null)
 			return this;
 
@@ -123,9 +124,9 @@ public class PixelImage implements MutableImage {
 	}
 
 	@Override
-	public MutableImage muteTransparentColor(Color newColor) {
+	public MutableImage muteTransparentColor(XColor newColor) {
 		if (newColor == null)
-			newColor = Color.WHITE;
+			newColor = XColor.WHITE;
 
 		final PortableImage copy = deepCopy();
 		for (int i = 0; i < imageScale1.getWidth(); i++)

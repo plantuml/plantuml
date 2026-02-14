@@ -35,13 +35,14 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
 
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class ColorUtils {
 
-	public static int getGrayScale(Color color) {
+	public static int getGrayScale(XColor color) {
 		return getGrayScaleInternalFromRGB(color.getRed(), color.getGreen(), color.getBlue());
 	}
 
@@ -63,17 +64,17 @@ public class ColorUtils {
 		return getGrayScaleInternalFromRGB(red, green, blue);
 	}
 
-	public static Color getGrayScaleColor(Color color) {
+	public static XColor getGrayScaleColor(XColor color) {
 		final int grayScale = getGrayScale(color);
-		return new Color(grayScale, grayScale, grayScale);
+		return new XColor(grayScale, grayScale, grayScale);
 	}
 
-	public static Color getGrayScaleColorReverse(Color color) {
+	public static XColor getGrayScaleColorReverse(XColor color) {
 		final int grayScale = 255 - getGrayScale(color);
-		return new Color(grayScale, grayScale, grayScale);
+		return new XColor(grayScale, grayScale, grayScale);
 	}
 
-	public static int distance(Color c1, Color c2) {
+	public static int distance(XColor c1, XColor c2) {
 		final int diffRed = MathUtils.abs(c1.getRed() - c2.getRed());
 		final int diffGreen = MathUtils.abs(c1.getGreen() - c2.getGreen());
 		final int diffBlue = MathUtils.abs(c1.getBlue() - c2.getBlue());
@@ -92,7 +93,7 @@ public class ColorUtils {
 	 * https://www.boronine.com/2012/03/26/Color-Spaces-for-Human-Beings/
 	 * 
 	 */
-	public static Color reverseHsluv(Color color) {
+	public static XColor reverseHsluv(XColor color) {
 		final int red = color.getRed();
 		final int green = color.getGreen();
 		final int blue = color.getBlue();
@@ -110,10 +111,10 @@ public class ColorUtils {
 		final int green2 = to255(rgb[1]);
 		final int blue2 = to255(rgb[2]);
 
-		return new Color(red2, green2, blue2);
+		return new XColor(red2, green2, blue2);
 	}
 
-	public static Color grayToColor(double coef, Color color) {
+	public static XColor grayToColor(double coef, XColor color) {
 		final int red = color.getRed();
 		final int green = color.getGreen();
 		final int blue = color.getBlue();
@@ -132,10 +133,10 @@ public class ColorUtils {
 		final int green2 = to255(rgb[1]);
 		final int blue2 = to255(rgb[2]);
 
-		return new Color(red2, green2, blue2);
+		return new XColor(red2, green2, blue2);
 	}
 
-	public static Color getReversed(Color color) {
+	public static XColor getReversed(XColor color) {
 		final int red = color.getRed();
 		final int green = color.getGreen();
 		final int blue = color.getBlue();
@@ -162,7 +163,7 @@ public class ColorUtils {
 		final int green2 = to255(rgb[1]);
 		final int blue2 = to255(rgb[2]);
 
-		return new Color(red2, green2, blue2);
+		return new XColor(red2, green2, blue2);
 	}
 
 	private static int to255(final double value) {

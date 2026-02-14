@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.sudoku;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -81,7 +82,7 @@ public class GraphicsSudoku {
 
 	// ::uncomment when __TEAVM__
 //	public ImageData writeImageSvg(OutputStream os) throws IOException {
-//		throw new UnsupportedOperationException("TEAVM");
+//		throw new UnsupportedOperationException("TEAVM1");
 //	}
 	// ::done
 
@@ -114,7 +115,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImagePng(OutputStream os) throws IOException {
 		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
-				Color.WHITE, stringBounder);
+				XColor.WHITE, stringBounder);
 		final PortableImage im = builder.getPortableImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 

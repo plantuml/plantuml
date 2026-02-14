@@ -57,15 +57,16 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 		this.dy = dy;
 	}
 
-	// ::comment when __HAXE__
 	public ULine rotate(double theta) {
+		// ::revert when __TEAVM__
 		if (theta == 0)
 			return this;
 		final AffineTransform rot = AffineTransform.getRotateInstance(theta);
 		final XPoint2D tmp = new XPoint2D(dx, dy).transform(rot);
 		return new ULine(tmp.getX(), tmp.getY());
+		// return this;
+		// ::done
 	}
-	// ::done
 
 	public static ULine hline(double dx) {
 		return new ULine(dx, 0);

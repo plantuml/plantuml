@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -46,6 +46,7 @@ import java.util.List;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -58,7 +59,7 @@ public class EmptyImageBuilder {
 	private final Graphics2D g2d;
 	// ::done
 
-	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder) {
+	public EmptyImageBuilder(String watermark, int width, int height, XColor background, StringBounder stringBounder) {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("width and height must be positive");
 
@@ -86,18 +87,18 @@ public class EmptyImageBuilder {
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		if (background != null) {
-			g2d.setColor(background);
+			g2d.setColor(background.toAwtColor());
 			g2d.fillRect(0, 0, width, height);
 		}
 		if (watermark != null) {
 			final int gray = 200;
-			g2d.setColor(new Color(gray, gray, gray));
+			g2d.setColor(new XColor(gray, gray, gray).toAwtColor());
 			printWatermark(watermark, width, height);
 		}
 		// ::done
 	}
 
-	private int getType(Color background) {
+	private int getType(XColor background) {
 		if (background == null)
 			return PortableImage.TYPE_INT_ARGB;
 

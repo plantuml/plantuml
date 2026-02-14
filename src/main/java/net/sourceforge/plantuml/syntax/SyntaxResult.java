@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class SyntaxResult {
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	private UmlDiagramType umlDiagramType;
 	private boolean isError;

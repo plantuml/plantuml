@@ -111,9 +111,11 @@ public class UPolygon extends AbstractShadowable {
 	}
 
 	public void rotate(double theta) {
+	    // ::comment when __TEAVM__
 		if (theta == 0)
 			return;
 		affine(AffineTransform.getRotateInstance(theta));
+	    // ::done
 	}
 
 	public void affine(AffineTransform rotate) {

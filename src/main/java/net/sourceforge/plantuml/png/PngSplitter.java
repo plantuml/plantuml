@@ -94,14 +94,14 @@ public class PngSplitter {
 							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);
 					final Graphics2D g2d = withMargin.createGraphics();
 					if (splitParam.getExternalColor() != null) {
-						g2d.setColor(splitParam.getExternalColor());
+						g2d.setColor(splitParam.getExternalColor().toAwtColor());
 						g2d.fillRect(0, 0, withMargin.getWidth(), withMargin.getHeight());
 					}
 					g2d.drawImage(piece.getBufferedImage(), splitParam.getExternalMargin(),
 							splitParam.getExternalMargin(), null);
 
 					if (splitParam.getBorderColor() != null) {
-						g2d.setColor(splitParam.getBorderColor());
+						g2d.setColor(splitParam.getBorderColor().toAwtColor());
 						g2d.drawRect(splitParam.getExternalMargin() - 1, splitParam.getExternalMargin() - 1,
 								piece.getWidth() + 1, piece.getHeight() + 1);
 					}

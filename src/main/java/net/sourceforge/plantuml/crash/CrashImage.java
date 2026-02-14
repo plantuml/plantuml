@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.crash;
 
-import java.awt.Color;
+
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
@@ -86,7 +87,7 @@ public class CrashImage implements UDrawable {
 		// ::comment when __CORE__ or __TEAVM__
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		try {
-			final PortableImage flashcodeImage = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
+			final PortableImage flashcodeImage = utils.exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
 			if (flashcodeImage != null)
 				strings.addDecodeHint();
 			return flashcodeImage;

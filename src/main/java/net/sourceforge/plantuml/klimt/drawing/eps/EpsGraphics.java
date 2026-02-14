@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import java.awt.Color;
+
 import java.awt.geom.PathIterator;
 import java.util.List;
 import java.util.Locale;
@@ -43,6 +43,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
 import net.sourceforge.plantuml.klimt.geom.USegment;
@@ -66,8 +67,8 @@ public class EpsGraphics {
 	private final StringBuilder body = new StringBuilder();
 	private final StringBuilder header = new StringBuilder();
 
-	private Color color = Color.BLACK;
-	private Color fillcolor = Color.BLACK;
+	private XColor color = XColor.BLACK;
+	private XColor fillcolor = XColor.BLACK;
 
 	private String strokeWidth = format(1);
 	// private String strokeDasharray = null;
@@ -123,7 +124,7 @@ public class EpsGraphics {
 
 	}
 
-	protected final Color getColor() {
+	protected final XColor getColor() {
 		return color;
 	}
 
@@ -177,12 +178,12 @@ public class EpsGraphics {
 		return body.toString();
 	}
 
-	public final void setStrokeColor(Color c) {
+	public final void setStrokeColor(XColor c) {
 		checkCloseDone();
 		this.color = c;
 	}
 
-	final public void setFillColor(Color c) {
+	final public void setFillColor(XColor c) {
 		checkCloseDone();
 		this.fillcolor = c;
 	}
@@ -336,7 +337,7 @@ public class EpsGraphics {
 
 	}
 
-	private final boolean isNull(Color c) {
+	private final boolean isNull(XColor c) {
 		return c == null || c.getAlpha() == 0;
 	}
 
@@ -572,7 +573,7 @@ public class EpsGraphics {
 
 	}
 
-	final protected void appendColor(Color c) {
+	final protected void appendColor(XColor c) {
 		if (isNull(c))
 			return;
 
@@ -582,7 +583,7 @@ public class EpsGraphics {
 		append(formatSimple2(r) + " " + formatSimple2(g) + " " + formatSimple2(b) + " setrgbcolor", true);
 	}
 
-	final protected void appendColorShort(Color c) {
+	final protected void appendColorShort(XColor c) {
 		if (isNull(c))
 			return;
 

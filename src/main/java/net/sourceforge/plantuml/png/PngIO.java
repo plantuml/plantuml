@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.png;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.drawing.g2d;
 import static java.lang.Math.max;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
@@ -46,6 +45,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -93,10 +93,10 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		final double width = dim.getWidth();
 
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);
+			final XColor extended = fontConfiguration.getExtendedColor().toColor(mapper);
 			if (extended != null) {
-				g2d.setColor(extended);
-				g2d.setBackground(extended);
+				g2d.setColor(extended.toAwtColor());
+				g2d.setBackground(extended.toAwtColor());
 				g2d.fill(new Rectangle2D.Double(x, y - height + 1.5, width, height));
 			}
 		}
@@ -104,7 +104,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		visible.ensureVisible(x + width, y + 1.5);
 
 		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));
-		g2d.setColor(fontConfiguration.getColor().toColor(mapper));
+		g2d.setColor(fontConfiguration.getColor().toColor(mapper).toAwtColor());
 		final TextLayout t = UFontContext.G2D.createTextLayout(font, text);
 		g2d.translate(x, y);
 		g2d.fill(t.getOutline(null));
@@ -113,7 +113,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
 			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null)
-				g2d.setColor(extended.toColor(mapper));
+				g2d.setColor(extended.toColor(mapper).toAwtColor());
 
 			final int ypos = (int) (y + 2.5);
 			g2d.setStroke(new BasicStroke((float) 1));
@@ -124,7 +124,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 			final int ypos = (int) (y + 2.5) - 1;
 			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null)
-				g2d.setColor(extended.toColor(mapper));
+				g2d.setColor(extended.toColor(mapper).toAwtColor());
 
 			for (int i = (int) x; i < x + width - 5; i += 6) {
 				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
@@ -136,7 +136,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null)
-				g2d.setColor(extended.toColor(mapper));
+				g2d.setColor(extended.toColor(mapper).toAwtColor());
 
 			g2d.setStroke(new BasicStroke((float) 1.5));
 			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);

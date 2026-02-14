@@ -54,7 +54,7 @@ public class DriverCenteredCharacterG2d implements UDriver<UCenteredCharacter, G
 		final UFont font = characterCircled.getFont();
 		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
 
-		g2d.setColor(param.getColor().toColor(mapper));
+		g2d.setColor(param.getColor().toColor(mapper).toAwtColor());
 		final double xpos = x - unusedSpace.getCenterX();
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 

@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.Color;
+
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 
@@ -48,7 +49,7 @@ public class ColorPalette4096 {
 	// So we replace them by . and '
 	private static final String colorValue = ".,$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-	public String getStringFor(Color dest) {
+	public String getStringFor(XColor dest) {
 		return getStringFor((HColorSimple) HColors.simple(dest));
 	}
 
@@ -73,11 +74,11 @@ public class ColorPalette4096 {
 	}
 
 	private HColorSimple getHtmlColorSimpleFor(int s) {
-		final Color color = Objects.requireNonNull(getColorFor(s));
+		final XColor color = Objects.requireNonNull(getColorFor(s));
 		return (HColorSimple) HColors.simple(color);
 	}
 
-	protected Color getColorFor(String s) {
+	protected XColor getColorFor(String s) {
 		// Migration
 		s = s.replace('!', '.');
 		s = s.replace('#', ',');
@@ -96,11 +97,11 @@ public class ColorPalette4096 {
 		return getColorFor(code);
 	}
 
-	protected Color getColorFor(final int code) {
+	protected XColor getColorFor(final int code) {
 		final int blue = code % 16;
 		final int green = (code / 16) % 16;
 		final int red = (code / 256) % 16;
-		return new Color(dup(red), dup(green), dup(blue));
+		return new XColor(dup(red), dup(green), dup(blue));
 	}
 
 	private int dup(int v) {

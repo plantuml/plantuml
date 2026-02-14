@@ -35,9 +35,6 @@
  */
 package net.sourceforge.plantuml.math;
 
-
-
-import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -52,6 +49,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -92,7 +90,7 @@ public class ScientificEquationSafe {
 
 	private ImageData dimSvg;
 
-	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor) {
+	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor) {
 		if (equation != null)
 			try {
 				final UImageSvg svg = equation.getSvg(scale, foregroundColor, backgroundColor);
@@ -110,7 +108,7 @@ public class ScientificEquationSafe {
 		return new UImageSvg(new String(baos.toByteArray()), scale);
 	}
 
-	public MutableImage getImage(Color foregroundColor, Color backgroundColor) {
+	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor) {
 		if (equation != null)
 			try {
 				return equation.getImage(foregroundColor, backgroundColor);
@@ -118,7 +116,8 @@ public class ScientificEquationSafe {
 				printTrace(e);
 			}
 		try {
-			final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), getRollback()).writeByteArray();
+			final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), getRollback())
+					.writeByteArray();
 			return new PixelImage(SImageIO.read(bytes), AffineTransformType.TYPE_BILINEAR);
 		} catch (IOException e1) {
 			return null;
@@ -137,8 +136,8 @@ public class ScientificEquationSafe {
 		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
 	}
 
-	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, Color foregroundColor,
-			Color backgroundColor) throws IOException {
+	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, XColor foregroundColor,
+			XColor backgroundColor) throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.PNG) {
 			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
 			SImageIO.write(image, "png", os);

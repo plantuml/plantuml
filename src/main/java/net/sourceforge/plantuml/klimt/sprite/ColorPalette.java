@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.awt.Color;
+
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -46,7 +47,7 @@ public class ColorPalette {
 
 	private static final String colorValue = "!#$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-	public char getCharFor(Color dest) {
+	public char getCharFor(XColor dest) {
 		return getCharFor(HColors.simple(dest));
 	}
 
@@ -66,11 +67,11 @@ public class ColorPalette {
 	}
 
 	private HColor getHtmlColorSimpleFor(char c) {
-		final Color color = Objects.requireNonNull(getColorFor(c));
+		final XColor color = Objects.requireNonNull(getColorFor(c));
 		return HColors.simple(color);
 	}
 
-	public Color getColorFor(char c) {
+	public XColor getColorFor(char c) {
 		final int col = colorValue.indexOf(c);
 		if (col == -1) {
 			return null;
@@ -78,7 +79,7 @@ public class ColorPalette {
 		final int blue = (col % 4) * 85;
 		final int green = ((col / 4) % 4) * 85;
 		final int red = ((col / 16) % 4) * 85;
-		return new Color(red, green, blue);
+		return new XColor(red, green, blue);
 	}
 
 }

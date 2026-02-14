@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 
 public class SyntaxChecker {
 	// ::remove folder when __HAXE__
-	// ::remove file when __CORE__
+	// ::remove file when __CORE__ or __TEAVM__
 
 	public static SyntaxResult checkSyntax(List<String> source) {
 		final StringBuilder sb = new StringBuilder();

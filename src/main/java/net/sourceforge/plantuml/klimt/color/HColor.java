@@ -34,11 +34,12 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 class Back implements UBackground {
 
@@ -65,27 +66,28 @@ public abstract class HColor implements UChange {
 		return new Back(this);
 	}
 
-	public Color toColor(ColorMapper mapper) {
+	public XColor toColor(ColorMapper mapper) {
 		throw new UnsupportedOperationException();
 	}
 
 	final public String toRGB(ColorMapper mapper) {
-		final Color color = toColor(mapper);
-		return StringUtils.sharp000000(color.getRGB());
+		final XColor color = toColor(mapper);
+		return XColor.toHexRGBColor(color.getRGB());
 	}
 
 	final public String toSvg(ColorMapper mapper) {
 		if (this.isTransparent())
 			return "#00000000";
 
-		final Color color = toColor(mapper);
-		final int alpha = color.getAlpha();
-		if (alpha == 255)
-			return toRGB(mapper);
-
-		String s = "0" + Integer.toHexString(alpha).toUpperCase();
-		s = s.substring(s.length() - 2);
-		return toRGB(mapper) + s;
+		final XColor color = toColor(mapper);
+		return color.toSvg();
+//		final int alpha = color.getAlpha();
+//		if (alpha == 255)
+//			return toRGB(mapper);
+//
+//		String s = "0" + Integer.toHexString(alpha).toUpperCase();
+//		s = s.substring(s.length() - 2);
+//		return toRGB(mapper) + s;
 	}
 
 	public HColor lighten(int ratio) {

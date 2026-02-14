@@ -34,11 +34,12 @@
  */
 package net.sourceforge.plantuml.tim.builtin;
 
-import java.awt.Color;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.HSLColor;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -69,12 +70,12 @@ public class HslColor extends SimpleReturnFunction {
 		final int l = values.get(2).toInt();
 		if (values.size() == 3) {
 			final HSLColor color = new HSLColor(h, s, l);
-			final Color rgb = color.getRGB();
+			final XColor rgb = color.getRGB();
 			return TValue.fromString(HColors.simple(rgb).asString());
 		}
 		final int a = values.get(3).toInt();
 		final HSLColor color = new HSLColor(h, s, l, (float) (a / 100.0));
-		final Color rgb = color.getRGB();
+		final XColor rgb = color.getRGB();
 		return TValue.fromString(HColors.simple(rgb).asString());
 
 	}

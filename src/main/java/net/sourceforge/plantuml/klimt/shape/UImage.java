@@ -35,11 +35,12 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class UImage implements UShape {
     // ::remove file when __HAXE__
@@ -90,14 +91,14 @@ public class UImage implements UShape {
 		return image.getImage().getHeight() - 1;
 	}
 
-	public UImage muteColor(Color newColor) {
+	public UImage muteColor(XColor newColor) {
 		// ::revert when __TEAVM__
 		return new UImage(image.muteColor(newColor), rawFileName, formula);
 		// return this;
 		// ::done
 	}
 
-	public UImage muteTransparentColor(Color newColor) {
+	public UImage muteTransparentColor(XColor newColor) {
 		// ::revert when __TEAVM__
 		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);
 		// return this;

@@ -162,7 +162,7 @@ public enum FileFormat {
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
-		// ::comment when __CORE__ or __TEAVM__
+		// ::revert when __TEAVM__
 		if (this == LATEX || this == LATEX_NO_PREAMBLE)
 			return getTikzStringBounder(tikzFontDistortion);
 
@@ -174,16 +174,12 @@ public enum FileFormat {
 
 		if (this == SVG)
 			return getSvgStringBounder(charSizeHack);
-		// ::done
 
 		return getNormalStringBounder();
+		// return new net.sourceforge.plantuml.teavm.StringBounderTeaVM();
+		// ::done
 	}
 
-	// ::uncomment when __TEAVM__
-//	private StringBounder getNormalStringBounder() {
-//		throw new UnsupportedOperationException("TEAVM");
-//	}
-	// ::done
 
 	private static final int CACHE_SIZE = 10_000;
 

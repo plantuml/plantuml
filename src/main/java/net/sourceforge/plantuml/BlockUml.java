@@ -91,7 +91,7 @@ public class BlockUml {
 		this(PathSystem.fetch(), convert(strings), Defines.createEmpty(), null, null, null);
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		final String source = getDiagram().getSource().getPlainString("\n");
@@ -160,7 +160,7 @@ public class BlockUml {
 		}
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public String getFileOrDirname() {
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))
 			return null;
@@ -190,6 +190,7 @@ public class BlockUml {
 	// ::done
 
 	public Diagram getDiagram() {
+		// ::revert when __CORE__ or __TEAVM__
 		if (system == null) {
 			if (preprocessorError)
 				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);
@@ -198,13 +199,15 @@ public class BlockUml {
 						preprocessingArtifact);
 		}
 		return system;
+		// throw new UnsupportedOperationException("TEAVM11");
+		// ::done
 	}
 
 	public final List<StringLocated> getData() {
 		return data;
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	private String internalEtag() {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();

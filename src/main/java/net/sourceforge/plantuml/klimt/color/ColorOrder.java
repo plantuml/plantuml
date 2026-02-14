@@ -35,37 +35,37 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public enum ColorOrder {
 	// ::remove file when __HAXE__
 	RGB, RBG, GRB, GBR, BRG, BGR;
 
-	public Color getColor(Color color) {
+	public XColor getColor(XColor color) {
 		if (this == RGB)
-			return new Color(color.getRed(), color.getGreen(), color.getBlue());
+			return new XColor(color.getRed(), color.getGreen(), color.getBlue());
 
 		if (this == RBG)
-			return new Color(color.getRed(), color.getBlue(), color.getGreen());
+			return new XColor(color.getRed(), color.getBlue(), color.getGreen());
 
 		if (this == GRB)
-			return new Color(color.getGreen(), color.getRed(), color.getBlue());
+			return new XColor(color.getGreen(), color.getRed(), color.getBlue());
 
 		if (this == GBR)
-			return new Color(color.getGreen(), color.getBlue(), color.getRed());
+			return new XColor(color.getGreen(), color.getBlue(), color.getRed());
 
 		if (this == BRG)
-			return new Color(color.getBlue(), color.getRed(), color.getGreen());
+			return new XColor(color.getBlue(), color.getRed(), color.getGreen());
 
 		if (this == BGR)
-			return new Color(color.getBlue(), color.getGreen(), color.getRed());
+			return new XColor(color.getBlue(), color.getGreen(), color.getRed());
 
 		throw new IllegalStateException();
 	}
 
-	public Color getReverse(Color color) {
+	public XColor getReverse(XColor color) {
 		color = this.getColor(color);
-		return new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
+		return new XColor(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
 	}
 
 	public static ColorOrder fromString(String order) {

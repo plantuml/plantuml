@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import java.awt.Color;
+
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public interface MutableImage {
 
@@ -45,9 +46,9 @@ public interface MutableImage {
 
 	public MutableImage withScale(double scale);
 
-	public MutableImage muteColor(Color newColor);
+	public MutableImage muteColor(XColor newColor);
 
-	public MutableImage muteTransparentColor(Color newColor);
+	public MutableImage muteTransparentColor(XColor newColor);
 
 	public MutableImage monochrome();
 

@@ -41,11 +41,15 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
+import net.sourceforge.plantuml.klimt.awt.XColor;
+
+
+
 public class TeXIconBuilder {
 
 	private Icon icon;
 
-	public TeXIconBuilder(String tex, Color foregroundColor)
+	public TeXIconBuilder(String tex, XColor foregroundColor2)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
@@ -64,7 +68,8 @@ public class TeXIconBuilder {
 		final int margin = 1;
 		final Insets insets = new Insets(margin, margin, margin, margin);
 		icon.getClass().getMethod("setInsets", insets.getClass()).invoke(icon, insets);
-		icon.getClass().getMethod("setForeground", foregroundColor.getClass()).invoke(icon, foregroundColor);
+		final Color awtColor = foregroundColor2.toAwtColor();
+		icon.getClass().getMethod("setForeground", awtColor.getClass()).invoke(icon, awtColor);
 	}
 
 	public Icon getIcon() {
