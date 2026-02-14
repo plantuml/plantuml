@@ -32,14 +32,52 @@
         PlantUML Build File
     </description>
 
+    <!-- Get git commit info and compile timestamp -->
+    <target name="build-info">
+        <!-- Get short git commit hash -->
+        <exec executable="git" outputproperty="git.commit.id.abbrev" failifexecutionfails="false" errorproperty="git.error">
+            <arg value="rev-parse"/>
+            <arg value="--short"/>
+            <arg value="HEAD"/>
+        </exec>
+        <!-- Fallback if git is not available -->
+        <property name="git.commit.id.abbrev" value="unknown"/>
+        
+        <!-- Get current timestamp in milliseconds using a temporary Java class -->
+        <mkdir dir=".ant-temp"/>
+        <echo file=".ant-temp/Timestamp.java">public class Timestamp { public static void main(String[] a) { System.out.print(System.currentTimeMillis()); } }</echo>
+        <javac srcdir=".ant-temp" destdir=".ant-temp" includeantruntime="false"/>
+        <java classname="Timestamp" classpath=".ant-temp" outputproperty="compile.timestamp.millis" fork="true"/>
+        <delete dir=".ant-temp"/>
+        
+        <echo>Git commit: ${git.commit.id.abbrev}</echo>
+        <echo>Compile timestamp: ${compile.timestamp.millis}</echo>
+    </target>
+
     <!-- Compile source code and copy necessary files -->
-    <target name="compile">
+    <target name="compile" depends="build-info">
         <!-- Prepare the build directory -->
         <delete dir="build" />
         <mkdir dir="build" />
+        <mkdir dir="build/filtered-src" />
 
-        <!-- Compile Java sources -->
-        <javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on" encoding="UTF-8">
+        <!-- Copy sources with CompilationInfo injection -->
+        <copy todir="build/filtered-src">
+            <fileset dir="src/main/java"/>
+        </copy>
+        
+        <!-- Inject git commit id -->
+        <replace file="build/filtered-src/net/sourceforge/plantuml/version/CompilationInfo.java"
+                 token="$git.commit.id$"
+                 value="${git.commit.id.abbrev}"/>
+        
+        <!-- Inject compile timestamp -->
+        <replace file="build/filtered-src/net/sourceforge/plantuml/version/CompilationInfo.java"
+                 token="COMPILE_TIMESTAMP = 000L"
+                 value="COMPILE_TIMESTAMP = ${compile.timestamp.millis}L"/>
+
+        <!-- Compile Java sources from filtered sources -->
+        <javac target="1.8" source="1.8" srcdir="build/filtered-src" destdir="build" debug="on" encoding="UTF-8">
             <exclude name="test/**" />
         </javac>
 
