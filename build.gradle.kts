@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.jar.JarFile
 import java.util.Base64
+import java.util.Properties
 import org.gradle.api.tasks.Sync
 
 println("Running build.gradle.kts")
@@ -22,6 +23,7 @@ plugins {
 	signing
     eclipse
 	jacoco
+	id("com.gorylenko.gradle-git-properties") version "2.5.7"
 //	alias(libs.plugins.adarshr.test.logger)
 }
 
@@ -521,12 +523,98 @@ tasks.register("site") {
 }
 
 // ============================================
+// CompilationInfo - Git commit & timestamp injection
+// ============================================
+
+gitProperties {
+	dateFormat = "yyyy-MM-dd'T'HH:mm:ssX"
+}
+
+tasks.named("generateGitProperties") {
+	doLast {
+		val propsFile = layout.buildDirectory.file("resources/main/git.properties").get().asFile
+		if (propsFile.exists()) {
+			println("----- git.properties -----")
+			propsFile.readLines()
+				.sorted()
+				.forEach { println(it) }
+			println("--------------------------")
+		} else {
+			println("git.properties not found")
+		}
+	}
+}
+
+val filteredSrcDir = layout.buildDirectory.dir("generated/sources/git-filtered")
+
+val filterSourcesWithBuildInfo by tasks.registering {
+	dependsOn("generateGitProperties")
+	mustRunAfter("processResources")
+
+	inputs.dir("src/main/java")
+	outputs.dir(filteredSrcDir)
+
+	doLast {
+		// 1) Read git.properties
+		val propsFile = layout.buildDirectory.file("resources/main/git.properties").get().asFile
+		val props = Properties().apply { propsFile.inputStream().use { load(it) } }
+		val commitId = props.getProperty("git.commit.id")
+			?: error("git.commit.id not found in ${propsFile.absolutePath}")
+
+		// 2) Compute compile timestamp (epoch millis)
+		val compileTs = System.currentTimeMillis().toString()
+
+		// 3) Copy sources
+		val outDir = filteredSrcDir.get().asFile
+		outDir.deleteRecursively()
+		project.copy {
+			from("src/main/java")
+			into(outDir)
+		}
+
+		// 4) Ant replace in the copy
+		val targetFile = outDir.resolve("net/sourceforge/plantuml/version/CompilationInfo.java")
+		if (!targetFile.exists()) {
+			error("Target file not found: ${targetFile.absolutePath}")
+		}
+
+		ant.withGroovyBuilder {
+			// commit token replacement
+			"replace"(
+				"file" to targetFile.absolutePath,
+				"token" to "\$git.commit.id\$",
+				"value" to commitId
+			)
+
+			// timestamp replacement
+			"replace"(
+				"file" to targetFile.absolutePath,
+				"token" to "COMPILE_TIMESTAMP = 000L",
+				"value" to "COMPILE_TIMESTAMP = ${compileTs}L"
+			)
+		}
+
+		println("Injected git.commit.id into ${targetFile.name}: $commitId")
+		println("Injected compile timestamp into ${targetFile.name}: $compileTs")
+	}
+}
+
+sourceSets.named("main") {
+	java.setSrcDirs(listOf(filteredSrcDir))
+}
+
+tasks.compileJava {
+	dependsOn(filterSourcesWithBuildInfo)
+}
+
+// ============================================
 // TeaVM Configuration - Java to JavaScript
 // ============================================
 
-// Sync sources for TeaVM preprocessing
+// Sync sources for TeaVM preprocessing (use filtered sources with CompilationInfo injected)
 val syncSourcesForTeaVM by tasks.registering(Sync::class) {
-	from(rootProject.layout.projectDirectory.dir("src/main/java"))
+	dependsOn(filterSourcesWithBuildInfo)
+	from(filteredSrcDir)
 	into(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
 }
 
