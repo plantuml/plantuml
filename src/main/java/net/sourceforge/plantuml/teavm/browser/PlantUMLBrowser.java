@@ -172,6 +172,8 @@ public class PlantUMLBrowser {
 //        registerRender(PlantUMLBrowser::requestRender);
 //
 //        consoleLog("PlantUML TeaVM loaded.");
+//        consoleLog("Version:  " + net.sourceforge.plantuml.version.CompilationInfo.VERSION);
+//        consoleLog("Commit:   " + net.sourceforge.plantuml.version.CompilationInfo.COMMIT);
 //    }
 //
 //    // =========================================================================
