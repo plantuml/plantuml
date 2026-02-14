@@ -329,7 +329,7 @@ public static ST_Agnode_s UF_find(ST_Agnode_s n) {
 <span class="fc" id="L329">ENTERING(&quot;aeq0acpkhfv3gd5jx8op4jf18&quot;,&quot;UF_find&quot;);</span>
 try {
 <span class="fc bfc" id="L331" title="All 4 branches covered.">    while (ND_UF_parent(n)!=null &amp;&amp; (ND_UF_parent(n) != n)) {</span>
-<span class="pc bpc" id="L332" title="1 of 2 branches missed.">	if (ND_UF_parent(ND_UF_parent(n))!=null)</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">	if (ND_UF_parent(ND_UF_parent(n))!=null)</span>
 <span class="fc" id="L333">	    ND_UF_parent(n, ND_UF_parent(ND_UF_parent(n)));</span>
 <span class="fc" id="L334">	n = ND_UF_parent(n);</span>
     }
@@ -354,11 +354,11 @@ try {
 <span class="fc" id="L354">	ND_UF_size(u, 1);</span>
     } else
 <span class="nc" id="L356">    UNSUPPORTED(&quot;35c97tyk6tzw1g527j6rp6xoo&quot;); // 	u = UF_find(u);</span>
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">    if (ND_UF_parent(v) == null) {</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">    if (ND_UF_parent(v) == null) {</span>
 <span class="fc" id="L358">	ND_UF_parent(v, v);</span>
 <span class="fc" id="L359">	ND_UF_size(v, 1);</span>
     } else
-<span class="nc" id="L361">	v = UF_find(v);</span>
+<span class="fc" id="L361">	v = UF_find(v);</span>
 <span class="pc bpc" id="L362" title="1 of 2 branches missed.">    if (ND_id(u) &gt; ND_id(v)) {</span>
 <span class="nc" id="L363">	UNSUPPORTED(&quot;2igr3ntnkm6svji4pbnjlp54e&quot;); // 	ND_UF_parent(u) = v;</span>
 <span class="nc" id="L364">	UNSUPPORTED(&quot;3lht90i6tvxbr10meir8nvcic&quot;); // 	ND_UF_size(v) += ND_UF_size(u);</span>
@@ -831,9 +831,9 @@ try {
 <span class="fc" id="L831">    final ST_pointf p = new ST_pointf();</span>
 <span class="fc" id="L832">    p.___(lp.pos);</span>
     double min, max;
-<span class="pc bpc" id="L834" title="1 of 2 branches missed.">    if (flipxy) {</span>
-<span class="nc" id="L835">	height = lp.dimen.x;</span>
-<span class="nc" id="L836">	width = lp.dimen.y;</span>
+<span class="fc bfc" id="L834" title="All 2 branches covered.">    if (flipxy) {</span>
+<span class="fc" id="L835">	height = lp.dimen.x;</span>
+<span class="fc" id="L836">	width = lp.dimen.y;</span>
     }
     else {
 <span class="fc" id="L839">	width = lp.dimen.x;</span>
@@ -1117,11 +1117,11 @@ public static void gv_nodesize(ST_Agnode_s n, boolean flip) {
 try {
     double w;
     
-<span class="pc bpc" id="L1120" title="1 of 2 branches missed.">    if (flip) {</span>
-<span class="nc" id="L1121">        w = INCH2PS(ND_height(n));</span>
-<span class="nc" id="L1122">        ND_rw(n, w / 2);</span>
-<span class="nc" id="L1123">        ND_lw(n, w / 2);</span>
-<span class="nc" id="L1124">        ND_ht(n, INCH2PS(ND_width(n)));</span>
+<span class="fc bfc" id="L1120" title="All 2 branches covered.">    if (flip) {</span>
+<span class="fc" id="L1121">        w = INCH2PS(ND_height(n));</span>
+<span class="fc" id="L1122">        ND_rw(n, w / 2);</span>
+<span class="fc" id="L1123">        ND_lw(n, w / 2);</span>
+<span class="fc" id="L1124">        ND_ht(n, INCH2PS(ND_width(n)));</span>
     } 
     else {
 <span class="fc" id="L1127">        w = INCH2PS(ND_width(n));</span>

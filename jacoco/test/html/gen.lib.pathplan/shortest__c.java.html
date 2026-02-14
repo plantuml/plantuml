@@ -119,10 +119,10 @@ try {
 <span class="fc" id="L119">		minpi = pi; }</span>
     }
 <span class="fc" id="L121">    p2.___(polyp.ps.get__(minpi));</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">    p1.___(polyp.ps.get__(((minpi == 0) ? polyp.pn - 1 : minpi - 1)));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">    p1.___(polyp.ps.get__(((minpi == 0) ? polyp.pn - 1 : minpi - 1)));</span>
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">    p3.___(polyp.ps.get__(((minpi == polyp.pn - 1) ? 0 : minpi + 1)));</span>
 <span class="pc bpc" id="L124" title="5 of 6 branches missed.">    if (((p1.x == p2.x &amp;&amp; p2.x == p3.x) &amp;&amp; (p3.y &gt; p2.y)) ||</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">	ccw(p1, p2, p3) != 1) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">	ccw(p1, p2, p3) != 1) {</span>
 <span class="fc bfc" id="L126" title="All 2 branches covered.">	for (pi = polyp.pn - 1; pi &gt;= 0; pi--) {</span>
 <span class="fc bfc" id="L127" title="All 2 branches covered.">	    if (pi &lt; polyp.pn - 1</span>
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		&amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi+1).x</span>
@@ -134,14 +134,14 @@ try {
 <span class="fc" id="L134">	    zz.pnll++;</span>
 	}
     } else {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">	for (pi = 0; pi &lt; polyp.pn; pi++) {</span>
-<span class="nc bnc" id="L138" title="All 4 branches missed.">	    if (pi &gt; 0 &amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi - 1).x &amp;&amp;</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		polyp.ps.get__(pi).y == polyp.ps.get__(pi - 1).y)</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">	for (pi = 0; pi &lt; polyp.pn; pi++) {</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">	    if (pi &gt; 0 &amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi - 1).x &amp;&amp;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		polyp.ps.get__(pi).y == polyp.ps.get__(pi - 1).y)</span>
 <span class="nc" id="L140">		continue;</span>
-<span class="nc" id="L141">	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);</span>
-<span class="nc" id="L142">	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];</span>
-<span class="nc" id="L143">	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];</span>
-<span class="nc" id="L144">	    zz.pnll++;</span>
+<span class="fc" id="L141">	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);</span>
+<span class="fc" id="L142">	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];</span>
+<span class="fc" id="L143">	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];</span>
+<span class="fc" id="L144">	    zz.pnll++;</span>
 	}
     }
     

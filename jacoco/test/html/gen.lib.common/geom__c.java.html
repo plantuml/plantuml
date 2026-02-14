@@ -148,13 +148,13 @@ private static ST_pointf ccwrotatepf_w_(final ST_pointf p, int ccwrot) {
 <span class="fc" id="L148">ENTERING(&quot;6np74e9pfmv8uek8irqru2tma&quot;,&quot;ccwrotatepf&quot;);</span>
 try {
 <span class="fc" id="L150">    double x = p.x, y = p.y;</span>
-<span class="pc bpc" id="L151" title="4 of 5 branches missed.">    switch (ccwrot) {</span>
+<span class="pc bpc" id="L151" title="3 of 5 branches missed.">    switch (ccwrot) {</span>
     case 0:
 <span class="fc" id="L153">	break;</span>
     case 90:
-<span class="nc" id="L155">	p.x = -y;</span>
-<span class="nc" id="L156">	p.y = x;</span>
-<span class="nc" id="L157">	break;</span>
+<span class="fc" id="L155">	p.x = -y;</span>
+<span class="fc" id="L156">	p.y = x;</span>
+<span class="fc" id="L157">	break;</span>
     case 180:
 <span class="nc" id="L159">	p.x = x;</span>
 <span class="nc" id="L160">	p.y = -y;</span>
@@ -186,19 +186,19 @@ try {
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/geom.c&quot;, name=&quot;ptToLine2&quot;, key=&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;, definition=&quot;double ptToLine2 (pointf a, pointf b, pointf p)&quot;)
 public static double ptToLine2(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
 // WARNING!! STRUCT
-<span class="nc" id="L189">return ptToLine2_w_(a.copy(), b.copy(), p.copy());</span>
+<span class="fc" id="L189">return ptToLine2_w_(a.copy(), b.copy(), p.copy());</span>
 }
 private static double ptToLine2_w_(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
-<span class="nc" id="L192">ENTERING(&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;,&quot;ptToLine2&quot;);</span>
+<span class="fc" id="L192">ENTERING(&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;,&quot;ptToLine2&quot;);</span>
 try {
-<span class="nc" id="L194">  double dx = b.x-a.x;</span>
-<span class="nc" id="L195">  double dy = b.y-a.y;</span>
-<span class="nc" id="L196">  double a2 = (p.y-a.y)*dx - (p.x-a.x)*dy;</span>
-<span class="nc" id="L197">  a2 *= a2;   /* square - ensures that it is positive */</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">  if (a2 &lt; 0.0000000001) return 0.;  /* avoid 0/0 problems */</span>
-<span class="nc" id="L199">  return a2 / (dx*dx + dy*dy);</span>
+<span class="fc" id="L194">  double dx = b.x-a.x;</span>
+<span class="fc" id="L195">  double dy = b.y-a.y;</span>
+<span class="fc" id="L196">  double a2 = (p.y-a.y)*dx - (p.x-a.x)*dy;</span>
+<span class="fc" id="L197">  a2 *= a2;   /* square - ensures that it is positive */</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">  if (a2 &lt; 0.0000000001) return 0.;  /* avoid 0/0 problems */</span>
+<span class="fc" id="L199">  return a2 / (dx*dx + dy*dy);</span>
 } finally {
-<span class="nc" id="L201">LEAVING(&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;,&quot;ptToLine2&quot;);</span>
+<span class="fc" id="L201">LEAVING(&quot;90k9l4o3khu3dw0fzkrcd97nk&quot;,&quot;ptToLine2&quot;);</span>
 }
 }
 
