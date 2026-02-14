@@ -20,6 +20,7 @@ mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.11.0"
 junit-pioneer       = "2.3.0"
+teavm               = "0.13.0"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
@@ -43,7 +44,9 @@ mockito-junit-jupiter-j8    = { module = "org.mockito:mockito-junit-jupiter", ve
 mockito-junit-jupiter       = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 xmlunit-core                = { module = "org.xmlunit:xmlunit-core", version.ref = "xmlunit-core" }
 junit-pioneer               = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
-
+teavm-cli                   = { module = "org.teavm:teavm-cli", version.ref = "teavm" }
+teavm-jso-apis              = { module = "org.teavm:teavm-jso-apis", version.ref = "teavm" }
+teavm-jso                   = { module = "org.teavm:teavm-jso", version.ref = "teavm" }
 
 [plugins]
 adarshr-test-logger = { id = "com.adarshr.test-logger", version.ref = "adarshr-test-logger" }
