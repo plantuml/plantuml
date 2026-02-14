@@ -10,8 +10,6 @@ on:
       - '**.md'
       - 'docs/**'
   push:
-    branches:
-      - master
     paths-ignore:
       - '**.md'
       - 'docs/**'
@@ -239,6 +237,26 @@ jobs:
             plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
+
+      - name: Upload plantuml JAR
+        uses: actions/upload-artifact@v6
+        with:
+          name: plantuml-jar
+          path: |
+            build/libs/plantuml-*.jar
+            !build/libs/plantuml-*-javadoc.jar
+            !build/libs/plantuml-*-sources.jar
+            !build/libs/plantuml-*-pdf*.jar
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload js-plantuml ZIP
+        uses: actions/upload-artifact@v6
+        with:
+          name: js-plantuml-zip
+          path: build/libs/js-plantuml-*.zip
+          if-no-files-found: error
+          retention-days: 30
 
   deploy_site_to_gh_page:
     needs: [ build_artifacts, jdk8 ]
