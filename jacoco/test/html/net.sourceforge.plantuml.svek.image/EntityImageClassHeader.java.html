@@ -116,7 +116,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 		final TextBlock stereo;
 <span class="fc" id="L117">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
 <span class="pc bpc" id="L118" title="1 of 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">				|| stereotypeLabels.isEmpty())</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				|| stereotypeLabels.isEmpty())</span>
 <span class="fc" id="L120">			stereo = null;</span>
 		else
 <span class="fc" id="L122">			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(</span>
@@ -124,25 +124,25 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L124">					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);</span>
 
 		TextBlock genericBlock;
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (generic == null) {</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (generic == null) {</span>
 <span class="fc" id="L128">			genericBlock = null;</span>
 		} else {
-<span class="fc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
-<span class="fc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
-<span class="fc" id="L132">					.withTOBECHANGED(stereotype) //</span>
-<span class="fc" id="L133">					.with(entity.getStereostyles()) //</span>
-<span class="fc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L130">			final Style styleGeneric = StyleSignatureBasic</span>
+<span class="nc" id="L131">					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //</span>
+<span class="nc" id="L132">					.withTOBECHANGED(stereotype) //</span>
+<span class="nc" id="L133">					.with(entity.getStereostyles()) //</span>
+<span class="nc" id="L134">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 
-<span class="fc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
-<span class="fc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
-<span class="fc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="fc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="nc" id="L136">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
+<span class="nc" id="L137">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L138">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L139">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 
-<span class="fc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L141">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L142">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L144">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
-<span class="fc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="nc" id="L144">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
+<span class="nc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 		}
 
 		final TextBlock circledCharacter;
@@ -169,14 +169,14 @@ import net.sourceforge.plantuml.text.Guillemet;
 
 <span class="fc" id="L170">		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="fc bfc" id="L172" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
 <span class="fc" id="L173">			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,</span>
 <span class="pc bpc" id="L174" title="1 of 2 branches missed.">					stereotype.getHtmlColor() == null ? spotBackColor : stereotype.getHtmlColor(), spotBorder,</span>
 					fontColor);
 
 <span class="fc" id="L177">		char circledChar = 0;</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L179">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L179">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
 
 <span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (circledChar == 0)</span>
 <span class="fc" id="L182">			circledChar = getCircledChar(leafType);</span>
