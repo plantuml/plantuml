@@ -47,7 +47,6 @@ sourceSets {
 
 val jdependConfig by configurations.creating
 val teavmConfig by configurations.creating
-val teavmVersion = "0.13.0"
 
 // Separate configuration for TeaVM compile dependencies (requires Java 11+)
 val teavmCompileConfig by configurations.creating {
@@ -84,11 +83,11 @@ dependencies {
 	jdependConfig(libs.jdepend)
 
 	// TeaVM CLI for compilation (contains the main class)
-    teavmConfig("org.teavm:teavm-cli:$teavmVersion")
+    teavmConfig(libs.teavm.cli)
 	
 	// TeaVM dependencies for Java to JavaScript compilation (Java 11+ only)
-	teavmCompileConfig("org.teavm:teavm-jso-apis:$teavmVersion")
-	teavmCompileConfig("org.teavm:teavm-jso:$teavmVersion")
+	teavmCompileConfig(libs.teavm.jso.apis)
+	teavmCompileConfig(libs.teavm.jso)
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
