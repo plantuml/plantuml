@@ -578,7 +578,17 @@ val filterSourcesWithBuildInfo by tasks.registering {
 			error("Target file not found: ${targetFile.absolutePath}")
 		}
 
+		// 4) Get project version
+		val projectVersion = project.version.toString()
+
 		ant.withGroovyBuilder {
+			// version replacement
+			"replace"(
+				"file" to targetFile.absolutePath,
+				"token" to "\$version\$",
+				"value" to projectVersion
+			)
+
 			// commit token replacement
 			"replace"(
 				"file" to targetFile.absolutePath,
@@ -594,6 +604,7 @@ val filterSourcesWithBuildInfo by tasks.registering {
 			)
 		}
 
+		println("Injected version into ${targetFile.name}: $projectVersion")
 		println("Injected git.commit.id into ${targetFile.name}: $commitId")
 		println("Injected compile timestamp into ${targetFile.name}: $compileTs")
 	}

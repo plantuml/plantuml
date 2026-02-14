@@ -32,8 +32,19 @@
         PlantUML Build File
     </description>
 
-    <!-- Get git commit info and compile timestamp -->
+    <!-- Get git commit info, version, and compile timestamp -->
     <target name="build-info">
+        <!-- Read version from gradle.properties -->
+        <loadproperties srcFile="gradle.properties"/>
+        <!-- Trim whitespace from version -->
+        <loadresource property="project.version">
+            <propertyresource name="version"/>
+            <filterchain>
+                <striplinebreaks/>
+                <trim/>
+            </filterchain>
+        </loadresource>
+        
         <!-- Get short git commit hash -->
         <exec executable="git" outputproperty="git.commit.id.abbrev" failifexecutionfails="false" errorproperty="git.error">
             <arg value="rev-parse"/>
@@ -50,6 +61,7 @@
         <java classname="Timestamp" classpath=".ant-temp" outputproperty="compile.timestamp.millis" fork="true"/>
         <delete dir=".ant-temp"/>
         
+        <echo>Version: ${project.version}</echo>
         <echo>Git commit: ${git.commit.id.abbrev}</echo>
         <echo>Compile timestamp: ${compile.timestamp.millis}</echo>
     </target>
@@ -70,6 +82,11 @@
         <delete>
             <fileset dir="build/filtered-src" includes="**/package-info.java"/>
         </delete>
+        
+        <!-- Inject version -->
+        <replace file="build/filtered-src/net/sourceforge/plantuml/version/CompilationInfo.java"
+                 token="$version$"
+                 value="${project.version}"/>
         
         <!-- Inject git commit id -->
         <replace file="build/filtered-src/net/sourceforge/plantuml/version/CompilationInfo.java"
