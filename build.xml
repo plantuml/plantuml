@@ -66,6 +66,11 @@
             <fileset dir="src/main/java"/>
         </copy>
         
+        <!-- Remove package-info.java files (not supported in Java 8 target) -->
+        <delete>
+            <fileset dir="build/filtered-src" includes="**/package-info.java"/>
+        </delete>
+        
         <!-- Inject git commit id -->
         <replace file="build/filtered-src/net/sourceforge/plantuml/version/CompilationInfo.java"
                  token="$git.commit.id$"
