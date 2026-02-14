@@ -607,6 +607,10 @@ tasks.compileJava {
 	dependsOn(filterSourcesWithBuildInfo)
 }
 
+tasks.named("sourcesJar") {
+	dependsOn(filterSourcesWithBuildInfo)
+}
+
 // ============================================
 // TeaVM Configuration - Java to JavaScript
 // ============================================

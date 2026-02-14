@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
+import net.sourceforge.plantuml.version.CompilationInfo;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
@@ -79,6 +80,13 @@ public class OptionPrint {
 	public static void printVersion() {
 		System.out.println(Version.fullDescription());
 		System.out.println("(" + License.getCurrent() + " source distribution)");
+		System.out.println();
+		System.out.println("Build Version: " + CompilationInfo.VERSION);
+		System.out.println("Git Commit: " + CompilationInfo.COMMIT);
+		if (CompilationInfo.COMPILE_TIMESTAMP != 0) {
+			System.out.println("Compile Time: " + new java.util.Date(CompilationInfo.COMPILE_TIMESTAMP));
+		}
+		System.out.println();
 		for (String v : interestingProperties())
 			System.out.println(v);
 
