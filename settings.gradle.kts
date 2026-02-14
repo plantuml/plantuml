@@ -2,7 +2,7 @@
 
 rootProject.name = "plantuml"
 
-val isCiBuild = System.getenv("CI") != null
+val isCiBuild = System.getenv("CI") != null || settings.providers.gradleProperty("ci").isPresent
 val isDevTest = System.getenv("DEV_TEST") != null
 val version: String by settings
 

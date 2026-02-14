@@ -9,12 +9,13 @@ integration with `build.gradle.kts`.
 
 1. [Overview](#overview)
 2. [Workflow Triggers](#workflow-triggers)
-3. [Jobs Architecture](#jobs-architecture)
-4. [Job Descriptions](#job-descriptions)
-5. [Gradle Tasks Reference](#gradle-tasks-reference)
-6. [Artifacts Produced](#artifacts-produced)
-7. [Release Process](#release-process)
-8. [Secrets Required](#secrets-required)
+3. [Build Info Injection](#build-info-injection)
+4. [Jobs Architecture](#jobs-architecture)
+5. [Job Descriptions](#job-descriptions)
+6. [Gradle Tasks Reference](#gradle-tasks-reference)
+7. [Artifacts Produced](#artifacts-produced)
+8. [Release Process](#release-process)
+9. [Secrets Required](#secrets-required)
 
 ---
 
@@ -84,6 +85,120 @@ The workflow runs on the following events:
 The following paths are **ignored** (won't trigger a build):
 - `**.md` (Markdown files)
 - `docs/**` (Documentation folder)
+
+---
+
+## Build Info Injection
+
+During the build process, compilation metadata is injected into `CompilationInfo.java`
+to enable runtime version identification. This allows `java -jar plantuml.jar -version`
+to display the exact build details.
+
+### Source File
+
+**Location:** `src/main/java/net/sourceforge/plantuml/version/CompilationInfo.java`
+
+```java
+package net.sourceforge.plantuml.version;
+
+public class CompilationInfo {
+    public static final String VERSION = "0.0.0";
+    public static final String COMMIT = "$git.commit.id$";
+    public static final long COMPILE_TIMESTAMP = 000L;
+}
+```
+
+### Injection Process
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                        CompilationInfo Injection Pipeline                       │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                 │
+│   ┌───────────────────────┐                                                     │
+│   │  generateGitProperties │  Gradle plugin: gradle-git-properties             │
+│   │                        │  Output: build/resources/main/git.properties      │
+│   │  Extracts:             │                                                    │
+│   │  • git.commit.id.abbrev│  (short commit hash, e.g., "a1b2c3d")             │
+│   │  • git.commit.id       │  (full commit hash)                               │
+│   │  • git.branch          │                                                    │
+│   └───────────┬────────────┘                                                    │
+│               │                                                                 │
+│               ▼                                                                 │
+│   ┌────────────────────────────┐                                                │
+│   │  filterSourcesWithBuildInfo │  Custom Gradle task                           │
+│   │                             │                                               │
+│   │  1. Copy src/main/java/ to │                                               │
+│   │     build/generated/sources/git-filtered/                                  │
+│   │                             │                                               │
+│   │  2. Replace placeholders:  │                                               │
+│   │     • $git.commit.id$      │  → actual commit hash (abbrev)                │
+│   │     • COMPILE_TIMESTAMP = 000L → current epoch millis                      │
+│   │                             │                                               │
+│   └───────────┬─────────────────┘                                               │
+│               │                                                                 │
+│               ▼                                                                 │
+│   ┌─────────────────────────────┐                                               │
+│   │  compileJava / sourcesJar   │  Uses filtered sources                       │
+│   │                             │  from build/generated/sources/git-filtered/  │
+│   └─────────────────────────────┘                                               │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Result at Runtime
+
+After compilation, running `java -jar plantuml.jar -version` displays:
+
+```
+PlantUML version 1.2024.8 (Mon Jan 15 14:30:00 CET 2024)
+(GPL source distribution)
+
+Build Version: 1.2024.8
+Git Commit: a1b2c3d
+Compile Time: Mon Jan 15 14:30:00 CET 2024
+
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+...
+```
+
+### License Variants
+
+All license subprojects (plantuml-asl, plantuml-bsd, plantuml-epl, plantuml-lgpl,
+plantuml-mit, plantuml-gplv2) inherit the same build info injection. Their `syncSources`
+task depends on `filterSourcesWithBuildInfo` from the root project, ensuring consistent
+metadata across all distribution variants.
+
+```
+rootProject                          subproject (e.g., plantuml-asl)
+─────────────────────────────────    ─────────────────────────────────────────
+src/main/java/                       
+       │                             
+       ▼                             
+filterSourcesWithBuildInfo           
+       │                             
+       ▼                             
+build/generated/sources/git-filtered/
+       │                                    │
+       │                                    ▼
+       │                             syncSources (depends on filterSourcesWithBuildInfo)
+       │                                    │
+       │                                    ▼
+       │                             build/sources/sjpp/java/
+       │                                    │
+       │                                    ▼
+       │                             preprocessLicenceAntTask (SJPP with license header)
+       │                                    │
+       │                                    ▼
+       ▼                             build/generated/sjpp/
+compileJava                                 │
+       │                                    ▼
+       ▼                             compileJava
+build/classes/                              │
+                                            ▼
+                                     build/classes/
+```
 
 ---
 
@@ -790,6 +905,10 @@ gradle test
 
 # Generate full site
 gradle site
+
+# Build all license variants (asl, bsd, epl, lgpl, mit, gplv2, mit-light)
+# By default, these are only built in CI environments
+gradle clean build -x test -Pci
 ```
 
 ---

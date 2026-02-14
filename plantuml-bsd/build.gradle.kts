@@ -79,7 +79,8 @@ tasks.withType<Javadoc>().configureEach {
 }
 
 val syncSources by tasks.registering(Sync::class) {
-	from(rootProject.layout.projectDirectory.dir("src/main/java"))
+	dependsOn(rootProject.tasks.named("filterSourcesWithBuildInfo"))
+	from(rootProject.layout.buildDirectory.dir("generated/sources/git-filtered"))
 	into(project.layout.buildDirectory.dir("sources/sjpp/java"))
 }
 
