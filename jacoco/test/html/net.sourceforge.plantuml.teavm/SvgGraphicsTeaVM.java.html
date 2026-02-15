@@ -177,7 +177,6 @@ package net.sourceforge.plantuml.teavm;
 //		Element textElem = createSvgElement(&quot;text&quot;);
 //		textElem.setAttribute(&quot;x&quot;, format(x));
 //		textElem.setAttribute(&quot;y&quot;, format(y));
-//		textElem.setAttribute(&quot;font-family&quot;, fontFamily);
 //		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));
 //		textElem.setAttribute(&quot;fill&quot;, fillColor);
 //		// Preserve whitespace (multiple spaces, tabs, etc.)
@@ -188,6 +187,19 @@ package net.sourceforge.plantuml.teavm;
 //		}
 //		if (!&quot;normal&quot;.equals(fontStyle)) {
 //			textElem.setAttribute(&quot;font-style&quot;, fontStyle);
+//		}
+//		if (fontFamily != null) {
+//			// Map Java font name to web-safe equivalent
+//			// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
+//			if (&quot;monospaced&quot;.equalsIgnoreCase(fontFamily))
+//				fontFamily = &quot;monospace&quot;;
+//
+//			textElem.setAttribute(&quot;font-family&quot;, fontFamily);
+//
+//			// For monospace fonts, replace spaces with non-breaking spaces
+//			// to ensure consistent character width
+//			if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))
+//				text = text.replace(' ', (char) 160);
 //		}
 //		textElem.setTextContent(text);
 //		mainGroup.appendChild(textElem);
