@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.core;
 <span class="fc" id="L39">public enum DiagramType {</span>
 	// ::remove folder when __HAXE__
 <span class="fc" id="L41">	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,</span>
-<span class="fc" id="L42">	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, CHART, UNKNOWN;</span>
+<span class="fc" id="L42">	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, CHART, PACKET, UNKNOWN;</span>
 
 	static public DiagramType getTypeFromArobaseStart(String text) {
 <span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
@@ -151,42 +151,44 @@ package net.sourceforge.plantuml.core;
 		case 'p':
 <span class="nc bnc" id="L152" title="All 2 branches missed.">			if (check(&quot;project&quot;, text, p))</span>
 <span class="nc" id="L153">				return PROJECT;</span>
-<span class="nc" id="L154">			return UNKNOWN;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (check(&quot;packetdiag&quot;, text, p))</span>
+<span class="nc" id="L155">				return PACKET;</span>
+<span class="nc" id="L156">			return UNKNOWN;</span>
 
 		case 'r':
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (check(&quot;regex&quot;, text, p))</span>
-<span class="nc" id="L158">				return REGEX;</span>
-<span class="nc" id="L159">			return UNKNOWN;</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (check(&quot;regex&quot;, text, p))</span>
+<span class="nc" id="L160">				return REGEX;</span>
+<span class="nc" id="L161">			return UNKNOWN;</span>
 
 		case 's':
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (check(&quot;salt&quot;, text, p))</span>
-<span class="nc" id="L163">				return SALT;</span>
-<span class="nc" id="L164">			return UNKNOWN;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (check(&quot;salt&quot;, text, p))</span>
+<span class="nc" id="L165">				return SALT;</span>
+<span class="nc" id="L166">			return UNKNOWN;</span>
 
 		case 'u':
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">			if (check(&quot;uml&quot;, text, p))</span>
-<span class="fc" id="L168">				return UML;</span>
-<span class="nc" id="L169">			return UNKNOWN;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (check(&quot;uml&quot;, text, p))</span>
+<span class="fc" id="L170">				return UML;</span>
+<span class="nc" id="L171">			return UNKNOWN;</span>
 
 		case 'w':
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (check(&quot;wire&quot;, text, p))</span>
-<span class="nc" id="L173">				return WIRE;</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (check(&quot;wbs&quot;, text, p))</span>
-<span class="fc" id="L175">				return WBS;</span>
-<span class="nc" id="L176">			return UNKNOWN;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (check(&quot;wire&quot;, text, p))</span>
+<span class="nc" id="L175">				return WIRE;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			if (check(&quot;wbs&quot;, text, p))</span>
+<span class="fc" id="L177">				return WBS;</span>
+<span class="nc" id="L178">			return UNKNOWN;</span>
 
 		case 'y':
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (check(&quot;yaml&quot;, text, p))</span>
-<span class="nc" id="L180">				return YAML;</span>
-<span class="nc" id="L181">			return UNKNOWN;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (check(&quot;yaml&quot;, text, p))</span>
+<span class="nc" id="L182">				return YAML;</span>
+<span class="nc" id="L183">			return UNKNOWN;</span>
 
 		default:
-<span class="nc" id="L184">			return UNKNOWN;</span>
+<span class="nc" id="L186">			return UNKNOWN;</span>
 		}
 	}
 
 	static boolean check(String key, String text, int p) {
-<span class="fc" id="L189">		return text.regionMatches(true, p, key, 0, key.length());</span>
+<span class="fc" id="L191">		return text.regionMatches(true, p, key, 0, key.length());</span>
 	}
 
 }

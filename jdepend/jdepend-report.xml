@@ -2274,7 +2274,7 @@
                 <TotalClasses>61</TotalClasses>
                 <ConcreteClasses>47</ConcreteClasses>
                 <AbstractClasses>14</AbstractClasses>
-                <Ca>118</Ca>
+                <Ca>119</Ca>
                 <Ce>62</Ce>
                 <A>0.23</A>
                 <I>0.34</I>
@@ -2615,6 +2615,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.picoweb</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -5386,11 +5387,11 @@
                 <TotalClasses>20</TotalClasses>
                 <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>1</Ca>
+                <Ca>2</Ca>
                 <Ce>20</Ce>
                 <A>0</A>
-                <I>0.95</I>
-                <D>0.05</D>
+                <I>0.91</I>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -5485,6 +5486,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.chart.command</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
             </UsedBy>
         </Package>
 
@@ -6269,7 +6271,7 @@
                 <TotalClasses>67</TotalClasses>
                 <ConcreteClasses>55</ConcreteClasses>
                 <AbstractClasses>12</AbstractClasses>
-                <Ca>67</Ca>
+                <Ca>68</Ca>
                 <Ce>40</Ce>
                 <A>0.18</A>
                 <I>0.37</I>
@@ -6575,6 +6577,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -6837,7 +6840,7 @@
                 <TotalClasses>6</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>84</Ca>
+                <Ca>85</Ca>
                 <Ce>12</Ce>
                 <A>0.33</A>
                 <I>0.12</I>
@@ -6940,6 +6943,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.picoweb</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -10138,11 +10142,11 @@
                 <TotalClasses>26</TotalClasses>
                 <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
-                <Ca>84</Ca>
+                <Ca>85</Ca>
                 <Ce>15</Ce>
                 <A>0.38</A>
                 <I>0.15</I>
-                <D>0.46</D>
+                <D>0.47</D>
                 <V>1</V>
             </Stats>
 
@@ -10308,6 +10312,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -10419,7 +10424,7 @@
                 <TotalClasses>32</TotalClasses>
                 <ConcreteClasses>30</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>106</Ca>
+                <Ca>107</Ca>
                 <Ce>14</Ce>
                 <A>0.06</A>
                 <I>0.12</I>
@@ -10617,6 +10622,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -10744,11 +10750,11 @@
                 <TotalClasses>23</TotalClasses>
                 <ConcreteClasses>19</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>84</Ca>
+                <Ca>85</Ca>
                 <Ce>24</Ce>
                 <A>0.17</A>
                 <I>0.22</I>
-                <D>0.6</D>
+                <D>0.61</D>
                 <V>1</V>
             </Stats>
 
@@ -10908,6 +10914,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.picoweb</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -11296,11 +11303,11 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
-                <Ca>86</Ca>
+                <Ca>87</Ca>
                 <Ce>15</Ce>
                 <A>0.44</A>
                 <I>0.15</I>
-                <D>0.41</D>
+                <D>0.42</D>
                 <V>1</V>
             </Stats>
 
@@ -11435,6 +11442,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.data</Package>
@@ -12143,7 +12151,7 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>91</Ca>
+                <Ca>92</Ca>
                 <Ce>14</Ce>
                 <A>0.29</A>
                 <I>0.13</I>
@@ -12279,6 +12287,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -12316,7 +12325,7 @@
                 <TotalClasses>43</TotalClasses>
                 <ConcreteClasses>37</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>95</Ca>
+                <Ca>96</Ca>
                 <Ce>12</Ce>
                 <A>0.14</A>
                 <I>0.11</I>
@@ -12538,6 +12547,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -12578,11 +12588,11 @@
                 <TotalClasses>51</TotalClasses>
                 <ConcreteClasses>47</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>91</Ca>
+                <Ca>92</Ca>
                 <Ce>21</Ce>
                 <A>0.08</A>
                 <I>0.19</I>
-                <D>0.73</D>
+                <D>0.74</D>
                 <V>1</V>
             </Stats>
 
@@ -12833,6 +12843,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
@@ -13410,10 +13421,10 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>40</Ca>
+                <Ca>41</Ca>
                 <Ce>8</Ce>
                 <A>0.18</A>
-                <I>0.17</I>
+                <I>0.16</I>
                 <D>0.65</D>
                 <V>1</V>
             </Stats>
@@ -13495,6 +13506,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
@@ -13517,11 +13529,11 @@
                 <TotalClasses>13</TotalClasses>
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
+                <Ca>3</Ca>
                 <Ce>25</Ce>
                 <A>0</A>
-                <I>0.93</I>
-                <D>0.07</D>
+                <I>0.89</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -13600,6 +13612,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
             </UsedBy>
         </Package>
@@ -14033,6 +14046,91 @@
             </UsedBy>
         </Package>
 
+        <Package name="net.sourceforge.plantuml.packetdiag">
+            <Stats>
+                <TotalClasses>13</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>19</Ce>
+                <A>0</A>
+                <I>0.95</I>
+                <D>0.05</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CommandColWidth.java">
+                    net.sourceforge.plantuml.packetdiag.CommandColWidth
+                </Class>
+                <Class sourceFile="CommandNodeHeight.java">
+                    net.sourceforge.plantuml.packetdiag.CommandNodeHeight
+                </Class>
+                <Class sourceFile="CommandPacketDiagEnd.java">
+                    net.sourceforge.plantuml.packetdiag.CommandPacketDiagEnd
+                </Class>
+                <Class sourceFile="CommandPacketDiagStart.java">
+                    net.sourceforge.plantuml.packetdiag.CommandPacketDiagStart
+                </Class>
+                <Class sourceFile="CommandScaleInterval.java">
+                    net.sourceforge.plantuml.packetdiag.CommandScaleInterval
+                </Class>
+                <Class sourceFile="PacketBlock.java">
+                    net.sourceforge.plantuml.packetdiag.PacketBlock
+                </Class>
+                <Class sourceFile="PacketBlock.java">
+                    net.sourceforge.plantuml.packetdiag.PacketBlock$1
+                </Class>
+                <Class sourceFile="PacketDiagram.java">
+                    net.sourceforge.plantuml.packetdiag.PacketDiagram$1
+                </Class>
+                <Class sourceFile="PacketDiagram.java">
+                    net.sourceforge.plantuml.packetdiag.PacketDiagram$PacketItem
+                </Class>
+                <Class sourceFile="PacketDiagram.java">
+                    net.sourceforge.plantuml.packetdiag.PacketDiagram$ScaleDirection
+                </Class>
+                <Class sourceFile="PacketDiagramFactory.java">
+                    net.sourceforge.plantuml.packetdiag.PacketDiagramFactory
+                </Class>
+                <Class sourceFile="PacketIndicator.java">
+                    net.sourceforge.plantuml.packetdiag.PacketIndicator
+                </Class>
+                <Class sourceFile="PacketIndicator.java">
+                    net.sourceforge.plantuml.packetdiag.PacketIndicator$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.command</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
+                <Package>net.sourceforge.plantuml.nwdiag</Package>
+                <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.regex</Package>
+                <Package>net.sourceforge.plantuml.skin</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.teavm</Package>
+            </UsedBy>
+        </Package>
+
         <Package name="net.sourceforge.plantuml.pdf">
             <Stats>
                 <TotalClasses>1</TotalClasses>
@@ -14418,7 +14516,7 @@
                 <TotalClasses>24</TotalClasses>
                 <ConcreteClasses>21</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>72</Ca>
+                <Ca>73</Ca>
                 <Ce>19</Ce>
                 <A>0.12</A>
                 <I>0.21</I>
@@ -14575,6 +14673,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.picoweb</Package>
                 <Package>net.sourceforge.plantuml.preproc.spm</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
@@ -15951,10 +16050,10 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>51</Ca>
+                <Ca>52</Ca>
                 <Ce>6</Ce>
                 <A>0.18</A>
-                <I>0.11</I>
+                <I>0.1</I>
                 <D>0.71</D>
                 <V>1</V>
             </Stats>
@@ -16041,6 +16140,7 @@
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -17718,10 +17818,10 @@
                 <TotalClasses>47</TotalClasses>
                 <ConcreteClasses>42</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>81</Ca>
+                <Ca>82</Ca>
                 <Ce>34</Ce>
                 <A>0.11</A>
-                <I>0.3</I>
+                <I>0.29</I>
                 <D>0.6</D>
                 <V>1</V>
             </Stats>
@@ -17965,6 +18065,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
@@ -18541,11 +18642,11 @@
                 <TotalClasses>31</TotalClasses>
                 <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>81</Ca>
                 <Ce>28</Ce>
                 <A>0.26</A>
                 <I>0.26</I>
-                <D>0.48</D>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
@@ -18732,6 +18833,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
@@ -19904,7 +20006,7 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>24</Ce>
+                <Ce>26</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -19962,6 +20064,7 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
+                <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.error</Package>
@@ -19973,6 +20076,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sudoku</Package>
@@ -21360,11 +21464,11 @@
                 <TotalClasses>23</TotalClasses>
                 <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>95</Ca>
+                <Ca>96</Ca>
                 <Ce>23</Ce>
                 <A>0.26</A>
                 <I>0.19</I>
-                <D>0.54</D>
+                <D>0.55</D>
                 <V>1</V>
             </Stats>
 
@@ -21527,6 +21631,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.oregon</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.picoweb</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
@@ -24418,6 +24523,13 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.version</Package>
             <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.jaws</Package>
+            <Package>net.sourceforge.plantuml.text</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.packetdiag">
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
             <Package>net.sourceforge.plantuml.text</Package>

@@ -314,8 +314,8 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 <span class="fc" id="L316">	private static final Pattern p = Pattern.compile(&quot;\\s*(\\w+)\\s*=\\s*(\&quot;([^\&quot;]*)\&quot;|[^\\s,]+)&quot;);</span>
-	
-	private Map&lt;String, String&gt; toSet(String definition) {
+
+	public static Map&lt;String, String&gt; toSet(String definition) {
 <span class="nc" id="L319">		final Map&lt;String, String&gt; result = new HashMap&lt;String, String&gt;();</span>
 <span class="nc bnc" id="L320" title="All 2 branches missed.">		if (definition == null)</span>
 <span class="nc" id="L321">			return result;</span>

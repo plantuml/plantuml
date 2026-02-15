@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PacketBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.packetdiag</a> &gt; <span class="el_source">PacketBlock.java</span></div><h1>PacketBlock.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2026, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  kolulu23
+ *
+ * 
+ */
+package net.sourceforge.plantuml.packetdiag;
+
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class PacketBlock {
+
+<span class="nc" id="L62">	private static final UStroke openerStroke = new UStroke(5, 5, 1);</span>
+
+	/**
+	 * Desired block width unit, this is not the final drawing dimension as margins, paddings and scaling are not added
+	 */
+	private final int width;
+
+	/**
+	 * Desired block height unit
+	 */
+	private int height;
+
+	/**
+	 * Full label text
+	 */
+	private final String label;
+
+	private final ISkinParam skinParam;
+
+<span class="nc" id="L81">	private boolean leftOpen = false;</span>
+
+<span class="nc" id="L83">	private boolean rightOpen = false;</span>
+
+<span class="nc" id="L85">	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {</span>
+<span class="nc" id="L86">		this.width = width;</span>
+<span class="nc" id="L87">		this.height = height;</span>
+<span class="nc" id="L88">		this.label = label;</span>
+<span class="nc" id="L89">		this.skinParam = skinParam;</span>
+<span class="nc" id="L90">	}</span>
+
+<span class="nc" id="L92">	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {</span>
+<span class="nc" id="L93">		this.width = width;</span>
+<span class="nc" id="L94">		this.height = height;</span>
+<span class="nc" id="L95">		this.label = label;</span>
+<span class="nc" id="L96">		this.skinParam = skinParam;</span>
+<span class="nc" id="L97">		this.leftOpen = leftOpen;</span>
+<span class="nc" id="L98">		this.rightOpen = rightOpen;</span>
+<span class="nc" id="L99">	}</span>
+
+	public void openLeft(boolean leftOpen) {
+<span class="nc" id="L102">		this.leftOpen = leftOpen;</span>
+<span class="nc" id="L103">	}</span>
+
+	public void openRight(boolean rightOpen) {
+<span class="nc" id="L106">		this.rightOpen = rightOpen;</span>
+<span class="nc" id="L107">	}</span>
+
+	public int getWidth() {
+<span class="nc" id="L110">		return width;</span>
+	}
+
+	public int getHeight() {
+<span class="nc" id="L114">		return height;</span>
+	}
+
+	public void setHeight(int height) {
+<span class="nc" id="L118">		this.height = height;</span>
+<span class="nc" id="L119">	}</span>
+
+	public double getDrawWidth(double scale) {
+<span class="nc" id="L122">		return width * scale;</span>
+	}
+
+	public double getDrawHeight(double scale) {
+<span class="nc" id="L126">		return height * scale;</span>
+	}
+
+	public String getLabel() {
+<span class="nc" id="L130">		return label;</span>
+	}
+
+	Style getStyle() {
+<span class="nc" id="L134">		return StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)</span>
+<span class="nc" id="L135">						.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+	}
+
+	Fashion getFashion() {
+<span class="nc" id="L139">		return getStyle().getSymbolContext(skinParam.getIHtmlColorSet());</span>
+	}
+
+	private TextBlock getLabelTextBlock(String label) {
+<span class="nc" id="L143">		return Display.getWithNewlines(skinParam.getPragma(), label).create8(</span>
+<span class="nc" id="L144">						getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+						HorizontalAlignment.CENTER,
+						skinParam,
+						CreoleMode.SIMPLE_LINE,
+						LineBreakStrategy.NONE
+		);
+	}
+
+	private TextBlock getLabelTextBlockAbbr(StringBounder stringBounder, double bitWidth) {
+<span class="nc" id="L153">		UFont font = getStyle().getUFont();</span>
+<span class="nc" id="L154">		final String pad = &quot;...&quot;;</span>
+<span class="nc" id="L155">		XDimension2D padDim = stringBounder.calculateDimension(font, pad);</span>
+<span class="nc" id="L156">		XDimension2D labelDim = stringBounder.calculateDimension(font, label);</span>
+<span class="nc" id="L157">		double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
+<span class="nc" id="L159">			return getLabelTextBlock(label);</span>
+		}
+		// Shrink label char by char, this is technically wrong when there's multiple Unicode code points
+<span class="nc" id="L162">		String abbr = label;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (int i = label.length(); i &gt; 0; i--) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
+<span class="nc" id="L165">				break;</span>
+			}
+<span class="nc" id="L167">			abbr = label.substring(0, i) + pad;</span>
+<span class="nc" id="L168">			labelDim = stringBounder.calculateDimension(font, abbr);</span>
+		}
+<span class="nc" id="L170">		return getLabelTextBlock(abbr);</span>
+	}
+
+	TextBlock getShapeTextBlock(StringBounder stringBounder, double bitWidth, double bitHeight) {
+		// vertical(top and bottom) margin for displaying the label content
+<span class="nc" id="L175">		final double vMargin = 10D;</span>
+<span class="nc" id="L176">		final double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="nc" id="L177">		final Fashion fashion = getFashion();</span>
+<span class="nc" id="L178">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
+		// mergeTB would add label height and margins to the shape so here this offset makes sure we actually get drawHeight
+<span class="nc" id="L180">		double heightPreOffset = Math.max(0D, getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);</span>
+<span class="nc" id="L181">		final TextBlock stereo = TextBlockUtils.empty(reqWidth, heightPreOffset);</span>
+
+		// Basically it's URectangle#asSmall, but without horizontal margin
+<span class="nc" id="L184">		return new AbstractTextBlock() {</span>
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L187">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L188">				final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L189">				XDimension2D dim = dimStereo.mergeTB(dimLabel);</span>
+<span class="nc" id="L190">				return new XDimension2D(dim.getWidth(), dim.getHeight() + vMargin + vMargin);</span>
+			}
+
+			@Override
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L195">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L196">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="nc" id="L197">				ug = fashion.apply(ug);</span>
+				// URectangle#drawRect
+<span class="nc" id="L199">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L200">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
+<span class="nc" id="L201">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
+<span class="nc" id="L202">				ug.draw(shape);</span>
+
+<span class="nc" id="L204">				final TextBlock tb = TextBlockUtils.mergeTB(stereo, label, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L205">				tb.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
+<span class="nc" id="L206">			}</span>
+		};
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

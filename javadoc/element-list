@@ -143,6 +143,7 @@ net.sourceforge.plantuml.objectdiagram.command
 net.sourceforge.plantuml.openiconic
 net.sourceforge.plantuml.openiconic.data
 net.sourceforge.plantuml.oregon
+net.sourceforge.plantuml.packetdiag
 net.sourceforge.plantuml.pdf
 net.sourceforge.plantuml.picoweb
 net.sourceforge.plantuml.plasma

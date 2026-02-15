@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.style.SName;
 //To be merged with DiagramType
 <span class="fc" id="L41">public enum UmlDiagramType {</span>
 <span class="fc" id="L42">	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM, NWDIAG, MINDMAP, WBS, WIRE,</span>
-<span class="fc" id="L43">	HELP, GANTT, SALT, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHRONOLOGY, CHEN_EER, CHART;</span>
+<span class="fc" id="L43">	HELP, GANTT, SALT, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHRONOLOGY, CHEN_EER, CHART, PACKET;</span>
 
 	public SName getStyleName() {
 <span class="fc bfc" id="L46" title="All 2 branches covered.">		if (this == SEQUENCE)</span>
@@ -103,13 +103,16 @@ import net.sourceforge.plantuml.style.SName;
 <span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (this == CHART)</span>
 <span class="nc" id="L104">			return SName.chartDiagram;</span>
 
-<span class="fc" id="L106">		return SName.activityDiagram;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (this == PACKET)</span>
+<span class="nc" id="L107">			return SName.packetdiagDiagram;</span>
+
+<span class="fc" id="L109">		return SName.activityDiagram;</span>
 	}
 
 	public String humanReadableName() {
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
-<span class="nc" id="L111">			return &quot;component&quot;;</span>
-<span class="fc" id="L112">		return name().toLowerCase();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
+<span class="nc" id="L114">			return &quot;component&quot;;</span>
+<span class="fc" id="L115">		return name().toLowerCase();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

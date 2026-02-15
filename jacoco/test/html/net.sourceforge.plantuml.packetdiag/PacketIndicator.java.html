@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PacketIndicator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.packetdiag</a> &gt; <span class="el_source">PacketIndicator.java</span></div><h1>PacketIndicator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2026, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  kolulu23
+ *
+ * 
+ */
+package net.sourceforge.plantuml.packetdiag;
+
+import java.util.Collections;
+
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.nwdiag.VerticalLine;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.Style;
+
+public class PacketIndicator extends AbstractTextBlock {
+
+	public static final double V_LINE_FULL = 32D;
+
+	public static final double V_LINE_SHORT = V_LINE_FULL / 2;
+
+	private final boolean full;
+
+	private final boolean numbered;
+
+	private final String bitNumber;
+
+	private final Style style;
+
+	private final ISkinParam skinParam;
+
+<span class="nc" id="L73">	public PacketIndicator(boolean full, boolean numbered, int bitNumber, Style style, ISkinParam skinParam) {</span>
+<span class="nc" id="L74">		this.full = full;</span>
+<span class="nc" id="L75">		this.numbered = numbered;</span>
+<span class="nc" id="L76">		this.style = style;</span>
+<span class="nc" id="L77">		this.bitNumber = bitNumber + &quot;&quot;;</span>
+<span class="nc" id="L78">		this.skinParam = skinParam;</span>
+<span class="nc" id="L79">	}</span>
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L83">		TextBlock numberTb = numberTb();</span>
+		// number dimension is always calculated for consistent padding
+<span class="nc" id="L85">		XDimension2D numberDim = numberTb.calculateDimension(ug.getStringBounder());</span>
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		double lineOffsetY = full ? 0 : V_LINE_SHORT;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		double lineLength = full ? V_LINE_FULL : V_LINE_SHORT;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (numbered) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			double numberYOffset = full ? 0 : V_LINE_SHORT;</span>
+<span class="nc" id="L91">			numberTb.drawU(ug.apply(new UTranslate(-numberDim.getWidth() / 2, numberYOffset)));</span>
+		}
+<span class="nc" id="L93">		TextBlock vLineTb = vLineTb(lineOffsetY, lineLength);</span>
+<span class="nc" id="L94">		vLineTb.drawU(ug.apply(UTranslate.dy(numberDim.getHeight())));</span>
+<span class="nc" id="L95">	}</span>
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L99">		XDimension2D numberDim = numberTb().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		double vLineHeight = full ? V_LINE_FULL : V_LINE_SHORT;</span>
+<span class="nc" id="L101">		return numberDim.mergeTB(new XDimension2D(0D, vLineHeight));</span>
+	}
+
+	TextBlock numberTb() {
+<span class="nc" id="L105">		FontConfiguration fg = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L106">		return createNumberTextBlock(fg, skinParam, bitNumber);</span>
+	}
+
+	TextBlock vLineTb(double y, double height) {
+<span class="nc" id="L110">		return createVLineTextBlock(style, skinParam, y, height);</span>
+	}
+
+	public static TextBlock createNumberTextBlock(FontConfiguration fg, ISkinParam skinParam, CharSequence... s) {
+<span class="nc" id="L114">		return Display.create(s).create8(</span>
+						fg,
+						HorizontalAlignment.LEFT,
+						skinParam,
+						CreoleMode.NO_CREOLE,
+						LineBreakStrategy.NONE
+		);
+	}
+
+	public static TextBlock createVLineTextBlock(Style style, ISkinParam skinParam, double y, double height) {
+<span class="nc" id="L124">		final HColor lineColor = style.getSymbolContext(skinParam.getIHtmlColorSet()).getForeColor();</span>
+<span class="nc" id="L125">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L126">		return new AbstractTextBlock() {</span>
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L129">				return new XDimension2D(stroke.getThickness(), height);</span>
+			}
+
+			@Override
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L134">				ug = ug.apply(lineColor).apply(stroke);</span>
+<span class="nc" id="L135">				VerticalLine vLine = new VerticalLine(y, y + height, Collections.emptySet());</span>
+<span class="nc" id="L136">				vLine.drawU(ug);</span>
+<span class="nc" id="L137">			}</span>
+		};
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
