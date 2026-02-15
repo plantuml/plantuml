@@ -170,11 +170,11 @@ public class PSystemVersion extends PlainStringsDiagram {
 	public static PSystemVersion createShowVersion(UmlSource source, PreprocessingArtifact preprocessing) {
 <span class="nc" id="L171">		final ReportLog strings = new ReportLog();</span>
 <span class="nc" id="L172">		strings.add(&quot;&lt;b&gt;PlantUML&lt;/b&gt; \&quot;\&quot;&quot; + Version.versionString() + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L173">		strings.add(&quot;&lt;b&gt;Build Version&lt;/b&gt; \&quot;\&quot;&quot; + Version.compileTimeString() + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L174">		strings.add(&quot;&lt;b&gt;Git Commit&lt;/b&gt; \&quot;\&quot;&quot; + CompilationInfo.COMMIT + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L173">		strings.add(&quot;&lt;b&gt;Git Commit&lt;/b&gt; \&quot;\&quot;&quot; + CompilationInfo.COMMIT + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L174">		strings.add(&quot;&lt;b&gt;Build Time&lt;/b&gt; \&quot;\&quot;&quot; + Version.compileTimeString() + &quot;\&quot;\&quot;&quot;);</span>
 
 		// ::revert when __TEAVM__
-<span class="nc" id="L177">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc" id="L177">		strings.add(&quot;&lt;b&gt;License&lt;/b&gt; \&quot;\&quot;&quot; + License.getCurrent() + &quot;\&quot;\&quot;&quot;);</span>
 <span class="nc" id="L178">		strings.checkOldVersionWarning();</span>
 <span class="nc bnc" id="L179" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
 <span class="nc" id="L180">			strings.add(&quot;Loaded from &quot; + Version.getJarPath());</span>

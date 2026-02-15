@@ -56,8 +56,8 @@ class RealDelta extends RealMoveable {
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="nc" id="L59">		delegated.ensureBiggerThan(new RealDelta(other, -diff));</span>
-<span class="nc" id="L60">	}</span>
+<span class="fc" id="L59">		delegated.ensureBiggerThan(new RealDelta(other, -diff));</span>
+<span class="fc" id="L60">	}</span>
 
 	void move(double delta) {
 <span class="nc" id="L63">		((RealMoveable) delegated).move(delta);</span>

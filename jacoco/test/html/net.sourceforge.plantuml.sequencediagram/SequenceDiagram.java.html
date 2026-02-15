@@ -294,7 +294,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 		// ::done
 
 <span class="fc bfc" id="L296" title="All 2 branches covered.">		if (modeTeoz())</span>
-<span class="nc" id="L297">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
+<span class="fc" id="L297">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
 
 <span class="fc" id="L299">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
 	}
@@ -354,10 +354,10 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="nc" id="L354">			pendingCreate = lifeEvent;</span>
 <span class="nc" id="L355">			return null;</span>
 		}
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">		if (lastEventWithDeactivate == null) {</span>
-<span class="nc bnc" id="L358" title="All 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
-<span class="nc" id="L359">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
-<span class="nc" id="L360">				return null;</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">		if (lastEventWithDeactivate == null) {</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
+<span class="fc" id="L359">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
+<span class="fc" id="L360">				return null;</span>
 			}
 <span class="nc bnc" id="L362" title="All 2 branches missed.">			if (p.getInitialLife() == 0)</span>
 <span class="nc" id="L363">				return &quot;You cannot deactivate here&quot;;</span>
@@ -601,8 +601,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="pc bpc" id="L604" title="1 of 2 branches missed.">		return modeTeoz() // this is for backward compatibility</span>
-<span class="nc" id="L605">				? ClockwiseTopRightBottomLeft.same(5)</span>
+<span class="fc bfc" id="L604" title="All 2 branches covered.">		return modeTeoz() // this is for backward compatibility</span>
+<span class="fc" id="L605">				? ClockwiseTopRightBottomLeft.same(5)</span>
 <span class="fc" id="L606">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
 	}
 }

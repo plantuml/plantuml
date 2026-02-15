@@ -123,9 +123,9 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 			try {
 <span class="nc" id="L124">				final String version = GraphvizRuntimeEnvironment.getInstance().dotVersion();</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">				if (withRichText)</span>
-<span class="nc" id="L126">					result.add(&quot;Dot version: \&quot;\&quot;&quot; + version + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L126">					result.add(&quot;&lt;b&gt;GraphViz&lt;/b&gt; \&quot;\&quot;&quot; + version + &quot;\&quot;\&quot;&quot;);</span>
 				else
-<span class="nc" id="L128">					result.add(&quot;Dot version: &quot; + version);</span>
+<span class="nc" id="L128">					result.add(&quot;GraphViz: &quot; + version);</span>
 <span class="nc" id="L129">				final int v = GraphvizRuntimeEnvironment.getInstance().getDotVersion();</span>
 <span class="nc bnc" id="L130" title="All 2 branches missed.">				if (v == -1) {</span>
 <span class="nc" id="L131">					result.add(&quot;Warning : cannot determine dot version&quot;);</span>
