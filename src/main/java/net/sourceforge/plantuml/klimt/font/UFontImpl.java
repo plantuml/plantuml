@@ -96,8 +96,8 @@ public final class UFontImpl implements UFont {
 
 	public String getFamily(String text, UFontContext context) {
 		// ::uncomment when __TEAVM__
-		// throw new UnsupportedOperationException("TEAVM1254");
-		// // return fontStack.getFullDefinition().replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
+//		final String fullDefinition = fontStack.getFullDefinition();
+//		return fullDefinition.replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
 		// ::done
 		// ::comment when __TEAVM__
 		if (context == UFontContext.EPS) {

@@ -62,22 +62,12 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 //		svg.setFillColor(color);
 //
 //		// Extract font properties
-//		final String fontFamily = getFontFamily(font);
+//		final String fontFamily = font.getFamily(null, null);
 //		final int fontSize = font.getSize();
 //		final String fontWeight = font.isBold() ? "bold" : "normal";
 //		final String fontStyle = font.isItalic() ? "italic" : "normal";
 //
 //		svg.drawText(text.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle);
 		// ::done
-	}
-
-	private String getFontFamily(UFont font) {
-		// Try to get a web-safe font family
-		// UFont.getFamily() needs a context, so we use a simplified approach
-		String family = "sans-serif";
-		
-		// This is a simplification - in real implementation we'd need 
-		// to extract the font family name properly
-		return family;
 	}
 }

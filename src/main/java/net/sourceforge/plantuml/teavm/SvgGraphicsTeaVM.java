@@ -177,7 +177,6 @@ public class SvgGraphicsTeaVM {
 //		Element textElem = createSvgElement("text");
 //		textElem.setAttribute("x", format(x));
 //		textElem.setAttribute("y", format(y));
-//		textElem.setAttribute("font-family", fontFamily);
 //		textElem.setAttribute("font-size", String.valueOf(fontSize));
 //		textElem.setAttribute("fill", fillColor);
 //		// Preserve whitespace (multiple spaces, tabs, etc.)
@@ -188,6 +187,19 @@ public class SvgGraphicsTeaVM {
 //		}
 //		if (!"normal".equals(fontStyle)) {
 //			textElem.setAttribute("font-style", fontStyle);
+//		}
+//		if (fontFamily != null) {
+//			// Map Java font name to web-safe equivalent
+//			// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
+//			if ("monospaced".equalsIgnoreCase(fontFamily))
+//				fontFamily = "monospace";
+//
+//			textElem.setAttribute("font-family", fontFamily);
+//
+//			// For monospace fonts, replace spaces with non-breaking spaces
+//			// to ensure consistent character width
+//			if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
+//				text = text.replace(' ', (char) 160);
 //		}
 //		textElem.setTextContent(text);
 //		mainGroup.appendChild(textElem);
