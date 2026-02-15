@@ -40,15 +40,15 @@ public final class MatrixToImageWriter {
    * as white, and &quot;true&quot; bits are rendered as black.
    */
   public static BufferedImage toBufferedImage(BitMatrix matrix, int fore, int back) {
-<span class="fc" id="L43">    int width = matrix.getWidth();</span>
-<span class="fc" id="L44">    int height = matrix.getHeight();</span>
-<span class="fc" id="L45">    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">    for (int x = 0; x &lt; width; x++) {</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">      for (int y = 0; y &lt; height; y++) {</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        image.setRGB(x, y, matrix.get(x, y) ? fore : back);</span>
+<span class="nc" id="L43">    int width = matrix.getWidth();</span>
+<span class="nc" id="L44">    int height = matrix.getHeight();</span>
+<span class="nc" id="L45">    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">    for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">      for (int y = 0; y &lt; height; y++) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        image.setRGB(x, y, matrix.get(x, y) ? fore : back);</span>
       }
     }
-<span class="fc" id="L51">    return image;</span>
+<span class="nc" id="L51">    return image;</span>
   }
 
 //  /**

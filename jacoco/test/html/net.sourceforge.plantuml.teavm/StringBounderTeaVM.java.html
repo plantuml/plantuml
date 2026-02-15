@@ -55,13 +55,20 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 //
 //		// Use SVG getBBox for height as it's more accurate for layout
 //		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);
-//		final double height = svgMetrics[1];
+//		double height = svgMetrics[1];
+//
+//		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
+//		// In this case, use font metrics to get the proper line height
+//		if (height == 0 &amp;&amp; !text.isEmpty()) {
+//			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
+//			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent
+//		}
 //
 //		return new XDimension2D(width, height);
 		// ::done
 		
 		// ::comment when __TEAVM__
-<span class="nc" id="L64">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L71">		throw new UnsupportedOperationException();</span>
 		// ::done
 
 	}
@@ -82,20 +89,20 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 		// ::done
 
 		// ::comment when __TEAVM__
-<span class="nc" id="L85">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
 		// ::done
 
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (&quot;TEAVM&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L93">			return true;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (&quot;TEAVM&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L100">			return true;</span>
 
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (&quot;SVG&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L96">			return true;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (&quot;SVG&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L103">			return true;</span>
 
-<span class="nc" id="L98">		return false;</span>
+<span class="nc" id="L105">		return false;</span>
 	}
 
 	private String getFontFamily(UFont font) {
@@ -106,7 +113,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 		// Default to sans-serif for now
 		// In a more complete implementation, we could parse font.toString()
 		// or add a method to UFont to get the family name without AWT
-<span class="nc" id="L109">		return &quot;sans-serif&quot;;</span>
+<span class="nc" id="L116">		return &quot;sans-serif&quot;;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
