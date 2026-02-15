@@ -113,7 +113,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 				return "chen";
 			case EMBEDDED_START + "chart":
 				return "chart";
-			case EMBEDDED_START + "chart":
+			case EMBEDDED_START + "packetdiag":
 				return "packetdiag";
 			default:
 				return null;
