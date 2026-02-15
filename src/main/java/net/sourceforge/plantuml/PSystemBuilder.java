@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,8 +30,8 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
- * 
+ *
+ *
  */
 package net.sourceforge.plantuml;
 
@@ -94,6 +94,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
+import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -234,6 +235,7 @@ public class PSystemBuilder {
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new ChartDiagramFactory());
+		factories.add(new PacketDiagramFactory());
 
 		// ::uncomment when __CORE__
 		// factories.add(new PSystemSudokuFactory());

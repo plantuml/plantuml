@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.core;
 public enum DiagramType {
 	// ::remove folder when __HAXE__
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,
-	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, CHART, UNKNOWN;
+	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, CHART, PACKET, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String text) {
 		for (int i = 0; i < text.length(); i++) {
@@ -151,6 +151,8 @@ public enum DiagramType {
 		case 'p':
 			if (check("project", text, p))
 				return PROJECT;
+			if (check("packetdiag", text, p))
+				return PACKET;
 			return UNKNOWN;
 
 		case 'r':

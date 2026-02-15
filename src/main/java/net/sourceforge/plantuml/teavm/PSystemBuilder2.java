@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
+import net.sourceforge.plantuml.chart.ChartDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
+import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -71,6 +73,8 @@ public class PSystemBuilder2 {
 		factories.add(new NwDiagramFactory(DiagramType.UML));
 		factories.add(new PSystemSudokuFactory());
 		factories.add(new TimingDiagramFactory());
+		factories.add(new ChartDiagramFactory());
+		factories.add(new PacketDiagramFactory());
 	}
 
 	public Diagram createDiagram(String[] split) {

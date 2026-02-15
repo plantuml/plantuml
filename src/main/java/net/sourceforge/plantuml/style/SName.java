@@ -122,6 +122,7 @@ public enum SName {
 	node, //
 	note, //
 	nwdiagDiagram, //
+	packetdiagDiagram, //
 	objectDiagram, //
 	object, //
 	package_, //
