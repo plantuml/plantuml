@@ -178,64 +178,60 @@ public class SpriteMonochrome implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
-		// ::revert when __TEAVM__
-<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		if (backcolor == null || backcolor.isTransparent())</span>
-<span class="fc" id="L183">			backcolor = HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">		if (backcolor == null || backcolor.isTransparent())</span>
+<span class="fc" id="L182">			backcolor = HColors.WHITE.withDark(HColors.BLACK);</span>
 
-<span class="pc bpc" id="L185" title="1 of 4 branches missed.">		if (color == null || color.isTransparent())</span>
-<span class="fc" id="L186">			color = HColors.BLACK.withDark(HColors.WHITE);</span>
+<span class="pc bpc" id="L184" title="1 of 4 branches missed.">		if (color == null || color.isTransparent())</span>
+<span class="fc" id="L185">			color = HColors.BLACK.withDark(HColors.WHITE);</span>
 
-<span class="fc" id="L188">		final PortableImage im = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);</span>
-<span class="fc" id="L189">		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');</span>
-<span class="fc" id="L190">		double maxCoef = 0;</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">			for (int line = 0; line &lt; height; line++)</span>
-<span class="fc" id="L193">				maxCoef = Math.max(maxCoef, 1.0 * gray[line][col] / (grayLevel - 1));</span>
+<span class="fc" id="L187">		final PortableImage im = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L188">		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');</span>
+<span class="fc" id="L189">		double maxCoef = 0;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			for (int line = 0; line &lt; height; line++)</span>
+<span class="fc" id="L192">				maxCoef = Math.max(maxCoef, 1.0 * gray[line][col] / (grayLevel - 1));</span>
 
-<span class="fc bfc" id="L195" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">			for (int line = 0; line &lt; height; line++) {</span>
-<span class="fc" id="L197">				final int grayValue = gray[line][col];</span>
-<span class="fc" id="L198">				final double coef = 1.0 * grayValue / (grayLevel - 1);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (int col = 0; col &lt; width; col++)</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">			for (int line = 0; line &lt; height; line++) {</span>
+<span class="fc" id="L196">				final int grayValue = gray[line][col];</span>
+<span class="fc" id="L197">				final double coef = 1.0 * grayValue / (grayLevel - 1);</span>
 				final int alpha;
-<span class="fc bfc" id="L200" title="All 2 branches covered.">				if (coef &gt; maxCoef / 4)</span>
-<span class="fc" id="L201">					alpha = 255;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">				if (coef &gt; maxCoef / 4)</span>
+<span class="fc" id="L200">					alpha = 255;</span>
 				else
-<span class="fc" id="L203">					alpha = (int) (255 * (coef * 4 / maxCoef));</span>
-<span class="fc" id="L204">				final XColor c = gradient.getColor(colorMapper, coef, alpha);</span>
-<span class="fc" id="L205">				im.setRGB(col, line, c.getRGB());</span>
+<span class="fc" id="L202">					alpha = (int) (255 * (coef * 4 / maxCoef));</span>
+<span class="fc" id="L203">				final XColor c = gradient.getColor(colorMapper, coef, alpha);</span>
+<span class="fc" id="L204">				im.setRGB(col, line, c.getRGB());</span>
 			}
 
-<span class="fc" id="L208">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
-		
-		// return null;
-		// ::done
+<span class="fc" id="L207">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
 	}
 
 	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
-<span class="fc" id="L216">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L212">		return new AbstractTextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L219">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
-<span class="fc" id="L221">				ug.draw(image.scale(scale));</span>
-<span class="fc" id="L222">			}</span>
+<span class="fc" id="L215">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
+<span class="fc" id="L217">				ug.draw(image.scale(scale));</span>
+<span class="fc" id="L218">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L225">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
+<span class="fc" id="L221">				return new XDimension2D(getWidth() * scale, getHeight() * scale);</span>
 			}
 		};
 	}
 
 	public void exportSprite1(OutputStream fos) throws IOException {
-<span class="nc bnc" id="L231" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
-<span class="nc" id="L233">				int b1 = this.getGray(x, y);</span>
-<span class="nc bnc" id="L234" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
-<span class="nc" id="L235">				fos.write(b1 * 16 + b2);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (int y = 0; y &lt; this.getHeight(); y += 2)</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			for (int x = 0; x &lt; this.getWidth(); x += 1) {</span>
+<span class="nc" id="L229">				int b1 = this.getGray(x, y);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">				int b2 = y + 1 &lt; this.getHeight() ? this.getGray(x, y + 1) : b1;</span>
+<span class="nc" id="L231">				fos.write(b1 * 16 + b2);</span>
 			}
 
-<span class="nc" id="L238">	}</span>
+<span class="nc" id="L234">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

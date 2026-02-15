@@ -413,6 +413,36 @@ package net.sourceforge.plantuml.teavm;
 //		textElem.setTextContent(String.valueOf(c));
 //		mainGroup.appendChild(textElem);
 //	}
+//
+//	// ========================================================================
+//	// Image drawing
+//	// ========================================================================
+//
+//	/**
+//	 * Draws an image at the specified position using a data URL.
+//	 * The image is embedded directly in the SVG as a base64-encoded PNG.
+//	 * 
+//	 * @param dataUrl PNG data URL (data:image/png;base64,...)
+//	 * @param x       X position
+//	 * @param y       Y position
+//	 * @param width   Image width
+//	 * @param height  Image height
+//	 */
+//	public void drawImage(String dataUrl, double x, double y, int width, int height) {
+//		Element image = createSvgElement(&quot;image&quot;);
+//		image.setAttribute(&quot;x&quot;, format(x));
+//		image.setAttribute(&quot;y&quot;, format(y));
+//		image.setAttribute(&quot;width&quot;, String.valueOf(width));
+//		image.setAttribute(&quot;height&quot;, String.valueOf(height));
+//		// Use href for SVG 2.0 compatibility (xlink:href is deprecated)
+//		image.setAttribute(&quot;href&quot;, dataUrl);
+//		// Also set xlink:href for older browser compatibility
+//		setXlinkHref(image, dataUrl);
+//		mainGroup.appendChild(image);
+//	}
+//
+//	@JSBody(params = { &quot;element&quot;, &quot;href&quot; }, script = &quot;element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', href);&quot;)
+//	private static native void setXlinkHref(Element element, String href);
 	
 	// ::done
 

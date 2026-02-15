@@ -10349,10 +10349,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>38</Ca>
-                <Ce>5</Ce>
+                <Ce>8</Ce>
                 <A>0</A>
-                <I>0.12</I>
-                <D>0.88</D>
+                <I>0.17</I>
+                <D>0.83</D>
                 <V>1</V>
             </Stats>
 
@@ -10375,7 +10375,10 @@
                 <Package>java.awt</Package>
                 <Package>java.awt.geom</Package>
                 <Package>java.awt.image</Package>
+                <Package>java.io</Package>
                 <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>javax.imageio</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
             </DependsUpon>
 
@@ -20005,8 +20008,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>13</ConcreteClasses>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>30</Ce>
@@ -20028,6 +20031,9 @@
                 </Class>
                 <Class sourceFile="DriverEllipseTeaVM.java">
                     net.sourceforge.plantuml.teavm.DriverEllipseTeaVM
+                </Class>
+                <Class sourceFile="DriverImageTeaVM.java">
+                    net.sourceforge.plantuml.teavm.DriverImageTeaVM
                 </Class>
                 <Class sourceFile="DriverLineTeaVM.java">
                     net.sourceforge.plantuml.teavm.DriverLineTeaVM

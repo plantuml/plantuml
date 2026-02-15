@@ -6915,11 +6915,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 38
-    Ce: 5
+    Ce: 8
 
     A: 0
-    I: 0.12
-    D: 0.88
+    I: 0.17
+    D: 0.83
 
 Abstract Classes:
 
@@ -6932,7 +6932,10 @@ Depends Upon:
     java.awt
     java.awt.geom
     java.awt.image
+    java.io
     java.lang
+    java.util
+    javax.imageio
     net.sourceforge.plantuml.klimt.geom
 
 Used By:
@@ -13376,8 +13379,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 13
-    Concrete Classes: 13
+    Total Classes: 14
+    Concrete Classes: 14
     Abstract Classes: 0
 
     Ca: 0
@@ -13393,6 +13396,7 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.DriverCenteredCharacterTeaVM
     net.sourceforge.plantuml.teavm.DriverDotPathTeaVM
     net.sourceforge.plantuml.teavm.DriverEllipseTeaVM
+    net.sourceforge.plantuml.teavm.DriverImageTeaVM
     net.sourceforge.plantuml.teavm.DriverLineTeaVM
     net.sourceforge.plantuml.teavm.DriverPathTeaVM
     net.sourceforge.plantuml.teavm.DriverPolygonTeaVM
@@ -17412,7 +17416,7 @@ java.awt.event,0,0,2,0,0,0,1,1
 java.awt.font,0,0,7,0,0,0,1,1
 java.awt.geom,0,0,17,0,0,0,1,1
 java.awt.image,0,0,17,0,0,0,1,1
-java.io,0,0,125,0,0,0,1,1
+java.io,0,0,126,0,0,0,1,1
 java.lang,0,0,238,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,8,0,0,0,1,1
@@ -17428,7 +17432,7 @@ java.text,0,0,9,0,0,0,1,1
 java.time,0,0,13,0,0,0,1,1
 java.time.format,0,0,2,0,0,0,1,1
 java.time.temporal,0,0,1,0,0,0,1,1
-java.util,0,0,193,0,0,0,1,1
+java.util,0,0,194,0,0,0,1,1
 java.util.concurrent,0,0,10,0,0,0,1,1
 java.util.concurrent.atomic,0,0,12,0,0,0,1,1
 java.util.concurrent.locks,0,0,2,0,0,0,1,1
@@ -17440,7 +17444,7 @@ java.util.regex,0,0,34,0,0,0,1,1
 java.util.zip,0,0,5,0,0,0,1,1
 javax.crypto,0,0,1,0,0,0,1,1
 javax.crypto.spec,0,0,1,0,0,0,1,1
-javax.imageio,0,0,3,0,0,0,1,1
+javax.imageio,0,0,4,0,0,0,1,1
 javax.imageio.event,0,0,1,0,0,0,1,1
 javax.imageio.metadata,0,0,1,0,0,0,1,1
 javax.imageio.stream,0,0,3,0,0,0,1,1
@@ -17547,7 +17551,7 @@ net.sourceforge.plantuml.jcckit,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,5,30,0,0.86,0.14,1
 net.sourceforge.plantuml.klimt,26,10,85,15,0.38,0.15,0.47,1
-net.sourceforge.plantuml.klimt.awt,3,0,38,5,0,0.12,0.88,1
+net.sourceforge.plantuml.klimt.awt,3,0,38,8,0,0.17,0.83,1
 net.sourceforge.plantuml.klimt.color,32,2,107,14,0.06,0.12,0.82,1
 net.sourceforge.plantuml.klimt.compress,14,2,5,10,0.14,0.67,0.19,1
 net.sourceforge.plantuml.klimt.creole,23,4,85,24,0.17,0.22,0.61,1
@@ -17637,7 +17641,7 @@ net.sourceforge.plantuml.svek.extremity,56,4,5,11,0.07,0.69,0.24,1
 net.sourceforge.plantuml.svek.image,52,2,16,25,0.04,0.61,0.35,1
 net.sourceforge.plantuml.swing,42,0,0,30,0,1,0,1
 net.sourceforge.plantuml.syntax,3,0,3,11,0,0.79,0.21,1
-net.sourceforge.plantuml.teavm,13,0,0,30,0,1,0,1
+net.sourceforge.plantuml.teavm,14,0,0,30,0,1,0,1
 net.sourceforge.plantuml.teavm.browser,1,0,0,1,0,1,0,1
 net.sourceforge.plantuml.telnet,2,0,0,6,0,1,0,1
 net.sourceforge.plantuml.text,9,1,52,9,0.11,0.15,0.74,1

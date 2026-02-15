@@ -4,6 +4,27 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+// ::comment when __TEAVM__
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+import javax.imageio.ImageIO;
+// ::done
+
+// ::uncomment when __TEAVM__
+//import org.teavm.jso.JSBody;
+//import org.teavm.jso.canvas.CanvasImageSource;
+//import org.teavm.jso.canvas.CanvasRenderingContext2D;
+//import org.teavm.jso.canvas.ImageData;
+//import org.teavm.jso.dom.html.HTMLCanvasElement;
+//import org.teavm.jso.dom.html.HTMLDocument;
+//import org.teavm.jso.typedarrays.Uint8ClampedArray;
+// ::done
+
+/**
+ * Portable image abstraction that works both in standard Java (using BufferedImage)
+ * and in TeaVM (using an in-memory pixel array with browser canvas for PNG export).
+ */
 public class PortableImage {
 
 	// ::comment when __TEAVM__
@@ -13,52 +34,81 @@ public class PortableImage {
 
 	private final BufferedImage image;
 
-<span class="fc" id="L16">	public PortableImage(int width, int height, int imageType) {</span>
-<span class="fc" id="L17">		this.image = new BufferedImage(width, height, imageType);</span>
-<span class="fc" id="L18">	}</span>
+<span class="fc" id="L37">	public PortableImage(int width, int height, int imageType) {</span>
+<span class="fc" id="L38">		this.image = new BufferedImage(width, height, imageType);</span>
+<span class="fc" id="L39">	}</span>
 
-<span class="fc" id="L20">	public PortableImage(BufferedImage image) {</span>
-<span class="fc" id="L21">		this.image = image;</span>
-<span class="fc" id="L22">	}</span>
+<span class="fc" id="L41">	public PortableImage(BufferedImage image) {</span>
+<span class="fc" id="L42">		this.image = image;</span>
+<span class="fc" id="L43">	}</span>
 
 	public int getWidth() {
-<span class="fc" id="L25">		return image.getWidth();</span>
+<span class="fc" id="L46">		return image.getWidth();</span>
 	}
 
 	public int getHeight() {
-<span class="fc" id="L29">		return image.getHeight();</span>
+<span class="fc" id="L50">		return image.getHeight();</span>
 	}
 
 	public int getRGB(int x, int y) {
-<span class="fc" id="L33">		return image.getRGB(x, y);</span>
+<span class="fc" id="L54">		return image.getRGB(x, y);</span>
 	}
 
 	public void setRGB(int x, int y, int rgb) {
-<span class="fc" id="L37">		image.setRGB(x, y, rgb);</span>
-<span class="fc" id="L38">	}</span>
+<span class="fc" id="L58">		image.setRGB(x, y, rgb);</span>
+<span class="fc" id="L59">	}</span>
 
 	public int getType() {
-<span class="fc" id="L41">		return image.getType();</span>
+<span class="fc" id="L62">		return image.getType();</span>
 	}
 
 	public BufferedImage getBufferedImage() {
-<span class="fc" id="L45">		return image;</span>
+<span class="fc" id="L66">		return image;</span>
 	}
 
 	public PortableImage getSubimage(int x, int y, int width, int height) {
-<span class="fc" id="L49">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
+<span class="fc" id="L70">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
 	}
 
 	public Graphics2D createGraphics() {
-<span class="fc" id="L53">		return image.createGraphics();</span>
+<span class="fc" id="L74">		return image.createGraphics();</span>
 	}
 
 	public int getTransparency() {
-<span class="nc" id="L57">		return image.getTransparency();</span>
+<span class="nc" id="L78">		return image.getTransparency();</span>
 	}
 
 	public Graphics getGraphics() {
-<span class="nc" id="L61">		return image.getGraphics();</span>
+<span class="nc" id="L82">		return image.getGraphics();</span>
+	}
+	
+	/**
+	 * Converts this image to a PNG data URL (data:image/png;base64,...).
+	 * In standard Java, uses ImageIO to encode the BufferedImage.
+	 * 
+	 * @return PNG data URL string
+	 */
+	public String toPngDataUrl() {
+		try {
+<span class="nc" id="L93">			ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L94">			ImageIO.write(image, &quot;PNG&quot;, baos);</span>
+<span class="nc" id="L95">			byte[] bytes = baos.toByteArray();</span>
+<span class="nc" id="L96">			String base64 = Base64.getEncoder().encodeToString(bytes);</span>
+<span class="nc" id="L97">			return &quot;data:image/png;base64,&quot; + base64;</span>
+<span class="nc" id="L98">		} catch (IOException e) {</span>
+<span class="nc" id="L99">			throw new RuntimeException(&quot;Failed to encode image as PNG&quot;, e);</span>
+		}
+	}
+	
+	/**
+	 * Returns all pixels as an ARGB int array (row-major order).
+	 * 
+	 * @return pixel array of size width * height
+	 */
+	public int[] getPixels() {
+<span class="nc" id="L109">		int w = image.getWidth();</span>
+<span class="nc" id="L110">		int h = image.getHeight();</span>
+<span class="nc" id="L111">		return image.getRGB(0, 0, w, h, null, 0, w);</span>
 	}
 	// ::done
 
@@ -70,11 +120,33 @@ public class PortableImage {
 //	private final int width;
 //	private final int height;
 //	private final int imageType;
+//	private final int[] pixels;
 //
 //	public PortableImage(int width, int height, int imageType) {
 //		this.width = width;
 //		this.height = height;
 //		this.imageType = imageType;
+//		this.pixels = new int[width * height];
+//		// Initialize with default color based on type
+//		if (imageType == TYPE_INT_RGB) {
+//			// Default to white for RGB
+//			java.util.Arrays.fill(pixels, 0xFFFFFFFF);
+//		} else {
+//			// Default to transparent for ARGB
+//			java.util.Arrays.fill(pixels, 0x00000000);
+//		}
+//	}
+//
+//	/**
+//	 * Creates a PortableImage from an existing pixel array.
+//	 * The array is copied, not referenced.
+//	 */
+//	public PortableImage(int width, int height, int imageType, int[] sourcePixels) {
+//		this.width = width;
+//		this.height = height;
+//		this.imageType = imageType;
+//		this.pixels = new int[width * height];
+//		System.arraycopy(sourcePixels, 0, this.pixels, 0, Math.min(sourcePixels.length, this.pixels.length));
 //	}
 //
 //	public int getWidth() {
@@ -86,23 +158,93 @@ public class PortableImage {
 //	}
 //
 //	public int getRGB(int x, int y) {
-//		return 0;
+//		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)
+//			return 0;
+//		return pixels[y * width + x];
 //	}
 //
 //	public void setRGB(int x, int y, int rgb) {
+//		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)
+//			return;
+//		pixels[y * width + x] = rgb;
 //	}
 //
 //	public int getType() {
 //		return imageType;
 //	}
 //
-//	public PortableImage getSubimage(int x, int y, int width, int height) {
-//		return this;
+//	public PortableImage getSubimage(int x, int y, int w, int h) {
+//		// Clamp bounds
+//		if (x &lt; 0) { w += x; x = 0; }
+//		if (y &lt; 0) { h += y; y = 0; }
+//		if (x + w &gt; width) w = width - x;
+//		if (y + h &gt; height) h = height - y;
+//		if (w &lt;= 0 || h &lt;= 0)
+//			return new PortableImage(1, 1, imageType);
+//		
+//		int[] subPixels = new int[w * h];
+//		for (int row = 0; row &lt; h; row++) {
+//			int srcOffset = (y + row) * width + x;
+//			int dstOffset = row * w;
+//			System.arraycopy(pixels, srcOffset, subPixels, dstOffset, w);
+//		}
+//		return new PortableImage(w, h, imageType, subPixels);
 //	}
 //
 //	public int getTransparency() {
-//		return 0;
+//		// 1 = OPAQUE, 2 = BITMASK, 3 = TRANSLUCENT
+//		return (imageType == TYPE_INT_RGB) ? 1 : 3;
 //	}
+//
+//	/**
+//	 * Returns all pixels as an ARGB int array (row-major order).
+//	 * Returns a copy to prevent external modification.
+//	 * 
+//	 * @return pixel array of size width * height
+//	 */
+//	public int[] getPixels() {
+//		int[] copy = new int[pixels.length];
+//		System.arraycopy(pixels, 0, copy, 0, pixels.length);
+//		return copy;
+//	}
+//
+//	/**
+//	 * Converts this image to a PNG data URL using browser's canvas API.
+//	 * Creates an offscreen canvas, writes pixels via ImageData, and exports as PNG.
+//	 * 
+//	 * @return PNG data URL string (data:image/png;base64,...)
+//	 */
+//	public String toPngDataUrl() {
+//		HTMLDocument doc = HTMLDocument.current();
+//		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement(&quot;canvas&quot;);
+//		canvas.setWidth(width);
+//		canvas.setHeight(height);
+//
+//		CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) canvas.getContext(&quot;2d&quot;);
+//		ImageData imageData = ctx.createImageData(width, height);
+//		Uint8ClampedArray data = imageData.getData();
+//
+//		// Convert ARGB (0xAARRGGBB) to RGBA bytes
+//		int p = 0;
+//		for (int i = 0; i &lt; pixels.length; i++) {
+//			int c = pixels[i];
+//			int a = (c &gt;&gt;&gt; 24) &amp; 0xFF;
+//			int r = (c &gt;&gt;&gt; 16) &amp; 0xFF;
+//			int g = (c &gt;&gt;&gt; 8) &amp; 0xFF;
+//			int b = c &amp; 0xFF;
+//
+//			data.set(p++, r);
+//			data.set(p++, g);
+//			data.set(p++, b);
+//			data.set(p++, a);
+//		}
+//
+//		ctx.putImageData(imageData, 0, 0);
+//		return canvasToDataUrl(canvas);
+//	}
+//
+//	@JSBody(params = { &quot;canvas&quot; }, script = &quot;return canvas.toDataURL('image/png');&quot;)
+//	private static native String canvasToDataUrl(HTMLCanvasElement canvas);
 	// ::done
 
 }

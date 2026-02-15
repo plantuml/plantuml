@@ -92,25 +92,19 @@ public class UImage implements UShape {
 	}
 
 	public UImage muteColor(XColor newColor) {
-		// ::revert when __TEAVM__
-<span class="nc" id="L96">		return new UImage(image.muteColor(newColor), rawFileName, formula);</span>
-		// return this;
-		// ::done
+<span class="nc" id="L95">		return new UImage(image.muteColor(newColor), rawFileName, formula);</span>
 	}
 
 	public UImage muteTransparentColor(XColor newColor) {
-		// ::revert when __TEAVM__
-<span class="nc" id="L103">		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);</span>
-		// return this;
-		// ::done
+<span class="nc" id="L99">		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);</span>
 	}
 
 	public UImage monochrome() {
-<span class="nc" id="L109">		return new UImage(image.monochrome(), rawFileName, formula);</span>
+<span class="nc" id="L103">		return new UImage(image.monochrome(), rawFileName, formula);</span>
 	}
 
 	public double getScale() {
-<span class="nc" id="L113">		return image.getScale();</span>
+<span class="nc" id="L107">		return image.getScale();</span>
 	}
 
 }
