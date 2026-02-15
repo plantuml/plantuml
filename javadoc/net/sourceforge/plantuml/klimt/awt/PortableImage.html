@@ -169,14 +169,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWidth()" class="member-name-link">getWidth</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRGB(int,int,int)" class="member-name-link">setRGB</a><wbr>(int&nbsp;x,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PortableImage.html" title="class in net.sourceforge.plantuml.klimt.awt">PortableImage</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scale(double,int)" class="member-name-link">scale</a><wbr>(double&nbsp;scaleFactor,
+ int&nbsp;interpolationType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Scales this image by the given factor using the specified interpolation type.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRGB(int,int,int)" class="member-name-link">setRGB</a><wbr>(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;rgb)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toPngDataUrl()" class="member-name-link">toPngDataUrl</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toPngDataUrl()" class="member-name-link">toPngDataUrl</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Converts this image to a PNG data URL (data:image/png;base64,...).</div>
 </div>
 </div>
@@ -354,6 +360,21 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>pixel array of size width * height</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="scale(double,int)">
+<h3>scale</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PortableImage.html" title="class in net.sourceforge.plantuml.klimt.awt">PortableImage</a></span>&nbsp;<span class="element-name">scale</span><wbr><span class="parameters">(double&nbsp;scaleFactor,
+ int&nbsp;interpolationType)</span></div>
+<div class="block">Scales this image by the given factor using the specified interpolation type.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scaleFactor</code> - the scale factor (e.g., 2.0 for double size)</dd>
+<dd><code>interpolationType</code> - AffineTransformOp interpolation type</dd>
+<dt>Returns:</dt>
+<dd>a new scaled PortableImage</dd>
 </dl>
 </section>
 </li>

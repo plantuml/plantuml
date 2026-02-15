@@ -2123,10 +2123,10 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>53</Ca>
-                <Ce>55</Ce>
+                <Ce>53</Ce>
                 <A>0.17</A>
-                <I>0.51</I>
-                <D>0.32</D>
+                <I>0.5</I>
+                <D>0.33</D>
                 <V>1</V>
             </Stats>
 
@@ -2157,8 +2157,6 @@
             <DependsUpon>
                 <Package>com.plantuml.api.cheerpj</Package>
                 <Package>java.awt</Package>
-                <Package>java.awt.geom</Package>
-                <Package>java.awt.image</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>

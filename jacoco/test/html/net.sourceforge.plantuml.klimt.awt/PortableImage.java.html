@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 // ::comment when __TEAVM__
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
@@ -34,52 +36,52 @@ public class PortableImage {
 
 	private final BufferedImage image;
 
-<span class="fc" id="L37">	public PortableImage(int width, int height, int imageType) {</span>
-<span class="fc" id="L38">		this.image = new BufferedImage(width, height, imageType);</span>
-<span class="fc" id="L39">	}</span>
+<span class="fc" id="L39">	public PortableImage(int width, int height, int imageType) {</span>
+<span class="fc" id="L40">		this.image = new BufferedImage(width, height, imageType);</span>
+<span class="fc" id="L41">	}</span>
 
-<span class="fc" id="L41">	public PortableImage(BufferedImage image) {</span>
-<span class="fc" id="L42">		this.image = image;</span>
-<span class="fc" id="L43">	}</span>
+<span class="fc" id="L43">	public PortableImage(BufferedImage image) {</span>
+<span class="fc" id="L44">		this.image = image;</span>
+<span class="fc" id="L45">	}</span>
 
 	public int getWidth() {
-<span class="fc" id="L46">		return image.getWidth();</span>
+<span class="fc" id="L48">		return image.getWidth();</span>
 	}
 
 	public int getHeight() {
-<span class="fc" id="L50">		return image.getHeight();</span>
+<span class="fc" id="L52">		return image.getHeight();</span>
 	}
 
 	public int getRGB(int x, int y) {
-<span class="fc" id="L54">		return image.getRGB(x, y);</span>
+<span class="fc" id="L56">		return image.getRGB(x, y);</span>
 	}
 
 	public void setRGB(int x, int y, int rgb) {
-<span class="fc" id="L58">		image.setRGB(x, y, rgb);</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L60">		image.setRGB(x, y, rgb);</span>
+<span class="fc" id="L61">	}</span>
 
 	public int getType() {
-<span class="fc" id="L62">		return image.getType();</span>
+<span class="nc" id="L64">		return image.getType();</span>
 	}
 
 	public BufferedImage getBufferedImage() {
-<span class="fc" id="L66">		return image;</span>
+<span class="fc" id="L68">		return image;</span>
 	}
 
 	public PortableImage getSubimage(int x, int y, int width, int height) {
-<span class="fc" id="L70">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
+<span class="fc" id="L72">		return new PortableImage(image.getSubimage(x, y, width, height));</span>
 	}
 
 	public Graphics2D createGraphics() {
-<span class="fc" id="L74">		return image.createGraphics();</span>
+<span class="fc" id="L76">		return image.createGraphics();</span>
 	}
 
 	public int getTransparency() {
-<span class="nc" id="L78">		return image.getTransparency();</span>
+<span class="nc" id="L80">		return image.getTransparency();</span>
 	}
 
 	public Graphics getGraphics() {
-<span class="nc" id="L82">		return image.getGraphics();</span>
+<span class="nc" id="L84">		return image.getGraphics();</span>
 	}
 	
 	/**
@@ -90,13 +92,13 @@ public class PortableImage {
 	 */
 	public String toPngDataUrl() {
 		try {
-<span class="nc" id="L93">			ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L94">			ImageIO.write(image, &quot;PNG&quot;, baos);</span>
-<span class="nc" id="L95">			byte[] bytes = baos.toByteArray();</span>
-<span class="nc" id="L96">			String base64 = Base64.getEncoder().encodeToString(bytes);</span>
-<span class="nc" id="L97">			return &quot;data:image/png;base64,&quot; + base64;</span>
-<span class="nc" id="L98">		} catch (IOException e) {</span>
-<span class="nc" id="L99">			throw new RuntimeException(&quot;Failed to encode image as PNG&quot;, e);</span>
+<span class="nc" id="L95">			ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L96">			ImageIO.write(image, &quot;PNG&quot;, baos);</span>
+<span class="nc" id="L97">			byte[] bytes = baos.toByteArray();</span>
+<span class="nc" id="L98">			String base64 = Base64.getEncoder().encodeToString(bytes);</span>
+<span class="nc" id="L99">			return &quot;data:image/png;base64,&quot; + base64;</span>
+<span class="nc" id="L100">		} catch (IOException e) {</span>
+<span class="nc" id="L101">			throw new RuntimeException(&quot;Failed to encode image as PNG&quot;, e);</span>
 		}
 	}
 	
@@ -106,9 +108,26 @@ public class PortableImage {
 	 * @return pixel array of size width * height
 	 */
 	public int[] getPixels() {
-<span class="nc" id="L109">		int w = image.getWidth();</span>
-<span class="nc" id="L110">		int h = image.getHeight();</span>
-<span class="nc" id="L111">		return image.getRGB(0, 0, w, h, null, 0, w);</span>
+<span class="nc" id="L111">		int w = image.getWidth();</span>
+<span class="nc" id="L112">		int h = image.getHeight();</span>
+<span class="nc" id="L113">		return image.getRGB(0, 0, w, h, null, 0, w);</span>
+	}
+
+	/**
+	 * Scales this image by the given factor using the specified interpolation type.
+	 * 
+	 * @param scaleFactor the scale factor (e.g., 2.0 for double size)
+	 * @param interpolationType AffineTransformOp interpolation type
+	 * @return a new scaled PortableImage
+	 */
+	public PortableImage scale(double scaleFactor, int interpolationType) {
+<span class="fc" id="L124">		final int w = (int) Math.round(image.getWidth() * scaleFactor);</span>
+<span class="fc" id="L125">		final int h = (int) Math.round(image.getHeight() * scaleFactor);</span>
+<span class="fc" id="L126">		final BufferedImage scaled = new BufferedImage(w, h, image.getType());</span>
+<span class="fc" id="L127">		final AffineTransform at = new AffineTransform();</span>
+<span class="fc" id="L128">		at.scale(scaleFactor, scaleFactor);</span>
+<span class="fc" id="L129">		final AffineTransformOp scaleOp = new AffineTransformOp(at, interpolationType);</span>
+<span class="fc" id="L130">		return new PortableImage(scaleOp.filter(image, scaled));</span>
 	}
 	// ::done
 
@@ -245,6 +264,95 @@ public class PortableImage {
 //
 //	@JSBody(params = { &quot;canvas&quot; }, script = &quot;return canvas.toDataURL('image/png');&quot;)
 //	private static native String canvasToDataUrl(HTMLCanvasElement canvas);
+//
+//	/**
+//	 * Scales this image by the given factor using the specified interpolation type.
+//	 * 
+//	 * @param scaleFactor the scale factor (e.g., 2.0 for double size)
+//	 * @param interpolationType 1=nearest-neighbor, 2=bilinear
+//	 * @return a new scaled PortableImage
+//	 */
+//	public PortableImage scale(double scaleFactor, int interpolationType) {
+//		final int dstW = (int) Math.round(width * scaleFactor);
+//		final int dstH = (int) Math.round(height * scaleFactor);
+//
+//		if (dstW &lt;= 0 || dstH &lt;= 0)
+//			return new PortableImage(1, 1, imageType);
+//
+//		final int[] dstPixels = new int[dstW * dstH];
+//
+//		if (interpolationType == 2)
+//			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);
+//		else
+//			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);
+//
+//		return new PortableImage(dstW, dstH, imageType, dstPixels);
+//	}
+//
+//	/**
+//	 * Nearest-neighbor scaling - fast but can be blocky.
+//	 */
+//	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+//		for (int y = 0; y &lt; dstH; y++) {
+//			final int srcY = y * srcH / dstH;
+//			for (int x = 0; x &lt; dstW; x++) {
+//				final int srcX = x * srcW / dstW;
+//				dst[y * dstW + x] = src[srcY * srcW + srcX];
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * Bilinear interpolation scaling - smoother results.
+//	 */
+//	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+//		final double xRatio = (double) (srcW - 1) / dstW;
+//		final double yRatio = (double) (srcH - 1) / dstH;
+//
+//		for (int y = 0; y &lt; dstH; y++) {
+//			final double srcYf = y * yRatio;
+//			final int y0 = (int) srcYf;
+//			final int y1 = Math.min(y0 + 1, srcH - 1);
+//			final double yFrac = srcYf - y0;
+//
+//			for (int x = 0; x &lt; dstW; x++) {
+//				final double srcXf = x * xRatio;
+//				final int x0 = (int) srcXf;
+//				final int x1 = Math.min(x0 + 1, srcW - 1);
+//				final double xFrac = srcXf - x0;
+//
+//				// Get 4 neighboring pixels
+//				final int c00 = src[y0 * srcW + x0];
+//				final int c10 = src[y0 * srcW + x1];
+//				final int c01 = src[y1 * srcW + x0];
+//				final int c11 = src[y1 * srcW + x1];
+//
+//				// Interpolate each channel
+//				final int a = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 24);
+//				final int r = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 16);
+//				final int g = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 8);
+//				final int b = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 0);
+//
+//				dst[y * dstW + x] = (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * Bilinear interpolation for a single color channel.
+//	 */
+//	private static int interpolateChannel(int c00, int c10, int c01, int c11, double xFrac, double yFrac, int shift) {
+//		final int v00 = (c00 &gt;&gt; shift) &amp; 0xFF;
+//		final int v10 = (c10 &gt;&gt; shift) &amp; 0xFF;
+//		final int v01 = (c01 &gt;&gt; shift) &amp; 0xFF;
+//		final int v11 = (c11 &gt;&gt; shift) &amp; 0xFF;
+//
+//		final double top = v00 + xFrac * (v10 - v00);
+//		final double bottom = v01 + xFrac * (v11 - v01);
+//		final double result = top + yFrac * (bottom - top);
+//
+//		return Math.min(255, Math.max(0, (int) Math.round(result)));
+//	}
 	// ::done
 
 }
