@@ -180,6 +180,9 @@ public class SvgGraphicsTeaVM {
 //		textElem.setAttribute("font-family", fontFamily);
 //		textElem.setAttribute("font-size", String.valueOf(fontSize));
 //		textElem.setAttribute("fill", fillColor);
+//		// Preserve whitespace (multiple spaces, tabs, etc.)
+//		textElem.setAttribute("xml:space", "preserve");
+//		textElem.setAttribute("style", "white-space: pre");
 //		if (!"normal".equals(fontWeight)) {
 //			textElem.setAttribute("font-weight", fontWeight);
 //		}
