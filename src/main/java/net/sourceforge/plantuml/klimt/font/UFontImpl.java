@@ -97,6 +97,11 @@ public final class UFontImpl implements UFont {
 	public String getFamily(String text, UFontContext context) {
 		// ::uncomment when __TEAVM__
 //		final String fullDefinition = fontStack.getFullDefinition();
+//		// Map Java font name to web-safe equivalent
+//		// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
+//		if ("monospaced".equalsIgnoreCase(fullDefinition))
+//			return "monospace";
+//
 //		return fullDefinition.replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
 		// ::done
 		// ::comment when __TEAVM__

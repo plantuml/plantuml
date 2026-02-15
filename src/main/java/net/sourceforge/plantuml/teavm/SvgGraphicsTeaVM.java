@@ -169,11 +169,11 @@ public class SvgGraphicsTeaVM {
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
-//		drawText(text, x, y, fontFamily, fontSize, "normal", "normal");
+//		drawText(text, x, y, fontFamily, fontSize, null, null, null);
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-//			String fontStyle) {
+//			String fontStyle, String textDecoration) {
 //		Element textElem = createSvgElement("text");
 //		textElem.setAttribute("x", format(x));
 //		textElem.setAttribute("y", format(y));
@@ -182,24 +182,22 @@ public class SvgGraphicsTeaVM {
 //		// Preserve whitespace (multiple spaces, tabs, etc.)
 //		textElem.setAttribute("xml:space", "preserve");
 //		textElem.setAttribute("style", "white-space: pre");
-//		if (!"normal".equals(fontWeight)) {
+//		if (fontWeight != null) {
 //			textElem.setAttribute("font-weight", fontWeight);
 //		}
-//		if (!"normal".equals(fontStyle)) {
+//		if (fontStyle != null) {
 //			textElem.setAttribute("font-style", fontStyle);
 //		}
+//		if (textDecoration != null) {
+//			textElem.setAttribute("text-decoration", textDecoration);
+//		}
 //		if (fontFamily != null) {
-//			// Map Java font name to web-safe equivalent
-//			// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
-//			if ("monospaced".equalsIgnoreCase(fontFamily))
-//				fontFamily = "monospace";
-//
 //			textElem.setAttribute("font-family", fontFamily);
 //
 //			// For monospace fonts, replace spaces with non-breaking spaces
 //			// to ensure consistent character width
-//			if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
-//				text = text.replace(' ', (char) 160);
+//			// if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
+//			//	text = text.replace(' ', (char) 160);
 //		}
 //		textElem.setTextContent(text);
 //		mainGroup.appendChild(textElem);

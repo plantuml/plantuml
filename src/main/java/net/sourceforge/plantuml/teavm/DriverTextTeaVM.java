@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.teavm;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
@@ -52,22 +54,64 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 	}
 
 	@Override
-	public void draw(UText text, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
+	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
 		// ::uncomment when __TEAVM__
-//		final FontConfiguration fontConfig = text.getFontConfiguration();
-//		final UFont font = fontConfig.getFont();
+//		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+//		if (fontConfiguration.getColor().isTransparent())
+//			return;
+//
+//		final UFont font = fontConfiguration.getFont();
 //		
 //		// Set text color
-//		final String color = fontConfig.getColor().toSvg(mapper);
+//		final String color = fontConfiguration.getColor().toSvg(mapper);
 //		svg.setFillColor(color);
 //
 //		// Extract font properties
 //		final String fontFamily = font.getFamily(null, null);
 //		final int fontSize = font.getSize();
-//		final String fontWeight = font.isBold() ? "bold" : "normal";
-//		final String fontStyle = font.isItalic() ? "italic" : "normal";
 //
-//		svg.drawText(text.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle);
+//		String fontWeight = null;
+//		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())
+//			fontWeight = "bold";
+//
+//		String fontStyle = null;
+//		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())
+//			fontStyle = "italic";
+//
+//		// Handle text decoration (underline, strike, wave)
+//		String textDecoration = null;
+//		HColor extraLine = null;
+//		double deltaLineY = 0;
+//
+//		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
+//				&& fontConfiguration.getUnderlineStroke().getThickness() > 0) {
+//			if (fontConfiguration.getExtendedColor() == null)
+//				textDecoration = "underline";
+//			else {
+//				extraLine = fontConfiguration.getExtendedColor();
+//				deltaLineY = font.getSize2D() / 14.0;
+//			}
+//		} else if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
+//			if (fontConfiguration.getExtendedColor() == null)
+//				textDecoration = "line-through";
+//			else {
+//				extraLine = fontConfiguration.getExtendedColor();
+//				deltaLineY = -font.getSize2D() / 4.0;
+//			}
+//		} else if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
+//			// Note: some browsers may not render wave properly
+//			textDecoration = "wavy underline";
+//		}
+//
+//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration);
+//
+//		// Draw extra line for colored underline/strike
+//		if (extraLine != null) {
+//			final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);
+//			svg.setStrokeColor(extraLine.toSvg(mapper));
+//			svg.setStrokeWidth(font.getSize2D() / 28.0);
+//			svg.drawLine(x, y + deltaLineY, x + width, y + deltaLineY);
+//		}
 		// ::done
 	}
 }

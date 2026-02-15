@@ -46,7 +46,7 @@ public class StringBounderTeaVM implements StringBounder {
 //		if (text == null || text.isEmpty())
 //			return new XDimension2D(0, 0);
 //
-//		final String fontFamily = getFontFamily(font);
+//		final String fontFamily = font.getFamily(null, null);
 //		final int fontSize = font.getSize();
 //		final String fontWeight = font.isBold() ? "bold" : "normal";
 //
@@ -79,7 +79,7 @@ public class StringBounderTeaVM implements StringBounder {
 //		if (text == null || text.isEmpty())
 //			return 0;
 //
-//		final String fontFamily = getFontFamily(font);
+//		final String fontFamily = font.getFamily(null, null);
 //		final int fontSize = font.getSize();
 //		final String fontWeight = font.isBold() ? "bold" : "normal";
 //
@@ -103,16 +103,5 @@ public class StringBounderTeaVM implements StringBounder {
 			return true;
 
 		return false;
-	}
-
-	private String getFontFamily(UFont font) {
-		// Map common Java font names to web-safe equivalents
-		// UFont doesn't expose the family name directly without AWT context,
-		// so we use a simplified mapping based on common patterns
-
-		// Default to sans-serif for now
-		// In a more complete implementation, we could parse font.toString()
-		// or add a method to UFont to get the family name without AWT
-		return "sans-serif";
 	}
 }
