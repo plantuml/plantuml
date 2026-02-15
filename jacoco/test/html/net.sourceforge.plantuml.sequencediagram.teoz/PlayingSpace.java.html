@@ -50,52 +50,52 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 public class PlayingSpace implements Bordered {
 
-<span class="nc" id="L53">	private final double startingY = 8;</span>
+<span class="fc" id="L53">	private final double startingY = 8;</span>
 	private final Real min;
 	private final Real max;
 	private final boolean isShowFootbox;
 
-<span class="nc" id="L58">	private final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">	private final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
 	private final LivingSpaces livingSpaces;
 	private final List&lt;LinkAnchor&gt; linkAnchors;
 	private final ISkinParam skinParam;
 
-<span class="nc" id="L63">	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {</span>
+<span class="fc" id="L63">	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {</span>
 
-<span class="nc" id="L65">		this.livingSpaces = tileArguments.getLivingSpaces();</span>
-<span class="nc" id="L66">		this.linkAnchors = diagram.getLinkAnchors();</span>
-<span class="nc" id="L67">		this.skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L65">		this.livingSpaces = tileArguments.getLivingSpaces();</span>
+<span class="fc" id="L66">		this.linkAnchors = diagram.getLinkAnchors();</span>
+<span class="fc" id="L67">		this.skinParam = diagram.getSkinParam();</span>
 
-<span class="nc" id="L69">		final List&lt;Real&gt; min2 = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L70">		final List&lt;Real&gt; max2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L69">		final List&lt;Real&gt; min2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L70">		final List&lt;Real&gt; max2 = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L72">		min2.add(tileArguments.getXOrigin());</span>
-<span class="nc" id="L73">		max2.add(tileArguments.getXOrigin());</span>
+<span class="fc" id="L72">		min2.add(tileArguments.getXOrigin());</span>
+<span class="fc" id="L73">		max2.add(tileArguments.getXOrigin());</span>
 
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (dolls.size() &gt; 0) {</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (dolls.size() &gt; 0) {</span>
 <span class="nc" id="L76">			min2.add(dolls.getMinX(tileArguments.getStringBounder()));</span>
 <span class="nc" id="L77">			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));</span>
 		}
 
-<span class="nc" id="L80">		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addAtLeast(0), 0);</span>
+<span class="fc" id="L80">		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addAtLeast(0), 0);</span>
 
-<span class="nc" id="L82">		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));</span>
+<span class="fc" id="L82">		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));</span>
 
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (Tile tile : tiles) {</span>
-<span class="nc" id="L85">			min2.add(tile.getMinX());</span>
-<span class="nc" id="L86">			max2.add(tile.getMaxX());</span>
-<span class="nc" id="L87">		}</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc" id="L85">			min2.add(tile.getMinX());</span>
+<span class="fc" id="L86">			max2.add(tile.getMaxX());</span>
+<span class="fc" id="L87">		}</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (LivingSpace livingSpace : livingSpaces.values()) {</span>
-<span class="nc" id="L90">			max2.add(livingSpace.getPosD(tileArguments.getStringBounder()));</span>
-<span class="nc" id="L91">			max2.add(livingSpace.getPosC2(tileArguments.getStringBounder()));</span>
-<span class="nc" id="L92">		}</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (LivingSpace livingSpace : livingSpaces.values()) {</span>
+<span class="fc" id="L90">			max2.add(livingSpace.getPosD(tileArguments.getStringBounder()));</span>
+<span class="fc" id="L91">			max2.add(livingSpace.getPosC2(tileArguments.getStringBounder()));</span>
+<span class="fc" id="L92">		}</span>
 
-<span class="nc" id="L94">		this.min = RealUtils.min(min2);</span>
-<span class="nc" id="L95">		this.max = RealUtils.max(max2);</span>
+<span class="fc" id="L94">		this.min = RealUtils.min(min2);</span>
+<span class="fc" id="L95">		this.max = RealUtils.max(max2);</span>
 
-<span class="nc" id="L97">		this.isShowFootbox = diagram.isShowFootbox();</span>
-<span class="nc" id="L98">	}</span>
+<span class="fc" id="L97">		this.isShowFootbox = diagram.isShowFootbox();</span>
+<span class="fc" id="L98">	}</span>
 
 	public void drawBackground(UGraphic ug) {
 <span class="nc" id="L101">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
@@ -149,13 +149,13 @@ public class PlayingSpace implements Bordered {
 	}
 
 	public void addConstraints() {
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (Tile tile : tiles)</span>
-<span class="nc" id="L153">			tile.addConstraints();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
+<span class="fc" id="L153">			tile.addConstraints();</span>
 
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L155">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="nc" id="L158">		return min;</span>
+<span class="fc" id="L158">		return min;</span>
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {

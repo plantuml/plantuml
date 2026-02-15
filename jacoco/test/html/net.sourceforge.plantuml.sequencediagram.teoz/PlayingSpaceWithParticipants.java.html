@@ -59,9 +59,9 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 	private double ymin;
 	private double ymax;
 
-<span class="nc" id="L62">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
-<span class="nc" id="L63">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L62">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
+<span class="fc" id="L63">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
+<span class="fc" id="L64">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 <span class="nc bnc" id="L67" title="All 2 branches missed.">		if (cacheDimension == null) {</span>
@@ -111,7 +111,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 <span class="nc" id="L111">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="nc" id="L114">		return playingSpace.getMinX(stringBounder);</span>
+<span class="fc" id="L114">		return playingSpace.getMinX(stringBounder);</span>
 	}
 
 	public int getNbPages() {
