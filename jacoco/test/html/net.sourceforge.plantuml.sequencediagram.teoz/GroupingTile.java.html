@@ -360,7 +360,7 @@ public class GroupingTile extends AbstractTile {
 <span class="fc bfc" id="L360" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
 <span class="pc bpc" id="L361" title="3 of 4 branches missed.">			if (!isParallel(tile) || result.size() == 0) {</span>
 <span class="fc" id="L362">				result.add(tile);</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">				if (tile instanceof LifeEventTile == false)</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">				if (tile instanceof LifeEventTile == false)</span>
 <span class="fc" id="L364">					pending = null;</span>
 <span class="nc bnc" id="L365" title="All 2 branches missed.">			} else if (pending == null) {</span>
 <span class="nc" id="L366">				pending = new TileParallel(stringBounder, null);</span>

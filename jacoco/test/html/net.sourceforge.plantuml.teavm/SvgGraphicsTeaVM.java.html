@@ -59,6 +59,7 @@ package net.sourceforge.plantuml.teavm;
 //	private String fillColor = &quot;#000000&quot;;
 //	private String strokeColor = &quot;#000000&quot;;
 //	private double strokeWidth = 1.0;
+//	private double[] strokeDasharray = null;
 //
 //	public SvgGraphicsTeaVM(int width, int height) {
 //		this.document = HTMLDocument.current();
@@ -97,6 +98,12 @@ package net.sourceforge.plantuml.teavm;
 //
 //	public void setStrokeWidth(double width) {
 //		this.strokeWidth = width;
+//		this.strokeDasharray = null;
+//	}
+//
+//	public void setStrokeWidth(double width, double[] dasharray) {
+//		this.strokeWidth = width;
+//		this.strokeDasharray = dasharray;
 //	}
 //
 //	public void drawRectangle(double x, double y, double width, double height) {
@@ -246,12 +253,13 @@ package net.sourceforge.plantuml.teavm;
 //	private void applyStrokeStyle(Element element) {
 //		element.setAttribute(&quot;stroke&quot;, strokeColor);
 //		element.setAttribute(&quot;stroke-width&quot;, format(strokeWidth));
+//		if (strokeDasharray != null &amp;&amp; strokeDasharray.length &gt;= 2)
+//			element.setAttribute(&quot;stroke-dasharray&quot;, format(strokeDasharray[0]) + &quot;,&quot; + format(strokeDasharray[1]));
 //	}
 //
 //	private String format(double value) {
-//		if (value == (int) value) {
+//		if (value == (int) value)
 //			return String.valueOf((int) value);
-//		}
 //		return String.format(&quot;%.2f&quot;, value).replace(',', '.');
 //	}
 //
