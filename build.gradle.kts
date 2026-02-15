@@ -102,9 +102,11 @@ repositories {
 }
 
 // Configure teavm sourceSet classpath after dependencies are declared
+// Note: teavm sourceSet compiles preprocessed sources from generated/teavm-sjpp
+// It does NOT need the main sourceSet output (which would trigger unnecessary compilation)
 sourceSets["teavm"].apply {
-	compileClasspath = teavmCompileConfig + sourceSets.main.get().output
-	runtimeClasspath = teavmCompileConfig + sourceSets.main.get().output
+	compileClasspath = teavmCompileConfig
+	runtimeClasspath = teavmCompileConfig
 }
 
 tasks.compileJava {
