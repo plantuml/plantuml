@@ -35,72 +35,72 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
-<span class="nc" id="L44">public class Version {</span>
+<span class="nc" id="L46">public class Version {</span>
 	// ::remove folder when __HAXE__
 
-	// Warning, &quot;version&quot; should be the same in gradle.properties and Version.java
-	// Any idea anyone how to magically synchronize those :-) ?
-	private static final String version = &quot;1.2026.2beta3&quot;;
-
 	public static String versionString() {
-<span class="fc" id="L52">		return version;</span>
+<span class="fc" id="L50">		return CompilationInfo.VERSION;</span>
 	}
 
 	public static String fullDescription() {
-<span class="nc" id="L56">		return &quot;PlantUML version &quot; + Version.versionString() + &quot; (&quot; + Version.compileTimeString() + &quot;)&quot;;</span>
+<span class="nc" id="L54">		return &quot;PlantUML version &quot; + Version.versionString() + &quot; (&quot; + Version.compileTimeString() + &quot;)&quot;;</span>
 	}
 
 	public static String versionString(int size) {
-<span class="fc" id="L60">		final StringBuilder sb = new StringBuilder(versionString());</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		while (sb.length() &lt; size)</span>
-<span class="fc" id="L62">			sb.append(' ');</span>
+<span class="fc" id="L58">		final StringBuilder sb = new StringBuilder(versionString());</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		while (sb.length() &lt; size)</span>
+<span class="fc" id="L60">			sb.append(' ');</span>
 
-<span class="fc" id="L64">		return sb.toString();</span>
+<span class="fc" id="L62">		return sb.toString();</span>
 	}
 
 	public static int beta() {
-<span class="nc" id="L68">		final int x = version.indexOf(&quot;beta&quot;);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (x == -1)</span>
-<span class="nc" id="L70">			return 0;</span>
-<span class="nc" id="L71">		return Integer.parseInt(version.substring(x + &quot;beta&quot;.length()));</span>
+<span class="nc" id="L66">		final int x = CompilationInfo.VERSION.indexOf(&quot;beta&quot;);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (x == -1)</span>
+<span class="nc" id="L68">			return 0;</span>
+<span class="nc" id="L69">		return Integer.parseInt(CompilationInfo.VERSION.substring(x + &quot;beta&quot;.length()));</span>
 	}
 
 	public static String etag() {
-<span class="nc" id="L75">		return SignatureUtils.getMD5Hex(version);</span>
+<span class="nc" id="L73">		return SignatureUtils.getMD5Hex(CompilationInfo.VERSION);</span>
 	}
 
 	public static String turningId() {
-<span class="nc" id="L79">		return etag();</span>
+<span class="nc" id="L77">		return etag();</span>
 	}
 
 	public static long compileTime() {
-<span class="nc" id="L83">		return 1768736672346L;</span>
+<span class="nc" id="L81">		return 1768736672346L;</span>
 	}
 
 	public static String compileTimeString() {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (version.contains(&quot;beta&quot;))</span>
-<span class="nc" id="L88">			return &quot;Unknown compile time&quot;;</span>
+		if (CompilationInfo.COMPILE_TIMESTAMP == 0L)
+			return &quot;Unknown compile time&quot;;
 
-<span class="nc" id="L90">		return new Date(Version.compileTime()).toString();</span>
+<span class="nc" id="L88">		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP)</span>
+<span class="nc" id="L89">				.atZone(ZoneOffset.UTC)</span>
+<span class="nc" id="L90">				.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss 'UTC'&quot;));</span>
 	}
 
-	// ::comment when __CORE__
+	// ::comment when __CORE__ or __TEAVM__
 	public static String getJarPath() {
 		try {
 <span class="nc" id="L96">			final ClassLoader loader = Version.class.getClassLoader();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (loader == null) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (loader == null) </span>
 <span class="nc" id="L98">				return &quot;No ClassLoader?&quot;;</span>
-			}
+			
 <span class="nc" id="L100">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (url == null) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (url == null) </span>
 <span class="nc" id="L102">				return &quot;No URL?&quot;;</span>
-			}
+			
 <span class="nc" id="L104">			String fullpath = url.toString();</span>
 <span class="nc" id="L105">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
 <span class="nc" id="L106">			return fullpath;</span>
@@ -109,12 +109,6 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 <span class="nc" id="L109">			return t.toString();</span>
 		}
 	}
-
-	public static void main(String[] args) {
-<span class="nc" id="L114">		final String s = &quot;return &quot; + System.currentTimeMillis() + &quot;L;&quot;;</span>
-<span class="nc" id="L115">		System.out.print(s);</span>
-
-<span class="nc" id="L117">	}</span>
 	// ::done
 
 }

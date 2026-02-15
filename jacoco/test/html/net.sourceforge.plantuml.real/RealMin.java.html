@@ -41,33 +41,33 @@ import java.util.List;
 
 class RealMin extends AbstractReal implements Real {
 
-<span class="fc" id="L44">	private final List&lt;Real&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L44">	private final List&lt;Real&gt; all = new ArrayList&lt;&gt;();</span>
 
 	RealMin(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L47">		super(RealMax.line(reals));</span>
-<span class="fc" id="L48">		this.all.addAll(reals);</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L47">		super(RealMax.line(reals));</span>
+<span class="nc" id="L48">		this.all.addAll(reals);</span>
+<span class="nc" id="L49">	}</span>
 
 	public String getName() {
 <span class="nc" id="L52">		return &quot;min &quot; + all.size();</span>
 	}
 
-<span class="fc" id="L55">	private double cache = Double.MAX_VALUE;</span>
+<span class="nc" id="L55">	private double cache = Double.MAX_VALUE;</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
-<span class="fc" id="L60">			return cache;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (cache != Double.MAX_VALUE)</span>
+<span class="nc" id="L60">			return cache;</span>
 
-<span class="fc" id="L62">		double result = all.get(0).getCurrentValue();</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
-<span class="fc" id="L64">			final double v = all.get(i).getCurrentValue();</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (v &lt; result)</span>
+<span class="nc" id="L62">		double result = all.get(0).getCurrentValue();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (int i = 1; i &lt; all.size(); i++) {</span>
+<span class="nc" id="L64">			final double v = all.get(i).getCurrentValue();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (v &lt; result)</span>
 <span class="nc" id="L66">				result = v;</span>
 
 		}
-<span class="fc" id="L69">		cache = result;</span>
-<span class="fc" id="L70">		return result;</span>
+<span class="nc" id="L69">		cache = result;</span>
+<span class="nc" id="L70">		return result;</span>
 	}
 
 	public Real addFixed(double delta) {

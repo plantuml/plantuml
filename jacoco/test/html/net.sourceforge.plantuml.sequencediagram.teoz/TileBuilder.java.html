@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 	public static List&lt;Tile&gt; buildSeveral(Iterator&lt;Event&gt; it, TileArguments tileArguments, Tile parent,
 			YGauge currentY) {
 <span class="fc" id="L67">		final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
 <span class="fc" id="L69">			final Event ev = it.next();</span>
 <span class="fc bfc" id="L70" title="All 2 branches covered.">			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent, currentY)) {</span>
 <span class="fc" id="L71">				tiles.add(tile);</span>
@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 				}
 <span class="fc" id="L77">			}</span>
 <span class="fc" id="L78">		}</span>
-<span class="fc" id="L79">		return Collections.unmodifiableList(tiles);</span>
+<span class="nc" id="L79">		return Collections.unmodifiableList(tiles);</span>
 	}
 
 	public static List&lt;Tile&gt; buildOne(Iterator&lt;Event&gt; it, TileArguments tileArguments, final Event ev, Tile parent,
@@ -128,8 +128,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc" id="L128">			final MessageExo exo = (MessageExo) ev;</span>
 <span class="fc" id="L129">			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());</span>
 <span class="fc" id="L130">			Tile result = null;</span>
-<span class="fc" id="L131">			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments, currentY);</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			for (Note noteOnMessage : exo.getNoteOnMessages()) {</span>
+<span class="nc" id="L131">			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments, currentY);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">			for (Note noteOnMessage : exo.getNoteOnMessages()) {</span>
 <span class="nc" id="L133">				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getPosition();</span>
 <span class="nc bnc" id="L134" title="All 2 branches missed.">				if (notePosition == NotePosition.LEFT)</span>
 <span class="nc" id="L135">					result = new CommunicationTileNoteLeft(result, exo, skin, skinParam, livingSpace1, noteOnMessage,</span>
@@ -138,8 +138,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="nc" id="L138">					result = new CommunicationTileNoteRight(result, exo, skin, skinParam, livingSpace1, noteOnMessage,</span>
 							currentY);
 <span class="nc" id="L140">			}</span>
-<span class="fc" id="L141">			tiles.add(result);</span>
-<span class="pc bnc" id="L142" title="All 2 branches missed.">		} else if (ev instanceof Note) {</span>
+<span class="nc" id="L141">			tiles.add(result);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		} else if (ev instanceof Note) {</span>
 <span class="nc" id="L143">			final Note note = (Note) ev;</span>
 <span class="nc" id="L144">			LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
 <span class="nc bnc" id="L145" title="All 2 branches missed.">			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());</span>

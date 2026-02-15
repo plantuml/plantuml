@@ -119,13 +119,13 @@ class AboutWindow extends JFrame {
 
 	private JComponent getInfoVersion() {
 <span class="nc" id="L121">		final PSystemVersion p1 = PSystemVersion</span>
-<span class="nc" id="L122">				.createShowVersion2(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
+<span class="nc" id="L122">				.createShowVersion(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
 <span class="nc" id="L123">		return getJComponent(skip(p1.getLines()));</span>
 	}
 
 	private JComponent getInfoAuthors() {
 <span class="nc" id="L127">		final PSystemVersion p1 = PSystemVersion</span>
-<span class="nc" id="L128">				.createShowAuthors2(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
+<span class="nc" id="L128">				.createShowAuthors(UmlSource.create(new ArrayList&lt;StringLocated&gt;(), false), new PreprocessingArtifact());</span>
 <span class="nc" id="L129">		return getJComponent(skip(p1.getLines()));</span>
 	}
 
