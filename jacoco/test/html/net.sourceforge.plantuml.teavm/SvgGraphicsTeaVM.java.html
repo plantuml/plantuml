@@ -169,11 +169,11 @@ package net.sourceforge.plantuml.teavm;
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
-//		drawText(text, x, y, fontFamily, fontSize, &quot;normal&quot;, &quot;normal&quot;);
+//		drawText(text, x, y, fontFamily, fontSize, null, null, null);
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-//			String fontStyle) {
+//			String fontStyle, String textDecoration) {
 //		Element textElem = createSvgElement(&quot;text&quot;);
 //		textElem.setAttribute(&quot;x&quot;, format(x));
 //		textElem.setAttribute(&quot;y&quot;, format(y));
@@ -182,24 +182,22 @@ package net.sourceforge.plantuml.teavm;
 //		// Preserve whitespace (multiple spaces, tabs, etc.)
 //		textElem.setAttribute(&quot;xml:space&quot;, &quot;preserve&quot;);
 //		textElem.setAttribute(&quot;style&quot;, &quot;white-space: pre&quot;);
-//		if (!&quot;normal&quot;.equals(fontWeight)) {
+//		if (fontWeight != null) {
 //			textElem.setAttribute(&quot;font-weight&quot;, fontWeight);
 //		}
-//		if (!&quot;normal&quot;.equals(fontStyle)) {
+//		if (fontStyle != null) {
 //			textElem.setAttribute(&quot;font-style&quot;, fontStyle);
 //		}
+//		if (textDecoration != null) {
+//			textElem.setAttribute(&quot;text-decoration&quot;, textDecoration);
+//		}
 //		if (fontFamily != null) {
-//			// Map Java font name to web-safe equivalent
-//			// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
-//			if (&quot;monospaced&quot;.equalsIgnoreCase(fontFamily))
-//				fontFamily = &quot;monospace&quot;;
-//
 //			textElem.setAttribute(&quot;font-family&quot;, fontFamily);
 //
 //			// For monospace fonts, replace spaces with non-breaking spaces
 //			// to ensure consistent character width
-//			if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))
-//				text = text.replace(' ', (char) 160);
+//			// if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))
+//			//	text = text.replace(' ', (char) 160);
 //		}
 //		textElem.setTextContent(text);
 //		mainGroup.appendChild(textElem);

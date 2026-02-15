@@ -97,21 +97,26 @@ public final class UFontImpl implements UFont {
 	public String getFamily(String text, UFontContext context) {
 		// ::uncomment when __TEAVM__
 //		final String fullDefinition = fontStack.getFullDefinition();
+//		// Map Java font name to web-safe equivalent
+//		// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
+//		if (&quot;monospaced&quot;.equalsIgnoreCase(fullDefinition))
+//			return &quot;monospace&quot;;
+//
 //		return fullDefinition.replace('&quot;', '\'').replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);
 		// ::done
 		// ::comment when __TEAVM__
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (context == UFontContext.EPS) {</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (context == UFontContext.EPS) {</span>
 //			if (fontStack.getFamily() == null)
 //				return &quot;Times-Roman&quot;;
-<span class="fc" id="L106">			return getUnderlayingFont(text).getPSName();</span>
+<span class="fc" id="L111">			return getUnderlayingFont(text).getPSName();</span>
 		}
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (context == UFontContext.SVG) {</span>
-<span class="fc" id="L109">			String result = fontStack.getFullDefinition().replace('&quot;', '\'');</span>
-<span class="fc" id="L110">			result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (context == UFontContext.SVG) {</span>
+<span class="fc" id="L114">			String result = fontStack.getFullDefinition().replace('&quot;', '\'');</span>
+<span class="fc" id="L115">			result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
 
-<span class="fc" id="L112">			return result;</span>
+<span class="fc" id="L117">			return result;</span>
 		}
-<span class="nc" id="L114">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L119">		throw new IllegalArgumentException();</span>
 		// ::done
 	}
 
@@ -119,42 +124,42 @@ public final class UFontImpl implements UFont {
 	// end with &lt;DOT&gt;&lt;STYLE&gt;
 	// See https://github.com/plantuml/plantuml/issues/720
 	private String getPortableFontName() {
-<span class="fc" id="L122">		final Font font = getUnderlayingFont(null);</span>
-<span class="fc" id="L123">		final String name = font.getFontName();</span>
-<span class="pc bpc" id="L124" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		else if (font.isBold())</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		else if (font.isItalic())</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
+<span class="fc" id="L127">		final Font font = getUnderlayingFont(null);</span>
+<span class="fc" id="L128">		final String name = font.getFontName();</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		else if (font.isBold())</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		else if (font.isItalic())</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
 		else
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L136">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L137">		sb.append(getPortableFontName());</span>
-<span class="fc" id="L138">		sb.append(&quot;/&quot;);</span>
-<span class="fc" id="L139">		sb.append(getSize());</span>
-<span class="fc" id="L140">		return sb.toString();</span>
+<span class="fc" id="L141">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L142">		sb.append(getPortableFontName());</span>
+<span class="fc" id="L143">		sb.append(&quot;/&quot;);</span>
+<span class="fc" id="L144">		sb.append(getSize());</span>
+<span class="fc" id="L145">		return sb.toString();</span>
 	}
 
 	// ::comment when __HAXE__
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L147">		return Objects.hash(fontStack, style, size);</span>
+<span class="fc" id="L152">		return Objects.hash(fontStack, style, size);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (this == obj)</span>
-<span class="fc" id="L153">			return true;</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (!(obj instanceof UFontImpl))</span>
-<span class="nc" id="L155">			return false;</span>
-<span class="fc" id="L156">		UFontImpl other = (UFontImpl) obj;</span>
-<span class="pc bpc" id="L157" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; style == other.style &amp;&amp; size == other.size;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L158">			return true;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (!(obj instanceof UFontImpl))</span>
+<span class="nc" id="L160">			return false;</span>
+<span class="fc" id="L161">		UFontImpl other = (UFontImpl) obj;</span>
+<span class="pc bpc" id="L162" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; style == other.style &amp;&amp; size == other.size;</span>
 	}
 
 	// ::done
