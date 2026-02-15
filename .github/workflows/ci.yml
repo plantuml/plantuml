@@ -156,6 +156,10 @@ jobs:
           distribution: temurin
           cache: gradle
 
+      # Use of `setup-gradle`, see https://github.com/gradle/actions/
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
       # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
       - name: Compile
         if: needs.workflow_config.outputs.do_test_linux == 'true'
@@ -188,6 +192,8 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
 #      - name: Set version in gradle.properties
 #        if: env.POM_VERSION
 #        env:
@@ -272,6 +278,9 @@ jobs:
           java-version: 17
           distribution: temurin
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
       - name: Build Site for GH Page
         run: gradle site
 
@@ -298,6 +307,9 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Restore Libs cache
         uses: actions/cache/restore@v5
