@@ -13377,8 +13377,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 14
-    Concrete Classes: 14
+    Total Classes: 15
+    Concrete Classes: 15
     Abstract Classes: 0
 
     Ca: 0
@@ -13394,6 +13394,7 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.DriverCenteredCharacterTeaVM
     net.sourceforge.plantuml.teavm.DriverDotPathTeaVM
     net.sourceforge.plantuml.teavm.DriverEllipseTeaVM
+    net.sourceforge.plantuml.teavm.DriverImageSvgTeaVM
     net.sourceforge.plantuml.teavm.DriverImageTeaVM
     net.sourceforge.plantuml.teavm.DriverLineTeaVM
     net.sourceforge.plantuml.teavm.DriverPathTeaVM
@@ -17639,7 +17640,7 @@ net.sourceforge.plantuml.svek.extremity,56,4,5,11,0.07,0.69,0.24,1
 net.sourceforge.plantuml.svek.image,52,2,16,25,0.04,0.61,0.35,1
 net.sourceforge.plantuml.swing,42,0,0,30,0,1,0,1
 net.sourceforge.plantuml.syntax,3,0,3,11,0,0.79,0.21,1
-net.sourceforge.plantuml.teavm,14,0,0,30,0,1,0,1
+net.sourceforge.plantuml.teavm,15,0,0,30,0,1,0,1
 net.sourceforge.plantuml.teavm.browser,1,0,0,1,0,1,0,1
 net.sourceforge.plantuml.telnet,2,0,0,6,0,1,0,1
 net.sourceforge.plantuml.text,9,1,52,9,0.11,0.15,0.74,1

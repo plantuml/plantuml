@@ -35,17 +35,17 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-<span class="nc" id="L38">public enum MessageExoType {</span>
-<span class="nc" id="L39">	FROM_LEFT, TO_LEFT, FROM_RIGHT, TO_RIGHT;</span>
+<span class="fc" id="L38">public enum MessageExoType {</span>
+<span class="fc" id="L39">	FROM_LEFT, TO_LEFT, FROM_RIGHT, TO_RIGHT;</span>
 
 	public int getDirection() {
-<span class="nc bnc" id="L42" title="All 5 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L42" title="3 of 5 branches missed.">		switch (this) {</span>
 		case FROM_LEFT:
-<span class="nc" id="L44">			return 1;</span>
+<span class="fc" id="L44">			return 1;</span>
 		case TO_LEFT:
 <span class="nc" id="L46">			return -1;</span>
 		case TO_RIGHT:
-<span class="nc" id="L48">			return 1;</span>
+<span class="fc" id="L48">			return 1;</span>
 		case FROM_RIGHT:
 <span class="nc" id="L50">			return -1;</span>
 		}
@@ -53,11 +53,11 @@ package net.sourceforge.plantuml.sequencediagram;
 	}
 
 	public boolean isLeftBorder() {
-<span class="nc bnc" id="L56" title="All 4 branches missed.">		return this == MessageExoType.FROM_LEFT || this == MessageExoType.TO_LEFT;</span>
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">		return this == MessageExoType.FROM_LEFT || this == MessageExoType.TO_LEFT;</span>
 	}
 
 	public boolean isRightBorder() {
-<span class="nc bnc" id="L60" title="All 4 branches missed.">		return this == MessageExoType.FROM_RIGHT || this == MessageExoType.TO_RIGHT;</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">		return this == MessageExoType.FROM_RIGHT || this == MessageExoType.TO_RIGHT;</span>
 	}
 
 	public MessageExoType reverse() {

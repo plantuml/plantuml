@@ -88,12 +88,12 @@ public class UGraphicTeaVM extends AbstractUGraphic&lt;SvgGraphicsTeaVM&gt; impl
 <span class="nc" id="L88">		registerDriver(UPath.class, new DriverPathTeaVM(this));</span>
 
 <span class="nc" id="L90">		registerDriver(UImage.class, new DriverImageTeaVM(this));</span>
-<span class="nc" id="L91">		registerDriver(DotPath.class, new DriverDotPathTeaVM());</span>
+<span class="nc" id="L91">		registerDriver(UImageSvg.class, new DriverImageSvgTeaVM());</span>
+<span class="nc" id="L92">		registerDriver(DotPath.class, new DriverDotPathTeaVM());</span>
 
-<span class="nc" id="L93">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
+<span class="nc" id="L94">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
 
 		// NOP drivers for shapes not yet implemented
-<span class="nc" id="L96">		ignoreShape(UImageSvg.class);</span>
 <span class="nc" id="L97">		ignoreShape(UPixel.class);</span>
 <span class="nc" id="L98">	}</span>
 

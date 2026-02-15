@@ -443,6 +443,64 @@ package net.sourceforge.plantuml.teavm;
 //
 //	@JSBody(params = { &quot;element&quot;, &quot;href&quot; }, script = &quot;element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', href);&quot;)
 //	private static native void setXlinkHref(Element element, String href);
+//
+//	// ========================================================================
+//	// SVG image embedding
+//	// ========================================================================
+//
+//	/**
+//	 * Embeds an SVG image at the specified position.
+//	 * The SVG content is parsed and inserted as a nested SVG element.
+//	 * 
+//	 * @param image UImageSvg containing the SVG data
+//	 * @param x     X position
+//	 * @param y     Y position
+//	 */
+//	public void drawSvgImage(net.sourceforge.plantuml.klimt.shape.UImageSvg image, double x, double y) {
+//		final double svgScale = image.getScale();
+//		String svg = image.getSvg(false);
+//
+//		// Handle scaling if needed
+//		if (svgScale != 1) {
+//			svg = wrapWithScaleTransform(svg, svgScale);
+//		}
+//
+//		// Create a group to position the embedded SVG
+//		Element wrapper = createSvgElement(&quot;g&quot;);
+//		wrapper.setAttribute(&quot;transform&quot;, &quot;translate(&quot; + format(x) + &quot;,&quot; + format(y) + &quot;)&quot;);
+//
+//		// Parse and insert the SVG content
+//		insertSvgContent(wrapper, svg);
+//
+//		mainGroup.appendChild(wrapper);
+//	}
+//
+//	/**
+//	 * Wraps SVG content with a scale transform.
+//	 */
+//	private String wrapWithScaleTransform(String svg, double scale) {
+//		String svg2 = svg.replace('\n', ' ').replace('\r', ' ');
+//		if (!svg2.contains(&quot;&lt;g &quot;) &amp;&amp; !svg2.contains(&quot;&lt;g&gt;&quot;)) {
+//			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);
+//			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);
+//		}
+//		final String factor = format(scale);
+//		svg = svg.replaceFirst(&quot;\\&lt;g\\b&quot;, &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;);
+//		return svg;
+//	}
+//
+//	/**
+//	 * Parses SVG string and inserts its content into the parent element.
+//	 */
+//	@JSBody(params = { &quot;parent&quot;, &quot;svgContent&quot; }, script = 
+//		&quot;var parser = new DOMParser();&quot; +
+//		&quot;var doc = parser.parseFromString(svgContent, 'image/svg+xml');&quot; +
+//		&quot;var svgElem = doc.documentElement;&quot; +
+//		&quot;if (svgElem &amp;&amp; svgElem.tagName.toLowerCase() === 'svg') {&quot; +
+//		&quot;  var imported = document.importNode(svgElem, true);&quot; +
+//		&quot;  parent.appendChild(imported);&quot; +
+//		&quot;}&quot;)
+//	private static native void insertSvgContent(Element parent, String svgContent);
 	
 	// ::done
 
