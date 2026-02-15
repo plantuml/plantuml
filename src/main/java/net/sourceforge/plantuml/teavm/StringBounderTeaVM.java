@@ -55,7 +55,14 @@ public class StringBounderTeaVM implements StringBounder {
 //
 //		// Use SVG getBBox for height as it's more accurate for layout
 //		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);
-//		final double height = svgMetrics[1];
+//		double height = svgMetrics[1];
+//
+//		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
+//		// In this case, use font metrics to get the proper line height
+//		if (height == 0 && !text.isEmpty()) {
+//			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
+//			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent
+//		}
 //
 //		return new XDimension2D(width, height);
 		// ::done
