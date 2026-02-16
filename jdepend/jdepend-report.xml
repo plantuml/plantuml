@@ -1465,10 +1465,6 @@
             </UsedBy>
         </Package>
 
-        <Package name="java.applet">
-            <error>No stats available: package referenced, but not analyzed.</error>
-        </Package>
-
         <Package name="java.awt">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -2041,14 +2037,14 @@
 
         <Package name="jcckit.util">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>10</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>7</Ce>
-                <A>0.23</A>
-                <I>0.54</I>
-                <D>0.23</D>
+                <Ce>6</Ce>
+                <A>0.25</A>
+                <I>0.5</I>
+                <D>0.25</D>
                 <V>1</V>
             </Stats>
 
@@ -2065,9 +2061,6 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="AppletBasedConfigData.java">
-                    jcckit.util.AppletBasedConfigData
-                </Class>
                 <Class sourceFile="ConfigParameters.java">
                     jcckit.util.ConfigParameters
                 </Class>
@@ -2098,7 +2091,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.applet</Package>
                 <Package>java.awt</Package>
                 <Package>java.lang</Package>
                 <Package>java.lang.reflect</Package>

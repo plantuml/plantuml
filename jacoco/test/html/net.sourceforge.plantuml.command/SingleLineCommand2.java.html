@@ -123,7 +123,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
-<span class="pc bpc" id="L126" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
 <span class="nc bnc" id="L127" title="All 2 branches missed.">			assert myTrim(lines.getAt(1)).equals(&quot;{&quot;);</span>
 <span class="nc" id="L128">			lines = BlocLines.singleString(lines.getFirst().getString() + &quot; {&quot;);</span>
 		}

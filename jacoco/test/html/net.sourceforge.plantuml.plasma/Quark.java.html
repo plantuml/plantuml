@@ -133,7 +133,7 @@ public class Quark&lt;DATA&gt; {
 
 	private Quark&lt;DATA&gt; getDirectChild(String name) {
 <span class="fc" id="L135">		Quark&lt;DATA&gt; result = children.get(name);</span>
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (result == null) {</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (result == null) {</span>
 <span class="fc" id="L137">			result = new Quark&lt;DATA&gt;(plasma, this, name);</span>
 <span class="fc" id="L138">			children.put(name, result);</span>
 		}
@@ -155,7 +155,7 @@ public class Quark&lt;DATA&gt; {
 	}
 
 	public int countChildren() {
-<span class="nc" id="L158">		return children.size();</span>
+<span class="fc" id="L158">		return children.size();</span>
 	}
 
 }

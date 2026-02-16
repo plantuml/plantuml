@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.abel.Entity;
 	public MagmaList getMagmas(Entity group) {
 <span class="fc" id="L52">		final MagmaList result = new MagmaList();</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">		for (Magma m : all) {</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">			if (m.getContainer() == group) {</span>
-<span class="nc" id="L55">				result.add(m);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			if (m.getContainer() == group) {</span>
+<span class="fc" id="L55">				result.add(m);</span>
 			}
 <span class="fc" id="L57">		}</span>
 <span class="fc" id="L58">		return result;</span>

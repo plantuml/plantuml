@@ -815,11 +815,6 @@ Used By:
     smetana.core
 
 --------------------------------------------------
-- Package: java.applet
---------------------------------------------------
-No stats available: package referenced, but not analyzed.
-
---------------------------------------------------
 - Package: java.awt
 --------------------------------------------------
 No stats available: package referenced, but not analyzed.
@@ -1302,16 +1297,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 13
-    Concrete Classes: 10
+    Total Classes: 12
+    Concrete Classes: 9
     Abstract Classes: 3
 
     Ca: 6
-    Ce: 7
+    Ce: 6
 
-    A: 0.23
-    I: 0.54
-    D: 0.23
+    A: 0.25
+    I: 0.5
+    D: 0.25
 
 Abstract Classes:
     jcckit.util.ConfigData
@@ -1319,7 +1314,6 @@ Abstract Classes:
     jcckit.util.TicLabelFormat
 
 Concrete Classes:
-    jcckit.util.AppletBasedConfigData
     jcckit.util.ConfigParameters
     jcckit.util.ConfigParametersBasedConfigData
     jcckit.util.Factory
@@ -1331,7 +1325,6 @@ Concrete Classes:
     jcckit.util.Util
 
 Depends Upon:
-    java.applet
     java.awt
     java.lang
     java.lang.reflect
@@ -17421,7 +17414,6 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,4,0,1,5,0,0.83,0.17,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,104,2,12,5,0.02,0.29,0.69,1
-java.applet,0,0,1,0,0,0,1,1
 java.awt,0,0,35,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,2,0,0,0,1,1
@@ -17474,7 +17466,7 @@ jcckit.graphic,24,13,4,4,0.54,0.5,0.04,1
 jcckit.plot,26,8,1,7,0.31,0.88,0.18,1
 jcckit.renderer,2,0,1,4,0,0.8,0.2,1
 jcckit.transformation,2,1,1,4,0.5,0.8,0.3,1
-jcckit.util,13,3,6,7,0.23,0.54,0.23,1
+jcckit.util,12,3,6,6,0.25,0.5,0.25,1
 net.atmp,6,1,53,53,0.17,0.5,0.33,1
 net.sourceforge.plantuml,61,14,120,62,0.23,0.34,0.43,1
 net.sourceforge.plantuml.abel,34,8,39,25,0.24,0.39,0.37,1

@@ -144,11 +144,11 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 	}
 
 	public static UChange changeBack(UGraphic ug) {
-<span class="nc" id="L147">		final HColor color = ug.getParam().getColor();</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (color == null)</span>
+<span class="fc" id="L147">		final HColor color = ug.getParam().getColor();</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (color == null)</span>
 <span class="nc" id="L149">			return HColors.none().bg();</span>
 
-<span class="nc" id="L151">		return color.bg();</span>
+<span class="fc" id="L151">		return color.bg();</span>
 	}
 
 	public static HColor unlinear(HColor color1, HColor color2, int completion) {
