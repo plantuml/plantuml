@@ -176,11 +176,26 @@ package net.sourceforge.plantuml.teavm;
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
-//		drawText(text, x, y, fontFamily, fontSize, null, null, null);
+//		drawText(text, x, y, fontFamily, fontSize, null, null, null, null);
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-//			String fontStyle, String textDecoration) {
+//			String fontStyle, String textDecoration, String backColor) {
+//		// Draw background rectangle if backColor is specified
+//		if (backColor != null) {
+//			double[] metrics = measureTextCanvas(text, fontFamily, fontSize, fontWeight != null ? fontWeight : &quot;normal&quot;);
+//			double width = metrics[0];
+//			double height = metrics[1];
+//			Element rect = createSvgElement(&quot;rect&quot;);
+//			rect.setAttribute(&quot;x&quot;, format(x));
+//			rect.setAttribute(&quot;y&quot;, format(y - height + 2));
+//			rect.setAttribute(&quot;width&quot;, format(width));
+//			rect.setAttribute(&quot;height&quot;, format(height));
+//			rect.setAttribute(&quot;fill&quot;, backColor);
+//			rect.setAttribute(&quot;stroke&quot;, &quot;none&quot;);
+//			mainGroup.appendChild(rect);
+//		}
+//
 //		Element textElem = createSvgElement(&quot;text&quot;);
 //		textElem.setAttribute(&quot;x&quot;, format(x));
 //		textElem.setAttribute(&quot;y&quot;, format(y));

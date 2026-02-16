@@ -103,7 +103,16 @@ public class DriverTextTeaVM implements UDriver&lt;UText, SvgGraphicsTeaVM&gt; {
 //			textDecoration = &quot;wavy underline&quot;;
 //		}
 //
-//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration);
+//		// Handle background color
+//		String backColor = null;
+//		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
+//			final HColor back = fontConfiguration.getExtendedColor();
+//			if (back != null &amp;&amp; !(back instanceof net.sourceforge.plantuml.klimt.color.HColorGradient)) {
+//				backColor = back.toRGB(mapper);
+//			}
+//		}
+//
+//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);
 //
 //		// Draw extra line for colored underline/strike
 //		if (extraLine != null) {
@@ -113,6 +122,6 @@ public class DriverTextTeaVM implements UDriver&lt;UText, SvgGraphicsTeaVM&gt; {
 //			svg.drawLine(x, y + deltaLineY, x + width, y + deltaLineY);
 //		}
 		// ::done
-<span class="nc" id="L116">	}</span>
+<span class="nc" id="L125">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

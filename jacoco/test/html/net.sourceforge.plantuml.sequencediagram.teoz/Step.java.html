@@ -47,27 +47,27 @@ public class Step {
 	private final Fashion color;
 	private final StyleBuilder styleBuilder;
 
-<span class="fc" id="L50">	public Step(double value, boolean destroy, int indent, Fashion color, StyleBuilder styleBuilder) {</span>
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (indent &lt; 0)</span>
+<span class="nc" id="L50">	public Step(double value, boolean destroy, int indent, Fashion color, StyleBuilder styleBuilder) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (indent &lt; 0)</span>
 <span class="nc" id="L52">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L54">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L55">		this.indent = indent;</span>
-<span class="fc" id="L56">		this.color = color;</span>
-<span class="fc" id="L57">		this.value = value;</span>
-<span class="fc" id="L58">		this.destroy = destroy;</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L54">		this.styleBuilder = styleBuilder;</span>
+<span class="nc" id="L55">		this.indent = indent;</span>
+<span class="nc" id="L56">		this.color = color;</span>
+<span class="nc" id="L57">		this.value = value;</span>
+<span class="nc" id="L58">		this.destroy = destroy;</span>
+<span class="nc" id="L59">	}</span>
 
 	public double getValue() {
-<span class="fc" id="L62">		return value;</span>
+<span class="nc" id="L62">		return value;</span>
 	}
 
 	public boolean isDestroy() {
-<span class="fc" id="L66">		return destroy;</span>
+<span class="nc" id="L66">		return destroy;</span>
 	}
 
 	public int getIndent() {
-<span class="fc" id="L70">		return indent;</span>
+<span class="nc" id="L70">		return indent;</span>
 	}
 
 	public Fashion getColors() {
