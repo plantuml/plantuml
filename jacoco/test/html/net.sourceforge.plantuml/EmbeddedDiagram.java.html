@@ -232,7 +232,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
 	private Diagram getSystem() throws IOException, InterruptedException {
 <span class="pc bpc" id="L234" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());</span>
-<span class="fc" id="L235">		final BlockUml blockUml = new BlockUml(PathSystem.fetch(), list, Defines.createEmpty(), previous, null, null);</span>
+<span class="fc" id="L235">		final BlockUml blockUml = new BlockUml(null, PathSystem.fetch(), list, Defines.createEmpty(), previous, null);</span>
 <span class="fc" id="L236">		return blockUml.getDiagram();</span>
 
 	}

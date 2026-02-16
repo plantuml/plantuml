@@ -130,7 +130,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 <span class="nc" id="L130">						current.add(s);</span>
 
 <span class="fc" id="L132">					WasmLog.log(&quot;...text loaded...&quot;);</span>
-<span class="fc" id="L133">					final BlockUml uml = new BlockUml(pathSystem, current, defines.cloneMe(), null, this, charset);</span>
+<span class="fc" id="L133">					final BlockUml uml = new BlockUml(this, pathSystem, current, defines.cloneMe(), null, charset);</span>
 <span class="fc" id="L134">					usedFiles.addAll(uml.getIncluded());</span>
 <span class="fc" id="L135">					blocks.add(uml);</span>
 <span class="fc" id="L136">					current = null;</span>

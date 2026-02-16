@@ -41,11 +41,11 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 public abstract class CommonTile implements Tile, UDrawable {
 
 	private final StringBounder stringBounder;
-<span class="fc" id="L44">	private TimeHook y = new TimeHook(-1);</span>
+<span class="nc" id="L44">	private TimeHook y = new TimeHook(-1);</span>
 
-<span class="fc" id="L46">	public CommonTile(StringBounder stringBounder) {</span>
-<span class="fc" id="L47">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L48">	}</span>
+<span class="nc" id="L46">	public CommonTile(StringBounder stringBounder) {</span>
+<span class="nc" id="L47">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L48">	}</span>
 
 	final public void callbackY(TimeHook y) {
 		if (YGauge.USE_ME) {
@@ -62,7 +62,7 @@ public abstract class CommonTile implements Tile, UDrawable {
 <span class="nc" id="L62">	}</span>
 
 	protected final StringBounder getStringBounder() {
-<span class="fc" id="L65">		return stringBounder;</span>
+<span class="nc" id="L65">		return stringBounder;</span>
 	}
 
 	public double getMiddleX() {

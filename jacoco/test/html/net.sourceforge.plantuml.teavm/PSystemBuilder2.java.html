@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.teavm;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
@@ -50,94 +52,114 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
+import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
+import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
+import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
+import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilder2 {
 
-<span class="nc" id="L68">	private final List&lt;PSystemFactory&gt; factories = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L76">	private final List&lt;PSystemFactory&gt; factories = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L70">	public PSystemBuilder2() {</span>
-<span class="nc" id="L71">		factories.add(new SequenceDiagramFactory());</span>
-<span class="nc" id="L72">		factories.add(new ClassDiagramFactory());</span>
-<span class="nc" id="L73">		factories.add(new ActivityDiagramFactory());</span>
-<span class="nc" id="L74">		factories.add(new DescriptionDiagramFactory());</span>
-<span class="nc" id="L75">		factories.add(new StateDiagramFactory());</span>
-<span class="nc" id="L76">		factories.add(new ActivityDiagramFactory3());</span>
-<span class="nc" id="L77">		factories.add(new PSystemVersionFactory());</span>
-<span class="nc" id="L78">		factories.add(new MindMapDiagramFactory());</span>
-<span class="nc" id="L79">		factories.add(new WBSDiagramFactory());</span>
-<span class="nc" id="L80">		factories.add(new NwDiagramFactory(DiagramType.UML));</span>
-<span class="nc" id="L81">		factories.add(new PSystemSudokuFactory());</span>
-<span class="nc" id="L82">		factories.add(new TimingDiagramFactory());</span>
-<span class="nc" id="L83">		factories.add(new ChartDiagramFactory());</span>
-<span class="nc" id="L84">		factories.add(new PacketDiagramFactory());</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L78">	public PSystemBuilder2() {</span>
+<span class="nc" id="L79">		factories.add(new SequenceDiagramFactory());</span>
+<span class="nc" id="L80">		factories.add(new ClassDiagramFactory());</span>
+<span class="nc" id="L81">		factories.add(new ActivityDiagramFactory());</span>
+<span class="nc" id="L82">		factories.add(new DescriptionDiagramFactory());</span>
+<span class="nc" id="L83">		factories.add(new StateDiagramFactory());</span>
+<span class="nc" id="L84">		factories.add(new ActivityDiagramFactory3());</span>
+<span class="nc" id="L85">		factories.add(new PSystemVersionFactory());</span>
+<span class="nc" id="L86">		factories.add(new MindMapDiagramFactory());</span>
+<span class="nc" id="L87">		factories.add(new WBSDiagramFactory());</span>
+<span class="nc" id="L88">		factories.add(new NwDiagramFactory(DiagramType.UML));</span>
+<span class="nc" id="L89">		factories.add(new PSystemSudokuFactory());</span>
+<span class="nc" id="L90">		factories.add(new PSystemCreoleFactory());</span>
+<span class="nc" id="L91">		factories.add(new TimingDiagramFactory());</span>
+<span class="nc" id="L92">		factories.add(new ChartDiagramFactory());</span>
+<span class="nc" id="L93">		factories.add(new PacketDiagramFactory());</span>
+<span class="nc" id="L94">		factories.add(new JsonDiagramFactory());</span>
+<span class="nc" id="L95">		factories.add(new YamlDiagramFactory());</span>
+<span class="nc" id="L96">	}</span>
 
 	public Diagram createDiagram(String[] split) {
-<span class="nc" id="L88">		final List&lt;StringLocated&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (String s : clean(split))</span>
-<span class="nc" id="L90">			lines.add(new StringLocated(s, new LineLocationImpl(&quot;textarea&quot;, null)));</span>
+<span class="nc" id="L99">		final List&lt;StringLocated&gt; rawSource = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (String s : clean(split))</span>
+<span class="nc" id="L101">			rawSource.add(new StringLocated(s, new LineLocationImpl(&quot;textarea&quot;, null)));</span>
 
-<span class="nc" id="L92">		final UmlSource source = UmlSource.create(lines, false);</span>
-<span class="nc" id="L93">		final DiagramType diagramType = source.getDiagramType();</span>
+<span class="nc" id="L103">		final PathSystem pathSystem = PathSystem.fetch();</span>
+<span class="nc" id="L104">		final Defines defines = Defines.createEmpty();</span>
+<span class="nc" id="L105">		final Charset charset = java.nio.charset.StandardCharsets.UTF_8;</span>
+<span class="nc" id="L106">		final DefinitionsContainer definitions = null;</span>
 
-<span class="nc" id="L95">		final PreprocessingArtifact preprocessing = new PreprocessingArtifact();</span>
-<span class="nc" id="L96">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (PSystemFactory systemFactory : factories) {</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (diagramType != systemFactory.getDiagramType())</span>
-<span class="nc" id="L99">				continue;</span>
+<span class="nc" id="L108">		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));</span>
+<span class="nc" id="L109">		timLoader.load(rawSource);</span>
+<span class="nc" id="L110">		System.err.println(&quot;load ok&quot;);</span>
+<span class="nc" id="L111">		final List&lt;StringLocated&gt; resultList = timLoader.getResultList();</span>
+		// System.err.println(&quot;resultList=&quot; + resultList);
 
-<span class="nc" id="L101">			final Diagram sys = systemFactory.createSystem(null, source, null, preprocessing);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (isOk(sys))</span>
-<span class="nc" id="L103">				return sys;</span>
-<span class="nc" id="L104">			errors.add((PSystemError) sys);</span>
-<span class="nc" id="L105">		}</span>
+<span class="nc" id="L114">		final UmlSource source = UmlSource.create(resultList, false);</span>
+<span class="nc" id="L115">		final DiagramType diagramType = source.getDiagramType();</span>
 
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (errors.size() == 0)</span>
-<span class="nc" id="L108">			return new PSystemUnsupported(source, preprocessing);</span>
+<span class="nc" id="L117">		final PreprocessingArtifact preprocessing = new PreprocessingArtifact();</span>
+<span class="nc" id="L118">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (PSystemFactory systemFactory : factories) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (diagramType != systemFactory.getDiagramType())</span>
+<span class="nc" id="L121">				continue;</span>
 
-<span class="nc" id="L110">		return PSystemErrorUtils.merge(errors);</span>
+<span class="nc" id="L123">			final Diagram sys = systemFactory.createSystem(null, source, null, preprocessing);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (isOk(sys))</span>
+<span class="nc" id="L125">				return sys;</span>
+<span class="nc" id="L126">			errors.add((PSystemError) sys);</span>
+<span class="nc" id="L127">		}</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (errors.size() == 0)</span>
+<span class="nc" id="L130">			return new PSystemUnsupported(source, preprocessing);</span>
+
+<span class="nc" id="L132">		return PSystemErrorUtils.merge(errors);</span>
 
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="nc bnc" id="L115" title="All 4 branches missed.">		if (ps == null || ps instanceof PSystemError)</span>
-<span class="nc" id="L116">			return false;</span>
+<span class="nc bnc" id="L137" title="All 4 branches missed.">		if (ps == null || ps instanceof PSystemError)</span>
+<span class="nc" id="L138">			return false;</span>
 
-<span class="nc" id="L118">		return true;</span>
+<span class="nc" id="L140">		return true;</span>
 	}
 
 	private List&lt;String&gt; clean(String[] tab) {
-<span class="nc" id="L122">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (String s : tab)</span>
-<span class="nc" id="L124">			lines.add(s);</span>
+<span class="nc" id="L144">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (String s : tab)</span>
+<span class="nc" id="L146">			lines.add(s);</span>
 
-<span class="nc bnc" id="L126" title="All 4 branches missed.">		while (lines.size() &gt; 2 &amp;&amp; lines.get(lines.size() - 1).trim().isEmpty())</span>
-<span class="nc" id="L127">			lines.remove(lines.size() - 1);</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		while (lines.size() &gt; 2 &amp;&amp; lines.get(lines.size() - 1).trim().isEmpty())</span>
+<span class="nc" id="L149">			lines.remove(lines.size() - 1);</span>
 
-<span class="nc" id="L129">		return lines;</span>
+<span class="nc" id="L151">		return lines;</span>
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L133">		System.err.println(&quot;Hello!&quot;);</span>
+<span class="nc" id="L155">		System.err.println(&quot;Hello!&quot;);</span>
 
-<span class="nc" id="L135">		final String source[] = new String[] { &quot;@startuml&quot;, &quot;class A&quot;, &quot;class B extends A&quot;, &quot;@enduml&quot; };</span>
+<span class="nc" id="L157">		final String source[] = new String[] { &quot;@startuml&quot;, &quot;class A&quot;, &quot;class B extends A&quot;, &quot;@enduml&quot; };</span>
 
-<span class="nc" id="L137">		final Diagram diagram = new PSystemBuilder2().createDiagram(source);</span>
+<span class="nc" id="L159">		final Diagram diagram = new PSystemBuilder2().createDiagram(source);</span>
 
-<span class="nc" id="L139">		System.err.println(&quot;diagram=&quot; + diagram);</span>
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L161">		System.err.println(&quot;diagram=&quot; + diagram);</span>
+<span class="nc" id="L162">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
