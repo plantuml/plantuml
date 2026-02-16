@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
 class ExtremityDiamond extends Extremity {
 
-<span class="fc" id="L46">	private UPolygon polygon = new UPolygon();</span>
+<span class="nc" id="L46">	private UPolygon polygon = new UPolygon();</span>
 	private final boolean fill;
 	private final XPoint2D contact;
 	private final UTranslate deltaForKal;
@@ -53,21 +53,21 @@ class ExtremityDiamond extends Extremity {
 <span class="nc" id="L53">		return contact;</span>
 	}
 
-<span class="fc" id="L56">	public ExtremityDiamond(XPoint2D p1, double angle, boolean fill) {</span>
-<span class="fc" id="L57">		this.fill = fill;</span>
-<span class="fc" id="L58">		this.contact = new XPoint2D(p1.getX(), p1.getY());</span>
-<span class="fc" id="L59">		angle = manageround(angle);</span>
-<span class="fc" id="L60">		polygon.addPoint(0, 0);</span>
-<span class="fc" id="L61">		final int xWing = 6;</span>
-<span class="fc" id="L62">		final int yAperture = 4;</span>
-<span class="fc" id="L63">		polygon.addPoint(-xWing, -yAperture);</span>
-<span class="fc" id="L64">		polygon.addPoint(-xWing * 2, 0);</span>
-<span class="fc" id="L65">		polygon.addPoint(-xWing, yAperture);</span>
-<span class="fc" id="L66">		polygon.addPoint(0, 0);</span>
-<span class="fc" id="L67">		polygon.rotate(angle + Math.PI / 2);</span>
-<span class="fc" id="L68">		this.deltaForKal = UTranslate.point(polygon.getPoint(2)).reverse();</span>
-<span class="fc" id="L69">		polygon = polygon.translate(p1.getX(), p1.getY());</span>
-<span class="fc" id="L70">	}</span>
+<span class="nc" id="L56">	public ExtremityDiamond(XPoint2D p1, double angle, boolean fill) {</span>
+<span class="nc" id="L57">		this.fill = fill;</span>
+<span class="nc" id="L58">		this.contact = new XPoint2D(p1.getX(), p1.getY());</span>
+<span class="nc" id="L59">		angle = manageround(angle);</span>
+<span class="nc" id="L60">		polygon.addPoint(0, 0);</span>
+<span class="nc" id="L61">		final int xWing = 6;</span>
+<span class="nc" id="L62">		final int yAperture = 4;</span>
+<span class="nc" id="L63">		polygon.addPoint(-xWing, -yAperture);</span>
+<span class="nc" id="L64">		polygon.addPoint(-xWing * 2, 0);</span>
+<span class="nc" id="L65">		polygon.addPoint(-xWing, yAperture);</span>
+<span class="nc" id="L66">		polygon.addPoint(0, 0);</span>
+<span class="nc" id="L67">		polygon.rotate(angle + Math.PI / 2);</span>
+<span class="nc" id="L68">		this.deltaForKal = UTranslate.point(polygon.getPoint(2)).reverse();</span>
+<span class="nc" id="L69">		polygon = polygon.translate(p1.getX(), p1.getY());</span>
+<span class="nc" id="L70">	}</span>
 
 	@Override
 	public UTranslate getDeltaForKal() {
@@ -75,17 +75,17 @@ class ExtremityDiamond extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (fill)</span>
-<span class="fc" id="L79">			ug = ug.apply(HColors.changeBack(ug));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (fill)</span>
+<span class="nc" id="L79">			ug = ug.apply(HColors.changeBack(ug));</span>
 		else
-<span class="fc" id="L81">			ug = ug.apply(HColors.none().bg());</span>
+<span class="nc" id="L81">			ug = ug.apply(HColors.none().bg());</span>
 
-<span class="fc" id="L83">		ug.draw(polygon);</span>
-<span class="fc" id="L84">	}</span>
+<span class="nc" id="L83">		ug.draw(polygon);</span>
+<span class="nc" id="L84">	}</span>
 	
 	@Override
 	public double getDecorationLength() {
-<span class="fc" id="L88">		return 12;</span>
+<span class="nc" id="L88">		return 12;</span>
 	}
 
 //	@Override

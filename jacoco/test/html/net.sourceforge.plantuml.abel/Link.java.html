@@ -452,13 +452,13 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean sameConnections(Link other) {
-<span class="fc bfc" id="L455" title="All 4 branches covered.">		if (this.cl1 == other.cl1 &amp;&amp; this.cl2 == other.cl2)</span>
+<span class="pc bpc" id="L455" title="2 of 4 branches missed.">		if (this.cl1 == other.cl1 &amp;&amp; this.cl2 == other.cl2)</span>
 <span class="fc" id="L456">			return true;</span>
 
-<span class="pc bpc" id="L458" title="1 of 4 branches missed.">		if (this.cl1 == other.cl2 &amp;&amp; this.cl2 == other.cl1)</span>
+<span class="nc bnc" id="L458" title="All 4 branches missed.">		if (this.cl1 == other.cl2 &amp;&amp; this.cl2 == other.cl1)</span>
 <span class="nc" id="L459">			return true;</span>
 
-<span class="fc" id="L461">		return false;</span>
+<span class="nc" id="L461">		return false;</span>
 	}
 
 	public boolean doesTouch(Link other) {

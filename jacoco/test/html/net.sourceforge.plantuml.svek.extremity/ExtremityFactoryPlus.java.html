@@ -45,13 +45,13 @@ public class ExtremityFactoryPlus extends AbstractExtremityFactory implements Ex
 
 	private final HColor backgroundColor;
 
-<span class="fc" id="L48">	public ExtremityFactoryPlus(HColor backgroundColor) {</span>
-<span class="fc" id="L49">		this.backgroundColor = backgroundColor;</span>
-<span class="fc" id="L50">	}</span>
+<span class="nc" id="L48">	public ExtremityFactoryPlus(HColor backgroundColor) {</span>
+<span class="nc" id="L49">		this.backgroundColor = backgroundColor;</span>
+<span class="nc" id="L50">	}</span>
 
 	@Override
 	public UDrawable createUDrawable(XPoint2D center, double angle, Side side) {
-<span class="fc" id="L54">		return ExtremityPlus.create(center, angle - Math.PI / 2, backgroundColor);</span>
+<span class="nc" id="L54">		return ExtremityPlus.create(center, angle - Math.PI / 2, backgroundColor);</span>
 	}
 
 	@Override

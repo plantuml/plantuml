@@ -168,10 +168,10 @@ try {
 <span class="nc" id="L168">	    vlist.set_(i, null);</span>
     } else {
 /*assert(ND_rank(root)[r].n + d - 1 &lt;= ND_rank(root)[r].an);*/
-<span class="fc bfc" id="L171" title="All 2 branches covered.">	for (i = GD_rank(root).get__(r).n - 1; i &gt; pos; i--) {</span>
-<span class="fc" id="L172">	    v = vlist.get_(i);</span>
-<span class="fc" id="L173">	    ND_order(v, i + d - 1);</span>
-<span class="fc" id="L174">	    vlist.set_(ND_order(v), v);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">	for (i = GD_rank(root).get__(r).n - 1; i &gt; pos; i--) {</span>
+<span class="nc" id="L172">	    v = vlist.get_(i);</span>
+<span class="nc" id="L173">	    ND_order(v, i + d - 1);</span>
+<span class="nc" id="L174">	    vlist.set_(ND_order(v), v);</span>
 	}
 <span class="fc bfc" id="L176" title="All 2 branches covered.">	for (i = pos + 1; i &lt; pos + d; i++)</span>
 <span class="fc" id="L177">	    vlist.set_(i, null);</span>
@@ -451,8 +451,8 @@ try {
 <span class="fc" id="L451">	v = GD_rankleader(g).get_(r);</span>
 	
 	/* remove the entire chain */
-<span class="fc bfc" id="L454" title="All 2 branches covered.">	while ((e = (ST_Agedge_s) ND_out(v).list.get_(0))!=null)</span>
-<span class="fc" id="L455">	    delete_fast_edge(e);</span>
+<span class="pc bpc" id="L454" title="1 of 2 branches missed.">	while ((e = (ST_Agedge_s) ND_out(v).list.get_(0))!=null)</span>
+<span class="nc" id="L455">	    delete_fast_edge(e);</span>
 <span class="pc bpc" id="L456" title="1 of 2 branches missed.">	while ((e = (ST_Agedge_s) ND_in(v).list.get_(0))!=null)</span>
 <span class="nc" id="L457">	    delete_fast_edge(e);</span>
 <span class="fc" id="L458">	delete_fast_node(dot_root(g), v);</span>
@@ -565,9 +565,9 @@ try {
 <span class="fc" id="L565">	ND_rank(v, r);</span>
 <span class="fc" id="L566">	ND_ranktype(v, CLUSTER);</span>
 <span class="fc" id="L567">	ND_clust(v, subg);</span>
-<span class="fc bfc" id="L568" title="All 2 branches covered.">	if (prev!=null) {</span>
-<span class="fc" id="L569">	    e = virtual_edge(prev, v, null);</span>
-<span class="fc" id="L570">	    ED_xpenalty(e, ED_xpenalty(e) * CL_CROSS);</span>
+<span class="pc bpc" id="L568" title="1 of 2 branches missed.">	if (prev!=null) {</span>
+<span class="nc" id="L569">	    e = virtual_edge(prev, v, null);</span>
+<span class="nc" id="L570">	    ED_xpenalty(e, ED_xpenalty(e) * CL_CROSS);</span>
 	}
 <span class="fc" id="L572">	prev = v;</span>
     }
@@ -578,8 +578,8 @@ try {
 <span class="fc" id="L578">	rl = GD_rankleader(subg).get_(ND_rank(v));</span>
 <span class="fc" id="L579">	ND_UF_size(rl, ND_UF_size(rl)+1);</span>
 <span class="fc bfc" id="L580" title="All 2 branches covered.">	for (e = agfstout(zz, subg, v); e!=null; e = agnxtout(zz, subg, e)) {</span>
-<span class="fc bfc" id="L581" title="All 2 branches covered.">	    for (r = ND_rank(agtail(e)); r &lt; ND_rank(aghead(e)); r++) {</span>
-<span class="fc" id="L582">		ED_count(ND_out(rl).list.get_(0), ED_count(ND_out(rl).list.get_(0))+1);</span>
+<span class="pc bpc" id="L581" title="1 of 2 branches missed.">	    for (r = ND_rank(agtail(e)); r &lt; ND_rank(aghead(e)); r++) {</span>
+<span class="nc" id="L582">		ED_count(ND_out(rl).list.get_(0), ED_count(ND_out(rl).list.get_(0))+1);</span>
 	    }
 	}
     }
@@ -605,7 +605,7 @@ try {
     ST_Agraph_s clust;
 <span class="fc" id="L606">    clust = ND_clust(n);</span>
     
-<span class="fc bfc" id="L608" title="All 2 branches covered.">    if (GD_installed(clust) != pass + 1) {</span>
+<span class="pc bpc" id="L608" title="1 of 2 branches missed.">    if (GD_installed(clust) != pass + 1) {</span>
 <span class="fc bfc" id="L609" title="All 2 branches covered.">	for (r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++)</span>
 <span class="fc" id="L610">	    install_in_rank(zz, g, GD_rankleader(clust).get_(r));</span>
 <span class="fc bfc" id="L611" title="All 2 branches covered.">	for (r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++)</span>

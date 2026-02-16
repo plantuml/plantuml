@@ -46,12 +46,12 @@ public class ExtremityFactoryDiamond extends AbstractExtremityFactory implements
 
 	@Override
 	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-<span class="fc" id="L49">		return new ExtremityDiamond(p0, angle - Math.PI / 2, fill);</span>
+<span class="nc" id="L49">		return new ExtremityDiamond(p0, angle - Math.PI / 2, fill);</span>
 	}
 
-<span class="fc" id="L52">	public ExtremityFactoryDiamond(boolean fill) {</span>
-<span class="fc" id="L53">		this.fill = fill;</span>
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L52">	public ExtremityFactoryDiamond(boolean fill) {</span>
+<span class="nc" id="L53">		this.fill = fill;</span>
+<span class="nc" id="L54">	}</span>
 
 	@Override
 	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {

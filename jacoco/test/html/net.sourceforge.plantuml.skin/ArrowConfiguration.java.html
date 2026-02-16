@@ -92,8 +92,8 @@ public class ArrowConfiguration {
 	}
 
 	public static ArrowConfiguration withDirectionBoth() {
-<span class="fc" id="L95">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),</span>
-<span class="fc" id="L96">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+<span class="nc" id="L95">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),</span>
+<span class="nc" id="L96">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
 				false, 1, false, 0);
 	}
 
@@ -123,17 +123,17 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration withHead(ArrowHead head) {
-<span class="fc" id="L126">		final ArrowDressing newDressing1 = addHead(dressing1, head);</span>
-<span class="fc" id="L127">		final ArrowDressing newDressing2 = addHead(dressing2, head);</span>
-<span class="fc" id="L128">		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf,</span>
+<span class="nc" id="L126">		final ArrowDressing newDressing1 = addHead(dressing1, head);</span>
+<span class="nc" id="L127">		final ArrowDressing newDressing2 = addHead(dressing2, head);</span>
+<span class="nc" id="L128">		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf,</span>
 				thickness, reverseDefine, inclination);
 	}
 
 	private static ArrowDressing addHead(ArrowDressing dressing, ArrowHead head) {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (dressing.getHead() == ArrowHead.NONE)</span>
-<span class="fc" id="L134">			return dressing;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (dressing.getHead() == ArrowHead.NONE)</span>
+<span class="nc" id="L134">			return dressing;</span>
 
-<span class="fc" id="L136">		return dressing.withHead(head);</span>
+<span class="nc" id="L136">		return dressing.withHead(head);</span>
 	}
 
 	public ArrowConfiguration withHead1(ArrowHead head) {
@@ -269,7 +269,7 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration reverseDefine() {
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
 				!reverseDefine, inclination);
 	}
 

@@ -124,14 +124,14 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	static public EntityGender all() {
-<span class="fc" id="L127">		return new EntityGender() {</span>
+<span class="nc" id="L127">		return new EntityGender() {</span>
 			public boolean contains(Entity test) {
-<span class="fc" id="L129">				return true;</span>
+<span class="nc" id="L129">				return true;</span>
 			}
 
 			@Override
 			public String getGender() {
-<span class="fc" id="L134">				return null;</span>
+<span class="nc" id="L134">				return null;</span>
 			}
 		};
 	}
@@ -164,10 +164,10 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	static public EntityGender byClassName(final String className) {
-<span class="fc" id="L167">		return new EntityGender() {</span>
+<span class="nc" id="L167">		return new EntityGender() {</span>
 			@Override
 			public boolean contains(Entity test) {
-<span class="fc" id="L170">				return className.equals(test.getName());</span>
+<span class="nc" id="L170">				return className.equals(test.getName());</span>
 			}
 
 			@Override

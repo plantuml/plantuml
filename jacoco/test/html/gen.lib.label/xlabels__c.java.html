@@ -179,17 +179,17 @@ try {
 <span class="nc" id="L179">	n &gt;&gt;= 16;</span>
 <span class="nc" id="L180">	pos += 16;</span>
     }
-<span class="fc bfc" id="L182" title="All 2 branches covered.">    if (n &gt;= 1 &lt;&lt; 8) {</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">    if (n &gt;= 1 &lt;&lt; 8) {</span>
 <span class="fc" id="L183">	n &gt;&gt;= 8;</span>
 <span class="fc" id="L184">	pos += 8;</span>
     }
-<span class="fc bfc" id="L186" title="All 2 branches covered.">    if (n &gt;= 1 &lt;&lt; 4) {</span>
-<span class="fc" id="L187">	n &gt;&gt;= 4;</span>
-<span class="fc" id="L188">	pos += 4;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">    if (n &gt;= 1 &lt;&lt; 4) {</span>
+<span class="nc" id="L187">	n &gt;&gt;= 4;</span>
+<span class="nc" id="L188">	pos += 4;</span>
     }
-<span class="fc bfc" id="L190" title="All 2 branches covered.">    if (n &gt;= 1 &lt;&lt; 2) {</span>
-<span class="fc" id="L191">	n &gt;&gt;= 2;</span>
-<span class="fc" id="L192">	pos += 2;</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">    if (n &gt;= 1 &lt;&lt; 2) {</span>
+<span class="nc" id="L191">	n &gt;&gt;= 2;</span>
+<span class="nc" id="L192">	pos += 2;</span>
     }
 <span class="pc bpc" id="L194" title="1 of 2 branches missed.">    if (n &gt;= 1 &lt;&lt; 1) {</span>
 <span class="fc" id="L195">	pos += 1;</span>
@@ -262,23 +262,23 @@ public static double aabbaabb(ST_Rect_t r, ST_Rect_t s) {
 try {
      /* per dimension if( max &lt; omin || min &gt; omax) */
      double iminx, iminy, imaxx, imaxy;
-<span class="fc bfc" id="L265" title="All 4 branches covered.">     if (r.boundary[2] &lt; s.boundary[0] || r.boundary[0] &gt; s.boundary[2])</span>
-<span class="fc" id="L266"> 	return 0;</span>
+<span class="pc bpc" id="L265" title="2 of 4 branches missed.">     if (r.boundary[2] &lt; s.boundary[0] || r.boundary[0] &gt; s.boundary[2])</span>
+<span class="nc" id="L266"> 	return 0;</span>
 <span class="pc bpc" id="L267" title="2 of 4 branches missed.">     if (r.boundary[3] &lt; s.boundary[1] || r.boundary[1] &gt; s.boundary[3])</span>
 <span class="nc" id="L268">  	return 0;</span>
      /* if we get here we have an intersection */
      /* rightmost left edge of the 2 rectangles */
      iminx =
-<span class="fc bfc" id="L272" title="All 2 branches covered."> 	r.boundary[0] &gt; s.boundary[0] ? r.boundary[0] : s.boundary[0];</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed."> 	r.boundary[0] &gt; s.boundary[0] ? r.boundary[0] : s.boundary[0];</span>
      /* upmost bottom edge */
      iminy =
 <span class="pc bpc" id="L275" title="1 of 2 branches missed."> 	r.boundary[1] &gt; s.boundary[1] ? r.boundary[1] : s.boundary[1];</span>
      /* leftmost right edge */
      imaxx =
-<span class="fc bfc" id="L278" title="All 2 branches covered."> 	r.boundary[2] &lt; s.boundary[2] ? r.boundary[2] : s.boundary[2];</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed."> 	r.boundary[2] &lt; s.boundary[2] ? r.boundary[2] : s.boundary[2];</span>
      /* downmost top edge */
      imaxy =
-<span class="fc bfc" id="L281" title="All 2 branches covered."> 	r.boundary[3] &lt; s.boundary[3] ? r.boundary[3] : s.boundary[3];</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed."> 	r.boundary[3] &lt; s.boundary[3] ? r.boundary[3] : s.boundary[3];</span>
 <span class="fc" id="L282">     return (imaxx - iminx) * (imaxy - iminy);</span>
 } finally {
 <span class="fc" id="L284">LEAVING(&quot;bpkzwylrchx5wta1qhytfgbtr&quot;,&quot;aabbaabb&quot;);</span>
@@ -388,13 +388,13 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;getintrsxi&quot;, key=&quot;calnhom3s9dqvvi6crrz3h2wp&quot;, definition=&quot;static int getintrsxi(XLabels_t * xlp, object_t * op, object_t * cp)&quot;)
 public static int getintrsxi(ST_XLabels_t xlp, ST_object_t  op, ST_object_t cp) {
-<span class="fc" id="L391">ENTERING(&quot;calnhom3s9dqvvi6crrz3h2wp&quot;,&quot;getintrsxi&quot;);</span>
+<span class="nc" id="L391">ENTERING(&quot;calnhom3s9dqvvi6crrz3h2wp&quot;,&quot;getintrsxi&quot;);</span>
 try {
-<span class="fc" id="L393">     int i = -1;</span>
-<span class="fc" id="L394">     CArray&lt;ST_xlabel_t&gt; lp = op.lbl, clp = cp.lbl;</span>
-<span class="pc bpc" id="L395" title="1 of 2 branches missed.">     assert(lp != clp);</span>
-<span class="pc bpc" id="L396" title="3 of 4 branches missed.">     if (lp.get__(0).set == 0 || clp.get__(0).set == 0)</span>
-<span class="fc" id="L397"> 	return i;</span>
+<span class="nc" id="L393">     int i = -1;</span>
+<span class="nc" id="L394">     CArray&lt;ST_xlabel_t&gt; lp = op.lbl, clp = cp.lbl;</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">     assert(lp != clp);</span>
+<span class="nc bnc" id="L396" title="All 4 branches missed.">     if (lp.get__(0).set == 0 || clp.get__(0).set == 0)</span>
+<span class="nc" id="L397"> 	return i;</span>
 <span class="nc" id="L398">UNSUPPORTED(&quot;bofpvwtmumoe1ckgnlgbwg8bt&quot;); //     if ((op-&gt;pos.x == 0.0 &amp;&amp; op-&gt;pos.y == 0.0) ||</span>
 <span class="nc" id="L399">UNSUPPORTED(&quot;f039op8rn0jopi9r8kora4cwz&quot;); // 	(cp-&gt;pos.x == 0.0 &amp;&amp; cp-&gt;pos.y == 0.0))</span>
 <span class="nc" id="L400">UNSUPPORTED(&quot;11drvggon8u61uz4iw75insly&quot;); // 	return i;</span>
@@ -421,7 +421,7 @@ try {
 
 <span class="nc" id="L422">throw new UnsupportedOperationException();</span>
 } finally {
-<span class="fc" id="L424">LEAVING(&quot;calnhom3s9dqvvi6crrz3h2wp&quot;,&quot;getintrsxi&quot;);</span>
+<span class="nc" id="L424">LEAVING(&quot;calnhom3s9dqvvi6crrz3h2wp&quot;,&quot;getintrsxi&quot;);</span>
 }
 }
 
@@ -433,36 +433,36 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/xlabels.c&quot;, name=&quot;recordointrsx&quot;, key=&quot;52awwxu810dg9a2pjq45aomam&quot;, definition=&quot;static double recordointrsx(XLabels_t * xlp, object_t * op, object_t * cp, Rect_t * rp, 	      double a, object_t * intrsx[9])&quot;)
 public static double recordointrsx(ST_XLabels_t xlp, ST_object_t op, ST_object_t cp, ST_Rect_t rp, double a, ST_object_t[] intrsx) {
-<span class="fc" id="L436">ENTERING(&quot;52awwxu810dg9a2pjq45aomam&quot;,&quot;recordointrsx&quot;);</span>
+<span class="nc" id="L436">ENTERING(&quot;52awwxu810dg9a2pjq45aomam&quot;,&quot;recordointrsx&quot;);</span>
 try {
-<span class="fc" id="L438">     int i = getintrsxi(xlp, op, cp);</span>
-<span class="pc bpc" id="L439" title="1 of 2 branches missed.">     if (i &lt; 0)</span>
-<span class="fc" id="L440"> 	i = 5;</span>
-<span class="fc bfc" id="L441" title="All 2 branches covered.">     if (intrsx[i] != null) {</span>
-<span class="fc" id="L442"> 	double sa, maxa = 0.0;</span>
-<span class="fc" id="L443"> 	final ST_Rect_t srect = new ST_Rect_t();</span>
+<span class="nc" id="L438">     int i = getintrsxi(xlp, op, cp);</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">     if (i &lt; 0)</span>
+<span class="nc" id="L440"> 	i = 5;</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">     if (intrsx[i] != null) {</span>
+<span class="nc" id="L442"> 	double sa, maxa = 0.0;</span>
+<span class="nc" id="L443"> 	final ST_Rect_t srect = new ST_Rect_t();</span>
  	/* keep maximally overlapping object */
-<span class="fc" id="L445"> 	objp2rect(intrsx[i], srect);</span>
-<span class="fc" id="L446"> 	sa = aabbaabb(rp, srect);</span>
-<span class="fc bfc" id="L447" title="All 2 branches covered."> 	if (sa &gt; a)</span>
-<span class="fc" id="L448"> 	    maxa = sa;</span>
+<span class="nc" id="L445"> 	objp2rect(intrsx[i], srect);</span>
+<span class="nc" id="L446"> 	sa = aabbaabb(rp, srect);</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed."> 	if (sa &gt; a)</span>
+<span class="nc" id="L448"> 	    maxa = sa;</span>
  	/*keep maximally overlapping label */
-<span class="pc bpc" id="L450" title="1 of 2 branches missed."> 	if (intrsx[i].lbl!=null) {</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed."> 	if (intrsx[i].lbl!=null) {</span>
 <span class="nc" id="L451"> 	    objplp2rect(intrsx[i], srect);</span>
 <span class="nc" id="L452"> 	    sa = aabbaabb(rp, srect);</span>
 <span class="nc bnc" id="L453" title="All 2 branches missed."> 	    if (sa &gt; a)</span>
 <span class="nc bnc" id="L454" title="All 2 branches missed."> 		maxa = sa &gt; maxa ? sa : maxa;</span>
  	}
-<span class="fc bfc" id="L456" title="All 2 branches covered."> 	if (maxa &gt; 0.0)</span>
-<span class="fc" id="L457"> 	    return maxa;</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed."> 	if (maxa &gt; 0.0)</span>
+<span class="nc" id="L457"> 	    return maxa;</span>
  	/*replace overlapping label/object pair */
-<span class="fc" id="L459"> 	intrsx[i] = cp;</span>
-<span class="fc" id="L460"> 	return a;</span>
+<span class="nc" id="L459"> 	intrsx[i] = cp;</span>
+<span class="nc" id="L460"> 	return a;</span>
      }
-<span class="fc" id="L462">     intrsx[i] = cp;</span>
-<span class="fc" id="L463">     return a;</span>
+<span class="nc" id="L462">     intrsx[i] = cp;</span>
+<span class="nc" id="L463">     return a;</span>
 } finally {
-<span class="fc" id="L465">LEAVING(&quot;52awwxu810dg9a2pjq45aomam&quot;,&quot;recordointrsx&quot;);</span>
+<span class="nc" id="L465">LEAVING(&quot;52awwxu810dg9a2pjq45aomam&quot;,&quot;recordointrsx&quot;);</span>
 }
 }
 
@@ -563,14 +563,14 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
    /*label-object intersect */
 <span class="fc" id="L564"> 	objp2rect(cp, srect);</span>
 <span class="fc" id="L565"> 	a = aabbaabb(rect, srect);</span>
-<span class="fc bfc" id="L566" title="All 2 branches covered."> 	if (a &gt; 0.0) {</span>
-<span class="fc" id="L567"> 	  ra = recordointrsx(xlp, objp, cp, rect, a, intrsx);</span>
-<span class="fc" id="L568">	  bp.n++;</span>
-<span class="fc" id="L569">	  bp.area += ra;</span>
+<span class="pc bpc" id="L566" title="1 of 2 branches missed."> 	if (a &gt; 0.0) {</span>
+<span class="nc" id="L567"> 	  ra = recordointrsx(xlp, objp, cp, rect, a, intrsx);</span>
+<span class="nc" id="L568">	  bp.n++;</span>
+<span class="nc" id="L569">	  bp.area += ra;</span>
  	}
  	/*label-label intersect */
-<span class="pc bpc" id="L572" title="1 of 4 branches missed."> 	if ((cp.lbl) == null || cp.lbl.get__(0).set == 0)</span>
-<span class="fc" id="L573"> 	    continue;</span>
+<span class="pc bpc" id="L572" title="3 of 4 branches missed."> 	if ((cp.lbl) == null || cp.lbl.get__(0).set == 0)</span>
+<span class="nc" id="L573"> 	    continue;</span>
 <span class="nc" id="L574"> 	objplp2rect(cp, srect);</span>
 <span class="nc" id="L575"> 	a = aabbaabb(rect, srect);</span>
 <span class="nc bnc" id="L576" title="All 2 branches missed."> 	if (a &gt; 0.0) {</span>
@@ -612,63 +612,63 @@ private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
      /*top */
 <span class="fc" id="L613">    lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
 <span class="fc" id="L614">    bp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="fc bfc" id="L615" title="All 2 branches covered.">     if (bp.n == 0)</span>
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">     if (bp.n == 0)</span>
 <span class="fc" id="L616"> 	return bp;</span>
      /*mid */
-<span class="fc" id="L618">     lp.get__(0).pos.y = objp.pos.y;</span>
-<span class="fc" id="L619">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L620" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L618">     lp.get__(0).pos.y = objp.pos.y;</span>
+<span class="nc" id="L619">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">     if (nbp.n == 0)</span>
 <span class="nc" id="L621"> 	return nbp;</span>
-<span class="pc bpc" id="L622" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L623"> 	bp.___(nbp);</span>
      /*bottom */
-<span class="fc" id="L625">     lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
-<span class="fc" id="L626">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L627" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L625">     lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="nc" id="L626">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L627" title="All 2 branches missed.">     if (nbp.n == 0)</span>
 <span class="nc" id="L628"> 	return nbp;</span>
-<span class="pc bpc" id="L629" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L629" title="All 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L630"> 	bp.___(nbp);</span>
      /*x mid */
-<span class="fc" id="L632">     lp.get__(0).pos.x = objp.pos.x;</span>
+<span class="nc" id="L632">     lp.get__(0).pos.x = objp.pos.x;</span>
      /*top */
-<span class="fc" id="L634">     lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
-<span class="fc" id="L635">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L636" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L634">     lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
+<span class="nc" id="L635">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L636" title="All 2 branches missed.">     if (nbp.n == 0)</span>
 <span class="nc" id="L637">       return nbp;</span>
-<span class="pc bpc" id="L638" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L639">       bp.___(nbp);</span>
      /*bottom */
-<span class="fc" id="L641">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
-<span class="fc" id="L642">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L643" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
+<span class="nc" id="L641">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="nc" id="L642">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L643" title="All 2 branches missed.">     if (nbp.n == 0)</span>
 <span class="nc" id="L644">       return nbp;</span>
-<span class="pc bpc" id="L645" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L646">       bp.___(nbp);</span>
      /*x right */
-<span class="fc" id="L648"> 	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;</span>
+<span class="nc" id="L648"> 	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;</span>
      /*top */
-<span class="fc" id="L650"> 	lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
-<span class="fc" id="L651">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L652" title="1 of 2 branches missed.">if (nbp.n == 0)</span>
+<span class="nc" id="L650"> 	lp.get__(0).pos.y = objp.pos.y + objp.sz.y;</span>
+<span class="nc" id="L651">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">if (nbp.n == 0)</span>
 <span class="nc" id="L653">return nbp;</span>
-<span class="pc bpc" id="L654" title="1 of 2 branches missed.">if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L655">    bp.___(nbp);</span>
      /*mid */
-<span class="fc" id="L657">	lp.get__(0).pos.y = objp.pos.y;</span>
-<span class="fc" id="L658">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L659" title="1 of 2 branches missed.">if (nbp.n == 0)</span>
+<span class="nc" id="L657">	lp.get__(0).pos.y = objp.pos.y;</span>
+<span class="nc" id="L658">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L659" title="All 2 branches missed.">if (nbp.n == 0)</span>
 <span class="nc" id="L660">return nbp;</span>
-<span class="pc bpc" id="L661" title="1 of 2 branches missed.">if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L661" title="All 2 branches missed.">if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L662">    bp.___(nbp);</span>
      /*bottom */
-<span class="fc" id="L664">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
-<span class="fc" id="L665">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L666" title="1 of 2 branches missed.">if (nbp.n == 0)</span>
+<span class="nc" id="L664">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="nc" id="L665">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L666" title="All 2 branches missed.">if (nbp.n == 0)</span>
 <span class="nc" id="L667">return nbp;</span>
-<span class="pc bpc" id="L668" title="1 of 2 branches missed.">if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L668" title="All 2 branches missed.">if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L669">    bp.___(nbp);</span>
      /*sliding from top left */
-<span class="pc bpc" id="L671" title="5 of 10 branches missed.">     if (intrsx[6]!=null || intrsx[7]!=null || intrsx[8]!=null || intrsx[3]!=null || intrsx[0]!=null) {	/* have to move */</span>
+<span class="nc bnc" id="L671" title="All 10 branches missed.">     if (intrsx[6]!=null || intrsx[7]!=null || intrsx[8]!=null || intrsx[3]!=null || intrsx[0]!=null) {	/* have to move */</span>
 <span class="nc" id="L672">UNSUPPORTED(&quot;c5acs4cl77hgu5j6nmhk090uz&quot;); // 	if (!intrsx[7] &amp;&amp; !intrsx[8]) {	/* some room right? */</span>
 <span class="nc" id="L673">UNSUPPORTED(&quot;ez8sbh237xdqdjeewev2ys74y&quot;); // 	    /* slide along upper edge */</span>
 <span class="nc" id="L674">UNSUPPORTED(&quot;ajgw2jggmwmofm77lgbx5eo2n&quot;); // 	    for (lp-&gt;pos.x = objp-&gt;pos.x - lp-&gt;sz.x,</span>
@@ -697,23 +697,23 @@ private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
 <span class="nc" id="L697">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
      }
      /*sliding from bottom right */
-<span class="fc" id="L700"> 	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;</span>
-<span class="fc" id="L701">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
-<span class="pc bpc" id="L702" title="6 of 10 branches missed.">     if (intrsx[2]!=null || intrsx[1]!=null || intrsx[0]!=null || intrsx[5]!=null || intrsx[8]!=null) {	/* have to move */</span>
-<span class="pc bpc" id="L703" title="2 of 4 branches missed."> 	if ((intrsx[1]) == null &amp;&amp; (intrsx[0]) == null) {	/* some room left? */</span>
+<span class="nc" id="L700"> 	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;</span>
+<span class="nc" id="L701">	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="nc bnc" id="L702" title="All 10 branches missed.">     if (intrsx[2]!=null || intrsx[1]!=null || intrsx[0]!=null || intrsx[5]!=null || intrsx[8]!=null) {	/* have to move */</span>
+<span class="nc bnc" id="L703" title="All 4 branches missed."> 	if ((intrsx[1]) == null &amp;&amp; (intrsx[0]) == null) {	/* some room left? */</span>
  	    /* slide along lower edge */
-<span class="fc" id="L705"> 	    for (lp.get__(0).pos.x = (objp.pos.x + objp.sz.x),</span>
-<span class="fc" id="L706"> 		 lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
-<span class="fc bfc" id="L707" title="All 2 branches covered."> 		 lp.get__(0).pos.x &gt;= (objp.pos.x - lp.get__(0).sz.x);</span>
-<span class="fc" id="L708"> 		 lp.get__(0).pos.x = (lp.get__(0).pos.x - xincr)) {</span>
-<span class="fc" id="L709"> 		nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L710" title="1 of 2 branches missed."> 		if (nbp.n == 0)</span>
+<span class="nc" id="L705"> 	    for (lp.get__(0).pos.x = (objp.pos.x + objp.sz.x),</span>
+<span class="nc" id="L706"> 		 lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed."> 		 lp.get__(0).pos.x &gt;= (objp.pos.x - lp.get__(0).sz.x);</span>
+<span class="nc" id="L708"> 		 lp.get__(0).pos.x = (lp.get__(0).pos.x - xincr)) {</span>
+<span class="nc" id="L709"> 		nbp.___(xlintersections(xlp, objp, intrsx));</span>
+<span class="nc bnc" id="L710" title="All 2 branches missed."> 		if (nbp.n == 0)</span>
 <span class="nc" id="L711"> 			return nbp;</span>
-<span class="pc bpc" id="L712" title="1 of 2 branches missed."> 			if (nbp.area &lt; bp.area)</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed."> 			if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L713"> 			    bp.___(nbp);</span>
  	    }
  	}
-<span class="pc bpc" id="L716" title="3 of 4 branches missed."> 	if ((intrsx[5]) == null &amp;&amp; (intrsx[8]) == null) {	/* some room up? */</span>
+<span class="nc bnc" id="L716" title="All 4 branches missed."> 	if ((intrsx[5]) == null &amp;&amp; (intrsx[8]) == null) {	/* some room up? */</span>
 <span class="nc" id="L717">UNSUPPORTED(&quot;4bcpk3ixfwrlr0yzrjv2efigj&quot;); // 	    /* slide up right edge */</span>
 <span class="nc" id="L718">UNSUPPORTED(&quot;7natp0873pfsvymhhhvki1sev&quot;); // 	    for (lp-&gt;pos.x = objp-&gt;pos.x + objp-&gt;sz.x,</span>
 <span class="nc" id="L719">UNSUPPORTED(&quot;56ycmo0ljb7e86mnezdx3regh&quot;); // 		 lp-&gt;pos.y = objp-&gt;pos.y - lp-&gt;sz.y;</span>
@@ -727,7 +727,7 @@ private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
 <span class="nc" id="L727">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
  	}
      }
-<span class="fc" id="L730">     return bp;</span>
+<span class="nc" id="L730">     return bp;</span>
 }
 
 
@@ -879,16 +879,16 @@ int r, i;
 <span class="fc bfc" id="L879" title="All 2 branches covered."> 	if (objs.get__(i).lbl == null)</span>
 <span class="fc" id="L880"> 	    continue;</span>
 <span class="fc" id="L881"> 	bp.___(xladjust(xlp, objs.get__(i)));</span>
-<span class="fc bfc" id="L882" title="All 2 branches covered."> 	if (bp.n == 0) {</span>
+<span class="pc bpc" id="L882" title="1 of 2 branches missed."> 	if (bp.n == 0) {</span>
 <span class="fc" id="L883"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
-<span class="pc bpc" id="L884" title="1 of 2 branches missed."> 	} else if(bp.area == 0) {</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed."> 	} else if(bp.area == 0) {</span>
 <span class="nc" id="L885"> 	    objs.get__(i).lbl.get__(0).pos.x = bp.pos.x;</span>
 <span class="nc" id="L886"> 	    objs.get__(i).lbl.get__(0).pos.y = bp.pos.y;</span>
 <span class="nc" id="L887"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
-<span class="pc bpc" id="L888" title="1 of 2 branches missed."> 	} else if (params.force) {</span>
-<span class="fc" id="L889"> 	    objs.get__(i).lbl.get__(0).pos.x = bp.pos.x;</span>
-<span class="fc" id="L890"> 	    objs.get__(i).lbl.get__(0).pos.y = bp.pos.y;</span>
-<span class="fc" id="L891"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
+<span class="nc bnc" id="L888" title="All 2 branches missed."> 	} else if (params.force) {</span>
+<span class="nc" id="L889"> 	    objs.get__(i).lbl.get__(0).pos.x = bp.pos.x;</span>
+<span class="nc" id="L890"> 	    objs.get__(i).lbl.get__(0).pos.y = bp.pos.y;</span>
+<span class="nc" id="L891"> 	    objs.get__(i).lbl.get__(0).set = 1;</span>
  	} else {
 <span class="nc" id="L893"> 	    r = 1;</span>
  	}
