@@ -627,8 +627,8 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 	 *         default value if this object does not contain a member with that name
 	 */
 	public int getInt(String name, int defaultValue) {
-<span class="fc" id="L630">		JsonValue value = get(name);</span>
-<span class="pc bpc" id="L631" title="1 of 2 branches missed.">		return value != null ? value.asInt() : defaultValue;</span>
+<span class="nc" id="L630">		JsonValue value = get(name);</span>
+<span class="nc bnc" id="L631" title="All 2 branches missed.">		return value != null ? value.asInt() : defaultValue;</span>
 	}
 
 	/**
@@ -721,8 +721,8 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 	 *         default value if this object does not contain a member with that name
 	 */
 	public String getString(String name, String defaultValue) {
-<span class="fc" id="L724">		JsonValue value = get(name);</span>
-<span class="pc bpc" id="L725" title="1 of 2 branches missed.">		return value != null ? value.asString() : defaultValue;</span>
+<span class="nc" id="L724">		JsonValue value = get(name);</span>
+<span class="nc bnc" id="L725" title="All 2 branches missed.">		return value != null ? value.asString() : defaultValue;</span>
 	}
 
 	/**

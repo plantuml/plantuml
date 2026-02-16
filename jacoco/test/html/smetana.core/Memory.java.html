@@ -35,32 +35,29 @@
  */
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
-<span class="nc" id="L40">final public class Memory {</span>
+<span class="nc" id="L38">final public class Memory {</span>
 
 	public static void free(Object arg) {
-<span class="fc" id="L43">	}</span>
+<span class="fc" id="L41">	}</span>
 
 	public static int identityHashCode(Globals zz, CString data) {
-<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (data == null)</span>
-<span class="fc" id="L47">			return 0;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (data == null)</span>
+<span class="fc" id="L45">			return 0;</span>
 
-<span class="fc" id="L49">		int result = data.getUid();</span>
-<span class="fc" id="L50">		zz.all.put(result, data);</span>
-<span class="fc" id="L51">		WasmLog.log(&quot;hashsize = &quot; + zz.all.size());</span>
-<span class="fc" id="L52">		return result;</span>
+<span class="fc" id="L47">		int result = data.getUid();</span>
+<span class="fc" id="L48">		zz.all.put(result, data);</span>
+<span class="fc" id="L49">		return result;</span>
 	}
 
 	public static CString fromIdentityHashCode(Globals zz, int hash) {
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (hash % 2 != 0)</span>
-<span class="nc" id="L57">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (hash % 2 != 0)</span>
+<span class="nc" id="L54">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L59">		Object result = zz.all.get(hash);</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L61">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L56">		Object result = zz.all.get(hash);</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L58">			throw new UnsupportedOperationException();</span>
 
-<span class="fc" id="L63">		return (CString) result;</span>
+<span class="fc" id="L60">		return (CString) result;</span>
 	}
 
 }

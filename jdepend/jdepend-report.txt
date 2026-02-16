@@ -1,99 +1,5 @@
 
 --------------------------------------------------
-- Package: com.plantuml.api.cheerpj
---------------------------------------------------
-
-Stats:
-    Total Classes: 6
-    Concrete Classes: 6
-    Abstract Classes: 0
-
-    Ca: 4
-    Ce: 10
-
-    A: 0
-    I: 0.71
-    D: 0.29
-
-Abstract Classes:
-
-Concrete Classes:
-    com.plantuml.api.cheerpj.Base64OutputStream
-    com.plantuml.api.cheerpj.JsonResult
-    com.plantuml.api.cheerpj.StaticMemory
-    com.plantuml.api.cheerpj.StringBounderCanvas
-    com.plantuml.api.cheerpj.SvgOutputStream
-    com.plantuml.api.cheerpj.Utils
-
-Depends Upon:
-    java.awt
-    java.awt.geom
-    java.io
-    java.lang
-    java.util
-    net.sourceforge.plantuml
-    net.sourceforge.plantuml.core
-    net.sourceforge.plantuml.error
-    net.sourceforge.plantuml.klimt.font
-    net.sourceforge.plantuml.klimt.geom
-
-Used By:
-    com.plantuml.api.cheerpj.v1
-    net.atmp
-    net.sourceforge.plantuml
-    smetana.core
-
---------------------------------------------------
-- Package: com.plantuml.api.cheerpj.v1
---------------------------------------------------
-
-Stats:
-    Total Classes: 6
-    Concrete Classes: 6
-    Abstract Classes: 0
-
-    Ca: 0
-    Ce: 19
-
-    A: 0
-    I: 1
-    D: 0
-
-Abstract Classes:
-
-Concrete Classes:
-    com.plantuml.api.cheerpj.v1.DirectDraw
-    com.plantuml.api.cheerpj.v1.Info
-    com.plantuml.api.cheerpj.v1.Png
-    com.plantuml.api.cheerpj.v1.Raw
-    com.plantuml.api.cheerpj.v1.RunInit
-    com.plantuml.api.cheerpj.v1.Svg
-
-Depends Upon:
-    com.plantuml.api.cheerpj
-    java.awt
-    java.io
-    java.lang
-    java.nio.charset
-    java.util
-    net.sourceforge.plantuml
-    net.sourceforge.plantuml.api
-    net.sourceforge.plantuml.code
-    net.sourceforge.plantuml.core
-    net.sourceforge.plantuml.error
-    net.sourceforge.plantuml.klimt.awt
-    net.sourceforge.plantuml.klimt.color
-    net.sourceforge.plantuml.klimt.drawing
-    net.sourceforge.plantuml.klimt.drawing.g2d
-    net.sourceforge.plantuml.klimt.font
-    net.sourceforge.plantuml.klimt.shape
-    net.sourceforge.plantuml.preproc
-    net.sourceforge.plantuml.version
-
-Used By:
-    Not used by any packages.
-
---------------------------------------------------
 - Package: com.plantuml.ubrex
 --------------------------------------------------
 
@@ -1350,11 +1256,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 53
-    Ce: 53
+    Ce: 52
 
     A: 0.17
     I: 0.5
-    D: 0.33
+    D: 0.34
 
 Abstract Classes:
     net.atmp.CucaDiagram
@@ -1367,7 +1273,6 @@ Concrete Classes:
     net.atmp.SpecialText
 
 Depends Upon:
-    com.plantuml.api.cheerpj
     java.awt
     java.io
     java.lang
@@ -1485,8 +1390,8 @@ Stats:
     Concrete Classes: 47
     Abstract Classes: 14
 
-    Ca: 120
-    Ce: 62
+    Ca: 118
+    Ce: 61
 
     A: 0.23
     I: 0.34
@@ -1558,7 +1463,6 @@ Concrete Classes:
     net.sourceforge.plantuml.TikzFontDistortion
 
 Depends Upon:
-    com.plantuml.api.cheerpj
     java.awt
     java.awt.event
     java.awt.font
@@ -1622,8 +1526,6 @@ Depends Upon:
     net.sourceforge.plantuml.warning
 
 Used By:
-    com.plantuml.api.cheerpj
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml.abel
     net.sourceforge.plantuml.activitydiagram
@@ -2727,12 +2629,12 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 6
 
-    Ca: 16
+    Ca: 15
     Ce: 14
 
     A: 0.4
-    I: 0.47
-    D: 0.13
+    I: 0.48
+    D: 0.12
 
 Abstract Classes:
     net.sourceforge.plantuml.api.ApiStable
@@ -2770,7 +2672,6 @@ Depends Upon:
     net.sourceforge.plantuml.url
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.command
@@ -3873,12 +3774,12 @@ Stats:
     Concrete Classes: 28
     Abstract Classes: 4
 
-    Ca: 6
+    Ca: 5
     Ce: 13
 
     A: 0.12
-    I: 0.68
-    D: 0.19
+    I: 0.72
+    D: 0.15
 
 Abstract Classes:
     net.sourceforge.plantuml.code.Compression
@@ -3932,7 +3833,6 @@ Depends Upon:
     net.sourceforge.plantuml.zopfli
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.sourceforge.plantuml
     net.sourceforge.plantuml.donors
     net.sourceforge.plantuml.klimt.sprite
@@ -4358,11 +4258,11 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 2
 
-    Ca: 85
+    Ca: 83
     Ce: 12
 
     A: 0.33
-    I: 0.12
+    I: 0.13
     D: 0.54
 
 Abstract Classes:
@@ -4390,8 +4290,6 @@ Depends Upon:
     net.sourceforge.plantuml.version
 
 Used By:
-    com.plantuml.api.cheerpj
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.activitydiagram
@@ -5893,12 +5791,12 @@ Stats:
     Concrete Classes: 7
     Abstract Classes: 1
 
-    Ca: 9
+    Ca: 7
     Ce: 27
 
     A: 0.12
-    I: 0.75
-    D: 0.12
+    I: 0.79
+    D: 0.08
 
 Abstract Classes:
     net.sourceforge.plantuml.error.PSystemError
@@ -5942,8 +5840,6 @@ Depends Upon:
     net.sourceforge.plantuml.version
 
 Used By:
-    com.plantuml.api.cheerpj
-    com.plantuml.api.cheerpj.v1
     net.sourceforge.plantuml
     net.sourceforge.plantuml.api.v2
     net.sourceforge.plantuml.command
@@ -6907,12 +6803,12 @@ Stats:
     Concrete Classes: 3
     Abstract Classes: 0
 
-    Ca: 38
+    Ca: 37
     Ce: 8
 
     A: 0
-    I: 0.17
-    D: 0.83
+    I: 0.18
+    D: 0.82
 
 Abstract Classes:
 
@@ -6932,7 +6828,6 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     jcckit.util
     net.atmp
     net.sourceforge.plantuml
@@ -6980,7 +6875,7 @@ Stats:
     Concrete Classes: 30
     Abstract Classes: 2
 
-    Ca: 107
+    Ca: 106
     Ce: 14
 
     A: 0.06
@@ -7040,7 +6935,6 @@ Depends Upon:
     net.sourceforge.plantuml.utils
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     jcckit.util
     net.atmp
     net.sourceforge.plantuml
@@ -7592,12 +7486,12 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 7
 
-    Ca: 87
+    Ca: 86
     Ce: 15
 
     A: 0.44
     I: 0.15
-    D: 0.42
+    D: 0.41
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic
@@ -7637,7 +7531,6 @@ Depends Upon:
     net.sourceforge.plantuml.utils
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.abel
@@ -7848,12 +7741,12 @@ Stats:
     Concrete Classes: 13
     Abstract Classes: 1
 
-    Ca: 5
+    Ca: 4
     Ce: 19
 
     A: 0.07
-    I: 0.79
-    D: 0.14
+    I: 0.83
+    D: 0.1
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.drawing.g2d.ExtendedPathIterator
@@ -7895,7 +7788,6 @@ Depends Upon:
     net.sourceforge.plantuml.url
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml.eggs
     net.sourceforge.plantuml.klimt.drawing.svg
@@ -8200,7 +8092,7 @@ Stats:
     Concrete Classes: 10
     Abstract Classes: 4
 
-    Ca: 92
+    Ca: 90
     Ce: 14
 
     A: 0.29
@@ -8242,8 +8134,6 @@ Depends Upon:
     net.sourceforge.plantuml.text
 
 Used By:
-    com.plantuml.api.cheerpj
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.abel
@@ -8344,7 +8234,7 @@ Stats:
     Concrete Classes: 37
     Abstract Classes: 6
 
-    Ca: 96
+    Ca: 95
     Ce: 12
 
     A: 0.14
@@ -8413,7 +8303,6 @@ Depends Upon:
     net.sourceforge.plantuml.utils
 
 Used By:
-    com.plantuml.api.cheerpj
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.abel
@@ -8519,12 +8408,12 @@ Stats:
     Concrete Classes: 47
     Abstract Classes: 4
 
-    Ca: 92
+    Ca: 91
     Ce: 21
 
     A: 0.08
     I: 0.19
-    D: 0.74
+    D: 0.73
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.shape.AbstractTextBlock
@@ -8605,7 +8494,6 @@ Depends Upon:
     net.sourceforge.plantuml.utils
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.abel
@@ -9922,7 +9810,7 @@ Stats:
     Concrete Classes: 21
     Abstract Classes: 3
 
-    Ca: 73
+    Ca: 72
     Ce: 19
 
     A: 0.12
@@ -9979,7 +9867,6 @@ Depends Upon:
     net.sourceforge.plantuml.warning
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.atmp
     net.sourceforge.plantuml
     net.sourceforge.plantuml.activitydiagram
@@ -14457,12 +14344,12 @@ Stats:
     Concrete Classes: 15
     Abstract Classes: 1
 
-    Ca: 18
+    Ca: 17
     Ce: 36
 
     A: 0.06
-    I: 0.67
-    D: 0.27
+    I: 0.68
+    D: 0.26
 
 Abstract Classes:
     net.sourceforge.plantuml.version.IteratorCounter2
@@ -14523,7 +14410,6 @@ Depends Upon:
     net.sourceforge.plantuml.windowsdot
 
 Used By:
-    com.plantuml.api.cheerpj.v1
     net.sourceforge.plantuml
     net.sourceforge.plantuml.cli
     net.sourceforge.plantuml.command
@@ -15294,11 +15180,11 @@ Stats:
     Abstract Classes: 5
 
     Ca: 12
-    Ce: 13
+    Ce: 12
 
     A: 0.25
-    I: 0.52
-    D: 0.23
+    I: 0.5
+    D: 0.25
 
 Abstract Classes:
     smetana.core.ACCESS
@@ -15325,7 +15211,6 @@ Concrete Classes:
     smetana.core.size_t
 
 Depends Upon:
-    com.plantuml.api.cheerpj
     gen.lib.cdt
     gen.lib.cgraph
     gen.lib.common
@@ -15697,121 +15582,58 @@ Used By:
 - Package Dependency Cycles:
 --------------------------------------------------
 
-com.plantuml.api.cheerpj
-    |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
-
-com.plantuml.api.cheerpj.v1
-    |
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
-
 gen.lib.cdt
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.cgraph
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.common
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.dotgen
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.gvc
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.label
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.pack
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 gen.lib.pathplan
     |
-    |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> smetana.core
+    |   h
+    |-> smetana.core
 
 h
     |
     |   smetana.core
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> h
 
 jcckit
     |
@@ -17339,13 +17161,8 @@ org.stathissideris.ascii2image.text
 
 smetana.core
     |
-    |   com.plantuml.api.cheerpj
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |   h
+    |-> smetana.core
 
 zext.plantuml.com.google.zxing
     |
@@ -17400,8 +17217,6 @@ zext.plantuml.com.google.zxing.qrcode.encoder
 
 Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
 
-com.plantuml.api.cheerpj,6,0,4,10,0,0.71,0.29,1
-com.plantuml.api.cheerpj.v1,6,0,0,19,0,1,0,1
 com.plantuml.ubrex,41,4,9,2,0.1,0.18,0.72,1
 com.plantuml.ubrex.builder,8,1,5,2,0.12,0.29,0.59,1
 gen.annotation,9,9,1,2,1,0.67,0.67,1
@@ -17415,20 +17230,20 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,4,0,1,5,0,0.83,0.17,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,104,2,12,5,0.02,0.29,0.69,1
-java.awt,0,0,35,0,0,0,1,1
+java.awt,0,0,33,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,2,0,0,0,1,1
 java.awt.font,0,0,7,0,0,0,1,1
-java.awt.geom,0,0,16,0,0,0,1,1
+java.awt.geom,0,0,15,0,0,0,1,1
 java.awt.image,0,0,16,0,0,0,1,1
-java.io,0,0,126,0,0,0,1,1
-java.lang,0,0,238,0,0,0,1,1
+java.io,0,0,124,0,0,0,1,1
+java.lang,0,0,236,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,8,0,0,0,1,1
 java.math,0,0,7,0,0,0,1,1
 java.net,0,0,13,0,0,0,1,1
 java.nio,0,0,2,0,0,0,1,1
-java.nio.charset,0,0,31,0,0,0,1,1
+java.nio.charset,0,0,30,0,0,0,1,1
 java.nio.file,0,0,4,0,0,0,1,1
 java.nio.file.attribute,0,0,1,0,0,0,1,1
 java.security,0,0,5,0,0,0,1,1
@@ -17437,7 +17252,7 @@ java.text,0,0,9,0,0,0,1,1
 java.time,0,0,13,0,0,0,1,1
 java.time.format,0,0,2,0,0,0,1,1
 java.time.temporal,0,0,1,0,0,0,1,1
-java.util,0,0,194,0,0,0,1,1
+java.util,0,0,192,0,0,0,1,1
 java.util.concurrent,0,0,10,0,0,0,1,1
 java.util.concurrent.atomic,0,0,12,0,0,0,1,1
 java.util.concurrent.locks,0,0,2,0,0,0,1,1
@@ -17468,8 +17283,8 @@ jcckit.plot,26,8,1,7,0.31,0.88,0.18,1
 jcckit.renderer,2,0,1,4,0,0.8,0.2,1
 jcckit.transformation,2,1,1,4,0.5,0.8,0.3,1
 jcckit.util,12,3,6,6,0.25,0.5,0.25,1
-net.atmp,6,1,53,53,0.17,0.5,0.33,1
-net.sourceforge.plantuml,61,14,120,62,0.23,0.34,0.43,1
+net.atmp,6,1,53,52,0.17,0.5,0.34,1
+net.sourceforge.plantuml,61,14,118,61,0.23,0.34,0.43,1
 net.sourceforge.plantuml.abel,34,8,39,25,0.24,0.39,0.37,1
 net.sourceforge.plantuml.activitydiagram,3,0,3,16,0,0.84,0.16,1
 net.sourceforge.plantuml.activitydiagram.command,12,0,1,19,0,0.95,0.05,1
@@ -17482,7 +17297,7 @@ net.sourceforge.plantuml.activitydiagram3.ftile.vertical,22,2,6,19,0.09,0.76,0.1
 net.sourceforge.plantuml.activitydiagram3.gtile,40,7,3,22,0.17,0.88,0.05,1
 net.sourceforge.plantuml.annotation,3,3,0,2,1,1,1,1
 net.sourceforge.plantuml.ant,3,0,0,15,0,1,0,1
-net.sourceforge.plantuml.api,15,6,16,14,0.4,0.47,0.13,1
+net.sourceforge.plantuml.api,15,6,15,14,0.4,0.48,0.12,1
 net.sourceforge.plantuml.api.mda.option2,4,3,1,3,0.75,0.75,0.5,1
 net.sourceforge.plantuml.api.mda.option3,1,1,0,1,1,1,1,1
 net.sourceforge.plantuml.api.v2,4,2,0,11,0.5,1,0.5,1
@@ -17504,14 +17319,14 @@ net.sourceforge.plantuml.chronology,14,1,0,33,0.07,1,0.07,1
 net.sourceforge.plantuml.classdiagram,5,1,13,24,0.2,0.65,0.15,1
 net.sourceforge.plantuml.classdiagram.command,21,0,9,28,0,0.76,0.24,1
 net.sourceforge.plantuml.cli,18,3,14,15,0.17,0.52,0.32,1
-net.sourceforge.plantuml.code,32,4,6,13,0.12,0.68,0.19,1
+net.sourceforge.plantuml.code,32,4,5,13,0.12,0.72,0.15,1
 net.sourceforge.plantuml.code.deflate,6,1,1,4,0.17,0.8,0.03,1
 net.sourceforge.plantuml.command,67,12,68,40,0.18,0.37,0.45,1
 net.sourceforge.plantuml.command.note,11,1,4,17,0.09,0.81,0.1,1
 net.sourceforge.plantuml.command.note.sequence,8,0,1,9,0,0.9,0.1,1
 net.sourceforge.plantuml.compositediagram,2,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.compositediagram.command,4,0,1,12,0,0.92,0.08,1
-net.sourceforge.plantuml.core,6,2,85,12,0.33,0.12,0.54,1
+net.sourceforge.plantuml.core,6,2,83,12,0.33,0.13,0.54,1
 net.sourceforge.plantuml.crash,4,0,10,23,0,0.7,0.3,1
 net.sourceforge.plantuml.cruise,3,3,2,7,1,0.78,0.78,1
 net.sourceforge.plantuml.cucadiagram,37,6,12,28,0.16,0.7,0.14,1
@@ -17537,7 +17352,7 @@ net.sourceforge.plantuml.elk.proxy.graph,6,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.elk.proxy.graph.util,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.emoji,11,1,3,21,0.09,0.88,0.03,1
 net.sourceforge.plantuml.emoji.data,1,0,1,1,0,0.5,0.5,1
-net.sourceforge.plantuml.error,8,1,9,27,0.12,0.75,0.12,1
+net.sourceforge.plantuml.error,8,1,7,27,0.12,0.79,0.08,1
 net.sourceforge.plantuml.file,3,0,3,7,0,0.7,0.3,1
 net.sourceforge.plantuml.filesdiagram,5,0,0,21,0,1,0,1
 net.sourceforge.plantuml.flashcode,3,1,4,2,0.33,0.33,0.33,1
@@ -17556,26 +17371,26 @@ net.sourceforge.plantuml.jcckit,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,6,30,0,0.83,0.17,1
 net.sourceforge.plantuml.klimt,26,10,85,15,0.38,0.15,0.47,1
-net.sourceforge.plantuml.klimt.awt,3,0,38,8,0,0.17,0.83,1
-net.sourceforge.plantuml.klimt.color,32,2,107,14,0.06,0.12,0.82,1
+net.sourceforge.plantuml.klimt.awt,3,0,37,8,0,0.18,0.82,1
+net.sourceforge.plantuml.klimt.color,32,2,106,14,0.06,0.12,0.82,1
 net.sourceforge.plantuml.klimt.compress,14,2,5,10,0.14,0.67,0.19,1
 net.sourceforge.plantuml.klimt.creole,23,4,85,24,0.17,0.22,0.61,1
 net.sourceforge.plantuml.klimt.creole.atom,17,2,3,27,0.12,0.9,0.02,1
 net.sourceforge.plantuml.klimt.creole.command,24,2,3,21,0.08,0.88,0.04,1
 net.sourceforge.plantuml.klimt.creole.legacy,18,2,11,30,0.11,0.73,0.16,1
-net.sourceforge.plantuml.klimt.drawing,16,7,87,15,0.44,0.15,0.42,1
+net.sourceforge.plantuml.klimt.drawing,16,7,86,15,0.44,0.15,0.41,1
 net.sourceforge.plantuml.klimt.drawing.debug,2,0,4,13,0,0.76,0.24,1
 net.sourceforge.plantuml.klimt.drawing.eps,25,1,3,19,0.04,0.86,0.1,1
-net.sourceforge.plantuml.klimt.drawing.g2d,14,1,5,19,0.07,0.79,0.14,1
+net.sourceforge.plantuml.klimt.drawing.g2d,14,1,4,19,0.07,0.83,0.1,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,2,7,0,0.78,0.22,1
 net.sourceforge.plantuml.klimt.drawing.html5,4,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.klimt.drawing.svg,16,0,5,21,0,0.81,0.19,1
 net.sourceforge.plantuml.klimt.drawing.tikz,12,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,5,12,0,0.71,0.29,1
 net.sourceforge.plantuml.klimt.drawing.visio,12,1,1,13,0.08,0.93,0.01,1
-net.sourceforge.plantuml.klimt.font,14,4,92,14,0.29,0.13,0.58,1
-net.sourceforge.plantuml.klimt.geom,43,6,96,12,0.14,0.11,0.75,1
-net.sourceforge.plantuml.klimt.shape,51,4,92,21,0.08,0.19,0.74,1
+net.sourceforge.plantuml.klimt.font,14,4,90,14,0.29,0.13,0.58,1
+net.sourceforge.plantuml.klimt.geom,43,6,95,12,0.14,0.11,0.75,1
+net.sourceforge.plantuml.klimt.shape,51,4,91,21,0.08,0.19,0.73,1
 net.sourceforge.plantuml.klimt.sprite,27,2,24,31,0.07,0.56,0.36,1
 net.sourceforge.plantuml.licensing,8,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,50,3,0,0.06,0.94,1
@@ -17599,7 +17414,7 @@ net.sourceforge.plantuml.png,5,0,6,19,0,0.76,0.24,1
 net.sourceforge.plantuml.png.quant,2,0,1,2,0,0.67,0.33,1
 net.sourceforge.plantuml.png.quantx,9,0,0,4,0,1,0,1
 net.sourceforge.plantuml.posimo,9,2,1,17,0.22,0.94,0.17,1
-net.sourceforge.plantuml.preproc,24,3,73,19,0.12,0.21,0.67,1
+net.sourceforge.plantuml.preproc,24,3,72,19,0.12,0.21,0.67,1
 net.sourceforge.plantuml.preproc.spm,1,0,0,4,0,1,0,1
 net.sourceforge.plantuml.preproc2,10,1,4,8,0.1,0.67,0.23,1
 net.sourceforge.plantuml.project,20,2,12,36,0.1,0.75,0.15,1
@@ -17661,7 +17476,7 @@ net.sourceforge.plantuml.timingdiagram.command,24,1,1,15,0.04,0.94,0.02,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,14,0.18,0.93,0.11,1
 net.sourceforge.plantuml.url,8,0,41,7,0,0.15,0.85,1
 net.sourceforge.plantuml.utils,23,6,96,23,0.26,0.19,0.55,1
-net.sourceforge.plantuml.version,16,1,18,36,0.06,0.67,0.27,1
+net.sourceforge.plantuml.version,16,1,17,36,0.06,0.68,0.26,1
 net.sourceforge.plantuml.vizjs,7,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.warning,3,1,9,2,0.33,0.18,0.48,1
 net.sourceforge.plantuml.wbs,13,2,2,25,0.15,0.93,0.08,1
@@ -17682,7 +17497,7 @@ org.stathissideris.ascii2image.text,12,0,2,6,0,0.75,0.25,1
 org.w3c.dom,0,0,7,0,0,0,1,1
 org.xml.sax,0,0,1,0,0,0,1,1
 org.xml.sax.helpers,0,0,1,0,0,0,1,1
-smetana.core,20,5,12,13,0.25,0.52,0.23,1
+smetana.core,20,5,12,12,0.25,0.5,0.25,1
 smetana.core.debug,3,0,11,5,0,0.31,0.69,1
 zext.plantuml.com.google.zxing,10,2,5,3,0.2,0.38,0.43,1
 zext.plantuml.com.google.zxing.client.j2se,1,0,0,3,0,1,0,1

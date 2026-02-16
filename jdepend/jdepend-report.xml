@@ -2,127 +2,6 @@
 <JDepend>
     <Packages>
 
-        <Package name="com.plantuml.api.cheerpj">
-            <Stats>
-                <TotalClasses>6</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>4</Ca>
-                <Ce>10</Ce>
-                <A>0</A>
-                <I>0.71</I>
-                <D>0.29</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="Base64OutputStream.java">
-                    com.plantuml.api.cheerpj.Base64OutputStream
-                </Class>
-                <Class sourceFile="JsonResult.java">
-                    com.plantuml.api.cheerpj.JsonResult
-                </Class>
-                <Class sourceFile="StaticMemory.java">
-                    com.plantuml.api.cheerpj.StaticMemory
-                </Class>
-                <Class sourceFile="StringBounderCanvas.java">
-                    com.plantuml.api.cheerpj.StringBounderCanvas
-                </Class>
-                <Class sourceFile="SvgOutputStream.java">
-                    com.plantuml.api.cheerpj.SvgOutputStream
-                </Class>
-                <Class sourceFile="Utils.java">
-                    com.plantuml.api.cheerpj.Utils
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.awt</Package>
-                <Package>java.awt.geom</Package>
-                <Package>java.io</Package>
-                <Package>java.lang</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.error</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
-                <Package>net.atmp</Package>
-                <Package>net.sourceforge.plantuml</Package>
-                <Package>smetana.core</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="com.plantuml.api.cheerpj.v1">
-            <Stats>
-                <TotalClasses>6</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
-                <Ce>19</Ce>
-                <A>0</A>
-                <I>1</I>
-                <D>0</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="DirectDraw.java">
-                    com.plantuml.api.cheerpj.v1.DirectDraw
-                </Class>
-                <Class sourceFile="Info.java">
-                    com.plantuml.api.cheerpj.v1.Info
-                </Class>
-                <Class sourceFile="Png.java">
-                    com.plantuml.api.cheerpj.v1.Png
-                </Class>
-                <Class sourceFile="Raw.java">
-                    com.plantuml.api.cheerpj.v1.Raw
-                </Class>
-                <Class sourceFile="RunInit.java">
-                    com.plantuml.api.cheerpj.v1.RunInit
-                </Class>
-                <Class sourceFile="Svg.java">
-                    com.plantuml.api.cheerpj.v1.Svg
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>com.plantuml.api.cheerpj</Package>
-                <Package>java.awt</Package>
-                <Package>java.io</Package>
-                <Package>java.lang</Package>
-                <Package>java.nio.charset</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.api</Package>
-                <Package>net.sourceforge.plantuml.code</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.error</Package>
-                <Package>net.sourceforge.plantuml.klimt.awt</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.version</Package>
-            </DependsUpon>
-
-            <UsedBy>
-            </UsedBy>
-        </Package>
-
         <Package name="com.plantuml.ubrex">
             <Stats>
                 <TotalClasses>41</TotalClasses>
@@ -2115,10 +1994,10 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>53</Ca>
-                <Ce>53</Ce>
+                <Ce>52</Ce>
                 <A>0.17</A>
                 <I>0.5</I>
-                <D>0.33</D>
+                <D>0.34</D>
                 <V>1</V>
             </Stats>
 
@@ -2147,7 +2026,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>com.plantuml.api.cheerpj</Package>
                 <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
@@ -2264,8 +2142,8 @@
                 <TotalClasses>61</TotalClasses>
                 <ConcreteClasses>47</ConcreteClasses>
                 <AbstractClasses>14</AbstractClasses>
-                <Ca>120</Ca>
-                <Ce>62</Ce>
+                <Ca>118</Ca>
+                <Ce>61</Ce>
                 <A>0.23</A>
                 <I>0.34</I>
                 <D>0.43</D>
@@ -2462,7 +2340,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>com.plantuml.api.cheerpj</Package>
                 <Package>java.awt</Package>
                 <Package>java.awt.event</Package>
                 <Package>java.awt.font</Package>
@@ -2527,8 +2404,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj</Package>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram</Package>
@@ -4376,11 +4251,11 @@
                 <TotalClasses>15</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>16</Ca>
+                <Ca>15</Ca>
                 <Ce>14</Ce>
                 <A>0.4</A>
-                <I>0.47</I>
-                <D>0.13</D>
+                <I>0.48</I>
+                <D>0.12</D>
                 <V>1</V>
             </Stats>
 
@@ -4453,7 +4328,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
@@ -6073,11 +5947,11 @@
                 <TotalClasses>32</TotalClasses>
                 <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>6</Ca>
+                <Ca>5</Ca>
                 <Ce>13</Ce>
                 <A>0.12</A>
-                <I>0.68</I>
-                <D>0.19</D>
+                <I>0.72</I>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
@@ -6200,7 +6074,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
@@ -6832,10 +6705,10 @@
                 <TotalClasses>6</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>85</Ca>
+                <Ca>83</Ca>
                 <Ce>12</Ce>
                 <A>0.33</A>
-                <I>0.12</I>
+                <I>0.13</I>
                 <D>0.54</D>
                 <V>1</V>
             </Stats>
@@ -6880,8 +6753,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj</Package>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram</Package>
@@ -9017,11 +8888,11 @@
                 <TotalClasses>8</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>9</Ca>
+                <Ca>7</Ca>
                 <Ce>27</Ce>
                 <A>0.12</A>
-                <I>0.75</I>
-                <D>0.12</D>
+                <I>0.79</I>
+                <D>0.08</D>
                 <V>1</V>
             </Stats>
 
@@ -9086,8 +8957,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj</Package>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api.v2</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
@@ -10340,11 +10209,11 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>38</Ca>
+                <Ca>37</Ca>
                 <Ce>8</Ce>
                 <A>0</A>
-                <I>0.17</I>
-                <D>0.83</D>
+                <I>0.18</I>
+                <D>0.82</D>
                 <V>1</V>
             </Stats>
 
@@ -10375,7 +10244,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>jcckit.util</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
@@ -10421,7 +10289,7 @@
                 <TotalClasses>32</TotalClasses>
                 <ConcreteClasses>30</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>107</Ca>
+                <Ca>106</Ca>
                 <Ce>14</Ce>
                 <A>0.06</A>
                 <I>0.12</I>
@@ -10549,7 +10417,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>jcckit.util</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
@@ -11301,11 +11168,11 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
-                <Ca>87</Ca>
+                <Ca>86</Ca>
                 <Ce>15</Ce>
                 <A>0.44</A>
                 <I>0.15</I>
-                <D>0.42</D>
+                <D>0.41</D>
                 <V>1</V>
             </Stats>
 
@@ -11382,7 +11249,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
@@ -11649,11 +11515,11 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>5</Ca>
+                <Ca>4</Ca>
                 <Ce>19</Ce>
                 <A>0.07</A>
-                <I>0.79</I>
-                <D>0.14</D>
+                <I>0.83</I>
+                <D>0.1</D>
                 <V>1</V>
             </Stats>
 
@@ -11728,7 +11594,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
@@ -12149,7 +12014,7 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>92</Ca>
+                <Ca>90</Ca>
                 <Ce>14</Ce>
                 <A>0.29</A>
                 <I>0.13</I>
@@ -12223,8 +12088,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj</Package>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
@@ -12323,7 +12186,7 @@
                 <TotalClasses>43</TotalClasses>
                 <ConcreteClasses>37</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>96</Ca>
+                <Ca>95</Ca>
                 <Ce>12</Ce>
                 <A>0.14</A>
                 <I>0.11</I>
@@ -12482,7 +12345,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
@@ -12586,11 +12448,11 @@
                 <TotalClasses>51</TotalClasses>
                 <ConcreteClasses>47</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>92</Ca>
+                <Ca>91</Ca>
                 <Ce>21</Ce>
                 <A>0.08</A>
                 <I>0.19</I>
-                <D>0.74</D>
+                <D>0.73</D>
                 <V>1</V>
             </Stats>
 
@@ -12778,7 +12640,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
@@ -14515,7 +14376,7 @@
                 <TotalClasses>24</TotalClasses>
                 <ConcreteClasses>21</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>73</Ca>
+                <Ca>72</Ca>
                 <Ce>19</Ce>
                 <A>0.12</A>
                 <I>0.21</I>
@@ -14624,7 +14485,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram</Package>
@@ -21699,11 +21559,11 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>18</Ca>
+                <Ca>17</Ca>
                 <Ce>36</Ce>
                 <A>0.06</A>
-                <I>0.67</I>
-                <D>0.27</D>
+                <I>0.68</I>
+                <D>0.26</D>
                 <V>1</V>
             </Stats>
 
@@ -21801,7 +21661,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>com.plantuml.api.cheerpj.v1</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.cli</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
@@ -22907,10 +22766,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>12</Ca>
-                <Ce>13</Ce>
+                <Ce>12</Ce>
                 <A>0.25</A>
-                <I>0.52</I>
-                <D>0.23</D>
+                <I>0.5</I>
+                <D>0.25</D>
                 <V>1</V>
             </Stats>
 
@@ -22981,7 +22840,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>com.plantuml.api.cheerpj</Package>
                 <Package>gen.lib.cdt</Package>
                 <Package>gen.lib.cgraph</Package>
                 <Package>gen.lib.common</Package>
@@ -23482,120 +23340,57 @@
     </Packages>
 
     <Cycles>
-        <Package Name="com.plantuml.api.cheerpj">
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-        </Package>
-
-        <Package Name="com.plantuml.api.cheerpj.v1">
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-        </Package>
-
         <Package Name="gen.lib.cdt">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.cgraph">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.common">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.dotgen">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.gvc">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.label">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.pack">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="gen.lib.pathplan">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="h">
             <Package>smetana.core</Package>
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
         </Package>
 
         <Package Name="jcckit">
@@ -25123,13 +24918,8 @@
         </Package>
 
         <Package Name="smetana.core">
-            <Package>com.plantuml.api.cheerpj</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
-            <Package>net.sourceforge.plantuml.utils</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>h</Package>
+            <Package>smetana.core</Package>
         </Package>
 
         <Package Name="zext.plantuml.com.google.zxing">

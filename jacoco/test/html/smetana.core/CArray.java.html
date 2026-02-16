@@ -36,8 +36,6 @@
 
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 final public class CArray&lt;O&gt; extends UnsupportedC {
 
 	private final ZType type;
@@ -46,56 +44,54 @@ final public class CArray&lt;O&gt; extends UnsupportedC {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L49">		return &quot;Array &quot; + type + &quot; offset=&quot; + offset + &quot; [&quot; + data.length + &quot;]&quot; + data;</span>
+<span class="nc" id="L47">		return &quot;Array &quot; + type + &quot; offset=&quot; + offset + &quot; [&quot; + data.length + &quot;]&quot; + data;</span>
 	}
 
 	public static &lt;O&gt; CArray&lt;O&gt; ALLOC__(int size, ZType type) {
 		// WasmLog.log(&quot;ALLOC &quot; + size);
-<span class="fc" id="L54">		final CArray&lt;O&gt; result = new CArray&lt;O&gt;(new Object[size], 0, type);</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++)</span>
-<span class="fc" id="L56">			result.data[i] = type.create();</span>
-<span class="fc" id="L57">		return result;</span>
+<span class="fc" id="L52">		final CArray&lt;O&gt; result = new CArray&lt;O&gt;(new Object[size], 0, type);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++)</span>
+<span class="fc" id="L54">			result.data[i] = type.create();</span>
+<span class="fc" id="L55">		return result;</span>
 	}
 
 	public static &lt;O&gt; CArray&lt;O&gt; REALLOC__(int size, CArray&lt;O&gt; old, ZType type) {
 		// WasmLog.log(&quot;REALLOC &quot; + size);
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (old == null)</span>
-<span class="fc" id="L63">			return ALLOC__(size, type);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (old == null)</span>
+<span class="fc" id="L61">			return ALLOC__(size, type);</span>
 
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (size &lt;= old.data.length)</span>
-<span class="nc" id="L66">			return old;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (size &lt;= old.data.length)</span>
+<span class="nc" id="L64">			return old;</span>
 
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (old.offset != 0)</span>
-<span class="nc" id="L69">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (old.offset != 0)</span>
+<span class="nc" id="L67">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L71">		WasmLog.log(&quot;Realloc from &quot; + old.data.length + &quot; to &quot; + size);</span>
-
-<span class="fc" id="L73">		final CArray&lt;O&gt; result = new CArray&lt;O&gt;(new Object[size], 0, type);</span>
-<span class="fc" id="L74">		System.arraycopy(old.data, 0, result.data, 0, old.data.length);</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (int i = old.data.length; i &lt; result.data.length; i++)</span>
-<span class="fc" id="L76">			result.data[i] = type.create();</span>
-<span class="fc" id="L77">		return result;</span>
+<span class="fc" id="L69">		final CArray&lt;O&gt; result = new CArray&lt;O&gt;(new Object[size], 0, type);</span>
+<span class="fc" id="L70">		System.arraycopy(old.data, 0, result.data, 0, old.data.length);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = old.data.length; i &lt; result.data.length; i++)</span>
+<span class="fc" id="L72">			result.data[i] = type.create();</span>
+<span class="fc" id="L73">		return result;</span>
 	}
 
-<span class="fc" id="L80">	private CArray(Object[] data, int offset, ZType type) {</span>
-<span class="fc" id="L81">		this.data = data;</span>
-<span class="fc" id="L82">		this.offset = offset;</span>
-<span class="fc" id="L83">		this.type = type;</span>
-<span class="fc" id="L84">	}</span>
+<span class="fc" id="L76">	private CArray(Object[] data, int offset, ZType type) {</span>
+<span class="fc" id="L77">		this.data = data;</span>
+<span class="fc" id="L78">		this.offset = offset;</span>
+<span class="fc" id="L79">		this.type = type;</span>
+<span class="fc" id="L80">	}</span>
 
 	public CArray&lt;O&gt; plus_(int delta) {
-<span class="fc" id="L87">		return new CArray&lt;O&gt;(data, offset + delta, type);</span>
+<span class="fc" id="L83">		return new CArray&lt;O&gt;(data, offset + delta, type);</span>
 	}
 
 	public int minus_(CArray&lt;O&gt; other) {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (this.data != other.data) {</span>
-<span class="nc" id="L92">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (this.data != other.data) {</span>
+<span class="nc" id="L88">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc" id="L94">		return this.offset - other.offset;</span>
+<span class="fc" id="L90">		return this.offset - other.offset;</span>
 	}
 
 	public O get__(int i) {
-<span class="fc" id="L98">		return (O) data[i + offset];</span>
+<span class="fc" id="L94">		return (O) data[i + offset];</span>
 	}
 
 }

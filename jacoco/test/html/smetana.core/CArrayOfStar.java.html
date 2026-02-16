@@ -36,8 +36,6 @@
 
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 final public class CArrayOfStar&lt;O&gt; extends UnsupportedC {
 
 	private final Object[] data;
@@ -45,63 +43,61 @@ final public class CArrayOfStar&lt;O&gt; extends UnsupportedC {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L48">		return &quot;*Array offset=&quot; + offset + &quot; [&quot; + data.length + &quot;]&quot; + data;</span>
+<span class="nc" id="L46">		return &quot;*Array offset=&quot; + offset + &quot; [&quot; + data.length + &quot;]&quot; + data;</span>
 	}
 
-<span class="fc" id="L51">	private CArrayOfStar(Object data[], int offset) {</span>
-<span class="fc" id="L52">		this.data = data;</span>
-<span class="fc" id="L53">		this.offset = offset;</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L49">	private CArrayOfStar(Object data[], int offset) {</span>
+<span class="fc" id="L50">		this.data = data;</span>
+<span class="fc" id="L51">		this.offset = offset;</span>
+<span class="fc" id="L52">	}</span>
 
 	public static &lt;O&gt; CArrayOfStar&lt;O&gt; ALLOC(int size, ZType type) {
-<span class="fc" id="L57">		final CArrayOfStar&lt;O&gt; result = new CArrayOfStar&lt;O&gt;(new Object[size], 0);</span>
-<span class="fc" id="L58">		return result;</span>
+<span class="fc" id="L55">		final CArrayOfStar&lt;O&gt; result = new CArrayOfStar&lt;O&gt;(new Object[size], 0);</span>
+<span class="fc" id="L56">		return result;</span>
 	}
 
 	public static &lt;O&gt; CArrayOfStar&lt;O&gt; REALLOC(int size, CArrayOfStar&lt;O&gt; old, ZType type) {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (old == null)</span>
-<span class="fc" id="L63">			return ALLOC(size, type);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (old == null)</span>
+<span class="fc" id="L61">			return ALLOC(size, type);</span>
 
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (size &lt;= old.data.length)</span>
-<span class="fc" id="L66">			return old;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (size &lt;= old.data.length)</span>
+<span class="fc" id="L64">			return old;</span>
 
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (old.offset != 0)</span>
-<span class="nc" id="L69">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (old.offset != 0)</span>
+<span class="nc" id="L67">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L71">		WasmLog.log(&quot;Realloc* from &quot; + old.data.length + &quot; to &quot; + size);</span>
-
-<span class="fc" id="L73">		final CArrayOfStar&lt;O&gt; result = ALLOC(size, type);</span>
-<span class="fc" id="L74">		System.arraycopy(old.data, 0, result.data, 0, old.data.length);</span>
-<span class="fc" id="L75">		return result;</span>
+<span class="fc" id="L69">		final CArrayOfStar&lt;O&gt; result = ALLOC(size, type);</span>
+<span class="fc" id="L70">		System.arraycopy(old.data, 0, result.data, 0, old.data.length);</span>
+<span class="fc" id="L71">		return result;</span>
 	}
 
 	public int comparePointer_(CArrayOfStar&lt;O&gt; other) {
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (this.data != other.data)</span>
-<span class="nc" id="L80">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (this.data != other.data)</span>
+<span class="nc" id="L76">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L82">		return this.offset - other.offset;</span>
+<span class="fc" id="L78">		return this.offset - other.offset;</span>
 	}
 
 	public O get_(int i) {
-<span class="fc" id="L86">		return (O) data[i + offset];</span>
+<span class="fc" id="L82">		return (O) data[i + offset];</span>
 	}
 
 	public void set_(int i, O value) {
-<span class="fc" id="L90">		data[i + offset] = value;</span>
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L86">		data[i + offset] = value;</span>
+<span class="fc" id="L87">	}</span>
 
 	public CArrayOfStar&lt;O&gt; plus_(int delta) {
-<span class="fc" id="L94">		return new CArrayOfStar&lt;O&gt;(data, offset + delta);</span>
+<span class="fc" id="L90">		return new CArrayOfStar&lt;O&gt;(data, offset + delta);</span>
 	}
 
 	public void _swap(int i, int j) {
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (offset != 0)</span>
-<span class="nc" id="L99">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (offset != 0)</span>
+<span class="nc" id="L95">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L101">		final Object tmp = data[i];</span>
-<span class="fc" id="L102">		data[i] = data[j];</span>
-<span class="fc" id="L103">		data[j] = tmp;</span>
-<span class="fc" id="L104">	}</span>
+<span class="fc" id="L97">		final Object tmp = data[i];</span>
+<span class="fc" id="L98">		data[i] = data[j];</span>
+<span class="fc" id="L99">		data[j] = tmp;</span>
+<span class="fc" id="L100">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
