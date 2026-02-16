@@ -20110,8 +20110,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm.browser">
             <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>1</ConcreteClasses>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>1</Ce>
@@ -20127,6 +20127,9 @@
             <ConcreteClasses>
                 <Class sourceFile="PlantUMLBrowser.java">
                     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser
+                </Class>
+                <Class sourceFile="TeaVmScriptLoader.java">
+                    net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader
                 </Class>
             </ConcreteClasses>
 

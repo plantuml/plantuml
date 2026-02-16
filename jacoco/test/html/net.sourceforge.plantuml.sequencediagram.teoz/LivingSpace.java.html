@@ -86,8 +86,8 @@ public class LivingSpace {
 	}
 
 	public void addStepForLivebox(Event event, double y) {
-<span class="fc" id="L89">		liveboxes.addStep(event, y);</span>
-<span class="fc" id="L90">	}</span>
+<span class="nc" id="L89">		liveboxes.addStep(event, y);</span>
+<span class="nc" id="L90">	}</span>
 
 	@Override
 	public String toString() {
@@ -208,7 +208,7 @@ public class LivingSpace {
 	}
 
 	public Real getPosB(StringBounder stringBounder) {
-<span class="fc" id="L211">		return posB;</span>
+<span class="nc" id="L211">		return posB;</span>
 	}
 
 	public Participant getParticipant() {
@@ -249,11 +249,11 @@ public class LivingSpace {
 <span class="nc" id="L249">	}</span>
 
 	public Real getPosA(StringBounder stringBounder) {
-<span class="fc" id="L252">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
+<span class="nc" id="L252">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
 	}
 
 	public Real getPosE(StringBounder stringBounder) {
-<span class="fc" id="L256">		return getPosD(stringBounder).addFixed(marginAfter);</span>
+<span class="nc" id="L256">		return getPosD(stringBounder).addFixed(marginAfter);</span>
 	}
 
 }

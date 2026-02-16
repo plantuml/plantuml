@@ -13451,8 +13451,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 1
-    Concrete Classes: 1
+    Total Classes: 2
+    Concrete Classes: 2
     Abstract Classes: 0
 
     Ca: 0
@@ -13466,6 +13466,7 @@ Abstract Classes:
 
 Concrete Classes:
     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser
+    net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader
 
 Depends Upon:
     java.lang
@@ -17646,7 +17647,7 @@ net.sourceforge.plantuml.svek.image,52,2,16,25,0.04,0.61,0.35,1
 net.sourceforge.plantuml.swing,42,0,0,30,0,1,0,1
 net.sourceforge.plantuml.syntax,3,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.teavm,15,0,0,37,0,1,0,1
-net.sourceforge.plantuml.teavm.browser,1,0,0,1,0,1,0,1
+net.sourceforge.plantuml.teavm.browser,2,0,0,1,0,1,0,1
 net.sourceforge.plantuml.telnet,2,0,0,6,0,1,0,1
 net.sourceforge.plantuml.text,9,1,52,9,0.11,0.15,0.74,1
 net.sourceforge.plantuml.theme,1,0,3,6,0,0.67,0.33,1
