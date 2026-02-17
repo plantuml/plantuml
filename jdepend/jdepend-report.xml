@@ -4,8 +4,8 @@
 
         <Package name="com.plantuml.ubrex">
             <Stats>
-                <TotalClasses>41</TotalClasses>
-                <ConcreteClasses>37</ConcreteClasses>
+                <TotalClasses>40</TotalClasses>
+                <ConcreteClasses>36</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>9</Ca>
                 <Ce>2</Ce>
@@ -126,9 +126,6 @@
                 </Class>
                 <Class sourceFile="LookAround.java">
                     com.plantuml.ubrex.LookAround
-                </Class>
-                <Class sourceFile="LookAround.java">
-                    com.plantuml.ubrex.LookAround$1
                 </Class>
                 <Class sourceFile="Repetition.java">
                     com.plantuml.ubrex.Repetition
@@ -2139,8 +2136,8 @@
 
         <Package name="net.sourceforge.plantuml">
             <Stats>
-                <TotalClasses>61</TotalClasses>
-                <ConcreteClasses>47</ConcreteClasses>
+                <TotalClasses>60</TotalClasses>
+                <ConcreteClasses>46</ConcreteClasses>
                 <AbstractClasses>14</AbstractClasses>
                 <Ca>118</Ca>
                 <Ce>61</Ce>
@@ -2273,9 +2270,6 @@
                 </Class>
                 <Class sourceFile="Pipe.java">
                     net.sourceforge.plantuml.Pipe
-                </Class>
-                <Class sourceFile="Pipe.java">
-                    net.sourceforge.plantuml.Pipe$1
                 </Class>
                 <Class sourceFile="Pipe.java">
                     net.sourceforge.plantuml.Pipe$State
@@ -2527,8 +2521,8 @@
 
         <Package name="net.sourceforge.plantuml.abel">
             <Stats>
-                <TotalClasses>34</TotalClasses>
-                <ConcreteClasses>26</ConcreteClasses>
+                <TotalClasses>33</TotalClasses>
+                <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
                 <Ca>39</Ca>
                 <Ce>25</Ce>
@@ -2631,9 +2625,6 @@
                 </Class>
                 <Class sourceFile="LinkArrow.java">
                     net.sourceforge.plantuml.abel.LinkArrow$1
-                </Class>
-                <Class sourceFile="LinkArrow.java">
-                    net.sourceforge.plantuml.abel.LinkArrow$2
                 </Class>
                 <Class sourceFile="LinkStrategy.java">
                     net.sourceforge.plantuml.abel.LinkStrategy
@@ -7133,14 +7124,14 @@
 
         <Package name="net.sourceforge.plantuml.decoration">
             <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>29</Ca>
                 <Ce>7</Ce>
-                <A>0.12</A>
+                <A>0.14</A>
                 <I>0.19</I>
-                <D>0.68</D>
+                <D>0.66</D>
                 <V>1</V>
             </Stats>
 
@@ -7153,9 +7144,6 @@
             <ConcreteClasses>
                 <Class sourceFile="HtmlColorAndStyle.java">
                     net.sourceforge.plantuml.decoration.HtmlColorAndStyle
-                </Class>
-                <Class sourceFile="LinkDecor.java">
-                    net.sourceforge.plantuml.decoration.LinkDecor$1
                 </Class>
                 <Class sourceFile="LinkMiddleDecor.java">
                     net.sourceforge.plantuml.decoration.LinkMiddleDecor
@@ -7998,14 +7986,14 @@
 
         <Package name="net.sourceforge.plantuml.dot">
             <Stats>
-                <TotalClasses>24</TotalClasses>
-                <ConcreteClasses>21</ConcreteClasses>
+                <TotalClasses>23</TotalClasses>
+                <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>14</Ca>
                 <Ce>28</Ce>
-                <A>0.12</A>
+                <A>0.13</A>
                 <I>0.67</I>
-                <D>0.21</D>
+                <D>0.2</D>
                 <V>1</V>
             </Stats>
 
@@ -8042,9 +8030,6 @@
                 </Class>
                 <Class sourceFile="ExeState.java">
                     net.sourceforge.plantuml.dot.ExeState
-                </Class>
-                <Class sourceFile="ExeState.java">
-                    net.sourceforge.plantuml.dot.ExeState$1
                 </Class>
                 <Class sourceFile="GraphvizLinux.java">
                     net.sourceforge.plantuml.dot.GraphvizLinux
@@ -8138,8 +8123,8 @@
 
         <Package name="net.sourceforge.plantuml.ebnf">
             <Stats>
-                <TotalClasses>34</TotalClasses>
-                <ConcreteClasses>32</ConcreteClasses>
+                <TotalClasses>33</TotalClasses>
+                <ConcreteClasses>31</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>24</Ce>
@@ -8239,9 +8224,6 @@
                 </Class>
                 <Class sourceFile="Symbol.java">
                     net.sourceforge.plantuml.ebnf.Symbol
-                </Class>
-                <Class sourceFile="Symbol.java">
-                    net.sourceforge.plantuml.ebnf.Symbol$1
                 </Class>
                 <Class sourceFile="TitleBox.java">
                     net.sourceforge.plantuml.ebnf.TitleBox
@@ -9398,8 +9380,8 @@
 
         <Package name="net.sourceforge.plantuml.golem">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>13</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>11</Ce>
@@ -9442,9 +9424,6 @@
                 </Class>
                 <Class sourceFile="TileGeometry.java">
                     net.sourceforge.plantuml.golem.TileGeometry
-                </Class>
-                <Class sourceFile="TileGeometry.java">
-                    net.sourceforge.plantuml.golem.TileGeometry$1
                 </Class>
                 <Class sourceFile="TilesField.java">
                     net.sourceforge.plantuml.golem.TilesField
@@ -10003,14 +9982,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt">
             <Stats>
-                <TotalClasses>27</TotalClasses>
-                <ConcreteClasses>17</ConcreteClasses>
+                <TotalClasses>26</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
                 <Ca>85</Ca>
                 <Ce>19</Ce>
-                <A>0.37</A>
+                <A>0.38</A>
                 <I>0.18</I>
-                <D>0.45</D>
+                <D>0.43</D>
                 <V>1</V>
             </Stats>
 
@@ -10050,9 +10029,6 @@
             <ConcreteClasses>
                 <Class sourceFile="AffineTransformType.java">
                     net.sourceforge.plantuml.klimt.AffineTransformType
-                </Class>
-                <Class sourceFile="AffineTransformType.java">
-                    net.sourceforge.plantuml.klimt.AffineTransformType$1
                 </Class>
                 <Class sourceFile="CopyForegroundColorToBackgroundColor.java">
                     net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor
@@ -12190,14 +12166,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.geom">
             <Stats>
-                <TotalClasses>43</TotalClasses>
-                <ConcreteClasses>37</ConcreteClasses>
+                <TotalClasses>42</TotalClasses>
+                <ConcreteClasses>36</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>94</Ca>
                 <Ce>12</Ce>
                 <A>0.14</A>
                 <I>0.11</I>
-                <D>0.75</D>
+                <D>0.74</D>
                 <V>1</V>
             </Stats>
 
@@ -12309,9 +12285,6 @@
                 </Class>
                 <Class sourceFile="USegmentType.java">
                     net.sourceforge.plantuml.klimt.geom.USegmentType
-                </Class>
-                <Class sourceFile="USegmentType.java">
-                    net.sourceforge.plantuml.klimt.geom.USegmentType$1
                 </Class>
                 <Class sourceFile="VerticalAlignment.java">
                     net.sourceforge.plantuml.klimt.geom.VerticalAlignment
@@ -15219,8 +15192,8 @@
 
         <Package name="net.sourceforge.plantuml.project.lang">
             <Stats>
-                <TotalClasses>92</TotalClasses>
-                <ConcreteClasses>85</ConcreteClasses>
+                <TotalClasses>91</TotalClasses>
+                <ConcreteClasses>84</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>13</Ce>
@@ -15272,9 +15245,6 @@
                 </Class>
                 <Class sourceFile="ComplementDate.java">
                     net.sourceforge.plantuml.project.lang.ComplementDate
-                </Class>
-                <Class sourceFile="ComplementDate.java">
-                    net.sourceforge.plantuml.project.lang.ComplementDate$1
                 </Class>
                 <Class sourceFile="ComplementDate.java">
                     net.sourceforge.plantuml.project.lang.ComplementDate$Type
@@ -15587,14 +15557,14 @@
 
         <Package name="net.sourceforge.plantuml.project.ngm.math">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>10</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>6</Ca>
                 <Ce>5</Ce>
-                <A>0.17</A>
+                <A>0.18</A>
                 <I>0.45</I>
-                <D>0.38</D>
+                <D>0.36</D>
                 <V>1</V>
             </Stats>
 
@@ -15634,9 +15604,6 @@
                 </Class>
                 <Class sourceFile="TimeDirection.java">
                     net.sourceforge.plantuml.project.ngm.math.TimeDirection
-                </Class>
-                <Class sourceFile="TimeDirection.java">
-                    net.sourceforge.plantuml.project.ngm.math.TimeDirection$1
                 </Class>
             </ConcreteClasses>
 
@@ -16497,8 +16464,8 @@
 
         <Package name="net.sourceforge.plantuml.security">
             <Stats>
-                <TotalClasses>9</TotalClasses>
-                <ConcreteClasses>9</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>41</Ca>
                 <Ce>19</Ce>
@@ -16532,9 +16499,6 @@
                 </Class>
                 <Class sourceFile="SecurityProfile.java">
                     net.sourceforge.plantuml.security.SecurityProfile
-                </Class>
-                <Class sourceFile="SecurityProfile.java">
-                    net.sourceforge.plantuml.security.SecurityProfile$1
                 </Class>
                 <Class sourceFile="URLCheck.java">
                     net.sourceforge.plantuml.security.URLCheck
@@ -16793,14 +16757,14 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram">
             <Stats>
-                <TotalClasses>38</TotalClasses>
-                <ConcreteClasses>31</ConcreteClasses>
+                <TotalClasses>37</TotalClasses>
+                <ConcreteClasses>30</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
                 <Ca>16</Ca>
                 <Ce>34</Ce>
-                <A>0.18</A>
+                <A>0.19</A>
                 <I>0.68</I>
-                <D>0.14</D>
+                <D>0.13</D>
                 <V>1</V>
             </Stats>
 
@@ -16876,9 +16840,6 @@
                 </Class>
                 <Class sourceFile="MessageExoType.java">
                     net.sourceforge.plantuml.sequencediagram.MessageExoType
-                </Class>
-                <Class sourceFile="MessageExoType.java">
-                    net.sourceforge.plantuml.sequencediagram.MessageExoType$1
                 </Class>
                 <Class sourceFile="MessageNumber.java">
                     net.sourceforge.plantuml.sequencediagram.MessageNumber
@@ -17666,14 +17627,14 @@
 
         <Package name="net.sourceforge.plantuml.skin">
             <Stats>
-                <TotalClasses>47</TotalClasses>
-                <ConcreteClasses>42</ConcreteClasses>
+                <TotalClasses>44</TotalClasses>
+                <ConcreteClasses>39</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>82</Ca>
                 <Ce>34</Ce>
                 <A>0.11</A>
                 <I>0.29</I>
-                <D>0.6</D>
+                <D>0.59</D>
                 <V>1</V>
             </Stats>
 
@@ -17726,9 +17687,6 @@
                 <Class sourceFile="ArrowDirection.java">
                     net.sourceforge.plantuml.skin.ArrowDirection
                 </Class>
-                <Class sourceFile="ArrowDirection.java">
-                    net.sourceforge.plantuml.skin.ArrowDirection$1
-                </Class>
                 <Class sourceFile="ArrowDressing.java">
                     net.sourceforge.plantuml.skin.ArrowDressing
                 </Class>
@@ -17746,9 +17704,6 @@
                 </Class>
                 <Class sourceFile="ComponentStyle.java">
                     net.sourceforge.plantuml.skin.ComponentStyle
-                </Class>
-                <Class sourceFile="ComponentStyle.java">
-                    net.sourceforge.plantuml.skin.ComponentStyle$1
                 </Class>
                 <Class sourceFile="ComponentType.java">
                     net.sourceforge.plantuml.skin.ComponentType
@@ -17818,9 +17773,6 @@
                 </Class>
                 <Class sourceFile="VisibilityModifier.java">
                     net.sourceforge.plantuml.skin.VisibilityModifier$2
-                </Class>
-                <Class sourceFile="VisibilityModifier.java">
-                    net.sourceforge.plantuml.skin.VisibilityModifier$3
                 </Class>
             </ConcreteClasses>
 
@@ -21336,14 +21288,14 @@
 
         <Package name="net.sourceforge.plantuml.utils">
             <Stats>
-                <TotalClasses>23</TotalClasses>
-                <ConcreteClasses>17</ConcreteClasses>
+                <TotalClasses>22</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>96</Ca>
                 <Ce>23</Ce>
-                <A>0.26</A>
+                <A>0.27</A>
                 <I>0.19</I>
-                <D>0.55</D>
+                <D>0.53</D>
                 <V>1</V>
             </Stats>
 
@@ -21383,9 +21335,6 @@
                 </Class>
                 <Class sourceFile="Direction.java">
                     net.sourceforge.plantuml.utils.Direction
-                </Class>
-                <Class sourceFile="Direction.java">
-                    net.sourceforge.plantuml.utils.Direction$1
                 </Class>
                 <Class sourceFile="I18n.java">
                     net.sourceforge.plantuml.utils.I18n
@@ -21869,8 +21818,8 @@
 
         <Package name="net.sourceforge.plantuml.webp">
             <Stats>
-                <TotalClasses>15</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>7</Ce>
@@ -21916,9 +21865,6 @@
                 </Class>
                 <Class sourceFile="SubBlock.java">
                     net.sourceforge.plantuml.webp.SubBlock
-                </Class>
-                <Class sourceFile="SubBlock.java">
-                    net.sourceforge.plantuml.webp.SubBlock$1
                 </Class>
                 <Class sourceFile="SubBlock.java">
                     net.sourceforge.plantuml.webp.SubBlock$PLANE
@@ -21982,8 +21928,8 @@
 
         <Package name="net.sourceforge.plantuml.wire">
             <Stats>
-                <TotalClasses>24</TotalClasses>
-                <ConcreteClasses>24</ConcreteClasses>
+                <TotalClasses>23</TotalClasses>
+                <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>21</Ce>
@@ -22047,9 +21993,6 @@
                 </Class>
                 <Class sourceFile="WLinkType.java">
                     net.sourceforge.plantuml.wire.WLinkType
-                </Class>
-                <Class sourceFile="WLinkType.java">
-                    net.sourceforge.plantuml.wire.WLinkType$1
                 </Class>
                 <Class sourceFile="WLinkVertical.java">
                     net.sourceforge.plantuml.wire.WLinkVertical
@@ -22756,14 +22699,14 @@
 
         <Package name="smetana.core">
             <Stats>
-                <TotalClasses>20</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
+                <TotalClasses>19</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>12</Ca>
                 <Ce>12</Ce>
-                <A>0.25</A>
+                <A>0.26</A>
                 <I>0.5</I>
-                <D>0.25</D>
+                <D>0.24</D>
                 <V>1</V>
             </Stats>
 
@@ -22821,9 +22764,6 @@
                 </Class>
                 <Class sourceFile="ZType.java">
                     smetana.core.ZType
-                </Class>
-                <Class sourceFile="ZType.java">
-                    smetana.core.ZType$1
                 </Class>
                 <Class sourceFile="jmp_buf.java">
                     smetana.core.jmp_buf

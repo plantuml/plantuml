@@ -102,14 +102,14 @@ public class BrotliInputStream extends InputStream {
 	 */
 	@Override
 	public int read() throws IOException {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (bufferOffset &gt;= remainingBufferBytes) {</span>
-<span class="fc" id="L106">			remainingBufferBytes = read(buffer, 0, buffer.length);</span>
-<span class="fc" id="L107">			bufferOffset = 0;</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			if (remainingBufferBytes == -1) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (bufferOffset &gt;= remainingBufferBytes) {</span>
+<span class="nc" id="L106">			remainingBufferBytes = read(buffer, 0, buffer.length);</span>
+<span class="nc" id="L107">			bufferOffset = 0;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (remainingBufferBytes == -1) {</span>
 <span class="nc" id="L109">				return -1;</span>
 			}
 		}
-<span class="fc" id="L112">		return buffer[bufferOffset++] &amp; 0xFF;</span>
+<span class="nc" id="L112">		return buffer[bufferOffset++] &amp; 0xFF;</span>
 	}
 
 	/**
@@ -128,14 +128,14 @@ public class BrotliInputStream extends InputStream {
 <span class="nc" id="L128">			return 0;</span>
 		}
 <span class="fc" id="L130">		int copyLen = Math.max(remainingBufferBytes - bufferOffset, 0);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (copyLen != 0) {</span>
-<span class="fc" id="L132">			copyLen = Math.min(copyLen, destLen);</span>
-<span class="fc" id="L133">			System.arraycopy(buffer, bufferOffset, destBuffer, destOffset, copyLen);</span>
-<span class="fc" id="L134">			bufferOffset += copyLen;</span>
-<span class="fc" id="L135">			destOffset += copyLen;</span>
-<span class="fc" id="L136">			destLen -= copyLen;</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">			if (destLen == 0) {</span>
-<span class="fc" id="L138">				return copyLen;</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (copyLen != 0) {</span>
+<span class="nc" id="L132">			copyLen = Math.min(copyLen, destLen);</span>
+<span class="nc" id="L133">			System.arraycopy(buffer, bufferOffset, destBuffer, destOffset, copyLen);</span>
+<span class="nc" id="L134">			bufferOffset += copyLen;</span>
+<span class="nc" id="L135">			destOffset += copyLen;</span>
+<span class="nc" id="L136">			destLen -= copyLen;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (destLen == 0) {</span>
+<span class="nc" id="L138">				return copyLen;</span>
 			}
 		}
 		try {
