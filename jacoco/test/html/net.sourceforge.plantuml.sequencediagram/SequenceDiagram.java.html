@@ -406,8 +406,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L406">		events.add(g);</span>
 
 <span class="fc bfc" id="L408" title="All 2 branches covered.">		if (type.isStart()) {</span>
-<span class="fc bfc" id="L409" title="All 2 branches covered.">			if (parallel)</span>
-<span class="fc" id="L410">				((GroupingStart) g).goParallel();</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">			if (parallel)</span>
+<span class="nc" id="L410">				((GroupingStart) g).goParallel();</span>
 
 <span class="fc" id="L412">			openGroupings.add(0, (GroupingStart) g);</span>
 <span class="fc bfc" id="L413" title="All 2 branches covered.">		} else if (type == GroupingType.END) {</span>

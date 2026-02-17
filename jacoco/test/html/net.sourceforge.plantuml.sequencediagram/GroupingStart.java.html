@@ -102,12 +102,12 @@ public class GroupingStart extends Grouping {
 
 	@Override
 	public boolean isParallel() {
-<span class="pc bpc" id="L105" title="1 of 4 branches missed.">		return parallel || isPar2GroupStart();</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		return parallel || isPar2GroupStart();</span>
 	}
 
 	public void goParallel() {
-<span class="fc" id="L109">		this.parallel = true;</span>
-<span class="fc" id="L110">	}</span>
+<span class="nc" id="L109">		this.parallel = true;</span>
+<span class="nc" id="L110">	}</span>
 
 	public boolean isPar2GroupStart() {
 <span class="fc" id="L113">		return getTitle().equals(&quot;par2&quot;);</span>
