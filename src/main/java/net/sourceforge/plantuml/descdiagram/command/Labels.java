@@ -47,11 +47,15 @@ public class Labels {
 
 	private String firstLabel;
 	private String secondLabel;
+	private String firstRole;
+	private String secondRole;
 	private final StringWithArrow stringWithArrow;
 
 	public Labels(RegexResult arg) {
 		this.firstLabel = arg.get("FIRST_LABEL", 0);
 		this.secondLabel = arg.get("SECOND_LABEL", 0);
+		this.firstRole = cleanRole(arg.get("FIRST_ROLE", 0));
+		this.secondRole = cleanRole(arg.get("SECOND_ROLE", 0));
 		String labelLink = arg.get("LABEL_LINK", 0);
 
 		if (labelLink != null)
@@ -59,6 +63,12 @@ public class Labels {
 
 		this.stringWithArrow = new StringWithArrow(labelLink);
 
+	}
+
+	private static String cleanRole(String role) {
+		if (role == null)
+			return null;
+		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(role, "\"");
 	}
 
 	private static final Pattern2 p1 = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
@@ -98,6 +108,14 @@ public class Labels {
 
 	public final String getSecondLabel() {
 		return secondLabel;
+	}
+
+	public final String getFirstRole() {
+		return firstRole;
+	}
+
+	public final String getSecondRole() {
+		return secondRole;
 	}
 
 	public final String getLabelLink() {

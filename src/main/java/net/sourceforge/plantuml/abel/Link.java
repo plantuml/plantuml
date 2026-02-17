@@ -309,6 +309,14 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return getLinkArg().getQuantifier2();
 	}
 
+	public String getRole1() {
+		return getLinkArg().getRole1();
+	}
+
+	public String getRole2() {
+		return getLinkArg().getRole2();
+	}
+
 	public final double getWeight() {
 		return weight;
 	}

@@ -34,3 +34,6 @@ build/
 
 *.patch
 **/*.class
+
+# macos
+.DS_Store

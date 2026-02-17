@@ -128,6 +128,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	private final TextBlock startTailText;
 	private final TextBlock endHeadText;
+	private final TextBlock startTailRoleText;
+	private final TextBlock endHeadRoleText;
 	private final TextBlock labelText;
 	private boolean divideLabelWidthByTwo = false;
 
@@ -226,10 +228,12 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			GraphvizVersion graphvizVersion) {
 		super(link, skinParam, bibliotekon);
 		// ::comment when __CORE__ or __TEAVM__
-		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
+		if (graphvizVersion.useShieldForQuantifier() 
+				&& (link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null))
 			link.getEntity1().ensureMargins(Margins.uniform(16));
 
-		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier2() != null)
+		if (graphvizVersion.useShieldForQuantifier()
+				&& (link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null))
 			link.getEntity2().ensureMargins(Margins.uniform(16));
 		// ::done
 
@@ -324,6 +328,18 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			endHeadText = null;
 		else
 			endHeadText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier2()).create(cardinalityFont,
+					HorizontalAlignment.CENTER, skinParam);
+
+		if (link.getRole1() == null)
+			startTailRoleText = null;
+		else
+			startTailRoleText = Display.getWithNewlines(skinParam.getPragma(), link.getRole1()).create(cardinalityFont,
+					HorizontalAlignment.CENTER, skinParam);
+
+		if (link.getRole2() == null)
+			endHeadRoleText = null;
+		else
+			endHeadRoleText = Display.getWithNewlines(skinParam.getPragma(), link.getRole2()).create(cardinalityFont,
 					HorizontalAlignment.CENTER, skinParam);
 
 		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)
@@ -425,11 +441,21 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			sb.append("taillabel=<");
 			appendTable(sb, startTailText.calculateDimension(stringBounder), startTailColor, graphvizVersion);
 			sb.append(">");
+		} else if (startTailRoleText != null) {
+			sb.append(",");
+			sb.append("taillabel=<");
+			appendTable(sb, startTailRoleText.calculateDimension(stringBounder), startTailColor, graphvizVersion);
+			sb.append(">");
 		}
 		if (endHeadText != null) {
 			sb.append(",");
 			sb.append("headlabel=<");
 			appendTable(sb, endHeadText.calculateDimension(stringBounder), endHeadColor, graphvizVersion);
+			sb.append(">");
+		} else if (endHeadRoleText != null) {
+			sb.append(",");
+			sb.append("headlabel=<");
+			appendTable(sb, endHeadRoleText.calculateDimension(stringBounder), endHeadColor, graphvizVersion);
 			sb.append(">");
 		}
 
@@ -713,19 +739,21 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			}
 		}
 
-		if (this.startTailText != null) {
+		if (this.startTailText != null || this.startTailRoleText != null) {
 			final XPoint2D pos = getXY(fullSvg, this.startTailColor);
 			if (pos != null) {
 //				corner1.manage(pos);
-				this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, pos);
+				final TextBlock forSize = this.startTailText != null ? startTailText : startTailRoleText;
+				this.startTailLabelXY = TextBlockUtils.asPositionable(forSize, stringBounder, pos);
 			}
 		}
 
-		if (this.endHeadText != null) {
+		if (this.endHeadText != null || this.endHeadRoleText != null) {
 			final XPoint2D pos = getXY(fullSvg, this.endHeadColor);
 			if (pos != null) {
 //				corner1.manage(pos);
-				this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, pos);
+				final TextBlock forSize = this.endHeadText != null ? endHeadText : endHeadRoleText;
+				this.endHeadLabelXY = TextBlockUtils.asPositionable(forSize, stringBounder, pos);
 //				corner1.manage(pos.getX() - 15, pos.getY());
 			}
 		}
@@ -917,13 +945,33 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX() + labelShield,
 					y + this.labelXY.getPosition().getY() + labelShield)));
 
-		if (this.startTailText != null && this.startTailLabelXY != null && this.startTailLabelXY.getPosition() != null)
-			this.startTailText.drawU(ug.apply(new UTranslate(x + this.startTailLabelXY.getPosition().getX(),
-					y + this.startTailLabelXY.getPosition().getY())));
+		if (this.startTailLabelXY != null && this.startTailLabelXY.getPosition() != null) {
+			final double labelX = x + this.startTailLabelXY.getPosition().getX();
+			final double labelY = y + this.startTailLabelXY.getPosition().getY();
+			if (this.startTailText != null) {
+				this.startTailText.drawU(ug.apply(new UTranslate(labelX, labelY)));
+				if (this.startTailRoleText != null)
+					drawRoleLabel(ug, this.startTailRoleText, this.startTailText,
+							this.startTailLabelXY.getPosition(), dotPath.getStartPoint(),
+							dotPath.getEndPoint(), x, y);
+			} else if (this.startTailRoleText != null) {
+				this.startTailRoleText.drawU(ug.apply(new UTranslate(labelX, labelY)));
+			}
+		}
 
-		if (this.endHeadText != null && this.endHeadLabelXY != null && this.endHeadLabelXY.getPosition() != null)
-			this.endHeadText.drawU(ug.apply(new UTranslate(x + this.endHeadLabelXY.getPosition().getX(),
-					y + this.endHeadLabelXY.getPosition().getY())));
+		if (this.endHeadLabelXY != null && this.endHeadLabelXY.getPosition() != null) {
+			final double labelX = x + this.endHeadLabelXY.getPosition().getX();
+			final double labelY = y + this.endHeadLabelXY.getPosition().getY();
+			if (this.endHeadText != null) {
+				this.endHeadText.drawU(ug.apply(new UTranslate(labelX, labelY)));
+				if (this.endHeadRoleText != null)
+					drawRoleLabel(ug, this.endHeadRoleText, this.endHeadText,
+							this.endHeadLabelXY.getPosition(), dotPath.getEndPoint(),
+							dotPath.getStartPoint(), x, y);
+			} else if (this.endHeadRoleText != null) {
+				this.endHeadRoleText.drawU(ug.apply(new UTranslate(labelX, labelY)));
+			}
+		}
 
 		if (linkType.getMiddleDecor() != LinkMiddleDecor.NONE) {
 			final PointAndAngle middle = dotPath.getMiddle();
@@ -965,6 +1013,52 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			kal2.drawU(ug);
 
 		ug.closeGroup();
+	}
+
+	/**
+	 * Draws a role label on the opposite side of the line from the quantifier.
+	 * For vertical lines, the role is placed on the other side of the line's X.
+	 * For horizontal lines, the role is placed on the other side of the line's Y.
+	 */
+	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
+			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint, double x, double y) {
+		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);
+		final XDimension2D rDim = role.calculateDimension(stringBounder);
+
+		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();
+		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();
+
+		if (Math.abs(dirX) + Math.abs(dirY) < 0.001) {
+			role.drawU(ug.apply(new UTranslate(x + quantifierPos.getX(),
+					y + quantifierPos.getY() + qDim.getHeight())));
+			return;
+		}
+
+		final double gap = 2;
+		final double roleX;
+		final double roleY;
+
+		if (Math.abs(dirY) >= Math.abs(dirX)) {
+			// Mostly vertical: mirror across line X
+			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;
+			final double lineX = thisEndpoint.getX();
+			if (qCenterX < lineX)
+				roleX = lineX + gap;
+			else
+				roleX = lineX - rDim.getWidth() - gap;
+			roleY = quantifierPos.getY();
+		} else {
+			// Mostly horizontal: mirror across line Y
+			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;
+			final double lineY = thisEndpoint.getY();
+			if (qCenterY < lineY)
+				roleY = lineY + gap;
+			else
+				roleY = lineY - rDim.getHeight() - gap;
+			roleX = quantifierPos.getX();
+		}
+
+		role.drawU(ug.apply(new UTranslate(x + roleX, y + roleY)));
 	}
 
 	public void computeKal() {
@@ -1106,10 +1200,12 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	public void manageCollision(Collection<SvekNode> allNodes) {
 		for (SvekNode sh : allNodes) {
 			final Positionable cl = PositionableUtils.addMargin(sh, 8, 8);
-			if (startTailText != null && startTailLabelXY != null && PositionableUtils.intersect(cl, startTailLabelXY))
+			if ((startTailText != null || startTailRoleText != null) && startTailLabelXY != null
+					&& PositionableUtils.intersect(cl, startTailLabelXY))
 				startTailLabelXY = PositionableUtils.moveAwayFrom(cl, startTailLabelXY);
 
-			if (endHeadText != null && endHeadLabelXY != null && PositionableUtils.intersect(cl, endHeadLabelXY))
+			if ((endHeadText != null || endHeadRoleText != null) && endHeadLabelXY != null
+					&& PositionableUtils.intersect(cl, endHeadLabelXY))
 				endHeadLabelXY = PositionableUtils.moveAwayFrom(cl, endHeadLabelXY);
 
 		}

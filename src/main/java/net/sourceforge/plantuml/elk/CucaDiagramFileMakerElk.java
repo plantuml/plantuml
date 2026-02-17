@@ -261,7 +261,22 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+			skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		if (TextBlockUtils.isEmpty(label, stringBounder))
+			return null;
+
+		return label;
+	}
+
+	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
+		final String role = n == 1 ? link.getRole1() : link.getRole2();
+		if (role == null)
+			return null;
+
+		final ISkinParam skinParam = diagram.getSkinParam();
+		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
+		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont, 
+			skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;
 
@@ -465,9 +480,12 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
-		if (link.getQuantifier1() != null) {
+		if (link.getQuantifier1() != null || link.getRole1() != null) {
+			final TextBlock q1 = getQuantifier(stringBounder, link, 1);
+			final TextBlock r1 = getRoleLabel(stringBounder, link, 1);
+			final TextBlock forLayout = q1 != null ? q1 : r1;
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final XDimension2D dim = getQuantifier(stringBounder, link, 1).calculateDimension(stringBounder);
+			final XDimension2D dim = forLayout.calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("1");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
@@ -476,9 +494,12 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
-		if (link.getQuantifier2() != null) {
+		if (link.getQuantifier2() != null || link.getRole2() != null) {
+			final TextBlock q2 = getQuantifier(stringBounder, link, 2);
+			final TextBlock r2 = getRoleLabel(stringBounder, link, 2);
+			final TextBlock forLayout = q2 != null ? q2 : r2;
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final XDimension2D dim = getQuantifier(stringBounder, link, 2).calculateDimension(stringBounder);
+			final XDimension2D dim = forLayout.calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("2");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
