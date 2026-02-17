@@ -36,8 +36,6 @@
 
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 final public class CArray<O> extends UnsupportedC {
 
 	private final ZType type;
@@ -67,8 +65,6 @@ final public class CArray<O> extends UnsupportedC {
 
 		if (old.offset != 0)
 			throw new IllegalStateException();
-
-		WasmLog.log("Realloc from " + old.data.length + " to " + size);
 
 		final CArray<O> result = new CArray<O>(new Object[size], 0, type);
 		System.arraycopy(old.data, 0, result.data, 0, old.data.length);

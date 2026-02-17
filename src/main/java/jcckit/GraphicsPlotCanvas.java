@@ -49,6 +49,7 @@ import jcckit.util.Factory;
  */
 public class GraphicsPlotCanvas extends PlotCanvas {
 	// ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 	// ::remove folder when __HAXE__
 	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 	/** Key of a configuration parameter. */

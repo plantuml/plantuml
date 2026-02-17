@@ -756,6 +756,7 @@ tasks.register("teavm") {
 	group = "teavm"
 	
 	dependsOn("generateJavaScript")
+	finalizedBy("teavmJavadoc")
 	
 	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
 	
@@ -764,6 +765,7 @@ tasks.register("teavm") {
 		copy {
 			from("src/main/resources/teavm/index.html")
 			from("src/main/resources/teavm/viz-global.js")
+			from("src/main/resources/teavm/c4.js")
 			into(outputDir)
 		}
 		
@@ -771,6 +773,43 @@ tasks.register("teavm") {
 		println("======================")
 		println("TeaVM Ready!  --> ${outputDir.absolutePath}/index.html")
 		println("======================")
+		println("")
+	}
+}
+
+// Javadoc for TeaVM preprocessed sources
+tasks.register<Javadoc>("teavmJavadoc") {
+	description = "Generates Javadoc for TeaVM preprocessed sources (after SJPP processing)"
+	group = "documentation"
+	
+	dependsOn(preprocessForTeaVM)
+	
+	source = fileTree(layout.buildDirectory.dir("generated/teavm-sjpp"))
+	classpath = teavmCompileConfig
+	
+	destinationDir = layout.buildDirectory.dir("docs/teavm-javadoc").get().asFile
+	
+	options {
+		this as StandardJavadocDocletOptions
+		addBooleanOption("Xdoclint:none", true)
+		addStringOption("Xmaxwarns", "50")
+		encoding = "UTF-8"
+		isUse = true
+		windowTitle = "PlantUML TeaVM API (preprocessed)"
+		docTitle = "PlantUML TeaVM API - Code after SJPP preprocessing"
+		header = "<b>PlantUML TeaVM</b><br>After __TEAVM__ preprocessing"
+	}
+	
+	doFirst {
+		println("Generating Javadoc for TeaVM preprocessed sources...")
+		println("Source: ${layout.buildDirectory.dir("generated/teavm-sjpp").get().asFile.absolutePath}")
+	}
+	
+	doLast {
+		println("")
+		println("=======================")
+		println("TeaVM Javadoc generated: ${destinationDir}/index.html")
+		println("=======================")
 		println("")
 	}
 }

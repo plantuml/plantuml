@@ -36,8 +36,6 @@
 
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 final public class CArrayOfStar<O> extends UnsupportedC {
 
 	private final Object[] data;
@@ -67,8 +65,6 @@ final public class CArrayOfStar<O> extends UnsupportedC {
 
 		if (old.offset != 0)
 			throw new IllegalStateException();
-
-		WasmLog.log("Realloc* from " + old.data.length + " to " + size);
 
 		final CArrayOfStar<O> result = ALLOC(size, type);
 		System.arraycopy(old.data, 0, result.data, 0, old.data.length);

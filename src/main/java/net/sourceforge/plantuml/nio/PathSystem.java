@@ -44,6 +44,12 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 
+//::uncomment when __TEAVM__
+//import java.io.InputStream;
+//import org.teavm.jso.JSObject;
+//import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+//::done
+
 // Replacement for FileSystem
 //See ImportedFiles
 //See TContext::executeInclude
@@ -64,6 +70,18 @@ public class PathSystem {
 //	}
 //	public PathSystem withCurrentDir(Object... foo) {
 //		return this;
+//	}
+	// ::done
+
+	
+	// ::uncomment when __TEAVM__
+//	public InputStream getTeaVMInputStream(String path) {
+//		TeaVmScriptLoader.loadOnceSync("c4.js");
+//		JSObject data = TeaVmScriptLoader.getRaw("c4", "stdlib/c4/info.puml");
+//		if (data == null)
+//			return null;
+//		String content = TeaVmScriptLoader.joinLines(data);
+//		return new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
 //	}
 	// ::done
 
