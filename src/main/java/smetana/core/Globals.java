@@ -48,8 +48,6 @@ import static smetana.core.Macro.ARR_TYPE_TEE;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 import gen.lib.cdt.dttree__c;
 import gen.lib.cgraph.attr__c;
 import gen.lib.cgraph.edge__c;
@@ -95,12 +93,10 @@ import h.ST_triangle_t;
 final public class Globals {
 
 	public static Globals open() {
-		WasmLog.log("Starting smetana instance");
 		return new Globals();
 	}
 
 	public static void close() {
-		WasmLog.log("Ending smetana instance");
 	}
 
 	public final Map<Integer, CString> all = new HashMap<Integer, CString>();

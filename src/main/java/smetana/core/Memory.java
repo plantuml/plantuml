@@ -35,8 +35,6 @@
  */
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 final public class Memory {
 
 	public static void free(Object arg) {
@@ -48,7 +46,6 @@ final public class Memory {
 
 		int result = data.getUid();
 		zz.all.put(result, data);
-		WasmLog.log("hashsize = " + zz.all.size());
 		return result;
 	}
 

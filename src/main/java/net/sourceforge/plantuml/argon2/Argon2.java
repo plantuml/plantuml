@@ -25,8 +25,9 @@ import net.sourceforge.plantuml.argon2.model.Argon2Type;
 import net.sourceforge.plantuml.argon2.model.Instance;
 
 public class Argon2 {
-	// ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 	// ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
 
 	private byte[] output;
 	private int outputLength; // -l N

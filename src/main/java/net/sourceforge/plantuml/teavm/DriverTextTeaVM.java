@@ -103,7 +103,16 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 //			textDecoration = "wavy underline";
 //		}
 //
-//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration);
+//		// Handle background color
+//		String backColor = null;
+//		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
+//			final HColor back = fontConfiguration.getExtendedColor();
+//			if (back != null && !(back instanceof net.sourceforge.plantuml.klimt.color.HColorGradient)) {
+//				backColor = back.toRGB(mapper);
+//			}
+//		}
+//
+//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);
 //
 //		// Draw extra line for colored underline/strike
 //		if (extraLine != null) {

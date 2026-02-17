@@ -36,8 +36,6 @@
 
 package smetana.core;
 
-import com.plantuml.api.cheerpj.WasmLog;
-
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_bezier;
@@ -141,7 +139,6 @@ final public class JUtils {
 	}
 
 	public static void qsort(Globals zz, CArrayOfStar array, int nb, CFunction compare) {
-		WasmLog.log("bubble sort objects " + nb);
 		try {
 			for (int pass = 0; pass < nb - 1; pass++) {
 				boolean change = false;
@@ -158,7 +155,7 @@ final public class JUtils {
 					return;
 			}
 		} finally {
-			WasmLog.log("sort done");
+			
 			// ::comment when __CORE__
 			for (int i = 0; i < nb - 1; i++) {
 				final __ptr__ element1 = array.plus_(i);
@@ -173,7 +170,6 @@ final public class JUtils {
 	}
 
 	public static void qsortInt(Globals zz, int array[], int nb, CFunction compare) {
-		WasmLog.log("bubble sort int[] " + nb);
 		try {
 			for (int pass = 0; pass < nb - 1; pass++) {
 				boolean change = false;
@@ -192,7 +188,7 @@ final public class JUtils {
 					return;
 			}
 		} finally {
-			WasmLog.log("sort done");
+			
 			// ::comment when __CORE__
 			for (int i = 0; i < nb - 1; i++) {
 				final Integer element1 = array[i];

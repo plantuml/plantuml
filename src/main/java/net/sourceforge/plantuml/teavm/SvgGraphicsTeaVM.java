@@ -176,11 +176,26 @@ public class SvgGraphicsTeaVM {
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
-//		drawText(text, x, y, fontFamily, fontSize, null, null, null);
+//		drawText(text, x, y, fontFamily, fontSize, null, null, null, null);
 //	}
 //
 //	public void drawText(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-//			String fontStyle, String textDecoration) {
+//			String fontStyle, String textDecoration, String backColor) {
+//		// Draw background rectangle if backColor is specified
+//		if (backColor != null) {
+//			double[] metrics = measureTextCanvas(text, fontFamily, fontSize, fontWeight != null ? fontWeight : "normal");
+//			double width = metrics[0];
+//			double height = metrics[1];
+//			Element rect = createSvgElement("rect");
+//			rect.setAttribute("x", format(x));
+//			rect.setAttribute("y", format(y - height + 2));
+//			rect.setAttribute("width", format(width));
+//			rect.setAttribute("height", format(height));
+//			rect.setAttribute("fill", backColor);
+//			rect.setAttribute("stroke", "none");
+//			mainGroup.appendChild(rect);
+//		}
+//
 //		Element textElem = createSvgElement("text");
 //		textElem.setAttribute("x", format(x));
 //		textElem.setAttribute("y", format(y));
