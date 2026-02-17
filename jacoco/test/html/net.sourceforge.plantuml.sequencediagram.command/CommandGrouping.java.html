@@ -78,38 +78,38 @@ public class CommandGrouping extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L81">		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
+<span class="nc" id="L81">		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
 
-<span class="fc" id="L83">		final HColor backColorElement = getColor(arg.get(&quot;COLORS&quot;, 0), colorSet);</span>
-<span class="fc" id="L84">		final HColor backColorGeneral = getColor(arg.get(&quot;COLORS&quot;, 1), colorSet);</span>
+<span class="nc" id="L83">		final HColor backColorElement = getColor(arg.get(&quot;COLORS&quot;, 0), colorSet);</span>
+<span class="nc" id="L84">		final HColor backColorGeneral = getColor(arg.get(&quot;COLORS&quot;, 1), colorSet);</span>
 
-<span class="fc" id="L86">		String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
-<span class="fc" id="L87">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
-<span class="fc" id="L88">		final GroupingType groupingType = GroupingType.getType(type);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (&quot;group&quot;.equals(type))</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (StringUtils.isEmpty(comment)) {</span>
-<span class="fc" id="L91">				comment = &quot;group&quot;;</span>
+<span class="nc" id="L86">		String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc" id="L87">		String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
+<span class="nc" id="L88">		final GroupingType groupingType = GroupingType.getType(type);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (&quot;group&quot;.equals(type))</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (StringUtils.isEmpty(comment)) {</span>
+<span class="nc" id="L91">				comment = &quot;group&quot;;</span>
 			} else {
-<span class="fc" id="L93">				final Matcher m = TRAILING_BRACKET_CONTENT_PATTERN.matcher(comment);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if (m.find()) {</span>
+<span class="nc" id="L93">				final Matcher m = TRAILING_BRACKET_CONTENT_PATTERN.matcher(comment);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (m.find()) {</span>
 <span class="nc" id="L95">					type = m.group(1);</span>
 <span class="nc" id="L96">					comment = m.group(2);</span>
 				}
 			}
 
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="fc" id="L101">		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="nc" id="L101">		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,</span>
 				parallel);
 
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (result == false)</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (result == false)</span>
 <span class="nc" id="L105">			return CommandExecutionResult.error(&quot;Cannot create group&quot;);</span>
 
-<span class="fc" id="L107">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L107">		return CommandExecutionResult.ok();</span>
 	}
 
 	private HColor getColor(String color, HColorSet colorSet) throws NoSuchColorException {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L112">			return null;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L112">			return null;</span>
 <span class="nc" id="L113">		return colorSet.getColor(color);</span>
 	}
 

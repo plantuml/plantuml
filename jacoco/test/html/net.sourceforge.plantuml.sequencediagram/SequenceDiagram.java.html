@@ -189,8 +189,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public CommandExecutionResult addMessage(AbstractMessage m) {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (m.isParallel())</span>
-<span class="fc" id="L193">			m.setParallelBrother(getLastAbstractMessage());</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (m.isParallel())</span>
+<span class="nc" id="L193">			m.setParallelBrother(getLastAbstractMessage());</span>
 
 <span class="fc" id="L195">		lastEventWithDeactivate = m;</span>
 <span class="fc" id="L196">		lastDelay = null;</span>
@@ -207,9 +207,9 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	private AbstractMessage getLastAbstractMessage() {
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">			if (events.get(i) instanceof AbstractMessage)</span>
-<span class="fc" id="L212">				return (AbstractMessage) events.get(i);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (events.get(i) instanceof AbstractMessage)</span>
+<span class="nc" id="L212">				return (AbstractMessage) events.get(i);</span>
 
 <span class="nc" id="L214">		return null;</span>
 	}
@@ -340,7 +340,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L340">	private LifeEvent pendingCreate = null;</span>
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor) {
-<span class="fc" id="L343">		return activate(p, lifeEventType, backcolor, null);</span>
+<span class="nc" id="L343">		return activate(p, lifeEventType, backcolor, null);</span>
 	}
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor, HColor linecolor) {
@@ -366,8 +366,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 		}
 <span class="pc bpc" id="L367" title="1 of 4 branches missed.">		if (lifeEventType == LifeEventType.ACTIVATE &amp;&amp; lastEventWithDeactivate instanceof AbstractMessage)</span>
 <span class="fc" id="L368">			activationState.push((AbstractMessage) lastEventWithDeactivate);</span>
-<span class="fc bfc" id="L369" title="All 4 branches covered.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
-<span class="fc" id="L370">			activationState.pop();</span>
+<span class="pc bpc" id="L369" title="3 of 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
+<span class="nc" id="L370">			activationState.pop();</span>
 
 <span class="fc" id="L372">		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);</span>
 <span class="pc bpc" id="L373" title="1 of 2 branches missed.">		if (lastEventWithDeactivate instanceof AbstractMessage) {</span>
@@ -384,38 +384,38 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	public boolean grouping(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, boolean parallel) {
-<span class="pc bpc" id="L387" title="1 of 4 branches missed.">		if (type.isStart() == false &amp;&amp; openGroupings.size() == 0)</span>
+<span class="nc bnc" id="L387" title="All 4 branches missed.">		if (type.isStart() == false &amp;&amp; openGroupings.size() == 0)</span>
 <span class="nc" id="L388">			return false;</span>
 
-<span class="pc bpc" id="L390" title="1 of 2 branches missed.">		if (backColorGeneral == null)</span>
-<span class="fc" id="L391">			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">		if (backColorGeneral == null)</span>
+<span class="nc" id="L391">			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);</span>
 
-<span class="fc bfc" id="L393" title="All 2 branches covered.">		final GroupingStart top = openGroupings.size() &gt; 0 ? openGroupings.get(0) : null;</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">		final GroupingStart top = openGroupings.size() &gt; 0 ? openGroupings.get(0) : null;</span>
 
 		final Grouping g;
-<span class="fc bfc" id="L396" title="All 2 branches covered.">		switch (type) {</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		switch (type) {</span>
 		case START_PARTITION:
 		case START:
-<span class="fc" id="L399">			g = new GroupingStart(type, title, comment, backColorGeneral, backColorElement, top,</span>
-<span class="fc" id="L400">					getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L401">			break;</span>
+<span class="nc" id="L399">			g = new GroupingStart(type, title, comment, backColorGeneral, backColorElement, top,</span>
+<span class="nc" id="L400">					getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L401">			break;</span>
 		default:
-<span class="fc" id="L403">			g = new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,</span>
-<span class="fc" id="L404">					getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L403">			g = new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top,</span>
+<span class="nc" id="L404">					getSkinParam().getCurrentStyleBuilder());</span>
 		}
-<span class="fc" id="L406">		events.add(g);</span>
+<span class="nc" id="L406">		events.add(g);</span>
 
-<span class="fc bfc" id="L408" title="All 2 branches covered.">		if (type.isStart()) {</span>
-<span class="pc bpc" id="L409" title="1 of 2 branches missed.">			if (parallel)</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">		if (type.isStart()) {</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">			if (parallel)</span>
 <span class="nc" id="L410">				((GroupingStart) g).goParallel();</span>
 
-<span class="fc" id="L412">			openGroupings.add(0, (GroupingStart) g);</span>
-<span class="fc bfc" id="L413" title="All 2 branches covered.">		} else if (type == GroupingType.END) {</span>
-<span class="fc" id="L414">			openGroupings.remove(0);</span>
-<span class="fc" id="L415">			lastEventWithDeactivate = (GroupingLeaf) g;</span>
+<span class="nc" id="L412">			openGroupings.add(0, (GroupingStart) g);</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">		} else if (type == GroupingType.END) {</span>
+<span class="nc" id="L414">			openGroupings.remove(0);</span>
+<span class="nc" id="L415">			lastEventWithDeactivate = (GroupingLeaf) g;</span>
 		}
 
-<span class="fc" id="L418">		return true;</span>
+<span class="nc" id="L418">		return true;</span>
 	}
 
 	public DiagramDescription getDescription() {
@@ -466,8 +466,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L466">	private boolean showFootbox = true;</span>
 
 	public void setShowFootbox(boolean footbox) {
-<span class="fc" id="L469">		this.showFootbox = footbox;</span>
-<span class="fc" id="L470">	}</span>
+<span class="nc" id="L469">		this.showFootbox = footbox;</span>
+<span class="nc" id="L470">	}</span>
 
 	private ParticipantEnglober participantEnglober;
 

@@ -58,7 +58,7 @@ class RealMax extends AbstractReal implements Real {
 	}
 
 	public String getName() {
-<span class="fc" id="L61">		return &quot;max &quot; + all.size();</span>
+<span class="nc" id="L61">		return &quot;max &quot; + all.size();</span>
 	}
 
 <span class="fc" id="L64">	private double cache = Double.MAX_VALUE;</span>
@@ -88,7 +88,7 @@ class RealMax extends AbstractReal implements Real {
 	}
 
 	public Real addFixed(double delta) {
-<span class="fc" id="L91">		return new RealDelta(this, delta);</span>
+<span class="nc" id="L91">		return new RealDelta(this, delta);</span>
 	}
 
 	public Real addAtLeast(double delta) {

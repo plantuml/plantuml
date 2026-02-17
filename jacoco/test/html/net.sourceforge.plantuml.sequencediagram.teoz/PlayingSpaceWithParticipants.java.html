@@ -68,7 +68,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 <span class="fc" id="L68">			final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
 <span class="fc" id="L69">					- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">			final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
 <span class="fc" id="L72">			final double height = playingSpace.getPreferredHeight(stringBounder)</span>
 <span class="fc" id="L73">					+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
 
@@ -96,7 +96,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 <span class="fc" id="L96">		livingSpaces.drawLifeLines(ug.apply(UTranslate.dy(headHeight)), height, context);</span>
 
 <span class="fc" id="L98">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (playingSpace.isShowFootbox()) {</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (playingSpace.isShowFootbox()) {</span>
 <span class="fc" id="L100">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(height + headHeight)), context, VerticalAlignment.TOP);</span>
 		}
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (ymax == 0) {</span>

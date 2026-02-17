@@ -66,10 +66,10 @@ import java.util.Map;
 <span class="pc bpc" id="L66" title="1 of 2 branches missed.">			if (y &lt; lastY) {</span>
 <span class="nc" id="L67">				throw new IllegalArgumentException();</span>
 			}
-<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (lastY == y) {</span>
-<span class="fc" id="L70">				values.set(ys.size() - 1, value);</span>
-<span class="fc" id="L71">				cache.clear();</span>
-<span class="fc" id="L72">				return;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (lastY == y) {</span>
+<span class="nc" id="L70">				values.set(ys.size() - 1, value);</span>
+<span class="nc" id="L71">				cache.clear();</span>
+<span class="nc" id="L72">				return;</span>
 			}
 		}
 <span class="fc" id="L75">		ys.add(y);</span>
