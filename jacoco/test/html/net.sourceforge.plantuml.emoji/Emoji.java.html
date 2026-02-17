@@ -54,97 +54,94 @@ import net.sourceforge.plantuml.log.Logme;
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
-// ::uncomment when __CORE__
-//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
-//import java.io.FileInputStream;
-// ::done
-
 public class Emoji {
-	// ::remove folder when __HAXE__
-	// ::remove file when __TEAVM__
-	
-<span class="nc" id="L66">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
+
+	// ::comment when __TEAVM__
+<span class="nc" id="L60">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
 
 	static {
-<span class="nc" id="L69">		final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (is != null)</span>
-<span class="nc" id="L71">			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
-<span class="nc" id="L72">				String s = null;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">				while ((s = br.readLine()) != null)</span>
-<span class="nc" id="L74">					new Emoji(s);</span>
+<span class="nc" id="L63">		final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (is != null)</span>
+<span class="nc" id="L65">			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L66">				String s = null;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">				while ((s = br.readLine()) != null)</span>
+<span class="nc" id="L68">					new Emoji(s);</span>
 
-<span class="nc" id="L76">			} catch (IOException e) {</span>
-<span class="nc" id="L77">				Logme.error(e);</span>
-<span class="nc" id="L78">			}</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L70">			} catch (IOException e) {</span>
+<span class="nc" id="L71">				Logme.error(e);</span>
+<span class="nc" id="L72">			}</span>
+<span class="nc" id="L73">	}</span>
 
 	public static Map&lt;String, Emoji&gt; getAll() {
-<span class="nc" id="L82">		return Collections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
+<span class="nc" id="L76">		return Collections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
 	}
+	//::done
 
 	private SvgNanoParser nano;
 
 	private final String unicode;
 	private final String shortcut;
 
-<span class="nc" id="L90">	private Emoji(String unicode) {</span>
-<span class="nc" id="L91">		final int x = unicode.indexOf(';');</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (x == -1) {</span>
-<span class="nc" id="L93">			this.shortcut = null;</span>
+<span class="nc" id="L85">	private Emoji(String unicode) {</span>
+<span class="nc" id="L86">		final int x = unicode.indexOf(';');</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (x == -1) {</span>
+<span class="nc" id="L88">			this.shortcut = null;</span>
 		} else {
-<span class="nc" id="L95">			this.shortcut = unicode.substring(x + 1);</span>
-<span class="nc" id="L96">			ALL.put(this.shortcut, this);</span>
-<span class="nc" id="L97">			unicode = unicode.substring(0, x);</span>
+<span class="nc" id="L90">			this.shortcut = unicode.substring(x + 1);</span>
+			// ::comment when __TEAVM__
+<span class="nc" id="L92">			ALL.put(this.shortcut, this);</span>
+<span class="nc" id="L93">			unicode = unicode.substring(0, x);</span>
+			//::done
 		}
-<span class="nc" id="L99">		this.unicode = unicode;</span>
-<span class="nc" id="L100">		ALL.put(unicode, this);</span>
-<span class="nc" id="L101">	}</span>
-
-//	private static String patternOld() {
-//		final StringBuilder sb = new StringBuilder(&quot;\\&lt;(#\\w+)?:(&quot;);
-//		for (String s : ALL.keySet()) {
-//			if (sb.toString().endsWith(&quot;(&quot;) == false)
-//				sb.append(&quot;|&quot;);
-//			sb.append(s);
-//		}
-//		sb.append(&quot;):\\&gt;&quot;);
-//		return sb.toString();
-//	}
+<span class="nc" id="L96">		this.unicode = unicode;</span>
+		// ::comment when __TEAVM__
+<span class="nc" id="L98">		ALL.put(unicode, this);</span>
+		//::done
+<span class="nc" id="L100">	}</span>
 
 	public static Emoji retrieve(String name) {
-<span class="nc" id="L115">		return ALL.get(name.toLowerCase());</span>
+		// ::revert when __TEAVM__
+<span class="nc" id="L104">		return ALL.get(name.toLowerCase());</span>
+		// return new Emoji(name);
+		//::done
 	}
 
 	private synchronized void loadIfNeed() throws IOException {
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (nano != null)</span>
-<span class="nc" id="L120">			return;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (nano != null)</span>
+<span class="nc" id="L111">			return;</span>
 
-<span class="nc" id="L122">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L113">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
 		// ::uncomment when __CORE__
 //		final String fullpath = cheerpjPath + &quot;emoji/&quot; + unicode + &quot;.svg&quot;;
 //		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullpath)))) {
 		// ::done
-		// ::comment when __CORE__
-<span class="nc" id="L128">		try (BufferedReader br = new BufferedReader(</span>
-<span class="nc" id="L129">				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
-			// ::done
-<span class="nc" id="L131">			final String singleLine = br.readLine();</span>
-<span class="nc" id="L132">			data.add(singleLine);</span>
+		
+		// ::uncomment when __TEAVM__
+		// data.add(&quot;&lt;path fill=\&quot;#66757F\&quot; d=\&quot;M26 4c0 3-3.582 6-8 6s-8-3-8-6c0-4.418 6-4 8-4s8-.418 8 4z\&quot;/&gt;&lt;path fill=\&quot;#CCD6DD\&quot; d=\&quot;M24.306 12H11.694c-.978 0-1.812.707-1.973 1.671l-3.333 20C6.185 34.89 7.125 36 8.361 36h19.278c1.236 0 2.176-1.11 1.973-2.329l-3.333-20c-.161-.964-.996-1.671-1.973-1.671z\&quot;/&gt;&lt;path fill=\&quot;#F5F8FA\&quot; d=\&quot;M19.344 14h-6.802c-.489 0-.906.353-.986.836l-3 18c-.103.609.367 1.164.985 1.164h10.427l-.624-20zm5.101.836c-.08-.483-.498-.836-.986-.836h-2.413l.909 20h4.505c.618 0 1.088-.555.986-1.164l-3.001-18z\&quot;/&gt;&lt;ellipse fill=\&quot;#CCD6DD\&quot; cx=\&quot;15\&quot; cy=\&quot;1.5\&quot; rx=\&quot;1.2\&quot; ry=\&quot;.6\&quot;/&gt;&lt;ellipse fill=\&quot;#CCD6DD\&quot; cx=\&quot;21\&quot; cy=\&quot;1.5\&quot; rx=\&quot;1.2\&quot; ry=\&quot;.6\&quot;/&gt;&lt;ellipse fill=\&quot;#CCD6DD\&quot; cx=\&quot;18\&quot; cy=\&quot;3.5\&quot; rx=\&quot;1.2\&quot; ry=\&quot;.6\&quot;/&gt;&lt;path fill=\&quot;#66757F\&quot; d=\&quot;M25 12H11V9.528c0-.844.684-1.262 1.528-1.262h10.944c.844 0 1.528.418 1.528 1.262V12z\&quot;/&gt;&lt;path fill=\&quot;#CCD6DD\&quot; d=\&quot;M23.472 8H12.528c-.657 0-1.213.417-1.429 1H24.9c-.215-.583-.77-1-1.428-1zM11 10h14v1H11zm0 2h14v.5H11z\&quot;/&gt;&quot;);
+		// ::done
+
+		// ::comment when __CORE__ or __TEAVM__
+<span class="nc" id="L124">		try (BufferedReader br = new BufferedReader(</span>
+<span class="nc" id="L125">				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
+<span class="nc" id="L126">			final String singleLine = br.readLine();</span>
+<span class="nc" id="L127">			data.add(singleLine);</span>
 		}
-<span class="nc" id="L134">		this.nano = new SvgNanoParser(data);</span>
-<span class="nc" id="L135">	}</span>
+		// ::done
+		
+<span class="nc" id="L131">		this.nano = new SvgNanoParser(data);</span>
+<span class="nc" id="L132">	}</span>
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
 		try {
-<span class="nc" id="L139">			loadIfNeed();</span>
-<span class="nc" id="L140">		} catch (IOException e) {</span>
-<span class="nc" id="L141">			Logme.error(e);</span>
-<span class="nc" id="L142">		}</span>
-<span class="nc" id="L143">		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L136">			loadIfNeed();</span>
+<span class="nc" id="L137">		} catch (IOException e) {</span>
+<span class="nc" id="L138">			Logme.error(e);</span>
+<span class="nc" id="L139">		}</span>
+<span class="nc" id="L140">		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
+<span class="nc" id="L141">	}</span>
 
 	public String getShortcut() {
-<span class="nc" id="L147">		return shortcut;</span>
+<span class="nc" id="L144">		return shortcut;</span>
 	}
 
 }

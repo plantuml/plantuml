@@ -24,83 +24,82 @@ import java.util.Hashtable;
  * @author Sean Owen
  */
 public final class BarcodeFormat {
-	// ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	// No, we can't use an enum here. J2ME doesn't support it.
 
-<span class="nc" id="L33">	private static final Hashtable VALUES = new Hashtable();</span>
+<span class="nc" id="L32">	private static final Hashtable VALUES = new Hashtable();</span>
 
 	/** QR Code 2D barcode format. */
-<span class="nc" id="L36">	public static final BarcodeFormat QR_CODE = new BarcodeFormat(&quot;QR_CODE&quot;);</span>
+<span class="nc" id="L35">	public static final BarcodeFormat QR_CODE = new BarcodeFormat(&quot;QR_CODE&quot;);</span>
 
 	/** Data Matrix 2D barcode format. */
-<span class="nc" id="L39">	public static final BarcodeFormat DATA_MATRIX = new BarcodeFormat(&quot;DATA_MATRIX&quot;);</span>
+<span class="nc" id="L38">	public static final BarcodeFormat DATA_MATRIX = new BarcodeFormat(&quot;DATA_MATRIX&quot;);</span>
 
 	/** UPC-E 1D format. */
-<span class="nc" id="L42">	public static final BarcodeFormat UPC_E = new BarcodeFormat(&quot;UPC_E&quot;);</span>
+<span class="nc" id="L41">	public static final BarcodeFormat UPC_E = new BarcodeFormat(&quot;UPC_E&quot;);</span>
 
 	/** UPC-A 1D format. */
-<span class="nc" id="L45">	public static final BarcodeFormat UPC_A = new BarcodeFormat(&quot;UPC_A&quot;);</span>
+<span class="nc" id="L44">	public static final BarcodeFormat UPC_A = new BarcodeFormat(&quot;UPC_A&quot;);</span>
 
 	/** EAN-8 1D format. */
-<span class="nc" id="L48">	public static final BarcodeFormat EAN_8 = new BarcodeFormat(&quot;EAN_8&quot;);</span>
+<span class="nc" id="L47">	public static final BarcodeFormat EAN_8 = new BarcodeFormat(&quot;EAN_8&quot;);</span>
 
 	/** EAN-13 1D format. */
-<span class="nc" id="L51">	public static final BarcodeFormat EAN_13 = new BarcodeFormat(&quot;EAN_13&quot;);</span>
+<span class="nc" id="L50">	public static final BarcodeFormat EAN_13 = new BarcodeFormat(&quot;EAN_13&quot;);</span>
 
 	/** UPC/EAN extension format. Not a stand-alone format. */
-<span class="nc" id="L54">	public static final BarcodeFormat UPC_EAN_EXTENSION = new BarcodeFormat(&quot;UPC_EAN_EXTENSION&quot;);</span>
+<span class="nc" id="L53">	public static final BarcodeFormat UPC_EAN_EXTENSION = new BarcodeFormat(&quot;UPC_EAN_EXTENSION&quot;);</span>
 
 	/** Code 128 1D format. */
-<span class="nc" id="L57">	public static final BarcodeFormat CODE_128 = new BarcodeFormat(&quot;CODE_128&quot;);</span>
+<span class="nc" id="L56">	public static final BarcodeFormat CODE_128 = new BarcodeFormat(&quot;CODE_128&quot;);</span>
 
 	/** Code 39 1D format. */
-<span class="nc" id="L60">	public static final BarcodeFormat CODE_39 = new BarcodeFormat(&quot;CODE_39&quot;);</span>
+<span class="nc" id="L59">	public static final BarcodeFormat CODE_39 = new BarcodeFormat(&quot;CODE_39&quot;);</span>
 
 	/** Code 93 1D format. */
-<span class="nc" id="L63">	public static final BarcodeFormat CODE_93 = new BarcodeFormat(&quot;CODE_93&quot;);</span>
+<span class="nc" id="L62">	public static final BarcodeFormat CODE_93 = new BarcodeFormat(&quot;CODE_93&quot;);</span>
 
 	/** CODABAR 1D format. */
-<span class="nc" id="L66">	public static final BarcodeFormat CODABAR = new BarcodeFormat(&quot;CODABAR&quot;);</span>
+<span class="nc" id="L65">	public static final BarcodeFormat CODABAR = new BarcodeFormat(&quot;CODABAR&quot;);</span>
 
 	/** ITF (Interleaved Two of Five) 1D format. */
-<span class="nc" id="L69">	public static final BarcodeFormat ITF = new BarcodeFormat(&quot;ITF&quot;);</span>
+<span class="nc" id="L68">	public static final BarcodeFormat ITF = new BarcodeFormat(&quot;ITF&quot;);</span>
 
 	/** RSS 14 */
-<span class="nc" id="L72">	public static final BarcodeFormat RSS14 = new BarcodeFormat(&quot;RSS14&quot;);</span>
+<span class="nc" id="L71">	public static final BarcodeFormat RSS14 = new BarcodeFormat(&quot;RSS14&quot;);</span>
 
 	/** PDF417 format. */
-<span class="nc" id="L75">	public static final BarcodeFormat PDF417 = new BarcodeFormat(&quot;PDF417&quot;);</span>
+<span class="nc" id="L74">	public static final BarcodeFormat PDF417 = new BarcodeFormat(&quot;PDF417&quot;);</span>
 
 	/** RSS EXPANDED */
-<span class="nc" id="L78">	public static final BarcodeFormat RSS_EXPANDED = new BarcodeFormat(&quot;RSS_EXPANDED&quot;);</span>
+<span class="nc" id="L77">	public static final BarcodeFormat RSS_EXPANDED = new BarcodeFormat(&quot;RSS_EXPANDED&quot;);</span>
 
 	private final String name;
 
-<span class="nc" id="L82">	private BarcodeFormat(String name) {</span>
-<span class="nc" id="L83">		this.name = name;</span>
-<span class="nc" id="L84">		VALUES.put(name, this);</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L81">	private BarcodeFormat(String name) {</span>
+<span class="nc" id="L82">		this.name = name;</span>
+<span class="nc" id="L83">		VALUES.put(name, this);</span>
+<span class="nc" id="L84">	}</span>
 
 	public String getName() {
-<span class="nc" id="L88">		return name;</span>
+<span class="nc" id="L87">		return name;</span>
 	}
 
 	public String toString() {
-<span class="nc" id="L92">		return name;</span>
+<span class="nc" id="L91">		return name;</span>
 	}
 
 	public static BarcodeFormat valueOf(String name) {
-<span class="nc bnc" id="L96" title="All 4 branches missed.">		if (name == null || name.length() == 0) {</span>
-<span class="nc" id="L97">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (name == null || name.length() == 0) {</span>
+<span class="nc" id="L96">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L99">		BarcodeFormat format = (BarcodeFormat) VALUES.get(name);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (format == null) {</span>
-<span class="nc" id="L101">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L98">		BarcodeFormat format = (BarcodeFormat) VALUES.get(name);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (format == null) {</span>
+<span class="nc" id="L100">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L103">		return format;</span>
+<span class="nc" id="L102">		return format;</span>
 	}
 
 }

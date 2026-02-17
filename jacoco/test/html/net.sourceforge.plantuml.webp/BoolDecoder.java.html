@@ -20,8 +20,7 @@ import java.io.IOException;
 import javax.imageio.stream.ImageInputStream;
 
 public class BoolDecoder {
-    // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
+    // ::remove folder when __TEAVM__
     // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 	int bit_count; /* # of bits shifted out of value, at most 7 */
 	ImageInputStream data;
@@ -29,66 +28,66 @@ public class BoolDecoder {
 	private int range; /* always identical to encoder's range */
 	private int value; /* contains at least 24 significant bits */
 
-<span class="nc" id="L32">	BoolDecoder(ImageInputStream frame, long offset) throws IOException {</span>
-<span class="nc" id="L33">		this.data = frame;</span>
-<span class="nc" id="L34">		this.offset = offset;</span>
-<span class="nc" id="L35">		initBoolDecoder();</span>
-<span class="nc" id="L36">	}</span>
+<span class="nc" id="L31">	BoolDecoder(ImageInputStream frame, long offset) throws IOException {</span>
+<span class="nc" id="L32">		this.data = frame;</span>
+<span class="nc" id="L33">		this.offset = offset;</span>
+<span class="nc" id="L34">		initBoolDecoder();</span>
+<span class="nc" id="L35">	}</span>
 
 	private void initBoolDecoder() throws IOException {
 
-<span class="nc" id="L40">		value = 0; /* value = first 16 input bits */</span>
+<span class="nc" id="L39">		value = 0; /* value = first 16 input bits */</span>
 
-<span class="nc" id="L42">		data.seek(offset);</span>
-<span class="nc" id="L43">		value = data.readUnsignedByte() &lt;&lt; 8;</span>
+<span class="nc" id="L41">		data.seek(offset);</span>
+<span class="nc" id="L42">		value = data.readUnsignedByte() &lt;&lt; 8;</span>
 		// value = (data[offset]) &lt;&lt; 8;
-<span class="nc" id="L45">		offset++;</span>
+<span class="nc" id="L44">		offset++;</span>
 
-<span class="nc" id="L47">		range = 255; /* initial range is full */</span>
-<span class="nc" id="L48">		bit_count = 0; /* have not yet shifted out any bits */</span>
-<span class="nc" id="L49">	}</span>
+<span class="nc" id="L46">		range = 255; /* initial range is full */</span>
+<span class="nc" id="L47">		bit_count = 0; /* have not yet shifted out any bits */</span>
+<span class="nc" id="L48">	}</span>
 
 	public int readBit() throws IOException {
-<span class="nc" id="L52">		return readBool(128);</span>
+<span class="nc" id="L51">		return readBool(128);</span>
 	}
 
 	public int readBool(int probability) throws IOException {
 
-<span class="nc" id="L57">		int bit = 0;</span>
+<span class="nc" id="L56">		int bit = 0;</span>
 		int split;
 		int bigsplit;
-<span class="nc" id="L60">		int range = this.range;</span>
-<span class="nc" id="L61">		int value = this.value;</span>
-<span class="nc" id="L62">		split = 1 + (((range - 1) * probability) &gt;&gt; 8);</span>
-<span class="nc" id="L63">		bigsplit = (split &lt;&lt; 8);</span>
-<span class="nc" id="L64">		range = split;</span>
+<span class="nc" id="L59">		int range = this.range;</span>
+<span class="nc" id="L60">		int value = this.value;</span>
+<span class="nc" id="L61">		split = 1 + (((range - 1) * probability) &gt;&gt; 8);</span>
+<span class="nc" id="L62">		bigsplit = (split &lt;&lt; 8);</span>
+<span class="nc" id="L63">		range = split;</span>
 
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (value &gt;= bigsplit) {</span>
-<span class="nc" id="L67">			range = this.range - split;</span>
-<span class="nc" id="L68">			value = value - bigsplit;</span>
-<span class="nc" id="L69">			bit = 1;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (value &gt;= bigsplit) {</span>
+<span class="nc" id="L66">			range = this.range - split;</span>
+<span class="nc" id="L67">			value = value - bigsplit;</span>
+<span class="nc" id="L68">			bit = 1;</span>
 		}
 
 		{
-<span class="nc" id="L73">			int count = this.bit_count;</span>
-<span class="nc" id="L74">			int shift = Globals.vp8dxBitreaderNorm[range];</span>
-<span class="nc" id="L75">			range &lt;&lt;= shift;</span>
-<span class="nc" id="L76">			value &lt;&lt;= shift;</span>
-<span class="nc" id="L77">			count -= shift;</span>
+<span class="nc" id="L72">			int count = this.bit_count;</span>
+<span class="nc" id="L73">			int shift = Globals.vp8dxBitreaderNorm[range];</span>
+<span class="nc" id="L74">			range &lt;&lt;= shift;</span>
+<span class="nc" id="L75">			value &lt;&lt;= shift;</span>
+<span class="nc" id="L76">			count -= shift;</span>
 
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (count &lt;= 0) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (count &lt;= 0) {</span>
 				// data.seek(offset);
-<span class="nc" id="L81">				value |= data.readUnsignedByte() &lt;&lt; (-count);</span>
+<span class="nc" id="L80">				value |= data.readUnsignedByte() &lt;&lt; (-count);</span>
 				// value |= data[offset] &lt;&lt; (-count);
-<span class="nc" id="L83">				offset++;</span>
-<span class="nc" id="L84">				count += 8;</span>
+<span class="nc" id="L82">				offset++;</span>
+<span class="nc" id="L83">				count += 8;</span>
 			}
 
-<span class="nc" id="L87">			this.bit_count = count;</span>
+<span class="nc" id="L86">			this.bit_count = count;</span>
 		}
-<span class="nc" id="L89">		this.value = value;</span>
-<span class="nc" id="L90">		this.range = range;</span>
-<span class="nc" id="L91">		return bit;</span>
+<span class="nc" id="L88">		this.value = value;</span>
+<span class="nc" id="L89">		this.range = range;</span>
+<span class="nc" id="L90">		return bit;</span>
 	}
 
 	/*
@@ -97,42 +96,42 @@ public class BoolDecoder {
 	 * probability 128 (i.e., 1/2).
 	 */
 	public int readLiteral(int num_bits) throws IOException {
-<span class="nc" id="L100">		int v = 0;</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		while (num_bits-- &gt; 0)</span>
-<span class="nc" id="L102">			v = (v &lt;&lt; 1) + readBool(128);</span>
-<span class="nc" id="L103">		return v;</span>
+<span class="nc" id="L99">		int v = 0;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		while (num_bits-- &gt; 0)</span>
+<span class="nc" id="L101">			v = (v &lt;&lt; 1) + readBool(128);</span>
+<span class="nc" id="L102">		return v;</span>
 	}
 
 	int readTree(int t[], /* tree specification */
 			int p[] /* corresponding interior node probabilities */
 	) throws IOException {
-<span class="nc" id="L109">		int i = 0; /* begin at root */</span>
+<span class="nc" id="L108">		int i = 0; /* begin at root */</span>
 
 		/* Descend tree until leaf is reached */
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		while ((i = t[i + readBool(p[i &gt;&gt; 1])]) &gt; 0) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		while ((i = t[i + readBool(p[i &gt;&gt; 1])]) &gt; 0) {</span>
 		}
-<span class="nc" id="L114">		return -i; /* return value is negation of nonpositive index */</span>
+<span class="nc" id="L113">		return -i; /* return value is negation of nonpositive index */</span>
 
 	}
 
 	int readTreeSkip(int t[], /* tree specification */
 			int p[], /* corresponding interior node probabilities */
 			int skip_branches) throws IOException {
-<span class="nc" id="L121">		int i = skip_branches * 2; /* begin at root */</span>
+<span class="nc" id="L120">		int i = skip_branches * 2; /* begin at root */</span>
 
 		/* Descend tree until leaf is reached */
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		while ((i = t[i + readBool(p[i &gt;&gt; 1])]) &gt; 0) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		while ((i = t[i + readBool(p[i &gt;&gt; 1])]) &gt; 0) {</span>
 		}
-<span class="nc" id="L126">		return -i; /* return value is negation of nonpositive index */</span>
+<span class="nc" id="L125">		return -i; /* return value is negation of nonpositive index */</span>
 
 	}
 
 	public void seek() throws IOException {
-<span class="nc" id="L131">		data.seek(offset);</span>
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L130">		data.seek(offset);</span>
+<span class="nc" id="L131">	}</span>
 
 	public String toString() {
-<span class="nc" id="L135">		return &quot;bc: &quot; + value;</span>
+<span class="nc" id="L134">		return &quot;bc: &quot; + value;</span>
 	}
 
 }
