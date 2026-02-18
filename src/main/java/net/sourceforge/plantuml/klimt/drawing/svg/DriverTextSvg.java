@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
@@ -51,7 +54,26 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
-	// ::remove file when __HAXE__
+
+	// Collects extra colored lines (underline/strikethrough) that cannot be
+	// expressed as simple CSS text-decoration because they use a custom color.
+	static class ExtraLines {
+		private final List<HColor> colors = new ArrayList<>();
+		private final List<Double> deltaYs = new ArrayList<>();
+
+		void add(HColor color, double deltaY) {
+			colors.add(color);
+			deltaYs.add(deltaY);
+		}
+
+		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphics svg) {
+			for (int i = 0; i < colors.size(); i++) {
+				svg.setStrokeColor(colors.get(i).toSvg(mapper));
+				svg.setStrokeWidth(font.getSize2D() / 28.0, null);
+				svg.svgLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i), 0);
+			}
+		}
+	}
 
 	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;
@@ -97,31 +119,35 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();
 
-		HColor extraLine = null;
+		final ExtraLines extraLines = new ExtraLines();
 
-		double deltaLineY = 0;
-		String textDecoration = null;
+		final StringBuilder decorations = new StringBuilder();
+
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
 				&& fontConfiguration.getUnderlineStroke().getThickness() > 0) {
 			if (fontConfiguration.getExtendedColor() == null)
-				textDecoration = "underline";
-			else {
-				extraLine = fontConfiguration.getExtendedColor();
-				deltaLineY = font.getSize2D() / 14.0;
-			}
-		} else if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
+				decorations.append("underline ");
+			else
+				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);
+
+		}
+
+		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			if (fontConfiguration.getExtendedColor() == null)
-				textDecoration = "line-through";
-			else {
-				extraLine = fontConfiguration.getExtendedColor();
-				deltaLineY = -font.getSize2D() / 4.0;
-			}
-		} else if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
+				decorations.append("line-through ");
+			else
+				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);
+
+		}
+
+		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			// Beware that some current SVG implementations do not render the wave properly
 			// (e.g. Chrome just draws a straight line)
 			// Works ok on Firefox 85.
-			textDecoration = "wavy underline";
+			decorations.append("wavy underline ");
 		}
+
+		final String textDecoration = decorations.length() > 0 ? decorations.toString().trim() : null;
 
 		String backColor = null;
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
@@ -142,14 +168,10 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 
 		final HColor textColor = fontConfiguration.getColor();
 		svg.setFillColor(textColor.toSvg(mapper));
-		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
-				width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());
+		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle,
+				textDecoration, width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());
 
-		if (extraLine != null) {
-			svg.setStrokeColor(extraLine.toSvg(mapper));
-			svg.setStrokeWidth(font.getSize2D() / 28.0, null);
-			svg.svgLine(x, y + deltaLineY, x + width, y + deltaLineY, 0);
-		}
+		extraLines.drawAll(x, y, width, font, mapper, svg);
 
 	}
 }
