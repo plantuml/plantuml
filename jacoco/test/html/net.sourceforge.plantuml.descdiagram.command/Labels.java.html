@@ -47,69 +47,87 @@ public class Labels {
 
 	private String firstLabel;
 	private String secondLabel;
+	private String firstRole;
+	private String secondRole;
 	private final StringWithArrow stringWithArrow;
 
-<span class="fc" id="L52">	public Labels(RegexResult arg) {</span>
-<span class="fc" id="L53">		this.firstLabel = arg.get(&quot;FIRST_LABEL&quot;, 0);</span>
-<span class="fc" id="L54">		this.secondLabel = arg.get(&quot;SECOND_LABEL&quot;, 0);</span>
-<span class="fc" id="L55">		String labelLink = arg.get(&quot;LABEL_LINK&quot;, 0);</span>
+<span class="fc" id="L54">	public Labels(RegexResult arg) {</span>
+<span class="fc" id="L55">		this.firstLabel = arg.get(&quot;FIRST_LABEL&quot;, 0);</span>
+<span class="fc" id="L56">		this.secondLabel = arg.get(&quot;SECOND_LABEL&quot;, 0);</span>
+<span class="fc" id="L57">		this.firstRole = cleanRole(arg.get(&quot;FIRST_ROLE&quot;, 0));</span>
+<span class="fc" id="L58">		this.secondRole = cleanRole(arg.get(&quot;SECOND_ROLE&quot;, 0));</span>
+<span class="fc" id="L59">		String labelLink = arg.get(&quot;LABEL_LINK&quot;, 0);</span>
 
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (labelLink != null)</span>
-<span class="fc" id="L58">			labelLink = init(labelLink);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (labelLink != null)</span>
+<span class="fc" id="L62">			labelLink = init(labelLink);</span>
 
-<span class="fc" id="L60">		this.stringWithArrow = new StringWithArrow(labelLink);</span>
+<span class="fc" id="L64">		this.stringWithArrow = new StringWithArrow(labelLink);</span>
 
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L66">	}</span>
 
-<span class="fc" id="L64">	private static final Pattern2 p1 = Pattern2.cmpile(&quot;^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
-<span class="fc" id="L65">	private static final Pattern2 p2 = Pattern2.cmpile(&quot;^[%g]([^%g]+)[%g]([^%g]+)$&quot;);</span>
-<span class="fc" id="L66">	private static final Pattern2 p3 = Pattern2.cmpile(&quot;^([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
+	private static String cleanRole(String role) {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (role == null)</span>
+<span class="fc" id="L70">			return null;</span>
+<span class="nc" id="L71">		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(role, &quot;\&quot;&quot;);</span>
+	}
+
+<span class="fc" id="L74">	private static final Pattern2 BOTH_LABELS = Pattern2.cmpile(&quot;^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
+<span class="fc" id="L75">	private static final Pattern2 FIRST_LABEL_ONLY = Pattern2.cmpile(&quot;^[%g]([^%g]+)[%g]([^%g]+)$&quot;);</span>
+<span class="fc" id="L76">	private static final Pattern2 SECOND_LABEL_ONLY = Pattern2.cmpile(&quot;^([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
 
 	private String init(String labelLink) {
-<span class="pc bpc" id="L69" title="2 of 4 branches missed.">		if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
-<span class="fc" id="L70">			final Matcher2 m1 = p1.matcher(labelLink);</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			if (m1.matches()) {</span>
-<span class="nc" id="L72">				firstLabel = m1.group(1);</span>
-<span class="nc" id="L73">				secondLabel = m1.group(3);</span>
-<span class="nc" id="L74">				return StringUtils</span>
-<span class="nc" id="L75">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">		if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
+<span class="fc" id="L80">			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (m1.matches()) {</span>
+<span class="nc" id="L82">				firstLabel = m1.group(1);</span>
+<span class="nc" id="L83">				secondLabel = m1.group(3);</span>
+<span class="nc" id="L84">				return StringUtils</span>
+<span class="nc" id="L85">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));</span>
 			}
-<span class="fc" id="L77">			final Matcher2 m2 = p2.matcher(labelLink);</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (m2.matches()) {</span>
-<span class="nc" id="L79">				firstLabel = m2.group(1);</span>
-<span class="nc" id="L80">				secondLabel = null;</span>
-<span class="nc" id="L81">				return StringUtils</span>
-<span class="nc" id="L82">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));</span>
+<span class="fc" id="L87">			final Matcher2 m2 = FIRST_LABEL_ONLY.matcher(labelLink);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (m2.matches()) {</span>
+<span class="nc" id="L89">				firstLabel = m2.group(1);</span>
+<span class="nc" id="L90">				secondLabel = null;</span>
+<span class="nc" id="L91">				return StringUtils</span>
+<span class="nc" id="L92">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));</span>
 			}
-<span class="fc" id="L84">			final Matcher2 m3 = p3.matcher(labelLink);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			if (m3.matches()) {</span>
-<span class="nc" id="L86">				firstLabel = null;</span>
-<span class="nc" id="L87">				secondLabel = m3.group(2);</span>
-<span class="nc" id="L88">				return StringUtils</span>
-<span class="nc" id="L89">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));</span>
+<span class="fc" id="L94">			final Matcher2 m3 = SECOND_LABEL_ONLY.matcher(labelLink);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (m3.matches()) {</span>
+<span class="nc" id="L96">				firstLabel = null;</span>
+<span class="nc" id="L97">				secondLabel = m3.group(2);</span>
+<span class="nc" id="L98">				return StringUtils</span>
+<span class="nc" id="L99">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));</span>
 			}
 		}
-<span class="fc" id="L92">		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink, &quot;\&quot;&quot;);</span>
+<span class="fc" id="L102">		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink, &quot;\&quot;&quot;);</span>
 	}
 
 	public final String getFirstLabel() {
-<span class="fc" id="L96">		return firstLabel;</span>
+<span class="fc" id="L106">		return firstLabel;</span>
 	}
 
 	public final String getSecondLabel() {
-<span class="fc" id="L100">		return secondLabel;</span>
+<span class="fc" id="L110">		return secondLabel;</span>
+	}
+
+	public final String getFirstRole() {
+<span class="fc" id="L114">		return firstRole;</span>
+	}
+
+	public final String getSecondRole() {
+<span class="fc" id="L118">		return secondRole;</span>
 	}
 
 	public final String getLabelLink() {
-<span class="fc" id="L104">		return stringWithArrow.getLabel();</span>
+<span class="fc" id="L122">		return stringWithArrow.getLabel();</span>
 	}
 
 	public final LinkArrow getLinkArrow() {
-<span class="fc" id="L108">		return stringWithArrow.getLinkArrow();</span>
+<span class="fc" id="L126">		return stringWithArrow.getLinkArrow();</span>
 	}
 
 	public Display getDisplay(Pragma pragma) {
-<span class="fc" id="L112">		return stringWithArrow.getDisplay(pragma);</span>
+<span class="fc" id="L130">		return stringWithArrow.getDisplay(pragma);</span>
 	}
 
 }

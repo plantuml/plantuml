@@ -74,8 +74,10 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -101,6 +103,8 @@ public class MyElkEdge implements UDrawable {
 	private final TextBlock centerLabel;
 	private final TextBlock headLabel;
 	private final TextBlock tailLabel;
+	private final TextBlock tailRole;
+	private final TextBlock headRole;
 
 	private final SName styleName;
 
@@ -113,178 +117,239 @@ public class MyElkEdge implements UDrawable {
 	private final UTranslate translate;
 
 	public MyElkEdge(CucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
-			TextBlock tailLabel, TextBlock headLabel, double magicY2, Map&lt;Entity, MyElkCluster&gt; elkClusters,
-<span class="nc" id="L117">			UTranslate translate, Map&lt;Entity, IEntityImage&gt; nodeImages) {</span>
-<span class="nc" id="L118">		this.link = link;</span>
-<span class="nc" id="L119">		this.edge = edge;</span>
-<span class="nc" id="L120">		this.translate = translate;</span>
-<span class="nc" id="L121">		this.nodeImages = nodeImages;</span>
+			TextBlock tailLabel, TextBlock headLabel, TextBlock tailRole, TextBlock headRole,
+			double magicY2, Map&lt;Entity, MyElkCluster&gt; elkClusters,
+<span class="nc" id="L122">			UTranslate translate, Map&lt;Entity, IEntityImage&gt; nodeImages) {</span>
+<span class="nc" id="L123">		this.link = link;</span>
+<span class="nc" id="L124">		this.edge = edge;</span>
+<span class="nc" id="L125">		this.translate = translate;</span>
+<span class="nc" id="L126">		this.nodeImages = nodeImages;</span>
 
-<span class="nc" id="L123">		this.diagram = diagram;</span>
-<span class="nc" id="L124">		this.centerLabel = centerLabel;</span>
-<span class="nc" id="L125">		this.tailLabel = tailLabel;</span>
-<span class="nc" id="L126">		this.headLabel = headLabel;</span>
-<span class="nc" id="L127">		this.styleName = styleName;</span>
-<span class="nc" id="L128">		this.magicY2 = magicY2;</span>
-<span class="nc" id="L129">		this.elkClusters = elkClusters;</span>
+<span class="nc" id="L128">		this.diagram = diagram;</span>
+<span class="nc" id="L129">		this.centerLabel = centerLabel;</span>
+<span class="nc" id="L130">		this.tailLabel = tailLabel;</span>
+<span class="nc" id="L131">		this.headLabel = headLabel;</span>
+<span class="nc" id="L132">		this.tailRole = tailRole;</span>
+<span class="nc" id="L133">		this.headRole = headRole;</span>
+<span class="nc" id="L134">		this.styleName = styleName;</span>
+<span class="nc" id="L135">		this.magicY2 = magicY2;</span>
+<span class="nc" id="L136">		this.elkClusters = elkClusters;</span>
 
-<span class="nc" id="L131">	}</span>
+<span class="nc" id="L138">	}</span>
 
 	private Style getStyle() {
-<span class="nc" id="L134">		final StyleSignature result = StyleSignatureBasic</span>
-<span class="nc" id="L135">				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)</span>
-<span class="nc" id="L136">				.withTOBECHANGED(link.getStereotype());</span>
-<span class="nc" id="L137">		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L141">		final StyleSignature result = StyleSignatureBasic</span>
+<span class="nc" id="L142">				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)</span>
+<span class="nc" id="L143">				.withTOBECHANGED(link.getStereotype());</span>
+<span class="nc" id="L144">		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	@DuplicateCode(reference = &quot;SvekEdge&quot;)
 	public void drawU(UGraphic ug) {
 
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (link.isHidden())</span>
-<span class="nc" id="L144">			return;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (link.isHidden())</span>
+<span class="nc" id="L151">			return;</span>
 
-<span class="nc" id="L146">		ug = ug.apply(translate);</span>
-<span class="nc" id="L147">		UGraphic ugOrig = ug;</span>
+<span class="nc" id="L153">		ug = ug.apply(translate);</span>
+<span class="nc" id="L154">		UGraphic ugOrig = ug;</span>
 
-<span class="nc" id="L149">		final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L150">		final Style styleLine = getStyle();</span>
+<span class="nc" id="L156">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L157">		final Style styleLine = getStyle();</span>
 
-<span class="nc" id="L152">		HColor color = styleLine.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L159">		HColor color = styleLine.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (this.link.getColors() != null) {</span>
-<span class="nc" id="L155">			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (newColor != null)</span>
-<span class="nc" id="L157">				color = newColor;</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		} else if (this.link.getSpecificColor() != null) {</span>
-<span class="nc" id="L159">			color = this.link.getSpecificColor();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (this.link.getColors() != null) {</span>
+<span class="nc" id="L162">			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (newColor != null)</span>
+<span class="nc" id="L164">				color = newColor;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		} else if (this.link.getSpecificColor() != null) {</span>
+<span class="nc" id="L166">			color = this.link.getSpecificColor();</span>
 		}
 
-<span class="nc" id="L162">		final LinkType linkType = link.getType();</span>
-<span class="nc" id="L163">		final UStroke suggestedStroke = styleLine.getStroke();</span>
-<span class="nc" id="L164">		final UStroke defaultThickness = diagram.getSkinParam().getThickness(LineParam.arrow, null);</span>
+<span class="nc" id="L169">		final LinkType linkType = link.getType();</span>
+<span class="nc" id="L170">		final UStroke suggestedStroke = styleLine.getStroke();</span>
+<span class="nc" id="L171">		final UStroke defaultThickness = diagram.getSkinParam().getThickness(LineParam.arrow, null);</span>
 
 		UStroke stroke;
-<span class="nc bnc" id="L167" title="All 4 branches missed.">		if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
-<span class="nc" id="L168">			stroke = linkType.getStroke3(defaultThickness);</span>
+<span class="nc bnc" id="L174" title="All 4 branches missed.">		if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
+<span class="nc" id="L175">			stroke = linkType.getStroke3(defaultThickness);</span>
 		else
-<span class="nc" id="L170">			stroke = linkType.getStroke3(suggestedStroke);</span>
+<span class="nc" id="L177">			stroke = linkType.getStroke3(suggestedStroke);</span>
 
-<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (link.getColors() != null &amp;&amp; link.getColors().getSpecificLineStroke() != null)</span>
-<span class="nc" id="L173">			stroke = link.getColors().getSpecificLineStroke();</span>
+<span class="nc bnc" id="L179" title="All 4 branches missed.">		if (link.getColors() != null &amp;&amp; link.getColors().getSpecificLineStroke() != null)</span>
+<span class="nc" id="L180">			stroke = link.getColors().getSpecificLineStroke();</span>
 
-<span class="nc" id="L175">		final MyElkCluster elkCluster1 = elkClusters.get(link.getEntity1());</span>
-<span class="nc" id="L176">		final MyElkCluster elkCluster2 = elkClusters.get(link.getEntity2());</span>
-<span class="nc" id="L177">		final IEntityImage elkNode1 = nodeImages.get(link.getEntity1());</span>
-<span class="nc" id="L178">		final IEntityImage elkNode2 = nodeImages.get(link.getEntity2());</span>
-<span class="nc" id="L179">		MagneticBorder magneticBorder1 = new MagneticBorderNone();</span>
-<span class="nc" id="L180">		MagneticBorder magneticBorder2 = new MagneticBorderNone();</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (elkNode1 != null)</span>
-<span class="nc" id="L182">			magneticBorder1 = elkNode1.getMagneticBorder();</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		else if (elkCluster1 != null)</span>
-<span class="nc" id="L184">			magneticBorder1 = elkCluster1.getMagneticBorder(ug.getStringBounder());</span>
+<span class="nc" id="L182">		final MyElkCluster elkCluster1 = elkClusters.get(link.getEntity1());</span>
+<span class="nc" id="L183">		final MyElkCluster elkCluster2 = elkClusters.get(link.getEntity2());</span>
+<span class="nc" id="L184">		final IEntityImage elkNode1 = nodeImages.get(link.getEntity1());</span>
+<span class="nc" id="L185">		final IEntityImage elkNode2 = nodeImages.get(link.getEntity2());</span>
+<span class="nc" id="L186">		MagneticBorder magneticBorder1 = new MagneticBorderNone();</span>
+<span class="nc" id="L187">		MagneticBorder magneticBorder2 = new MagneticBorderNone();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (elkNode1 != null)</span>
+<span class="nc" id="L189">			magneticBorder1 = elkNode1.getMagneticBorder();</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		else if (elkCluster1 != null)</span>
+<span class="nc" id="L191">			magneticBorder1 = elkCluster1.getMagneticBorder(ug.getStringBounder());</span>
 
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (elkNode2 != null)</span>
-<span class="nc" id="L187">			magneticBorder2 = elkNode2.getMagneticBorder();</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (elkCluster2 != null)</span>
-<span class="nc" id="L189">			magneticBorder2 = elkCluster2.getMagneticBorder(ug.getStringBounder());</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (elkNode2 != null)</span>
+<span class="nc" id="L194">			magneticBorder2 = elkNode2.getMagneticBorder();</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (elkCluster2 != null)</span>
+<span class="nc" id="L196">			magneticBorder2 = elkCluster2.getMagneticBorder(ug.getStringBounder());</span>
 
-<span class="nc" id="L191">		ug = ug.apply(stroke).apply(color);</span>
+<span class="nc" id="L198">		ug = ug.apply(stroke).apply(color);</span>
 
-<span class="nc" id="L193">		final List&lt;ElkEdgeSection&gt; sections = edge.getSections();</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (sections.size() == 0) {</span>
-<span class="nc" id="L195">			System.err.println(&quot;Strange: no section?&quot;);</span>
-<span class="nc" id="L196">			System.err.println(&quot;Maybe a 'Long hierarchical edge' &quot; + edge.isHierarchical());</span>
-<span class="nc" id="L197">			return;</span>
+<span class="nc" id="L200">		final List&lt;ElkEdgeSection&gt; sections = edge.getSections();</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (sections.size() == 0) {</span>
+<span class="nc" id="L202">			System.err.println(&quot;Strange: no section?&quot;);</span>
+<span class="nc" id="L203">			System.err.println(&quot;Maybe a 'Long hierarchical edge' &quot; + edge.isHierarchical());</span>
+<span class="nc" id="L204">			return;</span>
 		} else {
-<span class="nc" id="L199">			drawSections(ug, sections, magneticBorder1, magneticBorder2);</span>
+<span class="nc" id="L206">			drawSections(ug, sections, magneticBorder1, magneticBorder2);</span>
 		}
 
-<span class="nc" id="L202">		final UDrawable extremityFactory1 = getDecors(link.getType().getDecor1(), Math.PI / 2, HColors.WHITE);</span>
-<span class="nc" id="L203">		final UDrawable extremityFactory2 = getDecors(link.getType().getDecor2(), -Math.PI / 2, HColors.WHITE);</span>
+<span class="nc" id="L209">		final UDrawable extremityFactory1 = getDecors(link.getType().getDecor1(), Math.PI / 2, HColors.WHITE);</span>
+<span class="nc" id="L210">		final UDrawable extremityFactory2 = getDecors(link.getType().getDecor2(), -Math.PI / 2, HColors.WHITE);</span>
 
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (extremityFactory1 != null) {</span>
-<span class="nc" id="L206">			final double x = sections.get(0).getEndX();</span>
-<span class="nc" id="L207">			final double y = sections.get(0).getEndY();</span>
-<span class="nc" id="L208">			final UTranslate force = magneticBorder2.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));</span>
-<span class="nc" id="L209">			extremityFactory1.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (extremityFactory1 != null) {</span>
+<span class="nc" id="L213">			final double x = sections.get(0).getEndX();</span>
+<span class="nc" id="L214">			final double y = sections.get(0).getEndY();</span>
+<span class="nc" id="L215">			final UTranslate force = magneticBorder2.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));</span>
+<span class="nc" id="L216">			extremityFactory1.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));</span>
 		}
 
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (extremityFactory2 != null) {</span>
-<span class="nc" id="L213">			final double x = sections.get(0).getStartX();</span>
-<span class="nc" id="L214">			final double y = sections.get(0).getStartY();</span>
-<span class="nc" id="L215">			final UTranslate force = magneticBorder1.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));</span>
-<span class="nc" id="L216">			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (extremityFactory2 != null) {</span>
+<span class="nc" id="L220">			final double x = sections.get(0).getStartX();</span>
+<span class="nc" id="L221">			final double y = sections.get(0).getStartY();</span>
+<span class="nc" id="L222">			final UTranslate force = magneticBorder1.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));</span>
+<span class="nc" id="L223">			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));</span>
 		}
 
-<span class="nc" id="L219">		drawLabels(ugOrig);</span>
-<span class="nc" id="L220">	}</span>
+<span class="nc" id="L226">		drawLabels(ugOrig);</span>
+<span class="nc" id="L227">	}</span>
 
 	private UDrawable getDecors(LinkDecor decors, double angle, HColor backColor) {
 		// For legacy reason, extends are treated differently
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (decors == LinkDecor.EXTENDS)</span>
-<span class="nc" id="L225">			return new ExtremityFactoryExtends(backColor).createUDrawable(new XPoint2D(0, 0), angle, null);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (decors == LinkDecor.EXTENDS)</span>
+<span class="nc" id="L232">			return new ExtremityFactoryExtends(backColor).createUDrawable(new XPoint2D(0, 0), angle, null);</span>
 
-<span class="nc" id="L227">		final ExtremityFactory extremityFactory = decors.getExtremityFactoryLegacy(backColor);</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (extremityFactory == null)</span>
-<span class="nc" id="L229">			return null;</span>
+<span class="nc" id="L234">		final ExtremityFactory extremityFactory = decors.getExtremityFactoryLegacy(backColor);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (extremityFactory == null)</span>
+<span class="nc" id="L236">			return null;</span>
 
-<span class="nc" id="L231">		return extremityFactory.createUDrawable(new XPoint2D(0, 0), angle, null);</span>
+<span class="nc" id="L238">		return extremityFactory.createUDrawable(new XPoint2D(0, 0), angle, null);</span>
 	}
 
 	private void drawLabels(UGraphic ug) {
-<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (ElkLabel label : edge.getLabels()) {</span>
-<span class="nc" id="L236">			final double x = label.getX();</span>
-<span class="nc" id="L237">			final double y = label.getY();</span>
+<span class="nc" id="L242">		XPoint2D tailLabelPos = null;</span>
+<span class="nc" id="L243">		XPoint2D headLabelPos = null;</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		for (ElkLabel label : edge.getLabels()) {</span>
+<span class="nc" id="L245">			final double x = label.getX();</span>
+<span class="nc" id="L246">			final double y = label.getY();</span>
 			final TextBlock labelLink;
 			// Nasty trick: we store the type of label (center/head/tail) in the text
-<span class="nc" id="L240">			final String type = label.getText();</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (&quot;X&quot;.equals(type))</span>
-<span class="nc" id="L242">				labelLink = centerLabel;</span>
-<span class="nc bnc" id="L243" title="All 2 branches missed.">			else if (&quot;1&quot;.equals(type))</span>
-<span class="nc" id="L244">				labelLink = tailLabel;</span>
-<span class="nc bnc" id="L245" title="All 2 branches missed.">			else if (&quot;2&quot;.equals(type))</span>
-<span class="nc" id="L246">				labelLink = headLabel;</span>
-			else
+<span class="nc" id="L249">			final String type = label.getText();</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">			if (&quot;X&quot;.equals(type))</span>
+<span class="nc" id="L251">				labelLink = centerLabel;</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">			else if (&quot;1&quot;.equals(type)) {</span>
+<span class="nc" id="L253">				labelLink = tailLabel;</span>
+<span class="nc" id="L254">				tailLabelPos = new XPoint2D(x, y);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">			} else if (&quot;2&quot;.equals(type)) {</span>
+<span class="nc" id="L256">				labelLink = headLabel;</span>
+<span class="nc" id="L257">				headLabelPos = new XPoint2D(x, y);</span>
+			} else
 				continue;
 
-<span class="nc" id="L250">			labelLink.drawU(ug.apply(new UTranslate(x, y)));</span>
-<span class="nc" id="L251">		}</span>
-<span class="nc" id="L252">	}</span>
+<span class="nc" id="L261">			labelLink.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L262">		}</span>
+
+		// Draw role labels at reflected positions
+<span class="nc" id="L265">		final List&lt;ElkEdgeSection&gt; sections = edge.getSections();</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (sections.size() &gt; 0) {</span>
+<span class="nc" id="L267">			final ElkEdgeSection section = sections.get(0);</span>
+<span class="nc" id="L268">			final XPoint2D startPt = new XPoint2D(section.getStartX(), section.getStartY());</span>
+<span class="nc" id="L269">			final XPoint2D endPt = new XPoint2D(section.getEndX(), section.getEndY());</span>
+
+<span class="nc bnc" id="L271" title="All 4 branches missed.">			if (tailRole != null &amp;&amp; tailLabelPos != null)</span>
+<span class="nc" id="L272">				drawRoleLabel(ug, tailRole, tailLabel, tailLabelPos, startPt, endPt);</span>
+
+<span class="nc bnc" id="L274" title="All 4 branches missed.">			if (headRole != null &amp;&amp; headLabelPos != null)</span>
+<span class="nc" id="L275">				drawRoleLabel(ug, headRole, headLabel, headLabelPos, endPt, startPt);</span>
+		}
+<span class="nc" id="L277">	}</span>
+
+	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
+			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint) {
+<span class="nc" id="L281">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L282">		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);</span>
+<span class="nc" id="L283">		final XDimension2D rDim = role.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L285">		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();</span>
+<span class="nc" id="L286">		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();</span>
+
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		if (Math.abs(dirX) + Math.abs(dirY) &lt; 0.001) {</span>
+<span class="nc" id="L289">			role.drawU(ug.apply(new UTranslate(quantifierPos.getX(),</span>
+<span class="nc" id="L290">					quantifierPos.getY() + qDim.getHeight())));</span>
+<span class="nc" id="L291">			return;</span>
+		}
+
+<span class="nc" id="L294">		final double gap = 2;</span>
+		final double roleX;
+		final double roleY;
+
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (Math.abs(dirY) &gt;= Math.abs(dirX)) {</span>
+<span class="nc" id="L299">			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;</span>
+<span class="nc" id="L300">			final double lineX = thisEndpoint.getX();</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			if (qCenterX &lt; lineX)</span>
+<span class="nc" id="L302">				roleX = lineX + gap;</span>
+			else
+<span class="nc" id="L304">				roleX = lineX - rDim.getWidth() - gap;</span>
+<span class="nc" id="L305">			roleY = quantifierPos.getY();</span>
+<span class="nc" id="L306">		} else {</span>
+<span class="nc" id="L307">			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;</span>
+<span class="nc" id="L308">			final double lineY = thisEndpoint.getY();</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">			if (qCenterY &lt; lineY)</span>
+<span class="nc" id="L310">				roleY = lineY + gap;</span>
+			else
+<span class="nc" id="L312">				roleY = lineY - rDim.getHeight() - gap;</span>
+<span class="nc" id="L313">			roleX = quantifierPos.getX();</span>
+		}
+
+<span class="nc" id="L316">		role.drawU(ug.apply(new UTranslate(roleX, roleY)));</span>
+<span class="nc" id="L317">	}</span>
 
 	private void drawSections(UGraphic ug, final Collection&lt;ElkEdgeSection&gt; sections, MagneticBorder magneticBorder1,
 			MagneticBorder magneticBorder2) {
-<span class="nc bnc" id="L256" title="All 2 branches missed.">		for (ElkEdgeSection section : sections) {</span>
-<span class="nc" id="L257">			final Collection&lt;ElkBendPoint&gt; points = section.getBendPoints();</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">		for (ElkEdgeSection section : sections) {</span>
+<span class="nc" id="L322">			final Collection&lt;ElkBendPoint&gt; points = section.getBendPoints();</span>
 
-<span class="nc" id="L259">			double x1 = section.getStartX();</span>
-<span class="nc" id="L260">			double y1 = section.getStartY();</span>
+<span class="nc" id="L324">			double x1 = section.getStartX();</span>
+<span class="nc" id="L325">			double y1 = section.getStartY();</span>
 
-<span class="nc" id="L262">			final XPoint2D tmpStart = new XPoint2D(x1, y1);</span>
-<span class="nc" id="L263">			final UTranslate force1 = magneticBorder1.getForceAt(ug.getStringBounder(),</span>
-<span class="nc" id="L264">					translate.getTranslated(tmpStart));</span>
-<span class="nc" id="L265">			final XPoint2D start = force1.getTranslated(tmpStart);</span>
-<span class="nc" id="L266">			x1 = start.x;</span>
-<span class="nc" id="L267">			y1 = start.y;</span>
+<span class="nc" id="L327">			final XPoint2D tmpStart = new XPoint2D(x1, y1);</span>
+<span class="nc" id="L328">			final UTranslate force1 = magneticBorder1.getForceAt(ug.getStringBounder(),</span>
+<span class="nc" id="L329">					translate.getTranslated(tmpStart));</span>
+<span class="nc" id="L330">			final XPoint2D start = force1.getTranslated(tmpStart);</span>
+<span class="nc" id="L331">			x1 = start.x;</span>
+<span class="nc" id="L332">			y1 = start.y;</span>
 
-<span class="nc bnc" id="L269" title="All 2 branches missed.">			for (ElkBendPoint pt : points) {</span>
-<span class="nc" id="L270">				drawLine(ug, x1, y1, pt.getX(), pt.getY());</span>
-<span class="nc" id="L271">				x1 = pt.getX();</span>
-<span class="nc" id="L272">				y1 = pt.getY();</span>
-<span class="nc" id="L273">			}</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">			for (ElkBendPoint pt : points) {</span>
+<span class="nc" id="L335">				drawLine(ug, x1, y1, pt.getX(), pt.getY());</span>
+<span class="nc" id="L336">				x1 = pt.getX();</span>
+<span class="nc" id="L337">				y1 = pt.getY();</span>
+<span class="nc" id="L338">			}</span>
 
-<span class="nc" id="L275">			final XPoint2D tmpEnd = new XPoint2D(section.getEndX(), section.getEndY() + magicY2);</span>
-<span class="nc" id="L276">			final UTranslate force2 = magneticBorder2.getForceAt(ug.getStringBounder(),</span>
-<span class="nc" id="L277">					translate.getTranslated(tmpEnd));</span>
-<span class="nc" id="L278">			final XPoint2D end = force2.getTranslated(tmpEnd);</span>
+<span class="nc" id="L340">			final XPoint2D tmpEnd = new XPoint2D(section.getEndX(), section.getEndY() + magicY2);</span>
+<span class="nc" id="L341">			final UTranslate force2 = magneticBorder2.getForceAt(ug.getStringBounder(),</span>
+<span class="nc" id="L342">					translate.getTranslated(tmpEnd));</span>
+<span class="nc" id="L343">			final XPoint2D end = force2.getTranslated(tmpEnd);</span>
 
-<span class="nc" id="L280">			drawLine(ug, x1, y1, end.x, end.y);</span>
-<span class="nc" id="L281">		}</span>
-<span class="nc" id="L282">	}</span>
+<span class="nc" id="L345">			drawLine(ug, x1, y1, end.x, end.y);</span>
+<span class="nc" id="L346">		}</span>
+<span class="nc" id="L347">	}</span>
 
 	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-<span class="nc" id="L285">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="nc" id="L286">		ug.apply(new UTranslate(x1, y1)).draw(line);</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L350">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="nc" id="L351">		ug.apply(new UTranslate(x1, y1)).draw(line);</span>
+<span class="nc" id="L352">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

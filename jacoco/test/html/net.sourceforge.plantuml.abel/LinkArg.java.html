@@ -43,6 +43,8 @@ public class LinkArg {
 	private final Display label;
 	private final String quantifier1;
 	private final String quantifier2;
+	private final String role1;
+	private final String role2;
 	private final String labeldistance;
 	private final String labelangle;
 
@@ -53,102 +55,118 @@ public class LinkArg {
 	private int length;
 
 	public static LinkArg build(final Display label, int length) {
-<span class="fc" id="L56">		return build(label, length, true);</span>
+<span class="fc" id="L58">		return build(label, length, true);</span>
 	}
 
 	public static LinkArg noDisplay(int length) {
-<span class="fc" id="L60">		return build(Display.NULL, length, true);</span>
+<span class="fc" id="L62">		return build(Display.NULL, length, true);</span>
 	}
 
 	public static LinkArg build(final Display label, int length, boolean manageVisibilityModifier) {
-<span class="fc" id="L64">		VisibilityModifier visibilityModifier = null;</span>
+<span class="fc" id="L66">		VisibilityModifier visibilityModifier = null;</span>
 		final Display newLabel;
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (Display.isNull(label)) {</span>
-<span class="fc" id="L67">			newLabel = Display.NULL;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (Display.isNull(label)) {</span>
+<span class="fc" id="L69">			newLabel = Display.NULL;</span>
 		} else {
-<span class="fc" id="L69">			newLabel = label.manageGuillemet(manageVisibilityModifier);</span>
-<span class="pc bpc" id="L70" title="2 of 4 branches missed.">			if (manageVisibilityModifier &amp;&amp; VisibilityModifier.isVisibilityCharacter(label.get(0)))</span>
-<span class="nc" id="L71">				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);</span>
+<span class="fc" id="L71">			newLabel = label.manageGuillemet(manageVisibilityModifier);</span>
+<span class="pc bpc" id="L72" title="2 of 4 branches missed.">			if (manageVisibilityModifier &amp;&amp; VisibilityModifier.isVisibilityCharacter(label.get(0)))</span>
+<span class="nc" id="L73">				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);</span>
 		}
-<span class="fc" id="L73">		return new LinkArg(newLabel, length, null, null, null, null, visibilityModifier, null, null);</span>
+<span class="fc" id="L75">		return new LinkArg(newLabel, length, null, null, null, null, visibilityModifier, null, null, null, null);</span>
 	}
 
 	public LinkArg withQuantifier(String quantifier1, String quantifier2) {
-<span class="fc" id="L77">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
-				kal2);
+<span class="fc" id="L79">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
+				kal2, role1, role2);
+	}
+
+	public LinkArg withRole(String role1, String role2) {
+<span class="fc" id="L84">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
+				kal2, role1, role2);
 	}
 
 	public LinkArg withKal(String kal1, String kal2) {
-<span class="fc" id="L82">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
-				kal2);
+<span class="fc" id="L89">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
+				kal2, role1, role2);
 	}
 
 	public LinkArg withDistanceAngle(String labeldistance, String labelangle) {
-<span class="fc" id="L87">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
-				kal2);
+<span class="fc" id="L94">		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,</span>
+				kal2, role1, role2);
 	}
 
 	private LinkArg(Display label, int length, String quantifier1, String quantifier2, String labeldistance,
-<span class="fc" id="L92">			String labelangle, VisibilityModifier visibilityModifier, String kal1, String kal2) {</span>
+			String labelangle, VisibilityModifier visibilityModifier, String kal1, String kal2, String role1,
+<span class="fc" id="L100">			String role2) {</span>
 
-<span class="fc" id="L94">		this.label = label;</span>
-<span class="fc" id="L95">		this.visibilityModifier = visibilityModifier;</span>
-<span class="fc" id="L96">		this.length = length;</span>
-<span class="fc" id="L97">		this.quantifier1 = quantifier1;</span>
-<span class="fc" id="L98">		this.quantifier2 = quantifier2;</span>
-<span class="fc" id="L99">		this.labeldistance = labeldistance;</span>
-<span class="fc" id="L100">		this.labelangle = labelangle;</span>
-<span class="fc" id="L101">		this.kal1 = kal1;</span>
-<span class="fc" id="L102">		this.kal2 = kal2;</span>
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L102">		this.label = label;</span>
+<span class="fc" id="L103">		this.visibilityModifier = visibilityModifier;</span>
+<span class="fc" id="L104">		this.length = length;</span>
+<span class="fc" id="L105">		this.quantifier1 = quantifier1;</span>
+<span class="fc" id="L106">		this.quantifier2 = quantifier2;</span>
+<span class="fc" id="L107">		this.labeldistance = labeldistance;</span>
+<span class="fc" id="L108">		this.labelangle = labelangle;</span>
+<span class="fc" id="L109">		this.kal1 = kal1;</span>
+<span class="fc" id="L110">		this.kal2 = kal2;</span>
+<span class="fc" id="L111">		this.role1 = role1;</span>
+<span class="fc" id="L112">		this.role2 = role2;</span>
+<span class="fc" id="L113">	}</span>
 
 	public LinkArg getInv() {
-<span class="fc" id="L106">		return new LinkArg(label, length, quantifier2, quantifier1, labeldistance, labelangle, visibilityModifier, kal2,</span>
-				kal1);
+<span class="fc" id="L116">		return new LinkArg(label, length, quantifier2, quantifier1, labeldistance, labelangle, visibilityModifier, kal2,</span>
+				kal1, role2, role1);
 	}
 
 	public final Display getLabel() {
-<span class="fc" id="L111">		return label;</span>
+<span class="fc" id="L121">		return label;</span>
 	}
 
 	public final int getLength() {
-<span class="fc" id="L115">		return length;</span>
+<span class="fc" id="L125">		return length;</span>
 	}
 
 	public final String getQuantifier1() {
-<span class="fc" id="L119">		return quantifier1;</span>
+<span class="fc" id="L129">		return quantifier1;</span>
 	}
 
 	public final String getQuantifier2() {
-<span class="fc" id="L123">		return quantifier2;</span>
+<span class="fc" id="L133">		return quantifier2;</span>
 	}
 
 	public final String getLabeldistance() {
-<span class="nc" id="L127">		return labeldistance;</span>
+<span class="nc" id="L137">		return labeldistance;</span>
 	}
 
 	public final String getLabelangle() {
-<span class="nc" id="L131">		return labelangle;</span>
+<span class="nc" id="L141">		return labelangle;</span>
 	}
 
 	public final VisibilityModifier getVisibilityModifier() {
-<span class="fc" id="L135">		return visibilityModifier;</span>
+<span class="fc" id="L145">		return visibilityModifier;</span>
 	}
 
 	public final void setVisibilityModifier(VisibilityModifier visibilityModifier) {
-<span class="fc" id="L139">		this.visibilityModifier = visibilityModifier;</span>
-<span class="fc" id="L140">	}</span>
+<span class="fc" id="L149">		this.visibilityModifier = visibilityModifier;</span>
+<span class="fc" id="L150">	}</span>
 
 	public final void setLength(int length) {
-<span class="nc" id="L143">		this.length = length;</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L153">		this.length = length;</span>
+<span class="nc" id="L154">	}</span>
 
 	public final String getKal1() {
-<span class="nc" id="L147">		return kal1;</span>
+<span class="nc" id="L157">		return kal1;</span>
 	}
 
 	public final String getKal2() {
-<span class="nc" id="L151">		return kal2;</span>
+<span class="nc" id="L161">		return kal2;</span>
+	}
+
+	public final String getRole1() {
+<span class="fc" id="L165">		return role1;</span>
+	}
+
+	public final String getRole2() {
+<span class="fc" id="L169">		return role2;</span>
 	}
 
 }

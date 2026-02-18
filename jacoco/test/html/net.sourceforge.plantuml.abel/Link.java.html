@@ -309,64 +309,72 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="fc" id="L309">		return getLinkArg().getQuantifier2();</span>
 	}
 
+	public String getRole1() {
+<span class="fc" id="L313">		return getLinkArg().getRole1();</span>
+	}
+
+	public String getRole2() {
+<span class="fc" id="L317">		return getLinkArg().getRole2();</span>
+	}
+
 	public final double getWeight() {
-<span class="nc" id="L313">		return weight;</span>
+<span class="nc" id="L321">		return weight;</span>
 	}
 
 	public final void setWeight(double weight) {
-<span class="nc" id="L317">		this.weight = weight;</span>
-<span class="nc" id="L318">	}</span>
+<span class="nc" id="L325">		this.weight = weight;</span>
+<span class="nc" id="L326">	}</span>
 
 	public final CucaNote getNote() {
-<span class="fc" id="L321">		return note;</span>
+<span class="fc" id="L329">		return note;</span>
 	}
 
 	public final void addNote(CucaNote note) {
-<span class="nc" id="L325">		this.note = note;</span>
-<span class="nc" id="L326">	}</span>
+<span class="nc" id="L333">		this.note = note;</span>
+<span class="nc" id="L334">	}</span>
 
 	public final void addNoteFrom(Link other, NoteLinkStrategy strategy) {
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		if (other.note != null)</span>
-<span class="nc" id="L330">			this.note = other.note.withStrategy(strategy);</span>
-<span class="nc" id="L331">	}</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (other.note != null)</span>
+<span class="nc" id="L338">			this.note = other.note.withStrategy(strategy);</span>
+<span class="nc" id="L339">	}</span>
 
 	public boolean isAutoLinkOfAGroup() {
-<span class="nc bnc" id="L334" title="All 2 branches missed.">		if (getEntity1().isGroup() == false)</span>
-<span class="nc" id="L335">			return false;</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (getEntity1().isGroup() == false)</span>
+<span class="nc" id="L343">			return false;</span>
 
-<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (getEntity2().isGroup() == false)</span>
-<span class="nc" id="L338">			return false;</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (getEntity2().isGroup() == false)</span>
+<span class="nc" id="L346">			return false;</span>
 
-<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (getEntity1() == getEntity2())</span>
-<span class="nc" id="L341">			return true;</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">		if (getEntity1() == getEntity2())</span>
+<span class="nc" id="L349">			return true;</span>
 
-<span class="nc" id="L343">		return false;</span>
+<span class="nc" id="L351">		return false;</span>
 	}
 
 	public boolean containsType(LeafType type) {
-<span class="nc bnc" id="L347" title="All 4 branches missed.">		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type)</span>
-<span class="nc" id="L348">			return true;</span>
+<span class="nc bnc" id="L355" title="All 4 branches missed.">		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type)</span>
+<span class="nc" id="L356">			return true;</span>
 
-<span class="nc" id="L350">		return false;</span>
+<span class="nc" id="L358">		return false;</span>
 	}
 
 	public boolean contains(Entity entity) {
-<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
-<span class="fc" id="L355">			return true;</span>
-<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
-<span class="nc" id="L357">			return true;</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
+<span class="fc" id="L363">			return true;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
+<span class="nc" id="L365">			return true;</span>
 
-<span class="nc" id="L359">		return false;</span>
+<span class="nc" id="L367">		return false;</span>
 	}
 
 	public Entity getOther(Entity entity) {
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
-<span class="fc" id="L364">			return getEntity2();</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
+<span class="fc" id="L372">			return getEntity2();</span>
 
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
-<span class="nc" id="L367">			return getEntity1();</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
+<span class="nc" id="L375">			return getEntity1();</span>
 
-<span class="nc" id="L369">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L377">		throw new IllegalArgumentException();</span>
 	}
 
 //	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif, ISkinSimple spriteContainer) {
@@ -383,191 +391,191 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	private double getQuantifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif,
 			ISkinSimple spriteContainer) {
-<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (qualif != null) {</span>
-<span class="nc" id="L387">			final TextBlock b = Display.create(qualif).create(FontConfiguration.blackBlueTrue(fontQualif),</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">		if (qualif != null) {</span>
+<span class="nc" id="L395">			final TextBlock b = Display.create(qualif).create(FontConfiguration.blackBlueTrue(fontQualif),</span>
 					HorizontalAlignment.LEFT, spriteContainer);
-<span class="nc" id="L389">			final XDimension2D dim = b.calculateDimension(stringBounder);</span>
-<span class="nc" id="L390">			return Math.max(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L397">			final XDimension2D dim = b.calculateDimension(stringBounder);</span>
+<span class="nc" id="L398">			return Math.max(dim.getWidth(), dim.getHeight());</span>
 		}
-<span class="nc" id="L392">		return 0;</span>
+<span class="nc" id="L400">		return 0;</span>
 	}
 
 	public final boolean isConstraint() {
-<span class="nc" id="L396">		return constraint;</span>
+<span class="nc" id="L404">		return constraint;</span>
 	}
 
 	public final void setConstraint(boolean constraint) {
-<span class="nc" id="L400">		this.constraint = constraint;</span>
-<span class="nc" id="L401">	}</span>
+<span class="nc" id="L408">		this.constraint = constraint;</span>
+<span class="nc" id="L409">	}</span>
 
 	public void setOpale(boolean opale) {
-<span class="fc" id="L404">		this.opale = opale;</span>
-<span class="fc" id="L405">	}</span>
+<span class="fc" id="L412">		this.opale = opale;</span>
+<span class="fc" id="L413">	}</span>
 
 	public final void setHorizontalSolitary(boolean horizontalSolitary) {
-<span class="fc" id="L408">		this.horizontalSolitary = horizontalSolitary;</span>
-<span class="fc" id="L409">	}</span>
+<span class="fc" id="L416">		this.horizontalSolitary = horizontalSolitary;</span>
+<span class="fc" id="L417">	}</span>
 
 	public final boolean isHorizontalSolitary() {
-<span class="nc" id="L412">		return horizontalSolitary;</span>
+<span class="nc" id="L420">		return horizontalSolitary;</span>
 	}
 
 	public final LinkArrow getLinkArrow() {
-<span class="fc bfc" id="L416" title="All 2 branches covered.">		if (inverted)</span>
-<span class="fc" id="L417">			return linkArrow.reverse();</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (inverted)</span>
+<span class="fc" id="L425">			return linkArrow.reverse();</span>
 
-<span class="fc" id="L419">		return linkArrow;</span>
+<span class="fc" id="L427">		return linkArrow;</span>
 	}
 
 	public final void setLinkArrow(LinkArrow linkArrow) {
-<span class="fc" id="L423">		this.linkArrow = linkArrow;</span>
-<span class="fc" id="L424">	}</span>
+<span class="fc" id="L431">		this.linkArrow = linkArrow;</span>
+<span class="fc" id="L432">	}</span>
 
 	public final boolean isInverted() {
-<span class="nc" id="L427">		return inverted;</span>
+<span class="nc" id="L435">		return inverted;</span>
 	}
 
 	public boolean hasEntryPoint() {
-<span class="nc bnc" id="L431" title="All 4 branches missed.">		return (getEntity1().isGroup() == false &amp;&amp; getEntity1().getEntityPosition() != EntityPosition.NORMAL)</span>
-<span class="nc bnc" id="L432" title="All 4 branches missed.">				|| (getEntity2().isGroup() == false &amp;&amp; getEntity2().getEntityPosition() != EntityPosition.NORMAL);</span>
+<span class="nc bnc" id="L439" title="All 4 branches missed.">		return (getEntity1().isGroup() == false &amp;&amp; getEntity1().getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="nc bnc" id="L440" title="All 4 branches missed.">				|| (getEntity2().isGroup() == false &amp;&amp; getEntity2().getEntityPosition() != EntityPosition.NORMAL);</span>
 	}
 
 	public boolean hasTwoEntryPointsSameContainer() {
-<span class="nc bnc" id="L436" title="All 4 branches missed.">		return getEntity1().isGroup() == false &amp;&amp; getEntity2().isGroup() == false</span>
-<span class="nc bnc" id="L437" title="All 2 branches missed.">				&amp;&amp; getEntity1().getEntityPosition() != EntityPosition.NORMAL</span>
-<span class="nc bnc" id="L438" title="All 2 branches missed.">				&amp;&amp; getEntity2().getEntityPosition() != EntityPosition.NORMAL</span>
-<span class="nc bnc" id="L439" title="All 2 branches missed.">				&amp;&amp; getEntity1().getParentContainer() == getEntity2().getParentContainer();</span>
+<span class="nc bnc" id="L444" title="All 4 branches missed.">		return getEntity1().isGroup() == false &amp;&amp; getEntity2().isGroup() == false</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">				&amp;&amp; getEntity1().getEntityPosition() != EntityPosition.NORMAL</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">				&amp;&amp; getEntity2().getEntityPosition() != EntityPosition.NORMAL</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">				&amp;&amp; getEntity1().getParentContainer() == getEntity2().getParentContainer();</span>
 	}
 
 	public Url getUrl() {
-<span class="fc" id="L443">		return url;</span>
+<span class="fc" id="L451">		return url;</span>
 	}
 
 	public void setUrl(Url url) {
-<span class="nc" id="L447">		this.url = url;</span>
-<span class="nc" id="L448">	}</span>
+<span class="nc" id="L455">		this.url = url;</span>
+<span class="nc" id="L456">	}</span>
 
 	public boolean isHidden() {
-<span class="pc bpc" id="L451" title="3 of 6 branches missed.">		return hidden || cl1.isHidden() || cl2.isHidden();</span>
+<span class="pc bpc" id="L459" title="3 of 6 branches missed.">		return hidden || cl1.isHidden() || cl2.isHidden();</span>
 	}
 
 	public boolean sameConnections(Link other) {
-<span class="fc bfc" id="L455" title="All 4 branches covered.">		if (this.cl1 == other.cl1 &amp;&amp; this.cl2 == other.cl2)</span>
-<span class="fc" id="L456">			return true;</span>
+<span class="fc bfc" id="L463" title="All 4 branches covered.">		if (this.cl1 == other.cl1 &amp;&amp; this.cl2 == other.cl2)</span>
+<span class="fc" id="L464">			return true;</span>
 
-<span class="pc bpc" id="L458" title="1 of 4 branches missed.">		if (this.cl1 == other.cl2 &amp;&amp; this.cl2 == other.cl1)</span>
-<span class="nc" id="L459">			return true;</span>
+<span class="pc bpc" id="L466" title="1 of 4 branches missed.">		if (this.cl1 == other.cl2 &amp;&amp; this.cl2 == other.cl1)</span>
+<span class="nc" id="L467">			return true;</span>
 
-<span class="fc" id="L461">		return false;</span>
+<span class="fc" id="L469">		return false;</span>
 	}
 
 	public boolean doesTouch(Link other) {
-<span class="nc bnc" id="L465" title="All 2 branches missed.">		if (this.cl1 == other.cl1)</span>
-<span class="nc" id="L466">			return true;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">		if (this.cl1 == other.cl1)</span>
+<span class="nc" id="L474">			return true;</span>
 
-<span class="nc bnc" id="L468" title="All 2 branches missed.">		if (this.cl1 == other.cl2)</span>
-<span class="nc" id="L469">			return true;</span>
+<span class="nc bnc" id="L476" title="All 2 branches missed.">		if (this.cl1 == other.cl2)</span>
+<span class="nc" id="L477">			return true;</span>
 
-<span class="nc bnc" id="L471" title="All 2 branches missed.">		if (this.cl2 == other.cl1)</span>
-<span class="nc" id="L472">			return true;</span>
+<span class="nc bnc" id="L479" title="All 2 branches missed.">		if (this.cl2 == other.cl1)</span>
+<span class="nc" id="L480">			return true;</span>
 
-<span class="nc bnc" id="L474" title="All 2 branches missed.">		if (this.cl2 == other.cl2)</span>
-<span class="nc" id="L475">			return true;</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">		if (this.cl2 == other.cl2)</span>
+<span class="nc" id="L483">			return true;</span>
 
-<span class="nc" id="L477">		return false;</span>
+<span class="nc" id="L485">		return false;</span>
 	}
 
 	public boolean isAutolink() {
-<span class="nc bnc" id="L481" title="All 2 branches missed.">		return cl1 == cl2;</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">		return cl1 == cl2;</span>
 	}
 
 	public boolean isRemoved() {
-<span class="fc" id="L485">		final Stereotype stereotype = getStereotype();</span>
-<span class="pc bpc" id="L486" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; cucaDiagram.isStereotypeRemoved(stereotype))</span>
-<span class="nc" id="L487">			return true;</span>
+<span class="fc" id="L493">		final Stereotype stereotype = getStereotype();</span>
+<span class="pc bpc" id="L494" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; cucaDiagram.isStereotypeRemoved(stereotype))</span>
+<span class="nc" id="L495">			return true;</span>
 
-<span class="pc bpc" id="L489" title="2 of 4 branches missed.">		return cl1.isRemoved() || cl2.isRemoved();</span>
+<span class="pc bpc" id="L497" title="2 of 4 branches missed.">		return cl1.isRemoved() || cl2.isRemoved();</span>
 	}
 
 	public boolean hasUrl() {
-<span class="nc bnc" id="L493" title="All 4 branches missed.">		if (Display.isNull(linkArg.getLabel()) == false &amp;&amp; linkArg.getLabel().hasUrl())</span>
-<span class="nc" id="L494">			return true;</span>
+<span class="nc bnc" id="L501" title="All 4 branches missed.">		if (Display.isNull(linkArg.getLabel()) == false &amp;&amp; linkArg.getLabel().hasUrl())</span>
+<span class="nc" id="L502">			return true;</span>
 
-<span class="nc bnc" id="L496" title="All 2 branches missed.">		return getUrl() != null;</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">		return getUrl() != null;</span>
 	}
 
 	public String getSametail() {
-<span class="fc" id="L500">		return sametail;</span>
+<span class="fc" id="L508">		return sametail;</span>
 	}
 
 	public void setSametail(String sametail) {
-<span class="nc" id="L504">		this.sametail = sametail;</span>
-<span class="nc" id="L505">	}</span>
+<span class="nc" id="L512">		this.sametail = sametail;</span>
+<span class="nc" id="L513">	}</span>
 
 	public void setPortMembers(String port1, String port2) {
-<span class="fc" id="L508">		this.port1 = port1;</span>
-<span class="fc" id="L509">		this.port2 = port2;</span>
-<span class="pc bpc" id="L510" title="1 of 2 branches missed.">		if (port1 != null)</span>
-<span class="nc" id="L511">			cl1.addPortShortName(port1);</span>
+<span class="fc" id="L516">		this.port1 = port1;</span>
+<span class="fc" id="L517">		this.port2 = port2;</span>
+<span class="pc bpc" id="L518" title="1 of 2 branches missed.">		if (port1 != null)</span>
+<span class="nc" id="L519">			cl1.addPortShortName(port1);</span>
 
-<span class="pc bpc" id="L513" title="1 of 2 branches missed.">		if (port2 != null)</span>
-<span class="nc" id="L514">			cl2.addPortShortName(port2);</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		if (port2 != null)</span>
+<span class="nc" id="L522">			cl2.addPortShortName(port2);</span>
 
-<span class="fc" id="L516">	}</span>
+<span class="fc" id="L524">	}</span>
 
 	private LinkConstraint linkConstraint;
 
 	public void setLinkConstraint(LinkConstraint linkConstraint) {
-<span class="nc" id="L521">		this.linkConstraint = linkConstraint;</span>
-<span class="nc" id="L522">	}</span>
+<span class="nc" id="L529">		this.linkConstraint = linkConstraint;</span>
+<span class="nc" id="L530">	}</span>
 
 	public final LinkConstraint getLinkConstraint() {
-<span class="nc" id="L525">		return linkConstraint;</span>
+<span class="nc" id="L533">		return linkConstraint;</span>
 	}
 
 	private LineLocation codeLine;
 
 	public String getCodeLine() {
-<span class="nc bnc" id="L531" title="All 2 branches missed.">		if (codeLine == null)</span>
-<span class="nc" id="L532">			return null;</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">		if (codeLine == null)</span>
+<span class="nc" id="L540">			return null;</span>
 
-<span class="nc" id="L534">		return &quot;&quot; + codeLine.getPosition();</span>
+<span class="nc" id="L542">		return &quot;&quot; + codeLine.getPosition();</span>
 	}
 
 	public void setCodeLine(LineLocation location) {
-<span class="fc" id="L538">		this.codeLine = location;</span>
-<span class="fc" id="L539">	}</span>
+<span class="fc" id="L546">		this.codeLine = location;</span>
+<span class="fc" id="L547">	}</span>
 
 	public void setStereotype(Stereotype stereotype) {
-<span class="nc" id="L542">		this.stereotype = stereotype;</span>
-<span class="nc" id="L543">	}</span>
+<span class="nc" id="L550">		this.stereotype = stereotype;</span>
+<span class="nc" id="L551">	}</span>
 
 	public final Stereotype getStereotype() {
-<span class="fc" id="L546">		return stereotype;</span>
+<span class="fc" id="L554">		return stereotype;</span>
 	}
 
 	public final LinkArg getLinkArg() {
-<span class="fc" id="L550">		return linkArg;</span>
+<span class="fc" id="L558">		return linkArg;</span>
 	}
 
 	public final VisibilityModifier getVisibilityModifier() {
-<span class="fc" id="L554">		return getLinkArg().getVisibilityModifier();</span>
+<span class="fc" id="L562">		return getLinkArg().getVisibilityModifier();</span>
 	}
 
 	public final boolean isOpale() {
-<span class="fc" id="L558">		return opale;</span>
+<span class="fc" id="L566">		return opale;</span>
 	}
 
 	public final boolean hasKal1() {
-<span class="nc bnc" id="L562" title="All 4 branches missed.">		return this.linkArg.getKal1() != null &amp;&amp; !this.linkArg.getKal1().isEmpty();</span>
+<span class="nc bnc" id="L570" title="All 4 branches missed.">		return this.linkArg.getKal1() != null &amp;&amp; !this.linkArg.getKal1().isEmpty();</span>
 	}
 
 	public final boolean hasKal2() {
-<span class="nc bnc" id="L566" title="All 4 branches missed.">		return this.linkArg.getKal2() != null &amp;&amp; !this.linkArg.getKal2().isEmpty();</span>
+<span class="nc bnc" id="L574" title="All 4 branches missed.">		return this.linkArg.getKal2() != null &amp;&amp; !this.linkArg.getKal2().isEmpty();</span>
 	}
 
 	public LineLocation getLocation() {
-<span class="nc" id="L570">		return location;</span>
+<span class="nc" id="L578">		return location;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

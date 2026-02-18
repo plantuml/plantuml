@@ -192,131 +192,153 @@ class MyElkDrawing extends AbstractTextBlock {
 <span class="nc" id="L192">		final TextBlock label = getLabel(ug.getStringBounder(), link);</span>
 <span class="nc" id="L193">		final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);</span>
 <span class="nc" id="L194">		final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);</span>
-<span class="nc" id="L195">		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, quantifier1,</span>
-<span class="nc" id="L196">				quantifier2, magicY2, elkClusters, UTranslate.point(translate), nodeImages);</span>
-<span class="nc" id="L197">		elkPath.drawU(ug);</span>
-<span class="nc" id="L198">	}</span>
+<span class="nc" id="L195">		final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);</span>
+<span class="nc" id="L196">		final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		final TextBlock tailRole = quantifier1 != null ? role1 : null;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		final TextBlock headRole = quantifier2 != null ? role2 : null;</span>
+<span class="nc" id="L201">		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, tailLabel,</span>
+				headLabel, tailRole, headRole,
+<span class="nc" id="L203">				magicY2, elkClusters, UTranslate.point(translate), nodeImages);</span>
+<span class="nc" id="L204">		elkPath.drawU(ug);</span>
+<span class="nc" id="L205">	}</span>
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-<span class="nc" id="L201">		final SName styleName = skinParam.getUmlDiagramType().getStyleName();</span>
+<span class="nc" id="L208">		final SName styleName = skinParam.getUmlDiagramType().getStyleName();</span>
 
-<span class="nc" id="L203">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
-<span class="nc" id="L204">				.getMergedStyle(link.getStyleBuilder());</span>
-<span class="nc" id="L205">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L210">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
+<span class="nc" id="L211">				.getMergedStyle(link.getStyleBuilder());</span>
+<span class="nc" id="L212">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 	}
 
 	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-<span class="nc" id="L210">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L212">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L217">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L219">			result = result.withTOBECHANGED(stereotype);</span>
 
-<span class="nc" id="L214">		return result;</span>
+<span class="nc" id="L221">		return result;</span>
 	}
 
 	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
-<span class="nc" id="L219">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
+<span class="nc" id="L226">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
 
-<span class="nc" id="L221">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L228">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
 	}
 
 	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
-<span class="nc" id="L225">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (visibilityModifier != null) {</span>
-<span class="nc" id="L227">			final Rose rose = new Rose();</span>
-<span class="nc" id="L228">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
-<span class="nc" id="L229">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
-<span class="nc" id="L230">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
-<span class="nc" id="L231">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L232">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (visibilityModifier != null) {</span>
+<span class="nc" id="L234">			final Rose rose = new Rose();</span>
+<span class="nc" id="L235">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
+<span class="nc" id="L236">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
+<span class="nc" id="L237">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
+<span class="nc" id="L238">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L233">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
-<span class="nc" id="L234">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
+<span class="nc" id="L240">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
+<span class="nc" id="L241">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
 	}
 
 	private TextBlock getLabel(StringBounder stringBounder, Link link) {
-<span class="nc" id="L238">		ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L239">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
+<span class="nc" id="L245">		ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L246">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
 
 		// final FontConfiguration labelFont =
 		// style.getFontConfiguration(skinParam.getIHtmlColorSet());
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-<span class="nc" id="L246">		final UmlDiagramType type = skinParam.getUmlDiagramType();</span>
-<span class="nc" id="L247">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
+<span class="nc" id="L253">		final UmlDiagramType type = skinParam.getUmlDiagramType();</span>
+<span class="nc" id="L254">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
 
 		TextBlock labelOnly;
 		// toto2
-<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
-<span class="nc" id="L252">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
+<span class="nc" id="L259">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 //			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {
 //				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 //			}
 
 		} else {
-<span class="nc" id="L258">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
-<span class="nc" id="L259">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
+<span class="nc" id="L265">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
+<span class="nc" id="L266">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
 			final TextBlock block;
 			// if (hasSeveralGuideLines)
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-<span class="nc" id="L265">			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),</span>
+<span class="nc" id="L272">			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),</span>
 					CreoleMode.SIMPLE_LINE, null, null);
 
-<span class="nc" id="L268">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
+<span class="nc" id="L275">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
 //			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {
 //				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 //			}
 
 		}
 
-<span class="nc" id="L275">		final CucaNote note = link.getNote();</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">		if (note == null) {</span>
-<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
-<span class="nc" id="L278">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
-<span class="nc" id="L279">			return labelOnly;</span>
+<span class="nc" id="L282">		final CucaNote note = link.getNote();</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">		if (note == null) {</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
+<span class="nc" id="L285">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
+<span class="nc" id="L286">			return labelOnly;</span>
 		}
-<span class="nc" id="L281">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
-<span class="nc" id="L282">				link.getStyleBuilder());</span>
+<span class="nc" id="L288">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
+<span class="nc" id="L289">				link.getStyleBuilder());</span>
 
-<span class="nc bnc" id="L284" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
-<span class="nc" id="L285">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
-<span class="nc bnc" id="L286" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
-<span class="nc" id="L287">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
-<span class="nc bnc" id="L288" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
-<span class="nc" id="L289">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
+<span class="nc" id="L292">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
+<span class="nc" id="L294">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
+<span class="nc" id="L296">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
 		else
-<span class="nc" id="L291">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L298">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
 
 	}
 
 	@DuplicateCode(reference = &quot;CucaDiagramFile&quot;)
 	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
-<span class="nc bnc" id="L297" title="All 2 branches missed.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
-<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (tmp == null)</span>
-<span class="nc" id="L299">			return null;</span>
-
-<span class="nc" id="L301">		final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L302">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
-<span class="nc" id="L303">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
-<span class="nc" id="L304">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (tmp == null)</span>
 <span class="nc" id="L306">			return null;</span>
 
-<span class="nc" id="L308">		return label;</span>
+<span class="nc" id="L308">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L309">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
+<span class="nc" id="L310">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
+<span class="nc" id="L311">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L313">			return null;</span>
+
+<span class="nc" id="L315">		return label;</span>
+	}
+
+	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		final String role = n == 1 ? link.getRole1() : link.getRole2();</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">		if (role == null)</span>
+<span class="nc" id="L321">			return null;</span>
+
+<span class="nc" id="L323">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L324">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
+<span class="nc" id="L325">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,</span>
+<span class="nc" id="L326">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L328">			return null;</span>
+
+<span class="nc" id="L330">		return label;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (minMax == null)</span>
-<span class="nc" id="L313">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">		if (minMax == null)</span>
+<span class="nc" id="L335">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L315">		return minMax.getDimension();</span>
+<span class="nc" id="L337">		return minMax.getDimension();</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="nc" id="L319">		return null;</span>
+<span class="nc" id="L341">		return null;</span>
 	}
 
 }
