@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
@@ -97,31 +100,38 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();
 
-		HColor extraLine = null;
-
-		double deltaLineY = 0;
-		String textDecoration = null;
+		List<HColor> extraLines = new ArrayList<>();
+		List<Double> deltaLineYs = new ArrayList<>();
+		
+		StringBuilder decorations = new StringBuilder();
+		
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
 				&& fontConfiguration.getUnderlineStroke().getThickness() > 0) {
-			if (fontConfiguration.getExtendedColor() == null)
-				textDecoration = "underline";
-			else {
-				extraLine = fontConfiguration.getExtendedColor();
-				deltaLineY = font.getSize2D() / 14.0;
+			if (fontConfiguration.getExtendedColor() == null) {
+				decorations.append("underline ");
+			} else {
+				extraLines.add(fontConfiguration.getExtendedColor());
+				deltaLineYs.add(font.getSize2D() / 14.0);
 			}
-		} else if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			if (fontConfiguration.getExtendedColor() == null)
-				textDecoration = "line-through";
-			else {
-				extraLine = fontConfiguration.getExtendedColor();
-				deltaLineY = -font.getSize2D() / 4.0;
+		}
+		
+		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
+			if (fontConfiguration.getExtendedColor() == null) {
+				decorations.append("line-through ");
+			} else {
+				extraLines.add(fontConfiguration.getExtendedColor());
+				deltaLineYs.add(-font.getSize2D() / 4.0);
 			}
-		} else if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
+		}
+		
+		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			// Beware that some current SVG implementations do not render the wave properly
 			// (e.g. Chrome just draws a straight line)
 			// Works ok on Firefox 85.
-			textDecoration = "wavy underline";
+			decorations.append("wavy underline ");
 		}
+		
+		String textDecoration = decorations.length() > 0 ? decorations.toString().trim() : null;
 
 		String backColor = null;
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
@@ -145,10 +155,10 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
 				width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());
 
-		if (extraLine != null) {
-			svg.setStrokeColor(extraLine.toSvg(mapper));
+		for (int i = 0; i < extraLines.size(); i++) {
+			svg.setStrokeColor(extraLines.get(i).toSvg(mapper));
 			svg.setStrokeWidth(font.getSize2D() / 28.0, null);
-			svg.svgLine(x, y + deltaLineY, x + width, y + deltaLineY, 0);
+			svg.svgLine(x, y + deltaLineYs.get(i), x + width, y + deltaLineYs.get(i), 0);
 		}
 
 	}
