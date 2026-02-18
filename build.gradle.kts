@@ -1,10 +1,3 @@
-//    permits to start the build setting the javac release parameter, no parameter means build for java8:
-// gradle clean build -x javaDoc -PjavacRelease=8
-// gradle clean build -x javaDoc -PjavacRelease=17
-//    also supported is to build first, with java17, then switch the java version, and run the test with java8:
-// gradle clean build -x javaDoc -x test
-// gradle test
-
 import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.jar.JarFile
@@ -16,6 +9,9 @@ println("Running build.gradle.kts")
 println(project.version)
 
 val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
+
+// When -Pfast is set, skip expensive steps like JavaScript minification
+val fastBuild = project.hasProperty("fast")
 
 plugins {
 	java
@@ -722,47 +718,71 @@ tasks.named<JavaCompile>("compileTeavmJava") {
 }
 
 // Task to minify JavaScript using Google Closure Compiler
-tasks.register<JavaExec>("minifyJavaScript") {
-	description = "Minifies classes.js using Google Closure Compiler"
-	group = "teavm"
-	
-	dependsOn("generateJavaScript")
-	
-	val inputFile = layout.buildDirectory.file("teavm/js/classes.js").get().asFile
-	val outputFile = layout.buildDirectory.file("teavm/js/classes.min.js").get().asFile
-	
-	inputs.file(inputFile)
-	outputs.file(outputFile)
-	
-	classpath = closureConfig
-	mainClass.set("com.google.javascript.jscomp.CommandLineRunner")
-	jvmArgs("-Xmx4g", "-XX:+UseParallelGC")
-	
-	args = listOf(
-		"--js", inputFile.absolutePath,
-		"--js_output_file", outputFile.absolutePath,
-		"--compilation_level", "SIMPLE",
-		"--language_out", "ECMASCRIPT_2015",
-		"--warning_level", "QUIET",
-		"--rewrite_polyfills", "false",
-		"--assume_function_wrapper", "true"
-	)
-	
-	doFirst {
-		println("Minifying JavaScript with Google Closure Compiler...")
-		println("Input:  ${inputFile.absolutePath}")
-		println("Output: ${outputFile.absolutePath}")
+// With -Pfast, simply copies classes.js to classes.min.js (skips minification)
+if (fastBuild) {
+	tasks.register<Copy>("minifyJavaScript") {
+		description = "Copies classes.js to classes.min.js (fast mode, no minification)"
+		group = "teavm"
+
+		dependsOn("generateJavaScript")
+
+		val inputFile = layout.buildDirectory.file("teavm/js/classes.js")
+		val outputDir = layout.buildDirectory.dir("teavm/js")
+
+		inputs.file(inputFile)
+		outputs.file(outputDir.map { it.file("classes.min.js") })
+
+		from(inputFile)
+		into(outputDir)
+		rename { "classes.min.js" }
+
+		doFirst {
+			println("Fast mode: copying classes.js to classes.min.js (skipping minification)")
+		}
 	}
+} else {
+	tasks.register<JavaExec>("minifyJavaScript") {
+		description = "Minifies classes.js using Google Closure Compiler"
+		group = "teavm"
 	
-	doLast {
-		val originalSize = inputFile.length() / 1024
-		val minifiedSize = outputFile.length() / 1024
-		val ratio = if (originalSize > 0) (100 - (minifiedSize * 100 / originalSize)) else 0
-		println("")
-		println("Google Closure Compiler minification complete! 🗜")
-		println("  Original:  $originalSize KB")
-		println("  Minified:  $minifiedSize KB")
-		println("  Reduction: $ratio%")
+		dependsOn("generateJavaScript")
+	
+		val inputFile = layout.buildDirectory.file("teavm/js/classes.js").get().asFile
+		val outputFile = layout.buildDirectory.file("teavm/js/classes.min.js").get().asFile
+	
+		inputs.file(inputFile)
+		outputs.file(outputFile)
+	
+		classpath = closureConfig
+		mainClass.set("com.google.javascript.jscomp.CommandLineRunner")
+		jvmArgs("-Xmx4g", "-XX:+UseParallelGC")
+	
+		args = listOf(
+			"--js", inputFile.absolutePath,
+			"--js_output_file", outputFile.absolutePath,
+			"--compilation_level", "SIMPLE",
+			"--language_out", "ECMASCRIPT_2015",
+			"--warning_level", "QUIET",
+			"--rewrite_polyfills", "false",
+			"--assume_function_wrapper", "true"
+		)
+	
+		doFirst {
+			println("Minifying JavaScript with Google Closure Compiler...")
+			println("Input:  ${inputFile.absolutePath}")
+			println("Output: ${outputFile.absolutePath}")
+		}
+	
+		doLast {
+			val originalSize = inputFile.length() / 1024
+			val minifiedSize = outputFile.length() / 1024
+			val ratio = if (originalSize > 0) (100 - (minifiedSize * 100 / originalSize)) else 0
+			println("")
+			println("Google Closure Compiler minification complete! 🗜")
+			println("  Original:  $originalSize KB")
+			println("  Minified:  $minifiedSize KB")
+			println("  Reduction: $ratio%")
+		}
 	}
 }
 
