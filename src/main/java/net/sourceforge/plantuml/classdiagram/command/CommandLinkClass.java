@@ -98,7 +98,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						RegexLeaf.spaceOneOrMore() //
 				)), //
 				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
-				new RegexOptional(new RegexLeaf(1, "FIRST_ROLE", "/([%pLN_]+|[%g][^%g]+[%g])")), //
+				new RegexOptional(new RegexLeaf(1, "FIRST_ROLE", "/([^%s]+|[%g][^%g]+[%g])")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
@@ -115,7 +115,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				RegexLeaf.spaceZeroOrMore(), //
 
 				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
-				new RegexOptional(new RegexLeaf(1, "SECOND_ROLE", "/([%pLN_]+|[%g][^%g]+[%g])")), //
+				new RegexOptional(new RegexLeaf(1, "SECOND_ROLE", "/([^%s]+|[%g][^%g]+[%g])")), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("[\\[]"), //
