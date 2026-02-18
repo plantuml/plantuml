@@ -76,8 +76,11 @@ public class PathSystem {
 	
 	// ::uncomment when __TEAVM__
 //	public InputStream getTeaVMInputStream(String path) {
-//		TeaVmScriptLoader.loadOnceSync("c4.js");
-//		JSObject data = TeaVmScriptLoader.getRaw("c4", "stdlib/c4/info.puml");
+// 		final String full = path.substring(1, path.length() - 1).toLowerCase();
+// 		final String libname = full.substring(0, full.indexOf('/'));
+// 		final String filepath = full.substring(libname.length() + 1);
+//		TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+//		JSObject data = TeaVmScriptLoader.getRaw(libname, filepath);
 //		if (data == null)
 //			return null;
 //		String content = TeaVmScriptLoader.joinLines(data);

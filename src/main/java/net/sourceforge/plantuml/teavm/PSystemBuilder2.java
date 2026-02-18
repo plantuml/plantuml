@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -113,10 +114,12 @@ public class PSystemBuilder2 {
 		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));
 		timLoader.load(rawSource);
 		System.err.println("load ok");
-		final List<StringLocated> resultList = timLoader.getResultList();
+		List<StringLocated> tmp = timLoader.getResultList();
+		tmp = Jaws.expands0(tmp);
+		tmp = Jaws.expandsJawsForPreprocessor(tmp);
 		// System.err.println("resultList=" + resultList);
 
-		final UmlSource source = UmlSource.create(resultList, false);
+		final UmlSource source = UmlSource.create(tmp, false);
 		final DiagramType diagramType = source.getDiagramType();
 
 		final PreprocessingArtifact preprocessing = new PreprocessingArtifact();
