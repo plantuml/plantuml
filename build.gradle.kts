@@ -1,10 +1,3 @@
-//    permits to start the build setting the javac release parameter, no parameter means build for java8:
-// gradle clean build -x javaDoc -PjavacRelease=8
-// gradle clean build -x javaDoc -PjavacRelease=17
-//    also supported is to build first, with java17, then switch the java version, and run the test with java8:
-// gradle clean build -x javaDoc -x test
-// gradle test
-
 import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.jar.JarFile
@@ -17,13 +10,16 @@ println(project.version)
 
 val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
+// When -Pfast is set, skip expensive steps like JavaScript minification
+val fastBuild = project.hasProperty("fast")
+
 plugins {
 	java
 	`maven-publish`
 	signing
-    eclipse
+	eclipse
 	jacoco
-	id("com.gorylenko.gradle-git-properties") version "2.5.7"
+	alias(libs.plugins.gorylenko.gradle.git.properties)
 //	alias(libs.plugins.adarshr.test.logger)
 }
 
@@ -58,6 +54,8 @@ val teavmCompileConfig by configurations.creating {
 	}
 }
 
+// Configuration for Google Closure Compiler
+val closureConfig by configurations.creating
 
 dependencies {
 	compileOnly(libs.ant)
@@ -90,6 +88,8 @@ dependencies {
 	// TeaVM dependencies for Java to JavaScript compilation (Java 11+ only)
 	teavmCompileConfig(libs.teavm.jso.apis)
 	teavmCompileConfig(libs.teavm.jso)
+
+	closureConfig(libs.closure.compiler)
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -405,9 +405,11 @@ signing {
 	}
 }
 
-// Site generation task - creates a comprehensive project site
-tasks.register("site") {
-	description = "Generates project site with documentation, reports, test results and demo."
+// Site assembly task - creates the site from pre-existing build outputs
+// Use 'site' for a full build (including TeaVM), or 'siteAssemble' if
+// TeaVM JS files are already present in build/teavm/js/ (e.g. from CI artifact)
+tasks.register("siteAssemble") {
+	description = "Assembles project site from pre-existing build outputs (no TeaVM build)."
 	group = "documentation"
 	
 	val siteDir = layout.buildDirectory.dir("site").get().asFile
@@ -418,12 +420,11 @@ tasks.register("site") {
 		tasks.test,
 		tasks.jacocoTestReport,
 		"jdepend",
-		"jdependHtml",
-		// Demo.
-		"teavm"
+		"jdependHtml"
 	)
 	
 	doLast {
+		println("::group::[SITE]")
 		println("[SITE] Starting site generation...")
 		println("[SITE] siteDir = ${siteDir.absolutePath}")
 		siteDir.mkdirs()
@@ -505,7 +506,8 @@ tasks.register("site") {
 		if (classesJs.exists()) {
 			println("[SITE] classes.js size: ${classesJs.length()} bytes")
 		}
-	
+		println("::endgroup::")
+
 		println("========================================")
 		println("Project site generated successfully!")
 		println("========================================")
@@ -522,6 +524,14 @@ tasks.register("site") {
 	}
 }
 
+// Full site generation task (builds TeaVM + assembles site)
+tasks.register("site") {
+	description = "Generates complete project site including TeaVM JS build."
+	group = "documentation"
+	
+	dependsOn("teavm", "siteAssemble")
+}
+
 // ============================================
 // CompilationInfo - Git commit & timestamp injection
 // ============================================
@@ -534,13 +544,16 @@ tasks.named("generateGitProperties") {
 	doLast {
 		val propsFile = layout.buildDirectory.file("resources/main/git.properties").get().asFile
 		if (propsFile.exists()) {
+      println("::group::[Git Properties]")
 			println("----- git.properties -----")
 			propsFile.readLines()
 				.sorted()
 				.forEach { println(it) }
 			println("--------------------------")
+      println("::endgroup::")
 		} else {
 			println("git.properties not found")
+      println("::warning file=git.properties,title=File not found::")
 		}
 	}
 }
@@ -704,6 +717,75 @@ tasks.named<JavaCompile>("compileTeavmJava") {
 	dependsOn(generateTeavmEmbeddedResources)
 }
 
+// Task to minify JavaScript using Google Closure Compiler
+// With -Pfast, simply copies classes.js to classes.min.js (skips minification)
+if (fastBuild) {
+	tasks.register<Copy>("minifyJavaScript") {
+		description = "Copies classes.js to classes.min.js (fast mode, no minification)"
+		group = "teavm"
+
+		dependsOn("generateJavaScript")
+
+		val inputFile = layout.buildDirectory.file("teavm/js/classes.js")
+		val outputDir = layout.buildDirectory.dir("teavm/js")
+
+		inputs.file(inputFile)
+		outputs.file(outputDir.map { it.file("classes.min.js") })
+
+		from(inputFile)
+		into(outputDir)
+		rename { "classes.min.js" }
+
+		doFirst {
+			println("Fast mode: copying classes.js to classes.min.js (skipping minification)")
+		}
+	}
+} else {
+	tasks.register<JavaExec>("minifyJavaScript") {
+		description = "Minifies classes.js using Google Closure Compiler"
+		group = "teavm"
+	
+		dependsOn("generateJavaScript")
+	
+		val inputFile = layout.buildDirectory.file("teavm/js/classes.js").get().asFile
+		val outputFile = layout.buildDirectory.file("teavm/js/classes.min.js").get().asFile
+	
+		inputs.file(inputFile)
+		outputs.file(outputFile)
+	
+		classpath = closureConfig
+		mainClass.set("com.google.javascript.jscomp.CommandLineRunner")
+		jvmArgs("-Xmx4g", "-XX:+UseParallelGC")
+	
+		args = listOf(
+			"--js", inputFile.absolutePath,
+			"--js_output_file", outputFile.absolutePath,
+			"--compilation_level", "SIMPLE",
+			"--language_out", "ECMASCRIPT_2015",
+			"--warning_level", "QUIET",
+			"--rewrite_polyfills", "false",
+			"--assume_function_wrapper", "true"
+		)
+	
+		doFirst {
+			println("Minifying JavaScript with Google Closure Compiler...")
+			println("Input:  ${inputFile.absolutePath}")
+			println("Output: ${outputFile.absolutePath}")
+		}
+	
+		doLast {
+			val originalSize = inputFile.length() / 1024
+			val minifiedSize = outputFile.length() / 1024
+			val ratio = if (originalSize > 0) (100 - (minifiedSize * 100 / originalSize)) else 0
+			println("")
+			println("Google Closure Compiler minification complete! 🗜")
+			println("  Original:  $originalSize KB")
+			println("  Minified:  $minifiedSize KB")
+			println("  Reduction: $ratio%")
+		}
+	}
+}
+
 // Task to compile Java to JavaScript using TeaVM
 tasks.register<JavaExec>("generateJavaScript") {
 	description = "Compiles Java to JavaScript using TeaVM"
@@ -735,6 +817,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 	}
 	
 	doLast {
+		println("::group::[TEAVM]")
 		println("[TEAVM] JavaScript generation complete!")
 		println("[TEAVM] Checking output directory: ${outputDir.absolutePath}")
 		println("[TEAVM] outputDir.exists() = ${outputDir.exists()}")
@@ -744,6 +827,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 		}
 		val classesJs = file("${outputDir.absolutePath}/classes.js")
 		println("[TEAVM] classes.js exists: ${classesJs.exists()}")
+		println("::endgroup::")
 		if (!classesJs.exists()) {
 			println("[TEAVM] WARNING: classes.js was NOT generated!")
 		}
@@ -755,20 +839,19 @@ tasks.register("teavm") {
 	description = "Prepares TeaVM JS version with HTML file"
 	group = "teavm"
 	
-	dependsOn("generateJavaScript")
+	dependsOn("minifyJavaScript")
 	finalizedBy("teavmJavadoc")
 	
 	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
 	
 	doLast {
-		// Copy the HTML template and Viz.js library (without erasing existing files)
+		// Copy the HTML template and all js files (without erasing existing files)
 		copy {
-			from("src/main/resources/teavm/index.html")
-			from("src/main/resources/teavm/viz-global.js")
-			from("src/main/resources/teavm/c4.js")
-			into(outputDir)
-		}
-		
+		    from("src/main/resources/teavm") {
+		        include("index.html", "*.js")
+		    }
+		    into(outputDir)
+		}		
 		println("")
 		println("======================")
 		println("TeaVM Ready!  --> ${outputDir.absolutePath}/index.html")
@@ -823,7 +906,7 @@ tasks.register<Zip>("teavmZip") {
 	
 	// Use lazy evaluation to ensure files are read after teavm task completes
 	from(layout.buildDirectory.dir("teavm/js")) {
-		include("classes.js", "index.html", "viz-global.js")
+		include("*.js", "*.html")
 	}
 	
 	destinationDirectory.set(layout.buildDirectory.dir("libs"))

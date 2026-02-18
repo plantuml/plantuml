@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import net.sourceforge.plantuml.klimt.PngTitler;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.png.PngTitler;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class SequenceDiagramArea {

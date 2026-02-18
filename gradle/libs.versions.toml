@@ -7,9 +7,11 @@
 ant                 = "1.10.15"
 assertj             = "3.27.7"
 batik               = "1.19"
+closure-compiler    = "v20260216"
 elk                 = "0.10.0"
 fop                 = "2.11"
 glytching-junit-ext = "2.6.0"
+gorylenko-gradle-git-properties = "2.5.7"
 graalvm-native      = "0.11.4"
 jdepend             = "2.9.1"
 jlatexmath          = "1.0.7"
@@ -27,6 +29,7 @@ teavm               = "0.13.0"
 ant                         = { module = "org.apache.ant:ant", version.ref = "ant" }
 assertj-core                = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 batik-all                   = { module = "org.apache.xmlgraphics:batik-all", version.ref = "batik" }
+closure-compiler            = { module = "com.google.javascript:closure-compiler", version.ref = "closure-compiler" }
 elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
 elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
@@ -50,4 +53,5 @@ teavm-jso                   = { module = "org.teavm:teavm-jso", version.ref = "t
 
 [plugins]
 adarshr-test-logger = { id = "com.adarshr.test-logger", version.ref = "adarshr-test-logger" }
+gorylenko-gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "gorylenko-gradle-git-properties" }
 graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }

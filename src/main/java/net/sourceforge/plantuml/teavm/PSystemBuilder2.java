@@ -49,9 +49,11 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
+import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -60,6 +62,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -83,6 +86,7 @@ public class PSystemBuilder2 {
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
 		factories.add(new PSystemVersionFactory());
+		// factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new NwDiagramFactory(DiagramType.UML));
@@ -93,6 +97,8 @@ public class PSystemBuilder2 {
 		factories.add(new PacketDiagramFactory());
 		factories.add(new JsonDiagramFactory());
 		factories.add(new YamlDiagramFactory());
+		factories.add(new PSystemEbnfFactory());
+		factories.add(new PSystemRegexFactory());
 	}
 
 	public Diagram createDiagram(String[] split) {
@@ -108,10 +114,12 @@ public class PSystemBuilder2 {
 		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));
 		timLoader.load(rawSource);
 		System.err.println("load ok");
-		final List<StringLocated> resultList = timLoader.getResultList();
+		List<StringLocated> tmp = timLoader.getResultList();
+		tmp = Jaws.expands0(tmp);
+		tmp = Jaws.expandsJawsForPreprocessor(tmp);
 		// System.err.println("resultList=" + resultList);
 
-		final UmlSource source = UmlSource.create(resultList, false);
+		final UmlSource source = UmlSource.create(tmp, false);
 		final DiagramType diagramType = source.getDiagramType();
 
 		final PreprocessingArtifact preprocessing = new PreprocessingArtifact();

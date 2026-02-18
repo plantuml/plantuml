@@ -57,6 +57,11 @@ public class I18n {
 	 *                                  null
 	 */
 	public static String getLocalizedValue(String language, String key, String defaultValue) {
+		// ::uncomment when __TEAVM__
+		// return defaultValue;
+		// ::done
+		
+		// ::comment when __TEAVM__
 		if (key == null)
 			throw new IllegalArgumentException("Key must not be null.");
 		if (defaultValue == null)
@@ -75,5 +80,6 @@ public class I18n {
 			// Return the default value if the translation is not found
 			return defaultValue;
 		}
+		// ::done
 	}
 }

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
 
 public class ConfigurationParser {
-	// ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 
 	private static final boolean DEBUG = false;
 

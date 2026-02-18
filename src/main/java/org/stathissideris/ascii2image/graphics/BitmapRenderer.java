@@ -47,7 +47,7 @@ import org.stathissideris.ascii2image.core.ShapeAreaComparator;
  * @author Efstathios Sideris
  */
 public class BitmapRenderer {
-	// ::remove folder when __CORE__
+	// ::remove folder when __TEAVM__
 
 	private static final boolean DEBUG = false;
 	private static final boolean DEBUG_LINES = false;

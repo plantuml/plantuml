@@ -1,2 +1,2 @@
 @echo off
-gradlew.bat clean teavm
+gradlew.bat clean teavm -Pfast
