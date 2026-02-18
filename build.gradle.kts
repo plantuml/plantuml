@@ -428,6 +428,7 @@ tasks.register("siteAssemble") {
 	)
 	
 	doLast {
+		println("::group::[SITE]")
 		println("[SITE] Starting site generation...")
 		println("[SITE] siteDir = ${siteDir.absolutePath}")
 		siteDir.mkdirs()
@@ -509,7 +510,8 @@ tasks.register("siteAssemble") {
 		if (classesJs.exists()) {
 			println("[SITE] classes.js size: ${classesJs.length()} bytes")
 		}
-	
+		println("::endgroup::")
+
 		println("========================================")
 		println("Project site generated successfully!")
 		println("========================================")
@@ -546,13 +548,16 @@ tasks.named("generateGitProperties") {
 	doLast {
 		val propsFile = layout.buildDirectory.file("resources/main/git.properties").get().asFile
 		if (propsFile.exists()) {
+      println("::group::[Git Properties]")
 			println("----- git.properties -----")
 			propsFile.readLines()
 				.sorted()
 				.forEach { println(it) }
 			println("--------------------------")
+      println("::endgroup::")
 		} else {
 			println("git.properties not found")
+      println("::warning file=git.properties,title=File not found::")
 		}
 	}
 }
@@ -754,7 +759,7 @@ tasks.register<JavaExec>("minifyJavaScript") {
 		val minifiedSize = outputFile.length() / 1024
 		val ratio = if (originalSize > 0) (100 - (minifiedSize * 100 / originalSize)) else 0
 		println("")
-		println("Google Closure Compiler minification complete!")
+		println("Google Closure Compiler minification complete! 🗜")
 		println("  Original:  $originalSize KB")
 		println("  Minified:  $minifiedSize KB")
 		println("  Reduction: $ratio%")
@@ -792,6 +797,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 	}
 	
 	doLast {
+		println("::group::[TEAVM]")
 		println("[TEAVM] JavaScript generation complete!")
 		println("[TEAVM] Checking output directory: ${outputDir.absolutePath}")
 		println("[TEAVM] outputDir.exists() = ${outputDir.exists()}")
@@ -801,6 +807,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 		}
 		val classesJs = file("${outputDir.absolutePath}/classes.js")
 		println("[TEAVM] classes.js exists: ${classesJs.exists()}")
+		println("::endgroup::")
 		if (!classesJs.exists()) {
 			println("[TEAVM] WARNING: classes.js was NOT generated!")
 		}
