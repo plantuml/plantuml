@@ -716,7 +716,7 @@ tasks.named<JavaCompile>("compileTeavmJava") {
 val closureConfig by configurations.creating
 
 dependencies {
-	closureConfig("com.google.javascript:closure-compiler:v20250820")
+	closureConfig("com.google.javascript:closure-compiler:v20260216")
 }
 
 // Task to minify JavaScript using Google Closure Compiler
