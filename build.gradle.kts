@@ -23,7 +23,7 @@ plugins {
 	signing
 	eclipse
 	jacoco
-	id("com.gorylenko.gradle-git-properties") version "2.5.7"
+	alias(libs.plugins.gorylenko.gradle.git.properties)
 //	alias(libs.plugins.adarshr.test.logger)
 }
 
