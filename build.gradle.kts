@@ -58,6 +58,8 @@ val teavmCompileConfig by configurations.creating {
 	}
 }
 
+// Configuration for Google Closure Compiler
+val closureConfig by configurations.creating
 
 dependencies {
 	compileOnly(libs.ant)
@@ -90,6 +92,8 @@ dependencies {
 	// TeaVM dependencies for Java to JavaScript compilation (Java 11+ only)
 	teavmCompileConfig(libs.teavm.jso.apis)
 	teavmCompileConfig(libs.teavm.jso)
+
+	closureConfig(libs.closure.compiler)
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -710,13 +714,6 @@ val generateTeavmEmbeddedResources by tasks.registering {
 
 tasks.named<JavaCompile>("compileTeavmJava") {
 	dependsOn(generateTeavmEmbeddedResources)
-}
-
-// Configuration for Google Closure Compiler
-val closureConfig by configurations.creating
-
-dependencies {
-	closureConfig("com.google.javascript:closure-compiler:v20250820")
 }
 
 // Task to minify JavaScript using Google Closure Compiler
