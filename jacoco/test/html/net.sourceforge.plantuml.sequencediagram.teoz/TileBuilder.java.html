@@ -155,16 +155,16 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">		} else if (ev instanceof Divider) {</span>
 <span class="nc" id="L156">			final Divider divider = (Divider) ev;</span>
 <span class="nc" id="L157">			tiles.add(new DividerTile(divider, tileArguments, currentY));</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		} else if (ev instanceof GroupingStart) {</span>
-<span class="nc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
+<span class="pc bfc" id="L158" title="All 2 branches covered.">		} else if (ev instanceof GroupingStart) {</span>
+<span class="fc" id="L159">			final GroupingStart start = (GroupingStart) ev;</span>
 			final AbstractTile groupingTile;
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (start.getType() == GroupingType.START_PARTITION)</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (start.getType() == GroupingType.START_PARTITION)</span>
 <span class="nc" id="L162">				groupingTile = new PartitionTile(it, start,</span>
 <span class="nc" id="L163">						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
 						tileArguments, currentY);
 			else
-<span class="nc" id="L166">				groupingTile = new GroupingTile(it, start,</span>
-<span class="nc" id="L167">						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
+<span class="fc" id="L166">				groupingTile = new GroupingTile(it, start,</span>
+<span class="fc" id="L167">						tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),</span>
 						tileArguments, currentY);
 
 			if (YGauge.USE_ME == false)
