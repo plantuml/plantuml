@@ -58,10 +58,10 @@ public class Pragma implements WarningHandler {
 
 	public void define(String keyName, String value) {
 <span class="fc" id="L60">		final PragmaKey key = PragmaKey.lazyFrom(keyName);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (key != null) {</span>
-<span class="pc bpc" id="L62" title="3 of 4 branches missed.">			if (value == null &amp;&amp; key.getDefaultValue() != null)</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (key != null) {</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">			if (value == null &amp;&amp; key.getDefaultValue() != null)</span>
 <span class="nc" id="L63">				value = key.getDefaultValue();</span>
-<span class="fc" id="L64">			values.put(key, value);</span>
+<span class="nc" id="L64">			values.put(key, value);</span>
 		}
 <span class="fc" id="L66">	}</span>
 
@@ -79,7 +79,7 @@ public class Pragma implements WarningHandler {
 
 	public boolean isTrue(PragmaKey key) {
 <span class="fc" id="L81">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L82" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
+<span class="pc bpc" id="L82" title="2 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public boolean isFalse(PragmaKey key) {

@@ -274,14 +274,14 @@ public class LinkType {
 	 * @return the semantic type name, or null if no specific type can be determined
 	 */
 	public String getLinkTypeName() {
-<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (has(LinkDecor.COMPOSITION))</span>
-<span class="fc" id="L278">			return &quot;composition&quot;;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (has(LinkDecor.COMPOSITION))</span>
+<span class="nc" id="L278">			return &quot;composition&quot;;</span>
 		
-<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (has(LinkDecor.AGREGATION))</span>
-<span class="fc" id="L281">			return &quot;aggregation&quot;;</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (has(LinkDecor.AGREGATION))</span>
+<span class="nc" id="L281">			return &quot;aggregation&quot;;</span>
 		
-<span class="fc bfc" id="L283" title="All 2 branches covered.">		if (has(LinkDecor.EXTENDS))</span>
-<span class="fc" id="L284">			return &quot;extension&quot;;</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (has(LinkDecor.EXTENDS))</span>
+<span class="nc" id="L284">			return &quot;extension&quot;;</span>
 		
 <span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (has(LinkDecor.REDEFINES))</span>
 <span class="nc" id="L287">			return &quot;redefines&quot;;</span>

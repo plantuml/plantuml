@@ -79,7 +79,7 @@ class PositiveForce {
 <span class="fc" id="L79">		}</span>
 <span class="fc" id="L80">		final double distance = movingPointValue - fixedPointValue;</span>
 <span class="fc" id="L81">		final double diff = distance - minimunDistance;</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (diff &gt;= 0) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (diff &gt;= 0) {</span>
 			if (trace) {
 				System.err.println(&quot;Not using &quot;);
 			}
@@ -88,8 +88,8 @@ class PositiveForce {
 		if (trace) {
 			System.err.println(&quot;moving &quot; + (-diff) + &quot; &quot; + movingPoint);
 		}
-<span class="fc" id="L91">		movingPoint.move(-diff);</span>
-<span class="fc" id="L92">		return true;</span>
+<span class="nc" id="L91">		movingPoint.move(-diff);</span>
+<span class="nc" id="L92">		return true;</span>
 	}
 
 }
