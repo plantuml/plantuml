@@ -11695,8 +11695,8 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.svg">
             <Stats>
-                <TotalClasses>16</TotalClasses>
-                <ConcreteClasses>16</ConcreteClasses>
+                <TotalClasses>17</TotalClasses>
+                <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>21</Ce>
@@ -11745,6 +11745,9 @@
                 </Class>
                 <Class sourceFile="DriverTextSvg.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.DriverTextSvg
+                </Class>
+                <Class sourceFile="DriverTextSvg.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.DriverTextSvg$ExtraLines
                 </Class>
                 <Class sourceFile="SvgData.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.SvgData
