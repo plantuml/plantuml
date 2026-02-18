@@ -30,54 +30,54 @@ public final class CharacterSetECI extends ECI {
   private static Hashtable NAME_TO_ECI;
 
   private static void initialize() {
-<span class="fc" id="L33">    VALUE_TO_ECI = new Hashtable(29);</span>
-<span class="fc" id="L34">    NAME_TO_ECI = new Hashtable(29);</span>
+<span class="nc" id="L33">    VALUE_TO_ECI = new Hashtable(29);</span>
+<span class="nc" id="L34">    NAME_TO_ECI = new Hashtable(29);</span>
     // TODO figure out if these values are even right!
-<span class="fc" id="L36">    addCharacterSet(0, &quot;Cp437&quot;);</span>
-<span class="fc" id="L37">    addCharacterSet(1, new String[] {&quot;ISO8859_1&quot;, &quot;ISO-8859-1&quot;});</span>
-<span class="fc" id="L38">    addCharacterSet(2, &quot;Cp437&quot;);</span>
-<span class="fc" id="L39">    addCharacterSet(3, new String[] {&quot;ISO8859_1&quot;, &quot;ISO-8859-1&quot;});</span>
-<span class="fc" id="L40">    addCharacterSet(4, &quot;ISO8859_2&quot;);</span>
-<span class="fc" id="L41">    addCharacterSet(5, &quot;ISO8859_3&quot;);</span>
-<span class="fc" id="L42">    addCharacterSet(6, &quot;ISO8859_4&quot;);</span>
-<span class="fc" id="L43">    addCharacterSet(7, &quot;ISO8859_5&quot;);</span>
-<span class="fc" id="L44">    addCharacterSet(8, &quot;ISO8859_6&quot;);</span>
-<span class="fc" id="L45">    addCharacterSet(9, &quot;ISO8859_7&quot;);</span>
-<span class="fc" id="L46">    addCharacterSet(10, &quot;ISO8859_8&quot;);</span>
-<span class="fc" id="L47">    addCharacterSet(11, &quot;ISO8859_9&quot;);</span>
-<span class="fc" id="L48">    addCharacterSet(12, &quot;ISO8859_10&quot;);</span>
-<span class="fc" id="L49">    addCharacterSet(13, &quot;ISO8859_11&quot;);</span>
-<span class="fc" id="L50">    addCharacterSet(15, &quot;ISO8859_13&quot;);</span>
-<span class="fc" id="L51">    addCharacterSet(16, &quot;ISO8859_14&quot;);</span>
-<span class="fc" id="L52">    addCharacterSet(17, &quot;ISO8859_15&quot;);</span>
-<span class="fc" id="L53">    addCharacterSet(18, &quot;ISO8859_16&quot;);</span>
-<span class="fc" id="L54">    addCharacterSet(20, new String[] {&quot;SJIS&quot;, &quot;Shift_JIS&quot;});</span>
-<span class="fc" id="L55">  }</span>
+<span class="nc" id="L36">    addCharacterSet(0, &quot;Cp437&quot;);</span>
+<span class="nc" id="L37">    addCharacterSet(1, new String[] {&quot;ISO8859_1&quot;, &quot;ISO-8859-1&quot;});</span>
+<span class="nc" id="L38">    addCharacterSet(2, &quot;Cp437&quot;);</span>
+<span class="nc" id="L39">    addCharacterSet(3, new String[] {&quot;ISO8859_1&quot;, &quot;ISO-8859-1&quot;});</span>
+<span class="nc" id="L40">    addCharacterSet(4, &quot;ISO8859_2&quot;);</span>
+<span class="nc" id="L41">    addCharacterSet(5, &quot;ISO8859_3&quot;);</span>
+<span class="nc" id="L42">    addCharacterSet(6, &quot;ISO8859_4&quot;);</span>
+<span class="nc" id="L43">    addCharacterSet(7, &quot;ISO8859_5&quot;);</span>
+<span class="nc" id="L44">    addCharacterSet(8, &quot;ISO8859_6&quot;);</span>
+<span class="nc" id="L45">    addCharacterSet(9, &quot;ISO8859_7&quot;);</span>
+<span class="nc" id="L46">    addCharacterSet(10, &quot;ISO8859_8&quot;);</span>
+<span class="nc" id="L47">    addCharacterSet(11, &quot;ISO8859_9&quot;);</span>
+<span class="nc" id="L48">    addCharacterSet(12, &quot;ISO8859_10&quot;);</span>
+<span class="nc" id="L49">    addCharacterSet(13, &quot;ISO8859_11&quot;);</span>
+<span class="nc" id="L50">    addCharacterSet(15, &quot;ISO8859_13&quot;);</span>
+<span class="nc" id="L51">    addCharacterSet(16, &quot;ISO8859_14&quot;);</span>
+<span class="nc" id="L52">    addCharacterSet(17, &quot;ISO8859_15&quot;);</span>
+<span class="nc" id="L53">    addCharacterSet(18, &quot;ISO8859_16&quot;);</span>
+<span class="nc" id="L54">    addCharacterSet(20, new String[] {&quot;SJIS&quot;, &quot;Shift_JIS&quot;});</span>
+<span class="nc" id="L55">  }</span>
 
   private final String encodingName;
 
   private CharacterSetECI(int value, String encodingName) {
-<span class="fc" id="L60">    super(value);</span>
-<span class="fc" id="L61">    this.encodingName = encodingName;</span>
-<span class="fc" id="L62">  }</span>
+<span class="nc" id="L60">    super(value);</span>
+<span class="nc" id="L61">    this.encodingName = encodingName;</span>
+<span class="nc" id="L62">  }</span>
 
   public String getEncodingName() {
 <span class="nc" id="L65">    return encodingName;</span>
   }
 
   private static void addCharacterSet(int value, String encodingName) {
-<span class="fc" id="L69">    CharacterSetECI eci = new CharacterSetECI(value, encodingName);</span>
-<span class="fc" id="L70">    VALUE_TO_ECI.put(value, eci); // can't use valueOf</span>
-<span class="fc" id="L71">    NAME_TO_ECI.put(encodingName, eci);</span>
-<span class="fc" id="L72">  }</span>
+<span class="nc" id="L69">    CharacterSetECI eci = new CharacterSetECI(value, encodingName);</span>
+<span class="nc" id="L70">    VALUE_TO_ECI.put(value, eci); // can't use valueOf</span>
+<span class="nc" id="L71">    NAME_TO_ECI.put(encodingName, eci);</span>
+<span class="nc" id="L72">  }</span>
 
   private static void addCharacterSet(int value, String[] encodingNames) {
-<span class="fc" id="L75">    CharacterSetECI eci = new CharacterSetECI(value, encodingNames[0]);</span>
-<span class="fc" id="L76">    VALUE_TO_ECI.put(value, eci); // can't use valueOf</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">    for (int i = 0; i &lt; encodingNames.length; i++) {</span>
-<span class="fc" id="L78">      NAME_TO_ECI.put(encodingNames[i], eci);</span>
+<span class="nc" id="L75">    CharacterSetECI eci = new CharacterSetECI(value, encodingNames[0]);</span>
+<span class="nc" id="L76">    VALUE_TO_ECI.put(value, eci); // can't use valueOf</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">    for (int i = 0; i &lt; encodingNames.length; i++) {</span>
+<span class="nc" id="L78">      NAME_TO_ECI.put(encodingNames[i], eci);</span>
     }
-<span class="fc" id="L80">  }</span>
+<span class="nc" id="L80">  }</span>
 
   /**
    * @param value character set ECI value
@@ -101,10 +101,10 @@ public final class CharacterSetECI extends ECI {
    *   but unsupported
    */
   public static CharacterSetECI getCharacterSetECIByName(String name) {
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">    if (NAME_TO_ECI == null) {</span>
-<span class="fc" id="L105">      initialize();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    if (NAME_TO_ECI == null) {</span>
+<span class="nc" id="L105">      initialize();</span>
     }
-<span class="fc" id="L107">    return (CharacterSetECI) NAME_TO_ECI.get(name);</span>
+<span class="nc" id="L107">    return (CharacterSetECI) NAME_TO_ECI.get(name);</span>
   }
 
 }
