@@ -98,6 +98,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						RegexLeaf.spaceOneOrMore() //
 				)), //
 				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "FIRST_ROLE", "/([^%s]+|[%g][^%g]+[%g])")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
@@ -114,6 +115,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				RegexLeaf.spaceZeroOrMore(), //
 
 				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexLeaf(1, "SECOND_ROLE", "/([^%s]+|[%g][^%g]+[%g])")), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("[\\[]"), //
@@ -211,6 +213,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				.build(labels.getDisplay(diagram.getPragma()), queue,
 						diagram.getSkinParam().classAttributeIconSize() > 0)
 				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
+				.withRole(labels.getFirstRole(), labels.getSecondRole())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
 		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,

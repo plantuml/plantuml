@@ -47,11 +47,15 @@ public class Labels {
 
 	private String firstLabel;
 	private String secondLabel;
+	private String firstRole;
+	private String secondRole;
 	private final StringWithArrow stringWithArrow;
 
 	public Labels(RegexResult arg) {
 		this.firstLabel = arg.get("FIRST_LABEL", 0);
 		this.secondLabel = arg.get("SECOND_LABEL", 0);
+		this.firstRole = cleanRole(arg.get("FIRST_ROLE", 0));
+		this.secondRole = cleanRole(arg.get("SECOND_ROLE", 0));
 		String labelLink = arg.get("LABEL_LINK", 0);
 
 		if (labelLink != null)
@@ -61,27 +65,33 @@ public class Labels {
 
 	}
 
-	private static final Pattern2 p1 = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
-	private static final Pattern2 p2 = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
-	private static final Pattern2 p3 = Pattern2.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
+	private static String cleanRole(String role) {
+		if (role == null)
+			return null;
+		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(role, "\"");
+	}
+
+	private static final Pattern2 BOTH_LABELS = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
+	private static final Pattern2 FIRST_LABEL_ONLY = Pattern2.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
+	private static final Pattern2 SECOND_LABEL_ONLY = Pattern2.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 
 	private String init(String labelLink) {
 		if (firstLabel == null && secondLabel == null) {
-			final Matcher2 m1 = p1.matcher(labelLink);
+			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
 				secondLabel = m1.group(3);
 				return StringUtils
 						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 			}
-			final Matcher2 m2 = p2.matcher(labelLink);
+			final Matcher2 m2 = FIRST_LABEL_ONLY.matcher(labelLink);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
 				secondLabel = null;
 				return StringUtils
 						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 			}
-			final Matcher2 m3 = p3.matcher(labelLink);
+			final Matcher2 m3 = SECOND_LABEL_ONLY.matcher(labelLink);
 			if (m3.matches()) {
 				firstLabel = null;
 				secondLabel = m3.group(2);
@@ -98,6 +108,14 @@ public class Labels {
 
 	public final String getSecondLabel() {
 		return secondLabel;
+	}
+
+	public final String getFirstRole() {
+		return firstRole;
+	}
+
+	public final String getSecondRole() {
+		return secondRole;
 	}
 
 	public final String getLabelLink() {

@@ -192,8 +192,15 @@ class MyElkDrawing extends AbstractTextBlock {
 		final TextBlock label = getLabel(ug.getStringBounder(), link);
 		final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);
 		final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);
-		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, quantifier1,
-				quantifier2, magicY2, elkClusters, UTranslate.point(translate), nodeImages);
+		final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);
+		final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);
+		final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;
+		final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;
+		final TextBlock tailRole = quantifier1 != null ? role1 : null;
+		final TextBlock headRole = quantifier2 != null ? role2 : null;
+		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, tailLabel,
+				headLabel, tailRole, headRole,
+				magicY2, elkClusters, UTranslate.point(translate), nodeImages);
 		elkPath.drawU(ug);
 	}
 
@@ -301,6 +308,21 @@ class MyElkDrawing extends AbstractTextBlock {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		if (TextBlockUtils.isEmpty(label, stringBounder))
+			return null;
+
+		return label;
+	}
+
+	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
+		final String role = n == 1 ? link.getRole1() : link.getRole2();
+		if (role == null)
+			return null;
+
+		final ISkinParam skinParam = diagram.getSkinParam();
+		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
+		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;

@@ -55,7 +55,9 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -81,15 +83,20 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final TextBlock label;
 	private final TextBlock headLabel;
 	private final TextBlock tailLabel;
+	private final TextBlock tailRole;
+	private final TextBlock headRole;
 
 	public SmetanaEdge(Link link, ST_Agedge_s edge, YMirror ymirror, TextBlock label,
-			TextBlock tailLabel, TextBlock headLabel, Bibliotekon bibliotekon, ISkinParam skinParam) {
+			TextBlock tailLabel, TextBlock headLabel, TextBlock tailRole, TextBlock headRole,
+			Bibliotekon bibliotekon, ISkinParam skinParam) {
 		super(link, skinParam, bibliotekon);
 		this.edge = edge;
 		this.ymirror = ymirror;
 		this.label = label;
 		this.tailLabel = tailLabel;
 		this.headLabel = headLabel;
+		this.tailRole = tailRole;
+		this.headRole = headRole;
 	}
 
 	private LinkStrategy getLinkStrategy() {
@@ -187,6 +194,25 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		if (getLabelRectangleTranslate("tail_label") != null)
 			tailLabel.drawU(ug.apply(getLabelRectangleTranslate("tail_label")));
+
+		if (dotPath != null) {
+			DotPath pathForRoles = dotPath;
+			if (ymirror != null)
+				pathForRoles = ymirror.getMirrored(pathForRoles);
+
+			if (tailRole != null && getLabelRectangleTranslate("tail_label") != null) {
+				final UTranslate tailTr = getLabelRectangleTranslate("tail_label");
+				final XPoint2D tailLabelPos = new XPoint2D(tailTr.getDx(), tailTr.getDy());
+				drawRoleLabel(ug, tailRole, tailLabel, tailLabelPos,
+						pathForRoles.getStartPoint(), pathForRoles.getEndPoint());
+			}
+			if (headRole != null && getLabelRectangleTranslate("head_label") != null) {
+				final UTranslate headTr = getLabelRectangleTranslate("head_label");
+				final XPoint2D headLabelPos = new XPoint2D(headTr.getDx(), headTr.getDy());
+				drawRoleLabel(ug, headRole, headLabel, headLabelPos,
+						pathForRoles.getEndPoint(), pathForRoles.getStartPoint());
+			}
+		}
 
 		ug.closeGroup();
 		// printDebug(ug);
@@ -348,6 +374,46 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
 		final ST_pointf pt = beziers.list.get__(i);
 		return new XPoint2D(pt.x, pt.y);
+	}
+
+	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
+			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);
+		final XDimension2D rDim = role.calculateDimension(stringBounder);
+
+		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();
+		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();
+
+		if (Math.abs(dirX) + Math.abs(dirY) < 0.001) {
+			role.drawU(ug.apply(new UTranslate(quantifierPos.getX(),
+					quantifierPos.getY() + qDim.getHeight())));
+			return;
+		}
+
+		final double gap = 2;
+		final double roleX;
+		final double roleY;
+
+		if (Math.abs(dirY) >= Math.abs(dirX)) {
+			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;
+			final double lineX = thisEndpoint.getX();
+			if (qCenterX < lineX)
+				roleX = lineX + gap;
+			else
+				roleX = lineX - rDim.getWidth() - gap;
+			roleY = quantifierPos.getY();
+		} else {
+			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;
+			final double lineY = thisEndpoint.getY();
+			if (qCenterY < lineY)
+				roleY = lineY + gap;
+			else
+				roleY = lineY - rDim.getHeight() - gap;
+			roleX = quantifierPos.getX();
+		}
+
+		role.drawU(ug.apply(new UTranslate(roleX, roleY)));
 	}
 
 	@Override

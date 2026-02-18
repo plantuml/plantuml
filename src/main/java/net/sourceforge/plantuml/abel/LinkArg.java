@@ -43,6 +43,8 @@ public class LinkArg {
 	private final Display label;
 	private final String quantifier1;
 	private final String quantifier2;
+	private final String role1;
+	private final String role2;
 	private final String labeldistance;
 	private final String labelangle;
 
@@ -70,26 +72,32 @@ public class LinkArg {
 			if (manageVisibilityModifier && VisibilityModifier.isVisibilityCharacter(label.get(0)))
 				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);
 		}
-		return new LinkArg(newLabel, length, null, null, null, null, visibilityModifier, null, null);
+		return new LinkArg(newLabel, length, null, null, null, null, visibilityModifier, null, null, null, null);
 	}
 
 	public LinkArg withQuantifier(String quantifier1, String quantifier2) {
 		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
-				kal2);
+				kal2, role1, role2);
+	}
+
+	public LinkArg withRole(String role1, String role2) {
+		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
+				kal2, role1, role2);
 	}
 
 	public LinkArg withKal(String kal1, String kal2) {
 		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
-				kal2);
+				kal2, role1, role2);
 	}
 
 	public LinkArg withDistanceAngle(String labeldistance, String labelangle) {
 		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
-				kal2);
+				kal2, role1, role2);
 	}
 
 	private LinkArg(Display label, int length, String quantifier1, String quantifier2, String labeldistance,
-			String labelangle, VisibilityModifier visibilityModifier, String kal1, String kal2) {
+			String labelangle, VisibilityModifier visibilityModifier, String kal1, String kal2, String role1,
+			String role2) {
 
 		this.label = label;
 		this.visibilityModifier = visibilityModifier;
@@ -100,11 +108,13 @@ public class LinkArg {
 		this.labelangle = labelangle;
 		this.kal1 = kal1;
 		this.kal2 = kal2;
+		this.role1 = role1;
+		this.role2 = role2;
 	}
 
 	public LinkArg getInv() {
 		return new LinkArg(label, length, quantifier2, quantifier1, labeldistance, labelangle, visibilityModifier, kal2,
-				kal1);
+				kal1, role2, role1);
 	}
 
 	public final Display getLabel() {
@@ -149,6 +159,14 @@ public class LinkArg {
 
 	public final String getKal2() {
 		return kal2;
+	}
+
+	public final String getRole1() {
+		return role1;
+	}
+
+	public final String getRole2() {
+		return role2;
 	}
 
 }

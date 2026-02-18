@@ -179,9 +179,18 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					continue;
 
 				final ST_Agedge_s edge = ent.getValue();
+				final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);
+				final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);
+				final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);
+				final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);
+				final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;
+				final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;
+				final TextBlock tailRole = quantifier1 != null ? role1 : null;
+				final TextBlock headRole = quantifier2 != null ? role2 : null;
 				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,
-						getLabel(ug.getStringBounder(), link), getQuantifier(ug.getStringBounder(), link, 1),
-						getQuantifier(ug.getStringBounder(), link, 2), getBibliotekon(), diagram.getSkinParam());
+						getLabel(ug.getStringBounder(), link), tailLabel,
+						headLabel, tailRole, headRole,
+						getBibliotekon(), diagram.getSkinParam());
 				smetanaPathes.put(link, smetanaPath);
 			}
 
@@ -658,6 +667,23 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 	}
 
+	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
+		final String role = n == 1 ? link.getRole1() : link.getRole2();
+		if (role == null)
+			return null;
+
+		final double marginLabel = 1;
+		ISkinParam skinParam = diagram.getSkinParam();
+		final Style style = getStyle();
+		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		if (TextBlockUtils.isEmpty(label, stringBounder))
+			return label;
+
+		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
+	}
+
 	private ST_Agnode_s getAgnodeFromLeaf(Entity entity) {
 		final ST_Agnode_s n = nodes.get(entity);
 		if (n != null)
@@ -709,14 +735,18 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			agsafeset(zz, e, new CString("label"), hackDim, new CString(""));
 		}
 		final TextBlock q1 = getQuantifier(stringBounder, link, 1);
-		if (q1 != null) {
-			final XDimension2D dimLabel = q1.calculateDimension(stringBounder);
+		final TextBlock r1 = getRoleLabel(stringBounder, link, 1);
+		final TextBlock tailForLayout = q1 != null ? q1 : r1;
+		if (tailForLayout != null) {
+			final XDimension2D dimLabel = tailForLayout.calculateDimension(stringBounder);
 			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());
 			agsafeset(zz, e, new CString("taillabel"), hackDim, new CString(""));
 		}
 		final TextBlock q2 = getQuantifier(stringBounder, link, 2);
-		if (q2 != null) {
-			final XDimension2D dimLabel = q2.calculateDimension(stringBounder);
+		final TextBlock r2 = getRoleLabel(stringBounder, link, 2);
+		final TextBlock headForLayout = q2 != null ? q2 : r2;
+		if (headForLayout != null) {
+			final XDimension2D dimLabel = headForLayout.calculateDimension(stringBounder);
 			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());
 			agsafeset(zz, e, new CString("headlabel"), hackDim, new CString(""));
 		}
