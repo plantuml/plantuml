@@ -19,7 +19,7 @@ Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
 package net.sourceforge.plantuml.zopfli;
 
 class BlockSplitter {
-	// ::remove folder when __CORE__
+    // ::remove folder when __TEAVM__
 
 	static int split(Cookie cookie, byte[] input, int from, int to) {
 		LzStore store = cookie.store1;

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
+import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
@@ -60,6 +61,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -83,6 +85,7 @@ public class PSystemBuilder2 {
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
 		factories.add(new PSystemVersionFactory());
+		// factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new NwDiagramFactory(DiagramType.UML));
@@ -93,6 +96,8 @@ public class PSystemBuilder2 {
 		factories.add(new PacketDiagramFactory());
 		factories.add(new JsonDiagramFactory());
 		factories.add(new YamlDiagramFactory());
+		factories.add(new PSystemEbnfFactory());
+		factories.add(new PSystemRegexFactory());
 	}
 
 	public Diagram createDiagram(String[] split) {

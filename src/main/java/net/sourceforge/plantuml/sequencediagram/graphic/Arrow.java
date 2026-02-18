@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.util.EnumMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.klimt.UGroup;
@@ -48,7 +46,6 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Pragma;
-import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.url.Url;
 

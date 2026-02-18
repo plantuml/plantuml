@@ -33,10 +33,9 @@
  * 
  *
  */
-package net.sourceforge.plantuml.png;
+package net.sourceforge.plantuml.klimt;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;

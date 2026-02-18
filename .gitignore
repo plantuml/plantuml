@@ -37,3 +37,6 @@ build/
 
 # macos
 .DS_Store
+
+# other
+tmp
