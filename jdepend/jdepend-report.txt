@@ -6423,12 +6423,12 @@ Stats:
     Concrete Classes: 3
     Abstract Classes: 1
 
-    Ca: 11
+    Ca: 12
     Ce: 4
 
     A: 0.25
-    I: 0.27
-    D: 0.48
+    I: 0.25
+    D: 0.5
 
 Abstract Classes:
     net.sourceforge.plantuml.jaws.JawsStrange
@@ -6452,6 +6452,7 @@ Used By:
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.nwdiag
     net.sourceforge.plantuml.nwdiag.core
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.tim
     net.sourceforge.plantuml.tim.builtin
@@ -13241,7 +13242,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 39
+    Ce: 40
 
     A: 0
     I: 1
@@ -13281,6 +13282,7 @@ Depends Upon:
     net.sourceforge.plantuml.descdiagram
     net.sourceforge.plantuml.ebnf
     net.sourceforge.plantuml.error
+    net.sourceforge.plantuml.jaws
     net.sourceforge.plantuml.jsondiagram
     net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.color
@@ -17334,7 +17336,7 @@ net.sourceforge.plantuml.graphml,2,0,1,17,0,0.94,0.06,1
 net.sourceforge.plantuml.hcl,5,0,0,11,0,1,0,1
 net.sourceforge.plantuml.help,7,0,0,23,0,1,0,1
 net.sourceforge.plantuml.html,2,0,0,12,0,1,0,1
-net.sourceforge.plantuml.jaws,4,1,11,4,0.25,0.27,0.48,1
+net.sourceforge.plantuml.jaws,4,1,12,4,0.25,0.25,0.5,1
 net.sourceforge.plantuml.jcckit,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.json,23,3,14,3,0.13,0.18,0.69,1
 net.sourceforge.plantuml.jsondiagram,11,0,6,30,0,0.83,0.17,1
@@ -17429,7 +17431,7 @@ net.sourceforge.plantuml.svek.extremity,56,4,5,11,0.07,0.69,0.24,1
 net.sourceforge.plantuml.svek.image,52,2,16,25,0.04,0.61,0.35,1
 net.sourceforge.plantuml.swing,42,0,0,30,0,1,0,1
 net.sourceforge.plantuml.syntax,3,0,3,11,0,0.79,0.21,1
-net.sourceforge.plantuml.teavm,15,0,0,39,0,1,0,1
+net.sourceforge.plantuml.teavm,15,0,0,40,0,1,0,1
 net.sourceforge.plantuml.teavm.browser,2,0,0,1,0,1,0,1
 net.sourceforge.plantuml.telnet,2,0,0,6,0,1,0,1
 net.sourceforge.plantuml.text,9,1,52,9,0.11,0.15,0.74,1

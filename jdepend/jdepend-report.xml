@@ -9674,11 +9674,11 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>11</Ca>
+                <Ca>12</Ca>
                 <Ce>4</Ce>
                 <A>0.25</A>
-                <I>0.27</I>
-                <D>0.48</D>
+                <I>0.25</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -9715,6 +9715,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.tim.builtin</Package>
@@ -19810,7 +19811,7 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>39</Ce>
+                <Ce>40</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -19883,6 +19884,7 @@
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.error</Package>
+                <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
