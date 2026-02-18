@@ -41,28 +41,28 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 public abstract class CommonTile implements Tile, UDrawable {
 
 	private final StringBounder stringBounder;
-<span class="nc" id="L44">	private TimeHook y = new TimeHook(-1);</span>
+<span class="fc" id="L44">	private TimeHook y = new TimeHook(-1);</span>
 
-<span class="nc" id="L46">	public CommonTile(StringBounder stringBounder) {</span>
-<span class="nc" id="L47">		this.stringBounder = stringBounder;</span>
-<span class="nc" id="L48">	}</span>
+<span class="fc" id="L46">	public CommonTile(StringBounder stringBounder) {</span>
+<span class="fc" id="L47">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L48">	}</span>
 
 	final public void callbackY(TimeHook y) {
 		if (YGauge.USE_ME) {
 		} else {
-<span class="nc" id="L53">			this.y = y;</span>
-<span class="nc" id="L54">			callbackY_internal(y);</span>
+<span class="fc" id="L53">			this.y = y;</span>
+<span class="fc" id="L54">			callbackY_internal(y);</span>
 		}
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L56">	}</span>
 
 	protected void callbackY_internal(TimeHook y) {
 		if (YGauge.USE_ME) {
 			System.err.println(&quot;callbackY_internal::y=&quot; + y + &quot; gauge=&quot; + getYGauge() + &quot; &quot; + getClass());
 		}
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L62">	}</span>
 
 	protected final StringBounder getStringBounder() {
-<span class="nc" id="L65">		return stringBounder;</span>
+<span class="fc" id="L65">		return stringBounder;</span>
 	}
 
 	public double getMiddleX() {
@@ -75,7 +75,7 @@ public abstract class CommonTile implements Tile, UDrawable {
 		if (YGauge.USE_ME) {
 			throw new IllegalStateException();
 		}
-<span class="nc" id="L78">		return y;</span>
+<span class="fc" id="L78">		return y;</span>
 	}
 
 }
