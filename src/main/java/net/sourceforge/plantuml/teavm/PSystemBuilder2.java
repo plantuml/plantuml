@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 public class PSystemBuilder2 {
 
 	private final List<PSystemFactory> factories = new ArrayList<>();
+	private PSystemFactory lastFactory;
 
 	public PSystemBuilder2() {
 		factories.add(new SequenceDiagramFactory());
@@ -124,13 +125,25 @@ public class PSystemBuilder2 {
 
 		final PreprocessingArtifact preprocessing = new PreprocessingArtifact();
 		final List<PSystemError> errors = new ArrayList<>();
-		for (PSystemFactory systemFactory : factories) {
-			if (diagramType != systemFactory.getDiagramType())
-				continue;
 
-			final Diagram sys = systemFactory.createSystem(null, source, null, preprocessing);
+		if (lastFactory != null && diagramType == lastFactory.getDiagramType()) {
+			final Diagram sys = lastFactory.createSystem(null, source, null, preprocessing);
 			if (isOk(sys))
 				return sys;
+
+		}
+
+		for (PSystemFactory f : factories) {
+			if (diagramType != f.getDiagramType())
+				continue;
+			if (f == lastFactory)
+				continue;
+
+			final Diagram sys = f.createSystem(null, source, null, preprocessing);
+			if (isOk(sys)) {
+				this.lastFactory = f;
+				return sys;
+			}
 			errors.add((PSystemError) sys);
 		}
 
