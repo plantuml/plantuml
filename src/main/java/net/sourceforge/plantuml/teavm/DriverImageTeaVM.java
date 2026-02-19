@@ -43,9 +43,8 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 
 /**
- * TeaVM driver for rendering images in SVG.
- * Converts PortableImage to PNG data URL using browser's canvas API,
- * then embeds as an SVG image element.
+ * TeaVM driver for rendering images in SVG. Converts PortableImage to PNG data
+ * URL using browser's canvas API, then embeds as an SVG image element.
  */
 public class DriverImageTeaVM implements UDriver<UImage, SvgGraphicsTeaVM> {
 
@@ -57,17 +56,14 @@ public class DriverImageTeaVM implements UDriver<UImage, SvgGraphicsTeaVM> {
 
 	@Override
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		final PortableImage image = shape.getImage(1.0);
-//		final int width = image.getWidth();
-//		final int height = image.getHeight();
-//		
-//		// Convert image to PNG data URL via canvas
-//		final String dataUrl = image.toPngDataUrl();
-//		
-//		// Draw as embedded image in SVG
-//		svg.drawImage(dataUrl, x, y, width, height);
-		// ::done
+		final PortableImage image = shape.getImage(1.0);
+		final int width = image.getWidth();
+		final int height = image.getHeight();
 
+		// Convert image to PNG data URL via canvas
+		final String dataUrl = image.toPngDataUrl();
+
+		// Draw as embedded image in SVG
+		svg.drawImage(dataUrl, x, y, width, height);
 	}
 }

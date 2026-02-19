@@ -42,56 +42,44 @@ public class StringBounderTeaVM implements StringBounder {
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-		// ::uncomment when __TEAVM__
-//		if (text == null || text.isEmpty())
-//			return new XDimension2D(0, 0);
-//
-//		final String fontFamily = font.getFamily(null, null);
-//		final int fontSize = font.getSize();
-//		final String fontWeight = font.isBold() ? "bold" : "normal";
-//
-//		final double[] metrics = SvgGraphicsTeaVM.measureTextCanvas(text, fontFamily, fontSize, fontWeight);
-//		final double width = metrics[0];
-//
-//		// Use SVG getBBox for height as it's more accurate for layout
-//		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);
-//		double height = svgMetrics[1];
-//
-//		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
-//		// In this case, use font metrics to get the proper line height
-//		if (height == 0 && !text.isEmpty()) {
-//			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
-//			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent
-//		}
-//
-//		return new XDimension2D(width, height);
-		// ::done
-		
-		// ::comment when __TEAVM__
-		throw new UnsupportedOperationException();
-		// ::done
+		if (text == null || text.isEmpty())
+			return new XDimension2D(0, 0);
+
+		final String fontFamily = font.getFamily(null, null);
+		final int fontSize = font.getSize();
+		final String fontWeight = font.isBold() ? "bold" : "normal";
+
+		final double[] metrics = SvgGraphicsTeaVM.measureTextCanvas(text, fontFamily, fontSize, fontWeight);
+		final double width = metrics[0];
+
+		// Use SVG getBBox for height as it's more accurate for layout
+		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);
+		double height = svgMetrics[1];
+
+		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
+		// In this case, use font metrics to get the proper line height
+		if (height == 0 && !text.isEmpty()) {
+			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize,
+					fontWeight);
+			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent
+		}
+
+		return new XDimension2D(width, height);
 
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-		// ::uncomment when __TEAVM__
-//		if (text == null || text.isEmpty())
-//			return 0;
-//
-//		final String fontFamily = font.getFamily(null, null);
-//		final int fontSize = font.getSize();
-//		final String fontWeight = font.isBold() ? "bold" : "normal";
-//
-//		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
-//		// metrics[2] is actualBoundingBoxDescent
-//		return metrics[2];
-		// ::done
+		if (text == null || text.isEmpty())
+			return 0;
 
-		// ::comment when __TEAVM__
-		throw new UnsupportedOperationException();
-		// ::done
+		final String fontFamily = font.getFamily(null, null);
+		final int fontSize = font.getSize();
+		final String fontWeight = font.isBold() ? "bold" : "normal";
 
+		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
+		// metrics[2] is actualBoundingBoxDescent
+		return metrics[2];
 	}
 
 	@Override

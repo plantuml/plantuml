@@ -52,35 +52,33 @@ public class DriverRectangleTeaVM implements UDriver<URectangle, SvgGraphicsTeaV
 
 	@Override
 	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		final double rx = rect.getRx();
-//		final double ry = rect.getRy();
-//		final double width = rect.getWidth();
-//		final double height = rect.getHeight();
-//
-//		applyFillColor(svg, mapper, param);
-//		applyStrokeColor(svg, mapper, param);
-//		svg.setStrokeWidth(param.getStroke().getThickness());
-//
-//		svg.drawRectangle(x, y, width, height, rx / 2, ry / 2);
-//	}
-//
-//	public static void applyFillColor(SvgGraphicsTeaVM svg, ColorMapper mapper, UParam param) {
-//		final HColor background = param.getBackcolor();
-//		if (background == null) {
-//			svg.setFillColor("none");
-//		} else {
-//			svg.setFillColor(background.toSvg(mapper));
-//		}
-//	}
-//
-//	public static void applyStrokeColor(SvgGraphicsTeaVM svg, ColorMapper mapper, UParam param) {
-//		final HColor color = param.getColor();
-//		if (color == null) {
-//			svg.setStrokeColor("none");
-//		} else {
-//			svg.setStrokeColor(color.toSvg(mapper));
-//		}
-		// ::done
+		final double rx = rect.getRx();
+		final double ry = rect.getRy();
+		final double width = rect.getWidth();
+		final double height = rect.getHeight();
+
+		applyFillColor(svg, mapper, param);
+		applyStrokeColor(svg, mapper, param);
+		svg.setStrokeWidth(param.getStroke().getThickness());
+
+		svg.drawRectangle(x, y, width, height, rx / 2, ry / 2);
+	}
+
+	public static void applyFillColor(SvgGraphicsTeaVM svg, ColorMapper mapper, UParam param) {
+		final HColor background = param.getBackcolor();
+		if (background == null) {
+			svg.setFillColor("none");
+		} else {
+			svg.setFillColor(background.toSvg(mapper));
+		}
+	}
+
+	public static void applyStrokeColor(SvgGraphicsTeaVM svg, ColorMapper mapper, UParam param) {
+		final HColor color = param.getColor();
+		if (color == null) {
+			svg.setStrokeColor("none");
+		} else {
+			svg.setStrokeColor(color.toSvg(mapper));
+		}
 	}
 }

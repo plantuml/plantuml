@@ -644,6 +644,17 @@ val syncSourcesForTeaVM by tasks.registering(Sync::class) {
 	dependsOn(filterSourcesWithBuildInfo)
 	from(filteredSrcDir)
 	into(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
+
+	// Remove org.teavm stub sources after sync:
+	// these stubs exist in src/main/java for Java 8 compilation,
+	// but the real org.teavm classes are provided by teavmCompileConfig dependencies.
+	doLast {
+		val teavmStubDir = layout.buildDirectory.dir("sources/teavm-sjpp/java/org/teavm").get().asFile
+		if (teavmStubDir.exists()) {
+			val deleted = teavmStubDir.deleteRecursively()
+			println("Removed org.teavm stubs from synced sources: $deleted")
+		}
+	}
 }
 
 // Preprocess sources with SJPP for TeaVM
@@ -666,6 +677,8 @@ val preprocessForTeaVM by tasks.registering {
 				"define" to "__TEAVM__"
 			)
 		}
+
+
 	}
 }
 

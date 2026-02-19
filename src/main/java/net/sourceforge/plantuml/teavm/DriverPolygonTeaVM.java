@@ -52,20 +52,18 @@ public class DriverPolygonTeaVM implements UDriver<UPolygon, SvgGraphicsTeaVM> {
 
 	@Override
 	public void draw(UPolygon polygon, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
-//		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
-//		svg.setStrokeWidth(param.getStroke().getThickness());
-//
-//		// Convert polygon points to array
-//		final double[] points = new double[polygon.getPoints().size() * 2];
-//		int i = 0;
-//		for (XPoint2D pt : polygon.getPoints()) {
-//			points[i++] = x + pt.getX();
-//			points[i++] = y + pt.getY();
-//		}
-//
-//		svg.drawPolygon(points);
-		// ::done
+		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
+		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
+		svg.setStrokeWidth(param.getStroke().getThickness());
+
+		// Convert polygon points to array
+		final double[] points = new double[polygon.getPoints().size() * 2];
+		int i = 0;
+		for (XPoint2D pt : polygon.getPoints()) {
+			points[i++] = x + pt.getX();
+			points[i++] = y + pt.getY();
+		}
+
+		svg.drawPolygon(points);
 	}
 }

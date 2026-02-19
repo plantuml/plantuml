@@ -52,25 +52,23 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 
 	// Collects extra colored lines (underline/strikethrough) that cannot be
 	// expressed as simple CSS text-decoration because they use a custom color.
-	// ::uncomment when __TEAVM__
-//	static class ExtraLines {
-//		private final List<HColor> colors = new ArrayList<>();
-//		private final List<Double> deltaYs = new ArrayList<>();
-//
-//		void add(HColor color, double deltaY) {
-//			colors.add(color);
-//			deltaYs.add(deltaY);
-//		}
-//
-//		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphicsTeaVM svg) {
-//			for (int i = 0; i < colors.size(); i++) {
-//				svg.setStrokeColor(colors.get(i).toSvg(mapper));
-//				svg.setStrokeWidth(font.getSize2D() / 28.0);
-//				svg.drawLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i));
-//			}
-//		}
-//	}
-	// ::done
+	static class ExtraLines {
+		private final List<HColor> colors = new ArrayList<>();
+		private final List<Double> deltaYs = new ArrayList<>();
+
+		void add(HColor color, double deltaY) {
+			colors.add(color);
+			deltaYs.add(deltaY);
+		}
+
+		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphicsTeaVM svg) {
+			for (int i = 0; i < colors.size(); i++) {
+				svg.setStrokeColor(colors.get(i).toSvg(mapper));
+				svg.setStrokeWidth(font.getSize2D() / 28.0);
+				svg.drawLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i));
+			}
+		}
+	}
 
 	private final ClipContainer clipContainer;
 
@@ -80,69 +78,67 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 
 	@Override
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-//		if (fontConfiguration.getColor().isTransparent())
-//			return;
-//
-//		final UFont font = fontConfiguration.getFont();
-//		
-//		// Set text color
-//		final String color = fontConfiguration.getColor().toSvg(mapper);
-//		svg.setFillColor(color);
-//
-//		// Extract font properties
-//		final String fontFamily = font.getFamily(null, null);
-//		final int fontSize = font.getSize();
-//
-//		String fontWeight = null;
-//		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())
-//			fontWeight = "bold";
-//
-//		String fontStyle = null;
-//		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())
-//			fontStyle = "italic";
-//
-//		// Handle text decoration (underline, strike, wave)
-//		final ExtraLines extraLines = new ExtraLines();
-//		final StringBuilder decorations = new StringBuilder();
-//
-//		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
-//				&& fontConfiguration.getUnderlineStroke().getThickness() > 0) {
-//			if (fontConfiguration.getExtendedColor() == null)
-//				decorations.append("underline ");
-//			else
-//				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);
-//		}
-//
-//		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-//			if (fontConfiguration.getExtendedColor() == null)
-//				decorations.append("line-through ");
-//			else
-//				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);
-//		}
-//
-//		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
-//			// Note: some browsers may not render wave properly
-//			decorations.append("wavy underline ");
-//		}
-//
-//		final String textDecoration = decorations.length() > 0 ? decorations.toString().trim() : null;
-//
-//		// Handle background color
-//		String backColor = null;
-//		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-//			final HColor back = fontConfiguration.getExtendedColor();
-//			if (back != null && !(back instanceof net.sourceforge.plantuml.klimt.color.HColorGradient)) {
-//				backColor = back.toRGB(mapper);
-//			}
-//		}
-//
-//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);
-//
-//		// Draw extra lines for colored underline/strike
-//		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);
-//		extraLines.drawAll(x, y, width, font, mapper, svg);
-		// ::done
+		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+		if (fontConfiguration.getColor().isTransparent())
+			return;
+
+		final UFont font = fontConfiguration.getFont();
+
+		// Set text color
+		final String color = fontConfiguration.getColor().toSvg(mapper);
+		svg.setFillColor(color);
+
+		// Extract font properties
+		final String fontFamily = font.getFamily(null, null);
+		final int fontSize = font.getSize();
+
+		String fontWeight = null;
+		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())
+			fontWeight = "bold";
+
+		String fontStyle = null;
+		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())
+			fontStyle = "italic";
+
+		// Handle text decoration (underline, strike, wave)
+		final ExtraLines extraLines = new ExtraLines();
+		final StringBuilder decorations = new StringBuilder();
+
+		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
+				&& fontConfiguration.getUnderlineStroke().getThickness() > 0) {
+			if (fontConfiguration.getExtendedColor() == null)
+				decorations.append("underline ");
+			else
+				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);
+		}
+
+		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
+			if (fontConfiguration.getExtendedColor() == null)
+				decorations.append("line-through ");
+			else
+				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);
+		}
+
+		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
+			// Note: some browsers may not render wave properly
+			decorations.append("wavy underline ");
+		}
+
+		final String textDecoration = decorations.length() > 0 ? decorations.toString().trim() : null;
+
+		// Handle background color
+		String backColor = null;
+		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
+			final HColor back = fontConfiguration.getExtendedColor();
+			if (back != null && !(back instanceof net.sourceforge.plantuml.klimt.color.HColorGradient)) {
+				backColor = back.toRGB(mapper);
+			}
+		}
+
+		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);
+
+		// Draw extra lines for colored underline/strike
+		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);
+		extraLines.drawAll(x, y, width, font, mapper, svg);
 	}
 }
