@@ -61,7 +61,7 @@ public class ElseTile extends AbstractTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="nc" id="L64">		return anElse;</span>
+<span class="fc" id="L64">		return anElse;</span>
 	}
 
 	@Override
@@ -70,13 +70,13 @@ public class ElseTile extends AbstractTile {
 	}
 
 	public ElseTile(GroupingLeaf anElse, Rose skin, ISkinParam skinParam, Tile parent, YGauge currentY) {
-<span class="nc" id="L73">		super(((AbstractTile) parent).getStringBounder(), currentY);</span>
-<span class="nc" id="L74">		this.anElse = anElse;</span>
-<span class="nc" id="L75">		this.skin = skin;</span>
-<span class="nc" id="L76">		this.skinParam = skinParam;</span>
-<span class="nc" id="L77">		this.parent = parent;</span>
-<span class="nc" id="L78">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="nc" id="L79">	}</span>
+<span class="fc" id="L73">		super(((AbstractTile) parent).getStringBounder(), currentY);</span>
+<span class="fc" id="L74">		this.anElse = anElse;</span>
+<span class="fc" id="L75">		this.skin = skin;</span>
+<span class="fc" id="L76">		this.skinParam = skinParam;</span>
+<span class="fc" id="L77">		this.parent = parent;</span>
+<span class="fc" id="L78">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L79">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
@@ -84,23 +84,23 @@ public class ElseTile extends AbstractTile {
 	}
 
 	public final HColor getBackColorGeneral() {
-<span class="nc" id="L87">		return anElse.getBackColorGeneral();</span>
+<span class="fc" id="L87">		return anElse.getBackColorGeneral();</span>
 	}
 
 	public Component getComponent(StringBounder stringBounder) {
 		// final Display display = Display.create(anElse.getTitle());
-<span class="nc" id="L92">		final ISkinParam tmp = new SkinParamBackcolored(skinParam, anElse.getBackColorElement(),</span>
-<span class="nc" id="L93">				anElse.getBackColorGeneral());</span>
+<span class="fc" id="L92">		final ISkinParam tmp = new SkinParamBackcolored(skinParam, anElse.getBackColorElement(),</span>
+<span class="fc" id="L93">				anElse.getBackColorGeneral());</span>
 
-<span class="nc" id="L95">		final Display display = Display.create(anElse.getComment());</span>
-<span class="nc" id="L96">		final Component comp = skin.createComponent(anElse.getUsedStyles(), ComponentType.GROUPING_ELSE_TEOZ, null, tmp,</span>
+<span class="fc" id="L95">		final Display display = Display.create(anElse.getComment());</span>
+<span class="fc" id="L96">		final Component comp = skin.createComponent(anElse.getUsedStyles(), ComponentType.GROUPING_ELSE_TEOZ, null, tmp,</span>
 				display);
-<span class="nc" id="L98">		return comp;</span>
+<span class="fc" id="L98">		return comp;</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		if (YGauge.USE_ME == false)
-<span class="nc" id="L103">			return;</span>
+<span class="fc" id="L103">			return;</span>
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
@@ -120,31 +120,31 @@ public class ElseTile extends AbstractTile {
 	}
 
 	public double getPreferredHeight() {
-<span class="nc" id="L123">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L124">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L123">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L124">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
 
-<span class="nc" id="L126">		double height = dim.getHeight();</span>
+<span class="fc" id="L126">		double height = dim.getHeight();</span>
 //		if (anElse.getComment() != null)
 //			height += 10;
 //
 //		return height + 20;
-<span class="nc" id="L131">		return height;</span>
+<span class="fc" id="L131">		return height;</span>
 	}
 
 	public void addConstraints() {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		// final double width = dim.getWidth();
-<span class="nc" id="L138">	}</span>
+<span class="fc" id="L138">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L141">		return parent.getMinX();</span>
+<span class="fc" id="L141">		return parent.getMinX();</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L145">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L146">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L147">		return getMinX().addFixed(dim.getWidth());</span>
+<span class="fc" id="L145">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L146">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L147">		return getMinX().addFixed(dim.getWidth());</span>
 	}
 
 }

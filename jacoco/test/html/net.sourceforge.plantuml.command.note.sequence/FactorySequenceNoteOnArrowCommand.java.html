@@ -115,7 +115,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 	
 <span class="fc" id="L117">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L118">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
+<span class="fc" id="L118">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
 
 
 	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
@@ -125,11 +125,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L128">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L129">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="nc" id="L130">				lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L131">				final Display display = lines.toDisplay();</span>
-<span class="nc" id="L132">				return executeInternal(diagram, line0, diagram.manageVariable(display));</span>
+<span class="fc" id="L128">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L129">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L130">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L131">				final Display display = lines.toDisplay();</span>
+<span class="fc" id="L132">				return executeInternal(diagram, line0, diagram.manageVariable(display));</span>
 			}
 
 		};
