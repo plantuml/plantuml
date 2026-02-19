@@ -43,32 +43,28 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 
 /**
- * TeaVM driver for rendering images in SVG.
- * Converts PortableImage to PNG data URL using browser's canvas API,
- * then embeds as an SVG image element.
+ * TeaVM driver for rendering images in SVG. Converts PortableImage to PNG data
+ * URL using browser's canvas API, then embeds as an SVG image element.
  */
 public class DriverImageTeaVM implements UDriver&lt;UImage, SvgGraphicsTeaVM&gt; {
 
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L54">	public DriverImageTeaVM(ClipContainer clipContainer) {</span>
-<span class="nc" id="L55">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L53">	public DriverImageTeaVM(ClipContainer clipContainer) {</span>
+<span class="nc" id="L54">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L55">	}</span>
 
 	@Override
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		final PortableImage image = shape.getImage(1.0);
-//		final int width = image.getWidth();
-//		final int height = image.getHeight();
-//		
-//		// Convert image to PNG data URL via canvas
-//		final String dataUrl = image.toPngDataUrl();
-//		
-//		// Draw as embedded image in SVG
-//		svg.drawImage(dataUrl, x, y, width, height);
-		// ::done
+<span class="nc" id="L59">		final PortableImage image = shape.getImage(1.0);</span>
+<span class="nc" id="L60">		final int width = image.getWidth();</span>
+<span class="nc" id="L61">		final int height = image.getHeight();</span>
 
-<span class="nc" id="L72">	}</span>
+		// Convert image to PNG data URL via canvas
+<span class="nc" id="L64">		final String dataUrl = image.toPngDataUrl();</span>
+
+		// Draw as embedded image in SVG
+<span class="nc" id="L67">		svg.drawImage(dataUrl, x, y, width, height);</span>
+<span class="nc" id="L68">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

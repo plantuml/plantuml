@@ -34,13 +34,11 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-// ::uncomment when __TEAVM__
-//import org.teavm.interop.Async;
-//import org.teavm.interop.AsyncCallback;
-//import org.teavm.jso.JSBody;
-//import org.teavm.jso.JSFunctor;
-//import org.teavm.jso.JSObject;
-// ::done
+import org.teavm.interop.Async;
+import org.teavm.interop.AsyncCallback;
+import org.teavm.jso.JSBody;
+import org.teavm.jso.JSFunctor;
+import org.teavm.jso.JSObject;
 
 /**
  * TeaVM engine for rendering DOT graphs to SVG using Viz.js.
@@ -55,89 +53,85 @@ package net.sourceforge.plantuml.teavm;
  * String svg = GraphVizjsTeaVMEngine.renderDotToSvg(dot);
  * &lt;/pre&gt;
  */
-<span class="nc" id="L58">public class GraphVizjsTeaVMEngine {</span>
+<span class="nc" id="L56">public class GraphVizjsTeaVMEngine {</span>
 
-	// ::uncomment when __TEAVM__
+	/**
+	 * Renders a DOT graph description to SVG format.
+	 * &lt;p&gt;
+	 * This method is asynchronous from JavaScript's perspective but appears
+	 * synchronous to the Java caller thanks to TeaVM's @Async mechanism.
+	 *
+	 * @param dotSource the graph description in DOT format
+	 * @return the rendered SVG as a string
+	 */
+	@Async
+	public static native String renderDotToSvg(String dotSource);
 
-//	/**
-//	 * Renders a DOT graph description to SVG format.
-//	 * &lt;p&gt;
-//	 * This method is asynchronous from JavaScript's perspective but appears
-//	 * synchronous to the Java caller thanks to TeaVM's @Async mechanism.
-//	 *
-//	 * @param dotSource the graph description in DOT format
-//	 * @return the rendered SVG as a string
-//	 */
-//	@Async
-//	public static native String renderDotToSvg(String dotSource);
-//
-//	/**
-//	 * Internal implementation called by TeaVM's async mechanism.
-//	 * Sets up the JavaScript Promise handling and calls the callback when complete.
-//	 */
-//	private static void renderDotToSvg(String dotSource, AsyncCallback&lt;String&gt; callback) {
-//		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));
-//	}
-//
-//	/**
-//	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
-//	 * Uses Viz.js API: Viz.instance().then(viz =&gt; viz.renderString(dot, options))
-//	 */
-//	@JSBody(params = { &quot;dotSource&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script = 
-//		&quot;Viz.instance().then(function(viz) {&quot; +
-//		&quot;  try {&quot; +
-//		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });&quot; +
-//		&quot;    onSuccess(svg);&quot; +
-//		&quot;  } catch(e) {&quot; +
-//		&quot;    onError(e.toString());&quot; +
-//		&quot;  }&quot; +
-//		&quot;}).catch(function(err) {&quot; +
-//		&quot;  onError(err.toString());&quot; +
-//		&quot;});&quot;)
-//	private static native void renderDotToSvgAsync(String dotSource, StringCallback onSuccess, StringCallback onError);
-//
-//	/**
-//	 * Renders a DOT graph using a specific GraphViz engine.
-//	 *
-//	 * @param dotSource the graph description in DOT format
-//	 * @param engine    the GraphViz engine to use (dot, neato, fdp, sfdp, twopi, circo)
-//	 * @return the rendered SVG as a string
-//	 */
-//	@Async
-//	public static native String renderDotToSvg(String dotSource, String engine);
-//
-//	/**
-//	 * Internal implementation for engine-specific rendering.
-//	 */
-//	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback&lt;String&gt; callback) {
-//		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));
-//	}
-//
-//	/**
-//	 * JavaScript bridge for engine-specific rendering.
-//	 */
-//	@JSBody(params = { &quot;dotSource&quot;, &quot;engine&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script = 
-//		&quot;Viz.instance().then(function(viz) {&quot; +
-//		&quot;  try {&quot; +
-//		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });&quot; +
-//		&quot;    onSuccess(svg);&quot; +
-//		&quot;  } catch(e) {&quot; +
-//		&quot;    onError(e.toString());&quot; +
-//		&quot;  }&quot; +
-//		&quot;}).catch(function(err) {&quot; +
-//		&quot;  onError(err.toString());&quot; +
-//		&quot;});&quot;)
-//	private static native void renderDotToSvgWithEngineAsync(String dotSource, String engine, StringCallback onSuccess, StringCallback onError);
-//
-//	/**
-//	 * Callback interface for receiving string results from JavaScript.
-//	 */
-//	@JSFunctor
-//	private interface StringCallback extends JSObject {
-//		void call(String value);
-//	}
+	/**
+	 * Internal implementation called by TeaVM's async mechanism.
+	 * Sets up the JavaScript Promise handling and calls the callback when complete.
+	 */
+	private static void renderDotToSvg(String dotSource, AsyncCallback&lt;String&gt; callback) {
+<span class="nc" id="L75">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L76">	}</span>
+
+	/**
+	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
+	 * Uses Viz.js API: Viz.instance().then(viz =&gt; viz.renderString(dot, options))
+	 */
+	@JSBody(params = { &quot;dotSource&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script = 
+		&quot;Viz.instance().then(function(viz) {&quot; +
+		&quot;  try {&quot; +
+		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });&quot; +
+		&quot;    onSuccess(svg);&quot; +
+		&quot;  } catch(e) {&quot; +
+		&quot;    onError(e.toString());&quot; +
+		&quot;  }&quot; +
+		&quot;}).catch(function(err) {&quot; +
+		&quot;  onError(err.toString());&quot; +
+		&quot;});&quot;)
+	private static native void renderDotToSvgAsync(String dotSource, StringCallback onSuccess, StringCallback onError);
+
+	/**
+	 * Renders a DOT graph using a specific GraphViz engine.
+	 *
+	 * @param dotSource the graph description in DOT format
+	 * @param engine    the GraphViz engine to use (dot, neato, fdp, sfdp, twopi, circo)
+	 * @return the rendered SVG as a string
+	 */
+	@Async
+	public static native String renderDotToSvg(String dotSource, String engine);
+
+	/**
+	 * Internal implementation for engine-specific rendering.
+	 */
+	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback&lt;String&gt; callback) {
+<span class="nc" id="L109">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L110">	}</span>
+
+	/**
+	 * JavaScript bridge for engine-specific rendering.
+	 */
+	@JSBody(params = { &quot;dotSource&quot;, &quot;engine&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script = 
+		&quot;Viz.instance().then(function(viz) {&quot; +
+		&quot;  try {&quot; +
+		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });&quot; +
+		&quot;    onSuccess(svg);&quot; +
+		&quot;  } catch(e) {&quot; +
+		&quot;    onError(e.toString());&quot; +
+		&quot;  }&quot; +
+		&quot;}).catch(function(err) {&quot; +
+		&quot;  onError(err.toString());&quot; +
+		&quot;});&quot;)
+	private static native void renderDotToSvgWithEngineAsync(String dotSource, String engine, StringCallback onSuccess, StringCallback onError);
+
+	/**
+	 * Callback interface for receiving string results from JavaScript.
+	 */
+	@JSFunctor
+	private interface StringCallback extends JSObject {
+		void call(String value);
+	}
 	
-	// ::done
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

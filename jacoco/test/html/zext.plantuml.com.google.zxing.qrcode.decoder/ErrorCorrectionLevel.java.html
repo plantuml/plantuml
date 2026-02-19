@@ -29,38 +29,38 @@ public final class ErrorCorrectionLevel {
   /**
    * L = ~7% correction
    */
-<span class="fc" id="L32">  public static final ErrorCorrectionLevel L = new ErrorCorrectionLevel(0, 0x01, &quot;L&quot;);</span>
+<span class="nc" id="L32">  public static final ErrorCorrectionLevel L = new ErrorCorrectionLevel(0, 0x01, &quot;L&quot;);</span>
   /**
    * M = ~15% correction
    */
-<span class="fc" id="L36">  public static final ErrorCorrectionLevel M = new ErrorCorrectionLevel(1, 0x00, &quot;M&quot;);</span>
+<span class="nc" id="L36">  public static final ErrorCorrectionLevel M = new ErrorCorrectionLevel(1, 0x00, &quot;M&quot;);</span>
   /**
    * Q = ~25% correction
    */
-<span class="fc" id="L40">  public static final ErrorCorrectionLevel Q = new ErrorCorrectionLevel(2, 0x03, &quot;Q&quot;);</span>
+<span class="nc" id="L40">  public static final ErrorCorrectionLevel Q = new ErrorCorrectionLevel(2, 0x03, &quot;Q&quot;);</span>
   /**
    * H = ~30% correction
    */
-<span class="fc" id="L44">  public static final ErrorCorrectionLevel H = new ErrorCorrectionLevel(3, 0x02, &quot;H&quot;);</span>
+<span class="nc" id="L44">  public static final ErrorCorrectionLevel H = new ErrorCorrectionLevel(3, 0x02, &quot;H&quot;);</span>
 
-<span class="fc" id="L46">  private static final ErrorCorrectionLevel[] FOR_BITS = {M, L, H, Q};</span>
+<span class="nc" id="L46">  private static final ErrorCorrectionLevel[] FOR_BITS = {M, L, H, Q};</span>
 
   private final int ordinal;
   private final int bits;
   private final String name;
 
-<span class="fc" id="L52">  private ErrorCorrectionLevel(int ordinal, int bits, String name) {</span>
-<span class="fc" id="L53">    this.ordinal = ordinal;</span>
-<span class="fc" id="L54">    this.bits = bits;</span>
-<span class="fc" id="L55">    this.name = name;</span>
-<span class="fc" id="L56">  }</span>
+<span class="nc" id="L52">  private ErrorCorrectionLevel(int ordinal, int bits, String name) {</span>
+<span class="nc" id="L53">    this.ordinal = ordinal;</span>
+<span class="nc" id="L54">    this.bits = bits;</span>
+<span class="nc" id="L55">    this.name = name;</span>
+<span class="nc" id="L56">  }</span>
 
   public int ordinal() {
-<span class="fc" id="L59">    return ordinal;</span>
+<span class="nc" id="L59">    return ordinal;</span>
   }
 
   public int getBits() {
-<span class="fc" id="L63">    return bits;</span>
+<span class="nc" id="L63">    return bits;</span>
   }
 
   public String getName() {

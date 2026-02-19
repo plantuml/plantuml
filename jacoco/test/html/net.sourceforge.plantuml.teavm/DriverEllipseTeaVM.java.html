@@ -51,28 +51,25 @@ public class DriverEllipseTeaVM implements UDriver&lt;UEllipse, SvgGraphicsTeaVM
 
 	@Override
 	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
-//		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
-//		svg.setStrokeWidth(param.getStroke().getThickness());
-//
-//		final double width = ellipse.getWidth();
-//		final double height = ellipse.getHeight();
-//
-//		// UEllipse uses width/height, but SVG ellipse uses rx/ry (radii)
-//		// And x,y is top-left corner for UEllipse, but center for SVG
-//		final double cx = x + width / 2;
-//		final double cy = y + height / 2;
-//		final double rx = width / 2;
-//		final double ry = height / 2;
-//
-//		if (Math.abs(rx - ry) &lt; 0.01)
-//			svg.drawCircle(cx, cy, rx);
-//		else
-//			svg.drawEllipse(cx, cy, rx, ry);
-		
-		// ::done
+<span class="nc" id="L54">		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);</span>
+<span class="nc" id="L55">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc" id="L56">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
 
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L58">		final double width = ellipse.getWidth();</span>
+<span class="nc" id="L59">		final double height = ellipse.getHeight();</span>
+
+		// UEllipse uses width/height, but SVG ellipse uses rx/ry (radii)
+		// And x,y is top-left corner for UEllipse, but center for SVG
+<span class="nc" id="L63">		final double cx = x + width / 2;</span>
+<span class="nc" id="L64">		final double cy = y + height / 2;</span>
+<span class="nc" id="L65">		final double rx = width / 2;</span>
+<span class="nc" id="L66">		final double ry = height / 2;</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (Math.abs(rx - ry) &lt; 0.01)</span>
+<span class="nc" id="L69">			svg.drawCircle(cx, cy, rx);</span>
+		else
+<span class="nc" id="L71">			svg.drawEllipse(cx, cy, rx, ry);</span>
+
+<span class="nc" id="L73">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

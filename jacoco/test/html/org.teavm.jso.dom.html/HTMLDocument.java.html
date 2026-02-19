@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HTMLDocument.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.teavm.jso.dom.html</a> &gt; <span class="el_source">HTMLDocument.java</span></div><h1>HTMLDocument.java</h1><pre class="source lang-java linenums">package org.teavm.jso.dom.html;
+
+import org.teavm.jso.dom.xml.Document;
+
+/**
+ * Mock for org.teavm.jso.dom.html.HTMLDocument.
+ * &lt;p&gt;
+ * In the real TeaVM runtime, this interface represents the browser's
+ * {@code document} object. Here it provides only the methods actually used
+ * by PlantUML code, as a compilation stub.
+ */
+<span class="nc" id="L12">public abstract class HTMLDocument implements Document {</span>
+
+	/**
+	 * Returns the current HTML document ({@code window.document}).
+	 *
+	 * @return the current document instance
+	 */
+	public static HTMLDocument current() {
+<span class="nc" id="L20">		throw new UnsupportedOperationException(&quot;TeaVM mock — not available outside browser&quot;);</span>
+	}
+
+	/**
+	 * Returns the element with the specified ID, or {@code null} if not found.
+	 *
+	 * @param id the element ID to look up
+	 * @return the matching element, or {@code null}
+	 */
+	public abstract HTMLElement getElementById(String id);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -51,12 +51,10 @@ public class DriverLineTeaVM implements UDriver&lt;ULine, SvgGraphicsTeaVM&gt; {
 
 	@Override
 	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
-//		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
-//
-//		svg.drawLine(x, y, x + line.getDX(), y + line.getDY());
-		// ::done
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L54">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc" id="L55">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+
+<span class="nc" id="L57">		svg.drawLine(x, y, x + line.getDX(), y + line.getDY());</span>
+<span class="nc" id="L58">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

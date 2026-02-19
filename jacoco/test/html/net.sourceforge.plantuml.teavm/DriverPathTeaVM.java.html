@@ -53,48 +53,46 @@ public class DriverPathTeaVM implements UDriver&lt;UPath, SvgGraphicsTeaVM&gt; {
 
 	@Override
 	public void draw(UPath path, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
-//		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
-//		svg.setStrokeWidth(param.getStroke().getThickness());
-//
-//		// Build SVG path data string
-//		final StringBuilder pathData = new StringBuilder();
-//
-//		for (USegment seg : path) {
-//			final USegmentType type = seg.getSegmentType();
-//			final double[] coord = seg.getCoord();
-//
-//			if (type == USegmentType.SEG_MOVETO) {
-//				pathData.append(&quot;M&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;);
-//			} else if (type == USegmentType.SEG_LINETO) {
-//				pathData.append(&quot;L&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;);
-//			} else if (type == USegmentType.SEG_QUADTO) {
-//				pathData.append(&quot;Q&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;)
-//						.append(format(coord[2] + x)).append(&quot;,&quot;).append(format(coord[3] + y)).append(&quot; &quot;);
-//			} else if (type == USegmentType.SEG_CUBICTO) {
-//				pathData.append(&quot;C&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;)
-//						.append(format(coord[2] + x)).append(&quot;,&quot;).append(format(coord[3] + y)).append(&quot; &quot;)
-//						.append(format(coord[4] + x)).append(&quot;,&quot;).append(format(coord[5] + y)).append(&quot; &quot;);
-//			} else if (type == USegmentType.SEG_ARCTO) {
-//				pathData.append(&quot;A&quot;).append(format(coord[0])).append(&quot;,&quot;).append(format(coord[1])).append(&quot; &quot;)
-//						.append(format(coord[2])).append(&quot; &quot;).append(coord[3] == 0 ? &quot;0&quot; : &quot;1&quot;).append(&quot; &quot;)
-//						.append(coord[4] == 0 ? &quot;0&quot; : &quot;1&quot;).append(&quot; &quot;).append(format(coord[5] + x)).append(&quot;,&quot;)
-//						.append(format(coord[6] + y)).append(&quot; &quot;);
-//			} else if (type == USegmentType.SEG_CLOSE) {
-//				pathData.append(&quot;Z &quot;);
-//			}
-//		}
-//
-//		svg.drawPath(pathData.toString().trim());
-		// ::done
-<span class="nc" id="L91">	}</span>
+<span class="nc" id="L56">		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);</span>
+<span class="nc" id="L57">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc" id="L58">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
+
+		// Build SVG path data string
+<span class="nc" id="L61">		final StringBuilder pathData = new StringBuilder();</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (USegment seg : path) {</span>
+<span class="nc" id="L64">			final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L65">			final double[] coord = seg.getCoord();</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L68">				pathData.append(&quot;M&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L70">				pathData.append(&quot;L&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="nc" id="L72">				pathData.append(&quot;Q&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;)</span>
+<span class="nc" id="L73">						.append(format(coord[2] + x)).append(&quot;,&quot;).append(format(coord[3] + y)).append(&quot; &quot;);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L75">				pathData.append(&quot;C&quot;).append(format(coord[0] + x)).append(&quot;,&quot;).append(format(coord[1] + y)).append(&quot; &quot;)</span>
+<span class="nc" id="L76">						.append(format(coord[2] + x)).append(&quot;,&quot;).append(format(coord[3] + y)).append(&quot; &quot;)</span>
+<span class="nc" id="L77">						.append(format(coord[4] + x)).append(&quot;,&quot;).append(format(coord[5] + y)).append(&quot; &quot;);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="nc" id="L79">				pathData.append(&quot;A&quot;).append(format(coord[0])).append(&quot;,&quot;).append(format(coord[1])).append(&quot; &quot;)</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">						.append(format(coord[2])).append(&quot; &quot;).append(coord[3] == 0 ? &quot;0&quot; : &quot;1&quot;).append(&quot; &quot;)</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">						.append(coord[4] == 0 ? &quot;0&quot; : &quot;1&quot;).append(&quot; &quot;).append(format(coord[5] + x)).append(&quot;,&quot;)</span>
+<span class="nc" id="L82">						.append(format(coord[6] + y)).append(&quot; &quot;);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
+<span class="nc" id="L84">				pathData.append(&quot;Z &quot;);</span>
+			}
+<span class="nc" id="L86">		}</span>
+
+<span class="nc" id="L88">		svg.drawPath(pathData.toString().trim());</span>
+<span class="nc" id="L89">	}</span>
 
 	private String format(double value) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (value == (int) value)</span>
-<span class="nc" id="L95">			return String.valueOf((int) value);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (value == (int) value)</span>
+<span class="nc" id="L93">			return String.valueOf((int) value);</span>
 
-<span class="nc" id="L97">		return String.format(&quot;%.2f&quot;, value).replace(',', '.');</span>
+<span class="nc" id="L95">		return String.format(&quot;%.2f&quot;, value).replace(',', '.');</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

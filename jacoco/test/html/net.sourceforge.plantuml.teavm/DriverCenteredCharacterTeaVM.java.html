@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 /**
@@ -50,20 +49,18 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
  * text-anchor=&quot;middle&quot; and dominant-baseline for centering, instead of
  * converting the character to a path (which would require AWT).
  */
-<span class="nc" id="L53">public class DriverCenteredCharacterTeaVM implements UDriver&lt;UCenteredCharacter, SvgGraphicsTeaVM&gt; {</span>
+<span class="nc" id="L52">public class DriverCenteredCharacterTeaVM implements UDriver&lt;UCenteredCharacter, SvgGraphicsTeaVM&gt; {</span>
 
 	@Override
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		final char c = characterCircled.getChar();
-//		final UFont font = characterCircled.getFont();
-//		final HColor textColor = param.getColor();
-//		final String text = String.valueOf(c);
-//
-//		svg.setFillColor(textColor.toSvg(mapper));
-//		svg.drawCenteredCharacter(c, x, y, &quot;monospace&quot;, font.getSize());
-		// ::done
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L57">		final char c = characterCircled.getChar();</span>
+<span class="nc" id="L58">		final UFont font = characterCircled.getFont();</span>
+<span class="nc" id="L59">		final HColor textColor = param.getColor();</span>
+<span class="nc" id="L60">		final String text = String.valueOf(c);</span>
+
+<span class="nc" id="L62">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="nc" id="L63">		svg.drawCenteredCharacter(c, x, y, &quot;monospace&quot;, font.getSize());</span>
+<span class="nc" id="L64">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

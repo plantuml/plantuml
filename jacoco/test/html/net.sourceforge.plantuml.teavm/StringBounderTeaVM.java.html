@@ -42,67 +42,55 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-		// ::uncomment when __TEAVM__
-//		if (text == null || text.isEmpty())
-//			return new XDimension2D(0, 0);
-//
-//		final String fontFamily = font.getFamily(null, null);
-//		final int fontSize = font.getSize();
-//		final String fontWeight = font.isBold() ? &quot;bold&quot; : &quot;normal&quot;;
-//
-//		final double[] metrics = SvgGraphicsTeaVM.measureTextCanvas(text, fontFamily, fontSize, fontWeight);
-//		final double width = metrics[0];
-//
-//		// Use SVG getBBox for height as it's more accurate for layout
-//		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);
-//		double height = svgMetrics[1];
-//
-//		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
-//		// In this case, use font metrics to get the proper line height
-//		if (height == 0 &amp;&amp; !text.isEmpty()) {
-//			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
-//			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent
-//		}
-//
-//		return new XDimension2D(width, height);
-		// ::done
-		
-		// ::comment when __TEAVM__
-<span class="nc" id="L71">		throw new UnsupportedOperationException();</span>
-		// ::done
+<span class="nc bnc" id="L45" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
+<span class="nc" id="L46">			return new XDimension2D(0, 0);</span>
+
+<span class="nc" id="L48">		final String fontFamily = font.getFamily(null, null);</span>
+<span class="nc" id="L49">		final int fontSize = font.getSize();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		final String fontWeight = font.isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>
+
+<span class="nc" id="L52">		final double[] metrics = SvgGraphicsTeaVM.measureTextCanvas(text, fontFamily, fontSize, fontWeight);</span>
+<span class="nc" id="L53">		final double width = metrics[0];</span>
+
+		// Use SVG getBBox for height as it's more accurate for layout
+<span class="nc" id="L56">		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);</span>
+<span class="nc" id="L57">		double height = svgMetrics[1];</span>
+
+		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
+		// In this case, use font metrics to get the proper line height
+<span class="nc bnc" id="L61" title="All 4 branches missed.">		if (height == 0 &amp;&amp; !text.isEmpty()) {</span>
+<span class="nc" id="L62">			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize,</span>
+					fontWeight);
+<span class="nc" id="L64">			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent</span>
+		}
+
+<span class="nc" id="L67">		return new XDimension2D(width, height);</span>
 
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-		// ::uncomment when __TEAVM__
-//		if (text == null || text.isEmpty())
-//			return 0;
-//
-//		final String fontFamily = font.getFamily(null, null);
-//		final int fontSize = font.getSize();
-//		final String fontWeight = font.isBold() ? &quot;bold&quot; : &quot;normal&quot;;
-//
-//		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
-//		// metrics[2] is actualBoundingBoxDescent
-//		return metrics[2];
-		// ::done
+<span class="nc bnc" id="L73" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
+<span class="nc" id="L74">			return 0;</span>
 
-		// ::comment when __TEAVM__
-<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
-		// ::done
+<span class="nc" id="L76">		final String fontFamily = font.getFamily(null, null);</span>
+<span class="nc" id="L77">		final int fontSize = font.getSize();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		final String fontWeight = font.isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>
 
+<span class="nc" id="L80">		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);</span>
+		// metrics[2] is actualBoundingBoxDescent
+<span class="nc" id="L82">		return metrics[2];</span>
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (&quot;TEAVM&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L100">			return true;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (&quot;TEAVM&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L88">			return true;</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (&quot;SVG&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L103">			return true;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (&quot;SVG&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L91">			return true;</span>
 
-<span class="nc" id="L105">		return false;</span>
+<span class="nc" id="L93">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

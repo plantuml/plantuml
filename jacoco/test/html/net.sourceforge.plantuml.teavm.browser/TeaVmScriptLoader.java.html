@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeaVmScriptLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.browser</a> &gt; <span class="el_source">TeaVmScriptLoader.java</span></div><h1>TeaVmScriptLoader.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.teavm.browser;
+
+import org.teavm.jso.JSBody;
+import org.teavm.jso.JSFunctor;
+import org.teavm.jso.JSObject;
+
+public final class TeaVmScriptLoader {
+
+<span class="nc" id="L9">	private static final Object LOCK = new Object();</span>
+	private static volatile boolean loadSuccess;
+	private static volatile String loadError;
+	private static volatile boolean loadComplete;
+
+	@JSFunctor
+	public interface Ok extends JSObject {
+		void invoke();
+	}
+
+	@JSFunctor
+	public interface Err extends JSObject {
+		void invoke(String message);
+	}
+
+	/**
+	 * Loads a JS file once. Multiple concurrent calls are coalesced. The state is
+	 * stored on window.
+	 */
+	@JSBody(params = { &quot;url&quot;, &quot;onOk&quot;, &quot;onErr&quot; }, script = &quot;var w = window;&quot;
+			+ &quot;w.__pl_script_state = w.__pl_script_state || Object.create(null);&quot; + &quot;var st = w.__pl_script_state[url];&quot;
+			+
+
+			&quot;if (st &amp;&amp; st.state === 'loaded') { onOk(); return; }&quot;
+			+ &quot;if (st &amp;&amp; st.state === 'loading') { st.ok.push(onOk); st.err.push(onErr); return; }&quot; +
+
+			&quot;st = w.__pl_script_state[url] = { state: 'loading', ok: [onOk], err: [onErr] };&quot; +
+
+			&quot;var s = document.createElement('script');&quot; + &quot;s.src = url;&quot; + &quot;s.async = true;&quot; +
+
+			&quot;s.onload = function() {&quot; + &quot;  st.state = 'loaded';&quot; + &quot;  var list = st.ok; st.ok = []; st.err = [];&quot;
+			+ &quot;  for (var i = 0; i &lt; list.length; i++) list[i]();&quot; + &quot;};&quot; +
+
+			&quot;s.onerror = function() {&quot; + &quot;  st.state = 'error';&quot; + &quot;  var list = st.err; st.ok = []; st.err = [];&quot;
+			+ &quot;  for (var i = 0; i &lt; list.length; i++) list[i]('Failed to load ' + url);&quot; + &quot;};&quot; +
+
+			&quot;document.head.appendChild(s);&quot;)
+	public static native void loadOnce(String url, Ok onOk, Err onErr);
+
+	@JSBody(params = { &quot;namespace&quot;,
+			&quot;path&quot; }, script = &quot;var ns = window.PLANTUML_STDLIB &amp;&amp; window.PLANTUML_STDLIB[namespace];&quot;
+					+ &quot;return (ns &amp;&amp; ns[path]) || null;&quot;)
+	public static native JSObject getRaw(String namespace, String path);
+
+	@JSBody(params = &quot;lines&quot;, script = &quot;return lines.join('\\n');&quot;)
+	public static native String joinLines(JSObject lines);
+
+	@JSBody(params = &quot;url&quot;, script = &quot;var st = window.__pl_script_state &amp;&amp; window.__pl_script_state[url];&quot;
+			+ &quot;return !!(st &amp;&amp; st.state === 'loaded');&quot;)
+	private static native boolean isLoaded(String url);
+
+	/**
+	 * Loads a script synchronously. Blocks until the script is loaded. MUST be
+	 * called from a TeaVM thread context (not from native JS).
+	 */
+	public static void loadOnceSync(String url) {
+		// Fast path: already loaded
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (isLoaded(url))</span>
+<span class="nc" id="L67">			return;</span>
+
+<span class="nc" id="L69">		synchronized (LOCK) {</span>
+<span class="nc" id="L70">			loadComplete = false;</span>
+<span class="nc" id="L71">			loadSuccess = false;</span>
+<span class="nc" id="L72">			loadError = null;</span>
+
+<span class="nc" id="L74">			loadOnce(url, () -&gt; {</span>
+<span class="nc" id="L75">				synchronized (LOCK) {</span>
+<span class="nc" id="L76">					loadSuccess = true;</span>
+<span class="nc" id="L77">					loadComplete = true;</span>
+<span class="nc" id="L78">					LOCK.notify();</span>
+<span class="nc" id="L79">				}</span>
+<span class="nc" id="L80">			}, (msg) -&gt; {</span>
+<span class="nc" id="L81">				synchronized (LOCK) {</span>
+<span class="nc" id="L82">					loadSuccess = false;</span>
+<span class="nc" id="L83">					loadError = msg;</span>
+<span class="nc" id="L84">					loadComplete = true;</span>
+<span class="nc" id="L85">					LOCK.notify();</span>
+<span class="nc" id="L86">				}</span>
+<span class="nc" id="L87">			});</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			while (!loadComplete) {</span>
+				try {
+<span class="nc" id="L91">					LOCK.wait();</span>
+<span class="nc" id="L92">				} catch (InterruptedException e) {</span>
+					// retry
+<span class="nc" id="L94">				}</span>
+			}
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (!loadSuccess)</span>
+<span class="nc" id="L98">				throw new RuntimeException(loadError);</span>
+<span class="nc" id="L99">		}</span>
+<span class="nc" id="L100">	}</span>
+
+	private TeaVmScriptLoader() {
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

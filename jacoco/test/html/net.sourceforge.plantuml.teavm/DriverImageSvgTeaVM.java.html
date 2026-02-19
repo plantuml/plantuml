@@ -41,17 +41,14 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
 /**
- * TeaVM driver for rendering embedded SVG images.
- * Embeds SVG content directly into the output SVG.
+ * TeaVM driver for rendering embedded SVG images. Embeds SVG content directly
+ * into the output SVG.
  */
 <span class="nc" id="L47">public class DriverImageSvgTeaVM implements UDriver&lt;UImageSvg, SvgGraphicsTeaVM&gt; {</span>
 
 	@Override
 	public void draw(UImageSvg image, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-		// svg.drawSvgImage(image, x, y);
-		// ::done
-
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L51">		svg.drawSvgImage(image, x, y);</span>
+<span class="nc" id="L52">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -52,98 +52,94 @@ public class DriverTextTeaVM implements UDriver&lt;UText, SvgGraphicsTeaVM&gt; {
 
 	// Collects extra colored lines (underline/strikethrough) that cannot be
 	// expressed as simple CSS text-decoration because they use a custom color.
-	// ::uncomment when __TEAVM__
-//	static class ExtraLines {
-//		private final List&lt;HColor&gt; colors = new ArrayList&lt;&gt;();
-//		private final List&lt;Double&gt; deltaYs = new ArrayList&lt;&gt;();
-//
-//		void add(HColor color, double deltaY) {
-//			colors.add(color);
-//			deltaYs.add(deltaY);
-//		}
-//
-//		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphicsTeaVM svg) {
-//			for (int i = 0; i &lt; colors.size(); i++) {
-//				svg.setStrokeColor(colors.get(i).toSvg(mapper));
-//				svg.setStrokeWidth(font.getSize2D() / 28.0);
-//				svg.drawLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i));
-//			}
-//		}
-//	}
-	// ::done
+<span class="nc" id="L55">	static class ExtraLines {</span>
+<span class="nc" id="L56">		private final List&lt;HColor&gt; colors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L57">		private final List&lt;Double&gt; deltaYs = new ArrayList&lt;&gt;();</span>
+
+		void add(HColor color, double deltaY) {
+<span class="nc" id="L60">			colors.add(color);</span>
+<span class="nc" id="L61">			deltaYs.add(deltaY);</span>
+<span class="nc" id="L62">		}</span>
+
+		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphicsTeaVM svg) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			for (int i = 0; i &lt; colors.size(); i++) {</span>
+<span class="nc" id="L66">				svg.setStrokeColor(colors.get(i).toSvg(mapper));</span>
+<span class="nc" id="L67">				svg.setStrokeWidth(font.getSize2D() / 28.0);</span>
+<span class="nc" id="L68">				svg.drawLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i));</span>
+			}
+<span class="nc" id="L70">		}</span>
+	}
 
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L77">	public DriverTextTeaVM(ClipContainer clipContainer) {</span>
-<span class="nc" id="L78">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L75">	public DriverTextTeaVM(ClipContainer clipContainer) {</span>
+<span class="nc" id="L76">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L77">	}</span>
 
 	@Override
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// ::uncomment when __TEAVM__
-//		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-//		if (fontConfiguration.getColor().isTransparent())
-//			return;
-//
-//		final UFont font = fontConfiguration.getFont();
-//		
-//		// Set text color
-//		final String color = fontConfiguration.getColor().toSvg(mapper);
-//		svg.setFillColor(color);
-//
-//		// Extract font properties
-//		final String fontFamily = font.getFamily(null, null);
-//		final int fontSize = font.getSize();
-//
-//		String fontWeight = null;
-//		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())
-//			fontWeight = &quot;bold&quot;;
-//
-//		String fontStyle = null;
-//		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())
-//			fontStyle = &quot;italic&quot;;
-//
-//		// Handle text decoration (underline, strike, wave)
-//		final ExtraLines extraLines = new ExtraLines();
-//		final StringBuilder decorations = new StringBuilder();
-//
-//		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
-//				&amp;&amp; fontConfiguration.getUnderlineStroke().getThickness() &gt; 0) {
-//			if (fontConfiguration.getExtendedColor() == null)
-//				decorations.append(&quot;underline &quot;);
-//			else
-//				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);
-//		}
-//
-//		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-//			if (fontConfiguration.getExtendedColor() == null)
-//				decorations.append(&quot;line-through &quot;);
-//			else
-//				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);
-//		}
-//
-//		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
-//			// Note: some browsers may not render wave properly
-//			decorations.append(&quot;wavy underline &quot;);
-//		}
-//
-//		final String textDecoration = decorations.length() &gt; 0 ? decorations.toString().trim() : null;
-//
-//		// Handle background color
-//		String backColor = null;
-//		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-//			final HColor back = fontConfiguration.getExtendedColor();
-//			if (back != null &amp;&amp; !(back instanceof net.sourceforge.plantuml.klimt.color.HColorGradient)) {
-//				backColor = back.toRGB(mapper);
-//			}
-//		}
-//
-//		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);
-//
-//		// Draw extra lines for colored underline/strike
-//		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);
-//		extraLines.drawAll(x, y, width, font, mapper, svg);
-		// ::done
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L81">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
+<span class="nc" id="L83">			return;</span>
+
+<span class="nc" id="L85">		final UFont font = fontConfiguration.getFont();</span>
+
+		// Set text color
+<span class="nc" id="L88">		final String color = fontConfiguration.getColor().toSvg(mapper);</span>
+<span class="nc" id="L89">		svg.setFillColor(color);</span>
+
+		// Extract font properties
+<span class="nc" id="L92">		final String fontFamily = font.getFamily(null, null);</span>
+<span class="nc" id="L93">		final int fontSize = font.getSize();</span>
+
+<span class="nc" id="L95">		String fontWeight = null;</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())</span>
+<span class="nc" id="L97">			fontWeight = &quot;bold&quot;;</span>
+
+<span class="nc" id="L99">		String fontStyle = null;</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())</span>
+<span class="nc" id="L101">			fontStyle = &quot;italic&quot;;</span>
+
+		// Handle text decoration (underline, strike, wave)
+<span class="nc" id="L104">		final ExtraLines extraLines = new ExtraLines();</span>
+<span class="nc" id="L105">		final StringBuilder decorations = new StringBuilder();</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">				&amp;&amp; fontConfiguration.getUnderlineStroke().getThickness() &gt; 0) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
+<span class="nc" id="L110">				decorations.append(&quot;underline &quot;);</span>
+			else
+<span class="nc" id="L112">				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);</span>
+		}
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
+<span class="nc" id="L117">				decorations.append(&quot;line-through &quot;);</span>
+			else
+<span class="nc" id="L119">				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);</span>
+		}
+
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
+			// Note: some browsers may not render wave properly
+<span class="nc" id="L124">			decorations.append(&quot;wavy underline &quot;);</span>
+		}
+
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		final String textDecoration = decorations.length() &gt; 0 ? decorations.toString().trim() : null;</span>
+
+		// Handle background color
+<span class="nc" id="L130">		String backColor = null;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
+<span class="nc" id="L132">			final HColor back = fontConfiguration.getExtendedColor();</span>
+<span class="nc bnc" id="L133" title="All 4 branches missed.">			if (back != null &amp;&amp; !(back instanceof net.sourceforge.plantuml.klimt.color.HColorGradient)) {</span>
+<span class="nc" id="L134">				backColor = back.toRGB(mapper);</span>
+			}
+		}
+
+<span class="nc" id="L138">		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);</span>
+
+		// Draw extra lines for colored underline/strike
+<span class="nc" id="L141">		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);</span>
+<span class="nc" id="L142">		extraLines.drawAll(x, y, width, font, mapper, svg);</span>
+<span class="nc" id="L143">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
