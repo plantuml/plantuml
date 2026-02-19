@@ -1,0 +1,110 @@
+// ============================================================
+// build-eclipse.gradle.kts
+// ============================================================
+// Simplified build file for Eclipse IDE.
+//
+// Strips out TeaVM source set, configurations, and tasks that
+// confuse Eclipse's Gradle tooling (Buildship). Use this when
+// Eclipse cannot properly import the main build.gradle.kts.
+//
+// Usage:
+//   1. In Eclipse: Window → Preferences → Gradle
+//      → "Override workspace settings" → Build Script:
+//        build-eclipse.gradle.kts
+//   Or simply:
+//   2. Rename this file to build.gradle.kts (backup the original first)
+//   3. Re-import the Gradle project in Eclipse
+//
+// This file is NOT used by CI or command-line builds.
+// ============================================================
+
+val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
+
+plugins {
+    java
+    `maven-publish`
+    eclipse
+}
+
+group = "net.sourceforge.plantuml"
+description = "PlantUML"
+
+java {
+    registerFeature("pdf") {
+        usingSourceSet(sourceSets["main"])
+    }
+}
+
+// No "teavm" source set — that's the whole point of this file.
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly(libs.ant)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.glytching.junit.extensions)
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.xmlunit.core)
+    if (JavaVersion.current().isJava8) {
+        testImplementation(libs.mockito.core.j8)
+        testImplementation(libs.mockito.junit.jupiter.j8)
+    } else {
+        testImplementation(libs.mockito.core)
+        testImplementation(libs.mockito.junit.jupiter)
+        testImplementation(libs.junit.pioneer)
+    }
+
+    implementation(libs.jlatexmath)
+    implementation(libs.elk.core)
+    implementation(libs.elk.alg.layered)
+    implementation(libs.elk.alg.mrtree)
+}
+
+tasks.compileJava {
+    if (JavaVersion.current().isJava8) {
+        java.targetCompatibility = JavaVersion.VERSION_1_8
+    } else {
+        options.release.set(Integer.parseInt(javacRelease))
+    }
+}
+
+// ============================================
+// Jar
+// ============================================
+
+tasks.withType<Jar>().configureEach {
+    manifest {
+        attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
+        attributes["Implementation-Version"] = archiveVersion
+        attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
+        from("manifest.txt")
+    }
+
+    val runtimeClasspath = configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) }
+    from(runtimeClasspath) {
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// ============================================
+// Compile & Test
+// ============================================
+
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+}
