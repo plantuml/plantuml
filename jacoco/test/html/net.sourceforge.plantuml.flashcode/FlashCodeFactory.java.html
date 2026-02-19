@@ -40,10 +40,10 @@ package net.sourceforge.plantuml.flashcode;
 
 
 	public static FlashCodeUtils getFlashCodeUtils() {
-<span class="fc" id="L43">		final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
+<span class="nc" id="L43">		final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
 		try {
-<span class="fc" id="L45">			final Class cl = Class.forName(name);</span>
-<span class="fc" id="L46">			return (FlashCodeUtils) cl.newInstance();</span>
+<span class="nc" id="L45">			final Class cl = Class.forName(name);</span>
+<span class="nc" id="L46">			return (FlashCodeUtils) cl.newInstance();</span>
 <span class="nc" id="L47">		} catch (ClassNotFoundException e) {</span>
 <span class="nc" id="L48">			return new FlashCodeUtilsNone();</span>
 <span class="nc" id="L49">		} catch (InstantiationException e) {</span>

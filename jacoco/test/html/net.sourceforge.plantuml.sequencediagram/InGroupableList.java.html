@@ -46,13 +46,13 @@ import net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox;
 import net.sourceforge.plantuml.sequencediagram.graphic.MessageExoArrow;
 import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
 
-<span class="fc" id="L49">public class InGroupableList implements InGroupable {</span>
+<span class="nc" id="L49">public class InGroupableList implements InGroupable {</span>
 
 	private static final int MARGIN5 = 5;
 	public static final int MARGIN10 = 10;
 
 	private final Grouping grouping;
-<span class="fc" id="L55">	private final Set&lt;InGroupable&gt; inGroupables = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L55">	private final Set&lt;InGroupable&gt; inGroupables = new HashSet&lt;&gt;();</span>
 
 	private double minWidth;
 
@@ -67,17 +67,17 @@ import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
 
 	private final ParticipantBox veryfirst;
 
-<span class="fc" id="L70">	public InGroupableList(ParticipantBox veryfirst, Grouping grouping, double startingY) {</span>
-<span class="fc" id="L71">		this.grouping = grouping;</span>
-<span class="fc" id="L72">		this.veryfirst = veryfirst;</span>
-<span class="fc" id="L73">	}</span>
+<span class="nc" id="L70">	public InGroupableList(ParticipantBox veryfirst, Grouping grouping, double startingY) {</span>
+<span class="nc" id="L71">		this.grouping = grouping;</span>
+<span class="nc" id="L72">		this.veryfirst = veryfirst;</span>
+<span class="nc" id="L73">	}</span>
 
 	public void addInGroupable(InGroupable in) {
 		// Thread.dumpStack();
-<span class="fc" id="L77">		this.inGroupables.add(in);</span>
-<span class="fc" id="L78">		cacheMin = null;</span>
-<span class="fc" id="L79">		cacheMax = null;</span>
-<span class="fc" id="L80">	}</span>
+<span class="nc" id="L77">		this.inGroupables.add(in);</span>
+<span class="nc" id="L78">		cacheMin = null;</span>
+<span class="nc" id="L79">		cacheMax = null;</span>
+<span class="nc" id="L80">	}</span>
 
 	public boolean isEmpty() {
 <span class="nc" id="L83">		return inGroupables.isEmpty();</span>
@@ -98,52 +98,52 @@ import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
 	}
 
 	private InGroupable getMinSlow(StringBounder stringBounder) {
-<span class="fc" id="L101">		InGroupable result = null;</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">		for (InGroupable in : inGroupables) {</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (in instanceof GroupingGraphicalElementElse)</span>
+<span class="nc" id="L101">		InGroupable result = null;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (InGroupable in : inGroupables) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (in instanceof GroupingGraphicalElementElse)</span>
 <span class="nc" id="L104">				continue;</span>
 
-<span class="fc bfc" id="L106" title="All 4 branches covered.">			if (result == null || in.getMinX(stringBounder) &lt; result.getMinX(stringBounder))</span>
-<span class="fc" id="L107">				result = in;</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">			if (result == null || in.getMinX(stringBounder) &lt; result.getMinX(stringBounder))</span>
+<span class="nc" id="L107">				result = in;</span>
 
-<span class="fc" id="L109">		}</span>
-<span class="fc" id="L110">		return result;</span>
+<span class="nc" id="L109">		}</span>
+<span class="nc" id="L110">		return result;</span>
 	}
 
 	private InGroupable getMaxSlow(StringBounder stringBounder) {
-<span class="fc" id="L114">		InGroupable result = null;</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (InGroupable in : inGroupables)</span>
-<span class="fc bfc" id="L116" title="All 4 branches covered.">			if (result == null || in.getMaxX(stringBounder) &gt; result.getMaxX(stringBounder))</span>
-<span class="fc" id="L117">				result = in;</span>
+<span class="nc" id="L114">		InGroupable result = null;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (InGroupable in : inGroupables)</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">			if (result == null || in.getMaxX(stringBounder) &gt; result.getMaxX(stringBounder))</span>
+<span class="nc" id="L117">				result = in;</span>
 
-<span class="fc" id="L119">		return result;</span>
+<span class="nc" id="L119">		return result;</span>
 	}
 
-<span class="fc" id="L122">	private InGroupable cacheMin = null;</span>
-<span class="fc" id="L123">	private InGroupable cacheMax = null;</span>
+<span class="nc" id="L122">	private InGroupable cacheMin = null;</span>
+<span class="nc" id="L123">	private InGroupable cacheMax = null;</span>
 
 	private InGroupable getMin(StringBounder stringBounder) {
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (cacheMin == null)</span>
-<span class="fc" id="L127">			cacheMin = getMinSlow(stringBounder);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (cacheMin == null)</span>
+<span class="nc" id="L127">			cacheMin = getMinSlow(stringBounder);</span>
 
 		// Since // MODIF42 // the assert does not work...
 		// System.err.println(&quot;cacheMin1=&quot;+cacheMin+&quot;
 		// cacheMin2=&quot;+getMinSlow(stringBounder));
 		// assert cacheMin == getMinSlow(stringBounder);
-<span class="fc" id="L133">		return cacheMin;</span>
+<span class="nc" id="L133">		return cacheMin;</span>
 	}
 
 	private InGroupable getMax(StringBounder stringBounder) {
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (cacheMax == null)</span>
-<span class="fc" id="L138">			cacheMax = getMaxSlow(stringBounder);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (cacheMax == null)</span>
+<span class="nc" id="L138">			cacheMax = getMaxSlow(stringBounder);</span>
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		assert cacheMax == getMaxSlow(stringBounder);</span>
-<span class="fc" id="L141">		return cacheMax;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		assert cacheMax == getMaxSlow(stringBounder);</span>
+<span class="nc" id="L141">		return cacheMax;</span>
 	}
 
 	public void setMinWidth(double minWidth) {
-<span class="fc" id="L145">		this.minWidth = minWidth;</span>
-<span class="fc" id="L146">	}</span>
+<span class="nc" id="L145">		this.minWidth = minWidth;</span>
+<span class="nc" id="L146">	}</span>
 
 	public ParticipantBox getFirstParticipantBox() {
 <span class="nc" id="L149">		ParticipantBox first = null;</span>
@@ -170,47 +170,47 @@ import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
 	}
 
 	public double getMinX(StringBounder stringBounder) {
-<span class="fc" id="L173">		final InGroupable min = getMin(stringBounder);</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (min == null)</span>
+<span class="nc" id="L173">		final InGroupable min = getMin(stringBounder);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (min == null)</span>
 <span class="nc bnc" id="L175" title="All 2 branches missed.">			return MARGIN10 + MARGIN5 + (veryfirst == null ? 0 : veryfirst.getStartingX());</span>
 
-<span class="fc" id="L177">		double m = min.getMinX(stringBounder);</span>
-<span class="pc bpc" id="L178" title="3 of 4 branches missed.">		if (min instanceof MessageExoArrow &amp;&amp; (((MessageExoArrow) min).getType() == MessageExoType.FROM_LEFT</span>
+<span class="nc" id="L177">		double m = min.getMinX(stringBounder);</span>
+<span class="nc bnc" id="L178" title="All 4 branches missed.">		if (min instanceof MessageExoArrow &amp;&amp; (((MessageExoArrow) min).getType() == MessageExoType.FROM_LEFT</span>
 <span class="nc bnc" id="L179" title="All 2 branches missed.">				|| ((MessageExoArrow) min).getType() == MessageExoType.TO_LEFT))</span>
 <span class="nc" id="L180">			m += 3;</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		else if (min instanceof InGroupableList)</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		else if (min instanceof InGroupableList)</span>
 <span class="nc" id="L182">			m -= MARGIN10;</span>
 		else
-<span class="fc" id="L184">			m -= MARGIN5;</span>
+<span class="nc" id="L184">			m -= MARGIN5;</span>
 
-<span class="fc" id="L186">		return m;</span>
+<span class="nc" id="L186">		return m;</span>
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L190">		final double min = getMinX(stringBounder);</span>
-<span class="fc" id="L191">		final double max = getMaxXInternal(stringBounder);</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		assert max - min &gt;= 0;</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (max - min &lt; minWidth)</span>
-<span class="fc" id="L194">			return min + minWidth + hack2;</span>
+<span class="nc" id="L190">		final double min = getMinX(stringBounder);</span>
+<span class="nc" id="L191">		final double max = getMaxXInternal(stringBounder);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		assert max - min &gt;= 0;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (max - min &lt; minWidth)</span>
+<span class="nc" id="L194">			return min + minWidth + hack2;</span>
 
-<span class="fc" id="L196">		return max + hack2;</span>
+<span class="nc" id="L196">		return max + hack2;</span>
 	}
 
 	private final double getMaxXInternal(StringBounder stringBounder) {
-<span class="fc" id="L200">		final InGroupable max = getMax(stringBounder);</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (max == null)</span>
+<span class="nc" id="L200">		final InGroupable max = getMax(stringBounder);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (max == null)</span>
 <span class="nc" id="L202">			return MARGIN10 + MARGIN5 + minWidth;</span>
 
-<span class="fc" id="L204">		double m = max.getMaxX(stringBounder);</span>
-<span class="pc bpc" id="L205" title="3 of 4 branches missed.">		if (max instanceof MessageExoArrow &amp;&amp; (((MessageExoArrow) max).getType() == MessageExoType.FROM_RIGHT</span>
+<span class="nc" id="L204">		double m = max.getMaxX(stringBounder);</span>
+<span class="nc bnc" id="L205" title="All 4 branches missed.">		if (max instanceof MessageExoArrow &amp;&amp; (((MessageExoArrow) max).getType() == MessageExoType.FROM_RIGHT</span>
 <span class="nc bnc" id="L206" title="All 2 branches missed.">				|| ((MessageExoArrow) max).getType() == MessageExoType.TO_RIGHT))</span>
 <span class="nc" id="L207">			m -= 3;</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		else if (max instanceof InGroupableList)</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		else if (max instanceof InGroupableList)</span>
 <span class="nc" id="L209">			m += MARGIN10;</span>
 		else
-<span class="fc" id="L211">			m += MARGIN5;</span>
+<span class="nc" id="L211">			m += MARGIN5;</span>
 
-<span class="fc" id="L213">		return m;</span>
+<span class="nc" id="L213">		return m;</span>
 	}
 
 	private double hack2;
@@ -220,7 +220,7 @@ import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
 <span class="nc" id="L220">	}</span>
 
 	public double getHack2() {
-<span class="fc" id="L223">		return hack2;</span>
+<span class="nc" id="L223">		return hack2;</span>
 	}
 
 }

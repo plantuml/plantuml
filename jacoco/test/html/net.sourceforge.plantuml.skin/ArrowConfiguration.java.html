@@ -215,7 +215,7 @@ public class ArrowConfiguration {
 	}
 
 	public boolean isAsync2() {
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		return dressing2.getHead() == ArrowHead.ASYNC;</span>
 	}
 
 	public final ArrowPart getPart() {
@@ -253,14 +253,14 @@ public class ArrowConfiguration {
 
 	@Deprecated
 	public UGraphic applyStroke(UGraphic ug) {
-<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (isDotted())</span>
-<span class="fc" id="L257">			return ug.apply(new UStroke(2, 2, thickness));</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (isDotted())</span>
+<span class="nc" id="L257">			return ug.apply(new UStroke(2, 2, thickness));</span>
 
 <span class="fc" id="L259">		return ug.apply(UStroke.withThickness(thickness));</span>
 	}
 
 	public UGraphic applyThicknessOnly(UGraphic ug) {
-<span class="fc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
+<span class="nc" id="L263">		return ug.apply(UStroke.withThickness(thickness));</span>
 	}
 
 	public ArrowConfiguration withThickness(double thickness) {

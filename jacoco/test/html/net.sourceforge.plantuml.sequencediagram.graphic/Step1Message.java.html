@@ -125,8 +125,8 @@ import net.sourceforge.plantuml.style.Style;
 <span class="fc" id="L125">		getDrawingSet().addEvent(getMessage(), graphic);</span>
 
 <span class="fc bfc" id="L127" title="All 2 branches covered.">		if (isSelfMessage()) {</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">			if (this.getConfig().isReverseDefine())</span>
-<span class="fc" id="L129">				constraintSet.getConstraintBefore(getParticipantBox1()).ensureValue(length);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (this.getConfig().isReverseDefine())</span>
+<span class="nc" id="L129">				constraintSet.getConstraintBefore(getParticipantBox1()).ensureValue(length);</span>
 			else
 <span class="fc" id="L131">				constraintSet.getConstraintAfter(getParticipantBox1()).ensureValue(length);</span>
 		} else {
@@ -178,17 +178,17 @@ import net.sourceforge.plantuml.style.Style;
 <span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (getMessage().isCreate())</span>
 <span class="nc" id="L179">			return createArrowCreate();</span>
 
-<span class="fc bfc" id="L181" title="All 4 branches covered.">		if (getMessage().getNoteOnMessages().size() &gt; 0 &amp;&amp; isSelfMessage()) {</span>
-<span class="fc" id="L182">			final MessageSelfArrow messageSelfArrow = createMessageSelfArrow();</span>
-<span class="fc" id="L183">			final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">			for (int i = 0; i &lt; getNotes().size(); i++) {</span>
-<span class="fc" id="L185">				final Component note = getNotes().get(i);</span>
-<span class="fc" id="L186">				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);</span>
-<span class="fc" id="L187">				noteOnMessage.temporaryProtectedUntilTeozIsStandard();</span>
-<span class="fc" id="L188">				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));</span>
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">		if (getMessage().getNoteOnMessages().size() &gt; 0 &amp;&amp; isSelfMessage()) {</span>
+<span class="nc" id="L182">			final MessageSelfArrow messageSelfArrow = createMessageSelfArrow();</span>
+<span class="nc" id="L183">			final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">			for (int i = 0; i &lt; getNotes().size(); i++) {</span>
+<span class="nc" id="L185">				final Component note = getNotes().get(i);</span>
+<span class="nc" id="L186">				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);</span>
+<span class="nc" id="L187">				noteOnMessage.temporaryProtectedUntilTeozIsStandard();</span>
+<span class="nc" id="L188">				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));</span>
 			}
-<span class="fc" id="L190">			return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
-<span class="fc" id="L191">					getStringBounder(), messageSelfArrow, noteBoxes);</span>
+<span class="nc" id="L190">			return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
+<span class="nc" id="L191">					getStringBounder(), messageSelfArrow, noteBoxes);</span>
 <span class="fc bfc" id="L192" title="All 2 branches covered.">		} else if (getMessage().getNoteOnMessages().size() &gt; 0) {</span>
 <span class="fc" id="L193">			final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L194" title="All 2 branches covered.">			for (int i = 0; i &lt; getNotes().size(); i++) {</span>
@@ -276,8 +276,8 @@ import net.sourceforge.plantuml.style.Style;
 
 	private ArrowConfiguration getSelfArrowType(Message m) {
 <span class="fc" id="L278">		ArrowConfiguration result = ArrowConfiguration.withDirectionSelf(m.getArrowConfiguration().isReverseDefine());</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (m.getArrowConfiguration().isDotted())</span>
-<span class="fc" id="L280">			result = result.withBody(ArrowBody.DOTTED);</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (m.getArrowConfiguration().isDotted())</span>
+<span class="nc" id="L280">			result = result.withBody(ArrowBody.DOTTED);</span>
 
 <span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (m.getArrowConfiguration().isHidden())</span>
 <span class="nc" id="L283">			result = result.withBody(ArrowBody.HIDDEN);</span>
