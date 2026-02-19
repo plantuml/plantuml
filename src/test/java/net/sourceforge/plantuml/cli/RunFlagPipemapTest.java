@@ -4,11 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.Isolated;
 import org.junitpioneer.jupiter.StdIo;
 import org.junitpioneer.jupiter.StdOut;
 
 import net.sourceforge.plantuml.Run;
 
+@Execution(ExecutionMode.SAME_THREAD)
+@Isolated
 class RunFlagPipemapTest extends AbstractCliTest {
 
 	@StdIo({ "@startuml", "participant Alice [[http://plantuml.com/sequence]]", "Alice->Bob: hello", "@enduml" })

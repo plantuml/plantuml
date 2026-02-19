@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.NFolder;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -182,7 +183,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
 				strings.add("Word Mode");
 				strings.add("Current Dir: " + new SFile(".").getAbsolutePath());
-				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv(SecurityUtils.PATHS_INCLUDES));
+				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));
 			}
 		}
 		strings.add(" ");

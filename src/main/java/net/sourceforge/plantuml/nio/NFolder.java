@@ -39,6 +39,22 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public interface NFolder {
+	
+	/**
+	 * Java class paths to import files from.
+	 */
+	public static final String PATHS_CLASSES = "java.class.path";
+
+	/**
+	 * Paths to include files.
+	 */
+	public static final String PATHS_INCLUDES = "plantuml.include.path";
+
+	/**
+	 * Whitelist of paths from where scripts can load data.
+	 */
+	public static final String ALLOWLIST_LOCAL_PATHS = "plantuml.allowlist.path";
+
 
 	public InputFile getInputFile(Path nameOrPath) throws IOException;
 

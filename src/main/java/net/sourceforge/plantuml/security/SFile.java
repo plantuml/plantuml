@@ -259,10 +259,10 @@ public class SFile implements Comparable<SFile>, InputFile {
 			return false;
 		}
 		// Files in "plantuml.include.path" and "plantuml.allowlist.path" are ok.
-		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)))
+		if (isInAllowList(SecurityUtils.getPath(NFolder.PATHS_INCLUDES)))
 			return true;
 
-		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.ALLOWLIST_LOCAL_PATHS)))
+		if (isInAllowList(SecurityUtils.getPath(NFolder.ALLOWLIST_LOCAL_PATHS)))
 			return true;
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)
@@ -426,7 +426,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return null;
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	// Writing
 	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
 		return new BufferedOutputStream(new FileOutputStream(internal));
@@ -451,6 +451,12 @@ public class SFile implements Comparable<SFile>, InputFile {
 	public PrintStream createPrintStream(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
 		return new PrintStream(internal, charset.name());
 	}
+
+	public Path toPath() throws IOException {
+		if (isFileOk())
+			return getSanitizedPath();
+		return null;
+	}
 	// ::done
 
 	@Override
@@ -460,13 +466,10 @@ public class SFile implements Comparable<SFile>, InputFile {
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
+		// ::revert when __TEAVM__
 		return new NFolderRegular(getSanitizedPath().getParent());
-	}
-
-	public Path toPath() throws IOException {
-		if (isFileOk())
-			return getSanitizedPath();
-		return null;
+		// throw new UnsupportedOperationException("TEAVM96521");
+		// ::done
 	}
 
 }

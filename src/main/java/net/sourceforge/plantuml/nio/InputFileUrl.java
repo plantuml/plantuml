@@ -41,6 +41,7 @@ import java.io.InputStream;
 import net.sourceforge.plantuml.security.SURL;
 
 public class InputFileUrl implements InputFile {
+	// ::remove file when __TEAVM__
 
 	private final SURL url;
 

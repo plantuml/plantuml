@@ -200,7 +200,9 @@ final public class StringLocated {
 
 	@Override
 	public String toString() {
-		return s;
+		if (s.length() == 0)
+			return "<<<EMPTY STRING>>>";
+		return "(SL) " + s;
 	}
 
 	public StringLocated append(String endOfLine) {

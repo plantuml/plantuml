@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.nio.NFolder;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -97,13 +98,13 @@ public class FileSystem {
 				return filecurrent.getCanonicalFile();
 
 		}
-		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)) {
+		for (SFile d : SecurityUtils.getPath(NFolder.PATHS_INCLUDES)) {
 			assert d.isDirectory();
 			final SFile file = d.file(nameOrPath);
 			if (file.exists())
 				return file.getCanonicalFile();
 		}
-		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES)) {
+		for (SFile d : SecurityUtils.getPath(NFolder.PATHS_CLASSES)) {
 			assert d.isDirectory();
 			final SFile file = d.file(nameOrPath);
 			if (file.exists())

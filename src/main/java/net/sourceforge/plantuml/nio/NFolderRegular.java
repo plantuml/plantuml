@@ -40,8 +40,10 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class NFolderRegular implements NFolder {
+	// ::remove file when __TEAVM__
 
 	private final Path dir;
 
@@ -52,14 +54,31 @@ public class NFolderRegular implements NFolder {
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
 		final SFile result;
-		if (nameOrPath.isAbsolute())
+		if (nameOrPath.isAbsolute()) {
 			result = SFile.fromFile(nameOrPath.toFile());
-		else
-			result = SFile.fromFile(dir.resolve(nameOrPath).toFile());
+			if (result.canRead())
+				return result;
 
-		if (result.canRead())
-			return result;
-		
+		} else {
+			result = SFile.fromFile(dir.resolve(nameOrPath).toFile());
+			if (result.canRead())
+				return result;
+
+			for (SFile d : SecurityUtils.getPath(PATHS_INCLUDES)) {
+				assert d.isDirectory();
+				final SFile file = d.file(nameOrPath.toString());
+				if (file.canRead())
+					return file.getCanonicalFile();
+			}
+			for (SFile d : SecurityUtils.getPath(PATHS_CLASSES)) {
+				assert d.isDirectory();
+				final SFile file = d.file(nameOrPath.toString());
+				if (file.canRead())
+					return file.getCanonicalFile();
+
+			}
+		}
+
 		return null;
 
 	}

@@ -49,6 +49,7 @@ import java.util.Objects;
  * specific sub-path (which can be the root) inside that archive.
  */
 public final class NFolderZip implements NFolder {
+	// ::remove file when __TEAVM__
 
 	private final File zipFile;
 	/** Current path inside the ZIP (relative, no leading slash). */
