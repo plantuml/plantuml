@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.nio.NFolder;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -44,35 +45,35 @@ import net.sourceforge.plantuml.utils.Log;
 public class FileSystem {
 	// ::remove file when __HAXE__
 
-<span class="fc" id="L47">	private final static FileSystem singleton = new FileSystem();</span>
+<span class="fc" id="L48">	private final static FileSystem singleton = new FileSystem();</span>
 
-<span class="fc" id="L49">	private ThreadLocal&lt;String&gt; currentDir = new ThreadLocal&lt;&gt;();</span>
+<span class="fc" id="L50">	private ThreadLocal&lt;String&gt; currentDir = new ThreadLocal&lt;&gt;();</span>
 
-<span class="fc" id="L51">	private FileSystem() {</span>
-<span class="fc" id="L52">		reset();</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L52">	private FileSystem() {</span>
+<span class="fc" id="L53">		reset();</span>
+<span class="fc" id="L54">	}</span>
 
 	public static FileSystem getInstance() {
-<span class="fc" id="L56">		return singleton;</span>
+<span class="fc" id="L57">		return singleton;</span>
 	}
 
 	public void setCurrentDir(SFile dir) {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (dir == null) {</span>
-<span class="nc" id="L61">			this.currentDir.set(null);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (dir == null) {</span>
+<span class="nc" id="L62">			this.currentDir.set(null);</span>
 		} else {
-<span class="fc" id="L63">			Log.info(() -&gt; &quot;Setting current dir: &quot; + dir.getAbsolutePath());</span>
-<span class="fc" id="L64">			this.currentDir.set(dir.getAbsolutePath());</span>
+<span class="fc" id="L64">			Log.info(() -&gt; &quot;Setting current dir: &quot; + dir.getAbsolutePath());</span>
+<span class="fc" id="L65">			this.currentDir.set(dir.getAbsolutePath());</span>
 		}
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L67">	}</span>
 
 	public SFile getCurrentDir() {
 		// ::comment when __CORE__ or __TEAVM__
-<span class="fc" id="L70">		final String path = this.currentDir.get();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (path != null)</span>
-<span class="fc" id="L72">			return new SFile(path);</span>
+<span class="fc" id="L71">		final String path = this.currentDir.get();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (path != null)</span>
+<span class="fc" id="L73">			return new SFile(path);</span>
 		// ::done
 
-<span class="fc" id="L75">		return null;</span>
+<span class="fc" id="L76">		return null;</span>
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {
@@ -81,54 +82,54 @@ public class FileSystem {
 		// ::done
 
 		// ::comment when __CORE__ or __TEAVM__
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (isAbsolute(nameOrPath)) {</span>
-<span class="nc" id="L85">			final SFile result = new SFile(nameOrPath);</span>
-<span class="nc" id="L86">			Log.info(() -&gt; &quot;Trying &quot; + result.getAbsolutePath());</span>
-<span class="nc" id="L87">			return result.getCanonicalFile();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (isAbsolute(nameOrPath)) {</span>
+<span class="nc" id="L86">			final SFile result = new SFile(nameOrPath);</span>
+<span class="nc" id="L87">			Log.info(() -&gt; &quot;Trying &quot; + result.getAbsolutePath());</span>
+<span class="nc" id="L88">			return result.getCanonicalFile();</span>
 		}
 
-<span class="fc" id="L90">		final SFile dir = getCurrentDir();</span>
-<span class="fc" id="L91">		SFile filecurrent = null;</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (dir != null) {</span>
-<span class="fc" id="L93">			filecurrent = dir.getAbsoluteFile().file(nameOrPath);</span>
-<span class="fc" id="L94">			final SFile filecurrent2 = filecurrent;</span>
-<span class="pc" id="L95">			Log.info(() -&gt; &quot;Current dir is &quot; + dir.getAbsolutePath() + &quot; so trying &quot; + filecurrent2.getAbsolutePath());</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (filecurrent.exists())</span>
-<span class="fc" id="L97">				return filecurrent.getCanonicalFile();</span>
+<span class="fc" id="L91">		final SFile dir = getCurrentDir();</span>
+<span class="fc" id="L92">		SFile filecurrent = null;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (dir != null) {</span>
+<span class="fc" id="L94">			filecurrent = dir.getAbsoluteFile().file(nameOrPath);</span>
+<span class="fc" id="L95">			final SFile filecurrent2 = filecurrent;</span>
+<span class="pc" id="L96">			Log.info(() -&gt; &quot;Current dir is &quot; + dir.getAbsolutePath() + &quot; so trying &quot; + filecurrent2.getAbsolutePath());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (filecurrent.exists())</span>
+<span class="fc" id="L98">				return filecurrent.getCanonicalFile();</span>
 
 		}
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)) {</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			assert d.isDirectory();</span>
-<span class="nc" id="L102">			final SFile file = d.file(nameOrPath);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (file.exists())</span>
-<span class="nc" id="L104">				return file.getCanonicalFile();</span>
-<span class="nc" id="L105">		}</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES)) {</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			assert d.isDirectory();</span>
-<span class="fc" id="L108">			final SFile file = d.file(nameOrPath);</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if (file.exists())</span>
-<span class="nc" id="L110">				return file.getCanonicalFile();</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		for (SFile d : SecurityUtils.getPath(NFolder.PATHS_INCLUDES)) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			assert d.isDirectory();</span>
+<span class="nc" id="L103">			final SFile file = d.file(nameOrPath);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (file.exists())</span>
+<span class="nc" id="L105">				return file.getCanonicalFile();</span>
+<span class="nc" id="L106">		}</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (SFile d : SecurityUtils.getPath(NFolder.PATHS_CLASSES)) {</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			assert d.isDirectory();</span>
+<span class="fc" id="L109">			final SFile file = d.file(nameOrPath);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (file.exists())</span>
+<span class="nc" id="L111">				return file.getCanonicalFile();</span>
 
-<span class="fc" id="L112">		}</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (dir == null) {</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">			assert filecurrent == null;</span>
-<span class="nc" id="L115">			return new SFile(nameOrPath).getCanonicalFile();</span>
+<span class="fc" id="L113">		}</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (dir == null) {</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			assert filecurrent == null;</span>
+<span class="nc" id="L116">			return new SFile(nameOrPath).getCanonicalFile();</span>
 		}
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		assert filecurrent != null;</span>
-<span class="fc" id="L118">		return filecurrent;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		assert filecurrent != null;</span>
+<span class="fc" id="L119">		return filecurrent;</span>
 		// ::done
 	}
 
 	// ::comment when __CORE__ or __TEAVM__
 	private boolean isAbsolute(String nameOrPath) {
-<span class="fc" id="L124">		final SFile f = new SFile(nameOrPath);</span>
-<span class="fc" id="L125">		return f.isAbsolute();</span>
+<span class="fc" id="L125">		final SFile f = new SFile(nameOrPath);</span>
+<span class="fc" id="L126">		return f.isAbsolute();</span>
 	}
 	// ::done
 
 	public void reset() {
-<span class="fc" id="L130">		setCurrentDir(new SFile(&quot;.&quot;));</span>
-<span class="fc" id="L131">	}</span>
+<span class="fc" id="L131">		setCurrentDir(new SFile(&quot;.&quot;));</span>
+<span class="fc" id="L132">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

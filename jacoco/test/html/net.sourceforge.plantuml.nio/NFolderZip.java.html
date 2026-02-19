@@ -49,6 +49,7 @@ import java.util.Objects;
  * specific sub-path (which can be the root) inside that archive.
  */
 public final class NFolderZip implements NFolder {
+	// ::remove file when __TEAVM__
 
 	private final File zipFile;
 	/** Current path inside the ZIP (relative, no leading slash). */
@@ -56,33 +57,33 @@ public final class NFolderZip implements NFolder {
 
 	/** Creates a folder view of the ZIP root. */
 	public NFolderZip(File zipFile) {
-<span class="fc" id="L59">		this(zipFile, Paths.get(&quot;&quot;));</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L60">		this(zipFile, Paths.get(&quot;&quot;));</span>
+<span class="fc" id="L61">	}</span>
 
-<span class="fc" id="L62">	private NFolderZip(File zipFile, Path currentPathInsideZip) {</span>
-<span class="fc" id="L63">		this.zipFile = Objects.requireNonNull(zipFile);</span>
-<span class="fc" id="L64">		this.pathInsideZip = Objects.requireNonNull(currentPathInsideZip).normalize();</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L63">	private NFolderZip(File zipFile, Path currentPathInsideZip) {</span>
+<span class="fc" id="L64">		this.zipFile = Objects.requireNonNull(zipFile);</span>
+<span class="fc" id="L65">		this.pathInsideZip = Objects.requireNonNull(currentPathInsideZip).normalize();</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
-<span class="fc" id="L69">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L70">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="fc" id="L71">		return new InputFileZip(zipFile, entry);</span>
+<span class="fc" id="L70">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L71">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="fc" id="L72">		return new InputFileZip(zipFile, entry);</span>
 	}
 
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
-<span class="fc" id="L76">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L77">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		final Path next = entry.isEmpty() ? Paths.get(&quot;&quot;) : Paths.get(entry);</span>
-<span class="fc" id="L79">		return new NFolderZip(zipFile, next);</span>
+<span class="fc" id="L77">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L78">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		final Path next = entry.isEmpty() ? Paths.get(&quot;&quot;) : Paths.get(entry);</span>
+<span class="fc" id="L80">		return new NFolderZip(zipFile, next);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L84">		final String prefix = pathInsideZip.toString().replace('\\', '/');</span>
-<span class="fc" id="L85">		return zipFile.getName() + &quot;!&quot; + prefix;</span>
+<span class="fc" id="L85">		final String prefix = pathInsideZip.toString().replace('\\', '/');</span>
+<span class="fc" id="L86">		return zipFile.getName() + &quot;!&quot; + prefix;</span>
 	}
 
 	/**
@@ -90,12 +91,12 @@ public final class NFolderZip implements NFolder {
 	 * any leading slash (as typically stored in ZIPs).
 	 */
 	private String toZipEntryName(Path child) {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();</span>
-<span class="fc" id="L94">		String s = resolved.toString().replace('\\', '/');</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		while (s.startsWith(&quot;/&quot;))</span>
-<span class="nc" id="L96">			s = s.substring(1);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();</span>
+<span class="fc" id="L95">		String s = resolved.toString().replace('\\', '/');</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		while (s.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L97">			s = s.substring(1);</span>
 
-<span class="fc" id="L98">		return s;</span>
+<span class="fc" id="L99">		return s;</span>
 	}
 
 }

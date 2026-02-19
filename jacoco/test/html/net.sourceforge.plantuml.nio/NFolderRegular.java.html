@@ -40,39 +40,58 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
-public class NFolderRegular implements NFolder {
+<span class="fc" id="L45">public class NFolderRegular implements NFolder {</span>
+	// ::remove file when __TEAVM__
 
 	private final Path dir;
 
-<span class="fc" id="L48">	public NFolderRegular(Path dir) {</span>
-<span class="fc" id="L49">		this.dir = Objects.requireNonNull(dir);</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L50">	public NFolderRegular(Path dir) {</span>
+<span class="fc" id="L51">		this.dir = Objects.requireNonNull(dir);</span>
+<span class="fc" id="L52">	}</span>
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
 		final SFile result;
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (nameOrPath.isAbsolute())</span>
-<span class="fc" id="L56">			result = SFile.fromFile(nameOrPath.toFile());</span>
-		else
-<span class="fc" id="L58">			result = SFile.fromFile(dir.resolve(nameOrPath).toFile());</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (nameOrPath.isAbsolute()) {</span>
+<span class="fc" id="L58">			result = SFile.fromFile(nameOrPath.toFile());</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (result.canRead())</span>
+<span class="fc" id="L60">				return result;</span>
 
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (result.canRead())</span>
-<span class="fc" id="L61">			return result;</span>
-		
-<span class="fc" id="L63">		return null;</span>
+		} else {
+<span class="fc" id="L63">			result = SFile.fromFile(dir.resolve(nameOrPath).toFile());</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			if (result.canRead())</span>
+<span class="fc" id="L65">				return result;</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			for (SFile d : SecurityUtils.getPath(PATHS_INCLUDES)) {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">				assert d.isDirectory();</span>
+<span class="fc" id="L69">				final SFile file = d.file(nameOrPath.toString());</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">				if (file.canRead())</span>
+<span class="fc" id="L71">					return file.getCanonicalFile();</span>
+<span class="nc" id="L72">			}</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (SFile d : SecurityUtils.getPath(PATHS_CLASSES)) {</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">				assert d.isDirectory();</span>
+<span class="fc" id="L75">				final SFile file = d.file(nameOrPath.toString());</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">				if (file.canRead())</span>
+<span class="nc" id="L77">					return file.getCanonicalFile();</span>
+
+<span class="fc" id="L79">			}</span>
+		}
+
+<span class="fc" id="L82">		return null;</span>
 
 	}
 
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
-<span class="fc" id="L69">		final Path sub = dir.resolve(nameOrPath).normalize();</span>
-<span class="fc" id="L70">		return new NFolderRegular(sub);</span>
+<span class="fc" id="L88">		final Path sub = dir.resolve(nameOrPath).normalize();</span>
+<span class="fc" id="L89">		return new NFolderRegular(sub);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L75">		return &quot;NFolderRegular[&quot; + dir + &quot;]&quot;;</span>
+<span class="nc" id="L94">		return &quot;NFolderRegular[&quot; + dir + &quot;]&quot;;</span>
 	}
 
 }

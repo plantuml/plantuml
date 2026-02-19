@@ -13262,7 +13262,7 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>42</Ca>
+                <Ca>43</Ca>
                 <Ce>8</Ce>
                 <A>0.18</A>
                 <I>0.16</I>
@@ -13360,6 +13360,7 @@
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
+                <Package>net.sourceforge.plantuml.version</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
                 <Package>net.sourceforge.plantuml.wire</Package>
                 <Package>net.sourceforge.plantuml.yaml</Package>
@@ -21508,10 +21509,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>17</Ca>
-                <Ce>36</Ce>
+                <Ce>37</Ce>
                 <A>0.06</A>
-                <I>0.68</I>
-                <D>0.26</D>
+                <I>0.69</I>
+                <D>0.25</D>
                 <V>1</V>
             </Stats>
 
@@ -21600,6 +21601,7 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.log</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.security</Package>

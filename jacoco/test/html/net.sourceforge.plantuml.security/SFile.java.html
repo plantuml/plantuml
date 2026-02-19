@@ -259,10 +259,10 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 <span class="nc" id="L259">			return false;</span>
 <span class="fc" id="L260">		}</span>
 		// Files in &quot;plantuml.include.path&quot; and &quot;plantuml.allowlist.path&quot; are ok.
-<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)))</span>
-<span class="nc" id="L263">			return true;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		if (isInAllowList(SecurityUtils.getPath(NFolder.PATHS_INCLUDES)))</span>
+<span class="fc" id="L263">			return true;</span>
 
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.ALLOWLIST_LOCAL_PATHS)))</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(NFolder.ALLOWLIST_LOCAL_PATHS)))</span>
 <span class="nc" id="L266">			return true;</span>
 
 <span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)</span>
@@ -288,10 +288,10 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 
 	private boolean isInAllowList(List&lt;SFile&gt; allowlist) {
 <span class="fc" id="L290">		final String path = getCleanPathSecure();</span>
-<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		for (SFile allow : allowlist)</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">			if (path.startsWith(allow.getCleanPathSecure()))</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		for (SFile allow : allowlist)</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if (path.startsWith(allow.getCleanPathSecure()))</span>
 				// File directory is in the allowlist
-<span class="nc" id="L294">				return true;</span>
+<span class="fc" id="L294">				return true;</span>
 
 <span class="fc" id="L296">		return false;</span>
 	}
@@ -426,7 +426,7 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 <span class="nc" id="L426">		return null;</span>
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	// Writing
 	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
 <span class="fc" id="L432">		return new BufferedOutputStream(new FileOutputStream(internal));</span>
@@ -451,22 +451,25 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	public PrintStream createPrintStream(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
 <span class="nc" id="L452">		return new PrintStream(internal, charset.name());</span>
 	}
+
+	public Path toPath() throws IOException {
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">		if (isFileOk())</span>
+<span class="fc" id="L457">			return getSanitizedPath();</span>
+<span class="nc" id="L458">		return null;</span>
+	}
 	// ::done
 
 	@Override
 	public InputStream newInputStream() {
-<span class="fc" id="L458">		return openFile();</span>
+<span class="fc" id="L464">		return openFile();</span>
 	}
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
-<span class="fc" id="L463">		return new NFolderRegular(getSanitizedPath().getParent());</span>
-	}
-
-	public Path toPath() throws IOException {
-<span class="pc bpc" id="L467" title="1 of 2 branches missed.">		if (isFileOk())</span>
-<span class="fc" id="L468">			return getSanitizedPath();</span>
-<span class="nc" id="L469">		return null;</span>
+		// ::revert when __TEAVM__
+<span class="fc" id="L470">		return new NFolderRegular(getSanitizedPath().getParent());</span>
+		// throw new UnsupportedOperationException(&quot;TEAVM96521&quot;);
+		// ::done
 	}
 
 }

@@ -71,9 +71,9 @@ public class MutingLine {
 <span class="fc" id="L71">	}</span>
 
 	public void drawLine(UGraphic ug, Context2D context, double createY, double endY) {
-<span class="nc" id="L74">		final ComponentType defaultLineType = /* useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE : */</span>
+<span class="fc" id="L74">		final ComponentType defaultLineType = /* useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE : */</span>
 				ComponentType.PARTICIPANT_LINE;
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (delays.size() &gt; 0) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (delays.size() &gt; 0) {</span>
 <span class="nc" id="L77">			double y = createY;</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">			for (Map.Entry&lt;Double, Double&gt; ent : delays.entrySet()) {</span>
 <span class="nc bnc" id="L79" title="All 2 branches missed.">				if (ent.getKey() &gt;= createY) {</span>
@@ -84,25 +84,25 @@ public class MutingLine {
 <span class="nc" id="L84">			}</span>
 <span class="nc" id="L85">			drawInternal(ug, context, y, endY, defaultLineType);</span>
 <span class="nc" id="L86">		} else {</span>
-<span class="nc" id="L87">			drawInternal(ug, context, createY, endY, defaultLineType);</span>
+<span class="fc" id="L87">			drawInternal(ug, context, createY, endY, defaultLineType);</span>
 		}
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L89">	}</span>
 
 	private void drawInternal(UGraphic ug, Context2D context, double y1, double y2,
 			final ComponentType defaultLineType) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (y2 == y1)</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (y2 == y1)</span>
 <span class="nc" id="L94">			return;</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (y2 &lt; y1)</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (y2 &lt; y1)</span>
 <span class="nc" id="L97">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L99">		final Style style = defaultLineType.getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="nc" id="L100">		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,</span>
-<span class="nc" id="L101">				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="nc" id="L102">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
-<span class="nc" id="L103">		final Area area = Area.create(dim.getWidth(), y2 - y1);</span>
-<span class="nc" id="L104">		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);</span>
-<span class="nc" id="L105">	}</span>
+<span class="fc" id="L99">		final Style style = defaultLineType.getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L100">		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,</span>
+<span class="fc" id="L101">				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L102">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
+<span class="fc" id="L103">		final Area area = Area.create(dim.getWidth(), y2 - y1);</span>
+<span class="fc" id="L104">		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);</span>
+<span class="fc" id="L105">	}</span>
 
 	public void delayOn(double y, double height) {
 <span class="nc" id="L108">		delays.put(y, height);</span>

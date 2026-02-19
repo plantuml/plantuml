@@ -65,8 +65,8 @@ class RealMax extends AbstractReal implements Real {
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (cache != Double.MAX_VALUE)</span>
-<span class="nc" id="L69">			return cache;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
+<span class="fc" id="L69">			return cache;</span>
 <span class="fc" id="L70">		double result = all.get(0).getCurrentValue();</span>
 <span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
 <span class="fc" id="L72">			Throwable t = new Throwable();</span>

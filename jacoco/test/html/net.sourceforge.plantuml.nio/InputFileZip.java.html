@@ -58,6 +58,7 @@ import java.util.zip.ZipFile;
  * &lt;/pre&gt;
  */
 public class InputFileZip implements InputFile {
+	// ::remove file when __TEAVM__
 
 	private final File zipFile;
 	private final String entryName;
@@ -68,24 +69,24 @@ public class InputFileZip implements InputFile {
 	 * @param zipFile   the ZIP archive file
 	 * @param entryName the name of the entry inside the archive
 	 */
-<span class="fc" id="L71">	public InputFileZip(File zipFile, String entryName) {</span>
-<span class="fc" id="L72">		this.zipFile = Objects.requireNonNull(zipFile);</span>
-<span class="fc" id="L73">		this.entryName = Objects.requireNonNull(entryName);</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L72">	public InputFileZip(File zipFile, String entryName) {</span>
+<span class="fc" id="L73">		this.zipFile = Objects.requireNonNull(zipFile);</span>
+<span class="fc" id="L74">		this.entryName = Objects.requireNonNull(entryName);</span>
+<span class="fc" id="L75">	}</span>
 
 	@Override
 	public InputStream newInputStream() throws IOException {
-<span class="fc" id="L78">		final ZipFile zf = new ZipFile(zipFile);</span>
-<span class="fc" id="L79">		final ZipEntry entry = zf.getEntry(entryName);</span>
+<span class="fc" id="L79">		final ZipFile zf = new ZipFile(zipFile);</span>
+<span class="fc" id="L80">		final ZipEntry entry = zf.getEntry(entryName);</span>
 
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (entry == null) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (entry == null) {</span>
 			// Ensure the ZipFile is closed immediately in case of missing entry
-<span class="fc" id="L83">			zf.close();</span>
-<span class="fc" id="L84">			throw new IOException(&quot;Entry not found in ZIP: &quot; + entryName + &quot; (&quot; + zipFile + &quot;)&quot;);</span>
+<span class="fc" id="L84">			zf.close();</span>
+<span class="fc" id="L85">			throw new IOException(&quot;Entry not found in ZIP: &quot; + entryName + &quot; (&quot; + zipFile + &quot;)&quot;);</span>
 		}
 
 		// Wrap the entry InputStream so closing it also closes the ZipFile.
-<span class="fc" id="L88">		return new ZipEntryInputStream(zf, zf.getInputStream(entry));</span>
+<span class="fc" id="L89">		return new ZipEntryInputStream(zf, zf.getInputStream(entry));</span>
 	}
 
 	/**
@@ -97,43 +98,43 @@ public class InputFileZip implements InputFile {
 		private final InputStream delegate;
 		private boolean closed;
 
-<span class="fc" id="L100">		private ZipEntryInputStream(ZipFile zipFile, InputStream delegate) {</span>
-<span class="fc" id="L101">			this.zipFile = zipFile;</span>
-<span class="fc" id="L102">			this.delegate = delegate;</span>
-<span class="fc" id="L103">		}</span>
+<span class="fc" id="L101">		private ZipEntryInputStream(ZipFile zipFile, InputStream delegate) {</span>
+<span class="fc" id="L102">			this.zipFile = zipFile;</span>
+<span class="fc" id="L103">			this.delegate = delegate;</span>
+<span class="fc" id="L104">		}</span>
 
 		@Override
 		public int read() throws IOException {
-<span class="nc" id="L107">			return delegate.read();</span>
+<span class="nc" id="L108">			return delegate.read();</span>
 		}
 
 		@Override
 		public int read(byte[] b, int off, int len) throws IOException {
-<span class="fc" id="L112">			return delegate.read(b, off, len);</span>
+<span class="fc" id="L113">			return delegate.read(b, off, len);</span>
 		}
 
 		@Override
 		public void close() throws IOException {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (!closed)</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (!closed)</span>
 				try {
-<span class="fc" id="L119">					delegate.close();</span>
+<span class="fc" id="L120">					delegate.close();</span>
 				} finally {
-<span class="fc" id="L121">					zipFile.close();</span>
-<span class="fc" id="L122">					closed = true;</span>
+<span class="fc" id="L122">					zipFile.close();</span>
+<span class="fc" id="L123">					closed = true;</span>
 				}
 
-<span class="fc" id="L125">		}</span>
+<span class="fc" id="L126">		}</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L130">		return Paths.get(zipFile.getPath()).toAbsolutePath() + &quot;!&quot; + entryName;</span>
+<span class="nc" id="L131">		return Paths.get(zipFile.getPath()).toAbsolutePath() + &quot;!&quot; + entryName;</span>
 	}
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
-<span class="fc" id="L135">		final Path parent = getParentFrom(entryName);</span>
-<span class="fc" id="L136">		return new NFolderZip(zipFile).getSubfolder(parent);</span>
+<span class="fc" id="L136">		final Path parent = getParentFrom(entryName);</span>
+<span class="fc" id="L137">		return new NFolderZip(zipFile).getSubfolder(parent);</span>
 	}
 
 	/**
@@ -145,13 +146,13 @@ public class InputFileZip implements InputFile {
 	 * &lt;/ul&gt;
 	 */
 	private static Path getParentFrom(String entryName) {
-<span class="pc bpc" id="L148" title="2 of 4 branches missed.">		if (entryName == null || entryName.isEmpty())</span>
-<span class="nc" id="L149">			return Paths.get(&quot;&quot;);</span>
-<span class="fc" id="L150">		final int idx = entryName.replace('\\', '/').lastIndexOf('/');</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (idx &lt;= 0)</span>
-<span class="fc" id="L152">			return Paths.get(&quot;&quot;);</span>
-<span class="fc" id="L153">		final String parent = entryName.substring(0, idx);</span>
-<span class="fc" id="L154">		return Paths.get(parent);</span>
+<span class="pc bpc" id="L149" title="2 of 4 branches missed.">		if (entryName == null || entryName.isEmpty())</span>
+<span class="nc" id="L150">			return Paths.get(&quot;&quot;);</span>
+<span class="fc" id="L151">		final int idx = entryName.replace('\\', '/').lastIndexOf('/');</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (idx &lt;= 0)</span>
+<span class="fc" id="L153">			return Paths.get(&quot;&quot;);</span>
+<span class="fc" id="L154">		final String parent = entryName.substring(0, idx);</span>
+<span class="fc" id="L155">		return Paths.get(parent);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

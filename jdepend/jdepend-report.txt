@@ -8977,7 +8977,7 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 2
 
-    Ca: 42
+    Ca: 43
     Ce: 8
 
     A: 0.18
@@ -9049,6 +9049,7 @@ Used By:
     net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.tim
     net.sourceforge.plantuml.timingdiagram
+    net.sourceforge.plantuml.version
     net.sourceforge.plantuml.wbs
     net.sourceforge.plantuml.wire
     net.sourceforge.plantuml.yaml
@@ -14324,11 +14325,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 17
-    Ce: 36
+    Ce: 37
 
     A: 0.06
-    I: 0.68
-    D: 0.26
+    I: 0.69
+    D: 0.25
 
 Abstract Classes:
     net.sourceforge.plantuml.version.IteratorCounter2
@@ -14381,6 +14382,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.log
+    net.sourceforge.plantuml.nio
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.preproc2
     net.sourceforge.plantuml.security
@@ -17368,7 +17370,7 @@ net.sourceforge.plantuml.log,2,0,50,3,0,0.06,0.94,1
 net.sourceforge.plantuml.math,14,1,4,19,0.07,0.83,0.1,1
 net.sourceforge.plantuml.mda,3,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.mindmap,18,1,2,23,0.06,0.92,0.02,1
-net.sourceforge.plantuml.nio,11,2,42,8,0.18,0.16,0.66,1
+net.sourceforge.plantuml.nio,11,2,43,8,0.18,0.16,0.66,1
 net.sourceforge.plantuml.nwdiag,13,0,3,25,0,0.89,0.11,1
 net.sourceforge.plantuml.nwdiag.core,4,1,2,15,0.25,0.88,0.13,1
 net.sourceforge.plantuml.nwdiag.next,11,1,2,12,0.09,0.86,0.05,1
@@ -17447,7 +17449,7 @@ net.sourceforge.plantuml.timingdiagram.command,24,1,1,15,0.04,0.94,0.02,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,14,0.18,0.93,0.11,1
 net.sourceforge.plantuml.url,8,0,41,7,0,0.15,0.85,1
 net.sourceforge.plantuml.utils,22,6,96,23,0.27,0.19,0.53,1
-net.sourceforge.plantuml.version,16,1,17,36,0.06,0.68,0.26,1
+net.sourceforge.plantuml.version,16,1,17,37,0.06,0.69,0.25,1
 net.sourceforge.plantuml.vizjs,7,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.warning,3,1,9,2,0.33,0.18,0.48,1
 net.sourceforge.plantuml.wbs,13,2,2,25,0.15,0.93,0.08,1
