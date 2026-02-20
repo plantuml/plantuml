@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.Locale;
 
-<span class="nc" id="L40">public enum GroupingType {</span>
-<span class="nc" id="L41">	START, START_PARTITION, ELSE, END;</span>
+<span class="fc" id="L40">public enum GroupingType {</span>
+<span class="fc" id="L41">	START, START_PARTITION, ELSE, END;</span>
 
 	public static GroupingType getType(String s) {
-<span class="nc bnc" id="L44" title="All 5 branches missed.">		switch (s.toLowerCase(Locale.US)) {</span>
+<span class="pc bpc" id="L44" title="2 of 5 branches missed.">		switch (s.toLowerCase(Locale.US)) {</span>
 		case &quot;opt&quot;:
 		case &quot;alt&quot;:
 		case &quot;loop&quot;:
@@ -50,17 +50,17 @@ import java.util.Locale;
 		case &quot;break&quot;:
 		case &quot;group&quot;:
 		case &quot;critical&quot;:
-<span class="nc" id="L53">			return GroupingType.START;</span>
+<span class="fc" id="L53">			return GroupingType.START;</span>
 
 		case &quot;partition&quot;:
 <span class="nc" id="L56">			return GroupingType.START_PARTITION;</span>
 
 		case &quot;also&quot;:
 		case &quot;else&quot;:
-<span class="nc" id="L60">			return GroupingType.ELSE;</span>
+<span class="fc" id="L60">			return GroupingType.ELSE;</span>
 
 		case &quot;end&quot;:
-<span class="nc" id="L63">			return GroupingType.END;</span>
+<span class="fc" id="L63">			return GroupingType.END;</span>
 
 		default:
 <span class="nc" id="L66">			throw new IllegalArgumentException(s);</span>
@@ -68,7 +68,7 @@ import java.util.Locale;
 	}
 
 	public boolean isStart() {
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		return this == START || this == START_PARTITION;</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">		return this == START || this == START_PARTITION;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
